@@ -3,6 +3,11 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * User migration
+ *
+ * Color: Blue
+ */
 class CreateUsersTable extends Migration {
 
 	/**
@@ -12,7 +17,6 @@ class CreateUsersTable extends Migration {
 	 */
 	public function up()
 	{
-
 		Schema::create('user_type', function(Blueprint $table)
 		{
 			$table->increments('id');
