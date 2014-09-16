@@ -77,8 +77,8 @@ class UserSeeder extends Seeder {
 
 			ProjectType::create(array('type_name' => 'regie'));
 			ProjectType::create(array('type_name' => 'calculatie'));
-			ProjectType::create(array('type_name' => 'blancoofferte'));
-			ProjectType::create(array('type_name' => 'blancofactuur'));
+			ProjectType::create(array('type_name' => 'blanco offerte'));
+			ProjectType::create(array('type_name' => 'blanco factuur'));
 
 	}
  
