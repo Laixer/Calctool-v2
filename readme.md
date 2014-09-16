@@ -1,25 +1,10 @@
-## Laravel PHP Framework
+**CalcTool | CalculatieTool**
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/downloads.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+*Calculeren, Offreren, Factureren, Urenregistratie, Nacalculatie , Meer- minderwerk en nog veel meer. Nu alles in 1-pakket en voor een prijs waar je niet eens over na hoeft te denken.*
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, and caching.
+Buiten het feit dat het werk van een zzp’er van goede kwaliteit moet zijn om genoeg werk te behouden, is het minstens zo belangrijk om een goede geordende administratie bij te houden. Ook de offertes en facturen dienen van goede kwaliteit te zijn voor het genereren terugkerende klanten en het zo effectief mogelijk inzetten van de hiervoor te besteden tijd.
 
-Laravel aims to make the development process a pleasing one for the developer without sacrificing application functionality. Happy developers make the best code. To this end, we've attempted to combine the very best of what we have seen in other web frameworks, including frameworks implemented in other languages, such as Ruby on Rails, ASP.NET MVC, and Sinatra.
+Een ongeordende papierstapel op het bureau, losse velletjes, offertes op een blaadje, niet meer weten waar wat bij hoort enz. De CalcTool neemt dit weg en zorgt voor het maken van goede offertes, facturen en projectadministratie.
+De meeste (startende) ondernemers hebben een probleem om gedisciplineerd een administratie bij te houden en om offertes van goede kwaliteit te maken. De meeste nemen het hier niet zo nou mee omdat het algemeen als vervelend ervaren wordt, toch is een ondernemer verplicht om aan een aantal eisen te voldoen. In deze tijd van crisis is het belangrijk dat kwalitatief goede offertes geformuleerd worden naar de opdrachtgever om kans te maken op het werk.
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
-
-## Official Documentation
-
-Documentation for the entire framework can be found on the [Laravel website](http://laravel.com/docs).
-
-### Contributing To Laravel
-
-**All issues and pull requests should be filed on the [laravel/framework](http://github.com/laravel/framework) repository.**
-
-### License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+***Ondernemen krijgt een hele andere dimensie.***
