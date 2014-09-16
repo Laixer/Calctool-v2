@@ -79,7 +79,53 @@ class UserSeeder extends Seeder {
 			ProjectType::create(array('type_name' => 'calculatie'));
 			ProjectType::create(array('type_name' => 'blanco offerte'));
 			ProjectType::create(array('type_name' => 'blanco factuur'));
-
+			
+			user_account::create(array(
+				'username' => 'usernamesystem'
+				'secret' => 'ABC123'
+				'firstname' => 'firstnamesystem'
+				'Lastname' => 'lastnamesystem'
+				'Api' => ''
+				'ip' => '127.0.0.1'
+				'Active' => 'Y'
+				'Confirmed_mail' => 'Y'
+				'registration_date' => '41898'
+				'last_active' => 'ABC'
+				'Promotion_code' => '123'
+				'Address_street' => 'adresssystem'
+				'Address_number' => '01'
+				'Address_postal' => '1234AB'
+				'Address_city' => 'citysystem'
+				'Website' => 'www.calctool.nl'
+				'Note' => 'system_user'
+				'Mobile' => '612345678'
+				'Phone' => '101234567'
+				'Email' => 'info@calctool.nl'
+				'Pref_mailings_optin' => 'Y'
+				'Pref_hourrate_calc' => '35'
+				'Pref_hourdate_more' => '45'
+				'Pref_profit_calc_contr_mat' => '1'
+				'Pref_profit_calc_contr_equip' => '2'
+				'Pref_profit_calc_subcontr_mat' => '3'
+				'Pref_profit_calc_subcontr_equip' => '4'
+				'Pref_profit_calc_estim_mat' => '5'
+				'Pref_profit_calc_estim_equip' => '6'
+				'Pref_profit_more_contr_mat' => '7'
+				'Pref_profit_more_contr_equip' => '8'
+				'Pref_profit_more_subcontr_mat' => '9'
+				'Pref_profit_more_subcontr_equip' => '10'
+				'Pref_email_offer' => 'test_pref_email_offer'
+				'Pref_offer_description' => 'pref_offer_description'
+				'Pref_closure_offer' => 'pref_closure_offer'
+				'Pref_email_invoice' => 'pref_email_invoice'
+				'Pref_invoice_description' => 'pref_invoice_description'
+				'Pref_invoice_closure' => 'pref_invoice_closure'
+				'Pref_email_invoice_first_reminder' => 'pref_email_invoice_first_reminder'
+				'Pref_email_invoice_last_reminder' => 'pref_email_invoice_last_reminder'
+				'Pref_email_invoice_first_demand' => 'pref_email_invoice_first_demand'
+				'Pref_email_invoice_last_demand' => 'pref_email_invoice_last_demand'
+				'Administration_cost' => '12,5'
+				));
 	}
  
 }
