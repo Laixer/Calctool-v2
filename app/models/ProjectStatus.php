@@ -8,6 +8,4 @@ class ProjectStatus extends Eloquent {
 	 * @var string
 	 */
 	protected $table = 'status_date';
-
-	public $timestamps = false;
 }

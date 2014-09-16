@@ -9,5 +9,11 @@ class Iban extends Eloquent {
 	 */
 	protected $table = 'iban';
 
+	protected $fillable = array('iban_name');
+
+	public function user() {
+		return $this->hasOne('User');
+	}
+
 	public $timestamps = false;
 }

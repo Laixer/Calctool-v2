@@ -10,4 +10,8 @@ class Payment extends Eloquent {
 	protected $table = 'payment';
 
 	public $timestamps = false;
+
+	public function user() {
+		return $this->hasOne('User');
+	}
 }

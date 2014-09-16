@@ -8,4 +8,12 @@ class Resource extends Eloquent {
 	 * @var string
 	 */
 	protected $table = 'resource';
+
+	public function user() {
+		return $this->hasOne('User');
+	}
+
+	public function project() {
+		return $this->hasOne('Project');
+	}
 }
