@@ -74,7 +74,7 @@ class CreateRelation extends Migration {
 
 		Schema::table('user_account', function(Blueprint $table)
 		{
-			$table->integer('self_id')->unsigned();
+			$table->integer('self_id')->unsigned()->nullable();
 			$table->foreign('self_id')->references('id')->on('relation')->onUpdate('cascade')->onDelete('restrict');
 		});
 
