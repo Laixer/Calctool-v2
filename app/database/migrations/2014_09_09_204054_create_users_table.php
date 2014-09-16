@@ -113,7 +113,7 @@ class CreateUsersTable extends Migration {
 		Schema::create('project_type', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('type_name', 10)->unique();
+			$table->string('type_name', 15)->unique();
 		});
 
 		Schema::create('project_step', function(Blueprint $table)
