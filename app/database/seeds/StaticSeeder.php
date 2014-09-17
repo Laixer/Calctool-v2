@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * Static Models Only
+ * Test are performed on other seeds
+ */
 class StaticSeeder extends Seeder {
 
 	public function run()
