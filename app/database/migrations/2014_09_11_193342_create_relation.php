@@ -131,6 +131,11 @@ class CreateRelation extends Migration {
 			Schema::drop('relation');
 		});
 
+		Schema::table('relation_kind', function(Blueprint $table)
+		{
+			Schema::drop('relation_kind');
+		});
+
 		Schema::table('relation_type', function(Blueprint $table)
 		{
 			Schema::drop('relation_type');

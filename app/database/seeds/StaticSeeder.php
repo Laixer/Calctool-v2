@@ -173,7 +173,6 @@ class StaticSeeder extends Seeder {
 		ContactFunction::create(array('function_name' => 'notaris'));
 		ContactFunction::create(array('function_name' => 'boekhouder'));
 		ContactFunction::create(array('function_name' => 'architect'));
-		ContactFunction::create(array('function_name' => 'projectleider'));
 		ContactFunction::create(array('function_name' => 'secretaresse'));
 		ContactFunction::create(array('function_name' => 'Programme manager'));
 		ContactFunction::create(array('function_name' => 'projectleider'));
