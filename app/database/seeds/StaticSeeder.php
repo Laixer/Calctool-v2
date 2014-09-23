@@ -8,6 +8,7 @@ class StaticSeeder extends Seeder {
 
 	public function run()
 	{
+		DB::table('system_option')->delete();
 		DB::table('specification')->delete();
 		DB::table('deliver_time')->delete();
 		DB::table('valid')->delete();
@@ -257,5 +258,8 @@ class StaticSeeder extends Seeder {
 		Specification::create(array('specification_name' => 'totalen per werkzaamheid'));
 		Specification::create(array('specification_name' => 'totaal voor project'));
 		$this->command->info('Specification created');
+
+		SystemOption::create(array('option_key' => 'tool_name', 'option_value' => 'Calctool'));
+		$this->command->info('SystemOption created');
 	}
  }
