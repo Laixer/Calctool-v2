@@ -20,22 +20,19 @@ class CreatePart extends Migration {
 		Schema::create('part', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('part_name', 10);
-			$table->boolean('activity')->default('Y');
-			$table->boolean('invoice')->default('N');
-			$table->char('acronym', 2);
+			$table->string('part_name', 15);
 		});
 
 		Schema::create('part_type', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('type_name', 10);
+			$table->string('type_name', 15);
 		});
 
 		Schema::create('detail', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('detail_name', 10);
+			$table->string('detail_name', 15);
 		});
 
 		Schema::create('part_part_type', function(Blueprint $table)
