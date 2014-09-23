@@ -8,6 +8,9 @@ class StaticSeeder extends Seeder {
 
 	public function run()
 	{
+		DB::table('specification')->delete();
+		DB::table('deliver_time')->delete();
+		DB::table('valid')->delete();
 		DB::table('relation_kind')->delete();
 		DB::table('relation_type')->delete();
 		DB::table('contact_function')->delete();
@@ -233,5 +236,26 @@ class StaticSeeder extends Seeder {
 		RelationKind::create(array('kind_name' => 'zakelijk'));
 		RelationKind::create(array('kind_name' => 'particulier'));
 		$this->command->info('RelationKind created');
+
+		Valid::create(array('valid_name' => '5 dagen'));
+		Valid::create(array('valid_name' => '14 dagen'));
+		Valid::create(array('valid_name' => '30 dagen'));
+		Valid::create(array('valid_name' => '2 maanden'));
+		Valid::create(array('valid_name' => '3 maanden'));
+		$this->command->info('Valid created');
+
+		DeliverTime::create(array('delivertime_name' => 'direct'));
+		DeliverTime::create(array('delivertime_name' => '1 week'));
+		DeliverTime::create(array('delivertime_name' => '2 weken'));
+		DeliverTime::create(array('delivertime_name' => '3 weken'));
+		DeliverTime::create(array('delivertime_name' => '1 maand'));
+		$this->command->info('DeliverTime created');
+
+		Specification::create(array('specification_name' => 'gespecificeerd, exclusief omschrijving'));
+		Specification::create(array('specification_name' => 'gespecificeerd, inclusief omschrijving'));
+		Specification::create(array('specification_name' => 'totalen per hoofdstuk'));
+		Specification::create(array('specification_name' => 'totalen per werkzaamheid'));
+		Specification::create(array('specification_name' => 'totaal voor project'));
+		$this->command->info('Specification created');
 	}
  }

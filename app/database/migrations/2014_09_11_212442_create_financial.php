@@ -21,7 +21,7 @@ class CreateFinancial extends Migration {
 		Schema::create('deliver_time', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('delivertime_name', 80)->unique();
+			$table->string('delivertime_name', 10)->unique();
 		});
 
 		Schema::create('specification', function(Blueprint $table)
@@ -33,13 +33,7 @@ class CreateFinancial extends Migration {
 		Schema::create('valid', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('valid_name', 50)->unique();
-		});
-
-		Schema::create('invoice_type', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->string('type_name', 30)->unique();
+			$table->string('valid_name', 10)->unique();
 		});
 
 		Schema::create('offer', function(Blueprint $table)
@@ -77,8 +71,6 @@ class CreateFinancial extends Migration {
 			$table->boolean('display_tax')->default('Y');
 			$table->text('closure')->nullable();
 			$table->boolean('auto_email_reminder')->default('Y');
-			$table->integer('type_id')->unsigned();
-			$table->foreign('type_id')->references('id')->on('invoice_type')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('offer_id')->unsigned();
 			$table->foreign('offer_id')->references('id')->on('offer')->onUpdate('cascade')->onDelete('restrict');
 		});
@@ -99,11 +91,6 @@ class CreateFinancial extends Migration {
 		Schema::table('offer', function(Blueprint $table)
 		{
 			Schema::drop('offer');
-		});
-
-		Schema::table('invoice_type', function(Blueprint $table)
-		{
-			Schema::drop('invoice_type');
 		});
 
 		Schema::table('valid', function(Blueprint $table)
