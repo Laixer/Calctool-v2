@@ -29,6 +29,12 @@ class CreateRelation extends Migration {
 			$table->string('type_name', 50)->unique();
 		});
 
+		Schema::create('relation_kind', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('kind_name', 11)->unique();
+		});
+
 		Schema::create('relation', function(Blueprint $table)
 		{
 			$table->increments('id');
@@ -51,6 +57,8 @@ class CreateRelation extends Migration {
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('type_id')->unsigned();
 			$table->foreign('type_id')->references('id')->on('relation_type')->onUpdate('cascade')->onDelete('restrict');
+			$table->integer('kind_id')->unsigned();
+			$table->foreign('kind_id')->references('id')->on('relation_kind')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('provance_id')->unsigned();
 			$table->foreign('provance_id')->references('id')->on('provance')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('country_id')->unsigned();
@@ -74,7 +82,7 @@ class CreateRelation extends Migration {
 
 		Schema::table('user_account', function(Blueprint $table)
 		{
-			$table->integer('self_id')->unsigned();
+			$table->integer('self_id')->unsigned()->nullable();
 			$table->foreign('self_id')->references('id')->on('relation')->onUpdate('cascade')->onDelete('restrict');
 		});
 
@@ -121,6 +129,11 @@ class CreateRelation extends Migration {
 		Schema::table('relation', function(Blueprint $table)
 		{
 			Schema::drop('relation');
+		});
+
+		Schema::table('relation_kind', function(Blueprint $table)
+		{
+			Schema::drop('relation_kind');
 		});
 
 		Schema::table('relation_type', function(Blueprint $table)
