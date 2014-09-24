@@ -49,9 +49,9 @@ return array(
 		'pgsql' => array(
 			'driver'   => 'pgsql',
 			'host'     => 'localhost',
-			'database' => '',
-			'username' => '',
-			'password' => '',
+			'database' => 'calctoolv2',
+			'username' => 'user_laravel',
+			'password' => '13R4bZB5Xb4gGqFwmJQ2Ky7u7e4PcF523X2HNwed',
 			'charset'  => 'utf8',
 			'prefix'   => '',
 			'schema'   => 'public',
