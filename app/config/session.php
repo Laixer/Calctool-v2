@@ -96,7 +96,7 @@ return array(
 	|
 	*/
 
-	'cookie' => 'laravel_session',
+	'cookie' => '_csavasid',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -122,7 +122,7 @@ return array(
 	|
 	*/
 
-	'domain' => null,
+	'domain' => '.calctool.nl',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -135,6 +135,6 @@ return array(
 	|
 	*/
 
-	'secure' => false,
+	'secure' => true,
 
 );
