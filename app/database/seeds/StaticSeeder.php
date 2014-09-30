@@ -8,6 +8,7 @@ class StaticSeeder extends Seeder {
 
 	public function run()
 	{
+		DB::table('tax')->delete();
 		DB::table('system_option')->delete();
 		DB::table('specification')->delete();
 		DB::table('deliver_time')->delete();
@@ -261,5 +262,10 @@ class StaticSeeder extends Seeder {
 
 		SystemOption::create(array('option_key' => 'tool_name', 'option_value' => 'Calctool'));
 		$this->command->info('SystemOption created');
+
+		Tax::create(array('tax_rate' => 0));
+		Tax::create(array('tax_rate' => 6));
+		Tax::create(array('tax_rate' => 21));
+		$this->command->info('Tax created');
 	}
  }
