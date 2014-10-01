@@ -40,24 +40,10 @@
 	"buffers":
 	[
 		{
-			"contents": "<?php\n\nclass StaticSeeder extends Seeder {\n\n	public function run()\n	{\n		DB::table('project_step')->delete();\n		DB::table('project_type')->delete();\n		DB::table('country')->delete();\n		DB::table('provance')->delete();\n		DB::table('user_type')->delete();\n		$this->command->info('Tables deleted');\n		\n		UserType::create(array('user_type' => 'zakelijk'));\n		UserType::create(array('user_type' => 'particulier'));\n		$this->command->info('UserType created');\n\n		Provance::create(array('provance_name' => 'Groningen'));\n		Provance::create(array('provance_name' => 'Friesland'));\n		Provance::create(array('provance_name' => 'Drenthe'));\n		Provance::create(array('provance_name' => 'Overijssel'));\n		Provance::create(array('provance_name' => 'Flevoland'));\n		Provance::create(array('provance_name' => 'Gelderland'));\n		Provance::create(array('provance_name' => 'Utrecht'));\n		Provance::create(array('provance_name' => 'Noord-Holland'));\n		Provance::create(array('provance_name' => 'Zuid-Holland'));\n		Provance::create(array('provance_name' => 'Noord-Brabant'));\n		Provance::create(array('provance_name' => 'Limburg'));\n		Provance::create(array('provance_name' => 'Zeeland'));\n		Provance::create(array('provance_name' => 'Overig'));\n		$this->command->info('Provance created');\n\n		Country::create(array('country_name' => 'Albanië'));\n		Country::create(array('country_name' => 'Andorra'));\n		Country::create(array('country_name' => 'Armenië'));\n		Country::create(array('country_name' => 'Azerbeidzjan'));\n		Country::create(array('country_name' => 'België'));\n		Country::create(array('country_name' => 'BosniëenHerzegovina'));\n		Country::create(array('country_name' => 'Bulgarije'));\n		Country::create(array('country_name' => 'Cyprus'));\n		Country::create(array('country_name' => 'Denemarken'));\n		Country::create(array('country_name' => 'Duitsland'));\n		Country::create(array('country_name' => 'Estland'));\n		Country::create(array('country_name' => 'aeröer'));\n		Country::create(array('country_name' => 'Finland'));\n		Country::create(array('country_name' => 'Frankrijk'));\n		Country::create(array('country_name' => 'Georgië'));\n		Country::create(array('country_name' => 'Griekenland'));\n		Country::create(array('country_name' => 'Groenland'));\n		Country::create(array('country_name' => 'Hongarije'));\n		Country::create(array('country_name' => 'Ierland'));\n		Country::create(array('country_name' => 'IJsland'));\n		Country::create(array('country_name' => 'Italië'));\n		Country::create(array('country_name' => 'Kazachstan'));\n		Country::create(array('country_name' => 'Kosovo'));\n		Country::create(array('country_name' => 'Kroatië'));\n		Country::create(array('country_name' => 'Letland'));\n		Country::create(array('country_name' => 'Liechtenstein'));\n		Country::create(array('country_name' => 'Litouwen'));\n		Country::create(array('country_name' => 'Luxemburg'));\n		Country::create(array('country_name' => 'Macedonië'));\n		Country::create(array('country_name' => 'Malta'));\n		Country::create(array('country_name' => 'Moldavië'));\n		Country::create(array('country_name' => 'Monaco'));\n		Country::create(array('country_name' => 'Montenegro'));\n		Country::create(array('country_name' => 'Nederland'));\n		Country::create(array('country_name' => 'Noorwegen'));\n		Country::create(array('country_name' => 'Oekraïne'));\n		Country::create(array('country_name' => 'Oostenrijk'));\n		Country::create(array('country_name' => 'Polen'));\n		Country::create(array('country_name' => 'Portugal'));\n		Country::create(array('country_name' => 'Roemenië'));\n		Country::create(array('country_name' => 'Rusland'));\n		Country::create(array('country_name' => 'SanMarino'));\n		Country::create(array('country_name' => 'Servië'));\n		Country::create(array('country_name' => 'Slovenië'));\n		Country::create(array('country_name' => 'Slowakije'));\n		Country::create(array('country_name' => 'Spanje'));\n		Country::create(array('country_name' => 'Tsjechië'));\n		Country::create(array('country_name' => 'Turkije'));\n		Country::create(array('country_name' => 'Vaticaanstad'));\n		Country::create(array('country_name' => 'Verenigd Koninkrijk'));\n		Country::create(array('country_name' => 'Wit-Rusland'));\n		Country::create(array('country_name' => 'Zweden'));\n		Country::create(array('country_name' => 'Zwitserland'));\n		$this->command->info('Country created');\n\n		$ProjectType1 = ProjectType::create(array('type_name' => 'regie'));\n		$ProjectType2 = ProjectType::create(array('type_name' => 'calculatie'));\n		$ProjectType3 = ProjectType::create(array('type_name' => 'blanco offerte'));\n		$ProjectType4 = ProjectType::create(array('type_name' => 'blanco factuur'));\n		$this->command->info('ProjectType created');\n\n		$ProjectStep1 = ProjectStep::create(array('step_name' => 'calculation'));\n		$ProjectStep2 = ProjectStep::create(array('step_name' => 'offer'));\n		$ProjectStep3 = ProjectStep::create(array('step_name' => 'contracting'));\n		$ProjectStep4 = ProjectStep::create(array('step_name' => 'estimate'));\n		$ProjectStep5 = ProjectStep::create(array('step_name' => 'more'));\n		$ProjectStep6 = ProjectStep::create(array('step_name' => 'less'));\n		$ProjectStep7 = ProjectStep::create(array('step_name' => 'invoice'));\n		$this->command->info('ProjectStep created');\n\n		$ProjectType1->projectStep()->attach($ProjectStep5->id);\n		$ProjectType1->projectStep()->attach($ProjectStep7->id);\n\n		$ProjectType2->projectStep()->attach($ProjectStep1->id);\n		$ProjectType2->projectStep()->attach($ProjectStep2->id);\n		$ProjectType2->projectStep()->attach($ProjectStep3->id);\n		$ProjectType2->projectStep()->attach($ProjectStep4->id);\n		$ProjectType2->projectStep()->attach($ProjectStep5->id);\n		$ProjectType2->projectStep()->attach($ProjectStep6->id);\n		$ProjectType2->projectStep()->attach($ProjectStep7->id);\n\n		$ProjectType3->projectStep()->attach($ProjectStep2->id);\n		$ProjectType3->projectStep()->attach($ProjectStep7->id);\n\n		$ProjectType4->projectStep()->attach($ProjectStep2->id);\n		$this->command->info('ProjectType / ProjectStep attached');\n\n/*		$test_user = User::create(array(\n			'username' => 'system',\n			'secret' => Hash::make('ABC@123'),\n			'firstname' => 'system',\n			'lastname' => 'system',\n			'api' => md5(mt_rand()),\n			'ip' => '127.0.0.1',\n			'active' => 'Y',\n			'confirmed_mail' => '2014-09-16',\n			'registration_date' => '2014-09-16',\n			'last_active' => '2014-09-15',\n			'promotion_code' => md5(mt_rand()),\n			'address_street' => 'adressystem',\n			'address_number' => '1',\n			'address_postal' => '1234AB',\n			'address_city' => 'citysystem',\n			'website' => 'www.calctool.nl',\n			'note' => 'system user',\n			'mobile' => '612345678',\n			'phone' => '101234567',\n			'email' => 'info@calctool.nl',\n			'pref_mailings_optin' => 'Y',\n			'pref_hourrate_calc' => '35',\n			'pref_hourrate_more' => '45',\n			'pref_profit_calc_contr_mat' => '1',\n			'pref_profit_calc_contr_equip' => '2',\n			'pref_profit_calc_subcontr_mat' => '3',\n			'pref_profit_calc_subcontr_equip' => '4',\n			'pref_profit_calc_estim_mat' => '5',\n			'pref_profit_calc_estim_equip' => '6',\n			'pref_profit_more_contr_mat' => '7',\n			'pref_profit_more_contr_equip' => '8',\n			'pref_profit_more_subcontr_mat' => '9',\n			'pref_profit_more_subcontr_equip' => '10',\n			'pref_email_offer' => 'test_pref_email_offer',\n			'pref_offer_description' => 'pref_offer_description',\n			'pref_closure_offer' => 'pref_closure_offer',\n			'pref_email_invoice' => 'pref_email_invoice',\n			'pref_invoice_description' => 'pref_invoice_description',\n			'pref_invoice_closure' => 'pref_invoice_closure',\n			'pref_email_invoice_first_reminder' => 'pref_email_invoice_first_reminder',\n			'pref_email_invoice_last_reminder' => 'pref_email_invoice_last_reminder',\n			'pref_email_invoice_first_demand' => 'pref_email_invoice_first_demand',\n			'pref_email_invoice_last_demand' => 'pref_email_invoice_last_demand',\n			'administration_cost' => '12.50',\n			'user_type' => 1\n		));*/\n\n/*		Project::create(array(\n			'project_name' => 'testproject',\n			'project_code' => '123456',\n			'address_street' => 'teststraat',\n			'address_number' => '01',\n			'address_postal' => '1234AB',\n			'address_city' => 'testscity',\n			'note' => 'testopmerking',\n			'hour_rate' => '36',\n			'hour_rate_more' => '37',\n			'profit_calc_contr_mat' => '11',\n			'profit_calc_contr_equip' => '12',\n			'profit_calc_subcontr_mat' => '13',\n			'profit_calc_subcontr_equip' => '14',\n			'profit_calc_estim_mat' => '15',\n			'profit_calc_estim_equip' => '16',\n			'profit_more_contr_mat' => '17',\n			'profit_more_contr_equip' => '18',\n			'profit_more_subcontr_mat' => '19',\n			'profit_more_subcontr_equip' => '20',\n			'user_id' => $test_user->id,\n			'provance_id' => 9,\n			'country_id' => 14,\n			'type_id' => 2,\n		));*/\n\n	}\n }\n",
-			"file": "app/database/seeds/StaticSeeder.php",
-			"file_size": 8747,
-			"file_write_time": 130554614652102067,
+			"file": "app/database/seeds/MaterialStorageSeeder.php",
 			"settings":
 			{
-				"buffer_size": 8665,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "<?php\n\nreturn array(\n\n	/*\n	|--------------------------------------------------------------------------\n	| Default Remote Connection Name\n	|--------------------------------------------------------------------------\n	|\n	| Here you may specify the default connection that will be used for SSH\n	| operations. This name should correspond to a connection name below\n	| in the server list. Each connection will be manually accessible.\n	|\n	*/\n\n	'default' => 'production',\n\n	/*\n	|--------------------------------------------------------------------------\n	| Remote Server Connections\n	|--------------------------------------------------------------------------\n	|\n	| These are the servers that will be accessible via the SSH task runner\n	| facilities of Laravel. This feature radically simplifies executing\n	| tasks on your servers, such as deploying out these applications.\n	|\n	*/\n\n	'connections' => array(\n\n		'production' => array(\n			'host'      => '',\n			'username'  => '',\n			'password'  => '',\n			'key'       => '',\n			'keyphrase' => '',\n			'root'      => '/var/www',\n		),\n\n	),\n\n	/*\n	|--------------------------------------------------------------------------\n	| Remote Server Groups\n	|--------------------------------------------------------------------------\n	|\n	| Here you may list connections under a single group name, which allows\n	| you to easily access all of the servers at once using a short name\n	| that is extremely easy to remember, such as \"web\" or \"database\".\n	|\n	*/\n\n	'groups' => array(\n\n		'web' => array('production')\n\n	),\n\n);\n",
-			"file": "app/config/remote.php",
-			"file_size": 1541,
-			"file_write_time": 130554614652102067,
-			"settings":
-			{
-				"buffer_size": 1541,
+				"buffer_size": 231,
 				"line_ending": "Unix"
 			}
 		}
@@ -90,23 +76,47 @@
 	"expanded_folders":
 	[
 		"/var/www/calctool/app",
-		"/var/www/calctool/public",
+		"/var/www/calctool/app/database",
+		"/var/www/calctool/app/database/migrations",
+		"/var/www/calctool/app/database/seeds",
+		"/var/www/calctool/app/models",
 		"/var/www/calctool/vendor"
 	],
 	"file_history":
 	[
+		"/var/www/calctool/app/database/migrations/2014_09_11_212442_create_financial.php",
+		"/var/www/calctool/app/database/migrations/2014_09_11_225236_create_system_table.php",
+		"/var/www/calctool/app/database/seeds/StaticSeeder.php",
+		"/var/www/calctool/app/models/SystemOption.php",
+		"/var/www/calctool/app/models/InvoiceType.php",
+		"/var/www/calctool/app/models/Offer.php",
+		"/var/www/calctool/app/models/Invoice.php",
+		"/var/www/calctool/app/models/Valid.php",
+		"/var/www/calctool/app/models/Specification.php",
+		"/var/www/calctool/app/models/DeliverTime.php",
+		"/var/www/calctool/app/database/migrations/2014_09_11_193342_create_relation.php",
+		"/var/www/calctool/app/models/Contact.php",
+		"/var/www/calctool/app/models/RelationKind.php",
+		"/var/www/calctool/app/models/RelationType.php",
+		"/var/www/calctool/app/models/Relation.php",
+		"/var/www/calctool/app/models/Resource.php",
+		"/var/www/calctool/app/models/ContactFunction.php",
+		"/var/www/calctool/app/database/migrations/2014_09_11_205753_create_part.php",
+		"/var/www/calctool/app/models/PartType.php",
 		"/var/www/calctool/app/models/ProjectType.php",
+		"/var/www/calctool/app/database/seeds/TestProjectSeeder.php",
+		"/var/www/calctool/app/models/Detail.php",
+		"/var/www/calctool/app/models/ProjectStep.php",
+		"/var/www/calctool/app/models/Part.php",
+		"/var/www/calctool/app/models/Iban.php",
+		"/var/www/calctool/app/config/remote.php",
 		"/var/www/calctool/app/database/migrations/2014_09_09_204054_create_users_table.php",
 		"/var/www/calctool/app/database/seeds/DatabaseSeeder.php",
 		"/var/www/calctool/app/models/User.php",
-		"/var/www/calctool/app/models/Resource.php",
-		"/var/www/calctool/app/models/ProjectStep.php",
 		"/var/www/calctool/app/models/ProjectStatus.php",
 		"/var/www/calctool/app/models/Project.php",
 		"/var/www/calctool/app/models/Payment.php",
-		"/var/www/calctool/app/models/Iban.php",
 		"/var/www/calctool/app/database/seeds/UserSeeder.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_193342_create_relation.php",
 		"/var/www/calctool/app/models/ProjectStepType.php",
 		"/var/www/calctool/app/database/seeds/ProvanceSeeder.php",
 		"/var/www/calctool/app/models/UserType.php",
@@ -114,11 +124,8 @@
 		"/var/www/calctool/app/models/Country.php",
 		"/var/www/calctool/app/models/Provance.php",
 		"/var/www/calctool/app/config/app.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_225236_create_system_table.php",
 		"/var/www/calctool/app/database/migrations/2014_09_11_220407_create_calculation.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_212442_create_financial.php",
 		"/var/www/calctool/app/database/migrations/2014_09_11_210838_create_cost_registration.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_205753_create_part.php",
 		"/var/www/calctool/app/database/migrations/2014_09_11_204724_create_works.php",
 		"/var/www/calctool/app/database/migrations/2014_09_11_202219_create_material_storage.php",
 		"/var/www/calctool/app/config/database.php",
@@ -127,7 +134,7 @@
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
@@ -162,24 +169,24 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "app/database/seeds/StaticSeeder.php",
+					"file": "app/database/seeds/MaterialStorageSeeder.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8665,
+						"buffer_size": 231,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5980,
-								5980
+								231,
+								231
 							]
 						],
 						"settings":
@@ -189,35 +196,6 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "app/config/remote.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1541,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 345.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -299,7 +277,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 308.0,
+	"side_bar_width": 392.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

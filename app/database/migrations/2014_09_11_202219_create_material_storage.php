@@ -34,10 +34,11 @@ class CreateMaterialStorage extends Migration {
 		Schema::create('product', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('product_name', 100)->index();
-			$table->decimal('package_length', 9,2 )->index()->unsigned();
-			$table->string('price_unit', 30)->index();
+			$table->string('unit', 30)->nullable();
+			$table->string('unit_price', 30);
 			$table->decimal('price', 9, 2)->index()->unsigned();
+			$table->decimal('package_length', 9, 2)->index()->unsigned();
+			$table->string('description');
 			$table->integer('group_id')->unsigned();
 			$table->foreign('group_id')->references('id')->on('sub_group')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('supplier_id')->unsigned();
