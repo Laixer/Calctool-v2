@@ -59,8 +59,8 @@ class CreateRelation extends Migration {
 			$table->foreign('type_id')->references('id')->on('relation_type')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('kind_id')->unsigned();
 			$table->foreign('kind_id')->references('id')->on('relation_kind')->onUpdate('cascade')->onDelete('restrict');
-			$table->integer('provance_id')->unsigned();
-			$table->foreign('provance_id')->references('id')->on('provance')->onUpdate('cascade')->onDelete('restrict');
+			$table->integer('province_id')->unsigned();
+			$table->foreign('province_id')->references('id')->on('province')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('country_id')->unsigned();
 			$table->foreign('country_id')->references('id')->on('country')->onUpdate('cascade')->onDelete('restrict');
 		});

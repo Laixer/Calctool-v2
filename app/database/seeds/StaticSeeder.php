@@ -24,7 +24,7 @@ class StaticSeeder extends Seeder {
 		DB::table('project_step')->delete();
 		DB::table('project_type')->delete();
 		DB::table('country')->delete();
-		DB::table('provance')->delete();
+		DB::table('province')->delete();
 		DB::table('user_type')->delete();
 		$this->command->info('Tables deleted');
 		
@@ -35,19 +35,20 @@ class StaticSeeder extends Seeder {
 		UserType::create(array('user_type' => 'system'));
 		$this->command->info('UserType created');
 
-		Provance::create(array('provance_name' => 'groningen'));
-		Provance::create(array('provance_name' => 'friesland'));
-		Provance::create(array('provance_name' => 'drenthe'));
-		Provance::create(array('provance_name' => 'overijssel'));
-		Provance::create(array('provance_name' => 'flevoland'));
-		Provance::create(array('provance_name' => 'gelderland'));
-		Provance::create(array('provance_name' => 'utrecht'));
-		Provance::create(array('provance_name' => 'noord-holland'));
-		Provance::create(array('provance_name' => 'zuid-holland'));
-		Provance::create(array('provance_name' => 'noord-brabant'));
-		Provance::create(array('provance_name' => 'limburg'));
-		Provance::create(array('provance_name' => 'zeeland'));
-		Provance::create(array('provance_name' => 'overig'));
+
+		Province::create(array('province_name' => 'groningen'));
+		Province::create(array('province_name' => 'friesland'));
+		Province::create(array('province_name' => 'drenthe'));
+		Province::create(array('province_name' => 'overijssel'));
+		Province::create(array('province_name' => 'flevoland'));
+		Province::create(array('province_name' => 'gelderland'));
+		Province::create(array('province_name' => 'utrecht'));
+		Province::create(array('province_name' => 'noord-holland'));
+		Province::create(array('province_name' => 'zuid-holland'));
+		Province::create(array('province_name' => 'noord-brabant'));
+		Province::create(array('province_name' => 'limburg'));
+		Province::create(array('province_name' => 'zeeland'));
+		Province::create(array('province_name' => 'overig'));
 		$this->command->info('Provance created');
 
 		Country::create(array('country_name' => 'albanië'));
@@ -181,7 +182,7 @@ class StaticSeeder extends Seeder {
 		ContactFunction::create(array('function_name' => 'secretaresse'));
 		ContactFunction::create(array('function_name' => 'programma manager'));
 		ContactFunction::create(array('function_name' => 'projectleider'));
-		ContactFunction::create(array('function_name' => 'inkoop en facilitair medewerker'));
+		ContactFunction::create(array('function_name' => 'inkoop medewerker'));
 		ContactFunction::create(array('function_name' => 'makelaar'));
 		ContactFunction::create(array('function_name' => 'adviseur'));
 		ContactFunction::create(array('function_name' => 'uitvoerder'));

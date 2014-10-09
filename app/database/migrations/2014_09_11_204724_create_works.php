@@ -20,7 +20,7 @@ class CreateWorks extends Migration {
 		Schema::create('chapter', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('chapter_name', 10);
+			$table->string('chapter_name', 50);
 			$table->smallInteger('priority')->index();
 			$table->text('note')->nullable();
 			$table->integer('project_id')->unsigned();

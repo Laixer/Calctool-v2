@@ -98,10 +98,10 @@ class CreateUsersTable extends Migration {
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
 		});
 
-		Schema::create('provance', function(Blueprint $table)
+		Schema::create('province', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('provance_name', 25)->unique();
+			$table->string('province_name', 25)->unique();
 		});
 
 		Schema::create('country', function(Blueprint $table)
@@ -147,8 +147,8 @@ class CreateUsersTable extends Migration {
 			$table->nullableTimestamps();
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
-			$table->integer('provance_id')->unsigned();
-			$table->foreign('provance_id')->references('id')->on('provance')->onUpdate('cascade')->onDelete('restrict');
+			$table->integer('province_id')->unsigned();
+			$table->foreign('province_id')->references('id')->on('province')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('country_id')->unsigned();
 			$table->foreign('country_id')->references('id')->on('country')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('type_id')->unsigned();
@@ -176,7 +176,7 @@ class CreateUsersTable extends Migration {
 			$table->nullableTimestamps();
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
-			$table->integer('project_id')->unsigned();
+			$table->integer('project_id')->nullable()->unsigned();
 			$table->foreign('project_id')->references('id')->on('project')->onUpdate('cascade')->onDelete('cascade');
 		});
 
@@ -231,9 +231,9 @@ class CreateUsersTable extends Migration {
 			Schema::drop('country');
 		});
 
-		Schema::table('provance', function(Blueprint $table)
+		Schema::table('province', function(Blueprint $table)
 		{
-			Schema::drop('provance');
+			Schema::drop('province');
 		});
 
 		Schema::table('payment', function(Blueprint $table)
