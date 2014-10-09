@@ -35,7 +35,6 @@ class StaticSeeder extends Seeder {
 		UserType::create(array('user_type' => 'system'));
 		$this->command->info('UserType created');
 
-
 		Province::create(array('province_name' => 'groningen'));
 		Province::create(array('province_name' => 'friesland'));
 		Province::create(array('province_name' => 'drenthe'));
