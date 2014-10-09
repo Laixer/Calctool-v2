@@ -40,10 +40,21 @@
 	"buffers":
 	[
 		{
-			"file": "app/database/seeds/MaterialStorageSeeder.php",
+			"file": "app/database/migrations/2014_09_09_204054_create_users_table.php",
 			"settings":
 			{
-				"buffer_size": 231,
+				"buffer_size": 9303,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "<?php\n\n/*\n * Static Models Only\n * Test are performed on other seeds\n */\nclass TestProjectSeeder extends Seeder {\n\n	public function run()\n	{\n		DB::table('user_account')->delete();\n		DB::table('project')->delete();\n		$this->command->info('Tables deleted');\n\n		$test_user = User::create(array(\n			'username' => 'system',\n			'secret' => Hash::make('ABC@123'),\n			'firstname' => 'system',\n			'lastname' => 'system',\n			'api' => md5(mt_rand()),\n			'ip' => '127.0.0.1',\n			'active' => 'Y',\n			'confirmed_mail' => '2014-09-16',\n			'registration_date' => '2014-09-16',\n			'last_active' => '2014-09-15',\n			'promotion_code' => md5(mt_rand()),\n			'address_street' => 'adressystem',\n			'address_number' => '1',\n			'address_postal' => '1234AB',\n			'address_city' => 'citysystem',\n			'website' => 'www.calctool.nl',\n			'note' => 'system user',\n			'mobile' => '612345678',\n			'phone' => '101234567',\n			'email' => 'info@calctool.nl',\n			'pref_mailings_optin' => 'Y',\n			'pref_hourrate_calc' => '35',\n			'pref_hourrate_more' => '45',\n			'pref_profit_calc_contr_mat' => '1',\n			'pref_profit_calc_contr_equip' => '2',\n			'pref_profit_calc_subcontr_mat' => '3',\n			'pref_profit_calc_subcontr_equip' => '4',\n			'pref_profit_calc_estim_mat' => '5',\n			'pref_profit_calc_estim_equip' => '6',\n			'pref_profit_more_contr_mat' => '7',\n			'pref_profit_more_contr_equip' => '8',\n			'pref_profit_more_subcontr_mat' => '9',\n			'pref_profit_more_subcontr_equip' => '10',\n			'pref_email_offer' => 'test_pref_email_offer',\n			'pref_offer_description' => 'pref_offer_description',\n			'pref_closure_offer' => 'pref_closure_offer',\n			'pref_email_invoice' => 'pref_email_invoice',\n			'pref_invoice_description' => 'pref_invoice_description',\n			'pref_invoice_closure' => 'pref_invoice_closure',\n			'pref_email_invoice_first_reminder' => 'pref_email_invoice_first_reminder',\n			'pref_email_invoice_last_reminder' => 'pref_email_invoice_last_reminder',\n			'pref_email_invoice_first_demand' => 'pref_email_invoice_first_demand',\n			'pref_email_invoice_last_demand' => 'pref_email_invoice_last_demand',\n			'administration_cost' => '12.50',\n			'user_type' => 1\n		));*/\n\n/*		Project::create(array(\n			'project_name' => 'testproject',\n			'project_code' => '123456',\n			'address_street' => 'teststraat',\n			'address_number' => '01',\n			'address_postal' => '1234AB',\n			'address_city' => 'testscity',\n			'note' => 'testopmerking',\n			'hour_rate' => '36',\n			'hour_rate_more' => '37',\n			'profit_calc_contr_mat' => '11',\n			'profit_calc_contr_equip' => '12',\n			'profit_calc_subcontr_mat' => '13',\n			'profit_calc_subcontr_equip' => '14',\n			'profit_calc_estim_mat' => '15',\n			'profit_calc_estim_equip' => '16',\n			'profit_more_contr_mat' => '17',\n			'profit_more_contr_equip' => '18',\n			'profit_more_subcontr_mat' => '19',\n			'profit_more_subcontr_equip' => '20',\n			'user_id' => $test_user->id,\n			'provance_id' => 9,\n			'country_id' => 14,\n			'type_id' => 2,\n		));*/\n\n	}\n }\n",
+			"file": "app/database/seeds/TestProjectSeeder.php",
+			"file_size": 2937,
+			"file_write_time": 130566486661329556,
+			"settings":
+			{
+				"buffer_size": 2935,
 				"line_ending": "Unix"
 			}
 		}
@@ -51,11 +62,11 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 0.0,
+		"height": 392.0,
 		"selected_items":
 		[
 		],
-		"width": 0.0
+		"width": 440.0
 	},
 	"console":
 	{
@@ -76,6 +87,7 @@
 	"expanded_folders":
 	[
 		"/var/www/calctool/app",
+		"/var/www/calctool/app/commands",
 		"/var/www/calctool/app/database",
 		"/var/www/calctool/app/database/migrations",
 		"/var/www/calctool/app/database/seeds",
@@ -84,9 +96,41 @@
 	],
 	"file_history":
 	[
-		"/var/www/calctool/app/database/migrations/2014_09_11_212442_create_financial.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_225236_create_system_table.php",
+		"/var/www/calctool/app/database/migrations/2014_09_11_220407_create_calculation.php",
+		"/var/www/calctool/app/models/EstimateEquipment.php",
+		"/var/www/calctool/app/models/EstimateMaterial.php",
+		"/var/www/calctool/app/models/EstimateLabor.php",
+		"/var/www/calctool/app/models/MoreEquipment.php",
+		"/var/www/calctool/app/models/MoreMaterial.php",
 		"/var/www/calctool/app/database/seeds/StaticSeeder.php",
+		"/var/www/calctool/app/database/seeds/MaterialStorageSeeder.php",
+		"/var/www/calctool/app/models/MoreLabor.php",
+		"/var/www/calctool/app/models/LessEquipment.php",
+		"/var/www/calctool/app/models/LessMaterial.php",
+		"/var/www/calctool/app/models/LessLabor.php",
+		"/var/www/calctool/app/models/CalculationEquipment.php",
+		"/var/www/calctool/app/models/CalculationMaterial.php",
+		"/var/www/calctool/app/models/Tax.php",
+		"/var/www/calctool/app/database/migrations/Tax.php",
+		"/var/www/calctool/app/database/migrations/2014_09_11_202219_create_material_storage.php",
+		"/var/www/calctool/app/models/CalculationLabor.php",
+		"/var/www/calctool/app/database/migrations/2014_09_11_225236_create_system_table.php",
+		"/var/www/calctool/app/models/SystemTooltip.php",
+		"/var/www/calctool/app/models/SystemMessage.php",
+		"/var/www/calctool/app/models/Purchase.php",
+		"/var/www/calctool/app/database/migrations/2014_09_11_210838_create_cost_registration.php",
+		"/var/www/calctool/app/models/Timesheet.php",
+		"/var/www/calctool/app/models/Chapter.php",
+		"/var/www/calctool/app/models/Activity.php",
+		"/var/www/calctool/app/database/migrations/2014_09_11_205753_create_part.php",
+		"/var/www/calctool/app/database/migrations/2014_09_11_204724_create_works.php",
+		"/var/www/calctool/app/models/Product.php",
+		"/var/www/calctool/app/database/seeds/DatabaseSeeder.php",
+		"/var/www/calctool/app/models/User.php",
+		"/var/www/calctool/app/models/PartType.php",
+		"/var/www/calctool/app/models/Supplier.php",
+		"/var/www/calctool/app/models/SubGroup.php",
+		"/var/www/calctool/app/database/migrations/2014_09_11_212442_create_financial.php",
 		"/var/www/calctool/app/models/SystemOption.php",
 		"/var/www/calctool/app/models/InvoiceType.php",
 		"/var/www/calctool/app/models/Offer.php",
@@ -101,8 +145,6 @@
 		"/var/www/calctool/app/models/Relation.php",
 		"/var/www/calctool/app/models/Resource.php",
 		"/var/www/calctool/app/models/ContactFunction.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_205753_create_part.php",
-		"/var/www/calctool/app/models/PartType.php",
 		"/var/www/calctool/app/models/ProjectType.php",
 		"/var/www/calctool/app/database/seeds/TestProjectSeeder.php",
 		"/var/www/calctool/app/models/Detail.php",
@@ -111,8 +153,6 @@
 		"/var/www/calctool/app/models/Iban.php",
 		"/var/www/calctool/app/config/remote.php",
 		"/var/www/calctool/app/database/migrations/2014_09_09_204054_create_users_table.php",
-		"/var/www/calctool/app/database/seeds/DatabaseSeeder.php",
-		"/var/www/calctool/app/models/User.php",
 		"/var/www/calctool/app/models/ProjectStatus.php",
 		"/var/www/calctool/app/models/Project.php",
 		"/var/www/calctool/app/models/Payment.php",
@@ -124,10 +164,6 @@
 		"/var/www/calctool/app/models/Country.php",
 		"/var/www/calctool/app/models/Provance.php",
 		"/var/www/calctool/app/config/app.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_220407_create_calculation.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_210838_create_cost_registration.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_204724_create_works.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_202219_create_material_storage.php",
 		"/var/www/calctool/app/config/database.php",
 		"/var/www/calctool/bootstrap/start.php",
 		"/var/www/calctool/app/config/local/database.php"
@@ -174,19 +210,19 @@
 			[
 				{
 					"buffer": 0,
-					"file": "app/database/seeds/MaterialStorageSeeder.php",
+					"file": "app/database/migrations/2014_09_09_204054_create_users_table.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 231,
+						"buffer_size": 9303,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								231,
-								231
+								527,
+								527
 							]
 						],
 						"settings":
@@ -195,10 +231,39 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 232.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/database/seeds/TestProjectSeeder.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2935,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								304,
+								304
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 82.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
