@@ -15,7 +15,7 @@ class Contact extends Eloquent {
 
 	public $timestamps = false;
 
-	public function function() {
+	public function contactFunction() {
 		return $this->hasOne('ContactFunction');
 	}
 

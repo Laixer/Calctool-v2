@@ -17,8 +17,8 @@ class Relation extends Eloquent {
 		return $this->hasOne('User');
 	}
 
-	public function provance() {
-		return $this->hasOne('Provance');
+	public function province() {
+		return $this->hasOne('Province');
 	}
 
 	public function country() {
