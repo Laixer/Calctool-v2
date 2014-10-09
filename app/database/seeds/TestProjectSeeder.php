@@ -23,9 +23,11 @@ class TestProjectSeeder extends Seeder {
 		$test_part_type = PartType::where('type_name','=','calculation')->first();
 		$test_detail = Detail::where('detail_name','=','more')->first();
 		$test_step = ProjectStep::where('step_name','=','estimate')->first();
-		$deliver = DeliverTime::where('delivertime_name','=','3 weken')->first();
-		$specification = Specification::where('specification_name','=','gespecificeerd, exclusief omschrijving')->first();
-		$valid = Valid::where('valid_name','=','3 maanden')->first();
+		$test_deliver = DeliverTime::where('delivertime_name','=','3 weken')->first();
+		$test_specification = Specification::where('specification_name','=','gespecificeerd, exclusief omschrijving')->first();
+		$test_valid = Valid::where('valid_name','=','3 maanden')->first();
+		$test_tax = Tax::where('tax_rate','=','21')->first();
+		$test_product = Product::where('description','=','Hoge kast deur links 60cm met nis 450/485/880mm')->first();
 
 		$test_user = User::create(array(
 			'username' => 'system',
@@ -229,7 +231,7 @@ class TestProjectSeeder extends Seeder {
 			'detail_id' => $test_detail->id
 		));
 
-		Timesheet::create(array(
+		$test_timesheet = Timesheet::create(array(
 			'register_date' => '09-10-2014',
 			'register_hour' => '24',
 			'note' => 'omschrijving bij uren invoer',
@@ -255,9 +257,9 @@ class TestProjectSeeder extends Seeder {
 			'end_invoice' => 'Y',
 			'auto_email_reminder' => 'Y',
 			'offer_finish' => '01-11-2014',
-			'deliver_id' => $deliver->id,
-			'specification_id' => $specification->id,
-			'valid_id' => $valid->id,
+			'deliver_id' => $test_deliver->id,
+			'specification_id' => $test_specification->id,
+			'valid_id' => $test_valid->id,
 			'project_id' => $test_project->id
 		));
 
@@ -276,5 +278,115 @@ class TestProjectSeeder extends Seeder {
 			'closure' => 'dit was de clusure tekst',
 			'offer_id' => $test_offer->id,
 		));
+
+		$calculation_labor = CalculationLabor::create(array(
+			'rate' => '12.33',
+			'amount' => '344.56',
+			'activity_id' => $test_activity4->id,
+			'tax_id' => $test_tax->id
+		));
+
+		$calculation_material = CalculationMaterial::create(array(
+			'material_name' => 'plank',
+			'unit' => 'm',
+			'rate' => '1.24',
+			'amount' => '111.22',
+			'activity_id' => $test_activity4->id,
+			'tax_id' => $test_tax->id
+		));
+
+		$calculation_equipment = CalculationEquipment::create(array(
+			'equipment_name' => 'plankknipper',
+			'unit' => 'stuk',
+			'rate' => '112.23',
+			'amount' => '1101.25',
+			'activity_id' => $test_activity4->id,
+			'tax_id' => $test_tax->id
+		));
+
+		LessLabor::create(array(
+			'amount' => '34.56',
+			'activity_id' => $test_activity4->id,
+			'original_id' => $calculation_labor->id,
+		));
+
+		LessMaterial::create(array(
+			'rate' => '1.00',
+			'amount' => '21.29',
+			'activity_id' => $test_activity4->id,
+			'original_id' => $calculation_material->id,
+		));
+
+		LessEquipment::create(array(
+			'rate' => '112.23',
+			'amount' => '1101.25',
+			'activity_id' => $test_activity4->id,
+			'original_id' => $calculation_equipment->id,
+		));
+
+		MoreLabor::create(array(
+			'rate' => '102.33',
+			'amount' => '999.56',
+			'note' => 'omschrijving voor bij meerwerk',
+			'activity_id' => $test_activity3->id,
+			'tax_id' => $test_tax->id,
+			'hour_id' => $test_timesheet->id
+		));
+
+		MoreMaterial::create(array(
+			'material_name' => 'plankmeer',
+			'unit' => 'm',
+			'rate' => '160.24',
+			'amount' => '1611.22',
+			'activity_id' => $test_activity3->id,
+			'tax_id' => $test_tax->id
+		));
+
+		MoreEquipment::create(array(
+			'equipment_name' => 'plankknippermeer',
+			'unit' => 'stuk',
+			'rate' => '1812.23',
+			'amount' => '18101.25',
+			'activity_id' => $test_activity3->id,
+			'tax_id' => $test_tax->id
+		));
+
+		EstimateLabor::create(array(
+			'rate' => '102.33',
+			'amount' => '3404.56',
+			'set_rate' => '404.56',
+			'set_amount' => '1404.56',	
+			'activity_id' => $test_activity2->id,
+			'tax_id' => $test_tax->id,
+			'hour_id' => $test_timesheet->id
+		));
+
+		EstimateMaterial::create(array(
+			'material_name' => 'plankmeerestimate',
+			'unit' => 'm',
+			'rate' => '50.24',
+			'amount' => '511.22',
+			'set_material_name' => 'plankje meer',
+			'set_unit' => 'm2',	
+			'set_rate' => '604.56',
+			'set_amount' => '604.56',	
+			'activity_id' => $test_activity3->id,
+			'tax_id' => $test_tax->id
+		));
+
+		EstimateEquipment::create(array(
+			'equipment_name' => 'plankknippermeer',
+			'unit' => 'stuk',
+			'rate' => '1212.23',
+			'amount' => '12101.25',
+			'set_equipment_name' => 'knipper meer',
+			'set_unit' => 'stuk',	
+			'set_rate' => '64.56',
+			'set_amount' => '6.56',	
+			'activity_id' => $test_activity3->id,
+			'tax_id' => $test_tax->id
+		));
+
+		$test_user->productFavorite()->attach($test_product->id);
 	}
  }

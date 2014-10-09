@@ -186,6 +186,7 @@ class CreateUsersTable extends Migration {
 			$table->integer('step_id')->unsigned();
 			$table->foreign('type_id')->references('id')->on('project_type')->onUpdate('cascade')->onDelete('cascade');
 			$table->foreign('step_id')->references('id')->on('project_step')->onUpdate('cascade')->onDelete('cascade');
+			$table->primary(array('type_id', 'step_id'));
 		});
 	}
 

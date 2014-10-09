@@ -41,6 +41,7 @@ class CreatePart extends Migration {
 			$table->foreign('part_id')->references('id')->on('part')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('type_id')->unsigned();
 			$table->foreign('type_id')->references('id')->on('part_type')->onUpdate('cascade')->onDelete('cascade');
+			$table->primary(array('part_id', 'type_id'));
 		});
 
 		Schema::create('part_part_detail', function(Blueprint $table)
@@ -49,6 +50,7 @@ class CreatePart extends Migration {
 			$table->foreign('detail_id')->references('id')->on('detail')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('type_id')->unsigned();
 			$table->foreign('type_id')->references('id')->on('part_type')->onUpdate('cascade')->onDelete('cascade');
+			$table->primary(array('detail_id', 'type_id'));
 		});
 
 		Schema::table('activity', function(Blueprint $table)

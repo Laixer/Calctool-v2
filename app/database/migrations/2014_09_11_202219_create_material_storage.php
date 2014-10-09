@@ -51,6 +51,7 @@ class CreateMaterialStorage extends Migration {
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('product_id')->unsigned();
 			$table->foreign('product_id')->references('id')->on('product')->onUpdate('cascade')->onDelete('cascade');
+			$table->primary(array('user_id', 'product_id'));
 		});
 	}
 

@@ -27,7 +27,7 @@ class CreateCalculation extends Migration {
 		{
 			$table->increments('id');
 			$table->decimal('rate', 5, 2)->unsigned()->index();
-			$table->decimal('amount', 5, 2)->unsigned()->index();
+			$table->decimal('amount', 9, 2)->unsigned()->index();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('tax_id')->unsigned();
@@ -63,7 +63,7 @@ class CreateCalculation extends Migration {
 		Schema::create('less_labor', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->decimal('amount', 5, 2)->index();
+			$table->decimal('amount', 9, 2)->index();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('original_id')->unsigned();
@@ -96,7 +96,7 @@ class CreateCalculation extends Migration {
 		{
 			$table->increments('id');
 			$table->decimal('rate', 5, 2)->unsigned()->index();
-			$table->decimal('amount', 5, 2)->unsigned()->index();
+			$table->decimal('amount', 9, 2)->unsigned()->index();
 			$table->text('note');
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
@@ -136,9 +136,9 @@ class CreateCalculation extends Migration {
 		{
 			$table->increments('id');
 			$table->decimal('rate', 5, 2)->unsigned()->index();
-			$table->decimal('amount', 5, 2)->unsigned()->index();
+			$table->decimal('amount', 9, 2)->unsigned()->index();
 			$table->decimal('set_rate', 5, 2)->unsigned()->index();
-			$table->decimal('set_amount', 5, 2)->unsigned()->index();
+			$table->decimal('set_amount', 9, 2)->unsigned()->index();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('tax_id')->unsigned();
