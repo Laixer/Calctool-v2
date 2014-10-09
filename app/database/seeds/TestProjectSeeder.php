@@ -12,7 +12,7 @@ class TestProjectSeeder extends Seeder {
 		DB::table('project')->delete();
 		$this->command->info('Tables deleted');
 
-/*		$test_user = User::create(array(
+		$test_user = User::create(array(
 			'username' => 'system',
 			'secret' => Hash::make('ABC@123'),
 			'firstname' => 'system',
