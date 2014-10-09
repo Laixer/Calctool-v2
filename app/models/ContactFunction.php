@@ -2,12 +2,9 @@
 
 class ContactFunction extends Eloquent {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'contact_function';
+	protected $guarded = array('id');
 
 	public $timestamps = false;
+
 }

@@ -2,16 +2,8 @@
 
 class Relation extends Eloquent {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'relation';
-
-	protected $fillable = array('company_name');
-
-	protected $guarded = array('id', 'kvk', 'btw', 'debtor_code');
+	protected $guarded = array('id', 'debtor_code');
 
 	public function user() {
 		return $this->hasOne('User');
@@ -36,4 +28,5 @@ class Relation extends Eloquent {
 	public function kind() {
 		return $this->hasOne('RelationKind');
 	}
+
 }

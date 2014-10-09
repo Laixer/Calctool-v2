@@ -2,15 +2,7 @@
 
 class Project extends Eloquent {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'project';
-
-	protected $fillable = array('project_name');
-
 	protected $guarded = array('id', 'project_code');
 
 	public function user() {
@@ -28,4 +20,5 @@ class Project extends Eloquent {
 	public function type() {
 		return $this->hasOne('ProjectType');
 	}
+
 }

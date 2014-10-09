@@ -2,16 +2,8 @@
 
 class MoreLabor extends Eloquent {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'more_labor';
-
 	protected $guarded = array('id');
-
-	protected $fillable = array('rate', 'amount', 'note');
 
 	public $timestamps = false;
 
@@ -26,4 +18,5 @@ class MoreLabor extends Eloquent {
 	public function timesheet() {
 		return $this->hasOne('Timesheet', 'hour_id');
 	}
+
 }

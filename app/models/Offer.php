@@ -2,13 +2,7 @@
 
 class Offer extends Eloquent {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'offer';
-
 	protected $guarded = array('id');
 
 	public function deliverTime() {
@@ -26,4 +20,5 @@ class Offer extends Eloquent {
 	public function project() {
 		return $this->hasOne('Project');
 	}
+
 }

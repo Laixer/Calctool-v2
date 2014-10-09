@@ -2,12 +2,9 @@
 
 class RelationKind extends Eloquent {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'relation_kind';
+	protected $guarded = array('id');
 
 	public $timestamps = false;
+
 }

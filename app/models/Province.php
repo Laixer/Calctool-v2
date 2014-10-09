@@ -2,12 +2,9 @@
 
 class Province extends Eloquent {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'province';
+	protected $guarded = array('id');
 
 	public $timestamps = false;
+
 }

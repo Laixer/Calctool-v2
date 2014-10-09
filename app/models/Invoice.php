@@ -2,14 +2,8 @@
 
 class Invoice extends Eloquent {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'invoice';
-
-	protected $guarded = array('id', 'reference', 'invoice_code', 'book_code');
+	protected $guarded = array('id');
 
 	public function type() {
 		return $this->hasOne('InvoiceType');
@@ -18,4 +12,5 @@ class Invoice extends Eloquent {
 	public function offer() {
 		return $this->hasOne('Offer');
 	}
+
 }

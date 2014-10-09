@@ -2,16 +2,8 @@
 
 class Timesheet extends Eloquent {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'timesheet';
-
 	protected $guarded = array('id');
-
-	protected $fillable = array('note');
 
 	public $timestamps = false;
 
@@ -22,4 +14,5 @@ class Timesheet extends Eloquent {
 	public function project() {
 		return $this->hasOne('Project');
 	}
+
 }

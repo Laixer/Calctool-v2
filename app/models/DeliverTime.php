@@ -2,14 +2,9 @@
 
 class DeliverTime extends Eloquent {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'deliver_time';
-
-	protected $fillable = array('delivertime_name');
+	protected $guarded = array('id');
 
 	public $timestamps = false;
+
 }

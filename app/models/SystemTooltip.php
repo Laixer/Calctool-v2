@@ -2,14 +2,9 @@
 
 class SystemTooltip extends Eloquent {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'system_tooltip';
-
-	protected $fillable = array('title', 'tooltip_content');
+	protected $guarded = array('id');
 
 	public $timestamps = false;
+
 }
