@@ -31,7 +31,7 @@ return array(
 
 	'lifetime' => 120,
 
-	'expire_on_close' => false,
+	'expire_on_close' => true,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -45,32 +45,6 @@ return array(
 	*/
 
 	'files' => storage_path().'/sessions',
-
-	/*
-	|--------------------------------------------------------------------------
-	| Session Database Connection
-	|--------------------------------------------------------------------------
-	|
-	| When using the "database" or "redis" session drivers, you may specify a
-	| connection that should be used to manage these sessions. This should
-	| correspond to a connection in your database configuration options.
-	|
-	*/
-
-	'connection' => null,
-
-	/*
-	|--------------------------------------------------------------------------
-	| Session Database Table
-	|--------------------------------------------------------------------------
-	|
-	| When using the "database" session driver, you may specify the table we
-	| should use to manage the sessions. Of course, a sensible default is
-	| provided for you; however, you are free to change this as needed.
-	|
-	*/
-
-	'table' => 'sessions',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -96,7 +70,7 @@ return array(
 	|
 	*/
 
-	'cookie' => '_csavasid',
+	'cookie' => 'dev_session',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -122,7 +96,7 @@ return array(
 	|
 	*/
 
-	'domain' => '.calctool.nl',
+	'domain' => null,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -135,6 +109,6 @@ return array(
 	|
 	*/
 
-	'secure' => true,
+	'secure' => false,
 
 );
