@@ -169,7 +169,7 @@ header#topHead {
 
 
 header#topNav.topHead {
-	top:40px;
+	/* top:40px; */
 }
 header#topNav {
 	background:#fff;
