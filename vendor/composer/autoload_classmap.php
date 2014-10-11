@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Activity' => $baseDir . '/app/models/Activity.php',
+    'AuthController' => $baseDir . '/app/controllers/AuthController.php',
     'BaseController' => $baseDir . '/app/controllers/BaseController.php',
     'Boris\\Boris' => $vendorDir . '/d11wtq/boris/lib/Boris/Boris.php',
     'Boris\\CLIOptionsHandler' => $vendorDir . '/d11wtq/boris/lib/Boris/CLIOptionsHandler.php',
@@ -992,7 +993,7 @@ return array(
     'ProjectStatus' => $baseDir . '/app/models/ProjectStatus.php',
     'ProjectStep' => $baseDir . '/app/models/ProjectStep.php',
     'ProjectType' => $baseDir . '/app/models/ProjectType.php',
-    'Provance' => $baseDir . '/app/models/Provance.php',
+    'Province' => $baseDir . '/app/models/Province.php',
     'Psr\\Log\\AbstractLogger' => $vendorDir . '/psr/log/Psr/Log/AbstractLogger.php',
     'Psr\\Log\\InvalidArgumentException' => $vendorDir . '/psr/log/Psr/Log/InvalidArgumentException.php',
     'Psr\\Log\\LogLevel' => $vendorDir . '/psr/log/Psr/Log/LogLevel.php',
