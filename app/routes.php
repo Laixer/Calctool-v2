@@ -11,6 +11,9 @@
 |
 */
 
+Route::get('login', array('uses' => 'AuthController@getLogin'));
+Route::post('login', array('uses' => 'AuthController@doLogin'));
+
 Route::get('/', function()
 {
 	return View::make('placeholder');

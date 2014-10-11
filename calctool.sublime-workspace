@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"pay",
+				"payment"
+			],
+			[
+				"test_pa",
+				"test_part"
+			],
+			[
 				"Project",
 				"projectStep"
 			],
@@ -40,13 +48,26 @@
 	"buffers":
 	[
 		{
-			"contents": "",
-			"file": "app/database/seeds/TestProjectSeeder.php",
-			"file_size": 2935,
-			"file_write_time": 130573326403078816,
+			"file": "app/routes.php",
 			"settings":
 			{
-				"buffer_size": 0,
+				"buffer_size": 558,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/controllers/AuthController.php",
+			"settings":
+			{
+				"buffer_size": 1020,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/layouts/master.blade.php",
+			"settings":
+			{
+				"buffer_size": 35730,
 				"line_ending": "Unix"
 			}
 		}
@@ -81,21 +102,75 @@
 		"/var/www/calctool/app",
 		"/var/www/calctool/app/commands",
 		"/var/www/calctool/app/config",
+		"/var/www/calctool/app/config/local",
 		"/var/www/calctool/app/controllers",
-		"/var/www/calctool/app/database",
-		"/var/www/calctool/app/database/migrations",
-		"/var/www/calctool/app/database/seeds",
-		"/var/www/calctool/app/lang",
-		"/var/www/calctool/app/models",
 		"/var/www/calctool/app/views",
-		"/var/www/calctool/bootstrap",
 		"/var/www/calctool/public"
 	],
 	"file_history":
 	[
-		"/var/www/calctool/app/config/cache.php",
+		"/var/www/calctool/app/database/migrations/2014_09_11_225236_create_system_table.php",
+		"/var/www/calctool/app/models/SystemTooltip.php",
+		"/var/www/calctool/app/models/SystemOption.php",
+		"/var/www/calctool/app/models/SystemMessage.php",
+		"/var/www/calctool/app/database/migrations/2014_09_11_220407_create_calculation.php",
+		"/var/www/calctool/app/models/EstimateEquipment.php",
+		"/var/www/calctool/app/models/EstimateLabor.php",
+		"/var/www/calctool/app/models/EstimateMaterial.php",
+		"/var/www/calctool/app/models/MoreMaterial.php",
+		"/var/www/calctool/app/models/MoreEquipment.php",
+		"/var/www/calctool/app/models/MoreLabor.php",
+		"/var/www/calctool/app/models/LessEquipment.php",
+		"/var/www/calctool/app/models/LessMaterial.php",
+		"/var/www/calctool/app/models/LessLabor.php",
+		"/var/www/calctool/app/models/CalculationEquipment.php",
+		"/var/www/calctool/app/models/CalculationMaterial.php",
+		"/var/www/calctool/app/models/CalculationLabor.php",
+		"/var/www/calctool/app/models/Tax.php",
+		"/var/www/calctool/app/database/migrations/2014_09_11_212442_create_financial.php",
+		"/var/www/calctool/app/models/Invoice.php",
+		"/var/www/calctool/app/models/Offer.php",
+		"/var/www/calctool/app/models/Valid.php",
+		"/var/www/calctool/app/models/Specification.php",
+		"/var/www/calctool/app/models/DeliverTime.php",
+		"/var/www/calctool/app/database/migrations/2014_09_11_210838_create_cost_registration.php",
+		"/var/www/calctool/app/models/Purchase.php",
+		"/var/www/calctool/app/models/Timesheet.php",
+		"/var/www/calctool/app/database/migrations/2014_09_11_205753_create_part.php",
+		"/var/www/calctool/app/models/Detail.php",
+		"/var/www/calctool/app/models/PartType.php",
+		"/var/www/calctool/app/models/Part.php",
+		"/var/www/calctool/app/database/migrations/2014_09_11_204724_create_works.php",
+		"/var/www/calctool/app/models/Activity.php",
+		"/var/www/calctool/app/models/Chapter.php",
+		"/var/www/calctool/app/database/migrations/2014_09_11_202219_create_material_storage.php",
+		"/var/www/calctool/app/models/Product.php",
+		"/var/www/calctool/app/models/Supplier.php",
+		"/var/www/calctool/app/models/SubGroup.php",
+		"/var/www/calctool/app/database/migrations/2014_09_11_193342_create_relation.php",
+		"/var/www/calctool/app/models/ContactFunction.php",
+		"/var/www/calctool/app/models/Relation.php",
+		"/var/www/calctool/app/models/RelationKind.php",
+		"/var/www/calctool/app/models/RelationType.php",
 		"/var/www/calctool/app/database/migrations/2014_09_09_204054_create_users_table.php",
+		"/var/www/calctool/app/models/Contact.php",
+		"/var/www/calctool/app/models/Resource.php",
+		"/var/www/calctool/app/models/ProjectStatus.php",
+		"/var/www/calctool/app/models/Project.php",
+		"/var/www/calctool/app/models/ProjectStep.php",
+		"/var/www/calctool/app/models/ProjectType.php",
+		"/var/www/calctool/app/models/Country.php",
+		"/var/www/calctool/app/models/Province.php",
+		"/var/www/calctool/app/models/Payment.php",
+		"/var/www/calctool/app/models/Iban.php",
+		"/var/www/calctool/app/models/UserType.php",
+		"/var/www/calctool/app/models/User.php",
+		"/var/www/calctool/app/database/seeds/StaticSeeder.php",
+		"/var/www/calctool/app/database/seeds/TestProjectSeeder.php",
+		"/var/www/calctool/app/database/seeds/DatabaseSeeder.php",
+		"/var/www/calctool/app/models/Provance.php",
 		"/var/www/calctool/app/views/placeholder.php",
+		"/var/www/calctool/app/config/cache.php",
 		"/var/www/calctool/app/controllers/HomeController.php",
 		"/var/www/calctool/app/routes.php",
 		"/var/www/calctool/app/views/hello.php",
@@ -105,72 +180,14 @@
 		"/var/www/calctool/TODO",
 		"/var/www/calctool/app/config/app.php",
 		"/var/www/calctool/app/config/auth.php",
-		"/var/www/calctool/app/database/seeds/TestProjectSeeder.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_220407_create_calculation.php",
-		"/var/www/calctool/app/models/EstimateEquipment.php",
-		"/var/www/calctool/app/models/EstimateMaterial.php",
-		"/var/www/calctool/app/models/EstimateLabor.php",
-		"/var/www/calctool/app/models/MoreEquipment.php",
-		"/var/www/calctool/app/models/MoreMaterial.php",
-		"/var/www/calctool/app/database/seeds/StaticSeeder.php",
 		"/var/www/calctool/app/database/seeds/MaterialStorageSeeder.php",
-		"/var/www/calctool/app/models/MoreLabor.php",
-		"/var/www/calctool/app/models/LessEquipment.php",
-		"/var/www/calctool/app/models/LessMaterial.php",
-		"/var/www/calctool/app/models/LessLabor.php",
-		"/var/www/calctool/app/models/CalculationEquipment.php",
-		"/var/www/calctool/app/models/CalculationMaterial.php",
-		"/var/www/calctool/app/models/Tax.php",
 		"/var/www/calctool/app/database/migrations/Tax.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_202219_create_material_storage.php",
-		"/var/www/calctool/app/models/CalculationLabor.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_225236_create_system_table.php",
-		"/var/www/calctool/app/models/SystemTooltip.php",
-		"/var/www/calctool/app/models/SystemMessage.php",
-		"/var/www/calctool/app/models/Purchase.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_210838_create_cost_registration.php",
-		"/var/www/calctool/app/models/Timesheet.php",
-		"/var/www/calctool/app/models/Chapter.php",
-		"/var/www/calctool/app/models/Activity.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_205753_create_part.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_204724_create_works.php",
-		"/var/www/calctool/app/models/Product.php",
-		"/var/www/calctool/app/database/seeds/DatabaseSeeder.php",
-		"/var/www/calctool/app/models/User.php",
-		"/var/www/calctool/app/models/PartType.php",
-		"/var/www/calctool/app/models/Supplier.php",
-		"/var/www/calctool/app/models/SubGroup.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_212442_create_financial.php",
-		"/var/www/calctool/app/models/SystemOption.php",
 		"/var/www/calctool/app/models/InvoiceType.php",
-		"/var/www/calctool/app/models/Offer.php",
-		"/var/www/calctool/app/models/Invoice.php",
-		"/var/www/calctool/app/models/Valid.php",
-		"/var/www/calctool/app/models/Specification.php",
-		"/var/www/calctool/app/models/DeliverTime.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_193342_create_relation.php",
-		"/var/www/calctool/app/models/Contact.php",
-		"/var/www/calctool/app/models/RelationKind.php",
-		"/var/www/calctool/app/models/RelationType.php",
-		"/var/www/calctool/app/models/Relation.php",
-		"/var/www/calctool/app/models/Resource.php",
-		"/var/www/calctool/app/models/ContactFunction.php",
-		"/var/www/calctool/app/models/ProjectType.php",
-		"/var/www/calctool/app/models/Detail.php",
-		"/var/www/calctool/app/models/ProjectStep.php",
-		"/var/www/calctool/app/models/Part.php",
-		"/var/www/calctool/app/models/Iban.php",
 		"/var/www/calctool/app/config/remote.php",
-		"/var/www/calctool/app/models/ProjectStatus.php",
-		"/var/www/calctool/app/models/Project.php",
-		"/var/www/calctool/app/models/Payment.php",
 		"/var/www/calctool/app/database/seeds/UserSeeder.php",
 		"/var/www/calctool/app/models/ProjectStepType.php",
 		"/var/www/calctool/app/database/seeds/ProvanceSeeder.php",
-		"/var/www/calctool/app/models/UserType.php",
 		"/var/www/calctool/app/database/seeds/CountrySeeder.php",
-		"/var/www/calctool/app/models/Country.php",
-		"/var/www/calctool/app/models/Provance.php",
 		"/var/www/calctool/app/config/database.php",
 		"/var/www/calctool/bootstrap/start.php",
 		"/var/www/calctool/app/config/local/database.php"
@@ -181,9 +198,11 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 90.0,
 		"where_history":
 		[
+			"/var/www/calctool/app",
+			"<open files>,<open folders>"
 		]
 	},
 	"find_state":
@@ -191,6 +210,27 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"assets",
+			"test_timesheet",
+			"contactF",
+			"valid",
+			"specification",
+			"deliver",
+			"test_timesheet",
+			"test_purchase",
+			"test_iban",
+			"test_contact",
+			"test_resource2",
+			"test_resource1",
+			"test_payment",
+			"step",
+			"test_projecttype",
+			"test_res",
+			"recource",
+			"Prova",
+			"provance",
+			"prov",
+			"prova",
 			"self",
 			"equipments",
 			"bll",
@@ -212,30 +252,88 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 2,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "app/database/seeds/TestProjectSeeder.php",
+					"file": "app/routes.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 0,
+						"buffer_size": 558,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								439,
+								439
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/controllers/AuthController.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1020,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								160,
+								160
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/PHP/PHP.tmLanguage",
 							"translate_tabs_to_spaces": false
+						},
+						"translation.x": -0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/views/layouts/master.blade.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 35730,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								34622,
+								34622
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false,
+							"word_wrap": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -320,7 +418,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 402.0,
+	"side_bar_width": 322.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

@@ -88,3 +88,18 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+/*
+|--------------------------------------------------------------------------
+| Missing page
+|--------------------------------------------------------------------------
+|
+| If a page could not be found an 404 error page is sumbitted to the
+| client. Here a view can be registred as an 404 error page.
+|
+*/
+
+App::missing(function($exception)
+{
+    return Response::view('generic.404', array('url' => Request::path()), 404);
+});
