@@ -6,7 +6,7 @@
 
 	<section class="container">
 
-		<h2>Home</h2>
+		<h2><strong>Home</strong></h2>
 
 		<?# -- BORN TO BE A WINNER -- ?>
 		<article class="row">
@@ -16,7 +16,7 @@
 						<div class="box-content">
 							<a href="/project/new">
 								<i class="fa fa-pencil"></i>
-								<h5>Nieuwe projecten</h5>
+								<h5>Nieuw project</h5>
 							</a>
 						</div>
 					</div>
@@ -42,7 +42,7 @@
 				<div class="col-md-3">
 					<div class="featured-box nobg border-only">
 						<div class="box-content">
-							<i class="fa fa-user"></i>
+							<i class="fa fa-users"></i>
 							<h5>Relaties<br />&nbsp;</h5>
 						</div>
 					</div>

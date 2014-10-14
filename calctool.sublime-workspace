@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"i",
+				"id	Attr"
+			],
+			[
 				"ech",
 				"echo"
 			],
@@ -67,28 +71,60 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "app/views/auth/login.blade.php",
-			"settings":
-			{
-				"buffer_size": 2934,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 292.0,
+		"height": 392.0,
 		"selected_items":
 		[
 			[
-				"Package Control: ",
-				"Package Control: Install Package"
+				"git c",
+				"Git: Commit"
+			],
+			[
+				"git add",
+				"Git: Add..."
+			],
+			[
+				"git st",
+				"Git: Status"
+			],
+			[
+				"git ",
+				"Git: Push"
+			],
+			[
+				"git co",
+				"Git: Commit"
+			],
+			[
+				"git ad",
+				"Git: Add..."
+			],
+			[
+				"git s",
+				"Git: Status"
 			],
 			[
 				"git pu",
 				"Git: Push"
+			],
+			[
+				"git a",
+				"Git: Add..."
+			],
+			[
+				"git",
+				"Git: Commit"
+			],
+			[
+				"gi",
+				"Git: Commit"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
 			],
 			[
 				"git com",
@@ -103,31 +139,11 @@
 				"Git: Status"
 			],
 			[
-				"git add",
-				"Git: Add..."
-			],
-			[
-				"git s",
-				"Git: Status"
-			],
-			[
-				"git st",
-				"Git: Status"
-			],
-			[
-				"git ad",
-				"Git: Add..."
-			],
-			[
-				"git ",
-				"Git: Status"
-			],
-			[
 				"Package Control: git",
 				"Package Control: Upgrade/Overwrite All Packages"
 			]
 		],
-		"width": 449.0
+		"width": 575.0
 	},
 	"console":
 	{
@@ -153,15 +169,34 @@
 		"/var/www/calctool/app/controllers",
 		"/var/www/calctool/app/database",
 		"/var/www/calctool/app/views",
-		"/var/www/calctool/app/views/auth",
+		"/var/www/calctool/app/views/base",
+		"/var/www/calctool/app/views/calc",
+		"/var/www/calctool/app/views/generic",
 		"/var/www/calctool/app/views/layout",
-		"/var/www/calctool/bootstrap",
-		"/var/www/calctool/public",
-		"/var/www/calctool/public/css",
-		"/var/www/calctool/vendor"
+		"/var/www/calctool/app/views/user",
+		"/var/www/calctool/bootstrap"
 	],
 	"file_history":
 	[
+		"/var/www/calctool/app/views/layout/header.blade.php",
+		"/var/www/calctool/app/views/base/home.blade.php",
+		"/var/www/calctool/app/views/calc/calculation.blade.php",
+		"/var/www/calctool/app/views/user/new_project.blade.php",
+		"/var/www/calctool/app/routes.php",
+		"/var/www/calctool/app/controllers/CalcController.php",
+		"/var/www/calctool/app/controllers/HomeController.php",
+		"/var/www/calctool/app/controllers/AuthController.php",
+		"/var/www/calctool/app/controllers/ProjectController.php",
+		"/var/www/calctool/app/controllers/RelationController.php",
+		"/var/www/calctool/app/views/user/new_relation.blade.php",
+		"/var/www/calctool/TODO",
+		"/var/www/calctool/app/filters.php",
+		"/var/www/calctool/app/views/user/newRelation.balde.php",
+		"/var/www/calctool/app/views/user/new_relation.balde.php",
+		"/var/www/calctool/public/css/essentials.css",
+		"/var/www/calctool/app/views/generic/404.blade.php",
+		"/var/www/calctool/app/views/generic/COMMIT_EDITMSG.COMMIT_EDITMSG",
+		"/var/www/calctool/app/views/auth/login.blade.php",
 		"/var/www/calctool/public/css/layout.css",
 		"/var/www/calctool/app/views/layout/master.blade.php",
 		"/root/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
@@ -171,7 +206,6 @@
 		"/root/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
 		"/var/www/calctool/vendor/ircmaxell/password-compat/test/Unit/PasswordGetInfoTest.php",
 		"/var/www/calctool/vendor/laravel/framework/src/Illuminate/Remote/GatewayInterface.php",
-		"/var/www/calctool/TODO",
 		"/var/www/calctool/.gitignore",
 		"/var/www/calctool/composer.json",
 		"/var/www/calctool/app/config/app.php",
@@ -183,18 +217,12 @@
 		"/var/www/calctool/app/config/local/session.php",
 		"/var/www/calctool/app/config/database.php",
 		"/var/www/calctool/app/config/cache.php",
-		"/var/www/calctool/app/controllers/AuthController.php",
-		"/var/www/calctool/app/views/auth/login.blade.php",
-		"/var/www/calctool/app/views/generic/404.blade.php",
-		"/var/www/calctool/app/filters.php",
-		"/var/www/calctool/app/routes.php",
 		"/var/www/calctool/app/models/User.php",
 		"/var/www/HTML/page-404.html",
 		"/var/www/calctool/app/config/workbench.php",
 		"/var/www/calctool/app/config/mail.php",
 		"/var/www/calctool/app/database/seeds/TestProjectSeeder.php",
 		"/var/www/calctool/app/storage/logs/laravel.log",
-		"/var/www/calctool/app/views/layout/header.blade.php",
 		"/var/www/calctool/app/views/layout/footer.blade.php",
 		"/var/www/calctool/app/views/layouts/master.blade.php",
 		"/var/www/calctool/public/css/color_scheme/darkgreen.css",
@@ -257,7 +285,6 @@
 		"/var/www/calctool/app/database/seeds/DatabaseSeeder.php",
 		"/var/www/calctool/app/models/Provance.php",
 		"/var/www/calctool/app/views/placeholder.php",
-		"/var/www/calctool/app/controllers/HomeController.php",
 		"/var/www/calctool/app/views/hello.php",
 		"/var/www/calctool/app/lang/nl/validation.php",
 		"/var/www/calctool/app/lang/nl/reminders.php",
@@ -292,6 +319,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"right",
+			"assets",
 			"89a550",
 			"assets",
 			"test_timesheet",
@@ -335,38 +364,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "app/views/auth/login.blade.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2934,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								106,
-								106
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Laravel Blade Highlighter/laravel-blade.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -447,7 +446,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 242.0,
+	"side_bar_width": 282.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
