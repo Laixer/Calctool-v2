@@ -32,7 +32,7 @@
 		{{ HTML::style('css/essentials.css') }}
 		{{ HTML::style('css/layout.css') }}
 		{{ HTML::style('css/layout-responsive.css') }}
-		{{ HTML::style('css/color_scheme/darkgreen.css') }}
+		{{ HTML::style('css/darkgreen.css') }}
 
 		<?# -- Morenizr -- ?>
 		{{ HTML::script('plugins/modernizr.min.js') }}

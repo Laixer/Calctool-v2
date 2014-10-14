@@ -2,9 +2,9 @@
 	#2E363F	= blue
 	#1b1f23	= darker blue
 	#454b56	= brighter blue
-	#F15757	= red
-	#ee3939	= darker red
-	#f37676	= brighter red
+	#719E00	= darkgreen
+	#89a550	= darker darkgreen
+	#b3c789	= brighter darkgreen
  **************************************************************** **/
 
 	/* theme main color [blue] */
@@ -20,6 +20,9 @@
 	.styleColor {
 		color:#2E363F;
 	}
+	h4 {
+		color:#719E00;
+	}
 	#slider h2,
 	#slider .image-caption .inner p.dark,
 	div.price-table.popular,
@@ -32,12 +35,12 @@
 		background:rgba(41,47,56,0.8) !important;
 	}
 	.overlay.color2 {
-		background:rgba(241,87,87,0.8) !important;
+		background:rgba(157,182,103,0.8) !important;
 	}
 
 
 	/* second color [orange] */
-	a, .styleSecondColor, 
+	a, .styleSecondColor,
 	.list-icon.color li:before,
 	.item-box-desc small,
 	p.dropcap:first-letter,
@@ -47,14 +50,15 @@
 	ul.star-rated.styleSecondColor li i,
 	.tp-catpion a,
 	.divider.styleColor .fa {
-		color:#F15757;
+		color:#719E00;
 	}
 	#slider .btn.btn-default {
-		color:#F15757 !important;
+		color:#719E00 !important;
 	}
 
 	a:hover, a:active {
-		color:#ee3939;
+		/* color:#89a550; */
+		color:#79bb00;
 	}
 
 
@@ -73,7 +77,7 @@
 	.blog-timeline .timeline-item .item-date span,
 	ul.nav-pills li.active a,
 	.modal-header {
-		background-color:#F15757;
+		background-color:#719E00;
 	}
 
 	.styleSecondBackground,
@@ -88,10 +92,10 @@
 	}
 
 	/* Top Nav  */
-	header#topNav nav ul.nav-main > li:hover > a, 
-	header#topNav nav ul.nav-main li.active > a, 
-	header#topNav nav ul.nav-main li.active > a:hover, 
-	header#topNav nav ul.nav-main li.active > a:focus, 
+	header#topNav nav ul.nav-main > li:hover > a,
+	header#topNav nav ul.nav-main li.active > a,
+	header#topNav nav ul.nav-main li.active > a:hover,
+	header#topNav nav ul.nav-main li.active > a:focus,
 	header#topNav nav ul.nav-main li.active i.icon-caret-down {
 		color:#2E363F; 					/* active|hover color */
 	}
@@ -117,7 +121,7 @@
 	/* top Head */
 	header#topHead.color {
 		color:#fff;
-		background-color:#F15757;
+		background-color:#719E00;
 	}
 	header#topHead.color a {
 		color:#fff;
@@ -134,31 +138,33 @@
 
 	/* Buttons */
 	.btn-default {
-		border:#F15757 2px solid;
+		border:#719E00 2px solid;
 	}
 	.btn-default:hover, .btn-default:active, .btn-default:focus {
-		border:#ee3939 2px solid;
+		/* border:#89a550 2px solid; */
+		border:#79bb00 2px solid;
 	}
 	.btn-primary {
-		background-color:#F15757 !important;
+		background-color:#719E00 !important;
 	}
 	.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
 		border:rgba(255,255,255,0) 2px solid;
-		background-color:#ee3939 !important;
+		/* background-color:#89a550 !important; */
+		background-color:#79bb00 !important;
 	}
 
-	
+
 	/* Toggle */
 	div.toggle.active > label {
 		color:#fff;
-		background-color:#F15757;
+		background-color:#719E00;
 	}
 
 	/* Panels */
 
 	.panel-primary .panel-heading {
-		background-color:#F15757;
-		border-bottom:#F15757 1px solid;
+		background-color:#719E00;
+		border-bottom:#719E00 1px solid;
 	}
 	.panel-body {
 		background-color:#fff;
@@ -172,26 +178,26 @@
 
 	/* Featured Box */
 	div.featured-box i.fa:after {
-		border-color:#F15757;
+		border-color:#719E00;
 	}
 	div.featured-box.nobg.border-only i.fa {
-		color:#F15757;
-		border-color:#F15757;
+		color:#719E00;
+		border-color:#719E00;
 	}
-	
+
 	/* Featured Icons */
 	i.featured-icon,
 	i.featured-icon:after {
-		border:#F15757 1px solid;
+		border:#719E00 1px solid;
 	}
 	i.featured-icon.empty {
-		color:#F15757 !important;
+		color:#719E00 !important;
 	}
 
 	/* Popover */
 	.popover-title {
 		color:#fff;
-		background-color:#F15757;
+		background-color:#719E00;
 	}
 
 	/* testimonials */
@@ -203,12 +209,12 @@
 	.testimonial.color2 p,
 	.testimonial.color2 cite {
 		color:#fff;
-		background-color:#F15757;
+		background-color:#719E00;
 	}
 
 	/* OWL Carousel */
 	.owl-theme .owl-controls .owl-buttons div {
-		color:#F15757;
+		color:#719E00;
 	}
 
 	/* slider */
@@ -222,7 +228,7 @@
 	#slider li.styleBackground p {
 		color:#fff !important;
 	}
-	
+
 	/* Top Search , Top Login */
 	#topHead .signin-dd form button,
 	#topHead .signin-dd form button:hover,
@@ -230,11 +236,11 @@
 	header#topNav li.search form button,
 	header#topNav li.search form button:hover,
 	header#topNav li.search form button:active {
-		background-color:#F15757 !important;;
+		background-color:#719E00 !important;;
 	}
 	#topHead .signin-dd form button:after,
 	header#topNav li.search form button:after {
-		border: #F15757 10px solid; /* same with .btn-primary */
+		border: #719E00 10px solid; /* same with .btn-primary */
 		border-top: 10px solid transparent;
 		border-left: 10px solid transparent;
 		border-bottom: 10px solid transparent;
