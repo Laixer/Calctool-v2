@@ -11,10 +11,11 @@
 |
 */
 
-Route::get('login', array('uses' => 'AuthController@getLogin'));
-Route::post('login', array('uses' => 'AuthController@doLogin'));
+Route::get('login', array('before' => 'guest', 'as' => 'login', 'uses' => 'AuthController@getLogin'));
+Route::post('login', array('before' => 'guest', 'uses' => 'AuthController@doLogin'));
 
-Route::get('/', function()
+Route::group(array('before' => 'auth'), function()
 {
-	return View::make('placeholder');
+	Route::get('relation/new', array('uses' => 'RelationController@getNew'));
+	Route::get('/', array('uses' => 'HomeController@getHome'));
 });

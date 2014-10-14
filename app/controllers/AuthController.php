@@ -29,9 +29,9 @@ class AuthController extends \BaseController {
 		$remember = Input::get('rememberme') ? true : false;
 
 		if(Auth::attempt($userdata, $remember)){
-			echo 'SUCCESS!';
+			return Redirect::to('/');
 		}else{
-			return Redirect::to('login')
+			return Redirect::route('login')
 				->withErrors(true)
 				->withInput(Input::except('secret'));
 		}
@@ -40,7 +40,7 @@ class AuthController extends \BaseController {
 	public function doLogout()
 	{
 		Auth::logout(); // log the user out of our application
-		return Redirect::to('login'); // redirect the user to the login screen
+		return Redirect::route('login'); // redirect the user to the login screen
 	}
 
 }
