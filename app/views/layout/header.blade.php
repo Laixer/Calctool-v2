@@ -9,7 +9,7 @@
 
 		<?# -- Logo text or image -- ?>
 		<a class="logo" href="index.html">
-			<img src="images/logo2.png" width="200px" alt="Atropos" />
+			<img src="/images/logo2.png" width="200px" alt="Atropos" />
 		</a>
 
 		<?#-- Top Nav -- ?>
