@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"ech",
+				"echo"
+			],
+			[
+				"print",
+				"print_r"
+			],
+			[
+				"ex",
+				"exit"
+			],
+			[
+				"prin",
+				"print_r"
+			],
+			[
+				"pri",
+				"print_r"
+			],
+			[
 				"pay",
 				"payment"
 			],
@@ -48,26 +68,10 @@
 	"buffers":
 	[
 		{
-			"file": "app/routes.php",
+			"file": "app/views/auth/login.blade.php",
 			"settings":
 			{
-				"buffer_size": 558,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/controllers/AuthController.php",
-			"settings":
-			{
-				"buffer_size": 1020,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/views/layouts/master.blade.php",
-			"settings":
-			{
-				"buffer_size": 35730,
+				"buffer_size": 2934,
 				"line_ending": "Unix"
 			}
 		}
@@ -75,17 +79,62 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 392.0,
+		"height": 292.0,
 		"selected_items":
 		[
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"git pu",
+				"Git: Push"
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
+			[
+				"git sta",
+				"Git: Status"
+			],
+			[
+				"git tat",
+				"Git: Status"
+			],
+			[
+				"git add",
+				"Git: Add..."
+			],
+			[
+				"git s",
+				"Git: Status"
+			],
+			[
+				"git st",
+				"Git: Status"
+			],
+			[
+				"git ad",
+				"Git: Add..."
+			],
+			[
+				"git ",
+				"Git: Status"
+			],
+			[
+				"Package Control: git",
+				"Package Control: Upgrade/Overwrite All Packages"
+			]
 		],
-		"width": 440.0
+		"width": 449.0
 	},
 	"console":
 	{
-		"height": 0.0,
+		"height": 51.0,
 		"history":
 		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
 		]
 	},
 	"distraction_free":
@@ -99,16 +148,56 @@
 	},
 	"expanded_folders":
 	[
+		"/var/www/calctool",
 		"/var/www/calctool/app",
-		"/var/www/calctool/app/commands",
-		"/var/www/calctool/app/config",
-		"/var/www/calctool/app/config/local",
 		"/var/www/calctool/app/controllers",
+		"/var/www/calctool/app/database",
 		"/var/www/calctool/app/views",
-		"/var/www/calctool/public"
+		"/var/www/calctool/app/views/auth",
+		"/var/www/calctool/app/views/layout",
+		"/var/www/calctool/bootstrap",
+		"/var/www/calctool/public",
+		"/var/www/calctool/public/css",
+		"/var/www/calctool/vendor"
 	],
 	"file_history":
 	[
+		"/var/www/calctool/public/css/layout.css",
+		"/var/www/calctool/app/views/layout/master.blade.php",
+		"/root/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/var/www/calctool/calctool.sublime-project",
+		"/root/.config/sublime-text-3/Settings/SideBarEnhancements.json",
+		"/var/www/calctool/app/config/local/app.php",
+		"/root/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/var/www/calctool/vendor/ircmaxell/password-compat/test/Unit/PasswordGetInfoTest.php",
+		"/var/www/calctool/vendor/laravel/framework/src/Illuminate/Remote/GatewayInterface.php",
+		"/var/www/calctool/TODO",
+		"/var/www/calctool/.gitignore",
+		"/var/www/calctool/composer.json",
+		"/var/www/calctool/app/config/app.php",
+		"/root/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/root/.config/sublime-text-3/Packages/User/Distraction Free.sublime-settings",
+		"/root/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
+		"/root/.config/sublime-text-3/Packages/User/JSON.sublime-settings",
+		"/var/www/calctool/app/config/session.php",
+		"/var/www/calctool/app/config/local/session.php",
+		"/var/www/calctool/app/config/database.php",
+		"/var/www/calctool/app/config/cache.php",
+		"/var/www/calctool/app/controllers/AuthController.php",
+		"/var/www/calctool/app/views/auth/login.blade.php",
+		"/var/www/calctool/app/views/generic/404.blade.php",
+		"/var/www/calctool/app/filters.php",
+		"/var/www/calctool/app/routes.php",
+		"/var/www/calctool/app/models/User.php",
+		"/var/www/HTML/page-404.html",
+		"/var/www/calctool/app/config/workbench.php",
+		"/var/www/calctool/app/config/mail.php",
+		"/var/www/calctool/app/database/seeds/TestProjectSeeder.php",
+		"/var/www/calctool/app/storage/logs/laravel.log",
+		"/var/www/calctool/app/views/layout/header.blade.php",
+		"/var/www/calctool/app/views/layout/footer.blade.php",
+		"/var/www/calctool/app/views/layouts/master.blade.php",
+		"/var/www/calctool/public/css/color_scheme/darkgreen.css",
 		"/var/www/calctool/app/database/migrations/2014_09_11_225236_create_system_table.php",
 		"/var/www/calctool/app/models/SystemTooltip.php",
 		"/var/www/calctool/app/models/SystemOption.php",
@@ -164,21 +253,15 @@
 		"/var/www/calctool/app/models/Payment.php",
 		"/var/www/calctool/app/models/Iban.php",
 		"/var/www/calctool/app/models/UserType.php",
-		"/var/www/calctool/app/models/User.php",
 		"/var/www/calctool/app/database/seeds/StaticSeeder.php",
-		"/var/www/calctool/app/database/seeds/TestProjectSeeder.php",
 		"/var/www/calctool/app/database/seeds/DatabaseSeeder.php",
 		"/var/www/calctool/app/models/Provance.php",
 		"/var/www/calctool/app/views/placeholder.php",
-		"/var/www/calctool/app/config/cache.php",
 		"/var/www/calctool/app/controllers/HomeController.php",
-		"/var/www/calctool/app/routes.php",
 		"/var/www/calctool/app/views/hello.php",
 		"/var/www/calctool/app/lang/nl/validation.php",
 		"/var/www/calctool/app/lang/nl/reminders.php",
 		"/var/www/calctool/app/lang/nl/pagination.php",
-		"/var/www/calctool/TODO",
-		"/var/www/calctool/app/config/app.php",
 		"/var/www/calctool/app/config/auth.php",
 		"/var/www/calctool/app/database/seeds/MaterialStorageSeeder.php",
 		"/var/www/calctool/app/database/migrations/Tax.php",
@@ -188,7 +271,6 @@
 		"/var/www/calctool/app/models/ProjectStepType.php",
 		"/var/www/calctool/app/database/seeds/ProvanceSeeder.php",
 		"/var/www/calctool/app/database/seeds/CountrySeeder.php",
-		"/var/www/calctool/app/config/database.php",
 		"/var/www/calctool/bootstrap/start.php",
 		"/var/www/calctool/app/config/local/database.php"
 	],
@@ -210,6 +292,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"89a550",
 			"assets",
 			"test_timesheet",
 			"contactF",
@@ -252,88 +335,30 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "app/routes.php",
+					"file": "app/views/auth/login.blade.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 558,
+						"buffer_size": 2934,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								439,
-								439
+								106,
+								106
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/PHP/PHP.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "app/controllers/AuthController.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1020,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								160,
-								160
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"syntax": "Packages/Laravel Blade Highlighter/laravel-blade.tmLanguage",
 							"translate_tabs_to_spaces": false
-						},
-						"translation.x": -0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "app/views/layouts/master.blade.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 35730,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								34622,
-								34622
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"translate_tabs_to_spaces": false,
-							"word_wrap": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -380,6 +405,10 @@
 	{
 		"height": 0.0
 	},
+	"output.git":
+	{
+		"height": 25.0
+	},
 	"project": "calctool.sublime-project",
 	"replace":
 	{
@@ -396,11 +425,11 @@
 	},
 	"select_project":
 	{
-		"height": 0.0,
+		"height": 500.0,
 		"selected_items":
 		[
 		],
-		"width": 0.0
+		"width": 380.0
 	},
 	"select_symbol":
 	{
@@ -418,7 +447,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 322.0,
+	"side_bar_width": 242.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

@@ -4,18 +4,6 @@
 <?# -- WRAPPER -- ?>
 <div id="wrapper">
 
-	<?# -- PAGE TITLE -- ?>
-	<header id="page-title">
-		<div class="container">
-			<h1>Page Not Found</h1>
-
-			<ul class="breadcrumb">
-				<li><a href="index.html">Home</a></li>
-				<li class="active">Page Not Found</li>
-			</ul>
-		</div>
-	</header>
-
 	<section class="container">
 
 		<div class="row">
@@ -25,7 +13,7 @@
 					<strong>Oops</strong>, Deze pagina is niet beschikbaar!
 					<span class="subtitle">Ons excuus, de pagina {{ $url }} kon niet worden gevonden.</span>
 				</h2>
-				
+
 				<div class="e404">404</div>
 			</div>
 

@@ -6,18 +6,6 @@
 
 	<div id="shop">
 
-		<?# -- PAGE TITLE --?>
-		<header id="page-title">
-			<div class="container">
-				<h1>Login</h1>
-
-				<ul class="breadcrumb">
-					<li><a href="index.html">Home</a></li>
-					<li class="active">Login</li>
-				</ul>
-			</div>
-		</header>
-
 		<section class="container">
 
 			<div class="row">
@@ -83,7 +71,7 @@
 						<?# -- alert success -- ?>
 						@if(isset($success))
 						<div class="alert alert-success">
-							<i class="fa fa-check-circle"></i> 
+							<i class="fa fa-check-circle"></i>
 							<strong>Nieuw wachtwoord verzonden!</strong> Check je e-mail!
 						</div>
 						@endif
@@ -97,7 +85,7 @@
 						@endif
 
 						<?# -- password form -- ?>
-						<label>Type je e-mailadres</label>
+						<label>Vul uw e-mailadres hier in</label>
 						<form class="input-group" method="post" action="#">
 							<input type="text" class="form-control" name="s" id="s" value="" placeholder="E-mailadres" />
 							<span class="input-group-btn">

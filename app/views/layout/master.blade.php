@@ -59,7 +59,7 @@
 
 		{{ HTML::script('plugins/bootstrap/js/bootstrap.min.js') }}
 		{{ HTML::script('plugins/magnific-popup/jquery.magnific-popup.min.js') }}
-		{{ HTML::script('plugins/stellar/plugins/owl-carousel/owl.carousel.min.js') }}
+		{{ HTML::script('plugins/owl-carousel/owl.carousel.min.js') }}
 		{{ HTML::script('plugins/stellar/jquery.stellar.min.js') }}
 		{{ HTML::script('plugins/knob/js/jquery.knob.js') }}
 		{{ HTML::script('plugins/jquery.backstretch.min.js') }}
