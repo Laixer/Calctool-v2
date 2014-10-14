@@ -17,7 +17,7 @@
 			<nav class="nav-main mega-menu">
 				<ul class="nav nav-pills nav-main scroll-menu" id="topMain">
 					<li>
-						<a href="#">Home</a>
+						{{ HTML::link('/', 'Home') }}
 					</li>
 					<li>
 						<a href="#">Blog</a>
@@ -29,7 +29,11 @@
 						<a href="#">Contact</a>
 					</li>
 					<li class="active">
-						<a href="#">Login</a>
+					@if (Auth::check())
+						{{ HTML::link('/logout', 'Uitloggen') }}
+					@else
+						{{ HTML::link('/login', 'Login') }}
+					@endif
 					</li>
 
 					<?# -- GLOBAL SEARCH -- ?>

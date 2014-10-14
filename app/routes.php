@@ -16,6 +16,8 @@ Route::post('login', array('before' => 'guest', 'uses' => 'AuthController@doLogi
 
 Route::group(array('before' => 'auth'), function()
 {
+	Route::get('logout', array('as' => 'logout', 'uses' => 'AuthController@doLogout'));
 	Route::get('relation/new', array('uses' => 'RelationController@getNew'));
+	Route::get('project/new', array('uses' => 'ProjectController@getNew'));
 	Route::get('/', array('uses' => 'HomeController@getHome'));
 });

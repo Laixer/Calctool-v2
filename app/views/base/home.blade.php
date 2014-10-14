@@ -14,8 +14,10 @@
 				<div class="col-md-3">
 					<div class="featured-box nobg border-only">
 						<div class="box-content">
-							<i class="fa fa-pencil"></i>
-							<h5>Nieuwe projecten</h5>
+							<a href="/project/new">
+								<i class="fa fa-pencil"></i>
+								<h5>Nieuwe projecten</h5>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -30,8 +32,10 @@
 				<div class="col-md-3">
 					<div class="featured-box nobg border-only">
 						<div class="box-content">
-							<i class="fa fa-user"></i>
-							<h5>Nieuwe relatie</h5>
+							<a href="/relation/new">
+								<i class="fa fa-user"></i>
+								<h5>Nieuwe relatie</h5>
+							</a>
 						</div>
 					</div>
 				</div>
