@@ -29,10 +29,14 @@ Route::any('faq', function()
 	return View::make('generic.faq');
 });
 
-
 Route::any('terms-and-conditions', function()
 {
 	return View::make('generic.terms');
+});
+
+Route::any('privacy-policy', function()
+{
+	return View::make('generic.privacy');
 });
 
 Route::group(array('before' => 'auth'), function()
