@@ -79,28 +79,36 @@
 		"selected_items":
 		[
 			[
+				"git st",
+				"Git: Status"
+			],
+			[
+				"git p",
+				"Git: Push"
+			],
+			[
 				"git c",
 				"Git: Commit"
+			],
+			[
+				"git a",
+				"Git: Add..."
+			],
+			[
+				"git ad",
+				"Git: Add..."
 			],
 			[
 				"git add",
 				"Git: Add..."
 			],
 			[
-				"git st",
-				"Git: Status"
-			],
-			[
-				"git ",
-				"Git: Push"
-			],
-			[
 				"git co",
 				"Git: Commit"
 			],
 			[
-				"git ad",
-				"Git: Add..."
+				"git ",
+				"Git: Push"
 			],
 			[
 				"git s",
@@ -109,10 +117,6 @@
 			[
 				"git pu",
 				"Git: Push"
-			],
-			[
-				"git a",
-				"Git: Add..."
 			],
 			[
 				"git",
@@ -143,7 +147,7 @@
 				"Package Control: Upgrade/Overwrite All Packages"
 			]
 		],
-		"width": 575.0
+		"width": 449.0
 	},
 	"console":
 	{
@@ -174,10 +178,24 @@
 		"/var/www/calctool/app/views/generic",
 		"/var/www/calctool/app/views/layout",
 		"/var/www/calctool/app/views/user",
-		"/var/www/calctool/bootstrap"
+		"/var/www/calctool/bootstrap",
+		"/var/www/calctool/public",
+		"/var/www/calctool/public/css"
 	],
 	"file_history":
 	[
+		"/var/www/calctool/public/css/darkgreen.css",
+		"/var/www/calctool/app/views/layout/master.blade.php",
+		"/var/www/calctool/public/css/color_scheme/darkgreen.css",
+		"/var/www/calctool/public/css/color_scheme/blue.css",
+		"/var/www/calctool/public/css/color_scheme/brown.css",
+		"/var/www/calctool/public/css/color_scheme/darkblue.css",
+		"/var/www/calctool/public/css/color_scheme/green.css",
+		"/var/www/calctool/public/css/color_scheme/lightgrey.css",
+		"/var/www/calctool/public/css/color_scheme/orange.css",
+		"/var/www/calctool/public/css/color_scheme/pink.css",
+		"/var/www/calctool/public/css/color_scheme/red.css",
+		"/var/www/calctool/public/css/color_scheme/yellow.css",
 		"/var/www/calctool/app/views/layout/header.blade.php",
 		"/var/www/calctool/app/views/base/home.blade.php",
 		"/var/www/calctool/app/views/calc/calculation.blade.php",
@@ -198,7 +216,6 @@
 		"/var/www/calctool/app/views/generic/COMMIT_EDITMSG.COMMIT_EDITMSG",
 		"/var/www/calctool/app/views/auth/login.blade.php",
 		"/var/www/calctool/public/css/layout.css",
-		"/var/www/calctool/app/views/layout/master.blade.php",
 		"/root/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
 		"/var/www/calctool/calctool.sublime-project",
 		"/root/.config/sublime-text-3/Settings/SideBarEnhancements.json",
@@ -225,7 +242,6 @@
 		"/var/www/calctool/app/storage/logs/laravel.log",
 		"/var/www/calctool/app/views/layout/footer.blade.php",
 		"/var/www/calctool/app/views/layouts/master.blade.php",
-		"/var/www/calctool/public/css/color_scheme/darkgreen.css",
 		"/var/www/calctool/app/database/migrations/2014_09_11_225236_create_system_table.php",
 		"/var/www/calctool/app/models/SystemTooltip.php",
 		"/var/www/calctool/app/models/SystemOption.php",
@@ -295,11 +311,7 @@
 		"/var/www/calctool/app/models/InvoiceType.php",
 		"/var/www/calctool/app/config/remote.php",
 		"/var/www/calctool/app/database/seeds/UserSeeder.php",
-		"/var/www/calctool/app/models/ProjectStepType.php",
-		"/var/www/calctool/app/database/seeds/ProvanceSeeder.php",
-		"/var/www/calctool/app/database/seeds/CountrySeeder.php",
-		"/var/www/calctool/bootstrap/start.php",
-		"/var/www/calctool/app/config/local/database.php"
+		"/var/www/calctool/app/models/ProjectStepType.php"
 	],
 	"find":
 	{
@@ -319,6 +331,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"9DB667",
 			"right",
 			"assets",
 			"89a550",
@@ -354,6 +367,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"719E00"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -411,7 +425,7 @@
 	"project": "calctool.sublime-project",
 	"replace":
 	{
-		"height": 42.0
+		"height": 62.0
 	},
 	"save_all_on_build": true,
 	"select_file":

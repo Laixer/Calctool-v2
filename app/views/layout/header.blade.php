@@ -23,7 +23,7 @@
 						<a href="#">Blog</a>
 					</li>
 					<li>
-						<a href="#">Over Ons</a>
+						{{ HTML::link('about-us', 'Over Ons') }}
 					</li>
 					<li>
 						<a href="#">Contact</a>

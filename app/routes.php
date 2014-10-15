@@ -14,11 +14,16 @@
 Route::get('login', array('before' => 'guest', 'as' => 'login', 'uses' => 'AuthController@getLogin'));
 Route::post('login', array('before' => 'guest', 'uses' => 'AuthController@doLogin'));
 
+Route::any('about-us', function()
+{
+	return View::make('generic.about');
+});
+
 Route::group(array('before' => 'auth'), function()
 {
 	Route::get('logout', array('as' => 'logout', 'uses' => 'AuthController@doLogout'));
-	Route::get('calculation', array('uses' => 'CalcController@getCalculation'));
-	Route::get('relation/new', array('uses' => 'RelationController@getNew'));
-	Route::get('project/new', array('uses' => 'ProjectController@getNew'));
+	Route::get('calculation', array('as' => 'calculation', 'uses' => 'CalcController@getCalculation'));
+	Route::get('relation/new', array('as' => 'relation.new', 'uses' => 'RelationController@getNew'));
+	Route::get('project/new', array('as' => 'project.new', 'uses' => 'ProjectController@getNew'));
 	Route::get('/', array('uses' => 'HomeController@getHome'));
 });
