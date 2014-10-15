@@ -1204,6 +1204,11 @@ li.divider {
 			box-shadow:none;
 }
 
+.control-sm {
+	height: 35px;
+	padding: 0 12px;
+}
+
 form label {
 	font-weight:300;
 }

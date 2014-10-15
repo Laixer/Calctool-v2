@@ -34,17 +34,24 @@
 		{{ HTML::style('css/layout-responsive.css') }}
 		{{ HTML::style('css/darkgreen.css') }}
 
+		<?# -- SHOP CSS -- ?>
+		{{ HTML::style('css/custom.css') }}
+
 		<?# -- Morenizr -- ?>
 		{{ HTML::script('plugins/modernizr.min.js') }}
 	</head>
 	<body>
 
+		<?# -- HEADER -- ?>
 		@section('header')
 			@include('layout.header')
 		@show
 
+		<?# -- MAIN CONTENT -- ?>
 		@yield('content')
 
+
+		<?# -- FOOTER -- ?>
 		@section('footer')
 			@include('layout.footer')
 		@show
