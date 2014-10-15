@@ -26,7 +26,10 @@
 						{{ HTML::link('about-us', 'Over Ons') }}
 					</li>
 					<li>
-						<a href="#">Contact</a>
+						{{ HTML::link('contact', 'Contact') }}
+					</li>
+					<li>
+						{{ HTML::link('faq', 'FAQ') }}
 					</li>
 					<li class="active">
 					@if (Auth::check())

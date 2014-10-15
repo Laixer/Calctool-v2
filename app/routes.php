@@ -19,6 +19,16 @@ Route::any('about-us', function()
 	return View::make('generic.about');
 });
 
+Route::any('contact', function()
+{
+	return View::make('generic.contact');
+});
+
+Route::any('faq', function()
+{
+	return View::make('generic.faq');
+});
+
 Route::group(array('before' => 'auth'), function()
 {
 	Route::get('logout', array('as' => 'logout', 'uses' => 'AuthController@doLogout'));
