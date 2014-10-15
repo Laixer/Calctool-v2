@@ -29,6 +29,12 @@ Route::any('faq', function()
 	return View::make('generic.faq');
 });
 
+
+Route::any('terms-and-conditions', function()
+{
+	return View::make('generic.terms');
+});
+
 Route::group(array('before' => 'auth'), function()
 {
 	Route::get('logout', array('as' => 'logout', 'uses' => 'AuthController@doLogout'));
