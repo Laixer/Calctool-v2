@@ -30,4 +30,9 @@ class CalcController extends BaseController {
 	{
 		return View::make('calc.less');
 	}
+
+	public function getMore()
+	{
+		return View::make('calc.more');
+	}
 }

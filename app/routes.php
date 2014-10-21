@@ -45,6 +45,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('calculation', array('as' => 'calculation', 'uses' => 'CalcController@getCalculation'));
 	Route::get('estimate', array('as' => 'estimate', 'uses' => 'CalcController@getEstimate'));
 	Route::get('less', array('as' => 'less', 'uses' => 'CalcController@getLess'));
+	Route::get('more', array('as' => 'more', 'uses' => 'CalcController@getMore'));
 	Route::get('relation/new', array('as' => 'relation.new', 'uses' => 'RelationController@getNew'));
 	Route::get('project/new', array('as' => 'project.new', 'uses' => 'ProjectController@getNew'));
 	Route::get('/', array('uses' => 'HomeController@getHome'));

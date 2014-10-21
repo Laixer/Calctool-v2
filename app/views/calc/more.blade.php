@@ -13,10 +13,10 @@
 					<ul class="steps">
 						<li data-target="#step0">Home<span class="chevron"></span></li>
 						<li data-target="#step1" class="complete">Projectgegevens<span class="chevron"></span></li>
-						<li data-target="#step2" class="complete">Calculatie<span class="chevron"></span></li>
-						<li data-target="#step3" class="complete">Offerte<span class="chevron"></span></li>
-						<li data-target="#step4" class="complete">Stelpost<span class="chevron"></span></li>
-						<li data-target="#step5" class="active">Minderwerk<span class="chevron"></span></li>
+						<li data-target="#step2" class="active">Calculatie<span class="chevron"></span></li>
+						<li data-target="#step3">Offerte<span class="chevron"></span></li>
+						<li data-target="#step4">Stelpost<span class="chevron"></span></li>
+						<li data-target="#step5">Minderwerk<span class="chevron"></span></li>
 						<li data-target="#step6">Meerwerk<span class="chevron"></span></li>
 						<li data-target="#step7">Factuur<span class="chevron"></span></li>
 						<li data-target="#step8">Winst/Verlies<span class="chevron"></span></li>
@@ -26,7 +26,7 @@
 
 			<hr />
 
-			<h2><strong>Minderwerk</strong></h2>
+			<h2><strong>Meerwerk</strong></h2>
 
 			<div class="tabs nomargin">
 
@@ -64,19 +64,27 @@
 											<label>Werkzaamheid 1</label>
 											<div class="toggle-content">
 
+												<div class="col-md-12">
+														<span class="pull-right">
+															<div class="form-group">
+																<label class="radio-inline"><input id="type" name="type" value="1" type="radio">Aanneming</label>
+	    														<label class="radio-inline"><input id="type" name="type" value="2" type="radio">Onderaanneming</label>
+															</div>
+														</span>
+												</div>
+
 												<h4>Arbeid</h4>
 												<table class="table table-striped">
 													<?# -- table head -- ?>
 													<thead>
 														<tr>
-															<th class="col-md-2">Eenheid</th>
+															<th class="col-md-2">Datum</th>
 															<th class="col-md-1">Tarief</th>
+															<th class="col-md-2">Eenheid</th>
 															<th class="col-md-1">Arbeidsuren</th>
-															<th class="col-md-1">Gecalculeerd</th>
-															<th class="col-md-2">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-2">&nbsp;</th>
-															<th class="col-md-1">Minderwerk</th>
+															<th class="col-md-1">Arbeidskosten</th>
+															<th class="col-md-3">Opmerking</th>
+															<th class="col-md-1">BTW</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -84,15 +92,32 @@
 													<!-- table items -->
 													<tbody>
 														<tr><!-- item -->
-															<td class="col-md-2">Per Uur</td>
+															<td class="col-md-2"><input name="date" id="date" type="date" value="" class="form-control control-sm" /></td>
 															<td class="col-md-1">$1</td>
+															<td class="col-md-2">Per Uur</td>
 															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
 															<td class="col-md-1">$1</td>
-															<td class="col-md-2">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-2">&nbsp;</td>
-															<td class="col-md-1 text-danger">$-734,72</td>
-															<td class="col-md-1"><button class="btn btn-warning btn-xs fa fa-undo"></button></td>
+															<td class="col-md-3"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
+															<td class="col-md-1">
+																<select name="type" id="type" class="form-control pointer control-sm">
+																	<option value="" selected="selected"></option>
+																</select>
+															</td>
+															<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
+														</tr>
+														<tr><!-- item -->
+															<td class="col-md-2"><input name="date" id="date" type="date" value="" class="form-control control-sm" /></td>
+															<td class="col-md-1">$1</td>
+															<td class="col-md-2">Per Uur</td>
+															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
+															<td class="col-md-1">$1</td>
+															<td class="col-md-3"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
+															<td class="col-md-1">
+																<select name="type" id="type" class="form-control pointer control-sm">
+																	<option value="" selected="selected"></option>
+																</select>
+															</td>
+															<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
 														</tr>
 													</tbody>
 												</table>
@@ -106,8 +131,9 @@
 															<th class="col-md-2">Eenheid</th>
 															<th class="col-md-1">Prijs/eenheid</th>
 															<th class="col-md-1">Hoeveelheid</th>
-															<th class="col-md-3">Gecalculeerd Incl. Winst</th>
-															<th class="col-md-1">Minderwerk</th>
+															<th class="col-md-1">Totaalprijs</th>
+															<th class="col-md-2">Incl. Winst</th>
+															<th class="col-md-1">BTW</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -115,22 +141,36 @@
 													<!-- table items -->
 													<tbody>
 														<tr>
-															<td class="col-md-3">Kaas</td>
-															<td class="col-md-2">Stuk</td>
-															<td class="col-md-1"><input name="name" id="name" type="text" value="7,60" class="form-control control-sm" /></td>
-															<td class="col-md-1"><input name="name" id="name" type="number" min="0" value="3" class="form-control control-sm" /></td>
-															<td class="col-md-3">$40</td>
-															<td class="col-md-1 text-danger">$-72,82</td>
-															<td class="col-md-1"><button class="btn btn-warning btn-xs fa fa-undo"></button></td>
+															<td class="col-md-3"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
+															<td class="col-md-2"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
+															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
+															<td class="col-md-1"><input name="name" id="name" type="number" min="0" value="" class="form-control control-sm" /></td>
+															<td class="col-md-1 centering">$20.000,00</td>
+															<td class="col-md-2">$40</td>
+															<td class="col-md-1">
+																<select name="type" id="type" class="form-control pointer control-sm">
+																	<option value="" selected="selected">0</option>
+																	<option value="">9</option>
+																	<option value="">21</option>
+																</select>
+															</td>
+															<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
 														</tr>
 														<tr>
-															<td class="col-md-3">Kaas</td>
-															<td class="col-md-2">Stuk</td>
-															<td class="col-md-1"><input name="name" id="name" type="text" value="7,60" class="form-control control-sm" /></td>
-															<td class="col-md-1"><input name="name" id="name" type="number" min="0" value="3" class="form-control control-sm" /></td>
-															<td class="col-md-3">$40</td>
-															<td class="col-md-1 text-danger">$-72,82</td>
-															<td class="col-md-1"><button class="btn btn-warning btn-xs fa fa-undo"></button></td>
+															<td class="col-md-3"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
+															<td class="col-md-2"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
+															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
+															<td class="col-md-1"><input name="name" id="name" type="number" min="0" value="" class="form-control control-sm" /></td>
+															<td class="col-md-1">$20.000,00</td>
+															<td class="col-md-2">$40</td>
+															<td class="col-md-1">
+																<select name="type" id="type" class="form-control pointer control-sm">
+																	<option value="" selected="selected">0</option>
+																	<option value="">9</option>
+																	<option value="">21</option>
+																</select>
+															</td>
+															<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
 														</tr>
 													</tbody>
 												</table>
@@ -144,8 +184,9 @@
 															<th class="col-md-2">Eenheid</th>
 															<th class="col-md-1">Prijs/eenheid</th>
 															<th class="col-md-1">Hoeveelheid</th>
-															<th class="col-md-3">Gecalculeerd Incl. Winst</th>
-															<th class="col-md-1">Minderwerk</th>
+															<th class="col-md-1">Totaalprijs</th>
+															<th class="col-md-2">Incl. Winst</th>
+															<th class="col-md-1">BTW</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -153,22 +194,36 @@
 													<!-- table items -->
 													<tbody>
 														<tr>
-															<td class="col-md-3">Kaas</td>
-															<td class="col-md-2">Stuk</td>
-															<td class="col-md-1"><input name="name" id="name" type="text" value="7,60" class="form-control control-sm" /></td>
-															<td class="col-md-1"><input name="name" id="name" type="number" min="0" value="3" class="form-control control-sm" /></td>
-															<td class="col-md-3">$40</td>
-															<td class="col-md-1 text-danger">$-72,82</td>
-															<td class="col-md-1"><button class="btn btn-warning btn-xs fa fa-undo"></button></td>
+															<td class="col-md-3"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
+															<td class="col-md-2"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
+															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
+															<td class="col-md-1"><input name="name" id="name" type="number" min="0" value="" class="form-control control-sm" /></td>
+															<td class="col-md-1">$20.000,00</td>
+															<td class="col-md-2">$40</td>
+															<td class="col-md-1">
+																<select name="type" id="type" class="form-control pointer control-sm">
+																	<option value="" selected="selected">0</option>
+																	<option value="">9</option>
+																	<option value="">21</option>
+																</select>
+															</td>
+															<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
 														</tr>
 														<tr>
-															<td class="col-md-3">Kaas</td>
-															<td class="col-md-2">Stuk</td>
-															<td class="col-md-1"><input name="name" id="name" type="text" value="7,60" class="form-control control-sm" /></td>
-															<td class="col-md-1"><input name="name" id="name" type="number" min="0" value="3" class="form-control control-sm" /></td>
-															<td class="col-md-3">$40</td>
-															<td class="col-md-1 text-danger">$-72,82</td>
-															<td class="col-md-1"><button class="btn btn-warning btn-xs fa fa-undo"></button></td>
+															<td class="col-md-3"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
+															<td class="col-md-2"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
+															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
+															<td class="col-md-1"><input name="name" id="name" type="number" min="0" value="" class="form-control control-sm" /></td>
+															<td class="col-md-1">$20.000,00</td>
+															<td class="col-md-2">$40</td>
+															<td class="col-md-1">
+																<select name="type" id="type" class="form-control pointer control-sm">
+																	<option value="" selected="selected">0</option>
+																	<option value="">9</option>
+																	<option value="">21</option>
+																</select>
+															</td>
+															<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
 														</tr>
 													</tbody>
 												</table>
@@ -229,7 +284,8 @@
 												<th class="col-md-1">Arbeidskosten</th>
 												<th class="col-md-1">Materiaalkosten</th>
 												<th class="col-md-1">Materieelkosten</th>
-												<th class="col-md-4">Totaal minderwerk (excl. BTW)</th>
+												<th class="col-md-3">Totaal (excl. BTW)</th>
+												<th class="col-md-1">Stelpost</th>
 											</tr>
 										</thead>
 
@@ -242,7 +298,8 @@
 												<td class="col-md-1">$42</td>
 												<td class="col-md-1">$83</td>
 												<td class="col-md-1">$742</td>
-												<td class="col-md-4">$742,28</td>
+												<td class="col-md-3">$742,28</td>
+												<td class="col-md-1">&nbsp;</td>
 											</tr>
 											<tr><!-- item -->
 												<td class="col-md-2">&nbsp;</td>
@@ -251,7 +308,8 @@
 												<td class="col-md-1">$42</td>
 												<td class="col-md-1">$83</td>
 												<td class="col-md-1">$742</td>
-												<td class="col-md-4">$742,28</td>
+												<td class="col-md-3">$742,28</td>
+												<td class="col-md-1  fa fa-check">&nbsp;</td>
 											</tr>
 											<tr><!-- item -->
 												<td class="col-md-2">&nbsp;</td>
@@ -260,7 +318,8 @@
 												<td class="col-md-1">$42</td>
 												<td class="col-md-1">$83</td>
 												<td class="col-md-1">$742</td>
-												<td class="col-md-4">$742,28</td>
+												<td class="col-md-3">$742,28</td>
+												<td class="col-md-1 fa fa-check">&nbsp;</td>
 											</tr>
 										</tbody>
 									</table>
@@ -535,7 +594,7 @@
 							</tbody>
 						</table>
 
-						<h4>Cumulatieven Minderwerk</h4>
+						<h4>Cumulatieven Meerwerk</h4>
 						<table class="table table-striped">
 							<?# -- table head -- ?>
 							<thead>
