@@ -20,4 +20,9 @@ class CalcController extends BaseController {
 		return View::make('calc.calculation');
 	}
 
+
+	public function getEstimate()
+	{
+		return View::make('calc.estimate');
+	}
 }
