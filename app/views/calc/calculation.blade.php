@@ -277,12 +277,13 @@
 										<thead>
 											<tr>
 												<th class="col-md-2">&nbsp;</th>
-												<th class="col-md-3">&nbsp;</th>
+												<th class="col-md-2">&nbsp;</th>
 												<th class="col-md-1">Arbeidsuren</th>
 												<th class="col-md-1">Arbeidskosten</th>
 												<th class="col-md-1">Materiaalkosten</th>
 												<th class="col-md-1">Materieelkosten</th>
 												<th class="col-md-3">Totaal (excl. BTW)</th>
+												<th class="col-md-1">Stelpost</th>
 											</tr>
 										</thead>
 
@@ -290,30 +291,33 @@
 										<tbody>
 											<tr><!-- item -->
 												<td class="col-md-2"><strong>Hoofdstuk 1</strong></td>
-												<td class="col-md-3">Werkzaamheid 1</td>
+												<td class="col-md-2">Werkzaamheid 1</td>
 												<td class="col-md-1">6</td>
 												<td class="col-md-1">$42</td>
 												<td class="col-md-1">$83</td>
 												<td class="col-md-1">$742</td>
 												<td class="col-md-3">$742,28</td>
+												<td class="col-md-1">&nbsp;</td>
 											</tr>
 											<tr><!-- item -->
 												<td class="col-md-2">&nbsp;</td>
-												<td class="col-md-3">Werkzaamheid 2</td>
+												<td class="col-md-2">Werkzaamheid 2</td>
 												<td class="col-md-1">6</td>
 												<td class="col-md-1">$42</td>
 												<td class="col-md-1">$83</td>
 												<td class="col-md-1">$742</td>
 												<td class="col-md-3">$742,28</td>
+												<td class="col-md-1  fa fa-check">&nbsp;</td>
 											</tr>
 											<tr><!-- item -->
 												<td class="col-md-2">&nbsp;</td>
-												<td class="col-md-3">Werkzaamheid 3</td>
+												<td class="col-md-2">Werkzaamheid 3</td>
 												<td class="col-md-1">6</td>
 												<td class="col-md-1">$42</td>
 												<td class="col-md-1">$83</td>
 												<td class="col-md-1">$742</td>
 												<td class="col-md-3">$742,28</td>
+												<td class="col-md-1 fa fa-check">&nbsp;</td>
 											</tr>
 										</tbody>
 									</table>
@@ -332,7 +336,232 @@
 					</div>
 
 					<div id="endresult" class="tab-pane">
-						<p>Kaas</p>
+
+						<h4>Aanneming</h4>
+						<table class="table table-striped">
+							<?# -- table head -- ?>
+							<thead>
+								<tr>
+									<th class="col-md-4">&nbsp;</th>
+									<th class="col-md-1">Manuren</th>
+									<th class="col-md-2">Bedrag (excl. BTW)</th>
+									<th class="col-md-1">&nbsp;</th>
+									<th class="col-md-1">BTW</th>
+									<th class="col-md-2">BTW bedrag</th>
+									<th class="col-md-1">&nbsp;</th>
+								</tr>
+							</thead>
+
+							<!-- table items -->
+							<tbody>
+								<tr><!-- item -->
+									<td class="col-md-4">Arbeidskosten</td>
+									<td class="col-md-1">6</td>
+									<td class="col-md-2">$42</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">21%</td>
+									<td class="col-md-2">$742,28</td>
+									<td class="col-md-1">&nbsp;</td>
+								</tr>
+								<tr><!-- item -->
+									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-1">6</td>
+									<td class="col-md-2">$42</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">6%</td>
+									<td class="col-md-2">$742,28</td>
+									<td class="col-md-1">&nbsp;</td>
+								</tr>
+								<tr><!-- item -->
+									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-1">6</td>
+									<td class="col-md-2">$42</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">0%</td>
+									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+								</tr>
+
+								<tr><!-- item -->
+									<td class="col-md-4">Materiaalkosten</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2">$42</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">21%</td>
+									<td class="col-md-2">$742,28</td>
+									<td class="col-md-1">&nbsp;</td>
+								</tr>
+								<tr><!-- item -->
+									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2">$42</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">6%</td>
+									<td class="col-md-2">$742,28</td>
+									<td class="col-md-1">&nbsp;</td>
+								</tr>
+								<tr><!-- item -->
+									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2">$42</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">0%</td>
+									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+								</tr>
+
+								<tr><!-- item -->
+									<td class="col-md-4">Materieelkosten</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2">$42</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">21%</td>
+									<td class="col-md-2">$742,28</td>
+									<td class="col-md-1">&nbsp;</td>
+								</tr>
+								<tr><!-- item -->
+									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2">$42</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">6%</td>
+									<td class="col-md-2">$742,28</td>
+									<td class="col-md-1">&nbsp;</td>
+								</tr>
+								<tr><!-- item -->
+									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2">$42</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">0%</td>
+									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+								</tr>
+
+								<tr><!-- item -->
+									<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-1"><strong>$6.362,71</strong></td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-1"><strong>$6.362,71</strong></td>
+								</tr>
+							</tbody>
+						</table>
+
+						<h4>Onderaanneming</h4>
+						<table class="table table-striped">
+							<?# -- table head -- ?>
+							<thead>
+								<tr>
+									<th class="col-md-4">&nbsp;</th>
+									<th class="col-md-1">Manuren</th>
+									<th class="col-md-2">Bedrag (excl. BTW)</th>
+									<th class="col-md-1">&nbsp;</th>
+									<th class="col-md-1">BTW</th>
+									<th class="col-md-2">BTW bedrag</th>
+									<th class="col-md-1">&nbsp;</th>
+								</tr>
+							</thead>
+
+							<!-- table items -->
+							<tbody>
+								<tr><!-- item -->
+									<td class="col-md-4">Arbeidskosten</td>
+									<td class="col-md-1">6</td>
+									<td class="col-md-2">$42</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">21%</td>
+									<td class="col-md-2">$742,28</td>
+									<td class="col-md-1">&nbsp;</td>
+								</tr>
+								<tr><!-- item -->
+									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-1">6</td>
+									<td class="col-md-2">$42</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">6%</td>
+									<td class="col-md-2">$742,28</td>
+									<td class="col-md-1">&nbsp;</td>
+								</tr>
+								<tr><!-- item -->
+									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-1">6</td>
+									<td class="col-md-2">$42</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">0%</td>
+									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+								</tr>
+
+								<tr><!-- item -->
+									<td class="col-md-4">Materiaalkosten</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2">$42</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">21%</td>
+									<td class="col-md-2">$742,28</td>
+									<td class="col-md-1">&nbsp;</td>
+								</tr>
+								<tr><!-- item -->
+									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2">$42</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">6%</td>
+									<td class="col-md-2">$742,28</td>
+									<td class="col-md-1">&nbsp;</td>
+								</tr>
+								<tr><!-- item -->
+									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2">$42</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">0%</td>
+									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+								</tr>
+
+								<tr><!-- item -->
+									<td class="col-md-4">Materieelkosten</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2">$42</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">21%</td>
+									<td class="col-md-2">$742,28</td>
+									<td class="col-md-1">&nbsp;</td>
+								</tr>
+								<tr><!-- item -->
+									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2">$42</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">6%</td>
+									<td class="col-md-2">$742,28</td>
+									<td class="col-md-1">&nbsp;</td>
+								</tr>
+								<tr><!-- item -->
+									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2">$42</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">0%</td>
+									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+								</tr>
+
+								<tr><!-- item -->
+									<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-1"><strong>$6.362,71</strong></td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-1"><strong>$6.362,71</strong></td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 
