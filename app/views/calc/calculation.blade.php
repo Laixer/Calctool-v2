@@ -76,11 +76,9 @@
 													</div>
 													<div class="col-md-2">
 														<span class="pull-right">
-															<label>Stelpost</label>
-															<input type="checkbox" name="estimate" value="1" class="form-control">
+															<label class="checkbox-inline"><input type="checkbox" name="estimate" value="1" class="form-control">Stelpost</label>
 														</span>
 													</div>
-
 												</div>
 
 												<h4>Arbeid</h4>
@@ -244,6 +242,16 @@
 										</div>
 
 									</div>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="input-group" method="post" action="#">
+												<input type="text" class="form-control" name="k" id="k" value="" placeholder="Nieuwe Werkzaamheid">
+												<span class="input-group-btn">
+													<button class="btn btn-primary"><i class="fa fa-check"></i></button>
+												</span>
+											</div>
+										</div>
+									</div>
 
 								</div>
 							</div>
@@ -262,6 +270,16 @@
 								</div>
 							</div>
 
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="input-group" method="post" action="#">
+									<input type="text" class="form-control" name="k" id="k" value="" placeholder="Nieuw Hoofdstuk">
+									<span class="input-group-btn">
+										<button class="btn btn-primary"><i class="fa fa-check"></i></button>
+									</span>
+								</div>
+							</div>
 						</div>
 					</div>
 

@@ -13,11 +13,11 @@
 					<ul class="steps">
 						<li data-target="#step0">Home<span class="chevron"></span></li>
 						<li data-target="#step1" class="complete">Projectgegevens<span class="chevron"></span></li>
-						<li data-target="#step2" class="active">Calculatie<span class="chevron"></span></li>
-						<li data-target="#step3">Offerte<span class="chevron"></span></li>
-						<li data-target="#step4">Stelpost<span class="chevron"></span></li>
-						<li data-target="#step5">Minderwerk<span class="chevron"></span></li>
-						<li data-target="#step6">Meerwerk<span class="chevron"></span></li>
+						<li data-target="#step2" class="complete">Calculatie<span class="chevron"></span></li>
+						<li data-target="#step3" class="complete">Offerte<span class="chevron"></span></li>
+						<li data-target="#step4" class="complete">Stelpost<span class="chevron"></span></li>
+						<li data-target="#step5" class="complete">Minderwerk<span class="chevron"></span></li>
+						<li data-target="#step6" class="active">Meerwerk<span class="chevron"></span></li>
 						<li data-target="#step7">Factuur<span class="chevron"></span></li>
 						<li data-target="#step8">Winst/Verlies<span class="chevron"></span></li>
 					</ul>
