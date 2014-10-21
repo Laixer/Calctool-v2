@@ -25,4 +25,9 @@ class CalcController extends BaseController {
 	{
 		return View::make('calc.estimate');
 	}
+
+	public function getLess()
+	{
+		return View::make('calc.less');
+	}
 }

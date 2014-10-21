@@ -301,8 +301,19 @@
 									<td class="col-md-3">$742,28</td>
 									<td class="col-md-1 text-success">746.23%</td>
 								</tr>
+								<tr><!-- item -->
+									<td class="col-md-2"><strong>Totaal Stelposten</strong></td>
+									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-1"><strong>6</strong></td>
+									<td class="col-md-1"><strong>$42</strong></td>
+									<td class="col-md-1"><strong>$83</strong></td>
+									<td class="col-md-1"><strong>$742</strong></td>
+									<td class="col-md-3"><strong>$742,28</strong></td>
+									<td class="col-md-1 text-success"><strong>746.23%</strong></td>
+								</tr>
 							</tbody>
 						</table>
+
 					</div>
 				</div>
 
