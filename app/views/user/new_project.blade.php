@@ -101,7 +101,7 @@
 								<div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
 								<div class="col-md-1"><div class="pull-right">&euro;</div></div>
 								<div class="col-md-2">
-									<input name="hour_rate" id="hour_rate" type="number" min="0" max="1000" value="" class="form-control"/>
+									<input name="hour_rate" id="hour_rate" type="number" min="0" max="1000" value="" class="form-control control-sm"/>
 								</div>
 							</div>
 
@@ -110,14 +110,14 @@
 								<div class="col-md-3"><label for="profit_material_1">Winst materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_material_1" id="profit_material_1" type="number" min="0" max="200" value="" class="form-control"/>
+									<input name="profit_material_1" id="profit_material_1" type="number" min="0" max="200" value="" class="form-control control-sm"/>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_equipment_1">Winst materieel</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_equipment_1" id="profit_equipment_1" type="number" min="0" max="200" value="" class="form-control"/>
+									<input name="profit_equipment_1" id="profit_equipment_1" type="number" min="0" max="200" value="" class="form-control control-sm"/>
 								</div>
 							</div>
 
@@ -126,14 +126,14 @@
 								<div class="col-md-3"><label for="profit_material_2">Winst materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_material_2" id="profit_material_2" type="number" min="0" max="200" value="" class="form-control"/>
+									<input name="profit_material_2" id="profit_material_2" type="number" min="0" max="200" value="" class="form-control control-sm"/>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_equipment_2">Winst materieel</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_equipment_2" id="profit_equipment_2" type="number" min="0" max="200" value="" class="form-control"/>
+									<input name="profit_equipment_2" id="profit_equipment_2" type="number" min="0" max="200" value="" class="form-control control-sm"/>
 								</div>
 							</div>
 
@@ -142,14 +142,14 @@
 								<div class="col-md-3"><label for="profit_material_3">Winst materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_material_3" id="profit_material_3" type="number" min="0" max="200" value="" class="form-control"/>
+									<input name="profit_material_3" id="profit_material_3" type="number" min="0" max="200" value="" class="form-control control-sm"/>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_equipment_3">Winst materieel</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_equipment_3" id="profit_equipment_3" type="number" min="0" max="200" value="" class="form-control"/>
+									<input name="profit_equipment_3" id="profit_equipment_3" type="number" min="0" max="200" value="" class="form-control control-sm"/>
 								</div>
 							</div>
 
@@ -161,7 +161,7 @@
 								<div class="col-md-3"><label for="more_hour_rate">Uurtarief excl. BTW</label></div>
 								<div class="col-md-1"><div class="pull-right">&euro;</div></div>
 								<div class="col-md-2">
-									<input name="more_hour_rate" id="more_hour_rate" type="number" min="0" max="1000" value="" class="form-control"/>
+									<input name="more_hour_rate" id="more_hour_rate" type="number" min="0" max="1000" value="" class="form-control control-sm"/>
 								</div>
 							</div>
 
@@ -170,14 +170,14 @@
 								<div class="col-md-3"><label for="more_profit_material_1">Winst materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="more_profit_material_1" id="more_profit_material_1" type="number" min="0" max="200" value="" class="form-control"/>
+									<input name="more_profit_material_1" id="more_profit_material_1" type="number" min="0" max="200" value="" class="form-control control-sm"/>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-3"><label for="more_profit_equipment_1">Winst materieel</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="more_profit_equipment_1" id="more_profit_equipment_1" type="number" min="0" max="200" value="" class="form-control"/>
+									<input name="more_profit_equipment_1" id="more_profit_equipment_1" type="number" min="0" max="200" value="" class="form-control control-sm"/>
 								</div>
 							</div>
 
@@ -186,14 +186,14 @@
 								<div class="col-md-3"><label for="more_profit_material_2">Winst materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="more_profit_material_2" id="more_profit_material_2" type="number" min="0" max="200" value="" class="form-control"/>
+									<input name="more_profit_material_2" id="more_profit_material_2" type="number" min="0" max="200" value="" class="form-control control-sm"/>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-3"><label for="more_profit_equipment_2">Winst materieel</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="more_profit_equipment_2" id="more_profit_equipment_2" type="number" min="0" max="200" value="" class="form-control"/>
+									<input name="more_profit_equipment_2" id="more_profit_equipment_2" type="number" min="0" max="200" value="" class="form-control control-sm"/>
 								</div>
 							</div>
 

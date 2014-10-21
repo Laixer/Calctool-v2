@@ -13,7 +13,7 @@
 				<?# -- LOGIN -- ?>
 				<div class="col-md-6">
 
-					<h2>Login</h2>
+					<h2><strong>Login</strong></h2>
 
 					{{ Form::open(array('url' => 'login', 'class' => 'white-row')) }}
 
