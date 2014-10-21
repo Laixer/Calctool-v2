@@ -107,8 +107,8 @@
 															<td class="col-md-1">$1</td>
 															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
 															<td class="col-md-1">$1</td>
-															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-2">&nbsp;</td>
+															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-2">&nbsp;</td>
 															<td class="col-md-1">
 																<select name="type" id="type" class="form-control pointer control-sm">
@@ -266,7 +266,69 @@
 					</div>
 
 					<div id="summary" class="tab-pane">
-						<p>Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+						<div class="toogle">
+
+							<div class="toggle">
+								<label>Aanneming</label>
+								<div class="toggle-content">
+
+									<table class="table table-striped">
+										<?# -- table head -- ?>
+										<thead>
+											<tr>
+												<th class="col-md-2">&nbsp;</th>
+												<th class="col-md-3">&nbsp;</th>
+												<th class="col-md-1">Arbeidsuren</th>
+												<th class="col-md-1">Arbeidskosten</th>
+												<th class="col-md-1">Materiaalkosten</th>
+												<th class="col-md-1">Materieelkosten</th>
+												<th class="col-md-3">Totaal (excl. BTW)</th>
+											</tr>
+										</thead>
+
+										<!-- table items -->
+										<tbody>
+											<tr><!-- item -->
+												<td class="col-md-2"><strong>Hoofdstuk 1</strong></td>
+												<td class="col-md-3">Werkzaamheid 1</td>
+												<td class="col-md-1">6</td>
+												<td class="col-md-1">$42</td>
+												<td class="col-md-1">$83</td>
+												<td class="col-md-1">$742</td>
+												<td class="col-md-3">$742,28</td>
+											</tr>
+											<tr><!-- item -->
+												<td class="col-md-2">&nbsp;</td>
+												<td class="col-md-3">Werkzaamheid 2</td>
+												<td class="col-md-1">6</td>
+												<td class="col-md-1">$42</td>
+												<td class="col-md-1">$83</td>
+												<td class="col-md-1">$742</td>
+												<td class="col-md-3">$742,28</td>
+											</tr>
+											<tr><!-- item -->
+												<td class="col-md-2">&nbsp;</td>
+												<td class="col-md-3">Werkzaamheid 3</td>
+												<td class="col-md-1">6</td>
+												<td class="col-md-1">$42</td>
+												<td class="col-md-1">$83</td>
+												<td class="col-md-1">$742</td>
+												<td class="col-md-3">$742,28</td>
+											</tr>
+										</tbody>
+									</table>
+
+								</div>
+							</div>
+
+							<div class="toggle">
+								<label>Onderaanneming</label>
+								<div class="toggle-content">
+									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Ut enim massa, sodales tempor convallis et, iaculis ac massa.</p>
+								</div>
+							</div>
+
+						</div>
 					</div>
 
 					<div id="endresult" class="tab-pane">
