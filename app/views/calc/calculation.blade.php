@@ -244,12 +244,10 @@
 									</div>
 									<div class="row">
 										<div class="col-md-6">
-											<div class="input-group" method="post" action="#">
-												<input type="text" class="form-control" name="k" id="k" value="" placeholder="Nieuwe Werkzaamheid">
-												<span class="input-group-btn">
-													<button class="btn btn-primary"><i class="fa fa-check"></i></button>
-												</span>
-											</div>
+											<input name="name" id="name" type="text" value="" placeholder="Nieuwe Werkzaamheid" class="form-control" />
+										</div>
+										<div class="col-md-6">
+											<button class="btn btn-primary"><i class="fa fa-comment-o"></i> Omschrijving</button>
 										</div>
 									</div>
 
@@ -273,12 +271,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-6">
-								<div class="input-group" method="post" action="#">
-									<input type="text" class="form-control" name="k" id="k" value="" placeholder="Nieuw Hoofdstuk">
-									<span class="input-group-btn">
-										<button class="btn btn-primary"><i class="fa fa-check"></i></button>
-									</span>
-								</div>
+								<input type="text" class="form-control" name="k" id="k" value="" placeholder="Nieuw Hoofdstuk">
 							</div>
 						</div>
 					</div>
