@@ -24,8 +24,10 @@
 				<div class="col-md-3">
 					<div class="featured-box nobg border-only">
 						<div class="box-content">
-							<i class="fa fa-folder-open"></i>
-							<h5>Projecten</h5>
+							<a href="/project">
+								<i class="fa fa-folder-open"></i>
+								<h5>Projecten</h5>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -42,8 +44,10 @@
 				<div class="col-md-3">
 					<div class="featured-box nobg border-only">
 						<div class="box-content">
-							<i class="fa fa-users"></i>
-							<h5>Relaties<br />&nbsp;</h5>
+							<a href="/relation">
+								<i class="fa fa-users"></i>
+								<h5>Relaties<br />&nbsp;</h5>
+							</a>
 						</div>
 					</div>
 				</div>

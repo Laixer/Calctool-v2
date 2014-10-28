@@ -49,5 +49,6 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('relation/new', array('as' => 'relation.new', 'uses' => 'RelationController@getNew'));
 	Route::get('relation', array('as' => 'relation', 'uses' => 'RelationController@getAll'));
 	Route::get('project/new', array('as' => 'project.new', 'uses' => 'ProjectController@getNew'));
+	Route::get('project', array('as' => 'project', 'uses' => 'ProjectController@getAll'));
 	Route::get('/', array('uses' => 'HomeController@getHome'));
 });

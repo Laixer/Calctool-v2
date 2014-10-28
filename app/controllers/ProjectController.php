@@ -13,4 +13,9 @@ class ProjectController extends \BaseController {
 		return View::make('user.new_project');
 	}
 
+	public function getAll()
+	{
+		return View::make('user.project');
+	}
+
 }
