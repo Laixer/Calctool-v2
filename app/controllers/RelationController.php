@@ -13,4 +13,9 @@ class RelationController extends \BaseController {
 		return View::make('user.new_relation');
 	}
 
+	public function getAll()
+	{
+		return View::make('user.relation');
+	}
+
 }
