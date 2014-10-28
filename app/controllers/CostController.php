@@ -19,4 +19,9 @@ class CostController extends BaseController {
 	{
 		return View::make('cost.timesheet');
 	}
+
+	public function getPurchase()
+	{
+		return View::make('cost.purchase');
+	}
 }

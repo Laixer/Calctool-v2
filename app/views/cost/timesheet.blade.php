@@ -171,7 +171,7 @@
 													</select>
 												</td>
 												<td class="col-md-1"><button class="btn btn-primary btn-xs fa fa-comment-o"> Notitie</button></td>
-												<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
+												<td class="col-md-1">&nbsp;</button></td>
 											</tr>
 										</tbody>
 									</table>
