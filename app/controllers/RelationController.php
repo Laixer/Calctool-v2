@@ -8,6 +8,7 @@ class RelationController extends \BaseController {
 	 *
 	 * @return Response
 	 */
+
 	public function getNew()
 	{
 		return View::make('user.new_relation');

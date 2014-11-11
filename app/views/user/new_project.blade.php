@@ -8,23 +8,42 @@
 
 		<div class="col-md-12">
 
+			@if(Session::get('success'))
+			<div class="alert alert-success">
+				<i class="fa fa-check-circle"></i>
+				<strong>Opgeslagen</strong>
+			</div>
+			@endif
+
+			@if($errors->has())
+			<div class="alert alert-danger">
+				<i class="fa fa-frown-o"></i>
+				<strong>Fout</strong>
+				@foreach ($errors->all() as $error)
+					{{ $error }}
+				@endforeach
+			</div>
+			@endif
+
 			<h2><strong>Nieuw</strong> project</h2>
 
-			<form action="#" method="post">
+			{{ Form::open(array('url' => 'project/new')) }}
 				<h4>Projectgegevens</h4>
 				<div class="row">
 
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="name">Projectnaam</label>
-							<input name="name" id="name" type="text" value="" class="form-control" />
+							<input name="name" id="name" type="text" value="{{ Input::old('name') }}" class="form-control" />
 						</div>
 					</div>
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="contractor">Opdrachtgever</label>
 							<select name="contractor" id="contractor" class="form-control pointer">
-								<option value="" selected="selected"></option>
+							@foreach (Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
+								<option value="{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
+							@endforeach
 							</select>
 						</div>
 					</div>
@@ -32,7 +51,9 @@
 						<div class="form-group">
 							<label for="type">Type</label>
 							<select name="type" id="type" class="form-control pointer">
-								<option value="" selected="selected"></option>
+								@foreach (ProjectType::all() as $type)
+									<option value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
+								@endforeach
 							</select>
 						</div>
 					</div>
@@ -45,27 +66,27 @@
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="street">Straat</label>
-							<input name="street" id="street" type="text" value="" class="form-control"/>
+							<input name="street" id="street" type="text" value="{{ Input::old('street') }}" class="form-control"/>
 						</div>
 					</div>
 					<div class="col-md-1">
 						<div class="form-group">
 							<label for="address_number">Huisnr</label>
-							<input name="address_number" id="address_number" type="text" value="" class="form-control"/>
+							<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="zipcode">Postcode</label>
-							<input name="zipcode" id="zipcode" type="text" value="" class="form-control"/>
+							<input name="zipcode" id="zipcode" type="text" value="{{ Input::old('zipcode') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="city">Plaats</label>
-							<input name="city" id="city" type="text" value="" class="form-control"/>
+							<input name="city" id="city" type="text" value="{{ Input::old('city') }}" class="form-control"/>
 						</div>
 					</div>
 
@@ -73,7 +94,20 @@
 						<div class="form-group">
 							<label for="province">Provincie</label>
 							<select name="province" id="province" class="form-control pointer">
-								<option value="" selected="selected"></option>
+								@foreach (Province::all() as $province)
+									<option value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="country">Land</label>
+							<select name="country" id="country" class="form-control pointer">
+								@foreach (Country::all() as $country)
+									<option value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
+								@endforeach
 							</select>
 						</div>
 					</div>
@@ -101,7 +135,7 @@
 								<div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
 								<div class="col-md-1"><div class="pull-right">&euro;</div></div>
 								<div class="col-md-2">
-									<input name="hour_rate" id="hour_rate" type="number" min="0" max="1000" value="" class="form-control control-sm"/>
+									<input name="hour_rate" id="hour_rate" type="number" min="0" max="1000" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : 0 }}" class="form-control control-sm"/>
 								</div>
 							</div>
 
@@ -110,14 +144,14 @@
 								<div class="col-md-3"><label for="profit_material_1">Winst materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_material_1" id="profit_material_1" type="number" min="0" max="200" value="" class="form-control control-sm"/>
+									<input name="profit_material_1" id="profit_material_1" type="number" min="0" max="200" value="{{ Input::old('profit_material_1') ? Input::old('profit_material_1') : 0 }}" class="form-control control-sm"/>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_equipment_1">Winst materieel</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_equipment_1" id="profit_equipment_1" type="number" min="0" max="200" value="" class="form-control control-sm"/>
+									<input name="profit_equipment_1" id="profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_1') ? Input::old('profit_equipment_1') : 0 }}" class="form-control control-sm"/>
 								</div>
 							</div>
 
@@ -126,14 +160,14 @@
 								<div class="col-md-3"><label for="profit_material_2">Winst materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_material_2" id="profit_material_2" type="number" min="0" max="200" value="" class="form-control control-sm"/>
+									<input name="profit_material_2" id="profit_material_2" type="number" min="0" max="200" value="{{ Input::old('profit_material_2') ? Input::old('profit_material_2') : 0 }}" class="form-control control-sm"/>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_equipment_2">Winst materieel</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_equipment_2" id="profit_equipment_2" type="number" min="0" max="200" value="" class="form-control control-sm"/>
+									<input name="profit_equipment_2" id="profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_2') ? Input::old('profit_equipment_2') : 0 }}" class="form-control control-sm"/>
 								</div>
 							</div>
 
@@ -142,14 +176,14 @@
 								<div class="col-md-3"><label for="profit_material_3">Winst materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_material_3" id="profit_material_3" type="number" min="0" max="200" value="" class="form-control control-sm"/>
+									<input name="profit_material_3" id="profit_material_3" type="number" min="0" max="200" value="{{ Input::old('profit_material_3') ? Input::old('profit_material_3') : 0 }}" class="form-control control-sm"/>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_equipment_3">Winst materieel</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_equipment_3" id="profit_equipment_3" type="number" min="0" max="200" value="" class="form-control control-sm"/>
+									<input name="profit_equipment_3" id="profit_equipment_3" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_3') ? Input::old('profit_equipment_3') : 0 }}" class="form-control control-sm"/>
 								</div>
 							</div>
 
@@ -161,7 +195,7 @@
 								<div class="col-md-3"><label for="more_hour_rate">Uurtarief excl. BTW</label></div>
 								<div class="col-md-1"><div class="pull-right">&euro;</div></div>
 								<div class="col-md-2">
-									<input name="more_hour_rate" id="more_hour_rate" type="number" min="0" max="1000" value="" class="form-control control-sm"/>
+									<input name="more_hour_rate" id="more_hour_rate" type="number" min="0" max="1000" value="{{ Input::old('more_hour_rate') ? Input::old('more_hour_rate') : 0 }}" class="form-control control-sm"/>
 								</div>
 							</div>
 
@@ -170,14 +204,14 @@
 								<div class="col-md-3"><label for="more_profit_material_1">Winst materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="more_profit_material_1" id="more_profit_material_1" type="number" min="0" max="200" value="" class="form-control control-sm"/>
+									<input name="more_profit_material_1" id="more_profit_material_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_1') ? Input::old('more_profit_material_1') : 0 }}" class="form-control control-sm"/>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-3"><label for="more_profit_equipment_1">Winst materieel</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="more_profit_equipment_1" id="more_profit_equipment_1" type="number" min="0" max="200" value="" class="form-control control-sm"/>
+									<input name="more_profit_equipment_1" id="more_profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_1') ? Input::old('more_profit_equipment_1') : 0 }}" class="form-control control-sm"/>
 								</div>
 							</div>
 
@@ -186,14 +220,14 @@
 								<div class="col-md-3"><label for="more_profit_material_2">Winst materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="more_profit_material_2" id="more_profit_material_2" type="number" min="0" max="200" value="" class="form-control control-sm"/>
+									<input name="more_profit_material_2" id="more_profit_material_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_2') ? Input::old('more_profit_material_2') : 0 }}" class="form-control control-sm"/>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-3"><label for="more_profit_equipment_2">Winst materieel</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="more_profit_equipment_2" id="more_profit_equipment_2" type="number" min="0" max="200" value="" class="form-control control-sm"/>
+									<input name="more_profit_equipment_2" id="more_profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_2') ? Input::old('more_profit_equipment_2') : 0 }}" class="form-control control-sm"/>
 								</div>
 							</div>
 
@@ -206,7 +240,7 @@
 				<div class="row">
 					<div class="form-group">
 						<div class="col-md-12">
-							<textarea name="note" id="note" rows="10" class="form-control"></textarea>
+							<textarea name="note" id="note" rows="10" class="form-control">{{ Input::old('note') }}</textarea>
 						</div>
 					</div>
 				</div>
@@ -215,7 +249,7 @@
 						<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 					</div>
 				</div>
-			</form>
+			{{ Form::close() }}
 
 		</div>
 
