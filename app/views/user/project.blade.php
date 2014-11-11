@@ -24,32 +24,20 @@
 
 				<!-- table items -->
 				<tbody>
-					<tr><!-- item -->
-						<td class="col-md-4">Onderhoudswerkzaamheden complex Amsterdam</td>
-						<td class="col-md-2">K. Aas</td>
-						<td class="col-md-1">Regiewerk</td>
-						<td class="col-md-3">Anthonie van Leeuwenhoekweg 18E</td>
-						<td class="col-md-2">Hamburg</td>
+				@foreach (Project::where('user_id','=', Auth::user()->id)->get() as $project)
+					<tr>
+						<td class="col-md-4">{{ $project->project_name }}</td>
+						<td class="col-md-2">{{ $project->contactor->company_name }}</td>
+						<td class="col-md-1">{{ $project->type->type_name }}</td>
+						<td class="col-md-3">{{ $project->address_street }}</td>
+						<td class="col-md-2">{{ $project->address_city }}</td>
 					</tr>
-					<tr><!-- item -->
-						<td class="col-md-4">Onderhoudswerkzaamheden complex Amsterdam</td>
-						<td class="col-md-2">K. Aas</td>
-						<td class="col-md-1">Regiewerk</td>
-						<td class="col-md-3">Anthonie van Leeuwenhoekweg 18E</td>
-						<td class="col-md-2">Hamburg</td>
-					</tr>
-					<tr><!-- item -->
-						<td class="col-md-4">Onderhoudswerkzaamheden complex Amsterdam</td>
-						<td class="col-md-2">K. Aas</td>
-						<td class="col-md-1">Regiewerk</td>
-						<td class="col-md-3">Anthonie van Leeuwenhoekweg 18E</td>
-						<td class="col-md-2">Hamburg</td>
-					</tr>
+				@endforeach
 				</tbody>
 			</table>
 			<div class="row">
 				<div class="col-md-12">
-					<button class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw project</button>
+					<a href="project/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw project</a>
 				</div>
 			</div>
 		</div>

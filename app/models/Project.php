@@ -9,6 +9,10 @@ class Project extends Eloquent {
 		return $this->hasOne('User');
 	}
 
+	public function contactor() {
+		return $this->hasOne('Relation', 'id', 'client_id');
+	}
+
 	public function province() {
 		return $this->hasOne('Province');
 	}
@@ -18,7 +22,7 @@ class Project extends Eloquent {
 	}
 
 	public function type() {
-		return $this->hasOne('ProjectType');
+		return $this->hasOne('ProjectType', 'id', 'type_id');
 	}
 
 }
