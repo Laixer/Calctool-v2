@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"fu",
+				"function"
+			],
+			[
 				"i",
 				"id	Attr"
 			],
@@ -71,6 +75,22 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "app/views/user/new_project.blade.php",
+			"settings":
+			{
+				"buffer_size": 10402,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/user/new_relation.blade.php",
+			"settings":
+			{
+				"buffer_size": 5339,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -83,7 +103,7 @@
 				"Git: Push"
 			],
 			[
-				"git com",
+				"git",
 				"Git: Commit"
 			],
 			[
@@ -91,8 +111,20 @@
 				"Git: Add..."
 			],
 			[
+				"git pus",
+				"Git: Push"
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
+			[
 				"git add",
 				"Git: Add..."
+			],
+			[
+				"git st",
+				"Git: Status"
 			],
 			[
 				"git c",
@@ -103,16 +135,8 @@
 				"Git: Commit"
 			],
 			[
-				"git st",
-				"Git: Status"
-			],
-			[
 				"git s",
 				"Git: Status"
-			],
-			[
-				"git",
-				"Git: Amend Commit"
 			],
 			[
 				"git co",
@@ -174,26 +198,32 @@
 	[
 		"/var/www/calctool",
 		"/var/www/calctool/app",
-		"/var/www/calctool/app/controllers",
-		"/var/www/calctool/app/database",
 		"/var/www/calctool/app/views",
-		"/var/www/calctool/app/views/auth",
-		"/var/www/calctool/app/views/calc",
-		"/var/www/calctool/app/views/generic",
-		"/var/www/calctool/app/views/layout",
-		"/var/www/calctool/app/views/user",
-		"/var/www/calctool/bootstrap",
-		"/var/www/calctool/public",
-		"/var/www/calctool/public/css"
+		"/var/www/calctool/app/views/user"
 	],
 	"file_history":
 	[
-		"/var/www/calctool/app/views/calc/calculation.blade.php",
-		"/var/www/calctool/app/views/user/new_relation.blade.php",
+		"/var/www/calctool/calctool.sublime-project",
+		"/var/www/calctool/app/views/user/project.blade.php",
+		"/var/www/calctool/app/models/Project.php",
+		"/var/www/calctool/app/models/ProjectType.php",
 		"/var/www/calctool/app/views/user/new_project.blade.php",
+		"/var/www/calctool/app/controllers/ProjectController.php",
+		"/var/www/calctool/app/models/User.php",
+		"/var/www/calctool/app/controllers/RelationController.php",
+		"/var/www/calctool/app/routes.php",
+		"/var/www/calctool/app/controllers/AuthController.php",
+		"/var/www/calctool/app/views/cost/purchase.blade.php",
+		"/var/www/calctool/app/views/cost/timesheet.blade.php",
+		"/var/www/calctool/app/controllers/CostController.php",
+		"/var/www/calctool/app/views/calc/calculation.blade.php",
+		"/var/www/calctool/app/views/base/home.blade.php",
+		"/var/www/calctool/app/views/placeholder.php",
+		"/var/www/calctool/app/views/user/relation.blade.php",
+		"/home/yorickdewid/prod_databasename.sql",
+		"/var/www/calctool/app/views/user/new_relation.blade.php",
 		"/var/www/calctool/app/views/calc/more.blade.php",
 		"/var/www/calctool/app/views/calc/less.blade.php",
-		"/var/www/calctool/app/routes.php",
 		"/var/www/calctool/app/controllers/CalcController.php",
 		"/var/www/calctool/app/views/calc/estimate.blade.php",
 		"/var/www/calctool/app/views/layout/master.blade.php",
@@ -212,7 +242,6 @@
 		"/var/www/calctool/app/filters.php",
 		"/var/www/calctool/app/views/generic/contact.blade.php",
 		"/var/www/calctool/app/views/generic/about.blade.php",
-		"/var/www/calctool/app/controllers/AuthController.php",
 		"/var/www/calctool/public/css/darkgreen.css",
 		"/var/www/calctool/public/css/color_scheme/darkgreen.css",
 		"/var/www/calctool/public/css/color_scheme/blue.css",
@@ -224,16 +253,12 @@
 		"/var/www/calctool/public/css/color_scheme/pink.css",
 		"/var/www/calctool/public/css/color_scheme/red.css",
 		"/var/www/calctool/public/css/color_scheme/yellow.css",
-		"/var/www/calctool/app/views/base/home.blade.php",
 		"/var/www/calctool/app/controllers/HomeController.php",
-		"/var/www/calctool/app/controllers/ProjectController.php",
-		"/var/www/calctool/app/controllers/RelationController.php",
 		"/var/www/calctool/app/views/user/newRelation.balde.php",
 		"/var/www/calctool/app/views/user/new_relation.balde.php",
 		"/var/www/calctool/app/views/generic/COMMIT_EDITMSG.COMMIT_EDITMSG",
 		"/var/www/calctool/public/css/layout.css",
 		"/root/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
-		"/var/www/calctool/calctool.sublime-project",
 		"/root/.config/sublime-text-3/Settings/SideBarEnhancements.json",
 		"/var/www/calctool/app/config/local/app.php",
 		"/root/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
@@ -250,7 +275,6 @@
 		"/var/www/calctool/app/config/local/session.php",
 		"/var/www/calctool/app/config/database.php",
 		"/var/www/calctool/app/config/cache.php",
-		"/var/www/calctool/app/models/User.php",
 		"/var/www/HTML/page-404.html",
 		"/var/www/calctool/app/config/workbench.php",
 		"/var/www/calctool/app/config/mail.php",
@@ -305,17 +329,8 @@
 		"/var/www/calctool/app/models/Contact.php",
 		"/var/www/calctool/app/models/Resource.php",
 		"/var/www/calctool/app/models/ProjectStatus.php",
-		"/var/www/calctool/app/models/Project.php",
 		"/var/www/calctool/app/models/ProjectStep.php",
-		"/var/www/calctool/app/models/ProjectType.php",
-		"/var/www/calctool/app/models/Country.php",
-		"/var/www/calctool/app/models/Province.php",
-		"/var/www/calctool/app/models/Payment.php",
-		"/var/www/calctool/app/models/Iban.php",
-		"/var/www/calctool/app/models/UserType.php",
-		"/var/www/calctool/app/database/seeds/StaticSeeder.php",
-		"/var/www/calctool/app/database/seeds/DatabaseSeeder.php",
-		"/var/www/calctool/app/models/Provance.php"
+		"/var/www/calctool/app/models/Country.php"
 	],
 	"find":
 	{
@@ -335,6 +350,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"test_projecttype",
+			"nieuw",
+			"success",
+			"87.211.99.157",
 			"table",
 			"tab",
 			"cust",
@@ -376,6 +395,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"127.0.0.1",
 			"719E00"
 		],
 		"reverse": false,
@@ -387,8 +407,67 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "app/views/user/new_project.blade.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10402,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2921,
+								2921
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Laravel Blade Highlighter/laravel-blade.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1125.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/views/user/new_relation.blade.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5339,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2441,
+								2441
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Laravel Blade Highlighter/laravel-blade.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 965.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -469,7 +548,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 306.0,
+	"side_bar_width": 331.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
