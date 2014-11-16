@@ -27,7 +27,7 @@ class StaticSeeder extends Seeder {
 		DB::table('province')->delete();
 		DB::table('user_type')->delete();
 		$this->command->info('Tables deleted');
-		
+
 		UserType::create(array('user_type' => 'demo'));
 		UserType::create(array('user_type' => 'guest'));
 		UserType::create(array('user_type' => 'user'));
@@ -190,7 +190,7 @@ class StaticSeeder extends Seeder {
 		ContactFunction::create(array('function_name' => 'bestekschrijver'));
 		ContactFunction::create(array('function_name' => 'calculator'));
 		$this->command->info('ContactFunction created');
-		
+
 		RelationType::create(array('type_name' => 'aannemer'));
 		RelationType::create(array('type_name' => 'adviesbureau'));
 		RelationType::create(array('type_name' => 'afvalverwerker'));

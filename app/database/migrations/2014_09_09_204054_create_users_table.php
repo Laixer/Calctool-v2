@@ -80,7 +80,7 @@ class CreateUsersTable extends Migration {
 		Schema::create('iban', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('iban', 25)->unique();
+			$table->string('iban', 25);
 			$table->string('iban_name');
 			$table->integer('user_id')->unsigned()->nullable();
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
