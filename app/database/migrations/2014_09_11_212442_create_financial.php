@@ -72,7 +72,7 @@ class CreateFinancial extends Migration {
 			$table->text('closure')->nullable();
 			$table->boolean('auto_email_reminder')->default('Y');
 			$table->integer('offer_id')->unsigned();
-			$table->foreign('offer_id')->references('id')->on('offer')->onUpdate('cascade')->onDelete('restrict');
+			$table->foreign('offer_id')->references('id')->on('offer')->onUpdate('cascade')->onDelete('cascade');
 		});
 	}
 

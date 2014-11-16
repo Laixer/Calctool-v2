@@ -35,7 +35,7 @@ class CreateUsersTable extends Migration {
 			$table->boolean('active')->default('Y');
 			$table->dateTime('banned')->nullable();
 			$table->dateTime('confirmed_mail')->nullable();
-			$table->date('registration_date')->default(DB::raw('now()::timestamp(0)'));	
+			$table->date('registration_date')->default(DB::raw('now()::timestamp(0)'));
 			$table->dateTime('last_active')->nullable();
 			$table->char('promotion_code', 32)->unique();
 			$table->string('address_street', 60);
@@ -82,7 +82,7 @@ class CreateUsersTable extends Migration {
 			$table->increments('id');
 			$table->string('iban', 25)->unique();
 			$table->string('iban_name');
-			$table->integer('user_id')->unsigned();
+			$table->integer('user_id')->unsigned()->nullable();
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
 		});
 

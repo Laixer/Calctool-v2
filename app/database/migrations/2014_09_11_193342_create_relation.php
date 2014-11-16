@@ -38,7 +38,7 @@ class CreateRelation extends Migration {
 		Schema::create('relation', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('company_name', 50)->index();
+			$table->string('company_name', 50)->nullable();
 			$table->string('address_street', 50);
 			$table->string('address_number', 5);
 			$table->string('address_postal', 6);
@@ -47,7 +47,7 @@ class CreateRelation extends Migration {
 			$table->string('btw', 14)->nullable();
 			$table->string('debtor_code', 10)->index();
 			$table->integer('phone')->nullable()->unsigned();
-			$table->string('email', 80);
+			$table->string('email', 80)->nullable();
 			$table->text('note')->nullable();
 			$table->string('website', 180)->nullable();
 			$table->nullableTimestamps();
@@ -55,7 +55,7 @@ class CreateRelation extends Migration {
 			$table->foreign('logo_id')->references('id')->on('resource')->onUpdate('cascade')->onDelete('set null');
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
-			$table->integer('type_id')->unsigned();
+			$table->integer('type_id')->unsigned()->nullable();
 			$table->foreign('type_id')->references('id')->on('relation_type')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('kind_id')->unsigned();
 			$table->foreign('kind_id')->references('id')->on('relation_kind')->onUpdate('cascade')->onDelete('restrict');
@@ -70,7 +70,7 @@ class CreateRelation extends Migration {
 			$table->increments('id');
 			$table->string('firstname', 30)->nullable();
 			$table->string('lastname', 50);
-			$table->string('email', 80)->unique();
+			$table->string('email', 80);
 			$table->integer('mobile')->nullable()->unsigned();
 			$table->integer('phone')->nullable()->unsigned();
 			$table->text('note')->nullable();
@@ -88,7 +88,7 @@ class CreateRelation extends Migration {
 
 		Schema::table('iban', function(Blueprint $table)
 		{
-			$table->integer('relation_id')->unsigned();
+			$table->integer('relation_id')->unsigned()->nullable();
 			$table->foreign('relation_id')->references('id')->on('relation')->onUpdate('cascade')->onDelete('cascade');
 		});
 
