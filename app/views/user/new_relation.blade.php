@@ -10,14 +10,16 @@
 
 			<h2><strong>Nieuwe</strong> relatie</h2>
 
-			<form action="#" method="post">
+				{{ Form::open(array('url' => 'relation/new')) }}
 				<div class="row">
 
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="relationkind">Relatiesoort</label>
 							<select name="relationkind" id="relationkind" class="form-control pointer">
-								<option value="" selected="selected"></option>
+							@foreach (RelationKind::all() as $kind)
+								<option value="{{ $kind->id }}">{{ ucwords($kind->kind_name) }}</option>
+							@endforeach
 							</select>
 						</div>
 					</div>
@@ -29,7 +31,7 @@
 
 					<div class="col-md-8">
 						<div class="form-group">
-							<label for="company_name">Bedrijfsnaam</label>
+							<label for="company_			{{ Form::close() }}name">Bedrijfsnaam</label>
 							<input name="company_name" id="company_name" type="text" value="" class="form-control" />
 						</div>
 					</div>
@@ -37,7 +39,9 @@
 						<div class="form-group">
 							<label for="company_type">Bedrijfstype</label>
 							<select name="company_type" id="company_type" class="form-control pointer">
-								<option value="" selected="selected"></option>
+							@foreach (RelationType::all() as $type)
+								<option value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
+							@endforeach
 							</select>
 						</div>
 					</div>
@@ -130,6 +134,27 @@
 						</div>
 					</div>
 
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="telephone_comp">Telefoonnr</label>
+							<input name="telephone_comp" id="telephone_comp" type="number" value="" class="form-control"/>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="email_comp">Email</label>
+							<input name="email_comp" id="email_comp" type="text" value="" class="form-control"/>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="website">Website</label>
+							<input name="website" id="website" type="text" value="" class="form-control"/>
+						</div>
+					</div>
+
 				</div>
 
 				<h4>Contactgegevens</h4>
@@ -185,7 +210,7 @@
 						<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 					</div>
 				</div>
-			</form>
+			{{ Form::close() }}
 
 		</div>
 
