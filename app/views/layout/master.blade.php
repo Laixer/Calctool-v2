@@ -40,6 +40,9 @@
 
 		<?# -- Morenizr -- ?>
 		{{ HTML::script('plugins/modernizr.min.js') }}
+
+		<?# -- JQuery -- ?>
+		{{ HTML::script('plugins/jquery-2.0.3.min.js') }}
 	</head>
 	<body>
 
@@ -58,7 +61,6 @@
 		@show
 
 		<?# -- JAVASCRIPT FILES -- ?>
-		{{ HTML::script('plugins/jquery-2.0.3.min.js') }}
 		{{ HTML::script('plugins/jquery.easing.1.3.js') }}
 		{{ HTML::script('plugins/jquery.cookie.js') }}
 		{{ HTML::script('plugins/jquery.appear.js') }}
