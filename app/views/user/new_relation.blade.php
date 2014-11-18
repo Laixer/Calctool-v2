@@ -30,7 +30,7 @@
 				{{ Form::open(array('url' => 'relation/new')) }}
 				<div class="row">
 
-					<div class="col-md-4">
+					<div class="col-md-2">
 						<div class="form-group">
 							<label for="relationkind">Relatiesoort</label>
 							<select name="relationkind" id="relationkind" class="form-control pointer">
@@ -41,9 +41,9 @@
 						</div>
 					</div>
 
-					<div class="col-md-4">
+					<div class="col-md-2">
 						<div class="form-group">
-							<label for="debtor">Debiteurnr</label>
+							<label for="debtor">Debiteurennummer</label>
 							<input name="debtor" id="debtor" type="text" value="{{ Input::old('debtor') }}" class="form-control"/>
 						</div>
 					</div>
@@ -53,14 +53,14 @@
 				<h4 class="company">Bedrijfsgegevens</h4>
 				<div class="row company">
 
-					<div class="col-md-8">
+					<div class="col-md-5">
 						<div class="form-group">
 							<label for="company_name">Bedrijfsnaam</label>
 							<input name="company_name" id="company_name" type="text" value="{{ Input::old('company_name') }}" class="form-control" />
 						</div>
 					</div>
 
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<div class="form-group">
 							<label for="company_type">Bedrijfstype</label>
 							<select name="company_type" id="company_type" class="form-control pointer">
@@ -73,22 +73,29 @@
 
 					<div class="col-md-4">
 						<div class="form-group">
-							<label for="kvk">KVK nr</label>
-							<input name="kvk" id="kvk" type="number" value="{{ Input::old('kvk') }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div class="form-group">
-							<label for="btw">BTW nr</label>
-							<input name="btw" id="btw" type="text" value="{{ Input::old('btw') }}" class="form-control"/>
+							<label for="website">Website</label>
+							<input name="website" id="website" type="url" value="{{ Input::old('website') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="telephone_comp">Telefoonnr</label>
-							<input name="telephone_comp" id="telephone_comp" type="number" value="{{ Input::old('telephone_comp') }}" class="form-control"/>
+							<label for="kvk">K.v.K nummer</label>
+							<input name="kvk" id="kvk" type="text" maxlength="12" value="{{ Input::old('kvk') }}" class="form-control"/>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="btw">BTW nummer</label>
+							<input name="btw" id="btw" type="text" maxlength="14" value="{{ Input::old('btw') }}" class="form-control"/>
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="telephone_comp">Telefoonnummer</label>
+							<input name="telephone_comp" id="telephone_comp" type="text" maxlength="12" value="{{ Input::old('telephone_comp') }}" class="form-control"/>
 						</div>
 					</div>
 
@@ -99,12 +106,6 @@
 						</div>
 					</div>
 
-					<div class="col-md-3">
-						<div class="form-group">
-							<label for="website">Website</label>
-							<input name="website" id="website" type="url" value="{{ Input::old('website') }}" class="form-control"/>
-						</div>
-					</div>
 				</div>
 
 				<h4>Contactgegevens</h4>
@@ -127,14 +128,14 @@
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="mobile">Mobiel</label>
-							<input name="mobile" id="mobile" type="text" value="{{ Input::old('mobile') }}" class="form-control"/>
+							<input name="mobile" id="mobile" type="text" maxlength="12" value="{{ Input::old('mobile') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-2">
 						<div class="form-group">
-							<label for="telephone">Telefoonnr</label>
-							<input name="telephone" id="telephone" type="text" value="{{ Input::old('telephone') }}" class="form-control"/>
+							<label for="telephone">Telefoonnummer</label>
+							<input name="telephone" id="telephone" type="text" maxlength="12" value="{{ Input::old('telephone') }}" class="form-control"/>
 						</div>
 					</div>
 
@@ -145,7 +146,7 @@
 						</div>
 					</div>
 
-					<div class="col-md-4">
+					<div class="col-md-4 company">
 						<div class="form-group">
 							<label for="contactfunction">Functie</label>
 							<select name="contactfunction" id="contactfunction" class="form-control pointer">
@@ -170,7 +171,7 @@
 
 					<div class="col-md-1">
 						<div class="form-group">
-							<label for="address_number">Huisnr</label>
+							<label for="address_number">Huis nr.</label>
 							<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') }}" class="form-control"/>
 						</div>
 					</div>
@@ -225,7 +226,7 @@
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="btw">IBAN naam rekeningnummer </label>
+							<label for="btw">Naam rekeninghouder</label>
 							<input name="iban_name" id="iban_name" type="text" value="{{ Input::old('iban_name') }}" class="form-control"/>
 						</div>
 					</div>
