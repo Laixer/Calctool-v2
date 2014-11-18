@@ -43,10 +43,10 @@ class CreateRelation extends Migration {
 			$table->string('address_number', 5);
 			$table->string('address_postal', 6);
 			$table->string('address_city', 35);
-			$table->bigInteger('kvk')->nullable();
-			$table->string('btw', 14)->nullable();
+			$table->char('kvk', 12)->nullable();
+			$table->char('btw', 14)->nullable();
 			$table->string('debtor_code', 10)->index();
-			$table->bigInteger('phone')->nullable()->unsigned();
+			$table->string('phone', 12)->nullable();
 			$table->string('email', 80)->nullable();
 			$table->text('note')->nullable();
 			$table->string('website', 180)->nullable();
@@ -71,8 +71,8 @@ class CreateRelation extends Migration {
 			$table->string('firstname', 30)->nullable();
 			$table->string('lastname', 50);
 			$table->string('email', 80);
-			$table->bigInteger('mobile')->nullable()->unsigned();
-			$table->bigInteger('phone')->nullable()->unsigned();
+			$table->string('mobile', 12)->nullable();
+			$table->string('phone', 12)->nullable();
 			$table->text('note')->nullable();
 			$table->integer('relation_id')->unsigned();
 			$table->foreign('relation_id')->references('id')->on('relation')->onUpdate('cascade')->onDelete('cascade');

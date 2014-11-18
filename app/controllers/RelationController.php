@@ -23,16 +23,16 @@ class RelationController extends \BaseController {
 			/* Company */
 			'company_type' => 'required_if:relationkind,zakelijk|numeric',
 			'company_name' => 'required_if:relationkind,zakelijk|max:50',
-			'kvk' => 'numeric|max:12',
-			'btw' => 'alpha_num|max:14',
-			'telephone_comp' => 'numeric|max:14',
+			'kvk' => 'numeric|min:12',
+			'btw' => 'alpha_num|min:14',
+			'telephone_comp' => 'alpha_num|max:12',
 			'email_comp' => 'required_if:relationkind,zakelijk|email|max:80',
 			'website' => 'url|max:180',
 			/* Contact */
 			'contact_name' => 'required|max:50',
 			'contact_firstname' => 'required|max:30',
-			'mobile' => 'numeric|max:14',
-			'telephone' => 'numeric|max:14',
+			'mobile' => 'alpha_num|max:14',
+			'telephone' => 'alpha_num|max:14',
 			'email' => 'required|email|max:80',
 			'contactfunction' => 'required|numeric',
 			/* Adress */
@@ -52,6 +52,9 @@ class RelationController extends \BaseController {
 
 		if ($validator->fails()) {
 			$messages = $validator->messages();
+
+			$test = Input::get('kvk');
+			echo 'len '.strlen($test);
 
 			// redirect our user back to the form with the errors from the validator
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());

@@ -130,8 +130,8 @@ class TestProjectSeeder extends Seeder {
 			'address_number' => '11',
 			'address_postal' => '1234AB',
 			'address_city' => 'Rotterdam',
-			'kvk' => '1234567',
-			'btw' => '12345678912345',
+			'kvk' => '174365278954',
+			'btw' => '214855241B01',
 			'debtor_code' => 'UG83824',
 			'phone' => '0612345678',
 			'email' => 'info@website.nl',
@@ -408,7 +408,7 @@ class TestProjectSeeder extends Seeder {
 			'rate' => '102.33',
 			'amount' => '3404.56',
 			'set_rate' => '404.56',
-			'set_amount' => '1404.56',	
+			'set_amount' => '1404.56',
 			'activity_id' => $test_activity2->id,
 			'tax_id' => $test_tax->id,
 			'hour_id' => $test_timesheet->id
@@ -421,9 +421,9 @@ class TestProjectSeeder extends Seeder {
 			'rate' => '50.24',
 			'amount' => '511.22',
 			'set_material_name' => 'plankje meer',
-			'set_unit' => 'm2',	
+			'set_unit' => 'm2',
 			'set_rate' => '604.56',
-			'set_amount' => '604.56',	
+			'set_amount' => '604.56',
 			'activity_id' => $test_activity3->id,
 			'tax_id' => $test_tax->id
 		));
@@ -435,9 +435,9 @@ class TestProjectSeeder extends Seeder {
 			'rate' => '1212.23',
 			'amount' => '12101.25',
 			'set_equipment_name' => 'knipper meer',
-			'set_unit' => 'stuk',	
+			'set_unit' => 'stuk',
 			'set_rate' => '64.56',
-			'set_amount' => '6.56',	
+			'set_amount' => '6.56',
 			'activity_id' => $test_activity3->id,
 			'tax_id' => $test_tax->id
 		));
