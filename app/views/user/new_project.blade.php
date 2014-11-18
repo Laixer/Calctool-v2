@@ -71,7 +71,7 @@
 					</div>
 					<div class="col-md-1">
 						<div class="form-group">
-							<label for="address_number">Huisnr</label>
+							<label for="address_number">Huis nr.</label>
 							<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') }}" class="form-control"/>
 						</div>
 					</div>
@@ -132,7 +132,7 @@
 						<div id="calc" class="tab-pane active">
 							<h5><strong>Eigen uurtarief</strong></h5>
 							<div class="row">
-								<div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
+								<div class="col-md-2"><label for="hour_rate">Uurtarief excl. BTW</label></div>
 								<div class="col-md-1"><div class="pull-right">&euro;</div></div>
 								<div class="col-md-2">
 									<input name="hour_rate" id="hour_rate" type="number" min="0" max="1000" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : 0 }}" class="form-control control-sm"/>
@@ -141,15 +141,13 @@
 
 							<h5><strong>Aanneming</strong></h5>
 							<div class="row">
-								<div class="col-md-3"><label for="profit_material_1">Winst materiaal</label></div>
-								<div class="col-md-1"><div class="pull-right">%</div></div>
+								<div class="col-md-3"><label for="profit_material_1">Winstpercentage materiaal</label></div>
 								<div class="col-md-2">
 									<input name="profit_material_1" id="profit_material_1" type="number" min="0" max="200" value="{{ Input::old('profit_material_1') ? Input::old('profit_material_1') : 0 }}" class="form-control control-sm"/>
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-3"><label for="profit_equipment_1">Winst materieel</label></div>
-								<div class="col-md-1"><div class="pull-right">%</div></div>
+								<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage materieel</label></div>
 								<div class="col-md-2">
 									<input name="profit_equipment_1" id="profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_1') ? Input::old('profit_equipment_1') : 0 }}" class="form-control control-sm"/>
 								</div>
@@ -157,15 +155,13 @@
 
 							<h5><strong>Onderaanneming</strong></h5>
 							<div class="row">
-								<div class="col-md-3"><label for="profit_material_2">Winst materiaal</label></div>
-								<div class="col-md-1"><div class="pull-right">%</div></div>
+								<div class="col-md-3"><label for="profit_material_2">Winstpercentage materiaal</label></div>
 								<div class="col-md-2">
 									<input name="profit_material_2" id="profit_material_2" type="number" min="0" max="200" value="{{ Input::old('profit_material_2') ? Input::old('profit_material_2') : 0 }}" class="form-control control-sm"/>
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-3"><label for="profit_equipment_2">Winst materieel</label></div>
-								<div class="col-md-1"><div class="pull-right">%</div></div>
+								<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage materieel</label></div>
 								<div class="col-md-2">
 									<input name="profit_equipment_2" id="profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_2') ? Input::old('profit_equipment_2') : 0 }}" class="form-control control-sm"/>
 								</div>
@@ -173,15 +169,13 @@
 
 							<h5><strong>Stelpost</strong></h5>
 							<div class="row">
-								<div class="col-md-3"><label for="profit_material_3">Winst materiaal</label></div>
-								<div class="col-md-1"><div class="pull-right">%</div></div>
+								<div class="col-md-3"><label for="profit_material_3">Winstpercentage materiaal</label></div>
 								<div class="col-md-2">
 									<input name="profit_material_3" id="profit_material_3" type="number" min="0" max="200" value="{{ Input::old('profit_material_3') ? Input::old('profit_material_3') : 0 }}" class="form-control control-sm"/>
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-3"><label for="profit_equipment_3">Winst materieel</label></div>
-								<div class="col-md-1"><div class="pull-right">%</div></div>
+								<div class="col-md-3"><label for="profit_equipment_3">Winstpercentage materieel</label></div>
 								<div class="col-md-2">
 									<input name="profit_equipment_3" id="profit_equipment_3" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_3') ? Input::old('profit_equipment_3') : 0 }}" class="form-control control-sm"/>
 								</div>
@@ -192,7 +186,7 @@
 						<div id="more" class="tab-pane">
 							<h5><strong>Eigen uurtarief</strong></h5>
 							<div class="row">
-								<div class="col-md-3"><label for="more_hour_rate">Uurtarief excl. BTW</label></div>
+								<div class="col-md-2"><label for="more_hour_rate">Uurtarief excl. BTW</label></div>
 								<div class="col-md-1"><div class="pull-right">&euro;</div></div>
 								<div class="col-md-2">
 									<input name="more_hour_rate" id="more_hour_rate" type="number" min="0" max="1000" value="{{ Input::old('more_hour_rate') ? Input::old('more_hour_rate') : 0 }}" class="form-control control-sm"/>
@@ -201,15 +195,13 @@
 
 							<h5><strong>Aanneming</strong></h5>
 							<div class="row">
-								<div class="col-md-3"><label for="more_profit_material_1">Winst materiaal</label></div>
-								<div class="col-md-1"><div class="pull-right">%</div></div>
+								<div class="col-md-3"><label for="more_profit_material_1">Winstpercentage materiaal</label></div>
 								<div class="col-md-2">
 									<input name="more_profit_material_1" id="more_profit_material_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_1') ? Input::old('more_profit_material_1') : 0 }}" class="form-control control-sm"/>
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-3"><label for="more_profit_equipment_1">Winst materieel</label></div>
-								<div class="col-md-1"><div class="pull-right">%</div></div>
+								<div class="col-md-3"><label for="more_profit_equipment_1">Winstpercentage materieel</label></div>
 								<div class="col-md-2">
 									<input name="more_profit_equipment_1" id="more_profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_1') ? Input::old('more_profit_equipment_1') : 0 }}" class="form-control control-sm"/>
 								</div>
@@ -217,15 +209,13 @@
 
 							<h5><strong>Onderaanneming</strong></h5>
 							<div class="row">
-								<div class="col-md-3"><label for="more_profit_material_2">Winst materiaal</label></div>
-								<div class="col-md-1"><div class="pull-right">%</div></div>
+								<div class="col-md-3"><label for="more_profit_material_2">Winstpercentage materiaal</label></div>
 								<div class="col-md-2">
 									<input name="more_profit_material_2" id="more_profit_material_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_2') ? Input::old('more_profit_material_2') : 0 }}" class="form-control control-sm"/>
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-3"><label for="more_profit_equipment_2">Winst materieel</label></div>
-								<div class="col-md-1"><div class="pull-right">%</div></div>
+								<div class="col-md-3"><label for="more_profit_equipment_2">Winstpercentage materieel</label></div>
 								<div class="col-md-2">
 									<input name="more_profit_equipment_2" id="more_profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_2') ? Input::old('more_profit_equipment_2') : 0 }}" class="form-control control-sm"/>
 								</div>
