@@ -33,7 +33,7 @@
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="relationkind">Relatiesoort</label>
-							<select name="relationkind" id="relationkind" class="form-control pointer" onchange="$('.company').toggle('slow')">
+							<select name="relationkind" id="relationkind" class="form-control pointer">
 							@foreach (RelationKind::all() as $kind)
 								<option value="{{ $kind->id }}">{{ ucwords($kind->kind_name) }}</option>
 							@endforeach
@@ -252,5 +252,18 @@
 	</section>
 
 </div>
-<!-- /WRAPPER -->
+<?#-- /WRAPPER --?>
+<script type="text/javascript">
+$(document).ready(function() {
+	<?php $response = RelationKind::where('id','=',Input::old('relationkind'))->first(); ?>
+	if('{{ ($response ? $response->kind_name : 'zakelijk') }}'=='particulier'){
+		$('.company').hide();
+		$('#relationkind option[value="{{ Input::old('relationkind') }}"]').attr("selected",true);
+	}
+	$('#relationkind').change(function() {
+		$('.company').toggle('slow');
+		console.log('check');
+	});
+});
+</script>
 @stop
