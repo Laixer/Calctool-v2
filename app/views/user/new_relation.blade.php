@@ -178,7 +178,7 @@
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="zipcode">Postcode</label>
-							<input name="zipcode" id="zipcode" type="text" value="{{ Input::old('zipcode') }}" class="form-control"/>
+							<input name="zipcode" id="zipcode" maxlength="6" type="text" value="{{ Input::old('zipcode') }}" class="form-control"/>
 						</div>
 					</div>
 
