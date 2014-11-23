@@ -103,13 +103,13 @@
 														<tr><!-- item -->
 															<td class="col-md-2">Per Uur</td>
 															<td class="col-md-1">$1</td>
-															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
+															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control-number control-sm" /></td>
 															<td class="col-md-1">$1</td>
 															<td class="col-md-2">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-2">&nbsp;</td>
 															<td class="col-md-1">
-																<select name="type" id="type" class="form-control pointer control-sm">
+																<select name="type" id="type" class="form-control-number pointer control-sm">
 																	<option value="" selected="selected"></option>
 																</select>
 															</td>
@@ -137,14 +137,14 @@
 													<!-- table items -->
 													<tbody>
 														<tr>
-															<td class="col-md-3"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
-															<td class="col-md-2"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
-															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
-															<td class="col-md-1"><input name="name" id="name" type="number" min="0" value="" class="form-control control-sm" /></td>
+															<td class="col-md-3"><input name="name" id="name" type="text" value="" class="form-control-number control-sm" /></td>
+															<td class="col-md-2"><input name="name" id="name" type="text" value="" class="form-control-number control-sm" /></td>
+															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control-number control-sm" /></td>
+															<td class="col-md-1"><input name="name" id="name" type="number" min="0" value="" class="form-control-number control-sm" /></td>
 															<td class="col-md-1 centering">$20.000,00</td>
 															<td class="col-md-2">$40</td>
 															<td class="col-md-1">
-																<select name="type" id="type" class="form-control pointer control-sm">
+																<select name="type" id="type" class="form-control-number pointer control-sm">
 																	<option value="" selected="selected">0</option>
 																	<option value="">9</option>
 																	<option value="">21</option>
@@ -153,14 +153,14 @@
 															<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
 														</tr>
 														<tr>
-															<td class="col-md-3"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
-															<td class="col-md-2"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
-															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
-															<td class="col-md-1"><input name="name" id="name" type="number" min="0" value="" class="form-control control-sm" /></td>
+															<td class="col-md-3"><input name="name" id="name" type="text" value="" class="form-control-number control-sm" /></td>
+															<td class="col-md-2"><input name="name" id="name" type="text" value="" class="form-control-number control-sm" /></td>
+															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control-number control-sm" /></td>
+															<td class="col-md-1"><input name="name" id="name" type="number" min="0" value="" class="form-control-number control-sm" /></td>
 															<td class="col-md-1">$20.000,00</td>
 															<td class="col-md-2">$40</td>
 															<td class="col-md-1">
-																<select name="type" id="type" class="form-control pointer control-sm">
+																<select name="type" id="type" class="form-control-number pointer control-sm">
 																	<option value="" selected="selected">0</option>
 																	<option value="">9</option>
 																	<option value="">21</option>
@@ -190,14 +190,14 @@
 													<!-- table items -->
 													<tbody>
 														<tr>
-															<td class="col-md-3"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
-															<td class="col-md-2"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
-															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
-															<td class="col-md-1"><input name="name" id="name" type="number" min="0" value="" class="form-control control-sm" /></td>
+															<td class="col-md-3"><input name="name" id="name" type="text" value="" class="form-control-number control-sm" /></td>
+															<td class="col-md-2"><input name="name" id="name" type="text" value="" class="form-control-number control-sm" /></td>
+															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control-number control-sm" /></td>
+															<td class="col-md-1"><input name="name" id="name" type="number" min="0" value="" class="form-control-number control-sm" /></td>
 															<td class="col-md-1">$20.000,00</td>
 															<td class="col-md-2">$40</td>
 															<td class="col-md-1">
-																<select name="type" id="type" class="form-control pointer control-sm">
+																<select name="type" id="type" class="form-control-number pointer control-sm">
 																	<option value="" selected="selected">0</option>
 																	<option value="">9</option>
 																	<option value="">21</option>
@@ -206,14 +206,14 @@
 															<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
 														</tr>
 														<tr>
-															<td class="col-md-3"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
-															<td class="col-md-2"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
-															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control control-sm" /></td>
-															<td class="col-md-1"><input name="name" id="name" type="number" min="0" value="" class="form-control control-sm" /></td>
+															<td class="col-md-3"><input name="name" id="name" type="text" value="" class="form-control-number control-sm" /></td>
+															<td class="col-md-2"><input name="name" id="name" type="text" value="" class="form-control-number control-sm" /></td>
+															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control-number control-sm" /></td>
+															<td class="col-md-1"><input name="name" id="name" type="number" min="0" value="" class="form-control-number control-sm" /></td>
 															<td class="col-md-1">$20.000,00</td>
 															<td class="col-md-2">$40</td>
 															<td class="col-md-1">
-																<select name="type" id="type" class="form-control pointer control-sm">
+																<select name="type" id="type" class="form-control-number pointer control-sm">
 																	<option value="" selected="selected">0</option>
 																	<option value="">9</option>
 																	<option value="">21</option>
