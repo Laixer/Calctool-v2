@@ -54,8 +54,9 @@
 					<div id="calculate" class="tab-pane active">
 						<div class="toogle">
 
+							@foreach (Chapter::where('project_id','=', Route::Input('project_id'))->get() as $chapter)
 							<div class="toggle">
-								<label>Hoofdstuk 1</label>
+								<label>{{ $chapter->chapter_name }}</label>
 								<div class="toggle-content">
 
 									<div class="toogle">
@@ -241,6 +242,7 @@
 									{{ Form::close() }}
 								</div>
 							</div>
+							@endforeach
 						</div>
 
 						{{ Form::open(array('url' => '/calculation/newchapter/'.Route::Input('project_id'))) }}
