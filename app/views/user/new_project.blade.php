@@ -27,6 +27,13 @@
 
 			<h2><strong>Nieuw</strong> project</h2>
 
+			@if(!Relation::where('user_id','=', Auth::user()->id)->count())
+			<div class="alert alert-info">
+				<i class="fa fa-info-circle"></i>
+				<strong>Let Op!</strong> Maak eerst een opdrachtgever aan onder {{ HTML::link('/relation/new', 'nieuwe relatie') }}.
+			</div>
+			@endif
+
 			{{ Form::open(array('url' => 'project/new')) }}
 				<h4>Projectgegevens</h4>
 				<div class="row">
