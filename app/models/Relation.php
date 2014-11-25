@@ -26,7 +26,7 @@ class Relation extends Eloquent {
 	}
 
 	public function kind() {
-		return $this->hasOne('RelationKind');
+		return $this->hasOne('RelationKind', 'id');
 	}
 
 }
