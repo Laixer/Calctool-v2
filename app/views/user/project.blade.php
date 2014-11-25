@@ -26,7 +26,7 @@
 				<tbody>
 				@foreach (Project::where('user_id','=', Auth::user()->id)->get() as $project)
 					<tr>
-						<td class="col-md-4">{{ $project->project_name }}</td>
+						<td class="col-md-4">{{ HTML::link('calculation/'.$project->id, $project->project_name) }}</td>
 						<td class="col-md-2">{{ $project->contactor->company_name }}</td>
 						<td class="col-md-1">{{ $project->type->type_name }}</td>
 						<td class="col-md-3">{{ $project->address_street }}</td>

@@ -26,7 +26,7 @@
 
 			<hr />
 
-			<h2><strong>Calculeren</strong></h2>
+			<h2><strong>Calculeren</strong> {{ Route::Input('project_id')}} </h2>
 
 			<div class="tabs nomargin">
 
@@ -223,58 +223,53 @@
 														</tr>
 													</tbody>
 												</table>
-
 											</div>
 										</div>
-
-										<div class="toggle">
-											<label>Werkzaamheid 2</label>
-											<div class="toggle-content">
-												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Ut enim massa, sodales tempor convallis et, iaculis ac massa.</p>
-											</div>
-										</div>
-
-										<div class="toggle">
-											<label>Werkzaamheid 3</label>
-											<div class="toggle-content">
-												<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Ut enim massa, sodales tempor convallis et, iaculis ac massa.</p>
-											</div>
-										</div>
-
 									</div>
+
+									{{ Form::open(array('url' => '/calculation/newactivity/'.Route::Input('project_id'))) }}
 									<div class="row">
 										<div class="col-md-6">
-											<input name="name" id="name" type="text" value="" placeholder="Nieuwe Werkzaamheid" class="form-control" />
-										</div>
-										<div class="col-md-6">
-											<button class="btn btn-primary"><i class="fa fa-comment-o"></i> Omschrijving</button>
+											<div class="input-group">
+												<input type="text" class="form-control" name="activity" id="activity" value="" placeholder="Nieuwe Werkzaamheid">
+												<span class="input-group-btn">
+													<button class="btn btn-primary">Voeg toe</button>
+												</span>
+											</div>
 										</div>
 									</div>
-
+									{{ Form::close() }}
 								</div>
 							</div>
-
-							<div class="toggle">
-								<label>Hoofdstuk 2</label>
-								<div class="toggle-content">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Ut enim massa, sodales tempor convallis et, iaculis ac massa.</p>
-								</div>
-							</div>
-
-							<div class="toggle">
-								<label>Hoofdstuk 3</label>
-								<div class="toggle-content">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Ut enim massa, sodales tempor convallis et, iaculis ac massa.</p>
-								</div>
-							</div>
-
 						</div>
+
+						{{ Form::open(array('url' => '/calculation/newchapter/'.Route::Input('project_id'))) }}
 						<div class="row">
 							<div class="col-md-6">
-								<input type="text" class="form-control" name="k" id="k" value="" placeholder="Nieuw Hoofdstuk">
+								<div class="input-group">
+									<input type="text" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw Hoofdstuk">
+									<span class="input-group-btn">
+										<button class="btn btn-primary">Voeg toe</button>
+									</span>
+								</div>
 							</div>
 						</div>
+						{{ Form::close() }}
+
 					</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 					<div id="summary" class="tab-pane">
 						<div class="toogle">

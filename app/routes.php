@@ -42,7 +42,9 @@ Route::any('privacy-policy', function()
 Route::group(array('before' => 'auth'), function()
 {
 	Route::get('logout', array('as' => 'logout', 'uses' => 'AuthController@doLogout'));
-	Route::get('calculation', array('as' => 'calculation', 'uses' => 'CalcController@getCalculation'));
+	Route::get('calculation/{project_id}', array('as' => 'calculation', 'uses' => 'CalcController@getCalculation'))->where('project_id', '[0-9]+');
+	Route::post('calculation/newchapter/{project_id}', array('as' => 'calculation', 'uses' => 'CalcController@doNewChapter'))->where('project_id', '[0-9]+');
+	Route::post('calculation/newactivity/{project_id}', array('as' => 'calculation', 'uses' => 'CalcController@doNewActivity'))->where('project_id', '[0-9]+');
 	Route::get('estimate', array('as' => 'estimate', 'uses' => 'CalcController@getEstimate'));
 	Route::get('less', array('as' => 'less', 'uses' => 'CalcController@getLess'));
 	Route::get('more', array('as' => 'more', 'uses' => 'CalcController@getMore'));

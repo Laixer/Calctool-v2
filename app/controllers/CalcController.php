@@ -35,4 +35,59 @@ class CalcController extends BaseController {
 	{
 		return View::make('calc.more');
 	}
+
+	public function doNewChapter()
+	{
+		$rules = array(
+			'chapter' => 'required|max:50',
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			// redirect our user back to the form with the errors from the validator
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+
+			$chapter = new Chapter;
+			$chapter->chapter_name = Input::get('chapter');
+			$chapter->priority = 0;
+			$chapter->project_id = Route::Input('project_id');
+
+			$chapter->save();
+
+			return Redirect::back()->with('success', 1);
+		}
+
+	}
+
+	public function doNewActivity()
+	{
+		/*$rules = array(
+			'activity' => 'required|max:50',
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			// redirect our user back to the form with the errors from the validator
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+
+			$activity = new Activity;
+			$activity->chapter_name = Input::get('activity');
+			$activity->priority = 0;
+			$activity->chapter_id = Route::Input('project_id');
+
+			$activity->save();
+
+			return Redirect::back()->with('success', 1);
+
+		}
+		*/
+	}
 }
