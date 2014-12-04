@@ -65,7 +65,7 @@ class CalcController extends BaseController {
 
 	public function doNewActivity()
 	{
-		/*$rules = array(
+		$rules = array(
 			'activity' => 'required|max:50',
 		);
 
@@ -78,16 +78,20 @@ class CalcController extends BaseController {
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 
+			$part = Part::where('part_name','=','contracting')->first();
+			$part_type = PartType::where('type_name','=','calculation')->first();
+
 			$activity = new Activity;
-			$activity->chapter_name = Input::get('activity');
+			$activity->activity_name = Input::get('activity');
 			$activity->priority = 0;
-			$activity->chapter_id = Route::Input('project_id');
+			$activity->chapter_id = Route::Input('chapter_id');
+			$activity->part_id = $part->id;
+			$activity->part_type_id = $part_type->id;
 
 			$activity->save();
 
 			return Redirect::back()->with('success', 1);
 
 		}
-		*/
 	}
 }

@@ -2,6 +2,8 @@
 
 @section('content')
 <?# -- WRAPPER -- ?>
+
+
 <div id="wrapper">
 
 	<section class="container">
@@ -10,7 +12,7 @@
 
 			<div class="fuelux">
 				<div id="calculation-wizard" class="wizard">
-					<ul class="steps">
+					<ul class="steps">Debiteurennummer nieuwe relatie
 						<li data-target="#step0">Home<span class="chevron"></span></li>
 						<li data-target="#step1" class="complete">Projectgegevens<span class="chevron"></span></li>
 						<li data-target="#step2" class="active">Calculatie<span class="chevron"></span></li>
@@ -30,7 +32,7 @@
 
 			<div class="tabs nomargin">
 
-				<!-- tabs -->
+				<!-- taDebiteurennummer nieuwe relatiebs -->
 				<ul class="nav nav-tabs">
 					<li class="active">
 						<a href="#calculate" data-toggle="tab">
@@ -61,8 +63,9 @@
 
 									<div class="toogle">
 
+										@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
 										<div class="toggle">
-											<label>Werkzaamheid 1</label>
+											<label>{{ $activity->activity_name }}</label>
 											<div class="toggle-content">
 
 												<div class="col-md-12">
@@ -70,14 +73,14 @@
 													<div class="col-md-10">
 														<span class="pull-right">
 															<div class="form-group">
-																<label class="radio-inline"><input id="type" name="type" value="1" type="radio">Aanneming</label>
-	    														<label class="radio-inline"><input id="type" name="type" value="2" type="radio">Onderaanneming</label>
+																<label class="radio-inline"><input name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','contracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='contracting' ? 'checked' : '') }}/>Aanneming</label>
+	    														<label class="radio-inline"><input name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming</label>
 															</div>
 														</span>
 													</div>
 													<div class="col-md-2">
 														<span class="pull-right">
-															<label class="checkbox-inline"><input type="checkbox" name="estimate" value="1" class="form-control">Stelpost</label>
+															<label class="checkbox-inline"><input type="checkbox" name="estimate" {{ ( PartType::find($activity->part_type_id)->type_name == 'estimate' ? 'checked' : '') }} value="{{ PartType::where('type_name','=','estimate')->first()->id }}" class="form-control">Stelpost</label>
 														</span>
 													</div>
 												</div>
@@ -226,11 +229,13 @@
 												</table>
 											</div>
 										</div>
+										@endforeach
 									</div>
 
-									{{ Form::open(array('url' => '/calculation/newactivity/'.Route::Input('project_id'))) }}
+									{{ Form::open(array('url' => '/calculation/newactivity/' . $chapter->id)) }}
 									<div class="row">
 										<div class="col-md-6">
+
 											<div class="input-group">
 												<input type="text" class="form-control" name="activity" id="activity" value="" placeholder="Nieuwe Werkzaamheid">
 												<span class="input-group-btn">
@@ -257,7 +262,6 @@
 							</div>
 						</div>
 						{{ Form::close() }}
-
 					</div>
 
 
