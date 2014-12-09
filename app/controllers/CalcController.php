@@ -91,7 +91,7 @@ class CalcController extends BaseController {
 		}
 	}
 
-	public function updatePart()
+	public function doUpdatePart()
 	{
 		$rules = array(
 			'value' => 'required|integer|min:0',
@@ -114,7 +114,7 @@ class CalcController extends BaseController {
 		}
 	}
 
-	public function updatePartType()
+	public function doUpdatePartType()
 	{
 		$rules = array(
 			'value' => 'required|integer|min:0',
@@ -132,6 +132,38 @@ class CalcController extends BaseController {
 			$activity = Activity::find(Input::get('activity'));
 			$activity->part_type_id = Input::get('value');
 			$activity->save();
+
+			return json_encode(['success' => 1]);
+		}
+	}
+
+	public function doUpdateAmount()
+	{
+		$rules = array(
+			'amount' => 'required|integer|min:0',
+			'activity' => 'required|integer|min:0'
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+/* TODO id meegeven om te controlen in de database zodat een waarde uit de
+tabel word tingevuld (1e keer), of wordt geupdate (2e keer) + tax_id)
+*/
+
+			$hourlabor = CalculationLabor::firstOrCreate(array(
+				"amount" => Input::get('amount'),
+				"activity_id" => Input::get('activity'),
+				"tax_id" => 2
+			));
+
+			$hourlabor->amount = Input::get('amount');
+			$hourlabor->save();
 
 			return json_encode(['success' => 1]);
 		}

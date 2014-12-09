@@ -1,7 +1,11 @@
+<?php
+$project = Project::find(Route::Input('project_id'));
+?>
+
 @extends('layout.master')
 
 @section('content')
-<?# -- WRAPPER -- ?>
+<?# -- WRAPPER -- ?>labor-amount
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -11,7 +15,12 @@
 		$(".check-activity").change(function(){
 			$.post("/calculation/updateparttype", {value: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
 		});
+		$(".labor-amount").change(function(){
+			$.post("/calculation/updateamount", {amount: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
+		});
 	});
+
+
 </script>
 
 <div id="wrapper">
@@ -66,7 +75,7 @@
 					<div id="calculate" class="tab-pane active">
 						<div class="toogle">
 
-							@foreach (Chapter::where('project_id','=', Route::Input('project_id'))->get() as $chapter)
+							@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 							<div class="toggle">
 								<label>{{ $chapter->chapter_name }}</label>
 								<div class="toggle-content">
@@ -116,15 +125,17 @@
 													<tbody>
 														<tr><!-- item -->
 															<td class="col-md-2">Per Uur</td>
-															<td class="col-md-1">$1</td>
-															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control-number control-sm" /></td>
+															<td class="col-md-1">{{ $project->hour_rate }}</td>
+															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="name" type="text" value="" class="form-control-number control-sm labor-amount" /></td>
 															<td class="col-md-1">$1</td>
 															<td class="col-md-2">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-2">&nbsp;</td>
 															<td class="col-md-1">
-																<select name="type" id="type" class="form-control-number pointer control-sm">
-																	<option value="" selected="selected"></option>
+																<select name="type" id="type" class="form-control-number pointer control-sm labor-amount">
+																@foreach (Tax::all() as $tax)
+																	<option value="{{ $tax->id }}" selected="selected">{{ $tax->tax_rate }}%</option>
+																@endforeach
 																</select>
 															</td>
 															<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
@@ -159,9 +170,9 @@
 															<td class="col-md-2">$40</td>
 															<td class="col-md-1">
 																<select name="type" id="type" class="form-control-number pointer control-sm">
-																	<option value="" selected="selected">0</option>
-																	<option value="">9</option>
-																	<option value="">21</option>
+																@foreach (Tax::all() as $tax)
+																	<option value="{{ $tax->id }}" selected="selected">{{ $tax->tax_rate }}%</option>
+																@endforeach
 																</select>
 															</td>
 															<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
@@ -175,9 +186,9 @@
 															<td class="col-md-2">$40</td>
 															<td class="col-md-1">
 																<select name="type" id="type" class="form-control-number pointer control-sm">
-																	<option value="" selected="selected">0</option>
-																	<option value="">9</option>
-																	<option value="">21</option>
+																@foreach (Tax::all() as $tax)
+																	<option value="{{ $tax->id }}" selected="selected">{{ $tax->tax_rate }}%</option>
+																@endforeach
 																</select>
 															</td>
 															<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
@@ -212,9 +223,9 @@
 															<td class="col-md-2">$40</td>
 															<td class="col-md-1">
 																<select name="type" id="type" class="form-control-number pointer control-sm">
-																	<option value="" selected="selected">0</option>
-																	<option value="">9</option>
-																	<option value="">21</option>
+																@foreach (Tax::all() as $tax)
+																	<option value="{{ $tax->id }}" selected="selected">{{ $tax->tax_rate }}%</option>
+																@endforeach
 																</select>
 															</td>
 															<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
@@ -228,9 +239,9 @@
 															<td class="col-md-2">$40</td>
 															<td class="col-md-1">
 																<select name="type" id="type" class="form-control-number pointer control-sm">
-																	<option value="" selected="selected">0</option>
-																	<option value="">9</option>
-																	<option value="">21</option>
+																@foreach (Tax::all() as $tax)
+																	<option value="{{ $tax->id }}" selected="selected">{{ $tax->tax_rate }}%</option>
+																@endforeach
 																</select>
 															</td>
 															<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
@@ -260,7 +271,7 @@
 							@endforeach
 						</div>
 
-						{{ Form::open(array('url' => '/calculation/newchapter/'.Route::Input('project_id'))) }}
+						{{ Form::open(array('url' => '/calculation/newchapter/'.$project->id)) }}
 						<div class="row">
 							<div class="col-md-6">
 								<div class="input-group">
