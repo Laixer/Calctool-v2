@@ -3,6 +3,18 @@
 @section('content')
 <?# -- WRAPPER -- ?>
 
+<script type="text/javascript">
+	$( document ).ready(function() {
+		//$.post( "ajax/test.html", function( data ) {
+			//alert(data);
+		//});
+	$( ".radio-activity").change(function(){
+		alert(this.value);
+		alert($(this).attr("data-id") );
+	});
+	});
+</script>
+
 
 <div id="wrapper">
 
@@ -28,7 +40,7 @@
 
 			<hr />
 
-			<h2><strong>Calculeren</strong> {{ Route::Input('project_id')}} </h2>
+			<h2><strong>Calculeren</strong></h2>
 
 			<div class="tabs nomargin">
 
@@ -73,8 +85,8 @@
 													<div class="col-md-10">
 														<span class="pull-right">
 															<div class="form-group">
-																<label class="radio-inline"><input name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','contracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='contracting' ? 'checked' : '') }}/>Aanneming</label>
-	    														<label class="radio-inline"><input name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming</label>
+																<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','contracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='contracting' ? 'checked' : '') }}/>Aanneming</label>
+	    														<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming</label>
 															</div>
 														</span>
 													</div>
