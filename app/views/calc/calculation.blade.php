@@ -4,17 +4,15 @@
 <?# -- WRAPPER -- ?>
 
 <script type="text/javascript">
-	$( document ).ready(function() {
-		//$.post( "ajax/test.html", function( data ) {
-			//alert(data);
-		//});
-	$( ".radio-activity").change(function(){
-		alert(this.value);
-		alert($(this).attr("data-id") );
-	});
+	$(document).ready(function() {
+		$(".radio-activity").change(function(){
+			$.post("/calculation/updatepart", {value: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
+		});
+		$(".check-activity").change(function(){
+			$.post("/calculation/updateparttype", {value: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
+		});
 	});
 </script>
-
 
 <div id="wrapper">
 
@@ -92,7 +90,7 @@
 													</div>
 													<div class="col-md-2">
 														<span class="pull-right">
-															<label class="checkbox-inline"><input type="checkbox" name="estimate" {{ ( PartType::find($activity->part_type_id)->type_name == 'estimate' ? 'checked' : '') }} value="{{ PartType::where('type_name','=','estimate')->first()->id }}" class="form-control">Stelpost</label>
+															<label class="checkbox-inline"><input data-id="{{ $activity->id }}" class="check-activity" type="checkbox" name="estimate" {{ ( PartType::find($activity->part_type_id)->type_name == 'estimate' ? 'checked' : '') }} value="{{ PartType::where('type_name','=','estimate')->first()->id }}" class="form-control">Stelpost</label>
 														</span>
 													</div>
 												</div>
@@ -275,19 +273,6 @@
 						</div>
 						{{ Form::close() }}
 					</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 					<div id="summary" class="tab-pane">
 						<div class="toogle">

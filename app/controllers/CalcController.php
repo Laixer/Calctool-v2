@@ -45,9 +45,7 @@ class CalcController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			$messages = $validator->messages();
 
-			// redirect our user back to the form with the errors from the validator
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 
@@ -72,9 +70,7 @@ class CalcController extends BaseController {
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			$messages = $validator->messages();
 
-			// redirect our user back to the form with the errors from the validator
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 
@@ -92,6 +88,52 @@ class CalcController extends BaseController {
 
 			return Redirect::back()->with('success', 1);
 
+		}
+	}
+
+	public function updatePart()
+	{
+		$rules = array(
+			'value' => 'required|integer|min:0',
+			'activity' => 'required|integer|min:0'
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+			$activity = Activity::find(Input::get('activity'));
+			$activity->part_id = Input::get('value');
+			$activity->save();
+
+			return json_encode(['success' => 1]);
+		}
+	}
+
+	public function updatePartType()
+	{
+		$rules = array(
+			'value' => 'required|integer|min:0',
+			'activity' => 'required|integer|min:0'
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+			$activity = Activity::find(Input::get('activity'));
+			$activity->part_type_id = Input::get('value');
+			$activity->save();
+
+			return json_encode(['success' => 1]);
 		}
 	}
 }

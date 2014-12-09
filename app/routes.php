@@ -45,6 +45,8 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('calculation/{project_id}', array('as' => 'calculation', 'uses' => 'CalcController@getCalculation'))->where('project_id', '[0-9]+');
 	Route::post('calculation/newchapter/{project_id}', array('as' => 'calculation', 'uses' => 'CalcController@doNewChapter'))->where('project_id', '[0-9]+');
 	Route::post('calculation/newactivity/{chapter_id}', array('as' => 'calculation', 'uses' => 'CalcController@doNewActivity'))->where('chapter_id', '[0-9]+');
+	Route::post('calculation/updatepart', array('as' => 'calculation', 'uses' => 'CalcController@updatePart'));
+	Route::post('calculation/updateparttype', array('as' => 'calculation', 'uses' => 'CalcController@updatePartType'));
 	Route::get('estimate', array('as' => 'estimate', 'uses' => 'CalcController@getEstimate'));
 	Route::get('less', array('as' => 'less', 'uses' => 'CalcController@getLess'));
 	Route::get('more', array('as' => 'more', 'uses' => 'CalcController@getMore'));
