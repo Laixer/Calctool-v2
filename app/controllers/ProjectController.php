@@ -21,7 +21,7 @@ class ProjectController extends \BaseController {
 			'address_number' => 'required|alpha_num|max:5',
 			'zipcode' => 'required|size:6',
 			'city' => 'required|alpha_num|max:35',
-			'provance' => 'required|numeric',
+			'province' => 'required|numeric',
 			'country' => 'required|numeric',
 			'hour_rate' => 'required|numeric|between:0,1000',
 			'more_hour_rate' => 'required|numeric|between:0,1000',
