@@ -9,6 +9,18 @@ $project = Project::find(Route::Input('project_id'));
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		function addCommas(nStr){
+			nStr += '';
+			x = nStr.split('.');
+			x1 = x[0];
+			x2 = x.length > 1 ? ',' + x[1].substr(0,2) : ''; //TODO -> moet worden afgerond
+			//x2 = x.length > 1 ? ',' + parseInt(x[1]).toFixed(2) : '';
+			var rgx = /(\d+)(\d{3})/;
+			while (rgx.test(x1)) {
+				x1 = x1.replace(rgx, '$1' + '.' + '$2');
+			}
+			return x1 + x2;
+		}
 		$(".radio-activity").change(function(){
 			$.post("/calculation/updatepart", {value: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
 		});
@@ -25,14 +37,14 @@ $project = Project::find(Route::Input('project_id'));
 					var $curTable = $(this).closest("table");
 					$curTable.find("tr:eq(1)").clone().removeAttr("data-id").find("input").each(function(){
 						$(this).val("").removeClass("error-input").attr("id", function(_, id){ return id + i });
-					}).end().appendTo($curTable);
+					}).end().find(".total").text("").end().appendTo($curTable);
 					i++;
 				}
 			}
 		});
 		$("body").on("change", ".dsave", function(){
 			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
+			if($curThis.closest("tr").attr("data-id")){
 				$.post("/calculation/updatematerial", {
 					id: $curThis.closest("tr").attr("data-id"),
 					name: $curThis.closest("tr").find("input[name='name']").val(),
@@ -45,6 +57,9 @@ $project = Project::find(Route::Input('project_id'));
 					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);
+						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().replace(',', '.');
+						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().replace(',', '.');
+						$curThis.closest("tr").find(".total").text('€ '+addCommas(rate*amount));
 					} else {
 						$.each(json.message, function(i, item) {
 							if(json.message['name'])
@@ -60,6 +75,7 @@ $project = Project::find(Route::Input('project_id'));
 				}).fail(function(e){
 					console.log(e);
 				});
+			}
 		});
 		$("body").on("blur", ".dsave", function(){
 			var flag = true;
@@ -83,6 +99,9 @@ $project = Project::find(Route::Input('project_id'));
 					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);
+						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().replace(',', '.');
+						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().replace(',', '.');
+						$curThis.closest("tr").find(".total").text('€ '+(rate*amount).toFixed(2).toString().replace('.', ','));
 					} else {
 						$.each(json.message, function(i, item) {
 							if(json.message['name'])
@@ -254,7 +273,7 @@ $project = Project::find(Route::Input('project_id'));
 															<td class="col-md-2"><input name="unit" id="name" type="text" value="{{ $material->unit }}" class="form-control-number control-sm dsave" /></td>
 															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-number control-sm dsave" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-number control-sm dsave" /></td>
-															<td class="col-md-1 centering">$20.000,00</td>
+															<td class="col-md-1 centering"><span class="total">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</span></td>
 															<td class="col-md-2">$40</td>
 															<td class="col-md-1">
 																<select name="btw" id="type" class="form-control-number pointer dsave control-sm">
@@ -271,8 +290,8 @@ $project = Project::find(Route::Input('project_id'));
 															<td class="col-md-2"><input name="unit" id="name" type="text" class="form-control-number control-sm dsave" /></td>
 															<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-number control-sm dsave" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-number control-sm dsave" /></td>
-															<td class="col-md-1 centering">$20.000,00</td>
-															<td class="col-md-2">$40</td>
+															<td class="col-md-1 centering"><span class="total"></span></td>
+															<td class="col-md-2"></td>
 															<td class="col-md-1">
 																<select name="btw" id="type" class="form-control-number dsave pointer control-sm">
 																@foreach (Tax::all() as $tax)
