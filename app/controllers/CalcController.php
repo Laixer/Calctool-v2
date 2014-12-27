@@ -197,4 +197,23 @@ class CalcController extends BaseController {
 			return json_encode(['success' => 1, 'id' => $material->id]);
 		}
 	}
+
+	public function doDeleteMaterial()
+	{
+		$rules = array(
+			'id' => array('required','integer','min:0'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+			CalculationMaterial::destroy(Input::get('id'));
+
+			return json_encode(['success' => 1]);
+		}
+	}
 }
