@@ -45,8 +45,9 @@
 		{{ HTML::script('plugins/jquery-2.0.3.min.js') }}
 	</head>
 	<body>
+		<?# -- ONLY DEV -- ?>
 		@if(App::environment('dev'))
-		<div style="background-color:red;z-index:200;position:fixed;top:0px;left:45%;width: 100px;text-align: center;">{{ 'REV: ' . substr(File::get('../.revision'), 0, 7) }}</div>
+		<div style="background-color:red;z-index:200;position:fixed;top:0px;left:45%;width: 100px;text-align: center;"><a href="https://bitbucket.org/calctool/calctool-v2/commits/{{ File::get('../.revision') }}" style="color: black;">{{ 'REV: ' . substr(File::get('../.revision'), 0, 7) }}</a></div>
 		@endif
 
 		<?# -- HEADER -- ?>
