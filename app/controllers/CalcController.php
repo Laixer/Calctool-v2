@@ -172,8 +172,8 @@ class CalcController extends BaseController {
 		$rules = array(
 			'name' => array('required','alpha_dash','max:50'),
 			'unit' => array('required','max:10'),
-			'rate' => array('required','regex:/^[0-9]+[.,]?[0-9]+$/'),
-			'amount' => array('required','numeric'),
+			'rate' => array('required','regex:/^[0-9]+[.,]?[0-9]*$/'),
+			'amount' => array('required','regex:/^[0-9]+[.,]?[0-9]*$/'),
 			'activity' => array('required','integer','min:0'),
 			'tax' => array('required','integer')
 		);

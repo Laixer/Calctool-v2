@@ -24,7 +24,7 @@ $project = Project::find(Route::Input('project_id'));
 				if(!$(this).closest("tr").next().length){
 					var $curTable = $(this).closest("table");
 					$curTable.find("tr:eq(1)").clone().removeAttr("data-id").find("input").each(function(){
-						$(this).val("").attr("id", function(_, id){ return id + i });
+						$(this).val("").removeClass("error-input").attr("id", function(_, id){ return id + i });
 					}).end().appendTo($curTable);
 					i++;
 				}
@@ -49,7 +49,21 @@ $project = Project::find(Route::Input('project_id'));
 					activity: $curThis.closest("table").attr("data-id")
 				}, function(data){
 					var json = $.parseJSON(data);
-					$curThis.closest("tr").attr("data-id", json.id);
+					if (json.success) {
+						$curThis.closest("tr").attr("data-id", json.id);
+						$curThis.closest("tr").find("input").removeClass("error-input");
+					} else {
+						$.each(json.message, function(i, item) {
+							if(json.message['name'])
+								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+							if(json.message['unit'])
+								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+							if(json.message['rate'])
+								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+							if(json.message['amount'])
+								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+						});
+					}
 				}).fail(function(e){
 					console.log(e);
 				});
