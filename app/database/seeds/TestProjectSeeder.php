@@ -212,7 +212,7 @@ class TestProjectSeeder extends Seeder {
 		$this->command->info('Iban created');
 
 		$test_chapter1 = Chapter::create(array(
-			'chapter_name' => 'lHoofdstuk 1',
+			'chapter_name' => 'Hoofdstuk 1',
 			'priority' => '1',
 			'note' => 'omschrijving van hoofdstuk 1',
 			'project_id' => $test_project->id
