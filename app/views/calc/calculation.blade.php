@@ -30,6 +30,37 @@ $project = Project::find(Route::Input('project_id'));
 				}
 			}
 		});
+		$("body").on("change", ".dsave", function(){
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id"))
+				$.post("/calculation/updatematerial", {
+					id: $curThis.closest("tr").attr("data-id"),
+					name: $curThis.closest("tr").find("input[name='name']").val(),
+					unit: $curThis.closest("tr").find("input[name='unit']").val(),
+					rate: $curThis.closest("tr").find("input[name='rate']").val(),
+					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+					tax: $curThis.closest("tr").find("select[name='btw']").val(),
+				}, function(data){
+					var json = $.parseJSON(data);
+					if (json.success) {
+						$curThis.closest("tr").attr("data-id", json.id);
+						$curThis.closest("tr").find("input").removeClass("error-input");
+					} else {
+						$.each(json.message, function(i, item) {
+							if(json.message['name'])
+								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+							if(json.message['unit'])
+								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+							if(json.message['rate'])
+								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+							if(json.message['amount'])
+								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+						});
+					}
+				}).fail(function(e){
+					console.log(e);
+				});
+		});
 		$("body").on("blur", ".dsave", function(){
 			var flag = true;
 			var $curThis = $(this);
@@ -181,7 +212,7 @@ $project = Project::find(Route::Input('project_id'));
 													<tbody>
 														<tr><?# -- item -- ?>
 															<td class="col-md-2">Per Uur</td>
-															<td class="col-md-1">{{ $project->hour_rate }}</td>
+															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="name" type="text" value="{{ CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'] }}" class="form-control-number control-sm labor-amount" /></td>
 															<td class="col-md-1">$1</td>
 															<td class="col-md-2">&nbsp;</td>
@@ -226,7 +257,7 @@ $project = Project::find(Route::Input('project_id'));
 															<td class="col-md-1 centering">$20.000,00</td>
 															<td class="col-md-2">$40</td>
 															<td class="col-md-1">
-																<select name="btw" id="type" class="form-control-number pointer control-sm">
+																<select name="btw" id="type" class="form-control-number pointer dsave control-sm">
 																@foreach (Tax::all() as $tax)
 																	<option value="{{ $tax->id }}" {{ ($material->tax_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
 																@endforeach
@@ -243,7 +274,7 @@ $project = Project::find(Route::Input('project_id'));
 															<td class="col-md-1 centering">$20.000,00</td>
 															<td class="col-md-2">$40</td>
 															<td class="col-md-1">
-																<select name="btw" id="type" class="form-control-number pointer control-sm">
+																<select name="btw" id="type" class="form-control-number dsave pointer control-sm">
 																@foreach (Tax::all() as $tax)
 																	<option value="{{ $tax->id }}" selected="selected">{{ $tax->tax_rate }}%</option>
 																@endforeach

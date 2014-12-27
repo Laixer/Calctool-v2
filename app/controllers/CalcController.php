@@ -190,15 +190,15 @@ class CalcController extends BaseController {
 	public function doUpdateMaterial()
 	{
 		$rules = array(
+			'id' => array('integer','min:0'),
 			'name' => array('alpha_dash','max:50'),
 			'unit' => array('max:10'),
 			'rate' => array('regex:/^[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('regex:/^[0-9]+[.,]?[0-9]*$/'),
-			'activity' => array('integer','min:0'),
 			'tax' => array('integer')
 		);
 
-		$validator = Validator::update(Input::all(), $rules);
+		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
 			$messages = $validator->messages();
@@ -212,7 +212,6 @@ class CalcController extends BaseController {
 			$material->rate = str_replace(',', '.', Input::get('rate'));
 			$material->amount = str_replace(',', '.', Input::get('amount'));
 			$material->tax_id = Input::get('tax');
-			$material->activity_id = Input::get('activity');
 
 			$material->save();
 
