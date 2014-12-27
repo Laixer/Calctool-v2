@@ -32,7 +32,7 @@ $project = Project::find(Route::Input('project_id'));
 		});
 		$("body").on("blur", ".dsave", function(){
 			var flag = true;
-			var $curThis = $(this)
+			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
 				return false;
 			$curThis.closest("tr").find("input").each(function(){
@@ -70,7 +70,7 @@ $project = Project::find(Route::Input('project_id'));
 			}
 		});
 		$("body").on("click", ".deleterow", function(){
-			var $curThis = $(this)
+			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
 				$.post("/calculation/deletematerial", {id: $curThis.closest("tr").attr("data-id")}, function(){
 					$curThis.closest("tr").hide("slow");
@@ -249,7 +249,7 @@ $project = Project::find(Route::Input('project_id'));
 																@endforeach
 																</select>
 															</td>
-															<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
+															<td class="col-md-1"><button class="btn btn-danger btn-xs deleterow fa fa-times"></button></td>
 														</tr>
 													</tbody>
 												</table>
