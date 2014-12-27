@@ -16,25 +16,25 @@ class ProjectController extends \BaseController {
 	public function doNew()
 	{
 		$rules = array(
-			'name' => 'required|max:50',
-			'street' => 'required|alpha|max:60',
-			'address_number' => 'required|alpha_num|max:5',
-			'zipcode' => 'required|size:6',
-			'city' => 'required|alpha_num|max:35',
-			'provance' => 'required|numeric',
-			'country' => 'required|numeric',
-			'hour_rate' => 'required|numeric|between:0,1000',
-			'more_hour_rate' => 'required|numeric|between:0,1000',
-			'profit_material_1' => 'required|numeric|between:0,200',
-			'profit_equipment_1' => 'required|numeric|between:0,200',
-			'profit_material_2' => 'required|numeric|between:0,200',
-			'profit_equipment_2' => 'required|numeric|between:0,200',
-			'profit_material_3' => 'required|numeric|between:0,200',
-			'profit_equipment_3' => 'required|numeric|between:0,200',
-			'more_profit_material_1' => 'required|numeric|between:0,200',
-			'more_profit_equipment_1' => 'required|numeric|between:0,200',
-			'more_profit_material_2' => 'required|numeric|between:0,200',
-			'more_profit_equipment_2' => 'required|numeric|between:0,200'
+			'name' => array('required','max:50'),
+			'street' => array('required','alpha','max:60'),
+			'address_number' => array('required','alpha_num','max:5'),
+			'zipcode' => array('required','size:6'),
+			'city' => array('required','alpha_num','max:35'),
+			'province' => array('required','numeric'),
+			'country' => array('required','numeric'),
+			'hour_rate' => array('required','numeric','between:0,1000'),
+			'more_hour_rate' => array('required','numeric','between:0,1000'),
+			'profit_material_1' => array('required','numeric','between:0,200'),
+			'profit_equipment_1' => array('required','numeric','between:0,200'),
+			'profit_material_2' => array('required','numeric','between:0,200'),
+			'profit_equipment_2' => array('required','numeric','between:0,200'),
+			'profit_material_3' => array('required','numeric','between:0,200'),
+			'profit_equipment_3' => array('required','numeric','between:0,200'),
+			'more_profit_material_1' => array('required','numeric','between:0,200'),
+			'more_profit_equipment_1' => array('required','numeric','between:0,200'),
+			'more_profit_material_2' => array('required','numeric','between:0,200'),
+			'more_profit_equipment_2' => array('required','numeric','between:0,200')
 		);
 
 		$validator = Validator::make(Input::all(), $rules);

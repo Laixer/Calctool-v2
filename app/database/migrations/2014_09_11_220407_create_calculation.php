@@ -26,7 +26,7 @@ class CreateCalculation extends Migration {
 		Schema::create('calculation_labor', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->decimal('rate', 5, 2)->unsigned()->index();
+			$table->decimal('rate', 5, 2)->unsigned()->nullable();
 			$table->decimal('amount', 9, 2)->unsigned()->index();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');

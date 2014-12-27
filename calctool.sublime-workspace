@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"ac",
+				"activity"
+			],
+			[
+				"jso",
+				"json_encode"
+			],
+			[
+				"fun",
+				"fun	function …"
+			],
+			[
+				"pu",
+				"public"
+			],
+			[
+				"kin",
+				"kind_name"
+			],
+			[
 				"i",
 				"id	Attr"
 			],
@@ -71,40 +91,80 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "app/controllers/CostController.php",
-			"settings":
-			{
-				"buffer_size": 672,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 312.0,
+		"height": 292.0,
 		"selected_items":
 		[
 			[
-				"git ad",
-				"Git: Add..."
-			],
-			[
-				"git add",
-				"Git: Add..."
-			],
-			[
-				"git st",
-				"Git: Status"
+				" git pu",
+				"Git: Push"
 			],
 			[
 				"git com",
 				"Git: Commit"
 			],
 			[
-				"git pu",
+				"git add",
+				"Git: Add..."
+			],
+			[
+				"git stta",
+				"Git: Status"
+			],
+			[
+				"git status",
+				"Git: Status"
+			],
+			[
+				"git p",
 				"Git: Push"
+			],
+			[
+				"git c	",
+				"Git: Commit"
+			],
+			[
+				"git log",
+				"Git: Log All"
+			],
+			[
+				"git stat",
+				"Git: Status"
+			],
+			[
+				"git pu",
+				"Git: Pull"
+			],
+			[
+				"git fet",
+				"Git: Fetch"
+			],
+			[
+				"artisan route",
+				"Laravel Artisan: Routes"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"git st",
+				"Git: Status"
+			],
+			[
+				"git lo",
+				"Git: Log All"
+			],
+			[
+				"git fe",
+				"Git: Fetch"
+			],
+			[
+				"git ad",
+				"Git: Add..."
 			],
 			[
 				"git c",
@@ -131,20 +191,12 @@
 				"Git: Add..."
 			],
 			[
-				"git p",
-				"Git: Push"
-			],
-			[
 				"git ",
 				"Git: Push"
 			],
 			[
 				"gi",
 				"Git: Commit"
-			],
-			[
-				"Package Control: ",
-				"Package Control: Install Package"
 			],
 			[
 				"git sta",
@@ -183,11 +235,32 @@
 		"/var/www/calctool-v2",
 		"/var/www/calctool-v2/app",
 		"/var/www/calctool-v2/app/controllers",
-		"/var/www/calctool-v2/bootstrap",
-		"/var/www/calctool-v2/public"
+		"/var/www/calctool-v2/app/views",
+		"/var/www/calctool-v2/app/views/user",
+		"/var/www/calctool-v2/bootstrap"
 	],
 	"file_history":
 	[
+		"/var/www/calctool-v2/app/views/layout/master.blade.php",
+		"/var/www/calctool-v2/app/views/user/new_project.blade.php",
+		"/var/www/calctool-v2/app/controllers/HomeController.php",
+		"/var/www/calctool-v2/app/controllers/CalcController.php",
+		"/var/www/calctool-v2/app/routes.php",
+		"/var/www/calctool-v2/app/views/calc/calculation.blade.php",
+		"/var/www/calctool-v2/public/test.php",
+		"/var/www/calctool-v2/app/views/user/new_relation.blade.php",
+		"/var/www/calctool-v2/app/controllers/RelationController.php",
+		"/var/www/calctool-v2/app/database/seeds/TestProjectSeeder.php",
+		"/var/www/calctool-v2/app/database/migrations/2014_09_11_193342_create_relation.php",
+		"/var/www/calctool-v2/app/views/layout/header.blade.php",
+		"/var/www/calctool-v2/app/views/layout/footer.blade.php",
+		"/var/www/calctool-v2/app/config/dev/session.php",
+		"/var/www/calctool-v2/app/config/session.php",
+		"/var/www/calctool-v2/app/config/services.php",
+		"/var/www/calctool-v2/app/config/dev/database.php",
+		"/var/www/calctool-v2/app/config/dev/app.php",
+		"/var/www/calctool-v2/bootstrap/start.php",
+		"/var/www/calctool-v2/app/controllers/CostController.php",
 		"/var/www/calctool/app/views/placeholder.php",
 		"/var/www/calctool/app/views/user/relation.blade.php",
 		"/var/www/calctool/app/routes.php",
@@ -295,31 +368,11 @@
 		"/var/www/calctool/app/database/migrations/2014_09_11_204724_create_works.php",
 		"/var/www/calctool/app/models/Activity.php",
 		"/var/www/calctool/app/models/Chapter.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_202219_create_material_storage.php",
-		"/var/www/calctool/app/models/Product.php",
-		"/var/www/calctool/app/models/Supplier.php",
-		"/var/www/calctool/app/models/SubGroup.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_193342_create_relation.php",
-		"/var/www/calctool/app/models/ContactFunction.php",
-		"/var/www/calctool/app/models/Relation.php",
-		"/var/www/calctool/app/models/RelationKind.php",
-		"/var/www/calctool/app/models/RelationType.php",
-		"/var/www/calctool/app/database/migrations/2014_09_09_204054_create_users_table.php",
-		"/var/www/calctool/app/models/Contact.php",
-		"/var/www/calctool/app/models/Resource.php",
-		"/var/www/calctool/app/models/ProjectStatus.php",
-		"/var/www/calctool/app/models/Project.php",
-		"/var/www/calctool/app/models/ProjectStep.php",
-		"/var/www/calctool/app/models/ProjectType.php",
-		"/var/www/calctool/app/models/Country.php",
-		"/var/www/calctool/app/models/Province.php",
-		"/var/www/calctool/app/models/Payment.php",
-		"/var/www/calctool/app/models/Iban.php",
-		"/var/www/calctool/app/models/UserType.php"
+		"/var/www/calctool/app/database/migrations/2014_09_11_202219_create_material_storage.php"
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
@@ -335,6 +388,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"radio",
+			"rad",
+			"auth",
 			"87.211.99.157",
 			"table",
 			"tab",
@@ -389,38 +445,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "app/controllers/CostController.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 672,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -455,9 +481,17 @@
 		]
 	},
 	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 25.0
+	},
 	"output.find_results":
 	{
 		"height": 0.0
+	},
+	"output.git":
+	{
+		"height": 54.0
 	},
 	"project": "calctool.sublime-project",
 	"replace":
@@ -497,7 +531,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 306.0,
+	"side_bar_width": 285.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

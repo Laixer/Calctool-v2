@@ -101,13 +101,7 @@
 			<h4>Nieuws</h4>
 				<div class="owl-carousel controlls-over" data-plugin-options='{"items": 1, "singleItem": true, "navigation": true, "pagination": true, "transitionStyle":"fadeUp"}'>
 					<div>
-						<img class="img-responsive" src="http://www.hi-re.nl/wp-content/uploads/arbeidsmarkt-vakmanschap.jpg" width="850" height="250" alt="">
-					</div>
-					<div>
 						<iframe width="555" height="311" src="http://www.youtube.com/embed/-bdKMT1znJ0"></iframe>
-					</div>
-					<div>
-						<img class="img-responsive" src="http://www.hi-re.nl/wp-content/uploads/arbeidsmarkt-vakmanschap.jpg" width="850" height="250" alt="">
 					</div>
 					<div>
 						<iframe width="555" height="311" src="http://www.youtube.com/embed/-bdKMT1znJ0"></iframe>
@@ -127,53 +121,49 @@
 
 				<h4>Openstaande projecten</h4>
 				<div class="panel-group" id="project">
+					@foreach (Project::where('user_id','=', Auth::user()->id)->get() as $project)
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4 class="panel-title">
 								<a data-toggle="collapse" data-parent="#project" href="#project1">
 									<i class="fa fa-check"></i>
-									Option 1
+									{{ $project->project_name }}
 								</a>
 							</h4>
 						</div>
-						<div id="project1" class="collapse in">
+						<div id="project1" class="collapse">
 							<div class="panel-body">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur <a data-toggle="tooltip" data-original-title="Default tooltip" href="#">pellentesque neque eget</a> diam posuere porta. Quisque ut nulla at nunc vehicula lacinia. Proin adipiscing porta tellus, ut feugiat nibh adipiscing sit amet. In eu justo a felis faucibus ornare vel id metus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In eu libero ligula. Fusce eget metus lorem, ac viverra leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque neque eget diam posuere porta. Quisque ut nulla at nunc vehicula lacinia.
-							</div>
-						</div>
-					</div>
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<a data-toggle="collapse" data-parent="#project" href="#project2">
-									<i class="fa fa-check"></i>
-									Option 2
-								</a>
-							</h4>
-						</div>
-						<div id="project2" class="collapse">
-							<div class="panel-body">
-							<h4>Openstaande facturen</h4>				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur <a data-toggle="tooltip" data-original-title="Default tooltip" href="#">pellentesque neque eget</a> diam posuere porta. Quisque ut nulla at nunc vehicula lacinia. Proin adipiscing porta tellus, ut feugiat nibh adipiscing sit amet. In eu justo a felis faucibus ornare vel id metus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In eu libero ligula. Fusce eget metus lorem, ac viverra leo.
-							</div>
-						</div>
-					</div>
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<a data-toggle="collapse" data-parent="#project" href="#project3">
-									<i class="fa fa-check"></i>
-									Option 3
-								</a>
-							</h4>
-						</div>
-						<div id="project3" class="collapse">
-							<div class="panel-body">
-								Curabitur <a data-toggle="tooltip" data-original-title="Default tooltip" href="#">pellentesque neque eget</a> diam posuere porta. Quisque ut nulla at nunc vehicula lacinia. Proin adipiscing porta tellus, ut feugiat nibh adipiscing sit amet. In eu justo a felis faucibus ornare vel id metus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In eu libero ligula.
-							</div>
-						</div>
-					</div>
-				</div>
+								<table class="table table-striped">
+									<?# -- table head -- ?>
+									<thead>
+										<tr>
+											<th class="col-md-4">Projectnaam</th>
+											<th class="col-md-4">Oprachtgever</th>
+											<th class="col-md-4">Adres</th>
+										</tr>
+									</thead>
 
+									<!-- table items -->
+									<tbody>
+										<tr>
+											<td class="col-md-4">{{ HTML::link('calculation/'.$project->id, $project->project_name) }}</td>
+											<td class="col-md-4">{{ $project->contactor->company_name }}</td>
+											<td class="col-md-4">{{ $project->address_street }}</td>
+										</tr>
+									</tbody>
+								</table>
+								<tr>
+									<td class="col-md-1"><i class="fa fa-calendar"></i></td>
+									<td class="col-md-3">{{ HTML::link('calculation/'.$project->id, " Urenregistratie") }}</td>
+									<td class="col-md-1"><i class="fa fa-shopping-cart"></i></td>
+									<td class="col-md-3">{{ HTML::link('calculation/'.$project->id, " Inkoopfacturen") }}</td>
+									<td class="col-md-1"><a data-toggle="tooltip" data-original-title="Klik op het project om het project direct bewerken" href="#">Tip!</a></td>
+								</tr>
+							</div>
+						</div>
+					</div>
+					@endforeach
+				</div>
 			</div>
 			<div class="col-md-6">
 
