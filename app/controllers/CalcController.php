@@ -137,7 +137,7 @@ class CalcController extends BaseController {
 		}
 	}
 
-	public function doUpdateAmount()
+	public function doUpdateAmount() //hernoemen door code naar labor
 	{
 		$rules = array(
 			'amount' => 'required|numeric|min:0',
@@ -160,6 +160,39 @@ class CalcController extends BaseController {
 
 			$hourlabor->amount = Input::get('amount');
 			$hourlabor->save();
+
+			return json_encode(['success' => 1]);
+		}
+	}
+
+	public function doNewMaterial()
+	{
+		$rules = array(
+			'name' => 'required|alphanum|max:50',
+			'unit' => 'required|alphanum|max:10',
+			'rate' => 'required|numeric',
+			'amount' =>  'required|numeric',
+			'activity' => 'required|integer|min:0',
+			'tax' =>  'required|integer'
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+			$material = CalculationMaterial::create(array(
+				"material_name" => Input::get('name'),
+				"unit" => Input::get('unit'),
+				"rate" => Input::get('rate'),
+				"amount" => Input::get('amount'),
+				"tax_id" => Input::get('tax'),
+				"activity_id" => Input::get('activity'),
+			));
+
+			$material->save();
 
 			return json_encode(['success' => 1]);
 		}
