@@ -140,7 +140,7 @@ class CalcController extends BaseController {
 	public function doUpdateAmount()
 	{
 		$rules = array(
-			'amount' => 'required|integer|min:0',
+			'amount' => 'required|numeric|min:0',
 			'activity' => 'required|integer|min:0'
 		);
 
@@ -151,12 +151,8 @@ class CalcController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
-
-/* TODO id meegeven om te controlen in de database zodat een waarde uit de
-tabel word tingevuld (1e keer), of wordt geupdate (2e keer) + tax_id)
-*/
-
-			$hourlabor = CalculationLabor::firstOrCreate(array(
+			/* TODO yw: niet alleen insert maar ook update */
+			$hourlabor = CalculationLabor::create(array(
 				"amount" => Input::get('amount'),
 				"activity_id" => Input::get('activity'),
 				"tax_id" => 2
