@@ -50,6 +50,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('calculation/updateamount', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateAmount'));
 	Route::post('calculation/newmaterial', array('as' => 'calculation', 'uses' => 'CalcController@doNewMaterial'));
 	Route::post('calculation/deletematerial', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteMaterial'));
+	Route::post('calculation/updatematerial', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateMaterial'));
 	/*
 	DZa: Routes naar de controler achter de delte knop van calculatie labour. MOgelijk de de "amount" (ook in de regel hierboven) veranderen in Labour
 	Route::post('calculation/deleteamount', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteAmount'));

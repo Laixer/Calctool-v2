@@ -137,37 +137,7 @@ class CalcController extends BaseController {
 		}
 	}
 
-	public function doUpdateAmount() //hernoemen door code naar labor
-	{
-		$rules = array(
-			'amount' => array('required','numeric','min:0'),
-			'activity' => array('required','integer','min:0')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-			/* TODO yw: niet alleen insert maar ook update
-				kan geen create en save hebben.
-			 */
-			$hourlabor = CalculationLabor::create(array(
-				"amount" => Input::get('amount'),
-				"activity_id" => Input::get('activity'),
-				"tax_id" => 2
-			));
-
-			$hourlabor->amount = Input::get('amount');
-			$hourlabor->save();
-
-			return json_encode(['success' => 1]);
-		}
-	}
-
-	public function doNewMaterial()
+		public function doNewMaterial()
 	{
 		$rules = array(
 			'name' => array('required','alpha_dash','max:50'),
@@ -214,6 +184,40 @@ class CalcController extends BaseController {
 			CalculationMaterial::destroy(Input::get('id'));
 
 			return json_encode(['success' => 1]);
+		}
+	}
+
+	public function doUpdateMaterial()
+	{
+		$rules = array(
+			'name' => array('alpha_dash','max:50'),
+			'unit' => array('max:10'),
+			'rate' => array('regex:/^[0-9]+[.,]?[0-9]*$/'),
+			'amount' => array('regex:/^[0-9]+[.,]?[0-9]*$/'),
+			'activity' => array('integer','min:0'),
+			'tax' => array('integer')
+		);
+
+		$validator = Validator::update(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+			$material = CalculationMaterial::find(Input::get('id'));
+			$material->material_name = Input::get('name');
+			$material->unit = Input::get('unit');
+			$material->rate = str_replace(',', '.', Input::get('rate'));
+			$material->amount = str_replace(',', '.', Input::get('amount'));
+			$material->tax_id = Input::get('tax');
+			$material->activity_id = Input::get('activity');
+
+			$material->save();
+
+			return json_encode(['success' => 1]);
+
 		}
 	}
 }
