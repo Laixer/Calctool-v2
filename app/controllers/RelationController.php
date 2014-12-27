@@ -18,33 +18,33 @@ class RelationController extends \BaseController {
 	{
 		$rules = array(
 			/* General */
-			'relationkind' => 'required|numeric',
-			'debtor' => 'required|alpha_num|max:10',
+			'relationkind' => array('required','numeric'),
+			'debtor' => array('required','alpha_num','max:10'),
 			/* Company */
-			'company_type' => 'required_if:relationkind,zakelijk|numeric',
-			'company_name' => 'required_if:relationkind,zakelijk|max:50',
-			'kvk' => 'numeric|min:12',
-			'btw' => 'alpha_num|min:14',
-			'telephone_comp' => 'alpha_num|max:12',
-			'email_comp' => 'required_if:relationkind,zakelijk|email|max:80',
-			'website' => 'url|max:180',
+			'company_type' => array('required_if:relationkind,zakelijk','numeric'),
+			'company_name' => array('required_if:relationkind,zakelijk','max:50'),
+			'kvk' => array('numeric','min:12'),
+			'btw' => 'alpha_num','min:14'),
+			'telephone_comp' => array('alpha_num','max:12'),
+			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
+			'website' => array('url','max:180'),
 			/* Contact */
-			'contact_name' => 'required|max:50',
-			'contact_firstname' => 'required|max:30',
-			'mobile' => 'alpha_num|max:14',
-			'telephone' => 'alpha_num|max:14',
-			'email' => 'required|email|max:80',
-			'contactfunction' => 'required|numeric',
+			'contact_name' => array('required','max:50'),
+			'contact_firstname' => array('required','max:30'),
+			'mobile' => array('alpha_num','max:14'),
+			'telephone' => array('alpha_num','max:14'),
+			'email' => array('required','email','max:80'),
+			'contactfunction' => array('required','numeric'),
 			/* Adress */
-			'street' => 'required|alpha|max:60',
-			'address_number' => 'required|alpha_num|max:5',
-			'zipcode' => 'required|size:6',
-			'city' => 'required|alpha_num|max:35',
-			'province' => 'required|numeric',
-			'country' => 'required|numeric',
+			'street' => array('required','alpha','max:60'),
+			'address_number' => array('required','alpha_num','max:5'),
+			'zipcode' => array('required','size:6'),
+			'city' => array('required','alpha_num','max:35'),
+			'province' => array('required','numeric'),
+			'country' => array('required','numeric'),
 			/* Payment */
-			'iban' => 'alpha_num',
-			'iban_name' => 'required|max:50'
+			'iban' => array('alpha_num'),
+			'iban_name' => array('required','max:50')
 
 		);
 

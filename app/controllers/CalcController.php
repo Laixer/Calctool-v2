@@ -39,7 +39,7 @@ class CalcController extends BaseController {
 	public function doNewChapter()
 	{
 		$rules = array(
-			'chapter' => 'required|max:50',
+			'chapter' => array('required','max:50'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -64,7 +64,7 @@ class CalcController extends BaseController {
 	public function doNewActivity()
 	{
 		$rules = array(
-			'activity' => 'required|max:50',
+			'activity' => array('required','max:50'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -94,8 +94,8 @@ class CalcController extends BaseController {
 	public function doUpdatePart()
 	{
 		$rules = array(
-			'value' => 'required|integer|min:0',
-			'activity' => 'required|integer|min:0'
+			'value' => array('required','integer','min:0'),
+			'activity' => array('required','integer','min:0')
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -117,8 +117,8 @@ class CalcController extends BaseController {
 	public function doUpdatePartType()
 	{
 		$rules = array(
-			'value' => 'required|integer|min:0',
-			'activity' => 'required|integer|min:0'
+			'value' => array('required','integer','min:0'),
+			'activity' => array('required','integer','min:0')
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -140,8 +140,8 @@ class CalcController extends BaseController {
 	public function doUpdateAmount() //hernoemen door code naar labor
 	{
 		$rules = array(
-			'amount' => 'required|numeric|min:0',
-			'activity' => 'required|integer|min:0'
+			'amount' => array('required','numeric','min:0'),
+			'activity' => array('required','integer','min:0')
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -171,11 +171,11 @@ class CalcController extends BaseController {
 	{
 		$rules = array(
 			'name' => array('required','alpha_dash','max:50'),
-			'unit' => 'required|max:10',
-			'rate' => array('required', 'numeric'),
-			'amount' => 'required|numeric',
-			'activity' => 'required|integer|min:0',
-			'tax' => 'required|integer'
+			'unit' => array('required','max:10'),
+			'rate' => array('required','numeric'),
+			'amount' => array('required','numeric'),
+			'activity' => array('required','integer','min:0'),
+			'tax' => array('required','integer')
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
