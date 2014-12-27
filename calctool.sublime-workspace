@@ -4,12 +4,24 @@
 		"selected_items":
 		[
 			[
-				"debto",
-				"debtor_code"
+				"ac",
+				"activity"
 			],
 			[
-				"contact",
-				"contactfunction"
+				"jso",
+				"json_encode"
+			],
+			[
+				"fun",
+				"fun	function …"
+			],
+			[
+				"pu",
+				"public"
+			],
+			[
+				"kin",
+				"kind_name"
 			],
 			[
 				"i",
@@ -79,45 +91,15 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "app/views/calc/calculation.blade.php",
-			"settings":
-			{
-				"buffer_size": 31405,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "<?php\n\n/*\n|--------------------------------------------------------------------------\n| Application Routes\n|--------------------------------------------------------------------------\n|\n| Here is where you can register all of the routes for an application.\n| It's a breeze. Simply tell Laravel the URIs it should respond to\n| and give it the Closure to execute when that URI is requested.\n|\n*/\n\nRoute::get('login', array('before' => 'guest', 'as' => 'login', 'uses' => 'AuthController@getLogin'));\nRoute::post('login', array('before' => 'guest', 'uses' => 'AuthController@doLogin'));\n\nRoute::any('about-us', function()\n{\n	return View::make('generic.about');\n});\n\nRoute::any('contact', function()\n{\n	return View::make('generic.contact');\n});\n\nRoute::any('faq', function()\n{\n	return View::make('generic.faq');\n});\n\nRoute::any('terms-and-conditions', function()\n{\n	return View::make('generic.terms');\n});\n\nRoute::any('privacy-policy', function()\n{\n	return View::make('generic.privacy');\n});\n\nRoute::group(array('before' => 'auth'), function()\n{\n	Route::get('logout', array('as' => 'logout', 'uses' => 'AuthController@doLogout'));\n	Route::get('calculation/{project_id}', array('as' => 'calculation', 'uses' => 'CalcController@getCalculation'))->where('project_id', '[0-9]+');\n	Route::post('calculation/newchapter/{project_id}', array('as' => 'calculation', 'uses' => 'CalcController@doNewChapter'))->where('project_id', '[0-9]+');\n	Route::post('calculation/newactivity/{chapter_id}', array('as' => 'calculation', 'uses' => 'CalcController@doNewActivity'))->where('chapter_id', '[0-9]+');\n	Route::post('calculation/updatepart', array('as' => 'calculation', 'uses' => 'CalcController@doUpdatePart'));\n	Route::post('calculation/updateparttype', array('as' => 'calculation', 'uses' => 'CalcController@doUpdatePartType'));\n	Route::post('calculation/updateamount', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateAmount'));\n	/* DZa: Routes naar de controler achter de delte knop van calculatie labour. MOgelijk de de \"amount\" (ook in de regel hierboven) veranderen in Labour\n	Route::post('calculation/deleteamount', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteAmount'));\n	*/\n	Route::get('estimate', array('as' => 'estimate', 'uses' => 'CalcController@getEstimate'));\n	Route::get('less', array('as' => 'less', 'uses' => 'CalcController@getLess'));\n	Route::get('more', array('as' => 'more', 'uses' => 'CalcController@getMore'));\n	Route::get('relation/new', array('as' => 'relation.new', 'uses' => 'RelationController@getNew'));\n	Route::post('relation/new', array('as' => 'relation.new', 'uses' => 'RelationController@doNew'));\n	Route::get('relation', array('as' => 'relation', 'uses' => 'RelationController@getAll'));\n	Route::get('project/new', array('as' => 'project.new', 'uses' => 'ProjectController@getNew'));\n	Route::post('project/new', array('as' => 'project.new', 'uses' => 'ProjectController@doNew'));\n	Route::get('project', array('as' => 'project', 'uses' => 'ProjectController@getAll'));\n	Route::get('timesheet', array('as' => 'timesheet', 'uses' => 'CostController@getTimesheet'));\n	Route::get('purchase', array('as' => 'purchase', 'uses' => 'CostController@getPurchase'));\n	Route::get('/', array('uses' => 'HomeController@getHome'));\n});\n",
-			"file": "app/routes.php",
-			"file_size": 3001,
-			"file_write_time": 130626381554906488,
-			"settings":
-			{
-				"buffer_size": 3271,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "<?php\n\nclass CalcController extends BaseController {\n\n	/*\n	|--------------------------------------------------------------------------\n	| Default Home Controller\n	|--------------------------------------------------------------------------\n	|\n	| You may wish to use controllers instead of, or in addition to, Closure\n	| based routes. That's great! Here is an example controller method to\n	| get you started. To route to this controller, just add the route:\n	|\n	|	Route::get('/', 'HomeController@showWelcome');\n	|\n	*/\n\n	public function getCalculation()\n	{\n		return View::make('calc.calculation');\n	}\n\n\n	public function getEstimate()\n	{\n		return View::make('calc.estimate');\n	}\n\n	public function getLess()\n	{\n		return View::make('calc.less');\n	}\n\n	public function getMore()\n	{\n		return View::make('calc.more');\n	}\n\n	public function doNewChapter()\n	{\n		$rules = array(\n			'chapter' => 'required|max:50',\n		);\n\n		$validator = Validator::make(Input::all(), $rules);\n\n		if ($validator->fails()) {\n\n			return Redirect::back()->withErrors($validator)->withInput(Input::all());\n		} else {\n\n			$chapter = new Chapter;\n			$chapter->chapter_name = Input::get('chapter');\n			$chapter->priority = 0;\n			$chapter->project_id = Route::Input('project_id');\n\n			$chapter->save();\n\n			return Redirect::back()->with('success', 1);\n		}\n\n	}\n\n	public function doNewActivity()\n	{\n		$rules = array(\n			'activity' => 'required|max:50',\n		);\n\n		$validator = Validator::make(Input::all(), $rules);\n\n		if ($validator->fails()) {\n\n			return Redirect::back()->withErrors($validator)->withInput(Input::all());\n		} else {\n\n			$part = Part::where('part_name','=','contracting')->first();\n			$part_type = PartType::where('type_name','=','calculation')->first();\n\n			$activity = new Activity;\n			$activity->activity_name = Input::get('activity');\n			$activity->priority = 0;\n			$activity->chapter_id = Route::Input('chapter_id');\n			$activity->part_id = $part->id;\n			$activity->part_type_id = $part_type->id;\n\n			$activity->save();\n\n			return Redirect::back()->with('success', 1);\n\n		}\n	}\n\n	public function doUpdatePart()\n	{\n		$rules = array(\n			'value' => 'required|integer|min:0',\n			'activity' => 'required|integer|min:0'\n		);\n\n		$validator = Validator::make(Input::all(), $rules);\n\n		if ($validator->fails()) {\n			$messages = $validator->messages();\n\n			return json_encode(['success' => 0, 'message' => $messages]);\n		} else {\n\n			$activity = Activity::find(Input::get('activity'));\n			$activity->part_id = Input::get('value');\n			$activity->save();\n\n			return json_encode(['success' => 1]);\n		}\n	}\n\n	public function doUpdatePartType()\n	{\n		$rules = array(\n			'value' => 'required|integer|min:0',\n			'activity' => 'required|integer|min:0'\n		);\n\n		$validator = Validator::make(Input::all(), $rules);\n\n		if ($validator->fails()) {\n			$messages = $validator->messages();\n\n			return json_encode(['success' => 0, 'message' => $messages]);\n		} else {\n\n			$activity = Activity::find(Input::get('activity'));\n			$activity->part_type_id = Input::get('value');\n			$activity->save();\n\n			return json_encode(['success' => 1]);\n		}\n	}\n\n	public function doUpdateAmount()\n	{\n		$rules = array(\n			'amount' => 'required|integer|min:0',\n			'activity' => 'required|integer|min:0'\n		);\n\n		$validator = Validator::make(Input::all(), $rules);\n\n		if ($validator->fails()) {\n			$messages = $validator->messages();\n\n			return json_encode(['success' => 0, 'message' => $messages]);\n		} else {\n\n/* TODO dz id meegeven om te controlen in de database zodat een waarde uit de\ntabel wordt ingevuld (1e keer), of wordt geupdate (2e keer) + tax_id)\n*/\n\n			$hourlabor = CalculationLabor::firstOrCreate(array(\n				\"amount\" => Input::get('amount'),\n				\"activity_id\" => Input::get('activity'),\n				\"tax_id\" => 2\n			));\n\n			$hourlabor->amount = Input::get('amount');\n			$hourlabor->save();\n\n			return json_encode(['success' => 1]);\n		}\n	}\n	\n\n\n\n\n\n\n	/* DZa: Controler achter de delte knop van calculatie labour.\n	public function doDeleteAmount()\n	{\n			$hourlabor = CalculationLabor::delete(Input::XXXXXX(\n				\"amount\" => Delete::get('amount'),\n				\"tax_id\" => Delete::\n			));\n		}\n	}\n	*/\n}\n\n",
-			"file": "app/controllers/CalcController.php",
-			"file_size": 3869,
-			"file_write_time": 130626381508123108,
-			"settings":
-			{
-				"buffer_size": 4119,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 180.0,
+		"height": 292.0,
 		"selected_items":
 		[
 			[
-				"git pu",
+				" git pu",
 				"Git: Push"
 			],
 			[
@@ -125,11 +107,63 @@
 				"Git: Commit"
 			],
 			[
-				"git ad",
+				"git add",
 				"Git: Add..."
 			],
 			[
-				"git add",
+				"git stta",
+				"Git: Status"
+			],
+			[
+				"git status",
+				"Git: Status"
+			],
+			[
+				"git p",
+				"Git: Push"
+			],
+			[
+				"git c	",
+				"Git: Commit"
+			],
+			[
+				"git log",
+				"Git: Log All"
+			],
+			[
+				"git stat",
+				"Git: Status"
+			],
+			[
+				"git pu",
+				"Git: Pull"
+			],
+			[
+				"git fet",
+				"Git: Fetch"
+			],
+			[
+				"artisan route",
+				"Laravel Artisan: Routes"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"git st",
+				"Git: Status"
+			],
+			[
+				"git lo",
+				"Git: Log All"
+			],
+			[
+				"git fe",
+				"Git: Fetch"
+			],
+			[
+				"git ad",
 				"Git: Add..."
 			],
 			[
@@ -139,10 +173,6 @@
 			[
 				"git com	",
 				"Git: Commit"
-			],
-			[
-				"git st",
-				"Git: Status"
 			],
 			[
 				"git s",
@@ -161,20 +191,12 @@
 				"Git: Add..."
 			],
 			[
-				"git p",
-				"Git: Push"
-			],
-			[
 				"git ",
 				"Git: Push"
 			],
 			[
 				"gi",
 				"Git: Commit"
-			],
-			[
-				"Package Control: ",
-				"Package Control: Install Package"
 			],
 			[
 				"git sta",
@@ -189,7 +211,7 @@
 				"Package Control: Upgrade/Overwrite All Packages"
 			]
 		],
-		"width": 575.0
+		"width": 449.0
 	},
 	"console":
 	{
@@ -213,52 +235,42 @@
 		"/var/www/calctool-v2",
 		"/var/www/calctool-v2/app",
 		"/var/www/calctool-v2/app/controllers",
-		"/var/www/calctool-v2/app/database",
-		"/var/www/calctool-v2/app/database/migrations",
-		"/var/www/calctool-v2/app/database/seeds",
-		"/var/www/calctool-v2/app/models",
 		"/var/www/calctool-v2/app/views",
-		"/var/www/calctool-v2/app/views/base",
-		"/var/www/calctool-v2/app/views/calc",
-		"/var/www/calctool-v2/app/views/user"
+		"/var/www/calctool-v2/app/views/user",
+		"/var/www/calctool-v2/bootstrap"
 	],
 	"file_history":
 	[
-		"/var/www/calctool-v2/app/controllers/ProjectController.php",
-		"/var/www/calctool-v2/app/models/Project.php",
-		"/var/www/calctool-v2/app/views/user/project.blade.php",
-		"/var/www/calctool-v2/app/models/CalculationLabor.php",
-		"/var/www/calctool-v2/app/views/base/home.blade.php",
+		"/var/www/calctool-v2/app/views/layout/master.blade.php",
 		"/var/www/calctool-v2/app/views/user/new_project.blade.php",
-		"/var/www/calctool-v2/app/database/migrations/2014_09_11_220407_create_calculation.php",
-		"/var/www/calctool-v2/app/database/migrations/2014_09_11_212442_create_financial.php",
-		"/var/www/calctool-v2/app/models/Chapter.php",
-		"/var/www/calctool-v2/app/models/Activity.php",
-		"/var/www/calctool-v2/app/database/migrations/2014_09_11_204724_create_works.php",
-		"/var/www/calctool-v2/app/database/seeds/TestProjectSeeder.php",
-		"/var/www/calctool-v2/app/models/Part.php",
-		"/var/www/calctool-v2/app/models/PartType.php",
-		"/var/www/calctool-v2/app/routes.php",
-		"/var/www/calctool-v2/app/controllers/CalcController.php",
-		"/var/www/calctool-v2/app/config/local/database.php",
-		"/var/www/calctool-v2/app/models/Contact.php",
-		"/var/www/calctool-v2/app/models/Relation.php",
-		"/var/www/calctool-v2/public/css/custom.css",
-		"/var/www/calctool-v2/app/views/user/new_relation.blade.php",
-		"/var/www/calctool-v2/app/views/user/relation.blade.php",
-		"/var/www/calctool-v2/app/views/calc/calculation.blade.php",
-		"/var/www/calctool-v2/app/controllers/RelationController.php",
-		"/var/www/calctool-v2/app/database/migrations/2014_09_09_204054_create_users_table.php",
-		"/var/www/calctool-v2/app/database/migrations/2014_09_11_193342_create_relation.php",
-		"/var/www/calctool-v2/app/database/seeds/StaticSeeder.php",
-		"/var/www/calctool-v2/app/models/ContactFunction.php",
 		"/var/www/calctool-v2/app/controllers/HomeController.php",
+		"/var/www/calctool-v2/app/controllers/CalcController.php",
+		"/var/www/calctool-v2/app/routes.php",
+		"/var/www/calctool-v2/app/views/calc/calculation.blade.php",
+		"/var/www/calctool-v2/public/test.php",
+		"/var/www/calctool-v2/app/views/user/new_relation.blade.php",
+		"/var/www/calctool-v2/app/controllers/RelationController.php",
+		"/var/www/calctool-v2/app/database/seeds/TestProjectSeeder.php",
+		"/var/www/calctool-v2/app/database/migrations/2014_09_11_193342_create_relation.php",
+		"/var/www/calctool-v2/app/views/layout/header.blade.php",
+		"/var/www/calctool-v2/app/views/layout/footer.blade.php",
+		"/var/www/calctool-v2/app/config/dev/session.php",
+		"/var/www/calctool-v2/app/config/session.php",
+		"/var/www/calctool-v2/app/config/services.php",
+		"/var/www/calctool-v2/app/config/dev/database.php",
+		"/var/www/calctool-v2/app/config/dev/app.php",
+		"/var/www/calctool-v2/bootstrap/start.php",
+		"/var/www/calctool-v2/app/controllers/CostController.php",
+		"/var/www/calctool/app/views/placeholder.php",
+		"/var/www/calctool/app/views/user/relation.blade.php",
+		"/var/www/calctool/app/routes.php",
+		"/var/www/calctool/app/controllers/RelationController.php",
+		"/home/yorickdewid/prod_databasename.sql",
 		"/var/www/calctool/app/views/calc/calculation.blade.php",
 		"/var/www/calctool/app/views/user/new_relation.blade.php",
 		"/var/www/calctool/app/views/user/new_project.blade.php",
 		"/var/www/calctool/app/views/calc/more.blade.php",
 		"/var/www/calctool/app/views/calc/less.blade.php",
-		"/var/www/calctool/app/routes.php",
 		"/var/www/calctool/app/controllers/CalcController.php",
 		"/var/www/calctool/app/views/calc/estimate.blade.php",
 		"/var/www/calctool/app/views/layout/master.blade.php",
@@ -292,7 +304,6 @@
 		"/var/www/calctool/app/views/base/home.blade.php",
 		"/var/www/calctool/app/controllers/HomeController.php",
 		"/var/www/calctool/app/controllers/ProjectController.php",
-		"/var/www/calctool/app/controllers/RelationController.php",
 		"/var/www/calctool/app/views/user/newRelation.balde.php",
 		"/var/www/calctool/app/views/user/new_relation.balde.php",
 		"/var/www/calctool/app/views/generic/COMMIT_EDITMSG.COMMIT_EDITMSG",
@@ -351,11 +362,17 @@
 		"/var/www/calctool/app/models/Purchase.php",
 		"/var/www/calctool/app/models/Timesheet.php",
 		"/var/www/calctool/app/database/migrations/2014_09_11_205753_create_part.php",
-		"/var/www/calctool/app/models/Detail.php"
+		"/var/www/calctool/app/models/Detail.php",
+		"/var/www/calctool/app/models/PartType.php",
+		"/var/www/calctool/app/models/Part.php",
+		"/var/www/calctool/app/database/migrations/2014_09_11_204724_create_works.php",
+		"/var/www/calctool/app/models/Activity.php",
+		"/var/www/calctool/app/models/Chapter.php",
+		"/var/www/calctool/app/database/migrations/2014_09_11_202219_create_material_storage.php"
 	],
 	"find":
 	{
-		"height": 47.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
@@ -371,28 +388,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"fa fa",
-			"prov",
-			"pro",
-			"prov",
-			"inkoop",
-			"uren",
-			"alculationLabor",
-			"null",
-			"project",
-			"btw",
-			"form-control",
-			"form-control-number",
-			"materiaal",
-			"form-control",
-			"uur",
-			"800",
-			"});\n",
-			"project",
-			"user_acc",
-			"function_id",
-			"func",
-			"function",
+			"radio",
+			"rad",
+			"auth",
+			"87.211.99.157",
 			"table",
 			"tab",
 			"cust",
@@ -434,6 +433,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"127.0.0.1",
 			"719E00"
 		],
 		"reverse": false,
@@ -445,103 +445,14 @@
 	"groups":
 	[
 		{
-			"selected": 2,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "app/views/calc/calculation.blade.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 31405,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								11959,
-								11959
-							]
-						],
-						"settings":
-						{
-							"spell_check": true,
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 360.0,
-						"translation.y": 1433.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "app/routes.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3271,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2078,
-								2078
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 781.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "app/controllers/CalcController.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4119,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3889,
-								3889
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 3654.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 32.0
+		"height": 23.0
 	},
 	"input":
 	{
@@ -570,14 +481,22 @@
 		]
 	},
 	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 25.0
+	},
 	"output.find_results":
 	{
 		"height": 0.0
 	},
+	"output.git":
+	{
+		"height": 54.0
+	},
 	"project": "calctool.sublime-project",
 	"replace":
 	{
-		"height": 60.0
+		"height": 42.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -612,7 +531,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 347.0,
+	"side_bar_width": 285.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
