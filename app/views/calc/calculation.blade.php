@@ -21,16 +21,20 @@ $project = Project::find(Route::Input('project_id'));
 		$("body").on("change", ".newrow", function(){
 			var i = 1;
 			if($(this).val()){
-				var $curTable = $(this).closest("table");
-				$curTable.find("tr:eq(1)").clone().find("input").each(function(){
-					$(this).val("").attr("id", function(_, id) { return id + i });
-				}).end().appendTo($curTable);
-				i++;
+				if(!$(this).closest("tr").next().length){
+					var $curTable = $(this).closest("table");
+					$curTable.find("tr:eq(1)").clone().removeAttr("data-id").find("input").each(function(){
+						$(this).val("").attr("id", function(_, id){ return id + i });
+					}).end().appendTo($curTable);
+					i++;
+				}
 			}
 		});
-		$(".dsave").blur(function(){
+		$("body").on("blur", ".dsave", function(){
 			var flag = true;
 			var $curThis = $(this)
+			if($curThis.closest("tr").attr("data-id"))
+				return false;
 			$curThis.closest("tr").find("input").each(function(){
 				if(!$(this).val())
 					flag = false;
@@ -42,7 +46,10 @@ $project = Project::find(Route::Input('project_id'));
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
 					tax: $curThis.closest("tr").find("select[name='btw']").val(),
-					activity: $curThis.closest("tr").attr("data-id")
+					activity: $curThis.closest("table").attr("data-id")
+				}, function(data){
+					var json = $.parseJSON(data);
+					$curThis.closest("tr").attr("data-id", json.id);
 				}).fail(function(e){
 					console.log(e);
 				});
@@ -172,7 +179,7 @@ $project = Project::find(Route::Input('project_id'));
 												</table>
 
 												<h4>Materiaal</h4>
-												<table class="table table-striped">
+												<table class="table table-striped" data-id="{{ $activity->id }}">
 													<?# -- table head -- ?>
 													<thead>
 														<tr>
@@ -189,11 +196,29 @@ $project = Project::find(Route::Input('project_id'));
 
 													<?# -- table items -- ?>
 													<tbody>
-														<tr data-id="{{ $activity->id }}">
-															<td class="col-md-3"><input name="name" id="name" type="text" value="" class="form-control-number control-sm dsave newrow" /></td>
-															<td class="col-md-2"><input name="unit" id="name" type="text" value="" class="form-control-number control-sm dsave" /></td>
-															<td class="col-md-1"><input name="rate" id="name" type="text" value="" class="form-control-number control-sm dsave" /></td>
-															<td class="col-md-1"><input name="amount" id="name" type="number" min="0" value="" class="form-control-number control-sm dsave" /></td>
+														@foreach (CalculationMaterial::where('activity_id','=', $activity->id)->get() as $material)
+														<tr data-id="{{ $material->id }}">
+															<td class="col-md-3"><input name="name" id="name" type="text" value="{{ $material->material_name }}" class="form-control-number control-sm dsave newrow" /></td>
+															<td class="col-md-2"><input name="unit" id="name" type="text" value="{{ $material->unit }}" class="form-control-number control-sm dsave" /></td>
+															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-number control-sm dsave" /></td>
+															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-number control-sm dsave" /></td>
+															<td class="col-md-1 centering">$20.000,00</td>
+															<td class="col-md-2">$40</td>
+															<td class="col-md-1">
+																<select name="btw" id="type" class="form-control-number pointer control-sm">
+																@foreach (Tax::all() as $tax)
+																	<option value="{{ $tax->id }}" {{ ($material->tax_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
+																@endforeach
+																</select>
+															</td>
+															<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
+														</tr>
+														@endforeach
+														<tr>
+															<td class="col-md-3"><input name="name" id="name" type="text" class="form-control-number control-sm dsave newrow" /></td>
+															<td class="col-md-2"><input name="unit" id="name" type="text" class="form-control-number control-sm dsave" /></td>
+															<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-number control-sm dsave" /></td>
+															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-number control-sm dsave" /></td>
 															<td class="col-md-1 centering">$20.000,00</td>
 															<td class="col-md-2">$40</td>
 															<td class="col-md-1">

@@ -151,7 +151,9 @@ class CalcController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
-			/* TODO yw: niet alleen insert maar ook update */
+			/* TODO yw: niet alleen insert maar ook update
+				kan geen create en save hebben.
+			 */
 			$hourlabor = CalculationLabor::create(array(
 				"amount" => Input::get('amount'),
 				"activity_id" => Input::get('activity'),
@@ -168,12 +170,12 @@ class CalcController extends BaseController {
 	public function doNewMaterial()
 	{
 		$rules = array(
-			'name' => 'required|alphanum|max:50',
-			'unit' => 'required|alphanum|max:10',
-			'rate' => 'required|numeric',
-			'amount' =>  'required|numeric',
+			'name' => array('required','alpha_dash','max:50'),
+			'unit' => 'required|max:10',
+			'rate' => array('required', 'numeric'),
+			'amount' => 'required|numeric',
 			'activity' => 'required|integer|min:0',
-			'tax' =>  'required|integer'
+			'tax' => 'required|integer'
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -192,9 +194,7 @@ class CalcController extends BaseController {
 				"activity_id" => Input::get('activity'),
 			));
 
-			$material->save();
-
-			return json_encode(['success' => 1]);
+			return json_encode(['success' => 1, 'id' => $material->id]);
 		}
 	}
 }
