@@ -25,7 +25,7 @@ class ProjectController extends \BaseController {
 			'country' => array('required','numeric'),
 			'hour_rate' => array('required','numeric','between:0,1000'),
 			'more_hour_rate' => array('required','numeric','between:0,1000'),
-			'profit_material_1' => array('required','numeric|','between:0,200'),
+			'profit_material_1' => array('required','numeric','between:0,200'),
 			'profit_equipment_1' => array('required','numeric','between:0,200'),
 			'profit_material_2' => array('required','numeric','between:0,200'),
 			'profit_equipment_2' => array('required','numeric','between:0,200'),

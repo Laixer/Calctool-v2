@@ -24,7 +24,7 @@ class RelationController extends \BaseController {
 			'company_type' => array('required_if:relationkind,zakelijk','numeric'),
 			'company_name' => array('required_if:relationkind,zakelijk','max:50'),
 			'kvk' => array('numeric','min:12'),
-			'btw' => 'alpha_num','min:14'),
+			'btw' => array('alpha_num','min:14'),
 			'telephone_comp' => array('alpha_num','max:12'),
 			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
 			'website' => array('url','max:180'),
