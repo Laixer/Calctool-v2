@@ -50,3 +50,8 @@ color: #555;
 background-color: #fff;
 background-image: none;
 }
+
+/* Error rode border rondom inputvelden */
+.error-input {
+border: #d43f3a 2px solid;
+}
