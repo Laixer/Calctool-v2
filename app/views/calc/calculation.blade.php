@@ -42,9 +42,9 @@ $project = Project::find(Route::Input('project_id'));
 					tax: $curThis.closest("tr").find("select[name='btw']").val(),
 				}, function(data){
 					var json = $.parseJSON(data);
+					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);
-						$curThis.closest("tr").find("input").removeClass("error-input");
 					} else {
 						$.each(json.message, function(i, item) {
 							if(json.message['name'])
@@ -80,9 +80,9 @@ $project = Project::find(Route::Input('project_id'));
 					activity: $curThis.closest("table").attr("data-id")
 				}, function(data){
 					var json = $.parseJSON(data);
+					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);
-						$curThis.closest("tr").find("input").removeClass("error-input");
 					} else {
 						$.each(json.message, function(i, item) {
 							if(json.message['name'])
