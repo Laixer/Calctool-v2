@@ -172,7 +172,7 @@ class CalcController extends BaseController {
 		$rules = array(
 			'name' => array('required','alpha_dash','max:50'),
 			'unit' => array('required','max:10'),
-			'rate' => array('required','numeric'),
+			'rate' => array('required','regex:/^[0-9]+[.,]?[0-9]+$/'),
 			'amount' => array('required','numeric'),
 			'activity' => array('required','integer','min:0'),
 			'tax' => array('required','integer')
@@ -188,8 +188,8 @@ class CalcController extends BaseController {
 			$material = CalculationMaterial::create(array(
 				"material_name" => Input::get('name'),
 				"unit" => Input::get('unit'),
-				"rate" => Input::get('rate'),
-				"amount" => Input::get('amount'),
+				"rate" => str_replace(',', '.', Input::get('rate')),
+				"amount" => str_replace(',', '.', Input::get('amount')),
 				"tax_id" => Input::get('tax'),
 				"activity_id" => Input::get('activity'),
 			));
