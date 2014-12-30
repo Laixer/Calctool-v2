@@ -69,6 +69,7 @@
 		{{ HTML::script('plugins/jquery.cookie.js') }}
 		{{ HTML::script('plugins/jquery.appear.js') }}
 		{{ HTML::script('plugins/jquery.isotope.js') }}
+		{{ HTML::script('plugins/jquery.number.min.js') }}
 		{{ HTML::script('plugins/masonry.js') }}
 
 		{{ HTML::script('plugins/bootstrap/js/bootstrap.min.js') }}
