@@ -193,8 +193,8 @@ class CalcController extends BaseController {
 			'id' => array('integer','min:0'),
 			'name' => array('alpha_dash','max:50'),
 			'unit' => array('max:10'),
-			'rate' => array('regex:/^[0-9]+[.,]?[0-9]*$/'),
-			'amount' => array('regex:/^[0-9]+[.,]?[0-9]*$/'),
+			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'tax' => array('integer')
 		);
 
