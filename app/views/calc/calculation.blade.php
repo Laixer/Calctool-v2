@@ -9,18 +9,7 @@ $project = Project::find(Route::Input('project_id'));
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		function addCommas(nStr){
-			nStr += '';
-			x = nStr.split('.');
-			x1 = x[0];
-			x2 = x.length > 1 ? ',' + x[1].substr(0,2) : ''; //TODO -> moet worden afgerond
-			//x2 = x.length > 1 ? ',' + parseInt(x[1]).toFixed(2) : '';
-			var rgx = /(\d+)(\d{3})/;
-			while (rgx.test(x1)) {
-				x1 = x1.replace(rgx, '$1' + '.' + '$2');
-			}
-			return x1 + x2;
-		}
+		$(".form-control-sm-number").number(true, 2,",",".");
 		$(".radio-activity").change(function(){
 			$.post("/calculation/updatepart", {value: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
 		});
@@ -57,9 +46,9 @@ $project = Project::find(Route::Input('project_id'));
 					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().replace(',', '.');
-						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().replace(',', '.');
-						$curThis.closest("tr").find(".total").text('€ '+addCommas(rate*amount));
+						//var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().replace(',', '.');
+						//var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().replace(',', '.');
+						//$curThis.closest("tr").find(".total").text('€ '+addCommas(rate*amount));
 					} else {
 						$.each(json.message, function(i, item) {
 							if(json.message['name'])
@@ -232,13 +221,13 @@ $project = Project::find(Route::Input('project_id'));
 														<tr><?# -- item -- ?>
 															<td class="col-md-2">Per Uur</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
-															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="name" type="text" value="{{ CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'] }}" class="form-control-number control-sm labor-amount" /></td>
+															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="name" type="text" value="{{ CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'] }}" class="form-control-sm-number labor-amount" /></td>
 															<td class="col-md-1">$1</td>
 															<td class="col-md-2">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-2">&nbsp;</td>
 															<td class="col-md-1">
-																<select name="type" id="type" class="form-control-number pointer control-sm labor-amount">
+																<select name="type" id="type" class="form-control-sm-text pointer labor-amount">
 																@foreach (Tax::all() as $tax)
 																	<option value="{{ $tax->id }}" selected="selected">{{ $tax->tax_rate }}%</option>
 																@endforeach
@@ -269,14 +258,14 @@ $project = Project::find(Route::Input('project_id'));
 													<tbody>
 														@foreach (CalculationMaterial::where('activity_id','=', $activity->id)->get() as $material)
 														<tr data-id="{{ $material->id }}">
-															<td class="col-md-3"><input name="name" id="name" type="text" value="{{ $material->material_name }}" class="form-control-number control-sm dsave newrow" /></td>
-															<td class="col-md-2"><input name="unit" id="name" type="text" value="{{ $material->unit }}" class="form-control-number control-sm dsave" /></td>
-															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-number control-sm dsave" /></td>
-															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-number control-sm dsave" /></td>
+															<td class="col-md-3"><input name="name" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text dsave newrow" /></td>
+															<td class="col-md-2"><input name="unit" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text dsave" /></td>
+															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
+															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1 centering"><span class="total">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</span></td>
 															<td class="col-md-2">$40</td>
 															<td class="col-md-1">
-																<select name="btw" id="type" class="form-control-number pointer dsave control-sm">
+																<select name="btw" id="type" class="form-control-sm-text pointer dsave">
 																@foreach (Tax::all() as $tax)
 																	<option value="{{ $tax->id }}" {{ ($material->tax_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
 																@endforeach
@@ -286,14 +275,14 @@ $project = Project::find(Route::Input('project_id'));
 														</tr>
 														@endforeach
 														<tr>
-															<td class="col-md-3"><input name="name" id="name" type="text" class="form-control-number control-sm dsave newrow" /></td>
-															<td class="col-md-2"><input name="unit" id="name" type="text" class="form-control-number control-sm dsave" /></td>
-															<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-number control-sm dsave" /></td>
-															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-number control-sm dsave" /></td>
+															<td class="col-md-3"><input name="name" id="name" type="text" class="form-control-sm-text dsave newrow" /></td>
+															<td class="col-md-2"><input name="unit" id="name" type="text" class="form-control-sm-text dsave" /></td>
+															<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number dsave" /></td>
+															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1 centering"><span class="total"></span></td>
 															<td class="col-md-2"></td>
 															<td class="col-md-1">
-																<select name="btw" id="type" class="form-control-number dsave pointer control-sm">
+																<select name="btw" id="type" class="form-control-sm-text dsave pointer">
 																@foreach (Tax::all() as $tax)
 																	<option value="{{ $tax->id }}" selected="selected">{{ $tax->tax_rate }}%</option>
 																@endforeach
@@ -323,14 +312,14 @@ $project = Project::find(Route::Input('project_id'));
 													<!-- table items -->
 													<tbody>
 														<tr>
-															<td class="col-md-3"><input name="name" id="name" type="text" value="" class="form-control-number control-sm newrow" /></td>
-															<td class="col-md-2"><input name="name" id="name" type="text" value="" class="form-control-number control-sm" /></td>
-															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control-number control-sm" /></td>
-															<td class="col-md-1"><input name="name" id="name" type="number" min="0" value="" class="form-control-number control-sm" /></td>
+															<td class="col-md-3"><input name="name" id="name" type="text" value="" class="form-control-sm-number control-sm newrow" /></td>
+															<td class="col-md-2"><input name="name" id="name" type="text" value="" class="form-control-sm-number control-sm" /></td>
+															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control-sm-number control-sm" /></td>
+															<td class="col-md-1"><input name="name" id="name" type="number" min="0" value="" class="form-control-sm-number control-sm" /></td>
 															<td class="col-md-1">$20.000,00</td>
 															<td class="col-md-2">$40</td>
 															<td class="col-md-1">
-																<select name="type" id="type" class="form-control-number pointer control-sm">
+																<select name="type" id="type" class="form-control-sm-number pointer control-sm">
 																@foreach (Tax::all() as $tax)
 																	<option value="{{ $tax->id }}" selected="selected">{{ $tax->tax_rate }}%</option>
 																@endforeach
