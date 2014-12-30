@@ -2,6 +2,31 @@
 
 @section('content')
 <?# -- WRAPPER -- ?>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	function prefixURL(field) {
+		var cur_val = $(field).val();
+		if (!cur_val)
+			return;
+		var ini = cur_val.substring(0,4);
+		if (ini == 'http')
+			return;
+		else {
+			if (cur_val.indexOf("www") >=0) {
+				$(field).val('http://' + cur_val);
+			} else {
+				$(field).val('http://www.' + cur_val);
+			}
+		}
+	}
+
+	$('#website').blur(function(e){
+		prefixURL($(this));
+	});
+});
+</script>
+
 <div id="wrapper">
 
 	<section class="container">
