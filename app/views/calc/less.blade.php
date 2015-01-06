@@ -12,7 +12,7 @@
 				<div id="calculation-wizard" class="wizard">
 					<ul class="steps">
 						<li data-target="#step0">Home<span class="chevron"></span></li>
-						<li data-target="#step1" class="complete">Projectgegevens<span class="chevron"></span></li>
+						<li data-target="#step1" class="complete">Projectform-controlgegevens<span class="chevron"></span></li>
 						<li data-target="#step2" class="complete">Calculatie<span class="chevron"></span></li>
 						<li data-target="#step3" class="complete">Offerte<span class="chevron"></span></li>
 						<li data-target="#step4" class="complete">Stelpost<span class="chevron"></span></li>
@@ -145,7 +145,7 @@
 															<th class="col-md-1">Prijs/eenheid</th>
 															<th class="col-md-1">Hoeveelheid</th>
 															<th class="col-md-3">Gecalculeerd Incl. Winst</th>
-															<th class="col-md-1">Minderwerk</th>
+															<th class="col-md-1">Minderwerk</th>form-control
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>

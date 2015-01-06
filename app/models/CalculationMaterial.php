@@ -12,7 +12,7 @@ class CalculationMaterial extends Eloquent {
 	}
 
 	public function tax() {
-		return $this->hasOne('Tax');
+		return $this->hasOne('Tax','id', 'tax_id');
 	}
 
 }
