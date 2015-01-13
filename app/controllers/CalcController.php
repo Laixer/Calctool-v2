@@ -209,8 +209,8 @@ class CalcController extends BaseController {
 			$material = CalculationMaterial::find(Input::get('id'));
 			$material->material_name = Input::get('name');
 			$material->unit = Input::get('unit');
-			$material->rate = str_replace(',', '.', Input::get('rate'));
-			$material->amount = str_replace(',', '.', Input::get('amount'));
+			$material->rate = str_replace(',', '.', str_replace('.', '' , Input::get('rate')));
+			$material->amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
 			$material->tax_id = Input::get('tax');
 
 			$material->save();

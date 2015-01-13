@@ -4,16 +4,24 @@
 		"selected_items":
 		[
 			[
+				"da",
+				"data-id"
+			],
+			[
+				"clo",
+				"closest"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
 				"ac",
 				"activity"
 			],
 			[
 				"jso",
 				"json_encode"
-			],
-			[
-				"fun",
-				"fun	function …"
 			],
 			[
 				"pu",
@@ -91,15 +99,35 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "app/views/calc/calculation.blade.php",
+			"settings":
+			{
+				"buffer_size": 35995,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 292.0,
+		"height": 92.0,
 		"selected_items":
 		[
 			[
-				" git pu",
+				"git pull",
+				"Git: Pull"
+			],
+			[
+				"git fet",
+				"Git: Fetch"
+			],
+			[
+				"git log",
+				"Git: Log All"
+			],
+			[
+				"git pu",
 				"Git: Push"
 			],
 			[
@@ -107,8 +135,52 @@
 				"Git: Commit"
 			],
 			[
+				"git ad",
+				"Git: Add..."
+			],
+			[
+				"git st",
+				"Git: Status"
+			],
+			[
+				"git p",
+				"Git: Push"
+			],
+			[
+				"git om",
+				"Git: Commit"
+			],
+			[
+				"git pus",
+				"Git: Push"
+			],
+			[
 				"git add",
 				"Git: Add..."
+			],
+			[
+				"git br",
+				"Git: Change Branch"
+			],
+			[
+				"git bran",
+				"Git: Pull Current Branch"
+			],
+			[
+				"git branch",
+				"Git: Change Branch"
+			],
+			[
+				"git a",
+				"Git: Add..."
+			],
+			[
+				"git sat",
+				"Git: Status"
+			],
+			[
+				" git pu",
+				"Git: Push"
 			],
 			[
 				"git stta",
@@ -119,28 +191,12 @@
 				"Git: Status"
 			],
 			[
-				"git p",
-				"Git: Push"
-			],
-			[
 				"git c	",
 				"Git: Commit"
 			],
 			[
-				"git log",
-				"Git: Log All"
-			],
-			[
 				"git stat",
 				"Git: Status"
-			],
-			[
-				"git pu",
-				"Git: Pull"
-			],
-			[
-				"git fet",
-				"Git: Fetch"
 			],
 			[
 				"artisan route",
@@ -151,20 +207,12 @@
 				"Package Control: Install Package"
 			],
 			[
-				"git st",
-				"Git: Status"
-			],
-			[
 				"git lo",
 				"Git: Log All"
 			],
 			[
 				"git fe",
 				"Git: Fetch"
-			],
-			[
-				"git ad",
-				"Git: Add..."
 			],
 			[
 				"git c",
@@ -187,10 +235,6 @@
 				"Git: Commit history"
 			],
 			[
-				"git a",
-				"Git: Add..."
-			],
-			[
 				"git ",
 				"Git: Push"
 			],
@@ -211,7 +255,7 @@
 				"Package Control: Upgrade/Overwrite All Packages"
 			]
 		],
-		"width": 449.0
+		"width": 467.0
 	},
 	"console":
 	{
@@ -234,23 +278,29 @@
 	[
 		"/var/www/calctool-v2",
 		"/var/www/calctool-v2/app",
-		"/var/www/calctool-v2/app/controllers",
+		"/var/www/calctool-v2/app/models",
 		"/var/www/calctool-v2/app/views",
-		"/var/www/calctool-v2/app/views/user",
+		"/var/www/calctool-v2/app/views/calc",
 		"/var/www/calctool-v2/bootstrap"
 	],
 	"file_history":
 	[
+		"/var/www/calctool-v2/app/models/CalculationMaterial.php",
 		"/var/www/calctool-v2/app/views/layout/master.blade.php",
-		"/var/www/calctool-v2/app/views/user/new_project.blade.php",
-		"/var/www/calctool-v2/app/controllers/HomeController.php",
+		"/var/www/calctool-v2/public/plugins/superslides/jquery.number.min.js",
+		"/var/www/calctool-v2/public/plugins/jquery.numberformatter.js",
 		"/var/www/calctool-v2/app/controllers/CalcController.php",
-		"/var/www/calctool-v2/app/routes.php",
 		"/var/www/calctool-v2/app/views/calc/calculation.blade.php",
-		"/var/www/calctool-v2/public/test.php",
-		"/var/www/calctool-v2/app/views/user/new_relation.blade.php",
+		"/var/www/calctool-v2/app/views/base/home.blade.php",
+		"/var/www/calctool-v2/app/controllers/ProjectController.php",
 		"/var/www/calctool-v2/app/controllers/RelationController.php",
 		"/var/www/calctool-v2/app/database/seeds/TestProjectSeeder.php",
+		"/var/www/calctool-v2/app/models/CalculationLabor.php",
+		"/var/www/calctool-v2/app/views/user/new_project.blade.php",
+		"/var/www/calctool-v2/app/controllers/HomeController.php",
+		"/var/www/calctool-v2/app/routes.php",
+		"/var/www/calctool-v2/public/test.php",
+		"/var/www/calctool-v2/app/views/user/new_relation.blade.php",
 		"/var/www/calctool-v2/app/database/migrations/2014_09_11_193342_create_relation.php",
 		"/var/www/calctool-v2/app/views/layout/header.blade.php",
 		"/var/www/calctool-v2/app/views/layout/footer.blade.php",
@@ -362,13 +412,7 @@
 		"/var/www/calctool/app/models/Purchase.php",
 		"/var/www/calctool/app/models/Timesheet.php",
 		"/var/www/calctool/app/database/migrations/2014_09_11_205753_create_part.php",
-		"/var/www/calctool/app/models/Detail.php",
-		"/var/www/calctool/app/models/PartType.php",
-		"/var/www/calctool/app/models/Part.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_204724_create_works.php",
-		"/var/www/calctool/app/models/Activity.php",
-		"/var/www/calctool/app/models/Chapter.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_202219_create_material_storage.php"
+		"/var/www/calctool/app/models/Detail.php"
 	],
 	"find":
 	{
@@ -388,6 +432,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"number(",
+			" (",
+			"error-input",
 			"radio",
 			"rad",
 			"auth",
@@ -445,14 +492,44 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "app/views/calc/calculation.blade.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 35995,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								403,
+								403
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Laravel Blade Highlighter/laravel-blade.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 90.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 23.0
+		"height": 34.0
 	},
 	"input":
 	{
@@ -491,7 +568,7 @@
 	},
 	"output.git":
 	{
-		"height": 54.0
+		"height": 25.0
 	},
 	"project": "calctool.sublime-project",
 	"replace":
