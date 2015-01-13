@@ -21,7 +21,7 @@ var n = this,
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$(".form-control-sm-number").on("change", function(){
+		$("body").on("change", ".form-control-sm-number", function(){
 			$(this).val(parseFloat($(this).val().split('.').join('').replace(',', '.')).formatMoney(2, ',', '.'));
 		});
 		$(".radio-activity").change(function(){
