@@ -21,6 +21,31 @@ var n = this,
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		$('.toggle').click(function(e){
+			$id = $(this).attr('id');
+			if ($(this).hasClass('active')) {
+				$toggleOpen = JSON.parse(sessionStorage.toggleOpen);
+				if (!$toggleOpen.length)
+					$toggleOpen.push($id);
+				for(var i in $toggleOpen){
+					if ($toggleOpen.indexOf( $id ) == -1)
+						$toggleOpen.push($id);
+				}
+				sessionStorage.toggleOpen = JSON.stringify($toggleOpen);
+			} else {
+				$tmpOpen = [];
+				$toggleOpen = JSON.parse(sessionStorage.toggleOpen);
+				for(var i in $toggleOpen){
+					if($toggleOpen[i] != $id)
+						$tmpOpen.push($toggleOpen[i]);
+				}
+				sessionStorage.toggleOpen = JSON.stringify($tmpOpen);
+			}
+		});
+		$toggleOpen = JSON.parse(sessionStorage.toggleOpen);
+		for(var i in $toggleOpen){
+			$('#'+$toggleOpen[i]).addClass('active').children('.toggle-content').toggle();
+		}
 		$("body").on("change", ".form-control-sm-number", function(){
 			$(this).val(parseFloat($(this).val().split('.').join('').replace(',', '.')).formatMoney(2, ',', '.'));
 		});
@@ -198,14 +223,14 @@ var n = this,
 						<div class="toogle">
 
 							@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-							<div class="toggle">
+							<div id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
 								<label>{{ $chapter->chapter_name }}</label>
 								<div class="toggle-content">
 
 									<div class="toogle">
 
 										@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
-										<div class="toggle">
+										<div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
 											<label>{{ $activity->activity_name }}</label>
 											<div class="toggle-content">
 
