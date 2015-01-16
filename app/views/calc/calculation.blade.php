@@ -24,7 +24,11 @@ var n = this,
 		$('.toggle').click(function(e){
 			$id = $(this).attr('id');
 			if ($(this).hasClass('active')) {
-				$toggleOpen = JSON.parse(sessionStorage.toggleOpen);
+				if (sessionStorage.toggleOpen){
+					$toggleOpen = JSON.parse(sessionStorage.toggleOpen);
+				} else {
+					$toggleOpen = [];
+				}
 				if (!$toggleOpen.length)
 					$toggleOpen.push($id);
 				for(var i in $toggleOpen){
@@ -34,17 +38,21 @@ var n = this,
 				sessionStorage.toggleOpen = JSON.stringify($toggleOpen);
 			} else {
 				$tmpOpen = [];
-				$toggleOpen = JSON.parse(sessionStorage.toggleOpen);
-				for(var i in $toggleOpen){
-					if($toggleOpen[i] != $id)
-						$tmpOpen.push($toggleOpen[i]);
+				if (sessionStorage.toggleOpen){
+					$toggleOpen = JSON.parse(sessionStorage.toggleOpen);
+					for(var i in $toggleOpen){
+						if($toggleOpen[i] != $id)
+							$tmpOpen.push($toggleOpen[i]);
+					}
 				}
 				sessionStorage.toggleOpen = JSON.stringify($tmpOpen);
 			}
 		});
-		$toggleOpen = JSON.parse(sessionStorage.toggleOpen);
-		for(var i in $toggleOpen){
-			$('#'+$toggleOpen[i]).addClass('active').children('.toggle-content').toggle();
+		if (sessionStorage.toggleOpen){
+			$toggleOpen = JSON.parse(sessionStorage.toggleOpen);
+			for(var i in $toggleOpen){
+				$('#'+$toggleOpen[i]).addClass('active').children('.toggle-content').toggle();
+			}
 		}
 		$("body").on("change", ".form-control-sm-number", function(){
 			$(this).val(parseFloat($(this).val().split('.').join('').replace(',', '.')).formatMoney(2, ',', '.'));
