@@ -24,8 +24,8 @@ var n = this,
 		$('.toggle').click(function(e){
 			$id = $(this).attr('id');
 			if ($(this).hasClass('active')) {
-				if (sessionStorage.toggleOpen){
-					$toggleOpen = JSON.parse(sessionStorage.toggleOpen);
+				if (sessionStorage.toggleOpen{{Auth::user()->id}}){
+					$toggleOpen = JSON.parse(sessionStorage.toggleOpen{{Auth::user()->id}});
 				} else {
 					$toggleOpen = [];
 				}
@@ -35,21 +35,21 @@ var n = this,
 					if ($toggleOpen.indexOf( $id ) == -1)
 						$toggleOpen.push($id);
 				}
-				sessionStorage.toggleOpen = JSON.stringify($toggleOpen);
+				sessionStorage.toggleOpen{{Auth::user()->id}} = JSON.stringify($toggleOpen);
 			} else {
 				$tmpOpen = [];
-				if (sessionStorage.toggleOpen){
-					$toggleOpen = JSON.parse(sessionStorage.toggleOpen);
+				if (sessionStorage.toggleOpen{{Auth::user()->id}}){
+					$toggleOpen = JSON.parse(sessionStorage.toggleOpen{{Auth::user()->id}});
 					for(var i in $toggleOpen){
 						if($toggleOpen[i] != $id)
 							$tmpOpen.push($toggleOpen[i]);
 					}
 				}
-				sessionStorage.toggleOpen = JSON.stringify($tmpOpen);
+				sessionStorage.toggleOpen{{Auth::user()->id}} = JSON.stringify($tmpOpen);
 			}
 		});
-		if (sessionStorage.toggleOpen){
-			$toggleOpen = JSON.parse(sessionStorage.toggleOpen);
+		if (sessionStorage.toggleOpen{{Auth::user()->id}}){
+			$toggleOpen = JSON.parse(sessionStorage.toggleOpen{{Auth::user()->id}});
 			for(var i in $toggleOpen){
 				$('#'+$toggleOpen[i]).addClass('active').children('.toggle-content').toggle();
 			}
