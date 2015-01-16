@@ -15,7 +15,7 @@
   border-top: 0px solid #ddd;
 }
 
-/* Opvulling icoom en aanpassing background text. Kan hover backgrpound groen, icon wit? */
+/* Opvulling icoon en aanpassing background text. Kan hover backgrpound groen, icon wit?*/
 div.featured-box i.fa {
 color: #719E00;
 background-color: #E8E8E8;
@@ -31,7 +31,7 @@ height: 40px;
 padding: 4px;
 }
 
-/* Nieuw invulveld voor formulieren met getallen; regels dunner voor meer overzicht */
+/* Nieuw invulveld voor formulieren met getallen; regels dunner voor meer overzicht*/
 .form-control-sm-number {
 	border: #e6e6e6 2px solid;
 	-webkit-border-radius: 6px;
@@ -75,3 +75,45 @@ padding: 4px;
 .error-input {
 border: #d43f3a 2px solid;
 }
+
+/* Actieve hoofdstukken groen, niet actief groene border */
+div.toggle-chapter > label {
+background: #fff;
+border: #79BB00 2px solid;
+}
+
+div.toggle-chapter.active > label {
+color: #fff;
+background-color: #79BB00;
+}
+
+div.toggle-chapter > label:hover {
+color: #fff;
+background: #79BB00;
+}
+
+.btn-primary-chapter, .btn-primary-chapter:hover {
+background: #79BB00 !important;
+}
+
+/* Actieve werkzaamheden grijs, niet actief grijze border, incl knop */
+div.toggle-activity > label {
+background: #fff;
+border: #4E4E4E 2px solid;
+}
+
+div.toggle-activity.active > label {
+color: #fff;
+background-color: #4E4E4E;
+}
+
+div.toggle-activity > label:hover {
+color: #fff;
+background: #4E4E4E;
+}
+
+.btn-primary-activity, .btn-primary-activity:hover {
+background: #4E4E4E !important;
+}
+
+

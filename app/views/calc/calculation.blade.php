@@ -414,7 +414,7 @@ var n = this,
 											<div class="input-group">
 												<input type="text" class="form-control" name="activity" id="activity" value="" placeholder="Nieuwe Werkzaamheid">
 												<span class="input-group-btn">
-													<button class="btn btn-primary">Voeg toe</button>
+													<button class="btn btn-primary btn-primary-activity">Voeg toe</button>
 												</span>
 											</div>
 										</div>
@@ -431,7 +431,7 @@ var n = this,
 								<div class="input-group">
 									<input type="text" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw Hoofdstuk">
 									<span class="input-group-btn">
-										<button class="btn btn-primary">Voeg toe</button>
+										<button class="btn btn-primary btn-primary-chapter">Voeg toe</button>
 									</span>
 								</div>
 							</div>
