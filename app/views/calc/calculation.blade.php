@@ -28,7 +28,16 @@ var n = this,
 			$.post("/calculation/updatepart", {value: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
 		});
 		$(".check-activity").change(function(){
-			$.post("/calculation/updateparttype", {value: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
+			$this = $(this);
+			if($this.is(':checked')) {
+				$newval = {{ PartType::where('type_name','=', 'estimate')->first()->id; }}
+			} else {
+				$newval = {{ PartType::where('type_name','=', 'calculation')->first()->id; }}
+			}
+			$.post("/calculation/updateparttype", {
+				value: $newval,
+				activity: $this.attr("data-id")
+			}).fail(function(e) { console.log(e); });
 		});
 		$(".labor-amount").change(function(){
 			$.post("/calculation/updateamount", {amount: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
@@ -212,7 +221,7 @@ var n = this,
 													</div>
 													<div class="col-md-2">
 														<span class="pull-right">
-															<label class="checkbox-inline"><input data-id="{{ $activity->id }}" class="check-activity" type="checkbox" name="estimate" {{ ( PartType::find($activity->part_type_id)->type_name == 'estimate' ? 'checked' : '') }} value="{{ PartType::where('type_name','=','estimate')->first()->id }}" class="form-control">Stelpost</label>
+															<label class="checkbox-inline"><input data-id="{{ $activity->id }}" class="check-activity" type="checkbox" name="estimate" data-test="{{$activity->part_type_id}}" {{ ( PartType::find($activity->part_type_id)->type_name == 'estimate' ? 'checked' : '') }} class="form-control">Stelpost</label>
 														</span>
 													</div>
 												</div>
@@ -281,7 +290,20 @@ var n = this,
 															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1 centering"><span class="total-ex-tax">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</span></td>
-															<td class="col-md-2 centering"><span class="total-incl-tax">{{ '&euro; '.number_format($material->rate*$material->amount*((100+$project->profit_calc_contr_mat)/100), 2,",",".") }}</span></td>
+															<td class="col-md-2 centering"><span class="total-incl-tax">
+															<?php
+																if (PartType::find($activity->part_type_id)->type_name == 'estimate') {
+																	$profit = $project->profit_calc_estim_mat;
+																} else {
+																	if (Part::find($activity->part_id)->part_name=='contracting') {
+																		$profit = $project->profit_calc_contr_mat;
+																	} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+																		$profit = $project->profit_calc_subcontr_mat;
+																	}
+																}
+
+																echo '&euro; '.number_format($material->rate*$material->amount*((100+$profit)/100), 2,",",".")
+															?></span></td>
 															<td class="col-md-1">
 																<select name="btw" id="type" class="form-control-sm-text pointer dsave">
 																@foreach (Tax::all() as $tax)
