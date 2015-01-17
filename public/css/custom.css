@@ -15,16 +15,38 @@
   border-top: 0px solid #ddd;
 }
 
-/* Opvulling icoon en aanpassing background text. Kan hover backgrpound groen, icon wit?*/
+/* HOMEBLADE */
+/* kleur icoon, background and border*/
 div.featured-box i.fa {
-color: #719E00;
-background-color: #E8E8E8;
+color: #fff;
+background-color: #4E4E4E;
+border: #79BB00 2px solid;
 }
 
+/* kleur icoon, background and border inverted on hoover*/
+div.featured-box i.fa:hover {
+color: #fff;
+background: #79BB00;
+border: #4E4E4E 2px solid;
+}
+
+/* background box*/
 .panel-default > .panel-heading {
-background: #E8E8E8;
+color: #E8E8E8;
+background: #4E4E4E;
+border: #79BB00 2px solid;
 }
 
+.panel-default > .panel-heading:hover {
+color: #E8E8E8;
+background: #79BB00;
+}
+
+ h4.panel-title a {
+color: #fff;
+}
+
+/* CALCULATIONBLADE */
 /* invulvelden formulieren; text leesbaar maken en regels dunner voor meer overzicht */
 .form-control {
 height: 40px;

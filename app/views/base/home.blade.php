@@ -9,10 +9,11 @@
 		<h2><strong>Home</strong></h2>
 
 		<?# -- BORN TO BE A WINNER -- ?>
+
 		<article class="row">
-			<div class="col-md-3">
-				<h4>Navigatie</h4>
-				<div class="col-md-4">
+			<div class="col-md-12">
+				<!--<h4>Navigatie</h4>-->
+				<div class="col-md-1">
 					<div class="featured-box nobg">
 						<div class="box-content">
 							<a href="/project/new">
@@ -22,7 +23,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-1">
 					<div class="featured-box nobg">
 						<div class="box-content">
 							<a href="/project">
@@ -32,7 +33,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-1">
 					<div class="featured-box nobg">
 						<div class="box-content">
 							<a href="/relation/new">
@@ -42,7 +43,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-1">
 					<div class="featured-box nobg">
 						<div class="box-content">
 							<a href="/relation">
@@ -52,7 +53,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-1">
 					<div class="featured-box nobg">
 						<div class="box-content">
 							<i class="fa fa-calendar"></i>
@@ -60,7 +61,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-1">
 					<div class="featured-box nobg">
 						<div class="box-content">
 							<i class="fa fa-shopping-cart"></i>
@@ -68,7 +69,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-1">
 					<div class="featured-box nobg">
 						<div class="box-content">
 							<i class="fa fa-sort-alpha-desc"></i>
@@ -76,7 +77,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-1">
 					<div class="featured-box nobg">
 						<div class="box-content">
 							<i class="fa fa-cogs"></i>
@@ -84,7 +85,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-1">
 					<div class="featured-box nobg">
 						<div class="box-content">
 							<i class="fa fa-question"></i>
@@ -92,82 +93,82 @@
 						</div>
 					</div>
 				</div>
-			</div>
-
-			<div class="col-md-1">
-			</div>
-
-			<div class="col-md-8">
-			<h4>Nieuws</h4>
-				<div class="owl-carousel controlls-over" data-plugin-options='{"items": 1, "singleItem": true, "navigation": true, "pagination": true, "transitionStyle":"fadeUp"}'>
-					<div>
-						<iframe width="555" height="311" src="http://www.youtube.com/embed/-bdKMT1znJ0"></iframe>
+				<div class="col-md-1">
+					<div class="featured-box nobg">
+						<div class="box-content">
+							<i class="fa fa-question"></i>
+							<h5>over 1</h5>
+						</div>
 					</div>
-					<div>
-						<iframe width="555" height="311" src="http://www.youtube.com/embed/-bdKMT1znJ0"></iframe>
+				</div>
+				<div class="col-md-1">
+					<div class="featured-box nobg">
+						<div class="box-content">
+							<i class="fa fa-question"></i>
+							<h5>over 2</h5>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-1">
+					<div class="featured-box nobg">
+						<div class="">
+							<i class="fa fa-question"></i>
+							<h5>over 3</h5>
+						</div>
 					</div>
 				</div>
 			</div>
-
-
 		</article>
-		<?# -- /BORN TO BE A WINNER -- ?>
 
-		<hr />
-
-		<?# -- FEATURED BOXES 3 -- ?>
-		<div class="row">
-			<div class="col-md-6">
-
+		<article class="row">
+			<div class="col-md-12">
+				<div class="col-md-6">
 				<h4>Openstaande projecten</h4>
-				<div class="panel-group" id="project">
-					@foreach (Project::where('user_id','=', Auth::user()->id)->get() as $project)
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<a data-toggle="collapse" data-parent="#project" href="#project1">
-									<i class="fa fa-check"></i>
-									{{ $project->project_name }}
-								</a>
-							</h4>
-						</div>
-						<div id="project1" class="collapse">
-							<div class="panel-body">
-								<table class="table table-striped">
-									<?# -- table head -- ?>
-									<thead>
-										<tr>
-											<th class="col-md-4">Projectnaam</th>
-											<th class="col-md-4">Oprachtgever</th>
-											<th class="col-md-4">Adres</th>
-										</tr>
-									</thead>
+					<div class="panel-group" id="project">
+						@foreach (Project::where('user_id','=', Auth::user()->id)->get() as $project)
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#project" href="#project1">
+										<i class="fa fa-check"></i>
+										{{ $project->project_name }}
+									</a>
+								</h4>
+							</div>
+							<div id="project1" class="collapse">
+								<div class="panel-body">
+									<table class="table table-striped">
+										<?# -- table head -- ?>
+										<thead>
+											<tr>
+												<th class="col-md-4">Projectnaam</th>
+												<th class="col-md-4">Oprachtgever</th>
+												<th class="col-md-4">Adres</th>
+											</tr>
+										</thead>
 
-									<!-- table items -->
-									<tbody>
-										<tr>
-											<td class="col-md-4">{{ HTML::link('calculation/'.$project->id, $project->project_name) }}</td>
-											<td class="col-md-4">{{ $project->contactor->company_name }}</td>
-											<td class="col-md-4">{{ $project->address_street }}</td>
-										</tr>
-									</tbody>
-								</table>
-								<tr>
-									<td class="col-md-1"><i class="fa fa-calendar"></i></td>
-									<td class="col-md-3">{{ HTML::link('calculation/'.$project->id, " Urenregistratie") }}</td>
-									<td class="col-md-1"><i class="fa fa-shopping-cart"></i></td>
-									<td class="col-md-3">{{ HTML::link('calculation/'.$project->id, " Inkoopfacturen") }}</td>
-									<td class="col-md-1"><a data-toggle="tooltip" data-original-title="Klik op het project om het project direct bewerken" href="#">Tip!</a></td>
-								</tr>
+										<!-- table items -->
+										<tbody>
+											<tr>
+												<td class="col-md-4">{{ HTML::link('calculation/'.$project->id, $project->project_name) }}</td>
+												<td class="col-md-4">{{ $project->contactor->company_name }}</td>
+												<td class="col-md-4">{{ $project->address_street }}</td>
+											</tr>
+										</tbody>
+									</table>
+									<tr>
+										<td class="col-md-1"><i class="fa fa-calendar"></i></td>
+										<td class="col-md-3">{{ HTML::link('calculation/'.$project->id, " Urenregistratie") }}</td>
+										<td class="col-md-1"><i class="fa fa-shopping-cart"></i></td>
+										<td class="col-md-3">{{ HTML::link('calculation/'.$project->id, " Inkoopfacturen") }}</td>
+										<td class="col-md-1"><a data-toggle="tooltip" data-original-title="Klik op het project om het project direct bewerken" href="#">Tip!</a></td>
+									</tr>
+								</div>
 							</div>
 						</div>
+						@endforeach
 					</div>
-					@endforeach
-				</div>
-			</div>
-			<div class="col-md-6">
-
-				<h4>Openstaande facturen</h4>
+					<h4>Openstaande facturen</h4>
 				<div class="panel-group" id="invoice">
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -215,26 +216,34 @@
 						</div>
 					</div>
 				</div>
-
-			</div>
-		</div>
-		<?# -- /FEATURED BOXES 3 -- ?>
-
-		<hr />
-
-		<div class="row">
-			<div class="col-md-6">
-				<h4>Waarom de calculatietool?</h4>
-				<ul class="list-icon star-o">
-					<li>Reden 1</li>
-					<li>Reden 2</li>
-					<li>Reden 3</li>
-					<li>Reden 4</li>
-					<li>Reden 5</li>
-				</ul>
-			</div>
-
-			<div class="col-md-6">
+				</div>
+				<div class="col-md-6">
+				<h4>Nieuws</h4>
+					<div class="owl-carousel controlls-over" data-plugin-options='{"items": 1, "singleItem": true, "navigation": true, "pagination": true, "transitionStyle":"fadeUp"}'>
+						<div>
+							<iframe width="600" height="311" src="http://www.youtube.com/embed/-bdKMT1znJ0"></iframe>
+						</div>
+						<div>
+							<iframe width="600" height="311" src="http://www.youtube.com/embed/-bdKMT1znJ0"></iframe>
+						</div>
+					</div>
+				<h4>Statistiek</h4>
+					<section class="paddings white-row styleSecondBackground">
+						<div class="row text-center countTo">
+							<div class="col-md-4">
+								<strong data-to="32">1244</strong>
+								<label>Aantal offertes</label>
+							</div>
+							<div class="col-md-4">
+								<strong data-to="12">12</strong>
+								<label>Aantal projecten</label>
+							</div>
+							<div class="col-md-4">
+								<strong data-to="1438">1438</strong>
+								<label>Totaal omzet</label>
+							</div>
+						</div>
+					</section>
 				<h4>Wat zeggen klanten ervan?</h4>
 				<div class="owl-carousel text-center" data-plugin-options='{"items": 1, "singleItem": true, "navigation": false, "pagination": true, "autoPlay": true, "transitionStyle":"fadeUp"}'><!-- transitionStyle: fade, backSlide, goDown, fadeUp,  -->
 					<div class="testimonial white">
@@ -256,13 +265,12 @@
 						<p>Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa.</p>
 						<cite><strong>Melissa Doe</strong>, Customer</cite>
 					</div>
-
 				</div>
 			</div>
-		</div>
-
+		</article>
 	</section>
-
 </div>
+
 <?# -- /WRAPPER -- ?>
+
 @stop
