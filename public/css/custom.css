@@ -14,6 +14,16 @@
   vertical-align: middle;
   border-top: 0px solid #ddd;
 }
+/* ALGEMEEN */
+/* Accordion tabs kleiner */
+.panel-default > .panel-heading {
+padding: 6px 10px;
+}
+
+div.toggle > label {
+padding: 6px 10px;
+}
+
 
 /* HOMEBLADE */
 /* kleur icoon, background*/
@@ -127,5 +137,6 @@ background: #4E4E4E;
 .btn-primary-activity, .btn-primary-activity:hover {
 background: #4E4E4E !important;
 }
+
 
 

@@ -265,13 +265,13 @@ var n = this,
 													<thead>
 														<tr>
 															<th class="col-md-2">Eenheid</th>
-															<th class="col-md-1">Tarief</th>
-															<th class="col-md-1">Arbeidsuren</th>
-															<th class="col-md-1">Arbeidskosten</th>
+															<th class="col-md-1">Uurtarief</th>
+															<th class="col-md-1">Uren</th>
+															<th class="col-md-1">Kosten</th>
 															<th class="col-md-2">&nbsp;</th>
 															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-2">&nbsp;</th>
-															<th class="col-md-1">BTW</th>
+															<th class="col-md-1">BTW %</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -303,13 +303,13 @@ var n = this,
 													<?# -- table head -- ?>
 													<thead>
 														<tr>
-															<th class="col-md-3">Materiaalsoort</th>
+															<th class="col-md-3">Omschrijving</th>
 															<th class="col-md-2">Eenheid</th>
-															<th class="col-md-1">Prijs/eenheid</th>
-															<th class="col-md-1">Hoeveelheid</th>
-															<th class="col-md-1">Totaalprijs</th>
-															<th class="col-md-2">Incl. Winst</th>
-															<th class="col-md-1">BTW</th>
+															<th class="col-md-1">Prijs/Eenh.</th>
+															<th class="col-md-1">Aantal</th>
+															<th class="col-md-1">Prijs</th>
+															<th class="col-md-2">+ Winst %</th>
+															<th class="col-md-1">BTW %</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -371,13 +371,13 @@ var n = this,
 													<?# -- table head -- ?>
 													<thead>
 														<tr>
-															<th class="col-md-3">Materiaalsoort</th>
+															<th class="col-md-3">Omschrijving</th>
 															<th class="col-md-2">Eenheid</th>
-															<th class="col-md-1">Prijs/eenheid</th>
-															<th class="col-md-1">Hoeveelheid</th>
-															<th class="col-md-1">Totaalprijs</th>
-															<th class="col-md-2">Incl. Winst</th>
-															<th class="col-md-1">BTW</th>
+															<th class="col-md-1">Prijs/Eenh.</th>
+															<th class="col-md-1">Aantal</th>
+															<th class="col-md-1">Prijs</th>
+															<th class="col-md-2">+ Winst %</th>
+															<th class="col-md-1">BTW %</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
