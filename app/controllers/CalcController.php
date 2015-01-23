@@ -76,6 +76,7 @@ class CalcController extends BaseController {
 
 			$part = Part::where('part_name','=','contracting')->first();
 			$part_type = PartType::where('type_name','=','calculation')->first();
+			$tax = Tax::where('tax_rate','=',21)->first();
 
 			$activity = new Activity;
 			$activity->activity_name = Input::get('activity');
@@ -83,6 +84,15 @@ class CalcController extends BaseController {
 			$activity->chapter_id = Route::Input('chapter_id');
 			$activity->part_id = $part->id;
 			$activity->part_type_id = $part_type->id;
+			$activity->tax_calc_labor_id = $tax->id;
+			$activity->tax_calc_material_id = $tax->id;
+			$activity->tax_calc_equipment_id = $tax->id;
+			$activity->tax_more_labor_id = $tax->id;
+			$activity->tax_more_material_id = $tax->id;
+			$activity->tax_more_equipment_id = $tax->id;
+			$activity->tax_estimate_labor_id = $tax->id;
+			$activity->tax_estimate_material_id = $tax->id;
+			$activity->tax_estimate_equipment_id = $tax->id;
 
 			$activity->save();
 
@@ -144,8 +154,7 @@ class CalcController extends BaseController {
 			'unit' => array('required','max:10'),
 			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'activity' => array('required','integer','min:0'),
-			'tax' => array('required','integer')
+			'activity' => array('required','integer','min:0')
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -160,7 +169,6 @@ class CalcController extends BaseController {
 				"unit" => Input::get('unit'),
 				"rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
 				"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
-				"tax_id" => Input::get('tax'),
 				"activity_id" => Input::get('activity'),
 			));
 
@@ -194,8 +202,7 @@ class CalcController extends BaseController {
 			'name' => array('alpha_dash','max:50'),
 			'unit' => array('max:10'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'tax' => array('integer')
+			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -211,7 +218,6 @@ class CalcController extends BaseController {
 			$material->unit = Input::get('unit');
 			$material->rate = str_replace(',', '.', str_replace('.', '' , Input::get('rate')));
 			$material->amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
-			$material->tax_id = Input::get('tax');
 
 			$material->save();
 

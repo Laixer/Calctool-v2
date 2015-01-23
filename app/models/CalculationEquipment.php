@@ -11,8 +11,4 @@ class CalculationEquipment extends Eloquent {
 		return $this->hasOne('Activity');
 	}
 
-	public function tax() {
-		return $this->hasOne('Tax');
-	}
-
 }

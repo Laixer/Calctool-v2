@@ -11,4 +11,8 @@ class Activity extends Eloquent {
 		return $this->hasOne('Chapter');
 	}
 
+	public function tax() {
+		return $this->hasOne('Tax', 'id', 'tax_id');
+	}
+
 }

@@ -17,12 +17,6 @@ class CreateCalculation extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('tax', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->integer('tax_rate')->unsigned();
-		});
-
 		Schema::create('calculation_labor', function(Blueprint $table)
 		{
 			$table->increments('id');
@@ -30,8 +24,6 @@ class CreateCalculation extends Migration {
 			$table->decimal('amount', 9, 2)->unsigned()->index();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
-			$table->integer('tax_id')->unsigned();
-			$table->foreign('tax_id')->references('id')->on('tax')->onUpdate('cascade')->onDelete('restrict');
 		});
 
 		Schema::create('calculation_material', function(Blueprint $table)
@@ -43,8 +35,6 @@ class CreateCalculation extends Migration {
 			$table->decimal('amount', 9, 2)->unsigned()->index();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
-			$table->integer('tax_id')->unsigned();
-			$table->foreign('tax_id')->references('id')->on('tax')->onUpdate('cascade')->onDelete('restrict');
 		});
 
 		Schema::create('calculation_equipment', function(Blueprint $table)
@@ -56,8 +46,6 @@ class CreateCalculation extends Migration {
 			$table->decimal('amount', 9, 2)->unsigned()->index();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
-			$table->integer('tax_id')->unsigned();
-			$table->foreign('tax_id')->references('id')->on('tax')->onUpdate('cascade')->onDelete('restrict');
 		});
 
 		Schema::create('less_labor', function(Blueprint $table)
@@ -100,8 +88,6 @@ class CreateCalculation extends Migration {
 			$table->text('note');
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
-			$table->integer('tax_id')->unsigned();
-			$table->foreign('tax_id')->references('id')->on('tax')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('hour_id')->unsigned();
 			$table->foreign('hour_id')->references('id')->on('timesheet')->onUpdate('cascade')->onDelete('cascade');
 		});
@@ -115,8 +101,6 @@ class CreateCalculation extends Migration {
 			$table->decimal('amount', 9, 2)->unsigned()->index();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
-			$table->integer('tax_id')->unsigned();
-			$table->foreign('tax_id')->references('id')->on('tax')->onUpdate('cascade')->onDelete('restrict');
 		});
 
 		Schema::create('more_equipment', function(Blueprint $table)
@@ -128,8 +112,6 @@ class CreateCalculation extends Migration {
 			$table->decimal('amount', 9, 2)->unsigned()->index();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
-			$table->integer('tax_id')->unsigned();
-			$table->foreign('tax_id')->references('id')->on('tax')->onUpdate('cascade')->onDelete('restrict');
 		});
 
 		Schema::create('estimate_labor', function(Blueprint $table)
@@ -141,8 +123,6 @@ class CreateCalculation extends Migration {
 			$table->decimal('set_amount', 9, 2)->unsigned()->index();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
-			$table->integer('tax_id')->unsigned();
-			$table->foreign('tax_id')->references('id')->on('tax')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('hour_id')->unsigned();
 			$table->foreign('hour_id')->references('id')->on('timesheet')->onUpdate('cascade')->onDelete('cascade');
 		});
@@ -160,8 +140,6 @@ class CreateCalculation extends Migration {
 			$table->decimal('set_amount', 9, 2)->unsigned()->index();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
-			$table->integer('tax_id')->unsigned();
-			$table->foreign('tax_id')->references('id')->on('tax')->onUpdate('cascade')->onDelete('restrict');
 		});
 
 		Schema::create('estimate_equipment', function(Blueprint $table)
@@ -177,8 +155,6 @@ class CreateCalculation extends Migration {
 			$table->decimal('set_amount', 9, 2)->unsigned()->index();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
-			$table->integer('tax_id')->unsigned();
-			$table->foreign('tax_id')->references('id')->on('tax')->onUpdate('cascade')->onDelete('restrict');
 		});
 	}
 
@@ -247,11 +223,6 @@ class CreateCalculation extends Migration {
 		Schema::table('calculation_labor', function(Blueprint $table)
 		{
 			Schema::drop('calculation_labor');
-		});
-
-		Schema::table('tax', function(Blueprint $table)
-		{
-			Schema::drop('tax');
 		});
 	}
 
