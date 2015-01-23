@@ -47,6 +47,11 @@ background: #E8E8E8;
 background: #79BB00;
 }
 
+/* kleur tabbladen*/
+div.tabs ul.nav-tabs a {
+background: #E8E8E8;
+}
+
 /* CALCULATIONBLADE */
 /* invulvelden formulieren; text leesbaar maken en regels dunner voor meer overzicht */
 .form-control {
@@ -102,17 +107,19 @@ border: #d43f3a 2px solid;
 /* Actieve hoofdstukken, niet actief and border */
 div.toggle-chapter > label {
 background: #fff;
-border: #4E4E4E 2px solid;
+border: #8E8E8E 2px solid;
 }
 
 div.toggle-chapter.active > label {
 color: #fff;
 background: #79BB00;
+border: #79BB00 2px solid;
 }
 
 div.toggle-chapter > label:hover {
 color: #fff;
 background: #79BB00;
+border: #79BB00 2px solid;
 }
 
 .btn-primary-chapter, .btn-primary-chapter:hover {
@@ -122,7 +129,6 @@ background: #79BB00 !important;
 /* Actieve werkzaamheden grijs, niet actief grijze border, incl knop */
 div.toggle-activity > label {
 background: #E8E8E8;
-border: #4E4E4E 2px solid;
 }
 
 div.toggle-activity.active > label {
