@@ -198,6 +198,11 @@ var n = this,
 						</a>
 					</li>
 					<li>
+						<a href="#estimate" data-toggle="tab">
+							<i class="fa fa-sort-amount-desc"></i> Stelposten
+						</a>
+					</li>
+					<li>
 						<a href="#summary" data-toggle="tab">
 							<i class="fa fa-sort-amount-desc"></i> Uittrekstaat
 						</a>
@@ -235,7 +240,17 @@ var n = this,
 													</span>
 												</div>
 
-												<h4>Arbeid</h4>
+												<div class="row">
+													<div class="col-md-9"><h4>Arbeid</h4></div>
+													<div class="col-md-1"><strong>BTW</strong></div>
+													<div class="col-md-2">
+														<select name="type" id="type" class="form-control-sm-text pointer labor-amount">
+																@foreach (Tax::all() as $tax)
+																	<option value="{{ $tax->id }}" selected="selected">{{ $tax->tax_rate }}%</option>
+																@endforeach
+														</select>
+													</div>
+												</div>
 												<table class="table table-striped">
 													<?# -- table head -- ?>
 													<thead>
@@ -247,7 +262,7 @@ var n = this,
 															<th class="col-md-2">&nbsp;</th>
 															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-2">&nbsp;</th>
-															<th class="col-md-1">BTW %</th>
+															<th class="col-md-2">&nbsp;</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -258,24 +273,42 @@ var n = this,
 															<td class="col-md-2">Per Uur</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="name" type="text" value="{{ CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'] }}" class="form-control-sm-number labor-amount" /></td>
-															<td class="col-md-1">$1</td>
-															<td class="col-md-2">&nbsp;</td>
+															<td class="col-md-2"><span class="total-ex-tax">{{ '&euro; '.number_format($project->hour_rate*$project->hour_amount, 2,",",".") }}</span></td>
+															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-2">&nbsp;</td>
-															<td class="col-md-1">
-																<select name="type" id="type" class="form-control-sm-text pointer labor-amount">
-																@foreach (Tax::all() as $tax)
-																	<option value="{{ $tax->id }}" selected="selected">{{ $tax->tax_rate }}%</option>
-																@endforeach
-																</select>
-															</td>
+															<td class="col-md-2"></td>
 															<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
+														</tr>
+													</tbody>
+													<tbody>
+														<tr><?# -- item -- ?>
+															<td class="col-md-2"><strong>Totaal</strong></td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1"><strong>21,00</strong></td>
+															<td class="col-md-2"><strong>&euro;800,00</strong></td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-2">&nbsp;</td>
+															<td class="col-md-2">&nbsp;</td>
+															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
 												</table>
 
 												<div class="row">
-													<div class="col-md-9"><h4>Materiaal</h4></div>
+													<div class="col-md-2">
+														<a href="#" data-container="body" data-toggle="popover" data-placement="left" data-content="vul het btw tarief in" data-original-title="BTW tarief" title="">
+							 							<h4>Materiaal</h4>
+														</a>
+													</div>
+													<div class="col-md-1">
+														<a href="#" data-container="body" data-toggle="popover" data-placement="top" data-content="vul het btw tarief in" data-original-title="BTW tarief" title="">
+							 							<h5>BTW 6%</h5>
+														</a>
+													</div>
+													<div class="col-md-6">
+													</div>
 													<div class="col-md-1"><strong>BTW</strong></div>
 													<div class="col-md-2">
 														<select name="btw" id="type" class="form-control-sm-text pointer dsave">
@@ -290,12 +323,12 @@ var n = this,
 													<?# -- table head -- ?>
 													<thead>
 														<tr>
-															<th class="col-md-4">Omschrijving</th>
+															<th class="col-md-6">Omschrijving</th>
 															<th class="col-md-2">Eenheid</th>
-															<th class="col-md-1">Prijs/Eenh.</th>
+															<th class="col-md-1">&euro; / Eenh.</th>
 															<th class="col-md-1">Aantal</th>
 															<th class="col-md-1">Prijs</th>
-															<th class="col-md-2">+ Winst %</th>
+															<th class="col-md-1">+ Winst %</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -304,12 +337,12 @@ var n = this,
 													<tbody>
 														@foreach (CalculationMaterial::where('activity_id','=', $activity->id)->get() as $material)
 														<tr data-id="{{ $material->id }}">
-															<td class="col-md-4"><input name="name" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text dsave newrow" /></td>
+															<td class="col-md-6"><input name="name" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text dsave newrow" /></td>
 															<td class="col-md-2"><input name="unit" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text dsave" /></td>
 															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1 centering"><span class="total-ex-tax">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</span></td>
-															<td class="col-md-2 centering"><span class="total-incl-tax">
+															<td class="col-md-1 centering"><span class="total-incl-tax">
 															<?php
 																if (PartType::find($activity->part_type_id)->type_name == 'estimate') {
 																	$profit = $project->profit_calc_estim_mat;
@@ -327,29 +360,50 @@ var n = this,
 														</tr>
 														@endforeach
 														<tr>
-															<td class="col-md-4"><input name="name" id="name" type="text" class="form-control-sm-text dsave newrow" /></td>
+															<td class="col-md-5"><input name="name" id="name" type="text" class="form-control-sm-text dsave newrow" /></td>
 															<td class="col-md-2"><input name="unit" id="name" type="text" class="form-control-sm-text dsave" /></td>
 															<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1 centering"><span class="total-ex-tax"></span></td>
-															<td class="col-md-2 centering"><span class="total-incl-tax"></span></td>
+															<td class="col-md-1 centering"><span class="total-incl-tax"></span></td>
 															<td class="col-md-1"><button class="btn btn-danger btn-xs deleterow fa fa-times"></button></td>
+														</tr>
+													</tbody>
+													<tbody>
+													<tr>
+															<td class="col-md-5"><strong>Totaal</strong></td>
+															<td class="col-md-2">&nbsp;</td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1 centering"><strong>&euro;200,00</strong></td>
+															<td class="col-md-1 centering"><strong>&euro;2.000,00</strong></td>
+															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
 												</table>
 
-												<h4>Materieel</h4>
+												<div class="row">
+													<div class="col-md-9"><h4>Materieel</h4></div>
+													<div class="col-md-1"><strong>BTW</strong></div>
+													<div class="col-md-2">
+														<select name="btw" id="type" class="form-control-sm-text pointer dsave">
+														@foreach (Tax::all() as $tax)
+															<option value="{{ $tax->id }}" {{ ($activity->tax_calc_equipment==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
+														@endforeach
+														</select>
+													</div>
+												</div>
+
 												<table class="table table-striped">
 													<?# -- table head -- ?>
 													<thead>
 														<tr>
-															<th class="col-md-3">Omschrijving</th>
+															<th class="col-md-6">Omschrijving</th>
 															<th class="col-md-2">Eenheid</th>
-															<th class="col-md-1">Prijs/Eenh.</th>
+															<th class="col-md-1">&euro; / Eenh.</th>
 															<th class="col-md-1">Aantal</th>
 															<th class="col-md-1">Prijs</th>
-															<th class="col-md-2">+ Winst %</th>
-															<th class="col-md-1">BTW %</th>
+															<th class="col-md-1">+ Winst %</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -357,19 +411,12 @@ var n = this,
 													<!-- table items -->
 													<tbody>
 														<tr>
-															<td class="col-md-3"><input name="name" id="name" type="text" value="" class="form-control-sm-number control-sm newrow" /></td>
+															<td class="col-md-6"><input name="name" id="name" type="text" value="" class="form-control-sm-number control-sm newrow" /></td>
 															<td class="col-md-2"><input name="name" id="name" type="text" value="" class="form-control-sm-number control-sm" /></td>
 															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control-sm-number control-sm" /></td>
 															<td class="col-md-1"><input name="name" id="name" type="number" min="0" value="" class="form-control-sm-number control-sm" /></td>
-															<td class="col-md-1">$20.000,00</td>
-															<td class="col-md-2">$40</td>
-															<td class="col-md-1">
-																<select name="type" id="type" class="form-control-sm-number pointer control-sm">
-																@foreach (Tax::all() as $tax)
-																	<option value="{{ $tax->id }}" selected="selected">{{ $tax->tax_rate }}%</option>
-																@endforeach
-																</select>
-															</td>
+															<td class="col-md-1">&euro;20,000</td>
+															<td class="col-md-1">&euro;200,00</td>
 															<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
 														</tr>
 													</tbody>
