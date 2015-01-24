@@ -101,6 +101,35 @@ class CalcController extends BaseController {
 		}
 	}
 
+	public function doUpdateTax()
+	{
+		$rules = array(
+			'value' => array('required','integer'),
+			'type' => array('required'),
+			'activity' => array('required','integer')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+			$type = Input::get('value');
+			$activity = Activity::find(Input::get('activity'));
+			if ($type == 'calc-labor')
+				$activity->tax_calc_labor_id = Input::get('value');
+			if ($type == 'calc-material')
+				$activity->tax_calc_material_id = Input::get('value');
+			if ($type == 'calc-equipment')
+			$activity->tax_calc_equipment_id = Input::get('value');
+			$activity->save();
+
+			return json_encode(['success' => 1]);
+		}
+	}
+
 	public function doUpdatePart()
 	{
 		$rules = array(
@@ -124,33 +153,10 @@ class CalcController extends BaseController {
 		}
 	}
 
-	public function doUpdatePartType()
+	public function doNewMaterial()
 	{
 		$rules = array(
-			'value' => array('required','integer','min:0'),
-			'activity' => array('required','integer','min:0')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-
-			$activity = Activity::find(Input::get('activity'));
-			$activity->part_type_id = Input::get('value');
-			$activity->save();
-
-			return json_encode(['success' => 1]);
-		}
-	}
-
-		public function doNewMaterial()
-	{
-		$rules = array(
-			'name' => array('required','alpha_dash','max:50'),
+			'name' => array('required','max:50'),
 			'unit' => array('required','max:10'),
 			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
@@ -199,7 +205,7 @@ class CalcController extends BaseController {
 	{
 		$rules = array(
 			'id' => array('integer','min:0'),
-			'name' => array('alpha_dash','max:50'),
+			'name' => array('max:50'),
 			'unit' => array('max:10'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
@@ -222,7 +228,6 @@ class CalcController extends BaseController {
 			$material->save();
 
 			return json_encode(['success' => 1]);
-
 		}
 	}
 }
