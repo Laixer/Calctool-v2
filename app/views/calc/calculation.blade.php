@@ -60,18 +60,6 @@ var n = this,
 		$(".radio-activity").change(function(){
 			$.post("/calculation/updatepart", {value: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
 		});
-		$(".check-activity").change(function(){
-			$this = $(this);
-			if($this.is(':checked')) {
-				$newval = {{ PartType::where('type_name','=', 'estimate')->first()->id; }}
-			} else {
-				$newval = {{ PartType::where('type_name','=', 'calculation')->first()->id; }}
-			}
-			$.post("/calculation/updateparttype", {
-				value: $newval,
-				activity: $this.attr("data-id")
-			}).fail(function(e) { console.log(e); });
-		});
 		$(".labor-amount").change(function(){
 			$.post("/calculation/updateamount", {amount: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
 		});
@@ -96,7 +84,6 @@ var n = this,
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					tax: $curThis.closest("tr").find("select[name='btw']").val(),
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -104,7 +91,6 @@ var n = this,
 						$curThis.closest("tr").attr("data-id", json.id);
 						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
 						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-						var tax = $curThis.closest("tr").find("select[name='btw'] option:selected").text().slice(0,-1);
 						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
 						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+{{$project->profit_calc_contr_mat}})/100),2,',','.'));
 					} else {
@@ -139,7 +125,6 @@ var n = this,
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					tax: $curThis.closest("tr").find("select[name='btw']").val(),
 					activity: $curThis.closest("table").attr("data-id")
 				}, function(data){
 					var json = $.parseJSON(data);
@@ -148,7 +133,6 @@ var n = this,
 						$curThis.closest("tr").attr("data-id", json.id);
 						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
 						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-						var tax = $curThis.closest("tr").find("select[name='btw'] option:selected").text().slice(0,-1);
 						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
 						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+{{$project->profit_calc_contr_mat}})/100),2,',','.'));
 					} else {
@@ -242,21 +226,13 @@ var n = this,
 											<label>{{ $activity->activity_name }}</label>
 											<div class="toggle-content">
 
-												<div class="col-md-12">
-
-													<div class="col-md-10">
-														<span class="pull-right">
-															<div class="form-group">
-																<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','contracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='contracting' ? 'checked' : '') }}/>Aanneming</label>
-	    														<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming</label>
-															</div>
-														</span>
-													</div>
-													<div class="col-md-2">
-														<span class="pull-right">
-															<label class="checkbox-inline"><input data-id="{{ $activity->id }}" class="check-activity" type="checkbox" name="estimate" data-test="{{$activity->part_type_id}}" {{ ( PartType::find($activity->part_type_id)->type_name == 'estimate' ? 'checked' : '') }} class="form-control">Stelpost</label>
-														</span>
-													</div>
+												<div class="row">
+													<span class="pull-right">
+														<div class="form-group">
+															<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','contracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='contracting' ? 'checked' : '') }}/>Aanneming</label>
+	    													<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming</label>
+														</div>
+													</span>
 												</div>
 
 												<h4>Arbeid</h4>
@@ -298,18 +274,28 @@ var n = this,
 													</tbody>
 												</table>
 
-												<h4>Materiaal</h4>
+												<div class="row">
+													<div class="col-md-9"><h4>Materiaal</h4></div>
+													<div class="col-md-1"><strong>BTW</strong></div>
+													<div class="col-md-2">
+														<select name="btw" id="type" class="form-control-sm-text pointer dsave">
+														@foreach (Tax::all() as $tax)
+															<option value="{{ $tax->id }}" {{ ($activity->tax_calc_material_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
+														@endforeach
+														</select>
+													</div>
+												</div>
+
 												<table class="table table-striped" data-id="{{ $activity->id }}">
 													<?# -- table head -- ?>
 													<thead>
 														<tr>
-															<th class="col-md-3">Omschrijving</th>
+															<th class="col-md-4">Omschrijving</th>
 															<th class="col-md-2">Eenheid</th>
 															<th class="col-md-1">Prijs/Eenh.</th>
 															<th class="col-md-1">Aantal</th>
 															<th class="col-md-1">Prijs</th>
 															<th class="col-md-2">+ Winst %</th>
-															<th class="col-md-1">BTW %</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -318,7 +304,7 @@ var n = this,
 													<tbody>
 														@foreach (CalculationMaterial::where('activity_id','=', $activity->id)->get() as $material)
 														<tr data-id="{{ $material->id }}">
-															<td class="col-md-3"><input name="name" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text dsave newrow" /></td>
+															<td class="col-md-4"><input name="name" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text dsave newrow" /></td>
 															<td class="col-md-2"><input name="unit" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text dsave" /></td>
 															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
@@ -337,30 +323,16 @@ var n = this,
 
 																echo '&euro; '.number_format($material->rate*$material->amount*((100+$profit)/100), 2,",",".")
 															?></span></td>
-															<td class="col-md-1">
-																<select name="btw" id="type" class="form-control-sm-text pointer dsave">
-																@foreach (Tax::all() as $tax)
-																	<option value="{{ $tax->id }}" {{ ($material->tax_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
-																@endforeach
-																</select>
-															</td>
 															<td class="col-md-1"><button class="btn btn-danger btn-xs deleterow fa fa-times"></button></td>
 														</tr>
 														@endforeach
 														<tr>
-															<td class="col-md-3"><input name="name" id="name" type="text" class="form-control-sm-text dsave newrow" /></td>
+															<td class="col-md-4"><input name="name" id="name" type="text" class="form-control-sm-text dsave newrow" /></td>
 															<td class="col-md-2"><input name="unit" id="name" type="text" class="form-control-sm-text dsave" /></td>
 															<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1 centering"><span class="total-ex-tax"></span></td>
 															<td class="col-md-2 centering"><span class="total-incl-tax"></span></td>
-															<td class="col-md-1">
-																<select name="btw" id="type" class="form-control-sm-text dsave pointer">
-																@foreach (Tax::all() as $tax)
-																	<option value="{{ $tax->id }}" selected="selected">{{ $tax->tax_rate }}%</option>
-																@endforeach
-																</select>
-															</td>
 															<td class="col-md-1"><button class="btn btn-danger btn-xs deleterow fa fa-times"></button></td>
 														</tr>
 													</tbody>
