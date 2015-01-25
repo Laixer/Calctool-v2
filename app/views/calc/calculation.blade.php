@@ -241,7 +241,7 @@ var n = this,
 												</div>
 
 												<div class="row">
-													<div class="col-md-9"><h4>Arbeid</h4></div>
+													<div class="col-md-2"><h4>Arbeid</h4></div>
 													<div class="col-md-1"><strong>BTW</strong></div>
 													<div class="col-md-2">
 														<select name="type" id="type" class="form-control-sm-text pointer labor-amount">
@@ -250,19 +250,17 @@ var n = this,
 																@endforeach
 														</select>
 													</div>
+													<div class="col-md-8"></div>
 												</div>
 												<table class="table table-striped">
 													<?# -- table head -- ?>
 													<thead>
 														<tr>
-															<th class="col-md-2">Eenheid</th>
+															<th class="col-md-8">Omschrijving</th>
 															<th class="col-md-1">Uurtarief</th>
-															<th class="col-md-1">Uren</th>
-															<th class="col-md-1">Kosten</th>
-															<th class="col-md-2">&nbsp;</th>
+															<th class="col-md-1">Aantal</th>
+															<th class="col-md-1">Prijs</th>
 															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-2">&nbsp;</th>
-															<th class="col-md-2">&nbsp;</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -270,45 +268,18 @@ var n = this,
 													<?# -- table items -- ?>
 													<tbody>
 														<tr><?# -- item -- ?>
-															<td class="col-md-2">Per Uur</td>
+															<td class="col-md-8">Arbeidsuren</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="name" type="text" value="{{ CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'] }}" class="form-control-sm-number labor-amount" /></td>
-															<td class="col-md-2"><span class="total-ex-tax">{{ '&euro; '.number_format($project->hour_rate*$project->hour_amount, 2,",",".") }}</span></td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-2">&nbsp;</td>
-															<td class="col-md-2"></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($project->hour_rate*$project->hour_amount, 2,",",".") }}</span></td>
+															<td class="col-md-1"></td>
 															<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
-														</tr>
-													</tbody>
-													<tbody>
-														<tr><?# -- item -- ?>
-															<td class="col-md-2"><strong>Totaal</strong></td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>21,00</strong></td>
-															<td class="col-md-2"><strong>&euro;800,00</strong></td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-2">&nbsp;</td>
-															<td class="col-md-2">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
 												</table>
 
 												<div class="row">
-													<div class="col-md-2">
-														<a href="#" data-container="body" data-toggle="popover" data-placement="left" data-content="vul het btw tarief in" data-original-title="BTW tarief" title="">
-							 							<h4>Materiaal</h4>
-														</a>
-													</div>
-													<div class="col-md-1">
-														<a href="#" data-container="body" data-toggle="popover" data-placement="top" data-content="vul het btw tarief in" data-original-title="BTW tarief" title="">
-							 							<h5>BTW 6%</h5>
-														</a>
-													</div>
-													<div class="col-md-6">
-													</div>
+													<div class="col-md-2"><h4>Materiaal</h4></div>
 													<div class="col-md-1"><strong>BTW</strong></div>
 													<div class="col-md-2">
 														<select name="btw" id="type" class="form-control-sm-text pointer dsave">
@@ -317,6 +288,7 @@ var n = this,
 														@endforeach
 														</select>
 													</div>
+													<div class="col-md-2"></div>
 												</div>
 
 												<table class="table table-striped" data-id="{{ $activity->id }}">
@@ -383,7 +355,7 @@ var n = this,
 												</table>
 
 												<div class="row">
-													<div class="col-md-9"><h4>Materieel</h4></div>
+													<div class="col-md-2"><h4>Materieel</h4></div>
 													<div class="col-md-1"><strong>BTW</strong></div>
 													<div class="col-md-2">
 														<select name="btw" id="type" class="form-control-sm-text pointer dsave">
@@ -392,6 +364,7 @@ var n = this,
 														@endforeach
 														</select>
 													</div>
+													<div class="col-md-8"></div>
 												</div>
 
 												<table class="table table-striped">
