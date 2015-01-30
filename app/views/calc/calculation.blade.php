@@ -235,14 +235,11 @@ var n = this,
 											<div class="toggle-content">
 
 												<div class="row">
-													<span class="pull-right">
-														<div class="form-group">
-															<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','contracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='contracting' ? 'checked' : '') }}/>Aanneming</label>
-	    													<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming</label>
-														</div>
-													</span>
+													<div class="col-md-7"></div>
+													<div class="col-md-2"><label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','contracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='contracting' ? 'checked' : '') }}/>Aanneming</label></div>
+	    											<div class="col-md-2"><label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming</label></div>
+													<div class="col-md-1 text-right"><button class="btn btn-danger btn-xs deleterow fa fa-times"></button></div>
 												</div>
-
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
@@ -341,7 +338,6 @@ var n = this,
 																<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 																	<div class="modal-dialog">
 																		<div class="modal-content">
-
 																			<div class="modal-header"><!-- modal header -->
 																				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 																				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
