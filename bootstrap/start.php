@@ -26,7 +26,7 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(array(
 
-	'local' => array('webdev', 'don-VirtualBox'),
+	'local' => array('webdev', 'webdev2', 'don-VirtualBox', 'alnx17'),
 	'dev' => array('dev'),
 
 ));
