@@ -144,5 +144,8 @@ background: #4E4E4E;
 background: #4E4E4E !important;
 }
 
-
-
+/* Knop materialen databse mdb*/
+.btn-primary-mdb:hover, .btn-primary-mdb:active, .btn-primary-mdb:focus {
+border: rgba(25,25,25,0) 2px solid;
+/* background-color: #89a550 !important; */
+background-color: #4E4E4E !important;
