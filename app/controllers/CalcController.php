@@ -116,14 +116,16 @@ class CalcController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
-			$type = Input::get('value');
+			$type = Input::get('type');
 			$activity = Activity::find(Input::get('activity'));
 			if ($type == 'calc-labor')
 				$activity->tax_calc_labor_id = Input::get('value');
-			if ($type == 'calc-material')
+			if ($type == 'calc-material'){
 				$activity->tax_calc_material_id = Input::get('value');
+				//echo "blamakt neit";
+			}
 			if ($type == 'calc-equipment')
-			$activity->tax_calc_equipment_id = Input::get('value');
+				$activity->tax_calc_equipment_id = Input::get('value');
 			$activity->save();
 
 			return json_encode(['success' => 1]);
