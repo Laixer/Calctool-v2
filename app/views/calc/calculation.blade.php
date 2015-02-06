@@ -21,6 +21,28 @@ var n = this,
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		$(".popdesc").popover({
+	        html: true,
+	        trigger: 'manual',
+	        container: $(this).attr('id'),
+	        placement: 'bottom',
+	        content: function () {
+	            $return = '<div class="hover-hovercard"></div>';
+	        }
+	    }).on("mouseenter", function () {
+	        var _this = this;
+	        $(this).popover("show");
+	        $(this).siblings(".popover").on("mouseleave", function () {
+	            $(_this).popover('hide');
+	        });
+	    }).on("mouseleave", function () {
+	        var _this = this;
+	        setTimeout(function () {
+	            if (!$(".popover:hover").length) {
+	                $(_this).popover("hide")
+	            }
+	        }, 100);
+	    });
 		$('.toggle').click(function(e){
 			$id = $(this).attr('id');
 			if ($(this).hasClass('active')) {
@@ -63,9 +85,9 @@ var n = this,
 		$(".select-tax").change(function(){
 			$.post("/calculation/updatetax", {value: this.value, activity: $(this).attr("data-id"), type: $(this).attr("data-type")}).fail(function(e) { console.log(e); });
 		});
-		$(".labor-amount").change(function(){
-			$.post("/calculation/updateamount", {amount: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
-		});
+		//$(".labor-amount").change(function(){
+		//	$.post("/calculation/updateamount", {amount: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
+		//});
 		$("body").on("change", ".newrow", function(){
 			var i = 1;
 			if($(this).val()){
@@ -102,6 +124,83 @@ var n = this,
 								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
 							if(json.message['unit'])
 								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+							if(json.message['rate'])
+								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+							if(json.message['amount'])
+								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+						});
+					}
+				}).fail(function(e){
+					console.log(e);
+				});
+			}
+		});
+		$("body").on("change", ".lsave", function(){
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id")){
+				$.post("/calculation/updatelabor", {
+					id: $curThis.closest("tr").attr("data-id"),
+					rate: $curThis.closest("tr").find("input[name='rate']").val(),
+					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+				}, function(data){
+					var json = $.parseJSON(data);
+					$curThis.closest("tr").find("input").removeClass("error-input");
+					if (json.success) {
+						$curThis.closest("tr").attr("data-id", json.id);
+						var rate = $curThis.closest("tr").find("input[name='rate']").val()
+						if (rate) {
+							rate.toString().split('.').join('').replace(',', '.');
+						} else {
+							rate = {{$project->hour_rate}};
+						}
+						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+					} else {
+						$.each(json.message, function(i, item) {
+							if(json.message['name'])
+								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+							if(json.message['unit'])
+								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+							if(json.message['rate'])
+								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+							if(json.message['amount'])
+								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+						});
+					}
+				}).fail(function(e){
+					console.log(e);
+				});
+			}
+		});
+		$("body").on("blur", ".lsave", function(){
+			var flag = true;
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id"))
+				return false;
+			$curThis.closest("tr").find("input").each(function(){
+				if(!$(this).val())
+					flag = false;
+			});
+			if(flag){
+				$.post("/calculation/newlabor", {
+					rate: $curThis.closest("tr").find("input[name='rate']").val(),
+					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+					activity: $curThis.closest("table").attr("data-id")
+				}, function(data){
+					var json = $.parseJSON(data);
+					$curThis.closest("tr").find("input").removeClass("error-input");
+					if (json.success) {
+						$curThis.closest("tr").attr("data-id", json.id);
+						var rate = $curThis.closest("tr").find("input[name='rate']").val()
+						if (rate) {
+							rate.toString().split('.').join('').replace(',', '.');
+						} else {
+							rate = {{$project->hour_rate}};
+						}
+						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+					} else {
+						$.each(json.message, function(i, item) {
 							if(json.message['rate'])
 								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
 							if(json.message['amount'])
@@ -247,7 +346,8 @@ var n = this,
 													<div class="col-md-4"></div>
 													<div class="col-md-2"><label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','contracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='contracting' ? 'checked' : '') }}/>Aanneming</label></div>
 	    											<div class="col-md-2"><label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming</label></div>
-													<div class="col-md-2 text-right"><button data-container="body" data-toggle="popover" data-placement="bottom" data-content="<textarea></textarea>" data-original-title="A Title" title="" aria-describedby="popover499619" data-id="{{ $activity->id }}" class="btn btn-info btn-xs">Omschrijving toevoegen</button></div>
+													<!--<div class="col-md-2 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<textarea></textarea>" data-original-title="A Title" title="" aria-describedby="popover499619" data-id="{{ $activity->id }}" class="btn btn-info btn-xs">Omschrijving toevoegen</button></div>-->
+													<div class="col-md-2 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<textarea></textarea>" data-original-title="A Title" title="" aria-describedby="popover499619" class="btn btn-info btn-xs popdesc">Omschrijving toevoegen</button></div>
 
 													<div class="col-md-2 text-right"><button data-id="{{ $activity->id }}" class="btn btn-danger btn-xs deleteact">Verwijderen</button></div>
 												</div>
@@ -263,7 +363,7 @@ var n = this,
 													</div>
 													<div class="col-md-6"></div>
 												</div>
-												<table class="table table-striped">
+												<table class="table table-striped" data-id="{{ $activity->id }}">
 													<?# -- table head -- ?>
 													<thead>
 														<tr>
@@ -280,12 +380,12 @@ var n = this,
 
 													<?# -- table items -- ?>
 													<tbody>
-														<tr><?# -- item -- ?>
+														<tr data-id="{{ CalculationLabor::where('activity_id','=', $activity->id)->first()['id'] }}"><?# -- item -- ?>
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
-															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="name" type="text" value="{{ CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'] }}" class="form-control-sm-number labor-amount" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($project->hour_rate*$project->hour_amount, 2,",",".") }}</span></td>
+															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'] }}" class="form-control-sm-number labor-amount lsave" /></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['rate']*CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2,",",".") }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1 text-right"><button class="btn btn-danger btn-xs fa fa-times"></button></td>

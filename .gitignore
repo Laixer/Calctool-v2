@@ -1,3 +1,4 @@
+/bootstrap/compiled.php
 composer.phar
 composer.lock
 vendor/
@@ -6,4 +7,4 @@ vendor/
 .DS_Store
 Thumbs.db
 TODO
-.sublime*
+*.sublime*

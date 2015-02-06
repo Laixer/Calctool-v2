@@ -99,14 +99,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "app/views/calc/calculation.blade.php",
-			"settings":
-			{
-				"buffer_size": 35995,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -278,20 +270,21 @@
 	[
 		"/var/www/calctool-v2",
 		"/var/www/calctool-v2/app",
-		"/var/www/calctool-v2/app/models",
 		"/var/www/calctool-v2/app/views",
 		"/var/www/calctool-v2/app/views/calc",
 		"/var/www/calctool-v2/bootstrap"
 	],
 	"file_history":
 	[
+		"/var/www/calctool-v2/app/views/calc/calculation.blade.php",
+		"/var/www/calctool-v2/app/views/base/home.blade.php",
+		"/var/www/calctool-v2/app/views/calc/less.blade.php",
+		"/var/www/calctool-v2/app/views/calc/estimate.blade.php",
 		"/var/www/calctool-v2/app/models/CalculationMaterial.php",
 		"/var/www/calctool-v2/app/views/layout/master.blade.php",
 		"/var/www/calctool-v2/public/plugins/superslides/jquery.number.min.js",
 		"/var/www/calctool-v2/public/plugins/jquery.numberformatter.js",
 		"/var/www/calctool-v2/app/controllers/CalcController.php",
-		"/var/www/calctool-v2/app/views/calc/calculation.blade.php",
-		"/var/www/calctool-v2/app/views/base/home.blade.php",
 		"/var/www/calctool-v2/app/controllers/ProjectController.php",
 		"/var/www/calctool-v2/app/controllers/RelationController.php",
 		"/var/www/calctool-v2/app/database/seeds/TestProjectSeeder.php",
@@ -410,13 +403,11 @@
 		"/var/www/calctool/app/models/DeliverTime.php",
 		"/var/www/calctool/app/database/migrations/2014_09_11_210838_create_cost_registration.php",
 		"/var/www/calctool/app/models/Purchase.php",
-		"/var/www/calctool/app/models/Timesheet.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_205753_create_part.php",
-		"/var/www/calctool/app/models/Detail.php"
+		"/var/www/calctool/app/models/Timesheet.php"
 	],
 	"find":
 	{
-		"height": 34.0
+		"height": 23.0
 	},
 	"find_in_files":
 	{
@@ -492,44 +483,14 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "app/views/calc/calculation.blade.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 35995,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								403,
-								403
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Laravel Blade Highlighter/laravel-blade.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 90.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 34.0
+		"height": 23.0
 	},
 	"input":
 	{

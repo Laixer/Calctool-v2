@@ -49,10 +49,12 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('calculation/updateparttype', array('as' => 'calculation', 'uses' => 'CalcController@doUpdatePartType'));
 	Route::post('calculation/updatetax', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateTax'));
 	Route::post('calculation/deleteactivity', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteActivity'));
-	Route::post('calculation/updateamount', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateAmount'));
+	//Route::post('calculation/updateamount', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateAmount'));
 	Route::post('calculation/newmaterial', array('as' => 'calculation', 'uses' => 'CalcController@doNewMaterial'));
+	Route::post('calculation/newlabor', array('as' => 'calculation', 'uses' => 'CalcController@doNewLabor'));
 	Route::post('calculation/deletematerial', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteMaterial'));
 	Route::post('calculation/updatematerial', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateMaterial'));
+	Route::post('calculation/updatelabor', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateLabor'));
 	/*
 	DZa: Routes naar de controler achter de delte knop van calculatie labour. MOgelijk de de "amount" (ook in de regel hierboven) veranderen in Labour
 	Route::post('calculation/deleteamount', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteAmount'));

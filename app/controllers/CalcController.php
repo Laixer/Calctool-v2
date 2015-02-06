@@ -202,6 +202,37 @@ class CalcController extends BaseController {
 		}
 	}
 
+	public function doNewLabor()
+	{
+		$rules = array(
+			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'activity' => array('required','integer','min:0')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+			$rate = Input::get('rate');
+			if (empty($rate)) {
+				$rate = Project::where('user_id','=', Auth::user()->id)->first()->hour_rate;
+			} else {
+				$rate = str_replace(',', '.', str_replace('.', '' , $rate));
+			}
+			$labor = CalculationLabor::create(array(
+				"rate" => $rate,
+				"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
+				"activity_id" => Input::get('activity'),
+			));
+
+			return json_encode(['success' => 1, 'id' => $labor->id]);
+		}
+	}
+
 	public function doDeleteMaterial()
 	{
 		$rules = array(
@@ -246,6 +277,37 @@ class CalcController extends BaseController {
 			$material->amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
 
 			$material->save();
+
+			return json_encode(['success' => 1]);
+		}
+	}
+
+	public function doUpdateLabor()
+	{
+		$rules = array(
+			'id' => array('integer','min:0'),
+			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+			$rate = Input::get('rate');
+			if (empty($rate)) {
+				$rate = Project::where('user_id','=', Auth::user()->id)->first()->hour_rate;
+			} else {
+				$rate = str_replace(',', '.', str_replace('.', '' , $rate));
+			}
+			$labor = CalculationLabor::find(Input::get('id'));
+			$labor->rate = $rate;
+			$labor->amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
+
+			$labor->save();
 
 			return json_encode(['success' => 1]);
 		}
