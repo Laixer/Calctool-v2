@@ -162,6 +162,16 @@ var n = this,
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});
+		$("body").on("click", ".deleteact", function(){
+			if(confirm('Weet je het zeker?')){
+				var $curThis = $(this);
+				if($curThis.attr("data-id"))
+					$.post("/calculation/deleteactivity", {activity: $curThis.attr("data-id")}, function(){
+						//$curThis.closest("tr").hide("slow");
+						$('#toggle-activity-'+$curThis.attr("data-id")).hide('slow');
+					}).fail(function(e) { console.log(e); });
+			}
+		});
 	});
 </script>
 
@@ -233,12 +243,13 @@ var n = this,
 										<div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
 											<label>{{ $activity->activity_name }}</label>
 											<div class="toggle-content">
-
 												<div class="row">
-													<div class="col-md-7"></div>
+													<div class="col-md-4"></div>
 													<div class="col-md-2"><label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','contracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='contracting' ? 'checked' : '') }}/>Aanneming</label></div>
 	    											<div class="col-md-2"><label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming</label></div>
-													<div class="col-md-1 text-right"><button class="btn btn-danger btn-xs deleterow fa fa-times"></button></div>
+													<div class="col-md-2 text-right"><button data-container="body" data-toggle="popover" data-placement="bottom" data-content="<textarea></textarea>" data-original-title="A Title" title="" aria-describedby="popover499619" data-id="{{ $activity->id }}" class="btn btn-info btn-xs">Omschrijving toevoegen</button></div>
+
+													<div class="col-md-2 text-right"><button data-id="{{ $activity->id }}" class="btn btn-danger btn-xs deleteact">Verwijderen</button></div>
 												</div>
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>

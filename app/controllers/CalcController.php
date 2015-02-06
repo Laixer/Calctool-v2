@@ -120,10 +120,8 @@ class CalcController extends BaseController {
 			$activity = Activity::find(Input::get('activity'));
 			if ($type == 'calc-labor')
 				$activity->tax_calc_labor_id = Input::get('value');
-			if ($type == 'calc-material'){
+			if ($type == 'calc-material')
 				$activity->tax_calc_material_id = Input::get('value');
-				//echo "blamakt neit";
-			}
 			if ($type == 'calc-equipment')
 				$activity->tax_calc_equipment_id = Input::get('value');
 			$activity->save();
@@ -150,6 +148,26 @@ class CalcController extends BaseController {
 			$activity = Activity::find(Input::get('activity'));
 			$activity->part_id = Input::get('value');
 			$activity->save();
+
+			return json_encode(['success' => 1]);
+		}
+	}
+
+	public function doDeleteActivity()
+	{
+		$rules = array(
+			'activity' => array('required','integer','min:0')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+			Activity::destroy(Input::get('activity'));
 
 			return json_encode(['success' => 1]);
 		}
