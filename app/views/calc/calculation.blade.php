@@ -21,6 +21,28 @@ var n = this,
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		$(".popdesc").popover({
+	        html: true,
+	        trigger: 'manual',
+	        container: $(this).attr('id'),
+	        placement: 'bottom',
+	        content: function () {
+	            $return = '<div class="hover-hovercard"></div>';
+	        }
+	    }).on("mouseenter", function () {
+	        var _this = this;
+	        $(this).popover("show");
+	        $(this).siblings(".popover").on("mouseleave", function () {
+	            $(_this).popover('hide');
+	        });
+	    }).on("mouseleave", function () {
+	        var _this = this;
+	        setTimeout(function () {
+	            if (!$(".popover:hover").length) {
+	                $(_this).popover("hide")
+	            }
+	        }, 100);
+	    });
 		$('.toggle').click(function(e){
 			$id = $(this).attr('id');
 			if ($(this).hasClass('active')) {
@@ -324,7 +346,8 @@ var n = this,
 													<div class="col-md-4"></div>
 													<div class="col-md-2"><label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','contracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='contracting' ? 'checked' : '') }}/>Aanneming</label></div>
 	    											<div class="col-md-2"><label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming</label></div>
-													<div class="col-md-2 text-right"><button data-container="body" data-toggle="popover" data-placement="bottom" data-content="<textarea></textarea>" data-original-title="A Title" title="" aria-describedby="popover499619" data-id="{{ $activity->id }}" class="btn btn-info btn-xs">Omschrijving toevoegen</button></div>
+													<!--<div class="col-md-2 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<textarea></textarea>" data-original-title="A Title" title="" aria-describedby="popover499619" data-id="{{ $activity->id }}" class="btn btn-info btn-xs">Omschrijving toevoegen</button></div>-->
+													<div class="col-md-2 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<textarea></textarea>" data-original-title="A Title" title="" aria-describedby="popover499619" class="btn btn-info btn-xs popdesc">Omschrijving toevoegen</button></div>
 
 													<div class="col-md-2 text-right"><button data-id="{{ $activity->id }}" class="btn btn-danger btn-xs deleteact">Verwijderen</button></div>
 												</div>
