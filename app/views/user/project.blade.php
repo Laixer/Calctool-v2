@@ -15,7 +15,7 @@
 				<thead>
 					<tr>
 						<th class="col-md-4">Projectnaam</th>
-						<th class="col-md-2">Oprachtgever</th>
+						<th class="col-md-2">Opdrachtgever</th>
 						<th class="col-md-1">Type</th>
 						<th class="col-md-3">Adres</th>
 						<th class="col-md-2">Plaats</th>

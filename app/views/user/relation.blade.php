@@ -39,7 +39,7 @@
 			</table>
 			<div class="row">
 				<div class="col-md-12">
-					<button class="btn btn-primary"><i class="fa fa-user"></i> Nieuwe relatie</button>
+					<a href="relation/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuwe relatie</a>
 				</div>
 			</div>
 		</div>

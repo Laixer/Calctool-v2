@@ -25,7 +25,7 @@ padding: 6px 10px;
 }
 
 
-/* HOMEBLADE */
+/* HOMEBLADE ============================================================================ */
 /* kleur icoon, background*/
 div.featured-box i.fa {
 color: #4E4E4E;
@@ -52,14 +52,15 @@ div.tabs ul.nav-tabs a {
 background: #E8E8E8;
 }
 
-/* CALCULATIONBLADE */
 /* invulvelden formulieren; text leesbaar maken en regels dunner voor meer overzicht */
+/* gebruikt op Calculatiepagina*/
 .form-control {
 height: 40px;
 padding: 4px;
 }
 
 /* Nieuw invulveld voor formulieren met getallen; regels dunner voor meer overzicht*/
+/* gebruikt op Calculatiepagina, nieuw project*/
 .form-control-sm-number {
 	border: #e6e6e6 2px solid;
 	-webkit-border-radius: 6px;
@@ -80,6 +81,7 @@ padding: 4px;
 }
 
 /* Nieuw invulveld voor formulieren met text; regels dunner voor meer overzicht */
+/* gebruikt op Calculatiepagina*/
 .form-control-sm-text {
 	border: #e6e6e6 2px solid;
 	-webkit-border-radius: 6px;
@@ -100,11 +102,13 @@ padding: 4px;
 }
 
 /* Error rode border rondom inputvelden */
+/* gebruikt op Calculatiepagina*/
 .error-input {
 border: #d43f3a 2px solid;
 }
 
 /* Actieve hoofdstukken, niet actief and border */
+/* gebruikt op Calculatiepagina*/
 div.toggle-chapter > label {
 background: #fff;
 border: #8E8E8E 2px solid;
@@ -127,6 +131,7 @@ background: #79BB00 !important;
 }
 
 /* Actieve werkzaamheden grijs, niet actief grijze border, incl knop */
+/* gebruikt op Calculatiepagina*/
 div.toggle-activity > label {
 background: #E8E8E8;
 }
@@ -145,7 +150,7 @@ background: #4E4E4E !important;
 }
 
 /* Knop materialen databse mdb*/
+/* gebruikt op Calculatiepagina*/
 .btn-primary-mdb:hover, .btn-primary-mdb:active, .btn-primary-mdb:focus {
 border: rgba(25,25,25,0) 2px solid;
-/* background-color: #89a550 !important; */
 background-color: #4E4E4E !important;
