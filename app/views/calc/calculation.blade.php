@@ -384,8 +384,8 @@ var n = this,
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
-															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'] }}" class="form-control-sm-number labor-amount lsave" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['rate']*CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2,",",".") }}</span></td>
+															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(Register::calcLaborTotal(CalculationLabor::where('activity_id','=', $activity->id)->first()['rate'], CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".")) }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1 text-right"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
@@ -480,20 +480,17 @@ var n = this,
 															<td class="col-md-1 text-right">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target=".bs-example-modal-lg"></button>
 																<button class="btn btn-danger btn-xs deleterow fa fa-times"></button>
-
-
-
 															</td>
 														</tr>
 													</tbody>
 													<tbody>
-													<tr>
+														<tr>
 															<td class="col-md-5"><strong>Totaal</strong></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>&euro;200,00</strong></td>
-															<td class="col-md-1"><strong>&euro;2.000,00</strong></td>
+															<td class="col-md-1"><strong>&euro;{{ number_format(Register::calcMaterialTotal($activity->id), 2,",",".") }}</strong></td>
+															<td class="col-md-1"><strong>&euro;{{ number_format(Register::calcMaterialTotalProfit($activity->id, Auth::user()->id), 2,",",".") }}</strong></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
