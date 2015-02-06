@@ -6,4 +6,4 @@ vendor/
 .DS_Store
 Thumbs.db
 TODO
-.sublime*
+*.sublime*
