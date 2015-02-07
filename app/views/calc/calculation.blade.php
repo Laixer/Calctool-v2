@@ -76,6 +76,10 @@ var n = this,
 				$('#'+$toggleOpen[i]).addClass('active').children('.toggle-content').toggle();
 			}
 		}
+		$(".complete").click(function(e){
+			$loc = $(this).attr('data-location');
+			window.location.href = $loc;
+		});
 		$("body").on("change", ".form-control-sm-number", function(){
 			$(this).val(parseFloat($(this).val().split('.').join('').replace(',', '.')).formatMoney(2, ',', '.'));
 		});
@@ -85,9 +89,6 @@ var n = this,
 		$(".select-tax").change(function(){
 			$.post("/calculation/updatetax", {value: this.value, activity: $(this).attr("data-id"), type: $(this).attr("data-type")}).fail(function(e) { console.log(e); });
 		});
-		//$(".labor-amount").change(function(){
-		//	$.post("/calculation/updateamount", {amount: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
-		//});
 		$("body").on("change", ".newrow", function(){
 			var i = 1;
 			if($(this).val()){
@@ -366,9 +367,9 @@ var n = this,
 			<div class="fuelux">
 				<div id="calculation-wizard" class="wizard">
 					<ul class="steps">Debiteurennummer nieuwe relatie
-						<li data-target="#step0">Home<span class="chevron"></span></li>
-						<li data-target="#step1" class="complete">Projectgegevens<span class="chevron"></span></li>
-						<li data-target="#step2" class="active">Calculatie<span class="chevron"></span></li>
+						<li data-target="#step0" data-location="/" class="complete">Home<span class="chevron"></span></li>
+						<li data-target="#step1" data-location="/project" class="complete">Projectgegevens<span class="chevron"></span></li>
+						<li data-target="#step2" data-location="/calculation" class="active">Calculatie<span class="chevron"></span></li>
 						<li data-target="#step3">Offerte<span class="chevron"></span></li>
 						<li data-target="#step4">Stelpost<span class="chevron"></span></li>
 						<li data-target="#step5">Minderwerk<span class="chevron"></span></li>
@@ -412,6 +413,313 @@ var n = this,
 				<!-- tabs content -->
 				<div class="tab-content">
 					<div id="calculate" class="tab-pane active">
+						<div class="toogle">
+
+							@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+							<div id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
+								<label>{{ $chapter->chapter_name }}</label>
+								<div class="toggle-content">
+
+									<div class="toogle">
+
+										@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
+										<div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
+											<label>{{ $activity->activity_name }}</label>
+											<div class="toggle-content">
+												<div class="row">
+													<div class="col-md-4"></div>
+													<div class="col-md-2"><label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','contracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='contracting' ? 'checked' : '') }}/>Aanneming</label></div>
+	    											<div class="col-md-2"><label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming</label></div>
+													<!--<div class="col-md-2 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<textarea></textarea>" data-original-title="A Title" title="" aria-describedby="popover499619" data-id="{{ $activity->id }}" class="btn btn-info btn-xs">Omschrijving toevoegen</button></div>-->
+													<div class="col-md-2 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<textarea></textarea>" data-original-title="A Title" title="" aria-describedby="popover499619" class="btn btn-info btn-xs popdesc">Omschrijving toevoegen</button></div>
+
+													<div class="col-md-2 text-right"><button data-id="{{ $activity->id }}" class="btn btn-danger btn-xs deleteact">Verwijderen</button></div>
+												</div>
+												<div class="row">
+													<div class="col-md-2"><h4>Arbeid</h4></div>
+													<div class="col-md-1 text-right"><strong>BTW</strong></div>
+													<div class="col-md-2">
+														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-labor" id="type" class="form-control-sm-text pointer select-tax">
+																@foreach (Tax::all() as $tax)
+																	<option value="{{ $tax->id }}" {{ ($activity->tax_calc_labor_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
+																@endforeach
+														</select>
+													</div>
+													<div class="col-md-6"></div>
+												</div>
+												<table class="table table-striped" data-id="{{ $activity->id }}">
+													<?# -- table head -- ?>
+													<thead>
+														<tr>
+															<th class="col-md-5">Omschrijving</th>
+															<th class="col-md-1">&nbsp;</th>
+															<th class="col-md-1">Uurtarief</th>
+															<th class="col-md-1">Aantal</th>
+															<th class="col-md-1">Prijs</th>
+															<th class="col-md-1">&nbsp;</th>
+															<th class="col-md-1">&nbsp;</th>
+															<th class="col-md-1">&nbsp;</th>
+														</tr>
+													</thead>
+
+													<?# -- table items -- ?>
+													<tbody>
+														<tr data-id="{{ CalculationLabor::where('activity_id','=', $activity->id)->first()['id'] }}"><?# -- item -- ?>
+															<td class="col-md-5">Arbeidsuren</td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
+															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(Register::calcLaborTotal(CalculationLabor::where('activity_id','=', $activity->id)->first()['rate'], CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".")) }}</span></td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1 text-right"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
+														</tr>
+													</tbody>
+												</table>
+
+												<div class="row">
+													<div class="col-md-2"><h4>Materiaal</h4></div>
+													<div class="col-md-1 text-right"><strong>BTW</strong></div>
+													<div class="col-md-2">
+														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-material" id="type" class="form-control-sm-text pointer select-tax">
+														@foreach (Tax::all() as $tax)
+															<option value="{{ $tax->id }}" {{ ($activity->tax_calc_material_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
+														@endforeach
+														</select>
+													</div>
+													<div class="col-md-2"></div>
+												</div>
+
+												<table class="table table-striped" data-id="{{ $activity->id }}">
+													<?# -- tadble head -- ?>
+													<thead>
+														<tr>
+															<th class="col-md-5">Omschrijving</th>
+															<th class="col-md-1">Eenheid</th>
+															<th class="col-md-1">&euro; / Eenh.</th>
+															<th class="col-md-1">Aantal</th>
+															<th class="col-md-1">Prijs</th>
+															<th class="col-md-1">+ Winst %</th>
+															<th class="col-md-1">&nbsp;</th>
+														</tr>
+													</thead>
+
+													<?# -- table items -- ?>
+													<tbody>
+														@foreach (CalculationMaterial::where('activity_id','=', $activity->id)->get() as $material)
+														<tr data-id="{{ $material->id }}">
+															<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text dsave newrow" /></td>
+															<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text dsave" /></td>
+															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
+															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</span></td>
+															<td class="col-md-1"><span class="total-incl-tax">
+															<?php
+																if (PartType::find($activity->part_type_id)->type_name == 'estimate') {
+																	$profit = $project->profit_calc_estim_mat;
+																} else {
+																	if (Part::find($activity->part_id)->part_name=='contracting') {
+																		$profit = $project->profit_calc_contr_mat;
+																	} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+																		$profit = $project->profit_calc_subcontr_mat;
+																	}
+																}
+																echo '&euro; '.number_format($material->rate*$material->amount*((100+$profit)/100), 2,",",".")
+															?></span></td>
+															<td class="col-md-1 text-right">
+																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+																<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
+
+																<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+																	<div class="modal-dialog">
+																		<div class="modal-content">
+																			<div class="modal-header"><!-- modal header -->
+																				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+																				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+																			</div><!-- /modal header -->
+
+																			<!-- modal body -->
+																			<div class="modal-body">
+																				Modal Body
+																			</div>
+																			<!-- /modal body -->
+
+																			<div class="modal-footer"><!-- modal footer -->
+																				<button class="btn btn-default" data-dismiss="modal">Close</button> <button class="btn btn-primary">Save changes</button>
+																			</div><!-- /modal footer -->
+
+																		</div>
+																	</div>
+																</div>
+															</td>
+														</tr>
+														@endforeach
+														<tr>
+															<td class="col-md-5"><input name="name" id="name" type="text" class="form-control-sm-text dsave newrow" /></td>
+															<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text dsave" /></td>
+															<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number dsave" /></td>
+															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsave" /></td>
+															<td class="col-md-1"><span class="total-ex-tax"></span></td>
+															<td class="col-md-1"><span class="total-incl-tax"></span></td>
+															<td class="col-md-1 text-right">
+																<button class="btn-xs fa fa-book" data-toggle="modal" data-target=".bs-example-modal-lg"></button>
+																<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
+															</td>
+														</tr>
+													</tbody>
+													<tbody>
+														<tr>
+															<td class="col-md-5"><strong>Totaal</strong></td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1"><strong>&euro;{{ number_format(Register::calcMaterialTotal($activity->id), 2,",",".") }}</strong></td>
+															<td class="col-md-1"><strong>&euro;{{ number_format(Register::calcMaterialTotalProfit($activity->id, Auth::user()->id), 2,",",".") }}</strong></td>
+															<td class="col-md-1">&nbsp;</td>
+														</tr>
+													</tbody>
+												</table>
+
+												<div class="row">
+													<div class="col-md-2"><h4>Materieel</h4></div>
+													<div class="col-md-1 text-right"><strong>BTW</strong></div>
+													<div class="col-md-2">
+														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-equipment" id="type" class="form-control-sm-text pointer select-tax">
+														@foreach (Tax::all() as $tax)
+															<option value="{{ $tax->id }}" {{ ($activity->tax_calc_equipment_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
+														@endforeach
+														</select>
+													</div>
+													<div class="col-md-8"></div>
+												</div>
+
+												<table class="table table-striped" data-id="{{ $activity->id }}">
+													<?# -- table head -- ?>
+													<thead>
+														<tr>
+															<th class="col-md-5">Omschrijving</th>
+															<th class="col-md-1">Eenheid</th>
+															<th class="col-md-1">&euro; / Eenh.</th>
+															<th class="col-md-1">Aantal</th>
+															<th class="col-md-1">Prijs</th>
+															<th class="col-md-1">+ Winst %</th>
+															<th class="col-md-1">&nbsp;</th>
+														</tr>
+													</thead>
+
+													<?# -- table items -- ?>
+													<tbody>
+														@foreach (CalculationEquipment::where('activity_id','=', $activity->id)->get() as $equipment)
+														<tr data-id="{{ $equipment->id }}">
+															<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text esave newrow" /></td>
+															<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $equipment->unit }}" class="form-control-sm-text esave" /></td>
+															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($equipment->rate, 2,",",".") }}" class="form-control-sm-number esave" /></td>
+															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($equipment->amount, 2,",",".") }}" class="form-control-sm-number esave" /></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->rate*$equipment->amount, 2,",",".") }}</span></td>
+															<td class="col-md-1"><span class="total-incl-tax">
+															<?php
+																if (PartType::find($activity->part_type_id)->type_name == 'estimate') {
+																	$profit = $project->profit_calc_estim_mat;
+																} else {
+																	if (Part::find($activity->part_id)->part_name=='contracting') {
+																		$profit = $project->profit_calc_contr_mat;
+																	} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+																		$profit = $project->profit_calc_subcontr_mat;
+																	}
+																}
+																echo '&euro; '.number_format($equipment->rate*$equipment->amount*((100+$profit)/100), 2,",",".")
+															?></span></td>
+															<td class="col-md-1 text-right">
+																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+																<button class="btn btn-danger btn-xs edeleterow fa fa-times"></button>
+
+																<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+																	<div class="modal-dialog">
+																		<div class="modal-content">
+																			<div class="modal-header"><!-- modal header -->
+																				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+																				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+																			</div><!-- /modal header -->
+
+																			<!-- modal body -->
+																			<div class="modal-body">
+																				Modal Body
+																			</div>
+																			<!-- /modal body -->
+
+																			<div class="modal-footer"><!-- modal footer -->
+																				<button class="btn btn-default" data-dismiss="modal">Close</button> <button class="btn btn-primary">Save changes</button>
+																			</div><!-- /modal footer -->
+
+																		</div>
+																	</div>
+																</div>
+															</td>
+														</tr>
+														@endforeach
+														<tr>
+															<td class="col-md-5"><input name="name" id="name" type="text" class="form-control-sm-text esave newrow" /></td>
+															<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text esave" /></td>
+															<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number esave" /></td>
+															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number esave" /></td>
+															<td class="col-md-1"><span class="total-ex-tax"></span></td>
+															<td class="col-md-1"><span class="total-incl-tax"></span></td>
+															<td class="col-md-1 text-right">
+																<button class="btn-xs fa fa-book" data-toggle="modal" data-target=".bs-example-modal-lg"></button>
+																<button class="btn btn-danger btn-xs edeleterow fa fa-times"></button>
+															</td>
+														</tr>
+													</tbody>
+													<tbody>
+														<tr>
+															<td class="col-md-5"><strong>Totaal</strong></td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1"><strong>&euro;{{ number_format(Register::calcEquipmentTotal($activity->id), 2,",",".") }}</strong></td>
+															<td class="col-md-1"><strong>&euro;{{ number_format(Register::calcEquipmentTotalProfit($activity->id, Auth::user()->id), 2,",",".") }}</strong></td>
+															<td class="col-md-1">&nbsp;</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										@endforeach
+									</div>
+
+									{{ Form::open(array('url' => '/calculation/newactivity/' . $chapter->id)) }}
+									<div class="row">
+										<div class="col-md-6">
+
+											<div class="input-group">
+												<input type="text" class="form-control" name="activity" id="activity" value="" placeholder="Nieuwe Werkzaamheid">
+												<span class="input-group-btn">
+													<button class="btn btn-primary btn-primary-activity">Voeg toe</button>
+												</span>
+											</div>
+										</div>
+									</div>
+									{{ Form::close() }}
+								</div>
+							</div>
+							@endforeach
+						</div>
+
+						{{ Form::open(array('url' => '/calculation/newchapter/'.$project->id)) }}
+						<div class="row">
+							<div class="col-md-6">
+								<div class="input-group">
+									<input type="text" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw Hoofdstuk">
+									<span class="input-group-btn">
+										<button class="btn btn-primary btn-primary-chapter">Voeg toe</button>
+									</span>
+								</div>
+							</div>
+						</div>
+						{{ Form::close() }}
+					</div>
+
+					<div id="estimate" class="tab-pane active">
 						<div class="toogle">
 
 							@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
