@@ -679,14 +679,14 @@ class TestProjectSeeder extends Seeder {
 			'material_name' => 'regel 5',
 			'unit' => 'm',
 			'rate' => '311.11',
-			'amount' => '322.22',
+			'amount' => '32.22',
 			'activity_id' => $test_activity3->id
 		));
 		$calculation_equipment_activity3_5 = CalculationEquipment::create(array(
 			'equipment_name' => 'regel e',
 			'unit' => 'stuk',
 			'rate' => '322.22',
-			'amount' => '311.11',
+			'amount' => '31.11',
 			'activity_id' => $test_activity3->id
 		));
 		$this->command->info('CalculationMaterial created');
@@ -758,14 +758,14 @@ class TestProjectSeeder extends Seeder {
 		$calculation_material_activity4_5 = CalculationMaterial::create(array(
 			'material_name' => 'regel 5',
 			'unit' => 'm',
-			'rate' => '311.19',
+			'rate' => '31.19',
 			'amount' => '322.29',
 			'activity_id' => $test_activity4->id
 		));
 		$calculation_equipment_activity4_5 = CalculationEquipment::create(array(
 			'equipment_name' => 'regel e',
 			'unit' => 'stuk',
-			'rate' => '322.29',
+			'rate' => '32.29',
 			'amount' => '311.19',
 			'activity_id' => $test_activity4->id
 		));
@@ -782,70 +782,70 @@ class TestProjectSeeder extends Seeder {
 		$calculation_material_activity5_1 = CalculationMaterial::create(array(
 			'material_name' => 'regel 1',
 			'unit' => 'm',
-			'rate' => '131.90',
+			'rate' => '11.90',
 			'amount' => '132.90',
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_equipment_activity5_1 = CalculationEquipment::create(array(
 			'equipment_name' => 'regel a',
 			'unit' => 'stuk',
-			'rate' => '311.91',
+			'rate' => '31.91',
 			'amount' => '132.92',
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_material_activity5_2 = CalculationMaterial::create(array(
 			'material_name' => 'regel 2',
 			'unit' => 'm',
-			'rate' => '312.90',
+			'rate' => '32.90',
 			'amount' => '131.90',
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_equipment_activity5_2 = CalculationEquipment::create(array(
 			'equipment_name' => 'regel b',
 			'unit' => 'stuk',
-			'rate' => '312.91',
+			'rate' => '31.91',
 			'amount' => '311.91',
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_material_activity5_3 = CalculationMaterial::create(array(
 			'material_name' => 'regel 3',
 			'unit' => 'm',
-			'rate' => '311.19',
+			'rate' => '31.19',
 			'amount' => '132.29',
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_equipment_activity5_3 = CalculationEquipment::create(array(
 			'equipment_name' => 'regel c',
 			'unit' => 'stuk',
-			'rate' => '312.29',
+			'rate' => '31.29',
 			'amount' => '311.19',
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_material_activity5_4 = CalculationMaterial::create(array(
 			'material_name' => 'regel 4',
 			'unit' => 'm',
-			'rate' => '131.19',
+			'rate' => '11.19',
 			'amount' => '132.29',
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_equipment_activity5_4 = CalculationEquipment::create(array(
 			'equipment_name' => 'regel d',
 			'unit' => 'stuk',
-			'rate' => '312.29',
+			'rate' => '32.29',
 			'amount' => '311.19',
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_material_activity5_5 = CalculationMaterial::create(array(
 			'material_name' => 'regel 5',
 			'unit' => 'm',
-			'rate' => '311.19',
+			'rate' => '31.19',
 			'amount' => '322.29',
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_equipment_activity5_5 = CalculationEquipment::create(array(
 			'equipment_name' => 'regel e',
 			'unit' => 'stuk',
-			'rate' => '322.29',
+			'rate' => '32.29',
 			'amount' => '311.19',
 			'activity_id' => $test_activity5->id
 		));
@@ -863,70 +863,70 @@ class TestProjectSeeder extends Seeder {
 			'material_name' => 'regel 1',
 			'unit' => 'm',
 			'rate' => '131.90',
-			'amount' => '132.90',
+			'amount' => '13.90',
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_equipment_activity6_1 = CalculationEquipment::create(array(
 			'equipment_name' => 'regel a',
 			'unit' => 'stuk',
-			'rate' => '3101.91',
-			'amount' => '1032.92',
+			'rate' => '301.91',
+			'amount' => '102.92',
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_material_activity6_2 = CalculationMaterial::create(array(
 			'material_name' => 'regel 2',
 			'unit' => 'm',
-			'rate' => '3102.90',
-			'amount' => '1031.90',
+			'rate' => '102.90',
+			'amount' => '131.90',
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_equipment_activity6_2 = CalculationEquipment::create(array(
 			'equipment_name' => 'regel b',
 			'unit' => 'stuk',
-			'rate' => '312.91',
+			'rate' => '32.91',
 			'amount' => '311.91',
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_material_activity6_3 = CalculationMaterial::create(array(
 			'material_name' => 'regel 3',
 			'unit' => 'm',
-			'rate' => '3101.19',
-			'amount' => '1302.29',
+			'rate' => '311.19',
+			'amount' => '102.29',
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_equipment_activity6_3 = CalculationEquipment::create(array(
 			'equipment_name' => 'regel c',
 			'unit' => 'stuk',
 			'rate' => '312.29',
-			'amount' => '311.19',
+			'amount' => '31.19',
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_material_activity6_4 = CalculationMaterial::create(array(
 			'material_name' => 'regel 4',
 			'unit' => 'm',
-			'rate' => '1031.19',
-			'amount' => '1032.29',
+			'rate' => '101.19',
+			'amount' => '12.29',
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_equipment_activity6_4 = CalculationEquipment::create(array(
 			'equipment_name' => 'regel d',
 			'unit' => 'stuk',
-			'rate' => '3102.29',
-			'amount' => '3011.19',
+			'rate' => '312.29',
+			'amount' => '31.19',
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_material_activity6_5 = CalculationMaterial::create(array(
 			'material_name' => 'regel 5',
 			'unit' => 'm',
-			'rate' => '301.19',
-			'amount' => '3202.29',
+			'rate' => '30.19',
+			'amount' => '32.29',
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_equipment_activity6_5 = CalculationEquipment::create(array(
 			'equipment_name' => 'regel e',
 			'unit' => 'stuk',
-			'rate' => '3220.29',
-			'amount' => '3110.19',
+			'rate' => '30.29',
+			'amount' => '30.19',
 			'activity_id' => $test_activity6->id
 		));
 		$this->command->info('CalculationMaterial created');
