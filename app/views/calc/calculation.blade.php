@@ -135,6 +135,41 @@ var n = this,
 				});
 			}
 		});
+		$("body").on("change", ".esave", function(){
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id")){
+				$.post("/calculation/updateequipment", {
+					id: $curThis.closest("tr").attr("data-id"),
+					name: $curThis.closest("tr").find("input[name='name']").val(),
+					unit: $curThis.closest("tr").find("input[name='unit']").val(),
+					rate: $curThis.closest("tr").find("input[name='rate']").val(),
+					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+				}, function(data){
+					var json = $.parseJSON(data);
+					$curThis.closest("tr").find("input").removeClass("error-input");
+					if (json.success) {
+						$curThis.closest("tr").attr("data-id", json.id);
+						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
+						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+{{$project->profit_calc_contr_mat}})/100),2,',','.'));
+					} else {
+						$.each(json.message, function(i, item) {
+							if(json.message['name'])
+								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+							if(json.message['unit'])
+								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+							if(json.message['rate'])
+								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+							if(json.message['amount'])
+								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+						});
+					}
+				}).fail(function(e){
+					console.log(e);
+				});
+			}
+		});
 		$("body").on("change", ".lsave", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id")){
@@ -254,10 +289,59 @@ var n = this,
 				});
 			}
 		});
-		$("body").on("click", ".deleterow", function(){
+		$("body").on("blur", ".esave", function(){
+			var flag = true;
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id"))
+				return false;
+			$curThis.closest("tr").find("input").each(function(){
+				if(!$(this).val())
+					flag = false;
+			});
+			if(flag){
+				$.post("/calculation/newequipment", {
+					name: $curThis.closest("tr").find("input[name='name']").val(),
+					unit: $curThis.closest("tr").find("input[name='unit']").val(),
+					rate: $curThis.closest("tr").find("input[name='rate']").val(),
+					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+					activity: $curThis.closest("table").attr("data-id")
+				}, function(data){
+					var json = $.parseJSON(data);
+					$curThis.closest("tr").find("input").removeClass("error-input");
+					if (json.success) {
+						$curThis.closest("tr").attr("data-id", json.id);
+						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
+						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+{{$project->profit_calc_contr_mat}})/100),2,',','.'));
+					} else {
+						$.each(json.message, function(i, item) {
+							if(json.message['name'])
+								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+							if(json.message['unit'])
+								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+							if(json.message['rate'])
+								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+							if(json.message['amount'])
+								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+						});
+					}
+				}).fail(function(e){
+					console.log(e);
+				});
+			}
+		});
+		$("body").on("click", ".sdeleterow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
 				$.post("/calculation/deletematerial", {id: $curThis.closest("tr").attr("data-id")}, function(){
+					$curThis.closest("tr").hide("slow");
+				}).fail(function(e) { console.log(e); });
+		});
+		$("body").on("click", ".edeleterow", function(){
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id"))
+				$.post("/calculation/deleteequipment", {id: $curThis.closest("tr").attr("data-id")}, function(){
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});
@@ -266,7 +350,6 @@ var n = this,
 				var $curThis = $(this);
 				if($curThis.attr("data-id"))
 					$.post("/calculation/deleteactivity", {activity: $curThis.attr("data-id")}, function(){
-						//$curThis.closest("tr").hide("slow");
 						$('#toggle-activity-'+$curThis.attr("data-id")).hide('slow');
 					}).fail(function(e) { console.log(e); });
 			}
@@ -357,7 +440,7 @@ var n = this,
 													<div class="col-md-2">
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-labor" id="type" class="form-control-sm-text pointer select-tax">
 																@foreach (Tax::all() as $tax)
-																	<option value="{{ $tax->id }}" {{ ($activity->tax_calc_labor==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
+																	<option value="{{ $tax->id }}" {{ ($activity->tax_calc_labor_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
 																@endforeach
 														</select>
 													</div>
@@ -444,7 +527,7 @@ var n = this,
 															?></span></td>
 															<td class="col-md-1 text-right">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
-																<button class="btn btn-danger btn-xs deleterow fa fa-times"></button>
+																<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
 
 																<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 																	<div class="modal-dialog">
@@ -479,7 +562,7 @@ var n = this,
 															<td class="col-md-1"><span class="total-incl-tax"></span></td>
 															<td class="col-md-1 text-right">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target=".bs-example-modal-lg"></button>
-																<button class="btn btn-danger btn-xs deleterow fa fa-times"></button>
+																<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
 															</td>
 														</tr>
 													</tbody>
@@ -500,21 +583,21 @@ var n = this,
 													<div class="col-md-2"><h4>Materieel</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
 													<div class="col-md-2">
-														<select name="btw" id="type" class="form-control-sm-text pointer dsave">
+														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-equipment" id="type" class="form-control-sm-text pointer select-tax">
 														@foreach (Tax::all() as $tax)
-															<option value="{{ $tax->id }}" {{ ($activity->tax_calc_equipment==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
+															<option value="{{ $tax->id }}" {{ ($activity->tax_calc_equipment_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
 														@endforeach
 														</select>
 													</div>
 													<div class="col-md-8"></div>
 												</div>
 
-												<table class="table table-striped">
+												<table class="table table-striped" data-id="{{ $activity->id }}">
 													<?# -- table head -- ?>
 													<thead>
 														<tr>
-															<th class="col-md-6">Omschrijving</th>
-															<th class="col-md-2">Eenheid</th>
+															<th class="col-md-5">Omschrijving</th>
+															<th class="col-md-1">Eenheid</th>
 															<th class="col-md-1">&euro; / Eenh.</th>
 															<th class="col-md-1">Aantal</th>
 															<th class="col-md-1">Prijs</th>
@@ -523,16 +606,78 @@ var n = this,
 														</tr>
 													</thead>
 
-													<!-- table items -->
+													<?# -- table items -- ?>
+													<tbody>
+														@foreach (CalculationEquipment::where('activity_id','=', $activity->id)->get() as $equipment)
+														<tr data-id="{{ $equipment->id }}">
+															<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text esave newrow" /></td>
+															<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $equipment->unit }}" class="form-control-sm-text esave" /></td>
+															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($equipment->rate, 2,",",".") }}" class="form-control-sm-number esave" /></td>
+															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($equipment->amount, 2,",",".") }}" class="form-control-sm-number esave" /></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->rate*$equipment->amount, 2,",",".") }}</span></td>
+															<td class="col-md-1"><span class="total-incl-tax">
+															<?php
+																if (PartType::find($activity->part_type_id)->type_name == 'estimate') {
+																	$profit = $project->profit_calc_estim_mat;
+																} else {
+																	if (Part::find($activity->part_id)->part_name=='contracting') {
+																		$profit = $project->profit_calc_contr_mat;
+																	} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+																		$profit = $project->profit_calc_subcontr_mat;
+																	}
+																}
+																echo '&euro; '.number_format($equipment->rate*$equipment->amount*((100+$profit)/100), 2,",",".")
+															?></span></td>
+															<td class="col-md-1 text-right">
+																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+																<button class="btn btn-danger btn-xs edeleterow fa fa-times"></button>
+
+																<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+																	<div class="modal-dialog">
+																		<div class="modal-content">
+																			<div class="modal-header"><!-- modal header -->
+																				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+																				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+																			</div><!-- /modal header -->
+
+																			<!-- modal body -->
+																			<div class="modal-body">
+																				Modal Body
+																			</div>
+																			<!-- /modal body -->
+
+																			<div class="modal-footer"><!-- modal footer -->
+																				<button class="btn btn-default" data-dismiss="modal">Close</button> <button class="btn btn-primary">Save changes</button>
+																			</div><!-- /modal footer -->
+
+																		</div>
+																	</div>
+																</div>
+															</td>
+														</tr>
+														@endforeach
+														<tr>
+															<td class="col-md-5"><input name="name" id="name" type="text" class="form-control-sm-text esave newrow" /></td>
+															<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text esave" /></td>
+															<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number esave" /></td>
+															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number esave" /></td>
+															<td class="col-md-1"><span class="total-ex-tax"></span></td>
+															<td class="col-md-1"><span class="total-incl-tax"></span></td>
+															<td class="col-md-1 text-right">
+																<button class="btn-xs fa fa-book" data-toggle="modal" data-target=".bs-example-modal-lg"></button>
+																<button class="btn btn-danger btn-xs edeleterow fa fa-times"></button>
+															</td>
+														</tr>
+													</tbody>
 													<tbody>
 														<tr>
-															<td class="col-md-6"><input name="name" id="name" type="text" value="" class="form-control-sm-number control-sm newrow" /></td>
-															<td class="col-md-2"><input name="name" id="name" type="text" value="" class="form-control-sm-number control-sm" /></td>
-															<td class="col-md-1"><input name="name" id="name" type="text" value="" class="form-control-sm-number control-sm" /></td>
-															<td class="col-md-1"><input name="name" id="name" type="number" min="0" value="" class="form-control-sm-number control-sm" /></td>
-															<td class="col-md-1">&euro;20,000</td>
-															<td class="col-md-1">&euro;200,00</td>
-															<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
+															<td class="col-md-5"><strong>Totaal</strong></td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1"><strong>&euro;{{ number_format(Register::calcEquipmentTotal($activity->id), 2,",",".") }}</strong></td>
+															<td class="col-md-1"><strong>&euro;{{ number_format(Register::calcEquipmentTotalProfit($activity->id, Auth::user()->id), 2,",",".") }}</strong></td>
+															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
 												</table>
