@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"calc",
+				"calculus"
+			],
+			[
 				"da",
 				"data-id"
 			],
@@ -99,6 +103,30 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "app/views/calc/calculation.blade.php",
+			"settings":
+			{
+				"buffer_size": 53502,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/controllers/CalcController.php",
+			"settings":
+			{
+				"buffer_size": 10654,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/routes.php",
+			"settings":
+			{
+				"buffer_size": 4438,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -270,12 +298,34 @@
 	[
 		"/var/www/calctool-v2",
 		"/var/www/calctool-v2/app",
-		"/var/www/calctool-v2/app/views",
+		"/var/www/calctool-v2/app/calculus",
+		"/var/www/calctool-v2/app/controllers",
+		"/var/www/calctool-v2/app/database",
+		"/var/www/calctool-v2/app/database/seeds",
+		"/var/www/calctool-v2/app/start",
 		"/var/www/calctool-v2/app/views/calc",
-		"/var/www/calctool-v2/bootstrap"
+		"/var/www/calctool-v2/app/views/user",
+		"/var/www/calctool-v2/vendor/predis/predis",
+		"/var/www/calctool-v2/vendor/way/generators",
+		"/var/www/calctool-v2/vendor/way/generators/src",
+		"/var/www/calctool-v2/vendor/way/generators/src/Way",
+		"/var/www/calctool-v2/vendor/way/generators/src/Way/Generators",
+		"/var/www/calctool-v2/vendor/way/generators/src/config"
 	],
 	"file_history":
 	[
+		"/var/www/calctool-v2/app/calculus/Register.php",
+		"/var/www/calctool-v2/app/database/seeds/TestProjectSeeder.php",
+		"/var/www/calctool-v2/app/database/seeds/DatabaseSeeder.php",
+		"/var/www/calctool-v2/app/calculus/Helpers.php",
+		"/var/www/calctool-v2/app/config/app.php",
+		"/var/www/calctool-v2/app/start/global.php",
+		"/var/www/calctool-v2/app/controllers/CalcController.php",
+		"/var/www/calctool-v2/app/routes.php",
+		"/var/www/calctool-v2/workbench/calctool/calculus/src/Calctool/Calculus/CalculusServiceProvider.php",
+		"/var/www/calctool-v2/workbench/calctool/calculus/src/Calctool/Calculus/Calculus.php",
+		"/var/www/calctool-v2/app/models/CalculationLabor.php",
+		"/var/www/calctool-v2/calctool.sublime-project",
 		"/var/www/calctool-v2/app/views/calc/calculation.blade.php",
 		"/var/www/calctool-v2/app/views/base/home.blade.php",
 		"/var/www/calctool-v2/app/views/calc/less.blade.php",
@@ -284,14 +334,10 @@
 		"/var/www/calctool-v2/app/views/layout/master.blade.php",
 		"/var/www/calctool-v2/public/plugins/superslides/jquery.number.min.js",
 		"/var/www/calctool-v2/public/plugins/jquery.numberformatter.js",
-		"/var/www/calctool-v2/app/controllers/CalcController.php",
 		"/var/www/calctool-v2/app/controllers/ProjectController.php",
 		"/var/www/calctool-v2/app/controllers/RelationController.php",
-		"/var/www/calctool-v2/app/database/seeds/TestProjectSeeder.php",
-		"/var/www/calctool-v2/app/models/CalculationLabor.php",
 		"/var/www/calctool-v2/app/views/user/new_project.blade.php",
 		"/var/www/calctool-v2/app/controllers/HomeController.php",
-		"/var/www/calctool-v2/app/routes.php",
 		"/var/www/calctool-v2/public/test.php",
 		"/var/www/calctool-v2/app/views/user/new_relation.blade.php",
 		"/var/www/calctool-v2/app/database/migrations/2014_09_11_193342_create_relation.php",
@@ -395,19 +441,11 @@
 		"/var/www/calctool/app/models/CalculationMaterial.php",
 		"/var/www/calctool/app/models/CalculationLabor.php",
 		"/var/www/calctool/app/models/Tax.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_212442_create_financial.php",
-		"/var/www/calctool/app/models/Invoice.php",
-		"/var/www/calctool/app/models/Offer.php",
-		"/var/www/calctool/app/models/Valid.php",
-		"/var/www/calctool/app/models/Specification.php",
-		"/var/www/calctool/app/models/DeliverTime.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_210838_create_cost_registration.php",
-		"/var/www/calctool/app/models/Purchase.php",
-		"/var/www/calctool/app/models/Timesheet.php"
+		"/var/www/calctool/app/database/migrations/2014_09_11_212442_create_financial.php"
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
@@ -423,6 +461,21 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"deleterow",
+			"dsave",
+			"esave",
+			"select-tax",
+			"popdesc",
+			"popover",
+			"lsave",
+			"lsa",
+			"Update",
+			"lsave",
+			"user()",
+			"lsave",
+			"newmaterial",
+			"lsave",
+			"dsave",
 			"number(",
 			" (",
 			"error-input",
@@ -483,8 +536,96 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "app/views/calc/calculation.blade.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 53502,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								14708,
+								14708
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4729.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/controllers/CalcController.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10654,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7612,
+								7612
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4009.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/routes.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4438,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2661,
+								2661
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 405.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -569,7 +710,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 285.0,
+	"side_bar_width": 204.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

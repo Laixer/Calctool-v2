@@ -9,6 +9,13 @@ class AuthController extends \BaseController {
 	 */
 	public function getLogin()
 	{
+		if(App::environment('local'))
+		{
+			Auth::loginUsingId(1);
+
+			return Redirect::to('/');
+		}
+
 		return View::make('auth.login');
 	}
 
