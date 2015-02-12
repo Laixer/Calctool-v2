@@ -719,7 +719,7 @@ var n = this,
 						{{ Form::close() }}
 					</div>
 
-					<div id="estimate" class="tab-pane active">
+					<div id="estimate" class="tab-pane">
 						<div class="toogle">
 
 							@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
