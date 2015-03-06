@@ -123,7 +123,7 @@ class CreateCalculation extends Migration {
 			$table->decimal('set_amount', 9, 2)->unsigned()->index();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
-			$table->integer('hour_id')->unsigned();
+			$table->integer('hour_id')->unsigned()->nullable();
 			$table->foreign('hour_id')->references('id')->on('timesheet')->onUpdate('cascade')->onDelete('cascade');
 		});
 

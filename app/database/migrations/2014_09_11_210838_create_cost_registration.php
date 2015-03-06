@@ -22,7 +22,7 @@ class CreateCostRegistration extends Migration {
 			$table->increments('id');
 			$table->date('register_date');
 			$table->decimal('register_hour', 5, 2)->unsigned();
-			$table->text('note');
+			$table->text('note')->nullable();
 			$table->integer('part_id')->unsigned();
 			$table->foreign('part_id')->references('id')->on('part')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('part_type_id')->unsigned();
@@ -37,7 +37,7 @@ class CreateCostRegistration extends Migration {
 		{
 			$table->increments('id');
 			$table->decimal('amount', 9, 2);
-			$table->text('note');
+			$table->text('note')->nullable();
 			$table->date('register_date');
 			$table->integer('part_id')->unsigned();
 			$table->foreign('part_id')->references('id')->on('part')->onUpdate('cascade')->onDelete('restrict');

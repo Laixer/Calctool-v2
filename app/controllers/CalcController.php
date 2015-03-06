@@ -173,7 +173,7 @@ class CalcController extends BaseController {
 		}
 	}
 
-	public function doNewMaterial()
+	public function doNewCalculationMaterial()
 	{
 		$rules = array(
 			'name' => array('required','max:50'),
@@ -202,7 +202,7 @@ class CalcController extends BaseController {
 		}
 	}
 
-	public function doNewEquipment()
+	public function doNewCalculationEquipment()
 	{
 		$rules = array(
 			'name' => array('required','max:50'),
@@ -231,7 +231,7 @@ class CalcController extends BaseController {
 		}
 	}
 
-	public function doNewLabor()
+	public function doNewCalculationLabor()
 	{
 		$rules = array(
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
@@ -262,7 +262,7 @@ class CalcController extends BaseController {
 		}
 	}
 
-	public function doDeleteMaterial()
+	public function doDeleteCalculationMaterial()
 	{
 		$rules = array(
 			'id' => array('required','integer','min:0'),
@@ -281,7 +281,7 @@ class CalcController extends BaseController {
 		}
 	}
 
-	public function doDeleteEquipment()
+	public function doDeleteCalculationEquipment()
 	{
 		$rules = array(
 			'id' => array('required','integer','min:0'),
@@ -300,7 +300,7 @@ class CalcController extends BaseController {
 		}
 	}
 
-	public function doUpdateMaterial()
+	public function doUpdateCalculationMaterial()
 	{
 		$rules = array(
 			'id' => array('integer','min:0'),
@@ -330,7 +330,7 @@ class CalcController extends BaseController {
 		}
 	}
 
-	public function doUpdateEquipment()
+	public function doUpdateCalculationEquipment()
 	{
 		$rules = array(
 			'id' => array('integer','min:0'),
@@ -360,7 +360,7 @@ class CalcController extends BaseController {
 		}
 	}
 
-	public function doUpdateLabor()
+	public function doUpdateCalculationLabor()
 	{
 		$rules = array(
 			'id' => array('integer','min:0'),
@@ -382,6 +382,234 @@ class CalcController extends BaseController {
 				$rate = str_replace(',', '.', str_replace('.', '' , $rate));
 			}
 			$labor = CalculationLabor::find(Input::get('id'));
+			$labor->rate = $rate;
+			$labor->amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
+
+			$labor->save();
+
+			return json_encode(['success' => 1]);
+		}
+	}
+
+	public function doNewEstimateMaterial()
+	{
+		$rules = array(
+			'name' => array('required','max:50'),
+			'unit' => array('required','max:10'),
+			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'activity' => array('required','integer','min:0')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+			$material = EstimateMaterial::create(array(
+				"material_name" => Input::get('name'),
+				"set_material_name" => Input::get('name'),
+				"unit" => Input::get('unit'),
+				"set_unit" => Input::get('unit'),
+				"rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
+				"set_rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
+				"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
+				"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
+				"activity_id" => Input::get('activity'),
+			));
+
+			return json_encode(['success' => 1, 'id' => $material->id]);
+		}
+	}
+
+	public function doNewEstimateEquipment()
+	{
+		$rules = array(
+			'name' => array('required','max:50'),
+			'unit' => array('required','max:10'),
+			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'activity' => array('required','integer','min:0')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+			$equipment = EstimateEquipment::create(array(
+				"equipment_name" => Input::get('name'),
+				"set_equipment_name" => Input::get('name'),
+				"unit" => Input::get('unit'),
+				"set_unit" => Input::get('unit'),
+				"rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
+				"set_rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
+				"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
+				"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
+				"activity_id" => Input::get('activity'),
+			));
+
+			return json_encode(['success' => 1, 'id' => $equipment->id]);
+		}
+	}
+
+	public function doNewEstimateLabor()
+	{
+		$rules = array(
+			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'activity' => array('required','integer','min:0')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+			$rate = Input::get('rate');
+			if (empty($rate)) {
+				$rate = Project::where('user_id','=', Auth::user()->id)->first()->hour_rate;
+			} else {
+				$rate = str_replace(',', '.', str_replace('.', '' , $rate));
+			}
+			$labor = EstimateLabor::create(array(
+				"rate" => $rate,
+				"set_rate" => $rate,
+				"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
+				"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
+				"activity_id" => Input::get('activity'),
+			));
+
+			return json_encode(['success' => 1, 'id' => $labor->id]);
+		}
+	}
+
+	public function doDeleteEstimateMaterial()
+	{
+		$rules = array(
+			'id' => array('required','integer','min:0'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+			EstimateMaterial::destroy(Input::get('id'));
+
+			return json_encode(['success' => 1]);
+		}
+	}
+
+	public function doDeleteEstimateEquipment()
+	{
+		$rules = array(
+			'id' => array('required','integer','min:0'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+			EstimateEquipment::destroy(Input::get('id'));
+
+			return json_encode(['success' => 1]);
+		}
+	}
+
+	public function doUpdateEstimateMaterial()
+	{
+		$rules = array(
+			'id' => array('integer','min:0'),
+			'name' => array('max:50'),
+			'unit' => array('max:10'),
+			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+			$material = EstimateMaterial::find(Input::get('id'));
+			$material->material_name = Input::get('name');
+			$material->unit = Input::get('unit');
+			$material->rate = str_replace(',', '.', str_replace('.', '' , Input::get('rate')));
+			$material->amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
+
+			$material->save();
+
+			return json_encode(['success' => 1]);
+		}
+	}
+
+	public function doUpdateEstimateEquipment()
+	{
+		$rules = array(
+			'id' => array('integer','min:0'),
+			'name' => array('max:50'),
+			'unit' => array('max:10'),
+			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+			$equipment = EstimateEquipment::find(Input::get('id'));
+			$equipment->equipment_name = Input::get('name');
+			$equipment->unit = Input::get('unit');
+			$equipment->rate = str_replace(',', '.', str_replace('.', '' , Input::get('rate')));
+			$equipment->amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
+
+			$equipment->save();
+
+			return json_encode(['success' => 1]);
+		}
+	}
+
+	public function doUpdateEstimateLabor()
+	{
+		$rules = array(
+			'id' => array('integer','min:0'),
+			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+			$rate = Input::get('rate');
+			if (empty($rate)) {
+				$rate = Project::where('user_id','=', Auth::user()->id)->first()->hour_rate;
+			} else {
+				$rate = str_replace(',', '.', str_replace('.', '' , $rate));
+			}
+			$labor = EstimateLabor::find(Input::get('id'));
 			$labor->rate = $rate;
 			$labor->amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
 

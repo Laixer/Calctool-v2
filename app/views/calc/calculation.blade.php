@@ -104,7 +104,7 @@ var n = this,
 		$("body").on("change", ".dsave", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id")){
-				$.post("/calculation/updatematerial", {
+				$.post("/calculation/calc/updatematerial", {
 					id: $curThis.closest("tr").attr("data-id"),
 					name: $curThis.closest("tr").find("input[name='name']").val(),
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
@@ -139,7 +139,7 @@ var n = this,
 		$("body").on("change", ".esave", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id")){
-				$.post("/calculation/updateequipment", {
+				$.post("/calculation/calc/updateequipment", {
 					id: $curThis.closest("tr").attr("data-id"),
 					name: $curThis.closest("tr").find("input[name='name']").val(),
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
@@ -174,7 +174,7 @@ var n = this,
 		$("body").on("change", ".lsave", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id")){
-				$.post("/calculation/updatelabor", {
+				$.post("/calculation/calc/updatelabor", {
 					id: $curThis.closest("tr").attr("data-id"),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
@@ -218,7 +218,7 @@ var n = this,
 					flag = false;
 			});
 			if(flag){
-				$.post("/calculation/newlabor", {
+				$.post("/calculation/calc/newlabor", {
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
 					activity: $curThis.closest("table").attr("data-id")
@@ -258,7 +258,7 @@ var n = this,
 					flag = false;
 			});
 			if(flag){
-				$.post("/calculation/newmaterial", {
+				$.post("/calculation/calc/newmaterial", {
 					name: $curThis.closest("tr").find("input[name='name']").val(),
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
@@ -300,7 +300,238 @@ var n = this,
 					flag = false;
 			});
 			if(flag){
-				$.post("/calculation/newequipment", {
+				$.post("/calculation/calc/newequipment", {
+					name: $curThis.closest("tr").find("input[name='name']").val(),
+					unit: $curThis.closest("tr").find("input[name='unit']").val(),
+					rate: $curThis.closest("tr").find("input[name='rate']").val(),
+					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+					activity: $curThis.closest("table").attr("data-id")
+				}, function(data){
+					var json = $.parseJSON(data);
+					$curThis.closest("tr").find("input").removeClass("error-input");
+					if (json.success) {
+						$curThis.closest("tr").attr("data-id", json.id);
+						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
+						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+{{$project->profit_calc_contr_mat}})/100),2,',','.'));
+					} else {
+						$.each(json.message, function(i, item) {
+							if(json.message['name'])
+								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+							if(json.message['unit'])
+								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+							if(json.message['rate'])
+								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+							if(json.message['amount'])
+								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+						});
+					}
+				}).fail(function(e){
+					console.log(e);
+				});
+			}
+		});
+		$("body").on("change", ".dsavee", function(){
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id")){
+				$.post("/calculation/estim/updatematerial", {
+					id: $curThis.closest("tr").attr("data-id"),
+					name: $curThis.closest("tr").find("input[name='name']").val(),
+					unit: $curThis.closest("tr").find("input[name='unit']").val(),
+					rate: $curThis.closest("tr").find("input[name='rate']").val(),
+					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+				}, function(data){
+					var json = $.parseJSON(data);
+					$curThis.closest("tr").find("input").removeClass("error-input");
+					if (json.success) {
+						$curThis.closest("tr").attr("data-id", json.id);
+						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
+						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+{{$project->profit_calc_contr_mat}})/100),2,',','.'));
+					} else {
+						$.each(json.message, function(i, item) {
+							if(json.message['name'])
+								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+							if(json.message['unit'])
+								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+							if(json.message['rate'])
+								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+							if(json.message['amount'])
+								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+						});
+					}
+				}).fail(function(e){
+					console.log(e);
+				});
+			}
+		});
+		$("body").on("change", ".esavee", function(){
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id")){
+				$.post("/calculation/estim/updateequipment", {
+					id: $curThis.closest("tr").attr("data-id"),
+					name: $curThis.closest("tr").find("input[name='name']").val(),
+					unit: $curThis.closest("tr").find("input[name='unit']").val(),
+					rate: $curThis.closest("tr").find("input[name='rate']").val(),
+					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+				}, function(data){
+					var json = $.parseJSON(data);
+					$curThis.closest("tr").find("input").removeClass("error-input");
+					if (json.success) {
+						$curThis.closest("tr").attr("data-id", json.id);
+						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
+						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+{{$project->profit_calc_contr_mat}})/100),2,',','.'));
+					} else {
+						$.each(json.message, function(i, item) {
+							if(json.message['name'])
+								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+							if(json.message['unit'])
+								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+							if(json.message['rate'])
+								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+							if(json.message['amount'])
+								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+						});
+					}
+				}).fail(function(e){
+					console.log(e);
+				});
+			}
+		});
+		$("body").on("change", ".lsavee", function(){
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id")){
+				$.post("/calculation/estim/updatelabor", {
+					id: $curThis.closest("tr").attr("data-id"),
+					rate: $curThis.closest("tr").find("input[name='rate']").val(),
+					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+				}, function(data){
+					var json = $.parseJSON(data);
+					$curThis.closest("tr").find("input").removeClass("error-input");
+					if (json.success) {
+						$curThis.closest("tr").attr("data-id", json.id);
+						var rate = $curThis.closest("tr").find("input[name='rate']").val()
+						if (rate) {
+							rate.toString().split('.').join('').replace(',', '.');
+						} else {
+							rate = {{$project->hour_rate}};
+						}
+						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+					} else {
+						$.each(json.message, function(i, item) {
+							if(json.message['name'])
+								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+							if(json.message['unit'])
+								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+							if(json.message['rate'])
+								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+							if(json.message['amount'])
+								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+						});
+					}
+				}).fail(function(e){
+					console.log(e);
+				});
+			}
+		});
+		$("body").on("blur", ".lsavee", function(){
+			var flag = true;
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id"))
+				return false;
+			$curThis.closest("tr").find("input").each(function(){
+				if(!$(this).val())
+					flag = false;
+			});
+			if(flag){
+				$.post("/calculation/estim/newlabor", {
+					rate: $curThis.closest("tr").find("input[name='rate']").val(),
+					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+					activity: $curThis.closest("table").attr("data-id")
+				}, function(data){
+					var json = $.parseJSON(data);
+					$curThis.closest("tr").find("input").removeClass("error-input");
+					if (json.success) {
+						$curThis.closest("tr").attr("data-id", json.id);
+						var rate = $curThis.closest("tr").find("input[name='rate']").val()
+						if (rate) {
+							rate.toString().split('.').join('').replace(',', '.');
+						} else {
+							rate = {{$project->hour_rate}};
+						}
+						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+					} else {
+						$.each(json.message, function(i, item) {
+							if(json.message['rate'])
+								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+							if(json.message['amount'])
+								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+						});
+					}
+				}).fail(function(e){
+					console.log(e);
+				});
+			}
+		});
+		$("body").on("blur", ".dsavee", function(){
+			var flag = true;
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id"))
+				return false;
+			$curThis.closest("tr").find("input").each(function(){
+				if(!$(this).val())
+					flag = false;
+			});
+			if(flag){
+				$.post("/calculation/estim/newmaterial", {
+					name: $curThis.closest("tr").find("input[name='name']").val(),
+					unit: $curThis.closest("tr").find("input[name='unit']").val(),
+					rate: $curThis.closest("tr").find("input[name='rate']").val(),
+					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+					activity: $curThis.closest("table").attr("data-id")
+				}, function(data){
+					var json = $.parseJSON(data);
+					$curThis.closest("tr").find("input").removeClass("error-input");
+					if (json.success) {
+						$curThis.closest("tr").attr("data-id", json.id);
+						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
+						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+{{$project->profit_calc_contr_mat}})/100),2,',','.'));
+					} else {
+						$.each(json.message, function(i, item) {
+							if(json.message['name'])
+								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+							if(json.message['unit'])
+								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+							if(json.message['rate'])
+								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+							if(json.message['amount'])
+								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+						});
+					}
+				}).fail(function(e){
+					console.log(e);
+				});
+			}
+		});
+		$("body").on("blur", ".esavee", function(){
+			var flag = true;
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id"))
+				return false;
+			$curThis.closest("tr").find("input").each(function(){
+				if(!$(this).val())
+					flag = false;
+			});
+			if(flag){
+				$.post("/calculation/estim/newequipment", {
 					name: $curThis.closest("tr").find("input[name='name']").val(),
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
@@ -335,14 +566,28 @@ var n = this,
 		$("body").on("click", ".sdeleterow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/calculation/deletematerial", {id: $curThis.closest("tr").attr("data-id")}, function(){
+				$.post("/calculation/calc/deletematerial", {id: $curThis.closest("tr").attr("data-id")}, function(){
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});
 		$("body").on("click", ".edeleterow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/calculation/deleteequipment", {id: $curThis.closest("tr").attr("data-id")}, function(){
+				$.post("/calculation/calc/deleteequipment", {id: $curThis.closest("tr").attr("data-id")}, function(){
+					$curThis.closest("tr").hide("slow");
+				}).fail(function(e) { console.log(e); });
+		});
+		$("body").on("click", ".sdeleterowe", function(){
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id"))
+				$.post("/calculation/estim/deletematerial", {id: $curThis.closest("tr").attr("data-id")}, function(){
+					$curThis.closest("tr").hide("slow");
+				}).fail(function(e) { console.log(e); });
+		});
+		$("body").on("click", ".edeleterowe", function(){
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id"))
+				$.post("/calculation/estim/deleteequipment", {id: $curThis.closest("tr").attr("data-id")}, function(){
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});
@@ -771,12 +1016,12 @@ var n = this,
 
 													<?# -- table items -- ?>
 													<tbody>
-														<tr data-id="{{ CalculationLabor::where('activity_id','=', $activity->id)->first()['id'] }}"><?# -- item -- ?>
+														<tr data-id="{{ EstimateLabor::where('activity_id','=', $activity->id)->first()['id'] }}"><?# -- item -- ?>
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
-															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(Register::calcLaborTotal(CalculationLabor::where('activity_id','=', $activity->id)->first()['rate'], CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".")) }}</span></td>
+															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(EstimateLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsavee" /></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(Register::calcLaborTotal(EstimateLabor::where('activity_id','=', $activity->id)->first()['rate'], EstimateLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".")) }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1 text-right"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
@@ -813,12 +1058,12 @@ var n = this,
 
 													<?# -- table items -- ?>
 													<tbody>
-														@foreach (CalculationMaterial::where('activity_id','=', $activity->id)->get() as $material)
+														@foreach (EstimateMaterial::where('activity_id','=', $activity->id)->get() as $material)
 														<tr data-id="{{ $material->id }}">
-															<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text dsave newrow" /></td>
-															<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text dsave" /></td>
-															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
-															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
+															<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text dsavee newrow" /></td>
+															<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text dsavee" /></td>
+															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-sm-number dsavee" /></td>
+															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-sm-number dsavee" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</span></td>
 															<td class="col-md-1"><span class="total-incl-tax">
 															<?php
@@ -835,7 +1080,7 @@ var n = this,
 															?></span></td>
 															<td class="col-md-1 text-right">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
-																<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
+																<button class="btn btn-danger btn-xs sdeleterowe fa fa-times"></button>
 
 																<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 																	<div class="modal-dialog">
@@ -862,15 +1107,15 @@ var n = this,
 														</tr>
 														@endforeach
 														<tr>
-															<td class="col-md-5"><input name="name" id="name" type="text" class="form-control-sm-text dsave newrow" /></td>
-															<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text dsave" /></td>
-															<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number dsave" /></td>
-															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsave" /></td>
+															<td class="col-md-5"><input name="name" id="name" type="text" class="form-control-sm-text dsavee newrow" /></td>
+															<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text dsavee" /></td>
+															<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number dsavee" /></td>
+															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsavee" /></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-1"><span class="total-incl-tax"></span></td>
 															<td class="col-md-1 text-right">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target=".bs-example-modal-lg"></button>
-																<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
+																<button class="btn btn-danger btn-xs sdeleterowe fa fa-times"></button>
 															</td>
 														</tr>
 													</tbody>
@@ -916,12 +1161,12 @@ var n = this,
 
 													<?# -- table items -- ?>
 													<tbody>
-														@foreach (CalculationEquipment::where('activity_id','=', $activity->id)->get() as $equipment)
+														@foreach (EstimateEquipment::where('activity_id','=', $activity->id)->get() as $equipment)
 														<tr data-id="{{ $equipment->id }}">
-															<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text esave newrow" /></td>
+															<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text esavee newrow" /></td>
 															<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $equipment->unit }}" class="form-control-sm-text esave" /></td>
-															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($equipment->rate, 2,",",".") }}" class="form-control-sm-number esave" /></td>
-															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($equipment->amount, 2,",",".") }}" class="form-control-sm-number esave" /></td>
+															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($equipment->rate, 2,",",".") }}" class="form-control-sm-number esavee" /></td>
+															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($equipment->amount, 2,",",".") }}" class="form-control-sm-number esavee" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->rate*$equipment->amount, 2,",",".") }}</span></td>
 															<td class="col-md-1"><span class="total-incl-tax">
 															<?php
@@ -938,7 +1183,7 @@ var n = this,
 															?></span></td>
 															<td class="col-md-1 text-right">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
-																<button class="btn btn-danger btn-xs edeleterow fa fa-times"></button>
+																<button class="btn btn-danger btn-xs edeleterowe fa fa-times"></button>
 
 																<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 																	<div class="modal-dialog">
@@ -965,15 +1210,15 @@ var n = this,
 														</tr>
 														@endforeach
 														<tr>
-															<td class="col-md-5"><input name="name" id="name" type="text" class="form-control-sm-text esave newrow" /></td>
-															<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text esave" /></td>
-															<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number esave" /></td>
-															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number esave" /></td>
+															<td class="col-md-5"><input name="name" id="name" type="text" class="form-control-sm-text esavee newrow" /></td>
+															<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text esavee" /></td>
+															<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number esavee" /></td>
+															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number esavee" /></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-1"><span class="total-incl-tax"></span></td>
 															<td class="col-md-1 text-right">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target=".bs-example-modal-lg"></button>
-																<button class="btn btn-danger btn-xs edeleterow fa fa-times"></button>
+																<button class="btn btn-danger btn-xs edeleterowe fa fa-times"></button>
 															</td>
 														</tr>
 													</tbody>
