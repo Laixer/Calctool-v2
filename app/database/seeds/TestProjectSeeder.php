@@ -110,8 +110,8 @@ class TestProjectSeeder extends Seeder {
 		$this->command->info('User created');
 
 		Payment::create(array(
-			'payment_date' => '08-10-2014',
-			'due_date' => '12-08-2014',
+			'payment_date' => '07-03-2015',
+			'due_date' => '09-03-2015',
 			'amount' => '1250',
 			'payed' => 'N',
 			'note' => 'note on payment',
@@ -160,17 +160,17 @@ class TestProjectSeeder extends Seeder {
 			'address_city' => 'testscity',
 			'note' => 'testopmerking',
 			'hour_rate' => '35',
-			'hour_rate_more' => '37',
-			'profit_calc_contr_mat' => '11',
-			'profit_calc_contr_equip' => '12',
-			'profit_calc_subcontr_mat' => '13',
-			'profit_calc_subcontr_equip' => '14',
-			'profit_calc_estim_mat' => '15',
-			'profit_calc_estim_equip' => '16',
-			'profit_more_contr_mat' => '17',
-			'profit_more_contr_equip' => '18',
-			'profit_more_subcontr_mat' => '19',
-			'profit_more_subcontr_equip' => '20',
+			'hour_rate_more' => '45',
+			'profit_calc_contr_mat' => '1',
+			'profit_calc_contr_equip' => '2',
+			'profit_calc_subcontr_mat' => '3',
+			'profit_calc_subcontr_equip' => '4',
+			'profit_calc_estim_mat' => '5',
+			'profit_calc_estim_equip' => '6',
+			'profit_more_contr_mat' => '7',
+			'profit_more_contr_equip' => '8',
+			'profit_more_subcontr_mat' => '9',
+			'profit_more_subcontr_equip' => '10',
 			'user_id' => $test_user->id,
 			'province_id' => $test_province->id,
 			'country_id' => $test_country->id,
@@ -180,7 +180,7 @@ class TestProjectSeeder extends Seeder {
 		$this->command->info('Project created');
 
 		ProjectStatus::create(array(
-			'finish' => '2014-04-11',
+			'finish' => '09-03-2015',
 			'step_id' => $test_step->id,
 			'project_id' => $test_project->id
 		));
@@ -217,17 +217,17 @@ class TestProjectSeeder extends Seeder {
 		$this->command->info('Iban created');
 
 		$test_chapter1 = Chapter::create(array(
-			'chapter_name' => 'Hoofdstuk 1',
+			'chapter_name' => 'CHPTR1',
 			'priority' => '1',
-			'note' => 'omschrijving van hoofdstuk 1',
+			'note' => 'Description_CHPTR1',
 			'project_id' => $test_project->id
 		));
 		$this->command->info('Chapter created');
 
 		$test_activity1 = Activity::create(array(
-			'activity_name' => 'Werkzaamheid a',
+			'activity_name' => 'CHPTR1_ACT1_CON',
 			'priority' => '1',
-			'note' => 'omschrijving van werkzaamheid a',
+			'note' => 'Description_CHPTR1_ACT1_CON',
 			'chapter_id' => $test_chapter1->id,
 			'part_id' => $test_part_contract->id,
 			'part_type_id' => $test_part_type_calc->id,
@@ -245,9 +245,9 @@ class TestProjectSeeder extends Seeder {
 		$this->command->info('Activity created');
 
 		$test_activity2 = Activity::create(array(
-			'activity_name' => 'Werkzaamheid b',
+			'activity_name' => 'CHPTR1_ACT2_SUBCON',
 			'priority' => '2',
-			'note' => 'omschrijving van werkzaamheid b',
+			'note' => 'Description_CHPTR1_ACT2_SUBCON',
 			'chapter_id' => $test_chapter1->id,
 			'part_id' => $test_part_subcontract->id,
 			'part_type_id' => $test_part_type_calc->id,
@@ -265,17 +265,17 @@ class TestProjectSeeder extends Seeder {
 		$this->command->info('Activity created');
 
 		$test_chapter2 = Chapter::create(array(
-			'chapter_name' => 'Hoofdstuk 2',
-			'priority' => '4',
-			'note' => 'omschrijving van hoofdstuk 2',
+			'chapter_name' => 'CHPTR2',
+			'priority' => '2',
+			'note' => 'Description_CHPTR2',
 			'project_id' => $test_project->id
 		));
 		$this->command->info('Chapter created');
 
 		$test_activity3 = Activity::create(array(
-			'activity_name' => 'Werkzaamheid d',
-			'priority' => '2',
-			'note' => 'omschrijving van werkzaamheid d',
+			'activity_name' => 'CHPTR2_ACT3_CON',
+			'priority' => '3',
+			'note' => 'Description_CHPTR2_ACT3_CON',
 			'chapter_id' => $test_chapter2->id,
 			'part_id' => $test_part_contract->id,
 			'part_type_id' => $test_part_type_calc->id,
@@ -293,9 +293,9 @@ class TestProjectSeeder extends Seeder {
 		$this->command->info('Activity created');
 
 		$test_activity4 = Activity::create(array(
-			'activity_name' => 'Werkzaamheid e',
+			'activity_name' => 'CHPTR2_ACT4_SUBCON',
 			'priority' => '4',
-			'note' => 'omschrijving van werkzaamheid e',
+			'note' => 'Description_CHPTR2_ACT4_SUBCON',
 			'chapter_id' => $test_chapter2->id,
 			'part_id' => $test_part_subcontract->id,
 			'part_type_id' => $test_part_type_calc->id,
@@ -313,17 +313,17 @@ class TestProjectSeeder extends Seeder {
 		$this->command->info('Activity created');
 
 		$test_chapter3 = Chapter::create(array(
-			'chapter_name' => 'Hoofdstuk 2',
-			'priority' => '4',
-			'note' => 'omschrijving van hoofdstuk 2',
+			'chapter_name' => 'CHPTR3',
+			'priority' => '3',
+			'note' => 'Description_CHPTR3',
 			'project_id' => $test_project->id
 		));
 		$this->command->info('Chapter created');
 
 		$test_activity5 = Activity::create(array(
-			'activity_name' => 'Werkzaamheid f',
+			'activity_name' => 'CHPTR3_ACT5_CON',
 			'priority' => '5',
-			'note' => 'omschrijving van werkzaamheid f',
+			'note' => 'Description_CHPTR3_ACT5_CON',
 			'chapter_id' => $test_chapter3->id,
 			'part_id' => $test_part_contract->id,
 			'part_type_id' => $test_part_type_calc->id,
@@ -341,11 +341,11 @@ class TestProjectSeeder extends Seeder {
 		$this->command->info('Activity created');
 
 		$test_activity6 = Activity::create(array(
-			'activity_name' => 'Werkzaamheid g',
+			'activity_name' => 'CHPTR3_ACT6_SUBCON',
 			'priority' => '6',
-			'note' => 'omschrijving van werkzaamheid g',
+			'note' => 'Description_CHPTR3_ACT6_SUBCON',
 			'chapter_id' => $test_chapter3->id,
-			'part_id' => $test_part_contract->id,
+			'part_id' => $test_part_subcontract->id,
 			'part_type_id' => $test_part_type_calc->id,
 			'detail_id' => $test_detail->id,
 			'tax_calc_labor_id' => $test_tax->id,
@@ -361,9 +361,9 @@ class TestProjectSeeder extends Seeder {
 		$this->command->info('Activity created');
 
 		$test_activity7 = Activity::create(array(
-			'activity_name' => 'Werkzaamheid g',
+			'activity_name' => 'CHPTR3_ACT7_CON_EST',
 			'priority' => '7',
-			'note' => 'omschrijving van werkzaamheid g',
+			'note' => 'Description_CHPTR3_ACT7_CON_EST',
 			'chapter_id' => $test_chapter3->id,
 			'part_id' => $test_part_contract->id,
 			'part_type_id' => $test_part_type_est->id,
@@ -381,9 +381,9 @@ class TestProjectSeeder extends Seeder {
 		$this->command->info('Activity created');
 
 		$test_activity8 = Activity::create(array(
-			'activity_name' => 'Werkzaamheid h',
+			'activity_name' => 'CHPTR3_ACT8_SUBCON_EST',
 			'priority' => '8',
-			'note' => 'omschrijving van werkzaamheid h',
+			'note' => 'Description_CHPTR3_ACT8_SUBCON_EST',
 			'chapter_id' => $test_chapter3->id,
 			'part_id' => $test_part_subcontract->id,
 			'part_type_id' => $test_part_type_est->id,
@@ -454,79 +454,79 @@ class TestProjectSeeder extends Seeder {
 
 		$calculation_labor_activity1 = CalculationLabor::create(array(
 			'rate' => '35.00',
-			'amount' => '12.50',
+			'amount' => '1',
 			'activity_id' => $test_activity1->id
 		));
 		$this->command->info('CalculationLabor created');
 
 		$calculation_material_activity1_1 = CalculationMaterial::create(array(
-			'material_name' => 'regel 1',
+			'material_name' => 'CHPTR1_ACT1_CON_1',
 			'unit' => 'm',
-			'rate' => '1.00',
+			'rate' => '1',
 			'amount' => '2.00',
 			'activity_id' => $test_activity1->id
 		));
 		$calculation_equipment_activity1_1 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel a',
+			'equipment_name' => 'CHPTR1_ACT1_CON_a',
 			'unit' => 'stuk',
-			'rate' => '1.01',
+			'rate' => '1',
 			'amount' => '2.02',
 			'activity_id' => $test_activity1->id
 		));
 		$calculation_material_activity1_2 = CalculationMaterial::create(array(
-			'material_name' => 'regel 2',
+			'material_name' => 'CHPTR1_ACT1_CON_2',
 			'unit' => 'm',
-			'rate' => '2.00',
+			'rate' => '2',
 			'amount' => '1.00',
 			'activity_id' => $test_activity1->id
 		));
 		$calculation_equipment_activity1_2 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel b',
+			'equipment_name' => 'CHPTR1_ACT1_CON_b',
 			'unit' => 'stuk',
-			'rate' => '2.01',
+			'rate' => '2',
 			'amount' => '1.01',
 			'activity_id' => $test_activity1->id
 		));
 		$calculation_material_activity1_3 = CalculationMaterial::create(array(
-			'material_name' => 'regel 3',
+			'material_name' => 'CHPTR1_ACT1_CON_3',
 			'unit' => 'm',
-			'rate' => '1.10',
+			'rate' => '3',
 			'amount' => '2.20',
 			'activity_id' => $test_activity1->id
 		));
 		$calculation_equipment_activity1_3 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel c',
+			'equipment_name' => 'CHPTR1_ACT1_CON_c',
 			'unit' => 'stuk',
-			'rate' => '2.20',
+			'rate' => '3',
 			'amount' => '1.10',
 			'activity_id' => $test_activity1->id
 		));
 		$calculation_material_activity1_4 = CalculationMaterial::create(array(
-			'material_name' => 'regel 4',
+			'material_name' => 'CHPTR1_ACT1_CON_4',
 			'unit' => 'm',
-			'rate' => '1.11',
+			'rate' => '4',
 			'amount' => '2.22',
 			'activity_id' => $test_activity1->id
 		));
 		$calculation_equipment_activity1_4 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel d',
+			'equipment_name' => 'CHPTR1_ACT1_CON_d',
 			'unit' => 'stuk',
-			'rate' => '2.22',
+			'rate' => '4',
 			'amount' => '1.11',
 			'activity_id' => $test_activity1->id
 		));
 		$calculation_material_activity1_5 = CalculationMaterial::create(array(
-			'material_name' => 'regel 5',
+			'material_name' => 'CHPTR1_ACT1_CON_5',
 			'unit' => 'm',
-			'rate' => '11.11',
-			'amount' => '22.22',
+			'rate' => '5',
+			'amount' => '2.21',
 			'activity_id' => $test_activity1->id
 		));
 		$calculation_equipment_activity1_5 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel e',
+			'equipment_name' => 'CHPTR1_ACT1_CON_d',
 			'unit' => 'stuk',
-			'rate' => '22.22',
-			'amount' => '11.11',
+			'rate' => '5',
+			'amount' => '1.12',
 			'activity_id' => $test_activity1->id
 		));
 		$this->command->info('CalculationMaterial created');
@@ -534,79 +534,79 @@ class TestProjectSeeder extends Seeder {
 
 		$calculation_labor_activity2 = CalculationLabor::create(array(
 			'rate' => '35.00',
-			'amount' => '13.50',
+			'amount' => '2',
 			'activity_id' => $test_activity2->id
 		));
 		$this->command->info('CalculationLabor created');
 
 		$calculation_material_activity2_1 = CalculationMaterial::create(array(
-			'material_name' => 'regel 1',
+			'material_name' => 'CHPTR1_ACT2_SUBCON_1',
 			'unit' => 'm',
-			'rate' => '1.00',
+			'rate' => '1',
 			'amount' => '2.00',
 			'activity_id' => $test_activity2->id
 		));
 		$calculation_equipment_activity2_1 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel a',
+			'equipment_name' => 'CHPTR1_ACT2_SUBCON_a',
 			'unit' => 'stuk',
-			'rate' => '1.01',
+			'rate' => '1',
 			'amount' => '2.02',
 			'activity_id' => $test_activity2->id
 		));
 		$calculation_material_activity1_2 = CalculationMaterial::create(array(
-			'material_name' => 'regel 2',
+			'material_name' => 'CHPTR1_ACT2_SUBCON_2',
 			'unit' => 'm',
-			'rate' => '2.00',
+			'rate' => '2',
 			'amount' => '1.00',
 			'activity_id' => $test_activity2->id
 		));
 		$calculation_equipment_activity2_2 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel b',
+			'equipment_name' => 'CHPTR1_ACT2_SUBCON_b',
 			'unit' => 'stuk',
-			'rate' => '2.01',
+			'rate' => '2',
 			'amount' => '1.01',
 			'activity_id' => $test_activity2->id
 		));
 		$calculation_material_activity2_3 = CalculationMaterial::create(array(
-			'material_name' => 'regel 3',
+			'material_name' => 'CHPTR1_ACT2_SUBCON_3',
 			'unit' => 'm',
-			'rate' => '1.10',
+			'rate' => '3',
 			'amount' => '2.20',
 			'activity_id' => $test_activity2->id
 		));
 		$calculation_equipment_activity2_3 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel c',
+			'equipment_name' => 'CHPTR1_ACT2_SUBCON_c',
 			'unit' => 'stuk',
-			'rate' => '2.20',
+			'rate' => '3',
 			'amount' => '1.10',
 			'activity_id' => $test_activity2->id
 		));
 		$calculation_material_activity2_4 = CalculationMaterial::create(array(
-			'material_name' => 'regel 4',
+			'material_name' => 'CHPTR1_ACT2_SUBCON_4',
 			'unit' => 'm',
-			'rate' => '1.11',
+			'rate' => '4',
 			'amount' => '2.22',
 			'activity_id' => $test_activity2->id
 		));
 		$calculation_equipment_activity2_4 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel d',
+			'equipment_name' => 'CHPTR1_ACT2_SUBCON_d',
 			'unit' => 'stuk',
-			'rate' => '2.22',
+			'rate' => '4',
 			'amount' => '1.11',
 			'activity_id' => $test_activity2->id
 		));
 		$calculation_material_activity2_5 = CalculationMaterial::create(array(
-			'material_name' => 'regel 5',
+			'material_name' => 'CHPTR1_ACT2_SUBCON_5',
 			'unit' => 'm',
-			'rate' => '11.11',
-			'amount' => '22.22',
+			'rate' => '5',
+			'amount' => '2.21',
 			'activity_id' => $test_activity2->id
 		));
 		$calculation_equipment_activity2_5 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel e',
+			'equipment_name' => 'CHPTR1_ACT2_SUBCON_e',
 			'unit' => 'stuk',
-			'rate' => '22.22',
-			'amount' => '11.11',
+			'rate' => '5',
+			'amount' => '1.12',
 			'activity_id' => $test_activity2->id
 		));
 		$this->command->info('CalculationMaterial created');
@@ -614,79 +614,79 @@ class TestProjectSeeder extends Seeder {
 
 		$calculation_labor_activity3 = CalculationLabor::create(array(
 			'rate' => '35.00',
-			'amount' => '14.50',
+			'amount' => '3',
 			'activity_id' => $test_activity3->id
 		));
 		$this->command->info('CalculationLabor created');
 
 		$calculation_material_activity3_1 = CalculationMaterial::create(array(
-			'material_name' => 'regel 1',
+			'material_name' => 'CHPTR2_ACT3_CON_1',
 			'unit' => 'm',
-			'rate' => '31.00',
-			'amount' => '32.00',
+			'rate' => '1',
+			'amount' => '3.00',
 			'activity_id' => $test_activity3->id
 		));
 		$calculation_equipment_activity3_1 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel a',
+			'equipment_name' => 'CHPTR2_ACT3_CON_a',
 			'unit' => 'stuk',
-			'rate' => '31.01',
-			'amount' => '32.02',
+			'rate' => '1',
+			'amount' => '3.02',
 			'activity_id' => $test_activity3->id
 		));
 		$calculation_material_activity3_2 = CalculationMaterial::create(array(
-			'material_name' => 'regel 2',
+			'material_name' => 'CHPTR2_ACT3_CON_2',
 			'unit' => 'm',
-			'rate' => '32.00',
-			'amount' => '31.00',
+			'rate' => '2',
+			'amount' => '3.00',
 			'activity_id' => $test_activity3->id
 		));
 		$calculation_equipment_activity2_2 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel b',
+			'equipment_name' => 'CHPTR2_ACT3_CON_b',
 			'unit' => 'stuk',
-			'rate' => '32.01',
-			'amount' => '31.01',
+			'rate' => '2',
+			'amount' => '3.01',
 			'activity_id' => $test_activity3->id
 		));
 		$calculation_material_activity3_3 = CalculationMaterial::create(array(
-			'material_name' => 'regel 3',
+			'material_name' => 'CHPTR2_ACT3_CON_3',
 			'unit' => 'm',
-			'rate' => '31.10',
-			'amount' => '32.20',
+			'rate' => '3',
+			'amount' => '3.20',
 			'activity_id' => $test_activity3->id
 		));
 		$calculation_equipment_activity3_3 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel c',
+			'equipment_name' => 'CHPTR2_ACT3_CON_c',
 			'unit' => 'stuk',
-			'rate' => '32.20',
-			'amount' => '31.10',
+			'rate' => '3',
+			'amount' => '3.10',
 			'activity_id' => $test_activity3->id
 		));
 		$calculation_material_activity3_4 = CalculationMaterial::create(array(
-			'material_name' => 'regel 4',
+			'material_name' => 'CHPTR2_ACT3_CON_4',
 			'unit' => 'm',
-			'rate' => '31.11',
-			'amount' => '32.22',
+			'rate' => '4',
+			'amount' => '3.22',
 			'activity_id' => $test_activity3->id
 		));
 		$calculation_equipment_activity3_4 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel d',
+			'equipment_name' => 'CHPTR2_ACT3_CON_1d',
 			'unit' => 'stuk',
-			'rate' => '32.22',
-			'amount' => '31.11',
+			'rate' => '4',
+			'amount' => '3.11',
 			'activity_id' => $test_activity3->id
 		));
 		$calculation_material_activity3_5 = CalculationMaterial::create(array(
-			'material_name' => 'regel 5',
+			'material_name' => 'CHPTR2_ACT3_CON_5',
 			'unit' => 'm',
-			'rate' => '311.11',
-			'amount' => '32.22',
+			'rate' => '5',
+			'amount' => '3.22',
 			'activity_id' => $test_activity3->id
 		));
 		$calculation_equipment_activity3_5 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel e',
+			'equipment_name' => 'CHPTR2_ACT3_CON_e',
 			'unit' => 'stuk',
-			'rate' => '322.22',
-			'amount' => '31.11',
+			'rate' => '5',
+			'amount' => '3.11',
 			'activity_id' => $test_activity3->id
 		));
 		$this->command->info('CalculationMaterial created');
@@ -694,79 +694,79 @@ class TestProjectSeeder extends Seeder {
 
 		$calculation_labor_activity4 = CalculationLabor::create(array(
 			'rate' => '35.00',
-			'amount' => '15.50',
+			'amount' => '4',
 			'activity_id' => $test_activity4->id
 		));
 		$this->command->info('CalculationLabor created');
 
 		$calculation_material_activity4_1 = CalculationMaterial::create(array(
-			'material_name' => 'regel 1',
+			'material_name' => 'CHPTR2_ACT4_SUBCON_1',
 			'unit' => 'm',
-			'rate' => '31.90',
-			'amount' => '32.90',
+			'rate' => '1',
+			'amount' => '3.90',
 			'activity_id' => $test_activity4->id
 		));
 		$calculation_equipment_activity4_1 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel a',
+			'equipment_name' => 'CHPTR2_ACT4_SUBCON_a',
 			'unit' => 'stuk',
-			'rate' => '31.91',
-			'amount' => '32.92',
+			'rate' => '1',
+			'amount' => '3.92',
 			'activity_id' => $test_activity4->id
 		));
 		$calculation_material_activity4_2 = CalculationMaterial::create(array(
-			'material_name' => 'regel 2',
+			'material_name' => 'CHPTR2_ACT4_SUBCON_2',
 			'unit' => 'm',
-			'rate' => '32.90',
-			'amount' => '31.90',
+			'rate' => '2',
+			'amount' => '3.90',
 			'activity_id' => $test_activity4->id
 		));
 		$calculation_equipment_activity4_2 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel b',
+			'equipment_name' => 'CHPTR2_ACT4_SUBCON_b',
 			'unit' => 'stuk',
-			'rate' => '32.91',
-			'amount' => '31.91',
+			'rate' => '2',
+			'amount' => '3.91',
 			'activity_id' => $test_activity4->id
 		));
 		$calculation_material_activity4_3 = CalculationMaterial::create(array(
-			'material_name' => 'regel 3',
+			'material_name' => 'CHPTR2_ACT4_SUBCON_3',
 			'unit' => 'm',
-			'rate' => '31.19',
-			'amount' => '32.29',
+			'rate' => '3',
+			'amount' => '3.29',
 			'activity_id' => $test_activity4->id
 		));
 		$calculation_equipment_activity4_3 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel c',
+			'equipment_name' => 'CHPTR2_ACT4_SUBCON_c',
 			'unit' => 'stuk',
-			'rate' => '32.29',
-			'amount' => '31.19',
+			'rate' => '3',
+			'amount' => '3.19',
 			'activity_id' => $test_activity4->id
 		));
 		$calculation_material_activity4_4 = CalculationMaterial::create(array(
-			'material_name' => 'regel 4',
+			'material_name' => 'CHPTR2_ACT4_SUBCON_4',
 			'unit' => 'm',
-			'rate' => '31.19',
-			'amount' => '32.29',
+			'rate' => '4',
+			'amount' => '3.29',
 			'activity_id' => $test_activity4->id
 		));
 		$calculation_equipment_activity4_4 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel d',
+			'equipment_name' => 'CHPTR2_ACT4_SUBCON_d',
 			'unit' => 'stuk',
-			'rate' => '32.29',
-			'amount' => '31.19',
+			'rate' => '4',
+			'amount' => '3.19',
 			'activity_id' => $test_activity4->id
 		));
 		$calculation_material_activity4_5 = CalculationMaterial::create(array(
-			'material_name' => 'regel 5',
+			'material_name' => 'CHPTR2_ACT4_SUBCON_5',
 			'unit' => 'm',
-			'rate' => '31.19',
-			'amount' => '322.29',
+			'rate' => '5',
+			'amount' => '3.29',
 			'activity_id' => $test_activity4->id
 		));
 		$calculation_equipment_activity4_5 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel e',
+			'equipment_name' => 'CHPTR2_ACT4_SUBCON_e',
 			'unit' => 'stuk',
-			'rate' => '32.29',
-			'amount' => '311.19',
+			'rate' => '5',
+			'amount' => '3.19',
 			'activity_id' => $test_activity4->id
 		));
 		$this->command->info('CalculationMaterial created');
@@ -774,79 +774,79 @@ class TestProjectSeeder extends Seeder {
 
 		$calculation_labor_activity5 = CalculationLabor::create(array(
 			'rate' => '35.00',
-			'amount' => '16.50',
+			'amount' => '5',
 			'activity_id' => $test_activity5->id
 		));
 		$this->command->info('CalculationLabor created');
 
 		$calculation_material_activity5_1 = CalculationMaterial::create(array(
-			'material_name' => 'regel 1',
+			'material_name' => 'CHPTR3_ACT5_CON_1',
 			'unit' => 'm',
-			'rate' => '11.90',
-			'amount' => '132.90',
+			'rate' => '1',
+			'amount' => '1.90',
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_equipment_activity5_1 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel a',
+			'equipment_name' => 'CHPTR3_ACT5_CON_a',
 			'unit' => 'stuk',
-			'rate' => '31.91',
-			'amount' => '132.92',
+			'rate' => '1',
+			'amount' => '1.92',
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_material_activity5_2 = CalculationMaterial::create(array(
-			'material_name' => 'regel 2',
+			'material_name' => 'CHPTR3_ACT5_CON_2',
 			'unit' => 'm',
-			'rate' => '32.90',
-			'amount' => '131.90',
+			'rate' => '2',
+			'amount' => '1.90',
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_equipment_activity5_2 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel b',
+			'equipment_name' => 'CHPTR3_ACT5_CON_b',
 			'unit' => 'stuk',
-			'rate' => '31.91',
-			'amount' => '311.91',
+			'rate' => '2',
+			'amount' => '3.91',
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_material_activity5_3 = CalculationMaterial::create(array(
-			'material_name' => 'regel 3',
+			'material_name' => 'CHPTR3_ACT5_CON_3',
 			'unit' => 'm',
-			'rate' => '31.19',
-			'amount' => '132.29',
+			'rate' => '3',
+			'amount' => '1.29',
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_equipment_activity5_3 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel c',
+			'equipment_name' => 'CHPTR3_ACT5_CON_c',
 			'unit' => 'stuk',
-			'rate' => '31.29',
-			'amount' => '311.19',
+			'rate' => '3',
+			'amount' => '3.19',
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_material_activity5_4 = CalculationMaterial::create(array(
-			'material_name' => 'regel 4',
+			'material_name' => 'CHPTR3_ACT5_CON_4',
 			'unit' => 'm',
-			'rate' => '11.19',
-			'amount' => '132.29',
+			'rate' => '4',
+			'amount' => '4.29',
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_equipment_activity5_4 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel d',
+			'equipment_name' => 'CHPTR3_ACT5_CON_d',
 			'unit' => 'stuk',
-			'rate' => '32.29',
-			'amount' => '311.19',
+			'rate' => '4',
+			'amount' => '2.19',
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_material_activity5_5 = CalculationMaterial::create(array(
-			'material_name' => 'regel 5',
+			'material_name' => 'CHPTR3_ACT5_CON_5',
 			'unit' => 'm',
-			'rate' => '31.19',
-			'amount' => '322.29',
+			'rate' => '5',
+			'amount' => '3.29',
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_equipment_activity5_5 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel e',
+			'equipment_name' => 'CHPTR3_ACT5_CON_e',
 			'unit' => 'stuk',
-			'rate' => '32.29',
-			'amount' => '311.19',
+			'rate' => '5',
+			'amount' => '3.19',
 			'activity_id' => $test_activity5->id
 		));
 		$this->command->info('CalculationMaterial created');
@@ -854,86 +854,243 @@ class TestProjectSeeder extends Seeder {
 
 		$calculation_labor_activity6 = CalculationLabor::create(array(
 			'rate' => '35.00',
-			'amount' => '17.50',
+			'amount' => '6',
 			'activity_id' => $test_activity6->id
 		));
 		$this->command->info('CalculationLabor created');
 
 		$calculation_material_activity6_1 = CalculationMaterial::create(array(
-			'material_name' => 'regel 1',
+			'material_name' => 'CHPTR3_ACT6_SUBCON_1',
 			'unit' => 'm',
-			'rate' => '131.90',
-			'amount' => '13.90',
+			'rate' => '1',
+			'amount' => '1.90',
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_equipment_activity6_1 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel a',
+			'equipment_name' => 'CHPTR3_ACT6_SUBCON_a',
 			'unit' => 'stuk',
-			'rate' => '301.91',
-			'amount' => '102.92',
+			'rate' => '1',
+			'amount' => '1.92',
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_material_activity6_2 = CalculationMaterial::create(array(
-			'material_name' => 'regel 2',
+			'material_name' => 'CHPTR3_ACT6_SUBCON_2',
 			'unit' => 'm',
-			'rate' => '102.90',
-			'amount' => '131.90',
+			'rate' => '2',
+			'amount' => '1.90',
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_equipment_activity6_2 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel b',
+			'equipment_name' => 'CHPTR3_ACT6_SUBCON_b',
 			'unit' => 'stuk',
-			'rate' => '32.91',
-			'amount' => '311.91',
+			'rate' => '2',
+			'amount' => '1.91',
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_material_activity6_3 = CalculationMaterial::create(array(
-			'material_name' => 'regel 3',
+			'material_name' => 'CHPTR3_ACT6_SUBCON_3',
 			'unit' => 'm',
-			'rate' => '311.19',
-			'amount' => '102.29',
+			'rate' => '3',
+			'amount' => '1.29',
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_equipment_activity6_3 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel c',
+			'equipment_name' => 'CHPTR3_ACT6_SUBCON_c',
 			'unit' => 'stuk',
-			'rate' => '312.29',
-			'amount' => '31.19',
+			'rate' => '3',
+			'amount' => '1.19',
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_material_activity6_4 = CalculationMaterial::create(array(
-			'material_name' => 'regel 4',
+			'material_name' => 'CHPTR3_ACT6_SUBCON_4',
 			'unit' => 'm',
-			'rate' => '101.19',
-			'amount' => '12.29',
+			'rate' => '4',
+			'amount' => '1.29',
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_equipment_activity6_4 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel d',
+			'equipment_name' => 'CHPTR3_ACT6_SUBCON_d',
 			'unit' => 'stuk',
-			'rate' => '312.29',
-			'amount' => '31.19',
+			'rate' => '4',
+			'amount' => '1.19',
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_material_activity6_5 = CalculationMaterial::create(array(
-			'material_name' => 'regel 5',
+			'material_name' => 'CHPTR3_ACT6_SUBCON_5',
 			'unit' => 'm',
-			'rate' => '30.19',
-			'amount' => '32.29',
+			'rate' => '5',
+			'amount' => '2.29',
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_equipment_activity6_5 = CalculationEquipment::create(array(
-			'equipment_name' => 'regel e',
+			'equipment_name' => 'CHPTR3_ACT6_SUBCON_d',
 			'unit' => 'stuk',
-			'rate' => '30.29',
-			'amount' => '30.19',
+			'rate' => '5',
+			'amount' => '3.19',
 			'activity_id' => $test_activity6->id
 		));
 		$this->command->info('CalculationMaterial created');
 		$this->command->info('CalculationEquipment created');
 
+		$calculation_labor_activity7 = CalculationLabor::create(array(
+			'rate' => '35.00',
+			'amount' => '7',
+			'activity_id' => $test_activity7->id
+		));
+		$this->command->info('CalculationLabor created');
 
+		$calculation_material_activity7_1 = CalculationMaterial::create(array(
+			'material_name' => 'CHPTR3_ACT7_SUBCON_1',
+			'unit' => 'm',
+			'rate' => '1',
+			'amount' => '1.90',
+			'activity_id' => $test_activity7->id
+		));
+		$calculation_equipment_activity7_1 = CalculationEquipment::create(array(
+			'equipment_name' => 'CHPTR3_ACT7_SUBCON_a',
+			'unit' => 'stuk',
+			'rate' => '1',
+			'amount' => '1.92',
+			'activity_id' => $test_activity7->id
+		));
+		$calculation_material_activity7_2 = CalculationMaterial::create(array(
+			'material_name' => 'CHPTR3_ACT7_SUBCON_2',
+			'unit' => 'm',
+			'rate' => '2',
+			'amount' => '2.90',
+			'activity_id' => $test_activity7->id
+		));
+		$calculation_equipment_activity7_2 = CalculationEquipment::create(array(
+			'equipment_name' => 'CHPTR3_ACT7_SUBCON_b',
+			'unit' => 'stuk',
+			'rate' => '2',
+			'amount' => '3.91',
+			'activity_id' => $test_activity7->id
+		));
+		$calculation_material_activity7_3 = CalculationMaterial::create(array(
+			'material_name' => 'CHPTR3_ACT7_SUBCON_3',
+			'unit' => 'm',
+			'rate' => '3',
+			'amount' => '1.29',
+			'activity_id' => $test_activity7->id
+		));
+		$calculation_equipment_activity7_3 = CalculationEquipment::create(array(
+			'equipment_name' => 'CHPTR3_ACT7_SUBCON_c',
+			'unit' => 'stuk',
+			'rate' => '3',
+			'amount' => '3.19',
+			'activity_id' => $test_activity7->id
+		));
+		$calculation_material_activity7_4 = CalculationMaterial::create(array(
+			'material_name' => 'CHPTR3_ACT7_SUBCON_4',
+			'unit' => 'm',
+			'rate' => '4',
+			'amount' => '1.29',
+			'activity_id' => $test_activity7->id
+		));
+		$calculation_equipment_activity7_4 = CalculationEquipment::create(array(
+			'equipment_name' => 'CHPTR3_ACT7_SUBCON_d',
+			'unit' => 'stuk',
+			'rate' => '4',
+			'amount' => '3.19',
+			'activity_id' => $test_activity7->id
+		));
+		$calculation_material_activity7_5 = CalculationMaterial::create(array(
+			'material_name' => 'CHPTR3_ACT7_SUBCON_5',
+			'unit' => 'm',
+			'rate' => '5',
+			'amount' => '3.29',
+			'activity_id' => $test_activity7->id
+		));
+		$calculation_equipment_activity7_5 = CalculationEquipment::create(array(
+			'equipment_name' => 'CHPTR3_ACT7_SUBCON_d',
+			'unit' => 'stuk',
+			'rate' => '5',
+			'amount' => '3.19',
+			'activity_id' => $test_activity7->id
+		));
+		$this->command->info('CalculationMaterial created');
+		$this->command->info('CalculationEquipment created');
 
+		$calculation_labor_activity8 = CalculationLabor::create(array(
+			'rate' => '35.00',
+			'amount' => '8',
+			'activity_id' => $test_activity8->id
+		));
+		$this->command->info('CalculationLabor created');
+
+		$calculation_material_activity8_1 = CalculationMaterial::create(array(
+			'material_name' => 'CHPTR3_ACT8_SUBCON_1',
+			'unit' => 'm',
+			'rate' => '1',
+			'amount' => '1.90',
+			'activity_id' => $test_activity8->id
+		));
+		$calculation_equipment_activity8_1 = CalculationEquipment::create(array(
+			'equipment_name' => 'CHPTR3_ACT8_SUBCON_a',
+			'unit' => 'stuk',
+			'rate' => '1',
+			'amount' => '1.92',
+			'activity_id' => $test_activity8->id
+		));
+		$calculation_material_activity8_2 = CalculationMaterial::create(array(
+			'material_name' => 'CHPTR3_ACT8_SUBCON_2',
+			'unit' => 'm',
+			'rate' => '2',
+			'amount' => '1.90',
+			'activity_id' => $test_activity8->id
+		));
+		$calculation_equipment_activity8_2 = CalculationEquipment::create(array(
+			'equipment_name' => 'CHPTR3_ACT8_SUBCON_b',
+			'unit' => 'stuk',
+			'rate' => '2',
+			'amount' => '1.91',
+			'activity_id' => $test_activity8->id
+		));
+		$calculation_material_activity8_3 = CalculationMaterial::create(array(
+			'material_name' => 'CHPTR3_ACT8_SUBCON_3',
+			'unit' => 'm',
+			'rate' => '3',
+			'amount' => '1.29',
+			'activity_id' => $test_activity8->id
+		));
+		$calculation_equipment_activity8_3 = CalculationEquipment::create(array(
+			'equipment_name' => 'CHPTR3_ACT8_SUBCON_c',
+			'unit' => 'stuk',
+			'rate' => '3',
+			'amount' => '3.19',
+			'activity_id' => $test_activity8->id
+		));
+		$calculation_material_activity8_4 = CalculationMaterial::create(array(
+			'material_name' => 'CHPTR3_ACT8_SUBCON_4',
+			'unit' => 'm',
+			'rate' => '4',
+			'amount' => '1.29',
+			'activity_id' => $test_activity8->id
+		));
+		$calculation_equipment_activity8_4 = CalculationEquipment::create(array(
+			'equipment_name' => 'CHPTR3_ACT8_SUBCON_d',
+			'unit' => 'stuk',
+			'rate' => '4',
+			'amount' => '3.19',
+			'activity_id' => $test_activity8->id
+		));
+		$calculation_material_activity8_5 = CalculationMaterial::create(array(
+			'material_name' => 'CHPTR3_ACT8_SUBCON_5',
+			'unit' => 'm',
+			'rate' => '5',
+			'amount' => '3.29',
+			'activity_id' => $test_activity8->id
+		));
+		$calculation_equipment_activity8_5 = CalculationEquipment::create(array(
+			'equipment_name' => 'CHPTR3_ACT8_SUBCON_d',
+			'unit' => 'stuk',
+			'rate' => '5',
+			'amount' => '3.19',
+			'activity_id' => $test_activit87->id
+		));
+		$this->command->info('CalculationMaterial created');
+		$this->command->info('CalculationEquipment created');
 
 		LessLabor::create(array(
 			'amount' => '34.56',
@@ -957,14 +1114,6 @@ class TestProjectSeeder extends Seeder {
 			'original_id' => $calculation_equipment_activity4_1->id,
 		));
 		$this->command->info('LessEquipment created');
-
-
-
-
-
-
-
-
 
 		MoreLabor::create(array(
 			'rate' => '102.33',

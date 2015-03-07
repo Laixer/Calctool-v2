@@ -1290,7 +1290,7 @@ var n = this,
 					<div id="summary" class="tab-pane">
 						<div class="toogle">
 
-							<div class="toggle active">
+							<div class="toggle toggle-chapter active">
 								<label>Aanneming</label>
 								<div class="toggle-content">
 
@@ -1331,7 +1331,7 @@ var n = this,
 								</div>
 							</div>
 
-							<div class="toggle active">
+							<div class="toggle toggle-chapter active">
 								<label>Onderaanneming</label>
 								<div class="toggle-content">
 
@@ -1372,7 +1372,7 @@ var n = this,
 								</div>
 							</div>
 
-							<div class="toggle active">
+							<div class="toggle toggle-chapter active">
 								<label>Totalen project</label>
 								<div class="toggle-content">
 									<table class="table table-striped">
