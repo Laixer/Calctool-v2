@@ -760,14 +760,10 @@ var n = this,
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</span></td>
 															<td class="col-md-1"><span class="total-incl-tax">
 															<?php
-																if (PartType::find($activity->part_type_id)->type_name == 'estimate') {
-																	$profit = $project->profit_calc_estim_mat;
-																} else {
-																	if (Part::find($activity->part_id)->part_name=='contracting') {
-																		$profit = $project->profit_calc_contr_mat;
-																	} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
-																		$profit = $project->profit_calc_subcontr_mat;
-																	}
+																if (Part::find($activity->part_id)->part_name=='contracting') {
+																	$profit = $project->profit_calc_contr_mat;
+																} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+																	$profit = $project->profit_calc_subcontr_mat;
 																}
 																echo '&euro; '.number_format($material->rate*$material->amount*((100+$profit)/100), 2,",",".")
 															?></span></td>
@@ -818,8 +814,24 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>&euro;{{ number_format(Register::calcMaterialTotal($activity->id), 2,",",".") }}</strong></td>
-															<td class="col-md-1"><strong>&euro;{{ number_format(Register::calcMaterialTotalProfit($activity->id, Auth::user()->id), 2,",",".") }}</strong></td>
+															<td class="col-md-1"><strong>
+															<?php
+															if (Part::find($activity->part_id)->part_name=='contracting') {
+																$profit = $project->profit_calc_contr_mat;
+															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+																$profit = $project->profit_calc_subcontr_mat;
+															}
+															echo '&euro; '.number_format(Register::calcMaterialTotal($activity->id, $profit), 2, ",",".");
+															?></span></td>
+															<td class="col-md-1"><strong>
+															<?php
+															if (Part::find($activity->part_id)->part_name=='contracting') {
+																$profit = $project->profit_calc_contr_mat;
+															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+																$profit = $project->profit_calc_subcontr_mat;
+															}
+															echo '&euro; '.number_format(Register::calcMaterialTotalProfit($activity->id, $profit), 2, ",",".");
+															?></span></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -863,14 +875,10 @@ var n = this,
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->rate*$equipment->amount, 2,",",".") }}</span></td>
 															<td class="col-md-1"><span class="total-incl-tax">
 															<?php
-																if (PartType::find($activity->part_type_id)->type_name == 'estimate') {
-																	$profit = $project->profit_calc_estim_mat;
-																} else {
-																	if (Part::find($activity->part_id)->part_name=='contracting') {
-																		$profit = $project->profit_calc_contr_mat;
-																	} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
-																		$profit = $project->profit_calc_subcontr_mat;
-																	}
+																if (Part::find($activity->part_id)->part_name=='contracting') {
+																	$profit = $project->profit_calc_contr_mat;
+																} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+																	$profit = $project->profit_calc_subcontr_mat;
 																}
 																echo '&euro; '.number_format($equipment->rate*$equipment->amount*((100+$profit)/100), 2,",",".")
 															?></span></td>
@@ -921,8 +929,24 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>&euro;{{ number_format(Register::calcEquipmentTotal($activity->id), 2,",",".") }}</strong></td>
-															<td class="col-md-1"><strong>&euro;{{ number_format(Register::calcEquipmentTotalProfit($activity->id, Auth::user()->id), 2,",",".") }}</strong></td>
+															<td class="col-md-1"><strong>
+															<?php
+															if (Part::find($activity->part_id)->part_name=='contracting') {
+																$profit = $project->profit_calc_contr_mat;
+															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+																$profit = $project->profit_calc_subcontr_mat;
+															}
+															echo '&euro; '.number_format(Register::calcEquipmentTotal($activity->id, $profit), 2, ",",".");
+															?></span></td>
+															<td class="col-md-1"><strong>
+															<?php
+															if (Part::find($activity->part_id)->part_name=='contracting') {
+																$profit = $project->profit_calc_contr_mat;
+															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+																$profit = $project->profit_calc_subcontr_mat;
+															}
+															echo '&euro; '.number_format(Register::calcEquipmentTotalProfit($activity->id, $profit), 2, ",",".");
+															?></span></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -1067,14 +1091,10 @@ var n = this,
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</span></td>
 															<td class="col-md-1"><span class="total-incl-tax">
 															<?php
-																if (PartType::find($activity->part_type_id)->type_name == 'estimate') {
-																	$profit = $project->profit_calc_estim_mat;
-																} else {
-																	if (Part::find($activity->part_id)->part_name=='contracting') {
-																		$profit = $project->profit_calc_contr_mat;
-																	} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
-																		$profit = $project->profit_calc_subcontr_mat;
-																	}
+																if (Part::find($activity->part_id)->part_name=='contracting') {
+																	$profit = $project->profit_calc_contr_mat;
+																} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+																	$profit = $project->profit_calc_subcontr_mat;
 																}
 																echo '&euro; '.number_format($material->rate*$material->amount*((100+$profit)/100), 2,",",".")
 															?></span></td>
@@ -1170,14 +1190,10 @@ var n = this,
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->rate*$equipment->amount, 2,",",".") }}</span></td>
 															<td class="col-md-1"><span class="total-incl-tax">
 															<?php
-																if (PartType::find($activity->part_type_id)->type_name == 'estimate') {
-																	$profit = $project->profit_calc_estim_mat;
-																} else {
-																	if (Part::find($activity->part_id)->part_name=='contracting') {
-																		$profit = $project->profit_calc_contr_mat;
-																	} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
-																		$profit = $project->profit_calc_subcontr_mat;
-																	}
+																if (Part::find($activity->part_id)->part_name=='contracting') {
+																	$profit = $project->profit_calc_contr_mat;
+																} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+																	$profit = $project->profit_calc_subcontr_mat;
 																}
 																echo '&euro; '.number_format($equipment->rate*$equipment->amount*((100+$profit)/100), 2,",",".")
 															?></span></td>
@@ -1295,36 +1311,20 @@ var n = this,
 
 										<!-- table items -->
 										<tbody>
+											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
 											<tr><!-- item -->
-												<td class="col-md-2"><strong>Hoofdstuk 1</strong></td>
-												<td class="col-md-2">Werkzaamheid 1</td>
-												<td class="col-md-1">6</td>
-												<td class="col-md-1">$42</td>
-												<td class="col-md-1">$83</td>
-												<td class="col-md-1">$742</td>
-												<td class="col-md-3">$742,28</td>
-												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+												<td class="col-md-2">{{ $activity->activity_name }}</td>
+												<td class="col-md-1">{{ number_format(OverviewCalc::calcLaborTotal($activity->id), 2, ",",".") }}</td>
+												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(OverviewCalc::calcLaborActivity($activity->id), 2, ",",".") }}</span></td>
+												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(OverviewCalc::calcMaterialActivityProfit($activity->id, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
+												<td class="col-md-3">{{ '&euro; '.number_format(OverviewCalc::calcEquipmentActivityProfit($activity->id, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
+												<td class="col-md-1">{{ '&euro; '.number_format(OverviewCalc::calcActivityTotalProfit($activity->id, $project->profit_calc_contr_mat), 2, ",",".") }} </td>
+												<td class="col-md-1 {{ OverviewCalc::calcEstimateCheck($activity) }}"></td>
 											</tr>
-											<tr><!-- item -->
-												<td class="col-md-2">&nbsp;</td>
-												<td class="col-md-2">Werkzaamheid 2</td>
-												<td class="col-md-1">6</td>
-												<td class="col-md-1">$42</td>
-												<td class="col-md-1">$83</td>
-												<td class="col-md-1">$742</td>
-												<td class="col-md-3">$742,28</td>
-												<td class="col-md-1  fa fa-check">&nbsp;</td>
-											</tr>
-											<tr><!-- item -->
-												<td class="col-md-2">&nbsp;</td>
-												<td class="col-md-2">Werkzaamheid 3</td>
-												<td class="col-md-1">6</td>
-												<td class="col-md-1">$42</td>
-												<td class="col-md-1">$83</td>
-												<td class="col-md-1">$742</td>
-												<td class="col-md-3">$742,28</td>
-												<td class="col-md-1 fa fa-check">&nbsp;</td>
-											</tr>
+											@endforeach
+											@endforeach
 										</tbody>
 									</table>
 
@@ -1334,7 +1334,41 @@ var n = this,
 							<div class="toggle active">
 								<label>Onderaanneming</label>
 								<div class="toggle-content">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Ut enim massa, sodales tempor convallis et, iaculis ac massa.</p>
+
+									<table class="table table-striped">
+										<?# -- table head -- ?>
+										<thead>
+											<tr>
+												<th class="col-md-2">&nbsp;</th>
+												<th class="col-md-2">&nbsp;</th>
+												<th class="col-md-1">Arbeidsuren</th>
+												<th class="col-md-1">Arbeidskosten</th>
+												<th class="col-md-1">Materiaalkosten</th>
+												<th class="col-md-1">Materieelkosten</th>
+												<th class="col-md-3">Totaal (excl. BTW)</th>
+												<th class="col-md-1">Stelpost</th>
+											</tr>
+										</thead>
+
+										<!-- table items -->
+										<tbody>
+											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+											<tr><!-- item -->
+												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+												<td class="col-md-2">{{ $activity->activity_name }}</td>
+												<td class="col-md-1">{{ number_format(OverviewCalc::calcLaborTotal($activity->id), 2, ",",".") }}</td>
+												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(OverviewCalc::calcLaborActivity($activity->id), 2, ",",".") }}</span></td>
+												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(OverviewCalc::calcMaterialActivityProfit($activity->id, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
+												<td class="col-md-3">{{ '&euro; '.number_format(OverviewCalc::calcEquipmentActivityProfit($activity->id, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
+												<td class="col-md-1">{{ '&euro; '.number_format(OverviewCalc::calcActivityTotalProfit($activity->id, $project->profit_calc_subcontr_mat), 2, ",",".") }} </td>
+												<td class="col-md-1 {{ OverviewCalc::calcEstimateCheck($activity) }}"></td>
+											</tr>
+											@endforeach
+											@endforeach
+										</tbody>
+									</table>
+
 								</div>
 							</div>
 
@@ -1356,11 +1390,11 @@ var n = this,
 										<!-- table items -->
 										<tbody>
 											<tr><!-- item -->
-												<td class="col-md-4"><span class="pull-right">6</span></td>
-												<td class="col-md-2"><span class="pull-right">$42</span></td>
-												<td class="col-md-2"><span class="pull-right">$83</span></td>
-												<td class="col-md-2"><span class="pull-right">$742</span></td>
-												<td class="col-md-2"><span class="pull-right">$742,28</span></td>
+												<td class="col-md-4"><span class="pull-right">{{ OverviewCalc::calcLaborSuperTotalAmount($project) }}</span></td>
+												<td class="col-md-2"><span class="pull-right">{{ '&euro; '.number_format(OverviewCalc::calcLaborSuperTotal($project), 2, ",",".") }}</span></td>
+												<td class="col-md-2"><span class="pull-right">{{ '&euro; '.number_format(OverviewCalc::calcMaterialSuperTotal($project), 2, ",",".") }}</span></td>
+												<td class="col-md-2"><span class="pull-right">{{ '&euro; '.number_format(OverviewCalc::calcEquipmentSuperTotal($project), 2, ",",".") }}</span></td>
+												<td class="col-md-2"><span class="pull-right">{{ '&euro; '.number_format(OverviewCalc::calcSuperTotal($project), 2, ",",".") }}</span></td>
 											</tr>
 										</tbody>
 									</table>

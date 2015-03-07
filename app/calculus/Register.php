@@ -3,7 +3,6 @@
 class Register {
 
 /*Calculation labor*/
-
 	public static function calcLaborTotal($rate, $amount) {
 		return $rate * $amount;
 	}
@@ -22,8 +21,7 @@ class Register {
 	}
 
 /*Calculation Material Profit*/
-	public static function calcMaterialTotalProfit($activity, $userid) {
-		$profit = Project::where('user_id', '=', $userid)->first()['profit_calc_contr_mat'];
+	public static function calcMaterialTotalProfit($activity, $profit) {
 		$total = Register::calcMaterialTotal($activity);
 
 		return (1+($profit/100))*$total;
@@ -43,8 +41,7 @@ class Register {
 	}
 
 /*Calculation Equipment Profit*/
-	public static function calcEquipmentTotalProfit($activity, $userid) {
-		$profit = Project::where('user_id', '=', $userid)->first()['profit_calc_contr_equip'];
+	public static function calcEquipmentTotalProfit($activity, $profit) {
 		$total = Register::calcEquipmentTotal($activity);
 
 		return (1+($profit/100))*$total;

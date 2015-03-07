@@ -6,7 +6,7 @@
 
 	<section class="container">
 
-		<h2><strong>Home</strong></h2>
+		<!--<h2><strong>Home</strong></h2>-->
 
 		<?# -- BORN TO BE A WINNER -- ?>
 

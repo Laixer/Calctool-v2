@@ -103,6 +103,7 @@
 	},
 	"buffers":
 	[
+<<<<<<< Updated upstream
 		{
 			"file": "app/views/calc/calculation.blade.php",
 			"settings":
@@ -127,6 +128,8 @@
 				"line_ending": "Unix"
 			}
 		}
+=======
+>>>>>>> Stashed changes
 	],
 	"build_system": "",
 	"command_palette":
@@ -298,29 +301,39 @@
 	[
 		"/var/www/calctool-v2",
 		"/var/www/calctool-v2/app",
-		"/var/www/calctool-v2/app/calculus",
+		"/var/www/calctool-v2/app/config",
+		"/var/www/calctool-v2/app/config/local",
 		"/var/www/calctool-v2/app/controllers",
 		"/var/www/calctool-v2/app/database",
 		"/var/www/calctool-v2/app/database/seeds",
+<<<<<<< Updated upstream
 		"/var/www/calctool-v2/app/start"
 	],
 	"file_history":
 	[
 		"/home/dinux/Projects/cve/new.c",
 		"/home/dinux/Projects/cve/29290.c",
+=======
+		"/var/www/calctool-v2/app/start",
+		"/var/www/calctool-v2/bootstrap"
+	],
+	"file_history":
+	[
+		"/var/www/calctool-v2/app/views/calc/calculation.blade.php",
+		"/var/www/calctool-v2/bootstrap/start.php",
+		"/var/www/calctool-v2/app/controllers/CalcController.php",
+		"/var/www/calctool-v2/app/routes.php",
+>>>>>>> Stashed changes
 		"/var/www/calctool-v2/app/calculus/Register.php",
 		"/var/www/calctool-v2/app/database/seeds/TestProjectSeeder.php",
 		"/var/www/calctool-v2/app/database/seeds/DatabaseSeeder.php",
 		"/var/www/calctool-v2/app/calculus/Helpers.php",
 		"/var/www/calctool-v2/app/config/app.php",
 		"/var/www/calctool-v2/app/start/global.php",
-		"/var/www/calctool-v2/app/controllers/CalcController.php",
-		"/var/www/calctool-v2/app/routes.php",
 		"/var/www/calctool-v2/workbench/calctool/calculus/src/Calctool/Calculus/CalculusServiceProvider.php",
 		"/var/www/calctool-v2/workbench/calctool/calculus/src/Calctool/Calculus/Calculus.php",
 		"/var/www/calctool-v2/app/models/CalculationLabor.php",
 		"/var/www/calctool-v2/calctool.sublime-project",
-		"/var/www/calctool-v2/app/views/calc/calculation.blade.php",
 		"/var/www/calctool-v2/app/views/base/home.blade.php",
 		"/var/www/calctool-v2/app/views/calc/less.blade.php",
 		"/var/www/calctool-v2/app/views/calc/estimate.blade.php",
@@ -342,7 +355,6 @@
 		"/var/www/calctool-v2/app/config/services.php",
 		"/var/www/calctool-v2/app/config/dev/database.php",
 		"/var/www/calctool-v2/app/config/dev/app.php",
-		"/var/www/calctool-v2/bootstrap/start.php",
 		"/var/www/calctool-v2/app/controllers/CostController.php",
 		"/var/www/calctool/app/views/placeholder.php",
 		"/var/www/calctool/app/views/user/relation.blade.php",
@@ -528,6 +540,7 @@
 	"groups":
 	[
 		{
+<<<<<<< Updated upstream
 			"selected": 2,
 			"sheets":
 			[
@@ -618,6 +631,10 @@
 					"stack_index": 0,
 					"type": "text"
 				}
+=======
+			"sheets":
+			[
+>>>>>>> Stashed changes
 			]
 		}
 	],
@@ -702,7 +719,11 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
+<<<<<<< Updated upstream
 	"side_bar_width": 273.0,
+=======
+	"side_bar_width": 289.0,
+>>>>>>> Stashed changes
 	"status_bar_visible": true,
 	"template_settings":
 	{

@@ -159,7 +159,7 @@ class TestProjectSeeder extends Seeder {
 			'address_postal' => '1234AB',
 			'address_city' => 'testscity',
 			'note' => 'testopmerking',
-			'hour_rate' => '36',
+			'hour_rate' => '35',
 			'hour_rate_more' => '37',
 			'profit_calc_contr_mat' => '11',
 			'profit_calc_contr_equip' => '12',

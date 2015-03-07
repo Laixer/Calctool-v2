@@ -60,5 +60,5 @@
 	</div>
 </header>
 
-<span id="header_shadow"></span>
+<!--<span id="header_shadow"></span>-->
 <?# -- /TOP NAV -- ?>
