@@ -5,15 +5,14 @@
  */
 class Endresult {
 
-	public static function calcLaborActivityTax1($project) {
+	public static function conCalcLaborActivityTax1($project) {
 		$total = 0;
 		$part_id = Part::where('part_name','=','contracting')->first()->id;
-		$part_type_id = PartType::where('type_name','=','calculation')->first()->id;
 		$tax_id = Tax::where('tax_rate','=','21')->first()->id;
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('part_type_id','=',$part_type_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$total += CalculationLabor::where('activity_id','=',$activity->id)->sum('amount');
 			}
@@ -22,15 +21,14 @@ class Endresult {
 		return $total;
 	}
 
-	public static function calcLaborActivityTax2($project) {
+	public static function conCalcLaborActivityTax2($project) {
 		$total = 0;
 		$part_id = Part::where('part_name','=','contracting')->first()->id;
-		$part_type_id = PartType::where('type_name','=','calculation')->first()->id;
 		$tax_id = Tax::where('tax_rate','=','6')->first()->id;
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('part_type_id','=',$part_type_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$total += CalculationLabor::where('activity_id','=',$activity->id)->sum('amount');
 			}
@@ -39,15 +37,14 @@ class Endresult {
 		return $total;
 	}
 
-	public static function calcLaborActivityTax3($project) {
+	public static function conCalcLaborActivityTax3($project) {
 		$total = 0;
 		$part_id = Part::where('part_name','=','contracting')->first()->id;
-		$part_type_id = PartType::where('type_name','=','calculation')->first()->id;
 		$tax_id = Tax::where('tax_rate','=','0')->first()->id;
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('part_type_id','=',$part_type_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$total += CalculationLabor::where('activity_id','=',$activity->id)->sum('amount');
 			}
@@ -56,15 +53,14 @@ class Endresult {
 		return $total;
 	}
 
-	public static function calcLaborActivityTax1Amount($project) {
+	public static function conCalcLaborActivityTax1Amount($project) {
 		$total = 0;
 		$part_id = Part::where('part_name','=','contracting')->first()->id;
-		$part_type_id = PartType::where('type_name','=','calculation')->first()->id;
 		$tax_id = Tax::where('tax_rate','=','21')->first()->id;
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('part_type_id','=',$part_type_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -77,15 +73,14 @@ class Endresult {
 		return $total;
 	}
 
-	public static function calcLaborActivityTax2Amount($project) {
+	public static function conCalcLaborActivityTax2Amount($project) {
 		$total = 0;
 		$part_id = Part::where('part_name','=','contracting')->first()->id;
-		$part_type_id = PartType::where('type_name','=','calculation')->first()->id;
 		$tax_id = Tax::where('tax_rate','=','6')->first()->id;
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('part_type_id','=',$part_type_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -98,15 +93,14 @@ class Endresult {
 		return $total;
 	}
 
-	public static function calcLaborActivityTax3Amount($project) {
+	public static function conCalcLaborActivityTax3Amount($project) {
 		$total = 0;
 		$part_id = Part::where('part_name','=','contracting')->first()->id;
-		$part_type_id = PartType::where('type_name','=','calculation')->first()->id;
 		$tax_id = Tax::where('tax_rate','=','0')->first()->id;
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('part_type_id','=',$part_type_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -119,23 +113,22 @@ class Endresult {
 		return $total;
 	}
 
-	public static function calcLaborActivityTax1AmountTax($project) {
-		return (Endresult::calcLaborActivityTax1Amount($project)/100)*21;
+	public static function conCalcLaborActivityTax1AmountTax($project) {
+		return (Endresult::conCalcLaborActivityTax1Amount($project)/100)*21;
 	}
 
-	public static function calcLaborActivityTax2AmountTax($project) {
-		return (Endresult::calcLaborActivityTax2Amount($project)/100)*6;
+	public static function conCalcLaborActivityTax2AmountTax($project) {
+		return (Endresult::conCalcLaborActivityTax2Amount($project)/100)*6;
 	}
 
-	public static function calcMaterialActivityTax1Amount($project) {
+	public static function conCalcMaterialActivityTax1Amount($project) {
 		$total = 0;
 		$part_id = Part::where('part_name','=','contracting')->first()->id;
-		$part_type_id = PartType::where('type_name','=','calculation')->first()->id;
 		$tax_id = Tax::where('tax_rate','=','21')->first()->id;
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('part_type_id','=',$part_type_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -148,15 +141,14 @@ class Endresult {
 		return $total;
 	}
 
-	public static function calcMaterialActivityTax2Amount($project) {
+	public static function conCalcMaterialActivityTax2Amount($project) {
 		$total = 0;
 		$part_id = Part::where('part_name','=','contracting')->first()->id;
-		$part_type_id = PartType::where('type_name','=','calculation')->first()->id;
 		$tax_id = Tax::where('tax_rate','=','6')->first()->id;
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('part_type_id','=',$part_type_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -169,15 +161,14 @@ class Endresult {
 		return $total;
 	}
 
-	public static function calcMaterialActivityTax3Amount($project) {
+	public static function conCalcMaterialActivityTax3Amount($project) {
 		$total = 0;
 		$part_id = Part::where('part_name','=','contracting')->first()->id;
-		$part_type_id = PartType::where('type_name','=','calculation')->first()->id;
 		$tax_id = Tax::where('tax_rate','=','0')->first()->id;
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('part_type_id','=',$part_type_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -190,23 +181,22 @@ class Endresult {
 		return $total;
 	}
 
-	public static function calcMaterialActivityTax1AmountTax($project) {
-		return (Endresult::calcMaterialActivityTax1Amount($project)/100)*21;
+	public static function conCalcMaterialActivityTax1AmountTax($project) {
+		return (Endresult::conCalcMaterialActivityTax1Amount($project)/100)*21;
 	}
 
-	public static function calcMaterialActivityTax2AmountTax($project) {
-		return (Endresult::calcMaterialActivityTax2Amount($project)/100)*6;
+	public static function conCalcMaterialActivityTax2AmountTax($project) {
+		return (Endresult::conCalcMaterialActivityTax2Amount($project)/100)*6;
 	}
 
-	public static function calcEquipmentActivityTax1Amount($project) {
+	public static function conCalcEquipmentActivityTax1Amount($project) {
 		$total = 0;
 		$part_id = Part::where('part_name','=','contracting')->first()->id;
-		$part_type_id = PartType::where('type_name','=','calculation')->first()->id;
 		$tax_id = Tax::where('tax_rate','=','21')->first()->id;
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('part_type_id','=',$part_type_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -219,15 +209,14 @@ class Endresult {
 		return $total;
 	}
 
-	public static function calcEquipmentActivityTax2Amount($project) {
+	public static function conCalcEquipmentActivityTax2Amount($project) {
 		$total = 0;
 		$part_id = Part::where('part_name','=','contracting')->first()->id;
-		$part_type_id = PartType::where('type_name','=','calculation')->first()->id;
 		$tax_id = Tax::where('tax_rate','=','6')->first()->id;
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('part_type_id','=',$part_type_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -240,15 +229,14 @@ class Endresult {
 		return $total;
 	}
 
-	public static function calcEquipmentActivityTax3Amount($project) {
+	public static function conCalcEquipmentActivityTax3Amount($project) {
 		$total = 0;
 		$part_id = Part::where('part_name','=','contracting')->first()->id;
-		$part_type_id = PartType::where('type_name','=','calculation')->first()->id;
 		$tax_id = Tax::where('tax_rate','=','0')->first()->id;
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('part_type_id','=',$part_type_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -261,12 +249,284 @@ class Endresult {
 		return $total;
 	}
 
-	public static function calcEquipmentActivityTax1AmountTax($project) {
-		return (Endresult::calcEquipmentActivityTax1Amount($project)/100)*21;
+	public static function conCalcEquipmentActivityTax1AmountTax($project) {
+		return (Endresult::conCalcEquipmentActivityTax1Amount($project)/100)*21;
 	}
 
-	public static function calcEquipmentActivityTax2AmountTax($project) {
-		return (Endresult::calcEquipmentActivityTax2Amount($project)/100)*6;
+	public static function conCalcEquipmentActivityTax2AmountTax($project) {
+		return (Endresult::conCalcEquipmentActivityTax2Amount($project)/100)*6;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public static function subconCalcLaborActivityTax1($project) {
+		$total = 0;
+		$part_id = Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = Tax::where('tax_rate','=','21')->first()->id;
+
+		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		{
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			{
+				$total += CalculationLabor::where('activity_id','=',$activity->id)->sum('amount');
+			}
+		}
+
+		return $total;
+	}
+
+	public static function subconCalcLaborActivityTax2($project) {
+		$total = 0;
+		$part_id = Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = Tax::where('tax_rate','=','6')->first()->id;
+
+		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		{
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			{
+				$total += CalculationLabor::where('activity_id','=',$activity->id)->sum('amount');
+			}
+		}
+
+		return $total;
+	}
+
+	public static function subconCalcLaborActivityTax3($project) {
+		$total = 0;
+		$part_id = Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = Tax::where('tax_rate','=','0')->first()->id;
+
+		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		{
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			{
+				$total += CalculationLabor::where('activity_id','=',$activity->id)->sum('amount');
+			}
+		}
+
+		return $total;
+	}
+
+	public static function subconCalcLaborActivityTax1Amount($project) {
+		$total = 0;
+		$part_id = Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = Tax::where('tax_rate','=','21')->first()->id;
+
+		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		{
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			{
+				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
+				foreach ($rows as $row)
+				{
+					$total += $row->rate * $row->amount;
+				}
+			}
+		}
+
+		return $total;
+	}
+
+	public static function subconCalcLaborActivityTax2Amount($project) {
+		$total = 0;
+		$part_id = Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = Tax::where('tax_rate','=','6')->first()->id;
+
+		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		{
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			{
+				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
+				foreach ($rows as $row)
+				{
+					$total += $row->rate * $row->amount;
+				}
+			}
+		}
+
+		return $total;
+	}
+
+	public static function subconCalcLaborActivityTax3Amount($project) {
+		$total = 0;
+		$part_id = Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = Tax::where('tax_rate','=','0')->first()->id;
+
+		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		{
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			{
+				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
+				foreach ($rows as $row)
+				{
+					$total += $row->rate * $row->amount;
+				}
+			}
+		}
+
+		return $total;
+	}
+
+	public static function subconCalcLaborActivityTax1AmountTax($project) {
+		return (Endresult::subconCalcLaborActivityTax1Amount($project)/100)*21;
+	}
+
+	public static function subconCalcLaborActivityTax2AmountTax($project) {
+		return (Endresult::subconCalcLaborActivityTax2Amount($project)/100)*6;
+	}
+
+	public static function subconCalcMaterialActivityTax1Amount($project) {
+		$total = 0;
+		$part_id = Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = Tax::where('tax_rate','=','21')->first()->id;
+
+		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		{
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			{
+				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
+				foreach ($rows as $row)
+				{
+					$total += $row->rate * $row->amount;
+				}
+			}
+		}
+
+		return $total;
+	}
+
+	public static function subconCalcMaterialActivityTax2Amount($project) {
+		$total = 0;
+		$part_id = Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = Tax::where('tax_rate','=','6')->first()->id;
+
+		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		{
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			{
+				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
+				foreach ($rows as $row)
+				{
+					$total += $row->rate * $row->amount;
+				}
+			}
+		}
+
+		return $total;
+	}
+
+	public static function subconCalcMaterialActivityTax3Amount($project) {
+		$total = 0;
+		$part_id = Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = Tax::where('tax_rate','=','0')->first()->id;
+
+		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		{
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			{
+				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
+				foreach ($rows as $row)
+				{
+					$total += $row->rate * $row->amount;
+				}
+			}
+		}
+
+		return $total;
+	}
+
+	public static function subconCalcMaterialActivityTax1AmountTax($project) {
+		return (Endresult::subconCalcMaterialActivityTax1Amount($project)/100)*21;
+	}
+
+	public static function subconCalcMaterialActivityTax2AmountTax($project) {
+		return (Endresult::subconCalcMaterialActivityTax2Amount($project)/100)*6;
+	}
+
+	public static function subconCalcEquipmentActivityTax1Amount($project) {
+		$total = 0;
+		$part_id = Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = Tax::where('tax_rate','=','21')->first()->id;
+
+		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		{
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			{
+				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
+				foreach ($rows as $row)
+				{
+					$total += $row->rate * $row->amount;
+				}
+			}
+		}
+
+		return $total;
+	}
+
+	public static function subconCalcEquipmentActivityTax2Amount($project) {
+		$total = 0;
+		$part_id = Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = Tax::where('tax_rate','=','6')->first()->id;
+
+		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		{
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			{
+				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
+				foreach ($rows as $row)
+				{
+					$total += $row->rate * $row->amount;
+				}
+			}
+		}
+
+		return $total;
+	}
+
+	public static function subconCalcEquipmentActivityTax3Amount($project) {
+		$total = 0;
+		$part_id = Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = Tax::where('tax_rate','=','0')->first()->id;
+
+		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		{
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			{
+				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
+				foreach ($rows as $row)
+				{
+					$total += $row->rate * $row->amount;
+				}
+			}
+		}
+
+		return $total;
+	}
+
+	public static function subconCalcEquipmentActivityTax1AmountTax($project) {
+		return (Endresult::subconCalcEquipmentActivityTax1Amount($project)/100)*21;
+	}
+
+	public static function subconCalcEquipmentActivityTax2AmountTax($project) {
+		return (Endresult::subconCalcEquipmentActivityTax2Amount($project)/100)*6;
+	}
 }

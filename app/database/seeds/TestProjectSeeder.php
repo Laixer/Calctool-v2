@@ -1087,7 +1087,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '5',
 			'amount' => '3.19',
-			'activity_id' => $test_activit87->id
+			'activity_id' => $test_activity7->id
 		));
 		$this->command->info('CalculationMaterial created');
 		$this->command->info('CalculationEquipment created');

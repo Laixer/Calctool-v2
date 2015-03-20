@@ -1425,26 +1425,26 @@ var n = this,
 							<tbody>
 								<tr><!-- item -->
 									<td class="col-md-4">Arbeidskosten</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(Endresult::calcLaborActivityTax1($project), 2, ",",".") }}</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::calcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(Endresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">21%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::calcLaborActivityTax1AmountTax($project), 2, ",",".") }}</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::conCalcLaborActivityTax1AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(Endresult::calcLaborActivityTax2($project), 2, ",",".") }}</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::calcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(Endresult::conCalcLaborActivityTax2($project), 2, ",",".") }}</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::conCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">6%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::calcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::conCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(Endresult::calcLaborActivityTax3($project), 2, ",",".") }}</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::calcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(Endresult::conCalcLaborActivityTax3($project), 2, ",",".") }}</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">0%</td>
 									<td class="col-md-2">&nbsp;</td>
@@ -1454,25 +1454,25 @@ var n = this,
 								<tr><!-- item -->
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::calcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">21%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::calcMaterialActivityTax1AmountTax($project), 2, ",",".") }}</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::conCalcMaterialActivityTax1AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::calcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::conCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">6%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::calcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::conCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::calcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">0%</td>
 									<td class="col-md-2">&nbsp;</td>
@@ -1482,25 +1482,25 @@ var n = this,
 								<tr><!-- item -->
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::calcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">21%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::calcEquipmentActivityTax1AmountTax($project), 2, ",",".") }}</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::conCalcEquipmentActivityTax1AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::calcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::conCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">6%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::calcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::conCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::calcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">0%</td>
 									<td class="col-md-2">&nbsp;</td>
@@ -1538,26 +1538,26 @@ var n = this,
 							<tbody>
 								<tr><!-- item -->
 									<td class="col-md-4">Arbeidskosten</td>
-									<td class="col-md-1">6</td>
-									<td class="col-md-2">$42</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(Endresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">21%</td>
-									<td class="col-md-2">$742,28</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::subconCalcLaborActivityTax1AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">6</td>
-									<td class="col-md-2">$42</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(Endresult::subconCalcLaborActivityTax2($project), 2, ",",".") }}</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">6%</td>
-									<td class="col-md-2">$742,28</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::subconCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">6</td>
-									<td class="col-md-2">$42</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(Endresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">0%</td>
 									<td class="col-md-2">&nbsp;</td>
@@ -1567,25 +1567,25 @@ var n = this,
 								<tr><!-- item -->
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">$42</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">21%</td>
-									<td class="col-md-2">$742,28</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::subconCalcMaterialActivityTax1AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">$42</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">6%</td>
-									<td class="col-md-2">$742,28</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::subconCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">$42</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">0%</td>
 									<td class="col-md-2">&nbsp;</td>
@@ -1595,138 +1595,25 @@ var n = this,
 								<tr><!-- item -->
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">$42</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">21%</td>
-									<td class="col-md-2">$742,28</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::subconCalcEquipmentActivityTax1AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">$42</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">6%</td>
-									<td class="col-md-2">$742,28</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::subconCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">$42</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">0%</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-
-								<tr><!-- item -->
-									<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1"><strong>$6.362,71</strong></td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1"><strong>$6.362,71</strong></td>
-								</tr>
-							</tbody>
-						</table>
-
-						<h4>Stelposten</h4>
-						<table class="table table-striped">
-							<?# -- table head -- ?>
-							<thead>
-								<tr>
-									<th class="col-md-4">&nbsp;</th>
-									<th class="col-md-1">Manuren</th>
-									<th class="col-md-2">Bedrag (excl. BTW)</th>
-									<th class="col-md-1">&nbsp;</th>
-									<th class="col-md-1">BTW</th>
-									<th class="col-md-2">BTW bedrag</th>
-									<th class="col-md-1">&nbsp;</th>
-								</tr>
-							</thead>
-
-							<!-- table items -->
-							<tbody>
-								<tr><!-- item -->
-									<td class="col-md-4">Arbeidskosten</td>
-									<td class="col-md-1">6</td>
-									<td class="col-md-2">$42</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">21%</td>
-									<td class="col-md-2">$742,28</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">6</td>
-									<td class="col-md-2">$42</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">6%</td>
-									<td class="col-md-2">$742,28</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">6</td>
-									<td class="col-md-2">$42</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">0%</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-
-								<tr><!-- item -->
-									<td class="col-md-4">Materiaalkosten</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">$42</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">21%</td>
-									<td class="col-md-2">$742,28</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">$42</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">6%</td>
-									<td class="col-md-2">$742,28</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">$42</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">0%</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-
-								<tr><!-- item -->
-									<td class="col-md-4">Materieelkosten</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">$42</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">21%</td>
-									<td class="col-md-2">$742,28</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">$42</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">6%</td>
-									<td class="col-md-2">$742,28</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">$42</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">0%</td>
 									<td class="col-md-2">&nbsp;</td>
