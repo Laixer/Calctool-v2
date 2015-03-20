@@ -1,5 +1,8 @@
 <?php
 
+/*
+ * Uittrekstaat
+ */
 class OverviewCalc {
 
 /*Calculation labor*/
