@@ -257,28 +257,7 @@ class Endresult {
 		return (Endresult::conCalcEquipmentActivityTax2Amount($project)/100)*6;
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-public static function subconCalcLaborActivityTax1($project) {
+	public static function subconCalcLaborActivityTax1($project) {
 		$total = 0;
 		$part_id = Part::where('part_name','=','subcontracting')->first()->id;
 		$tax_id = Tax::where('tax_rate','=','21')->first()->id;
@@ -528,5 +507,123 @@ public static function subconCalcLaborActivityTax1($project) {
 
 	public static function subconCalcEquipmentActivityTax2AmountTax($project) {
 		return (Endresult::subconCalcEquipmentActivityTax2Amount($project)/100)*6;
+	}
+
+	public static function totalContracting($project) {
+		$total = 0;
+
+		$total += Endresult::conCalcLaborActivityTax1Amount($project);
+		$total += Endresult::conCalcLaborActivityTax2Amount($project);
+		$total += Endresult::conCalcLaborActivityTax3Amount($project);
+
+		$total += Endresult::conCalcMaterialActivityTax1Amount($project);
+		$total += Endresult::conCalcMaterialActivityTax2Amount($project);
+		$total += Endresult::conCalcMaterialActivityTax3Amount($project);
+
+		$total += Endresult::conCalcEquipmentActivityTax1Amount($project);
+		$total += Endresult::conCalcEquipmentActivityTax2Amount($project);
+		$total += Endresult::conCalcEquipmentActivityTax3Amount($project);
+
+		return $total;
+	}
+
+	public static function totalContractingTax($project) {
+		$total = 0;
+
+		$total += Endresult::conCalcLaborActivityTax1AmountTax($project);
+		$total += Endresult::conCalcLaborActivityTax2AmountTax($project);
+
+		$total += Endresult::conCalcMaterialActivityTax1AmountTax($project);
+		$total += Endresult::conCalcMaterialActivityTax2AmountTax($project);
+
+		$total += Endresult::conCalcEquipmentActivityTax1AmountTax($project);
+		$total += Endresult::conCalcEquipmentActivityTax2AmountTax($project);
+
+		return $total;
+	}
+
+	public static function totalSubcontracting($project) {
+		$total = 0;
+
+		$total += Endresult::subconCalcLaborActivityTax1Amount($project);
+		$total += Endresult::subconCalcLaborActivityTax2Amount($project);
+		$total += Endresult::subconCalcLaborActivityTax3Amount($project);
+
+		$total += Endresult::subconCalcMaterialActivityTax1Amount($project);
+		$total += Endresult::subconCalcMaterialActivityTax2Amount($project);
+		$total += Endresult::subconCalcMaterialActivityTax3Amount($project);
+
+		$total += Endresult::subconCalcEquipmentActivityTax1Amount($project);
+		$total += Endresult::subconCalcEquipmentActivityTax2Amount($project);
+		$total += Endresult::subconCalcEquipmentActivityTax3Amount($project);
+
+		return $total;
+	}
+
+	public static function totalSubcontractingTax($project) {
+		$total = 0;
+
+		$total += Endresult::subconCalcLaborActivityTax1AmountTax($project);
+		$total += Endresult::subconCalcLaborActivityTax2AmountTax($project);
+
+		$total += Endresult::subconCalcMaterialActivityTax1AmountTax($project);
+		$total += Endresult::subconCalcMaterialActivityTax2AmountTax($project);
+
+		$total += Endresult::subconCalcEquipmentActivityTax1AmountTax($project);
+		$total += Endresult::subconCalcEquipmentActivityTax2AmountTax($project);
+
+		return $total;
+	}
+
+	public static function totalProject($project) {
+		return Endresult::totalContracting($project) + Endresult::totalSubcontracting($project);
+	}
+
+	public static function totalContractingTax1($project) {
+		$total = 0;
+
+		$total += Endresult::conCalcLaborActivityTax1AmountTax($project);
+		$total += Endresult::conCalcMaterialActivityTax1AmountTax($project);
+		$total += Endresult::conCalcEquipmentActivityTax1AmountTax($project);
+
+		return $total;
+	}
+
+	public static function totalContractingTax2($project) {
+		$total = 0;
+
+		$total += Endresult::conCalcLaborActivityTax2AmountTax($project);
+		$total += Endresult::conCalcMaterialActivityTax2AmountTax($project);
+		$total += Endresult::conCalcEquipmentActivityTax2AmountTax($project);
+
+		return $total;
+	}
+
+	public static function totalSubcontractingTax1($project) {
+		$total = 0;
+
+		$total += Endresult::subconCalcLaborActivityTax1AmountTax($project);
+		$total += Endresult::subconCalcMaterialActivityTax1AmountTax($project);
+		$total += Endresult::subconCalcEquipmentActivityTax1AmountTax($project);
+
+		return $total;
+	}
+
+	public static function totalSubcontractingTax2($project) {
+		$total = 0;
+
+		$total += Endresult::subconCalcLaborActivityTax2AmountTax($project);
+		$total += Endresult::subconCalcMaterialActivityTax2AmountTax($project);
+		$total += Endresult::subconCalcEquipmentActivityTax2AmountTax($project);
+
+		return $total;
+	}
+
+	public static function totalProjectTax($project) {
+		return Endresult::totalContractingTax($project) + Endresult::totalSubcontractingTax($project);
+	}
+
+	public static function superTotalProject($project) {
+		return Endresult::totalProject($project) + Endresult::totalProjectTax($project);
 	}
 }

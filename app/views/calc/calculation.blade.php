@@ -1511,10 +1511,10 @@ var n = this,
 									<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1"><strong>$6.362,71</strong></td>
+									<td class="col-md-1"><strong>{{ '&euro; '.number_format(Endresult::totalContracting($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1"><strong>$6.362,71</strong></td>
+									<td class="col-md-1"><strong>{{ '&euro; '.number_format(Endresult::totalContractingTax($project), 2, ",",".") }}</strong></td>
 								</tr>
 							</tbody>
 						</table>
@@ -1624,10 +1624,10 @@ var n = this,
 									<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1"><strong>$6.362,71</strong></td>
+									<td class="col-md-1"><strong>{{ '&euro; '.number_format(Endresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1"><strong>$6.362,71</strong></td>
+									<td class="col-md-1"><strong>{{ '&euro; '.number_format(Endresult::totalSubcontractingTax($project), 2, ",",".") }}</strong></td>
 								</tr>
 							</tbody>
 						</table>
@@ -1648,57 +1648,45 @@ var n = this,
 							<tbody>
 								<tr><!-- item -->
 									<td class="col-md-6">Calculatief te offereren (excl. BTW)</td>
-									<td class="col-md-2">$42</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::totalProject($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-6">BTW bedrag aanneming belast met 21%</td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">$42</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::totalContractingTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-6">BTW bedrag aanneming belast met 6%</td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">$42</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::totalContractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-6">BTW bedrag onderaanneming belast met 21%</td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">$42</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-6">BTW bedrag onderaanneming belast met 6%</td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">$42</td>
-									<td class="col-md-2">&nbsp;</td>
-								</tr>
-								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag stelposten belast met 21%</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">$42</td>
-									<td class="col-md-2">&nbsp;</td>
-								</tr>
-								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag stelposten belast met 6%</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">$42</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-6">Te offereren BTW bedrag</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">$3.826,38</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(Endresult::totalProjectTax($project), 2, ",",".") }}</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-6"><strong>Calculatief te offereren (Incl. BTW)</strong></td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2"><strong>$3.826,38</strong></td>
+									<td class="col-md-2"><strong>{{ '&euro; '.number_format(Endresult::superTotalProject($project), 2, ",",".") }}</strong></td>
 								</tr>
 							</tbody>
 						</table>

@@ -48,6 +48,8 @@
 		<?# -- ONLY DEV -- ?>
 		@if(App::environment('dev'))
 		<div style="background-color:red;z-index:200;position:fixed;top:0px;left:45%;width: 100px;text-align: center;"><a href="https://bitbucket.org/calctool/calctool-v2/commits/{{ File::get('../.revision') }}" style="color: black;">{{ 'REV: ' . substr(File::get('../.revision'), 0, 7) }}</a></div>
+		@elseif(App::environment('local'))
+		<div style="background-color:green;z-index:200;position:fixed;top:0px;left:45%;width: 100px;text-align: center;">local</div>
 		@endif
 
 		<?# -- HEADER -- ?>
