@@ -138,7 +138,7 @@ class Endresult {
 			}
 		}
 
-		return $total;
+		return $total + ($total * ($project->profit_calc_contr_mat)/100);
 	}
 
 	public static function conCalcMaterialActivityTax2Amount($project) {
@@ -158,7 +158,7 @@ class Endresult {
 			}
 		}
 
-		return $total;
+		return $total + ($total * ($project->profit_calc_contr_mat)/100);
 	}
 
 	public static function conCalcMaterialActivityTax3Amount($project) {
@@ -178,7 +178,7 @@ class Endresult {
 			}
 		}
 
-		return $total;
+		return $total + ($total * ($project->profit_calc_contr_mat)/100);
 	}
 
 	public static function conCalcMaterialActivityTax1AmountTax($project) {
@@ -206,7 +206,7 @@ class Endresult {
 			}
 		}
 
-		return $total;
+		return $total + ($total * ($project->profit_calc_contr_equip)/100);
 	}
 
 	public static function conCalcEquipmentActivityTax2Amount($project) {
@@ -226,7 +226,7 @@ class Endresult {
 			}
 		}
 
-		return $total;
+		return $total + ($total * ($project->profit_calc_contr_equip)/100);
 	}
 
 	public static function conCalcEquipmentActivityTax3Amount($project) {
@@ -246,7 +246,7 @@ class Endresult {
 			}
 		}
 
-		return $total;
+		return $total + ($total * ($project->profit_calc_contr_equip)/100);
 	}
 
 	public static function conCalcEquipmentActivityTax1AmountTax($project) {
@@ -378,7 +378,11 @@ class Endresult {
 		$part_id = Part::where('part_name','=','subcontracting')->first()->id;
 		$tax_id = Tax::where('tax_rate','=','21')->first()->id;
 
+
+
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+
+
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
@@ -390,7 +394,7 @@ class Endresult {
 			}
 		}
 
-		return $total;
+		return $total + ($total * ($project->profit_calc_subcontr_mat)/100);
 	}
 
 	public static function subconCalcMaterialActivityTax2Amount($project) {
@@ -410,7 +414,7 @@ class Endresult {
 			}
 		}
 
-		return $total;
+		return $total + ($total * ($project->profit_calc_subcontr_mat)/100);
 	}
 
 	public static function subconCalcMaterialActivityTax3Amount($project) {
@@ -430,7 +434,7 @@ class Endresult {
 			}
 		}
 
-		return $total;
+		return $total + ($total * ($project->profit_calc_subcontr_mat)/100);
 	}
 
 	public static function subconCalcMaterialActivityTax1AmountTax($project) {
@@ -458,7 +462,7 @@ class Endresult {
 			}
 		}
 
-		return $total;
+		return $total + ($total * ($project->profit_calc_subcontr_equip)/100);
 	}
 
 	public static function subconCalcEquipmentActivityTax2Amount($project) {
@@ -478,7 +482,7 @@ class Endresult {
 			}
 		}
 
-		return $total;
+		return $total + ($total * ($project->profit_calc_subcontr_equip)/100);
 	}
 
 	public static function subconCalcEquipmentActivityTax3Amount($project) {
@@ -498,7 +502,7 @@ class Endresult {
 			}
 		}
 
-		return $total;
+		return $total + ($total * ($project->profit_calc_subcontr_equip)/100);
 	}
 
 	public static function subconCalcEquipmentActivityTax1AmountTax($project) {

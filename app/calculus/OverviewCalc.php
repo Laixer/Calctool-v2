@@ -109,9 +109,9 @@ class OverviewCalc {
 			foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
 			{
 				if (Part::find($activity->part_id)->part_name=='contracting') {
-					$profit = $project->profit_calc_contr_mat;
+					$profit = $project->profit_calc_contr_equip;
 				} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
-					$profit = $project->profit_calc_subcontr_mat;
+					$profit = $project->profit_calc_subcontr_equip;
 				}
 				$total += OverviewCalc::calcEquipmentActivityProfit($activity->id, $profit);
 			}

@@ -314,7 +314,7 @@ var n = this,
 						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
 						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
 						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+{{$project->profit_calc_contr_mat}})/100),2,',','.'));
+						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+{{$project->profit_calc_contr_equip}})/100),2,',','.'));
 					} else {
 						$.each(json.message, function(i, item) {
 							if(json.message['name'])
@@ -384,7 +384,7 @@ var n = this,
 						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
 						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
 						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+{{$project->profit_calc_contr_mat}})/100),2,',','.'));
+						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+{{$project->profit_calc_contr_equip}})/100),2,',','.'));
 					} else {
 						$.each(json.message, function(i, item) {
 							if(json.message['name'])
@@ -545,7 +545,7 @@ var n = this,
 						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
 						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
 						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+{{$project->profit_calc_contr_mat}})/100),2,',','.'));
+						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+{{$project->profit_calc_contr_equip}})/100),2,',','.'));
 					} else {
 						$.each(json.message, function(i, item) {
 							if(json.message['name'])
@@ -876,9 +876,9 @@ var n = this,
 															<td class="col-md-1"><span class="total-incl-tax">
 															<?php
 																if (Part::find($activity->part_id)->part_name=='contracting') {
-																	$profit = $project->profit_calc_contr_mat;
+																	$profit = $project->profit_calc_contr_equip;
 																} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
-																	$profit = $project->profit_calc_subcontr_mat;
+																	$profit = $project->profit_calc_subcontr_equip;
 																}
 																echo '&euro; '.number_format($equipment->rate*$equipment->amount*((100+$profit)/100), 2,",",".")
 															?></span></td>
@@ -932,18 +932,18 @@ var n = this,
 															<td class="col-md-1"><strong>
 															<?php
 															if (Part::find($activity->part_id)->part_name=='contracting') {
-																$profit = $project->profit_calc_contr_mat;
+																$profit = $project->profit_calc_contr_equip;
 															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
-																$profit = $project->profit_calc_subcontr_mat;
+																$profit = $project->profit_calc_subcontr_equip;
 															}
 															echo '&euro; '.number_format(Register::calcEquipmentTotal($activity->id, $profit), 2, ",",".");
 															?></span></td>
 															<td class="col-md-1"><strong>
 															<?php
 															if (Part::find($activity->part_id)->part_name=='contracting') {
-																$profit = $project->profit_calc_contr_mat;
+																$profit = $project->profit_calc_contr_equip;
 															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
-																$profit = $project->profit_calc_subcontr_mat;
+																$profit = $project->profit_calc_subcontr_equip;
 															}
 															echo '&euro; '.number_format(Register::calcEquipmentTotalProfit($activity->id, $profit), 2, ",",".");
 															?></span></td>
@@ -1191,9 +1191,9 @@ var n = this,
 															<td class="col-md-1"><span class="total-incl-tax">
 															<?php
 																if (Part::find($activity->part_id)->part_name=='contracting') {
-																	$profit = $project->profit_calc_contr_mat;
+																	$profit = $project->profit_calc_contr_equip;
 																} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
-																	$profit = $project->profit_calc_subcontr_mat;
+																	$profit = $project->profit_calc_subcontr_equip;
 																}
 																echo '&euro; '.number_format($equipment->rate*$equipment->amount*((100+$profit)/100), 2,",",".")
 															?></span></td>
@@ -1319,7 +1319,7 @@ var n = this,
 												<td class="col-md-1">{{ number_format(OverviewCalc::calcLaborTotal($activity->id), 2, ",",".") }}</td>
 												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(OverviewCalc::calcLaborActivity($activity->id), 2, ",",".") }}</span></td>
 												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(OverviewCalc::calcMaterialActivityProfit($activity->id, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
-												<td class="col-md-3">{{ '&euro; '.number_format(OverviewCalc::calcEquipmentActivityProfit($activity->id, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
+												<td class="col-md-3">{{ '&euro; '.number_format(OverviewCalc::calcEquipmentActivityProfit($activity->id, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
 												<td class="col-md-1">{{ '&euro; '.number_format(OverviewCalc::calcActivityTotalProfit($activity->id, $project->profit_calc_contr_mat), 2, ",",".") }} </td>
 												<td class="col-md-1 {{ OverviewCalc::calcEstimateCheck($activity) }}"></td>
 											</tr>
@@ -1360,7 +1360,7 @@ var n = this,
 												<td class="col-md-1">{{ number_format(OverviewCalc::calcLaborTotal($activity->id), 2, ",",".") }}</td>
 												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(OverviewCalc::calcLaborActivity($activity->id), 2, ",",".") }}</span></td>
 												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(OverviewCalc::calcMaterialActivityProfit($activity->id, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
-												<td class="col-md-3">{{ '&euro; '.number_format(OverviewCalc::calcEquipmentActivityProfit($activity->id, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
+												<td class="col-md-3">{{ '&euro; '.number_format(OverviewCalc::calcEquipmentActivityProfit($activity->id, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
 												<td class="col-md-1">{{ '&euro; '.number_format(OverviewCalc::calcActivityTotalProfit($activity->id, $project->profit_calc_subcontr_mat), 2, ",",".") }} </td>
 												<td class="col-md-1 {{ OverviewCalc::calcEstimateCheck($activity) }}"></td>
 											</tr>
