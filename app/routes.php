@@ -74,7 +74,7 @@ Route::group(array('before' => 'auth'), function()
 
 	/* Calculation pages */
 	Route::get('calculation/project-{project_id}', array('as' => 'calculation', 'uses' => 'CalcController@getCalculation'))->where('project_id', '[0-9]+');
-	Route::get('estimate', array('as' => 'estimate', 'uses' => 'CalcController@getEstimate'));
+	Route::get('estimate/project-{project_id}', array('as' => 'estimate', 'uses' => 'CalcController@getEstimate'))->where('project_id', '[0-9]+');
 	Route::get('less', array('as' => 'less', 'uses' => 'CalcController@getLess'));
 	Route::get('more', array('as' => 'more', 'uses' => 'CalcController@getMore'));
 
