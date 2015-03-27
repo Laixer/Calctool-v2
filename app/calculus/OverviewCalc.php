@@ -39,9 +39,9 @@ class OverviewCalc {
 	}
 
 /*Calculation Activity totaal*/
-	public static function calcActivityTotalProfit($activity, $profit) {
+	public static function calcActivityTotalProfit($activity, $profit_mat, $profit_equip) {
 
-		return OverviewCalc::calcLaborActivity($activity) + OverviewCalc::calcMaterialActivityProfit($activity, $profit) + OverviewCalc::calcEquipmentActivityProfit($activity, $profit);
+		return OverviewCalc::calcLaborActivity($activity) + OverviewCalc::calcMaterialActivityProfit($activity, $profit_mat) + OverviewCalc::calcEquipmentActivityProfit($activity, $profit_equip);
 	}
 
 /*Calculation Activity totaal*/

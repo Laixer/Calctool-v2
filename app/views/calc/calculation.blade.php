@@ -1320,7 +1320,7 @@ var n = this,
 												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(OverviewCalc::calcLaborActivity($activity->id), 2, ",",".") }}</span></td>
 												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(OverviewCalc::calcMaterialActivityProfit($activity->id, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
 												<td class="col-md-3">{{ '&euro; '.number_format(OverviewCalc::calcEquipmentActivityProfit($activity->id, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
-												<td class="col-md-1">{{ '&euro; '.number_format(OverviewCalc::calcActivityTotalProfit($activity->id, $project->profit_calc_contr_mat), 2, ",",".") }} </td>
+												<td class="col-md-1">{{ '&euro; '.number_format(OverviewCalc::calcActivityTotalProfit($activity->id, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
 												<td class="col-md-1 {{ OverviewCalc::calcEstimateCheck($activity) }}"></td>
 											</tr>
 											@endforeach
@@ -1361,7 +1361,7 @@ var n = this,
 												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(OverviewCalc::calcLaborActivity($activity->id), 2, ",",".") }}</span></td>
 												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(OverviewCalc::calcMaterialActivityProfit($activity->id, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
 												<td class="col-md-3">{{ '&euro; '.number_format(OverviewCalc::calcEquipmentActivityProfit($activity->id, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
-												<td class="col-md-1">{{ '&euro; '.number_format(OverviewCalc::calcActivityTotalProfit($activity->id, $project->profit_calc_subcontr_mat), 2, ",",".") }} </td>
+												<td class="col-md-1">{{ '&euro; '.number_format(OverviewCalc::calcActivityTotalProfit($activity->id, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
 												<td class="col-md-1 {{ OverviewCalc::calcEstimateCheck($activity) }}"></td>
 											</tr>
 											@endforeach
