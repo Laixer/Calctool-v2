@@ -27,7 +27,7 @@ class AuthController extends \BaseController {
 	public function doLogin()
 	{
 		$userdata = array(
-			'username' 	=> Input::get('username'),
+			'username' 	=> strtolower(trim(Input::get('username'))),
 			'password' 	=> Input::get('secret'),
 			'active' 	=> 1,
 			'banned' 	=> NULL
