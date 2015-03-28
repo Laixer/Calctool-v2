@@ -614,9 +614,9 @@ var n = this,
 					<ul class="steps">Debiteurennummer nieuwe relatie
 						<li data-target="#step0" data-location="/" class="complete">Home<span class="chevron"></span></li>
 						<li data-target="#step1" data-location="/project" class="complete">Projectgegevens<span class="chevron"></span></li>
-						<li data-target="#step2" data-location="/calculation" class="active">Calculatie<span class="chevron"></span></li>
+						<li data-target="#step2" data-location="/calculation/project-{{ $project->id }}" class="active">Calculatie<span class="chevron"></span></li>
 						<li data-target="#step3">Offerte<span class="chevron"></span></li>
-						<li data-target="#step4">Stelpost<span class="chevron"></span></li>
+						<li data-target="#step4" data-location="/estimate/project-{{ $project->id }}" class="complete">Stelpost<span class="chevron"></span></li>
 						<li data-target="#step5">Minderwerk<span class="chevron"></span></li>
 						<li data-target="#step6">Meerwerk<span class="chevron"></span></li>
 						<li data-target="#step7">Factuur<span class="chevron"></span></li>
