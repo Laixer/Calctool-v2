@@ -923,7 +923,7 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_equipment_activity6_5 = CalculationEquipment::create(array(
-			'equipment_name' => 'CHPTR3_ACT6_SUBCON_d',
+			'equipment_name' => 'CHPTR3_ACT6_SUBCON_e',
 			'unit' => 'stuk',
 			'rate' => '5',
 			'amount' => '3.19',
@@ -935,6 +935,8 @@ class TestProjectSeeder extends Seeder {
 		$calculation_labor_activity7 = EstimateLabor::create(array(
 			'rate' => '35.00',
 			'amount' => '7',
+			'set_rate' => '35.00',
+			'set_amount' => '8',
 			'activity_id' => $test_activity7->id
 		));
 		$this->command->info('CalculationLabor created');
@@ -944,6 +946,10 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '1',
 			'amount' => '1.90',
+			'set_material_name' => 'knipper meer',
+			'set_unit' => 'stuk',
+			'set_rate' => '35.00',
+			'set_amount' => '8',
 			'activity_id' => $test_activity7->id
 		));
 		$calculation_equipment_activity7_1 = EstimateEquipment::create(array(
@@ -951,6 +957,10 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '1',
 			'amount' => '1.92',
+			'set_equipment_name' => 'knipper meer',
+			'set_unit' => 'stuk',
+			'set_rate' => '35.00',
+			'set_amount' => '8',
 			'activity_id' => $test_activity7->id
 		));
 		$calculation_material_activity7_2 = EstimateMaterial::create(array(
@@ -958,6 +968,10 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '2',
 			'amount' => '2.90',
+			'set_material_name' => 'knipper meer',
+			'set_unit' => 'stuk',
+			'set_rate' => '35.00',
+			'set_amount' => '8',
 			'activity_id' => $test_activity7->id
 		));
 		$calculation_equipment_activity7_2 = EstimateEquipment::create(array(
@@ -965,6 +979,10 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '2',
 			'amount' => '3.91',
+			'set_equipment_name' => 'knipper meer',
+			'set_unit' => 'stuk',
+			'set_rate' => '35.00',
+			'set_amount' => '8',
 			'activity_id' => $test_activity7->id
 		));
 		$calculation_material_activity7_3 = EstimateMaterial::create(array(
@@ -972,6 +990,10 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '3',
 			'amount' => '1.29',
+			'set_material_name' => 'knipper meer',
+			'set_unit' => 'stuk',
+			'set_rate' => '35.00',
+			'set_amount' => '8',
 			'activity_id' => $test_activity7->id
 		));
 		$calculation_equipment_activity7_3 = EstimateEquipment::create(array(
@@ -979,6 +1001,10 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '3',
 			'amount' => '3.19',
+			'set_equipment_name' => 'knipper meer',
+			'set_unit' => 'stuk',
+			'set_rate' => '35.00',
+			'set_amount' => '8',
 			'activity_id' => $test_activity7->id
 		));
 		$calculation_material_activity7_4 = EstimateMaterial::create(array(
@@ -986,6 +1012,10 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '4',
 			'amount' => '1.29',
+			'set_material_name' => 'knipper meer',
+			'set_unit' => 'stuk',
+			'set_rate' => '35.00',
+			'set_amount' => '8',
 			'activity_id' => $test_activity7->id
 		));
 		$calculation_equipment_activity7_4 = EstimateEquipment::create(array(
@@ -993,6 +1023,10 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '4',
 			'amount' => '3.19',
+			'set_equipment_name' => 'knipper meer',
+			'set_unit' => 'stuk',
+			'set_rate' => '35.00',
+			'set_amount' => '8',
 			'activity_id' => $test_activity7->id
 		));
 		$calculation_material_activity7_5 = EstimateMaterial::create(array(
@@ -1000,13 +1034,21 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '5',
 			'amount' => '3.29',
+			'set_material_name' => 'knipper meer',
+			'set_unit' => 'stuk',
+			'set_rate' => '35.00',
+			'set_amount' => '8',
 			'activity_id' => $test_activity7->id
 		));
 		$calculation_equipment_activity7_5 = EstimateEquipment::create(array(
-			'equipment_name' => 'CHPTR3_ACT7_SUBCON_d',
+			'equipment_name' => 'CHPTR3_ACT7_SUBCON_e',
 			'unit' => 'stuk',
 			'rate' => '5',
 			'amount' => '3.19',
+			'set_equipment_name' => 'knipper meer',
+			'set_unit' => 'stuk',
+			'set_rate' => '35.00',
+			'set_amount' => '8',
 			'activity_id' => $test_activity7->id
 		));
 		$this->command->info('CalculationMaterial created');
@@ -1026,6 +1068,10 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '1',
 			'amount' => '1.90',
+			'set_material_name' => 'knipper meer',
+			'set_unit' => 'stuk',
+			'set_rate' => '35.00',
+			'set_amount' => '8',
 			'activity_id' => $test_activity8->id
 		));
 		$calculation_equipment_activity8_1 = EstimateEquipment::create(array(
@@ -1033,6 +1079,10 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '1',
 			'amount' => '1.92',
+			'set_equipment_name' => 'knipper meer',
+			'set_unit' => 'stuk',
+			'set_rate' => '35.00',
+			'set_amount' => '8',
 			'activity_id' => $test_activity8->id
 		));
 		$calculation_material_activity8_2 = EstimateMaterial::create(array(
@@ -1040,6 +1090,10 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '2',
 			'amount' => '1.90',
+			'set_material_name' => 'knipper meer',
+			'set_unit' => 'stuk',
+			'set_rate' => '35.00',
+			'set_amount' => '8',
 			'activity_id' => $test_activity8->id
 		));
 		$calculation_equipment_activity8_2 = EstimateEquipment::create(array(
@@ -1047,6 +1101,10 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '2',
 			'amount' => '1.91',
+			'set_equipment_name' => 'knipper meer',
+			'set_unit' => 'stuk',
+			'set_rate' => '35.00',
+			'set_amount' => '8',
 			'activity_id' => $test_activity8->id
 		));
 		$calculation_material_activity8_3 = EstimateMaterial::create(array(
@@ -1054,6 +1112,10 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '3',
 			'amount' => '1.29',
+			'set_material_name' => 'knipper meer',
+			'set_unit' => 'stuk',
+			'set_rate' => '35.00',
+			'set_amount' => '8',
 			'activity_id' => $test_activity8->id
 		));
 		$calculation_equipment_activity8_3 = EstimateEquipment::create(array(
@@ -1061,6 +1123,10 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '3',
 			'amount' => '3.19',
+			'set_equipment_name' => 'knipper meer',
+			'set_unit' => 'stuk',
+			'set_rate' => '35.00',
+			'set_amount' => '8',
 			'activity_id' => $test_activity8->id
 		));
 		$calculation_material_activity8_4 = EstimateMaterial::create(array(
@@ -1068,6 +1134,10 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '4',
 			'amount' => '1.29',
+			'set_material_name' => 'knipper meer',
+			'set_unit' => 'stuk',
+			'set_rate' => '35.00',
+			'set_amount' => '8',
 			'activity_id' => $test_activity8->id
 		));
 		$calculation_equipment_activity8_4 = EstimateEquipment::create(array(
@@ -1075,6 +1145,10 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '4',
 			'amount' => '3.19',
+			'set_equipment_name' => 'knipper meer',
+			'set_unit' => 'stuk',
+			'set_rate' => '35.00',
+			'set_amount' => '8',
 			'activity_id' => $test_activity8->id
 		));
 		$calculation_material_activity8_5 = EstimateMaterial::create(array(
@@ -1082,14 +1156,22 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '5',
 			'amount' => '3.29',
+			'set_material_name' => 'knipper meer',
+			'set_unit' => 'stuk',
+			'set_rate' => '35.00',
+			'set_amount' => '8',
 			'activity_id' => $test_activity8->id
 		));
 		$calculation_equipment_activity8_5 = EstimateEquipment::create(array(
-			'equipment_name' => 'CHPTR3_ACT8_SUBCON_d',
+			'equipment_name' => 'CHPTR3_ACT8_SUBCON_e',
 			'unit' => 'stuk',
 			'rate' => '5',
 			'amount' => '3.19',
-			'activity_id' => $test_activity7->id
+			'set_equipment_name' => 'knipper meer',
+			'set_unit' => 'stuk',
+			'set_rate' => '35.00',
+			'set_amount' => '8',
+			'activity_id' => $test_activity8->id
 		));
 		$this->command->info('CalculationMaterial created');
 		$this->command->info('CalculationEquipment created');
@@ -1145,6 +1227,8 @@ class TestProjectSeeder extends Seeder {
 		$this->command->info('MoreEquipment created');
 
 		EstimateLabor::create(array(
+			'rate' => '35.00',
+			'amount' => '8',
 			'set_rate' => '35.00',
 			'set_amount' => '8',
 			'activity_id' => $test_activity8->id,
@@ -1152,6 +1236,7 @@ class TestProjectSeeder extends Seeder {
 		));
 		$this->command->info('EstimateLabor created');
 
+		/*
 		EstimateMaterial::create(array(
 			'material_name' => 'plankmeerestimate',
 			'unit' => 'm',
@@ -1177,6 +1262,7 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity8->id
 		));
 		$this->command->info('EstimateEquipment created');
+		*/
 
 		$test_user->productFavorite()->attach($test_product->id);
 		$this->command->info('Project favorite created');
