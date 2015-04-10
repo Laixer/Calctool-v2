@@ -117,10 +117,10 @@ class CreateCalculation extends Migration {
 		Schema::create('estimate_labor', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->decimal('rate', 5, 2)->unsigned()->index();
-			$table->decimal('amount', 9, 2)->unsigned()->index();
-			$table->decimal('set_rate', 5, 2)->unsigned()->index();
-			$table->decimal('set_amount', 9, 2)->unsigned()->index();
+			$table->decimal('rate', 5, 2)->unsigned()->nullable()->index();
+			$table->decimal('amount', 9, 2)->unsigned()->nullable()->index();
+			$table->decimal('set_rate', 5, 2)->unsigned()->nullable()->index();
+			$table->decimal('set_amount', 9, 2)->unsigned()->nullable()->index();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('hour_id')->unsigned()->nullable();
@@ -130,14 +130,14 @@ class CreateCalculation extends Migration {
 		Schema::create('estimate_material', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('material_name', 50);
-			$table->string('unit', 10);
-			$table->decimal('rate', 9, 2)->unsigned()->index();
-			$table->decimal('amount', 9, 2)->unsigned()->index();
-			$table->string('set_material_name', 50);
-			$table->string('set_unit', 10);
-			$table->decimal('set_rate', 9, 2)->unsigned()->index();
-			$table->decimal('set_amount', 9, 2)->unsigned()->index();
+			$table->string('material_name', 50)->nullable();
+			$table->string('unit', 10)->nullable();
+			$table->decimal('rate', 9, 2)->unsigned()->nullable()->index();
+			$table->decimal('amount', 9, 2)->unsigned()->nullable()->index();
+			$table->string('set_material_name', 50)->nullable();
+			$table->string('set_unit', 10)->nullable();
+			$table->decimal('set_rate', 9, 2)->unsigned()->nullable()->index();
+			$table->decimal('set_amount', 9, 2)->unsigned()->nullable()->index();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
 		});
@@ -145,14 +145,14 @@ class CreateCalculation extends Migration {
 		Schema::create('estimate_equipment', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('equipment_name', 50);
-			$table->string('unit', 10);
-			$table->decimal('rate', 9, 2)->unsigned()->index();
-			$table->decimal('amount', 9, 2)->unsigned()->index();
-			$table->string('set_equipment_name', 50);
-			$table->string('set_unit', 10);
-			$table->decimal('set_rate', 9, 2)->unsigned()->index();
-			$table->decimal('set_amount', 9, 2)->unsigned()->index();
+			$table->string('equipment_name', 50)->nullable();
+			$table->string('unit', 10)->nullable();
+			$table->decimal('rate', 9, 2)->unsigned()->nullable()->index();
+			$table->decimal('amount', 9, 2)->unsigned()->nullable()->index();
+			$table->string('set_equipment_name', 50)->nullable();
+			$table->string('set_unit', 10)->nullable();
+			$table->decimal('set_rate', 9, 2)->unsigned()->nullable()->index();
+			$table->decimal('set_amount', 9, 2)->unsigned()->nullable()->index();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
 		});

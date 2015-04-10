@@ -56,8 +56,11 @@ class TestProjectSeeder extends Seeder {
 		$test_deliver = DeliverTime::where('delivertime_name','=','3 weken')->first();
 		$test_specification = Specification::where('specification_name','=','gespecificeerd, exclusief omschrijving')->first();
 		$test_valid = Valid::where('valid_name','=','3 maanden')->first();
-		$test_tax = Tax::where('tax_rate','=','21')->first();
-		$test_product = Product::where('description','=','Hoge kast deur links 60cm met nis 450/485/880mm')->first();
+		$test_tax1 = Tax::where('tax_rate','=','21')->first();
+		$test_tax2 = Tax::where('tax_rate','=','6')->first();
+		$test_tax3 = Tax::where('tax_rate','=','0')->first();
+
+		//$test_product = Product::where('description','=','Hoge kast deur links 60cm met nis 450/485/880mm')->first();
 
 		$test_user = User::create(array(
 			'username' => 'system',
@@ -232,15 +235,15 @@ class TestProjectSeeder extends Seeder {
 			'part_id' => $test_part_contract->id,
 			'part_type_id' => $test_part_type_calc->id,
 			'detail_id' => $test_detail->id,
-			'tax_calc_labor_id' => $test_tax->id,
-			'tax_calc_material_id' => $test_tax->id,
-			'tax_calc_equipment_id' => $test_tax->id,
-			'tax_more_labor_id' => $test_tax->id,
-			'tax_more_material_id' => $test_tax->id,
-			'tax_more_equipment_id' => $test_tax->id,
-			'tax_estimate_labor_id' => $test_tax->id,
-			'tax_estimate_material_id' => $test_tax->id,
-			'tax_estimate_equipment_id' => $test_tax->id
+			'tax_calc_labor_id' => $test_tax1->id,
+			'tax_calc_material_id' => $test_tax1->id,
+			'tax_calc_equipment_id' => $test_tax1->id,
+			'tax_more_labor_id' => $test_tax1->id,
+			'tax_more_material_id' => $test_tax1->id,
+			'tax_more_equipment_id' => $test_tax1->id,
+			'tax_estimate_labor_id' => $test_tax1->id,
+			'tax_estimate_material_id' => $test_tax1->id,
+			'tax_estimate_equipment_id' => $test_tax1->id
 		));
 		$this->command->info('Activity created');
 
@@ -252,15 +255,15 @@ class TestProjectSeeder extends Seeder {
 			'part_id' => $test_part_subcontract->id,
 			'part_type_id' => $test_part_type_calc->id,
 			'detail_id' => $test_detail->id,
-			'tax_calc_labor_id' => $test_tax->id,
-			'tax_calc_material_id' => $test_tax->id,
-			'tax_calc_equipment_id' => $test_tax->id,
-			'tax_more_labor_id' => $test_tax->id,
-			'tax_more_material_id' => $test_tax->id,
-			'tax_more_equipment_id' => $test_tax->id,
-			'tax_estimate_labor_id' => $test_tax->id,
-			'tax_estimate_material_id' => $test_tax->id,
-			'tax_estimate_equipment_id' => $test_tax->id
+			'tax_calc_labor_id' => $test_tax1->id,
+			'tax_calc_material_id' => $test_tax1->id,
+			'tax_calc_equipment_id' => $test_tax1->id,
+			'tax_more_labor_id' => $test_tax1->id,
+			'tax_more_material_id' => $test_tax1->id,
+			'tax_more_equipment_id' => $test_tax1->id,
+			'tax_estimate_labor_id' => $test_tax1->id,
+			'tax_estimate_material_id' => $test_tax1->id,
+			'tax_estimate_equipment_id' => $test_tax1->id
 		));
 		$this->command->info('Activity created');
 
@@ -280,15 +283,15 @@ class TestProjectSeeder extends Seeder {
 			'part_id' => $test_part_contract->id,
 			'part_type_id' => $test_part_type_calc->id,
 			'detail_id' => $test_detail->id,
-			'tax_calc_labor_id' => $test_tax->id,
-			'tax_calc_material_id' => $test_tax->id,
-			'tax_calc_equipment_id' => $test_tax->id,
-			'tax_more_labor_id' => $test_tax->id,
-			'tax_more_material_id' => $test_tax->id,
-			'tax_more_equipment_id' => $test_tax->id,
-			'tax_estimate_labor_id' => $test_tax->id,
-			'tax_estimate_material_id' => $test_tax->id,
-			'tax_estimate_equipment_id' => $test_tax->id
+			'tax_calc_labor_id' => $test_tax1->id,
+			'tax_calc_material_id' => $test_tax1->id,
+			'tax_calc_equipment_id' => $test_tax1->id,
+			'tax_more_labor_id' => $test_tax1->id,
+			'tax_more_material_id' => $test_tax1->id,
+			'tax_more_equipment_id' => $test_tax1->id,
+			'tax_estimate_labor_id' => $test_tax1->id,
+			'tax_estimate_material_id' => $test_tax1->id,
+			'tax_estimate_equipment_id' => $test_tax1->id
 		));
 		$this->command->info('Activity created');
 
@@ -300,15 +303,15 @@ class TestProjectSeeder extends Seeder {
 			'part_id' => $test_part_subcontract->id,
 			'part_type_id' => $test_part_type_calc->id,
 			'detail_id' => $test_detail->id,
-			'tax_calc_labor_id' => $test_tax->id,
-			'tax_calc_material_id' => $test_tax->id,
-			'tax_calc_equipment_id' => $test_tax->id,
-			'tax_more_labor_id' => $test_tax->id,
-			'tax_more_material_id' => $test_tax->id,
-			'tax_more_equipment_id' => $test_tax->id,
-			'tax_estimate_labor_id' => $test_tax->id,
-			'tax_estimate_material_id' => $test_tax->id,
-			'tax_estimate_equipment_id' => $test_tax->id
+			'tax_calc_labor_id' => $test_tax1->id,
+			'tax_calc_material_id' => $test_tax1->id,
+			'tax_calc_equipment_id' => $test_tax1->id,
+			'tax_more_labor_id' => $test_tax1->id,
+			'tax_more_material_id' => $test_tax1->id,
+			'tax_more_equipment_id' => $test_tax1->id,
+			'tax_estimate_labor_id' => $test_tax1->id,
+			'tax_estimate_material_id' => $test_tax1->id,
+			'tax_estimate_equipment_id' => $test_tax1->id
 		));
 		$this->command->info('Activity created');
 
@@ -328,15 +331,15 @@ class TestProjectSeeder extends Seeder {
 			'part_id' => $test_part_contract->id,
 			'part_type_id' => $test_part_type_calc->id,
 			'detail_id' => $test_detail->id,
-			'tax_calc_labor_id' => $test_tax->id,
-			'tax_calc_material_id' => $test_tax->id,
-			'tax_calc_equipment_id' => $test_tax->id,
-			'tax_more_labor_id' => $test_tax->id,
-			'tax_more_material_id' => $test_tax->id,
-			'tax_more_equipment_id' => $test_tax->id,
-			'tax_estimate_labor_id' => $test_tax->id,
-			'tax_estimate_material_id' => $test_tax->id,
-			'tax_estimate_equipment_id' => $test_tax->id
+			'tax_calc_labor_id' => $test_tax1->id,
+			'tax_calc_material_id' => $test_tax1->id,
+			'tax_calc_equipment_id' => $test_tax1->id,
+			'tax_more_labor_id' => $test_tax1->id,
+			'tax_more_material_id' => $test_tax1->id,
+			'tax_more_equipment_id' => $test_tax1->id,
+			'tax_estimate_labor_id' => $test_tax1->id,
+			'tax_estimate_material_id' => $test_tax1->id,
+			'tax_estimate_equipment_id' => $test_tax1->id
 		));
 		$this->command->info('Activity created');
 
@@ -348,15 +351,15 @@ class TestProjectSeeder extends Seeder {
 			'part_id' => $test_part_subcontract->id,
 			'part_type_id' => $test_part_type_calc->id,
 			'detail_id' => $test_detail->id,
-			'tax_calc_labor_id' => $test_tax->id,
-			'tax_calc_material_id' => $test_tax->id,
-			'tax_calc_equipment_id' => $test_tax->id,
-			'tax_more_labor_id' => $test_tax->id,
-			'tax_more_material_id' => $test_tax->id,
-			'tax_more_equipment_id' => $test_tax->id,
-			'tax_estimate_labor_id' => $test_tax->id,
-			'tax_estimate_material_id' => $test_tax->id,
-			'tax_estimate_equipment_id' => $test_tax->id
+			'tax_calc_labor_id' => $test_tax1->id,
+			'tax_calc_material_id' => $test_tax1->id,
+			'tax_calc_equipment_id' => $test_tax1->id,
+			'tax_more_labor_id' => $test_tax1->id,
+			'tax_more_material_id' => $test_tax1->id,
+			'tax_more_equipment_id' => $test_tax1->id,
+			'tax_estimate_labor_id' => $test_tax1->id,
+			'tax_estimate_material_id' => $test_tax1->id,
+			'tax_estimate_equipment_id' => $test_tax1->id
 		));
 		$this->command->info('Activity created');
 
@@ -368,15 +371,15 @@ class TestProjectSeeder extends Seeder {
 			'part_id' => $test_part_contract->id,
 			'part_type_id' => $test_part_type_est->id,
 			'detail_id' => $test_detail->id,
-			'tax_calc_labor_id' => $test_tax->id,
-			'tax_calc_material_id' => $test_tax->id,
-			'tax_calc_equipment_id' => $test_tax->id,
-			'tax_more_labor_id' => $test_tax->id,
-			'tax_more_material_id' => $test_tax->id,
-			'tax_more_equipment_id' => $test_tax->id,
-			'tax_estimate_labor_id' => $test_tax->id,
-			'tax_estimate_material_id' => $test_tax->id,
-			'tax_estimate_equipment_id' => $test_tax->id
+			'tax_calc_labor_id' => $test_tax1->id,
+			'tax_calc_material_id' => $test_tax1->id,
+			'tax_calc_equipment_id' => $test_tax1->id,
+			'tax_more_labor_id' => $test_tax1->id,
+			'tax_more_material_id' => $test_tax1->id,
+			'tax_more_equipment_id' => $test_tax1->id,
+			'tax_estimate_labor_id' => $test_tax1->id,
+			'tax_estimate_material_id' => $test_tax1->id,
+			'tax_estimate_equipment_id' => $test_tax1->id
 		));
 		$this->command->info('Activity created');
 
@@ -388,15 +391,15 @@ class TestProjectSeeder extends Seeder {
 			'part_id' => $test_part_subcontract->id,
 			'part_type_id' => $test_part_type_est->id,
 			'detail_id' => $test_detail->id,
-			'tax_calc_labor_id' => $test_tax->id,
-			'tax_calc_material_id' => $test_tax->id,
-			'tax_calc_equipment_id' => $test_tax->id,
-			'tax_more_labor_id' => $test_tax->id,
-			'tax_more_material_id' => $test_tax->id,
-			'tax_more_equipment_id' => $test_tax->id,
-			'tax_estimate_labor_id' => $test_tax->id,
-			'tax_estimate_material_id' => $test_tax->id,
-			'tax_estimate_equipment_id' => $test_tax->id
+			'tax_calc_labor_id' => $test_tax1->id,
+			'tax_calc_material_id' => $test_tax1->id,
+			'tax_calc_equipment_id' => $test_tax1->id,
+			'tax_more_labor_id' => $test_tax1->id,
+			'tax_more_material_id' => $test_tax1->id,
+			'tax_more_equipment_id' => $test_tax1->id,
+			'tax_estimate_labor_id' => $test_tax1->id,
+			'tax_estimate_material_id' => $test_tax1->id,
+			'tax_estimate_equipment_id' => $test_tax1->id
 		));
 		$this->command->info('Activity created');
 
@@ -1264,7 +1267,7 @@ class TestProjectSeeder extends Seeder {
 		$this->command->info('EstimateEquipment created');
 		*/
 
-		$test_user->productFavorite()->attach($test_product->id);
-		$this->command->info('Project favorite created');
+		//$test_user->productFavorite()->attach($test_product->id);
+		//$this->command->info('Project favorite created');
 	}
  }
