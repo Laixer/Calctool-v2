@@ -47,4 +47,54 @@ class Register {
 		return (1+($profit/100))*$total;
 	}
 
+
+
+
+
+
+/*Calculation Estimate labor*/
+	public static function estimLaborTotal($rate, $amount) {
+		return $rate * $amount;
+	}
+
+/*Calculation Estimate Material*/
+	public static function estimMaterialTotal($activity) {
+		$total = 0;
+
+		$rows = EstimateMaterial::where('activity_id', '=', $activity)->get();
+		foreach ($rows as $row)
+		{
+			$total += Register::estimLaborTotal($row->rate, $row->amount);
+		}
+
+		return $total;
+	}
+
+/*Calculation Estimate Material Profit*/
+	public static function estimMaterialTotalProfit($activity, $profit) {
+		$total = Register::estimMaterialTotal($activity);
+
+		return (1+($profit/100))*$total;
+	}
+
+/*Calculation Estimate Equipment*/
+	public static function estimEquipmentTotal($activity) {
+		$total = 0;
+
+		$rows = EstimateEquipment::where('activity_id', '=', $activity)->get();
+		foreach ($rows as $row)
+		{
+			$total += Register::estimLaborTotal($row->rate, $row->amount);
+		}
+
+		return $total;
+	}
+
+/*Calculation Estimate Equipment Profit*/
+	public static function estimEquipmentTotalProfit($activity, $profit) {
+		$total = Register::estimEquipmentTotal($activity);
+
+		return (1+($profit/100))*$total;
+	}
+
 }
