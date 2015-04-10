@@ -1141,7 +1141,7 @@ var n = this,
 													</tbody>
 													<tbody>
 														<tr>
-															<td class="col-md-5"><strong>Totaal</strong></td>
+															<td class="col-md-5"><strong>Totaal_estim_mat</strong></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
@@ -1240,13 +1240,35 @@ var n = this,
 													</tbody>
 													<tbody>
 														<tr>
-															<td class="col-md-5"><strong>Totaal</strong></td>
+															<td class="col-md-5"><strong>Totaal_estim_equip</strong></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1"><strong>&euro;{{ number_format(Register::calcEquipmentTotal($activity->id), 2,",",".") }}</strong></td>
 															<td class="col-md-1"><strong>&euro;{{ number_format(Register::calcEquipmentTotalProfit($activity->id, Auth::user()->id), 2,",",".") }}</strong></td>
 															<td class="col-md-1">&nbsp;</td>
+
+															<td class="col-md-1">
+															<?php
+															if (Part::find($activity->part_id)->part_name=='contracting') {
+																$profit = $project->profit_calc_contr_equip;
+															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+																$profit = $project->profit_calc_subcontr_equip;
+															}
+															echo '&euro; '.number_format(Register::calcEquipmentTotal($activity->id, $profit), 2, ",",".");
+															?></span></td>
+															<td class="col-md-1"><strong>
+															<?php
+															if (Part::find($activity->part_id)->part_name=='contracting') {
+																$profit = $project->profit_calc_contr_equip;
+															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+																$profit = $project->profit_calc_subcontr_equip;
+															}
+															echo '&euro; '.number_format(Register::calcEquipmentTotalProfit($activity->id, $profit), 2, ",",".");
+															?></span></td>
+															<td class="col-md-1">&nbsp;</td>
+
+
 														</tr>
 													</tbody>
 												</table>
