@@ -1248,28 +1248,6 @@ var n = this,
 															<td class="col-md-1"><strong>&euro;{{ number_format(Register::calcEquipmentTotal($activity->id), 2,",",".") }}</strong></td>
 															<td class="col-md-1"><strong>&euro;{{ number_format(Register::calcEquipmentTotalProfit($activity->id, Auth::user()->id), 2,",",".") }}</strong></td>
 															<td class="col-md-1">&nbsp;</td>
-
-															<td class="col-md-1">
-															<?php
-															if (Part::find($activity->part_id)->part_name=='contracting') {
-																$profit = $project->profit_calc_contr_equip;
-															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
-																$profit = $project->profit_calc_subcontr_equip;
-															}
-															echo '&euro; '.number_format(Register::calcEquipmentTotal($activity->id, $profit), 2, ",",".");
-															?></span></td>
-															<td class="col-md-1"><strong>
-															<?php
-															if (Part::find($activity->part_id)->part_name=='contracting') {
-																$profit = $project->profit_calc_contr_equip;
-															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
-																$profit = $project->profit_calc_subcontr_equip;
-															}
-															echo '&euro; '.number_format(Register::calcEquipmentTotalProfit($activity->id, $profit), 2, ",",".");
-															?></span></td>
-															<td class="col-md-1">&nbsp;</td>
-
-
 														</tr>
 													</tbody>
 												</table>
