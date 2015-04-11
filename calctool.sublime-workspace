@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"pro",
+				"profit"
+			],
+			[
 				"conCalcE",
 				"conCalcEquipmentActivityTax1AmountTax"
 			],
@@ -104,10 +108,6 @@
 				"unique"
 			],
 			[
-				"pro",
-				"project_step"
-			],
-			[
 				"project",
 				"project_type"
 			],
@@ -127,7 +127,7 @@
 			"file": "app/views/calc/calculation.blade.php",
 			"settings":
 			{
-				"buffer_size": 85815,
+				"buffer_size": 87284,
 				"line_ending": "Unix"
 			}
 		}
@@ -314,13 +314,13 @@
 	],
 	"file_history":
 	[
+		"/var/www/calctool-v2/app/calculus/OverviewCalc.php",
 		"/var/www/calctool-v2/app/routes.php",
 		"/var/www/calctool-v2/app/views/calc/calculation.blade.php",
 		"/var/www/calctool-v2/app/views/calc/estimate.blade.php",
 		"/var/www/calctool-v2/app/controllers/AuthController.php",
 		"/var/www/calctool-v2/app/calculus/Endresult.php",
 		"/var/www/calctool-v2/app/views/layout/master.blade.php",
-		"/var/www/calctool-v2/app/calculus/OverviewCalc.php",
 		"/var/www/calctool-v2/app/calculus/Register.php",
 		"/var/www/calctool-v2/app/controllers/CalcController.php",
 		"/var/www/calctool-v2/app/database/migrations/2014_09_11_220407_create_calculation.php",
@@ -445,7 +445,7 @@
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
@@ -461,6 +461,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"dsavee",
+			"esavee",
 			"set_rate",
 			"Tax::",
 			"()\n",
@@ -555,15 +557,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 85815,
+						"buffer_size": 87284,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								27240,
-								27240
+								12425,
+								12425
 							]
 						],
 						"settings":
@@ -571,8 +573,8 @@
 							"syntax": "Packages/PHP/PHP.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": 120.0,
-						"translation.y": 9005.0,
+						"translation.x": 105.0,
+						"translation.y": 4335.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,

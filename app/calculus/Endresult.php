@@ -14,7 +14,11 @@ class Endresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$total += CalculationLabor::where('activity_id','=',$activity->id)->sum('amount');
+				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
+					$total += EstimateLabor::where('activity_id','=',$activity->id)->sum('amount');
+				} else {
+					$total += CalculationLabor::where('activity_id','=',$activity->id)->sum('amount');
+				}
 			}
 		}
 
