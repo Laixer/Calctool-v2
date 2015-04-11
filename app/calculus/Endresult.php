@@ -305,12 +305,6 @@ class Endresult {
 		return (Endresult::conCalcEquipmentActivityTax2Amount($project)/100)*6;
 	}
 
-
-
-
-
-
-//deze geeft 20 uur maar moert maar 12 uur zijn. Het lijtkerop dat nog 8 uur optelt die onder subcontr in estimate staat maar wel een ander (0) BTW percentage heeft.
 	public static function subconCalcLaborActivityTax1($project) {
 		$total = 0;
 		$part_id = Part::where('part_name','=','subcontracting')->first()->id;
@@ -610,14 +604,6 @@ class Endresult {
 	public static function subconCalcEquipmentActivityTax2AmountTax($project) {
 		return (Endresult::subconCalcEquipmentActivityTax2Amount($project)/100)*6;
 	}
-
-
-
-
-
-
-
-
 
 	public static function totalContracting($project) {
 		$total = 0;

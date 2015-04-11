@@ -1227,10 +1227,6 @@ class TestProjectSeeder extends Seeder {
 		$this->command->info('CalculationMaterial created');
 		$this->command->info('CalculationEquipment created');
 
-
-
-
-
 		$calculation_labor_activity9 = EstimateLabor::create(array(
 			'rate' => '35.00',
 			'amount' => '7',
@@ -1475,11 +1471,6 @@ class TestProjectSeeder extends Seeder {
 		$this->command->info('CalculationMaterial created');
 		$this->command->info('CalculationEquipment created');
 
-
-
-
-
-
 		LessLabor::create(array(
 			'amount' => '34.56',
 			'activity_id' => $test_activity4->id,
@@ -1530,6 +1521,7 @@ class TestProjectSeeder extends Seeder {
 		));
 		$this->command->info('MoreEquipment created');
 
+		/*
 		EstimateLabor::create(array(
 			'rate' => '35.00',
 			'amount' => '8',
@@ -1540,7 +1532,7 @@ class TestProjectSeeder extends Seeder {
 		));
 		$this->command->info('EstimateLabor created');
 
-		/*
+
 		EstimateMaterial::create(array(
 			'material_name' => 'plankmeerestimate',
 			'unit' => 'm',
