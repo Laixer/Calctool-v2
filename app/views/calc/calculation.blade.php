@@ -810,7 +810,7 @@ var n = this,
 															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-1"><span class="total-incl-tax"></span></td>
-															<td class="col-md-1 text-right" data-profit="{{$profit}}">
+															<td class="col-md-1 text-right" data-profit="{{--$profit--}}">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target=".bs-example-modal-lg"></button>
 																<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
 															</td>
@@ -925,7 +925,7 @@ var n = this,
 															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number esave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-1"><span class="total-incl-tax"></span></td>
-															<td class="col-md-1 text-right" data-profit="{{$profit}}">
+															<td class="col-md-1 text-right" data-profit="{{--$profit--}}">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target=".bs-example-modal-lg"></button>
 																<button class="btn btn-danger btn-xs edeleterow fa fa-times"></button>
 															</td>
