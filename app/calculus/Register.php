@@ -47,11 +47,6 @@ class Register {
 		return (1+($profit/100))*$total;
 	}
 
-
-
-
-
-
 /*Calculation Estimate labor*/
 	public static function estimLaborTotal($rate, $amount) {
 		return $rate * $amount;
