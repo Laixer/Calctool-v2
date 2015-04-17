@@ -122,6 +122,7 @@ class CreateCalculation extends Migration {
 			$table->decimal('set_rate', 5, 2)->unsigned()->nullable()->index();
 			$table->decimal('set_amount', 9, 2)->unsigned()->nullable()->index();
 			$table->boolean('original');
+			$table->boolean('isset');
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('hour_id')->unsigned()->nullable();
@@ -140,6 +141,7 @@ class CreateCalculation extends Migration {
 			$table->decimal('set_rate', 9, 2)->unsigned()->nullable()->index();
 			$table->decimal('set_amount', 9, 2)->unsigned()->nullable()->index();
 			$table->boolean('original');
+			$table->boolean('isset');
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
 		});
@@ -156,6 +158,7 @@ class CreateCalculation extends Migration {
 			$table->decimal('set_rate', 9, 2)->unsigned()->nullable()->index();
 			$table->decimal('set_amount', 9, 2)->unsigned()->nullable()->index();
 			$table->boolean('original');
+			$table->boolean('isset');
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
 		});
