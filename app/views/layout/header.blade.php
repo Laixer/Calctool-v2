@@ -20,16 +20,7 @@
 						{{ HTML::link('/', 'Home') }}
 					</li>
 					<li>
-						<a href="#">Blog</a>
-					</li>
-					<li>
-						{{ HTML::link('about-us', 'Over Ons') }}
-					</li>
-					<li>
-						{{ HTML::link('contact', 'Contact') }}
-					</li>
-					<li>
-						{{ HTML::link('faq', 'FAQ') }}
+						{{ HTML::link('help', 'Help') }}
 					</li>
 					<li class="active">
 					@if (Auth::check())
