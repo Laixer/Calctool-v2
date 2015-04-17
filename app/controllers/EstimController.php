@@ -69,7 +69,8 @@ class EstimController extends BaseController {
 				"set_rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
 				"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
 				"activity_id" => Input::get('activity'),
-				"original" => false
+				"original" => false,
+				"isset" => true
 			));
 
 			return json_encode(['success' => 1, 'id' => $equipment->id]);
