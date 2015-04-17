@@ -92,6 +92,10 @@ var n = this,
 			$toggleOpenTab = sessionStorage.toggleTab{{Auth::user()->id}};
 			$('#tab-'+$toggleOpenTab).addClass('active');
 			$('#'+$toggleOpenTab).addClass('active');
+		} else {
+			sessionStorage.toggleTab{{Auth::user()->id}} = 'calculate';
+			$('#tab-calculate').addClass('active');
+			$('#calculate').addClass('active');
 		}
 		$(".complete").click(function(e){
 			$loc = $(this).attr('data-location');
