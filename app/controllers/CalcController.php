@@ -410,14 +410,11 @@ class CalcController extends BaseController {
 		} else {
 			$material = EstimateMaterial::create(array(
 				"material_name" => Input::get('name'),
-				//"set_material_name" => Input::get('name'),
 				"unit" => Input::get('unit'),
-				//"set_unit" => Input::get('unit'),
 				"rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
-				//"set_rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
 				"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
-				//"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
 				"activity_id" => Input::get('activity'),
+				"original" => true
 			));
 
 			return json_encode(['success' => 1, 'id' => $material->id]);
@@ -443,14 +440,11 @@ class CalcController extends BaseController {
 		} else {
 			$equipment = EstimateEquipment::create(array(
 				"equipment_name" => Input::get('name'),
-				//"set_equipment_name" => Input::get('name'),
 				"unit" => Input::get('unit'),
-				//"set_unit" => Input::get('unit'),
 				"rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
-				//"set_rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
 				"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
-				//"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
 				"activity_id" => Input::get('activity'),
+				"original" => true
 			));
 
 			return json_encode(['success' => 1, 'id' => $equipment->id]);
@@ -480,10 +474,9 @@ class CalcController extends BaseController {
 			}
 			$labor = EstimateLabor::create(array(
 				"rate" => $rate,
-				//"set_rate" => $rate,
 				"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
-				//"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
 				"activity_id" => Input::get('activity'),
+				"original" => true
 			));
 
 			return json_encode(['success' => 1, 'id' => $labor->id]);

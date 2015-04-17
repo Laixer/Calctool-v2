@@ -78,6 +78,11 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('less', array('as' => 'less', 'uses' => 'CalcController@getLess'));
 	Route::get('more', array('as' => 'more', 'uses' => 'CalcController@getMore'));
 
+	/* Estimate acions by estimate */
+	Route::post('estimate/newmaterial', array('as' => 'calculation', 'uses' => 'EstimController@doNewEstimateMaterial'));
+	Route::post('estimate/updatematerial', array('as' => 'calculation', 'uses' => 'EstimController@doUpdateEstimateMaterial'));
+	Route::post('estimate/deletematerial', array('as' => 'calculation', 'uses' => 'EstimController@doDeleteEstimateMaterial'));
+
 	/* Relation pages */
 	Route::get('relation/new', array('as' => 'relation.new', 'uses' => 'RelationController@getNew'));
 	Route::post('relation/new', array('as' => 'relation.new', 'uses' => 'RelationController@doNew'));

@@ -124,10 +124,34 @@
 	"buffers":
 	[
 		{
-			"file": "app/views/calc/calculation.blade.php",
+			"file": "app/controllers/CalcController.php",
 			"settings":
 			{
-				"buffer_size": 87284,
+				"buffer_size": 17775,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/controllers/EstimController.php",
+			"settings":
+			{
+				"buffer_size": 6952,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/routes.php",
+			"settings":
+			{
+				"buffer_size": 5779,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/calc/estimate.blade.php",
+			"settings":
+			{
+				"buffer_size": 50779,
 				"line_ending": "Unix"
 			}
 		}
@@ -303,23 +327,25 @@
 		"/var/www/calctool-v2",
 		"/var/www/calctool-v2/app",
 		"/var/www/calctool-v2/app/calculus",
+		"/var/www/calctool-v2/app/commands",
 		"/var/www/calctool-v2/app/controllers",
 		"/var/www/calctool-v2/app/database",
-		"/var/www/calctool-v2/app/database/migrations",
 		"/var/www/calctool-v2/app/database/seeds",
-		"/var/www/calctool-v2/app/start",
+		"/var/www/calctool-v2/app/lang",
+		"/var/www/calctool-v2/app/models",
+		"/var/www/calctool-v2/app/storage/views",
+		"/var/www/calctool-v2/app/tests",
 		"/var/www/calctool-v2/app/views",
-		"/var/www/calctool-v2/app/views/calc",
-		"/var/www/calctool-v2/bootstrap"
+		"/var/www/calctool-v2/app/views/calc"
 	],
 	"file_history":
 	[
+		"/var/www/calctool-v2/app/calculus/Endresult.php",
+		"/var/www/calctool-v2/app/views/calc/calculation.blade.php",
 		"/var/www/calctool-v2/app/calculus/OverviewCalc.php",
 		"/var/www/calctool-v2/app/routes.php",
-		"/var/www/calctool-v2/app/views/calc/calculation.blade.php",
 		"/var/www/calctool-v2/app/views/calc/estimate.blade.php",
 		"/var/www/calctool-v2/app/controllers/AuthController.php",
-		"/var/www/calctool-v2/app/calculus/Endresult.php",
 		"/var/www/calctool-v2/app/views/layout/master.blade.php",
 		"/var/www/calctool-v2/app/calculus/Register.php",
 		"/var/www/calctool-v2/app/controllers/CalcController.php",
@@ -461,6 +487,15 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"/estim",
+			"col-md-1 text-right\" data-profit",
+			"col-md-1 text-right",
+			"$profit",
+			"dsave",
+			"esave",
+			"dsavee",
+			"lsavee",
+			"esavee",
 			"dsavee",
 			"esavee",
 			"set_rate",
@@ -548,24 +583,24 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "app/views/calc/calculation.blade.php",
+					"file": "app/controllers/CalcController.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 87284,
+						"buffer_size": 17775,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								12425,
-								12425
+								17775,
+								17775
 							]
 						],
 						"settings":
@@ -573,8 +608,95 @@
 							"syntax": "Packages/PHP/PHP.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": 105.0,
-						"translation.y": 4335.0,
+						"translation.x": 0.0,
+						"translation.y": 7877.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/controllers/EstimController.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6952,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3454,
+								3454
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1448.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/routes.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5779,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4844,
+								4844
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 11.0,
+						"translation.y": 759.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/views/calc/estimate.blade.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 50779,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								33347,
+								33347
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 472.0,
+						"translation.y": 10950.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -664,7 +786,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 276.0,
+	"side_bar_width": 273.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

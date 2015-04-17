@@ -104,7 +104,7 @@ var n = this,
 		$("body").on("change", ".dsave", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id")){
-				$.post("/calculation/calc/updatematerial", {
+				$.post("/estimate/updatematerial", {
 					id: $curThis.closest("tr").attr("data-id"),
 					name: $curThis.closest("tr").find("input[name='name']").val(),
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
@@ -258,7 +258,7 @@ var n = this,
 					flag = false;
 			});
 			if(flag){
-				$.post("/calculation/calc/newmaterial", {
+				$.post("/estimate/newmaterial", {
 					name: $curThis.closest("tr").find("input[name='name']").val(),
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
@@ -335,7 +335,7 @@ var n = this,
 		$("body").on("change", ".dsavee", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id")){
-				$.post("/calculation/estim/updatematerial", {
+				$.post("/estimate/updatematerial", {
 					id: $curThis.closest("tr").attr("data-id"),
 					name: $curThis.closest("tr").find("input[name='name']").val(),
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
@@ -489,7 +489,7 @@ var n = this,
 					flag = false;
 			});
 			if(flag){
-				$.post("/calculation/estim/newmaterial", {
+				$.post("/estimate/newmaterial", {
 					name: $curThis.closest("tr").find("input[name='name']").val(),
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
@@ -566,7 +566,7 @@ var n = this,
 		$("body").on("click", ".sdeleterow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/calculation/calc/deletematerial", {id: $curThis.closest("tr").attr("data-id")}, function(){
+				$.post("/estimate/deletematerial", {id: $curThis.closest("tr").attr("data-id")}, function(){
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});
@@ -580,7 +580,7 @@ var n = this,
 		$("body").on("click", ".sdeleterowe", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/calculation/estim/deletematerial", {id: $curThis.closest("tr").attr("data-id")}, function(){
+				$.post("/estimate/deletematerial", {id: $curThis.closest("tr").attr("data-id")}, function(){
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});
@@ -730,12 +730,12 @@ var n = this,
 													<?# -- table items -- ?>
 													<tbody>
 														@foreach (EstimateMaterial::where('activity_id','=', $activity->id)->get() as $material)
-														<tr data-id="{{ $material->id }}">
-															<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text dsavee newrow" /></td>
-															<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text dsavee" /></td>
-															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-sm-number dsavee" /></td>
-															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-sm-number dsavee" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</span></td>
+														<tr data-id="{{ $material->id }}"> <!-- TODO: check voor original -->
+															<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $material->original ? $material->material_name : $material->set_material_name }}" class="form-control-sm-text dsavee newrow" /></td>
+															<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $material->original ? $material->unit : $material->set_unit }}" class="form-control-sm-text dsavee" /></td>
+															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->original ? $material->rate : $material->set_rate, 2,",",".") }}" class="form-control-sm-number dsavee" /></td>
+															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->original ? $material->amount : $material->set_amount, 2,",",".") }}" class="form-control-sm-number dsavee" /></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->original ? $material->rate * $material->amount : $material->set_rate * $material->set_amount, 2,",",".") }}</span></td>
 															<td class="col-md-1"><span class="total-incl-tax">
 															<?php
 																if (Part::find($activity->part_id)->part_name=='contracting') {
@@ -743,11 +743,11 @@ var n = this,
 																} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 																	$profit = $project->profit_calc_subcontr_mat;
 																}
-																echo '&euro; '.number_format($material->rate*$material->amount*((100+$profit)/100), 2,",",".")
+																echo '&euro; '.number_format(($material->original ? $material->rate * $material->amount : $material->set_rate*$material->set_amount) *((100+$profit)/100), 2,",",".")
 															?></span></td>
 															<td class="col-md-1 text-right">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
-																<button class="btn btn-warning btn-xs fa fa-undo"></button>
+																<button class="btn btn-xs fa {{$material->original ? 'btn-warning fa-undo' : 'btn-danger fa-times'}}"></button>
 
 																<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 																	<div class="modal-dialog">
