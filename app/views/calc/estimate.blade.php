@@ -910,7 +910,7 @@ var n = this,
 										@endforeach
 									</div>
 
-									{{ Form::open(array('url' => '/calculation/newactivity/' . $chapter->id)) }}
+									{{ Form::open(array('url' => '/calculation/estim/newactivity/' . $chapter->id)) }}
 									<div class="row">
 										<div class="col-md-6">
 

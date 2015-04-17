@@ -61,7 +61,7 @@ class CalcController extends BaseController {
 
 	}
 
-	public function doNewActivity()
+	public function doNewCalculationActivity()
 	{
 		$rules = array(
 			'activity' => array('required','max:50'),
@@ -76,6 +76,46 @@ class CalcController extends BaseController {
 
 			$part = Part::where('part_name','=','contracting')->first();
 			$part_type = PartType::where('type_name','=','calculation')->first();
+			$tax = Tax::where('tax_rate','=',21)->first();
+
+			$activity = new Activity;
+			$activity->activity_name = Input::get('activity');
+			$activity->priority = 0;
+			$activity->chapter_id = Route::Input('chapter_id');
+			$activity->part_id = $part->id;
+			$activity->part_type_id = $part_type->id;
+			$activity->tax_calc_labor_id = $tax->id;
+			$activity->tax_calc_material_id = $tax->id;
+			$activity->tax_calc_equipment_id = $tax->id;
+			$activity->tax_more_labor_id = $tax->id;
+			$activity->tax_more_material_id = $tax->id;
+			$activity->tax_more_equipment_id = $tax->id;
+			$activity->tax_estimate_labor_id = $tax->id;
+			$activity->tax_estimate_material_id = $tax->id;
+			$activity->tax_estimate_equipment_id = $tax->id;
+
+			$activity->save();
+
+			return Redirect::back()->with('success', 1);
+
+		}
+	}
+
+	public function doNewEstimateActivity()
+	{
+		$rules = array(
+			'activity' => array('required','max:50'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+
+			$part = Part::where('part_name','=','contracting')->first();
+			$part_type = PartType::where('type_name','=','estimate')->first();
 			$tax = Tax::where('tax_rate','=',21)->first();
 
 			$activity = new Activity;
