@@ -76,6 +76,23 @@ var n = this,
 				$('#'+$toggleOpen[i]).addClass('active').children('.toggle-content').toggle();
 			}
 		}
+		$('#tab-calculate').click(function(e){
+			sessionStorage.toggleTab{{Auth::user()->id}} = 'calculate';
+		});
+		$('#tab-estimate').click(function(e){
+			sessionStorage.toggleTab{{Auth::user()->id}} = 'estimate';
+		});
+		$('#tab-summary').click(function(e){
+			sessionStorage.toggleTab{{Auth::user()->id}} = 'summary';
+		});
+		$('#tab-endresult').click(function(e){
+			sessionStorage.toggleTab{{Auth::user()->id}} = 'endresult';
+		});
+		if (sessionStorage.toggleTab{{Auth::user()->id}}){
+			$toggleOpenTab = sessionStorage.toggleTab{{Auth::user()->id}};
+			$('#tab-'+$toggleOpenTab).addClass('active');
+			$('#'+$toggleOpenTab).addClass('active');
+		}
 		$(".complete").click(function(e){
 			$loc = $(this).attr('data-location');
 			window.location.href = $loc;
@@ -639,24 +656,24 @@ var n = this,
 
 			<div class="tabs nomargin">
 
-				<!-- taDebiteurennummer nieuwe relatiebs -->
+				<!-- tabs -->
 				<ul class="nav nav-tabs">
-					<li class="active">
+					<li id="tab-calculate">
 						<a href="#calculate" data-toggle="tab">
 							<i class="fa fa-list-ol"></i> Calculeren
 						</a>
 					</li>
-					<li>
+					<li id="tab-estimate">
 						<a href="#estimate" data-toggle="tab">
 							<i class="fa fa-sort-amount-desc"></i> Stelposten
 						</a>
 					</li>
-					<li>
+					<li id="tab-summary">
 						<a href="#summary" data-toggle="tab">
 							<i class="fa fa-sort-amount-desc"></i> Uittrekstaat
 						</a>
 					</li>
-					<li>
+					<li id="tab-endresult">
 						<a href="#endresult" data-toggle="tab">
 							<i class="fa fa-check-circle-o"></i> Eindresultaat
 						</a>
@@ -665,7 +682,7 @@ var n = this,
 
 				<!-- tabs content -->
 				<div class="tab-content">
-					<div id="calculate" class="tab-pane active">
+					<div id="calculate" class="tab-pane">
 						<div class="toogle">
 
 							@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
