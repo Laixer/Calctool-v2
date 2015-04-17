@@ -63,7 +63,7 @@ class EstimController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
-			$equipment = CalculationEquipment::create(array(
+			$equipment = EstimateEquipment::create(array(
 				"set_equipment_name" => Input::get('name'),
 				"set_unit" => Input::get('unit'),
 				"set_rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
@@ -97,7 +97,7 @@ class EstimController extends BaseController {
 			} else {
 				$rate = str_replace(',', '.', str_replace('.', '' , $rate));
 			}
-			$labor = CalculationLabor::create(array(
+			$labor = EstimateLabor::create(array(
 				"set_rate" => $rate,
 				"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
 				"set_activity_id" => Input::get('activity'),
