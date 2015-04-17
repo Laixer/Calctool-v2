@@ -54,8 +54,6 @@ class CreateUsersTable extends Migration {
 			$table->tinyInteger('pref_profit_calc_contr_equip')->nullable()->unsigned();
 			$table->tinyInteger('pref_profit_calc_subcontr_mat')->nullable()->unsigned();
 			$table->tinyInteger('pref_profit_calc_subcontr_equip')->nullable()->unsigned();
-			$table->tinyInteger('pref_profit_calc_estim_mat')->nullable()->unsigned();
-			$table->tinyInteger('pref_profit_calc_estim_equip')->nullable()->unsigned();
 			$table->tinyInteger('pref_profit_more_contr_mat')->nullable()->unsigned();
 			$table->tinyInteger('pref_profit_more_contr_equip')->nullable()->unsigned();
 			$table->tinyInteger('pref_profit_more_subcontr_mat')->nullable()->unsigned();
