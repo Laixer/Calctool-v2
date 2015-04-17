@@ -246,13 +246,13 @@ class EstimController extends BaseController {
 		} else {
 
 			$equipment = EstimateEquipment::find(Input::get('id'));
-			$equipment ->set_equipment_name = NULL;
-			$equipment ->set_unit =  NULL;
-			$equipment ->set_rate =  NULL;
-			$equipment ->set_amount =  NULL;
-			$equipment ->isset = False;
+			$equipment->set_equipment_name = NULL;
+			$equipment->set_unit =  NULL;
+			$equipment->set_rate =  NULL;
+			$equipment->set_amount =  NULL;
+			$equipment->isset = False;
 
-			$equipment ->save();
+			$equipment->save();
 
 			return json_encode(['success' => 1, 'name' => $equipment->equipment_name, 'unit' => $equipment->unit, 'rate' => number_format($equipment->rate, 2,",","."), 'amount' => number_format($equipment->amount, 2,",",".")]);
 		}
@@ -273,13 +273,13 @@ class EstimController extends BaseController {
 		} else {
 
 			$labor = EstimateLabor::find(Input::get('id'));
-			$labor ->set_rate =  NULL;
-			$labor ->set_amount =  NULL;
-			$labor ->isset = False;
+			$labor->set_rate =  NULL;
+			$labor->set_amount =  NULL;
+			$labor->isset = False;
 
-			$labor ->save();
+			$labor->save();
 
-			return json_encode(['success' => 1, 'rate' => number_format($labor->rate->rate, 2,",","."), 'amount' => number_format($labor->amount, 2,",",".")]);
+			return json_encode(['success' => 1, 'rate' => number_format($labor->rate, 2,",","."), 'amount' => number_format($labor->amount, 2,",",".")]);
 		}
 
 	}
