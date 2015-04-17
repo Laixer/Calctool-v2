@@ -76,6 +76,21 @@ var n = this,
 				$('#'+$toggleOpen[i]).addClass('active').children('.toggle-content').toggle();
 			}
 		}
+		$('#tab-estimate').click(function(e){
+			sessionStorage.toggleTabEstim{{Auth::user()->id}} = 'estimate';
+		});
+		$('#tab-summary').click(function(e){
+			sessionStorage.toggleTabEstim{{Auth::user()->id}} = 'summary';
+		});
+		if (sessionStorage.toggleTabEstim{{Auth::user()->id}}){
+			$toggleOpenTab = sessionStorage.toggleTabEstim{{Auth::user()->id}};
+			$('#tab-'+$toggleOpenTab).addClass('active');
+			$('#'+$toggleOpenTab).addClass('active');
+		} else {
+			sessionStorage.toggleTabEstim{{Auth::user()->id}} = 'estimate';
+			$('#tab-estimate').addClass('active');
+			$('#estimate').addClass('active');
+		}
 		$(".complete").click(function(e){
 			$loc = $(this).attr('data-location');
 			window.location.href = $loc;
@@ -649,12 +664,12 @@ var n = this,
 
 				<!-- taDebiteurennummer nieuwe relatiebs -->
 				<ul class="nav nav-tabs">
-					<li class="active">
+					<li id="tab-estimate">
 						<a href="#estimate" data-toggle="tab">
 							<i class="fa fa-sort-amount-desc"></i> Stelposten
 						</a>
 					</li>
-					<li>
+					<li id="tab-summary">
 						<a href="#summary" data-toggle="tab">
 							<i class="fa fa-sort-amount-desc"></i> Uittrekstaat
 						</a>
@@ -664,7 +679,7 @@ var n = this,
 				<!-- tabs content -->
 				<div class="tab-content">
 
-					<div id="estimate" class="tab-pane active">
+					<div id="estimate" class="tab-pane">
 						<div class="toogle">
 
 							@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)

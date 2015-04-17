@@ -77,23 +77,23 @@ var n = this,
 			}
 		}
 		$('#tab-calculate').click(function(e){
-			sessionStorage.toggleTab{{Auth::user()->id}} = 'calculate';
+			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'calculate';
 		});
 		$('#tab-estimate').click(function(e){
-			sessionStorage.toggleTab{{Auth::user()->id}} = 'estimate';
+			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'estimate';
 		});
 		$('#tab-summary').click(function(e){
-			sessionStorage.toggleTab{{Auth::user()->id}} = 'summary';
+			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'summary';
 		});
 		$('#tab-endresult').click(function(e){
-			sessionStorage.toggleTab{{Auth::user()->id}} = 'endresult';
+			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'endresult';
 		});
-		if (sessionStorage.toggleTab{{Auth::user()->id}}){
-			$toggleOpenTab = sessionStorage.toggleTab{{Auth::user()->id}};
+		if (sessionStorage.toggleTabCalc{{Auth::user()->id}}){
+			$toggleOpenTab = sessionStorage.toggleTabCalc{{Auth::user()->id}};
 			$('#tab-'+$toggleOpenTab).addClass('active');
 			$('#'+$toggleOpenTab).addClass('active');
 		} else {
-			sessionStorage.toggleTab{{Auth::user()->id}} = 'calculate';
+			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'calculate';
 			$('#tab-calculate').addClass('active');
 			$('#calculate').addClass('active');
 		}
