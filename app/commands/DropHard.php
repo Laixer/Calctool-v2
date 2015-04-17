@@ -39,8 +39,10 @@ class DropHard extends Command {
 	 */
 	public function fire()
 	{
-		DB::statement('DROP SCHEMA public CASCADE');
-		DB::statement('CREATE SCHEMA public');
+		$rs = DB::select("SELECT tablename FROM pg_tables WHERE schemaname = 'public'");
+		foreach ($rs as $value) {
+			DB::statement("DROP TABLE ".$value->tablename." CASCADE");
+		}
 	}
 
 	/**
