@@ -1441,7 +1441,7 @@ class TestProjectSeeder extends Seeder {
 		));
 		$this->command->info('MoreEquipment created');
 
-		/*
+/*
 		EstimateLabor::create(array(
 			'rate' => '35.00',
 			'amount' => '8',
@@ -1451,34 +1451,102 @@ class TestProjectSeeder extends Seeder {
 			'hour_id' => $test_timesheet->id
 		));
 		$this->command->info('EstimateLabor created');
-
-
+*/
+		$this->command->info('Estimate_Set_Material_Creating....');
 		EstimateMaterial::create(array(
-			'material_name' => 'plankmeerestimate',
-			'unit' => 'm',
-			'rate' => '50.24',
-			'amount' => '511.22',
-			'set_material_name' => 'plankje meer',
+			'set_material_name' => 'estim_set_mat_1',
 			'set_unit' => 'm2',
-			'set_rate' => '604.56',
-			'set_amount' => '604.56',
-			'activity_id' => $test_activity8->id
+			'set_rate' => '1',
+			'set_amount' => '2',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity9->id
 		));
-		$this->command->info('EstimateMaterial created');
+		EstimateMaterial::create(array(
+			'set_material_name' => 'estim_set_mat_2',
+			'set_unit' => 'm2',
+			'set_rate' => '2',
+			'set_amount' => '3',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity9->id
+		));
+		EstimateMaterial::create(array(
+			'set_material_name' => 'estim_set_mat_3',
+			'set_unit' => 'm2',
+			'set_rate' => '4',
+			'set_amount' => '5',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity9->id
+		));
+		EstimateMaterial::create(array(
+			'set_material_name' => 'estim_set_mat_4',
+			'set_unit' => 'm2',
+			'set_rate' => '6',
+			'set_amount' => '7',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity9->id
+		));
+		EstimateMaterial::create(array(
+			'set_material_name' => 'estim_set_mat_5',
+			'set_unit' => 'm2',
+			'set_rate' => '8',
+			'set_amount' => '9',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity9->id
+		));
+		$this->command->info('Estimate_Set_Material_Created');
 
+		$this->command->info('Estimate_Set_Equipment_Creating....');
 		EstimateEquipment::create(array(
-			'equipment_name' => 'plankknippermeer',
-			'unit' => 'stuk',
-			'rate' => '1212.23',
-			'amount' => '12101.25',
-			'set_equipment_name' => 'knipper meer',
+			'set_equipment_name' => 'estim_set_equip_1',
 			'set_unit' => 'stuk',
-			'set_rate' => '64.56',
-			'set_amount' => '6.56',
-			'activity_id' => $test_activity8->id
+			'set_rate' => '1.1',
+			'set_amount' => '2.2',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity9->id
 		));
-		$this->command->info('EstimateEquipment created');
-		*/
+		EstimateEquipment::create(array(
+			'set_equipment_name' => 'estim_set_equip_2',
+			'set_unit' => 'stuk',
+			'set_rate' => '3.3',
+			'set_amount' => '4.4',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity9->id
+		));
+		EstimateEquipment::create(array(
+			'set_equipment_name' => 'estim_set_equip_3',
+			'set_unit' => 'stuk',
+			'set_rate' => '5.1',
+			'set_amount' => '6.6',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity9->id
+		));
+		EstimateEquipment::create(array(
+			'set_equipment_name' => 'estim_set_equip_4',
+			'set_unit' => 'stuk',
+			'set_rate' => '7.7',
+			'set_amount' => '8.8',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity9->id
+		));
+		EstimateEquipment::create(array(
+			'set_equipment_name' => 'estim_set_equip_5',
+			'set_unit' => 'stuk',
+			'set_rate' => '9.9',
+			'set_amount' => '10.10',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity9->id
+		));
+		$this->command->info('Estimate_Set_Equipment_Created');
 
 		//$test_user->productFavorite()->attach($test_product->id);
 		//$this->command->info('Project favorite created');
