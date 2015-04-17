@@ -13,6 +13,11 @@ class ProjectController extends \BaseController {
 		return View::make('user.new_project');
 	}
 
+	public function getEdit()
+	{
+		return View::make('user.edit_project');
+	}
+
 	public function doNew()
 	{
 		$rules = array(
