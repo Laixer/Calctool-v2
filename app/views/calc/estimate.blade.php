@@ -823,8 +823,24 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>&euro;{{ number_format(EstimateRegister::estimMaterialTotal($activity->id), 2,",",".") }}</strong></td>
-															<td class="col-md-1"><strong>&euro;{{ number_format(EstimateRegister::estimMaterialTotalProfit($activity->id, Auth::user()->id), 2,",",".") }}</strong></td>
+															<td class="col-md-1"><strong>
+															<?php
+															if (Part::find($activity->part_id)->part_name=='contracting') {
+																$profit = $project->profit_calc_contr_mat;
+															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+																$profit = $project->profit_calc_subcontr_mat;
+															}
+															echo '&euro; '.number_format(EstimateRegister::estimMaterialTotal($activity->id, $profit), 2, ",",".");
+															?></span></td>
+															<td class="col-md-1"><strong>
+															<?php
+															if (Part::find($activity->part_id)->part_name=='contracting') {
+																$profit = $project->profit_calc_contr_mat;
+															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+																$profit = $project->profit_calc_subcontr_mat;
+															}
+															echo '&euro; '.number_format(EstimateRegister::estimMaterialTotalProfit($activity->id, $profit), 2, ",",".");
+															?></span></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -916,8 +932,24 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>&euro;{{ number_format(EstimateRegister::estimEquipmentTotal($activity->id), 2,",",".") }}</strong></td>
-															<td class="col-md-1"><strong>&euro;{{ number_format(EstimateRegister::estimEquipmentTotalProfit($activity->id, Auth::user()->id), 2,",",".") }}</strong></td>
+															<td class="col-md-1"><strong>
+															<?php
+															if (Part::find($activity->part_id)->part_name=='contracting') {
+																$profit = $project->profit_calc_contr_equip;
+															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+																$profit = $project->profit_calc_subcontr_equip;
+															}
+															echo '&euro; '.number_format(EstimateRegister::estimEquipmentTotal($activity->id, $profit), 2, ",",".");
+															?></span></td>
+															<td class="col-md-1"><strong>
+															<?php
+															if (Part::find($activity->part_id)->part_name=='contracting') {
+																$profit = $project->profit_calc_contr_equip;
+															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+																$profit = $project->profit_calc_subcontr_equip;
+															}
+															echo '&euro; '.number_format(EstimateRegister::estimEquipmentTotalProfit($activity->id, $profit), 2, ",",".");
+															?></span></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
