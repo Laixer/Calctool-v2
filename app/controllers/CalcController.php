@@ -414,7 +414,8 @@ class CalcController extends BaseController {
 				"rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
 				"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
 				"activity_id" => Input::get('activity'),
-				"original" => true
+				"original" => true,
+				"isset" => false
 			));
 
 			return json_encode(['success' => 1, 'id' => $material->id]);
@@ -444,7 +445,8 @@ class CalcController extends BaseController {
 				"rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
 				"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
 				"activity_id" => Input::get('activity'),
-				"original" => true
+				"original" => true,
+				"isset" => false
 			));
 
 			return json_encode(['success' => 1, 'id' => $equipment->id]);
@@ -476,7 +478,8 @@ class CalcController extends BaseController {
 				"rate" => $rate,
 				"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
 				"activity_id" => Input::get('activity'),
-				"original" => true
+				"original" => true,
+				"isset" => false
 			));
 
 			return json_encode(['success' => 1, 'id' => $labor->id]);
