@@ -909,39 +909,11 @@ var n = this,
 										</div>
 										@endforeach
 									</div>
-
-									{{ Form::open(array('url' => '/calculation/estim/newactivity/' . $chapter->id)) }}
-									<div class="row">
-										<div class="col-md-6">
-
-											<div class="input-group">
-												<input type="text" class="form-control" name="activity" id="activity" value="" placeholder="Nieuwe Werkzaamheid">
-												<span class="input-group-btn">
-													<button class="btn btn-primary btn-primary-activity">Voeg toe</button>
-												</span>
-											</div>
-										</div>
-									</div>
-									{{ Form::close() }}
 								</div>
 							</div>
 							@endforeach
 						</div>
-
-						{{ Form::open(array('url' => '/calculation/newchapter/'.$project->id)) }}
-						<div class="row">
-							<div class="col-md-6">
-								<div class="input-group">
-									<input type="text" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw Hoofdstuk">
-									<span class="input-group-btn">
-										<button class="btn btn-primary btn-primary-chapter">Voeg toe</button>
-									</span>
-								</div>
-							</div>
-						</div>
-						{{ Form::close() }}
 					</div>
-
 					<div id="summary" class="tab-pane">
 						<div class="toogle">
 
