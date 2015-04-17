@@ -20,7 +20,7 @@ class DropHard extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = 'Deletes and recreates the schema';
+	protected $description = 'Drop all tables and rebuild';
 
 	/**
 	 * Create a new command instance.
@@ -43,6 +43,8 @@ class DropHard extends Command {
 		foreach ($rs as $value) {
 			DB::statement("DROP TABLE ".$value->tablename." CASCADE");
 		}
+		Artisan::call('migrate');
+		Artisan::call('db:seed');
 	}
 
 	/**
