@@ -714,7 +714,7 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(EstimateLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsavee" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(EstimateRegister::calcLaborTotal(EstimateLabor::where('activity_id','=', $activity->id)->first()['set_rate'], EstimateLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".")) }}</span></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(EstimateRegister::estimLaborTotal(EstimateLabor::where('activity_id','=', $activity->id)->first()['set_rate'], EstimateLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".")) }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1 text-right"><button class="btn btn-warning btn-xs fa fa-undo"></button></td>
@@ -808,8 +808,8 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>&euro;{{ number_format(EstimateRegister::calcMaterialTotal($activity->id), 2,",",".") }}</strong></td>
-															<td class="col-md-1"><strong>&euro;{{ number_format(EstimateRegister::calcMaterialTotalProfit($activity->id, Auth::user()->id), 2,",",".") }}</strong></td>
+															<td class="col-md-1"><strong>&euro;{{ number_format(EstimateRegister::estimMaterialTotal($activity->id), 2,",",".") }}</strong></td>
+															<td class="col-md-1"><strong>&euro;{{ number_format(EstimateRegister::estimMaterialTotalProfit($activity->id, Auth::user()->id), 2,",",".") }}</strong></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -901,8 +901,8 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>&euro;{{ number_format(EstimateRegister::calcEquipmentTotal($activity->id), 2,",",".") }}</strong></td>
-															<td class="col-md-1"><strong>&euro;{{ number_format(EstimateRegister::calcEquipmentTotalProfit($activity->id, Auth::user()->id), 2,",",".") }}</strong></td>
+															<td class="col-md-1"><strong>&euro;{{ number_format(EstimateRegister::estimEquipmentTotal($activity->id), 2,",",".") }}</strong></td>
+															<td class="col-md-1"><strong>&euro;{{ number_format(EstimateRegister::estimEquipmentTotalProfit($activity->id, Auth::user()->id), 2,",",".") }}</strong></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
