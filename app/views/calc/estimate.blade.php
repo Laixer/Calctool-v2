@@ -567,11 +567,12 @@ var n = this,
 		$("body").on("click", ".sresetrow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/estimate/resetmaterial", {id: $curThis.closest("tr").attr("data-id")}, function(){
-					$curThis.closest("tr").find("input[name='name']").val('');
-					$curThis.closest("tr").find("input[name='unit']").val('');
-					$curThis.closest("tr").find("input[name='rate']").val('');
-					$curThis.closest("tr").find("input[name='amount']").val('');
+				$.post("/estimate/resetmaterial", {id: $curThis.closest("tr").attr("data-id")}, function(data){
+					var json = $.parseJSON(data);
+					$curThis.closest("tr").find("input[name='name']").val(json.name);
+					$curThis.closest("tr").find("input[name='unit']").val(json.unit);
+					$curThis.closest("tr").find("input[name='rate']").val(json.rate);
+					$curThis.closest("tr").find("input[name='amount']").val(json.amount);
 				}).fail(function(e) { console.log(e); });
 		});
 		$("body").on("click", ".edeleterow", function(){
@@ -584,11 +585,12 @@ var n = this,
 		$("body").on("click", ".eresetrow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/estimate/resetequipment", {id: $curThis.closest("tr").attr("data-id")}, function(){
-					$curThis.closest("tr").find("input[name='name']").val('');
-					$curThis.closest("tr").find("input[name='unit']").val('');
-					$curThis.closest("tr").find("input[name='rate']").val('');
-					$curThis.closest("tr").find("input[name='amount']").val('');
+				$.post("/estimate/resetequipment", {id: $curThis.closest("tr").attr("data-id")}, function(data){
+					var json = $.parseJSON(data);
+					$curThis.closest("tr").find("input[name='name']").val(json.name);
+					$curThis.closest("tr").find("input[name='unit']").val(json.unit);
+					$curThis.closest("tr").find("input[name='rate']").val(json.rate);
+					$curThis.closest("tr").find("input[name='amount']").val(json.amount);
 				}).fail(function(e) { console.log(e); });
 		});
 		$("body").on("click", ".sdeleterowe", function(){
@@ -744,12 +746,12 @@ var n = this,
 													<?# -- table items -- ?>
 													<tbody>
 														@foreach (EstimateMaterial::where('activity_id','=', $activity->id)->get() as $material)
-														<tr data-id="{{ $material->id }}"> <!-- TODO: check voor original -->
+														<tr data-id="{{ $material->id }}">
 															<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $material->original ? ($material->isset ? $material->set_material_name : $material->material_name) : $material->set_material_name }}" class="form-control-sm-text dsavee newrow" /></td>
 															<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $material->original ? ($material->isset ? $material->set_unit : $material->unit) : $material->set_unit }}" class="form-control-sm-text dsavee" /></td>
 															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ $material->original ? ($material->isset ? $material->set_rate : $material->rate) : $material->set_rate }}" class="form-control-sm-number dsavee" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ $material->original ? ($material->isset ? $material->set_amount : $material->amount) : $material->set_amount }}" class="form-control-sm-number dsavee" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->original ? $material->rate * $material->amount : $material->set_rate * $material->set_amount, 2,",",".") }}</span></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->original ? ($material->isset ? $material->set_rate * $material->set_amount : $material->rate * $material->amount) : $material->set_rate * $material->set_amount, 2,",",".") }}</span></td>
 															<td class="col-md-1"><span class="total-incl-tax">
 															<?php
 																if (Part::find($activity->part_id)->part_name=='contracting') {
@@ -757,7 +759,7 @@ var n = this,
 																} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 																	$profit = $project->profit_calc_subcontr_mat;
 																}
-																echo '&euro; '.number_format(($material->original ? $material->rate * $material->amount : $material->set_rate*$material->set_amount) *((100+$profit)/100), 2,",",".")
+																echo '&euro; '.number_format(($material->original ? ($material->isset ? $material->set_rate * $material->set_amount : $material->rate * $material->amount) : $material->set_rate * $material->set_amount) *((100+$profit)/100), 2,",",".")
 															?></span></td>
 															<td class="col-md-1 text-right">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
@@ -838,11 +840,11 @@ var n = this,
 													<tbody>
 														@foreach (EstimateEquipment::where('activity_id','=', $activity->id)->get() as $equipment)
 														<tr data-id="{{ $equipment->id }}">
-															<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $equipment->original ? $equipment->equipment_name : $equipment->set_equipment_name}}" class="form-control-sm-text esavee newrow" /></td>
-															<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $equipment->original ? $equipment->unit : $equipment->set_unit }}" class="form-control-sm-text esave" /></td>
-															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($equipment->original ? $equipment->rate : $equipment->set_rate, 2,",",".") }}" class="form-control-sm-number esavee" /></td>
-															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($equipment->original ? $equipment->amount : $equipment->set_amount, 2,",",".") }}" class="form-control-sm-number esavee" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->original ? $equipment->rate * $equipment->amount : $equipment->set_rate * $equipment->set_amount, 2,",",".") }}</span></td>
+															<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $equipment->original ? ($equipment->isset ? $equipment->set_equipment_name : $equipment->equipment_name) : $equipment->set_equipment_name }}" class="form-control-sm-text esavee newrow" /></td>
+															<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $equipment->original ? ($equipment->isset ? $equipment->set_unit : $equipment->unit) : $equipment->set_unit }}" class="form-control-sm-text esave" /></td>
+															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($equipment->original ? ($equipment->isset ? $equipment->set_rate : $equipment->rate) : $equipment->set_rate, 2,",",".") }}" class="form-control-sm-number esavee" /></td>
+															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($equipment->original ? ($equipment->isset ? $equipment->set_amount : $equipment->amount) : $equipment->set_amount, 2,",",".") }}" class="form-control-sm-number esavee" /></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->original ? ($equipment->isset ? $equipment->set_rate * $equipment->set_amount : $equipment->rate * $equipment->amount) : $equipment->set_rate * $equipment->set_amount, 2,",",".") }}</span></td>
 															<td class="col-md-1"><span class="total-incl-tax">
 															<?php
 																if (Part::find($activity->part_id)->part_name=='contracting') {
@@ -850,7 +852,7 @@ var n = this,
 																} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 																	$profit = $project->profit_calc_subcontr_equip;
 																}
-																echo '&euro; '.number_format($equipment->rate*$equipment->amount*((100+$profit)/100), 2,",",".")
+																echo '&euro; '.number_format(($equipment->original ? ($equipment->isset ? $equipment->set_rate * $equipment->set_amount : $equipment->rate * $equipment->amount) : $equipment->set_rate * $equipment->set_amount)*((100+$profit)/100), 2,",",".")
 															?></span></td>
 															<td class="col-md-1 text-right">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>

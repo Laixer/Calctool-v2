@@ -226,7 +226,7 @@ class EstimController extends BaseController {
 
 			$material->save();
 
-			return json_encode(['success' => 1]);
+			return json_encode(['success' => 1, 'name' => $material->material_name, 'unit' => $material->unit, 'rate' => $material->rate, 'amount' => $material->amount]);
 		}
 	}
 
@@ -253,7 +253,7 @@ class EstimController extends BaseController {
 
 			$equipment ->save();
 
-			return json_encode(['success' => 1]);
+			return json_encode(['success' => 1, 'name' => $equipment->equipment_name, 'unit' => $equipment->unit, 'rate' => $equipment->rate, 'amount' => $equipment->amount]);
 		}
 	}
 
@@ -278,7 +278,7 @@ class EstimController extends BaseController {
 
 			$labor ->save();
 
-			return json_encode(['success' => 1]);
+			return json_encode(['success' => 1, 'rate' => $labor->rate, 'amount' => $labor->amount]);
 		}
 
 	}
