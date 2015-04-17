@@ -129,13 +129,13 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h4 class="panel-title">
-									<a data-toggle="collapse" data-parent="#project" href="#project1">
+									<a data-toggle="collapse" data-parent="#project" href="#project{{ $project->id }}">
 										<i class="fa fa-check"></i>
 										{{ $project->project_name }}
 									</a>
 								</h4>
 							</div>
-							<div id="project1" class="collapse">
+							<div id="project{{ $project->id }}" class="collapse">
 								<div class="panel-body">
 									<table class="table table-striped">
 										<?# -- table head -- ?>
