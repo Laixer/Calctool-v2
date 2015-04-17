@@ -640,9 +640,9 @@ var n = this,
 
 			<div class="fuelux">
 				<div id="calculation-wizard" class="wizard">
-					<ul class="steps">Debiteurennummer nieuwe relatie
+					<ul class="steps">
 						<li data-target="#step0" data-location="/" class="complete">Home<span class="chevron"></span></li>
-						<li data-target="#step1" data-location="/project" class="complete">Projectgegevens<span class="chevron"></span></li>
+						<li data-target="#step1" data-location="/project-{{ $project->id }}/edit" class="complete">Projectgegevens<span class="chevron"></span></li>
 						<li data-target="#step2" data-location="/calculation/project-{{ $project->id }}" class="active">Calculatie<span class="chevron"></span></li>
 						<li data-target="#step3">Offerte<span class="chevron"></span></li>
 						<li data-target="#step4" data-location="/estimate/project-{{ $project->id }}" class="complete">Stelpost<span class="chevron"></span></li>
