@@ -1,6 +1,6 @@
 <?php
 
-class Register {
+class EstimateRegister {
 
 /*Calculation labor*/
 	public static function calcLaborTotal($rate, $amount) {
@@ -14,7 +14,7 @@ class Register {
 		$rows = CalculationMaterial::where('activity_id', '=', $activity)->get();
 		foreach ($rows as $row)
 		{
-			$total += Register::calcLaborTotal($row->rate, $row->amount);
+			$total += EstimateRegister::calcLaborTotal($row->rate, $row->amount);
 		}
 
 		return $total;
@@ -22,7 +22,7 @@ class Register {
 
 /*Calculation Material Profit*/
 	public static function calcMaterialTotalProfit($activity, $profit) {
-		$total = Register::calcMaterialTotal($activity);
+		$total = EstimateRegister::calcMaterialTotal($activity);
 
 		return (1+($profit/100))*$total;
 	}
@@ -34,7 +34,7 @@ class Register {
 		$rows = CalculationEquipment::where('activity_id', '=', $activity)->get();
 		foreach ($rows as $row)
 		{
-			$total += Register::calcLaborTotal($row->rate, $row->amount);
+			$total += EstimateRegister::calcLaborTotal($row->rate, $row->amount);
 		}
 
 		return $total;
@@ -42,7 +42,7 @@ class Register {
 
 /*Calculation Equipment Profit*/
 	public static function calcEquipmentTotalProfit($activity, $profit) {
-		$total = Register::calcEquipmentTotal($activity);
+		$total = EstimateRegister::calcEquipmentTotal($activity);
 
 		return (1+($profit/100))*$total;
 	}
@@ -59,7 +59,7 @@ class Register {
 		$rows = EstimateMaterial::where('activity_id', '=', $activity)->get();
 		foreach ($rows as $row)
 		{
-			$total += Register::estimLaborTotal($row->rate, $row->amount);
+			$total += EstimateRegister::estimLaborTotal($row->rate, $row->amount);
 		}
 
 		return $total;
@@ -67,7 +67,7 @@ class Register {
 
 /*Calculation Estimate Material Profit*/
 	public static function estimMaterialTotalProfit($activity, $profit) {
-		$total = Register::estimMaterialTotal($activity);
+		$total = EstimateRegister::estimMaterialTotal($activity);
 
 		return (1+($profit/100))*$total;
 	}
@@ -79,7 +79,7 @@ class Register {
 		$rows = EstimateEquipment::where('activity_id', '=', $activity)->get();
 		foreach ($rows as $row)
 		{
-			$total += Register::estimLaborTotal($row->rate, $row->amount);
+			$total += EstimateRegister::estimLaborTotal($row->rate, $row->amount);
 		}
 
 		return $total;
@@ -87,7 +87,7 @@ class Register {
 
 /*Calculation Estimate Equipment Profit*/
 	public static function estimEquipmentTotalProfit($activity, $profit) {
-		$total = Register::estimEquipmentTotal($activity);
+		$total = EstimateRegister::estimEquipmentTotal($activity);
 
 		return (1+($profit/100))*$total;
 	}

@@ -3,7 +3,7 @@
 /*
  * Uittrekstaat
  */
-class OverviewCalc {
+class CalculationOverview {
 
 /*Calculation labor*/
 	public static function laborActivity($activity) {
@@ -57,9 +57,9 @@ class OverviewCalc {
 	public static function activityTotalProfit($activity, $profit_mat, $profit_equip) {
 		$total = 0;
 
-		$total += OverviewCalc::laborActivity($activity);
-		$total += OverviewCalc::materialActivityProfit($activity, $profit_mat);
-		$total += OverviewCalc::equipmentActivityProfit($activity, $profit_equip);
+		$total += CalculationOverview::laborActivity($activity);
+		$total += CalculationOverview::materialActivityProfit($activity, $profit_mat);
+		$total += CalculationOverview::equipmentActivityProfit($activity, $profit_equip);
 
 		return $total;
 	}
@@ -87,7 +87,7 @@ class OverviewCalc {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
 			{
-				$total += OverviewCalc::laborTotal($activity);
+				$total += CalculationOverview::laborTotal($activity);
 			}
 		}
 
@@ -101,7 +101,7 @@ class OverviewCalc {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
 			{
-				$total += OverviewCalc::laborActivity($activity);
+				$total += CalculationOverview::laborActivity($activity);
 			}
 		}
 		return $total;
@@ -119,7 +119,7 @@ class OverviewCalc {
 				} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 					$profit = $project->profit_calc_subcontr_mat;
 				}
-				$total += OverviewCalc::materialActivityProfit($activity, $profit);
+				$total += CalculationOverview::materialActivityProfit($activity, $profit);
 			}
 		}
 		return $total;
@@ -137,14 +137,14 @@ class OverviewCalc {
 				} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 					$profit = $project->profit_calc_subcontr_equip;
 				}
-				$total += OverviewCalc::equipmentActivityProfit($activity, $profit);
+				$total += CalculationOverview::equipmentActivityProfit($activity, $profit);
 			}
 		}
 		return $total;
 	}
 
 	public static function superTotal($project) {
-		return OverviewCalc::laborSuperTotal($project) + OverviewCalc::materialSuperTotal($project) + OverviewCalc::equipmentSuperTotal($project);
+		return CalculationOverview::laborSuperTotal($project) + CalculationOverview::materialSuperTotal($project) + CalculationOverview::equipmentSuperTotal($project);
 	}
 
 }
