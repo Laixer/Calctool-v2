@@ -110,27 +110,14 @@ var n = this,
 		$(".select-tax").change(function(){
 			$.post("/calculation/updatetax", {value: this.value, activity: $(this).attr("data-id"), type: $(this).attr("data-type")}).fail(function(e) { console.log(e); });
 		});
-		$("body").on("change", ".newrow", function(){
-			var i = 1;
-			if($(this).val()){
-				if(!$(this).closest("tr").next().length){
-					var $curTable = $(this).closest("table");
-					$curTable.find("tr:eq(1)").clone().removeAttr("data-id").find("input").each(function(){
-						$(this).val("").removeClass("error-input").attr("id", function(_, id){ return id + i });
-					}).end().find(".total-ex-tax, .total-incl-tax").text("").end().appendTo($curTable);
-					i++;
-				}
-			}
-		});
 		$("body").on("change", ".dsave", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id")){
-				$.post("/calculation/calc/updatematerial", {
+				$.post("/less/updatematerial", {
 					id: $curThis.closest("tr").attr("data-id"),
-					name: $curThis.closest("tr").find("input[name='name']").val(),
-					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+					activity: $curThis.closest("table").attr("data-id")
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -161,12 +148,11 @@ var n = this,
 		$("body").on("change", ".esave", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id")){
-				$.post("/calculation/calc/updateequipment", {
+				$.post("/less/updateequipment", {
 					id: $curThis.closest("tr").attr("data-id"),
-					name: $curThis.closest("tr").find("input[name='name']").val(),
-					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+					activity: $curThis.closest("table").attr("data-id")
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -197,10 +183,11 @@ var n = this,
 		$("body").on("change", ".lsave", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id")){
-				$.post("/calculation/calc/updatelabor", {
+				$.post("/less/updatelabor", {
 					id: $curThis.closest("tr").attr("data-id"),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+					activity: $curThis.closest("table").attr("data-id")
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -592,43 +579,6 @@ var n = this,
 				});
 			}
 		});
-		$("body").on("click", ".sdeleterow", function(){
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				$.post("/calculation/calc/deletematerial", {id: $curThis.closest("tr").attr("data-id")}, function(){
-					$curThis.closest("tr").hide("slow");
-				}).fail(function(e) { console.log(e); });
-		});
-		$("body").on("click", ".edeleterow", function(){
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				$.post("/calculation/calc/deleteequipment", {id: $curThis.closest("tr").attr("data-id")}, function(){
-					$curThis.closest("tr").hide("slow");
-				}).fail(function(e) { console.log(e); });
-		});
-		$("body").on("click", ".sdeleterowe", function(){
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				$.post("/calculation/estim/deletematerial", {id: $curThis.closest("tr").attr("data-id")}, function(){
-					$curThis.closest("tr").hide("slow");
-				}).fail(function(e) { console.log(e); });
-		});
-		$("body").on("click", ".edeleterowe", function(){
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				$.post("/calculation/estim/deleteequipment", {id: $curThis.closest("tr").attr("data-id")}, function(){
-					$curThis.closest("tr").hide("slow");
-				}).fail(function(e) { console.log(e); });
-		});
-		$("body").on("click", ".deleteact", function(){
-			if(confirm('Weet je het zeker?')){
-				var $curThis = $(this);
-				if($curThis.attr("data-id"))
-					$.post("/calculation/deleteactivity", {activity: $curThis.attr("data-id")}, function(){
-						$('#toggle-activity-'+$curThis.attr("data-id")).hide('slow');
-					}).fail(function(e) { console.log(e); });
-			}
-		});
 	});
 </script>
 
@@ -721,7 +671,7 @@ var n = this,
 
 													<?# -- table items -- ?>
 													<tbody>
-														<tr data-id="{{ CalculationLabor::where('activity_id','=', $activity->id)->first()['id'] }}"><?# -- item -- ?>
+														<tr data-id="{{ CalculationLabor::where('activity_id','=', $activity->id)->first()['id'] }}">
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>

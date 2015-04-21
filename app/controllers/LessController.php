@@ -15,7 +15,7 @@ class LessController extends BaseController {
 	|
 	*/
 
-	public function doNewLessMaterial()
+	/*public function doNewLessMaterial()
 	{
 		$rules = array(
 			'name' => array('required','max:50'),
@@ -38,7 +38,7 @@ class LessController extends BaseController {
 				"set_rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
 				"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
 				"activity_id" => Input::get('activity'),
-				"original" => false,
+				"original" => false,l
 				"isset" => true
 			));
 
@@ -99,15 +99,6 @@ class LessController extends BaseController {
 				$rate = str_replace(',', '.', str_replace('.', '' , $rate));
 			}
 
-			/*$timesheet = Timesheet::create(array(
-				'register_date' => '09-10-2014',
-				'register_hour' => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
-				'part_id' => , // activity ->
-				'part_type_id' => PartType::where('type_name','=','estimate')->first()->id;
-				'detail_id' => ,
-				'project_id' => 1,
-			));*/
-
 			$labor = EstimateLabor::create(array(
 				"set_rate" => $rate,
 				"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
@@ -118,14 +109,13 @@ class LessController extends BaseController {
 
 			return json_encode(['success' => 1, 'id' => $labor->id]);
 		}
-	}
+	}*/
 
-	public function doUpdateEstimateMaterial()
+	public function doUpdateMaterial()
 	{
 		$rules = array(
 			'id' => array('integer','min:0'),
-			'name' => array('max:50'),
-			'unit' => array('max:10'),
+			'activity' => array('integer','min:0'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
 		);
@@ -137,26 +127,22 @@ class LessController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
-
-			$material = EstimateMaterial::find(Input::get('id'));
-			$material->set_material_name = Input::get('name');
-			$material->set_unit = Input::get('unit');
-			$material->set_rate = str_replace(',', '.', str_replace('.', '' , Input::get('rate')));
-			$material->set_amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
-			$material->isset = true;
-
-			$material->save();
+			$equipment = LessMaterial::create(array(
+				"rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
+				"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
+				"activity_id" => Input::get('activity'),
+				"original_id" => Input::get('id')
+			));
 
 			return json_encode(['success' => 1]);
 		}
 	}
 
-	public function doUpdateEstimateEquipment()
+	public function doUpdateEquipment()
 	{
 		$rules = array(
 			'id' => array('integer','min:0'),
-			'name' => array('max:50'),
-			'unit' => array('max:10'),
+			'activity' => array('integer','min:0'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
 		);
@@ -168,25 +154,22 @@ class LessController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
-
-			$equipment = EstimateEquipment::find(Input::get('id'));
-			$equipment->set_equipment_name = Input::get('name');
-			$equipment->set_unit = Input::get('unit');
-			$equipment->set_rate = str_replace(',', '.', str_replace('.', '' , Input::get('rate')));
-			$equipment->set_amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
-			$equipment->isset = true;
-
-			$equipment->save();
+			$equipment = LessEquipment::create(array(
+				"rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
+				"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
+				"activity_id" => Input::get('activity'),
+				"original_id" => Input::get('id')
+			));
 
 			return json_encode(['success' => 1]);
 		}
 	}
 
-	public function doUpdateEstimateLabor()
+	public function doUpdateLabor()
 	{
 		$rules = array(
 			'id' => array('integer','min:0'),
-			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'activity' => array('integer','min:0'),
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
 		);
 
@@ -197,18 +180,11 @@ class LessController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
-			$rate = Input::get('rate');
-			if (empty($rate)) {
-				$rate = Project::where('user_id','=', Auth::user()->id)->first()->hour_rate;
-			} else {
-				$rate = str_replace(',', '.', str_replace('.', '' , $rate));
-			}
-			$labor = EstimateLabor::find(Input::get('id'));
-			$labor->set_rate = $rate;
-			$labor->set_amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
-			$labor->isset = true;
-
-			$labor->save();
+			$labor = LessLabor::create(array(
+				"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
+				"activity_id" => Input::get('activity'),
+				"original_id" => Input::get('id')
+			));
 
 			return json_encode(['success' => 1]);
 		}
