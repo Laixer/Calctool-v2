@@ -163,6 +163,7 @@ background-color: #4E4E4E !important;
     background: #E8E8E8;
     position: relative;
     display: inline-block;
+    text-decoration: none;
 }
 .wizard a:before {
     width: 0;
