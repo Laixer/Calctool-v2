@@ -29,8 +29,8 @@ class CreateCostRegistration extends Migration {
 			$table->foreign('part_type_id')->references('id')->on('part_type')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('detail_id')->nullable()->unsigned();
 			$table->foreign('detail_id')->references('id')->on('detail')->onUpdate('cascade')->onDelete('restrict');
-			$table->integer('project_id')->unsigned();
-			$table->foreign('project_id')->references('id')->on('project')->onUpdate('cascade')->onDelete('cascade');
+			$table->integer('activity_id')->unsigned();
+			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
 		});
 
 		Schema::create('purchase', function(Blueprint $table)

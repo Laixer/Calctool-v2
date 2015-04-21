@@ -454,7 +454,7 @@ class TestProjectSeeder extends Seeder {
 			'part_id' => $test_part_contract->id,
 			'part_type_id' => $test_part_type_calc->id,
 			'detail_id' => $test_detail->id,
-			'project_id' => $test_project->id
+			'activity_id' => $test_activity10->id
 		));
 		$this->command->info('Timesheet created');
 
