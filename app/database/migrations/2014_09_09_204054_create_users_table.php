@@ -136,8 +136,6 @@ class CreateUsersTable extends Migration {
 			$table->tinyInteger('profit_calc_contr_equip')->unsigned()->default('0');
 			$table->tinyInteger('profit_calc_subcontr_mat')->unsigned()->default('0');
 			$table->tinyInteger('profit_calc_subcontr_equip')->unsigned()->default('0');
-			$table->tinyInteger('profit_calc_estim_mat')->unsigned()->default('0');
-			$table->tinyInteger('profit_calc_estim_equip')->unsigned()->default('0');
 			$table->tinyInteger('profit_more_contr_mat')->unsigned()->default('0');
 			$table->tinyInteger('profit_more_contr_equip')->unsigned()->default('0');
 			$table->tinyInteger('profit_more_subcontr_mat')->unsigned()->default('0');

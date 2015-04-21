@@ -75,7 +75,7 @@ class TestProjectSeeder extends Seeder {
 			'last_active' => '2014-09-15',
 			'promotion_code' => md5(mt_rand()),
 			'address_street' => 'adressystem',
-			'address_number' => '1',
+			'address_number' => '1B',
 			'address_postal' => '1234AB',
 			'address_city' => 'citysystem',
 			'website' => 'www.calctool.nl',
