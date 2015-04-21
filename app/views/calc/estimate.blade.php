@@ -639,33 +639,17 @@ var n = this,
 
 		<div class="col-md-12">
 
-		<div class="wizard">
-		    <a href="/"> Home</a>
-		    <a href="/project-{{ $project->id }}/edit">Project</a>
-		    <a href="/calculation/project-{{ $project->id }}">Calculatie</a>
-		    <a href="#">Offerte</a>
-		    <a href="javascript:void(0);" class="current">Stelpost</a>
-		  	<a href="/less/project-{{ $project->id }}">Minderwerk</a>
-		  	<a href="/more/project-{{ $project->id }}">Meerwerk</a>
-		    <a href="#">Factuur</a>
-		    <a href="#">Winst/verlies</a>
-		</div>
-
-			<!--<div class="fuelux">
-				<div id="calculation-wizard" class="wizard">
-					<ul class="steps">Debiteurennummer nieuwe relatie
-						<li data-target="#step0" data-location="/" class="complete">Home<span class="chevron"></span></li>
-						<li data-target="#step1" data-location="/project" class="complete">Projectgegevens<span class="chevron"></span></li>
-						<li data-target="#step2" data-location="/calculation/project-{{ $project->id }}" class="complete">Calculatie<span class="chevron"></span></li>
-						<li data-target="#step3">Offerte<span class="chevron"></span></li>
-						<li data-target="#step4" data-location="/estimate/project-{{ $project->id }}" class="active">Stelpost<span class="chevron"></span></li>
-						<li data-target="#step5">Minderwerk<span class="chevron"></span></li>
-						<li data-target="#step6">Meerwerk<span class="chevron"></span></li>
-						<li data-target="#step7">Factuur<span class="chevron"></span></li>
-						<li data-target="#step8">Winst/Verlies<span class="chevron"></span></li>
-					</ul>
-				</div>
-			</div>-->
+			<div class="wizard">
+				<a href="/"> Home</a>
+				<a href="/project-{{ $project->id }}/edit">Project</a>
+				<a href="/calculation/project-{{ $project->id }}">Calculatie</a>
+				<a href="#">Offerte</a>
+				<a href="javascript:void(0);" class="current">Stelpost</a>
+				<a href="/less/project-{{ $project->id }}">Minderwerk</a>
+				<a href="/more/project-{{ $project->id }}">Meerwerk</a>
+				<a href="#">Factuur</a>
+				<a href="#">Winst/verlies</a>
+			</div>
 
 			<hr />
 
@@ -708,7 +692,6 @@ var n = this,
 													<div class="col-md-4"></div>
 													<div class="col-md-2"></div>
 	    											<div class="col-md-2"></div>
-													<!--<div class="col-md-2 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<textarea></textarea>" data-original-title="A Title" title="" aria-describedby="popover499619" data-id="{{ $activity->id }}" class="btn btn-info btn-xs">Omschrijving toevoegen</button></div>-->
 													<div class="col-md-1 text-right"><strong>{{ Part::find($activity->part_id)->part_name=='subcontracting' ? 'Onderaanneming' : 'Aanneming' }}</strong></div>
 													<div class="col-md-3 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<textarea></textarea>" data-original-title="A Title" title="" aria-describedby="popover499619" class="btn btn-info btn-xs popdesc">Omschrijving toevoegen</button></div>
 												</div>
