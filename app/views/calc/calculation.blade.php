@@ -638,7 +638,7 @@ var n = this,
 
 		<div class="col-md-12">
 
-			<div class="fuelux">
+			<!--<div class="fuelux">
 				<div id="calculation-wizard" class="wizard">
 					<ul class="steps">
 						<li data-target="#step0" data-location="/" class="complete">Home<span class="chevron"></span></li>
@@ -652,7 +652,80 @@ var n = this,
 						<li data-target="#step8">Winst/Verlies<span class="chevron"></span></li>
 					</ul>
 				</div>
-			</div>
+			</div>-->
+    <style>
+.wizard a {
+    padding: 10px 20px 10px 35px;
+    margin-right: 5px;
+    background: #ffffff;
+    position: relative;
+    display: inline-block;
+}
+.wizard a:before {
+    width: 0;
+    height: 0;
+    border-top: 22px inset transparent;
+    border-bottom: 21px inset transparent;
+    border-left: 20px solid rgba(244,245,247,1);
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+}
+.wizard a:after {
+    width: 0;
+    height: 0;
+    border-top: 22px inset transparent;
+    border-bottom: 21px inset transparent;
+    border-left: 20px solid #ffffff;
+    position: absolute;
+    content: "";
+    top: 0;
+    right: -20px;
+    z-index: 2;
+}
+.wizard a:first-child:before,
+.wizard a:last-child:after {
+    border: none;
+}
+.wizard a:first-child {
+    -webkit-border-radius: 4px 0 0 4px;
+       -moz-border-radius: 4px 0 0 4px;
+            border-radius: 4px 0 0 4px;
+}
+.wizard a:last-child {
+    -webkit-border-radius: 0 4px 4px 0;
+       -moz-border-radius: 0 4px 4px 0;
+            border-radius: 0 4px 4px 0;
+}
+.wizard .badge {
+    margin: 0 5px 0 18px;
+    position: relative;
+    top: -1px;
+}
+.wizard a:first-child .badge {
+    margin-left: 0;
+}
+.wizard .current {
+    background: #007ACC;
+    color: #fff;
+}
+.wizard .current:after {
+    border-left-color: #007ACC;
+}
+</style>
+
+<div class="wizard">
+    <a href="/"> Home</a>
+    <a href="/project-{{ $project->id }}/edit">Project</a>
+    <a href="javascript:void(0);" class="current">Calculatie</a>
+    <a href="#">Offerte</a>
+    <a href="/estimate/project-{{ $project->id }}">Stelpost</a>
+    <a href="#">Minderwerk</a>
+    <a href="#">Meerwerk</a>
+    <a href="#">Factuur</a>
+    <a href="#">Winst/verlies</a>
+</div>
 
 			<hr />
 
