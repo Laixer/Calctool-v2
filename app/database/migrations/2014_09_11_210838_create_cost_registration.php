@@ -23,12 +23,6 @@ class CreateCostRegistration extends Migration {
 			$table->date('register_date');
 			$table->decimal('register_hour', 5, 2)->unsigned();
 			$table->text('note')->nullable();
-			$table->integer('part_id')->unsigned();
-			$table->foreign('part_id')->references('id')->on('part')->onUpdate('cascade')->onDelete('restrict');
-			$table->integer('part_type_id')->unsigned();
-			$table->foreign('part_type_id')->references('id')->on('part_type')->onUpdate('cascade')->onDelete('restrict');
-			$table->integer('detail_id')->nullable()->unsigned();
-			$table->foreign('detail_id')->references('id')->on('detail')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
 		});

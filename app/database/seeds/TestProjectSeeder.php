@@ -451,9 +451,6 @@ class TestProjectSeeder extends Seeder {
 			'register_date' => '09-10-2014',
 			'register_hour' => '24',
 			'note' => 'omschrijving bij uren invoer',
-			'part_id' => $test_part_contract->id,
-			'part_type_id' => $test_part_type_calc->id,
-			'detail_id' => $test_detail->id,
 			'activity_id' => $test_activity10->id
 		));
 		$this->command->info('Timesheet created');
