@@ -6,11 +6,6 @@ $project = Project::find(Route::Input('project_id'));
 
 @section('content')
 <?# -- WRAPPER -- ?>
-<script type="text/javascript">
-	$(document).ready(function() {
-		console.log('hit');
-	});
-</script>
 <div id="wrapper">
 
 	<section class="container">
@@ -20,7 +15,7 @@ $project = Project::find(Route::Input('project_id'));
 			@if(Session::get('success'))
 			<div class="alert alert-success">
 				<i class="fa fa-check-circle"></i>
-				<strong>Opgeslagen</strong>
+				<strong>Aangepast</strong>
 			</div>
 			@endif
 
@@ -61,7 +56,7 @@ $project = Project::find(Route::Input('project_id'));
 			</div>
 			@endif
 
-			{{ Form::open(array('url' => 'project/new')) }}
+			{{ Form::open(array('url' => 'project/update')) }}
 				<h4>Projectgegevens</h4>
 				<div class="row">
 
@@ -69,6 +64,7 @@ $project = Project::find(Route::Input('project_id'));
 						<div class="form-group">
 							<label for="name">Projectnaam</label>
 							<input name="name" id="name" type="text" value="{{ Input::old('name') ? Input::old('name') : $project->project_name }}" class="form-control" />
+							<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
 						</div>
 					</div>
 					<div class="col-md-4">
@@ -377,7 +373,7 @@ $project = Project::find(Route::Input('project_id'));
 												<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
 											</tr>
 											<tr><!-- item -->
-												<td class="col-md-1"><input type="date" class="form-control control-sm"/></td>
+												<!--<td class="col-md-1"><input type="date" class="form-control control-sm"/></td>
 												<td class="col-md-1"><input type="number" min="0" class="form-control control-sm"/></td>
 												<td class="col-md-1">
 													<select name="type" id="type" class="form-control pointer control-sm">
@@ -403,7 +399,7 @@ $project = Project::find(Route::Input('project_id'));
 													</select>
 												</td>
 												<td class="col-md-1"><button class="btn btn-primary btn-xs fa fa-comment-o"> Notitie</button></td>
-												<td class="col-md-1">&nbsp;</button></td>
+												<td class="col-md-1">&nbsp;</button></td>-->
 											</tr>
 										</tbody>
 									</table>
