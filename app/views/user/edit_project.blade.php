@@ -259,72 +259,10 @@ $project = Project::find(Route::Input('project_id'));
 
 
 						<div id="hour" class="tab-pane">
-							<div class="toggle">
-								<label>Twee weken geleden</label>
-								<div class="toggle-content">
-									<table class="table table-striped">
-										<?# -- table head -- ?>
-										<thead>
-											<tr>
-												<th class="col-md-1">Datum</th>
-												<th class="col-md-1">Uren</th>
-												<th class="col-md-1">Soort</th>
-												<th class="col-md-1">BTW</th>
-												<th class="col-md-2">Hoofdstuk</th>
-												<th class="col-md-4">Werkzaamheid</th>
-												<th class="col-md-1">&nbsp;</th>
-												<th class="col-md-1">&nbsp;</th>
-											</tr>
-										</thead>
 
-										<!-- table items -->
-										<tbody>
-											<tr><!-- item -->
-												<td class="col-md-1">5-7-2014</td>
-												<td class="col-md-1">5</td>
-												<td class="col-md-1">Meerwerk</td>
-												<td class="col-md-1">21%</td>
-												<td class="col-md-2">Badkamer</td>
-												<td class="col-md-4">Vervangen van oude cementvloer</td>
-												<td class="col-md-1"><button class="btn btn-primary btn-xs fa fa-comment-o"> Notitie</button></td>
-												<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
-											</tr>
-											<tr><!-- item -->
-												<td class="col-md-1">5-7-2014</td>
-												<td class="col-md-1">5</td>
-												<td class="col-md-1">Meerwerk</td>
-												<td class="col-md-1">21%</td>
-												<td class="col-md-2">Badkamer</td>
-												<td class="col-md-4">Vervangen van oude cementvloer</td>
-												<td class="col-md-1"><button class="btn btn-primary btn-xs fa fa-comment-o"> Notitie</button></td>
-												<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
-											</tr>
-											<tr><!-- item -->
-												<td class="col-md-1">5-7-2014</td>
-												<td class="col-md-1">5</td>
-												<td class="col-md-1">Meerwerk</td>
-												<td class="col-md-1">21%</td>
-												<td class="col-md-2">Badkamer</td>
-												<td class="col-md-4">Vervangen van oude cementvloer</td>
-												<td class="col-md-1"><button class="btn btn-primary btn-xs fa fa-comment-o"> Notitie</button></td>
-												<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-
-							</div>
-
-							<div class="toggle">
-								<label>Vorige week</label>
-								<div class="toggle-content">
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Ut enim massa, sodales tempor convallis et, iaculis ac massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque. Ut enim massa, sodales tempor convallis et, iaculis ac massa.</p>
-								</div>
-							</div>
-
-							<div class="toggle">
+							<!--<div class="toggle">
 								<label>Deze week</label>
-								<div class="toggle-content">
+								<div class="toggle-content">-->
 									<table class="table table-striped">
 										<?# -- table head -- ?>
 										<thead>
@@ -342,69 +280,72 @@ $project = Project::find(Route::Input('project_id'));
 
 										<!-- table items -->
 										<tbody>
+											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
+											@foreach (Timesheet::where('activity_id','=', $activity->id)->get() as $timesheet)
+											<?php
+												$typename;
+												$tax;
+												if (PartType::find($timesheet->part_type_id)->type_name == 'calculation') {
+													$typename = 'Aanneming';
+													$tax = Tax::find($activity->tax_calc_labor_id)->tax_rate;
+													if ($timesheet->detail_id) {
+														if (Detail::find($timesheet->detail_id)->detail_name == 'more') {
+															$typename = 'Meerwerk';
+															$tax = Tax::find($activity->tax_more_labor_id)->tax_rate;
+														}
+													}
+												} else {
+													$typename = 'Stelpost';
+													$tax = Tax::find($activity->tax_estimate_labor_id)->tax_rate;
+												}
+											?>
 											<tr><!-- item -->
-												<td class="col-md-1">5-7-2014</td>
-												<td class="col-md-1">5</td>
-												<td class="col-md-1">Meerwerk</td>
-												<td class="col-md-1">21%</td>
-												<td class="col-md-2">Badkamer</td>
-												<td class="col-md-4">Vervangen van oude cementvloer</td>
+												<td class="col-md-1">{{ $timesheet->register_date }}</td>
+												<td class="col-md-1">{{ $timesheet->register_hour }}</td>
+												<td class="col-md-1">{{ $typename; }}</td>
+												<td class="col-md-1">{{ $tax }}%</td>
+												<td class="col-md-2">{{ $chapter->chapter_name }}</td>
+												<td class="col-md-4">{{ $activity->activity_name }}</td>
 												<td class="col-md-1"><button class="btn btn-primary btn-xs fa fa-comment-o"> Notitie</button></td>
 												<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
 											</tr>
+											@endforeach
+											@endforeach
+											@endforeach
 											<tr><!-- item -->
-												<td class="col-md-1">5-7-2014</td>
-												<td class="col-md-1">5</td>
-												<td class="col-md-1">Meerwerk</td>
-												<td class="col-md-1">21%</td>
-												<td class="col-md-2">Badkamer</td>
-												<td class="col-md-4">Vervangen van oude cementvloer</td>
-												<td class="col-md-1"><button class="btn btn-primary btn-xs fa fa-comment-o"> Notitie</button></td>
-												<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
-											</tr>
-											<tr><!-- item -->
-												<td class="col-md-1">5-7-2014</td>
-												<td class="col-md-1">5</td>
-												<td class="col-md-1">Meerwerk</td>
-												<td class="col-md-1">21%</td>
-												<td class="col-md-2">Badkamer</td>
-												<td class="col-md-4">Vervangen van oude cementvloer</td>
-												<td class="col-md-1"><button class="btn btn-primary btn-xs fa fa-comment-o"> Notitie</button></td>
-												<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
-											</tr>
-											<tr><!-- item -->
-												<!--<td class="col-md-1"><input type="date" class="form-control control-sm"/></td>
-												<td class="col-md-1"><input type="number" min="0" class="form-control control-sm"/></td>
+												<td class="col-md-1"><input type="date" class="form-control-sm-text"/></td>
+												<td class="col-md-1"><input type="number" min="0" class="form-control-sm-text"/></td>
 												<td class="col-md-1">
-													<select name="type" id="type" class="form-control pointer control-sm">
+													<select name="timetype" id="type" class="form-control-sm-text">
 														<option value="" selected="selected">Aanneming</option>
 														<option value="" selected="selected">Meerwerk</option>
 														<option value="" selected="selected">Stelpost</option>
 													</select>
 												</td>
 												<td class="col-md-1">
-													<select name="type" id="type" class="form-control pointer control-sm">
+													<select name="timetype" id="type" class="form-control-sm-text">
 														<option value="" selected="selected">21</option>
 													</select>
 												</td>
 												<td class="col-md-2">
-													<select name="type" id="type" class="form-control pointer control-sm">
+													<select name="timetype" id="type" class="form-control-sm-text">
 														<option value="" selected="selected">Badkamer</option>
 														<option value="" selected="selected">Vloer</option>
 													</select>
 												</td>
 												<td class="col-md-4">
-													<select name="type" id="type" class="form-control pointer control-sm">
+													<select name="timetype" id="type" class="form-control-sm-text">
 														<option value="" selected="selected">Vervangen van vloer met cement</option>
 													</select>
 												</td>
 												<td class="col-md-1"><button class="btn btn-primary btn-xs fa fa-comment-o"> Notitie</button></td>
-												<td class="col-md-1">&nbsp;</button></td>-->
+												<td class="col-md-1">&nbsp;</button></td>
 											</tr>
 										</tbody>
 									</table>
-								</div>
-							</div>
+								<!--</div>
+							</div>-->
 						</div>
 
 						<div id="hour_overview" class="tab-pane">
