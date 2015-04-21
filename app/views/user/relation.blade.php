@@ -27,8 +27,8 @@
 				<tbody>
 				@foreach (Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
 					<tr>
-						<td class="col-md-3">{{ $relation->company_name }}</td>
-						<td class="col-md-1">{{ $relation->kind->kind_name }}</td>
+						<td class="col-md-3">{{ HTML::link('relation-'.$relation->id.'/edit', $relation->company_name) }}</td>
+						<td class="col-md-1">{{ RelationKind::find($relation->kind_id)->kind_name }}</td>
 						<td class="col-md-1">{{ $relation->phone }}</td>
 						<td class="col-md-3">{{ $relation->email }}</td>
 						<td class="col-md-2">{{ $relation->address_city }}</td>
