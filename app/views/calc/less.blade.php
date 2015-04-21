@@ -8,7 +8,7 @@
 
 		<div class="col-md-12">
 
-			<div class="fuelux">
+			<!--<div class="fuelux">
 				<div id="calculation-wizard" class="wizard">
 					<ul class="steps">
 						<li data-target="#step0">Home<span class="chevron"></span></li>
@@ -22,6 +22,18 @@
 						<li data-target="#step8">Winst/Verlies<span class="chevron"></span></li>
 					</ul>
 				</div>
+			</div>-->
+
+			<div class="wizard">
+			    <a href="/"> Home</a>
+		  		<a href="/project-{{ $project->id }}/edit">Project</a>
+			    <a href="/calculation/project-{{ $project->id }}">Calculatie</a>
+			    <a href="#">Offerte</a>
+		    	<a href="/estimate/project-{{ $project->id }}">Stelpost</a>
+			    <a href="javascript:void(0);" class="current">Minderwerk</a>
+		  		<a href="/more/project-{{ $project->id }}">Meerwerk</a>
+			    <a href="#">Factuur</a>
+			    <a href="#">Winst/verlies</a>
 			</div>
 
 			<hr />

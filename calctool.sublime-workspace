@@ -4,34 +4,6 @@
 		"selected_items":
 		[
 			[
-				"calcu",
-				"calculate"
-			],
-			[
-				"pro",
-				"profit"
-			],
-			[
-				"conCalcE",
-				"conCalcEquipmentActivityTax1AmountTax"
-			],
-			[
-				"conCalcMa",
-				"conCalcMaterialActivityTax1AmountTax"
-			],
-			[
-				"conCalcL",
-				"conCalcLaborActivityTax1AmountTax"
-			],
-			[
-				"calcLabor",
-				"calcLaborActivityTax1"
-			],
-			[
-				"tax",
-				"tax_id"
-			],
-			[
 				"calc",
 				"calculus"
 			],
@@ -112,6 +84,10 @@
 				"unique"
 			],
 			[
+				"pro",
+				"project_step"
+			],
+			[
 				"project",
 				"project_type"
 			],
@@ -127,6 +103,57 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "app/views/user/edit_project.blade.php",
+			"settings":
+			{
+				"buffer_size": 20778,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/database/migrations/2014_09_09_204054_create_users_table.php",
+			"settings":
+			{
+				"buffer_size": 9055,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "<?php\n\n/*\n * Static Models Only\n * Test are performed on other seeds\n */\nclass TestProjectSeeder extends Seeder {\n\n	public function run()\n	{\n		DB::table('product_favorite')->delete();\n		DB::table('estimate_equipment')->delete();\n		DB::table('estimate_material')->delete();\n		DB::table('estimate_labor')->delete();\n		DB::table('more_equipment')->delete();\n		DB::table('more_material')->delete();\n		DB::table('more_labor')->delete();\n		DB::table('less_equipment')->delete();\n		DB::table('less_material')->delete();\n		DB::table('less_labor')->delete();\n		DB::table('calculation_equipment')->delete();\n		DB::table('calculation_material')->delete();\n		DB::table('calculation_labor')->delete();\n		DB::table('invoice')->delete();\n		DB::table('offer')->delete();\n		DB::table('purchase')->delete();\n		DB::table('timesheet')->delete();\n		DB::table('activity')->delete();\n		DB::table('chapter')->delete();\n		DB::table('iban')->delete();\n		DB::table('contact')->delete();\n		DB::table('status_date')->delete();\n		DB::table('project')->delete();\n		DB::table('relation')->delete();\n		DB::table('resource')->delete();\n		DB::table('payment')->delete();\n		DB::table('user_account')->delete();\n		$this->command->info('Tables deleted');\n\n		$test_user_type = UserType::where('user_type','=','user')->first();\n		$test_province = Province::where('province_name','=','zuid-holland')->first();\n		$test_country = Country::where('country_name','=','duitsland')->first();\n		$test_projecttype = ProjectType::where('type_name','=','calculatie')->first();\n		$test_contact_function = ContactFunction::where('function_name','=','voorzitter')->first();\n		$test_type_name = RelationType::where('type_name','=','adviesbureau')->first();\n		$test_kind_name = RelationKind::where('kind_name','=','zakelijk')->first();\n\n		$test_part_contract = Part::where('part_name','=','contracting')->first();\n		$test_part_type_calc = PartType::where('type_name','=','calculation')->first();\n\n		$test_part_subcontract = Part::where('part_name','=','subcontracting')->first();\n		$test_part_type_est = PartType::where('type_name','=','estimate')->first();\n\n		$test_detail = Detail::where('detail_name','=','more')->first();\n		$test_step = ProjectStep::where('step_name','=','estimate')->first();\n		$test_deliver = DeliverTime::where('delivertime_name','=','3 weken')->first();\n		$test_specification = Specification::where('specification_name','=','gespecificeerd, exclusief omschrijving')->first();\n		$test_valid = Valid::where('valid_name','=','3 maanden')->first();\n		$test_tax1 = Tax::where('tax_rate','=','21')->first();\n		$test_tax2 = Tax::where('tax_rate','=','6')->first();\n		$test_tax3 = Tax::where('tax_rate','=','0')->first();\n\n		//$test_product = Product::where('description','=','Hoge kast deur links 60cm met nis 450/485/880mm')->first();\n\n		$test_user = User::create(array(\n			'username' => 'system',\n			'secret' => Hash::make('ABC@123'),\n			'firstname' => 'system_firtname',\n			'lastname' => 'system_lastname',\n			'api' => md5(mt_rand()),\n			'ip' => '127.0.0.1',\n			'active' => 'Y',\n			'confirmed_mail' => '2014-09-16',\n			'registration_date' => '2014-09-16',\n			'last_active' => '2014-09-15',\n			'promotion_code' => md5(mt_rand()),\n			'address_street' => 'adressystem',\n			'address_number' => '12B',\n			'address_postal' => '1234AB',\n			'address_city' => 'citysystem',\n			'website' => 'www.calctool.nl',\n			'note' => 'system user',\n			'mobile' => '612345678',\n			'phone' => '101234567',\n			'email' => 'info@calctool.nl',\n			'pref_mailings_optin' => 'Y',\n			'pref_hourrate_calc' => '35',\n			'pref_hourrate_more' => '45',\n			'pref_profit_calc_contr_mat' => '10',\n			'pref_profit_calc_contr_equip' => '11',\n			'pref_profit_calc_subcontr_mat' => '12',\n			'pref_profit_calc_subcontr_equip' => '13',\n			'pref_profit_more_contr_mat' => '14',\n			'pref_profit_more_contr_equip' => '15',\n			'pref_profit_more_subcontr_mat' => '16',\n			'pref_profit_more_subcontr_equip' => '17',\n			'pref_email_offer' => 'test_pref_email_offer',\n			'pref_offer_description' => 'pref_offer_description',\n			'pref_closure_offer' => 'pref_closure_offer',\n			'pref_email_invoice' => 'pref_email_invoice',\n			'pref_invoice_description' => 'pref_invoice_description',\n			'pref_invoice_closure' => 'pref_invoice_closure',\n			'pref_email_invoice_first_reminder' => 'pref_email_invoice_first_reminder',\n			'pref_email_invoice_last_reminder' => 'pref_email_invoice_last_reminder',\n			'pref_email_invoice_first_demand' => 'pref_email_invoice_first_demand',\n			'pref_email_invoice_last_demand' => 'pref_email_invoice_last_demand',\n			'administration_cost' => '12.50',\n			'user_type' => $test_user_type->id,\n			'self_id' => NULL\n		));\n		$this->command->info('User created');\n\n		Payment::create(array(\n			'payment_date' => '07-03-2015',\n			'due_date' => '09-03-2015',\n			'amount' => '1250',\n			'payed' => 'N',\n			'note' => 'note on payment',\n			'user_id' => $test_user->id\n		));\n		$this->command->info('Payment created');\n\n		$test_resource1 = Resource::create(array(\n			'resource_name' => 'resource naam',\n			'file_location' => 'dit is natuurlijk een link',\n			'file_size' => '1000',\n			'description' => 'beschrijving_bij_afbeeding',\n			'user_id' => $test_user->id,\n			'project_id' => NULL\n		));\n		$this->command->info('Resource created');\n\n		$test_relation = Relation::create(array(\n			'company_name' => 'bedrijfsnaam relatie',\n			'address_street' => 'straat',\n			'address_number' => '11',\n			'address_postal' => '1234AB',\n			'address_city' => 'Rotterdam',\n			'kvk' => '174365278954',\n			'btw' => '214855241B01',\n			'debtor_code' => 'UG83824',\n			'phone' => '0612345678',\n			'email' => 'info@website.nl',\n			'note' => 'omschrijving relatie',\n			'website' => 'www.website.nl',\n			'logo_id' => $test_resource1->id,\n			'user_id' => $test_user->id,\n			'type_id' => $test_type_name->id,\n			'kind_id' => $test_kind_name->id,\n			'province_id' => $test_province->id,\n			'country_id' => $test_country->id\n		));\n		$this->command->info('Relation created');\n\n		$test_project = Project::create(array(\n			'project_name' => 'testproject',\n			'project_code' => '123456',\n			'address_street' => 'teststraat',\n			'address_number' => '01',\n			'address_postal' => '1234AB',\n			'address_city' => 'testscity',\n			'note' => 'testopmerking',\n			'hour_rate' => '35',\n			'hour_rate_more' => '45',\n			'profit_calc_contr_mat' => '10',\n			'profit_calc_contr_equip' => '11',\n			'profit_calc_subcontr_mat' => '12',\n			'profit_calc_subcontr_equip' => '13',\n			'profit_more_contr_mat' => '14',\n			'profit_more_contr_equip' => '15',\n			'profit_more_subcontr_mat' => '16',\n			'profit_more_subcontr_equip' => '17',\n			'user_id' => $test_user->id,\n			'province_id' => $test_province->id,\n			'country_id' => $test_country->id,\n			'type_id' => $test_projecttype->id,\n			'client_id' => $test_relation->id\n		));\n		$this->command->info('Project created');\n\n		ProjectStatus::create(array(\n			'finish' => '09-03-2015',\n			'step_id' => $test_step->id,\n			'project_id' => $test_project->id\n		));\n		$this->command->info('ProjectStatus created');\n\n		Resource::create(array(\n			'resource_name' => 'resource naam2',\n			'file_location' => 'dit is natuurlijk een link2',\n			'file_size' => '10002',\n			'description' => 'beschrijving_bij_afbeeding2',\n			'user_id' => $test_user->id,\n			'project_id' => $test_project->id\n		));\n		$this->command->info('Resource created');\n\n		Contact::create(array(\n			'firstname' => 'voornaam',\n			'lastname' => 'achternaam',\n			'email' => 'info@naam.nl',\n			'mobile' => '0612345678',\n			'phone' => '0101234567',\n			'note' => 'omschrijving contact',\n			'relation_id' => $test_relation->id,\n			'function_id' => $test_contact_function->id\n		));\n		$this->command->info('Contact created');\n\n		Iban::create(array(\n			'iban' => 'NL45RABO0123456789m',\n			'iban_name' => 'system_iban',\n			'user_id' => $test_user->id,\n			'relation_id' => $test_relation->id,\n		));\n		$this->command->info('Iban created');\n\n		$test_chapter1 = Chapter::create(array(\n			'chapter_name' => 'CHPTR1',\n			'priority' => '1',\n			'note' => 'Description_CHPTR1',\n			'project_id' => $test_project->id\n		));\n		$this->command->info('Chapter created');\n\n		$test_activity1 = Activity::create(array(\n			'activity_name' => 'CHPTR1_ACT1_CON',\n			'priority' => '1',\n			'note' => 'Description_CHPTR1_ACT1_CON',\n			'chapter_id' => $test_chapter1->id,\n			'part_id' => $test_part_contract->id,\n			'part_type_id' => $test_part_type_calc->id,\n			'detail_id' => $test_detail->id,\n			'tax_calc_labor_id' => $test_tax1->id,\n			'tax_calc_material_id' => $test_tax1->id,\n			'tax_calc_equipment_id' => $test_tax1->id,\n			'tax_more_labor_id' => $test_tax1->id,\n			'tax_more_material_id' => $test_tax1->id,\n			'tax_more_equipment_id' => $test_tax1->id,\n			'tax_estimate_labor_id' => $test_tax1->id,\n			'tax_estimate_material_id' => $test_tax1->id,\n			'tax_estimate_equipment_id' => $test_tax1->id\n		));\n		$this->command->info('Activity created');\n\n		$test_activity2 = Activity::create(array(\n			'activity_name' => 'CHPTR1_ACT2_SUBCON',\n			'priority' => '2',\n			'note' => 'Description_CHPTR1_ACT2_SUBCON',\n			'chapter_id' => $test_chapter1->id,\n			'part_id' => $test_part_subcontract->id,\n			'part_type_id' => $test_part_type_calc->id,\n			'detail_id' => $test_detail->id,\n			'tax_calc_labor_id' => $test_tax2->id,\n			'tax_calc_material_id' => $test_tax2->id,\n			'tax_calc_equipment_id' => $test_tax2->id,\n			'tax_more_labor_id' => $test_tax2->id,\n			'tax_more_material_id' => $test_tax2->id,\n			'tax_more_equipment_id' => $test_tax2->id,\n			'tax_estimate_labor_id' => $test_tax2->id,\n			'tax_estimate_material_id' => $test_tax2->id,\n			'tax_estimate_equipment_id' => $test_tax2->id\n		));\n		$this->command->info('Activity created');\n\n		$test_chapter2 = Chapter::create(array(\n			'chapter_name' => 'CHPTR2',\n			'priority' => '2',\n			'note' => 'Description_CHPTR2',\n			'project_id' => $test_project->id\n		));\n		$this->command->info('Chapter created');\n\n		$test_activity3 = Activity::create(array(\n			'activity_name' => 'CHPTR2_ACT3_CON',\n			'priority' => '3',\n			'note' => 'Description_CHPTR2_ACT3_CON',\n			'chapter_id' => $test_chapter2->id,\n			'part_id' => $test_part_contract->id,\n			'part_type_id' => $test_part_type_calc->id,\n			'detail_id' => $test_detail->id,\n			'tax_calc_labor_id' => $test_tax3->id,\n			'tax_calc_material_id' => $test_tax3->id,\n			'tax_calc_equipment_id' => $test_tax3->id,\n			'tax_more_labor_id' => $test_tax3->id,\n			'tax_more_material_id' => $test_tax3->id,\n			'tax_more_equipment_id' => $test_tax3->id,\n			'tax_estimate_labor_id' => $test_tax3->id,\n			'tax_estimate_material_id' => $test_tax3->id,\n			'tax_estimate_equipment_id' => $test_tax3->id\n		));\n		$this->command->info('Activity created');\n\n		$test_activity4 = Activity::create(array(\n			'activity_name' => 'CHPTR2_ACT4_SUBCON',\n			'priority' => '4',\n			'note' => 'Description_CHPTR2_ACT4_SUBCON',\n			'chapter_id' => $test_chapter2->id,\n			'part_id' => $test_part_subcontract->id,\n			'part_type_id' => $test_part_type_calc->id,\n			'detail_id' => $test_detail->id,\n			'tax_calc_labor_id' => $test_tax1->id,\n			'tax_calc_material_id' => $test_tax1->id,\n			'tax_calc_equipment_id' => $test_tax1->id,\n			'tax_more_labor_id' => $test_tax1->id,\n			'tax_more_material_id' => $test_tax1->id,\n			'tax_more_equipment_id' => $test_tax1->id,\n			'tax_estimate_labor_id' => $test_tax1->id,\n			'tax_estimate_material_id' => $test_tax1->id,\n			'tax_estimate_equipment_id' => $test_tax1->id\n		));\n		$this->command->info('Activity created');\n\n		$test_chapter3 = Chapter::create(array(\n			'chapter_name' => 'CHPTR3',\n			'priority' => '3',\n			'note' => 'Description_CHPTR3',\n			'project_id' => $test_project->id\n		));\n		$this->command->info('Chapter created');\n\n		$test_activity5 = Activity::create(array(\n			'activity_name' => 'CHPTR3_ACT5_CON',\n			'priority' => '5',\n			'note' => 'Description_CHPTR3_ACT5_CON',\n			'chapter_id' => $test_chapter3->id,\n			'part_id' => $test_part_contract->id,\n			'part_type_id' => $test_part_type_calc->id,\n			'detail_id' => $test_detail->id,\n			'tax_calc_labor_id' => $test_tax2->id,\n			'tax_calc_material_id' => $test_tax2->id,\n			'tax_calc_equipment_id' => $test_tax2->id,\n			'tax_more_labor_id' => $test_tax2->id,\n			'tax_more_material_id' => $test_tax2->id,\n			'tax_more_equipment_id' => $test_tax2->id,\n			'tax_estimate_labor_id' => $test_tax2->id,\n			'tax_estimate_material_id' => $test_tax2->id,\n			'tax_estimate_equipment_id' => $test_tax2->id\n		));\n		$this->command->info('Activity created');\n\n		$test_activity6 = Activity::create(array(\n			'activity_name' => 'CHPTR3_ACT6_SUBCON',\n			'priority' => '6',\n			'note' => 'Description_CHPTR3_ACT6_SUBCON',\n			'chapter_id' => $test_chapter3->id,\n			'part_id' => $test_part_subcontract->id,\n			'part_type_id' => $test_part_type_calc->id,\n			'detail_id' => $test_detail->id,\n			'tax_calc_labor_id' => $test_tax3->id,\n			'tax_calc_material_id' => $test_tax3->id,\n			'tax_calc_equipment_id' => $test_tax3->id,\n			'tax_more_labor_id' => $test_tax3->id,\n			'tax_more_material_id' => $test_tax3->id,\n			'tax_more_equipment_id' => $test_tax3->id,\n			'tax_estimate_labor_id' => $test_tax3->id,\n			'tax_estimate_material_id' => $test_tax3->id,\n			'tax_estimate_equipment_id' => $test_tax3->id\n		));\n		$this->command->info('Activity created');\n\n		$test_activity7 = Activity::create(array(\n			'activity_name' => 'CHPTR3_ACT7_CON_EST',\n			'priority' => '7',\n			'note' => 'Description_CHPTR3_ACT7_CON_EST',\n			'chapter_id' => $test_chapter3->id,\n			'part_id' => $test_part_contract->id,\n			'part_type_id' => $test_part_type_est->id,\n			'detail_id' => $test_detail->id,\n			'tax_calc_labor_id' => $test_tax1->id,\n			'tax_calc_material_id' => $test_tax1->id,\n			'tax_calc_equipment_id' => $test_tax1->id,\n			'tax_more_labor_id' => $test_tax1->id,\n			'tax_more_material_id' => $test_tax1->id,\n			'tax_more_equipment_id' => $test_tax1->id,\n			'tax_estimate_labor_id' => $test_tax1->id,\n			'tax_estimate_material_id' => $test_tax1->id,\n			'tax_estimate_equipment_id' => $test_tax1->id\n		));\n		$this->command->info('Activity created');\n\n		$test_activity8 = Activity::create(array(\n			'activity_name' => 'CHPTR3_ACT8_SUBCON_EST',\n			'priority' => '8',\n			'note' => 'Description_CHPTR3_ACT8_SUBCON_EST',\n			'chapter_id' => $test_chapter3->id,\n			'part_id' => $test_part_subcontract->id,\n			'part_type_id' => $test_part_type_est->id,\n			'detail_id' => $test_detail->id,\n			'tax_calc_labor_id' => $test_tax1->id,\n			'tax_calc_material_id' => $test_tax1->id,\n			'tax_calc_equipment_id' => $test_tax1->id,\n			'tax_more_labor_id' => $test_tax1->id,\n			'tax_more_material_id' => $test_tax1->id,\n			'tax_more_equipment_id' => $test_tax1->id,\n			'tax_estimate_labor_id' => $test_tax1->id,\n			'tax_estimate_material_id' => $test_tax1->id,\n			'tax_estimate_equipment_id' => $test_tax1->id\n		));\n		$this->command->info('Activity created');\n\n		$test_chapter4 = Chapter::create(array(\n			'chapter_name' => 'CHPTR4',\n			'priority' => '4',\n			'note' => 'Description_CHPTR4',\n			'project_id' => $test_project->id\n		));\n		$this->command->info('Chapter created');\n\n		$test_activity9 = Activity::create(array(\n			'activity_name' => 'CHPTR4_ACT9_CON_EST',\n			'priority' => '9',\n			'note' => 'Description_CHPTR4_ACT9_CON_EST',\n			'chapter_id' => $test_chapter4->id,\n			'part_id' => $test_part_contract->id,\n			'part_type_id' => $test_part_type_est->id,\n			'detail_id' => $test_detail->id,\n			'tax_calc_labor_id' => $test_tax2->id,\n			'tax_calc_material_id' => $test_tax2->id,\n			'tax_calc_equipment_id' => $test_tax2->id,\n			'tax_more_labor_id' => $test_tax2->id,\n			'tax_more_material_id' => $test_tax2->id,\n			'tax_more_equipment_id' => $test_tax2->id,\n			'tax_estimate_labor_id' => $test_tax2->id,\n			'tax_estimate_material_id' => $test_tax2->id,\n			'tax_estimate_equipment_id' => $test_tax2->id\n		));\n		$this->command->info('Activity created');\n\n		$test_activity10 = Activity::create(array(\n			'activity_name' => 'CHPTR4_ACT10_SUBCON_EST',\n			'priority' => '10',\n			'note' => 'Description_CHPTR4_ACT10_SUBCON_EST',\n			'chapter_id' => $test_chapter4->id,\n			'part_id' => $test_part_subcontract->id,\n			'part_type_id' => $test_part_type_est->id,\n			'detail_id' => $test_detail->id,\n			'tax_calc_labor_id' => $test_tax3->id,\n			'tax_calc_material_id' => $test_tax3->id,\n			'tax_calc_equipment_id' => $test_tax3->id,\n			'tax_more_labor_id' => $test_tax3->id,\n			'tax_more_material_id' => $test_tax3->id,\n			'tax_more_equipment_id' => $test_tax3->id,\n			'tax_estimate_labor_id' => $test_tax3->id,\n			'tax_estimate_material_id' => $test_tax3->id,\n			'tax_estimate_equipment_id' => $test_tax3->id\n		));\n		$this->command->info('Activity created');\n\n		$test_timesheet = Timesheet::create(array(\n			'register_date' => '09-10-2014',\n			'register_hour' => '24',\n			'note' => 'omschrijving bij uren invoer',\n			'part_id' => $test_part_contract->id,\n			'part_type_id' => $test_part_type_calc->id,\n			'detail_id' => $test_detail->id,\n			'project_id' => $test_project->id\n		));\n		$this->command->info('Timesheet created');\n\n		Purchase::create(array(\n			'amount' => '33',\n			'note' => 'aankoop factuur omschrijving',\n			'register_date' => '09-10-2014',\n			'part_id' => $test_part_subcontract->id,\n			'project_id' => $test_project->id,\n			'relation_id' => $test_relation->id\n		));\n		$this->command->info('Purchase created');\n\n		$test_offer = Offer::create(array(\n			'display_tax' => 'Y',\n			'description' => 'omschrijving voor op offerte',\n			'closure' => 'dit was de omschrijving voor op offerte',\n			'end_invoice' => 'Y',\n			'auto_email_reminder' => 'Y',\n			'offer_finish' => '01-11-2014',\n			'deliver_id' => $test_deliver->id,\n			'specification_id' => $test_specification->id,\n			'valid_id' => $test_valid->id,\n			'project_id' => $test_project->id\n		));\n		$this->command->info('Offer created');\n\n		Invoice::create(array(\n			'invoice_close' => 'Y',\n			'description' => 'omschrijving',\n			'reference' => '24366',\n			'invoice_code' => '8765432',\n			'book_code' => '8765432123',\n			'amount' => '1230',\n			'payment_condition' => '30',\n			'payment_date' => '12-10-2014',\n			'display_tax' => 'Y',\n			'closure' => 'dit was de clusure tekst',\n			'auto_email_reminder' => 'Y',\n			'closure' => 'dit was de clusure tekst',\n			'offer_id' => $test_offer->id,\n		));\n		$this->command->info('Invoice created');\n\n		$calculation_labor_activity1 = CalculationLabor::create(array(\n			'rate' => '35.00',\n			'amount' => '1',\n			'activity_id' => $test_activity1->id\n		));\n		$this->command->info('CalculationLabor created');\n\n		$calculation_material_activity1_1 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR1_ACT1_CON_1',\n			'unit' => 'm',\n			'rate' => '1',\n			'amount' => '2.00',\n			'activity_id' => $test_activity1->id\n		));\n		$calculation_equipment_activity1_1 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR1_ACT1_CON_a',\n			'unit' => 'stuk',\n			'rate' => '1',\n			'amount' => '2.02',\n			'activity_id' => $test_activity1->id\n		));\n		$calculation_material_activity1_2 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR1_ACT1_CON_2',\n			'unit' => 'm',\n			'rate' => '2',\n			'amount' => '1.00',\n			'activity_id' => $test_activity1->id\n		));\n		$calculation_equipment_activity1_2 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR1_ACT1_CON_b',\n			'unit' => 'stuk',\n			'rate' => '2',\n			'amount' => '1.01',\n			'activity_id' => $test_activity1->id\n		));\n		$calculation_material_activity1_3 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR1_ACT1_CON_3',\n			'unit' => 'm',\n			'rate' => '3',\n			'amount' => '2.20',\n			'activity_id' => $test_activity1->id\n		));\n		$calculation_equipment_activity1_3 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR1_ACT1_CON_c',\n			'unit' => 'stuk',\n			'rate' => '3',\n			'amount' => '1.10',\n			'activity_id' => $test_activity1->id\n		));\n		$calculation_material_activity1_4 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR1_ACT1_CON_4',\n			'unit' => 'm',\n			'rate' => '4',\n			'amount' => '2.22',\n			'activity_id' => $test_activity1->id\n		));\n		$calculation_equipment_activity1_4 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR1_ACT1_CON_d',\n			'unit' => 'stuk',\n			'rate' => '4',\n			'amount' => '1.11',\n			'activity_id' => $test_activity1->id\n		));\n		$calculation_material_activity1_5 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR1_ACT1_CON_5',\n			'unit' => 'm',\n			'rate' => '5',\n			'amount' => '2.21',\n			'activity_id' => $test_activity1->id\n		));\n		$calculation_equipment_activity1_5 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR1_ACT1_CON_d',\n			'unit' => 'stuk',\n			'rate' => '5',\n			'amount' => '1.12',\n			'activity_id' => $test_activity1->id\n		));\n		$this->command->info('CalculationMaterial created');\n		$this->command->info('CalculationEquipment created');\n\n		$calculation_labor_activity2 = CalculationLabor::create(array(\n			'rate' => '35.00',\n			'amount' => '2',\n			'activity_id' => $test_activity2->id\n		));\n		$this->command->info('CalculationLabor created');\n\n		$calculation_material_activity2_1 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR1_ACT2_SUBCON_1',\n			'unit' => 'm',\n			'rate' => '1',\n			'amount' => '2.00',\n			'activity_id' => $test_activity2->id\n		));\n		$calculation_equipment_activity2_1 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR1_ACT2_SUBCON_a',\n			'unit' => 'stuk',\n			'rate' => '1',\n			'amount' => '2.02',\n			'activity_id' => $test_activity2->id\n		));\n		$calculation_material_activity1_2 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR1_ACT2_SUBCON_2',\n			'unit' => 'm',\n			'rate' => '2',\n			'amount' => '1.00',\n			'activity_id' => $test_activity2->id\n		));\n		$calculation_equipment_activity2_2 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR1_ACT2_SUBCON_b',\n			'unit' => 'stuk',\n			'rate' => '2',\n			'amount' => '1.01',\n			'activity_id' => $test_activity2->id\n		));\n		$calculation_material_activity2_3 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR1_ACT2_SUBCON_3',\n			'unit' => 'm',\n			'rate' => '3',\n			'amount' => '2.20',\n			'activity_id' => $test_activity2->id\n		));\n		$calculation_equipment_activity2_3 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR1_ACT2_SUBCON_c',\n			'unit' => 'stuk',\n			'rate' => '3',\n			'amount' => '1.10',\n			'activity_id' => $test_activity2->id\n		));\n		$calculation_material_activity2_4 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR1_ACT2_SUBCON_4',\n			'unit' => 'm',\n			'rate' => '4',\n			'amount' => '2.22',\n			'activity_id' => $test_activity2->id\n		));\n		$calculation_equipment_activity2_4 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR1_ACT2_SUBCON_d',\n			'unit' => 'stuk',\n			'rate' => '4',\n			'amount' => '1.11',\n			'activity_id' => $test_activity2->id\n		));\n		$calculation_material_activity2_5 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR1_ACT2_SUBCON_5',\n			'unit' => 'm',\n			'rate' => '5',\n			'amount' => '2.21',\n			'activity_id' => $test_activity2->id\n		));\n		$calculation_equipment_activity2_5 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR1_ACT2_SUBCON_e',\n			'unit' => 'stuk',\n			'rate' => '5',\n			'amount' => '1.12',\n			'activity_id' => $test_activity2->id\n		));\n		$this->command->info('CalculationMaterial created');\n		$this->command->info('CalculationEquipment created');\n\n		$calculation_labor_activity3 = CalculationLabor::create(array(\n			'rate' => '35.00',\n			'amount' => '3',\n			'activity_id' => $test_activity3->id\n		));\n		$this->command->info('CalculationLabor created');\n\n		$calculation_material_activity3_1 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR2_ACT3_CON_1',\n			'unit' => 'm',\n			'rate' => '1',\n			'amount' => '3.00',\n			'activity_id' => $test_activity3->id\n		));\n		$calculation_equipment_activity3_1 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR2_ACT3_CON_a',\n			'unit' => 'stuk',\n			'rate' => '1',\n			'amount' => '3.02',\n			'activity_id' => $test_activity3->id\n		));\n		$calculation_material_activity3_2 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR2_ACT3_CON_2',\n			'unit' => 'm',\n			'rate' => '2',\n			'amount' => '3.00',\n			'activity_id' => $test_activity3->id\n		));\n		$calculation_equipment_activity2_2 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR2_ACT3_CON_b',\n			'unit' => 'stuk',\n			'rate' => '2',\n			'amount' => '3.01',\n			'activity_id' => $test_activity3->id\n		));\n		$calculation_material_activity3_3 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR2_ACT3_CON_3',\n			'unit' => 'm',\n			'rate' => '3',\n			'amount' => '3.20',\n			'activity_id' => $test_activity3->id\n		));\n		$calculation_equipment_activity3_3 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR2_ACT3_CON_c',\n			'unit' => 'stuk',\n			'rate' => '3',\n			'amount' => '3.10',\n			'activity_id' => $test_activity3->id\n		));\n		$calculation_material_activity3_4 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR2_ACT3_CON_4',\n			'unit' => 'm',\n			'rate' => '4',\n			'amount' => '3.22',\n			'activity_id' => $test_activity3->id\n		));\n		$calculation_equipment_activity3_4 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR2_ACT3_CON_1d',\n			'unit' => 'stuk',\n			'rate' => '4',\n			'amount' => '3.11',\n			'activity_id' => $test_activity3->id\n		));\n		$calculation_material_activity3_5 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR2_ACT3_CON_5',\n			'unit' => 'm',\n			'rate' => '5',\n			'amount' => '3.22',\n			'activity_id' => $test_activity3->id\n		));\n		$calculation_equipment_activity3_5 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR2_ACT3_CON_e',\n			'unit' => 'stuk',\n			'rate' => '5',\n			'amount' => '3.11',\n			'activity_id' => $test_activity3->id\n		));\n		$this->command->info('CalculationMaterial created');\n		$this->command->info('CalculationEquipment created');\n\n		$calculation_labor_activity4 = CalculationLabor::create(array(\n			'rate' => '35.00',\n			'amount' => '4',\n			'activity_id' => $test_activity4->id\n		));\n		$this->command->info('CalculationLabor created');\n\n		$calculation_material_activity4_1 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR2_ACT4_SUBCON_1',\n			'unit' => 'm',\n			'rate' => '1',\n			'amount' => '3.90',\n			'activity_id' => $test_activity4->id\n		));\n		$calculation_equipment_activity4_1 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR2_ACT4_SUBCON_a',\n			'unit' => 'stuk',\n			'rate' => '1',\n			'amount' => '3.92',\n			'activity_id' => $test_activity4->id\n		));\n		$calculation_material_activity4_2 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR2_ACT4_SUBCON_2',\n			'unit' => 'm',\n			'rate' => '2',\n			'amount' => '3.90',\n			'activity_id' => $test_activity4->id\n		));\n		$calculation_equipment_activity4_2 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR2_ACT4_SUBCON_b',\n			'unit' => 'stuk',\n			'rate' => '2',\n			'amount' => '3.91',\n			'activity_id' => $test_activity4->id\n		));\n		$calculation_material_activity4_3 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR2_ACT4_SUBCON_3',\n			'unit' => 'm',\n			'rate' => '3',\n			'amount' => '3.29',\n			'activity_id' => $test_activity4->id\n		));\n		$calculation_equipment_activity4_3 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR2_ACT4_SUBCON_c',\n			'unit' => 'stuk',\n			'rate' => '3',\n			'amount' => '3.19',\n			'activity_id' => $test_activity4->id\n		));\n		$calculation_material_activity4_4 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR2_ACT4_SUBCON_4',\n			'unit' => 'm',\n			'rate' => '4',\n			'amount' => '3.29',\n			'activity_id' => $test_activity4->id\n		));\n		$calculation_equipment_activity4_4 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR2_ACT4_SUBCON_d',\n			'unit' => 'stuk',\n			'rate' => '4',\n			'amount' => '3.19',\n			'activity_id' => $test_activity4->id\n		));\n		$calculation_material_activity4_5 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR2_ACT4_SUBCON_5',\n			'unit' => 'm',\n			'rate' => '5',\n			'amount' => '3.29',\n			'activity_id' => $test_activity4->id\n		));\n		$calculation_equipment_activity4_5 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR2_ACT4_SUBCON_e',\n			'unit' => 'stuk',\n			'rate' => '5',\n			'amount' => '3.19',\n			'activity_id' => $test_activity4->id\n		));\n		$this->command->info('CalculationMaterial created');\n		$this->command->info('CalculationEquipment created');\n\n		$calculation_labor_activity5 = CalculationLabor::create(array(\n			'rate' => '35.00',\n			'amount' => '5',\n			'activity_id' => $test_activity5->id\n		));\n		$this->command->info('CalculationLabor created');\n\n		$calculation_material_activity5_1 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR3_ACT5_CON_1',\n			'unit' => 'm',\n			'rate' => '1',\n			'amount' => '1.90',\n			'activity_id' => $test_activity5->id\n		));\n		$calculation_equipment_activity5_1 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR3_ACT5_CON_a',\n			'unit' => 'stuk',\n			'rate' => '1',\n			'amount' => '1.92',\n			'activity_id' => $test_activity5->id\n		));\n		$calculation_material_activity5_2 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR3_ACT5_CON_2',\n			'unit' => 'm',\n			'rate' => '2',\n			'amount' => '1.90',\n			'activity_id' => $test_activity5->id\n		));\n		$calculation_equipment_activity5_2 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR3_ACT5_CON_b',\n			'unit' => 'stuk',\n			'rate' => '2',\n			'amount' => '3.91',\n			'activity_id' => $test_activity5->id\n		));\n		$calculation_material_activity5_3 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR3_ACT5_CON_3',\n			'unit' => 'm',\n			'rate' => '3',\n			'amount' => '1.29',\n			'activity_id' => $test_activity5->id\n		));\n		$calculation_equipment_activity5_3 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR3_ACT5_CON_c',\n			'unit' => 'stuk',\n			'rate' => '3',\n			'amount' => '3.19',\n			'activity_id' => $test_activity5->id\n		));\n		$calculation_material_activity5_4 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR3_ACT5_CON_4',\n			'unit' => 'm',\n			'rate' => '4',\n			'amount' => '4.29',\n			'activity_id' => $test_activity5->id\n		));\n		$calculation_equipment_activity5_4 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR3_ACT5_CON_d',\n			'unit' => 'stuk',\n			'rate' => '4',\n			'amount' => '2.19',\n			'activity_id' => $test_activity5->id\n		));\n		$calculation_material_activity5_5 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR3_ACT5_CON_5',\n			'unit' => 'm',\n			'rate' => '5',\n			'amount' => '3.29',\n			'activity_id' => $test_activity5->id\n		));\n		$calculation_equipment_activity5_5 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR3_ACT5_CON_e',\n			'unit' => 'stuk',\n			'rate' => '5',\n			'amount' => '3.19',\n			'activity_id' => $test_activity5->id\n		));\n		$this->command->info('CalculationMaterial created');\n		$this->command->info('CalculationEquipment created');\n\n		$calculation_labor_activity6 = CalculationLabor::create(array(\n			'rate' => '35.00',\n			'amount' => '6',\n			'activity_id' => $test_activity6->id\n		));\n		$this->command->info('CalculationLabor created');\n\n		$calculation_material_activity6_1 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR3_ACT6_SUBCON_1',\n			'unit' => 'm',\n			'rate' => '1',\n			'amount' => '1.90',\n			'activity_id' => $test_activity6->id\n		));\n		$calculation_equipment_activity6_1 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR3_ACT6_SUBCON_a',\n			'unit' => 'stuk',\n			'rate' => '1',\n			'amount' => '1.92',\n			'activity_id' => $test_activity6->id\n		));\n		$calculation_material_activity6_2 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR3_ACT6_SUBCON_2',\n			'unit' => 'm',\n			'rate' => '2',\n			'amount' => '1.90',\n			'activity_id' => $test_activity6->id\n		));\n		$calculation_equipment_activity6_2 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR3_ACT6_SUBCON_b',\n			'unit' => 'stuk',\n			'rate' => '2',\n			'amount' => '1.91',\n			'activity_id' => $test_activity6->id\n		));\n		$calculation_material_activity6_3 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR3_ACT6_SUBCON_3',\n			'unit' => 'm',\n			'rate' => '3',\n			'amount' => '1.29',\n			'activity_id' => $test_activity6->id\n		));\n		$calculation_equipment_activity6_3 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR3_ACT6_SUBCON_c',\n			'unit' => 'stuk',\n			'rate' => '3',\n			'amount' => '1.19',\n			'activity_id' => $test_activity6->id\n		));\n		$calculation_material_activity6_4 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR3_ACT6_SUBCON_4',\n			'unit' => 'm',\n			'rate' => '4',\n			'amount' => '1.29',\n			'activity_id' => $test_activity6->id\n		));\n		$calculation_equipment_activity6_4 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR3_ACT6_SUBCON_d',\n			'unit' => 'stuk',\n			'rate' => '4',\n			'amount' => '1.19',\n			'activity_id' => $test_activity6->id\n		));\n		$calculation_material_activity6_5 = CalculationMaterial::create(array(\n			'material_name' => 'CHPTR3_ACT6_SUBCON_5',\n			'unit' => 'm',\n			'rate' => '5',\n			'amount' => '2.29',\n			'activity_id' => $test_activity6->id\n		));\n		$calculation_equipment_activity6_5 = CalculationEquipment::create(array(\n			'equipment_name' => 'CHPTR3_ACT6_SUBCON_e',\n			'unit' => 'stuk',\n			'rate' => '5',\n			'amount' => '3.19',\n			'activity_id' => $test_activity6->id\n		));\n		$this->command->info('CalculationMaterial created');\n		$this->command->info('CalculationEquipment created');\n\n		$calculation_labor_activity7 = EstimateLabor::create(array(\n			'rate' => '35.00',\n			'amount' => '7',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity7->id\n		));\n		$this->command->info('CalculationLabor created');\n\n		$calculation_material_activity7_1 = EstimateMaterial::create(array(\n			'material_name' => 'CHPTR3_ACT7_SUBCON_1',\n			'unit' => 'm',\n			'rate' => '1',\n			'amount' => '1.90',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity7->id\n		));\n		$calculation_equipment_activity7_1 = EstimateEquipment::create(array(\n			'equipment_name' => 'CHPTR3_ACT7_SUBCON_a',\n			'unit' => 'stuk',\n			'rate' => '1',\n			'amount' => '1.92',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity7->id\n		));\n		$calculation_material_activity7_2 = EstimateMaterial::create(array(\n			'material_name' => 'CHPTR3_ACT7_SUBCON_2',\n			'unit' => 'm',\n			'rate' => '2',\n			'amount' => '2.90',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity7->id\n		));\n		$calculation_equipment_activity7_2 = EstimateEquipment::create(array(\n			'equipment_name' => 'CHPTR3_ACT7_SUBCON_b',\n			'unit' => 'stuk',\n			'rate' => '2',\n			'amount' => '3.91',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity7->id\n		));\n		$calculation_material_activity7_3 = EstimateMaterial::create(array(\n			'material_name' => 'CHPTR3_ACT7_SUBCON_3',\n			'unit' => 'm',\n			'rate' => '3',\n			'amount' => '1.29',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity7->id\n		));\n		$calculation_equipment_activity7_3 = EstimateEquipment::create(array(\n			'equipment_name' => 'CHPTR3_ACT7_SUBCON_c',\n			'unit' => 'stuk',\n			'rate' => '3',\n			'amount' => '3.19',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity7->id\n		));\n		$calculation_material_activity7_4 = EstimateMaterial::create(array(\n			'material_name' => 'CHPTR3_ACT7_SUBCON_4',\n			'unit' => 'm',\n			'rate' => '4',\n			'amount' => '1.29',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity7->id\n		));\n		$calculation_equipment_activity7_4 = EstimateEquipment::create(array(\n			'equipment_name' => 'CHPTR3_ACT7_SUBCON_d',\n			'unit' => 'stuk',\n			'rate' => '4',\n			'amount' => '3.19',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity7->id\n		));\n		$calculation_material_activity7_5 = EstimateMaterial::create(array(\n			'material_name' => 'CHPTR3_ACT7_SUBCON_5',\n			'unit' => 'm',\n			'rate' => '5',\n			'amount' => '3.29',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity7->id\n		));\n		$calculation_equipment_activity7_5 = EstimateEquipment::create(array(\n			'equipment_name' => 'CHPTR3_ACT7_SUBCON_e',\n			'unit' => 'stuk',\n			'rate' => '5',\n			'amount' => '3.19',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity7->id\n		));\n		$this->command->info('CalculationMaterial created');\n		$this->command->info('CalculationEquipment created');\n\n		$calculation_labor_activity8 = EstimateLabor::create(array(\n			'rate' => '35.00',\n			'amount' => '8',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity8->id\n		));\n		$this->command->info('CalculationLabor created');\n\n		$calculation_material_activity8_1 = EstimateMaterial::create(array(\n			'material_name' => 'CHPTR3_ACT8_SUBCON_1',\n			'unit' => 'm',\n			'rate' => '1',\n			'amount' => '1.90',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity8->id\n		));\n		$calculation_equipment_activity8_1 = EstimateEquipment::create(array(\n			'equipment_name' => 'CHPTR3_ACT8_SUBCON_a',\n			'unit' => 'stuk',\n			'rate' => '1',\n			'amount' => '1.92',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity8->id\n		));\n		$calculation_material_activity8_2 = EstimateMaterial::create(array(\n			'material_name' => 'CHPTR3_ACT8_SUBCON_2',\n			'unit' => 'm',\n			'rate' => '2',\n			'amount' => '1.90',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity8->id\n		));\n		$calculation_equipment_activity8_2 = EstimateEquipment::create(array(\n			'equipment_name' => 'CHPTR3_ACT8_SUBCON_b',\n			'unit' => 'stuk',\n			'rate' => '2',\n			'amount' => '1.91',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity8->id\n		));\n		$calculation_material_activity8_3 = EstimateMaterial::create(array(\n			'material_name' => 'CHPTR3_ACT8_SUBCON_3',\n			'unit' => 'm',\n			'rate' => '3',\n			'amount' => '1.29',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity8->id\n		));\n		$calculation_equipment_activity8_3 = EstimateEquipment::create(array(\n			'equipment_name' => 'CHPTR3_ACT8_SUBCON_c',\n			'unit' => 'stuk',\n			'rate' => '3',\n			'amount' => '3.19',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity8->id\n		));\n		$calculation_material_activity8_4 = EstimateMaterial::create(array(\n			'material_name' => 'CHPTR3_ACT8_SUBCON_4',\n			'unit' => 'm',\n			'rate' => '4',\n			'amount' => '1.29',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity8->id\n		));\n		$calculation_equipment_activity8_4 = EstimateEquipment::create(array(\n			'equipment_name' => 'CHPTR3_ACT8_SUBCON_d',\n			'unit' => 'stuk',\n			'rate' => '4',\n			'amount' => '3.19',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity8->id\n		));\n		$calculation_material_activity8_5 = EstimateMaterial::create(array(\n			'material_name' => 'CHPTR3_ACT8_SUBCON_5',\n			'unit' => 'm',\n			'rate' => '5',\n			'amount' => '3.29',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity8->id\n		));\n		$calculation_equipment_activity8_5 = EstimateEquipment::create(array(\n			'equipment_name' => 'CHPTR3_ACT8_SUBCON_e',\n			'unit' => 'stuk',\n			'rate' => '5',\n			'amount' => '3.19',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity8->id\n		));\n		$this->command->info('CalculationMaterial created');\n		$this->command->info('CalculationEquipment created');\n\n		$calculation_labor_activity9 = EstimateLabor::create(array(\n			'rate' => '35.00',\n			'amount' => '7',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity9->id\n		));\n		$this->command->info('CalculationLabor created');\n\n		$calculation_material_activity9_1 = EstimateMaterial::create(array(\n			'material_name' => 'CHPTR4_ACT9_SUBCON_1',\n			'unit' => 'm',\n			'rate' => '1',\n			'amount' => '1.90',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity9->id\n		));\n		$calculation_equipment_activity9_1 = EstimateEquipment::create(array(\n			'equipment_name' => 'CHPTR4_ACT9_SUBCON_a',\n			'unit' => 'stuk',\n			'rate' => '1',\n			'amount' => '1.92',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity9->id\n		));\n		$calculation_material_activity9_2 = EstimateMaterial::create(array(\n			'material_name' => 'CHPTR4_ACT9_SUBCON_2',\n			'unit' => 'm',\n			'rate' => '2',\n			'amount' => '2.90',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity9->id\n		));\n		$calculation_equipment_activity9_2 = EstimateEquipment::create(array(\n			'equipment_name' => 'CHPTR4_ACT9_SUBCON_b',\n			'unit' => 'stuk',\n			'rate' => '2',\n			'amount' => '3.91',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity9->id\n		));\n		$calculation_material_activity9_3 = EstimateMaterial::create(array(\n			'material_name' => 'CHPTR4_ACT9_SUBCON_3',\n			'unit' => 'm',\n			'rate' => '3',\n			'amount' => '1.29',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity9->id\n		));\n		$calculation_equipment_activity9_3 = EstimateEquipment::create(array(\n			'equipment_name' => 'CHPTR4_ACT9_SUBCON_c',\n			'unit' => 'stuk',\n			'rate' => '3',\n			'amount' => '3.19',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity9->id\n		));\n		$calculation_material_activity9_4 = EstimateMaterial::create(array(\n			'material_name' => 'CHPTR4_ACT9_SUBCON_4',\n			'unit' => 'm',\n			'rate' => '4',\n			'amount' => '1.29',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity9->id\n		));\n		$calculation_equipment_activity9_4 = EstimateEquipment::create(array(\n			'equipment_name' => 'CHPTR4_ACT9_SUBCON_d',\n			'unit' => 'stuk',\n			'rate' => '4',\n			'amount' => '3.19',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity9->id\n		));\n		$calculation_material_activity9_5 = EstimateMaterial::create(array(\n			'material_name' => 'CHPTR4_ACT9_SUBCON_5',\n			'unit' => 'm',\n			'rate' => '5',\n			'amount' => '3.29',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity9->id\n		));\n		$calculation_equipment_activity9_5 = EstimateEquipment::create(array(\n			'equipment_name' => 'CHPTR4_ACT9_SUBCON_e',\n			'unit' => 'stuk',\n			'rate' => '5',\n			'amount' => '3.19',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity9->id\n		));\n		$this->command->info('CalculationMaterial created');\n		$this->command->info('CalculationEquipment created');\n\n		$calculation_labor_activity10 = EstimateLabor::create(array(\n			'rate' => '35.00',\n			'amount' => '8',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity10->id\n		));\n		$this->command->info('CalculationLabor created');\n\n		$calculation_material_activity10_1 = EstimateMaterial::create(array(\n			'material_name' => 'CHPTR4_ACT10_SUBCON_1',\n			'unit' => 'm',\n			'rate' => '1',\n			'amount' => '1.90',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity10->id\n		));\n		$calculation_equipment_activity10_1 = EstimateEquipment::create(array(\n			'equipment_name' => 'CHPTR4_ACT10_SUBCON_a',\n			'unit' => 'stuk',\n			'rate' => '1',\n			'amount' => '1.92',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity10->id\n		));\n		$calculation_material_activity10_2 = EstimateMaterial::create(array(\n			'material_name' => 'CHPTR4_ACT10_SUBCON_2',\n			'unit' => 'm',\n			'rate' => '2',\n			'amount' => '1.90',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity10->id\n		));\n		$calculation_equipment_activity10_2 = EstimateEquipment::create(array(\n			'equipment_name' => 'CHPTR4_ACT10_SUBCON_b',\n			'unit' => 'stuk',\n			'rate' => '2',\n			'amount' => '1.91',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity10->id\n		));\n		$calculation_material_activity10_3 = EstimateMaterial::create(array(\n			'material_name' => 'CHPTR4_ACT10_SUBCON_3',\n			'unit' => 'm',\n			'rate' => '3',\n			'amount' => '1.29',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity10->id\n		));\n		$calculation_equipment_activity10_3 = EstimateEquipment::create(array(\n			'equipment_name' => 'CHPTR4_ACT10_SUBCON_c',\n			'unit' => 'stuk',\n			'rate' => '3',\n			'amount' => '3.19',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity10->id\n		));\n		$calculation_material_activity10_4 = EstimateMaterial::create(array(\n			'material_name' => 'CHPTR4_ACT10_SUBCON_4',\n			'unit' => 'm',\n			'rate' => '4',\n			'amount' => '1.29',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity10->id\n		));\n		$calculation_equipment_activity10_4 = EstimateEquipment::create(array(\n			'equipment_name' => 'CHPTR4_ACT10_SUBCON_d',\n			'unit' => 'stuk',\n			'rate' => '4',\n			'amount' => '3.19',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity10->id\n		));\n		$calculation_material_activity10_5 = EstimateMaterial::create(array(\n			'material_name' => 'CHPTR4_ACT10_SUBCON_5',\n			'unit' => 'm',\n			'rate' => '5',\n			'amount' => '3.29',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity10->id\n		));\n		$calculation_equipment_activity10_5 = EstimateEquipment::create(array(\n			'equipment_name' => 'CHPTR4_ACT10_SUBCON_e',\n			'unit' => 'stuk',\n			'rate' => '5',\n			'amount' => '3.19',\n			'original' => true,\n			'isset' => false,\n			'activity_id' => $test_activity10->id\n		));\n		$this->command->info('CalculationMaterial created');\n		$this->command->info('CalculationEquipment created');\n\n		LessLabor::create(array(\n			'amount' => '34.56',\n			'activity_id' => $test_activity4->id,\n			'original_id' => $calculation_labor_activity4->id,\n		));\n		$this->command->info('LessLabor created');\n\n		LessMaterial::create(array(\n			'rate' => '1.00',\n			'amount' => '21.29',\n			'activity_id' => $test_activity4->id,\n			'original_id' => $calculation_material_activity4_1->id,\n		));\n		$this->command->info('LessMaterial created');\n\n		LessEquipment::create(array(\n			'rate' => '112.23',\n			'amount' => '1101.25',\n			'activity_id' => $test_activity4->id,\n			'original_id' => $calculation_equipment_activity4_1->id,\n		));\n		$this->command->info('LessEquipment created');\n\n		MoreLabor::create(array(\n			'rate' => '102.33',\n			'amount' => '999.56',\n			'note' => 'omschrijving voor bij meerwerk',\n			'activity_id' => $test_activity7->id,\n			'hour_id' => $test_timesheet->id\n		));\n		$this->command->info('MoreLabor created');\n\n		MoreMaterial::create(array(\n			'material_name' => 'plankmeer',\n			'unit' => 'm',\n			'rate' => '160.24',\n			'amount' => '1611.22',\n			'activity_id' => $test_activity7->id\n		));\n		$this->command->info('MoreMaterial created');\n\n		MoreEquipment::create(array(\n			'equipment_name' => 'plankknippermeer',\n			'unit' => 'stuk',\n			'rate' => '1812.23',\n			'amount' => '18101.25',\n			'activity_id' => $test_activity7->id\n		));\n		$this->command->info('MoreEquipment created');\n\n/*\n		EstimateLabor::create(array(\n			'rate' => '35.00',\n			'amount' => '8',\n			'set_rate' => '35.00',\n			'set_amount' => '8',\n			'activity_id' => $test_activity8->id,\n			'hour_id' => $test_timesheet->id\n		));\n		$this->command->info('EstimateLabor created');\n*/\n		$this->command->info('Estimate_Set_Material_Creating....');\n		EstimateMaterial::create(array(\n			'set_material_name' => 'estim_set_mat_1',\n			'set_unit' => 'm2',\n			'set_rate' => '1',\n			'set_amount' => '2',\n			'original' => false,\n			'isset' => true,\n			'activity_id' => $test_activity9->id\n		));\n		EstimateMaterial::create(array(\n			'set_material_name' => 'estim_set_mat_2',\n			'set_unit' => 'm2',\n			'set_rate' => '2',\n			'set_amount' => '3',\n			'original' => false,\n			'isset' => true,\n			'activity_id' => $test_activity9->id\n		));\n		EstimateMaterial::create(array(\n			'set_material_name' => 'estim_set_mat_3',\n			'set_unit' => 'm2',\n			'set_rate' => '4',\n			'set_amount' => '5',\n			'original' => false,\n			'isset' => true,\n			'activity_id' => $test_activity9->id\n		));\n		EstimateMaterial::create(array(\n			'set_material_name' => 'estim_set_mat_4',\n			'set_unit' => 'm2',\n			'set_rate' => '6',\n			'set_amount' => '7',\n			'original' => false,\n			'isset' => true,\n			'activity_id' => $test_activity9->id\n		));\n		EstimateMaterial::create(array(\n			'set_material_name' => 'estim_set_mat_5',\n			'set_unit' => 'm2',\n			'set_rate' => '8',\n			'set_amount' => '9',\n			'original' => false,\n			'isset' => true,\n			'activity_id' => $test_activity9->id\n		));\n		$this->command->info('Estimate_Set_Material_Created');\n\n		$this->command->info('Estimate_Set_Equipment_Creating....');\n		EstimateEquipment::create(array(\n			'set_equipment_name' => 'estim_set_equip_1',\n			'set_unit' => 'stuk',\n			'set_rate' => '1.1',\n			'set_amount' => '2.2',\n			'original' => false,\n			'isset' => true,\n			'activity_id' => $test_activity9->id\n		));\n		EstimateEquipment::create(array(\n			'set_equipment_name' => 'estim_set_equip_2',\n			'set_unit' => 'stuk',\n			'set_rate' => '3.3',\n			'set_amount' => '4.4',\n			'original' => false,\n			'isset' => true,\n			'activity_id' => $test_activity9->id\n		));\n		EstimateEquipment::create(array(\n			'set_equipment_name' => 'estim_set_equip_3',\n			'set_unit' => 'stuk',\n			'set_rate' => '5.1',\n			'set_amount' => '6.6',\n			'original' => false,\n			'isset' => true,\n			'activity_id' => $test_activity9->id\n		));\n		EstimateEquipment::create(array(\n			'set_equipment_name' => 'estim_set_equip_4',\n			'set_unit' => 'stuk',\n			'set_rate' => '7.7',\n			'set_amount' => '8.8',\n			'original' => false,\n			'isset' => true,\n			'activity_id' => $test_activity9->id\n		));\n		EstimateEquipment::create(array(\n			'set_equipment_name' => 'estim_set_equip_5',\n			'set_unit' => 'stuk',\n			'set_rate' => '9.9',\n			'set_amount' => '10.10',\n			'original' => false,\n			'isset' => true,\n			'activity_id' => $test_activity9->id\n		));\n		$this->command->info('Estimate_Set_Equipment_Created');\n\n		//$test_user->productFavorite()->attach($test_product->id);\n		//$this->command->info('Project favorite created');\n	}\n }\n",
+			"file": "app/database/seeds/TestProjectSeeder.php",
+			"file_size": 50299,
+			"file_write_time": 130740844945003397,
+			"settings":
+			{
+				"buffer_size": 50296,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/routes.php",
+			"settings":
+			{
+				"buffer_size": 7073,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/controllers/ProjectController.php",
+			"settings":
+			{
+				"buffer_size": 6574,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/cost/timesheet.blade.php",
+			"settings":
+			{
+				"buffer_size": 10306,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -299,51 +326,63 @@
 		"/var/www/calctool-v2",
 		"/var/www/calctool-v2/app",
 		"/var/www/calctool-v2/app/calculus",
+		"/var/www/calctool-v2/app/config",
+		"/var/www/calctool-v2/app/config/local",
 		"/var/www/calctool-v2/app/controllers",
 		"/var/www/calctool-v2/app/database",
+		"/var/www/calctool-v2/app/database/migrations",
+		"/var/www/calctool-v2/app/database/seeds",
+		"/var/www/calctool-v2/app/models",
 		"/var/www/calctool-v2/app/start",
+		"/var/www/calctool-v2/app/tests",
 		"/var/www/calctool-v2/app/views",
+		"/var/www/calctool-v2/app/views/auth",
 		"/var/www/calctool-v2/app/views/base",
 		"/var/www/calctool-v2/app/views/calc",
 		"/var/www/calctool-v2/app/views/cost",
+		"/var/www/calctool-v2/app/views/generic",
 		"/var/www/calctool-v2/app/views/layout",
-		"/var/www/calctool-v2/app/views/user"
+		"/var/www/calctool-v2/app/views/user",
+		"/var/www/calctool-v2/bootstrap",
+		"/var/www/calctool-v2/public"
 	],
 	"file_history":
 	[
+		"/var/www/calctool-v2/app/database/migrations/2014_09_09_204054_create_users_table.php",
 		"/var/www/calctool-v2/app/views/calc/calculation.blade.php",
-		"/var/www/calctool-v2/app/views/user/edit_project.blade.php",
-		"/var/www/calctool-v2/app/routes.php",
-		"/var/www/calctool-v2/app/controllers/EstimController.php",
+		"/var/www/calctool-v2/app/calculus/CalculationRegister.php",
+		"/var/www/calctool-v2/app/calculus/CalculationOverview.php",
+		"/var/www/calctool-v2/app/calculus/CalculationEndresult.php",
 		"/var/www/calctool-v2/app/views/calc/estimate.blade.php",
 		"/var/www/calctool-v2/app/calculus/EstimateRegister.php",
+		"/var/www/calctool-v2/app/database/seeds/TestProjectSeeder.php",
+		"/var/www/calctool-v2/app/routes.php",
+		"/var/www/calctool-v2/app/database/migrations/2014_09_11_220407_create_calculation.php",
+		"/var/www/calctool-v2/app/controllers/EstimController.php",
+		"/var/www/calctool-v2/app/controllers/untitled",
+		"/var/www/calctool-v2/app/models/EstimateMaterial.php",
 		"/var/www/calctool-v2/app/controllers/CalcController.php",
-		"/var/www/calctool-v2/app/views/base/home.blade.php",
-		"/var/www/calctool-v2/app/start/artisan.php",
-		"/var/www/calctool-v2/app/commands/DropHard.php",
-		"/var/www/calctool-v2/app/views/layout/header.blade.php",
+		"/var/www/calctool-v2/app/database/seeds/StaticSeeder.php",
 		"/var/www/calctool-v2/app/calculus/Endresult.php",
 		"/var/www/calctool-v2/app/calculus/OverviewCalc.php",
-		"/var/www/calctool-v2/app/controllers/AuthController.php",
-		"/var/www/calctool-v2/app/views/layout/master.blade.php",
-		"/var/www/calctool-v2/app/calculus/Register.php",
-		"/var/www/calctool-v2/app/database/migrations/2014_09_11_220407_create_calculation.php",
-		"/var/www/calctool-v2/app/database/migrations/2014_09_11_210838_create_cost_registration.php",
-		"/var/www/calctool-v2/app/database/migrations/2014_09_11_212442_create_financial.php",
-		"/var/www/calctool-v2/app/models/Timesheet.php",
-		"/home/dinux/Projects/cve/new.c",
-		"/home/dinux/Projects/cve/29290.c",
-		"/var/www/calctool-v2/app/database/seeds/TestProjectSeeder.php",
+		"/var/www/calctool-v2/app/database/seeds/MaterialStorageSeeder.php",
 		"/var/www/calctool-v2/app/database/seeds/DatabaseSeeder.php",
+		"/var/www/calctool-v2/app/calculus/Register.php",
+		"/var/www/calctool-v2/app/database/migrations/2014_09_11_202219_create_material_storage.php",
+		"/var/www/calctool-v2/app/config/local/session.php",
+		"/var/www/calctool-v2/app/views/layout/header.blade.php",
+		"/var/www/calctool-v2/app/views/base/home.blade.php",
+		"/var/www/calctool-v2/bootstrap/start.php",
+		"/var/www/calctool-v2/app/models/CalculationMaterial.php",
+		"/var/www/calctool-v2/app/models/CalculationLabor.php",
 		"/var/www/calctool-v2/app/calculus/Helpers.php",
 		"/var/www/calctool-v2/app/config/app.php",
 		"/var/www/calctool-v2/app/start/global.php",
 		"/var/www/calctool-v2/workbench/calctool/calculus/src/Calctool/Calculus/CalculusServiceProvider.php",
 		"/var/www/calctool-v2/workbench/calctool/calculus/src/Calctool/Calculus/Calculus.php",
-		"/var/www/calctool-v2/app/models/CalculationLabor.php",
 		"/var/www/calctool-v2/calctool.sublime-project",
 		"/var/www/calctool-v2/app/views/calc/less.blade.php",
-		"/var/www/calctool-v2/app/models/CalculationMaterial.php",
+		"/var/www/calctool-v2/app/views/layout/master.blade.php",
 		"/var/www/calctool-v2/public/plugins/superslides/jquery.number.min.js",
 		"/var/www/calctool-v2/public/plugins/jquery.numberformatter.js",
 		"/var/www/calctool-v2/app/controllers/ProjectController.php",
@@ -359,7 +398,6 @@
 		"/var/www/calctool-v2/app/config/services.php",
 		"/var/www/calctool-v2/app/config/dev/database.php",
 		"/var/www/calctool-v2/app/config/dev/app.php",
-		"/var/www/calctool-v2/bootstrap/start.php",
 		"/var/www/calctool-v2/app/controllers/CostController.php",
 		"/var/www/calctool/app/views/placeholder.php",
 		"/var/www/calctool/app/views/user/relation.blade.php",
@@ -437,69 +475,140 @@
 		"/var/www/calctool/app/database/migrations/2014_09_11_225236_create_system_table.php",
 		"/var/www/calctool/app/models/SystemTooltip.php",
 		"/var/www/calctool/app/models/SystemOption.php",
-		"/var/www/calctool/app/models/SystemMessage.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_220407_create_calculation.php"
+		"/var/www/calctool/app/models/SystemMessage.php"
 	],
 	"find":
 	{
-		"height": 34.0
+		"height": 36.0
 	},
 	"find_in_files":
 	{
 		"height": 90.0,
 		"where_history":
 		[
-			"/var/www/calctool-v2",
 			"/var/www/calctool/app",
 			"<open files>,<open folders>"
 		]
 	},
 	"find_state":
 	{
-		"case_sensitive": false,
+		"case_sensitive": true,
 		"find_history":
 		[
-			"step0",
-			"btn-pre",
-			".btn",
-			"calculation-wizard",
-			"wizard",
-			"calculation-wizard",
-			"steps",
-			"wizard",
-			"calculation-wizard",
-			"fue",
-			"flue",
-			"amount",
-			"deleteact",
-			"Calc",
-			"calcE",
-			"calcM",
+			"project2.php",
+			"pref_profit_calc_estim_mat",
+			"profit",
+			"equip",
+			"activity_tax_calc_labor_id_foreign",
+			"OverviewCalc::",
+			"Register::",
+			"OverviewCalc::",
+			"Overview::",
+			"Overview",
+			"Endresult::",
+			"Endresult",
+			"Register",
+			"Endresult",
+			"OverviewCalc",
+			"Register",
+			"CalcRegister",
+			"CalcRegsiter",
+			"estimatematerial",
+			"estrimatematerial",
+			"estrimaMaterial",
+			"			'original' => false,",
+			"calculation/estim/newactivity",
+			"calculation/estim/newactivity/",
+			"fa-un",
+			"delete",
+			"$material",
+			"fa-un",
+			"			'isset' => true,",
+			"isset",
+			"			'isset' => true",
+			"			'original' => true,",
+			"$table->boolean('original');",
+			"equipme",
+			"time",
+			"fa-time",
+			"fa-times",
+			"fa times",
+			"est",
+			"estim",
+			"OverviewCalc::calcEqui",
+			"OverviewCalc::calcMaterial",
 			"calc",
-			"estimLaborTotal",
-			": ",
-			"newactivity",
-			"/estim",
-			"col-md-1 text-right\" data-profit",
-			"col-md-1 text-right",
-			"$profit",
-			"dsave",
-			"esave",
-			"dsavee",
-			"lsavee",
-			"esavee",
-			"dsavee",
-			"esavee",
+			"LaborTot",
+			"calcEstim",
+			"calcLaborAc",
+			"LaborTotal",
+			"calcLaborTotal",
+			"laborTotal",
+			"calcLaborT",
+			"calcLabor",
+			"10",
+			"subconCalcLaborActivityTax1",
+			"susubconCalcLaborActivityTax1",
+			"EstimateLabor",
+			"conCalcLaborActivityTax1",
+			"materialActivityProfit",
+			"calcEquipmentActivityProfit",
+			"row",
+			"			$",
+			"ind($activity->part_id)->part_name",
+			"test_product",
+			"$test_tax",
+			"estimate",
+			"stelpost",
+			"totaal",
+			"estimatelabor",
+			"estimate_labor",
 			"set_rate",
-			"Tax::",
-			"()\n",
-			"'];\n",
-			";\n",
-			"\">{{ ",
-			"part_id",
-			"Aan",
-			"proj",
-			"doDele",
+			"set-rate",
+			"tax_calc_labor_id",
+			"test_tax-",
+			"int",
+			"_est",
+			"part_type",
+			"estimate",
+			"activity7",
+			"plank",
+			"activity7 ",
+			"_EST",
+			"test_part_type_est",
+			"_EST",
+			"1+",
+			"uittrekstaat",
+			"totaal aa",
+			"calcActivityTotalProfit",
+			"_mat",
+			"$test_ta",
+			"calculation",
+			"contracting",
+			"c=",
+			"conCalc",
+			"subconCalcLaborActivityTax1($project)",
+			"conCalc",
+			"$test_product",
+			"tax",
+			"activit87",
+			"activity87",
+			"activity6",
+			"36",
+			"35",
+			"36",
+			"35",
+			"36",
+			"35",
+			"first()",
+			"endforeach",
+			"calclabor",
+			"calcLabor",
+			"uittre",
+			"register",
+			"calcMaterialTotal",
+			"CalculationMaterial",
+			"oUpdatePartType",
 			"deleterow",
 			"dsave",
 			"esave",
@@ -513,49 +622,7 @@
 			"user()",
 			"lsave",
 			"newmaterial",
-			"lsave",
-			"dsave",
-			"number(",
-			" (",
-			"error-input",
-			"radio",
-			"rad",
-			"auth",
-			"87.211.99.157",
-			"table",
-			"tab",
-			"cust",
-			"asset",
-			"asse",
-			"9DB667",
-			"right",
-			"assets",
-			"89a550",
-			"assets",
-			"test_timesheet",
-			"contactF",
-			"valid",
-			"specification",
-			"deliver",
-			"test_timesheet",
-			"test_purchase",
-			"test_iban",
-			"test_contact",
-			"test_resource2",
-			"test_resource1",
-			"test_payment",
-			"step",
-			"test_projecttype",
-			"test_res",
-			"recource",
-			"Prova",
-			"provance",
-			"prov",
-			"prova",
-			"self",
-			"equipments",
-			"bll",
-			"closu"
+			"lsave"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -563,6 +630,28 @@
 		"regex": false,
 		"replace_history":
 		[
+			"CalculationOverview::",
+			"EstimateRegister::",
+			"CalculationRegister::",
+			"CalculationOverview::",
+			"CalculationEndresult::",
+			"EstimateRegister",
+			"CalculationEndresult",
+			"CalculationOverview",
+			"CalculationRegister",
+			"			'original' => f,",
+			"			'original' => true,",
+			"$equipment",
+			"			'isset' => false,",
+			"			'isset' => true,",
+			"			'original' => true,\n			'isset' => true",
+			"$table->boolean('original');\n			$table->boolean('isset');",
+			"			$table->boolean('original');\n			$table->boolean('isset');",
+			"$table->boolean('original');\n$table->boolean('isset');",
+			"$test_tax1",
+			"estimate",
+			"subcontracting",
+			"subconCalc",
 			"127.0.0.1",
 			"719E00"
 		],
@@ -570,19 +659,194 @@
 		"show_context": true,
 		"use_buffer2": true,
 		"whole_word": false,
-		"wrap": true
+		"wrap": false
 	},
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "app/views/user/edit_project.blade.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 20778,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								16741,
+								16741
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 7184.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/database/migrations/2014_09_09_204054_create_users_table.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9055,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5244,
+								5244
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2460.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/database/seeds/TestProjectSeeder.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 50296,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3257,
+								3257
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": -0.0,
+						"translation.y": 1102.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/routes.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7073,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6688,
+								6688
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1680.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "app/controllers/ProjectController.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6574,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								292,
+								292
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 180.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "app/views/cost/timesheet.blade.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10306,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7554,
+								7554
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3240.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 23.0
+		"height": 28.0
 	},
 	"input":
 	{
@@ -626,7 +890,7 @@
 	"project": "calctool.sublime-project",
 	"replace":
 	{
-		"height": 42.0
+		"height": 66.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -661,7 +925,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 293.0,
+	"side_bar_width": 445.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

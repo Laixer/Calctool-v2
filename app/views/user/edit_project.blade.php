@@ -76,7 +76,7 @@ $project = Project::find(Route::Input('project_id'));
 			</div>
 			@endif
 
-			<div class="fuelux">
+			<!--<div class="fuelux">
 				<div id="calculation-wizard" class="wizard">
 					<ul class="steps">
 						<li data-target="#step0" data-location="/" class="complete">Home<span class="chevron"></span></li>
@@ -90,6 +90,18 @@ $project = Project::find(Route::Input('project_id'));
 						<li data-target="#step8">Winst/Verlies<span class="chevron"></span></li>
 					</ul>
 				</div>
+			</div>-->
+
+			<div class="wizard">
+			    <a href="/"> Home</a>
+			    <a href="javascript:void(0);" class="current">Project</a>
+			    <a href="/calculation/project-{{ $project->id }}">Calculatie</a>
+			    <a href="#">Offerte</a>
+		    	<a href="/estimate/project-{{ $project->id }}">Stelpost</a>
+		  		<a href="/less/project-{{ $project->id }}">Minderwerk</a>
+		  		<a href="/more/project-{{ $project->id }}">Meerwerk</a>
+			    <a href="#">Factuur</a>
+			    <a href="#">Winst/verlies</a>
 			</div>
 
 			<hr />
