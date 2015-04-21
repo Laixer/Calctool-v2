@@ -131,18 +131,18 @@ class TestProjectSeeder extends Seeder {
 		$this->command->info('Resource created');
 
 		$test_relation = Relation::create(array(
-			'company_name' => 'bedrijfsnaam relatie',
-			'address_street' => 'straat',
+			'company_name' => 'Beun Haas B.V.',
+			'address_street' => 'Afrikanenplein',
 			'address_number' => '11',
 			'address_postal' => '1234AB',
-			'address_city' => 'Rotterdam',
+			'address_city' => 'RotterdamZuid',
 			'kvk' => '174365278954',
-			'btw' => '214855241B01',
+			'btw' => 'NL214855241B01',
 			'debtor_code' => 'UG83824',
 			'phone' => '0612345678',
 			'email' => 'info@website.nl',
 			'note' => 'omschrijving relatie',
-			'website' => 'www.website.nl',
+			'website' => 'http://www.beunhaas.nl',
 			'logo_id' => $test_resource1->id,
 			'user_id' => $test_user->id,
 			'type_id' => $test_type_name->id,
