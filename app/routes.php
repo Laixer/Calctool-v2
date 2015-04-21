@@ -105,5 +105,6 @@ Route::group(array('before' => 'auth'), function()
 
 	/* Cost pages */
 	Route::get('timesheet', array('as' => 'timesheet', 'uses' => 'CostController@getTimesheet'));
+	Route::post('timesheet/new', array('as' => 'timesheet', 'uses' => 'CostController@doNewTimesheet'));
 	Route::get('purchase', array('as' => 'purchase', 'uses' => 'CostController@getPurchase'));
 });

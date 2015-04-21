@@ -98,6 +98,16 @@ class EstimController extends BaseController {
 			} else {
 				$rate = str_replace(',', '.', str_replace('.', '' , $rate));
 			}
+
+			/*$timesheet = Timesheet::create(array(
+				'register_date' => '09-10-2014',
+				'register_hour' => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
+				'part_id' => , // activity ->
+				'part_type_id' => PartType::where('type_name','=','estimate')->first()->id;
+				'detail_id' => ,
+				'project_id' => 1,
+			));*/
+
 			$labor = EstimateLabor::create(array(
 				"set_rate" => $rate,
 				"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),

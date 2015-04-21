@@ -6,6 +6,53 @@ $project = Project::find(Route::Input('project_id'));
 
 @section('content')
 <?# -- WRAPPER -- ?>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#addnew').click(function(e) {
+			$curThis = $(this);
+			e.preventDefault();
+			$date = $curThis.closest("tr").find("input[name='date']").val();
+			$hour = $curThis.closest("tr").find("input[name='hour']").val();
+			$type = $curThis.closest("tr").find("select[name='typename']").val();
+			$tax = $curThis.closest("tr").find("select[name='tax']").val();
+			$chapter = $curThis.closest("tr").find("select[name='chapter']").val();
+			$activity = $curThis.closest("tr").find("select[name='activity']").val();
+			$.post("/timesheet/new", {
+				date: $date,
+				hour: $hour,
+				type: $type,
+				tax: $tax,
+				chapter: $chapter,
+				activity: $activity
+			}, function(data){
+				var $curTable = $curThis.closest("table");
+
+				$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
+				.find("td:eq(0)").text($date).end()
+				.find("td:eq(1)").text($hour).end()
+				.find("td:eq(2)").text($type).end()
+				.find("td:eq(3)").text($tax).end()
+				.find("td:eq(4)").text($chapter).end()
+				.find("td:eq(5)").text($activity).end()
+				.prependTo($curTable);
+				//console.log($date);
+				//$curTable.find("tr:eq(1)").clone().prependTo($curTable);
+			});
+		});
+		/*$("body").on("change", ".newrow", function(){
+			var i = 1;
+			if($(this).val()){
+				if(!$(this).closest("tr").next().length){
+					var $curTable = $(this).closest("table");
+					$curTable.find("tr:eq(1)").clone().removeAttr("data-id").find("input").each(function(){
+						$(this).val("").removeClass("error-input").attr("id", function(_, id){ return id + i });
+					}).end().find(".total-ex-tax, .total-incl-tax").text("").end().appendTo($curTable);
+					i++;
+				}
+			}
+		});*/
+	});
+</script>
 <div id="wrapper">
 
 	<section class="container">
@@ -286,11 +333,11 @@ $project = Project::find(Route::Input('project_id'));
 											<?php
 												$typename;
 												$tax;
-												if (PartType::find($timesheet->part_type_id)->type_name == 'calculation') {
+												if (PartType::find($activity->part_type_id)->type_name == 'calculation') {
 													$typename = 'Aanneming';
 													$tax = Tax::find($activity->tax_calc_labor_id)->tax_rate;
-													if ($timesheet->detail_id) {
-														if (Detail::find($timesheet->detail_id)->detail_name == 'more') {
+													if ($activity->detail_id) {
+														if (Detail::find($activity->detail_id)->detail_name == 'more') {
 															$typename = 'Meerwerk';
 															$tax = Tax::find($activity->tax_more_labor_id)->tax_rate;
 														}
@@ -314,32 +361,39 @@ $project = Project::find(Route::Input('project_id'));
 											@endforeach
 											@endforeach
 											<tr><!-- item -->
-												<td class="col-md-1"><input type="date" class="form-control-sm-text"/></td>
-												<td class="col-md-1"><input type="number" min="0" class="form-control-sm-text"/></td>
+												<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text"/></td>
+												<td class="col-md-1"><input type="number" min="0" name="hour" id="hour" class="form-control-sm-text"/></td>
 												<td class="col-md-1">
-													<select name="timetype" id="type" class="form-control-sm-text">
-														<option value="" selected="selected">Aanneming</option>
-														<option value="" selected="selected">Meerwerk</option>
-														<option value="" selected="selected">Stelpost</option>
+													<select name="typename" id="typename" class="form-control-sm-text">
+														<option value="1" selected="selected">Aanneming</option>
+														<option value="2" selected="selected">Meerwerk</option>
+														<option value="3" selected="selected">Stelpost</option>
 													</select>
 												</td>
 												<td class="col-md-1">
-													<select name="timetype" id="type" class="form-control-sm-text">
-														<option value="" selected="selected">21</option>
+													<select name="tax" data-id="{{ $activity->id }}" data-type="calc-material" id="type" class="form-control-sm-text pointer select-tax">
+													@foreach (Tax::all() as $tax)
+														<option value="{{ $tax->id }}" {{ ($activity->tax_calc_material_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
+													@endforeach
 													</select>
 												</td>
 												<td class="col-md-2">
-													<select name="timetype" id="type" class="form-control-sm-text">
-														<option value="" selected="selected">Badkamer</option>
-														<option value="" selected="selected">Vloer</option>
+													<select name="chapter" id="chapter" class="form-control-sm-text">
+													@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+														<option value="{{ $chapter->id }}">{{ $chapter->chapter_name }}</option>
+													@endforeach
 													</select>
 												</td>
 												<td class="col-md-4">
-													<select name="timetype" id="type" class="form-control-sm-text">
-														<option value="" selected="selected">Vervangen van vloer met cement</option>
+													<select name="activity" id="activity" class="form-control-sm-text">
+													@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+													@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
+														<option value="{{ $activity->id }}">{{ $activity->activity_name }}</option>
+													@endforeach
+													@endforeach
 													</select>
 												</td>
-												<td class="col-md-1"><button class="btn btn-primary btn-xs fa fa-comment-o"> Notitie</button></td>
+												<td class="col-md-1"><button id="addnew" class="btn btn-primary btn-xs"> Toevoegen</button></td>
 												<td class="col-md-1">&nbsp;</button></td>
 											</tr>
 										</tbody>
