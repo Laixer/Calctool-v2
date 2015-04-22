@@ -76,22 +76,6 @@ $project = Project::find(Route::Input('project_id'));
 			</div>
 			@endif
 
-			<!--<div class="fuelux">
-				<div id="calculation-wizard" class="wizard">
-					<ul class="steps">
-						<li data-target="#step0" data-location="/" class="complete">Home<span class="chevron"></span></li>
-						<li data-target="#step1" data-location="/project-{{ $project->id }}/edit" class="complete">Projectgegevens<span class="chevron"></span></li>
-						<li data-target="#step2" data-location="/calculation/project-{{ $project->id }}" class="active">Calculatie<span class="chevron"></span></li>
-						<li data-target="#step3">Offerte<span class="chevron"></span></li>
-						<li data-target="#step4" data-location="/estimate/project-{{ $project->id }}" class="complete">Stelpost<span class="chevron"></span></li>
-						<li data-target="#step5">Minderwerk<span class="chevron"></span></li>
-						<li data-target="#step6">Meerwerk<span class="chevron"></span></li>
-						<li data-target="#step7">Factuur<span class="chevron"></span></li>
-						<li data-target="#step8">Winst/Verlies<span class="chevron"></span></li>
-					</ul>
-				</div>
-			</div>-->
-
 			<div class="wizard">
 			    <a href="/"> Home</a>
 			    <a href="javascript:void(0);" class="current">Project</a>

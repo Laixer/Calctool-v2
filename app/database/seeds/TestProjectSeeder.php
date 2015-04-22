@@ -196,12 +196,12 @@ class TestProjectSeeder extends Seeder {
 		$this->command->info('Resource created');
 
 		Contact::create(array(
-			'firstname' => 'voornaam',
-			'lastname' => 'achternaam',
-			'email' => 'info@naam.nl',
+			'firstname' => 'Beun',
+			'lastname' => 'Haas',
+			'email' => 'beun@haas.nl',
 			'mobile' => '0612345678',
 			'phone' => '0101234567',
-			'note' => 'omschrijving contact',
+			'note' => 'Eigenaar',
 			'relation_id' => $test_relation->id,
 			'function_id' => $test_contact_function->id
 		));

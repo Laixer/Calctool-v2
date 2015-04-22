@@ -56,157 +56,212 @@ $(document).ready(function() {
 
 			<h2><strong>Relatie</strong> {{ $relation->company_name }}</h2>
 
-				{{ Form::open(array('url' => 'relation/update')) }}
-				<div class="row">
+				<div class="tabs nomargin-top">
 
-					<div class="col-md-2">
-						<div class="form-group">
-							<label for="relationkind">Relatiesoort</label>
-							<select name="relationkind" id="relationkind" class="form-control pointer">
-							@foreach (RelationKind::all() as $kind)
-								<option {{ $relation->kind_id==$kind->id ? 'selected' : '' }} value="{{ $kind->id }}">{{ ucwords($kind->kind_name) }}</option>
-							@endforeach
-							</select>
+					<?# -- tabs -- ?>
+					<ul class="nav nav-tabs">
+						<li class="active">
+							<a href="#company" data-toggle="tab">Bedrijfsgegevens</a>
+						</li>
+						<li>
+							<a href="#contact" data-toggle="tab">Contacten</a>
+						</li>
+					</ul>
+
+					<?# -- tabs content -- ?>
+					<div class="tab-content">
+						<div id="company" class="tab-pane active">
+
+							{{ Form::open(array('url' => 'relation/update')) }}
+							<div class="row">
+
+								<div class="col-md-2">
+									<div class="form-group">
+										<label for="relationkind">Relatiesoort</label>
+										<select name="relationkind" id="relationkind" class="form-control pointer">
+										@foreach (RelationKind::all() as $kind)
+											<option {{ $relation->kind_id==$kind->id ? 'selected' : '' }} value="{{ $kind->id }}">{{ ucwords($kind->kind_name) }}</option>
+										@endforeach
+										</select>
+									</div>
+								</div>
+
+								<div class="col-md-2">
+									<div class="form-group">
+										<label for="debtor">Debiteurennummer</label>
+										<input name="debtor" id="debtor" type="text" value="{{ Input::old('debtor') ? Input::old('debtor') : $relation->debtor_code }}" class="form-control"/>
+										<input type="hidden" name="id" id="id" value="{{ $relation->id }}"/>
+									</div>
+								</div>
+
+							</div>
+
+							<h4 class="company">Bedrijfsgegevens</h4>
+							<div class="row company">
+
+								<div class="col-md-5">
+									<div class="form-group">
+										<label for="company_name">Bedrijfsnaam</label>
+										<input name="company_name" id="company_name" type="text" value="{{ Input::old('company_name') ? Input::old('company_name') : $relation->company_name }}" class="form-control" />
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<div class="form-group">
+										<label for="company_type">Bedrijfstype</label>
+										<select name="company_type" id="company_type" class="form-control pointer">
+										@foreach (RelationType::all() as $type)
+											<option {{ $relation->type_id==$type->id ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
+										@endforeach
+										</select>
+									</div>
+								</div>
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="website">Website</label>
+										<input name="website" id="website" type="url" value="{{ Input::old('website') ? Input::old('website') : $relation->website }}" class="form-control"/>
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<div class="form-group">
+										<label for="kvk">K.v.K nummer</label>
+										<input name="kvk" id="kvk" type="text" maxlength="12" value="{{ Input::old('kvk') ? Input::old('kvk') : $relation->kvk }}" class="form-control"/>
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<div class="form-group">
+										<label for="btw">BTW nummer</label>
+										<input name="btw" id="btw" type="text" maxlength="14" value="{{ Input::old('btw') ? Input::old('btw') : $relation->btw }}" class="form-control"/>
+									</div>
+								</div>
+
+								<div class="col-md-2">
+									<div class="form-group">
+										<label for="telephone_comp">Telefoonnummer</label>
+										<input name="telephone_comp" id="telephone_comp" type="text" maxlength="12" value="{{ Input::old('telephone_comp') ? Input::old('telephone_comp') : $relation->phone }}" class="form-control"/>
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<div class="form-group">
+										<label for="email_comp">Email</label>
+										<input name="email_comp" id="email_comp" type="email" value="{{ Input::old('email_comp') ? Input::old('email_comp') : $relation->email }}" class="form-control"/>
+									</div>
+								</div>
+
+							</div>
+
+							<h4>Adresgegevens</h4>
+							<div class="row">
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="street">Straat</label>
+										<input name="street" id="street" type="text" value="{{ Input::old('street') ? Input::old('street') : $relation->address_street }}" class="form-control"/>
+									</div>
+								</div>
+
+								<div class="col-md-1">
+									<div class="form-group">
+										<label for="address_number">Huis nr.</label>
+										<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') ? Input::old('address_number') : $relation->address_number }}" class="form-control"/>
+									</div>
+								</div>
+
+								<div class="col-md-2">
+									<div class="form-group">
+										<label for="zipcode">Postcode</label>
+										<input name="zipcode" id="zipcode" maxlength="6" type="text" value="{{ Input::old('zipcode') ? Input::old('zipcode') : $relation->address_postal }}" class="form-control"/>
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<div class="form-group">
+										<label for="city">Plaats</label>
+										<input name="city" id="city" type="text" value="{{ Input::old('city') ? Input::old('city') : $relation->address_city }}" class="form-control"/>
+									</div>
+								</div>
+
+								<div class="col-md-2">
+									<div class="form-group">
+										<label for="province">Provincie</label>
+										<select name="province" id="province" class="form-control pointer">
+											@foreach (Province::all() as $province)
+												<option {{ $relation->province_id==$province->id ? 'selected' : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
+											@endforeach
+										</select>
+									</div>
+								</div>
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="country">Land</label>
+										<select name="country" id="country" class="form-control pointer">
+											@foreach (Country::all() as $country)
+												<option {{ $relation->country_id==$country->id ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
+											@endforeach
+										</select>
+									</div>
+								</div>
+
+							</div>
+
+							<h4>Opmerkingen</h4>
+							<div class="row">
+								<div class="form-group">
+									<div class="col-md-12">
+										<textarea name="note" id="note" rows="10" class="form-control">{{ Input::old('note') ? Input::old('note') : $relation->note }}</textarea>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+								</div>
+							</div>
+						{{ Form::close() }}
+
+						</div>
+						<div id="contact" class="tab-pane">
+							<label>Contactpersonen</label>
+							<table class="table table-striped">
+								<?# -- table head -- ?>
+								<thead>
+									<tr>
+										<th class="col-md-2">Naam</th>
+										<th class="col-md-2">Voornaam</th>
+										<th class="col-md-2">Functie</th>
+										<th class="col-md-2">Telefoon</th>
+										<th class="col-md-2">Mobiel</th>
+										<th class="col-md-2">Email</th>
+									</tr>
+								</thead>
+
+								<!-- table items -->
+								<tbody>
+									@foreach (Contact::where('relation_id','=', $relation->id)->get() as $contact)
+									<tr><!-- item -->
+										<td class="col-md-2">{{ $contact->lastname }}</td>
+										<td class="col-md-2">{{ $contact->firstname }}</td>
+										<td class="col-md-2">{{ ContactFunction::find($contact->function_id)->function_name }}</td>
+										<td class="col-md-2">{{ $contact->phone }}</td>
+										<td class="col-md-2">{{ $contact->mobile }}</td>
+										<td class="col-md-2">{{ $contact->email }}</td>
+									</tr>
+									@endforeach
+								</tbody>
+							</table>
+							<div class="row">
+								<div class="col-md-12">
+									<a href="javascript:void(0);" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
+								</div>
+							</div>
 						</div>
 					</div>
-
-					<div class="col-md-2">
-						<div class="form-group">
-							<label for="debtor">Debiteurennummer</label>
-							<input name="debtor" id="debtor" type="text" value="{{ Input::old('debtor') ? Input::old('debtor') : $relation->debtor_code }}" class="form-control"/>
-							<input type="hidden" name="id" id="id" value="{{ $relation->id }}"/>
-						</div>
-					</div>
-
 				</div>
-
-				<h4 class="company">Bedrijfsgegevens</h4>
-				<div class="row company">
-
-					<div class="col-md-5">
-						<div class="form-group">
-							<label for="company_name">Bedrijfsnaam</label>
-							<input name="company_name" id="company_name" type="text" value="{{ Input::old('company_name') ? Input::old('company_name') : $relation->company_name }}" class="form-control" />
-						</div>
-					</div>
-
-					<div class="col-md-3">
-						<div class="form-group">
-							<label for="company_type">Bedrijfstype</label>
-							<select name="company_type" id="company_type" class="form-control pointer">
-							@foreach (RelationType::all() as $type)
-								<option {{ $relation->type_id==$type->id ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
-							@endforeach
-							</select>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div class="form-group">
-							<label for="website">Website</label>
-							<input name="website" id="website" type="url" value="{{ Input::old('website') ? Input::old('website') : $relation->website }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-3">
-						<div class="form-group">
-							<label for="kvk">K.v.K nummer</label>
-							<input name="kvk" id="kvk" type="text" maxlength="12" value="{{ Input::old('kvk') ? Input::old('kvk') : $relation->kvk }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-3">
-						<div class="form-group">
-							<label for="btw">BTW nummer</label>
-							<input name="btw" id="btw" type="text" maxlength="14" value="{{ Input::old('btw') ? Input::old('btw') : $relation->btw }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-2">
-						<div class="form-group">
-							<label for="telephone_comp">Telefoonnummer</label>
-							<input name="telephone_comp" id="telephone_comp" type="text" maxlength="12" value="{{ Input::old('telephone_comp') ? Input::old('telephone_comp') : $relation->phone }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-3">
-						<div class="form-group">
-							<label for="email_comp">Email</label>
-							<input name="email_comp" id="email_comp" type="email" value="{{ Input::old('email_comp') ? Input::old('email_comp') : $relation->email }}" class="form-control"/>
-						</div>
-					</div>
-
-				</div>
-
-				<h4>Adresgegevens</h4>
-				<div class="row">
-
-					<div class="col-md-4">
-						<div class="form-group">
-							<label for="street">Straat</label>
-							<input name="street" id="street" type="text" value="{{ Input::old('street') ? Input::old('street') : $relation->address_street }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-1">
-						<div class="form-group">
-							<label for="address_number">Huis nr.</label>
-							<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') ? Input::old('address_number') : $relation->address_number }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-2">
-						<div class="form-group">
-							<label for="zipcode">Postcode</label>
-							<input name="zipcode" id="zipcode" maxlength="6" type="text" value="{{ Input::old('zipcode') ? Input::old('zipcode') : $relation->address_postal }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-3">
-						<div class="form-group">
-							<label for="city">Plaats</label>
-							<input name="city" id="city" type="text" value="{{ Input::old('city') ? Input::old('city') : $relation->address_city }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-2">
-						<div class="form-group">
-							<label for="province">Provincie</label>
-							<select name="province" id="province" class="form-control pointer">
-								@foreach (Province::all() as $province)
-									<option {{ $relation->province_id==$province->id ? 'selected' : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
-								@endforeach
-							</select>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div class="form-group">
-							<label for="country">Land</label>
-							<select name="country" id="country" class="form-control pointer">
-								@foreach (Country::all() as $country)
-									<option {{ $relation->country_id==$country->id ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
-								@endforeach
-							</select>
-						</div>
-					</div>
-
-				</div>
-
-				<h4>Opmerkingen</h4>
-				<div class="row">
-					<div class="form-group">
-						<div class="col-md-12">
-							<textarea name="note" id="note" rows="10" class="form-control">{{ Input::old('note') ? Input::old('note') : $relation->note }}</textarea>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
-						<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
-					</div>
-				</div>
-			{{ Form::close() }}
 
 		</div>
 
