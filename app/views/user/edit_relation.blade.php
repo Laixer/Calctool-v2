@@ -8,6 +8,7 @@ $iban = Iban::where('relation_id','=',$relation->id)->first();
 @section('content')
 <?# -- WRAPPER -- ?>
 
+<script type="text/javascript" src="/js/iban.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	function prefixURL(field) {
@@ -26,8 +27,15 @@ $(document).ready(function() {
 		}
 	}
 
-	$('#website').blur(function(e){
+	$('#website').blur(function(e) {
 		prefixURL($(this));
+	});
+	$('#iban').blur(function() {
+		if (! IBAN.isValid($(this).val()) ) {
+			$(this).parent().addClass('has-error');
+		} else {
+			$(this).parent().removeClass('has-error');
+		}
 	});
 });
 </script>
