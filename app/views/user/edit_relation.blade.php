@@ -244,7 +244,7 @@ $(document).ready(function() {
 								<tbody>
 									@foreach (Contact::where('relation_id','=', $relation->id)->get() as $contact)
 									<tr><!-- item -->
-										<td class="col-md-2">{{ $contact->lastname }}</td>
+										<td class="col-md-2"><a href="/relation-{{ $relation->id }}/contact-{{ $contact->id }}/edit">{{ $contact->lastname }}</a></td>
 										<td class="col-md-2">{{ $contact->firstname }}</td>
 										<td class="col-md-2">{{ ContactFunction::find($contact->function_id)->function_name }}</td>
 										<td class="col-md-2">{{ $contact->phone }}</td>
