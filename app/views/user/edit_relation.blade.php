@@ -1,5 +1,6 @@
 <?php
 $relation = Relation::find(Route::Input('relation_id'));
+$iban = Iban::where('relation_id','=',$relation->id)->first();
 ?>
 
 @extends('layout.master')
@@ -62,6 +63,9 @@ $(document).ready(function() {
 					<ul class="nav nav-tabs">
 						<li class="active">
 							<a href="#company" data-toggle="tab">Bedrijfsgegevens</a>
+						</li>
+						<li>
+							<a href="#payment" data-toggle="tab">Betalingsgegevens</a>
 						</li>
 						<li>
 							<a href="#contact" data-toggle="tab">Contacten</a>
@@ -224,6 +228,34 @@ $(document).ready(function() {
 							</div>
 						{{ Form::close() }}
 
+						</div>
+						<div id="payment" class="tab-pane">
+							<h4>Betalingsgegevens</h4>
+							{{ Form::open(array('url' => 'relation/iban/update')) }}
+							<div class="row">
+
+								<div class="col-md-3">
+									<div class="form-group">
+										<label for="iban">IBAN rekeningnummer</label>
+										<input name="iban" id="iban" type="text" value="{{ Input::old('iban') ? Input::old('iban') : $iban->iban }}" class="form-control"/>
+										<input type="hidden" name="id" id="id" value="{{ $iban->id }}"/>
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<div class="form-group">
+										<label for="btw">Naam rekeninghouder</label>
+										<input name="iban_name" id="iban_name" type="text" value="{{ Input::old('iban_name') ? Input::old('iban_name') : $iban->iban_name }}" class="form-control"/>
+									</div>
+								</div>
+
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+								</div>
+							</div>
+							{{ Form::close() }}
 						</div>
 						<div id="contact" class="tab-pane">
 							<label>Contactpersonen</label>
