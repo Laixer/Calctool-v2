@@ -19,6 +19,10 @@ class RelationController extends \BaseController {
 		return View::make('user.edit_relation');
 	}
 
+	public function getNewContact() {
+		return View::make('user.new_contact');
+	}
+
 	public function doUpdate()
 	{
 		$rules = array(
@@ -175,6 +179,43 @@ class RelationController extends \BaseController {
 			$iban->relation_id = $relation->id;
 
 			$iban->save();
+
+			return Redirect::back()->with('success', 1);
+		}
+	}
+
+	public function doNewContact()
+	{
+		$rules = array(
+			/* Contact */
+			'id' => array('required','integer'),
+			'contact_name' => array('required','max:50'),
+			'contact_firstname' => array('required','max:30'),
+			'mobile' => array('alpha_num','max:14'),
+			'telephone' => array('alpha_num','max:14'),
+			'email' => array('required','email','max:80'),
+			'contactfunction' => array('required','numeric'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			// redirect our user back to the form with the errors from the validator
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+			$contact = new Contact;
+			$contact->firstname = Input::get('contact_name');
+			$contact->lastname = Input::get('contact_firstname');
+			$contact->mobile = Input::get('mobile');
+			$contact->phone = Input::get('telephone');
+			$contact->email = Input::get('email');
+			$contact->note = Input::get('note');
+			$contact->relation_id = Input::get('id');
+			$contact->function_id = Input::get('contactfunction');
+
+			$contact->save();
 
 			return Redirect::back()->with('success', 1);
 		}

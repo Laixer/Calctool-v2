@@ -256,7 +256,7 @@ $(document).ready(function() {
 							</table>
 							<div class="row">
 								<div class="col-md-12">
-									<a href="javascript:void(0);" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
+									<a href="/relation-{{ $relation->id }}/contact/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
 								</div>
 							</div>
 						</div>
