@@ -202,7 +202,7 @@ $project = Project::find(Route::Input('project_id'));
 							<a href="#hour" data-toggle="tab">Urenregistratie</a>
 						</li>
 						<li>
-							<a href="#hour_overview" data-toggle="tab">Uitrekstaat urenregistratie</a>
+							<a href="#hour_overview" data-toggle="tab">Uittrekstaat urenregistratie</a>
 						</li>
 					</ul>
 
