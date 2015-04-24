@@ -22,6 +22,7 @@ class CreateCalculation extends Migration {
 			$table->increments('id');
 			$table->decimal('rate', 5, 2)->unsigned()->nullable();
 			$table->decimal('amount', 9, 2)->unsigned()->index();
+			$table->decimal('less_amount', 9, 2)->unsigned()->index()->nullable();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
 		});
@@ -33,6 +34,8 @@ class CreateCalculation extends Migration {
 			$table->string('unit', 10);
 			$table->decimal('rate', 9, 2)->unsigned()->index();
 			$table->decimal('amount', 9, 2)->unsigned()->index();
+			$table->decimal('less_rate', 9, 2)->unsigned()->index()->nullable();
+			$table->decimal('less_amount', 9, 2)->unsigned()->index()->nullable();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
 		});
@@ -44,10 +47,13 @@ class CreateCalculation extends Migration {
 			$table->string('unit', 10);
 			$table->decimal('rate', 9, 2)->unsigned()->index();
 			$table->decimal('amount', 9, 2)->unsigned()->index();
+			$table->decimal('less_rate', 9, 2)->unsigned()->index()->nullable();
+			$table->decimal('less_amount', 9, 2)->unsigned()->index()->nullable();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
 		});
 
+		/*
 		Schema::create('less_labor', function(Blueprint $table)
 		{
 			$table->increments('id');
@@ -61,6 +67,8 @@ class CreateCalculation extends Migration {
 		Schema::create('less_material', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->decimal('rate', 9, 2)->unsigned()->index();
+			$table->decimal('amount', 9, 2)->index();
 			$table->decimal('rate', 9, 2)->unsigned()->index();
 			$table->decimal('amount', 9, 2)->index();
 			$table->integer('activity_id')->unsigned();
@@ -79,6 +87,7 @@ class CreateCalculation extends Migration {
 			$table->integer('original_id')->unsigned();
 			$table->foreign('original_id')->references('id')->on('calculation_equipment')->onUpdate('cascade')->onDelete('cascade');
 		});
+		*/
 
 		Schema::create('more_labor', function(Blueprint $table)
 		{

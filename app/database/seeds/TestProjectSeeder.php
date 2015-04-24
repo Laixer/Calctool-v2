@@ -15,9 +15,9 @@ class TestProjectSeeder extends Seeder {
 		DB::table('more_equipment')->delete();
 		DB::table('more_material')->delete();
 		DB::table('more_labor')->delete();
-		DB::table('less_equipment')->delete();
-		DB::table('less_material')->delete();
-		DB::table('less_labor')->delete();
+		//DB::table('less_equipment')->delete();
+		//DB::table('less_material')->delete();
+		//DB::table('less_labor')->delete();
 		DB::table('calculation_equipment')->delete();
 		DB::table('calculation_material')->delete();
 		DB::table('calculation_labor')->delete();
@@ -870,6 +870,8 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '4',
 			'amount' => '4.29',
+			'less_rate' => '3',
+			'less_amount' => '3.19',
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_equipment_activity5_4 = CalculationEquipment::create(array(
@@ -877,6 +879,8 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '4',
 			'amount' => '2.19',
+			'less_rate' => '3',
+			'less_amount' => '1.19',
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_material_activity5_5 = CalculationMaterial::create(array(
@@ -884,6 +888,8 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '5',
 			'amount' => '3.29',
+			'less_rate' => '4',
+			'less_amount' => '2.29',
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_equipment_activity5_5 = CalculationEquipment::create(array(
@@ -891,6 +897,8 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '5',
 			'amount' => '3.19',
+			'less_rate' => '4',
+			'less_amount' => '2.19',
 			'activity_id' => $test_activity5->id
 		));
 		$this->command->info('CalculationMaterial created');
@@ -1384,6 +1392,7 @@ class TestProjectSeeder extends Seeder {
 		$this->command->info('CalculationMaterial created');
 		$this->command->info('CalculationEquipment created');
 
+/*
 		LessLabor::create(array(
 			'amount' => '34.56',
 			'activity_id' => $test_activity4->id,
@@ -1406,7 +1415,7 @@ class TestProjectSeeder extends Seeder {
 			'original_id' => $calculation_equipment_activity4_1->id,
 		));
 		$this->command->info('LessEquipment created');
-
+*/
 		MoreLabor::create(array(
 			'rate' => '102.33',
 			'amount' => '999.56',
