@@ -690,7 +690,7 @@ var n = this,
 															<th class="col-md-1">Aantal</th>
 															<th class="col-md-1">Prijs</th>
 															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
+															<th class="col-md-1">Minderwerk</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -704,7 +704,7 @@ var n = this,
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal(CalculationLabor::where('activity_id','=', $activity->id)->first()['rate'], CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".")) }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
+															<th class="col-md-1">Minderwerk</th>
 															<td class="col-md-1 text-right"><button class="btn btn-warning lresetrow btn-xs fa fa-undo"></button></td>
 														</tr>
 													</tbody>
@@ -727,6 +727,7 @@ var n = this,
 															<th class="col-md-1">Aantal</th>
 															<th class="col-md-1">Prijs</th>
 															<th class="col-md-1">+ Winst %</th>
+															<th class="col-md-1">Minderwerk</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -750,6 +751,7 @@ var n = this,
 																echo '&euro; '.number_format($material->rate*$material->amount*((100+$profit)/100), 2,",",".")
 															?></span>
 															</td>
+															<th class="col-md-1">Minderwerk</th>
 															<td class="col-md-1 text-right" data-profit="{{$profit}}">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-warning btn-xs sresetrow fa fa-undo"></button>
@@ -781,6 +783,7 @@ var n = this,
 															}
 															echo '&euro; '.number_format(CalculationRegister::calcMaterialTotalProfit($activity->id, $profit), 2, ",",".");
 															?></span></td>
+															<th class="col-md-1">Minderwerk</th>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -803,6 +806,7 @@ var n = this,
 															<th class="col-md-1">Aantal</th>
 															<th class="col-md-1">Prijs</th>
 															<th class="col-md-1">+ Winst %</th>
+															<th class="col-md-1">Minderwerk</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -825,6 +829,7 @@ var n = this,
 																}
 																echo '&euro; '.number_format($equipment->rate*$equipment->amount*((100+$profit)/100), 2,",",".")
 															?></span></td>
+															<th class="col-md-1">Minderwerk</th>
 															<td class="col-md-1 text-right" data-profit="{{$profit}}">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-warning btn-xs eresetrow fa fa-undo"></button>
@@ -878,6 +883,7 @@ var n = this,
 															}
 															echo '&euro; '.number_format(CalculationRegister::calcEquipmentTotalProfit($activity->id, $profit), 2, ",",".");
 															?></span></td>
+															<th class="col-md-1">Minderwerk</th>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
