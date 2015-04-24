@@ -737,8 +737,8 @@ var n = this,
 														<tr data-id="{{ $material->id }}">
 															<td class="col-md-5">{{ $material->material_name }}</td>
 															<td class="col-md-1">{{ $material->unit }}</td>
-															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
-															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
+															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->isless ? $material->less_rate : $material->rate, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
+															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->isless ? $material->less_amount : $material->amount, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</span></td>
 															<td class="col-md-1"><span class="total-incl-tax">
 															<?php
@@ -813,8 +813,8 @@ var n = this,
 														<tr data-id="{{ $equipment->id }}">
 															<td class="col-md-5">{{ $equipment->equipment_name }}</td>
 															<td class="col-md-1">{{ $equipment->unit }}</td>
-															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($equipment->rate, 2,",",".") }}" class="form-control-sm-number esave" /></td>
-															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($equipment->amount, 2,",",".") }}" class="form-control-sm-number esave" /></td>
+															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($equipment->isless ? $equipment->less_rate : $equipment->rate, 2,",",".") }}" class="form-control-sm-number esave" /></td>
+															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($equipment->isless ? $equipment->less_amount : $equipment->amount, 2,",",".") }}" class="form-control-sm-number esave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->rate*$equipment->amount, 2,",",".") }}</span></td>
 															<td class="col-md-1"><span class="total-incl-tax">
 															<?php
