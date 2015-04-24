@@ -95,6 +95,9 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('less/updatelabor', array('as' => 'less', 'uses' => 'LessController@doUpdateLabor'));
 	Route::post('less/updateequipment', array('as' => 'less', 'uses' => 'LessController@doUpdateEquipment'));
 	Route::post('less/updatematerial', array('as' => 'less', 'uses' => 'LessController@doUpdateMaterial'));
+	Route::post('less/resetlabor', array('as' => 'calculation', 'uses' => 'LessController@doResetLabor'));
+	Route::post('less/resetmaterial', array('as' => 'calculation', 'uses' => 'LessController@doResetMaterial'));
+	Route::post('less/resetequipment', array('as' => 'calculation', 'uses' => 'LessController@doResetEquipment'));
 
 	/* Relation pages */
 	Route::get('relation/new', array('as' => 'relation.new', 'uses' => 'RelationController@getNew'));

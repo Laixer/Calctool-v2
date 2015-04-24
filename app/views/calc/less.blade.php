@@ -579,6 +579,32 @@ var n = this,
 				});
 			}
 		});
+		$("body").on("click", ".sresetrow", function(){
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id"))
+				$.post("/less/resetmaterial", {id: $curThis.closest("tr").attr("data-id")}, function(data){
+					var json = $.parseJSON(data);
+					$curThis.closest("tr").find("input[name='rate']").val(json.rate);
+					$curThis.closest("tr").find("input[name='amount']").val(json.amount);
+				}).fail(function(e) { console.log(e); });
+		});
+		$("body").on("click", ".eresetrow", function(){
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id"))
+				$.post("/less/resetequipment", {id: $curThis.closest("tr").attr("data-id")}, function(data){
+					var json = $.parseJSON(data);
+					$curThis.closest("tr").find("input[name='rate']").val(json.rate);
+					$curThis.closest("tr").find("input[name='amount']").val(json.amount);
+				}).fail(function(e) { console.log(e); });
+		});
+		$("body").on("click", ".lresetrow", function(){
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id"))
+				$.post("/less/resetlabor", {id: $curThis.closest("tr").attr("data-id")}, function(data){
+					var json = $.parseJSON(data);
+					$curThis.closest("tr").find("input[name='amount']").val(json.amount);
+				}).fail(function(e) { console.log(e); });
+		});
 	});
 </script>
 
@@ -679,7 +705,7 @@ var n = this,
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal(CalculationLabor::where('activity_id','=', $activity->id)->first()['rate'], CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".")) }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1 text-right"><button class="btn btn-warning btn-xs fa fa-undo"></button></td>
+															<td class="col-md-1 text-right"><button class="btn btn-warning lresetrow btn-xs fa fa-undo"></button></td>
 														</tr>
 													</tbody>
 												</table>
@@ -726,7 +752,7 @@ var n = this,
 															</td>
 															<td class="col-md-1 text-right" data-profit="{{$profit}}">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
-																<button class="btn btn-warning btn-xs sdeleterow fa fa-undo"></button>
+																<button class="btn btn-warning btn-xs sresetrow fa fa-undo"></button>
 															</td>
 														</tr>
 														@endforeach
@@ -801,7 +827,7 @@ var n = this,
 															?></span></td>
 															<td class="col-md-1 text-right" data-profit="{{$profit}}">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
-																<button class="btn btn-warning btn-xs edeleterow fa fa-undo"></button>
+																<button class="btn btn-warning btn-xs eresetrow fa fa-undo"></button>
 
 																<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 																	<div class="modal-dialog">
