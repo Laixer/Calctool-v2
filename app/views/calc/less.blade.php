@@ -751,7 +751,17 @@ var n = this,
 																echo '&euro; '.number_format(($material->isless ? $material->less_rate * $material->less_amount : $material->rate * $material->amount) *((100+$profit)/100), 2,",",".")
 															?></span>
 															</td>
-															<th class="col-md-1">Minderwerk</th>
+															<th class="col-md-1">
+															<?php
+																if ($material->isless) {
+																	$total = ($material->rate * $material->amount) * ((100+$profit)/100);
+																	$less_total = ($material->less_rate * $material->less_amount) * ((100+$profit)/100);
+																	echo '&euro; '.number_format($less_total-$total, 2,",",".");
+																} else {
+																	echo '&euro; 0';
+																}
+															?>
+															</th>
 															<td class="col-md-1 text-right" data-profit="{{$profit}}">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-warning btn-xs sresetrow fa fa-undo"></button>
@@ -783,7 +793,7 @@ var n = this,
 															}
 															echo '&euro; '.number_format(LessRegister::lessMaterialTotalProfit($activity->id, $profit), 2, ",",".");
 															?></span></td>
-															<th class="col-md-1">Minderwerk</th>
+															<th class="col-md-1">{{ number_format(LessRegister::lessMaterialDeltaTotal($activity->id, $profit), 2, ",",".") }}</th>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -829,7 +839,17 @@ var n = this,
 																}
 																echo '&euro; '.number_format(($equipment->isless ? $equipment->less_rate * $equipment->less_amount : $equipment->rate * $equipment->amount) *((100+$profit)/100), 2,",",".")
 															?></span></td>
-															<th class="col-md-1">Minderwerk</th>
+															<th class="col-md-1">
+															<?php
+																if ($equipment->isless) {
+																	$total = ($equipment->rate * $equipment->amount) * ((100+$profit)/100);
+																	$less_total = ($equipment->less_rate * $equipment->less_amount) * ((100+$profit)/100);
+																	echo '&euro; '.number_format($less_total-$total, 2,",",".");
+																} else {
+																	echo '&euro; 0';
+																}
+															?>
+															</th>
 															<td class="col-md-1 text-right" data-profit="{{$profit}}">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-warning btn-xs eresetrow fa fa-undo"></button>
@@ -883,7 +903,7 @@ var n = this,
 															}
 															echo '&euro; '.number_format(LessRegister::lessEquipmentTotalProfit($activity->id, $profit), 2, ",",".");
 															?></span></td>
-															<th class="col-md-1">Minderwerk</th>
+															<th class="col-md-1">{{ number_format(LessRegister::lessEquipmentDeltaTotal($activity->id, $profit), 2, ",",".") }}</th>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>

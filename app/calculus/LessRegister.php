@@ -53,4 +53,36 @@ class LessRegister {
 		return (1+($profit/100))*$total;
 	}
 
+	public static function lessMaterialDeltaTotal($activity, $profit) {
+		$supertotal = 0;
+
+		$rows = CalculationMaterial::where('activity_id', '=', $activity)->get();
+		foreach ($rows as $row)
+		{
+			if ($row->isless) {
+				$total = (LessRegister::lessLaborTotal($row->less_rate, $row->less_amount) * (1+($profit/100)));
+				$less_total = (LessRegister::lessLaborTotal($row->rate, $row->amount) * (1+($profit/100)));
+				$supertotal += $total - $less_total;
+			}
+		}
+
+		return $supertotal;
+	}
+
+	public static function lessEquipmentDeltaTotal($activity, $profit) {
+		$supertotal = 0;
+
+		$rows = CalculationEquipment::where('activity_id', '=', $activity)->get();
+		foreach ($rows as $row)
+		{
+			if ($row->isless) {
+				$total = (LessRegister::lessLaborTotal($row->less_rate, $row->less_amount) * (1+($profit/100)));
+				$less_total = (LessRegister::lessLaborTotal($row->rate, $row->amount) * (1+($profit/100)));
+				$supertotal += $total - $less_total;
+			}
+		}
+
+		return $supertotal;
+	}
+
 }
