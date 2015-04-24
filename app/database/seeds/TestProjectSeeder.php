@@ -499,6 +499,7 @@ class TestProjectSeeder extends Seeder {
 		$calculation_labor_activity1 = CalculationLabor::create(array(
 			'rate' => '35.00',
 			'amount' => '1',
+			'isless' => false,
 			'activity_id' => $test_activity1->id
 		));
 		$this->command->info('CalculationLabor created');
@@ -508,6 +509,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '1',
 			'amount' => '2.00',
+			'isless' => false,
 			'activity_id' => $test_activity1->id
 		));
 		$calculation_equipment_activity1_1 = CalculationEquipment::create(array(
@@ -515,6 +517,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '1',
 			'amount' => '2.02',
+			'isless' => false,
 			'activity_id' => $test_activity1->id
 		));
 		$calculation_material_activity1_2 = CalculationMaterial::create(array(
@@ -522,6 +525,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '2',
 			'amount' => '1.00',
+			'isless' => false,
 			'activity_id' => $test_activity1->id
 		));
 		$calculation_equipment_activity1_2 = CalculationEquipment::create(array(
@@ -529,6 +533,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '2',
 			'amount' => '1.01',
+			'isless' => false,
 			'activity_id' => $test_activity1->id
 		));
 		$calculation_material_activity1_3 = CalculationMaterial::create(array(
@@ -536,6 +541,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '3',
 			'amount' => '2.20',
+			'isless' => false,
 			'activity_id' => $test_activity1->id
 		));
 		$calculation_equipment_activity1_3 = CalculationEquipment::create(array(
@@ -543,6 +549,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '3',
 			'amount' => '1.10',
+			'isless' => false,
 			'activity_id' => $test_activity1->id
 		));
 		$calculation_material_activity1_4 = CalculationMaterial::create(array(
@@ -550,6 +557,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '4',
 			'amount' => '2.22',
+			'isless' => false,
 			'activity_id' => $test_activity1->id
 		));
 		$calculation_equipment_activity1_4 = CalculationEquipment::create(array(
@@ -557,6 +565,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '4',
 			'amount' => '1.11',
+			'isless' => false,
 			'activity_id' => $test_activity1->id
 		));
 		$calculation_material_activity1_5 = CalculationMaterial::create(array(
@@ -564,6 +573,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '5',
 			'amount' => '2.21',
+			'isless' => false,
 			'activity_id' => $test_activity1->id
 		));
 		$calculation_equipment_activity1_5 = CalculationEquipment::create(array(
@@ -571,6 +581,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '5',
 			'amount' => '1.12',
+			'isless' => false,
 			'activity_id' => $test_activity1->id
 		));
 		$this->command->info('CalculationMaterial created');
@@ -579,6 +590,7 @@ class TestProjectSeeder extends Seeder {
 		$calculation_labor_activity2 = CalculationLabor::create(array(
 			'rate' => '35.00',
 			'amount' => '2',
+			'isless' => false,
 			'activity_id' => $test_activity2->id
 		));
 		$this->command->info('CalculationLabor created');
@@ -588,6 +600,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '1',
 			'amount' => '2.00',
+			'isless' => false,
 			'activity_id' => $test_activity2->id
 		));
 		$calculation_equipment_activity2_1 = CalculationEquipment::create(array(
@@ -595,6 +608,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '1',
 			'amount' => '2.02',
+			'isless' => false,
 			'activity_id' => $test_activity2->id
 		));
 		$calculation_material_activity1_2 = CalculationMaterial::create(array(
@@ -602,6 +616,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '2',
 			'amount' => '1.00',
+			'isless' => false,
 			'activity_id' => $test_activity2->id
 		));
 		$calculation_equipment_activity2_2 = CalculationEquipment::create(array(
@@ -609,6 +624,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '2',
 			'amount' => '1.01',
+			'isless' => false,
 			'activity_id' => $test_activity2->id
 		));
 		$calculation_material_activity2_3 = CalculationMaterial::create(array(
@@ -616,6 +632,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '3',
 			'amount' => '2.20',
+			'isless' => false,
 			'activity_id' => $test_activity2->id
 		));
 		$calculation_equipment_activity2_3 = CalculationEquipment::create(array(
@@ -623,6 +640,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '3',
 			'amount' => '1.10',
+			'isless' => false,
 			'activity_id' => $test_activity2->id
 		));
 		$calculation_material_activity2_4 = CalculationMaterial::create(array(
@@ -630,6 +648,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '4',
 			'amount' => '2.22',
+			'isless' => false,
 			'activity_id' => $test_activity2->id
 		));
 		$calculation_equipment_activity2_4 = CalculationEquipment::create(array(
@@ -637,6 +656,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '4',
 			'amount' => '1.11',
+			'isless' => false,
 			'activity_id' => $test_activity2->id
 		));
 		$calculation_material_activity2_5 = CalculationMaterial::create(array(
@@ -644,6 +664,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '5',
 			'amount' => '2.21',
+			'isless' => false,
 			'activity_id' => $test_activity2->id
 		));
 		$calculation_equipment_activity2_5 = CalculationEquipment::create(array(
@@ -651,6 +672,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '5',
 			'amount' => '1.12',
+			'isless' => false,
 			'activity_id' => $test_activity2->id
 		));
 		$this->command->info('CalculationMaterial created');
@@ -659,6 +681,7 @@ class TestProjectSeeder extends Seeder {
 		$calculation_labor_activity3 = CalculationLabor::create(array(
 			'rate' => '35.00',
 			'amount' => '3',
+			'isless' => false,
 			'activity_id' => $test_activity3->id
 		));
 		$this->command->info('CalculationLabor created');
@@ -668,6 +691,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '1',
 			'amount' => '3.00',
+			'isless' => false,
 			'activity_id' => $test_activity3->id
 		));
 		$calculation_equipment_activity3_1 = CalculationEquipment::create(array(
@@ -675,6 +699,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '1',
 			'amount' => '3.02',
+			'isless' => false,
 			'activity_id' => $test_activity3->id
 		));
 		$calculation_material_activity3_2 = CalculationMaterial::create(array(
@@ -682,6 +707,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '2',
 			'amount' => '3.00',
+			'isless' => false,
 			'activity_id' => $test_activity3->id
 		));
 		$calculation_equipment_activity2_2 = CalculationEquipment::create(array(
@@ -689,6 +715,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '2',
 			'amount' => '3.01',
+			'isless' => false,
 			'activity_id' => $test_activity3->id
 		));
 		$calculation_material_activity3_3 = CalculationMaterial::create(array(
@@ -696,6 +723,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '3',
 			'amount' => '3.20',
+			'isless' => false,
 			'activity_id' => $test_activity3->id
 		));
 		$calculation_equipment_activity3_3 = CalculationEquipment::create(array(
@@ -703,6 +731,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '3',
 			'amount' => '3.10',
+			'isless' => false,
 			'activity_id' => $test_activity3->id
 		));
 		$calculation_material_activity3_4 = CalculationMaterial::create(array(
@@ -710,6 +739,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '4',
 			'amount' => '3.22',
+			'isless' => false,
 			'activity_id' => $test_activity3->id
 		));
 		$calculation_equipment_activity3_4 = CalculationEquipment::create(array(
@@ -717,6 +747,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '4',
 			'amount' => '3.11',
+			'isless' => false,
 			'activity_id' => $test_activity3->id
 		));
 		$calculation_material_activity3_5 = CalculationMaterial::create(array(
@@ -724,6 +755,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '5',
 			'amount' => '3.22',
+			'isless' => false,
 			'activity_id' => $test_activity3->id
 		));
 		$calculation_equipment_activity3_5 = CalculationEquipment::create(array(
@@ -731,6 +763,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '5',
 			'amount' => '3.11',
+			'isless' => false,
 			'activity_id' => $test_activity3->id
 		));
 		$this->command->info('CalculationMaterial created');
@@ -739,6 +772,7 @@ class TestProjectSeeder extends Seeder {
 		$calculation_labor_activity4 = CalculationLabor::create(array(
 			'rate' => '35.00',
 			'amount' => '4',
+			'isless' => false,
 			'activity_id' => $test_activity4->id
 		));
 		$this->command->info('CalculationLabor created');
@@ -748,6 +782,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '1',
 			'amount' => '3.90',
+			'isless' => false,
 			'activity_id' => $test_activity4->id
 		));
 		$calculation_equipment_activity4_1 = CalculationEquipment::create(array(
@@ -755,6 +790,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '1',
 			'amount' => '3.92',
+			'isless' => false,
 			'activity_id' => $test_activity4->id
 		));
 		$calculation_material_activity4_2 = CalculationMaterial::create(array(
@@ -762,6 +798,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '2',
 			'amount' => '3.90',
+			'isless' => false,
 			'activity_id' => $test_activity4->id
 		));
 		$calculation_equipment_activity4_2 = CalculationEquipment::create(array(
@@ -769,6 +806,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '2',
 			'amount' => '3.91',
+			'isless' => false,
 			'activity_id' => $test_activity4->id
 		));
 		$calculation_material_activity4_3 = CalculationMaterial::create(array(
@@ -776,6 +814,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '3',
 			'amount' => '3.29',
+			'isless' => false,
 			'activity_id' => $test_activity4->id
 		));
 		$calculation_equipment_activity4_3 = CalculationEquipment::create(array(
@@ -783,6 +822,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '3',
 			'amount' => '3.19',
+			'isless' => false,
 			'activity_id' => $test_activity4->id
 		));
 		$calculation_material_activity4_4 = CalculationMaterial::create(array(
@@ -790,6 +830,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '4',
 			'amount' => '3.29',
+			'isless' => false,
 			'activity_id' => $test_activity4->id
 		));
 		$calculation_equipment_activity4_4 = CalculationEquipment::create(array(
@@ -797,6 +838,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '4',
 			'amount' => '3.19',
+			'isless' => false,
 			'activity_id' => $test_activity4->id
 		));
 		$calculation_material_activity4_5 = CalculationMaterial::create(array(
@@ -804,6 +846,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '5',
 			'amount' => '3.29',
+			'isless' => false,
 			'activity_id' => $test_activity4->id
 		));
 		$calculation_equipment_activity4_5 = CalculationEquipment::create(array(
@@ -811,6 +854,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '5',
 			'amount' => '3.19',
+			'isless' => false,
 			'activity_id' => $test_activity4->id
 		));
 		$this->command->info('CalculationMaterial created');
@@ -819,6 +863,8 @@ class TestProjectSeeder extends Seeder {
 		$calculation_labor_activity5 = CalculationLabor::create(array(
 			'rate' => '35.00',
 			'amount' => '5',
+			'less_amount' =>'4',
+			'isless' => true,
 			'activity_id' => $test_activity5->id
 		));
 		$this->command->info('CalculationLabor created');
@@ -828,6 +874,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '1',
 			'amount' => '1.90',
+			'isless' => false,
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_equipment_activity5_1 = CalculationEquipment::create(array(
@@ -835,6 +882,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '1',
 			'amount' => '1.92',
+			'isless' => false,
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_material_activity5_2 = CalculationMaterial::create(array(
@@ -842,6 +890,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '2',
 			'amount' => '1.90',
+			'isless' => false,
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_equipment_activity5_2 = CalculationEquipment::create(array(
@@ -849,6 +898,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '2',
 			'amount' => '3.91',
+			'isless' => false,
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_material_activity5_3 = CalculationMaterial::create(array(
@@ -856,6 +906,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '3',
 			'amount' => '1.29',
+			'isless' => false,
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_equipment_activity5_3 = CalculationEquipment::create(array(
@@ -863,6 +914,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '3',
 			'amount' => '3.19',
+			'isless' => false,
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_material_activity5_4 = CalculationMaterial::create(array(
@@ -872,6 +924,7 @@ class TestProjectSeeder extends Seeder {
 			'amount' => '4.29',
 			'less_rate' => '3',
 			'less_amount' => '3.19',
+			'isless' => true,
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_equipment_activity5_4 = CalculationEquipment::create(array(
@@ -881,6 +934,7 @@ class TestProjectSeeder extends Seeder {
 			'amount' => '2.19',
 			'less_rate' => '3',
 			'less_amount' => '1.19',
+			'isless' => true,
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_material_activity5_5 = CalculationMaterial::create(array(
@@ -890,6 +944,7 @@ class TestProjectSeeder extends Seeder {
 			'amount' => '3.29',
 			'less_rate' => '4',
 			'less_amount' => '2.29',
+			'isless' => true,
 			'activity_id' => $test_activity5->id
 		));
 		$calculation_equipment_activity5_5 = CalculationEquipment::create(array(
@@ -899,6 +954,7 @@ class TestProjectSeeder extends Seeder {
 			'amount' => '3.19',
 			'less_rate' => '4',
 			'less_amount' => '2.19',
+			'isless' => true,
 			'activity_id' => $test_activity5->id
 		));
 		$this->command->info('CalculationMaterial created');
@@ -907,6 +963,7 @@ class TestProjectSeeder extends Seeder {
 		$calculation_labor_activity6 = CalculationLabor::create(array(
 			'rate' => '35.00',
 			'amount' => '6',
+			'isless' => false,
 			'activity_id' => $test_activity6->id
 		));
 		$this->command->info('CalculationLabor created');
@@ -916,6 +973,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '1',
 			'amount' => '1.90',
+			'isless' => false,
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_equipment_activity6_1 = CalculationEquipment::create(array(
@@ -923,6 +981,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '1',
 			'amount' => '1.92',
+			'isless' => false,
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_material_activity6_2 = CalculationMaterial::create(array(
@@ -930,6 +989,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '2',
 			'amount' => '1.90',
+			'isless' => false,
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_equipment_activity6_2 = CalculationEquipment::create(array(
@@ -937,6 +997,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '2',
 			'amount' => '1.91',
+			'isless' => false,
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_material_activity6_3 = CalculationMaterial::create(array(
@@ -944,6 +1005,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '3',
 			'amount' => '1.29',
+			'isless' => false,
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_equipment_activity6_3 = CalculationEquipment::create(array(
@@ -951,6 +1013,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '3',
 			'amount' => '1.19',
+			'isless' => false,
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_material_activity6_4 = CalculationMaterial::create(array(
@@ -958,6 +1021,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '4',
 			'amount' => '1.29',
+			'isless' => false,
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_equipment_activity6_4 = CalculationEquipment::create(array(
@@ -965,6 +1029,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '4',
 			'amount' => '1.19',
+			'isless' => false,
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_material_activity6_5 = CalculationMaterial::create(array(
@@ -972,6 +1037,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '5',
 			'amount' => '2.29',
+			'isless' => false,
 			'activity_id' => $test_activity6->id
 		));
 		$calculation_equipment_activity6_5 = CalculationEquipment::create(array(
@@ -979,6 +1045,7 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'stuk',
 			'rate' => '5',
 			'amount' => '3.19',
+			'isless' => false,
 			'activity_id' => $test_activity6->id
 		));
 		$this->command->info('CalculationMaterial created');

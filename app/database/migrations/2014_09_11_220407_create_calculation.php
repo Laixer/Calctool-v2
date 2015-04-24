@@ -23,6 +23,7 @@ class CreateCalculation extends Migration {
 			$table->decimal('rate', 5, 2)->unsigned()->nullable();
 			$table->decimal('amount', 9, 2)->unsigned()->index();
 			$table->decimal('less_amount', 9, 2)->unsigned()->index()->nullable();
+			$table->boolean('isless');
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
 		});
@@ -36,6 +37,7 @@ class CreateCalculation extends Migration {
 			$table->decimal('amount', 9, 2)->unsigned()->index();
 			$table->decimal('less_rate', 9, 2)->unsigned()->index()->nullable();
 			$table->decimal('less_amount', 9, 2)->unsigned()->index()->nullable();
+			$table->boolean('isless');
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
 		});
@@ -49,6 +51,7 @@ class CreateCalculation extends Migration {
 			$table->decimal('amount', 9, 2)->unsigned()->index();
 			$table->decimal('less_rate', 9, 2)->unsigned()->index()->nullable();
 			$table->decimal('less_amount', 9, 2)->unsigned()->index()->nullable();
+			$table->boolean('isless');
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
 		});
