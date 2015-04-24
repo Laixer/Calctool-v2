@@ -739,7 +739,7 @@ var n = this,
 															<td class="col-md-1">{{ $material->unit }}</td>
 															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->isless ? $material->less_rate : $material->rate, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->isless ? $material->less_amount : $material->amount, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</span></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->isless ? $material->less_rate * $material->less_amount : $material->rate * $material->amount, 2,",",".") }}</span></td>
 															<td class="col-md-1"><span class="total-incl-tax">
 															<?php
 																if (Part::find($activity->part_id)->part_name=='contracting') {
@@ -747,7 +747,7 @@ var n = this,
 																} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 																	$profit = $project->profit_calc_subcontr_mat;
 																}
-																echo '&euro; '.number_format($material->rate*$material->amount*((100+$profit)/100), 2,",",".")
+																echo '&euro; '.number_format(($material->isless ? $material->less_rate * $material->less_amount : $material->rate * $material->amount) *((100+$profit)/100), 2,",",".")
 															?></span>
 															</td>
 															<td class="col-md-1 text-right" data-profit="{{$profit}}">
@@ -770,7 +770,7 @@ var n = this,
 															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 																$profit = $project->profit_calc_subcontr_mat;
 															}
-															echo '&euro; '.number_format(CalculationRegister::calcMaterialTotal($activity->id, $profit), 2, ",",".");
+															echo '&euro; '.number_format(LessRegister::lessMaterialTotal($activity->id, $profit), 2, ",",".");
 															?></span></td>
 															<td class="col-md-1"><strong>
 															<?php
@@ -779,7 +779,7 @@ var n = this,
 															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 																$profit = $project->profit_calc_subcontr_mat;
 															}
-															echo '&euro; '.number_format(CalculationRegister::calcMaterialTotalProfit($activity->id, $profit), 2, ",",".");
+															echo '&euro; '.number_format(LessRegister::lessMaterialTotalProfit($activity->id, $profit), 2, ",",".");
 															?></span></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
@@ -815,7 +815,7 @@ var n = this,
 															<td class="col-md-1">{{ $equipment->unit }}</td>
 															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($equipment->isless ? $equipment->less_rate : $equipment->rate, 2,",",".") }}" class="form-control-sm-number esave" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($equipment->isless ? $equipment->less_amount : $equipment->amount, 2,",",".") }}" class="form-control-sm-number esave" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->rate*$equipment->amount, 2,",",".") }}</span></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->isless ? $equipment->less_rate * $equipment->less_amount : $equipment->rate * $equipment->amount, 2,",",".") }}</span></td>
 															<td class="col-md-1"><span class="total-incl-tax">
 															<?php
 																if (Part::find($activity->part_id)->part_name=='contracting') {
@@ -823,7 +823,7 @@ var n = this,
 																} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 																	$profit = $project->profit_calc_subcontr_equip;
 																}
-																echo '&euro; '.number_format($equipment->rate*$equipment->amount*((100+$profit)/100), 2,",",".")
+																echo '&euro; '.number_format(($equipment->isless ? $equipment->less_rate * $equipment->less_amount : $equipment->rate * $equipment->amount) *((100+$profit)/100), 2,",",".")
 															?></span></td>
 															<td class="col-md-1 text-right" data-profit="{{$profit}}">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
@@ -867,7 +867,7 @@ var n = this,
 															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 																$profit = $project->profit_calc_subcontr_equip;
 															}
-															echo '&euro; '.number_format(CalculationRegister::calcEquipmentTotal($activity->id, $profit), 2, ",",".");
+															echo '&euro; '.number_format(LessRegister::lessEquipmentTotal($activity->id, $profit), 2, ",",".");
 															?></span></td>
 															<td class="col-md-1"><strong>
 															<?php
@@ -876,7 +876,7 @@ var n = this,
 															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 																$profit = $project->profit_calc_subcontr_equip;
 															}
-															echo '&euro; '.number_format(CalculationRegister::calcEquipmentTotalProfit($activity->id, $profit), 2, ",",".");
+															echo '&euro; '.number_format(LessRegister::lessEquipmentTotalProfit($activity->id, $profit), 2, ",",".");
 															?></span></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
