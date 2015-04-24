@@ -213,6 +213,7 @@ class CreateCalculation extends Migration {
 			Schema::drop('more_labor');
 		});
 
+		/*
 		Schema::table('less_equipment', function(Blueprint $table)
 		{
 			Schema::drop('less_equipment');
@@ -227,7 +228,7 @@ class CreateCalculation extends Migration {
 		{
 			Schema::drop('less_labor');
 		});
-
+		*/
 		Schema::table('calculation_equipment', function(Blueprint $table)
 		{
 			Schema::drop('calculation_equipment');
