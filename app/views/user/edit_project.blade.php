@@ -14,43 +14,26 @@ $project = Project::find(Route::Input('project_id'));
 			$date = $curThis.closest("tr").find("input[name='date']").val();
 			$hour = $curThis.closest("tr").find("input[name='hour']").val();
 			$type = $curThis.closest("tr").find("select[name='typename']").val();
-			$tax = $curThis.closest("tr").find("select[name='tax']").val();
-			$chapter = $curThis.closest("tr").find("select[name='chapter']").val();
 			$activity = $curThis.closest("tr").find("select[name='activity']").val();
+			$note = $curThis.closest("tr").find("input[name='note']").val();
 			$.post("/timesheet/new", {
 				date: $date,
 				hour: $hour,
 				type: $type,
-				tax: $tax,
-				chapter: $chapter,
-				activity: $activity
+				activity: $activity,
+				note: $note
 			}, function(data){
 				var $curTable = $curThis.closest("table");
-
+				var json = $.parseJSON(data);
 				$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
 				.find("td:eq(0)").text($date).end()
-				.find("td:eq(1)").text($hour).end()
-				.find("td:eq(2)").text($type).end()
-				.find("td:eq(3)").text($tax).end()
-				.find("td:eq(4)").text($chapter).end()
-				.find("td:eq(5)").text($activity).end()
+				.find("td:eq(1)").text(json.hour).end()
+				.find("td:eq(2)").text(json.type).end()
+				.find("td:eq(3)").text(json.activity).end()
+				.find("td:eq(4)").text($note).end()
 				.prependTo($curTable);
-				//console.log($date);
-				//$curTable.find("tr:eq(1)").clone().prependTo($curTable);
 			});
 		});
-		/*$("body").on("change", ".newrow", function(){
-			var i = 1;
-			if($(this).val()){
-				if(!$(this).closest("tr").next().length){
-					var $curTable = $(this).closest("table");
-					$curTable.find("tr:eq(1)").clone().removeAttr("data-id").find("input").each(function(){
-						$(this).val("").removeClass("error-input").attr("id", function(_, id){ return id + i });
-					}).end().find(".total-ex-tax, .total-incl-tax").text("").end().appendTo($curTable);
-					i++;
-				}
-			}
-		});*/
 	});
 </script>
 <div id="wrapper">
@@ -313,9 +296,10 @@ $project = Project::find(Route::Input('project_id'));
 												<th class="col-md-1">Datum</th>
 												<th class="col-md-1">Uren</th>
 												<th class="col-md-1">Soort</th>
-												<th class="col-md-1">BTW</th>
-												<th class="col-md-2">Hoofdstuk</th>
-												<th class="col-md-4">Werkzaamheid</th>
+												<th class="col-md-1">Werkzaamheid</th>
+												<th class="col-md-4">Omschrijving</th>
+												<th class="col-md-1">&nbsp;</th>
+												<th class="col-md-1">&nbsp;</th>
 												<th class="col-md-1">&nbsp;</th>
 												<th class="col-md-1">&nbsp;</th>
 											</tr>
@@ -328,29 +312,25 @@ $project = Project::find(Route::Input('project_id'));
 											@foreach (Timesheet::where('activity_id','=', $activity->id)->get() as $timesheet)
 											<?php
 												$typename;
-												$tax;
 												if (PartType::find($activity->part_type_id)->type_name == 'calculation') {
 													$typename = 'Aanneming';
-													$tax = Tax::find($activity->tax_calc_labor_id)->tax_rate;
 													if ($activity->detail_id) {
 														if (Detail::find($activity->detail_id)->detail_name == 'more') {
 															$typename = 'Meerwerk';
-															$tax = Tax::find($activity->tax_more_labor_id)->tax_rate;
 														}
 													}
 												} else {
 													$typename = 'Stelpost';
-													$tax = Tax::find($activity->tax_estimate_labor_id)->tax_rate;
 												}
 											?>
 											<tr><!-- item -->
 												<td class="col-md-1">{{ $timesheet->register_date }}</td>
-												<td class="col-md-1">{{ $timesheet->register_hour }}</td>
+												<td class="col-md-1">{{ number_format($timesheet->register_hour, 2,",",".") }}</td>
 												<td class="col-md-1">{{ $typename; }}</td>
-												<td class="col-md-1">{{ $tax }}%</td>
-												<td class="col-md-2">{{ $chapter->chapter_name }}</td>
 												<td class="col-md-4">{{ $activity->activity_name }}</td>
-												<td class="col-md-1"><button class="btn btn-primary btn-xs fa fa-comment-o"> Notitie</button></td>
+												<td class="col-md-1">{{ $timesheet->note }}</td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1">&nbsp;</td>
 												<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
 											</tr>
 											@endforeach
@@ -366,20 +346,6 @@ $project = Project::find(Route::Input('project_id'));
 														<option value="3" selected="selected">Stelpost</option>
 													</select>
 												</td>
-												<td class="col-md-1">
-													<select name="tax" data-id="{{ $activity->id }}" data-type="calc-material" id="type" class="form-control-sm-text pointer select-tax">
-													@foreach (Tax::all() as $tax)
-														<option value="{{ $tax->id }}" {{ ($activity->tax_calc_material_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
-													@endforeach
-													</select>
-												</td>
-												<td class="col-md-2">
-													<select name="chapter" id="chapter" class="form-control-sm-text">
-													@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-														<option value="{{ $chapter->id }}">{{ $chapter->chapter_name }}</option>
-													@endforeach
-													</select>
-												</td>
 												<td class="col-md-4">
 													<select name="activity" id="activity" class="form-control-sm-text">
 													@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
@@ -389,8 +355,10 @@ $project = Project::find(Route::Input('project_id'));
 													@endforeach
 													</select>
 												</td>
+												<td class="col-md-1"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1">&nbsp;</td>
 												<td class="col-md-1"><button id="addnew" class="btn btn-primary btn-xs"> Toevoegen</button></td>
-												<td class="col-md-1">&nbsp;</button></td>
 											</tr>
 										</tbody>
 									</table>

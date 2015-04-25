@@ -30,11 +30,8 @@ class CostController extends BaseController {
 		$rules = array(
 			'date' => array('required','regex:/^20[0-9][0-9]-[0-9]{2}-[0-9]{2}$/'),
 			'type' => array('required','integer'),
-			'tax' => array('required','integer'),
-			'type' => array('required','integer'),
 			'hour' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'activity' => array('required','integer'),
-			'chapter' => array('required','integer')
+			'activity' => array('required','integer')
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -48,9 +45,24 @@ class CostController extends BaseController {
 				'register_date' => Input::get('date'),
 				'register_hour' => str_replace(',', '.', str_replace('.', '' , Input::get('hour'))),
 				'activity_id' => Input::get('activity'),
+				'note' => Input::get('note')
 			));
 
-			return json_encode(['success' => 1, 'id' => $timesheet->id]);
+			switch (Input::get('type')) {
+				case 1:
+					$type = 'Aanneming';
+					break;
+
+				case 2:
+					$type = 'Meerwerk';
+					break;
+
+				case 3:
+					$type = 'Stelpost';
+					break;
+			}
+
+			return json_encode(['success' => 1, 'type' => $type, 'activity' => Activity::find($timesheet->activity_id)->activity_name, 'hour' => number_format($timesheet->register_hour, 2,",","."), 'id' => $timesheet->id]);
 		}
 	}
 }
