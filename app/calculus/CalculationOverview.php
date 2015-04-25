@@ -17,6 +17,15 @@ class CalculationOverview {
 		return $row['rate'] * $row['amount'];
 	}
 
+	public static function laborTotal($activity) {
+
+		if (PartType::find($activity->part_type_id)->type_name=='estimate') {
+			return EstimateLabor::where('activity_id', '=', $activity->id)->first()['amount'];
+		} else {
+			return CalculationLabor::where('activity_id', '=', $activity->id)->first()['amount'];
+		}
+	}
+
 /*Calculation Material*/
 	public static function materialActivityProfit($activity, $profit) {
 		$total = 0;
@@ -53,7 +62,7 @@ class CalculationOverview {
 		return (1+($profit/100))*$total;
 	}
 
-/*Calculation Activity totaal*/
+/*Calculation activity*/
 	public static function activityTotalProfit($activity, $profit_mat, $profit_equip) {
 		$total = 0;
 
@@ -64,22 +73,12 @@ class CalculationOverview {
 		return $total;
 	}
 
-/*Calculation Activity totaal*/
-	public static function laborTotal($activity) {
-
-		if (PartType::find($activity->part_type_id)->type_name=='estimate') {
-			return EstimateLabor::where('activity_id', '=', $activity->id)->first()['amount'];
-		} else {
-			return CalculationLabor::where('activity_id', '=', $activity->id)->first()['amount'];
-		}
-	}
-
 	public static function estimateCheck($activity) {
 		if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 			return 'fa fa-check';
 		}
 	}
-
+/*Calculation Overview Super Total*/
 	public static function laborSuperTotalAmount($project) {
 		$total = 0;
 
@@ -147,6 +146,68 @@ class CalculationOverview {
 		return CalculationOverview::laborSuperTotal($project) + CalculationOverview::materialSuperTotal($project) + CalculationOverview::equipmentSuperTotal($project);
 	}
 
+
+
+
+
+/*
+Geprusts door Don, nog veranderen voor een goede variant"
+public static function conMaterialSuperTotal($project) {
+		$total = 0;
+		$part_id = Part::where('part_name','=','contracting')->first()->id;
+
+			foreach (Part::find($activity->part_id)->type_name=='contracting') {
+					$total = CalculationMaterial::where('activity_id','=',$activity->id)->get();
+					}
+
+			return $total ;
+	}
+*/
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
