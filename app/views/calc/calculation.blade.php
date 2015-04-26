@@ -1374,7 +1374,7 @@ var n = this,
 												<th class="col-md-2">&nbsp;</th>
 												<th class="col-md-3">&nbsp;</th>
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
-												<th class="col-md-1"><span class="pull-right">Arbeids</th>
+												<th class="col-md-1"><span class="pull-right">Arbeid</th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</th>
 												<th class="col-md-1"><span class="pull-right">Materieel</th>
 												<th class="col-md-1"><span class="pull-right">Totaal</th>
@@ -1790,6 +1790,7 @@ var n = this,
 							</tbody>
 						</table>
 					</div>
+					<h5>Weergegeven bedragen zijn exclusief BTW</h5>
 				</div>
 
 			</div>
