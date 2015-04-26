@@ -1498,6 +1498,7 @@ var n = this,
 											</tr>
 										</tbody>
 									</table>
+									<h5>Weergegeven bedragen zijn exclusief BTW</h5>
 								</div>
 							</div>
 
@@ -1788,10 +1789,12 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
 								</tr>
+
 							</tbody>
+
 						</table>
+
 					</div>
-					<h5><strong>* Weergegeven bedragen zijn exclusief BTW</strong></h5>
 				</div>
 
 			</div>
