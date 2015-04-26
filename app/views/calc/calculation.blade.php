@@ -636,8 +636,7 @@ var n = this,
 				var $curThis = $(this);
 				if($curThis.attr("data-id"))
 					$.post("/calculation/deletechapter", {chapter: $curThis.attr("data-id")}, function(){
-						$('#toggle-chapter-'+$curThis.attr("data-id")).hide('slow');
-						console.log('weg');
+						$curThis.closest('.toggle-chapter').hide('slow');
 					}).fail(function(e) { console.log(e); });
 			}
 		});
@@ -1338,6 +1337,9 @@ var n = this,
 												</span>
 											</div>
 										</div>
+										<div class="col-md-6 text-right">
+											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Verwijderen</button>
+										</div>
 									</div>
 									{{ Form::close() }}
 								</div>
@@ -1789,7 +1791,7 @@ var n = this,
 							</tbody>
 						</table>
 					</div>
-					<h5>Weergegeven bedragen zijn exclusief BTW</h5>
+					<h5><strong>* Weergegeven bedragen zijn exclusief BTW</strong></h5>
 				</div>
 
 			</div>
