@@ -213,6 +213,26 @@ class CalcController extends BaseController {
 		}
 	}
 
+	public function doDeleteChapter()
+	{
+		$rules = array(
+			'chapter' => array('required','integer','min:0')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+			Chapter::destroy(Input::get('chapter'));
+
+			return json_encode(['success' => 1]);
+		}
+	}
+
 	public function doNewCalculationMaterial()
 	{
 		$rules = array(

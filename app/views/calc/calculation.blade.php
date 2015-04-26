@@ -620,12 +620,24 @@ var n = this,
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});
-		$("body").on("click", ".deleteact", function(){
+		$("body").on("click", ".deleteact", function(e){
+			e.preventDefault();
 			if(confirm('Weet je het zeker?')){
 				var $curThis = $(this);
 				if($curThis.attr("data-id"))
 					$.post("/calculation/deleteactivity", {activity: $curThis.attr("data-id")}, function(){
 						$('#toggle-activity-'+$curThis.attr("data-id")).hide('slow');
+					}).fail(function(e) { console.log(e); });
+			}
+		});
+		$("body").on("click", ".deletechap", function(e){
+			e.preventDefault();
+			if(confirm('Weet je het zeker?')){
+				var $curThis = $(this);
+				if($curThis.attr("data-id"))
+					$.post("/calculation/deletechapter", {chapter: $curThis.attr("data-id")}, function(){
+						$('#toggle-chapter-'+$curThis.attr("data-id")).hide('slow');
+						console.log('weg');
 					}).fail(function(e) { console.log(e); });
 			}
 		});
@@ -638,33 +650,17 @@ var n = this,
 
 		<div class="col-md-12">
 
-			<!--<div class="fuelux">
-				<div id="calculation-wizard" class="wizard">
-					<ul class="steps">
-						<li data-target="#step0" data-location="/" class="complete">Home<span class="chevron"></span></li>
-						<li data-target="#step1" data-location="/project-{{ $project->id }}/edit" class="complete">Projectgegevens<span class="chevron"></span></li>
-						<li data-target="#step2" data-location="/calculation/project-{{ $project->id }}" class="active">Calculatie<span class="chevron"></span></li>
-						<li data-target="#step3">Offerte<span class="chevron"></span></li>
-						<li data-target="#step4" data-location="/estimate/project-{{ $project->id }}" class="complete">Stelpost<span class="chevron"></span></li>
-						<li data-target="#step5">Minderwerk<span class="chevron"></span></li>
-						<li data-target="#step6">Meerwerk<span class="chevron"></span></li>
-						<li data-target="#step7">Factuur<span class="chevron"></span></li>
-						<li data-target="#step8">Winst/Verlies<span class="chevron"></span></li>
-					</ul>
-				</div>
-			</div>-->
-
-		<div class="wizard">
-		    <a href="/"> Home</a>
-		    <a href="/project-{{ $project->id }}/edit">Project</a>
-		    <a href="javascript:void(0);" class="current">Calculatie</a>
-		    <a href="#">Offerte</a>
-		    <a href="/estimate/project-{{ $project->id }}">Stelpost</a>
-		  	<a href="/less/project-{{ $project->id }}">Minderwerk</a>
-		  	<a href="/more/project-{{ $project->id }}">Meerwerk</a>
-		    <a href="#">Factuur</a>
-		    <a href="#">Winst/verlies</a>
-		</div>
+			<div class="wizard">
+				<a href="/"> Home</a>
+				<a href="/project-{{ $project->id }}/edit">Project</a>
+				<a href="javascript:void(0);" class="current">Calculatie</a>
+				<a href="#">Offerte</a>
+				<a href="/estimate/project-{{ $project->id }}">Stelpost</a>
+				<a href="/less/project-{{ $project->id }}">Minderwerk</a>
+				<a href="/more/project-{{ $project->id }}">Meerwerk</a>
+				<a href="#">Factuur</a>
+				<a href="#">Winst/verlies</a>
+			</div>
 
 			<hr />
 
@@ -1007,6 +1003,9 @@ var n = this,
 													<button class="btn btn-primary btn-primary-activity">Voeg toe</button>
 												</span>
 											</div>
+										</div>
+										<div class="col-md-6 text-right">
+											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Verwijderen</button>
 										</div>
 									</div>
 									{{ Form::close() }}
