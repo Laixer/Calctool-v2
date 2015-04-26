@@ -5,7 +5,8 @@
  */
 class CalculationOverview {
 
-/*Calculation labor*/
+/*--Calculation Overview - total per activitys--*/
+/*labor activity total*/
 	public static function laborActivity($activity) {
 		$row = NULL;
 		if (PartType::find($activity->part_type_id)->type_name=='estimate') {
@@ -26,7 +27,7 @@ class CalculationOverview {
 		}
 	}
 
-/*Calculation Material*/
+/*Material activity total*/
 	public static function materialActivityProfit($activity, $profit) {
 		$total = 0;
 
@@ -44,7 +45,7 @@ class CalculationOverview {
 		return (1+($profit/100))*$total;
 	}
 
-/*Calculation Equipment*/
+/*Equipment activity total*/
 	public static function equipmentActivityProfit($activity, $profit) {
 		$total = 0;
 
@@ -62,7 +63,7 @@ class CalculationOverview {
 		return (1+($profit/100))*$total;
 	}
 
-/*Calculation activity*/
+/*Activity total*/
 	public static function activityTotalProfit($activity, $profit_mat, $profit_equip) {
 		$total = 0;
 
@@ -73,12 +74,138 @@ class CalculationOverview {
 		return $total;
 	}
 
+/*Check if activity*/
 	public static function estimateCheck($activity) {
 		if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 			return 'fa fa-check';
 		}
 	}
-/*Calculation Overview Super Total*/
+
+/*--Calculation Overview - total contracting--*/
+/*Material for Contracting & Subcontracting*/
+
+	public static function contrMaterialTotal($project) {
+		$total = 0;
+
+		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		{
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+			{
+				$total += CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat);
+			}
+		}
+		return $total;
+	}
+
+	public static function subcontrMaterialTotal($project) {
+		$total = 0;
+
+		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		{
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+			{
+				$total += CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat);
+			}
+		}
+		return $total;
+	}
+
+/*Equipment for Contracting & Subcontracting*/
+
+	public static function contrEquipmentTotal($project) {
+		$total = 0;
+
+		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		{
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+			{
+				$total += CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip);
+			}
+		}
+		return $total;
+	}
+
+	public static function subcontrEquipmentTotal($project) {
+		$total = 0;
+
+		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		{
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+			{
+				$total += CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip);
+			}
+		}
+		return $total;
+	}
+
+/*Labor amount & labor total for Contracting & Subcontracting*/
+
+	public static function contrLaborTotalAmount($project) {
+		$total = 0;
+
+		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		{
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+			{
+				$total += CalculationOverview::laborTotal($activity);
+			}
+		}
+
+		return $total;
+	}
+
+	public static function subcontrLaborTotalAmount($project) {
+		$total = 0;
+
+		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		{
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+			{
+				$total += CalculationOverview::laborTotal($activity);
+			}
+		}
+
+		return $total;
+	}
+
+	public static function contrLaborTotal($project) {
+		$total = 0;
+
+		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		{
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+			{
+				$total += CalculationOverview::laborActivity($activity);
+			}
+		}
+		return $total;
+	}
+
+	public static function subcontrLaborTotal($project) {
+		$total = 0;
+
+		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		{
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+			{
+				$total += CalculationOverview::laborActivity($activity);
+			}
+		}
+		return $total;
+	}
+
+	public static function contrTotal($project) {
+		return CalculationOverview::contrLaborTotal($project) + CalculationOverview::contrMaterialTotal($project) + CalculationOverview::contrEquipmentTotal($project);
+	}
+
+	public static function subcontrTotal($project) {
+		return CalculationOverview::subcontrLaborTotal($project) + CalculationOverview::subcontrMaterialTotal($project) + CalculationOverview::subcontrEquipmentTotal($project);
+	}
+
+
+/*--Calculation Overview -  SuperTotals (projecttotals)--*/
+/*Labor amount & labor total SuperTotal*/
+
 	public static function laborSuperTotalAmount($project) {
 		$total = 0;
 
@@ -106,6 +233,7 @@ class CalculationOverview {
 		return $total;
 	}
 
+/*Masterial SuperTotal*/
 	public static function materialSuperTotal($project) {
 		$total = 0;
 
@@ -124,6 +252,7 @@ class CalculationOverview {
 		return $total;
 	}
 
+/*Equipment SuperTotal*/
 	public static function equipmentSuperTotal($project) {
 		$total = 0;
 
@@ -142,122 +271,12 @@ class CalculationOverview {
 		return $total;
 	}
 
+/*Project SuperTotal*/
 	public static function superTotal($project) {
 		return CalculationOverview::laborSuperTotal($project) + CalculationOverview::materialSuperTotal($project) + CalculationOverview::equipmentSuperTotal($project);
 	}
 
-	public static function contrMaterialSuperTotal($project) {
-		$total = 0;
-
-		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
-			{
-				$total += CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat);
-			}
-		}
-		return $total;
-	}
-
-	public static function subcontrMaterialSuperTotal($project) {
-		$total = 0;
-
-		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
-			{
-				$total += CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat);
-			}
-		}
-		return $total;
-	}
-
-	public static function contrEquipmentSuperTotal($project) {
-		$total = 0;
-
-		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
-			{
-				$total += CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip);
-			}
-		}
-		return $total;
-	}
-
-	public static function subcontrEquipmentSuperTotal($project) {
-		$total = 0;
-
-		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
-			{
-				$total += CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip);
-			}
-		}
-		return $total;
-	}
-
-	public static function contrLaborSuperTotalAmount($project) {
-		$total = 0;
-
-		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
-			{
-				$total += CalculationOverview::laborTotal($activity);
-			}
-		}
-
-		return $total;
-	}
-
-	public static function subcontrLaborSuperTotalAmount($project) {
-		$total = 0;
-
-		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
-			{
-				$total += CalculationOverview::laborTotal($activity);
-			}
-		}
-
-		return $total;
-	}
-
-	public static function contrLaborSuperTotal($project) {
-		$total = 0;
-
-		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
-			{
-				$total += CalculationOverview::laborActivity($activity);
-			}
-		}
-		return $total;
-	}
-
-	public static function subcontrLaborSuperTotal($project) {
-		$total = 0;
-
-		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
-			{
-				$total += CalculationOverview::laborActivity($activity);
-			}
-		}
-		return $total;
-	}
-
-	public static function contrSuperTotal($project) {
-		return CalculationOverview::contrLaborSuperTotal($project) + CalculationOverview::contrMaterialSuperTotal($project) + CalculationOverview::contrEquipmentSuperTotal($project);
-	}
-
-	public static function subcontrSuperTotal($project) {
-		return CalculationOverview::subcontrLaborSuperTotal($project) + CalculationOverview::subcontrMaterialSuperTotal($project) + CalculationOverview::subcontrEquipmentSuperTotal($project);
-	}
 
 }
+
+
