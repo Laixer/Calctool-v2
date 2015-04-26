@@ -1402,11 +1402,11 @@ var n = this,
 											<tr><!-- item -->
 												<th class="col-md-3"><strong>Totaal aanneming</strong></th>
 												<th class="col-md-2">&nbsp;</th>
-												<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::contrLaborSuperTotalAmount($project) }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrLaborSuperTotal($project), 2, ",",".") }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrMaterialSuperTotal($project), 2, ",",".") }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrEquipmentSuperTotal($project), 2, ",",".") }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrSuperTotal($project), 2, ",",".") }}</span></strong></td>
 												<th class="col-md-1">&nbsp;</th>
 											</tr>
 										</tbody>
@@ -1453,11 +1453,11 @@ var n = this,
 											<tr><!-- item -->
 												<th class="col-md-3"><strong>Totaal onderaanneming</strong></th>
 												<th class="col-md-2">&nbsp;</th>
-												<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::subcontrLaborSuperTotalAmount($project) }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrLaborSuperTotal($project), 2, ",",".") }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrMaterialSuperTotal($project), 2, ",",".") }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentSuperTotal($project), 2, ",",".") }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrSuperTotal($project), 2, ",",".") }}</span></strong></td>
 												<th class="col-md-1">&nbsp;</th>
 											</tr>
 										</tbody>
