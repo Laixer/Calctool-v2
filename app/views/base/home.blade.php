@@ -2,11 +2,11 @@
 
 @section('content')
 <?# -- WRAPPER -- ?>
+<link href="http://vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
+<script src="http://vjs.zencdn.net/4.12/video.js"></script>
 <div id="wrapper">
 
 	<section class="container">
-
-		<!--<h2><strong>Home</strong></h2>-->
 
 		<?# -- BORN TO BE A WINNER -- ?>
 
@@ -219,14 +219,22 @@
 				</div>
 				<div class="col-md-6">
 				<h4>Nieuws</h4>
-					<div class="owl-carousel controlls-over" data-plugin-options='{"items": 1, "singleItem": true, "navigation": true, "pagination": true, "transitionStyle":"fadeUp"}'>
-						<div>
-							<iframe width="600" height="311" src="http://www.youtube.com/embed/-bdKMT1znJ0"></iframe>
-						</div>
-						<div>
-							<iframe width="600" height="311" src="http://www.youtube.com/embed/-bdKMT1znJ0"></iframe>
-						</div>
-					</div>
+				<?# https://vid.me/delete/cx4tz5oeyzw4o8ko4gkgs84o8 ?>
+					<!--<div class="owl-carousel controlls-over" data-plugin-options='{"items": 1, "singleItem": true, "navigation": true, "pagination": true, "transitionStyle":"fadeUp"}'>
+						<div>-->
+							<!--<iframe width="600" height="311" src="http://www.youtube.com/embed/-bdKMT1znJ0"></iframe>-->
+							<video id="really-cool-video" class="video-js vjs-default-skin" controls preload="auto" width="540" height="311" data-setup='{}'>
+							  <source src="https://d1wst0behutosd.cloudfront.net/videos/1814740.mp4?Expires=1430230213&Signature=oF10GlGzRp~veV1kFI8ttTtG10aIGtK~rC0tA0LQ1Z6F69PLlYcsEhsjRfw3nwTGZyFgaZEiKRpr7h9R1LsKh0FRAHrFMCA0TTHX8gEvKdKwJLph2xIs2WGOin0v7dz8N6~u1NFseCBJUyBZWVsL5uv19sXWjvUvD-hl-iMwWGnSrZwLPb2gubDaJWP2SiM0kNkts0tA1M8c1bq3RmHaoOy68kpPzahEmlSVbzK0oiTfee3~5xisTPiTjwr~79Fz3X~ZkMtQxaK0cj2IG7vmI2hEkda5ykljorDwnvLIBswhTDow5MiyrtHoH5jRd4W6sjBPbtmd3v54FeZ~SyGrVQ__&Key-Pair-Id=APKAJJ6WELAPEP47UKWQ" type='video/mp4'>
+							  <p class="vjs-no-js">
+							    To view this video please enable JavaScript, and consider upgrading to a web browser
+							    that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+							  </p>
+							</video>
+						<!--</div>
+						<div>-->
+							<!--<iframe width="600" height="311" src="http://www.youtube.com/embed/-bdKMT1znJ0"></iframe>-->
+						<!--</div>
+					</div>-->
 				<h4>Statistiek</h4>
 					<section class="paddings white-row styleSecondBackground">
 						<div class="row text-center countTo">
