@@ -368,6 +368,14 @@ var n = this,
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});
+		$("body").on("click", ".ldeleterow", function(){
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id"))
+				$.post("/more/deletelabor", {id: $curThis.closest("tr").attr("data-id")}, function(){
+					//$curThis.closest("tr").hide("slow");
+					$curThis.closest("tr").find("input").val("0,00");
+				}).fail(function(e) { console.log(e); });
+		});
 		$("body").on("click", ".deleteact", function(e){
 			e.preventDefault();
 			if(confirm('Weet je het zeker?')){
@@ -493,10 +501,10 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate_more, 2,",",".") }}</td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(MoreLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal(MoreLabor::where('activity_id','=', $activity->id)->first()['rate'], MoreLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".")) }}</span></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(MoreRegister::laborTotal(MoreLabor::where('activity_id','=', $activity->id)->first()['rate'], MoreLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".")) }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1 text-right"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
+															<td class="col-md-1 text-right"><button class="btn btn-danger ldeleterow btn-xs fa fa-times"></button></td>
 														</tr>
 													</tbody>
 												</table>
@@ -600,7 +608,7 @@ var n = this,
 															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 																$profit = $project->profit_more_subcontr_mat;
 															}
-															echo '&euro; '.number_format(CalculationRegister::calcMaterialTotal($activity->id, $profit), 2, ",",".");
+															echo '&euro; '.number_format(MoreRegister::materialTotal($activity->id, $profit), 2, ",",".");
 															?></span></td>
 															<td class="col-md-1"><strong>
 															<?php
@@ -609,7 +617,7 @@ var n = this,
 															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 																$profit = $project->profit_more_subcontr_mat;
 															}
-															echo '&euro; '.number_format(CalculationRegister::calcMaterialTotalProfit($activity->id, $profit), 2, ",",".");
+															echo '&euro; '.number_format(MoreRegister::materialTotalProfit($activity->id, $profit), 2, ",",".");
 															?></span></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
@@ -715,7 +723,7 @@ var n = this,
 															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 																$profit = $project->profit_more_subcontr_equip;
 															}
-															echo '&euro; '.number_format(CalculationRegister::calcEquipmentTotal($activity->id, $profit), 2, ",",".");
+															echo '&euro; '.number_format(MoreRegister::equipmentTotal($activity->id, $profit), 2, ",",".");
 															?></span></td>
 															<td class="col-md-1"><strong>
 															<?php
@@ -724,7 +732,7 @@ var n = this,
 															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 																$profit = $project->profit_more_subcontr_equip;
 															}
-															echo '&euro; '.number_format(CalculationRegister::calcEquipmentTotalProfit($activity->id, $profit), 2, ",",".");
+															echo '&euro; '.number_format(MoreRegister::equipmentTotalProfit($activity->id, $profit), 2, ",",".");
 															?></span></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
