@@ -82,9 +82,6 @@ var n = this,
 		$('#tab-estimate').click(function(e){
 			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'estimate';
 		});
-		$('#tab-summary').click(function(e){
-			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'summary';
-		});
 		$('#tab-endresult').click(function(e){
 			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'endresult';
 		});
@@ -125,7 +122,7 @@ var n = this,
 		$("body").on("change", ".dsave", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id")){
-				$.post("/calculation/calc/updatematerial", {
+				$.post("/more/updatematerial", {
 					id: $curThis.closest("tr").attr("data-id"),
 					name: $curThis.closest("tr").find("input[name='name']").val(),
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
@@ -161,7 +158,7 @@ var n = this,
 		$("body").on("change", ".esave", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id")){
-				$.post("/calculation/calc/updateequipment", {
+				$.post("/more/updateequipment", {
 					id: $curThis.closest("tr").attr("data-id"),
 					name: $curThis.closest("tr").find("input[name='name']").val(),
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
@@ -197,7 +194,7 @@ var n = this,
 		$("body").on("change", ".lsave", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id")){
-				$.post("/calculation/calc/updatelabor", {
+				$.post("/more/updatelabor", {
 					id: $curThis.closest("tr").attr("data-id"),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
@@ -241,7 +238,7 @@ var n = this,
 					flag = false;
 			});
 			if(flag){
-				$.post("/calculation/calc/newlabor", {
+				$.post("/more/newlabor", {
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
 					activity: $curThis.closest("table").attr("data-id")
@@ -281,7 +278,7 @@ var n = this,
 					flag = false;
 			});
 			if(flag){
-				$.post("/calculation/calc/newmaterial", {
+				$.post("/more/newmaterial", {
 					name: $curThis.closest("tr").find("input[name='name']").val(),
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
@@ -324,247 +321,12 @@ var n = this,
 					flag = false;
 			});
 			if(flag){
-				$.post("/calculation/calc/newequipment", {
+				$.post("/more/newequipment", {
 					name: $curThis.closest("tr").find("input[name='name']").val(),
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
 					activity: $curThis.closest("table").attr("data-id")
-				}, function(data){
-					var json = $.parseJSON(data);
-					$curThis.closest("tr").find("input").removeClass("error-input");
-					if (json.success) {
-						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
-						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
-						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
-					} else {
-						$.each(json.message, function(i, item) {
-							if(json.message['name'])
-								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-							if(json.message['unit'])
-								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-							if(json.message['rate'])
-								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-							if(json.message['amount'])
-								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-						});
-					}
-				}).fail(function(e){
-					console.log(e);
-				});
-			}
-		});
-		$("body").on("change", ".dsavee", function(){
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id")){
-				$.post("/calculation/estim/updatematerial", {
-					id: $curThis.closest("tr").attr("data-id"),
-					name: $curThis.closest("tr").find("input[name='name']").val(),
-					unit: $curThis.closest("tr").find("input[name='unit']").val(),
-					rate: $curThis.closest("tr").find("input[name='rate']").val(),
-					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-				}, function(data){
-					var json = $.parseJSON(data);
-					$curThis.closest("tr").find("input").removeClass("error-input");
-					if (json.success) {
-						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
-						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
-						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
-					} else {
-						$.each(json.message, function(i, item) {
-							if(json.message['name'])
-								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-							if(json.message['unit'])
-								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-							if(json.message['rate'])
-								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-							if(json.message['amount'])
-								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-						});
-					}
-				}).fail(function(e){
-					console.log(e);
-				});
-			}
-		});
-		$("body").on("change", ".esavee", function(){
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id")){
-				$.post("/calculation/estim/updateequipment", {
-					id: $curThis.closest("tr").attr("data-id"),
-					name: $curThis.closest("tr").find("input[name='name']").val(),
-					unit: $curThis.closest("tr").find("input[name='unit']").val(),
-					rate: $curThis.closest("tr").find("input[name='rate']").val(),
-					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-				}, function(data){
-					var json = $.parseJSON(data);
-					$curThis.closest("tr").find("input").removeClass("error-input");
-					if (json.success) {
-						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
-						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
-						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
-					} else {
-						$.each(json.message, function(i, item) {
-							if(json.message['name'])
-								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-							if(json.message['unit'])
-								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-							if(json.message['rate'])
-								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-							if(json.message['amount'])
-								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-						});
-					}
-				}).fail(function(e){
-					console.log(e);
-				});
-			}
-		});
-		$("body").on("change", ".lsavee", function(){
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id")){
-				$.post("/calculation/estim/updatelabor", {
-					id: $curThis.closest("tr").attr("data-id"),
-					rate: $curThis.closest("tr").find("input[name='rate']").val(),
-					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-				}, function(data){
-					var json = $.parseJSON(data);
-					$curThis.closest("tr").find("input").removeClass("error-input");
-					if (json.success) {
-						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = $curThis.closest("tr").find("input[name='rate']").val()
-						if (rate) {
-							rate.toString().split('.').join('').replace(',', '.');
-						} else {
-							rate = {{$project->hour_rate}};
-						}
-						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-					} else {
-						$.each(json.message, function(i, item) {
-							if(json.message['name'])
-								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-							if(json.message['unit'])
-								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-							if(json.message['rate'])
-								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-							if(json.message['amount'])
-								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-						});
-					}
-				}).fail(function(e){
-					console.log(e);
-				});
-			}
-		});
-		$("body").on("blur", ".lsavee", function(){
-			var flag = true;
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				return false;
-			$curThis.closest("tr").find("input").each(function(){
-				if(!$(this).val())
-					flag = false;
-			});
-			if(flag){
-				$.post("/calculation/estim/newlabor", {
-					rate: $curThis.closest("tr").find("input[name='rate']").val(),
-					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id")
-				}, function(data){
-					var json = $.parseJSON(data);
-					$curThis.closest("tr").find("input").removeClass("error-input");
-					if (json.success) {
-						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = $curThis.closest("tr").find("input[name='rate']").val()
-						if (rate) {
-							rate.toString().split('.').join('').replace(',', '.');
-						} else {
-							rate = {{$project->hour_rate}};
-						}
-						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-					} else {
-						$.each(json.message, function(i, item) {
-							if(json.message['rate'])
-								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-							if(json.message['amount'])
-								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-						});
-					}
-				}).fail(function(e){
-					console.log(e);
-				});
-			}
-		});
-		$("body").on("blur", ".dsavee", function(){
-			var flag = true;
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				return false;
-			$curThis.closest("tr").find("input").each(function(){
-				if(!$(this).val())
-					flag = false;
-			});
-			if(flag){
-				$.post("/calculation/estim/newmaterial", {
-					name: $curThis.closest("tr").find("input[name='name']").val(),
-					unit: $curThis.closest("tr").find("input[name='unit']").val(),
-					rate: $curThis.closest("tr").find("input[name='rate']").val(),
-					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id")
-				}, function(data){
-					var json = $.parseJSON(data);
-					$curThis.closest("tr").find("input").removeClass("error-input");
-					if (json.success) {
-						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
-						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
-						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
-					} else {
-						$.each(json.message, function(i, item) {
-							if(json.message['name'])
-								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-							if(json.message['unit'])
-								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-							if(json.message['rate'])
-								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-							if(json.message['amount'])
-								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-						});
-					}
-				}).fail(function(e){
-					console.log(e);
-				});
-			}
-		});
-		$("body").on("blur", ".esavee", function(){
-			var flag = true;
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				return false;
-			$curThis.closest("tr").find("input").each(function(){
-				if(!$(this).val())
-					flag = false;
-			});
-			if(flag){
-				$.post("/calculation/estim/newequipment", {
-					name: $curThis.closest("tr").find("input[name='name']").val(),
-					unit: $curThis.closest("tr").find("input[name='unit']").val(),
-					rate: $curThis.closest("tr").find("input[name='rate']").val(),
-					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id"),
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -595,28 +357,14 @@ var n = this,
 		$("body").on("click", ".sdeleterow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/calculation/calc/deletematerial", {id: $curThis.closest("tr").attr("data-id")}, function(){
+				$.post("/more/deletematerial", {id: $curThis.closest("tr").attr("data-id")}, function(){
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});
 		$("body").on("click", ".edeleterow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/calculation/calc/deleteequipment", {id: $curThis.closest("tr").attr("data-id")}, function(){
-					$curThis.closest("tr").hide("slow");
-				}).fail(function(e) { console.log(e); });
-		});
-		$("body").on("click", ".sdeleterowe", function(){
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				$.post("/calculation/estim/deletematerial", {id: $curThis.closest("tr").attr("data-id")}, function(){
-					$curThis.closest("tr").hide("slow");
-				}).fail(function(e) { console.log(e); });
-		});
-		$("body").on("click", ".edeleterowe", function(){
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				$.post("/calculation/estim/deleteequipment", {id: $curThis.closest("tr").attr("data-id")}, function(){
+				$.post("/more/deleteequipment", {id: $curThis.closest("tr").attr("data-id")}, function(){
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});
@@ -740,12 +488,12 @@ var n = this,
 
 													<?# -- table items -- ?>
 													<tbody>
-														<tr data-id="{{ CalculationLabor::where('activity_id','=', $activity->id)->first()['id'] }}"><?# -- item -- ?>
+														<tr data-id="{{ MoreLabor::where('activity_id','=', $activity->id)->first()['id'] }}"><?# -- item -- ?>
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
-															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal(CalculationLabor::where('activity_id','=', $activity->id)->first()['rate'], CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".")) }}</span></td>
+															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(MoreLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal(MoreLabor::where('activity_id','=', $activity->id)->first()['rate'], MoreLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".")) }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1 text-right"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
@@ -782,7 +530,7 @@ var n = this,
 
 													<?# -- table items -- ?>
 													<tbody>
-														@foreach (CalculationMaterial::where('activity_id','=', $activity->id)->get() as $material)
+														@foreach (MoreMaterial::where('activity_id','=', $activity->id)->get() as $material)
 														<tr data-id="{{ $material->id }}">
 															<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text dsave newrow" /></td>
 															<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text dsave" /></td>
@@ -897,7 +645,7 @@ var n = this,
 
 													<?# -- table items -- ?>
 													<tbody>
-														@foreach (CalculationEquipment::where('activity_id','=', $activity->id)->get() as $equipment)
+														@foreach (MoreEquipment::where('activity_id','=', $activity->id)->get() as $equipment)
 														<tr data-id="{{ $equipment->id }}">
 															<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text esave newrow" /></td>
 															<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $equipment->unit }}" class="form-control-sm-text esave" /></td>

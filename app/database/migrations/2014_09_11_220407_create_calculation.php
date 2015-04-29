@@ -56,51 +56,15 @@ class CreateCalculation extends Migration {
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
 		});
 
-		/*
-		Schema::create('less_labor', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->decimal('amount', 9, 2)->index();
-			$table->integer('activity_id')->unsigned();
-			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
-			$table->integer('original_id')->unsigned();
-			$table->foreign('original_id')->references('id')->on('calculation_labor')->onUpdate('cascade')->onDelete('cascade');
-		});
-
-		Schema::create('less_material', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->decimal('rate', 9, 2)->unsigned()->index();
-			$table->decimal('amount', 9, 2)->index();
-			$table->decimal('rate', 9, 2)->unsigned()->index();
-			$table->decimal('amount', 9, 2)->index();
-			$table->integer('activity_id')->unsigned();
-			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
-			$table->integer('original_id')->unsigned();
-			$table->foreign('original_id')->references('id')->on('calculation_material')->onUpdate('cascade')->onDelete('cascade');
-		});
-
-		Schema::create('less_equipment', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->decimal('rate', 9, 2)->unsigned()->index();
-			$table->decimal('amount', 9, 2)->index();
-			$table->integer('activity_id')->unsigned();
-			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
-			$table->integer('original_id')->unsigned();
-			$table->foreign('original_id')->references('id')->on('calculation_equipment')->onUpdate('cascade')->onDelete('cascade');
-		});
-		*/
-
 		Schema::create('more_labor', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->decimal('rate', 5, 2)->unsigned()->index();
 			$table->decimal('amount', 9, 2)->unsigned()->index();
-			$table->text('note');
+			$table->text('note')->nullable();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
-			$table->integer('hour_id')->unsigned();
+			$table->integer('hour_id')->unsigned()->nullable();
 			$table->foreign('hour_id')->references('id')->on('timesheet')->onUpdate('cascade')->onDelete('cascade');
 		});
 

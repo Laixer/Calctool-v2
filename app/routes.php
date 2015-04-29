@@ -95,12 +95,20 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('less/updatelabor', array('as' => 'less', 'uses' => 'LessController@doUpdateLabor'));
 	Route::post('less/updateequipment', array('as' => 'less', 'uses' => 'LessController@doUpdateEquipment'));
 	Route::post('less/updatematerial', array('as' => 'less', 'uses' => 'LessController@doUpdateMaterial'));
-	Route::post('less/resetlabor', array('as' => 'calculation', 'uses' => 'LessController@doResetLabor'));
-	Route::post('less/resetmaterial', array('as' => 'calculation', 'uses' => 'LessController@doResetMaterial'));
-	Route::post('less/resetequipment', array('as' => 'calculation', 'uses' => 'LessController@doResetEquipment'));
+	Route::post('less/resetlabor', array('as' => 'less', 'uses' => 'LessController@doResetLabor'));
+	Route::post('less/resetmaterial', array('as' => 'less', 'uses' => 'LessController@doResetMaterial'));
+	Route::post('less/resetequipment', array('as' => 'less', 'uses' => 'LessController@doResetEquipment'));
 
 	/* More pages */
 	Route::get('more/project-{project_id}', array('as' => 'more', 'uses' => 'CalcController@getMore'));
+	Route::post('more/newmaterial', array('as' => 'more', 'uses' => 'MoreController@doNewMaterial'));
+	Route::post('more/newequipment', array('as' => 'more', 'uses' => 'MoreController@doNewEquipment'));
+	Route::post('more/newlabor', array('as' => 'more', 'uses' => 'MoreController@doNewLabor'));
+	Route::post('more/updatematerial', array('as' => 'more', 'uses' => 'MoreController@doUpdateMaterial'));
+	Route::post('more/updateequipment', array('as' => 'more', 'uses' => 'MoreController@doUpdateEquipment'));
+	Route::post('more/updatelabor', array('as' => 'more', 'uses' => 'MoreController@doUpdateLabor'));
+	Route::post('more/deletematerial', array('as' => 'more', 'uses' => 'MoreController@doDeleteMaterial'));
+	Route::post('more/deleteequipment', array('as' => 'more', 'uses' => 'MoreController@doDeleteEquipment'));
 
 	/* Relation pages */
 	Route::get('relation/new', array('as' => 'relation.new', 'uses' => 'RelationController@getNew'));
