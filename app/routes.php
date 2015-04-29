@@ -77,7 +77,6 @@ Route::group(array('before' => 'auth'), function()
 	/* Calculation pages */
 	Route::get('calculation/project-{project_id}', array('as' => 'calculation', 'uses' => 'CalcController@getCalculation'))->where('project_id', '[0-9]+');
 	Route::get('estimate/project-{project_id}', array('as' => 'estimate', 'uses' => 'CalcController@getEstimate'))->where('project_id', '[0-9]+');
-	Route::get('more', array('as' => 'more', 'uses' => 'CalcController@getMore'));
 
 	/* Estimate acions by estimate */
 	Route::post('estimate/newmaterial', array('as' => 'calculation', 'uses' => 'EstimController@doNewEstimateMaterial'));
@@ -99,6 +98,9 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('less/resetlabor', array('as' => 'calculation', 'uses' => 'LessController@doResetLabor'));
 	Route::post('less/resetmaterial', array('as' => 'calculation', 'uses' => 'LessController@doResetMaterial'));
 	Route::post('less/resetequipment', array('as' => 'calculation', 'uses' => 'LessController@doResetEquipment'));
+
+	/* More pages */
+	Route::get('more/project-{project_id}', array('as' => 'more', 'uses' => 'CalcController@getMore'));
 
 	/* Relation pages */
 	Route::get('relation/new', array('as' => 'relation.new', 'uses' => 'RelationController@getNew'));
