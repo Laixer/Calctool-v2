@@ -10,13 +10,20 @@ class EstimateOverview {
 	public static function laborActivity($activity) {
 		if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 			$row = EstimateLabor::where('activity_id', '=', $activity->id)->first();
-			return $row['rate'] * $row['amount'];
+			if ($row['isset'])
+				return $row['set_rate'] * $row['set_amount'];
+			else
+				return $row['rate'] * $row['amount'];
 		}
 	}
 
 	public static function laborTotal($activity) {
 		if (PartType::find($activity->part_type_id)->type_name=='estimate') {
-			return EstimateLabor::where('activity_id', '=', $activity->id)->first()['amount'];
+			$row = EstimateLabor::where('activity_id', '=', $activity->id)->first();
+			if ($row['isset'])
+				return $row['set_amount'];
+			else
+				return $row['amount'];
 		}
 	}
 
@@ -30,7 +37,10 @@ class EstimateOverview {
 
 			foreach ($rows as $row)
 			{
-				$total += $row->rate * $row->amount;
+				if ($row['isset'])
+					$total += $row->set_rate * $row->set_amount;
+				else
+					$total += $row->rate * $row->amount;
 			}
 
 			return (1+($profit/100))*$total;
@@ -47,7 +57,10 @@ class EstimateOverview {
 
 			foreach ($rows as $row)
 			{
-				$total += $row->rate * $row->amount;
+				if ($row['isset'])
+					$total += $row->set_rate * $row->set_amount;
+				else
+					$total += $row->rate * $row->amount;
 			}
 
 			return (1+($profit/100))*$total;
