@@ -988,12 +988,12 @@ var n = this,
 											<tr><!-- item -->
 												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-2">{{ $activity->activity_name }}</td>
-												<td class="col-md-1">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
-												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($activity), 2, ",",".") }}</span></td>
-												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
-												<td class="col-md-3">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
-												<td class="col-md-1">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-												<td class="col-md-1 {{ CalculationOverview::estimateCheck($activity) }}"></td>
+												<td class="col-md-1">{{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }}</td>
+												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::laborActivity($activity), 2, ",",".") }}</span></td>
+												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
+												<td class="col-md-3">{{ '&euro; '.number_format(EstimateOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
+												<td class="col-md-1">{{ '&euro; '.number_format(EstimateOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
+												<td class="col-md-1 {{-- EstimateOverview::estimateCheck($activity) --}}"></td>
 											</tr>
 											@endforeach
 											@endforeach
@@ -1029,12 +1029,12 @@ var n = this,
 											<tr><!-- item -->
 												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-2">{{ $activity->activity_name }}</td>
-												<td class="col-md-1">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
-												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($activity), 2, ",",".") }}</span></td>
-												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::MaterialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
-												<td class="col-md-3">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
-												<td class="col-md-1">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
-												<td class="col-md-1 {{ CalculationOverview::estimateCheck($activity) }}"></td>
+												<td class="col-md-1">{{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }}</td>
+												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::laborActivity($activity), 2, ",",".") }}</span></td>
+												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::MaterialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
+												<td class="col-md-3">{{ '&euro; '.number_format(EstimateOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
+												<td class="col-md-1">{{ '&euro; '.number_format(EstimateOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
+												<td class="col-md-1 {{-- EstimateOverview::estimateCheck($activity) --}}"></td>
 											</tr>
 											@endforeach
 											@endforeach
@@ -1062,11 +1062,11 @@ var n = this,
 										<!-- table items -->
 										<tbody>
 											<tr><!-- item -->
-												<td class="col-md-4"><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>
-												<td class="col-md-2"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
-												<td class="col-md-2"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
-												<td class="col-md-2"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
-												<td class="col-md-2"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
+												<td class="col-md-4"><span class="pull-right">{{ EstimateOverview::laborSuperTotalAmount($project) }}</span></td>
+												<td class="col-md-2"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
+												<td class="col-md-2"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
+												<td class="col-md-2"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
+												<td class="col-md-2"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::superTotal($project), 2, ",",".") }}</span></td>
 											</tr>
 										</tbody>
 									</table>
