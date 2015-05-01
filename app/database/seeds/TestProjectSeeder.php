@@ -44,7 +44,7 @@ class TestProjectSeeder extends Seeder {
 		$test_contact_function = ContactFunction::where('function_name','=','voorzitter')->first();
 		$test_type_name = RelationType::where('type_name','=','adviesbureau')->first();
 		$test_kind_name = RelationKind::where('kind_name','=','zakelijk')->first();
-		$test_timesheet_kind_name = TimesheetKind::where('kind_name','=','meerwerk')->first();
+		$test_timesheet_kind_name = TimesheetKind::where('kind_name','=','aanneming')->first();
 
 		$test_part_contract = Part::where('part_name','=','contracting')->first();
 		$test_part_type_calc = PartType::where('type_name','=','calculation')->first();
