@@ -267,5 +267,10 @@ class StaticSeeder extends Seeder {
 		Tax::create(array('tax_rate' => 6));
 		Tax::create(array('tax_rate' => 21));
 		$this->command->info('Tax created');
+
+		TimesheetKind::create(array('kind_name' => 'aanneming'));
+		TimesheetKind::create(array('kind_name' => 'stelpost'));
+		TimesheetKind::create(array('kind_name' => 'meerwerk'));
+		$this->command->info('TimesheetKind created');
 	}
  }

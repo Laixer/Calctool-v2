@@ -44,6 +44,7 @@ class TestProjectSeeder extends Seeder {
 		$test_contact_function = ContactFunction::where('function_name','=','voorzitter')->first();
 		$test_type_name = RelationType::where('type_name','=','adviesbureau')->first();
 		$test_kind_name = RelationKind::where('kind_name','=','zakelijk')->first();
+		$test_timesheet_kind_name = TimesheetKind::where('kind_name','=','meerwerk')->first();
 
 		$test_part_contract = Part::where('part_name','=','contracting')->first();
 		$test_part_type_calc = PartType::where('type_name','=','calculation')->first();
@@ -513,6 +514,7 @@ class TestProjectSeeder extends Seeder {
 			'register_date' => '09-10-2014',
 			'register_hour' => '24',
 			'note' => 'omschrijving bij uren invoer',
+			'timesheet_kind_id' => $test_timesheet_kind_name->id,
 			'activity_id' => $test_activity10->id
 		));
 
@@ -565,7 +567,7 @@ class TestProjectSeeder extends Seeder {
 		$calculation_labor_activity1 = CalculationLabor::create(array(
 			'rate' => '35.00',
 			'amount' => '1',
-			'isless' => false,
+ 			'isless' => false,
 			'activity_id' => $test_activity1->id
 		));
 
