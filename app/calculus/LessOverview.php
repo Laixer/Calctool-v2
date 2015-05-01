@@ -5,44 +5,38 @@
  */
 class LessOverview {
 
-/*--Calculation Overview - total per activitys--*/
+/*--Less Overview - total per activitys--*/
 /*labor activity total*/
 
 /*NOG DOEN>>*/
 
-/*Calculation labor*/
+/*Less labor*/
 
 	public static function laborActivity($activity) {
 		$row = NULL;
-		if (PartType::find($activity->part_type_id)->type_name=='estimate') {
-			$row = EstimateLabor::where('activity_id', '=', $activity->id)->first();
-		} else {
-			$row = CalculationLabor::where('activity_id', '=', $activity->id)->first();
+		if (PartType::find($activity->part_type_id)->type_name=='calculation') {
+			$row = CalculationLabor::where('activity_id', '=', $activity->id)->where('isless','=','true')->first();
 		}
 
-		return $row['rate'] * $row['amount'];
+		return ($row['rate'] * $row['less_amount']) - ($row['rate'] * $row['amount']);
 	}
 
 	public static function laborTotal($activity) {
-
-		if (PartType::find($activity->part_type_id)->type_name=='estimate') {
-			return EstimateLabor::where('activity_id', '=', $activity->id)->first()['amount'];
-		} else {
-			return CalculationLabor::where('activity_id', '=', $activity->id)->first()['amount'];
+		if (PartType::find($activity->part_type_id)->type_name=='calculation') {
+			$row = CalculationLabor::where('activity_id', '=', $activity->id)->where('isless','=','true')->first();
+			return $row['less_amount'] - $row['amount'];
 		}
 	}
-
 
 	public static function LessMaterialTotal($activity) {
 		$total = 0;
 
-		$rows = CalculationMaterial::where('activity_id', '=', $activity)->get();
+		$rows = CalculationMaterial::where('activity_id', '=', $activity)->where('isless','=','true')->get();
 		foreach ($rows as $row)
 		{
-			if ($row->isless)
-				$total += LessRegister::lessLaborTotal($row->less_rate, $row->less_amount);
-			else
-				$total += LessRegister::lessLaborTotal($row->rate, $row->amount);
+			$total = LessRegister::lessLaborTotal($row->less_rate, $row->less_amount);
+			$less_total = LessRegister::lessLaborTotal($row->rate, $row->amount);
+			$total += $total - $less_total;
 		}
 
 		return $total;
@@ -56,16 +50,13 @@ class LessOverview {
 		$supertotal = 0;
 
 		$row = NULL;
-		$rows = CalculationMaterial::where('activity_id', '=', $activity->id)->get();
+		$rows = CalculationMaterial::where('activity_id', '=', $activity->id)->where('isless','=','true')->get();
 
 		foreach ($rows as $row)
 		{
-			if ($row->isless) {
-				$total = (LessRegister::lessLaborTotal($row->less_rate, $row->less_amount) * (1+($profit/100)));
-				$less_total = (LessRegister::lessLaborTotal($row->rate, $row->amount) * (1+($profit/100)));
-				$supertotal += $total - $less_total;
-			}
-
+			$total = (LessRegister::lessLaborTotal($row->less_rate, $row->less_amount) * (1+($profit/100)));
+			$less_total = (LessRegister::lessLaborTotal($row->rate, $row->amount) * (1+($profit/100)));
+			$supertotal += $total - $less_total;
 		}
 		return $supertotal;
 	}
@@ -76,16 +67,13 @@ class LessOverview {
 		$supertotal = 0;
 
 		$row = NULL;
-		$rows = CalculationEquipment::where('activity_id', '=', $activity->id)->get();
+		$rows = CalculationEquipment::where('activity_id', '=', $activity->id)->where('isless','=','true')->get();
 
 		foreach ($rows as $row)
 		{
-			if ($row->isless) {
-				$total = (LessRegister::lessLaborTotal($row->less_rate, $row->less_amount) * (1+($profit/100)));
-				$less_total = (LessRegister::lessLaborTotal($row->rate, $row->amount) * (1+($profit/100)));
-				$supertotal += $total - $less_total;
-			}
-
+			$total = (LessRegister::lessLaborTotal($row->less_rate, $row->less_amount) * (1+($profit/100)));
+			$less_total = (LessRegister::lessLaborTotal($row->rate, $row->amount) * (1+($profit/100)));
+			$supertotal += $total - $less_total;
 		}
 		return $supertotal;
 	}
@@ -101,15 +89,7 @@ class LessOverview {
 		return $total;
 	}
 
-/*NOG DOEN>>*/
-/*Check if activity*/
-	public static function estimateCheck($activity) {
-		if (PartType::find($activity->part_type_id)->type_name=='estimate') {
-			return 'fa fa-check';
-		}
-	}
-
-/*--Calculation Overview - total contracting--*/
+/*--Less Overview - total contracting--*/
 /*Material for Contracting & Subcontracting*/
 
 	public static function contrMaterialTotal($project) {
@@ -119,7 +99,7 @@ class LessOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
 			{
-				$total += CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat);
+				$total += LessOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat);
 			}
 		}
 		return $total;
@@ -132,7 +112,7 @@ class LessOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
 			{
-				$total += CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat);
+				$total += LessOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat);
 			}
 		}
 		return $total;
@@ -147,7 +127,7 @@ class LessOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
 			{
-				$total += CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip);
+				$total += LessOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip);
 			}
 		}
 		return $total;
@@ -160,7 +140,7 @@ class LessOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
 			{
-				$total += CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip);
+				$total += LessOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip);
 			}
 		}
 		return $total;
@@ -175,7 +155,7 @@ class LessOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
 			{
-				$total += CalculationOverview::laborTotal($activity);
+				$total += LessOverview::laborTotal($activity);
 			}
 		}
 
@@ -189,7 +169,7 @@ class LessOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
 			{
-				$total += CalculationOverview::laborTotal($activity);
+				$total += LessOverview::laborTotal($activity);
 			}
 		}
 
@@ -203,7 +183,7 @@ class LessOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
 			{
-				$total += CalculationOverview::laborActivity($activity);
+				$total += LessOverview::laborActivity($activity);
 			}
 		}
 		return $total;
@@ -216,22 +196,22 @@ class LessOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
 			{
-				$total += CalculationOverview::laborActivity($activity);
+				$total += LessOverview::laborActivity($activity);
 			}
 		}
 		return $total;
 	}
 
 	public static function contrTotal($project) {
-		return CalculationOverview::contrLaborTotal($project) + CalculationOverview::contrMaterialTotal($project) + CalculationOverview::contrEquipmentTotal($project);
+		return LessOverview::contrLaborTotal($project) + LessOverview::contrMaterialTotal($project) + LessOverview::contrEquipmentTotal($project);
 	}
 
 	public static function subcontrTotal($project) {
-		return CalculationOverview::subcontrLaborTotal($project) + CalculationOverview::subcontrMaterialTotal($project) + CalculationOverview::subcontrEquipmentTotal($project);
+		return LessOverview::subcontrLaborTotal($project) + LessOverview::subcontrMaterialTotal($project) + LessOverview::subcontrEquipmentTotal($project);
 	}
 
 
-/*--Calculation Overview -  SuperTotals (projecttotals)--*/
+/*--Less Overview -  SuperTotals (projecttotals)--*/
 /*Labor amount & labor total SuperTotal*/
 
 	public static function laborSuperTotalAmount($project) {
@@ -241,7 +221,7 @@ class LessOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
 			{
-				$total += CalculationOverview::laborTotal($activity);
+				$total += LessOverview::laborTotal($activity);
 			}
 		}
 
@@ -255,7 +235,7 @@ class LessOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
 			{
-				$total += CalculationOverview::laborActivity($activity);
+				$total += LessOverview::laborActivity($activity);
 			}
 		}
 		return $total;
@@ -274,7 +254,7 @@ class LessOverview {
 				} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 					$profit = $project->profit_calc_subcontr_mat;
 				}
-				$total += CalculationOverview::materialActivityProfit($activity, $profit);
+				$total += LessOverview::materialActivityProfit($activity, $profit);
 			}
 		}
 		return $total;
@@ -293,7 +273,7 @@ class LessOverview {
 				} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 					$profit = $project->profit_calc_subcontr_equip;
 				}
-				$total += CalculationOverview::equipmentActivityProfit($activity, $profit);
+				$total += LessOverview::equipmentActivityProfit($activity, $profit);
 			}
 		}
 		return $total;
@@ -301,7 +281,7 @@ class LessOverview {
 
 /*Project SuperTotal*/
 	public static function superTotal($project) {
-		return CalculationOverview::laborSuperTotal($project) + CalculationOverview::materialSuperTotal($project) + CalculationOverview::equipmentSuperTotal($project);
+		return LessOverview::laborSuperTotal($project) + LessOverview::materialSuperTotal($project) + LessOverview::equipmentSuperTotal($project);
 	}
 /*<<NOG DOEN*/
 }

@@ -899,49 +899,6 @@ var n = this,
 
 					</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 					<div id="summary" class="tab-pane">
 						<div class="toogle">
 
@@ -976,7 +933,7 @@ var n = this,
 												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
 												<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
 												<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-												<td class="col-md-1 text-center {{ LessOverview::estimateCheck($activity) }}"></td>
+												<td class="col-md-1 text-center {{-- LessOverview::estimateCheck($activity) --}}"></td>
 											</tr>
 											@endforeach
 											@endforeach
@@ -1027,7 +984,7 @@ var n = this,
 												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
 												<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
 												<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
-												<td class="col-md-1 text-center {{ LessOverview::estimateCheck($activity) }}"></td>
+												<td class="col-md-1 text-center {{-- LessOverview::estimateCheck($activity) --}}"></td>
 											</tr>
 											@endforeach
 											@endforeach
