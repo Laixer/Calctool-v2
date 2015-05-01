@@ -1565,9 +1565,8 @@ class TestProjectSeeder extends Seeder {
 		$calculation_labor_activity11 = MoreLabor::create(array(
 			'rate' => '45',
 			'amount' => '10.1',
-			'note' => '',
-			'activity_id' => $test_activity11->id,
-			'hour_id' => $test_timesheet->id
+			'note' => 'vrije text',
+			'activity_id' => $test_activity11->id
 		));
 		$this->command->info('MoreLabor created');
 
@@ -1606,9 +1605,8 @@ class TestProjectSeeder extends Seeder {
 			$calculation_labor_activity12 = MoreLabor::create(array(
 			'rate' => '45',
 			'amount' => '10.2',
-			'note' => '',
-			'activity_id' => $test_activity12->id,
-			'hour_id' => $test_timesheet->id
+			'note' => 'vrije tekst',
+			'activity_id' => $test_activity12->id
 		));
 		$this->command->info('MoreLabor created');
 
