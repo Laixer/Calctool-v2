@@ -565,7 +565,8 @@ class TestProjectSeeder extends Seeder {
 		$calculation_labor_activity1 = CalculationLabor::create(array(
 			'rate' => '35.00',
 			'amount' => '1',
-			'isless' => false,
+			'less_amount' => '0.11',
+			'isless' => true,
 			'activity_id' => $test_activity1->id
 		));
 
@@ -1642,17 +1643,6 @@ class TestProjectSeeder extends Seeder {
 	$this->command->info('MoreMaterial Activity 11 created');
 	$this->command->info('MoreEquipment Activity 11 created');
 
-
-
-
-
-
-
-
-
-
-
-		$this->command->info('Estimate_Set_Material_Creating....');
 		EstimateMaterial::create(array(
 			'set_material_name' => 'estim_set_mat_1',
 			'set_unit' => 'm2',
