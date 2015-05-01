@@ -111,7 +111,7 @@ class EstimController extends BaseController {
 			$labor = EstimateLabor::create(array(
 				"set_rate" => $rate,
 				"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
-				"set_activity_id" => Input::get('activity'),
+				"activity_id" => Input::get('activity'),
 				"original" => false,
 				"isset" => true
 			));

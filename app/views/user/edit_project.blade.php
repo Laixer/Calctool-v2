@@ -310,23 +310,10 @@ $project = Project::find(Route::Input('project_id'));
 											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
 											@foreach (Timesheet::where('activity_id','=', $activity->id)->get() as $timesheet)
-											<?php
-												$typename;
-												if (PartType::find($activity->part_type_id)->type_name == 'calculation') {
-													$typename = 'Aanneming';
-													if ($activity->detail_id) {
-														if (Detail::find($activity->detail_id)->detail_name == 'more') {
-															$typename = 'Meerwerk';
-														}
-													}
-												} else {
-													$typename = 'Stelpost';
-												}
-											?>
 											<tr><!-- item -->
 												<td class="col-md-1">{{ $timesheet->register_date }}</td>
 												<td class="col-md-1">{{ number_format($timesheet->register_hour, 2,",",".") }}</td>
-												<td class="col-md-1">{{ $typename; }}</td>
+												<td class="col-md-1">{{ ucwords(TimesheetKind::find($timesheet->timesheet_kind_id)->kind_name) }}</td>
 												<td class="col-md-4">{{ $activity->activity_name }}</td>
 												<td class="col-md-1">{{ $timesheet->note }}</td>
 												<td class="col-md-1">&nbsp;</td>
@@ -341,9 +328,9 @@ $project = Project::find(Route::Input('project_id'));
 												<td class="col-md-1"><input type="number" min="0" name="hour" id="hour" class="form-control-sm-text"/></td>
 												<td class="col-md-1">
 													<select name="typename" id="typename" class="form-control-sm-text">
-														<option value="1" selected="selected">Aanneming</option>
-														<option value="2" selected="selected">Meerwerk</option>
-														<option value="3" selected="selected">Stelpost</option>
+													@foreach (TimesheetKind::all() as $typename)
+														<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
+													@endforeach
 													</select>
 												</td>
 												<td class="col-md-4">

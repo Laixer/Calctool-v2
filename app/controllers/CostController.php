@@ -45,21 +45,33 @@ class CostController extends BaseController {
 				'register_date' => Input::get('date'),
 				'register_hour' => str_replace(',', '.', str_replace('.', '' , Input::get('hour'))),
 				'activity_id' => Input::get('activity'),
-				'note' => Input::get('note')
+				'note' => Input::get('note'),
+				'timesheet_kind_id' => Input::get('type')
 			));
 
-			switch (Input::get('type')) {
-				case 1:
-					$type = 'Aanneming';
-					break;
+			$type = 'Aanneming';
+			if (TimesheetKind::find(Input::get('type'))->kind_name == 'meerwerk')
+			{
+				$type = 'Meerwerk';
+				$labor = MoreLabor::create(array(
+					"rate" => Project::where('user_id','=', Auth::user()->id)->first()->hour_rate_more,
+					"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('hour'))),
+					"activity_id" => Input::get('activity'),
+					"hour_id" => $timesheet->id
+				));
+			}
 
-				case 2:
-					$type = 'Meerwerk';
-					break;
-
-				case 3:
-					$type = 'Stelpost';
-					break;
+			if (TimesheetKind::find(Input::get('type'))->kind_name == 'stelpost')
+			{
+				$type = 'Stelpost';
+				$labor = EstimateLabor::create(array(
+					"set_rate" => Project::where('user_id','=', Auth::user()->id)->first()->hour_rate,
+					"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('hour'))),
+					"activity_id" => Input::get('activity'),
+					"original" => false,
+					"isset" => true,
+					"hour_id" => $timesheet->id
+				));
 			}
 
 			return json_encode(['success' => 1, 'type' => $type, 'activity' => Activity::find($timesheet->activity_id)->activity_name, 'hour' => number_format($timesheet->register_hour, 2,",","."), 'id' => $timesheet->id]);
