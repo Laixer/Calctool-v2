@@ -657,7 +657,7 @@ var n = this,
 				<a href="/estimate/project-{{ $project->id }}">Stelpost</a>
 				<a href="/less/project-{{ $project->id }}">Minderwerk</a>
 				<a href="/more/project-{{ $project->id }}">Meerwerk</a>
-				<a href="#">Factuur</a>
+				<a href="/invoice/project-{{ $project->id }}">Factuur</a>
 				<a href="#">Winst/verlies</a>
 			</div>
 
