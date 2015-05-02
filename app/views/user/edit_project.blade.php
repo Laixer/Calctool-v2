@@ -34,6 +34,14 @@ $project = Project::find(Route::Input('project_id'));
 				.prependTo($curTable);
 			});
 		});
+		$("body").on("click", ".deleterow", function(e){
+			e.preventDefault();
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id"))
+				$.post("/timesheet/delete", {id: $curThis.closest("tr").attr("data-id")}, function(){
+					$curThis.closest("tr").hide("slow");
+				}).fail(function(e) { console.log(e); });
+		});
 	});
 </script>
 <div id="wrapper">
@@ -310,7 +318,7 @@ $project = Project::find(Route::Input('project_id'));
 											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
 											@foreach (Timesheet::where('activity_id','=', $activity->id)->get() as $timesheet)
-											<tr><!-- item -->
+											<tr data-id="{{ $timesheet->id }}"><!-- item -->
 												<td class="col-md-1">{{ $timesheet->register_date }}</td>
 												<td class="col-md-1">{{ number_format($timesheet->register_hour, 2,",",".") }}</td>
 												<td class="col-md-1">{{ ucwords(TimesheetKind::find($timesheet->timesheet_kind_id)->kind_name) }}</td>
@@ -318,7 +326,7 @@ $project = Project::find(Route::Input('project_id'));
 												<td class="col-md-1">{{ $timesheet->note }}</td>
 												<td class="col-md-1">&nbsp;</td>
 												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
+												<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times deleterow"></button></td>
 											</tr>
 											@endforeach
 											@endforeach
