@@ -77,4 +77,24 @@ class CostController extends BaseController {
 			return json_encode(['success' => 1, 'type' => $type, 'activity' => Activity::find($timesheet->activity_id)->activity_name, 'hour' => number_format($timesheet->register_hour, 2,",","."), 'id' => $timesheet->id]);
 		}
 	}
+
+	public function doDeleteTimesheet()
+	{
+		$rules = array(
+			'id' => array('required','integer')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+			Timesheet::destroy(Input::get('id'));
+
+			return json_encode(['success' => 1]);
+		}
+	}
 }

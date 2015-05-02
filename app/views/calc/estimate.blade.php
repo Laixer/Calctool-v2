@@ -180,7 +180,7 @@ var n = this,
 				});
 			}
 		});
-		$("body").on("change", ".lsave", function(){
+		/*$("body").on("change", ".lsave", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id")){
 				$.post("/estimate/updatelabor", {
@@ -256,7 +256,7 @@ var n = this,
 					console.log(e);
 				});
 			}
-		});
+		});*/
 		$("body").on("blur", ".dsave", function(){
 			var flag = true;
 			var $curThis = $(this);
@@ -572,6 +572,67 @@ var n = this,
 				});
 			}
 		});
+		$("body").on("blur", ".lsave", function(){
+			var flag = true;
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id"))
+				return false;
+			$curThis.closest("tr").find("input").each(function(){
+				if(!$(this).val())
+					flag = false;
+			});
+			if(flag){
+				$date = $curThis.closest("tr").find("input[name='date']").val();
+				$hour = $curThis.closest("tr").find("input[name='hour']").val();
+				$type = {{ TimesheetKind::where('kind_name','=','stelpost')->first()->id }};
+				$activity = $curThis.closest("table").attr("data-id");
+				$note = $curThis.closest("tr").find("input[name='note']").val();
+				$.post("/timesheet/new", {
+					date: $date,
+					hour: $hour,
+					type: $type,
+					activity: $activity,
+					note: $note
+				}, function(data){
+					var json = $.parseJSON(data);
+					$curThis.closest("tr").find("input").removeClass("error-input");
+					if (json.success) {
+						$curThis.closest("tr").attr("data-id", json.id);
+						var rate = {{ $project->hour_rate }};
+						var amount = $curThis.closest("tr").find("input[name='hour']").val().toString().split('.').join('').replace(',', '.');
+						var $curTable = $curThis.closest("table");
+						var json = $.parseJSON(data);
+						$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
+						.find("td:eq(0)").text($date).end()
+						.find("td:eq(1)").text(json.hour).end()
+						.find("td:eq(2)").text('€ '+$.number(rate*amount,2,',','.')).end()
+						.find("td:eq(3)").text($note).end()
+						.prependTo($curTable);
+						$curThis.closest("tr").find("input").val("");
+					} else {
+						$.each(json.message, function(i, item) {
+							if(json.message['name'])
+								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+							if(json.message['unit'])
+								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+							if(json.message['rate'])
+								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+							if(json.message['amount'])
+								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+						});
+					}
+				}).fail(function(e){
+					console.log(e);
+				});
+			}
+		});
+		$("body").on("click", ".xdeleterow", function(){
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id"))
+				$.post("/timesheet/delete", {id: $curThis.closest("tr").attr("data-id")}, function(){
+					$curThis.closest("tr").hide("slow");
+				}).fail(function(e) { console.log(e); });
+		});
 		$("body").on("click", ".sdeleterow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
@@ -702,7 +763,24 @@ var n = this,
 													<div class="col-md-6"></div>
 												</div>
 												<table class="table table-striped" data-id="{{ $activity->id }}">
-													<?# -- table head -- ?>
+													<?php
+													$count = EstimateLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
+													if ($count) {
+													?>
+													<thead>
+														<tr>
+															<th class="col-md-1">Datum</th>
+															<th class="col-md-1">Uren</th>
+															<th class="col-md-1">Prijs</th>
+															<th class="col-md-5">Omschrijving</th>
+															<th class="col-md-1">&nbsp;</th>
+															<th class="col-md-1">&nbsp;</th>
+															<th class="col-md-1">&nbsp;</th>
+															<th class="col-md-1">&nbsp;</th>
+															<th class="col-md-1">&nbsp;</th>
+														</tr>
+													</thead>
+													<?php }else { ?>
 													<thead>
 														<tr>
 															<th class="col-md-5">Omschrijving</th>
@@ -715,9 +793,36 @@ var n = this,
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
+													<?php } ?>
 
 													<?# -- table items -- ?>
 													<tbody>
+														<?php
+														if ($count) {
+														?>
+														@foreach (EstimateLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->get() as $labor)
+														<tr data-id="{{ $labor->id }}">
+															<td class="col-md-1">{{ Timesheet::find($labor->hour_id)->register_date }}</td>
+															<td class="col-md-1">{{ number_format($labor->set_amount, 2,",",".") }}</td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(EstimateRegister::estimLaborTotal($labor->original ? ($labor->isset ? $labor->set_rate : $labor->rate) : $labor->set_rate, $labor->original ? ($labor->isset ? $labor->set_amount : $labor->amount) : $labor->set_amount), 2, ",",".") }}</span></td>
+															<td class="col-md-5">{{ Timesheet::find($labor->hour_id)->note }}</td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1 text-right"><button class="btn btn-xs fa btn-danger fa-times xdeleterow"></button></td>
+														</tr>
+														@endforeach
+														<tr>
+															<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text lsave"/></td>
+															<td class="col-md-1"><input type="number" min="0" name="hour" id="hour" class="form-control-sm-text lsave"/></td>
+															<td class="col-md-1"><span class="total-ex-tax"></span></td>
+															<td class="col-md-5"><input type="text" name="note" id="note" class="form-control-sm-text lsave"/></td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1">&nbsp;</td>
+														</tr>
+														<?php }else{ ?>
 														@foreach (EstimateLabor::where('activity_id','=', $activity->id)->get() as $labor)
 														<tr data-id="{{ $labor->id }}">
 															<td class="col-md-5">Arbeidsuren</td>
@@ -730,6 +835,7 @@ var n = this,
 															<td class="col-md-1 text-right"><button class="btn btn-warning btn-xs lresetrow fa fa-undo"></button></td>
 														</tr>
 														@endforeach
+														<?php } ?>
 													</tbody>
 												</table>
 
