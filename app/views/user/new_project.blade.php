@@ -118,7 +118,6 @@
 							</select>
 						</div>
 					</div>
-
 				</div>
 
 				<h4>Financieel</h4>
@@ -127,110 +126,80 @@
 					<?# -- tabs -- ?>
 					<ul class="nav nav-tabs">
 						<li class="active">
-							<a href="#calc" data-toggle="tab">Calculatie</a>
+							<a href="#calc" data-toggle="tab">Uurtarief & Winstpercentages</a>
 						</li>
 						<li>
-							<a href="#more" data-toggle="tab">Meerwerk</a>
+							<a href="#" data-toggle="tab">Urenregistratie</a>
 						</li>
+						<li>
+							<a href="#" data-toggle="tab">Uittrekstaat urenregistratie</a>
+						</li>
+					</ul>
 					</ul>
 
 					<?# -- tabs content -- ?>
 					<div class="tab-content">
 						<div id="calc" class="tab-pane active">
-							<h5><strong>Eigen uurtarief</strong></h5>
 							<div class="row">
-								<div class="col-md-2"><label for="hour_rate">Uurtarief excl. BTW</label></div>
+								<div class="col-md-3"><h5><strong>Eigen uurtarief</strong></h5></div>
+								<div class="col-md-1"></div>
+								<div class="col-md-2"><h5><strong>Calculatie</strong></h5></div>
+								<div class="col-md-2"><h5><strong>Meerwerk</strong></h5></div>
+							</div>
+							<div class="row">
+								<div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
 								<div class="col-md-1"><div class="pull-right">&euro;</div></div>
 								<div class="col-md-2">
 									<input name="hour_rate" id="hour_rate" type="text" min="0" max="1000" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : 0 }}" class="form-control-sm-number"/>
 								</div>
-							</div>
-
-							<h5><strong>Aanneming</strong></h5>
-							<div class="row">
-								<div class="col-md-3"><label for="profit_material_1">Winstpercentage materiaal</label></div>
-								<div class="col-md-2">
-									<input name="profit_material_1" id="profit_material_1" type="number" min="0" max="200" value="{{ Input::old('profit_material_1') ? Input::old('profit_material_1') : 0 }}" class="form-control-sm-number"/>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage materieel</label></div>
-								<div class="col-md-2">
-									<input name="profit_equipment_1" id="profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_1') ? Input::old('profit_equipment_1') : 0 }}" class="form-control-sm-number"/>
-								</div>
-							</div>
-
-							<h5><strong>Onderaanneming</strong></h5>
-							<div class="row">
-								<div class="col-md-3"><label for="profit_material_2">Winstpercentage materiaal</label></div>
-								<div class="col-md-2">
-									<input name="profit_material_2" id="profit_material_2" type="number" min="0" max="200" value="{{ Input::old('profit_material_2') ? Input::old('profit_material_2') : 0 }}" class="form-control-sm-number"/>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage materieel</label></div>
-								<div class="col-md-2">
-									<input name="profit_equipment_2" id="profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_2') ? Input::old('profit_equipment_2') : 0 }}" class="form-control-sm-number"/>
-								</div>
-							</div>
-
-							<h5><strong>Stelpost</strong></h5>
-							<div class="row">
-								<div class="col-md-3"><label for="profit_material_3">Winstpercentage materiaal</label></div>
-								<div class="col-md-2">
-									<input name="profit_material_3" id="profit_material_3" type="number" min="0" max="200" value="{{ Input::old('profit_material_3') ? Input::old('profit_material_3') : 0 }}" class="form-control-sm-number"/>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-3"><label for="profit_equipment_3">Winstpercentage materieel</label></div>
-								<div class="col-md-2">
-									<input name="profit_equipment_3" id="profit_equipment_3" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_3') ? Input::old('profit_equipment_3') : 0 }}" class="form-control-sm-number"/>
-								</div>
-							</div>
-
-						</div>
-
-						<div id="more" class="tab-pane">
-							<h5><strong>Eigen uurtarief</strong></h5>
-							<div class="row">
-								<div class="col-md-2"><label for="more_hour_rate">Uurtarief excl. BTW</label></div>
-								<div class="col-md-1"><div class="pull-right">&euro;</div></div>
 								<div class="col-md-2">
 									<input name="more_hour_rate" id="more_hour_rate" type="text" min="0" max="1000" value="{{ Input::old('more_hour_rate') ? Input::old('more_hour_rate') : 0 }}" class="form-control-sm-number"/>
 								</div>
 							</div>
-
 							<h5><strong>Aanneming</strong></h5>
 							<div class="row">
-								<div class="col-md-3"><label for="more_profit_material_1">Winstpercentage materiaal</label></div>
+								<div class="col-md-3"><label for="profit_material_1">Winstpercentage materiaal</label></div>
+								<div class="col-md-1"><div class="pull-right">%</div></div>
+								<div class="col-md-2">
+									<input name="profit_material_1" id="profit_material_1" type="number" min="0" max="200" value="{{ Input::old('profit_material_1') ? Input::old('profit_material_1') : 0 }}" class="form-control-sm-number"/>
+								</div>
 								<div class="col-md-2">
 									<input name="more_profit_material_1" id="more_profit_material_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_1') ? Input::old('more_profit_material_1') : 0 }}" class="form-control-sm-number"/>
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-3"><label for="more_profit_equipment_1">Winstpercentage materieel</label></div>
+								<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage materieel</label></div>
+								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
+									<input name="profit_equipment_1" id="profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_1') ? Input::old('profit_equipment_1') : 0 }}" class="form-control-sm-number"/>
+								</div>
+							<div class="col-md-2">
 									<input name="more_profit_equipment_1" id="more_profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_1') ? Input::old('more_profit_equipment_1') : 0 }}" class="form-control-sm-number"/>
 								</div>
 							</div>
-
 							<h5><strong>Onderaanneming</strong></h5>
 							<div class="row">
-								<div class="col-md-3"><label for="more_profit_material_2">Winstpercentage materiaal</label></div>
+								<div class="col-md-3"><label for="profit_material_2">Winstpercentage materiaal</label></div>
+								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
+									<input name="profit_material_2" id="profit_material_2" type="number" min="0" max="200" value="{{ Input::old('profit_material_2') ? Input::old('profit_material_2') : 0 }}" class="form-control-sm-number"/>
+								</div>
+							<div class="col-md-2">
 									<input name="more_profit_material_2" id="more_profit_material_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_2') ? Input::old('more_profit_material_2') : 0 }}" class="form-control-sm-number"/>
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-3"><label for="more_profit_equipment_2">Winstpercentage materieel</label></div>
+								<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage materieel</label></div>
+								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
+									<input name="profit_equipment_2" id="profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_2') ? Input::old('profit_equipment_2') : 0 }}" class="form-control-sm-number"/>
+								</div>
+							<div class="col-md-2">
 									<input name="more_profit_equipment_2" id="more_profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_2') ? Input::old('more_profit_equipment_2') : 0 }}" class="form-control-sm-number"/>
 								</div>
 							</div>
-
 						</div>
 					</div>
-
 				</div>
 
 				<h4>Opmerkingen</h4>
