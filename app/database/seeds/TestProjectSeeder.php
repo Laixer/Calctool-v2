@@ -470,9 +470,11 @@ class TestProjectSeeder extends Seeder {
 			'tax_estimate_equipment_id' => $test_tax3->id
 		));
 
+	$this->command->info('Activity 10 created');
+
 		$test_activity11 = Activity::create(array(
 			'activity_name' => 'CHPTR4_ACT11_CON_MORE',
-			'priority' => '10',
+			'priority' => '11',
 			'note' => 'Description_CHPTR4_ACT11_CON_MORE',
 			'chapter_id' => $test_chapter4->id,
 			'part_id' => $test_part_contract->id,
@@ -489,10 +491,12 @@ class TestProjectSeeder extends Seeder {
 			'tax_estimate_equipment_id' => $test_tax1->id
 		));
 
+	$this->command->info('Activity 11 created');
+
 		$test_activity12 = Activity::create(array(
-			'activity_name' => 'CHPTR4_ACT11_SUBCON_MORE',
-			'priority' => '10',
-			'note' => 'Description_CHPTR4_ACT11_SUBCON_MORE',
+			'activity_name' => 'CHPTR4_ACT12_SUBCON_MORE',
+			'priority' => '12',
+			'note' => 'Description_CHPTR4_ACT12_SUBCON_MORE',
 			'chapter_id' => $test_chapter4->id,
 			'part_id' => $test_part_subcontract->id,
 			'part_type_id' => $test_part_type_calc->id,
@@ -500,15 +504,45 @@ class TestProjectSeeder extends Seeder {
 			'tax_calc_labor_id' => $test_tax1->id,
 			'tax_calc_material_id' => $test_tax1->id,
 			'tax_calc_equipment_id' => $test_tax1->id,
-			'tax_more_labor_id' => $test_tax3->id,
-			'tax_more_material_id' => $test_tax2->id,
+			'tax_more_labor_id' => $test_tax1->id,
+			'tax_more_material_id' => $test_tax1->id,
 			'tax_more_equipment_id' => $test_tax1->id,
 			'tax_estimate_labor_id' => $test_tax1->id,
 			'tax_estimate_material_id' => $test_tax1->id,
 			'tax_estimate_equipment_id' => $test_tax1->id
 		));
 
-	$this->command->info('Activity 10 created');
+	$this->command->info('Activity 12 created');
+
+		$test_chapter5 = Chapter::create(array(
+			'chapter_name' => 'CHPTR5',
+			'priority' => '5',
+			'note' => 'Description_CHPTR5',
+			'project_id' => $test_project->id
+		));
+
+	$this->command->info('Chapter 5 created');
+
+			$test_activity13 = Activity::create(array(
+			'activity_name' => 'CHPTR5_ACT13_CON_MORE',
+			'priority' => '13',
+			'note' => 'Description_CHPTR4_ACT13_CON_MORE',
+			'chapter_id' => $test_chapter5->id,
+			'part_id' => $test_part_contract->id,
+			'part_type_id' => $test_part_type_calc->id,
+			'detail_id' => $test_detail_more->id,
+			'tax_calc_labor_id' => $test_tax3->id,
+			'tax_calc_material_id' => $test_tax3->id,
+			'tax_calc_equipment_id' => $test_tax3->id,
+			'tax_more_labor_id' => $test_tax3->id,
+			'tax_more_material_id' => $test_tax3->id,
+			'tax_more_equipment_id' => $test_tax3->id,
+			'tax_estimate_labor_id' => $test_tax3->id,
+			'tax_estimate_material_id' => $test_tax1->id,
+			'tax_estimate_equipment_id' => $test_tax1->id
+		));
+
+	$this->command->info('Activity 13 created');
 
 		$test_timesheet = Timesheet::create(array(
 			'register_date' => '09-10-2014',
@@ -1161,6 +1195,10 @@ class TestProjectSeeder extends Seeder {
 			'unit' => 'm',
 			'rate' => '1',
 			'amount' => '1.90',
+			//'set_material_name' => 'CHPTR3_ACT7_SUBCON_1_SET',
+			//'set_unit' => 'm1',
+			//'set_rate' => '11',
+			//'set_amount' => '19',
 			'original' => true,
 			'isset' => false,
 			'activity_id' => $test_activity7->id
@@ -1365,7 +1403,7 @@ class TestProjectSeeder extends Seeder {
 	$this->command->info('CalculationLabor Activity 9 ESTIM created');
 
 		$calculation_material_activity9_1 = EstimateMaterial::create(array(
-			'material_name' => 'CHPTR4_ACT9_SUBCON_1',
+			'material_name' => 'CHPTR4_ACT9_CON_1',
 			'unit' => 'm',
 			'rate' => '1',
 			'amount' => '1.90',
@@ -1374,7 +1412,7 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity9->id
 		));
 		$calculation_equipment_activity9_1 = EstimateEquipment::create(array(
-			'equipment_name' => 'CHPTR4_ACT9_SUBCON_a',
+			'equipment_name' => 'CHPTR4_ACT9_CON_a',
 			'unit' => 'stuk',
 			'rate' => '1',
 			'amount' => '1.92',
@@ -1383,7 +1421,7 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity9->id
 		));
 		$calculation_material_activity9_2 = EstimateMaterial::create(array(
-			'material_name' => 'CHPTR4_ACT9_SUBCON_2',
+			'material_name' => 'CHPTR4_ACT9_CON_2',
 			'unit' => 'm',
 			'rate' => '2',
 			'amount' => '2.90',
@@ -1392,7 +1430,7 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity9->id
 		));
 		$calculation_equipment_activity9_2 = EstimateEquipment::create(array(
-			'equipment_name' => 'CHPTR4_ACT9_SUBCON_b',
+			'equipment_name' => 'CHPTR4_ACT9_CON_b',
 			'unit' => 'stuk',
 			'rate' => '2',
 			'amount' => '3.91',
@@ -1401,7 +1439,7 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity9->id
 		));
 		$calculation_material_activity9_3 = EstimateMaterial::create(array(
-			'material_name' => 'CHPTR4_ACT9_SUBCON_3',
+			'material_name' => 'CHPTR4_ACT9_CON_3',
 			'unit' => 'm',
 			'rate' => '3',
 			'amount' => '1.29',
@@ -1410,7 +1448,7 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity9->id
 		));
 		$calculation_equipment_activity9_3 = EstimateEquipment::create(array(
-			'equipment_name' => 'CHPTR4_ACT9_SUBCON_c',
+			'equipment_name' => 'CHPTR4_ACT9_CON_c',
 			'unit' => 'stuk',
 			'rate' => '3',
 			'amount' => '3.19',
@@ -1419,7 +1457,7 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity9->id
 		));
 		$calculation_material_activity9_4 = EstimateMaterial::create(array(
-			'material_name' => 'CHPTR4_ACT9_SUBCON_4',
+			'material_name' => 'CHPTR4_ACT9_CON_4',
 			'unit' => 'm',
 			'rate' => '4',
 			'amount' => '1.29',
@@ -1428,7 +1466,7 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity9->id
 		));
 		$calculation_equipment_activity9_4 = EstimateEquipment::create(array(
-			'equipment_name' => 'CHPTR4_ACT9_SUBCON_d',
+			'equipment_name' => 'CHPTR4_ACT9_CON_d',
 			'unit' => 'stuk',
 			'rate' => '4',
 			'amount' => '3.19',
@@ -1437,7 +1475,7 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity9->id
 		));
 		$calculation_material_activity9_5 = EstimateMaterial::create(array(
-			'material_name' => 'CHPTR4_ACT9_SUBCON_5',
+			'material_name' => 'CHPTR4_ACT9_CON_5',
 			'unit' => 'm',
 			'rate' => '5',
 			'amount' => '3.29',
@@ -1446,7 +1484,7 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity9->id
 		));
 		$calculation_equipment_activity9_5 = EstimateEquipment::create(array(
-			'equipment_name' => 'CHPTR4_ACT9_SUBCON_e',
+			'equipment_name' => 'CHPTR4_ACT9_CON_e',
 			'unit' => 'stuk',
 			'rate' => '5',
 			'amount' => '3.19',
@@ -1562,6 +1600,214 @@ class TestProjectSeeder extends Seeder {
 	$this->command->info('CalculationMaterial Activity 10 ESTIM created');
 	$this->command->info('CalculationEquipment Activity 10 ESTIM created');
 
+		$calculation_labor_activity8 = EstimateLabor::create(array(
+			'rate' => '35.00',
+			'set_amount' => '10',
+			'original' => true,
+			'isset' => true,
+			'activity_id' => $test_activity8->id
+		));
+		//Deze waarde is niet terug te zien in de uittrekstaat
+
+		EstimateMaterial::create(array(
+			'set_material_name' => 'CHPTR4_ACT8_SUBCON_6_SET',
+			'set_unit' => 'm2',
+			'set_rate' => '1',
+			'set_amount' => '1.1',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity8->id
+		));
+		EstimateMaterial::create(array(
+			'set_material_name' => 'CHPTR4_ACT8_SUBCON_7_SET',
+			'set_unit' => 'm2',
+			'set_rate' => '2',
+			'set_amount' => '2.2',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity8->id
+		));
+		EstimateMaterial::create(array(
+			'set_material_name' => 'CHPTR4_ACT8_SUBCON_8_SET',
+			'set_unit' => 'm2',
+			'set_rate' => '3',
+			'set_amount' => '3.3',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity8->id
+		));
+		EstimateMaterial::create(array(
+			'set_material_name' => 'CHPTR4_ACT8_SUBCON_9_SET',
+			'set_unit' => 'm2',
+			'set_rate' => '4',
+			'set_amount' => '4.4',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity8->id
+		));
+		EstimateMaterial::create(array(
+			'set_material_name' => 'CHPTR4_ACT8_SUBCON_10_SET',
+			'set_unit' => 'm2',
+			'set_rate' => '5',
+			'set_amount' => '5.5',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity8->id
+		));
+
+		EstimateEquipment::create(array(
+			'set_equipment_name' => 'CHPTR4_ACT8_SUBCON_f_SET',
+			'set_unit' => 'stuk',
+			'set_rate' => '6',
+			'set_amount' => '6.6',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity8->id
+		));
+		EstimateEquipment::create(array(
+			'set_equipment_name' => 'CHPTR4_ACT8_SUBCON_g_SET',
+			'set_unit' => 'stuk',
+			'set_rate' => '7',
+			'set_amount' => '7.7',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity8->id
+		));
+		EstimateEquipment::create(array(
+			'set_equipment_name' => 'CHPTR4_ACT8_SUBCON_h_SET',
+			'set_unit' => 'stuk',
+			'set_rate' => '8',
+			'set_amount' => '8.8',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity8->id
+		));
+		EstimateEquipment::create(array(
+			'set_equipment_name' => 'CHPTR4_ACT8_SUBCON_i_SET',
+			'set_unit' => 'stuk',
+			'set_rate' => '9',
+			'set_amount' => '9.9',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity8->id
+		));
+		EstimateEquipment::create(array(
+			'set_equipment_name' => 'CHPTR4_ACT8_SUBCON_j_SET',
+			'set_unit' => 'stuk',
+			'set_rate' => '10',
+			'set_amount' => '10.10',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity8->id
+		));
+		$this->command->info('Estimate_Set_Equipment_Created');
+
+	$this->command->info('EstimateMAterial SET Activity 8 added');
+	$this->command->info('EstimateEquipment SET Activity 8 added');
+
+		$calculation_labor_activity9 = EstimateLabor::create(array(
+			'rate' => '35.00',
+			'set_amount' => '10.10',
+			'original' => true,
+			'isset' => true,
+			'activity_id' => $test_activity9->id
+		));
+		//Deze waarde is niet terug te zien in de uittrekstaat
+
+		EstimateMaterial::create(array(
+			'set_material_name' => 'CHPTR4_ACT9_CON_6_SET',
+			'set_unit' => 'm2',
+			'set_rate' => '1',
+			'set_amount' => '0.1',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity9->id
+		));
+		EstimateMaterial::create(array(
+			'set_material_name' => 'CHPTR4_ACT9_CON_7_SET',
+			'set_unit' => 'm2',
+			'set_rate' => '2',
+			'set_amount' => '0.2',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity9->id
+		));
+		EstimateMaterial::create(array(
+			'set_material_name' => 'CHPTR4_ACT9_CON_8_SET',
+			'set_unit' => 'm2',
+			'set_rate' => '3',
+			'set_amount' => '0.3',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity9->id
+		));
+		EstimateMaterial::create(array(
+			'set_material_name' => 'CHPTR4_ACT9_CON_9_SET',
+			'set_unit' => 'm2',
+			'set_rate' => '4',
+			'set_amount' => '0.4',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity9->id
+		));
+		EstimateMaterial::create(array(
+			'set_material_name' => 'CHPTR4_ACT9_CON_10_SET',
+			'set_unit' => 'm2',
+			'set_rate' => '5',
+			'set_amount' => '0.5',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity9->id
+		));
+
+		EstimateEquipment::create(array(
+			'set_equipment_name' => 'CHPTR4_ACT9_CON_f_SET',
+			'set_unit' => 'stuk',
+			'set_rate' => '6',
+			'set_amount' => '0.6',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity9->id
+		));
+		EstimateEquipment::create(array(
+			'set_equipment_name' => 'CHPTR4_ACT9_CON_g_SET',
+			'set_unit' => 'stuk',
+			'set_rate' => '7',
+			'set_amount' => '0.7',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity9->id
+		));
+		EstimateEquipment::create(array(
+			'set_equipment_name' => 'CHPTR4_ACT9_CON_h_SET',
+			'set_unit' => 'stuk',
+			'set_rate' => '8',
+			'set_amount' => '0.8',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity9->id
+		));
+		EstimateEquipment::create(array(
+			'set_equipment_name' => 'CHPTR4_ACT9_CON_i_SET',
+			'set_unit' => 'stuk',
+			'set_rate' => '9',
+			'set_amount' => '0.9',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity9->id
+		));
+		EstimateEquipment::create(array(
+			'set_equipment_name' => 'CHPTR4_ACT9_CON_j_SET',
+			'set_unit' => 'stuk',
+			'set_rate' => '10',
+			'set_amount' => '1',
+			'original' => false,
+			'isset' => true,
+			'activity_id' => $test_activity9->id
+		));
+	$this->command->info('EstimateMaterial SET Activity 9 added');
+	$this->command->info('EstimateEquipment SET Activity 9 added');
+
 		$calculation_labor_activity11 = MoreLabor::create(array(
 			'rate' => '45',
 			'amount' => '10.1',
@@ -1611,131 +1857,76 @@ class TestProjectSeeder extends Seeder {
 		$this->command->info('MoreLabor created');
 
 		$calculation_material_activity12_1 = MoreMaterial::create(array(
-			'material_name' => 'CHPTR4_ACT11_CON_1',
+			'material_name' => 'CHPTR4_ACT12_CON_1',
 			'unit' => 'm',
 			'rate' => '333',
 			'amount' => '1',
 			'activity_id' => $test_activity12->id
 		));
 		$calculation_equipment_activity12_1 = MoreEquipment::create(array(
-			'equipment_name' => 'CHPTR4_ACT11_CON_a',
+			'equipment_name' => 'CHPTR4_ACT12_CON_a',
 			'unit' => 'm',
 			'rate' => '333',
 			'amount' => '2',
 			'activity_id' => $test_activity12->id
 		));
 		$calculation_material_activity12_2 = MoreMaterial::create(array(
-			'material_name' => 'CHPTR4_ACT11_CON_2',
+			'material_name' => 'CHPTR4_ACT12_CON_2',
 			'unit' => 'm',
 			'rate' => '444',
 			'amount' => '1',
 			'activity_id' => $test_activity12->id
 		));
 		$calculation_equipment_activity12_1 = MoreEquipment::create(array(
-			'equipment_name' => 'CHPTR4_ACT11_CON_b',
+			'equipment_name' => 'CHPTR4_ACT12_CON_b',
 			'unit' => 'm',
 			'rate' => '444',
 			'amount' => '2',
 			'activity_id' => $test_activity12->id
 		));
 
-	$this->command->info('MoreMaterial Activity 11 created');
-	$this->command->info('MoreEquipment Activity 11 created');
+	$this->command->info('MoreMaterial Activity 12 created');
+	$this->command->info('MoreEquipment Activity 12 created');
 
-		EstimateMaterial::create(array(
-			'set_material_name' => 'estim_set_mat_1',
-			'set_unit' => 'm2',
-			'set_rate' => '1',
-			'set_amount' => '2',
-			'original' => false,
-			'isset' => true,
-			'activity_id' => $test_activity9->id
+		$calculation_labor_activity13 = MoreLabor::create(array(
+			'rate' => '45',
+			'amount' => '10.2',
+			'note' => 'vrije tekst',
+			'activity_id' => $test_activity13->id
 		));
-		EstimateMaterial::create(array(
-			'set_material_name' => 'estim_set_mat_2',
-			'set_unit' => 'm2',
-			'set_rate' => '2',
-			'set_amount' => '3',
-			'original' => false,
-			'isset' => true,
-			'activity_id' => $test_activity9->id
-		));
-		EstimateMaterial::create(array(
-			'set_material_name' => 'estim_set_mat_3',
-			'set_unit' => 'm2',
-			'set_rate' => '4',
-			'set_amount' => '5',
-			'original' => false,
-			'isset' => true,
-			'activity_id' => $test_activity9->id
-		));
-		EstimateMaterial::create(array(
-			'set_material_name' => 'estim_set_mat_4',
-			'set_unit' => 'm2',
-			'set_rate' => '6',
-			'set_amount' => '7',
-			'original' => false,
-			'isset' => true,
-			'activity_id' => $test_activity9->id
-		));
-		EstimateMaterial::create(array(
-			'set_material_name' => 'estim_set_mat_5',
-			'set_unit' => 'm2',
-			'set_rate' => '8',
-			'set_amount' => '9',
-			'original' => false,
-			'isset' => true,
-			'activity_id' => $test_activity9->id
-		));
-		$this->command->info('Estimate_Set_Material_Created');
+		$this->command->info('MoreLabor created');
 
-		$this->command->info('Estimate_Set_Equipment_Creating....');
-		EstimateEquipment::create(array(
-			'set_equipment_name' => 'estim_set_equip_1',
-			'set_unit' => 'stuk',
-			'set_rate' => '1.1',
-			'set_amount' => '2.2',
-			'original' => false,
-			'isset' => true,
-			'activity_id' => $test_activity9->id
+		$calculation_material_activity13_1 = MoreMaterial::create(array(
+			'material_name' => 'CHPTR4_ACT13_CON_1',
+			'unit' => 'm',
+			'rate' => '333',
+			'amount' => '1',
+			'activity_id' => $test_activity13->id
 		));
-		EstimateEquipment::create(array(
-			'set_equipment_name' => 'estim_set_equip_2',
-			'set_unit' => 'stuk',
-			'set_rate' => '3.3',
-			'set_amount' => '4.4',
-			'original' => false,
-			'isset' => true,
-			'activity_id' => $test_activity9->id
+		$calculation_equipment_activity13_1 = MoreEquipment::create(array(
+			'equipment_name' => 'CHPTR4_ACT13_CON_a',
+			'unit' => 'm',
+			'rate' => '333',
+			'amount' => '2',
+			'activity_id' => $test_activity13->id
 		));
-		EstimateEquipment::create(array(
-			'set_equipment_name' => 'estim_set_equip_3',
-			'set_unit' => 'stuk',
-			'set_rate' => '5.1',
-			'set_amount' => '6.6',
-			'original' => false,
-			'isset' => true,
-			'activity_id' => $test_activity9->id
+		$calculation_material_activity13_2 = MoreMaterial::create(array(
+			'material_name' => 'CHPTR4_ACT13_CON_2',
+			'unit' => 'm',
+			'rate' => '444',
+			'amount' => '1',
+			'activity_id' => $test_activity13->id
 		));
-		EstimateEquipment::create(array(
-			'set_equipment_name' => 'estim_set_equip_4',
-			'set_unit' => 'stuk',
-			'set_rate' => '7.7',
-			'set_amount' => '8.8',
-			'original' => false,
-			'isset' => true,
-			'activity_id' => $test_activity9->id
+		$calculation_equipment_activity13_1 = MoreEquipment::create(array(
+			'equipment_name' => 'CHPTR4_ACT13_CON_b',
+			'unit' => 'm',
+			'rate' => '444',
+			'amount' => '2',
+			'activity_id' => $test_activity13->id
 		));
-		EstimateEquipment::create(array(
-			'set_equipment_name' => 'estim_set_equip_5',
-			'set_unit' => 'stuk',
-			'set_rate' => '9.9',
-			'set_amount' => '10.10',
-			'original' => false,
-			'isset' => true,
-			'activity_id' => $test_activity9->id
-		));
-		$this->command->info('Estimate_Set_Equipment_Created');
+
+	$this->command->info('MoreMaterial Activity 13 created');
+	$this->command->info('MoreEquipment Activity 13 created');
 
 		//$test_user->productFavorite()->attach($test_product->id);
 		//$this->command->info('Project favorite created');
