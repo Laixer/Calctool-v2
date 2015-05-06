@@ -1909,6 +1909,27 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity13->id
 		));
 
+
+
+
+		$timesheet_activity13 = Timesheet::create(array(
+			'register_date' => '2015-05-07',
+			'register_hour' => '123',
+			'note' => 'geen',
+			'timesheet_kind_id' =>  '2',
+			'activity_id' => $test_activity13->id
+		));
+		$estimate_labor_activity13 = EstimateLabor::create(array(
+			'rate' => '35.00',
+			'amount' => '7',
+			'set_amount' => '10.10',
+			'original' => true,
+			'isset' => true,
+			'hour_id' => $timesheet_activity13->id,
+			'activity_id' => $test_activity13->id
+		));
+
+
 	$this->command->info('MoreMaterial Activity 13 created');
 	$this->command->info('MoreEquipment Activity 13 created');
 
