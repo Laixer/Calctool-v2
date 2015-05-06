@@ -1291,8 +1291,9 @@ class TestProjectSeeder extends Seeder {
 		$calculation_labor_activity8 = EstimateLabor::create(array(
 			'rate' => '35.00',
 			'amount' => '8',
+			'set_amount' => '10',
 			'original' => true,
-			'isset' => false,
+			'isset' => true,
 			'activity_id' => $test_activity8->id
 		));
 
@@ -1600,15 +1601,6 @@ class TestProjectSeeder extends Seeder {
 	$this->command->info('CalculationMaterial Activity 10 ESTIM created');
 	$this->command->info('CalculationEquipment Activity 10 ESTIM created');
 
-		$calculation_labor_activity8 = EstimateLabor::create(array(
-			'rate' => '35.00',
-			'set_amount' => '10',
-			'original' => true,
-			'isset' => true,
-			'activity_id' => $test_activity8->id
-		));
-		//Deze waarde is niet terug te zien in de uittrekstaat
-
 		EstimateMaterial::create(array(
 			'set_material_name' => 'CHPTR4_ACT8_SUBCON_6_SET',
 			'set_unit' => 'm2',
@@ -1704,15 +1696,6 @@ class TestProjectSeeder extends Seeder {
 
 	$this->command->info('EstimateMAterial SET Activity 8 added');
 	$this->command->info('EstimateEquipment SET Activity 8 added');
-
-		$calculation_labor_activity9 = EstimateLabor::create(array(
-			'rate' => '35.00',
-			'set_amount' => '10.10',
-			'original' => true,
-			'isset' => true,
-			'activity_id' => $test_activity9->id
-		));
-		//Deze waarde is niet terug te zien in de uittrekstaat
 
 		EstimateMaterial::create(array(
 			'set_material_name' => 'CHPTR4_ACT9_CON_6_SET',
