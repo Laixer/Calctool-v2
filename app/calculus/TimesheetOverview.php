@@ -5,8 +5,6 @@
  */
 class TimesheetOverview {
 
-/*--Timesheet Overview - total per activitys--*/
-/*labor activity total*/
 	public static function calcTotalAmount($activity) {
 		$total = 0;
 
@@ -17,6 +15,28 @@ class TimesheetOverview {
 				$total += $row['less_amount'];
 			else
 				$total += $row['amount'];
+		}
+
+		return $total;
+	}
+
+	public static function estimTotalAmount($activity) {
+		$total = 0;
+
+		$count = EstimateLabor::where('activity_id','=', $activity)->where('isset','=','true')->where('original','=','false')->count('id');
+		$rows = EstimateLabor::where('activity_id', '=', $activity)->get();
+		foreach ($rows as $row)
+		{
+			if ($count) {
+				if ($row->isset && !$row->original) {
+					$total += $row->set_amount;
+				}
+			} else {
+				if ($row->isset)
+					$total += $row->set_amount;
+				else
+					$total += $row->amount;
+			}
 		}
 
 		return $total;

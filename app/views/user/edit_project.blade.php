@@ -346,7 +346,6 @@ $project = Project::find(Route::Input('project_id'));
 											</tr>
 										</thead>
 
-										<!-- table items -->
 										<tbody>
 											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->get() as $activity)
@@ -379,29 +378,18 @@ $project = Project::find(Route::Input('project_id'));
 											</tr>
 										</thead>
 
-										<!-- table items -->
 										<tbody>
-											<tr><!-- item -->
-												<td class="col-md-2"><strong>Hoofdstuk 1</strong></td>
-												<td class="col-md-4">Werkzaamheid 1</td>
-												<td class="col-md-2">6</td>
-												<td class="col-md-2">42</td>
-												<td class="col-md-2">83</td>
+											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->get() as $activity)
+											<tr>
+												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+												<td class="col-md-4">{{ $activity->activity_name }}</td>
+												<td class="col-md-2">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id), 2,",","."); }}</td>
+												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-2">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
 											</tr>
-											<tr><!-- item -->
-												<td class="col-md-2">&nbsp;</td>
-												<td class="col-md-4">Werkzaamheid 2</td>
-												<td class="col-md-2">6</td>
-												<td class="col-md-2">42</td>
-												<td class="col-md-2">42</td>
-											</tr>
-											<tr><!-- item -->
-												<td class="col-md-2">&nbsp;</td>
-												<td class="col-md-4">Werkzaamheid 3</td>
-												<td class="col-md-2">6</td>
-												<td class="col-md-2">42</td>
-												<td class="col-md-2">83</td>
-											</tr>
+											@endforeach
+											@endforeach
 										</tbody>
 									</table>
 									</div>
