@@ -1396,8 +1396,9 @@ class TestProjectSeeder extends Seeder {
 		$calculation_labor_activity9 = EstimateLabor::create(array(
 			'rate' => '35.00',
 			'amount' => '7',
+			'set_amount' => '10.10',
 			'original' => true,
-			'isset' => false,
+			'isset' => true,
 			'activity_id' => $test_activity9->id
 		));
 
