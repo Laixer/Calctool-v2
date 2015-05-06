@@ -404,35 +404,24 @@ $project = Project::find(Route::Input('project_id'));
 											<tr>
 												<th class="col-md-2">&nbsp;</th>
 												<th class="col-md-4">&nbsp;</th>
-												<th class="col-md-2">Gecalculeerde uren</th>
+												<th class="col-md-2">&nbsp;</th>
+												<th class="col-md-2">&nbsp;</th>
 												<th class="col-md-2">Geregistreerde uren</th>
-												<th class="col-md-2">Verschil</th>
 											</tr>
 										</thead>
 
-										<!-- table items -->
 										<tbody>
-											<tr><!-- item -->
-												<td class="col-md-2"><strong>Hoofdstuk 1</strong></td>
-												<td class="col-md-4">Werkzaamheid 1</td>
-												<td class="col-md-2">6</td>
-												<td class="col-md-2">42</td>
-												<td class="col-md-2">83</td>
-											</tr>
-											<tr><!-- item -->
+											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
+											<tr>
+												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+												<td class="col-md-4">{{ $activity->activity_name }}</td>
 												<td class="col-md-2">&nbsp;</td>
-												<td class="col-md-4">Werkzaamheid 2</td>
-												<td class="col-md-2">6</td>
-												<td class="col-md-2">42</td>
-												<td class="col-md-2">42</td>
-											</tr>
-											<tr><!-- item -->
 												<td class="col-md-2">&nbsp;</td>
-												<td class="col-md-4">Werkzaamheid 3</td>
-												<td class="col-md-2">6</td>
-												<td class="col-md-2">42</td>
-												<td class="col-md-2">83</td>
+												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'), 2,",","."); }}</td>
 											</tr>
+											@endforeach
+											@endforeach
 										</tbody>
 									</table>
 									</div>
