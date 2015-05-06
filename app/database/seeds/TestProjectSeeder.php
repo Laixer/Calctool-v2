@@ -1912,14 +1912,15 @@ class TestProjectSeeder extends Seeder {
 
 
 
-		$timesheet_activity13 = Timesheet::create(array(
+		$timesheet_activity9 = Timesheet::create(array(
 			'register_date' => '2015-05-07',
 			'register_hour' => '123',
 			'note' => 'geen',
 			'timesheet_kind_id' =>  '2',
-			'activity_id' => $test_activity13->id
+			'activity_id' => $test_activity9->id
 		));
-		$estimate_labor_activity13 = EstimateLabor::create(array(
+		$estimate_labor_activity9 = EstimateLabor::create(array(
+			'rate' => '35',
 			'set_amount' => '123',
 			'original' => false,
 			'isset' => true,

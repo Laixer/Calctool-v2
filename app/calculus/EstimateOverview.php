@@ -8,22 +8,57 @@ class EstimateOverview {
 /*--Estimate Overview - total per activitys--*/
 /*labor activity total*/
 	public static function laborActivity($activity) {
+		$total = 0;
+
+		$count = EstimateLabor::where('activity_id','=', $activity->id)->where('isset','=','true')->where('original','=','false')->count('id');
 		if (PartType::find($activity->part_type_id)->type_name=='estimate') {
-			$row = EstimateLabor::where('activity_id', '=', $activity->id)->first();
-			if ($row['isset'])
-				return $row['set_rate'] * $row['set_amount'];
-			else
-				return $row['rate'] * $row['amount'];
+			$rows = EstimateLabor::where('activity_id', '=', $activity->id)->get();
+			foreach ($rows as $row)
+			{
+				if ($count) {
+					if ($row->isset && !$row->original) {
+						if (!$row->set_rate)
+							$total += $row->rate * $row->set_amount;
+						else
+							$total += $row->set_rate * $row->set_amount;
+					}
+				} else {
+					if ($row->isset)
+						if (!$row->set_rate)
+							$total += $row->rate * $row->set_amount;
+						else
+							$total += $row->set_rate * $row->set_amount;
+					else
+						$total += $row->rate * $row->amount;
+				}
+			}
+
+			return $total;
 		}
 	}
 
 	public static function laborTotal($activity) {
+		$total = 0;
+
+		$count = EstimateLabor::where('activity_id','=', $activity->id)->where('isset','=','true')->where('original','=','false')->count('id');
 		if (PartType::find($activity->part_type_id)->type_name=='estimate') {
-			$row = EstimateLabor::where('activity_id', '=', $activity->id)->first();
-			if ($row['isset'])
-				return $row['set_amount'];
-			else
-				return $row['amount'];
+			$rows = EstimateLabor::where('activity_id', '=', $activity->id)->get();
+			foreach ($rows as $row)
+			{
+				if ($count) {
+					if ($row->isset && !$row->original) {
+						$total += $row->set_amount;
+					}
+				} else {
+					if ($row->isset)
+						$total += $row->set_amount;
+					else
+						$total += $row->amount;
+				}
+			}
+
+
+			return $total;
 		}
 	}
 
