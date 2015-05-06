@@ -1920,13 +1920,11 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity13->id
 		));
 		$estimate_labor_activity13 = EstimateLabor::create(array(
-			'rate' => '35.00',
-			'amount' => '7',
-			'set_amount' => '10.10',
-			'original' => true,
+			'set_amount' => '123',
+			'original' => false,
 			'isset' => true,
-			'hour_id' => $timesheet_activity13->id,
-			'activity_id' => $test_activity13->id
+			'hour_id' => $timesheet_activity9->id,
+			'activity_id' => $test_activity9->id
 		));
 
 
