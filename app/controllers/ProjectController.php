@@ -28,8 +28,8 @@ class ProjectController extends \BaseController {
 			'city' => array('required','alpha_num','max:35'),
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric'),
-			'hour_rate' => array('required','numeric','between:0,1000'),
-			'more_hour_rate' => array('required','numeric','between:0,1000'),
+			'hour_rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'more_hour_rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'profit_material_1' => array('required','numeric','between:0,200'),
 			'profit_equipment_1' => array('required','numeric','between:0,200'),
 			'profit_material_2' => array('required','numeric','between:0,200'),
@@ -57,8 +57,8 @@ class ProjectController extends \BaseController {
 			$project->address_postal = Input::get('zipcode');
 			$project->address_city = Input::get('city');
 			$project->note = Input::get('note');
-			$project->hour_rate = Input::get('hour_rate');
-			$project->hour_rate_more = Input::get('more_hour_rate');
+			$project->hour_rate = str_replace(',', '.', str_replace('.', '' , Input::get('hour_rate')));
+			$project->hour_rate_more = str_replace(',', '.', str_replace('.', '' , Input::get('more_hour_rate')));
 			$project->profit_calc_contr_mat = Input::get('profit_material_1');
 			$project->profit_calc_contr_equip = Input::get('profit_equipment_1');
 			$project->profit_calc_subcontr_mat = Input::get('profit_material_2');
