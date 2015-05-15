@@ -209,6 +209,15 @@ $project = Project::find(Route::Input('project_id'));
 
 				</div>
 
+				<h4>Opmerkingen</h4>
+				<div class="row">
+					<div class="form-group">
+						<div class="col-md-12">
+							<textarea name="note" id="note" rows="5" class="form-control">{{ Input::old('note') ? Input::old('note') : $project->note }}</textarea>
+						</div>
+					</div>
+				</div>
+
 				<h4>Financieel</h4>
 				<div class="tabs nomargin-top">
 
@@ -530,15 +539,7 @@ $project = Project::find(Route::Input('project_id'));
 
 					</div>
 
-				<h4>Opmerkingen</h4>
-				<div class="row">
-					<div class="form-group">
-						<div class="col-md-12">
-							<textarea name="note" id="note" rows="10" class="form-control">{{ Input::old('note') ? Input::old('note') : $project->note }}</textarea>
-						</div>
-					</div>
-				</div>
-				<div class="row">
+			<div class="row">
 					<div class="col-md-12">
 						<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 					</div>

@@ -120,6 +120,15 @@
 					</div>
 				</div>
 
+				<h4>Opmerkingen</h4>
+				<div class="row">
+					<div class="form-group">
+						<div class="col-md-12">
+							<textarea name="note" id="note" rows="5" class="form-control">{{ Input::old('note') }}</textarea>
+						</div>
+					</div>
+				</div>
+
 				<h4>Financieel</h4>
 				<div class="tabs nomargin-top">
 
@@ -128,13 +137,6 @@
 						<li class="active">
 							<a href="#calc" data-toggle="tab">Uurtarief & Winstpercentages</a>
 						</li>
-						<li>
-							<a href="#" data-toggle="tab">Urenregistratie</a>
-						</li>
-						<li>
-							<a href="#" data-toggle="tab">Uittrekstaat urenregistratie</a>
-						</li>
-					</ul>
 					</ul>
 
 					<?# -- tabs content -- ?>
@@ -202,19 +204,12 @@
 					</div>
 				</div>
 
-				<h4>Opmerkingen</h4>
-				<div class="row">
-					<div class="form-group">
-						<div class="col-md-12">
-							<textarea name="note" id="note" rows="10" class="form-control">{{ Input::old('note') }}</textarea>
-						</div>
-					</div>
-				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 					</div>
 				</div>
+
 			{{ Form::close() }}
 
 		</div>
