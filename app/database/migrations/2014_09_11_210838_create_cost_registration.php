@@ -47,8 +47,6 @@ class CreateCostRegistration extends Migration {
 			$table->decimal('amount', 9, 2);
 			$table->text('note')->nullable();
 			$table->date('register_date');
-			$table->integer('part_id')->unsigned();
-			$table->foreign('part_id')->references('id')->on('part')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('project_id')->unsigned();
 			$table->foreign('project_id')->references('id')->on('project')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('relation_id')->nullable()->unsigned();

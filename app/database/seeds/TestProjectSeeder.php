@@ -559,7 +559,6 @@ class TestProjectSeeder extends Seeder {
 			'amount' => '33',
 			'note' => 'aankoop factuur omschrijving',
 			'register_date' => '09-10-2014',
-			'part_id' => $test_part_subcontract->id,
 			'project_id' => $test_project->id,
 			'kind_id' => $test_purchase_kind_name->id,
 			'relation_id' => $test_relation->id
