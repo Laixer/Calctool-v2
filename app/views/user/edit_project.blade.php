@@ -32,6 +32,8 @@ $project = Project::find(Route::Input('project_id'));
 				.find("td:eq(3)").text(json.activity).end()
 				.find("td:eq(4)").text($note).end()
 				.prependTo($curTable);
+				$curThis.closest("tr").find("input").val("");
+				$curThis.closest("tr").find("select").val("");
 			});
 		});
 		$('#addnewpurchase').click(function(e) {
@@ -50,7 +52,6 @@ $project = Project::find(Route::Input('project_id'));
 				note: $note,
 				project: {{ $project->id }}
 			}, function(data){
-				//console.log(data);
 				var $curTable = $curThis.closest("table");
 				var json = $.parseJSON(data);
 				$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
@@ -60,6 +61,8 @@ $project = Project::find(Route::Input('project_id'));
 				.find("td:eq(3)").text(json.type).end()
 				.find("td:eq(4)").text($note).end()
 				.prependTo($curTable);
+				$curThis.closest("tr").find("input").val("");
+				$curThis.closest("tr").find("select").val("");
 			});
 		});
 		$("body").on("click", ".deleterow", function(e){
