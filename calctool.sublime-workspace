@@ -147,6 +147,22 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "app/views/user/edit_project.blade.php",
+			"settings":
+			{
+				"buffer_size": 19612,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/calculus/TimesheetOverview.php",
+			"settings":
+			{
+				"buffer_size": 888,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -324,10 +340,6 @@
 		"/var/www/calctool-v2",
 		"/var/www/calctool-v2/app",
 		"/var/www/calctool-v2/app/calculus",
-		"/var/www/calctool-v2/app/controllers",
-		"/var/www/calctool-v2/app/database",
-		"/var/www/calctool-v2/app/database/seeds",
-		"/var/www/calctool-v2/app/start",
 		"/var/www/calctool-v2/app/views",
 		"/var/www/calctool-v2/app/views/base",
 		"/var/www/calctool-v2/app/views/calc",
@@ -471,7 +483,7 @@
 	],
 	"find":
 	{
-		"height": 46.0
+		"height": 23.0
 	},
 	"find_in_files":
 	{
@@ -635,8 +647,67 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "app/views/user/edit_project.blade.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 19612,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								18874,
+								18874
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 5625.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/calculus/TimesheetOverview.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 888,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								614,
+								614
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -729,7 +800,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 358.0,
+	"side_bar_width": 250.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
