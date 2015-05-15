@@ -1909,7 +1909,7 @@ class TestProjectSeeder extends Seeder {
 			'amount' => '2',
 			'activity_id' => $test_activity13->id
 		));
-
+/*
 		$timesheet_activity9 = Timesheet::create(array(
 			'register_date' => '2015-05-07',
 			'register_hour' => '123',
@@ -1925,7 +1925,7 @@ class TestProjectSeeder extends Seeder {
 			'hour_id' => $timesheet_activity9->id,
 			'activity_id' => $test_activity9->id
 		));
-
+*/
 
 	$this->command->info('MoreMaterial Activity 13 created');
 	$this->command->info('MoreEquipment Activity 13 created');
