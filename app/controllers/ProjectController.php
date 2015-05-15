@@ -34,8 +34,6 @@ class ProjectController extends \BaseController {
 			'profit_equipment_1' => array('required','numeric','between:0,200'),
 			'profit_material_2' => array('required','numeric','between:0,200'),
 			'profit_equipment_2' => array('required','numeric','between:0,200'),
-			'profit_material_3' => array('required','numeric','between:0,200'),
-			'profit_equipment_3' => array('required','numeric','between:0,200'),
 			'more_profit_material_1' => array('required','numeric','between:0,200'),
 			'more_profit_equipment_1' => array('required','numeric','between:0,200'),
 			'more_profit_material_2' => array('required','numeric','between:0,200'),
@@ -65,8 +63,6 @@ class ProjectController extends \BaseController {
 			$project->profit_calc_contr_equip = Input::get('profit_equipment_1');
 			$project->profit_calc_subcontr_mat = Input::get('profit_material_2');
 			$project->profit_calc_subcontr_equip = Input::get('profit_equipment_2');
-			$project->profit_calc_estim_mat = Input::get('profit_material_3');
-			$project->profit_calc_estim_equip = Input::get('profit_equipment_3');
 			$project->profit_more_contr_mat = Input::get('more_profit_material_1');
 			$project->profit_more_contr_equip = Input::get('more_profit_equipment_1');
 			$project->profit_more_subcontr_mat = Input::get('more_profit_material_2');
@@ -107,8 +103,6 @@ class ProjectController extends \BaseController {
 			'profit_equipment_1' => array('required','numeric','between:0,200'),
 			'profit_material_2' => array('required','numeric','between:0,200'),
 			'profit_equipment_2' => array('required','numeric','between:0,200'),
-			'profit_material_3' => array('required','numeric','between:0,200'),
-			'profit_equipment_3' => array('required','numeric','between:0,200'),
 			'more_profit_material_1' => array('required','numeric','between:0,200'),
 			'more_profit_equipment_1' => array('required','numeric','between:0,200'),
 			'more_profit_material_2' => array('required','numeric','between:0,200'),
