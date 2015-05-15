@@ -137,4 +137,5 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('timesheet/new', array('as' => 'timesheet', 'uses' => 'CostController@doNewTimesheet'));
 	Route::post('timesheet/delete', array('as' => 'timesheet', 'uses' => 'CostController@doDeleteTimesheet'));
 	Route::get('purchase', array('as' => 'purchase', 'uses' => 'CostController@getPurchase'));
+	Route::post('purchase/new', array('as' => 'purchase', 'uses' => 'CostController@doNewPurchase'));
 });

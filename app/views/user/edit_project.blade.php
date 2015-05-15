@@ -34,6 +34,34 @@ $project = Project::find(Route::Input('project_id'));
 				.prependTo($curTable);
 			});
 		});
+		$('#addnewpurchase').click(function(e) {
+			$curThis = $(this);
+			e.preventDefault();
+			$date = $curThis.closest("tr").find("input[name='date']").val();
+			$hour = $curThis.closest("tr").find("input[name='hour']").val();
+			$type = $curThis.closest("tr").find("select[name='typename']").val();
+			$relation = $curThis.closest("tr").find("select[name='relation']").val();
+			$note = $curThis.closest("tr").find("input[name='note']").val();
+			$.post("/purchase/new", {
+				date: $date,
+				hour: $hour,
+				type: $type,
+				relation: $relation,
+				note: $note,
+				project: {{ $project->id }}
+			}, function(data){
+				//console.log(data);
+				var $curTable = $curThis.closest("table");
+				var json = $.parseJSON(data);
+				$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
+				.find("td:eq(0)").text($date).end()
+				.find("td:eq(1)").text(json.relation).end()
+				.find("td:eq(2)").text(json.amount).end()
+				.find("td:eq(3)").text(json.type).end()
+				.find("td:eq(4)").text($note).end()
+				.prependTo($curTable);
+			});
+		});
 		$("body").on("click", ".deleterow", function(e){
 			e.preventDefault();
 			var $curThis = $(this);
@@ -191,6 +219,9 @@ $project = Project::find(Route::Input('project_id'));
 						</li>
 						<li>
 							<a href="#hour_overview" data-toggle="tab">Uittrekstaat urenregistratie</a>
+						</li>
+						<li>
+							<a href="#purchase" data-toggle="tab">Inkoopfacturen</a>
 						</li>
 					</ul>
 
@@ -429,6 +460,71 @@ $project = Project::find(Route::Input('project_id'));
 
 							</div>
 						</div>
+
+						<div id="purchase" class="tab-pane">
+
+							<!--<div class="toggle">
+								<label>Deze week</label>
+								<div class="toggle-content">-->
+									<table class="table table-striped">
+										<?# -- table head -- ?>
+										<thead>
+											<tr>
+												<th class="col-md-1">Datum</th>
+												<th class="col-md-1">Relatie</th>
+												<th class="col-md-1">Factuurbedrag</th>
+												<th class="col-md-1">Soort</th>
+												<th class="col-md-4">Omschrijving</th>
+												<th class="col-md-1">&nbsp;</th>
+												<th class="col-md-1">&nbsp;</th>
+												<th class="col-md-1">&nbsp;</th>
+												<th class="col-md-1">&nbsp;</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											@foreach (Purchase::where('project_id','=', $project->id)->get() as $purchase)
+											<tr data-id="{{ $timesheet->id }}">
+												<td class="col-md-1">{{ $purchase->register_date }}</td>
+												<td class="col-md-4">{{ Relation::find($purchase->relation_id)->company_name }}</td>
+												<td class="col-md-1">{{ number_format($purchase->amount, 2,",",".") }}</td>
+												<td class="col-md-1">{{ ucwords(PurchaseKind::find($purchase->kind_id)->kind_name) }}</td>
+												<td class="col-md-1">{{ $purchase->note }}</td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times deleterow"></button></td>
+											</tr>
+											@endforeach
+											<tr>
+												<td class="col-md-1">
+													<input type="date" name="date" id="date" class="form-control-sm-text"/>
+												</td>
+												<td class="col-md-4">
+													<select name="relation" id="relation" class="form-control-sm-text">
+													@foreach (Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
+														<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
+													@endforeach
+													</select>
+												</td>
+												<td class="col-md-1"><input type="number" min="0" name="hour" id="hour" class="form-control-sm-text"/></td>
+												<td class="col-md-1">
+													<select name="typename" id="typename" class="form-control-sm-text">
+													@foreach (PurchaseKind::all() as $typename)
+														<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
+													@endforeach
+													</select>
+												</td>
+												<td class="col-md-1"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1"><button id="addnewpurchase" class="btn btn-primary btn-xs"> Toevoegen</button></td>
+											</tr>
+										</tbody>
+									</table>
+								<!--</div>
+							</div>-->
+						</div>
+
 					</div>
 
 				<h4>Opmerkingen</h4>
