@@ -165,11 +165,11 @@ class EstimateEndresult {
 	}
 
 	public static function conCalcLaborActivityTax1AmountTax($project) {
-		return (CalculationEndresult::conCalcLaborActivityTax1Amount($project)/100)*21;
+		return (EstimateEndresult::conCalcLaborActivityTax1Amount($project)/100)*21;
 	}
 
 	public static function conCalcLaborActivityTax2AmountTax($project) {
-		return (CalculationEndresult::conCalcLaborActivityTax2Amount($project)/100)*6;
+		return (EstimateEndresult::conCalcLaborActivityTax2Amount($project)/100)*6;
 	}
 
 	public static function conCalcMaterialActivityTax1Amount($project) {
@@ -263,11 +263,11 @@ class EstimateEndresult {
 		}
 
 	public static function conCalcMaterialActivityTax1AmountTax($project) {
-		return (CalculationEndresult::conCalcMaterialActivityTax1Amount($project)/100)*21;
+		return (EstimateEndresult::conCalcMaterialActivityTax1Amount($project)/100)*21;
 	}
 
 	public static function conCalcMaterialActivityTax2AmountTax($project) {
-		return (CalculationEndresult::conCalcMaterialActivityTax2Amount($project)/100)*6;
+		return (EstimateEndresult::conCalcMaterialActivityTax2Amount($project)/100)*6;
 	}
 
 	public static function conCalcEquipmentActivityTax1Amount($project) {
@@ -361,11 +361,11 @@ class EstimateEndresult {
 		}
 
 	public static function conCalcEquipmentActivityTax1AmountTax($project) {
-		return (CalculationEndresult::conCalcEquipmentActivityTax1Amount($project)/100)*21;
+		return (EstimateEndresult::conCalcEquipmentActivityTax1Amount($project)/100)*21;
 	}
 
 	public static function conCalcEquipmentActivityTax2AmountTax($project) {
-		return (CalculationEndresult::conCalcEquipmentActivityTax2Amount($project)/100)*6;
+		return (EstimateEndresult::conCalcEquipmentActivityTax2Amount($project)/100)*6;
 	}
 
 	public static function subconCalcLaborActivityTax1($project) {
@@ -549,11 +549,11 @@ class EstimateEndresult {
 	}
 
 	public static function subconCalcLaborActivityTax1AmountTax($project) {
-		return (CalculationEndresult::subconCalcLaborActivityTax1Amount($project)/100)*21;
+		return (EstimateEndresult::subconCalcLaborActivityTax1Amount($project)/100)*21;
 	}
 
 	public static function subconCalcLaborActivityTax2AmountTax($project) {
-		return (CalculationEndresult::subconCalcLaborActivityTax2Amount($project)/100)*6;
+		return (EstimateEndresult::subconCalcLaborActivityTax2Amount($project)/100)*6;
 	}
 
 	public static function subconCalcMaterialActivityTax1Amount($project) {
@@ -647,11 +647,11 @@ class EstimateEndresult {
 		}
 
 	public static function subconCalcMaterialActivityTax1AmountTax($project) {
-		return (CalculationEndresult::subconCalcMaterialActivityTax1Amount($project)/100)*21;
+		return (EstimateEndresult::subconCalcMaterialActivityTax1Amount($project)/100)*21;
 	}
 
 	public static function subconCalcMaterialActivityTax2AmountTax($project) {
-		return (CalculationEndresult::subconCalcMaterialActivityTax2Amount($project)/100)*6;
+		return (EstimateEndresult::subconCalcMaterialActivityTax2Amount($project)/100)*6;
 	}
 
 	public static function subconCalcEquipmentActivityTax1Amount($project) {
@@ -745,27 +745,27 @@ class EstimateEndresult {
 		}
 
 	public static function subconCalcEquipmentActivityTax1AmountTax($project) {
-		return (CalculationEndresult::subconCalcEquipmentActivityTax1Amount($project)/100)*21;
+		return (EstimateEndresult::subconCalcEquipmentActivityTax1Amount($project)/100)*21;
 	}
 
 	public static function subconCalcEquipmentActivityTax2AmountTax($project) {
-		return (CalculationEndresult::subconCalcEquipmentActivityTax2Amount($project)/100)*6;
+		return (EstimateEndresult::subconCalcEquipmentActivityTax2Amount($project)/100)*6;
 	}
 
 	public static function totalContracting($project) {
 		$total = 0;
 
-		$total += CalculationEndresult::conCalcLaborActivityTax1Amount($project);
-		$total += CalculationEndresult::conCalcLaborActivityTax2Amount($project);
-		$total += CalculationEndresult::conCalcLaborActivityTax3Amount($project);
+		$total += EstimateEndresult::conCalcLaborActivityTax1Amount($project);
+		$total += EstimateEndresult::conCalcLaborActivityTax2Amount($project);
+		$total += EstimateEndresult::conCalcLaborActivityTax3Amount($project);
 
-		$total += CalculationEndresult::conCalcMaterialActivityTax1Amount($project);
-		$total += CalculationEndresult::conCalcMaterialActivityTax2Amount($project);
-		$total += CalculationEndresult::conCalcMaterialActivityTax3Amount($project);
+		$total += EstimateEndresult::conCalcMaterialActivityTax1Amount($project);
+		$total += EstimateEndresult::conCalcMaterialActivityTax2Amount($project);
+		$total += EstimateEndresult::conCalcMaterialActivityTax3Amount($project);
 
-		$total += CalculationEndresult::conCalcEquipmentActivityTax1Amount($project);
-		$total += CalculationEndresult::conCalcEquipmentActivityTax2Amount($project);
-		$total += CalculationEndresult::conCalcEquipmentActivityTax3Amount($project);
+		$total += EstimateEndresult::conCalcEquipmentActivityTax1Amount($project);
+		$total += EstimateEndresult::conCalcEquipmentActivityTax2Amount($project);
+		$total += EstimateEndresult::conCalcEquipmentActivityTax3Amount($project);
 
 		return $total;
 	}
@@ -773,14 +773,14 @@ class EstimateEndresult {
 	public static function totalContractingTax($project) {
 		$total = 0;
 
-		$total += CalculationEndresult::conCalcLaborActivityTax1AmountTax($project);
-		$total += CalculationEndresult::conCalcLaborActivityTax2AmountTax($project);
+		$total += EstimateEndresult::conCalcLaborActivityTax1AmountTax($project);
+		$total += EstimateEndresult::conCalcLaborActivityTax2AmountTax($project);
 
-		$total += CalculationEndresult::conCalcMaterialActivityTax1AmountTax($project);
-		$total += CalculationEndresult::conCalcMaterialActivityTax2AmountTax($project);
+		$total += EstimateEndresult::conCalcMaterialActivityTax1AmountTax($project);
+		$total += EstimateEndresult::conCalcMaterialActivityTax2AmountTax($project);
 
-		$total += CalculationEndresult::conCalcEquipmentActivityTax1AmountTax($project);
-		$total += CalculationEndresult::conCalcEquipmentActivityTax2AmountTax($project);
+		$total += EstimateEndresult::conCalcEquipmentActivityTax1AmountTax($project);
+		$total += EstimateEndresult::conCalcEquipmentActivityTax2AmountTax($project);
 
 		return $total;
 	}
@@ -788,17 +788,17 @@ class EstimateEndresult {
 	public static function totalSubcontracting($project) {
 		$total = 0;
 
-		$total += CalculationEndresult::subconCalcLaborActivityTax1Amount($project);
-		$total += CalculationEndresult::subconCalcLaborActivityTax2Amount($project);
-		$total += CalculationEndresult::subconCalcLaborActivityTax3Amount($project);
+		$total += EstimateEndresult::subconCalcLaborActivityTax1Amount($project);
+		$total += EstimateEndresult::subconCalcLaborActivityTax2Amount($project);
+		$total += EstimateEndresult::subconCalcLaborActivityTax3Amount($project);
 
-		$total += CalculationEndresult::subconCalcMaterialActivityTax1Amount($project);
-		$total += CalculationEndresult::subconCalcMaterialActivityTax2Amount($project);
-		$total += CalculationEndresult::subconCalcMaterialActivityTax3Amount($project);
+		$total += EstimateEndresult::subconCalcMaterialActivityTax1Amount($project);
+		$total += EstimateEndresult::subconCalcMaterialActivityTax2Amount($project);
+		$total += EstimateEndresult::subconCalcMaterialActivityTax3Amount($project);
 
-		$total += CalculationEndresult::subconCalcEquipmentActivityTax1Amount($project);
-		$total += CalculationEndresult::subconCalcEquipmentActivityTax2Amount($project);
-		$total += CalculationEndresult::subconCalcEquipmentActivityTax3Amount($project);
+		$total += EstimateEndresult::subconCalcEquipmentActivityTax1Amount($project);
+		$total += EstimateEndresult::subconCalcEquipmentActivityTax2Amount($project);
+		$total += EstimateEndresult::subconCalcEquipmentActivityTax3Amount($project);
 
 		return $total;
 	}
@@ -806,28 +806,28 @@ class EstimateEndresult {
 	public static function totalSubcontractingTax($project) {
 		$total = 0;
 
-		$total += CalculationEndresult::subconCalcLaborActivityTax1AmountTax($project);
-		$total += CalculationEndresult::subconCalcLaborActivityTax2AmountTax($project);
+		$total += EstimateEndresult::subconCalcLaborActivityTax1AmountTax($project);
+		$total += EstimateEndresult::subconCalcLaborActivityTax2AmountTax($project);
 
-		$total += CalculationEndresult::subconCalcMaterialActivityTax1AmountTax($project);
-		$total += CalculationEndresult::subconCalcMaterialActivityTax2AmountTax($project);
+		$total += EstimateEndresult::subconCalcMaterialActivityTax1AmountTax($project);
+		$total += EstimateEndresult::subconCalcMaterialActivityTax2AmountTax($project);
 
-		$total += CalculationEndresult::subconCalcEquipmentActivityTax1AmountTax($project);
-		$total += CalculationEndresult::subconCalcEquipmentActivityTax2AmountTax($project);
+		$total += EstimateEndresult::subconCalcEquipmentActivityTax1AmountTax($project);
+		$total += EstimateEndresult::subconCalcEquipmentActivityTax2AmountTax($project);
 
 		return $total;
 	}
 
 	public static function totalProject($project) {
-		return CalculationEndresult::totalContracting($project) + CalculationEndresult::totalSubcontracting($project);
+		return EstimateEndresult::totalContracting($project) + EstimateEndresult::totalSubcontracting($project);
 	}
 
 	public static function totalContractingTax1($project) {
 		$total = 0;
 
-		$total += CalculationEndresult::conCalcLaborActivityTax1AmountTax($project);
-		$total += CalculationEndresult::conCalcMaterialActivityTax1AmountTax($project);
-		$total += CalculationEndresult::conCalcEquipmentActivityTax1AmountTax($project);
+		$total += EstimateEndresult::conCalcLaborActivityTax1AmountTax($project);
+		$total += EstimateEndresult::conCalcMaterialActivityTax1AmountTax($project);
+		$total += EstimateEndresult::conCalcEquipmentActivityTax1AmountTax($project);
 
 		return $total;
 	}
@@ -835,9 +835,9 @@ class EstimateEndresult {
 	public static function totalContractingTax2($project) {
 		$total = 0;
 
-		$total += CalculationEndresult::conCalcLaborActivityTax2AmountTax($project);
-		$total += CalculationEndresult::conCalcMaterialActivityTax2AmountTax($project);
-		$total += CalculationEndresult::conCalcEquipmentActivityTax2AmountTax($project);
+		$total += EstimateEndresult::conCalcLaborActivityTax2AmountTax($project);
+		$total += EstimateEndresult::conCalcMaterialActivityTax2AmountTax($project);
+		$total += EstimateEndresult::conCalcEquipmentActivityTax2AmountTax($project);
 
 		return $total;
 	}
@@ -845,9 +845,9 @@ class EstimateEndresult {
 	public static function totalSubcontractingTax1($project) {
 		$total = 0;
 
-		$total += CalculationEndresult::subconCalcLaborActivityTax1AmountTax($project);
-		$total += CalculationEndresult::subconCalcMaterialActivityTax1AmountTax($project);
-		$total += CalculationEndresult::subconCalcEquipmentActivityTax1AmountTax($project);
+		$total += EstimateEndresult::subconCalcLaborActivityTax1AmountTax($project);
+		$total += EstimateEndresult::subconCalcMaterialActivityTax1AmountTax($project);
+		$total += EstimateEndresult::subconCalcEquipmentActivityTax1AmountTax($project);
 
 		return $total;
 	}
@@ -855,18 +855,18 @@ class EstimateEndresult {
 	public static function totalSubcontractingTax2($project) {
 		$total = 0;
 
-		$total += CalculationEndresult::subconCalcLaborActivityTax2AmountTax($project);
-		$total += CalculationEndresult::subconCalcMaterialActivityTax2AmountTax($project);
-		$total += CalculationEndresult::subconCalcEquipmentActivityTax2AmountTax($project);
+		$total += EstimateEndresult::subconCalcLaborActivityTax2AmountTax($project);
+		$total += EstimateEndresult::subconCalcMaterialActivityTax2AmountTax($project);
+		$total += EstimateEndresult::subconCalcEquipmentActivityTax2AmountTax($project);
 
 		return $total;
 	}
 
 	public static function totalProjectTax($project) {
-		return CalculationEndresult::totalContractingTax($project) + CalculationEndresult::totalSubcontractingTax($project);
+		return EstimateEndresult::totalContractingTax($project) + EstimateEndresult::totalSubcontractingTax($project);
 	}
 
 	public static function superTotalProject($project) {
-		return CalculationEndresult::totalProject($project) + CalculationEndresult::totalProjectTax($project);
+		return EstimateEndresult::totalProject($project) + EstimateEndresult::totalProjectTax($project);
 	}
 }
