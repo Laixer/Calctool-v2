@@ -15,9 +15,6 @@ class TestProjectSeeder extends Seeder {
 		DB::table('more_equipment')->delete();
 		DB::table('more_material')->delete();
 		DB::table('more_labor')->delete();
-		//DB::table('less_equipment')->delete();
-		//DB::table('less_material')->delete();
-		//DB::table('less_labor')->delete();
 		DB::table('calculation_equipment')->delete();
 		DB::table('calculation_material')->delete();
 		DB::table('calculation_labor')->delete();
@@ -158,6 +155,27 @@ class TestProjectSeeder extends Seeder {
 			'country_id' => $test_country->id
 		));
 
+		$test_relation2 = Relation::create(array(
+			'company_name' => 'Kaas B.V.',
+			'address_street' => 'Melkweg',
+			'address_number' => '4D',
+			'address_postal' => '5724EB',
+			'address_city' => 'Zwolle',
+			'kvk' => '473264967312',
+			'btw' => 'NL246963512B01',
+			'debtor_code' => 'VRX75536',
+			'phone' => '0640174372',
+			'email' => 'info@kaas.nl',
+			'note' => 'Betaald altijd',
+			'website' => 'http://www.kaas.nl',
+			'logo_id' => $test_resource1->id,
+			'user_id' => $test_user->id,
+			'type_id' => $test_type_name->id,
+			'kind_id' => $test_kind_name->id,
+			'province_id' => $test_province->id,
+			'country_id' => $test_country->id
+		));
+
 	$this->command->info('Relation created');
 
 		$test_project = Project::create(array(
@@ -216,6 +234,17 @@ class TestProjectSeeder extends Seeder {
 			'function_id' => $test_contact_function->id
 		));
 
+		Contact::create(array(
+			'firstname' => 'K',
+			'lastname' => 'Aas',
+			'email' => 'k@kaas.nl',
+			'mobile' => '0612345678',
+			'phone' => '0101234567',
+			'note' => 'Eigenaar',
+			'relation_id' => $test_relation2->id,
+			'function_id' => $test_contact_function->id
+		));
+
 	$this->command->info('Contact created');
 
 		Iban::create(array(
@@ -223,6 +252,13 @@ class TestProjectSeeder extends Seeder {
 			'iban_name' => 'system_iban',
 			'user_id' => $test_user->id,
 			'relation_id' => $test_relation->id,
+		));
+
+		Iban::create(array(
+			'iban' => 'NL45RABO0123456789m',
+			'iban_name' => 'system_iban',
+			'user_id' => $test_user->id,
+			'relation_id' => $test_relation2->id,
 		));
 
 	$this->command->info('Iban created');
