@@ -275,7 +275,6 @@ class StaticSeeder extends Seeder {
 
 		PurchaseKind::create(array('kind_name' => 'aanneming'));
 		PurchaseKind::create(array('kind_name' => 'onderaanneming'));
-		PurchaseKind::create(array('kind_name' => 'stelposten'));
 		$this->command->info('PurchaseKind created');
 	}
  }
