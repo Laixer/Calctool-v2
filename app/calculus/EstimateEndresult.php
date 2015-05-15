@@ -469,7 +469,7 @@ class EstimateEndresult {
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
-					$set_rows = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','true')>get();
+					$set_rows = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
 					} else {
 						$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 						$set_rows = [];
@@ -529,7 +529,7 @@ class EstimateEndresult {
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
-					$set_rows = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','true')>get();
+					$set_rows = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
 					} else {
 						$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 						$set_rows = [];
