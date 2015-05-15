@@ -218,7 +218,7 @@ class EstimateEndresult {
 						$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
 						$set_rows = [];
 					}
-						foreach ($rows as $row)
+					foreach ($rows as $row)
 					{
 						$total += $row->rate * $row->amount;
 					}
@@ -226,11 +226,12 @@ class EstimateEndresult {
 					{
 						$total += $row->set_rate * $row->set_amount;
 					}
-				}
-			}
 
-			return $total + ($total * ($project->profit_calc_contr_mat)/100);
+			}
 		}
+
+		return $total + ($total * ($project->profit_calc_contr_mat)/100);
+	}
 
 	public static function conCalcMaterialActivityTax3Amount($project) {
 		$total = 0;
@@ -386,11 +387,11 @@ class EstimateEndresult {
 				}
 				foreach ($rows as $row)
 				{
-					$total += $row->rate * $row->amount;
+					$total += $row->amount;
 				}
 				foreach ($set_rows as $row)
 				{
-					$total += $row->rate * $row->set_amount;
+					$total += $row->set_amount;
 				}
 			}
 		}
@@ -416,11 +417,11 @@ class EstimateEndresult {
 				}
 				foreach ($rows as $row)
 				{
-					$total += $row->rate * $row->amount;
+					$total += $row->amount;
 				}
 				foreach ($set_rows as $row)
 				{
-					$total += $row->rate * $row->set_amount;
+					$total += $row->set_amount;
 				}
 			}
 		}
@@ -446,11 +447,11 @@ class EstimateEndresult {
 				}
 				foreach ($rows as $row)
 				{
-					$total += $row->rate * $row->amount;
+					$total += $row->amount;
 				}
 				foreach ($set_rows as $row)
 				{
-					$total += $row->rate * $row->set_amount;
+					$total += $row->set_amount;
 				}
 			}
 		}
@@ -578,7 +579,7 @@ class EstimateEndresult {
 					}
 					foreach ($set_rows as $row)
 					{
-						$total += $row->rate * $row->set_amount;
+						$total += $row->set_rate * $row->set_amount;
 					}
 				}
 			}
@@ -608,7 +609,7 @@ class EstimateEndresult {
 					}
 					foreach ($set_rows as $row)
 					{
-						$total += $row->rate * $row->set_amount;
+						$total += $row->set_rate * $row->set_amount;
 					}
 				}
 			}
@@ -638,7 +639,7 @@ class EstimateEndresult {
 					}
 					foreach ($set_rows as $row)
 					{
-						$total += $row->rate * $row->set_amount;
+						$total += $row->set_rate * $row->set_amount;
 					}
 				}
 			}
@@ -676,7 +677,7 @@ class EstimateEndresult {
 					}
 					foreach ($set_rows as $row)
 					{
-						$total += $row->rate * $row->set_amount;
+						$total += $row->set_rate * $row->set_amount;
 					}
 				}
 			}
@@ -706,7 +707,7 @@ class EstimateEndresult {
 					}
 					foreach ($set_rows as $row)
 					{
-						$total += $row->rate * $row->set_amount;
+						$total += $row->set_rate * $row->set_amount;
 					}
 				}
 			}
@@ -736,7 +737,7 @@ class EstimateEndresult {
 					}
 					foreach ($set_rows as $row)
 					{
-						$total += $row->rate * $row->set_amount;
+						$total += $row->set_rate * $row->set_amount;
 					}
 				}
 			}

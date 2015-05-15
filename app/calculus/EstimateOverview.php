@@ -57,7 +57,6 @@ class EstimateOverview {
 				}
 			}
 
-
 			return $total;
 		}
 	}
