@@ -623,7 +623,7 @@ var n = this,
 			    <a href="javascript:void(0);" class="current">Minderwerk</a>
 		  		<a href="/more/project-{{ $project->id }}">Meerwerk</a>
 			    <a href="/invoice/project-{{ $project->id }}">Factuur</a>
-			    <a href="javascript:void(0);">Winst/verlies</a>
+				<a href="/result/project-{{ $project->id }}">Resultaat</a>
 			</div>
 
 			<hr />
