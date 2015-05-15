@@ -697,16 +697,18 @@ var n = this,
 
 													<?# -- table items -- ?>
 													<tbody>
-														<tr data-id="{{ CalculationLabor::where('activity_id','=', $activity->id)->first()['id'] }}">
+														@foreach (CalculationLabor::where('activity_id','=', $activity->id)->get() as $labor)
+														<tr data-id="{{ $labor->id; }}">
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
-															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal(CalculationLabor::where('activity_id','=', $activity->id)->first()['rate'], CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".")) }}</span></td>
+															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format($labor->isless ? $labor->less_amount : $labor->amount, 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($labor->rate, $labor->isless ? $labor->less_amount : $labor->amount, 2, ",",".")) }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
-															<th class="col-md-1">Minderwerk</th>
+															<th class="col-md-1">{{ '&euro; '.number_format(LessRegister::lessLaborDeltaTotal($labor->rate, $labor->amount, $labor->less_amount), 2, ",",".") }}</th>
 															<td class="col-md-1 text-right"><button class="btn btn-warning lresetrow btn-xs fa fa-undo"></button></td>
 														</tr>
+														@endforeach
 													</tbody>
 												</table>
 

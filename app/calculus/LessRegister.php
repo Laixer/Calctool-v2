@@ -2,6 +2,10 @@
 
 class LessRegister {
 
+	public static function lessLaborDeltaTotal($rate, $amount, $less_amount) {
+		return ($less_amount - $amount) * $rate;
+	}
+
 /*Calculation labor*/
 	public static function lessLaborTotal($rate, $amount) {
 		return $rate * $amount;
