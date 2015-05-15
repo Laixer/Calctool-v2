@@ -272,5 +272,10 @@ class StaticSeeder extends Seeder {
 		TimesheetKind::create(array('kind_name' => 'stelpost'));
 		TimesheetKind::create(array('kind_name' => 'meerwerk'));
 		$this->command->info('TimesheetKind created');
+
+		PurchaseKind::create(array('kind_name' => 'aanneming'));
+		PurchaseKind::create(array('kind_name' => 'onderaanneming'));
+		PurchaseKind::create(array('kind_name' => 'stelposten'));
+		$this->command->info('PurchaseKind created');
 	}
  }

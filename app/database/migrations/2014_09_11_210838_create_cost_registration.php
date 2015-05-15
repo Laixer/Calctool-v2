@@ -23,6 +23,12 @@ class CreateCostRegistration extends Migration {
 			$table->text('kind_name');
 		});
 
+		Schema::create('purchase_kind', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->text('kind_name');
+		});
+
 		Schema::create('timesheet', function(Blueprint $table)
 		{
 			$table->increments('id');
@@ -47,6 +53,8 @@ class CreateCostRegistration extends Migration {
 			$table->foreign('project_id')->references('id')->on('project')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('relation_id')->nullable()->unsigned();
 			$table->foreign('relation_id')->references('id')->on('relation')->onUpdate('cascade')->onDelete('set null');
+			$table->integer('kind_id')->unsigned();
+			$table->foreign('kind_id')->references('id')->on('purchase_kind')->onUpdate('cascade')->onDelete('restrict');
 		});
 	}
 
@@ -69,6 +77,10 @@ class CreateCostRegistration extends Migration {
 		Schema::table('timesheet_kind', function(Blueprint $table)
 		{
 			Schema::drop('timesheet_kind');
+		});
+		Schema::table('purchase_kind', function(Blueprint $table)
+		{
+			Schema::drop('purchase_kind');
 		});
 	}
 

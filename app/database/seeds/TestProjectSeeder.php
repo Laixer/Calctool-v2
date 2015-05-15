@@ -45,6 +45,7 @@ class TestProjectSeeder extends Seeder {
 		$test_type_name = RelationType::where('type_name','=','adviesbureau')->first();
 		$test_kind_name = RelationKind::where('kind_name','=','zakelijk')->first();
 		$test_timesheet_kind_name = TimesheetKind::where('kind_name','=','aanneming')->first();
+		$test_purchase_kind_name = PurchaseKind::where('kind_name','=','aanneming')->first();
 
 		$test_part_contract = Part::where('part_name','=','contracting')->first();
 		$test_part_type_calc = PartType::where('type_name','=','calculation')->first();
@@ -560,6 +561,7 @@ class TestProjectSeeder extends Seeder {
 			'register_date' => '09-10-2014',
 			'part_id' => $test_part_subcontract->id,
 			'project_id' => $test_project->id,
+			'kind_id' => $test_purchase_kind_name->id,
 			'relation_id' => $test_relation->id
 		));
 
@@ -1908,9 +1910,6 @@ class TestProjectSeeder extends Seeder {
 			'amount' => '2',
 			'activity_id' => $test_activity13->id
 		));
-
-
-
 
 		$timesheet_activity9 = Timesheet::create(array(
 			'register_date' => '2015-05-07',
