@@ -14,7 +14,13 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$total += CalculationLabor::where('activity_id','=',$activity->id)->where('isless','=','true')->sum('less_amount');
+				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
+				foreach ($rows as $row)
+				{
+					if ($row->isless) {
+						$total += $row->less_amount - $row->amount;
+					}
+				}
 			}
 		}
 
@@ -30,7 +36,13 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$total += CalculationLabor::where('activity_id','=',$activity->id)->where('isless','=','true')->sum('less_amount');
+				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
+				foreach ($rows as $row)
+				{
+					if ($row->isless) {
+						$total += $row->less_amount - $row->amount;
+					}
+				}
 			}
 		}
 
@@ -46,7 +58,13 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$total += CalculationLabor::where('activity_id','=',$activity->id)->where('isless','=','true')->sum('less_amount');
+				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
+				foreach ($rows as $row)
+				{
+					if ($row->isless) {
+						$total += $row->less_amount - $row->amount;
+					}
+				}
 			}
 		}
 
@@ -62,10 +80,12 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$rows = CalculationLabor::where('activity_id','=',$activity->id)->where('isless','=','true')->get();
+				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
 				{
-					$total += $row->rate * $row->less_amount;
+					if ($row->isless) {
+						$total += $row->rate * ($row->less_amount - $row->amount);
+					}
 				}
 			}
 		}
@@ -82,10 +102,12 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$rows = CalculationLabor::where('activity_id','=',$activity->id)->where('isless','=','true')->get();
+				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
 				{
-					$total += $row->rate * $row->less_amount;
+					if ($row->isless) {
+						$total += $row->rate * ($row->less_amount - $row->amount);
+					}
 				}
 			}
 		}
@@ -102,10 +124,12 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$rows = CalculationLabor::where('activity_id','=',$activity->id)->where('isless','=','true')->get();
+				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
 				{
-					$total += $row->rate * $row->less_amount;
+					if ($row->isless) {
+						$total += $row->rate * ($row->less_amount - $row->amount);
+					}
 				}
 			}
 		}
@@ -130,10 +154,11 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)
 			{
-				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->where('isless','=','true')->get();
+				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
 				{
-					$total += $row->less_rate * $row->less_amount;
+					if ($row->isless)
+						$total += ($row->less_rate * $row->less_amount) - ($row->rate * $row->amount);
 				}
 			}
 		}
@@ -150,10 +175,11 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)
 			{
-				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->where('isless','=','true')->get();
+				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
 				{
-					$total += $row->less_rate * $row->less_amount;
+					if ($row->isless)
+						$total += ($row->less_rate * $row->less_amount) - ($row->rate * $row->amount);
 				}
 			}
 		}
@@ -170,10 +196,11 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)
 			{
-				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->where('isless','=','true')->get();
+				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
 				{
-					$total += $row->less_rate * $row->less_amount;
+					if ($row->isless)
+						$total += ($row->less_rate * $row->less_amount) - ($row->rate * $row->amount);
 				}
 			}
 		}
@@ -198,10 +225,11 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)
 			{
-				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->where('isless','=','true')->get();
+				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
 				{
-					$total += $row->less_rate * $row->less_amount;
+					if ($row->isless)
+						$total += ($row->less_rate * $row->less_amount) - ($row->rate * $row->amount);
 				}
 			}
 		}
@@ -218,10 +246,11 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)
 			{
-				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->where('isless','=','true')->get();
+				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
 				{
-					$total += $row->less_rate * $row->less_amount;
+					if ($row->isless)
+						$total += ($row->less_rate * $row->less_amount) - ($row->rate * $row->amount);
 				}
 			}
 		}
@@ -238,10 +267,11 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)
 			{
-				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->where('isless','=','true')->get();
+				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
 				{
-					$total += $row->less_rate * $row->less_amount;
+					if ($row->isless)
+						$total += ($row->less_rate * $row->less_amount) - ($row->rate * $row->amount);
 				}
 			}
 		}
@@ -266,7 +296,13 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$total += CalculationLabor::where('activity_id','=',$activity->id)->where('isless','=','true')->sum('less_amount');
+				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
+				foreach ($rows as $row)
+				{
+					if ($row->isless) {
+						$total += $row->less_amount - $row->amount;
+					}
+				}
 			}
 		}
 
@@ -282,7 +318,13 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$total += CalculationLabor::where('activity_id','=',$activity->id)->where('isless','=','true')->sum('less_amount');
+				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
+				foreach ($rows as $row)
+				{
+					if ($row->isless) {
+						$total += $row->less_amount - $row->amount;
+					}
+				}
 			}
 		}
 
@@ -298,7 +340,13 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$total += CalculationLabor::where('activity_id','=',$activity->id)->where('isless','=','true')->sum('less_amount');
+				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
+				foreach ($rows as $row)
+				{
+					if ($row->isless) {
+						$total += $row->less_amount - $row->amount;
+					}
+				}
 			}
 		}
 
@@ -314,10 +362,12 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$rows = CalculationLabor::where('activity_id','=',$activity->id)->where('isless','=','true')->get();
+				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
 				{
-					$total += $row->rate * $row->less_amount;
+					if ($row->isless) {
+						$total += $row->rate * ($row->less_amount - $row->amount);
+					}
 				}
 			}
 		}
@@ -334,10 +384,12 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$rows = CalculationLabor::where('activity_id','=',$activity->id)->where('isless','=','true')->get();
+				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
 				{
-					$total += $row->rate * $row->less_amount;
+					if ($row->isless) {
+						$total += $row->rate * ($row->less_amount - $row->amount);
+					}
 				}
 			}
 		}
@@ -354,10 +406,12 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$rows = CalculationLabor::where('activity_id','=',$activity->id)->where('isless','=','true')->get();
+				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
 				{
-					$total += $row->rate * $row->less_amount;
+					if ($row->isless) {
+						$total += $row->rate * ($row->less_amount - $row->amount);
+					}
 				}
 			}
 		}
@@ -382,10 +436,11 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)
 			{
-				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->where('isless','=','true')->get();
+				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
 				{
-					$total += $row->less_rate * $row->less_amount;
+					if ($row->isless)
+						$total += ($row->less_rate * $row->less_amount) - ($row->rate * $row->amount);
 				}
 			}
 		}
@@ -402,10 +457,11 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)
 			{
-				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->where('isless','=','true')->get();
+				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
 				{
-					$total += $row->less_rate * $row->less_amount;
+					if ($row->isless)
+						$total += ($row->less_rate * $row->less_amount) - ($row->rate * $row->amount);
 				}
 			}
 		}
@@ -422,10 +478,11 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)
 			{
-				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->where('isless','=','true')->get();
+				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
 				{
-					$total += $row->less_rate * $row->less_amount;
+					if ($row->isless)
+						$total += ($row->less_rate * $row->less_amount) - ($row->rate * $row->amount);
 				}
 			}
 		}
@@ -450,10 +507,11 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)
 			{
-				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->where('isless','=','true')->get();
+				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
 				{
-					$total += $row->less_rate * $row->less_amount;
+					if ($row->isless)
+						$total += ($row->less_rate * $row->less_amount) - ($row->rate * $row->amount);
 				}
 			}
 		}
@@ -470,10 +528,11 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)
 			{
-				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->where('isless','=','true')->get();
+				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
 				{
-					$total += $row->less_rate * $row->less_amount;
+					if ($row->isless)
+						$total += ($row->less_rate * $row->less_amount) - ($row->rate * $row->amount);
 				}
 			}
 		}
@@ -490,10 +549,11 @@ class LessEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)
 			{
-				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->where('isless','=','true')->get();
+				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
 				{
-					$total += $row->less_rate * $row->less_amount;
+					if ($row->isless)
+						$total += ($row->less_rate * $row->less_amount) - ($row->rate * $row->amount);
 				}
 			}
 		}

@@ -732,7 +732,7 @@ var n = this,
 					</li>
 					<li id="tab-endresult">
 						<a href="#endresult" data-toggle="tab">
-							<i class="fa fa-sort-amount-desc"></i> Uittrekstaat
+							<i class="fa fa-sort-amount-desc"></i> Eindresultaat
 						</a>
 					</li>
 				</ul>

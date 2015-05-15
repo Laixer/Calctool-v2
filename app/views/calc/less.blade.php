@@ -705,7 +705,7 @@ var n = this,
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format($labor->isless ? $labor->less_amount : $labor->amount, 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($labor->rate, $labor->isless ? $labor->less_amount : $labor->amount, 2, ",",".")) }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
-															<th class="col-md-1">{{ '&euro; '.number_format(LessRegister::lessLaborDeltaTotal($labor->rate, $labor->amount, $labor->less_amount), 2, ",",".") }}</th>
+															<th class="col-md-1">{{ '&euro; '.number_format(LessRegister::lessLaborDeltaTotal($labor), 2, ",",".") }}</th>
 															<td class="col-md-1 text-right"><button class="btn btn-warning lresetrow btn-xs fa fa-undo"></button></td>
 														</tr>
 														@endforeach

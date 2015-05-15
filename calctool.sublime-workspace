@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"less",
+				"less_amount"
+			],
+			[
 				"for",
 				"foreach	foreach …"
 			],
@@ -148,18 +152,66 @@
 	"buffers":
 	[
 		{
-			"file": "app/views/user/edit_project.blade.php",
+			"file": "app/routes.php",
 			"settings":
 			{
-				"buffer_size": 19612,
+				"buffer_size": 10548,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "app/calculus/TimesheetOverview.php",
+			"file": "app/views/calc/result.blade.php",
 			"settings":
 			{
-				"buffer_size": 888,
+				"buffer_size": 67277,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/controllers/ResultController.php",
+			"settings":
+			{
+				"buffer_size": 593,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "<?php\n\n/*\n * Eindresultaat\n */\nclass EstimateEndresult {\n\n	public static function conCalcLaborActivityTax1($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','contracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','21')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$total += EstimateLabor::where('activity_id','=',$activity->id)->sum('amount');\n				} else {\n					$total += CalculationLabor::where('activity_id','=',$activity->id)->sum('amount');\n				}\n			}\n		}\n\n		return $total;\n	}\n\n	public static function conCalcLaborActivityTax2($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','contracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','6')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$total += EstimateLabor::where('activity_id','=',$activity->id)->sum('amount');\n				} else {\n					$total += CalculationLabor::where('activity_id','=',$activity->id)->sum('amount');\n				}\n			}\n		}\n\n		return $total;\n	}\n\n	public static function conCalcLaborActivityTax3($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','contracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','0')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$total += EstimateLabor::where('activity_id','=',$activity->id)->sum('amount');\n				} else {\n					$total += CalculationLabor::where('activity_id','=',$activity->id)->sum('amount');\n				}\n			}\n		}\n\n		return $total;\n	}\n\n	public static function conCalcLaborActivityTax1Amount($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','contracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','21')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$rows = EstimateLabor::where('activity_id','=',$activity->id)->get();\n					} else {\n						$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();\n					}\n					foreach ($rows as $row)\n					{\n						$total += $row->rate * $row->amount;\n					}\n				}\n			}\n\n		return $total;\n	}\n\n	public static function conCalcLaborActivityTax2Amount($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','contracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','6')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$rows = EstimateLabor::where('activity_id','=',$activity->id)->get();\n					} else {\n						$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();\n					}\n					foreach ($rows as $row)\n					{\n						$total += $row->rate * $row->amount;\n					}\n				}\n			}\n\n		return $total;\n	}\n\n	public static function conCalcLaborActivityTax3Amount($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','contracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','0')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$rows = EstimateLabor::where('activity_id','=',$activity->id)->get();\n					} else {\n						$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();\n					}\n					foreach ($rows as $row)\n					{\n						$total += $row->rate * $row->amount;\n					}\n				}\n			}\n\n		return $total;\n	}\n\n	public static function conCalcLaborActivityTax1AmountTax($project) {\n		return (CalculationEndresult::conCalcLaborActivityTax1Amount($project)/100)*21;\n	}\n\n	public static function conCalcLaborActivityTax2AmountTax($project) {\n		return (CalculationEndresult::conCalcLaborActivityTax2Amount($project)/100)*6;\n	}\n\n	public static function conCalcMaterialActivityTax1Amount($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','contracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','21')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->get();\n					} else {\n						$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();\n					}\n						foreach ($rows as $row)\n					{\n						$total += $row->rate * $row->amount;\n					}\n				}\n			}\n\n			return $total + ($total * ($project->profit_calc_contr_mat)/100);\n		}\n\n	public static function conCalcMaterialActivityTax2Amount($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','contracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','6')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->get();\n					} else {\n						$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();\n					}\n						foreach ($rows as $row)\n					{\n						$total += $row->rate * $row->amount;\n					}\n				}\n			}\n\n			return $total + ($total * ($project->profit_calc_contr_mat)/100);\n		}\n\n	public static function conCalcMaterialActivityTax3Amount($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','contracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','0')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->get();\n					} else {\n						$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();\n					}\n						foreach ($rows as $row)\n					{\n						$total += $row->rate * $row->amount;\n					}\n				}\n			}\n\n			return $total + ($total * ($project->profit_calc_contr_mat)/100);\n		}\n\n	public static function conCalcMaterialActivityTax1AmountTax($project) {\n		return (CalculationEndresult::conCalcMaterialActivityTax1Amount($project)/100)*21;\n	}\n\n	public static function conCalcMaterialActivityTax2AmountTax($project) {\n		return (CalculationEndresult::conCalcMaterialActivityTax2Amount($project)/100)*6;\n	}\n\n	public static function conCalcEquipmentActivityTax1Amount($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','contracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','21')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->get();\n					} else {\n						$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();\n					}\n						foreach ($rows as $row)\n					{\n						$total += $row->rate * $row->amount;\n					}\n				}\n			}\n\n			return $total + ($total * ($project->profit_calc_contr_equip)/100);\n		}\n\n	public static function conCalcEquipmentActivityTax2Amount($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','contracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','6')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->get();\n					} else {\n						$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();\n					}\n						foreach ($rows as $row)\n					{\n						$total += $row->rate * $row->amount;\n					}\n				}\n			}\n\n			return $total + ($total * ($project->profit_calc_contr_equip)/100);\n		}\n\n	public static function conCalcEquipmentActivityTax3Amount($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','contracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','0')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->get();\n					} else {\n						$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();\n					}\n						foreach ($rows as $row)\n					{\n						$total += $row->rate * $row->amount;\n					}\n				}\n			}\n\n			return $total + ($total * ($project->profit_calc_contr_equip)/100);\n		}\n\n	public static function conCalcEquipmentActivityTax1AmountTax($project) {\n		return (CalculationEndresult::conCalcEquipmentActivityTax1Amount($project)/100)*21;\n	}\n\n	public static function conCalcEquipmentActivityTax2AmountTax($project) {\n		return (CalculationEndresult::conCalcEquipmentActivityTax2Amount($project)/100)*6;\n	}\n\n	public static function subconCalcLaborActivityTax1($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','subcontracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','21')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$total += EstimateLabor::where('activity_id','=',$activity->id)->sum('amount');\n				} else {\n					$total += CalculationLabor::where('activity_id','=',$activity->id)->sum('amount');\n				}\n			}\n		}\n\n		return $total;\n	}\n\n	public static function subconCalcLaborActivityTax2($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','subcontracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','6')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$total += EstimateLabor::where('activity_id','=',$activity->id)->sum('amount');\n				} else {\n					$total += CalculationLabor::where('activity_id','=',$activity->id)->sum('amount');\n				}\n			}\n		}\n\n		return $total;\n	}\n\n	public static function subconCalcLaborActivityTax3($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','subcontracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','0')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$total += EstimateLabor::where('activity_id','=',$activity->id)->sum('amount');\n				} else {\n					$total += CalculationLabor::where('activity_id','=',$activity->id)->sum('amount');\n				}\n			}\n		}\n\n		return $total;\n	}\n\n	public static function subconCalcLaborActivityTax1Amount($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','subcontracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','21')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$rows = EstimateLabor::where('activity_id','=',$activity->id)->get();\n					} else {\n						$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();\n					}\n					foreach ($rows as $row)\n					{\n						$total += $row->rate * $row->amount;\n					}\n				}\n			}\n\n		return $total;\n	}\n\n	public static function subconCalcLaborActivityTax2Amount($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','subcontracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','6')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$rows = EstimateLabor::where('activity_id','=',$activity->id)->get();\n					} else {\n						$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();\n					}\n					foreach ($rows as $row)\n					{\n						$total += $row->rate * $row->amount;\n					}\n				}\n			}\n\n		return $total;\n	}\n\n	public static function subconCalcLaborActivityTax3Amount($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','subcontracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','0')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$rows = EstimateLabor::where('activity_id','=',$activity->id)->get();\n					} else {\n						$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();\n					}\n					foreach ($rows as $row)\n					{\n						$total += $row->rate * $row->amount;\n					}\n				}\n			}\n\n		return $total;\n	}\n\n	public static function subconCalcLaborActivityTax1AmountTax($project) {\n		return (CalculationEndresult::subconCalcLaborActivityTax1Amount($project)/100)*21;\n	}\n\n	public static function subconCalcLaborActivityTax2AmountTax($project) {\n		return (CalculationEndresult::subconCalcLaborActivityTax2Amount($project)/100)*6;\n	}\n\n	public static function subconCalcMaterialActivityTax1Amount($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','subcontracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','21')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->get();\n					} else {\n						$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();\n					}\n						foreach ($rows as $row)\n					{\n						$total += $row->rate * $row->amount;\n					}\n				}\n			}\n\n			return $total + ($total * ($project->profit_calc_subcontr_mat)/100);\n		}\n\n	public static function subconCalcMaterialActivityTax2Amount($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','subcontracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','6')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->get();\n					} else {\n						$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();\n					}\n						foreach ($rows as $row)\n					{\n						$total += $row->rate * $row->amount;\n					}\n				}\n			}\n\n			return $total + ($total * ($project->profit_calc_subcontr_mat)/100);\n		}\n\n	public static function subconCalcMaterialActivityTax3Amount($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','subcontracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','0')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->get();\n					} else {\n						$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();\n					}\n						foreach ($rows as $row)\n					{\n						$total += $row->rate * $row->amount;\n					}\n				}\n			}\n\n			return $total + ($total * ($project->profit_calc_subcontr_mat)/100);\n		}\n\n	public static function subconCalcMaterialActivityTax1AmountTax($project) {\n		return (CalculationEndresult::subconCalcMaterialActivityTax1Amount($project)/100)*21;\n	}\n\n	public static function subconCalcMaterialActivityTax2AmountTax($project) {\n		return (CalculationEndresult::subconCalcMaterialActivityTax2Amount($project)/100)*6;\n	}\n\n	public static function subconCalcEquipmentActivityTax1Amount($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','subcontracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','21')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->get();\n					} else {\n						$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();\n					}\n						foreach ($rows as $row)\n					{\n						$total += $row->rate * $row->amount;\n					}\n				}\n			}\n\n			return $total + ($total * ($project->profit_calc_subcontr_equip)/100);\n		}\n\n	public static function subconCalcEquipmentActivityTax2Amount($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','subcontracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','6')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->get();\n					} else {\n						$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();\n					}\n						foreach ($rows as $row)\n					{\n						$total += $row->rate * $row->amount;\n					}\n				}\n			}\n\n			return $total + ($total * ($project->profit_calc_subcontr_equip)/100);\n		}\n\n	public static function subconCalcEquipmentActivityTax3Amount($project) {\n		$total = 0;\n		$part_id = Part::where('part_name','=','subcontracting')->first()->id;\n		$tax_id = Tax::where('tax_rate','=','0')->first()->id;\n\n		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n		{\n			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)\n			{\n				if (PartType::find($activity->part_type_id)->type_name=='estimate') {\n					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->get();\n					} else {\n						$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();\n					}\n						foreach ($rows as $row)\n					{\n						$total += $row->rate * $row->amount;\n					}\n				}\n			}\n\n			return $total + ($total * ($project->profit_calc_subcontr_equip)/100);\n		}\n\n	public static function subconCalcEquipmentActivityTax1AmountTax($project) {\n		return (CalculationEndresult::subconCalcEquipmentActivityTax1Amount($project)/100)*21;\n	}\n\n	public static function subconCalcEquipmentActivityTax2AmountTax($project) {\n		return (CalculationEndresult::subconCalcEquipmentActivityTax2Amount($project)/100)*6;\n	}\n\n	public static function totalContracting($project) {\n		$total = 0;\n\n		$total += CalculationEndresult::conCalcLaborActivityTax1Amount($project);\n		$total += CalculationEndresult::conCalcLaborActivityTax2Amount($project);\n		$total += CalculationEndresult::conCalcLaborActivityTax3Amount($project);\n\n		$total += CalculationEndresult::conCalcMaterialActivityTax1Amount($project);\n		$total += CalculationEndresult::conCalcMaterialActivityTax2Amount($project);\n		$total += CalculationEndresult::conCalcMaterialActivityTax3Amount($project);\n\n		$total += CalculationEndresult::conCalcEquipmentActivityTax1Amount($project);\n		$total += CalculationEndresult::conCalcEquipmentActivityTax2Amount($project);\n		$total += CalculationEndresult::conCalcEquipmentActivityTax3Amount($project);\n\n		return $total;\n	}\n\n	public static function totalContractingTax($project) {\n		$total = 0;\n\n		$total += CalculationEndresult::conCalcLaborActivityTax1AmountTax($project);\n		$total += CalculationEndresult::conCalcLaborActivityTax2AmountTax($project);\n\n		$total += CalculationEndresult::conCalcMaterialActivityTax1AmountTax($project);\n		$total += CalculationEndresult::conCalcMaterialActivityTax2AmountTax($project);\n\n		$total += CalculationEndresult::conCalcEquipmentActivityTax1AmountTax($project);\n		$total += CalculationEndresult::conCalcEquipmentActivityTax2AmountTax($project);\n\n		return $total;\n	}\n\n	public static function totalSubcontracting($project) {\n		$total = 0;\n\n		$total += CalculationEndresult::subconCalcLaborActivityTax1Amount($project);\n		$total += CalculationEndresult::subconCalcLaborActivityTax2Amount($project);\n		$total += CalculationEndresult::subconCalcLaborActivityTax3Amount($project);\n\n		$total += CalculationEndresult::subconCalcMaterialActivityTax1Amount($project);\n		$total += CalculationEndresult::subconCalcMaterialActivityTax2Amount($project);\n		$total += CalculationEndresult::subconCalcMaterialActivityTax3Amount($project);\n\n		$total += CalculationEndresult::subconCalcEquipmentActivityTax1Amount($project);\n		$total += CalculationEndresult::subconCalcEquipmentActivityTax2Amount($project);\n		$total += CalculationEndresult::subconCalcEquipmentActivityTax3Amount($project);\n\n		return $total;\n	}\n\n	public static function totalSubcontractingTax($project) {\n		$total = 0;\n\n		$total += CalculationEndresult::subconCalcLaborActivityTax1AmountTax($project);\n		$total += CalculationEndresult::subconCalcLaborActivityTax2AmountTax($project);\n\n		$total += CalculationEndresult::subconCalcMaterialActivityTax1AmountTax($project);\n		$total += CalculationEndresult::subconCalcMaterialActivityTax2AmountTax($project);\n\n		$total += CalculationEndresult::subconCalcEquipmentActivityTax1AmountTax($project);\n		$total += CalculationEndresult::subconCalcEquipmentActivityTax2AmountTax($project);\n\n		return $total;\n	}\n\n	public static function totalProject($project) {\n		return CalculationEndresult::totalContracting($project) + CalculationEndresult::totalSubcontracting($project);\n	}\n\n	public static function totalContractingTax1($project) {\n		$total = 0;\n\n		$total += CalculationEndresult::conCalcLaborActivityTax1AmountTax($project);\n		$total += CalculationEndresult::conCalcMaterialActivityTax1AmountTax($project);\n		$total += CalculationEndresult::conCalcEquipmentActivityTax1AmountTax($project);\n\n		return $total;\n	}\n\n	public static function totalContractingTax2($project) {\n		$total = 0;\n\n		$total += CalculationEndresult::conCalcLaborActivityTax2AmountTax($project);\n		$total += CalculationEndresult::conCalcMaterialActivityTax2AmountTax($project);\n		$total += CalculationEndresult::conCalcEquipmentActivityTax2AmountTax($project);\n\n		return $total;\n	}\n\n	public static function totalSubcontractingTax1($project) {\n		$total = 0;\n\n		$total += CalculationEndresult::subconCalcLaborActivityTax1AmountTax($project);\n		$total += CalculationEndresult::subconCalcMaterialActivityTax1AmountTax($project);\n		$total += CalculationEndresult::subconCalcEquipmentActivityTax1AmountTax($project);\n\n		return $total;\n	}\n\n	public static function totalSubcontractingTax2($project) {\n		$total = 0;\n\n		$total += CalculationEndresult::subconCalcLaborActivityTax2AmountTax($project);\n		$total += CalculationEndresult::subconCalcMaterialActivityTax2AmountTax($project);\n		$total += CalculationEndresult::subconCalcEquipmentActivityTax2AmountTax($project);\n\n		return $total;\n	}\n\n	public static function totalProjectTax($project) {\n		return CalculationEndresult::totalContractingTax($project) + CalculationEndresult::totalSubcontractingTax($project);\n	}\n\n	public static function superTotalProject($project) {\n		return CalculationEndresult::totalProject($project) + CalculationEndresult::totalProjectTax($project);\n	}\n}\n",
+			"settings":
+			{
+				"buffer_size": 26756,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/calc/calculation.blade.php",
+			"settings":
+			{
+				"buffer_size": 92700,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/calc/estimate.blade.php",
+			"settings":
+			{
+				"buffer_size": 75080,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/calculus/EstimateEndresult.php",
+			"settings":
+			{
+				"buffer_size": 32763,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/controllers/CalcController.php",
+			"settings":
+			{
+				"buffer_size": 18984,
 				"line_ending": "Unix"
 			}
 		}
@@ -340,32 +392,34 @@
 		"/var/www/calctool-v2",
 		"/var/www/calctool-v2/app",
 		"/var/www/calctool-v2/app/calculus",
+		"/var/www/calctool-v2/app/controllers",
 		"/var/www/calctool-v2/app/views",
 		"/var/www/calctool-v2/app/views/base",
 		"/var/www/calctool-v2/app/views/calc",
-		"/var/www/calctool-v2/app/views/cost",
 		"/var/www/calctool-v2/app/views/generic",
 		"/var/www/calctool-v2/app/views/layout",
 		"/var/www/calctool-v2/app/views/user",
-		"/var/www/calctool-v2/public",
 		"/var/www/calctool-v2/public/js"
 	],
 	"file_history":
 	[
-		"/var/www/calctool-v2/app/views/calc/calculation.blade.php",
+		"/var/www/calctool-v2/app/controllers/ProjectController.php",
+		"/var/www/calctool-v2/app/controllers/CalcController.php",
+		"/var/www/calctool-v2/app/calculus/CalculationEndresult.php",
+		"/var/www/calctool-v2/app/controllers/CostController.php",
 		"/var/www/calctool-v2/app/views/user/edit_project.blade.php",
-		"/var/www/calctool-v2/app/calculus/TimesheetOverview.php",
+		"/var/www/calctool-v2/app/views/layout/footer.blade.php",
+		"/var/www/calctool-v2/app/routes.php",
 		"/var/www/calctool-v2/app/views/calc/estimate.blade.php",
+		"/var/www/calctool-v2/app/calculus/LessRegister.php",
+		"/var/www/calctool-v2/app/calculus/CalculationRegister.php",
+		"/var/www/calctool-v2/app/views/calc/less.blade.php",
+		"/var/www/calctool-v2/app/calculus/TimesheetOverview.php",
+		"/var/www/calctool-v2/app/views/calc/calculation.blade.php",
 		"/var/www/calctool-v2/app/views/calc/more.blade.php",
 		"/var/www/calctool-v2/app/calculus/EstimateOverview.php",
 		"/var/www/calctool-v2/app/database/seeds/TestProjectSeeder.php",
-		"/var/www/calctool-v2/app/routes.php",
-		"/var/www/calctool-v2/app/controllers/CostController.php",
-		"/var/www/calctool-v2/app/controllers/CalcController.php",
 		"/var/www/calctool-v2/app/calculus/CalculationOverview.php",
-		"/var/www/calctool-v2/app/calculus/CalculationRegister.php",
-		"/var/www/calctool-v2/app/calculus/CalculationEndresult.php",
-		"/var/www/calctool-v2/app/views/calc/less.blade.php",
 		"/var/www/calctool-v2/app/views/calc/invoice.blade.php",
 		"/var/www/calctool-v2/app/controllers/MoreController.php",
 		"/var/www/calctool-v2/app/calculus/MoreEndresult.php",
@@ -374,11 +428,9 @@
 		"/var/www/calctool-v2/app/database/migrations/2014_09_11_220407_create_calculation.php",
 		"/var/www/calctool-v2/app/views/base/home.blade.php",
 		"/var/www/calctool-v2/app/views/user/project.blade.php",
-		"/var/www/calctool-v2/app/calculus/LessRegister.php",
 		"/var/www/calctool-v2/app/views/user/new_relation.blade.php",
 		"/var/www/calctool-v2/app/views/user/edit_relation.blade.php",
 		"/var/www/calctool-v2/app/views/user/edit_contact.blade.php",
-		"/var/www/calctool-v2/app/controllers/ProjectController.php",
 		"/var/www/calctool-v2/public/js/iban.js",
 		"/var/www/calctool-v2/app/controllers/LessController.php",
 		"/var/www/calctool-v2/app/controllers/RelationController.php",
@@ -416,7 +468,6 @@
 		"/var/www/calctool-v2/app/views/user/new_project.blade.php",
 		"/var/www/calctool-v2/public/test.php",
 		"/var/www/calctool-v2/app/database/migrations/2014_09_11_193342_create_relation.php",
-		"/var/www/calctool-v2/app/views/layout/footer.blade.php",
 		"/var/www/calctool-v2/app/config/dev/session.php",
 		"/var/www/calctool-v2/app/config/session.php",
 		"/var/www/calctool-v2/app/config/services.php",
@@ -483,7 +534,7 @@
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 46.0
 	},
 	"find_in_files":
 	{
@@ -500,6 +551,11 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"();\n",
+			"CalculationEndresult",
+			"endresult",
+			"Aut",
+			"amount",
 			">\n",
 			"123",
 			"xdeleterow",
@@ -622,12 +678,7 @@
 			"asset",
 			"asse",
 			"9DB667",
-			"right",
-			"assets",
-			"89a550",
-			"assets",
-			"test_timesheet",
-			"contactF"
+			"right"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -635,6 +686,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"EstimateEndresult",
 			"127.0.0.1",
 			"719E00"
 		],
@@ -647,24 +699,24 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 6,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "app/views/user/edit_project.blade.php",
+					"file": "app/routes.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 19612,
+						"buffer_size": 10548,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								18874,
-								18874
+								1248,
+								1248
 							]
 						],
 						"settings":
@@ -673,32 +725,90 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 5625.0,
+						"translation.y": 405.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "app/calculus/TimesheetOverview.php",
+					"file": "app/views/calc/result.blade.php",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 888,
+						"buffer_size": 67277,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								614,
-								614
+								51523,
+								51523
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 13497.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/controllers/ResultController.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 593,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								19,
+								19
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 26756,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								45,
+								45
+							]
+						],
+						"settings":
+						{
+							"default_dir": "/var/www/calctool-v2/app/calculus",
+							"syntax": "Packages/HTML/HTML.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
@@ -706,6 +816,122 @@
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "app/views/calc/calculation.blade.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 92700,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								76790,
+								76790
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 22303.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "app/views/calc/estimate.blade.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 75080,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								62218,
+								62218
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 18042.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "app/calculus/EstimateEndresult.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 32763,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								29450,
+								29450
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 11790.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "app/controllers/CalcController.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 18984,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6265,
+								6265
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3600.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -762,7 +988,7 @@
 	"project": "calctool.sublime-project",
 	"replace":
 	{
-		"height": 42.0
+		"height": 86.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -785,12 +1011,12 @@
 	},
 	"select_symbol":
 	{
-		"height": 0.0,
+		"height": 392.0,
 		"last_filter": "",
 		"selected_items":
 		[
 		],
-		"width": 0.0
+		"width": 1196.0
 	},
 	"selected_group": 0,
 	"settings":
@@ -800,7 +1026,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 250.0,
+	"side_bar_width": 317.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
