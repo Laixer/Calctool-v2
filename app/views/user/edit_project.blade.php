@@ -538,6 +538,7 @@ $project = Project::find(Route::Input('project_id'));
 						</div>
 
 					</div>
+				</div>
 
 			<div class="row">
 					<div class="col-md-12">
