@@ -7,7 +7,7 @@ class CalculationOverview {
 
 /*--Calculation Overview - total per activitys--*/
 /*labor activity total*/
-	public static function laborActivity($activity) {
+	public static function laborActivity($rate, $activity) {
 		$row = NULL;
 		if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 			$row = EstimateLabor::where('activity_id', '=', $activity->id)->first();
@@ -15,7 +15,7 @@ class CalculationOverview {
 			$row = CalculationLabor::where('activity_id', '=', $activity->id)->first();
 		}
 
-		return $row['rate'] * $row['amount'];
+		return $rate * $row['amount'];
 	}
 
 	public static function laborTotal($activity) {
@@ -64,10 +64,10 @@ class CalculationOverview {
 	}
 
 /*Activity total*/
-	public static function activityTotalProfit($activity, $profit_mat, $profit_equip) {
+	public static function activityTotalProfit($rate, $activity, $profit_mat, $profit_equip) {
 		$total = 0;
 
-		$total += CalculationOverview::laborActivity($activity);
+		$total += CalculationOverview::laborActivity($rate, $activity);
 		$total += CalculationOverview::materialActivityProfit($activity, $profit_mat);
 		$total += CalculationOverview::equipmentActivityProfit($activity, $profit_equip);
 
@@ -175,7 +175,7 @@ class CalculationOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
 			{
-				$total += CalculationOverview::laborActivity($activity);
+				$total += CalculationOverview::laborActivity($project->hour_rate, $activity);
 			}
 		}
 		return $total;
@@ -188,7 +188,7 @@ class CalculationOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
 			{
-				$total += CalculationOverview::laborActivity($activity);
+				$total += CalculationOverview::laborActivity($project->hour_rate, $activity);
 			}
 		}
 		return $total;
@@ -227,7 +227,7 @@ class CalculationOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
 			{
-				$total += CalculationOverview::laborActivity($activity);
+				$total += CalculationOverview::laborActivity($project->hour_rate, $activity);
 			}
 		}
 		return $total;
