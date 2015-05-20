@@ -392,7 +392,7 @@ $project = Project::find(Route::Input('project_id'));
 												<th class="col-md-2">Gecalculeerde uren</th>
 												<th class="col-md-2">Geregistreerde uren</th>
 												<th class="col-md-1">Verschil</th>
-												<th class="col-md-1">Totaal</th>
+												<th class="col-md-1">Totaal aanneming</th>
 											</tr>
 										</thead>
 
@@ -405,10 +405,18 @@ $project = Project::find(Route::Input('project_id'));
 												<td class="col-md-2">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id), 2,",","."); }}</td>
 												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
 												<td class="col-md-1">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-1">{{ number_format(TimesheetOverview::calcTotal($project->hour_rate, $activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-1">{{ number_format(TimesheetOverview::calcTotalHour($project->hour_rate, $activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
 											</tr>
 											@endforeach
 											@endforeach
+											<tr>
+												<th class="col-md-2"><strong>Totaal aanneming</strong></th>
+												<th class="col-md-4">&nbsp;</th>
+												<td class="col-md-2"><strong><span class="pull-right">{{ number_format(TimesheetOverview::calcTotalCalculation($project), 2, ",",".") }}</span></strong></td>
+												<td class="col-md-2"><strong><span class="pull-right">{{ number_format(TimesheetOverview::calcTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(TimesheetOverview::calcTotalCalculation($project)-TimesheetOverview::calcTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(TimesheetOverview::calcTotalHourCalculation($project), 2, ",",".") }}</span></strong></td>
+											</tr>
 										</tbody>
 									</table>
 									</div>
@@ -426,7 +434,7 @@ $project = Project::find(Route::Input('project_id'));
 												<th class="col-md-2">Gecalculeerde uren</th>
 												<th class="col-md-2">Geregistreerde uren</th>
 												<th class="col-md-1">Verschil</th>
-												<th class="col-md-1">Totaal</th>
+												<th class="col-md-1">Totaal Stelposten</th>
 											</tr>
 										</thead>
 
@@ -439,10 +447,18 @@ $project = Project::find(Route::Input('project_id'));
 												<td class="col-md-2">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id), 2,",","."); }}</td>
 												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
 												<td class="col-md-1">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-1">{{ number_format(TimesheetOverview::estimTotal($project->hour_rate, $activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-1">{{ number_format(TimesheetOverview::estimTotalHour($project->hour_rate, $activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
 											</tr>
 											@endforeach
 											@endforeach
+											<tr>
+												<th class="col-md-2"><strong>Totaal onderaanneming</strong></th>
+												<th class="col-md-4">&nbsp;</th>
+												<td class="col-md-2"><strong><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalCalculation($project), 2, ",",".") }}</span></strong></td>
+												<td class="col-md-2"><strong><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalCalculation($project)-TimesheetOverview::estimTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(TimesheetOverview::estimTotalHourCalculation($project), 2, ",",".") }}</span></strong></td>
+											</tr>
 										</tbody>
 									</table>
 									</div>
