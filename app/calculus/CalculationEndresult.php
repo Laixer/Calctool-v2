@@ -81,7 +81,7 @@ class CalculationEndresult {
 					}
 					foreach ($rows as $row)
 					{
-						$total += $row->rate * $row->amount;
+						$total += $project->hour_rate * $row->amount;
 					}
 				}
 			}
@@ -105,7 +105,7 @@ class CalculationEndresult {
 					}
 					foreach ($rows as $row)
 					{
-						$total += $row->rate * $row->amount;
+						$total += $project->hour_rate * $row->amount;
 					}
 				}
 			}
@@ -129,7 +129,7 @@ class CalculationEndresult {
 					}
 					foreach ($rows as $row)
 					{
-						$total += $row->rate * $row->amount;
+						$total += $project->hour_rate * $row->amount;
 					}
 				}
 			}
