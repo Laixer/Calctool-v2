@@ -290,4 +290,43 @@ class ResultEndresult {
 	public static function superTotalProject($project) {
 		return ResultEndresult::totalProject($project) + ResultEndresult::totalProjectTax($project);
 	}
+
+	public static function totalTimesheet($project) {
+		$total = 0;
+
+		$chapters = Chapter::where('project_id','=', $project->id)->get();
+		foreach ($chapters as $chapter)
+		{
+			$activities = Activity::where('chapter_id','=', $chapter->id)->get();
+			foreach ($activities as $activity)
+			{
+				$hour_calc = Timesheet::where('activity_id','=', $activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','aanneming')->first()->id)->sum('register_hour');
+				$total += $project->hour_rate * $hour_calc;
+
+				$hour_estim = Timesheet::where('activity_id','=', $activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','stelpost')->first()->id)->sum('register_hour');
+				$total += $project->hour_rate * $hour_estim;
+
+				$hour_more = Timesheet::where('activity_id','=', $activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour');
+				$total += $project->hour_rate_more * $hour_more;
+			}
+		}
+
+		return $total;
+	}
+
+	public static function totalContractingPurchase($project) {
+		return Purchase::where('project_id','=',$project->id)->where('kind_id','=',PurchaseKind::where('kind_name','=','aanneming')->first()->id)->sum('amount');
+	}
+
+	public static function totalSubcontractingPurchase($project) {
+		return Purchase::where('project_id','=',$project->id)->where('kind_id','=',PurchaseKind::where('kind_name','=','onderaanneming')->first()->id)->sum('amount');
+	}
+
+	public static function totalContractingBudget($project) {
+		return ResultEndresult::totalContracting($project) - ResultEndresult::totalTimesheet($project) - ResultEndresult::totalContractingPurchase($project);
+	}
+
+	public static function totalSubcontractingBudget($project) {
+		return ResultEndresult::totalSubcontracting($project) - ResultEndresult::totalSubcontractingPurchase($project);
+	}
 }

@@ -336,6 +336,43 @@ $project = Project::find(Route::Input('project_id'));
 						</table>
 
 					</div>
+
+					<div id="budget" class="tab-pane">
+
+						<h4>Aanneming</h4>
+						<table class="table table-striped">
+							<?# -- table head -- ?>
+							<thead>
+								<tr>
+									<th class="col-md-4">&nbsp;</th>
+									<th class="col-md-2">Balans</th>
+									<th class="col-md-1">Urenregistratie</th>
+									<th class="col-md-1">Inkoop</th>
+									<th class="col-md-4">Winst / Verlies</th>
+								</tr>
+							</thead>
+
+							<!-- table items -->
+							<tbody>
+								<tr><!-- item -->
+									<td class="col-md-4">Aanneming</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalContracting($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::totalTimesheet($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::totalContractingPurchase($project), 2, ",",".") }}</td>
+									<td class="col-md-4">{{ '&euro; '.number_format(ResultEndresult::totalContractingBudget($project), 2, ",",".") }}</td>
+								</tr>
+								<tr><!-- item -->
+									<td class="col-md-4">Onderaanneming</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalSubcontracting($project), 2, ",",".") }}</td>
+									<td class="col-md-1">-</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::totalSubcontractingPurchase($project), 2, ",",".") }}</td>
+									<td class="col-md-4">{{ '&euro; '.number_format(ResultEndresult::totalSubcontractingBudget($project), 2, ",",".") }}</td>
+								</tr>
+							</tbody>
+						</table>
+
+					</div>
+
 				</div>
 
 			</div>

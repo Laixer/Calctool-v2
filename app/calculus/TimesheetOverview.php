@@ -41,4 +41,5 @@ class TimesheetOverview {
 
 		return $total;
 	}
+
 }
