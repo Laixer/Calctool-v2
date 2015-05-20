@@ -44,7 +44,7 @@ $project = Project::find(Route::Input('project_id'));
 					</li>
 					<li id="tab-hour_overview">
 						<a href="#hour_overview" data-toggle="tab">
-							<i class="fa fa-sort-amount-desc"></i> Winst / Verlies
+							<i class="fa fa-sort-amount-desc"></i> Uittrekstaat urenregistratie
 						</a>
 					</li>
 				</ul>
@@ -391,7 +391,8 @@ $project = Project::find(Route::Input('project_id'));
 												<th class="col-md-4">&nbsp;</th>
 												<th class="col-md-2">Gecalculeerde uren</th>
 												<th class="col-md-2">Geregistreerde uren</th>
-												<th class="col-md-2">Verschil</th>
+												<th class="col-md-1">Verschil</th>
+												<th class="col-md-1">Totaal</th>
 											</tr>
 										</thead>
 
@@ -403,7 +404,8 @@ $project = Project::find(Route::Input('project_id'));
 												<td class="col-md-4">{{ $activity->activity_name }}</td>
 												<td class="col-md-2">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id), 2,",","."); }}</td>
 												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-2">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-1">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-1">{{ number_format(TimesheetOverview::calcTotal($project->hour_rate, $activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
 											</tr>
 											@endforeach
 											@endforeach
@@ -423,7 +425,8 @@ $project = Project::find(Route::Input('project_id'));
 												<th class="col-md-4">&nbsp;</th>
 												<th class="col-md-2">Gecalculeerde uren</th>
 												<th class="col-md-2">Geregistreerde uren</th>
-												<th class="col-md-2">Verschil</th>
+												<th class="col-md-1">Verschil</th>
+												<th class="col-md-1">Totaal</th>
 											</tr>
 										</thead>
 
@@ -435,39 +438,8 @@ $project = Project::find(Route::Input('project_id'));
 												<td class="col-md-4">{{ $activity->activity_name }}</td>
 												<td class="col-md-2">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id), 2,",","."); }}</td>
 												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-2">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-											</tr>
-											@endforeach
-											@endforeach
-										</tbody>
-									</table>
-									</div>
-								</div>
-
-								<div class="toggle active">
-									<label>Meerwerk</label>
-									<div class="toggle-content">
-									<table class="table table-striped">
-										<?# -- table head -- ?>
-										<thead>
-											<tr>
-												<th class="col-md-2">&nbsp;</th>
-												<th class="col-md-4">&nbsp;</th>
-												<th class="col-md-2">&nbsp;</th>
-												<th class="col-md-2">&nbsp;</th>
-												<th class="col-md-2">Geregistreerde uren</th>
-											</tr>
-										</thead>
-
-										<tbody>
-											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
-											<tr>
-												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-4">{{ $activity->activity_name }}</td>
-												<td class="col-md-2">&nbsp;</td>
-												<td class="col-md-2">&nbsp;</td>
-												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-1">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-1">{{ number_format(TimesheetOverview::estimTotal($project->hour_rate, $activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
 											</tr>
 											@endforeach
 											@endforeach
