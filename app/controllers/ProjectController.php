@@ -75,7 +75,7 @@ class ProjectController extends \BaseController {
 
 			$project->save();
 
-			return Redirect::back()->with('success', 1);
+			return Redirect::to('project-'.$project->id.'/edit')->with('success', 'Opgeslagen');
 		}
 
 	}
@@ -141,7 +141,7 @@ class ProjectController extends \BaseController {
 
 			$project->save();
 
-			return Redirect::back()->with('success', 1);
+			return Redirect::back()->with('success', 'Aangepast');
 		}
 
 	}

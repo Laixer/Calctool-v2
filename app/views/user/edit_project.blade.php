@@ -84,7 +84,7 @@ $project = Project::find(Route::Input('project_id'));
 			@if(Session::get('success'))
 			<div class="alert alert-success">
 				<i class="fa fa-check-circle"></i>
-				<strong>Aangepast</strong>
+				<strong>{{ Session::get('success') }}</strong>
 			</div>
 			@endif
 
