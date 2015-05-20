@@ -150,7 +150,7 @@
 										<!-- table items -->
 										<tbody>
 											<tr>
-												<td class="col-md-4">{{ HTML::link('calculation/project-'.$project->id, $project->project_name) }}</td>
+												<td class="col-md-4">{{ HTML::link('project-'.$project->id.'/edit', $project->project_name) }}</td>
 												<td class="col-md-4">{{ $project->contactor->company_name }}</td>
 												<td class="col-md-4">{{ $project->address_street }}</td>
 											</tr>
