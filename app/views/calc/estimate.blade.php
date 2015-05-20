@@ -697,6 +697,9 @@ var n = this,
 				$.post("/estimate/resetlabor", {id: $curThis.closest("tr").attr("data-id")}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input[name='amount']").val(json.amount);
+					var rate = json.rate.toString().split('.').join('').replace(',', '.');
+					var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+					$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
 				}).fail(function(e) { console.log(e); });
 		});
 	});
