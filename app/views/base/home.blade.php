@@ -224,7 +224,7 @@
 						<div>-->
 							<!--<iframe width="600" height="311" src="http://www.youtube.com/embed/-bdKMT1znJ0"></iframe>-->
 							<video id="really-cool-video" class="video-js vjs-default-skin" controls preload="auto" width="540" height="311" data-setup='{}'>
-							  <source src="https://d1wst0behutosd.cloudfront.net/videos/1814740.mp4?Expires=1430230213&Signature=oF10GlGzRp~veV1kFI8ttTtG10aIGtK~rC0tA0LQ1Z6F69PLlYcsEhsjRfw3nwTGZyFgaZEiKRpr7h9R1LsKh0FRAHrFMCA0TTHX8gEvKdKwJLph2xIs2WGOin0v7dz8N6~u1NFseCBJUyBZWVsL5uv19sXWjvUvD-hl-iMwWGnSrZwLPb2gubDaJWP2SiM0kNkts0tA1M8c1bq3RmHaoOy68kpPzahEmlSVbzK0oiTfee3~5xisTPiTjwr~79Fz3X~ZkMtQxaK0cj2IG7vmI2hEkda5ykljorDwnvLIBswhTDow5MiyrtHoH5jRd4W6sjBPbtmd3v54FeZ~SyGrVQ__&Key-Pair-Id=APKAJJ6WELAPEP47UKWQ" type='video/mp4'>
+							  <source src="http://calctool.nl.webhosting78.transurl.nl/331663334.mp4" type='video/mp4'>
 							  <p class="vjs-no-js">
 							    To view this video please enable JavaScript, and consider upgrading to a web browser
 							    that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
