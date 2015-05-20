@@ -80,7 +80,6 @@ class EstimController extends BaseController {
 	public function doNewEstimateLabor()
 	{
 		$rules = array(
-			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'activity' => array('required','integer','min:0')
 		);
@@ -92,24 +91,9 @@ class EstimController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
-			$rate = Input::get('rate');
-			if (empty($rate)) {
-				$rate = Project::where('user_id','=', Auth::user()->id)->first()->hour_rate;
-			} else {
-				$rate = str_replace(',', '.', str_replace('.', '' , $rate));
-			}
-
-			/*$timesheet = Timesheet::create(array(
-				'register_date' => '09-10-2014',
-				'register_hour' => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
-				'part_id' => , // activity ->
-				'part_type_id' => PartType::where('type_name','=','estimate')->first()->id;
-				'detail_id' => ,
-				'project_id' => 1,
-			));*/
 
 			$labor = EstimateLabor::create(array(
-				"set_rate" => $rate,
+				"set_rate" => Project::where('user_id','=', Auth::user()->id)->first()->hour_rate,
 				"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
 				"activity_id" => Input::get('activity'),
 				"original" => false,
@@ -327,6 +311,25 @@ class EstimController extends BaseController {
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
 			EstimaetEquipment::destroy(Input::get('id'));
+
+			return json_encode(['success' => 1]);
+		}
+	}
+
+	public function doDeleteEstimateLabor()
+	{
+		$rules = array(
+			'id' => array('required','integer','min:0'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+			EstimateLabor::destroy(Input::get('id'));
 
 			return json_encode(['success' => 1]);
 		}

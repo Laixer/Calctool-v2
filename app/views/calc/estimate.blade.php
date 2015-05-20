@@ -702,6 +702,15 @@ var n = this,
 					$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
 				}).fail(function(e) { console.log(e); });
 		});
+		$("body").on("click", ".ldeleterow", function(){
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id"))
+				$.post("/estimate/deletelabor", {id: $curThis.closest("tr").attr("data-id")}, function(){
+					$curThis.closest("tr").find("input").val("0,00");
+					$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(0,2,',','.'));
+					$curThis.closest("tr").removeAttr("data-id");
+				}).fail(function(e) { console.log(e); });
+		});
 	});
 </script>
 
@@ -844,18 +853,19 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 														<?php }else{ ?>
-														@foreach (EstimateLabor::where('activity_id','=', $activity->id)->get() as $labor)
-														<tr data-id="{{ $labor->id }}">
+														<?php
+														$labor = EstimateLabor::where('activity_id','=', $activity->id)->first();
+														?>
+														<tr data-id="{{ $labor['id'] }}"><?# -- item -- ?>
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">{{ number_format($labor->original ? ($labor->isset ? $labor->set_rate : $labor->rate) : $labor->set_rate, 2,",",".") }}</td>
-															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format($labor->original ? ($labor->isset ? $labor->set_amount : $labor->amount) : $labor->set_amount, 2, ",",".") }}" class="form-control-sm-number labor-amount lsavee" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(EstimateRegister::estimLaborTotal($labor->original ? ($labor->isset ? $labor->set_rate : $labor->rate) : $labor->set_rate, $labor->original ? ($labor->isset ? $labor->set_amount : $labor->amount) : $labor->set_amount), 2, ",",".") }}</span></td>
+															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
+															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format($labor['original'] ? ($labor['isset'] ? $labor['set_amount'] : $labor['amount']) : $labor['set_amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsavee" /></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(EstimateRegister::estimLaborTotal($project->hour_rate, $labor['original'] ? ($labor['isset'] ? $labor['set_amount'] : $labor['amount']) : $labor['set_amount']), 2, ",",".") }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1 text-right"><button class="btn btn-warning btn-xs lresetrow fa fa-undo"></button></td>
+															<td class="col-md-1 text-right"><button class="btn {{ ($labor['original'] ? 'btn-warning fa-undo lresetrow' : 'btn-danger ldeleterow fa-times' ) }} btn-xs fa"></button></td>
 														</tr>
-														@endforeach
 														<?php } ?>
 													</tbody>
 												</table>
