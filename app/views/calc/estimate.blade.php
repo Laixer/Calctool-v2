@@ -649,6 +649,10 @@ var n = this,
 					$curThis.closest("tr").find("input[name='unit']").val(json.unit);
 					$curThis.closest("tr").find("input[name='rate']").val(json.rate);
 					$curThis.closest("tr").find("input[name='amount']").val(json.amount);
+					var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
+					var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+					$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+					$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+{{$project->profit_calc_contr_mat}})/100),2,',','.'));
 				}).fail(function(e) { console.log(e); });
 		});
 		$("body").on("click", ".edeleterow", function(){
@@ -667,6 +671,10 @@ var n = this,
 					$curThis.closest("tr").find("input[name='unit']").val(json.unit);
 					$curThis.closest("tr").find("input[name='rate']").val(json.rate);
 					$curThis.closest("tr").find("input[name='amount']").val(json.amount);
+					var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
+					var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+					$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+					$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+{{$project->profit_calc_contr_equip}})/100),2,',','.'));
 				}).fail(function(e) { console.log(e); });
 		});
 		$("body").on("click", ".sdeleterowe", function(){
