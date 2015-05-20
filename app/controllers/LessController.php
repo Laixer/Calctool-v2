@@ -15,102 +15,6 @@ class LessController extends BaseController {
 	|
 	*/
 
-	/*public function doNewLessMaterial()
-	{
-		$rules = array(
-			'name' => array('required','max:50'),
-			'unit' => array('required','max:10'),
-			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'activity' => array('required','integer','min:0')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-			$material = EstimateMaterial::create(array(
-				"set_material_name" => Input::get('name'),
-				"set_unit" => Input::get('unit'),
-				"set_rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
-				"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
-				"activity_id" => Input::get('activity'),
-				"original" => false,l
-				"isset" => true
-			));
-
-			return json_encode(['success' => 1, 'id' => $material->id]);
-		}
-	}
-
-	public function doNewEstimateEquipment()
-	{
-		$rules = array(
-			'name' => array('required','max:50'),
-			'unit' => array('required','max:10'),
-			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'activity' => array('required','integer','min:0')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-			$equipment = EstimateEquipment::create(array(
-				"set_equipment_name" => Input::get('name'),
-				"set_unit" => Input::get('unit'),
-				"set_rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
-				"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
-				"activity_id" => Input::get('activity'),
-				"original" => false,
-				"isset" => true
-			));
-
-			return json_encode(['success' => 1, 'id' => $equipment->id]);
-		}
-	}
-
-	public function doNewEstimateLabor()
-	{
-		$rules = array(
-			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'activity' => array('required','integer','min:0')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-			$rate = Input::get('rate');
-			if (empty($rate)) {
-				$rate = Project::where('user_id','=', Auth::user()->id)->first()->hour_rate;
-			} else {
-				$rate = str_replace(',', '.', str_replace('.', '' , $rate));
-			}
-
-			$labor = EstimateLabor::create(array(
-				"set_rate" => $rate,
-				"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
-				"set_activity_id" => Input::get('activity'),
-				"original" => false,
-				"isset" => true
-			));
-
-			return json_encode(['success' => 1, 'id' => $labor->id]);
-		}
-	}*/
-
 	public function doUpdateMaterial()
 	{
 		$rules = array(
@@ -126,9 +30,17 @@ class LessController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
+			$rate = str_replace(',', '.', str_replace('.', '' , Input::get('rate')));
+			$amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
 			$material = CalculationMaterial::find(Input::get('id'));
-			$material->less_rate = str_replace(',', '.', str_replace('.', '' , Input::get('rate')));
-			$material->less_amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
+			if ($rate > $material->rate)
+				return json_encode(['success' => 0, 'message' => 'rate too large', 'rate' => $material->rate, 'amount' => $material->amount]);
+
+			$material->less_rate = $rate;
+			if ($amount > $material->amount)
+				return json_encode(['success' => 0, 'message' => 'amount too large', 'rate' => $material->rate, 'amount' => $material->amount]);
+
+			$material->less_amount = $amount;
 			$material->isless = True;
 
 			$material->save();
@@ -152,9 +64,17 @@ class LessController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
+			$rate = str_replace(',', '.', str_replace('.', '' , Input::get('rate')));
+			$amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
 			$equipment = CalculationEquipment::find(Input::get('id'));
-			$equipment->less_rate = str_replace(',', '.', str_replace('.', '' , Input::get('rate')));
-			$equipment->less_amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
+			if ($rate > $equipment->rate)
+				return json_encode(['success' => 0, 'message' => 'rate too large', 'rate' => $equipment->rate, 'amount' => $equipment->amount]);
+
+			$equipment->less_rate = $rate;
+			if ($amount > $equipment->amount)
+				return json_encode(['success' => 0, 'message' => 'amount too large', 'rate' => $equipment->rate, 'amount' => $equipment->amount]);
+
+			$equipment->less_amount = $amount;
 			$equipment->isless = True;
 
 			$equipment->save();
@@ -177,8 +97,12 @@ class LessController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
+			$amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
 			$labor = CalculationLabor::find(Input::get('id'));
-			$labor->less_amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
+			if ($amount > $labor->amount)
+				return json_encode(['success' => 0, 'message' => 'amount too large', 'amount' => $labor->amount]);
+
+			$labor->less_amount = $amount;
 			$labor->isless = True;
 
 			$labor->save();
@@ -260,43 +184,5 @@ class LessController extends BaseController {
 		}
 
 	}
-/*
-	public function doDeleteEstimateMaterial()
-	{
-		$rules = array(
-			'id' => array('required','integer','min:0'),
-		);
 
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-			EstimateMaterial::destroy(Input::get('id'));
-
-			return json_encode(['success' => 1]);
-		}
-	}
-
-	public function doDeleteEstimateEquipment()
-	{
-		$rules = array(
-			'id' => array('required','integer','min:0'),
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-			EstimaetEquipment::destroy(Input::get('id'));
-
-			return json_encode(['success' => 1]);
-		}
-	}
-*/
 }

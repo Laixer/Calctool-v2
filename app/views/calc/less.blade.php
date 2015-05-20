@@ -120,25 +120,30 @@ var n = this,
 					activity: $curThis.closest("table").attr("data-id")
 				}, function(data){
 					var json = $.parseJSON(data);
-					$curThis.closest("tr").find("input").removeClass("error-input");
-					if (json.success) {
-						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
-						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
-						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+					if (!json.success) {
+						$curThis.closest("tr").find("input[name='rate']").val($.number(json.rate,2,',','.')),
+						$curThis.closest("tr").find("input[name='amount']").val($.number(json.amount,2,',','.'))
 					} else {
-						$.each(json.message, function(i, item) {
-							if(json.message['name'])
-								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-							if(json.message['unit'])
-								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-							if(json.message['rate'])
-								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-							if(json.message['amount'])
-								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-						});
+						$curThis.closest("tr").find("input").removeClass("error-input");
+						if (json.success) {
+							$curThis.closest("tr").attr("data-id", json.id);
+							var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
+							var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+							var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
+							$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+							$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+						} else {
+							$.each(json.message, function(i, item) {
+								if(json.message['name'])
+									$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+								if(json.message['unit'])
+									$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+								if(json.message['rate'])
+									$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+								if(json.message['amount'])
+									$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+							});
+						}
 					}
 				}).fail(function(e){
 					console.log(e);
@@ -155,25 +160,30 @@ var n = this,
 					activity: $curThis.closest("table").attr("data-id")
 				}, function(data){
 					var json = $.parseJSON(data);
-					$curThis.closest("tr").find("input").removeClass("error-input");
-					if (json.success) {
-						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
-						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
-						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+					if (!json.success) {
+						$curThis.closest("tr").find("input[name='rate']").val($.number(json.rate,2,',','.')),
+						$curThis.closest("tr").find("input[name='amount']").val($.number(json.amount,2,',','.'))
 					} else {
-						$.each(json.message, function(i, item) {
-							if(json.message['name'])
-								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-							if(json.message['unit'])
-								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-							if(json.message['rate'])
-								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-							if(json.message['amount'])
-								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-						});
+						$curThis.closest("tr").find("input").removeClass("error-input");
+						if (json.success) {
+							$curThis.closest("tr").attr("data-id", json.id);
+							var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
+							var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+							var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
+							$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+							$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+						} else {
+							$.each(json.message, function(i, item) {
+								if(json.message['name'])
+									$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+								if(json.message['unit'])
+									$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+								if(json.message['rate'])
+									$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+								if(json.message['amount'])
+									$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+							});
+						}
 					}
 				}).fail(function(e){
 					console.log(e);
@@ -190,28 +200,32 @@ var n = this,
 					activity: $curThis.closest("table").attr("data-id")
 				}, function(data){
 					var json = $.parseJSON(data);
-					$curThis.closest("tr").find("input").removeClass("error-input");
-					if (json.success) {
-						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = $curThis.closest("tr").find("input[name='rate']").val()
-						if (rate) {
-							rate.toString().split('.').join('').replace(',', '.');
-						} else {
-							rate = {{$project->hour_rate}};
-						}
-						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+					if (!json.success) {
+						$curThis.closest("tr").find("input[name='amount']").val($.number(json.amount,2,',','.'))
 					} else {
-						$.each(json.message, function(i, item) {
-							if(json.message['name'])
-								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-							if(json.message['unit'])
-								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-							if(json.message['rate'])
-								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-							if(json.message['amount'])
-								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-						});
+						$curThis.closest("tr").find("input").removeClass("error-input");
+						if (json.success) {
+							$curThis.closest("tr").attr("data-id", json.id);
+							var rate = $curThis.closest("tr").find("input[name='rate']").val()
+							if (rate) {
+								rate.toString().split('.').join('').replace(',', '.');
+							} else {
+								rate = {{$project->hour_rate}};
+							}
+							var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+							$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+						} else {
+							$.each(json.message, function(i, item) {
+								if(json.message['name'])
+									$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+								if(json.message['unit'])
+									$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+								if(json.message['rate'])
+									$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+								if(json.message['amount'])
+									$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+							});
+						}
 					}
 				}).fail(function(e){
 					console.log(e);
