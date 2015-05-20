@@ -218,3 +218,7 @@ background-color: #4E4E4E !important;
     border-left-color: #79BB00;
 }
 /*a;s de knop niet beschikbaar is moet deze grijs (niet selecteerbaar) zijn.*/
+
+.fix-footer-bottom {
+    margin-bottom: 40px;
+}

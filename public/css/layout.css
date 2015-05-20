@@ -1377,6 +1377,10 @@ footer  {
 	color:#87919F;
 	font-size:13px;
 	overflow:hidden;
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+	z-index: 100;
 }
 footer a, footer a:hover {
 	color:#fff;

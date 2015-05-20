@@ -8,7 +8,7 @@ $project = Project::find(Route::Input('project_id'));
 
 <div id="wrapper">
 
-	<section class="container">
+	<section class="container fix-footer-bottom">
 
 		<div class="col-md-12">
 

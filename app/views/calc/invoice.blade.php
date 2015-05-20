@@ -9,7 +9,7 @@ $relation = Relation::find($project->client_id);
 <?# -- WRAPPER -- ?>
 <div id="wrapper">
 
-	<section class="container printable">
+	<section class="container printable fix-footer-bottom">
 
 		<div class="col-md-12">
 
