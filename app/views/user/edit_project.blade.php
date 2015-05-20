@@ -355,7 +355,7 @@ $project = Project::find(Route::Input('project_id'));
 												<td class="col-md-4">
 													<select name="activity" id="activity" class="form-control-sm-text">
 													@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-													@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
+													@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
 														<option value="{{ $activity->id }}">{{ $activity->activity_name }}</option>
 													@endforeach
 													@endforeach
@@ -496,7 +496,7 @@ $project = Project::find(Route::Input('project_id'));
 
 										<tbody>
 											@foreach (Purchase::where('project_id','=', $project->id)->get() as $purchase)
-											<tr data-id="{{ $timesheet->id }}">
+											<tr data-id="{{ $purchase->id }}">
 												<td class="col-md-1">{{ $purchase->register_date }}</td>
 												<td class="col-md-4">{{ Relation::find($purchase->relation_id)->company_name }}</td>
 												<td class="col-md-1">{{ number_format($purchase->amount, 2,",",".") }}</td>
