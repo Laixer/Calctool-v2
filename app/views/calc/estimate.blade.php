@@ -724,7 +724,7 @@ var n = this,
 				<a href="/"> Home</a>
 				<a href="/project-{{ $project->id }}/edit">Project</a>
 				<a href="/calculation/project-{{ $project->id }}">Calculatie</a>
-				<a href="#">Offerte</a>
+				<a href="/offer/project-{{ $project->id }}">Offerte</a>
 				<a href="javascript:void(0);" class="current">Stelpost</a>
 				<a href="/less/project-{{ $project->id }}">Minderwerk</a>
 				<a href="/more/project-{{ $project->id }}">Meerwerk</a>

@@ -27,7 +27,7 @@ $relation = Relation::find($project->client_id);
 
 		<hr />
 
-		<h2><strong>Factuur</strong></h2>
+		<h2><strong>Offerte</strong></h2>
 
 			<div class="white-row">
 

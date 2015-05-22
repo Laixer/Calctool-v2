@@ -102,7 +102,7 @@ $project = Project::find(Route::Input('project_id'));
 			    <a href="/"> Home</a>
 			    <a href="javascript:void(0);" class="current">Project</a>
 			    <a href="/calculation/project-{{ $project->id }}">Calculatie</a>
-			    <a href="#">Offerte</a>
+			    <a href="/offer/project-{{ $project->id }}">Offerte</a>
 		    	<a href="/estimate/project-{{ $project->id }}">Stelpost</a>
 		  		<a href="/less/project-{{ $project->id }}">Minderwerk</a>
 		  		<a href="/more/project-{{ $project->id }}">Meerwerk</a>

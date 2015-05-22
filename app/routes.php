@@ -55,7 +55,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('calculation/deleteactivity', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteActivity'));
 	Route::post('calculation/deletechapter', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteChapter'));
 	Route::get('invoice/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoice'))->where('project_id', '[0-9]+');
-	Route::get('invoicepdf/project-{project_id}', array('as' => 'invoicepdf', 'uses' => 'CalcController@getInvoicepdf'))->where('project_id', '[0-9]+');
+	Route::get('invoice/project-{project_id}/pdf', array('as' => 'invoicepdf', 'uses' => 'CalcController@getInvoicepdf'))->where('project_id', '[0-9]+');
 	Route::get('offer/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOffer'))->where('project_id', '[0-9]+');
 
 	/* Calculation acions by calculation */
