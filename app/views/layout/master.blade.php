@@ -22,7 +22,6 @@
 		{{ HTML::style('plugins/owl-carousel/owl.theme.css') }}
 		{{ HTML::style('plugins/owl-carousel/owl.transitions.css') }}
 		{{ HTML::style('plugins/magnific-popup/magnific-popup.css') }}
-		{{ HTML::style('plugins/fuelux/fuelux.min.css') }}
 		{{ HTML::style('css/animate.css') }}
 		{{ HTML::style('css/superslides.css') }}
 
@@ -81,7 +80,6 @@
 		{{ HTML::script('plugins/knob/js/jquery.knob.js') }}
 		{{ HTML::script('plugins/jquery.backstretch.min.js') }}
 		{{ HTML::script('plugins/superslides/dist/jquery.superslides.min.js') }}
-		{{ HTML::script('plugins/fuelux/fuelux.min.js') }}
 
 		{{ HTML::script('js/scripts.js') }}
 

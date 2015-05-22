@@ -1,9 +1,9 @@
 /bootstrap/compiled.php
-composer.phar
 composer.lock
 vendor/
 .env.*.php
 .env.php
+.env*
 .DS_Store
 Thumbs.db
 TODO
