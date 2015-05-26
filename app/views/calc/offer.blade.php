@@ -2,7 +2,8 @@
 $project = Project::find(Route::Input('project_id'));
 $relation = Relation::find($project->client_id);
 $relation_self = Relation::find(Auth::user()->self_id);
-$iban_self = Iban::find($relation_self->id);
+//$iban_self = Iban::find($relation_self->id);
+$contact_self = Contact::where('relation_id','=',$relation_self->id)
 ?>
 
 @extends('layout.master')
@@ -89,6 +90,7 @@ $iban_self = Iban::find($relation_self->id);
 						<ul class="list-unstyled">
 							<li><strong>Naam:</strong> {{ $relation->company_name }}</li>
 							<li><strong>Voornaam:</strong> Doe</li>
+							<li>{{ $relation->address_street . ' ' . $relation->address_number }}<br /> {{ $relation->address_postal . ', ' . $relation->address_city }}</li>
 							<li><strong>Land:</strong> U.S.A.</li>
 						</ul>
 
@@ -96,11 +98,15 @@ $iban_self = Iban::find($relation_self->id);
 
 					<div class="col-sm-6">
 
-						<h4><strong>Betalingsgegevens</strong></h4>
+						<h4><strong>Opdrachtgever</strong></h4>
 						<ul class="list-unstyled">
-							<li><strong>Bank:</strong> {{ $iban_self->iban }}</li>
-							<li><strong>BTWnr:</strong> {{ $relation_self->btw }}</li>
-							<li><strong>KVK:</strong> {{ $relation_self->kvk }}</li>
+							<li><strong>{{ $relation_self->company_name }}</strong></li>
+							<!--<li><strong>t.a.v.:</strong> {{ $relation_self->company_name }}</li>-->
+							<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}<br /> {{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
+							<li>{{ $relation_self->phone }}</li>
+							<li>{{ $relation_self->email }}</li>
+							<li><strong>KVK:</strong>{{ $relation_self->kvk }}</li>
+							<!--<li><strong>Naam:</strong> {{-- $relation_self->company_name --}}</li>-->
 							<!--<li><strong>V.A.T Reg #:</strong> VAT5678901CODE</li>-->
 						</ul>
 
@@ -407,7 +413,214 @@ $iban_self = Iban::find($relation_self->id);
 					<p>Deze offerte doet stand tot <a href="javascript:void(0);" style="border-bottom: 0" id="endtime" data-type="select" data-title="Stand offerte"></a> na dagtekening</p>
 
 				</div>
-			<!--</div>-->
+
+			<div class="white-row">
+
+				<div class="row">
+
+					<div class="col-sm-6">
+						<img class="img-responsive" src="/images/logo2.png" style="height: 75px;" alt="" />
+					</div>
+
+					<div class="col-sm-6 text-right">
+						<p>
+							#{{ sprintf("%06d", $project->id) }} &bull; <strong>{{ date("j M Y") }}</strong>
+							<br />
+							{{ $project->project_name }}
+						</p>
+					</div>
+
+				</div>
+
+				<hr class="margin-top10 margin-bottom10" /><!-- separator -->
+
+				<!-- DETAILS -->
+				<div class="row">
+
+					<div class="col-sm-6">
+
+						<h4><strong>Klantgegevens</strong></h4>
+						<ul class="list-unstyled">
+							<li><strong>Naam:</strong> {{ $relation->company_name }}</li>
+							<li><strong>Voornaam:</strong> Doe</li>
+							<li>{{ $relation->address_street . ' ' . $relation->address_number }}<br /> {{ $relation->address_postal . ', ' . $relation->address_city }}</li>
+							<li><strong>Land:</strong> U.S.A.</li>
+						</ul>
+
+					</div>
+
+					<div class="col-sm-6">
+
+						<h4><strong>Opdrachtgever</strong></h4>
+						<ul class="list-unstyled">
+							<li><strong>{{ $relation_self->company_name }}</strong></li>
+							<!--<li><strong>t.a.v.:</strong> {{ $relation_self->company_name }}</li>-->
+							<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}<br /> {{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
+							<li>{{ $relation_self->phone }}</li>
+							<li>{{ $relation_self->email }}</li>
+							<li><strong>KVK:</strong>{{ $relation_self->kvk }}</li>
+							<!--<li><strong>Naam:</strong> {{-- $relation_self->company_name --}}</li>-->
+							<!--<li><strong>V.A.T Reg #:</strong> VAT5678901CODE</li>-->
+						</ul>
+
+					</div>
+
+				</div>
+				<!-- /DETAILS -->
+
+				<!--<div class="panel-body">-->
+
+					<p><a id="description" href="javascript:void(0);" style="border-bottom: 0" data-type="textarea">Geef hier een omschrijving voor op de offerte</a></p>
+
+					<div class="toogle">
+
+						<div class="toggle toggle-chapter active">
+							<label>Aanneming</label>
+							<div class="toggle-content">
+
+								<table class="table table-striped">
+									<?# -- table head -- ?>
+									<thead>
+										<tr>
+											<th class="col-md-2">&nbsp;</th>
+											<th class="col-md-3">&nbsp;</th>
+											<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
+											<th class="col-md-1"><span class="pull-right">Arbeid</th>
+											<th class="col-md-1"><span class="pull-right">Materiaal</th>
+											<th class="col-md-1"><span class="pull-right">Materieel</th>
+											<th class="col-md-1"><span class="pull-right">Totaal</th>
+											<th class="col-md-1"><span class="text-center">Stelpost</th>
+										</tr>
+									</thead>
+
+									<!-- table items -->
+									<tbody>
+										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+										<tr><!-- item -->
+											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+											<td class="col-md-3">{{ $activity->activity_name }}</td>
+											<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
+											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
+											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
+											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
+											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
+											<td class="col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
+										</tr>
+										@endforeach
+										@endforeach
+										<tr><!-- item -->
+											<th class="col-md-3"><strong>Totaal aanneming</strong></th>
+											<th class="col-md-2">&nbsp;</th>
+											<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::contrLaborTotalAmount($project) }}</span></strong></td>
+											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
+											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
+											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
+											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
+											<th class="col-md-1">&nbsp;</th>
+										</tr>
+									</tbody>
+								</table>
+
+							</div>
+						</div>
+
+						<div class="toggle toggle-chapter active">
+							<label>Onderaanneming</label>
+							<div class="toggle-content">
+
+								<table class="table table-striped">
+									<?# -- table head -- ?>
+									<thead>
+										<tr>
+											<th class="col-md-2">&nbsp;</th>
+											<th class="col-md-3">&nbsp;</th>
+											<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
+											<th class="col-md-1"><span class="pull-right">Arbeid</th>
+											<th class="col-md-1"><span class="pull-right">Materiaal</th>
+											<th class="col-md-1"><span class="pull-right">Materieel</th>
+											<th class="col-md-1"><span class="pull-right">Totaal</th>
+											<th class="col-md-1"><span class="text-center">Stelpost</th>
+										</tr>
+									</thead>
+
+									<!-- table items -->
+									<tbody>
+										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+										<tr><!-- item -->
+											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+											<td class="col-md-3">{{ $activity->activity_name }}</td>
+											<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
+											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
+											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
+											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
+											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
+											<td class="col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
+										</tr>
+										@endforeach
+										@endforeach
+										<tr><!-- item -->
+											<th class="col-md-3"><strong>Totaal onderaanneming</strong></th>
+											<th class="col-md-2">&nbsp;</th>
+											<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::subcontrLaborTotalAmount($project) }}</span></strong></td>
+											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
+											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
+											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
+											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
+											<th class="col-md-1">&nbsp;</th>
+										</tr>
+									</tbody>
+								</table>
+
+							</div>
+						</div>
+
+						<div class="toggle toggle-chapter active">
+							<label>Totalen project</label>
+							<div class="toggle-content">
+								<table class="table table-striped">
+									<?# -- table head -- ?>
+									<thead>
+										<tr>
+											<th class="col-md-3">&nbsp;</th>
+											<th class="col-md-2">&nbsp;</th>
+											<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
+											<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
+											<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
+											<th class="col-md-1"><span class="pull-right">Materieel</span></th>
+											<th class="col-md-1"><span class="pull-right">Totaal</span></th>
+											<th class="col-md-1">&nbsp;</th>
+										</tr>
+									</thead>
+
+									<!-- table items -->
+									<tbody>
+										<tr><!-- item -->
+											<th class="col-md-3">&nbsp;</th>
+											<th class="col-md-2">&nbsp;</th>
+											<td class="col-md-1"><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>
+											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
+											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
+											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
+											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
+											<th class="col-md-1">&nbsp;</th>
+										</tr>
+									</tbody>
+								</table>
+								<h5>Weergegeven bedragen zijn exclusief BTW</h5>
+							</div>
+						</div>
+
+					</div>
+
+					<p><a id="closure" href="javascript:void(0);" style="border-bottom: 0" data-type="textarea">Zet hier een voetnoot</a></p>
+
+					<p>Wij kunnen de werkzaamheden starten binnen <a href="javascript:void(0);" style="border-bottom: 0" id="starttime" data-type="select" data-title="Starten werkzaamheden"></a> na dagtekening</p>
+
+					<p>Deze offerte doet stand tot <a href="javascript:void(0);" style="border-bottom: 0" id="endtime" data-type="select" data-title="Stand offerte"></a> na dagtekening</p>
+
+				</div>
 
 			<hr class="half-margins invisible" /><!-- separator -->
 
