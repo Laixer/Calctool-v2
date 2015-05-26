@@ -24,6 +24,7 @@
 		{{ HTML::style('plugins/magnific-popup/magnific-popup.css') }}
 		{{ HTML::style('css/animate.css') }}
 		{{ HTML::style('css/superslides.css') }}
+		{{ HTML::style('plugins/x-editable/css/bootstrap-editable.css') }}
 
 		<?# -- SHOP CSS -- ?>
 		{{ HTML::style('css/shop.css') }}
@@ -80,6 +81,7 @@
 		{{ HTML::script('plugins/knob/js/jquery.knob.js') }}
 		{{ HTML::script('plugins/jquery.backstretch.min.js') }}
 		{{ HTML::script('plugins/superslides/dist/jquery.superslides.min.js') }}
+		{{ HTML::script('plugins/x-editable/js/bootstrap-editable.min.js') }}
 
 		{{ HTML::script('js/scripts.js') }}
 
