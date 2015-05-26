@@ -176,6 +176,30 @@ class TestProjectSeeder extends Seeder {
 			'country_id' => $test_country->id
 		));
 
+		$test_relation3 = Relation::create(array(
+			'company_name' => 'MyCorp',
+			'address_street' => 'Dorpsweg',
+			'address_number' => '1',
+			'address_postal' => '2045ER',
+			'address_city' => 'Breda',
+			'kvk' => '473264967312',
+			'btw' => 'NL246963512B01',
+			'debtor_code' => 'JYFEGHD734',
+			'phone' => '0640174372',
+			'email' => 'info@mycorp.com',
+			'note' => 'Dit ben ik zelf',
+			'website' => 'http://www.mycorp.com',
+			'logo_id' => $test_resource1->id,
+			'user_id' => $test_user->id,
+			'type_id' => $test_type_name->id,
+			'kind_id' => $test_kind_name->id,
+			'province_id' => $test_province->id,
+			'country_id' => $test_country->id
+		));
+
+		$test_user->self_id = $test_relation3->id;
+		$test_user->save();
+
 	$this->command->info('Relation created');
 
 		$test_project = Project::create(array(
@@ -245,6 +269,17 @@ class TestProjectSeeder extends Seeder {
 			'function_id' => $test_contact_function->id
 		));
 
+		Contact::create(array(
+			'firstname' => 'H',
+			'lastname' => 'Blub',
+			'email' => 'h@mycorp.com',
+			'mobile' => '0612345678',
+			'phone' => '0101234567',
+			'note' => 'Dit ben ik',
+			'relation_id' => $test_relation3->id,
+			'function_id' => $test_contact_function->id
+		));
+
 	$this->command->info('Contact created');
 
 		Iban::create(array(
@@ -259,6 +294,13 @@ class TestProjectSeeder extends Seeder {
 			'iban_name' => 'system_iban',
 			'user_id' => $test_user->id,
 			'relation_id' => $test_relation2->id,
+		));
+
+		Iban::create(array(
+			'iban' => 'NL76ANBA0145672396',
+			'iban_name' => 'MyCorp',
+			'user_id' => $test_user->id,
+			'relation_id' => $test_relation3->id,
 		));
 
 	$this->command->info('Iban created');

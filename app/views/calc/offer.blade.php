@@ -1,6 +1,8 @@
 <?php
 $project = Project::find(Route::Input('project_id'));
 $relation = Relation::find($project->client_id);
+$relation_self = Relation::find(Auth::user()->self_id);
+$iban_self = Iban::find($relation_self->id);
 ?>
 
 @extends('layout.master')
@@ -83,7 +85,7 @@ $relation = Relation::find($project->client_id);
 
 					<div class="col-sm-6">
 
-						<h4><strong>Client</strong> Details</h4>
+						<h4><strong>Klantgegevens</strong></h4>
 						<ul class="list-unstyled">
 							<li><strong>Naam:</strong> {{ $relation->company_name }}</li>
 							<li><strong>Voornaam:</strong> Doe</li>
@@ -94,12 +96,12 @@ $relation = Relation::find($project->client_id);
 
 					<div class="col-sm-6">
 
-						<h4><strong>Payment</strong> Details</h4>
+						<h4><strong>Betalingsgegevens</strong></h4>
 						<ul class="list-unstyled">
-							<li><strong>Bank Name:</strong> 012345678901</li>
-							<li><strong>Account Number:</strong> 012345678901</li>
-							<li><strong>SWIFT Code:</strong> SWITCH012345678CODE</li>
-							<li><strong>V.A.T Reg #:</strong> VAT5678901CODE</li>
+							<li><strong>Bank:</strong> {{ $iban_self->iban }}</li>
+							<li><strong>BTWnr:</strong> {{ $relation_self->btw }}</li>
+							<li><strong>KVK:</strong> {{ $relation_self->kvk }}</li>
+							<!--<li><strong>V.A.T Reg #:</strong> VAT5678901CODE</li>-->
 						</ul>
 
 					</div>
