@@ -472,11 +472,7 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 
 					<p><a id="description" href="javascript:void(0);" style="border-bottom: 0" data-type="textarea">Geef hier een omschrijving voor op de offerte</a></p>
 
-					<div class="toogle">
-
-						<div class="toggle toggle-chapter active">
-							<label>Aanneming</label>
-							<div class="toggle-content">
+								<h4>Aanneming</h4>
 
 								<table class="table table-striped">
 									<?# -- table head -- ?>
@@ -522,12 +518,7 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 									</tbody>
 								</table>
 
-							</div>
-						</div>
-
-						<div class="toggle toggle-chapter active">
-							<label>Onderaanneming</label>
-							<div class="toggle-content">
+								<h4>Onderaanneming</h4>
 
 								<table class="table table-striped">
 									<?# -- table head -- ?>
@@ -573,12 +564,8 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 									</tbody>
 								</table>
 
-							</div>
-						</div>
+								<h4>Totalen project</h4>
 
-						<div class="toggle toggle-chapter active">
-							<label>Totalen project</label>
-							<div class="toggle-content">
 								<table class="table table-striped">
 									<?# -- table head -- ?>
 									<thead>
@@ -609,10 +596,7 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 									</tbody>
 								</table>
 								<h5>Weergegeven bedragen zijn exclusief BTW</h5>
-							</div>
-						</div>
 
-					</div>
 
 					<p><a id="closure" href="javascript:void(0);" style="border-bottom: 0" data-type="textarea">Zet hier een voetnoot</a></p>
 

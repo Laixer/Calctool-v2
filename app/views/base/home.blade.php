@@ -57,7 +57,7 @@
 					<div class="featured-box nobg">
 						<div class="box-content">
 							<i class="fa fa-calendar"></i>
-							<h5>Uren registratie</h5>
+							<h5>Uren</h5>
 						</div>
 					</div>
 				</div>
@@ -65,7 +65,7 @@
 					<div class="featured-box nobg">
 						<div class="box-content">
 							<i class="fa fa-shopping-cart"></i>
-							<h5>Inkoop facturen</h5>
+							<h5>Inkoop</h5>
 						</div>
 					</div>
 				</div>
@@ -73,7 +73,7 @@
 					<div class="featured-box nobg">
 						<div class="box-content">
 							<i class="fa fa-sort-alpha-desc"></i>
-							<h5>Materialen database</h5>
+							<h5>Materialen</h5>
 						</div>
 					</div>
 				</div>
@@ -88,8 +88,8 @@
 				<div class="col-md-1">
 					<div class="featured-box nobg">
 						<div class="box-content">
-							<i class="fa fa-question"></i>
-							<h5>Help</h5>
+							<i class="fa fa-files-o"></i>
+							<h5>Bedrijf</h5>
 						</div>
 					</div>
 				</div>
@@ -112,8 +112,8 @@
 				<div class="col-md-1">
 					<div class="featured-box nobg">
 						<div class="">
-							<i class="fa fa-question"></i>
-							<h5>over 3</h5>
+							<i class="fa fa-life-bouy"></i>
+							<h5>Help</h5>
 						</div>
 					</div>
 				</div>
