@@ -59,7 +59,54 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 
 		<hr />
 
-		<h2><strong>Offerte</strong></h2>
+	<div class="pull-right">
+		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
+	</div>
+
+	<!-- modal dialog -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header"><!-- modal header -->
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">Offerte opties</h4>
+				</div><!-- /modal header -->
+
+				<!-- modal body -->
+				<div class="modal-body">
+				<div class="row">
+					<div class="col-sm-3">
+						<span><strong>BTW zichtbaar</strong></span>
+						<span><strong>BTW zichtbaar</strong></span>
+						<span><strong>BTW zichtbaar</strong></span>
+						<span><strong>BTW zichtbaar</strong></span>
+						<span><strong>BTW zichtbaar</strong></span>
+						<span><strong>BTW zichtbaar</strong></span>
+					</div>
+
+					<div class="col-sm-6">
+						<div class="checkbox">
+  <label>
+    <input type="checkbox" data-toggle="toggle">
+    Option one is enabled
+  </label>
+</div>
+					</div>
+					</div>
+				</div>
+				<!-- /modal body -->
+
+				<div class="modal-footer"><!-- modal footer -->
+					<button class="btn btn-default" data-dismiss="modal">Close</button> <button class="btn btn-primary">Save changes</button>
+				</div><!-- /modal footer -->
+
+			</div>
+		</div>
+	</div>
+
+
+	<h2><strong>Offerte</strong></h2>
 
 			<div class="white-row">
 
@@ -96,18 +143,24 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 
 					</div>
 
-					<div class="col-sm-6">
+					<div class="col-sm-2"></div>
+
+					<div class="col-sm-4">
 
 						<h4><strong>Opdrachtgever</strong></h4>
 						<ul class="list-unstyled">
-							<li><strong>{{ $relation_self->company_name }}</strong></li>
-							<!--<li><strong>t.a.v.:</strong> {{ $relation_self->company_name }}</li>-->
-							<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}<br /> {{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
-							<li>{{ $relation_self->phone }}</li>
-							<li>{{ $relation_self->email }}</li>
+							<li><strong>Bedrijfsnaam:</strong> {{ $relation_self->company_name }}</li>
+							<li><strong>Adres:</strong> {{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
+							<li style="margin-left: 48px;">{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
+							<li><strong>Telefoon:</strong> {{ $relation_self->phone }}</li>
+							<li><strong>Email:</strong> {{ $relation_self->email }}</li>
 							<li><strong>KVK:</strong>{{ $relation_self->kvk }}</li>
-							<!--<li><strong>Naam:</strong> {{-- $relation_self->company_name --}}</li>-->
-							<!--<li><strong>V.A.T Reg #:</strong> VAT5678901CODE</li>-->
+						</ul>
+
+						<h4><strong>Offerte gegevens</strong></h4>
+						<ul class="list-unstyled">
+							<li><strong>Offertedatum:</strong> {{ date("j M Y") }}</li>
+							<li><strong>Offertenummer:</strong> #{{ sprintf("%06d", $project->id) }}</li>
 						</ul>
 
 					</div>
@@ -434,43 +487,10 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 
 				<hr class="margin-top10 margin-bottom10" /><!-- separator -->
 
-				<!-- DETAILS -->
-				<div class="row">
 
-					<div class="col-sm-6">
-
-						<h4><strong>Klantgegevens</strong></h4>
-						<ul class="list-unstyled">
-							<li><strong>Naam:</strong> {{ $relation->company_name }}</li>
-							<li><strong>Voornaam:</strong> Doe</li>
-							<li>{{ $relation->address_street . ' ' . $relation->address_number }}<br /> {{ $relation->address_postal . ', ' . $relation->address_city }}</li>
-							<li><strong>Land:</strong> U.S.A.</li>
-						</ul>
-
-					</div>
-
-					<div class="col-sm-6">
-
-						<h4><strong>Opdrachtgever</strong></h4>
-						<ul class="list-unstyled">
-							<li><strong>{{ $relation_self->company_name }}</strong></li>
-							<!--<li><strong>t.a.v.:</strong> {{ $relation_self->company_name }}</li>-->
-							<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}<br /> {{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
-							<li>{{ $relation_self->phone }}</li>
-							<li>{{ $relation_self->email }}</li>
-							<li><strong>KVK:</strong>{{ $relation_self->kvk }}</li>
-							<!--<li><strong>Naam:</strong> {{-- $relation_self->company_name --}}</li>-->
-							<!--<li><strong>V.A.T Reg #:</strong> VAT5678901CODE</li>-->
-						</ul>
-
-					</div>
-
-				</div>
 				<!-- /DETAILS -->
 
 				<!--<div class="panel-body">-->
-
-					<p><a id="description" href="javascript:void(0);" style="border-bottom: 0" data-type="textarea">Geef hier een omschrijving voor op de offerte</a></p>
 
 								<h4>Aanneming</h4>
 
@@ -597,16 +617,9 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 								</table>
 								<h5>Weergegeven bedragen zijn exclusief BTW</h5>
 
-
-					<p><a id="closure" href="javascript:void(0);" style="border-bottom: 0" data-type="textarea">Zet hier een voetnoot</a></p>
-
-					<p>Wij kunnen de werkzaamheden starten binnen <a href="javascript:void(0);" style="border-bottom: 0" id="starttime" data-type="select" data-title="Starten werkzaamheden"></a> na dagtekening</p>
-
-					<p>Deze offerte doet stand tot <a href="javascript:void(0);" style="border-bottom: 0" id="endtime" data-type="select" data-title="Stand offerte"></a> na dagtekening</p>
-
 				</div>
 
-			<hr class="half-margins invisible" /><!-- separator -->
+			<!--<hr class="half-margins invisible" />--><!-- separator -->
 
 			<!-- INVOICE FOOTER -->
 			<div class="row">
@@ -631,12 +644,12 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 
 				<div class="col-sm-6 text-right">
 
-					<ul class="list-unstyled invoice-total-info">
+					<!--<ul class="list-unstyled invoice-total-info">
 						<li><strong>Sub - Total Amount:</strong> $2162.00</li>
 						<li><strong>Discount:</strong> 10.0%</li>
 						<li><strong>VAT ($6):</strong> $12.0</li>
 						<li><strong>Grand Total:</strong> $1958.0</li>
-					</ul>
+					</ul>-->
 
 					<div class="padding20">
 						<!--<button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>-->
