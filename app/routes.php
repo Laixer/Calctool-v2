@@ -129,6 +129,8 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('relation-{relation_id}/edit', array('as' => 'relation.edit', 'uses' => 'RelationController@getEdit'))->where('relation_id', '[0-9]+');
 	Route::get('relation-{relation_id}/contact/new', array('as' => 'relation.contact.new', 'uses' => 'RelationController@getNewContact'))->where('relation_id', '[0-9]+');
 	Route::get('relation-{relation_id}/contact-{contact_id}/edit', array('as' => 'contact.edit', 'uses' => 'RelationController@getEditContact'))->where('relation_id', '[0-9]+')->where('contact_id', '[0-9]+');
+	Route::get('mycompany', array('as' => 'mycompany', 'uses' => 'RelationController@getMyCompany'));
+	Route::post('relation/updatemycompany', array('as' => 'relation.update', 'uses' => 'RelationController@doUpdateMyCompany'));
 
 	/* Project pages */
 	Route::get('project/new', array('as' => 'project.new', 'uses' => 'ProjectController@getNew'));

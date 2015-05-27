@@ -29,6 +29,72 @@ class RelationController extends \BaseController {
 		return View::make('user.edit_contact');
 	}
 
+	public function getMyCompany()
+	{
+		return View::make('user.edit_mycompany');
+	}
+
+	public function doUpdateMyCompany()
+	{
+		$rules = array(
+			/* General */
+			'id' => array('required','integer'),
+			/* Company */
+			'company_type' => array('required_if:relationkind,zakelijk','numeric'),
+			'company_name' => array('required_if:relationkind,zakelijk','max:50'),
+			'kvk' => array('numeric','min:12'),
+			'btw' => array('alpha_num','min:14'),
+			'telephone_comp' => array('alpha_num','max:12'),
+			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
+			'website' => array('url','max:180'),
+			/* Adress */
+			'street' => array('required','alpha','max:60'),
+			'address_number' => array('required','alpha_num','max:5'),
+			'zipcode' => array('required','size:6'),
+			'city' => array('required','alpha_num','max:35'),
+			'province' => array('required','numeric'),
+			'country' => array('required','numeric')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			// redirect our user back to the form with the errors from the validator
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+
+			/* General */
+			$relation = Relation::find(Input::get('id'));
+			$relation->note = Input::get('note');
+
+			/* Company */
+			$relation_kind = RelationKind::where('id','=',$relation->kind_id)->firstOrFail();
+			if ($relation_kind->kind_name == "zakelijk") {
+				$relation->company_name = Input::get('company_name');
+				$relation->type_id = Input::get('company_type');
+				$relation->kvk = Input::get('kvk');
+				$relation->btw = Input::get('btw');
+				$relation->phone = Input::get('telephone_comp');
+				$relation->email = Input::get('email_comp');
+				$relation->website = Input::get('website');
+			}
+
+			/* Adress */
+			$relation->address_street = Input::get('street');
+			$relation->address_number = Input::get('address_number');
+			$relation->address_postal = Input::get('zipcode');
+			$relation->address_city = Input::get('city');
+			$relation->province_id = Input::get('province');
+			$relation->country_id = Input::get('country');
+
+			$relation->save();
+
+			return Redirect::back()->with('success', 1);
+		}
+	}
+
 	public function doUpdate()
 	{
 		$rules = array(

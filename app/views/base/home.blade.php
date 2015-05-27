@@ -88,8 +88,10 @@
 				<div class="col-md-1">
 					<div class="featured-box nobg">
 						<div class="box-content">
-							<i class="fa fa-files-o"></i>
-							<h5>Bedrijf</h5>
+							<a href="/mycompany">
+								<i class="fa fa-files-o"></i>
+								<h5>Bedrijf</h5>
+							</a>
 						</div>
 					</div>
 				</div>
