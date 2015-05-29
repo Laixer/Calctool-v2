@@ -25,7 +25,7 @@
 		{{ HTML::style('css/animate.css') }}
 		{{ HTML::style('css/superslides.css') }}
 		{{ HTML::style('plugins/x-editable/css/bootstrap-editable.css') }}
-		{{ HTML::style('plugins/bootstrap-toggle/css/bootstrap2-toggle.min.css') }}
+		{{ HTML::style('plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css') }}
 
 		<?# -- SHOP CSS -- ?>
 		{{ HTML::style('css/shop.css') }}
@@ -83,7 +83,7 @@
 		{{ HTML::script('plugins/jquery.backstretch.min.js') }}
 		{{ HTML::script('plugins/superslides/dist/jquery.superslides.min.js') }}
 		{{ HTML::script('plugins/x-editable/js/bootstrap-editable.min.js') }}
-		{{ HTML::script('plugins/bootstrap-toggle/js/bootstrap2-toggle.min.js') }}
+		{{ HTML::script('plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}
 
 		{{ HTML::script('js/scripts.js') }}
 

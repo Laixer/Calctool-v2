@@ -79,8 +79,6 @@ $relation = Relation::find($project->client_id);
 				<!-- /DETAILS -->
 			</div>
 
-
-
 			<!-- INVOICE BODY -->
 			<div class="panel panel-primary">
 				<div class="panel-heading">
