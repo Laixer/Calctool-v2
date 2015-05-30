@@ -1,5 +1,5 @@
 <?# -- TOP NAV -- ?>
-<header id="topNav" class="topHead"><?# -- remove class="topHead" if no topHead used! -- ?>
+<header id="topNav" class="topHead">
 	<div class="container">
 
 		<?# -- Mobile Menu Button -- ?>
@@ -51,5 +51,4 @@
 	</div>
 </header>
 
-<!--<span id="header_shadow"></span>-->
 <?# -- /TOP NAV -- ?>

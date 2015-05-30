@@ -21,22 +21,19 @@
 		{{ HTML::style('plugins/owl-carousel/owl.carousel.css') }}
 		{{ HTML::style('plugins/owl-carousel/owl.theme.css') }}
 		{{ HTML::style('plugins/owl-carousel/owl.transitions.css') }}
-		{{ HTML::style('plugins/magnific-popup/magnific-popup.css') }}
-		{{ HTML::style('css/animate.css') }}
-		{{ HTML::style('css/superslides.css') }}
 		{{ HTML::style('plugins/x-editable/css/bootstrap-editable.css') }}
 		{{ HTML::style('plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css') }}
 
 		<?# -- SHOP CSS -- ?>
 		{{ HTML::style('css/shop.css') }}
 
-		<!-- THEME CSS -->
+		<?#-- THEME CSS -- ?>
 		{{ HTML::style('css/essentials.css') }}
 		{{ HTML::style('css/layout.css') }}
 		{{ HTML::style('css/layout-responsive.css') }}
 		{{ HTML::style('css/darkgreen.css') }}
 
-		<?# -- SHOP CSS -- ?>
+		<?# -- CUSTOM CSS -- ?>
 		{{ HTML::style('css/custom.css') }}
 
 		<?# -- Morenizr -- ?>
@@ -76,12 +73,7 @@
 		{{ HTML::script('plugins/masonry.js') }}
 
 		{{ HTML::script('plugins/bootstrap/js/bootstrap.min.js') }}
-		{{ HTML::script('plugins/magnific-popup/jquery.magnific-popup.min.js') }}
 		{{ HTML::script('plugins/owl-carousel/owl.carousel.min.js') }}
-		{{ HTML::script('plugins/stellar/jquery.stellar.min.js') }}
-		{{ HTML::script('plugins/knob/js/jquery.knob.js') }}
-		{{ HTML::script('plugins/jquery.backstretch.min.js') }}
-		{{ HTML::script('plugins/superslides/dist/jquery.superslides.min.js') }}
 		{{ HTML::script('plugins/x-editable/js/bootstrap-editable.min.js') }}
 		{{ HTML::script('plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}
 
