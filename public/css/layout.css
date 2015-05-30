@@ -1403,12 +1403,12 @@ footer .footer-bar .fa {
 }
 footer .footer-bar .copyright {
 	display:inline-block;
-	padding:20px 0;
+	padding:10px 0;
 }
 footer .footer-bar .toTop {
 	position:absolute;
 	right:0;
-	padding:20px 0;
+	padding:10px 0;
 	padding-left:70px;
 	width:50%;
 	display:inline-block;
