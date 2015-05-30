@@ -222,11 +222,11 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 				<div class="modal-body">
 					<div class="form-horizontal">
 
-						  <div class="form-group">
+						 <div class="form-group">
 						    <div class="col-sm-offset-0 col-sm-10">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-tax" type="checkbox" checked> BTW dinges
+						          <input name="toggle-tax" type="checkbox" checked> BTW bedragen gespecificeerd weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -235,7 +235,16 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 						    <div class="col-sm-offset-0 col-sm-10">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-subcontr" type="checkbox"> Onderaanneming
+						          <input name="toggle-endresult" type="checkbox"> Alleen eindbedrag weergeven
+						        </label>
+						      </div>
+						    </div>
+						  </div>
+						   <div class="form-group">
+						    <div class="col-sm-offset-0 col-sm-10">
+						      <div class="checkbox">
+						        <label>
+						          <input name="toggle-subcontr" type="checkbox"> Onderaanneming gespecificeerd weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -244,7 +253,7 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 						    <div class="col-sm-offset-0 col-sm-10">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-activity" type="checkbox" checked> Werkzaamheid
+						          <input name="toggle-activity" type="checkbox" checked> Overzicht werkzaamheden weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -253,7 +262,7 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 						    <div class="col-sm-offset-0 col-sm-10">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-note" type="checkbox" checked> Omschrijving
+						          <input name="toggle-summary" type="checkbox"> Specificatie overzicht werkzaamheden weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -262,16 +271,7 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 						    <div class="col-sm-offset-0 col-sm-10">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-endresult" type="checkbox"> Eindbedrag
-						        </label>
-						      </div>
-						    </div>
-						  </div>
-						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
-						      <div class="checkbox">
-						        <label>
-						          <input name="toggle-summary" type="checkbox"> Uittrekstaat gespecificeerd weergeven
+						          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden opnemen
 						        </label>
 						      </div>
 						    </div>
