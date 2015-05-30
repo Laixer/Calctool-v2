@@ -245,12 +245,85 @@ $project = Project::find(Route::Input('project_id'));
 								</div>
 							</div>
 
-
 						<div id="status" class="tab-pane">
 							<div class="row">
-								<div class="col-md-12"><h5><strong>Volgt....</strong></h5></div>
+								<div class="col-md-3"><strong>Offerte stadium</strong></div>
+								<div class="col-md-3"><strong>Start datum</strong></div>
+								<div class="col-md-3"><strong>Laatste wijziging</strong></div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Calculatie</div>
+								<div class="col-md-3">28-05-2015</div>
+								<div class="col-md-3">29-05-2015</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Offerte verzonden</div>
+								<div class="col-md-3">28-05-2015</div>
+								<div class="col-md-3">29-05-2015</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Opdracht ontvangen</div>
+								<div class="col-md-3">28-05-2015</div>
+							</div>
+								<br>
+							<div class="row">
+								<div class="col-md-3"><strong>Opdracht stadium</strong></div>
+								<div class="col-md-3"><strong>Start datum</strong></div>
+								<div class="col-md-3"><strong>Laatste wijziging</strong></div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Uitvoering</div>
+								<div class="col-md-3">28-05-2015</div>
+								<div class="col-md-3">29-05-2015</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Stelposten</div>
+								<div class="col-md-3">28-05-2015</div>
+								<div class="col-md-3">29-05-2015</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Meerwerk</div>
+								<div class="col-md-3">28-05-2015</div>
+								<div class="col-md-3">29-05-2015</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Minderwerk</div>
+								<div class="col-md-3">28-05-2015</div>
+								<div class="col-md-3">29-05-2015</div>
+							</div>
+								<br>
+							<div class="row">
+								<div class="col-md-3"><strong>Financieel</strong></div>
+								<div class="col-md-3"><strong>Verzonden</strong></div>
+								<div class="col-md-3"><strong>Laatste wijziging</strong></div>
+								<div class="col-md-3"><strong>Acties</strong></div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Aanbetaling</div>
+								<div class="col-md-3">28-05-2015</div>
+								<div class="col-md-3">29-05-2015</div>
+								<div class="col-md-3">Betaald</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Termijnfactuur 2</div>
+								<div class="col-md-3">28-05-2015</div>
+								<div class="col-md-3">29-05-2015</div>
+								<div class="col-md-3">Openstaand</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Termijnfactuur 3</div>
+								<div class="col-md-3">28-05-2015</div>
+								<div class="col-md-3">29-05-2015</div>
+								<div class="col-md-3">-</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Eindfactuur</div>
+								<div class="col-md-3">28-05-2015</div>
+								<div class="col-md-3">29-05-2015</div>
+								<div class="col-md-3">-</div>
 							</div>
 						</div>
+
 
 						<div id="calc" class="tab-pane">
 							<div class="row">
