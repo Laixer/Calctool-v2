@@ -182,6 +182,62 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 	        });
 		  }
 		});
+		var total = 532;
+	    function calc_amount(el){
+			var p = el.val();
+			if($.isNumeric(p)&&(p>=0)&&(p<=total)){
+				var i = ((total/100)*p).toFixed(2);
+				var c1 = el.parent().parent().find('.acalc').val();
+				el.parent().parent().find('.acalc').val(i);
+				if(!calc_total()){
+					el.parent().parent().find('.acalc').val(c1);
+				}
+			}
+		}
+		function calc_total(){
+			var tpercent = 0;
+			var tamount = 0;
+			$('.pcalc').each(function(index, element) {
+				var t1 = parseFloat(element.value);
+				if(t1){
+					tpercent += t1;
+				}
+			});
+			$('.acalc').each(function(index, element) {
+				var t2 = parseFloat(element.value);
+				if(t2){
+					tamount += t2;
+				}
+			});
+
+			if(0>tpercent||tpercent>100||total<tamount||0>tamount){
+				return false;
+			}else{
+				$('#percent_res').val(100-tpercent);
+				$('#amount_res').val(total-tamount);
+
+				return true;
+			}
+		}
+		$('#terms').blur(function(){
+			var q = $(this).val();
+			if($.isNumeric(q)&&(q>1)&&(q<=50)){
+				$('#tbl-term tbody tr').remove();
+				for(var i=0; i<q; i++){
+					if(i==(q-1)){
+						$('#tbl-term tbody').append('<tr><td>Slottermijn</td><td><input type="text" value="" class="form-control-sm-text" /></td></tr>');
+					}else{
+						$('#tbl-term tbody').append('<tr><td>'+(i+1)+'</td><td><input type="text" value="" id="amount_'+i+'" name="amount['+i+']" class="form-control-sm-text" /></td></tr>');
+					}
+				}
+				//$('.acalc').blur(function(){
+				//	calc_total();
+				//});
+			}
+		});
+		//$('.acalc').blur(function(){
+		//	calc_total();
+		//});
 	});
 </script>
 <div id="wrapper">
@@ -209,7 +265,7 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Versies</a>
 
-		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Termijnen</a>
+		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
 	</div>
 
 	<!-- modal dialog -->
@@ -305,42 +361,42 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 
 				<!-- modal body -->
 				<div class="modal-body">
-						<div class="table-responsive">
-							<table class="table table-hover">
-								<thead>
-									<tr>
-										<th>Offerte</th>
-										<th>Datum</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td><a href="#">Value 1</a></td>
-										<td>Value 2</td>
-									</tr>
-									<tr>
-										<td><a href="#">Value 1</a></td>
-										<td>Value 2</td>
-									</tr>
-									<tr>
-										<td><a href="#">Value 1</a></td>
-										<td>Value 2</td>
-									</tr>
-									<tr>
-										<td><a href="#">Value 1</a></td>
-										<td>Value 2</td>
-									</tr>
-									<tr>
-										<td><a href="#">Value 1</a></td>
-										<td>Value 2</td>
-									</tr>
-									<tr>
-										<td><a href="#">Value 1</a></td>
-										<td>Value 2</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
+					<div class="table-responsive">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>Offerte</th>
+									<th>Datum</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><a href="#">Value 1</a></td>
+									<td>Value 2</td>
+								</tr>
+								<tr>
+									<td><a href="#">Value 1</a></td>
+									<td>Value 2</td>
+								</tr>
+								<tr>
+									<td><a href="#">Value 1</a></td>
+									<td>Value 2</td>
+								</tr>
+								<tr>
+									<td><a href="#">Value 1</a></td>
+									<td>Value 2</td>
+								</tr>
+								<tr>
+									<td><a href="#">Value 1</a></td>
+									<td>Value 2</td>
+								</tr>
+								<tr>
+									<td><a href="#">Value 1</a></td>
+									<td>Value 2</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 
 				</div>
 				<!-- /modal body -->
@@ -353,6 +409,49 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 		</div>
 	</div>
 
+	<!-- modal dialog -->
+	<div class="modal fade" id="termModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header"><!-- modal header -->
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel2">Offerte versies</h4>
+				</div><!-- /modal header -->
+
+				<!-- modal body -->
+				<div class="modal-body">
+					<div class="form-horizontal">
+						<div class="form-group">
+							<div class="col-md-6">
+								<label>Termijnen</label>
+								<input id="terms" type="text" value="" class="form-control" />
+							</div>
+						</div>
+					</div>
+					<div class="table-responsive">
+						<table id="tbl-term" class="table table-hover">
+							<thead>
+								<tr>
+									<th>Termijnnummer</th>
+									<th>Bedrag</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+
+				</div>
+				<!-- /modal body -->
+
+				<div class="modal-footer"><!-- modal footer -->
+					<button class="btn btn-default" data-dismiss="modal">Close</button>
+				</div><!-- /modal footer -->
+
+			</div>
+		</div>
+	</div>
 
 	<h2><strong>Offerte</strong></h2>
 
