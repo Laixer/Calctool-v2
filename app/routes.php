@@ -145,4 +145,8 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('timesheet/delete', array('as' => 'timesheet', 'uses' => 'CostController@doDeleteTimesheet'));
 	Route::get('purchase', array('as' => 'purchase', 'uses' => 'CostController@getPurchase'));
 	Route::post('purchase/new', array('as' => 'purchase', 'uses' => 'CostController@doNewPurchase'));
+
+	/* Material database */
+	Route::get('material', array('as' => 'material', 'uses' => 'MaterialController@getList'));
+	Route::post('material/search', array('as' => 'material', 'uses' => 'MaterialController@doSearch'));
 });

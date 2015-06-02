@@ -72,8 +72,10 @@
 				<div class="col-md-1">
 					<div class="featured-box nobg">
 						<div class="box-content">
-							<i class="fa fa-sort-alpha-desc"></i>
-							<h5>Materialen</h5>
+							<a href="/material">
+								<i class="fa fa-sort-alpha-desc"></i>
+								<h5>Materialen</h5>
+							</a>
 						</div>
 					</div>
 				</div>
