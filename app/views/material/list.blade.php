@@ -31,7 +31,7 @@
 			<h2><strong>Materialenlijst</strong></h2>
 
 			<div class="form-group input-group-lg">
-				<input type="text" id="search" value="" class="form-control" placeholder="Input Placeholder">
+				<input type="text" id="search" value="" class="form-control" placeholder="Zoek materiaal">
 			</div>
 
 			<div class="table-responsive">

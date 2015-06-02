@@ -25,6 +25,8 @@ class MaterialController extends BaseController {
 		switch ($unit) {
 			case 'PCE':
 				return 'Stuk';
+			case 'MTR':
+				return 'Meter';
 
 			default:
 				return $unit;
@@ -53,7 +55,9 @@ class MaterialController extends BaseController {
 		} else {
 			$rtn_products = array();
 
-			$products = Product::where('description', 'LIKE', '%'.Input::get('query').'%')->take(100)->get();
+			$query = strtolower(Input::get('query'));
+
+			$products = Product::where('description', 'LIKE', '%'.$query.'%')->take(100)->get();
 			foreach ($products as $product) {
 				array_push($rtn_products, array(
 					'id' => $product['id'],

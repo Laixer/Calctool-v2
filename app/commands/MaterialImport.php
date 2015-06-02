@@ -41,6 +41,7 @@ class MaterialImport extends Command {
 		$contents = File::get($filename);
 		$xml =  str_replace("http://www.gs1.nl Artikelbericht_bou003_31012010.xsd", "http://calctool", $contents);
 		$articles = Parser::xml($xml)['Bilateral']['PricatLine'];
+		DB::raw("TRUNCATE product CASCADE");
 		foreach ($articles as $key => $value) {
 			Product::create(array(
 				'unit' => $value['Orderinginfo']['MinimumQuantity']['MeasureUnitQualifier'],
