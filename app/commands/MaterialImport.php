@@ -51,7 +51,7 @@ class MaterialImport extends Command {
 				'package_length' => $value['Packaging']['Length']['Quantity'],
 				'package_width' => $value['Packaging']['Width']['Quantity'],
 				'minimum_quantity' => $value['Orderinginfo']['MinimumQuantity']['Quantity'],
-				'description' => $value['ArticleData']['SuppliersDescription']['Description'],
+				'description' => strtolower($value['ArticleData']['SuppliersDescription']['Description']),
 				'group_id' => 1,
 				'supplier_id' => 1
 			));

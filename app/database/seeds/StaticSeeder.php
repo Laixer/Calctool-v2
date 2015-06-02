@@ -8,6 +8,9 @@ class StaticSeeder extends Seeder {
 
 	public function run()
 	{
+
+		DB::table('sub_group')->delete();
+		DB::table('supplier')->delete();
 		DB::table('tax')->delete();
 		DB::table('system_option')->delete();
 		DB::table('specification')->delete();
@@ -27,6 +30,12 @@ class StaticSeeder extends Seeder {
 		DB::table('province')->delete();
 		DB::table('user_type')->delete();
 		$this->command->info('Tables deleted');
+
+		SubGroup::create(array('reference_code' => '12345', 'group_type' => 'Zakkengoed'));
+		$this->command->info('SubGroup created');
+
+		Supplier::create(array('supplier_name' => 'Bouwmaat'));
+		$this->command->info('Supplier created');
 
 		UserType::create(array('user_type' => 'demo'));
 		UserType::create(array('user_type' => 'guest'));
