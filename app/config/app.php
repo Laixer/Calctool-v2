@@ -124,6 +124,7 @@ return array(
 
 		'Way\Generators\GeneratorsServiceProvider',
 		'Barryvdh\DomPDF\ServiceProvider',
+		'Nathanmac\Utilities\Parser\ParserServiceProvider',
 
 	),
 
@@ -191,7 +192,8 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
-		'PDF' => 'Barryvdh\DomPDF\Facade',
+		'PDF' 		=> 'Barryvdh\DomPDF\Facade',
+		'Parser' 	=> 'Nathanmac\Utilities\Parser\Facades\Parser',
 
 	),
 
