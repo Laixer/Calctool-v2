@@ -206,6 +206,10 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 
 	<div class="pull-right">
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
+
+		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Versies</a>
+
+		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Termijnen</a>
 	</div>
 
 	<!-- modal dialog -->
@@ -278,6 +282,66 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 						  </div>
 
 					</div>
+				</div>
+				<!-- /modal body -->
+
+				<div class="modal-footer"><!-- modal footer -->
+					<button class="btn btn-default" data-dismiss="modal">Close</button>
+				</div><!-- /modal footer -->
+
+			</div>
+		</div>
+	</div>
+
+	<!-- modal dialog -->
+	<div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header"><!-- modal header -->
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel2">Offerte versies</h4>
+				</div><!-- /modal header -->
+
+				<!-- modal body -->
+				<div class="modal-body">
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>Offerte</th>
+										<th>Datum</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><a href="#">Value 1</a></td>
+										<td>Value 2</td>
+									</tr>
+									<tr>
+										<td><a href="#">Value 1</a></td>
+										<td>Value 2</td>
+									</tr>
+									<tr>
+										<td><a href="#">Value 1</a></td>
+										<td>Value 2</td>
+									</tr>
+									<tr>
+										<td><a href="#">Value 1</a></td>
+										<td>Value 2</td>
+									</tr>
+									<tr>
+										<td><a href="#">Value 1</a></td>
+										<td>Value 2</td>
+									</tr>
+									<tr>
+										<td><a href="#">Value 1</a></td>
+										<td>Value 2</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
 				</div>
 				<!-- /modal body -->
 
