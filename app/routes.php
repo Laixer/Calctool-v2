@@ -39,6 +39,11 @@ Route::any('privacy-policy', function()
 	return View::make('generic.privacy');
 });
 
+Route::any('countdown', function()
+{
+	return View::make('generic.countdown');
+});
+
 Route::group(array('before' => 'auth'), function()
 {
 	/* Generic pages */
