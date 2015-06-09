@@ -39,18 +39,14 @@ class CreateFinancial extends Migration {
 		Schema::create('offer', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->boolean('display_tax')->default('Y');
 			$table->text('description')->nullable();
 			$table->text('closure')->nullable();
-			$table->boolean('end_invoice')->default('Y');
 			$table->boolean('downpayment')->default('N');
 			$table->boolean('auto_email_reminder')->default('Y');
 			$table->nullableTimestamps();
 			$table->date('offer_finish')->nullable();
 			$table->integer('deliver_id')->unsigned();
 			$table->foreign('deliver_id')->references('id')->on('deliver_time')->onUpdate('cascade')->onDelete('restrict');
-			$table->integer('specification_id')->unsigned();
-			$table->foreign('specification_id')->references('id')->on('specification')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('valid_id')->unsigned();
 			$table->foreign('valid_id')->references('id')->on('valid')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('project_id')->unsigned();

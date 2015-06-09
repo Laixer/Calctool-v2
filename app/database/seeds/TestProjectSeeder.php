@@ -55,7 +55,6 @@ class TestProjectSeeder extends Seeder {
 
 		$test_step = ProjectStep::where('step_name','=','estimate')->first();
 		$test_deliver = DeliverTime::where('delivertime_name','=','3 weken')->first();
-		$test_specification = Specification::where('specification_name','=','gespecificeerd, exclusief omschrijving')->first();
 		$test_valid = Valid::where('valid_name','=','3 maanden')->first();
 		$test_tax1 = Tax::where('tax_rate','=','21')->first();
 		$test_tax2 = Tax::where('tax_rate','=','6')->first();
@@ -645,15 +644,12 @@ class TestProjectSeeder extends Seeder {
 	$this->command->info('Purchase created');
 
 		$test_offer = Offer::create(array(
-			'display_tax' => 'Y',
 			'description' => 'omschrijving voor op offerte',
 			'closure' => 'dit was de omschrijving voor op offerte',
-			'end_invoice' => 'Y',
 			'downpayment' => 'N',
 			'auto_email_reminder' => 'Y',
 			'offer_finish' => '01-11-2014',
 			'deliver_id' => $test_deliver->id,
-			'specification_id' => $test_specification->id,
 			'valid_id' => $test_valid->id,
 			'project_id' => $test_project->id
 		));

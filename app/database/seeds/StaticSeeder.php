@@ -13,7 +13,6 @@ class StaticSeeder extends Seeder {
 		DB::table('supplier')->delete();
 		DB::table('tax')->delete();
 		DB::table('system_option')->delete();
-		DB::table('specification')->delete();
 		DB::table('deliver_time')->delete();
 		DB::table('valid')->delete();
 		DB::table('relation_kind')->delete();
@@ -584,19 +583,11 @@ class StaticSeeder extends Seeder {
 		Valid::create(array('valid_name' => '3 maanden'));
 		$this->command->info('Valid created');
 
-		DeliverTime::create(array('delivertime_name' => 'direct'));
 		DeliverTime::create(array('delivertime_name' => '1 week'));
 		DeliverTime::create(array('delivertime_name' => '2 weken'));
 		DeliverTime::create(array('delivertime_name' => '3 weken'));
 		DeliverTime::create(array('delivertime_name' => '1 maand'));
 		$this->command->info('DeliverTime created');
-
-		Specification::create(array('specification_name' => 'gespecificeerd, exclusief omschrijving'));
-		Specification::create(array('specification_name' => 'gespecificeerd, inclusief omschrijving'));
-		Specification::create(array('specification_name' => 'totalen per hoofdstuk'));
-		Specification::create(array('specification_name' => 'totalen per werkzaamheid'));
-		Specification::create(array('specification_name' => 'totaal voor project'));
-		$this->command->info('Specification created');
 
 		SystemOption::create(array('option_key' => 'tool_name', 'option_value' => 'Calctool'));
 		$this->command->info('SystemOption created');
