@@ -57,15 +57,19 @@ class MaterialController extends BaseController {
 
 			$query = strtolower(Input::get('query'));
 
-			$products = Product::where('description', 'LIKE', '%'.$query.'%')->take(100)->get();
+			if (Input::get('group')!='0')
+				$products = Product::where('description', 'LIKE', '%'.$query.'%')->where('group_id','=',Input::get('group'))->take(100)->get();
+			else
+				$products = Product::where('description', 'LIKE', '%'.$query.'%')->take(100)->get();
 			foreach ($products as $product) {
 				array_push($rtn_products, array(
 					'id' => $product['id'],
 					'unit' => $this->convertUnit($product['unit']),
 					'unit_price' => $product['unit_price'],
 					'price' => '&euro; '.number_format($product['price'], 2, ",","."),
+					'pricenum' => number_format($product['price'], 2, ",","."),
 					'package' => $this->convertPackage($product['package_length'], $product['package_height'], $product['package_width']),
-					'minimum_quantity' => $product['minimum_quantity'],
+					'minimum_quantity' => number_format($product['minimum_quantity'], 2, ",","."),
 					'description' => $product['description'],
 				));
 			}
