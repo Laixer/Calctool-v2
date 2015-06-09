@@ -649,6 +649,7 @@ class TestProjectSeeder extends Seeder {
 			'description' => 'omschrijving voor op offerte',
 			'closure' => 'dit was de omschrijving voor op offerte',
 			'end_invoice' => 'Y',
+			'downpayment' => 'N',
 			'auto_email_reminder' => 'Y',
 			'offer_finish' => '01-11-2014',
 			'deliver_id' => $test_deliver->id,

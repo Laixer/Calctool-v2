@@ -43,6 +43,7 @@ class CreateFinancial extends Migration {
 			$table->text('description')->nullable();
 			$table->text('closure')->nullable();
 			$table->boolean('end_invoice')->default('Y');
+			$table->boolean('downpayment')->default('N');
 			$table->boolean('auto_email_reminder')->default('Y');
 			$table->nullableTimestamps();
 			$table->date('offer_finish')->nullable();
