@@ -43,6 +43,8 @@ class MaterialImport extends Command {
 		$articles = Parser::xml($xml)['Bilateral']['PricatLine'];
 		DB::raw("TRUNCATE product CASCADE");
 		foreach ($articles as $key => $value) {
+			$groupcode = explode(" ", $value['AdditionalDescriptions']['SupplierProductGroupDescription']);
+			$subgroup = SubGroup::where('reference_code','=',$groupcode[0])->first();
 			Product::create(array(
 				'unit' => $value['Orderinginfo']['MinimumQuantity']['MeasureUnitQualifier'],
 				'unit_price' => $value['Orderinginfo']['MinimumQuantity']['MeasureUnitQualifier'],
@@ -52,7 +54,7 @@ class MaterialImport extends Command {
 				'package_width' => $value['Packaging']['Width']['Quantity'],
 				'minimum_quantity' => $value['Orderinginfo']['MinimumQuantity']['Quantity'],
 				'description' => strtolower($value['ArticleData']['SuppliersDescription']['Description']),
-				'group_id' => 1,
+				'group_id' => $subgroup->id,
 				'supplier_id' => 1
 			));
 		}
