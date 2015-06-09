@@ -643,37 +643,6 @@ class TestProjectSeeder extends Seeder {
 
 	$this->command->info('Purchase created');
 
-		$test_offer = Offer::create(array(
-			'description' => 'omschrijving voor op offerte',
-			'closure' => 'dit was de omschrijving voor op offerte',
-			'downpayment' => 'N',
-			'auto_email_reminder' => 'Y',
-			'offer_finish' => '01-11-2014',
-			'deliver_id' => $test_deliver->id,
-			'valid_id' => $test_valid->id,
-			'project_id' => $test_project->id
-		));
-
-	$this->command->info('Offer created');
-
-		Invoice::create(array(
-			'invoice_close' => 'Y',
-			'description' => 'omschrijving',
-			'reference' => '24366',
-			'invoice_code' => '8765432',
-			'book_code' => '8765432123',
-			'amount' => '1230',
-			'payment_condition' => '30',
-			'payment_date' => '12-10-2014',
-			'display_tax' => 'Y',
-			'closure' => 'dit was de clusure tekst',
-			'auto_email_reminder' => 'Y',
-			'closure' => 'dit was de clusure tekst',
-			'offer_id' => $test_offer->id,
-		));
-
-	$this->command->info('Invoice created');
-
 		$calculation_labor_activity1 = CalculationLabor::create(array(
 			'rate' => '35.00',
 			'amount' => '1',

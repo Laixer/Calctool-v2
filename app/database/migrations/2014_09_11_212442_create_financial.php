@@ -45,6 +45,8 @@ class CreateFinancial extends Migration {
 			$table->foreign('valid_id')->references('id')->on('valid')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('project_id')->unsigned();
 			$table->foreign('project_id')->references('id')->on('project')->onUpdate('cascade')->onDelete('cascade');
+			$table->integer('resource_id')->unsigned();
+			$table->foreign('resource_id')->references('id')->on('resource')->onUpdate('cascade')->onDelete('cascade');
 		});
 
 		Schema::create('invoice', function(Blueprint $table)
