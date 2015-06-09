@@ -1181,7 +1181,7 @@ var n = this,
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-1"><span class="total-incl-tax"></span></td>
 															<td class="col-md-1 text-right" data-profit="{{$profit}}">
-																<button class="btn-xs fa fa-book" data-toggle="modal" data-target=".bs-example-modal-lg"></button>
+																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-danger btn-xs sdeleterowe fa fa-times"></button>
 															</td>
 														</tr>
@@ -1274,7 +1274,7 @@ var n = this,
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-1"><span class="total-incl-tax"></span></td>
 															<td class="col-md-1 text-right" data-profit="{{$profit}}">
-																<button class="btn-xs fa fa-book" data-toggle="modal" data-target=".bs-example-modal-lg"></button>
+																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-danger btn-xs edeleterowe fa fa-times"></button>
 															</td>
 														</tr>
