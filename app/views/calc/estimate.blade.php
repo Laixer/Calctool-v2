@@ -711,9 +711,79 @@ var n = this,
 					$curThis.closest("tr").removeAttr("data-id");
 				}).fail(function(e) { console.log(e); });
 		});
+		$req = false;
+		$("#search").keyup(function() {
+			$val = $(this).val();
+			if ($val.length > 3 && !$req) {
+				$group = $('#group').val();
+				$req = true;
+				$.post("/material/search", {query:$val,group:$group}, function(data) {
+					if (data) {
+						$('#tbl-material tbody tr').remove();
+						$.each(data, function(i, item) {
+							$('#tbl-material tbody').append('<tr><td><a data-name="'+data[i].description+'" data-unit="'+data[i].unit+'" data-price="'+data[i].pricenum+'" href="javascript:void(0);">'+data[i].description+'</a></td><td>'+data[i].package+'</td><td>'+data[i].price+'</td></tr>');
+						});
+						$('#tbl-material tbody a').on("click", onmaterialclick);
+						$req = false;
+					}
+				});
+			}
+		});
+		var $newinputtr;
+		$("button[data-toggle='modal']").click(function(e) {
+			$newinputtr = $(this).closest("tr");
+		});
+		function onmaterialclick(e) {
+			$newinputtr.find("input[name='name']").val($(this).attr('data-name'));
+			$newinputtr.find("input[name='unit']").val($(this).attr('data-unit'));
+			$newinputtr.find("input[name='rate']").val($(this).attr('data-price'));
+			$newinputtr.find(".newrow").change();
+			$('#myModal').modal('toggle');
+		}
 	});
 </script>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header"><!-- modal header -->
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel">Materialen</h4>
+			</div>
 
+			<div class="modal-body">
+					<div class="form-group input-group input-group-lg">
+						<input type="text" id="search" value="" class="form-control" placeholder="Zoek materiaal">
+					      <span class="input-group-btn">
+					        <select id="group" class="btn">
+					        <option value="0" selected>Alles</option>
+					        @foreach (SubGroup::all() as $group)
+					          <option value="{{ $group->id }}">{{ $group->group_type }}</option>
+					        @endforeach
+					        </select>
+					      </span>
+					</div>
+					<div class="table-responsive">
+						<table id="tbl-material" class="table table-hover">
+							<thead>
+								<tr>
+									<th>Omschrijving</th>
+									<th>Afmeting</th>
+									<th>Totaalprijs</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+			</div>
+
+			<div class="modal-footer">
+				<button class="btn btn-default" data-dismiss="modal">Sluiten</button>
+			</div>
+
+		</div>
+	</div>
+</div>
 <div id="wrapper">
 
 	<section class="container fix-footer-bottom">
@@ -912,28 +982,6 @@ var n = this,
 															<td class="col-md-1 text-right">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-xs fa {{$material->original ? 'btn-warning fa-undo sresetrow' : 'btn-danger fa-times sdeleterow'}}"></button>
-
-																<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-																	<div class="modal-dialog">
-																		<div class="modal-content">
-																			<div class="modal-header"><!-- modal header -->
-																				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-																				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
-																			</div><!-- /modal header -->
-
-																			<!-- modal body -->
-																			<div class="modal-body">
-																				Modal Body
-																			</div>time
-																			<!-- /modal body -->
-
-																			<div class="modal-footer"><!-- modal footer -->
-																				<button class="btn btn-default" data-dismiss="modal">Close</button> <button class="btn btn-primary">Save changes</button>
-																			</div><!-- /modal footer -->
-
-																		</div>
-																	</div>
-																</div>
 															</td>
 														</tr>
 														@endforeach
@@ -1021,28 +1069,6 @@ var n = this,
 															<td class="col-md-1 text-right">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-xs fa {{$equipment->original ? 'btn-warning fa-undo eresetrow' : 'btn-danger fa-times edeleterow'}}"></button>
-
-																<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-																	<div class="modal-dialog">
-																		<div class="modal-content">
-																			<div class="modal-header"><!-- modal header -->
-																				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-																				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
-																			</div><!-- /modal header -->
-
-																			<!-- modal body -->
-																			<div class="modal-body">
-																				Modal Body
-																			</div>
-																			<!-- /modal body -->
-
-																			<div class="modal-footer"><!-- modal footer -->
-																				<button class="btn btn-default" data-dismiss="modal">Close</button> <button class="btn btn-primary">Save changes</button>
-																			</div><!-- /modal footer -->
-
-																		</div>
-																	</div>
-																</div>
 															</td>
 														</tr>
 														@endforeach
@@ -1054,7 +1080,7 @@ var n = this,
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-1"><span class="total-incl-tax"></span></td>
 															<td class="col-md-1 text-right">
-																<button class="btn-xs fa fa-book" data-toggle="modal" data-target=".bs-example-modal-lg"></button>
+																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-xs fa btn-danger fa-times"></button>
 															</td>
 														</tr>
