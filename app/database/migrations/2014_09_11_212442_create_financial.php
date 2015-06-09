@@ -24,12 +24,6 @@ class CreateFinancial extends Migration {
 			$table->string('delivertime_name', 10)->unique();
 		});
 
-		Schema::create('specification', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->string('specification_name', 50)->unique();
-		});
-
 		Schema::create('valid', function(Blueprint $table)
 		{
 			$table->increments('id');
@@ -93,11 +87,6 @@ class CreateFinancial extends Migration {
 		Schema::table('valid', function(Blueprint $table)
 		{
 			Schema::drop('valid');
-		});
-
-		Schema::table('specification', function(Blueprint $table)
-		{
-			Schema::drop('specification');
 		});
 
 		Schema::table('deliver_time', function(Blueprint $table)
