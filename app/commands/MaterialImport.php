@@ -46,13 +46,13 @@ class MaterialImport extends Command {
 			$groupcode = explode(" ", $value['AdditionalDescriptions']['SupplierProductGroupDescription']);
 			$subgroup = SubGroup::where('reference_code','=',$groupcode[0])->first();
 			Product::create(array(
-				'unit' => $value['Orderinginfo']['MinimumQuantity']['MeasureUnitQualifier'],
-				'unit_price' => $value['Orderinginfo']['MinimumQuantity']['MeasureUnitQualifier'],
+				'article_code' => $value['TradeItemId']['TradeItemNumber'],
+				'minimum_quantity' => $value['ArticleData']['SmallestUnitQuantity']['Quantity'],
+				'unit' => $value['ArticleData']['SmallestUnitQuantity']['MeasureUnitQualifier'],
 				'price' => $value['PriceInformation']['NetUnitPrice']['Price'],
 				'package_height' => $value['Packaging']['Height']['Quantity'],
 				'package_length' => $value['Packaging']['Length']['Quantity'],
 				'package_width' => $value['Packaging']['Width']['Quantity'],
-				'minimum_quantity' => $value['Orderinginfo']['MinimumQuantity']['Quantity'],
 				'description' => strtolower($value['ArticleData']['SuppliersDescription']['Description']),
 				'group_id' => $subgroup->id,
 				'supplier_id' => 1
