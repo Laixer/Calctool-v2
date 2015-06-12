@@ -11,31 +11,6 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 <?# -- WRAPPER -- ?>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$.fn.editable.defaults.mode = 'inline';
-		$('#description').editable({
-			title: 'Omschrijving op de offerte'
-		});
-		$('#closure').editable({
-			title: 'Voetnoot op de offerte'
-		});
-		$('#starttime').editable({
-			value: 3,
-			source: [
-				{value: 1, text: '1 dag'},
-				{value: 2, text: '2 dagen'},
-				{value: 3, text: '1 week'}
-			]
-		});
-		$('#endtime').editable({
-			value: 5,
-			source: [
-				{value: 1, text: '1 dag'},
-				{value: 2, text: '2 dagen'},
-				{value: 3, text: '1 week'},
-				{value: 4, text: '2 weken'},
-				{value: 5, text: '1 maand'}
-			]
-		});
         $('.only-end-total tr').each(function() {
             $(this).find("td").eq(2).hide();
             $(this).find("th").eq(2).hide();
@@ -182,62 +157,56 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 	        });
 		  }
 		});
-		var total = 532;
-	    function calc_amount(el){
-			var p = el.val();
-			if($.isNumeric(p)&&(p>=0)&&(p<=total)){
-				var i = ((total/100)*p).toFixed(2);
-				var c1 = el.parent().parent().find('.acalc').val();
-				el.parent().parent().find('.acalc').val(i);
-				if(!calc_total()){
-					el.parent().parent().find('.acalc').val(c1);
-				}
+		$tpayment = false;
+		$("[name='toggle-payment']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+			if (state) {
+				$('#tpayment').text('Aanbetaling');
+				$tpayment = true;
+			} else {
+				$('#tpayment').text('1');
+				$tpayment = false;
 			}
-		}
-		function calc_total(){
-			var tpercent = 0;
-			var tamount = 0;
-			$('.pcalc').each(function(index, element) {
-				var t1 = parseFloat(element.value);
-				if(t1){
-					tpercent += t1;
-				}
-			});
-			$('.acalc').each(function(index, element) {
-				var t2 = parseFloat(element.value);
-				if(t2){
-					tamount += t2;
-				}
-			});
 
-			if(0>tpercent||tpercent>100||total<tamount||0>tamount){
-				return false;
-			}else{
-				$('#percent_res').val(100-tpercent);
-				$('#amount_res').val(total-tamount);
-
-				return true;
-			}
-		}
+		});
 		$('#terms').blur(function(){
 			var q = $(this).val();
 			if($.isNumeric(q)&&(q>1)&&(q<=50)){
 				$('#tbl-term tbody tr').remove();
 				for(var i=0; i<q; i++){
-					if(i==(q-1)){
-						$('#tbl-term tbody').append('<tr><td>Slottermijn</td><td><input type="text" value="" class="form-control-sm-text" /></td></tr>');
-					}else{
-						$('#tbl-term tbody').append('<tr><td>'+(i+1)+'</td><td><input type="text" value="" id="amount_'+i+'" name="amount['+i+']" class="form-control-sm-text" /></td></tr>');
+					if(i==(q-1)) {
+						$('#tbl-term tbody').append('<tr><td>Slottermijn</td><td><input id="eterm" disabled type="text" value="" class="form-control-sm-text" /></td></tr>');
+					} else if (i==0){
+						$('#tbl-term tbody').append('<tr><td id="tpayment">'+(i+1)+'</td><td><input type="text" value="" id="amount_'+i+'" name="amount['+i+']" class="adata form-control-sm-text" /></td></tr>');
+					} else {
+						$('#tbl-term tbody').append('<tr><td>'+(i+1)+'</td><td><input type="text" value="" id="amount_'+i+'" name="amount['+i+']" class="adata form-control-sm-text" /></td></tr>');
 					}
 				}
-				//$('.acalc').blur(function(){
-				//	calc_total();
-				//});
+				$('.adata').blur(function(){
+					$total = {{ CalculationEndresult::totalProject($project) }};
+					$('.adata').each(function(){
+						$total -= $(this).val();
+						$('#eterm').val($.number($total,2,',','.'));
+					});
+				});
 			}
 		});
-		//$('.acalc').blur(function(){
-		//	calc_total();
-		//});
+		$('#termModal').on('hidden.bs.modal', function() {
+			var q = $('#terms').val();
+			if($.isNumeric(q)&&(q>1)&&(q<=50)) {
+				$('#termtext').text('Indien opdracht wordt verstrekt, wordt gefactureerd in '+q+' termijnen');
+				if ($tpayment)
+					$('#paymenttext').html('Het eerste termijn geldt hierbij als een aanbetaling van &euro; '+$('.adata').first().val());
+			}
+			console.log('terms: '+ $('#terms').val());
+			console.log('payement: '+ $tpayment);
+			$('.adata').each(function(){
+				console.log('adata: '+ $(this).val());
+			});
+		});
+		$('.osave').click(function(e){
+			e.preventDefault();
+			$('#frm-offer').submit();
+		});
 	});
 </script>
 <div id="wrapper">
@@ -260,12 +229,21 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 
 		<hr />
 
+		@if(Session::get('success'))
+		<div class="alert alert-success">
+			<i class="fa fa-check-circle"></i>
+			<strong>Opgeslagen</strong>
+		</div>
+		@endif
+
 	<div class="pull-right">
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Versies</a>
 
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
+
+		<button class="btn btn-primary osave">Offerte sluiten</button>
 	</div>
 
 	<!-- modal dialog -->
@@ -370,74 +348,12 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 								</tr>
 							</thead>
 							<tbody>
+								@foreach (Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->get() as $offer)
 								<tr>
-									<td><a href="#">Value 1</a></td>
-									<td>Value 2</td>
+									<td><a href="#">{{ $offer->id }}</a></td>
+									<td>{{ $offer->offer_finish }}</td>
 								</tr>
-								<tr>
-									<td><a href="#">Value 1</a></td>
-									<td>Value 2</td>
-								</tr>
-								<tr>
-									<td><a href="#">Value 1</a></td>
-									<td>Value 2</td>
-								</tr>
-								<tr>
-									<td><a href="#">Value 1</a></td>
-									<td>Value 2</td>
-								</tr>
-								<tr>
-									<td><a href="#">Value 1</a></td>
-									<td>Value 2</td>
-								</tr>
-								<tr>
-									<td><a href="#">Value 1</a></td>
-									<td>Value 2</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-
-				</div>
-				<!-- /modal body -->
-
-				<div class="modal-footer"><!-- modal footer -->
-					<button class="btn btn-default" data-dismiss="modal">Close</button>
-				</div><!-- /modal footer -->
-
-			</div>
-		</div>
-	</div>
-
-	<!-- modal dialog -->
-	<div class="modal fade" id="termModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-
-				<div class="modal-header"><!-- modal header -->
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel2">Offerte versies</h4>
-				</div><!-- /modal header -->
-
-				<!-- modal body -->
-				<div class="modal-body">
-					<div class="form-horizontal">
-						<div class="form-group">
-							<div class="col-md-6">
-								<label>Termijnen</label>
-								<input id="terms" type="text" value="" class="form-control" />
-							</div>
-						</div>
-					</div>
-					<div class="table-responsive">
-						<table id="tbl-term" class="table table-hover">
-							<thead>
-								<tr>
-									<th>Termijnnummer</th>
-									<th>Bedrag</th>
-								</tr>
-							</thead>
-							<tbody>
+								@endforeach
 							</tbody>
 						</table>
 					</div>
@@ -454,6 +370,61 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 	</div>
 
 	<h2><strong>Offerte</strong></h2>
+	<form method="POST" id="frm-offer">
+			<div class="modal fade" id="termModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+
+						<div class="modal-header"><!-- modal header -->
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title" id="myModalLabel2">Offerte versies</h4>
+						</div><!-- /modal header -->
+
+						<!-- modal body -->
+						<div class="modal-body">
+							<div class="form-horizontal">
+								<div class="form-group">
+									<div class="col-md-6">
+										<label>Termijnen</label>
+										<input id="terms" min="2" max="50" type="text" value="" class="form-control" />
+									</div>
+									<div class="col-md-6">
+									  <div class="form-group">
+									  <label>Aanbetaling</label>
+									    <div class="col-sm-offset-0 col-sm-10">
+									      <div class="checkbox">
+									        <label>
+									          <input name="toggle-payment" type="checkbox">
+									        </label>
+									      </div>
+									    </div>
+									  </div>
+									</div>
+								</div>
+							</div>
+							<div class="table-responsive">
+								<table id="tbl-term" class="table table-hover">
+									<thead>
+										<tr>
+											<th>Termijnnummer</th>
+											<th>Bedrag</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+
+						</div>
+						<!-- /modal body -->
+
+						<div class="modal-footer"><!-- modal footer -->
+							<button class="btn btn-default" data-dismiss="modal">Close</button>
+						</div><!-- /modal footer -->
+
+					</div>
+				</div>
+			</div>
 
 			<div class="white-row">
 
@@ -513,11 +484,8 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 					</div>
 
 				</div>
-				<!-- /DETAILS -->
 
-				<!--<div class="panel-body">-->
-
-					<p><a id="description" href="javascript:void(0);" style="border-bottom: 0" data-type="textarea">Geef hier een omschrijving voor op de offerte</a></p>
+					<textarea name="description" id="description" rows="10" class="form-control"></textarea>
 
 					<div class="show-all" style="display:none;">
 						<h4 class="only-total">Aanneming</h4>
@@ -971,11 +939,27 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 						</table>
 					</div>
 
-					<p><a id="closure" href="javascript:void(0);" style="border-bottom: 0" data-type="textarea">Zet hier een voetnoot</a></p>
+					<textarea name="closure" id="closure" rows="10" class="form-control"></textarea>
 
-					<p>Wij kunnen de werkzaamheden starten binnen <a href="javascript:void(0);" style="border-bottom: 0" id="starttime" data-type="select" data-title="Starten werkzaamheden"></a> na dagtekening</p>
+					<p id="termtext">Indien opdracht wordt verstrekt, wordt gefactureerd middels 1 eindfactuur</p>
+					<p id="paymenttext"></p>
 
-					<p>Deze offerte doet stand tot <a href="javascript:void(0);" style="border-bottom: 0" id="endtime" data-type="select" data-title="Stand offerte"></a> na dagtekening</p>
+
+					<p>Wij kunnen de werkzaamheden starten binnen
+						<select name="deliver" id="deliver">
+							@foreach (DeliverTime::all() as $deliver)
+							<option value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
+							@endforeach
+						</select>
+					</p>
+
+					<p>Deze offerte doet stand tot
+						<select name="valid" id="valid">
+							@foreach (Valid::all() as $valid)
+							<option value="{{ $valid->id }}">{{ $valid->valid_name }}</option>
+							@endforeach
+						</select> na dagtekening
+					</p>
 
 				</div>
 
@@ -1325,6 +1309,7 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 							</div>
 
 				</div>
+			</form>
 
 			<!--<hr class="half-margins invisible" />--><!-- separator -->
 
@@ -1359,8 +1344,13 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 					</ul>-->
 
 					<div class="padding20">
+						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
+
+						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Versies</a>
+
+						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
 						<!--<button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>-->
-						<button class="btn btn-primary">Offerte sluiten</button>
+						<button class="btn btn-primary osave">Offerte sluiten</button>
 					</div>
 
 				</div>
