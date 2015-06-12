@@ -424,7 +424,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<tbody>
 										<tr>
 											<td>Aanbetaling</td>
-											<td><input disabled type="text" value="{{ ($offer_last ? $offer_last->downpayment_amount : '') }}" id="amount" name="amount" class="form-control-sm-text" /></td>
+											<td><input {{ ($offer_last ? ($offer_last->downpayment ? '' : 'disabled') : 'disabled') }} type="text" value="{{ ($offer_last ? $offer_last->downpayment_amount : '') }}" id="amount" name="amount" class="form-control-sm-text" /></td>
 										</tr>
 									</tbody>
 								</table>
