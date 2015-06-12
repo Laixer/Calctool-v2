@@ -57,12 +57,12 @@ class CreateFinancial extends Migration {
 			$table->boolean('invoice_close')->default('N');
 			$table->text('description')->nullable();
 			$table->string('reference', 30)->index();
-			$table->string('invoice_code', 50)->index();
-			$table->string('book_code', 30)->index();
-			$table->decimal('amount', 9, 2);
+			$table->string('invoice_code', 50)->index()->nullable();
+			$table->string('book_code', 30)->index()->nullable();
+			$table->decimal('amount', 9, 2)->nullable();
 			$table->integer('payment_condition')->unsigned();
 			$table->nullableTimestamps();
-			$table->date('payment_date');
+			$table->date('payment_date')->nullable();
 			$table->text('closure')->nullable();
 			$table->boolean('auto_email_reminder')->default('Y');
 			$table->integer('offer_id')->unsigned();
