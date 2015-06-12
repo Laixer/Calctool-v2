@@ -2,7 +2,8 @@
 $project = Project::find(Route::Input('project_id'));
 $relation = Relation::find($project->client_id);
 $relation_self = Relation::find(Auth::user()->self_id);
-$contact_self = Contact::where('relation_id','=',$relation_self->id)
+$contact_self = Contact::where('relation_id','=',$relation_self->id);
+$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 ?>
 
 @extends('layout.master')
@@ -160,15 +161,17 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 		$tpayment = false;
 		$("[name='toggle-payment']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 			if (state) {
-				$('#tpayment').text('Aanbetaling');
+				//$('#tpayment').text('Aanbetaling');
+				$("#amount").prop('disabled', false);
 				$tpayment = true;
 			} else {
-				$('#tpayment').text('1');
+				//$('#tpayment').text('1');
+				$("#amount").prop('disabled', true);
 				$tpayment = false;
 			}
 
 		});
-		$('#terms').blur(function(){
+		/*$('#terms').blur(function(){
 			var q = $(this).val();
 			if($.isNumeric(q)&&(q>1)&&(q<=50)){
 				$('#tbl-term tbody tr').remove();
@@ -189,7 +192,7 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 					});
 				});
 			}
-		});
+		});*/
 		$('#termModal').on('hidden.bs.modal', function() {
 			var q = $('#terms').val();
 			if($.isNumeric(q)&&(q>1)&&(q<=50)) {
@@ -197,11 +200,9 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 				if ($tpayment)
 					$('#paymenttext').html('Het eerste termijn geldt hierbij als een aanbetaling van &euro; '+$('.adata').first().val());
 			}
-			console.log('terms: '+ $('#terms').val());
-			console.log('payement: '+ $tpayment);
-			$('.adata').each(function(){
-				console.log('adata: '+ $(this).val());
-			});
+			//$('.adata').each(function(){
+			//	console.log('adata: '+ $(this).val());
+			//});
 		});
 		$('.osave').click(function(e){
 			e.preventDefault();
@@ -233,6 +234,16 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 		<div class="alert alert-success">
 			<i class="fa fa-check-circle"></i>
 			<strong>Opgeslagen</strong>
+		</div>
+		@endif
+
+		@if($errors->has())
+		<div class="alert alert-danger">
+			<i class="fa fa-frown-o"></i>
+			<strong>Fout</strong>
+			@foreach ($errors->all() as $error)
+				{{ $error }}
+			@endforeach
 		</div>
 		@endif
 
@@ -386,7 +397,7 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 								<div class="form-group">
 									<div class="col-md-6">
 										<label>Termijnen</label>
-										<input id="terms" min="2" max="50" type="text" value="" class="form-control" />
+										<input value="{{ ($offer_last ? $offer_last->invoice_quantity : '') }}" name="terms" id="terms" min="2" max="50" type="text" value="" class="form-control" />
 									</div>
 									<div class="col-md-6">
 									  <div class="form-group">
@@ -394,7 +405,7 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 									    <div class="col-sm-offset-0 col-sm-10">
 									      <div class="checkbox">
 									        <label>
-									          <input name="toggle-payment" type="checkbox">
+									          <input {{ ($offer_last ? ($offer_last->downpayment ? 'checked' : '') : '') }} name="toggle-payment" type="checkbox">
 									        </label>
 									      </div>
 									    </div>
@@ -411,6 +422,10 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 										</tr>
 									</thead>
 									<tbody>
+										<tr>
+											<td>Aanbetaling</td>
+											<td><input disabled type="text" value="{{ ($offer_last ? $offer_last->downpayment_amount : '') }}" id="amount" name="amount" class="form-control-sm-text" /></td>
+										</tr>
 									</tbody>
 								</table>
 							</div>
@@ -485,7 +500,7 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 
 				</div>
 
-					<textarea name="description" id="description" rows="10" class="form-control"></textarea>
+					<textarea name="description" id="description" rows="10" class="form-control">{{ ($offer_last ? $offer_last->description : '') }}</textarea>
 
 					<div class="show-all" style="display:none;">
 						<h4 class="only-total">Aanneming</h4>
@@ -939,16 +954,15 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 						</table>
 					</div>
 
-					<textarea name="closure" id="closure" rows="10" class="form-control"></textarea>
+					<textarea name="closure" id="closure" rows="10" class="form-control">{{ ($offer_last ? $offer_last->closure : '') }}</textarea>
 
 					<p id="termtext">Indien opdracht wordt verstrekt, wordt gefactureerd middels 1 eindfactuur</p>
 					<p id="paymenttext"></p>
 
-
 					<p>Wij kunnen de werkzaamheden starten binnen
 						<select name="deliver" id="deliver">
 							@foreach (DeliverTime::all() as $deliver)
-							<option value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
+							<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
 							@endforeach
 						</select>
 					</p>
@@ -956,7 +970,7 @@ $contact_self = Contact::where('relation_id','=',$relation_self->id)
 					<p>Deze offerte doet stand tot
 						<select name="valid" id="valid">
 							@foreach (Valid::all() as $valid)
-							<option value="{{ $valid->id }}">{{ $valid->valid_name }}</option>
+							<option {{ ($offer_last ? ($offer_last->valid_id == $valid->id ? 'selected' : '') : '') }} value="{{ $valid->id }}">{{ $valid->valid_name }}</option>
 							@endforeach
 						</select> na dagtekening
 					</p>
