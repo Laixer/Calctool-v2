@@ -63,7 +63,6 @@ class CreateFinancial extends Migration {
 			$table->integer('payment_condition')->unsigned();
 			$table->nullableTimestamps();
 			$table->date('payment_date');
-			$table->boolean('display_tax')->default('Y');
 			$table->text('closure')->nullable();
 			$table->boolean('auto_email_reminder')->default('Y');
 			$table->integer('offer_id')->unsigned();
