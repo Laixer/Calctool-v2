@@ -173,7 +173,6 @@ header#topNav.topHead {
 }
 header#topNav {
 	background:#fff;
-	padding:10px 0;
 	position:fixed;
 	top: 0; left:0; right:0;
 	width:100%;
