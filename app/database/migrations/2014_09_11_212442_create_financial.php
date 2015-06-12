@@ -36,14 +36,14 @@ class CreateFinancial extends Migration {
 			$table->text('description')->nullable();
 			$table->text('closure')->nullable();
 			$table->boolean('downpayment')->default('N');
-			$table->integer('downpayment_amount')->unsigned();
+			$table->integer('downpayment_amount')->unsigned()->nullable();
 			$table->boolean('auto_email_reminder')->default('Y');
 			$table->nullableTimestamps();
 			$table->date('offer_finish')->nullable();
 			$table->integer('deliver_id')->unsigned();
 			$table->foreign('deliver_id')->references('id')->on('deliver_time')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('valid_id')->unsigned();
-			$table->integer('invoice_quantity')->unsigned();
+			$table->integer('invoice_quantity')->unsigned()->default(1);
 			$table->foreign('valid_id')->references('id')->on('valid')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('project_id')->unsigned();
 			$table->foreign('project_id')->references('id')->on('project')->onUpdate('cascade')->onDelete('cascade');
