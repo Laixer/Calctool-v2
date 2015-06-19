@@ -22,8 +22,8 @@ public function doNew()
 	{
 		$rules = array(
 			/* General */
-			'username' => array('required','numeric'),
-			'secret' => array('required','password','max:10'),
+			'username' => array('required'),
+			'secret' => array('required'),
 
 			/* Contact */
 			'contact_name' => array('required','max:50'),
@@ -37,8 +37,8 @@ public function doNew()
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
 			'city' => array('required','alpha_num','max:35'),
-			'province' => array('required','numeric'),
-			'country' => array('required','numeric'),
+			//'province' => array('required','numeric'),
+			//'country' => array('required','numeric'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -51,20 +51,20 @@ public function doNew()
 		} else {
 
 			/* General */
-			$user = new Relation;
-			$user->user_id = Auth::user()->id;
+			$user = new User;
 			$user->username = Input::get('username');
-			$user->secret = Input::get('secret');
-			$user->user_type = Input::get('user_type');
+			$user->secret = Hash::make(Input::get('secret'));
+			$user->user_type = 1;//Input::get('user_type');
 			$user->note = Input::get('note');
 			$user->ip = $_SERVER['REMOTE_ADDR'];
-			$user->promotion_code = md5(mt_rend());
+			$user->promotion_code = md5(mt_rand());
+			$user->api = md5(mt_rand());
 
 			/* Contact */
-			$user->contact_name = Input::get('contact_name');
-			$user->contact_firstname = Input::get('contact_firstname');
+			$user->lastname = Input::get('contact_name');
+			$user->firstname = Input::get('contact_firstname');
 			$user->mobile = Input::get('mobiler');
-			$user->telephone = Input::get('telephone');
+			$user->phone = Input::get('telephone');
 			$user->email = Input::get('email');
 			$user->website = Input::get('website');
 
@@ -73,8 +73,8 @@ public function doNew()
 			$user->address_number = Input::get('address_number');
 			$user->address_postal = Input::get('zipcode');
 			$user->address_city = Input::get('city');
-			$user->province_id = Input::get('province');
-			$user->country_id = Input::get('country');
+			//$user->province_id = Input::get('province');
+			//$user->country_id = Input::get('country');
 
 			$user->save();
 
