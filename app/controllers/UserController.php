@@ -22,8 +22,8 @@ public function doNew()
 	{
 		$rules = array(
 			/* General */
-			'username' => array('required','numeric'),
-			'secret' => array('required','numeric','max:10'),
+			'username' => array('required'),
+			'secret' => array('required'),
 
 			/* Contact */
 			'contact_name' => array('required','max:50'),
