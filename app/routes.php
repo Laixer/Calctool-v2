@@ -59,8 +59,10 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('calculation/updatetax', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateTax'));
 	Route::post('calculation/deleteactivity', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteActivity'));
 	Route::post('calculation/deletechapter', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteChapter'));
-	Route::get('invoice/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoice'))->where('project_id', '[0-9]+');
-	Route::get('invoice/project-{project_id}/pdf', array('as' => 'invoicepdf', 'uses' => 'CalcController@getInvoicepdf'))->where('project_id', '[0-9]+');
+
+	Route::get('invoice/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoiceAll'))->where('project_id', '[0-9]+');
+	Route::get('invoice/project-{project_id}/invoice-{invoice_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoice'))->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
+	Route::get('invoice/project-{project_id}/invoice-{invoice_id}/pdf', array('as' => 'invoicepdf', 'uses' => 'CalcController@getInvoicepdf'))->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
 
 	Route::get('offer/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOffer'))->where('project_id', '[0-9]+');
 	Route::post('offer/project-{project_id}', array('as' => 'invoice', 'uses' => 'OfferController@doNewOffer'));
