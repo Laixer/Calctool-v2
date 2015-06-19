@@ -30,6 +30,7 @@ class CreateFinancial extends Migration {
 			$table->string('valid_name', 10)->unique();
 		});
 
+
 		Schema::create('offer', function(Blueprint $table)
 		{
 			$table->increments('id');
