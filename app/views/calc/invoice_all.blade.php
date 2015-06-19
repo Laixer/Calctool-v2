@@ -25,16 +25,27 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			$('#bookcode').val($curbookcode);
 			$lastthis = $(this);
 		});
-		$('.adata').change(function(){
-			var q = $(this).val();
-			$termid = $(this).attr('data-id');
+		function calcend() {
 			$total = {{ ResultEndresult::totalProject($project) }};
 			$('.adata').each(function(){
 				$total -= $(this).val();
-				$('#endterm').html('&euro; '+ $.number($total,2,',','.'));
 			});
+			$('#endterm').html('&euro; '+ $.number($total,2,',','.'));
+		};
+		calcend();
+		<?php if (Invoice::where('offer_id','=', $offer_last->id)->where('invoice_close','=',true)->first()) { ?>
+		$('.adata').change(function(){
+			var q = $(this).val();
+			$termid = $(this).attr('data-id');
+			/*$total = {{ ResultEndresult::totalProject($project) }};
+			$('.adata').each(function(){
+				$total -= $(this).val();
+				$('#endterm').html('&euro; '+ $.number($total,2,',','.'));
+			});*/
+			calcend();
 			$.post("/invoice/updateamount", {id: $termid, idend: {{ Invoice::where('offer_id','=', $offer_last->id)->where('invoice_close','=',true)->first()->id }}, amount: q, totaal: $total}).fail(function(e) { console.log(e); });
 		});
+		<?php } ?>
 	});
 </script>
 <div id="wrapper">
