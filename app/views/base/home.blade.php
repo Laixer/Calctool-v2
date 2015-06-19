@@ -124,162 +124,357 @@
 			</div>
 		</article>
 
-		<article class="row">
-			<div class="col-md-12">
-				<div class="col-md-6">
-				<h4>Openstaande projecten</h4>
-					<div class="panel-group" id="project">
-						@foreach (Project::where('user_id','=', Auth::user()->id)->get() as $project)
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									<a data-toggle="collapse" data-parent="#project" href="#project{{ $project->id }}">
-										<i class="fa fa-check"></i>
-										{{ $project->project_name }}
-									</a>
-								</h4>
-							</div>
-							<div id="project{{ $project->id }}" class="collapse">
-								<div class="panel-body">
-									<table class="table table-striped">
-										<?# -- table head -- ?>
-										<thead>
-											<tr>
-												<th class="col-md-4">Projectnaam</th>
-												<th class="col-md-4">Oprachtgever</th>
-												<th class="col-md-4">Adres</th>
-											</tr>
-										</thead>
 
-										<!-- table items -->
-										<tbody>
-											<tr>
-												<td class="col-md-4">{{ HTML::link('project-'.$project->id.'/edit', $project->project_name) }}</td>
-												<td class="col-md-4">{{ $project->contactor->company_name }}</td>
-												<td class="col-md-4">{{ $project->address_street }}</td>
-											</tr>
-										</tbody>
-									</table>
-									<tr>
-										<td class="col-md-1"><i class="fa fa-calendar"></i></td>
-										<td class="col-md-3">{{ HTML::link('calculation/'.$project->id, " Urenregistratie") }}</td>
-										<td class="col-md-1"><i class="fa fa-shopping-cart"></i></td>
-										<td class="col-md-3">{{ HTML::link('calculation/'.$project->id, " Inkoopfacturen") }}</td>
-										<td class="col-md-1"><a data-toggle="tooltip" data-original-title="Klik op het project om het project direct bewerken" href="#">Tip!</a></td>
-									</tr>
-								</div>
+
+
+
+
+<!--
+		<div class="tabs nomargin-top">
+
+
+			<ul class="nav nav-tabs">
+				<li class="active">
+					<a href="#tab1" data-toggle="tab" aria-expanded="true">
+						<i class="fa fa-file"></i> Project overzicht
+					</a>
+				</li>
+				<li class="">
+					<a href="#tab2" data-toggle="tab" aria-expanded="false">
+						<i class="fa fa-file"></i> Project overzicht alternatief
+					</a>
+				</li>
+			</ul>
+
+
+					<div class="tab-content">
+						<div id="tab1" class="tab-pane active">
+	-->
+
+
+<!--
+http://ashobiz.asia/boot-extended14/ui/ui-117.html#
+http://wrapbootstrap.com/preview/WB0DS0351
+-->
+
+
+						<article class="row">
+							<div class="col-md-12">
+								<section id="portfolio">
+
+									<h2><strong>Project</strong> overzicht</h2>
+
+									<ul class="nav nav-pills isotope-filter isotope-filter" data-sort-id="isotope-list" data-option-key="filter">
+										<li data-option-value="*" class="active"><a href="#">Openstaande calculaties</a></li>
+										<li data-option-value=".development"><a href="#">Uitstaande offertes</a></li>
+										<li data-option-value=".photography"><a href="#">Onderhanden projecten</a></li>
+										<li data-option-value=".photography"><a href="#">Openstaande facturen</a></li>
+										<li data-option-value=".design"><a href="#">Gesloten projecten</a></li>
+									</ul>
+
+
+									<div class="row">
+
+										<ul class="sort-destination isotope fadeIn" data-sort-id="isotope-list" style="position: relative; overflow: hidden; height: 833px;">
+
+											<li class="isotope-item col-sm-6 col-md-3 development" style="position: absolute; left: 0px; top: 0px; transform: translate3d(0px, 0px, 0px);"><!-- item -->
+												<div class="item-box">
+													<figure>
+														<a class="item-hover" href="portfolio-single.html">
+															<span class="overlay color2"></span>
+															<span class="inner">
+																<span class="block fa fa-plus fsize20"></span>
+																<strong>PROJECT</strong> DETAIL
+															</span>
+														</a>
+														<img class="img-responsive" src="assets/images/demo/portfolio/scouter-600x403.jpg" width="260" height="260" alt="">
+													</figure>
+													<div class="item-box-desc">
+														<h4>Atropos Project</h4>
+														<small class="styleColor">29 June, 2014</small>
+													</div>
+												</div>
+											</li>
+
+											<li class="isotope-item col-sm-6 col-md-3 photography" style="position: absolute; left: 0px; top: 0px; transform: translate3d(293px, 0px, 0px);"><!-- item 2 -->
+												<div class="item-box">
+													<figure>
+														<a class="item-hover lightbox" href="http://www.youtube.com/watch?v=W7Las-MJnJo" data-plugin-options="{&quot;type&quot;:&quot;iframe&quot;}">
+															<span class="overlay color2"></span>
+															<span class="inner">
+																<span class="block fa fa-plus fsize20"></span>
+																<strong>VIEW</strong> VIDEO
+															</span>
+														</a>
+														<img class="img-responsive" src="assets/images/demo/portfolio/black-kitty-600x403.jpg" width="260" height="260" alt="">
+													</figure>
+													<div class="item-box-desc">
+														<h4>Atropos Project</h4>
+														<small class="styleColor">29 June, 2014</small>
+													</div>
+												</div>
+											</li>
+
+											<li class="isotope-item col-sm-6 col-md-3 design" style="position: absolute; left: 0px; top: 0px; transform: translate3d(586px, 0px, 0px);"><!-- item 3 -->
+												<div class="item-box">
+													<figure>
+														<a class="item-hover" href="portfolio-single.html">
+															<span class="overlay color2"></span>
+															<span class="inner">
+																<span class="block fa fa-plus fsize20"></span>
+																<strong>PROJECT</strong> DETAIL
+															</span>
+														</a>
+														<img class="img-responsive" src="assets/images/demo/portfolio/merchant2-600x403.jpg" width="260" height="260" alt="">
+													</figure>
+													<div class="item-box-desc">
+														<h4>Atropos Project</h4>
+														<small class="styleColor">29 June, 2014</small>
+													</div>
+												</div>
+											</li>
+
+											<li class="isotope-item col-sm-6 col-md-3 photography" style="position: absolute; left: 0px; top: 0px; transform: translate3d(879px, 0px, 0px);"><!-- item 4 -->
+												<div class="item-box">
+													<figure>
+														<a class="item-hover" href="portfolio-single.html">
+															<span class="overlay color2"></span>
+															<span class="inner">
+																<span class="block fa fa-plus fsize20"></span>
+																<strong>PROJECT</strong> DETAIL
+															</span>
+														</a>
+														<img class="img-responsive" src="assets/images/demo/portfolio/flippin-the-bird1-600x403.jpg" width="260" height="260" alt="">
+													</figure>
+													<div class="item-box-desc">
+														<h4>Atropos Project</h4>
+														<small class="styleColor">29 June, 2014</small>
+													</div>
+												</div>
+											</li>
+
+											<li class="isotope-item col-sm-6 col-md-3 development" style="position: absolute; left: 0px; top: 0px; transform: translate3d(0px, 277px, 0px);"><!-- item 5 -->
+												<div class="item-box">
+													<figure>
+														<a class="item-hover lightbox" href="http://www.youtube.com/watch?v=W7Las-MJnJo" data-plugin-options="{&quot;type&quot;:&quot;iframe&quot;}">
+															<span class="overlay color2"></span>
+															<span class="inner">
+																<span class="block fa fa-plus fsize20"></span>
+																<strong>VIEW</strong> VIDEO
+															</span>
+														</a>
+														<img class="img-responsive" src="assets/images/demo/portfolio/night_to_remember1-600x403.jpg" width="260" height="260" alt="">
+													</figure>
+													<div class="item-box-desc">
+														<h4>Atropos Project</h4>
+														<small class="styleColor">29 June, 2014</small>
+													</div>
+												</div>
+											</li>
+
+											<li class="isotope-item col-sm-6 col-md-3 design" style="position: absolute; left: 0px; top: 0px; transform: translate3d(293px, 277px, 0px);"><!-- item 6 -->
+												<div class="item-box">
+													<figure>
+														<a class="item-hover" href="portfolio-single.html">
+															<span class="overlay color2"></span>
+															<span class="inner">
+																<span class="block fa fa-plus fsize20"></span>
+																<strong>PROJECT</strong> DETAIL
+															</span>
+														</a>
+														<img class="img-responsive" src="assets/images/demo/portfolio/spacebound-600x403.jpg" width="260" height="260" alt="">
+													</figure>
+													<div class="item-box-desc">
+														<h4>Atropos Project</h4>
+														<small class="styleColor">29 June, 2014</small>
+													</div>
+												</div>
+											</li>
+
+											<li class="isotope-item col-sm-6 col-md-3 photography design" style="position: absolute; left: 0px; top: 0px; transform: translate3d(586px, 278px, 0px);"><!-- item 7 -->
+												<div class="item-box">
+													<figure>
+														<a class="item-hover" href="portfolio-single.html">
+															<span class="overlay color2"></span>
+															<span class="inner">
+																<span class="block fa fa-plus fsize20"></span>
+																<strong>PROJECT</strong> DETAIL
+															</span>
+														</a>
+														<img class="img-responsive" src="assets/images/demo/portfolio/be-my-guest1-600x403.jpg" width="260" height="260" alt="">
+													</figure>
+													<div class="item-box-desc">
+														<h4>Atropos Project</h4>
+														<small class="styleColor">29 June, 2014</small>
+													</div>
+												</div>
+											</li>
+
+											<li class="isotope-item col-sm-6 col-md-3 development" style="position: absolute; left: 0px; top: 0px; transform: translate3d(879px, 278px, 0px);"><!-- item 8 -->
+												<div class="item-box">
+													<figure>
+														<a class="item-hover" href="portfolio-single.html">
+															<span class="overlay color2"></span>
+															<span class="inner">
+																<span class="block fa fa-plus fsize20"></span>
+																<strong>PROJECT</strong> DETAIL
+															</span>
+														</a>
+														<img class="img-responsive" src="assets/images/demo/portfolio/black-box5-600x403.jpg" width="260" height="260" alt="">
+													</figure>
+													<div class="item-box-desc">
+														<h4>Atropos Project</h4>
+														<small class="styleColor">29 June, 2014</small>
+													</div>
+												</div>
+											</li>
+
+											<li class="isotope-item col-sm-6 col-md-3 development" style="position: absolute; left: 0px; top: 0px; transform: translate3d(0px, 555px, 0px);"><!-- item -->
+												<div class="item-box">
+													<figure>
+														<a class="item-hover lightbox" href="http://www.youtube.com/watch?v=W7Las-MJnJo" data-plugin-options="{&quot;type&quot;:&quot;iframe&quot;}">
+															<span class="overlay color2"></span>
+															<span class="inner">
+																<span class="block fa fa-plus fsize20"></span>
+																<strong>VIEW</strong> VIDEO
+															</span>
+														</a>
+														<img class="img-responsive" src="assets/images/demo/portfolio/weather-app-600x403.jpg" width="260" height="260" alt="">
+													</figure>
+													<div class="item-box-desc">
+														<h4>Atropos Project</h4>
+														<small class="styleColor">29 June, 2014</small>
+													</div>
+												</div>
+											</li>
+
+											<li class="isotope-item col-sm-6 col-md-3 photography" style="position: absolute; left: 0px; top: 0px; transform: translate3d(293px, 555px, 0px);"><!-- item 2 -->
+												<div class="item-box">
+													<figure>
+														<a class="item-hover" href="portfolio-single.html">
+															<span class="overlay color2"></span>
+															<span class="inner">
+																<span class="block fa fa-plus fsize20"></span>
+																<strong>PROJECT</strong> DETAIL
+															</span>
+														</a>
+														<img class="img-responsive" src="assets/images/demo/portfolio/theMoose-600x403.jpg" width="260" height="260" alt="">
+													</figure>
+													<div class="item-box-desc">
+														<h4>Atropos Project</h4>
+														<small class="styleColor">29 June, 2014</small>
+													</div>
+												</div>
+											</li>
+
+											<li class="isotope-item col-sm-6 col-md-3 design" style="position: absolute; left: 0px; top: 0px; transform: translate3d(586px, 555px, 0px);"><!-- item 3 -->
+												<div class="item-box">
+													<figure>
+														<a class="item-hover" href="portfolio-single.html">
+															<span class="overlay color2"></span>
+															<span class="inner">
+																<span class="block fa fa-plus fsize20"></span>
+																<strong>PROJECT</strong> DETAIL
+															</span>
+														</a>
+														<img class="img-responsive" src="assets/images/demo/portfolio/tumblr_mopqj9QUeq1st5lhmo1_12801-600x403.jpg" width="260" height="260" alt="">
+													</figure>
+													<div class="item-box-desc">
+														<h4>Atropos Project</h4>
+														<small class="styleColor">29 June, 2014</small>
+													</div>
+												</div>
+											</li>
+
+											<li class="isotope-item col-sm-6 col-md-3 photography" style="position: absolute; left: 0px; top: 0px; transform: translate3d(879px, 556px, 0px);"><!-- item 4 -->
+												<div class="item-box">
+													<figure>
+														<a class="item-hover" href="portfolio-single.html">
+															<span class="overlay color2"></span>
+															<span class="inner">
+																<span class="block fa fa-plus fsize20"></span>
+																<strong>PROJECT</strong> DETAIL
+															</span>
+														</a>
+														<img class="img-responsive" src="assets/images/demo/portfolio/scouter-600x403.jpg" width="260" height="260" alt="">
+													</figure>
+													<div class="item-box-desc">
+														<h4>Atropos Project</h4>
+														<small class="styleColor">29 June, 2014</small>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div><!-- /.masonry-container -->
+									<!-- CALLOUT -->
+									<div class="bs-callout text-center nomargin-bottom">
+										<h3>Do you like what you see? <a href="contact-us.html" target="_blank" class="btn btn-primary btn-lg">Yes, let's work together!</a></h3>
+									</div>
+									<!-- /CALLOUT -->
+								</section>
 							</div>
-						</div>
-						@endforeach
-					</div>
-					<h4>Openstaande facturen</h4>
-				<div class="panel-group" id="invoice">
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<a data-toggle="collapse" data-parent="#invoice" href="#invoice1">
-									<i class="fa fa-check"></i>
-									Option 1
-								</a>
-							</h4>
-						</div>
-						<div id="invoice1" class="collapse in">
-							<div class="panel-body">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur <a data-toggle="tooltip" data-original-title="Default tooltip" href="#">pellentesque neque eget</a> diam posuere porta. Quisque ut nulla at nunc vehicula lacinia. Proin adipiscing porta tellus, ut feugiat nibh adipiscing sit amet. In eu justo a felis faucibus ornare vel id metus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In eu libero ligula. Fusce eget metus lorem, ac viverra leo. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque neque eget diam posuere porta. Quisque ut nulla at nunc vehicula lacinia.
-							</div>
-						</div>
-					</div>
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<a data-toggle="collapse" data-parent="#invoice" href="#invoice2">
-									<i class="fa fa-check"></i>
-									Option 2
-								</a>
-							</h4>
-						</div>
-						<div id="invoice2" class="collapse">
-							<div class="panel-body">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur <a data-toggle="tooltip" data-original-title="Default tooltip" href="#">pellentesque neque eget</a> diam posuere porta. Quisque ut nulla at nunc vehicula lacinia. Proin adipiscing porta tellus, ut feugiat nibh adipiscing sit amet. In eu justo a felis faucibus ornare vel id metus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In eu libero ligula. Fusce eget metus lorem, ac viverra leo.
-							</div>
-						</div>
-					</div>
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<h4 class="panel-title">
-								<a data-toggle="collapse" data-parent="#invoice" href="#invoice3">
-									<i class="fa fa-check"></i>
-									Option 3
-								</a>
-							</h4>
-						</div>
-						<div id="invoice3" class="collapse">
-							<div class="panel-body">
-								Curabitur <a data-toggle="tooltip" data-original-title="Default tooltip" href="#">pellentesque neque eget</a> diam posuere porta. Quisque ut nulla at nunc vehicula lacinia. Proin adipiscing porta tellus, ut feugiat nibh adipiscing sit amet. In eu justo a felis faucibus ornare vel id metus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In eu libero ligula.
-							</div>
-						</div>
-					</div>
-				</div>
-				</div>
-				<div class="col-md-6">
-				<h4>Nieuws</h4>
-				<?# https://vid.me/delete/cx4tz5oeyzw4o8ko4gkgs84o8 ?>
-					<!--<div class="owl-carousel controlls-over" data-plugin-options='{"items": 1, "singleItem": true, "navigation": true, "pagination": true, "transitionStyle":"fadeUp"}'>
-						<div>-->
-							<!--<iframe width="600" height="311" src="http://www.youtube.com/embed/-bdKMT1znJ0"></iframe>-->
-							<video id="really-cool-video" class="video-js vjs-default-skin" controls preload="auto" width="540" height="311" data-setup='{}'>
-							  <source src="http://calctool.nl.webhosting78.transurl.nl/331663334.mp4" type='video/mp4'>
-							  <p class="vjs-no-js">
-							    To view this video please enable JavaScript, and consider upgrading to a web browser
-							    that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-							  </p>
-							</video>
-						<!--</div>
-						<div>-->
-							<!--<iframe width="600" height="311" src="http://www.youtube.com/embed/-bdKMT1znJ0"></iframe>-->
-						<!--</div>
-					</div>-->
-				<h4>Statistiek</h4>
-					<section class="paddings white-row styleSecondBackground">
-						<div class="row text-center countTo">
-							<div class="col-md-4">
-								<strong data-to="32">1244</strong>
-								<label>Aantal offertes</label>
-							</div>
-							<div class="col-md-4">
-								<strong data-to="12">12</strong>
-								<label>Aantal projecten</label>
-							</div>
-							<div class="col-md-4">
-								<strong data-to="1438">1438</strong>
-								<label>Totaal omzet</label>
-							</div>
-						</div>
-					</section>
-				<h4>Wat zeggen klanten ervan?</h4>
-				<div class="owl-carousel text-center" data-plugin-options='{"items": 1, "singleItem": true, "navigation": false, "pagination": true, "autoPlay": true, "transitionStyle":"fadeUp"}'><!-- transitionStyle: fade, backSlide, goDown, fadeUp,  -->
-					<div class="testimonial white">
-						<p>Praesent est laborum dolo rumes fugats untras. Etha rums ser quidem rerum facilis dolores nemis onis fugats vitaes nemo minima rerums unsers sadips amets.</p>
-						<cite><strong>Andre Opstal</strong>, Customer</cite>
+						</article>
 					</div>
 
-					<div class="testimonial white">
-						<p>Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa.</p>
-						<cite><strong>Ton Benner</strong>, Customer</cite>
-					</div>
+<!--
+					<div id="tab2" class="tab-pane">
+					<article class="row">
+						<div class="col-md-12">
+							<div class="col-md-3">
+							<h5><strong>Openstaande</strong> calculaties</h5>
+								@foreach (Project::where('user_id','=', Auth::user()->id)->get() as $project)
+									<div class="row">{{ HTML::link('project-'.$project->id.'/edit', $project->project_name) }}</div>
+								@endforeach
+							</div>
+							<div class="col-md-3">
+							<h5><strong>Uitstaande</strong> offertes</h5>
+								@foreach (Project::where('user_id','=', Auth::user()->id)->get() as $project)
+									<div class="row">{{ HTML::link('project-'.$project->id.'/edit', $project->project_name) }}</div>
+								@endforeach
+							</div>
+							<div class="col-md-3">
+							<h5><strong>Onderhanden</strong> projecten</h5>
+								@foreach (Project::where('user_id','=', Auth::user()->id)->get() as $project)
+									<div class="row">{{ HTML::link('project-'.$project->id.'/edit', $project->project_name) }}</div>
+								@endforeach
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="col-md-3">
+							<h5><strong>Openstaande</strong> facturen</h5>
+								@foreach (Project::where('user_id','=', Auth::user()->id)->get() as $project)
+									<div class="row">{{ HTML::link('project-'.$project->id.'/edit', $project->project_name) }}</div>
+								@endforeach
+							</div>
+							<div class="col-md-3">
+							<h5><strong>Afgesloten</strong> projecten</h5>
+								@foreach (Project::where('user_id','=', Auth::user()->id)->get() as $project)
+									<div class="row">{{ HTML::link('project-'.$project->id.'/edit', $project->project_name) }}</div>
+								@endforeach
+							</div>
+						</div>
 
-					<div class="testimonial white">
-						<p>Praesent est laborum dolo rumes fugats untras. Etha rums ser quidem rerum facilis dolores nemis onis fugats vitaes nemo minima rerums unsers sadips amets.</p>
-						<cite><strong>Dorin Doe</strong>, Customer</cite>
-					</div>
+					</article>
+-->
 
-					<div class="testimonial white">
-						<p>Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa.</p>
-						<cite><strong>Melissa Doe</strong>, Customer</cite>
-					</div>
 				</div>
 			</div>
-		</article>
+
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	</section>
 </div>
 
