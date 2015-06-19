@@ -50,6 +50,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('/', array('uses' => 'HomeController@getHome'));
 	Route::get('logout', array('as' => 'logout', 'uses' => 'AuthController@doLogout'));
 	Route::get('result/project-{project_id}', array('as' => 'result', 'uses' => 'ResultController@getResult'))->where('project_id', '[0-9]+');
+	Route::get('user/new', array('as' => 'user', 'uses' => 'UserController@getNew'));
 	Route::get('user', array('as' => 'user', 'uses' => 'UserController@getAll'));
 
 	/* Actions by calculation */

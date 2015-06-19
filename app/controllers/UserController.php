@@ -13,4 +13,9 @@ class UserController extends \BaseController {
 		return View::make('base.user');
 	}
 
+	public function getNew()
+	{
+		return View::make('base.new_user');
+	}
+
 }
