@@ -122,7 +122,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				<?php $i=0; ?>
 				@foreach (Invoice::where('offer_id','=', $offer_last->id)->orderBy('id')->get() as $invoice)
 					<tr>
-						<td class="col-md-4">{{ ($invoice->invoice_close ? 'Eindfactuur' : ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1))) }}</td>
+						<td class="col-md-4"><a href="/invoice/project-{{ $project->id }}/invoice-{{ $invoice->id }}">{{ ($invoice->invoice_close ? 'Eindfactuur' : ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1))) }}</a></td>
 						<td class="col-md-2"><?php if($invoice->invoice_close){ ?><span id="endterm">0</span><?php } else { ?><input data-id="{{ $invoice->id }}" class="form-control-sm-text adata" name="amount" type="text" value="{{ $invoice->amount }}" /><?php } ?></td>
 						<td class="col-md-1"><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice->reference }}" data-bookcode="{{ $invoice->book_code }}" data-id="{{ $invoice->id }}" data-target="#codeModal">{{ $invoice->invoice_code }}</a></td>
 						<td class="col-md-3">{{ $invoice->description }}</td>
