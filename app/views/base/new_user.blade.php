@@ -67,10 +67,19 @@ $(document).ready(function() {
 
 					<div class="col-md-3">
 						<div class="form-group">
+							<label for="user_type">Gebruikers type</label>
+							<select name="province" id="province" class="form-control pointer">
+								@foreach (Province::all() as $province)
+									<option value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
 							<label for="secret">Wachtwoord</label>
 							<input name="secret" id="secret" class="form-control">
-
-							</select>
 						</div>
 					</div>
 
