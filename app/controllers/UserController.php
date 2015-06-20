@@ -37,8 +37,7 @@ public function doNew()
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
 			'city' => array('required','alpha_num','max:35'),
-			//'province' => array('required','numeric'),
-			//'country' => array('required','numeric'),
+
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -73,8 +72,6 @@ public function doNew()
 			$user->address_number = Input::get('address_number');
 			$user->address_postal = Input::get('zipcode');
 			$user->address_city = Input::get('city');
-			//$user->province_id = Input::get('province');
-			//$user->country_id = Input::get('country');
 
 			$user->save();
 
