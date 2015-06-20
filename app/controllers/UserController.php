@@ -38,8 +38,8 @@ public function doNew()
 			'address_number' => array('required','alpha_num','max:5'),
 			'address_zipcode' => array('required','size:6'),
 			'address_city' => array('required','alpha_num','max:35'),
-			'address_province' => array('required','numeric'),
-			'address_country' => array('required','numeric'),
+			'province' => array('required','numeric'),
+			'country' => array('required','numeric'),
 
 		);
 

@@ -91,14 +91,14 @@ $(document).ready(function() {
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="lastname">Naam</label>
-							<input name="lastname" id="lastname" type="text" value="{{ Input::old('contact_name') }}" class="form-control"/>
+							<input name="lastname" id="lastname" type="text" value="{{ Input::old('lastname') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="firstname">Voornaam</label>
-							<input name="firstname" id="firstname" type="text" value="{{ Input::old('contact_firstname') }}" class="form-control"/>
+							<input name="firstname" id="firstname" type="text" value="{{ Input::old('firstname') }}" class="form-control"/>
 						</div>
 					</div>
 
@@ -138,7 +138,7 @@ $(document).ready(function() {
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="address_street">Straat</label>
-							<input name="address_street" id="address_street" type="text" value="{{ Input::old('street') }}" class="form-control"/>
+							<input name="address_street" id="address_street" type="text" value="{{ Input::old('address_street') }}" class="form-control"/>
 						</div>
 					</div>
 
@@ -152,14 +152,14 @@ $(document).ready(function() {
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="address_zipcode">Postcode</label>
-							<input name="address_zipcode" id="address_zipcode" maxlength="6" type="text" value="{{ Input::old('zipcode') }}" class="form-control"/>
+							<input name="address_zipcode" id="address_zipcode" maxlength="6" type="text" value="{{ Input::old('address_zipcode') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="address_city">Plaats</label>
-							<input name="address_city" id="address_city" type="text" value="{{ Input::old('city') }}" class="form-control"/>
+							<input name="address_city" id="address_city" type="text" value="{{ Input::old('address_city') }}" class="form-control"/>
 						</div>
 					</div>
 
