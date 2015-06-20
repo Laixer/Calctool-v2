@@ -106,6 +106,8 @@ class TestProjectSeeder extends Seeder {
 			'pref_email_invoice_last_demand' => 'pref_email_invoice_last_demand',
 			'administration_cost' => '12.50',
 			'user_type' => $test_user_type->id,
+			'province_id' => $test_province->id,
+			'country_id' => $test_country->id,
 			'self_id' => NULL
 		));
 

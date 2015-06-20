@@ -68,9 +68,9 @@ $(document).ready(function() {
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="user_type">Gebruikers type</label>
-							<select name="province" id="province" class="form-control pointer">
-								@foreach (Province::all() as $province)
-									<option value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
+							<select name="type" id="type" class="form-control pointer">
+								@foreach (UserType::all() as $type)
+									<option value="{{ $type->id }}">{{ ucwords($type->user_type) }}</option>
 								@endforeach
 							</select>
 						</div>
@@ -90,15 +90,15 @@ $(document).ready(function() {
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="contact_name">Naam</label>
-							<input name="contact_name" id="contact_name" type="text" value="{{ Input::old('contact_name') }}" class="form-control"/>
+							<label for="lastname">Naam</label>
+							<input name="lastname" id="lastname" type="text" value="{{ Input::old('contact_name') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-2">
 						<div class="form-group">
-							<label for="contact_firstname">Voornaam</label>
-							<input name="contact_firstname" id="contact_firstname" type="text" value="{{ Input::old('contact_firstname') }}" class="form-control"/>
+							<label for="firstname">Voornaam</label>
+							<input name="firstname" id="firstname" type="text" value="{{ Input::old('contact_firstname') }}" class="form-control"/>
 						</div>
 					</div>
 
@@ -137,8 +137,8 @@ $(document).ready(function() {
 
 					<div class="col-md-4">
 						<div class="form-group">
-							<label for="street">Straat</label>
-							<input name="street" id="street" type="text" value="{{ Input::old('street') }}" class="form-control"/>
+							<label for="address_street">Straat</label>
+							<input name="address_street" id="address_street" type="text" value="{{ Input::old('street') }}" class="form-control"/>
 						</div>
 					</div>
 
@@ -151,15 +151,15 @@ $(document).ready(function() {
 
 					<div class="col-md-2">
 						<div class="form-group">
-							<label for="zipcode">Postcode</label>
-							<input name="zipcode" id="zipcode" maxlength="6" type="text" value="{{ Input::old('zipcode') }}" class="form-control"/>
+							<label for="address_zipcode">Postcode</label>
+							<input name="address_zipcode" id="address_zipcode" maxlength="6" type="text" value="{{ Input::old('zipcode') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="city">Plaats</label>
-							<input name="city" id="city" type="text" value="{{ Input::old('city') }}" class="form-control"/>
+							<label for="address_city">Plaats</label>
+							<input name="address_city" id="address_city" type="text" value="{{ Input::old('city') }}" class="form-control"/>
 						</div>
 					</div>
 

@@ -23,6 +23,18 @@ class CreateUsersTable extends Migration {
 			$table->string('user_type', 50)->unique();
 		});
 
+		Schema::create('province', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('province_name', 25)->unique();
+		});
+
+		Schema::create('country', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('country_name', 80)->unique();
+		});
+
 		Schema::create('user_account', function(Blueprint $table)
 		{
 			$table->increments('id');
@@ -71,6 +83,10 @@ class CreateUsersTable extends Migration {
 			$table->decimal('administration_cost', 5, 2)->nullable();
 			$table->rememberToken();
 			$table->nullableTimestamps();
+			$table->integer('province_id')->unsigned();
+			$table->foreign('province_id')->references('id')->on('province')->onUpdate('cascade')->onDelete('restrict');
+			$table->integer('country_id')->unsigned();
+			$table->foreign('country_id')->references('id')->on('country')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('user_type')->unsigned();
 			$table->foreign('user_type')->references('id')->on('user_type')->onUpdate('cascade')->onDelete('restrict');
 		});
@@ -94,18 +110,6 @@ class CreateUsersTable extends Migration {
 			$table->text('note')->nullable();
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
-		});
-
-		Schema::create('province', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->string('province_name', 25)->unique();
-		});
-
-		Schema::create('country', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->string('country_name', 80)->unique();
 		});
 
 		Schema::create('project_type', function(Blueprint $table)

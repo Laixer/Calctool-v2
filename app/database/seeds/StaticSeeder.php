@@ -365,11 +365,12 @@ class StaticSeeder extends Seeder {
 		Supplier::create(array('supplier_name' => 'Bouwmaat'));
 		$this->command->info('Supplier created');
 
-		UserType::create(array('user_type' => 'demo'));
-		UserType::create(array('user_type' => 'guest'));
-		UserType::create(array('user_type' => 'user'));
-		UserType::create(array('user_type' => 'admin'));
 		UserType::create(array('user_type' => 'system'));
+		UserType::create(array('user_type' => 'admin'));
+		UserType::create(array('user_type' => 'user'));
+		UserType::create(array('user_type' => 'guest'));
+		UserType::create(array('user_type' => 'tester'));
+		UserType::create(array('user_type' => 'demo'));
 		$this->command->info('UserType created');
 
 		Province::create(array('province_name' => 'groningen'));
