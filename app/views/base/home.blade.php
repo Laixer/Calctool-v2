@@ -10,20 +10,11 @@
 
 		<?# -- BORN TO BE A WINNER -- ?>
 
+		<h2><strong>Navigatie</strong> koppelingen</h2>
 		<article class="row">
 			<div class="col-md-12">
 				<!--<h4>Navigatie</h4>-->
-				<div class="col-md-1">
-					<div class="featured-box nobg">
-						<div class="box-content">
-							<a href="/project/new">
-								<i class="fa fa-pencil"></i>
-								<h5>Nieuw project</h5>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-1">
+				<div class="col-md-3">
 					<div class="featured-box nobg">
 						<div class="box-content">
 							<a href="/project">
@@ -33,17 +24,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-1">
-					<div class="featured-box nobg">
-						<div class="box-content">
-							<a href="/relation/new">
-								<i class="fa fa-user"></i>
-								<h5>Nieuwe relatie</h5>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-1">
+				<div class="col-md-3">
 					<div class="featured-box nobg">
 						<div class="box-content">
 							<a href="/relation">
@@ -53,23 +34,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-1">
-					<div class="featured-box nobg">
-						<div class="box-content">
-							<i class="fa fa-calendar"></i>
-							<h5>Uren</h5>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-1">
-					<div class="featured-box nobg">
-						<div class="box-content">
-							<i class="fa fa-shopping-cart"></i>
-							<h5>Inkoop</h5>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-1">
+				<div class="col-md-3">
 					<div class="featured-box nobg">
 						<div class="box-content">
 							<a href="/material">
@@ -79,15 +44,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-1">
-					<div class="featured-box nobg">
-						<div class="box-content">
-							<i class="fa fa-cogs"></i>
-							<h5>Instellingen</h5>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-1">
+				<div class="col-md-3">
 					<div class="featured-box nobg">
 						<div class="box-content">
 							<a href="/mycompany">
@@ -97,60 +54,49 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-1">
+			</div>
+		</article>
+		<article class="row">
+			<div class="col-md-12">
+				<!--<h4>Navigatie</h4>-->
+				<div class="col-md-3">
 					<div class="featured-box nobg">
 						<div class="box-content">
-							<i class="fa fa-question"></i>
-							<h5>over 1</h5>
+							<a href="/project/new">
+								<i class="fa fa-pencil"></i>
+								<h5>Nieuw project</h5>
+							</a>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-1">
+				<div class="col-md-3">
 					<div class="featured-box nobg">
 						<div class="box-content">
-							<i class="fa fa-question"></i>
-							<h5>over 2</h5>
+							<a href="/relation/new">
+								<i class="fa fa-user"></i>
+								<h5>Nieuwe relatie</h5>
+							</a>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-1">
+				<div class="col-md-3">
 					<div class="featured-box nobg">
-						<div class="">
-							<i class="fa fa-life-bouy"></i>
-							<h5>Help</h5>
+						<div class="box-content">
+							<i class="fa fa-calendar"></i>
+							<h5>Uren</h5>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="featured-box nobg">
+						<div class="box-content">
+							<i class="fa fa-shopping-cart"></i>
+							<h5>Inkoop</h5>
 						</div>
 					</div>
 				</div>
 			</div>
 		</article>
-
-
-
-
-
-
-<!--
-		<div class="tabs nomargin-top">
-
-
-			<ul class="nav nav-tabs">
-				<li class="active">
-					<a href="#tab1" data-toggle="tab" aria-expanded="true">
-						<i class="fa fa-file"></i> Project overzicht
-					</a>
-				</li>
-				<li class="">
-					<a href="#tab2" data-toggle="tab" aria-expanded="false">
-						<i class="fa fa-file"></i> Project overzicht alternatief
-					</a>
-				</li>
-			</ul>
-
-
-					<div class="tab-content">
-						<div id="tab1" class="tab-pane active">
-	-->
-
 
 <!--
 http://ashobiz.asia/boot-extended14/ui/ui-117.html#
@@ -163,7 +109,6 @@ http://wrapbootstrap.com/preview/WB0DS0351
 								<section id="portfolio">
 
 									<h2><strong>Project</strong> overzicht</h2>
-
 									<ul class="nav nav-pills isotope-filter isotope-filter" data-sort-id="isotope-list" data-option-key="filter">
 										<li data-option-value="*" class="active"><a href="#">Openstaande calculaties</a></li>
 										<li data-option-value=".development"><a href="#">Uitstaande offertes</a></li>
@@ -171,7 +116,6 @@ http://wrapbootstrap.com/preview/WB0DS0351
 										<li data-option-value=".photography"><a href="#">Openstaande facturen</a></li>
 										<li data-option-value=".design"><a href="#">Gesloten projecten</a></li>
 									</ul>
-
 
 									<div class="row">
 

@@ -22,6 +22,9 @@
 					<li>
 						{{ HTML::link('help', 'Help') }}
 					</li>
+					<li>
+						{{ HTML::link('mijnaccount', 'Mijn account') }}
+					</li>
 					<li class="active">
 					@if (Auth::check())
 						{{ HTML::link('/logout', 'Uitloggen') }}
