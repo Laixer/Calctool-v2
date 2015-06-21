@@ -78,6 +78,12 @@ $(document).ready(function() {
 						<li>
 							<a href="#contact" data-toggle="tab">Contacten</a>
 						</li>
+						<li>
+							<a href="#voorkeuren" data-toggle="tab">Voorkeuren</a>
+						</li>
+						<li>
+							<a href="#instellingen" data-toggle="tab">Instellingen</a>
+						</li>
 					</ul>
 
 					<?# -- tabs content -- ?>
@@ -235,7 +241,6 @@ $(document).ready(function() {
 										<input name="iban_name" id="iban_name" type="text" value="{{ Input::old('iban_name') ? Input::old('iban_name') : $iban->iban_name }}" class="form-control"/>
 									</div>
 								</div>
-
 							</div>
 							<div class="row">
 								<div class="col-md-12">
@@ -245,7 +250,7 @@ $(document).ready(function() {
 							{{ Form::close() }}
 						</div>
 						<div id="contact" class="tab-pane">
-							<label>Contactpersonen</label>
+							<h4>Contactpersonen</h4>
 							<table class="table table-striped">
 								<?# -- table head -- ?>
 								<thead>
@@ -278,6 +283,14 @@ $(document).ready(function() {
 									<a href="/relation-{{ $relation->id }}/contact/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
 								</div>
 							</div>
+						</div>
+						<div id="voorkeuren" class="tab-pane">
+							<h4>Voorkeuren</h4>
+							Hier komen voorkeuren voor de prefs
+							</div>
+						<div id="instellingen" class="tab-pane">
+							<h4>Instellingen</h4>
+							Hier komen de API ed
 						</div>
 					</div>
 				</div>
