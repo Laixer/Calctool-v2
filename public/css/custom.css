@@ -30,6 +30,19 @@ padding: 6px 10px;
 div.featured-box i.fa {
 color: #4E4E4E;
 background: #E8E8E8;
+border-radius: 0%;
+}
+
+div.featured-box.nobg i.fa {
+font-size: 50px;
+margin-top: 0;
+width: 100px;
+height: 100px;
+line-height: 100px;
+}
+
+div.featured-box {
+padding: 14px;
 }
 
 /* kleur icoon, background inverted on hoover*/
@@ -52,6 +65,7 @@ div.tabs ul.nav-tabs a {
 background: #E8E8E8;
 }
 
+/* ============================================================================ */
 /* invulvelden formulieren; text leesbaar maken en regels dunner voor meer overzicht */
 /* gebruikt op Calculatiepagina*/
 .form-control {
@@ -222,3 +236,4 @@ background-color: #4E4E4E !important;
 .fix-footer-bottom {
     margin-bottom: 40px;
 }
+
