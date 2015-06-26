@@ -65,6 +65,9 @@ class CreateFinancial extends Migration {
 			$table->nullableTimestamps();
 			$table->date('payment_date')->nullable();
 			$table->text('closure')->nullable();
+			$table->decimal('rest_21', 9, 2)->nullable();
+			$table->decimal('rest_6', 9, 2)->nullable();
+			$table->decimal('rest_0', 9, 2)->nullable();
 			$table->boolean('auto_email_reminder')->default('Y');
 			$table->integer('offer_id')->unsigned();
 			$table->foreign('offer_id')->references('id')->on('offer')->onUpdate('cascade')->onDelete('cascade');

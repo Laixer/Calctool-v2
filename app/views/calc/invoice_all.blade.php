@@ -43,7 +43,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				$('#endterm').html('&euro; '+ $.number($total,2,',','.'));
 			});*/
 			calcend();
-			$.post("/invoice/updateamount", {id: $termid, idend: {{ Invoice::where('offer_id','=', $offer_last->id)->where('invoice_close','=',true)->first()->id }}, amount: q, totaal: $total}).fail(function(e) { console.log(e); });
+			$.post("/invoice/updateamount", {id: $termid, project: {{ $project->id }}, idend: {{ Invoice::where('offer_id','=', $offer_last->id)->where('invoice_close','=',true)->first()->id }}, amount: q, totaal: $total}).fail(function(e) { console.log(e); });
 		});
 		<?php } ?>
 		$('#condition').change(function(e){
@@ -108,7 +108,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			<hr />
 
 			<h2><strong>Factuurbeheer</strong></h2>
-
 			<table class="table table-striped">
 				<?# -- table head -- ?>
 				<thead>
@@ -132,8 +131,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						<td class="col-md-1"><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice->reference }}" data-bookcode="{{ $invoice->book_code }}" data-id="{{ $invoice->id }}" data-target="#codeModal">{{ $invoice->invoice_code }}</a></td>
 						<td class="col-md-3">{{ $invoice->description }}</td>
 						<td class="col-md-2"><input type="number" name="condition" data-id="{{ $invoice->id }}" value="{{ $invoice->payment_condition }}" id="condition" class="form-control" /></td>
-						<td class="col-md-2">{{ $invoice->attributes['created_at'] }}</td>
-						<td class="col-md-2">?</td>
+						<td class="col-md-2">{{-- $invoice->created_at --}}</td>
+						<td class="col-md-2">Open</td>
 					</tr>
 				<?php $i++; ?>
 				@endforeach
