@@ -8,9 +8,6 @@
 		"barryvdh/laravel-dompdf": "0.4.*",
 		"Nathanmac/Parser": "2.*"
 	},
-	"require-dev": {
-		"way/generators": "~2.0"
-	},
 	"autoload": {
 		"classmap": [
 			"app/commands",
