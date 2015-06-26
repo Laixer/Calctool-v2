@@ -46,6 +46,11 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			$.post("/invoice/updateamount", {id: $termid, idend: {{ Invoice::where('offer_id','=', $offer_last->id)->where('invoice_close','=',true)->first()->id }}, amount: q, totaal: $total}).fail(function(e) { console.log(e); });
 		});
 		<?php } ?>
+		$('#condition').change(function(e){
+			var $val = $(this).val();
+			$termid = $(this).attr('data-id');
+			$.post("/invoice/updatecondition", {id: $termid, condition: $val}).fail(function(e) { console.log(e); });
+		});
 	});
 </script>
 <div id="wrapper">
@@ -126,7 +131,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						<td class="col-md-2"><?php if($invoice->invoice_close){ ?><span id="endterm">0</span><?php } else { ?><input data-id="{{ $invoice->id }}" class="form-control-sm-text adata" name="amount" type="text" value="{{ $invoice->amount }}" /><?php } ?></td>
 						<td class="col-md-1"><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice->reference }}" data-bookcode="{{ $invoice->book_code }}" data-id="{{ $invoice->id }}" data-target="#codeModal">{{ $invoice->invoice_code }}</a></td>
 						<td class="col-md-3">{{ $invoice->description }}</td>
-						<td class="col-md-2">{{ $invoice->payment_condition }}</td>
+						<td class="col-md-2"><input type="number" name="condition" data-id="{{ $invoice->id }}" value="{{ $invoice->payment_condition }}" id="condition" class="form-control" /></td>
 						<td class="col-md-2">{{ $invoice->attributes['created_at'] }}</td>
 						<td class="col-md-2">?</td>
 					</tr>
