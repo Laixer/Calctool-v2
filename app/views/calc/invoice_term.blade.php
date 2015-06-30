@@ -405,38 +405,52 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<th class="col-md-6">&nbsp;</th>
 									<th class="col-md-2">Bedrag (excl. BTW)</th>
 									<th class="col-md-2">BTW bedrag</th>
-									<th class="col-md-2">&nbsp;</th>
+									<th class="col-md-2">Bedrag (incl. BTW);</th>
 								</tr>
 							</thead>
 
 							<!-- table items -->
 							<tbody>
 								<tr><!-- item -->
-									<td class="col-md-6">Calculatief te offereren (excl. BTW)</td>
+									<td class="col-md-6">1e termijnbedrag van in totaal 3 betalingstermijnen (excl. BTW)</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalProject($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
+
 								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag calculatie belast met 21%</td>
+									<td class="col-md-6">Factuurbedrag in 21% BTW cattegorie</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax1($project)+ResultEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
+									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-2">&nbsp;</td>
+								</tr>
+								<tr><!-- item -->
+									<td class="col-md-6">Factuurbedrag in 6% BTW cattegorie</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax2($project)+ResultEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
+									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-2">&nbsp;</td>
+								</tr>
+								<tr><!-- item -->
+									<td class="col-md-6">Factuurbedrag in 0% BTW cattegorie</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalProjectTax($project), 2, ",",".") }}</td>
+									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-2">&nbsp;</td>
+								</tr>
+
+								<tr><!-- item -->
+									<td class="col-md-6">BTW bedrag belast met 21%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax1($project)+ResultEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag calculatie belast met 6%</td>
+									<td class="col-md-6">BTW bedrag belast met 6%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax2($project)+ResultEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">Te offereren BTW bedrag</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalProjectTax($project), 2, ",",".") }}</td>
-								</tr>
-								<tr><!-- item -->
-									<td class="col-md-6"><strong>Calculatief te offereren (Incl. BTW)</strong></td>
+									<td class="col-md-6"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2"><strong>{{ '&euro; '.number_format(ResultEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
