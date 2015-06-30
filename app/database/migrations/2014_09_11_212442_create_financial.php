@@ -36,7 +36,6 @@ class CreateFinancial extends Migration {
 			$table->increments('id');
 			$table->text('description')->nullable();
 			$table->text('closure')->nullable();
-			$table->smallInteger('priority')->index();
 			$table->boolean('downpayment')->default('N');
 			$table->integer('downpayment_amount')->unsigned()->nullable();
 			$table->boolean('auto_email_reminder')->default('Y');
@@ -58,6 +57,7 @@ class CreateFinancial extends Migration {
 			$table->increments('id');
 			$table->boolean('invoice_close')->default('N');
 			$table->boolean('isclose')->default('N');
+			$table->smallInteger('priority')->index();
 			$table->text('description')->nullable();
 			$table->string('reference', 30)->index()->nullable();
 			$table->string('invoice_code', 50)->index();
