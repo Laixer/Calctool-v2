@@ -45,7 +45,7 @@ class DropHard extends Command {
 		}
 		Artisan::call('migrate');
 		Artisan::call('db:seed');
-		echo 'Done';
+		echo "Done\n";
 	}
 
 	/**

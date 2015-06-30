@@ -36,6 +36,7 @@ class CreateFinancial extends Migration {
 			$table->increments('id');
 			$table->text('description')->nullable();
 			$table->text('closure')->nullable();
+			$table->smallInteger('priority')->index();
 			$table->boolean('downpayment')->default('N');
 			$table->integer('downpayment_amount')->unsigned()->nullable();
 			$table->boolean('auto_email_reminder')->default('Y');

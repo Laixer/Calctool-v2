@@ -250,7 +250,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 	<div class="pull-right">
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 
-		<button class="btn btn-primary osave">Offerte sluiten</button>
+		<button class="btn btn-primary osave">Factureren</button>
 	</div>
 
 	<!-- modal dialog -->
@@ -260,7 +260,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 
 				<div class="modal-header"><!-- modal header -->
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">Offerte opties</h4>
+					<h4 class="modal-title" id="myModalLabel">Opties</h4>
 				</div><!-- /modal header -->
 
 				<!-- modal body -->
@@ -397,7 +397,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 
 					<textarea name="description" id="description" rows="10" class="form-control">{{ ($invoice ? $invoice->description : '') }}</textarea>
 					<div class="show-totals">
-						<h4>Cumulatieven Offerte</h4>
+						<h4>Specificatie termijnfactuur</h4>
 						<table class="table table-striped hide-btw2">
 							<?# -- table head -- ?>
 							<thead>
@@ -412,7 +412,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 							<!-- table items -->
 							<tbody>
 								<tr><!-- item -->
-									<td class="col-md-6">1e termijnbedrag van in totaal 3 betalingstermijnen (excl. BTW)</td>
+									<td class="col-md-6">#factuur van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen.</td>
 									<td class="col-md-2">{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
@@ -463,10 +463,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 
 					<textarea name="closure" id="closure" rows="10" class="form-control">{{ ($invoice ? $invoice->closure : '') }}</textarea>
 
-					<p id="termtext">Indien opdracht wordt verstrekt, wordt gefactureerd middels 1 eindfactuur</p>
-					<p id="paymenttext"></p>
-
-					<p>Betalen binne {{ $invoice->payment_condition }} dage</p>
+					<h5>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</h5>
 
 				</div>
 
@@ -507,7 +504,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 					<div class="padding20">
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 
-						<button class="btn btn-primary osave">Offerte sluiten</button>
+						<button class="btn btn-primary osave">Factureren</button>
 					</div>
 
 				</div>

@@ -227,15 +227,6 @@ class CreateUsersTable extends Migration {
 			Schema::drop('project_type');
 		});
 
-		Schema::table('country', function(Blueprint $table)
-		{
-			Schema::drop('country');
-		});
-
-		Schema::table('province', function(Blueprint $table)
-		{
-			Schema::drop('province');
-		});
 
 		Schema::table('payment', function(Blueprint $table)
 		{
@@ -255,6 +246,16 @@ class CreateUsersTable extends Migration {
 		Schema::table('user_type', function(Blueprint $table)
 		{
 			Schema::drop('user_type');
+		});
+
+		Schema::table('country', function(Blueprint $table)
+		{
+			Schema::drop('country');
+		});
+
+		Schema::table('province', function(Blueprint $table)
+		{
+			Schema::drop('province');
 		});
 	}
 
