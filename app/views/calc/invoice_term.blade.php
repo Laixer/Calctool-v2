@@ -446,14 +446,14 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 								<tr><!-- item -->
 									<td class="col-md-6">BTW bedrag belast met 6%</td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(($invoice->rest_21/100)*6, 2, ",",".") }}</td>
+									<td class="col-md-2">{{ '&euro; '.number_format(($invoice->rest_6/100)*6, 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-6"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2"><strong>{{ '&euro; '.number_format($invoice->amount+(($invoice->rest_21/100)*21)+(($invoice->rest_21/100)*6), 2, ",",".") }}</strong></td>
+									<td class="col-md-2"><strong>{{ '&euro; '.number_format($invoice->amount+(($invoice->rest_21/100)*21)+(($invoice->rest_6/100)*6), 2, ",",".") }}</strong></td>
 								</tr>
 
 							</tbody>

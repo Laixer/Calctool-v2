@@ -84,7 +84,7 @@ class InvoiceController extends BaseController {
 
 			$cnt = Invoice::where('offer_id','=', $invoice->offer_id)->count();
 			if ($cnt>1) {
-				$invoice = Invoice::where('offer_id','=', $invoice->offer_id)->orderBy('id', 'desc')->take(1)->first();
+				$invoice = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',true)->first();
 				$invoice->amount = Input::get('totaal');
 				$invoice->rest_21 = InvoiceTerm::partTax1(Project::find(Input::get('project')), $invoice)*Input::get('totaal');
 				$invoice->rest_6 = InvoiceTerm::partTax2(Project::find(Input::get('project')), $invoice)*Input::get('totaal');

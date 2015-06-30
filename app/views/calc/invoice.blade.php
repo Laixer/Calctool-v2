@@ -98,6 +98,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 		});
 		$("[name='toggle-endresult']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
+		  	$("[name='toggle-subcontr']").bootstrapSwitch('toggleDisabled');
 		  	$('.only-total').hide();
 		  	$('.hide-btw1').hide();
 	        $('.hide-btw2 tr').each(function() {
@@ -115,6 +116,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 	        	$(this).find("tr").eq(7).hide();
 	        });
 		  } else {
+		  	$("[name='toggle-subcontr']").bootstrapSwitch('toggleDisabled');
 		  	$('.only-total').show();
 			$('.hide-btw1').show();
 	        $('.hide-btw2 tr').each(function() {
@@ -849,6 +851,136 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 
 						</table>
 					</div>
+					<?php
+					$cnt = Invoice::where('offer_id','=', $invoice->offer_id)->count();
+					if ($cnt>1) {
+					?>
+					<h4>Cumulatieven Offerte</h4>
+					<table class="table table-striped hide-btw2">
+						<?# -- table head -- ?>
+						<thead>
+							<tr>
+								<th class="col-md-6">&nbsp;</th>
+								<th class="col-md-2">Bedrag (excl. BTW)</th>
+								<th class="col-md-2">BTW bedrag</th>
+								<th class="col-md-2">Bedrag (incl. BTW);</th>
+							</tr>
+						</thead>
+
+						<!-- table items -->
+						<tbody>
+							<tr><!-- item -->
+								<td class="col-md-6">1e termijnbedrag van in totaal 3 betalingstermijnen (excl. BTW)</td>
+								<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('amount'), 2, ",",".") }}</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2">&nbsp;</td>
+							</tr>
+
+							<tr><!-- item -->
+								<td class="col-md-6">Factuurbedrag in 21% BTW cattegorie</td>
+								<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21'), 2, ",",".") }}</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2">&nbsp;</td>
+							</tr>
+							<tr><!-- item -->
+								<td class="col-md-6">Factuurbedrag in 6% BTW cattegorie</td>
+								<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6'), 2, ",",".") }}</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2">&nbsp;</td>
+							</tr>
+							<tr><!-- item -->
+								<td class="col-md-6">Factuurbedrag in 0% BTW cattegorie</td>
+								<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_0'), 2, ",",".") }}</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2">&nbsp;</td>
+							</tr>
+
+							<tr><!-- item -->
+								<td class="col-md-6">BTW bedrag belast met 21%</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21')/100)*21, 2, ",",".") }}</td>
+								<td class="col-md-2">&nbsp;</td>
+							</tr>
+							<tr><!-- item -->
+								<td class="col-md-6">BTW bedrag belast met 6%</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6, 2, ",",".") }}</td>
+								<td class="col-md-2">&nbsp;</td>
+							</tr>
+							<tr><!-- item -->
+								<td class="col-md-6"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('amount')+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21')/100)*21)+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6), 2, ",",".") }}</strong></td>
+							</tr>
+
+						</tbody>
+
+					</table>
+
+					<h4>Cumulatieven Offerte</h4>
+					<table class="table table-striped hide-btw2">
+						<?# -- table head -- ?>
+						<thead>
+							<tr>
+								<th class="col-md-6">&nbsp;</th>
+								<th class="col-md-2">Bedrag (excl. BTW)</th>
+								<th class="col-md-2">BTW bedrag</th>
+								<th class="col-md-2">Bedrag (incl. BTW);</th>
+							</tr>
+						</thead>
+
+						<!-- table items -->
+						<tbody>
+							<tr><!-- item -->
+								<td class="col-md-6">1e termijnbedrag van in totaal 3 betalingstermijnen (excl. BTW)</td>
+								<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->amount, 2, ",",".") }}</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2">&nbsp;</td>
+							</tr>
+
+							<tr><!-- item -->
+								<td class="col-md-6">Factuurbedrag in 21% BTW cattegorie</td>
+								<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21, 2, ",",".") }}</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2">&nbsp;</td>
+							</tr>
+							<tr><!-- item -->
+								<td class="col-md-6">Factuurbedrag in 6% BTW cattegorie</td>
+								<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6, 2, ",",".") }}</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2">&nbsp;</td>
+							</tr>
+							<tr><!-- item -->
+								<td class="col-md-6">Factuurbedrag in 0% BTW cattegorie</td>
+								<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_0, 2, ",",".") }}</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2">&nbsp;</td>
+							</tr>
+
+							<tr><!-- item -->
+								<td class="col-md-6">BTW bedrag belast met 21%</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21/100)*21, 2, ",",".") }}</td>
+								<td class="col-md-2">&nbsp;</td>
+							</tr>
+							<tr><!-- item -->
+								<td class="col-md-6">BTW bedrag belast met 6%</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6, 2, ",",".") }}</td>
+								<td class="col-md-2">&nbsp;</td>
+							</tr>
+							<tr><!-- item -->
+								<td class="col-md-6"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->amount+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21/100)*21)+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6), 2, ",",".") }}</strong></td>
+							</tr>
+
+						</tbody>
+
+					</table>
+					<?php } ?>
 
 					<textarea name="closure" id="closure" rows="10" class="form-control">{{ ($invoice ? $invoice->closure : '') }}</textarea>
 
