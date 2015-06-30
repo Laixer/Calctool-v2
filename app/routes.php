@@ -68,6 +68,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('invoice/updateamount', array('as' => 'invoice', 'uses' => 'InvoiceController@doUpdateAmount'));
 	Route::get('invoice/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoiceAll'))->where('project_id', '[0-9]+');
 	Route::get('invoice/project-{project_id}/invoice-{invoice_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoice'))->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
+	Route::get('invoice/project-{project_id}/term-invoice-{invoice_id}', array('as' => 'invoice', 'uses' => 'CalcController@getTermInvoice'))->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
 	Route::get('invoice/project-{project_id}/invoice-{invoice_id}/pdf', array('as' => 'invoicepdf', 'uses' => 'CalcController@getInvoicepdf'))->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
 
 	Route::get('offer/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOffer'))->where('project_id', '[0-9]+');
