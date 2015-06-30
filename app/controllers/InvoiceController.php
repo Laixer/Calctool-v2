@@ -38,6 +38,29 @@ class InvoiceController extends BaseController {
 		}
 	}
 
+	public function doUpdateDescription()
+	{
+		$rules = array(
+			'id' => array('required','integer')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+			$invoice = Invoice::find(Input::get('id'));
+			$invoice->description = Input::get('description');
+			$invoice->closure = Input::get('closure');
+
+			$invoice->save();
+
+			return json_encode(['success' => 1]);
+		}
+	}
+
 	public function doUpdateCondition()
 	{
 		$rules = array(
