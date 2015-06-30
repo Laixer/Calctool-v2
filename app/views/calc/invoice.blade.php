@@ -398,7 +398,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 					<textarea name="description" id="description" rows="10" class="form-control">{{ ($invoice ? $invoice->description : '') }}</textarea>
 
 					<div class="show-all" style="display:none;">
-						<h4 class="only-total">Aanneming</h4>
+						<h4 class="only-total">Factuuroverzicht Aanneming</h4>
 						<table class="table table-striped hide-btw1">
 							<?# -- table head -- ?>
 							<thead>
@@ -511,7 +511,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 							</tbody>
 						</table>
 
-						<h4 class="only-total">Onderaanneming</h4>
+						<h4 class="only-total">Factuuroverzicht onderaanneming</h4>
 						<table class="table table-striped hide-btw1">
 							<?# -- table head -- ?>
 							<thead>
@@ -624,7 +624,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 							</tbody>
 						</table>
 
-						<h4>Cumulatieven Offerte</h4>
+						<h4>Cumulatieven factuur</h4>
 						<table class="table table-striped hide-btw2">
 							<?# -- table head -- ?>
 							<thead>
@@ -687,7 +687,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 					</div>
 
 					<div class="show-totals">
-						<h4 class="only-total">Calculatie</h4>
+						<h4 class="only-total">Totaal overzicht factuur</h4>
 						<table class="table table-striped hide-btw1">
 							<?# -- table head -- ?>
 							<thead>
@@ -800,7 +800,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 							</tbody>
 						</table>
 
-						<h4>Cumulatieven Offerte</h4>
+						<h4>Cumulatieven factuur</h4>
 						<table class="table table-striped hide-btw2">
 							<?# -- table head -- ?>
 							<thead>
@@ -855,7 +855,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 					<p id="termtext">Indien opdracht wordt verstrekt, wordt gefactureerd middels 1 eindfactuur</p>
 					<p id="paymenttext"></p>
 
-					<p>Betalen binne {{ $invoice->payment_condition }} dage</p>
+					<p>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</p>
 
 				</div>
 
@@ -976,7 +976,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									</tbody>
 								</table>
 
-								<h4>Totalen project</h4>
+								<h4>Totalen voor calculatieonderdeel</h4>
 
 								<table class="table table-striped only-end-total">
 									<?# -- table head -- ?>
@@ -1061,7 +1061,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									</tbody>
 								</table>
 
-								<h4>Totalen project</h4>
+								<h4>Totalen voor calculatieonderdeel</h4>
 
 								<table class="table table-striped only-end-total">
 									<?# -- table head -- ?>
@@ -1214,7 +1214,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									</tbody>
 								</table>
 
-								<h4>Totalen project</h4>
+								<h4>Totalen stelposten</h4>
 
 								<table class="table table-striped only-end-total">
 									<?# -- table head -- ?>
@@ -1299,7 +1299,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									</tbody>
 								</table>
 
-								<h4>Totalen project</h4>
+								<h4>Totalen stelposten</h4>
 
 								<table class="table table-striped only-end-total">
 									<?# -- table head -- ?>
@@ -1452,7 +1452,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									</tbody>
 								</table>
 
-								<h4>Totalen project</h4>
+								<h4>Totalen minderwerk</h4>
 
 								<table class="table table-striped only-end-total">
 									<?# -- table head -- ?>
@@ -1537,7 +1537,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									</tbody>
 								</table>
 
-								<h4>Totalen project</h4>
+								<h4>Totalen minderwerk</h4>
 
 								<table class="table table-striped only-end-total">
 									<?# -- table head -- ?>
@@ -1690,7 +1690,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									</tbody>
 								</table>
 
-								<h4>Totalen project</h4>
+								<h4>Totalen meerwerk</h4>
 
 								<table class="table table-striped only-end-total">
 									<?# -- table head -- ?>
@@ -1775,7 +1775,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									</tbody>
 								</table>
 
-								<h4>Totalen project</h4>
+								<h4>Totalen meerwerk</h4>
 
 								<table class="table table-striped only-end-total">
 									<?# -- table head -- ?>
@@ -1836,7 +1836,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 
 							<div class="show-all" style="display:none;">
 
-								<h4>Aanneming</h4>
+								<h4>Omschrijving werkzaamheden aanneming</h4>
 
 								<table class="table table-striped">
 									<?# -- table head -- ?>
@@ -1862,7 +1862,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									</tbody>
 								</table>
 
-								<h4>Onderaanneming</h4>
+								<h4>Omschrijving werkzaamheden onderaanneming</h4>
 
 								<table class="table table-striped">
 									<?# -- table head -- ?>
@@ -1890,7 +1890,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 							</div>
 
 							<div class="show-totals">
-								<h4>Calculatie</h4>
+								<h4>Omschrijving werkzaamheden</h4>
 
 								<table class="table table-striped">
 									<?# -- table head -- ?>
