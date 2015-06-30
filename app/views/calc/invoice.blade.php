@@ -163,38 +163,14 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 		$tpayment = false;
 		$("[name='toggle-payment']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 			if (state) {
-				//$('#tpayment').text('Aanbetaling');
 				$("#amount").prop('disabled', false);
 				$tpayment = true;
 			} else {
-				//$('#tpayment').text('1');
 				$("#amount").prop('disabled', true);
 				$tpayment = false;
 			}
 
 		});
-		/*$('#terms').blur(function(){
-			var q = $(this).val();
-			if($.isNumeric(q)&&(q>1)&&(q<=50)){
-				$('#tbl-term tbody tr').remove();
-				for(var i=0; i<q; i++){
-					if(i==(q-1)) {
-						$('#tbl-term tbody').append('<tr><td>Slottermijn</td><td><input id="eterm" disabled type="text" value="" class="form-control-sm-text" /></td></tr>');
-					} else if (i==0){
-						$('#tbl-term tbody').append('<tr><td id="tpayment">'+(i+1)+'</td><td><input type="text" value="" id="amount_'+i+'" name="amount['+i+']" class="adata form-control-sm-text" /></td></tr>');
-					} else {
-						$('#tbl-term tbody').append('<tr><td>'+(i+1)+'</td><td><input type="text" value="" id="amount_'+i+'" name="amount['+i+']" class="adata form-control-sm-text" /></td></tr>');
-					}
-				}
-				$('.adata').blur(function(){
-					$total = {{ CalculationEndresult::totalProject($project) }};
-					$('.adata').each(function(){
-						$total -= $(this).val();
-						$('#eterm').val($.number($total,2,',','.'));
-					});
-				});
-			}
-		});*/
 		$('#termModal').on('hidden.bs.modal', function() {
 			var q = $('#terms').val();
 			if($.isNumeric(q)&&(q>1)&&(q<=50)) {
@@ -202,9 +178,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 				if ($tpayment)
 					$('#paymenttext').html('Het eerste termijn geldt hierbij als een aanbetaling van &euro; '+$('.adata').first().val());
 			}
-			//$('.adata').each(function(){
-			//	console.log('adata: '+ $(this).val());
-			//});
 		});
 		$('.osave').click(function(e){
 			e.preventDefault();
@@ -1128,14 +1101,14 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<!-- table items -->
 									<tbody>
 										<tr><!-- item -->
-											<th class="col-md-3">&nbsp;</th>
-											<th class="col-md-2">&nbsp;</th>
+											<td class="col-md-3">&nbsp;</td>
+											<td class="col-md-2">&nbsp;</td>
 											<td class="col-md-1"><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
-											<th class="col-md-1">&nbsp;</th>
+											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
@@ -1213,14 +1186,14 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<!-- table items -->
 									<tbody>
 										<tr><!-- item -->
-											<th class="col-md-3">&nbsp;</th>
-											<th class="col-md-2">&nbsp;</th>
+											<td class="col-md-3">&nbsp;</td>
+											<td class="col-md-2">&nbsp;</td>
 											<td class="col-md-1"><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
-											<th class="col-md-1">&nbsp;</th>
+											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
@@ -1366,14 +1339,14 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<!-- table items -->
 									<tbody>
 										<tr><!-- item -->
-											<th class="col-md-3">&nbsp;</th>
-											<th class="col-md-2">&nbsp;</th>
+											<td class="col-md-3">&nbsp;</td>
+											<td class="col-md-2">&nbsp;</td>
 											<td class="col-md-1"><span class="pull-right">{{ EstimateOverview::laborSuperTotalAmount($project) }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::superTotal($project), 2, ",",".") }}</span></td>
-											<th class="col-md-1">&nbsp;</th>
+											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
@@ -1451,14 +1424,14 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<!-- table items -->
 									<tbody>
 										<tr><!-- item -->
-											<th class="col-md-3">&nbsp;</th>
-											<th class="col-md-2">&nbsp;</th>
+											<td class="col-md-3">&nbsp;</td>
+											<td class="col-md-2">&nbsp;</td>
 											<td class="col-md-1"><span class="pull-right">{{ EstimateOverview::laborSuperTotalAmount($project) }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::superTotal($project), 2, ",",".") }}</span></td>
-											<th class="col-md-1">&nbsp;</th>
+											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
@@ -1526,14 +1499,14 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 										@endforeach
 										@endforeach
 										<tr><!-- item -->
-											<th class="col-md-3"><strong>Totaal aanneming</strong></th>
-											<th class="col-md-2">&nbsp;</th>
+											<td class="col-md-3"><strong>Totaal aanneming</strong></td>
+											<td class="col-md-2">&nbsp;</td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ LessOverview::contrLaborTotalAmount($project) }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
-											<th class="col-md-1">&nbsp;</th>
+											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
@@ -1572,14 +1545,14 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 										@endforeach
 										@endforeach
 										<tr><!-- item -->
-											<th class="col-md-3"><strong>Totaal onderaanneming</strong></th>
-											<th class="col-md-2">&nbsp;</th>
+											<td class="col-md-3"><strong>Totaal onderaanneming</strong></td>
+											<td class="col-md-2">&nbsp;</td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ LessOverview::subcontrLaborTotalAmount($project) }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
-											<th class="col-md-1">&nbsp;</th>
+											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
@@ -1604,14 +1577,14 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<!-- table items -->
 									<tbody>
 										<tr><!-- item -->
-											<th class="col-md-3">&nbsp;</th>
-											<th class="col-md-2">&nbsp;</th>
+											<td class="col-md-3">&nbsp;</td>
+											<td class="col-md-2">&nbsp;</td>
 											<td class="col-md-1"><span class="pull-right">{{ LessOverview::laborSuperTotalAmount($project) }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::superTotal($project), 2, ",",".") }}</span></td>
-											<th class="col-md-1">&nbsp;</th>
+											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
@@ -1689,14 +1662,14 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<!-- table items -->
 									<tbody>
 										<tr><!-- item -->
-											<th class="col-md-3">&nbsp;</th>
-											<th class="col-md-2">&nbsp;</th>
+											<td class="col-md-3">&nbsp;</td>
+											<td class="col-md-2">&nbsp;</td>
 											<td class="col-md-1"><span class="pull-right">{{ LessOverview::laborSuperTotalAmount($project) }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::superTotal($project), 2, ",",".") }}</span></td>
-											<th class="col-md-1">&nbsp;</th>
+											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
@@ -1810,14 +1783,14 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 										@endforeach
 										@endforeach
 										<tr><!-- item -->
-											<th class="col-md-3"><strong>Totaal onderaanneming</strong></th>
-											<th class="col-md-2">&nbsp;</th>
+											<td class="col-md-3"><strong>Totaal onderaanneming</strong></td>
+											<td class="col-md-2">&nbsp;</td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ MoreOverview::subcontrLaborTotalAmount($project) }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
-											<th class="col-md-1">&nbsp;</th>
+											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
@@ -1842,14 +1815,14 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<!-- table items -->
 									<tbody>
 										<tr><!-- item -->
-											<th class="col-md-3">&nbsp;</th>
-											<th class="col-md-2">&nbsp;</th>
+											<td class="col-md-3">&nbsp;</td>
+											<td class="col-md-2">&nbsp;</td>
 											<td class="col-md-1"><span class="pull-right">{{ MoreOverview::laborSuperTotalAmount($project) }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::superTotal($project), 2, ",",".") }}</span></td>
-											<th class="col-md-1">&nbsp;</th>
+											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
@@ -1927,14 +1900,14 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<!-- table items -->
 									<tbody>
 										<tr><!-- item -->
-											<th class="col-md-3">&nbsp;</th>
-											<th class="col-md-2">&nbsp;</th>
+											<td class="col-md-3">&nbsp;</td>
+											<td class="col-md-2">&nbsp;</td>
 											<td class="col-md-1"><span class="pull-right">{{ MoreOverview::laborSuperTotalAmount($project) }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::superTotal($project), 2, ",",".") }}</span></td>
-											<th class="col-md-1">&nbsp;</th>
+											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
