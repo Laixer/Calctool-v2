@@ -236,4 +236,15 @@ background-color: #4E4E4E !important;
 .fix-footer-bottom {
     margin-bottom: 40px;
 }
+/*Selectboxxes op offerte*/
+select {
+border: 2px solid #719E00 ;
+border-radius: 4px;
+height: 26px;
+padding: 0px;
+background: #719E00 ;
+}
 
+select, textarea {
+color: white;
+}

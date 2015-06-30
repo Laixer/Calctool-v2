@@ -965,6 +965,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
 							@endforeach
 						</select>
+						na uw opdrachtbevestiging.
 					</p>
 
 					<p>Deze offerte doet stand tot
