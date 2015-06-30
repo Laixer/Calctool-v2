@@ -234,23 +234,23 @@ class InvoiceTerm {
 	public static function totalProjectBalance($project, $invoice) {
 		$total = 0;
 
-		$total += (InvoiceTerm::totalTax1($project) - Invoice::where('offer_id','=',$invoice->offer_id)->where('id','<',$invoice->id)->sum('rest_21'));
-		$total += (InvoiceTerm::totalTax2($project) - Invoice::where('offer_id','=',$invoice->offer_id)->where('id','<',$invoice->id)->sum('rest_6'));
-		$total += (InvoiceTerm::totalTax3($project) - Invoice::where('offer_id','=',$invoice->offer_id)->where('id','<',$invoice->id)->sum('rest_0'));
+		$total += (InvoiceTerm::totalTax1($project) - Invoice::where('offer_id','=',$invoice->offer_id)->where('priority','<',$invoice->priority)->where('isclose','=',false)->sum('rest_21'));
+		$total += (InvoiceTerm::totalTax2($project) - Invoice::where('offer_id','=',$invoice->offer_id)->where('priority','<',$invoice->priority)->where('isclose','=',false)->sum('rest_6'));
+		$total += (InvoiceTerm::totalTax3($project) - Invoice::where('offer_id','=',$invoice->offer_id)->where('priority','<',$invoice->priority)->where('isclose','=',false)->sum('rest_0'));
 
 		return $total;
 	}
 
 	public static function partTax1($project, $invoice) {
-		return (InvoiceTerm::totalTax1($project) - Invoice::where('offer_id','=',$invoice->offer_id)->where('id','<',$invoice->id)->sum('rest_21')) / InvoiceTerm::totalProjectBalance($project, $invoice);
+		return (InvoiceTerm::totalTax1($project) - Invoice::where('offer_id','=',$invoice->offer_id)->where('priority','<',$invoice->priority)->where('isclose','=',false)->sum('rest_21')) / InvoiceTerm::totalProjectBalance($project, $invoice);
 	}
 
 	public static function partTax2($project, $invoice) {
-		return (InvoiceTerm::totalTax2($project) - Invoice::where('offer_id','=',$invoice->offer_id)->where('id','<',$invoice->id)->sum('rest_6')) / InvoiceTerm::totalProjectBalance($project, $invoice);
+		return (InvoiceTerm::totalTax2($project) - Invoice::where('offer_id','=',$invoice->offer_id)->where('priority','<',$invoice->priority)->where('isclose','=',false)->sum('rest_6')) / InvoiceTerm::totalProjectBalance($project, $invoice);
 	}
 
 	public static function partTax3($project, $invoice) {
-		return (InvoiceTerm::totalTax3($project) - Invoice::where('offer_id','=',$invoice->offer_id)->where('id','<',$invoice->id)->sum('rest_0')) / InvoiceTerm::totalProjectBalance($project, $invoice);
+		return (InvoiceTerm::totalTax3($project) - Invoice::where('offer_id','=',$invoice->offer_id)->where('priority','<',$invoice->priority)->where('isclose','=',false)->sum('rest_0')) / InvoiceTerm::totalProjectBalance($project, $invoice);
 	}
 /*	public static function totalProjectTax($project) {
 		return ResultEndresult::totalContractingTax1($project) + ResultEndresult::totalContractingTax2($project) + ResultEndresult::totalSubcontractingTax1($project) + ResultEndresult::totalSubcontractingTax2($project);

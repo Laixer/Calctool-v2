@@ -122,14 +122,10 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				$i=0;
 				$count = Invoice::where('offer_id','=', $offer_last->id)->count();
 				?>
-				@foreach (Invoice::where('offer_id','=', $offer_last->id)->get() as $invoice)
+				@foreach (Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority')->get() as $invoice)
 					<tr>
-						<?php if ($invoice->isclose) { ?>
-						<td class="col-md-4"><a href="/invoice/project-{{ $project->id }}/invoice-{{ $invoice->id }}">Eindfactuur</a></td>
-						<?php } else { ?>
 						<td class="col-md-4"><a href="/invoice/project-{{ $project->id }}/term-invoice-{{ $invoice->id }}">{{ ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1)) }}</a></td>
-						<?php } ?>
-						<td class="col-md-2"><?php if($i == ($count-1)){ ?><span id="endterm">0</span><?php } else if ($invoice->invoice_close){ echo "<span>".$invoice->amount."</span>"; } else  { ?><input data-id="{{ $invoice->id }}" class="form-control-sm-text adata" name="amount" type="text" value="{{ $invoice->amount }}" /><?php } ?></td>
+						<td class="col-md-2"><?php if ($invoice->invoice_close){ echo "<span>".$invoice->amount."</span>"; } else  { ?><input data-id="{{ $invoice->id }}" class="form-control-sm-text adata" name="amount" type="text" value="{{ $invoice->amount }}" /><?php } ?></td>
 						<td class="col-md-1"><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice->reference }}" data-bookcode="{{ $invoice->book_code }}" data-id="{{ $invoice->id }}" data-target="#codeModal">{{ $invoice->invoice_code }}</a></td>
 						<td class="col-md-3">{{ $invoice->description }}</td>
 						<td class="col-md-2"><input type="number" name="condition" data-id="{{ $invoice->id }}" value="{{ $invoice->payment_condition }}" id="condition" class="form-control" /></td>
@@ -138,6 +134,16 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					</tr>
 				<?php $i++; ?>
 				@endforeach
+				<?php $invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first(); ?>
+					<tr>
+						<td class="col-md-4"><a href="/invoice/project-{{ $project->id }}/invoice-{{ $invoice_end->id }}">Eindfactuur</a></td>
+						<td class="col-md-2"><span id="endterm">0</span></td>
+						<td class="col-md-1"><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice_end->reference }}" data-bookcode="{{ $invoice_end->book_code }}" data-id="{{ $invoice_end->id }}" data-target="#codeModal">{{ $invoice_end->invoice_code }}</a></td>
+						<td class="col-md-3">{{ $invoice_end->description }}</td>
+						<td class="col-md-2"><input type="number" name="condition" data-id="{{ $invoice_end->id }}" value="{{ $invoice_end->payment_condition }}" id="condition" class="form-control" /></td>
+						<td class="col-md-2">{{-- $invoice_end->created_at --}}</td>
+						<td class="col-md-2">{{ $invoice_end->invoice_close ? 'Gefactureerd' : 'Open' }}</td></td>
+					</tr>
 				</tbody>
 			</table>
 			<div class="row">
