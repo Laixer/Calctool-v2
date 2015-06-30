@@ -338,12 +338,14 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 
 					<div class="col-sm-6">
 
-						<h4><strong>Klantgegevens</strong></h4>
 						<ul class="list-unstyled">
-							<li><strong>Naam:</strong> {{ $relation->company_name }}</li>
-							<li><strong>Voornaam:</strong> Doe</li>
+							<li>uitlijning omlaag</li>
+							<li>uitlijning omlaag</li>
+							<li>uitlijning omlaag</li>
+							<li>uitlijning omlaag</li>
+							<li><{{ $relation->company_name }}</li>
+							<li>t.a.v. -hier moet een selectlist komen van de contacten van dit bedrijf-</li>
 							<li>{{ $relation->address_street . ' ' . $relation->address_number }}<br /> {{ $relation->address_postal . ', ' . $relation->address_city }}</li>
-							<li><strong>Land:</strong> U.S.A.</li>
 						</ul>
 
 					</div>
@@ -352,7 +354,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 
 					<div class="col-sm-4">
 
-						<h4><strong>Opdrachtgever</strong></h4>
+						<h4><strong>Opdrachtnemer</strong></h4>
 						<ul class="list-unstyled">
 							<li><strong>Bedrijfsnaam:</strong> {{ $relation_self->company_name }}</li>
 							<li><strong>Adres:</strong> {{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
