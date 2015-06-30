@@ -41,7 +41,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			$.post("/invoice/updateamount", {id: $termid, project: {{ $project->id }}, amount: q, totaal: $total}).fail(function(e) { console.log(e); });
 		});
 		<?php } ?>
-		$('#condition').change(function(e){
+		$('.condition').change(function(e){
 			var $val = $(this).val();
 			$termid = $(this).attr('data-id');
 			$.post("/invoice/updatecondition", {id: $termid, condition: $val}).fail(function(e) { console.log(e); });
@@ -120,6 +120,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				<tbody>
 				<?php
 				$i=0;
+				$close = true;
 				$count = Invoice::where('offer_id','=', $offer_last->id)->count();
 				?>
 				@foreach (Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority')->get() as $invoice)
@@ -128,9 +129,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						<td class="col-md-2"><?php if ($invoice->invoice_close){ echo "<span>".$invoice->amount."</span>"; } else  { ?><input data-id="{{ $invoice->id }}" class="form-control-sm-text adata" name="amount" type="text" value="{{ $invoice->amount }}" /><?php } ?></td>
 						<td class="col-md-1"><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice->reference }}" data-bookcode="{{ $invoice->book_code }}" data-id="{{ $invoice->id }}" data-target="#codeModal">{{ $invoice->invoice_code }}</a></td>
 						<td class="col-md-3">{{ $invoice->description }}</td>
-						<td class="col-md-2"><input type="number" name="condition" data-id="{{ $invoice->id }}" value="{{ $invoice->payment_condition }}" id="condition" class="form-control" /></td>
+						<td class="col-md-2"><input type="number" name="condition" data-id="{{ $invoice->id }}" value="{{ $invoice->payment_condition }}" class="condition form-control" /></td>
 						<td class="col-md-2">{{-- $invoice->created_at --}}</td>
-						<td class="col-md-2">{{ $invoice->invoice_close ? 'Gefactureerd' : 'Open' }}</td></td>
+						<td class="col-md-2"><?php if ($invoice->invoice_close) { echo 'Gefactureerd'; } else if ($close) { echo '<form method="POST" id="frm-invoice" action="/invoice/close"><input name="id" value="'.$invoice->id.'" type="hidden"/><input name="projectid" value="'.$project->id.'" type="hidden"/><input type="submit" class="btn btn-primary btn-xs" value="Factureren"/></form>'; $close=false; } else { echo 'Open'; } ?></td></td>
 					</tr>
 				<?php $i++; ?>
 				@endforeach
@@ -140,9 +141,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						<td class="col-md-2"><span id="endterm">0</span></td>
 						<td class="col-md-1"><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice_end->reference }}" data-bookcode="{{ $invoice_end->book_code }}" data-id="{{ $invoice_end->id }}" data-target="#codeModal">{{ $invoice_end->invoice_code }}</a></td>
 						<td class="col-md-3">{{ $invoice_end->description }}</td>
-						<td class="col-md-2"><input type="number" name="condition" data-id="{{ $invoice_end->id }}" value="{{ $invoice_end->payment_condition }}" id="condition" class="form-control" /></td>
+						<td class="col-md-2"><input type="number" name="condition" data-id="{{ $invoice_end->id }}" value="{{ $invoice_end->payment_condition }}" class="form-control condition" /></td>
 						<td class="col-md-2">{{-- $invoice_end->created_at --}}</td>
-						<td class="col-md-2">{{ $invoice_end->invoice_close ? 'Gefactureerd' : 'Open' }}</td></td>
+						<td class="col-md-2"><?php if ($invoice_end->invoice_close) { echo 'Gefactureerd'; } else if ($close) { echo '<form method="POST" id="frm-invoice" action="/invoice/close"><input name="id" value="'.$invoice_end->id.'" type="hidden"/><input name="projectid" value="'.$project->id.'" type="hidden"/><input type="submit" class="btn btn-primary btn-xs" value="Factureren"/></form>'; $close=false; } else { echo 'Open'; } ?></td></td>
 					</tr>
 				</tbody>
 			</table>

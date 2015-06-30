@@ -206,7 +206,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 		});
 		$('.osave').click(function(e){
 			e.preventDefault();
-			$('#frm-offer').submit();
+			$('#frm-invoice').submit();
 		});
 	});
 </script>
@@ -335,7 +335,9 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 	</div>
 
 	<h2><strong>Termijnfactuur</strong></h2>
-	<form method="POST" id="frm-offer">
+	<form method="POST" id="frm-invoice" action="/invoice/close">
+		<input name="id" value="{{ $invoice->id }}" type="hidden"/>
+		<input name="projectid" value="{{ $project->id }}" type="hidden"/>
 			<div class="white-row">
 
 				<div class="row">

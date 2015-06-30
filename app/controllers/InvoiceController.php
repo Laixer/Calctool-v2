@@ -96,4 +96,27 @@ class InvoiceController extends BaseController {
 		}
 	}
 
+	public function doInvoiceClose()
+	{
+		$rules = array(
+			'id' => array('required','integer'),
+			'projectid' => array('required','integer'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+			$invoice = Invoice::find(Input::get('id'));
+			$invoice->invoice_close = true;
+
+			$invoice->save();
+
+			return Redirect::to('/invoice/project-'.Input::get('projectid'));
+		}
+	}
+
 }
