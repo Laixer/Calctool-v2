@@ -33,7 +33,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			$('#endterm').html('&euro; '+ $.number($total,2,',','.'));
 		};
 		calcend();
-		<?php if (Invoice::where('offer_id','=', $offer_last->id)->where('invoice_close','=',true)->first()) { ?>
+		<?php if (Invoice::where('offer_id','=', $offer_last->id)->count()>1) { ?>
 		$('.adata').change(function(){
 			var q = $(this).val();
 			$termid = $(this).attr('data-id');
@@ -43,7 +43,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				$('#endterm').html('&euro; '+ $.number($total,2,',','.'));
 			});*/
 			calcend();
-			$.post("/invoice/updateamount", {id: $termid, project: {{ $project->id }}, idend: {{ Invoice::where('offer_id','=', $offer_last->id)->where('invoice_close','=',true)->first()->id }}, amount: q, totaal: $total}).fail(function(e) { console.log(e); });
+			$.post("/invoice/updateamount", {id: $termid, project: {{ $project->id }}, amount: q, totaal: $total}).fail(function(e) { console.log(e); });
 		});
 		<?php } ?>
 		$('#condition').change(function(e){
@@ -113,7 +113,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				<thead>
 					<tr>
 						<th class="col-md-4">Onderdeel</th>
-						<th class="col-md-2">Factuurbedrag</th>
+		Factuurbeheer				<th class="col-md-2">Factuurbedrag</th>
 						<th class="col-md-1">Faxtuurnummer</th>
 						<th class="col-md-3">Omschrijving</th>
 						<th class="col-md-2">Betalingscondities</th>
@@ -123,16 +123,19 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				</thead>
 
 				<tbody>
-				<?php $i=0; ?>
+				<?php
+				$i=0;
+				$count = Invoice::where('offer_id','=', $offer_last->id)->count();
+				?>
 				@foreach (Invoice::where('offer_id','=', $offer_last->id)->orderBy('id')->get() as $invoice)
 					<tr>
-						<td class="col-md-4"><a href="/invoice/project-{{ $project->id }}/invoice-{{ $invoice->id }}">{{ ($invoice->invoice_close ? 'Eindfactuur' : ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1))) }}</a></td>
-						<td class="col-md-2"><?php if($invoice->invoice_close){ ?><span id="endterm">0</span><?php } else { ?><input data-id="{{ $invoice->id }}" class="form-control-sm-text adata" name="amount" type="text" value="{{ $invoice->amount }}" /><?php } ?></td>
+						<td class="col-md-4"><a href="/invoice/project-{{ $project->id }}/invoice-{{ $invoice->id }}">{{ ($i == ($count-1) ? 'Eindfactuur' : ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1))) }}</a></td>
+						<td class="col-md-2"><?php if($i == ($count-1)){ ?><span id="endterm">0</span><?php } else if ($invoice->invoice_close){ echo "<span>".$invoice->amount."</span>"; } else  { ?><input data-id="{{ $invoice->id }}" class="form-control-sm-text adata" name="amount" type="text" value="{{ $invoice->amount }}" /><?php } ?></td>
 						<td class="col-md-1"><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice->reference }}" data-bookcode="{{ $invoice->book_code }}" data-id="{{ $invoice->id }}" data-target="#codeModal">{{ $invoice->invoice_code }}</a></td>
 						<td class="col-md-3">{{ $invoice->description }}</td>
 						<td class="col-md-2"><input type="number" name="condition" data-id="{{ $invoice->id }}" value="{{ $invoice->payment_condition }}" id="condition" class="form-control" /></td>
 						<td class="col-md-2">{{-- $invoice->created_at --}}</td>
-						<td class="col-md-2">Open</td>
+						<td class="col-md-2">{{ $invoice->invoice_close ? 'Gefactureerd' : 'Open' }}</td></td>
 					</tr>
 				<?php $i++; ?>
 				@endforeach

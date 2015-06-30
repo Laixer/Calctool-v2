@@ -65,8 +65,7 @@ class InvoiceController extends BaseController {
 	{
 		$rules = array(
 			'id' => array('required','integer'),
-			'project' => array('required','integer'),
-			'idend' => array('required','integer')
+			'project' => array('required','integer')
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -78,16 +77,20 @@ class InvoiceController extends BaseController {
 		} else {
 			$invoice = Invoice::find(Input::get('id'));
 			$invoice->amount = Input::get('amount');
-			$invoice->rest_21 = InvoiceTerm::partTax1(Project::find(Input::get('project')), $invoice->offer_id)*Input::get('amount');
-			$invoice->rest_6 = InvoiceTerm::partTax2(Project::find(Input::get('project')), $invoice->offer_id)*Input::get('amount');
-			$invoice->rest_0 = InvoiceTerm::partTax3(Project::find(Input::get('project')), $invoice->offer_id)*Input::get('amount');
+			$invoice->rest_21 = InvoiceTerm::partTax1(Project::find(Input::get('project')), $invoice)*Input::get('amount');
+			$invoice->rest_6 = InvoiceTerm::partTax2(Project::find(Input::get('project')), $invoice)*Input::get('amount');
+			$invoice->rest_0 = InvoiceTerm::partTax3(Project::find(Input::get('project')), $invoice)*Input::get('amount');
 			$invoice->save();
-			$invoice = Invoice::find(Input::get('idend'));
-			$invoice->amount = Input::get('totaal');
-			$invoice->rest_21 = InvoiceTerm::partTax1(Project::find(Input::get('project')), $invoice->offer_id)*Input::get('totaal');
-			$invoice->rest_6 = InvoiceTerm::partTax2(Project::find(Input::get('project')), $invoice->offer_id)*Input::get('totaal');
-			$invoice->rest_0 = InvoiceTerm::partTax3(Project::find(Input::get('project')), $invoice->offer_id)*Input::get('totaal');
-			$invoice->save();
+
+			$cnt = Invoice::where('offer_id','=', $invoice->offer_id)->count();
+			if ($cnt>1) {
+				$invoice = Invoice::where('offer_id','=', $invoice->offer_id)->orderBy('id', 'desc')->take(1)->first();
+				$invoice->amount = Input::get('totaal');
+				$invoice->rest_21 = InvoiceTerm::partTax1(Project::find(Input::get('project')), $invoice)*Input::get('totaal');
+				$invoice->rest_6 = InvoiceTerm::partTax2(Project::find(Input::get('project')), $invoice)*Input::get('totaal');
+				$invoice->rest_0 = InvoiceTerm::partTax3(Project::find(Input::get('project')), $invoice)*Input::get('totaal');
+				$invoice->save();
+			}
 
 			return json_encode(['success' => 1]);
 		}
