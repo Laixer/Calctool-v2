@@ -56,6 +56,7 @@ class CreateFinancial extends Migration {
 		{
 			$table->increments('id');
 			$table->boolean('invoice_close')->default('N');
+			$table->boolean('isclose')->default('N');
 			$table->text('description')->nullable();
 			$table->string('reference', 30)->index()->nullable();
 			$table->string('invoice_code', 50)->index();
