@@ -65,6 +65,7 @@ class CreateFinancial extends Migration {
 			$table->decimal('amount', 9, 2)->nullable();
 			$table->integer('payment_condition')->unsigned();
 			$table->nullableTimestamps();
+			$table->date('bill_date')->nullable();
 			$table->date('payment_date')->nullable();
 			$table->text('closure')->nullable();
 			$table->decimal('rest_21', 9, 2)->nullable();
