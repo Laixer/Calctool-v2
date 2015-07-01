@@ -248,3 +248,8 @@ background: #719E00 ;
 select, textarea {
 color: white;
 }
+
+.btn-xs {
+padding: 2px;
+
+}
