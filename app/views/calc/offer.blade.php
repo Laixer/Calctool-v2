@@ -397,8 +397,10 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="form-group">
 									<div class="col-md-6">
 										<label>Termijnen</label>
-										<input value="{{ ($offer_last ? $offer_last->invoice_quantity : '') }}" name="terms" id="terms" min="2" max="50" type="text" value="" class="form-control" />
+										<input value="{{ ($offer_last ? $offer_last->invoice_quantity : '2') }}" name="terms" id="terms" min="2" max="50" type="number" class="form-control" />
 									</div>
+								</div>
+								<div class="form-horizontal">
 									<div class="col-md-6">
 									  <div class="form-group">
 									  <label>Aanbetaling</label>
