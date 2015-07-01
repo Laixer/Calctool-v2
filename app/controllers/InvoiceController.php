@@ -98,14 +98,24 @@ class InvoiceController extends BaseController {
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
 			$offer_last = Offer::where('project_id','=',Input::get('projectid'))->orderBy('created_at', 'desc')->first();
-			$invoice = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority', 'desc')->first();
+			$cnt = Invoice::where('offer_id','=', $offer_last->id)->count();
+			if ($cnt>1) {
+				$invoice = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority', 'desc')->first();
 
-			$ninvoice = new Invoice;
-			$ninvoice->payment_condition = $invoice->payment_condition;
-			$ninvoice->invoice_code = $invoice->invoice_code;
-			$ninvoice->priority = $invoice->priority+1;
-			$ninvoice->offer_id = $invoice->offer_id;
-			$ninvoice->save();
+				$ninvoice = new Invoice;
+				$ninvoice->payment_condition = $invoice->payment_condition;
+				$ninvoice->invoice_code = $invoice->invoice_code;
+				$ninvoice->priority = $invoice->priority+1;
+				$ninvoice->offer_id = $invoice->offer_id;
+				$ninvoice->save();
+			} else {
+				$ninvoice = new Invoice;
+				$ninvoice->payment_condition = 1;
+				$ninvoice->invoice_code = 'XYZ';
+				$ninvoice->priority = 1;
+				$ninvoice->offer_id = $offer_last->id;
+				$ninvoice->save();
+			}
 
 			return Redirect::back();
 		}
