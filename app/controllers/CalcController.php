@@ -51,6 +51,11 @@ class CalcController extends BaseController {
 		return View::make('calc.offer');
 	}
 
+	public function getOfferPDF()
+	{
+		return View::make('calc.offer_pdf');
+	}
+
 	public function getInvoiceAll()
 	{
 		return View::make('calc.invoice_all');
