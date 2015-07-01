@@ -73,6 +73,16 @@ $project = Project::find(Route::Input('project_id'));
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});
+		$('.dopay').click(function(e){
+			$curThis = $(this);
+			$curproj = $(this).attr('data-project');
+			$curinv = $(this).attr('data-invoice');
+			$.post("/invoice/pay", {id: $curinv, projectid: $curproj}, function(data){
+				$rs = jQuery.parseJSON(data);
+				console.log($rs);
+				$curThis.replaceWith('Betaald op ' +$rs.payment);
+			}).fail(function(e) { console.log(e); });
+		});
 	});
 </script>
 <div id="wrapper">
@@ -294,34 +304,32 @@ $project = Project::find(Route::Input('project_id'));
 								<br>
 							<div class="row">
 								<div class="col-md-3"><strong>Financieel</strong></div>
-								<div class="col-md-3"><strong>Verzonden</strong></div>
-								<div class="col-md-3"><strong>Laatste wijziging</strong></div>
+								<div class="col-md-3"><strong>Gefactureerd</strong></div>
 								<div class="col-md-3"><strong>Acties</strong></div>
+								<div class="col-md-3"></div>
 							</div>
+							<?php
+							$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+							$i=0;
+							?>
+							@foreach (Invoice::where('offer_id','=', $offer_last->id)->orderBy('priority')->get() as $invoice)
 							<div class="row">
-								<div class="col-md-3">Aanbetaling</div>
-								<div class="col-md-3">28-05-2015</div>
-								<div class="col-md-3">29-05-2015</div>
-								<div class="col-md-3">Betaald</div>
+								<div class="col-md-3">{{ ($invoice->isclose ? 'Eindfactuur' : ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1))) }}</div>
+								<div class="col-md-3">{{ $invoice->bill_date }}</div>
+								<div class="col-md-3"><?php
+								if ($invoice->invoice_close && !$invoice->payment_date)
+									echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xs dopay">Betalen</a>';
+								elseif ($invoice->invoice_close && $invoice->payment_date)
+									echo 'Betaald op '.$invoice->payment_date;
+								elseif ($invoice->isclose)
+									echo '<a href="/invoice/project-'.$project->id.'/invoice-'.$invoice->id.'" class="btn btn-primary btn-xs">Bekijken</a>';
+								else
+									echo '<a href="/invoice/project-'.$project->id.'/term-invoice-'.$invoice->id.'" class="btn btn-primary btn-xs">Bekijken</a>';
+								?></div>
+								<div class="col-md-3"></div>
 							</div>
-							<div class="row">
-								<div class="col-md-3">Termijnfactuur 2</div>
-								<div class="col-md-3">28-05-2015</div>
-								<div class="col-md-3">29-05-2015</div>
-								<div class="col-md-3">Openstaand</div>
-							</div>
-							<div class="row">
-								<div class="col-md-3">Termijnfactuur 3</div>
-								<div class="col-md-3">28-05-2015</div>
-								<div class="col-md-3">29-05-2015</div>
-								<div class="col-md-3">-</div>
-							</div>
-							<div class="row">
-								<div class="col-md-3">Eindfactuur</div>
-								<div class="col-md-3">28-05-2015</div>
-								<div class="col-md-3">29-05-2015</div>
-								<div class="col-md-3">-</div>
-							</div>
+							<?php $i++; ?>
+							@endforeach
 						</div>
 
 

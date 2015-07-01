@@ -191,6 +191,7 @@ class InvoiceController extends BaseController {
 		} else {
 			$invoice = Invoice::find(Input::get('id'));
 			$invoice->invoice_close = true;
+			$invoice->bill_date = date('Y-m-d H:i:s');
 
 			$invoice->save();
 
@@ -198,4 +199,26 @@ class InvoiceController extends BaseController {
 		}
 	}
 
+	public function doInvoicePay()
+	{
+		$rules = array(
+			'id' => array('required','integer'),
+			'projectid' => array('required','integer'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+			$invoice = Invoice::find(Input::get('id'));
+			$invoice->payment_date = date('Y-m-d');
+
+			$invoice->save();
+
+			return json_encode(['success' => 1, 'payment' => date('d-m-Y')]);
+		}
+	}
 }
