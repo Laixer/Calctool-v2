@@ -84,6 +84,52 @@ class InvoiceController extends BaseController {
 		}
 	}
 
+	public function doInvoiceNewTerm()
+	{
+		$rules = array(
+			'projectid' => array('required','integer')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+			$offer_last = Offer::where('project_id','=',Input::get('projectid'))->orderBy('created_at', 'desc')->first();
+			$invoice = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority', 'desc')->first();
+
+			$ninvoice = new Invoice;
+			$ninvoice->payment_condition = $invoice->payment_condition;
+			$ninvoice->invoice_code = $invoice->invoice_code;
+			$ninvoice->priority = $invoice->priority+1;
+			$ninvoice->offer_id = $invoice->offer_id;
+			$ninvoice->save();
+
+			return Redirect::back();
+		}
+	}
+
+	public function doInvoiceDeleteTerm()
+	{
+		$rules = array(
+			'id' => array('required','integer')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+			Invoice::destroy(Input::get('id'));
+
+			return Redirect::back();
+		}
+	}
+
 	public function doUpdateAmount()
 	{
 		$rules = array(

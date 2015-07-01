@@ -18,7 +18,7 @@ class UserController extends \BaseController {
 		return View::make('base.new_user');
 	}
 
-public function doNew()
+	public function doNew()
 	{
 		$rules = array(
 			/* General */
