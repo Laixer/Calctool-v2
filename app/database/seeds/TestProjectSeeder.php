@@ -105,8 +105,8 @@ class TestProjectSeeder extends Seeder {
 			'pref_email_invoice_last_reminder' => 'pref_email_invoice_last_reminder',
 			'pref_email_invoice_first_demand' => 'pref_email_invoice_first_demand',
 			'pref_email_invoice_last_demand' => 'pref_email_invoice_last_demand',
-			'offer_counter' => '001',
-			'invoice_counter' => '001',
+			'offer_counter' => '000',
+			'invoice_counter' => '000',
 			'administration_cost' => '12.50',
 			'user_type' => $test_user_type->id,
 			'province_id' => $test_province->id,
@@ -1958,6 +1958,24 @@ class TestProjectSeeder extends Seeder {
 			'amount' => '2',
 			'activity_id' => $test_activity13->id
 		));
+
+		Offer::create(array(
+			'description' => 'test',
+			'closure' => 'test',
+			'downpayment' => FALSE,
+			'downpayment_amount' => '100',
+			'auto_email_reminder' => false,
+			'offer_finish' => '2015-07-02',
+			'deliver_id' => '1',
+			'valid_id' => '1',
+			'invoice_quantity' => '1',
+			'project_id' => '1',
+			'recource_id' => '1',
+		));
+
+
+
+
 /*
 		$timesheet_activity9 = Timesheet::create(array(
 			'register_date' => '2015-05-07',
