@@ -14,6 +14,7 @@
 Route::get('login', array('before' => 'guest', 'as' => 'login', 'uses' => 'AuthController@getLogin'));
 Route::post('login', array('before' => 'guest', 'uses' => 'AuthController@doLogin'));
 
+
 Route::any('about-us', function()
 {
 	return View::make('generic.about');
@@ -53,6 +54,11 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('user/new', array('as' => 'user', 'uses' => 'UserController@getNew'));
 	Route::post('user/new', array('as' => 'user', 'uses' => 'UserController@doNew'));
 	Route::get('user', array('as' => 'user', 'uses' => 'UserController@getAll'));
+
+
+	Route::get('register', array('as' => 'register', 'uses' => 'AuthController@getRegister'));
+
+
 
 	/* Actions by calculation */
 	Route::post('calculation/newchapter/{project_id}', array('as' => 'calculation', 'uses' => 'CalcController@doNewChapter'))->where('project_id', '[0-9]+');

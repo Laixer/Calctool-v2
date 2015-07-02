@@ -21,6 +21,11 @@ class AuthController extends \BaseController {
 		return View::make('auth.login');
 	}
 
+	public function getRegister()
+	{
+		return View::make('auth.registration');
+	}
+
 	/**
 	 * Show the form for creating a new resource.
 	 *
