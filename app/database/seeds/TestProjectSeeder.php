@@ -1962,18 +1962,34 @@ class TestProjectSeeder extends Seeder {
 		Offer::create(array(
 			'description' => 'test',
 			'closure' => 'test',
-			'downpayment' => FALSE,
+			'downpayment' => false,
 			'downpayment_amount' => '100',
 			'auto_email_reminder' => false,
 			'offer_finish' => '2015-07-02',
 			'deliver_id' => '1',
 			'valid_id' => '1',
-			'invoice_quantity' => '1',
+			'invoice_quantity' => '2',
 			'project_id' => '1',
-			'recource_id' => '1',
+			'resource_id' => '1',
+			'project_id' => $test_project->id,
 		));
 
-
+		Invoice::create(array(
+			'invoice_close' => false,
+			'isclose' => true,
+			'priority' => '1',
+			'description' => 'test',
+			'reference' => '1',
+			'invoice_code' => 'test',
+			'book_code' => '0',
+			'amount' => '1000',
+			'payment_condition' => '1',
+			'bill_date' => '2015-04-01',
+			'payment_date' => '2015-04-01',
+			'closure' => 'test',
+			'auto_email_reminder' => true,
+			'offer_id' => '1',
+		));
 
 
 /*
