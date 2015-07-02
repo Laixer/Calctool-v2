@@ -131,7 +131,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 																<strong>PROJECT</strong> DETAIL
 															</span>
 														</a>
-														<img class="img-responsive" src="assets/images/demo/portfolio/scouter-600x403.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -150,7 +150,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 																<strong>VIEW</strong> VIDEO
 															</span>
 														</a>
-														<img class="img-responsive" src="assets/images/demo/portfolio/black-kitty-600x403.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -169,7 +169,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 																<strong>PROJECT</strong> DETAIL
 															</span>
 														</a>
-														<img class="img-responsive" src="assets/images/demo/portfolio/merchant2-600x403.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -188,7 +188,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 																<strong>PROJECT</strong> DETAIL
 															</span>
 														</a>
-														<img class="img-responsive" src="assets/images/demo/portfolio/flippin-the-bird1-600x403.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -207,7 +207,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 																<strong>VIEW</strong> VIDEO
 															</span>
 														</a>
-														<img class="img-responsive" src="assets/images/demo/portfolio/night_to_remember1-600x403.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -226,7 +226,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 																<strong>PROJECT</strong> DETAIL
 															</span>
 														</a>
-														<img class="img-responsive" src="assets/images/demo/portfolio/spacebound-600x403.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -245,7 +245,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 																<strong>PROJECT</strong> DETAIL
 															</span>
 														</a>
-														<img class="img-responsive" src="assets/images/demo/portfolio/be-my-guest1-600x403.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -264,7 +264,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 																<strong>PROJECT</strong> DETAIL
 															</span>
 														</a>
-														<img class="img-responsive" src="assets/images/demo/portfolio/black-box5-600x403.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -283,7 +283,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 																<strong>VIEW</strong> VIDEO
 															</span>
 														</a>
-														<img class="img-responsive" src="assets/images/demo/portfolio/weather-app-600x403.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -302,7 +302,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 																<strong>PROJECT</strong> DETAIL
 															</span>
 														</a>
-														<img class="img-responsive" src="assets/images/demo/portfolio/theMoose-600x403.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -321,7 +321,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 																<strong>PROJECT</strong> DETAIL
 															</span>
 														</a>
-														<img class="img-responsive" src="assets/images/demo/portfolio/tumblr_mopqj9QUeq1st5lhmo1_12801-600x403.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -340,7 +340,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 																<strong>PROJECT</strong> DETAIL
 															</span>
 														</a>
-														<img class="img-responsive" src="assets/images/demo/portfolio/scouter-600x403.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
