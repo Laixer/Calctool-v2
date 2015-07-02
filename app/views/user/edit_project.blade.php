@@ -302,16 +302,17 @@ $project = Project::find(Route::Input('project_id'));
 								<div class="col-md-3">29-05-2015</div>
 							</div>
 								<br>
+							<?php
+							$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+							if ($offer_last) {
+							$i=0;
+							?>
 							<div class="row">
 								<div class="col-md-3"><strong>Financieel</strong></div>
 								<div class="col-md-3"><strong>Gefactureerd</strong></div>
 								<div class="col-md-3"><strong>Acties</strong></div>
 								<div class="col-md-3"></div>
 							</div>
-							<?php
-							$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
-							$i=0;
-							?>
 							@foreach (Invoice::where('offer_id','=', $offer_last->id)->orderBy('priority')->get() as $invoice)
 							<div class="row">
 								<div class="col-md-3">{{ ($invoice->isclose ? 'Eindfactuur' : ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1))) }}</div>
@@ -330,6 +331,7 @@ $project = Project::find(Route::Input('project_id'));
 							</div>
 							<?php $i++; ?>
 							@endforeach
+							<?php } ?>
 						</div>
 
 
