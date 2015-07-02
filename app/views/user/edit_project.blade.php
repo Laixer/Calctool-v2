@@ -1,5 +1,6 @@
 <?php
 $project = Project::find(Route::Input('project_id'));
+$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 ?>
 
 @extends('layout.master')
@@ -83,6 +84,21 @@ $project = Project::find(Route::Input('project_id'));
 				$curThis.replaceWith('Betaald op ' +$rs.payment);
 			}).fail(function(e) { console.log(e); });
 		});
+		<?php if ($offer_last) { ?>
+		$('#dob').editable({
+			type:  'date',
+			pk:    {{ $offer_last->id }},
+			name:  'dob',
+			url:   '/offer/close',
+			send:  'always',
+			emptytext: 'Bewerk',
+			title: 'Selecteer offertedatum',
+			validate: function(value) {
+				if($.trim(value) == '')
+					return 'Vul een datum in';
+				}
+		});
+		<?php } ?>
 	});
 </script>
 <div id="wrapper">
@@ -258,27 +274,27 @@ $project = Project::find(Route::Input('project_id'));
 						<div id="status" class="tab-pane">
 							<div class="row">
 								<div class="col-md-3"><strong>Offerte stadium</strong></div>
-								<div class="col-md-3"><strong>Start datum</strong></div>
+								<div class="col-md-3"><strong>Datum</strong></div>
 								<div class="col-md-3"><strong>Laatste wijziging</strong></div>
 							</div>
 							<div class="row">
 								<div class="col-md-3">Calculatie</div>
-								<div class="col-md-3">28-05-2015</div>
-								<div class="col-md-3">29-05-2015</div>
+								<div class="col-md-3"><?php echo date('d-m-Y', strtotime(DB::table('project')->select('created_at')->where('id','=',$project->id)->get()[0]->created_at)); ?></div>
+								<div class="col-md-3"><?php echo date('d-m-Y', strtotime(DB::table('project')->select('updated_at')->where('id','=',$project->id)->get()[0]->updated_at)); ?></div>
 							</div>
 							<div class="row">
 								<div class="col-md-3">Offerte verzonden</div>
-								<div class="col-md-3">28-05-2015</div>
-								<div class="col-md-3">29-05-2015</div>
+								<div class="col-md-3"><?php if ($offer_last) { echo date('d-m-Y', strtotime(DB::table('offer')->select('created_at')->where('id','=',$offer_last->id)->get()[0]->created_at)); } ?></div>
+								<div class="col-md-3"></div>
 							</div>
 							<div class="row">
 								<div class="col-md-3">Opdracht ontvangen</div>
-								<div class="col-md-3">28-05-2015</div>
+								<div class="col-md-3"><?php if ($offer_last && $offer_last->offer_finish) { echo date('d-m-Y', strtotime($offer_last->offer_finish)); }else{ ?><a href="#" id="dob" data-format="dd-mm-yyyy"></a><?php } ?></div>
 							</div>
 								<br>
 							<div class="row">
 								<div class="col-md-3"><strong>Opdracht stadium</strong></div>
-								<div class="col-md-3"><strong>Start datum</strong></div>
+								<div class="col-md-3"><strong>Datum</strong></div>
 								<div class="col-md-3"><strong>Laatste wijziging</strong></div>
 							</div>
 							<div class="row">
@@ -302,17 +318,16 @@ $project = Project::find(Route::Input('project_id'));
 								<div class="col-md-3">29-05-2015</div>
 							</div>
 								<br>
-							<?php
-							$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
-							if ($offer_last) {
-							$i=0;
-							?>
 							<div class="row">
 								<div class="col-md-3"><strong>Financieel</strong></div>
 								<div class="col-md-3"><strong>Gefactureerd</strong></div>
 								<div class="col-md-3"><strong>Acties</strong></div>
 								<div class="col-md-3"></div>
 							</div>
+							<?php
+							if ($offer_last) {
+							$i=0;
+							?>
 							@foreach (Invoice::where('offer_id','=', $offer_last->id)->orderBy('priority')->get() as $invoice)
 							<div class="row">
 								<div class="col-md-3">{{ ($invoice->isclose ? 'Eindfactuur' : ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1))) }}</div>
@@ -331,9 +346,12 @@ $project = Project::find(Route::Input('project_id'));
 							</div>
 							<?php $i++; ?>
 							@endforeach
+							<?php }else{ ?>
+							<div class="row">
+								<div class="col-md-12">Geen uurtjes factuurtjes</div>
+							</div>
 							<?php } ?>
 						</div>
-
 
 						<div id="calc" class="tab-pane">
 							<div class="row">

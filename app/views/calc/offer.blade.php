@@ -247,6 +247,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 		</div>
 		@endif
 
+	<?php if (!($offer_last && $offer_last->offer_finish)) { ?>
 	<div class="pull-right">
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 
@@ -256,6 +257,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 		<button class="btn btn-primary osave">Offerte sluiten</button>
 	</div>
+	<?php } ?>
 
 	<!-- modal dialog -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -1353,6 +1355,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 				</div>
 
+				<?php if (!($offer_last && $offer_last->offer_finish)) { ?>
 				<div class="col-sm-6 text-right">
 
 					<!--<ul class="list-unstyled invoice-total-info">
@@ -1373,6 +1376,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					</div>
 
 				</div>
+				<?php } ?>
 
 			</div>
 		</div>
