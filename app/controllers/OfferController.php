@@ -53,4 +53,8 @@ class OfferController extends BaseController {
 
 	}
 
+	public static function getOfferCode($id)
+	{
+		return sprintf("OF%06d-%03d-%s", $id, Auth::user()->offer_counter, date('y'));
+	}
 }

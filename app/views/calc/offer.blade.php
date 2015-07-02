@@ -453,7 +453,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 					<div class="col-sm-6 text-right">
 						<p>
-							#{{ sprintf("%06d", $project->id) }} &bull; <strong>{{ date("j M Y") }}</strong>
+							{{ OfferController::getOfferCode($project->id) }} &bull; <strong>{{ date("j M Y") }}</strong>
 							<br />
 							{{ $project->project_name }}
 						</p>
@@ -497,7 +497,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						<h4><strong>Offerte gegevens</strong></h4>
 						<ul class="list-unstyled">
 							<li><strong>Offertedatum:</strong> {{ date("j M Y") }}</li>
-							<li><strong>Offertenummer:</strong> #{{ sprintf("%06d", $project->id) }}</li>
+							<li><strong>Offertenummer:</strong> {{ OfferController::getOfferCode($project->id) }}</li>
 						</ul>
 
 					</div>

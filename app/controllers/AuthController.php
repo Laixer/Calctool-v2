@@ -11,7 +11,9 @@ class AuthController extends \BaseController {
 	{
 		if(App::environment('local'))
 		{
-			Auth::loginUsingId(1);
+			$user = User::where('username','=','system')->first();
+
+			Auth::login($user);
 
 			return Redirect::to('/');
 		}
