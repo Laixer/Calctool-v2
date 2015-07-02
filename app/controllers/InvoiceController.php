@@ -221,4 +221,9 @@ class InvoiceController extends BaseController {
 			return json_encode(['success' => 1, 'payment' => date('d-m-Y')]);
 		}
 	}
+
+	public static function getInvoiceCode($id)
+	{
+		return sprintf("%s%05d-%03d-%s", Auth::user()->invoicenumber_prefix, $id, Auth::user()->invoice_counter, date('y'));
+	}
 }
