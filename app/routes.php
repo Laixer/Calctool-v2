@@ -13,6 +13,7 @@
 
 Route::get('login', array('before' => 'guest', 'as' => 'login', 'uses' => 'AuthController@getLogin'));
 Route::post('login', array('before' => 'guest', 'uses' => 'AuthController@doLogin'));
+Route::get('register', array('before' => 'guest', 'as' => 'register', 'uses' => 'AuthController@getRegister'));
 
 
 Route::any('about-us', function()
@@ -55,11 +56,6 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('user/new', array('as' => 'user', 'uses' => 'UserController@doNew'));
 	Route::get('user', array('as' => 'user', 'uses' => 'UserController@getAll'));
 
-
-	Route::get('register', array('as' => 'register', 'uses' => 'AuthController@getRegister'));
-
-
-
 	/* Actions by calculation */
 	Route::post('calculation/newchapter/{project_id}', array('as' => 'calculation', 'uses' => 'CalcController@doNewChapter'))->where('project_id', '[0-9]+');
 	Route::post('calculation/calc/newactivity/{chapter_id}', array('as' => 'calculation', 'uses' => 'CalcController@doNewCalculationActivity'))->where('chapter_id', '[0-9]+');
@@ -84,6 +80,7 @@ Route::group(array('before' => 'auth'), function()
 
 	Route::get('offer/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOffer'))->where('project_id', '[0-9]+');
 	Route::post('offer/project-{project_id}', array('as' => 'invoice', 'uses' => 'OfferController@doNewOffer'));
+	Route::post('offer/close', array('as' => 'invoice', 'uses' => 'OfferController@doOfferClose'));
 
 	Route::get('offer/pdf/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOfferPDF'))->where('project_id', '[0-9]+');
 

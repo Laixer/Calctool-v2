@@ -38,7 +38,6 @@ class OfferController extends BaseController {
 			if (Input::get('amount'))
 				$offer->downpayment_amount = Input::get('amount');
 			$offer->auto_email_reminder = false;
-			$offer->offer_finish = date("Y-m-d H:i:s");
 			$offer->deliver_id = Input::get('deliver');
 			$offer->valid_id = Input::get('valid');
 			if (Input::get('terms'))
@@ -49,6 +48,43 @@ class OfferController extends BaseController {
 			$offer->save();
 
 			return Redirect::back()->with('success', 'Opgeslagen');
+		}
+
+	}
+
+	public function doOfferClose()
+	{
+		$rules = array(
+			'name' => array('required'),
+			'value' => array('required'),
+			'pk' => array('required','integer')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+			$offer = Offer::find(Input::get('pk'));
+			$offer->offer_finish = date('Y-m-d', strtotime(Input::get('value')));
+			$offer->save();
+
+			for ($i=0; $i < $offer->invoice_quantity; $i++) {
+				$invoice = new Invoice;
+				$invoice->priority = $i;
+				$invoice->invoice_code = sprintf("%s%05d-CONCEPT-%s", Auth::user()->invoicenumber_prefix, 10000, date('y'));
+				$invoice->payment_condition = 1;
+				$invoice->offer_id = $offer->id;
+				if (($i+1) == $offer->invoice_quantity)
+					$invoice->isclose = true;
+				if ($i == 0 && $offer->downpayment)
+					$invoice->amount = $offer->downpayment_amount;
+				$invoice->save();
+			}
+
+			return json_encode(['success' => 1]);
 		}
 
 	}
