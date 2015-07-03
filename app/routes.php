@@ -15,7 +15,12 @@ Route::get('login', array('before' => 'guest', 'as' => 'login', 'uses' => 'AuthC
 Route::post('login', array('before' => 'guest', 'uses' => 'AuthController@doLogin'));
 Route::get('register', array('before' => 'guest', 'as' => 'register', 'uses' => 'AuthController@getRegister'));
 Route::post('register', array('before' => 'guest', 'as' => 'register', 'uses' => 'AuthController@doRegister'));
+Route::get('confirm/{api}/{token}', array('before' => 'guest', 'as' => 'register', 'uses' => 'AuthController@getActivate'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
 
+Route::any('testmail', function()
+{
+	return View::make('mail.confirm')->with(array('token' => 'ABCS', 'username' => 'arie'));
+});
 
 Route::any('about-us', function()
 {

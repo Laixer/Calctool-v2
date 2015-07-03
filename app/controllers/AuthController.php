@@ -104,8 +104,8 @@ class AuthController extends \BaseController {
 			$user->country_id = 1;
 			$user->user_type = UserType::where('user_type','=','user')->first()->id;
 
-			Mail::send('mail.confirm', array('token' => $user->token, 'email' => $user->email, 'username' => $user->username), function($message) {
-				$message->to(Input::get('email'), strtolower(trim(Input::get('username'))))->subject('Confirm your email address');
+			Mail::send('mail.confirm', array('api' => $user->api, 'token' => $user->token, 'username' => $user->username), function($message) {
+				$message->to(Input::get('email'), strtolower(trim(Input::get('username'))))->subject('Calctool - Account activatie');
 			});
 
 			$user->save();
@@ -113,6 +113,25 @@ class AuthController extends \BaseController {
 			return Redirect::back()->with('success', 'Account aangemaakt, er is een bevestingsmail verstuurd');
 		}
 
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function getActivate()
+	{
+		$user = User::where('token','=',Route::Input('token'))->first();
+		if ($user->confirmed_mail) {
+			$errors = new MessageBag(['activate' => ['Account is al geactiveerd']]);
+			return Redirect::to('login')->withErrors($errors);
+		}
+		$user->confirmed_mail = date('Y-m-d H:i:s');
+		$user->save();
+
+		Auth::login($user);
+		return Redirect::to('/');
 	}
 
 }
