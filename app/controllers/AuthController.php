@@ -72,8 +72,8 @@ class AuthController extends \BaseController {
 		$rules = array(
 			'username' => array('required','unique:user_account'),
 			'email' => array('required','max:80','email','unique:user_account'),
-			'secret' => array('required','confirmed'),
-			'secret_confirmation' => array('required'),
+			'secret' => array('required','confirmed','min:5'),
+			'secret_confirmation' => array('required','min:5'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -103,6 +103,10 @@ class AuthController extends \BaseController {
 			$user->province_id = 1;
 			$user->country_id = 1;
 			$user->user_type = UserType::where('user_type','=','user')->first()->id;
+
+			Mail::send('mail.confirm', array('token' => $user->token, 'email' => $user->email, 'username' => $user->username), function($message) {
+				$message->to(Input::get('email'), strtolower(trim(Input::get('username'))))->subject('Confirm your email address');
+			});
 
 			$user->save();
 
