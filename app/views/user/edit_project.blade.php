@@ -84,6 +84,19 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				$curThis.replaceWith('Betaald op ' +$rs.payment);
 			}).fail(function(e) { console.log(e); });
 		});
+		$('#wordexec').editable({
+			type:  'date',
+			pk:    {{ $project->id }},
+			name:  'wordexec',
+			url:   '/project/updateworkexecution',
+			send:  'always',
+			emptytext: 'Bewerk',
+			title: 'Selecteer uitvoerdatum',
+			validate: function(value) {
+				if($.trim(value) == '')
+					return 'Vul een datum in';
+				}
+		});
 		<?php if ($offer_last) { ?>
 		$('#dob').editable({
 			type:  'date',
@@ -298,8 +311,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							</div>
 							<div class="row">
 								<div class="col-md-3">Uitvoering</div>
-								<div class="col-md-3">28-05-2015</div>
-								<div class="col-md-3">29-05-2015</div>
+								<div class="col-md-3"><a href="#" id="wordexec" data-format="dd-mm-yyyy"></a></div>
+								<div class="col-md-3"></div>
 							</div>
 							<div class="row">
 								<div class="col-md-3">Stelposten</div>
