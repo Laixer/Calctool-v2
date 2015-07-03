@@ -27,8 +27,8 @@
 
 												<tr><!-- logo -->
 													<td width="100%" style="font-family: helvetica, Arial, sans-serif; font-size: 18px; letter-spacing: 0px;">
-														<a href="#" style="text-decoration: none;">
-															<img src="/images/logo2.png" alt="" border="0" width="166" height="auto" style="with: 166px; height: auto; border: 5px solid #ffffff;">
+														<a href="{{ URL::to('/') }}" style="text-decoration: none;">
+															{{ HTML::image('images/logo2.png', 'calctool', array('border' => '0', 'width' => '166', 'height' => 'auto', 'style' => 'with: 166px; height: auto; border: 5px solid #ffffff;')) }}
 														</a>
 													</td>
 												</tr>
