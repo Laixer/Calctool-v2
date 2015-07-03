@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'info@calctool.nl', 'name' => 'Calctool'),
+	'from' => array('address' => 'smarthost@calctool.nl', 'name' => 'Calctool'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => 'info@calctool.nl',
+	'username' => 'smarthost@calctool.nl',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return array(
 	|
 	*/
 
-	'password' => 'ABC@123Calc',
+	'password' => 'Cb1523173f41cd4aeffabcfa8991ce43',
 
 	/*
 	|--------------------------------------------------------------------------
