@@ -1028,7 +1028,7 @@ var n = this,
 											</div>
 										</div>
 										<div class="col-md-6 text-right">
-											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Verwijderen</button>
+											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Hoofdstuk verwijderen</button>
 										</div>
 									</div>
 									{{ Form::close() }}
@@ -1324,7 +1324,7 @@ var n = this,
 											</div>
 										</div>
 										<div class="col-md-6 text-right">
-											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Verwijderen</button>
+											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Hoofdstuk verwijderen</button>
 										</div>
 									</div>
 									{{ Form::close() }}
