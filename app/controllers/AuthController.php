@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\MessageBag;
+//use App\Database\DemoProjectTemplate;
 
 class AuthController extends \BaseController {
 
@@ -43,7 +44,7 @@ class AuthController extends \BaseController {
 			if (Auth::user()->confirmed_mail == NULL) {
 				Auth::logout();
 				$errors = new MessageBag(['mail' => ['Email nog niet bevestigd']]);
-				return Redirect::back()->withErrors($errors)->withInput(Input::except('secret'));
+				return Redirect::to('login')->withErrors($errors)->withInput(Input::except('secret'));
 			}
 
 			// Redirect to dashboard
@@ -52,14 +53,14 @@ class AuthController extends \BaseController {
 
 			// Login failed
 			$errors = new MessageBag(['password' => ['Gebruikersnaam of wachtwoord verkeerd']]);
-			return Redirect::back()->withErrors($errors)->withInput(Input::except('secret'));
+			return Redirect::to('login')->withErrors($errors)->withInput(Input::except('secret'));
 		}
 	}
 
 	public function doLogout()
 	{
 		Auth::logout(); // log the user out of our application
-		return Redirect::route('login'); // redirect the user to the login screen
+		return Redirect::to('login'); // redirect the user to the login screen
 	}
 
 	/**
@@ -80,7 +81,7 @@ class AuthController extends \BaseController {
 
 		if ($validator->fails()) {
 
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+			return Redirect::to('register')->withErrors($validator)->withInput(Input::all());
 		} else {
 			$part = Part::where('part_name','=','contracting')->first();
 			$part_type = PartType::where('type_name','=','calculation')->first();
@@ -110,7 +111,7 @@ class AuthController extends \BaseController {
 
 			$user->save();
 
-			return Redirect::back()->with('success', 'Account aangemaakt, er is een bevestingsmail verstuurd');
+			return Redirect::to('register')->with('success', 'Account aangemaakt, er is een bevestingsmail verstuurd');
 		}
 
 	}
@@ -134,6 +135,8 @@ class AuthController extends \BaseController {
 		$user->confirmed_mail = date('Y-m-d H:i:s');
 		$user->last_active = date('Y-m-d H:i:s');
 		$user->save();
+
+		DemoProjectTemplate::setup($user->id);
 
 		Auth::login($user);
 		return Redirect::to('/');
