@@ -49,12 +49,16 @@ class CostController extends BaseController {
 				'timesheet_kind_id' => Input::get('type')
 			));
 
+			$_activity = Activity::find(Input::get('activity'));
+			$_chapter = Chapter::find($_activity->chapter_id);
+			$_project = Project::find($_chapter->project_id);
+
 			$type = 'Aanneming';
 			if (TimesheetKind::find(Input::get('type'))->kind_name == 'meerwerk')
 			{
 				$type = 'Meerwerk';
 				$labor = MoreLabor::create(array(
-					"rate" => Project::where('user_id','=', Auth::user()->id)->first()->hour_rate_more,
+					"rate" => $_project->hour_rate_more,
 					"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('hour'))),
 					"activity_id" => Input::get('activity'),
 					"hour_id" => $timesheet->id
@@ -65,7 +69,7 @@ class CostController extends BaseController {
 			{
 				$type = 'Stelpost';
 				$labor = EstimateLabor::create(array(
-					"set_rate" => Project::where('user_id','=', Auth::user()->id)->first()->hour_rate,
+					"set_rate" => $_project->hour_rate,
 					"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('hour'))),
 					"activity_id" => Input::get('activity'),
 					"original" => false,
