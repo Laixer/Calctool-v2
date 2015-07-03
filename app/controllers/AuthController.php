@@ -100,11 +100,11 @@ class AuthController extends \BaseController {
 			$user->address_postal = '';
 			$user->address_city = '';
 			$user->email = Input::get('email');
-			$user->province_id = 1;
-			$user->country_id = 1;
+			$user->province_id = Province::where('province_name','=','zuid-holland')->first()->id;
+			$user->country_id = Country::where('country_name','=','nederland')->first()->id;
 			$user->user_type = UserType::where('user_type','=','user')->first()->id;
 
-			Mail::send('mail.confirm', array('api' => $user->api, 'token' => $user->token, 'username' => $user->username), function($message) {
+			Mail::queue('mail.confirm', array('api' => $user->api, 'token' => $user->token, 'username' => $user->username), function($message) {
 				$message->to(Input::get('email'), strtolower(trim(Input::get('username'))))->subject('Calctool - Account activatie');
 			});
 
@@ -122,12 +122,17 @@ class AuthController extends \BaseController {
 	 */
 	public function getActivate()
 	{
-		$user = User::where('token','=',Route::Input('token'))->first();
+		$user = User::where('token','=',Route::Input('token'))->where('api','=',Route::Input('api'))->first();
+		if (!$user) {
+			$errors = new MessageBag(['activate' => ['Activatielink is niet geldig']]);
+			return Redirect::to('login')->withErrors($errors);
+		}
 		if ($user->confirmed_mail) {
 			$errors = new MessageBag(['activate' => ['Account is al geactiveerd']]);
 			return Redirect::to('login')->withErrors($errors);
 		}
 		$user->confirmed_mail = date('Y-m-d H:i:s');
+		$user->last_active = date('Y-m-d H:i:s');
 		$user->save();
 
 		Auth::login($user);
