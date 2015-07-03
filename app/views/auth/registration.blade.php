@@ -15,41 +15,62 @@
 
 					<h2>Maak <strong>Account</strong> aan</h2>
 
-					<form class="white-row" method="post" action="#">
+					{{ Form::open(array('url' => 'register', 'class' => 'white-row')) }}
 
-						<!-- alert failed -->
+						@if(Session::get('success'))
+						<div class="alert alert-success">
+							<i class="fa fa-check-circle"></i>
+							<strong>{{ Session::get('success') }}</strong>
+						</div>
+						@endif
+
+						<?# -- alert failed -- ?>
+						@if($errors->any())
 						<div class="alert alert-danger">
 							<i class="fa fa-frown-o"></i>
-							<strong>Wachtwoord</strong> komt niet overeen!
+							@foreach ($errors->all() as $error)
+								{{ $error }}
+							@endforeach
 						</div>
+						@endif
 
 						<div class="row">
 							<div class="form-group">
 								<div class="col-md-12">
-									<label>E-mail adres</label>
-									<input type="text" value="" class="form-control">
+									<label></label>
+									{{ Form::label('username', 'Gebruikersnaam') }}
+									{{ Form::text('username', Input::old('username'), array('class' => 'form-control')) }}
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group">
+								<div class="col-md-12">
+									<label></label>
+									{{ Form::label('email', 'E-mail adres') }}
+									{{ Form::text('email', Input::old('email'), array('class' => 'form-control')) }}
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="form-group">
 								<div class="col-md-6">
-									<label>Wachtwoord</label>
-									<input type="password" value="" class="form-control">
+									{{ Form::label('secret', 'Wachtwoord') }}
+									{{ Form::password('secret', array('class' => 'form-control')) }}
 								</div>
 								<div class="col-md-6">
-									<label>Herhaal wachtwoord</label>
-									<input type="password" value="" class="form-control">
+									{{ Form::label('secret_confirmation', 'Herhaal wachtwoord') }}
+									{{ Form::password('secret_confirmation', array('class' => 'form-control')) }}
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-12">
-								<input type="submit" value="Sign Up" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
+								<input type="submit" value="Aanmelden" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
 							</div>
 						</div>
 
-					</form>
+					{{ Form::close() }}
 
 				</div>
 				<!-- /REGISTER -->
@@ -76,7 +97,7 @@
 
 						<p>
 							Already have an account?
-							<a href="page-signin.html">Click to Sign In</a>
+							<a href="/login">Click to Sign In</a>
 						</p>
 					</div>
 

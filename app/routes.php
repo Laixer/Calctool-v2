@@ -14,6 +14,7 @@
 Route::get('login', array('before' => 'guest', 'as' => 'login', 'uses' => 'AuthController@getLogin'));
 Route::post('login', array('before' => 'guest', 'uses' => 'AuthController@doLogin'));
 Route::get('register', array('before' => 'guest', 'as' => 'register', 'uses' => 'AuthController@getRegister'));
+Route::post('register', array('before' => 'guest', 'as' => 'register', 'uses' => 'AuthController@doRegister'));
 
 
 Route::any('about-us', function()

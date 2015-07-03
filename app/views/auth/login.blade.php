@@ -20,7 +20,10 @@
 						<?# -- alert failed -- ?>
 						@if($errors->any())
 						<div class="alert alert-danger">
-							<i class="fa fa-frown-o"></i>Verkeerd <strong>E-mailadres</strong> of <strong>wachtwoord</strong>!
+							<i class="fa fa-frown-o"></i>
+							@foreach ($errors->all() as $error)
+								{{ $error }}
+							@endforeach
 						</div>
 						@endif
 
@@ -102,7 +105,7 @@
 
 
 			<p class="white-row">
-				Nog geen account? <a href="page-signup.html">Maak er een aan</a>, het is gratis!
+				Nog geen account? <a href="/register">Maak er een aan</a>, het is gratis!
 			</p>
 
 		</section>

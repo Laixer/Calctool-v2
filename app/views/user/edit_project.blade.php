@@ -149,7 +149,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 			{{ Form::open(array('url' => 'project/update')) }}
 
-
 				<div class="tabs nomargin-top">
 
 					<?# -- tabs -- ?>

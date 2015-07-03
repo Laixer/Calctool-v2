@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\MessageBag;
+
 class AuthController extends \BaseController {
 
 	/**
@@ -9,15 +11,6 @@ class AuthController extends \BaseController {
 	 */
 	public function getLogin()
 	{
-		if(App::environment('local'))
-		{
-			$user = User::where('username','=','system')->first();
-
-			Auth::login($user);
-
-			return Redirect::to('/');
-		}
-
 		return View::make('auth.login');
 	}
 
@@ -33,6 +26,8 @@ class AuthController extends \BaseController {
 	 */
 	public function doLogin()
 	{
+		$errors = new MessageBag;
+
 		$userdata = array(
 			'username' 	=> strtolower(trim(Input::get('username'))),
 			'password' 	=> Input::get('secret'),
@@ -43,11 +38,21 @@ class AuthController extends \BaseController {
 		$remember = Input::get('rememberme') ? true : false;
 
 		if(Auth::attempt($userdata, $remember)){
+
+			// Email must be confirmed
+			if (Auth::user()->confirmed_mail == NULL) {
+				Auth::logout();
+				$errors = new MessageBag(['mail' => ['Email nog niet bevestigd']]);
+				return Redirect::back()->withErrors($errors)->withInput(Input::except('secret'));
+			}
+
+			// Redirect to dashboard
 			return Redirect::to('/');
 		}else{
-			return Redirect::route('login')
-				->withErrors(true)
-				->withInput(Input::except('secret'));
+
+			// Login failed
+			$errors = new MessageBag(['password' => ['Gebruikersnaam of wachtwoord verkeerd']]);
+			return Redirect::back()->withErrors($errors)->withInput(Input::except('secret'));
 		}
 	}
 
@@ -55,6 +60,55 @@ class AuthController extends \BaseController {
 	{
 		Auth::logout(); // log the user out of our application
 		return Redirect::route('login'); // redirect the user to the login screen
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function doRegister()
+	{
+		$rules = array(
+			'username' => array('required','unique:user_account'),
+			'email' => array('required','max:80','email','unique:user_account'),
+			'secret' => array('required','confirmed'),
+			'secret_confirmation' => array('required'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+			$part = Part::where('part_name','=','contracting')->first();
+			$part_type = PartType::where('type_name','=','calculation')->first();
+			$tax = Tax::where('tax_rate','=',21)->first();
+
+			$user = new User;
+			$user->username = strtolower(trim(Input::get('username')));
+			$user->secret = Hash::make(Input::get('secret'));
+			$user->firstname = $user->username;
+			$user->lastname = '';
+			$user->api = md5(mt_rand());
+			$user->token = sha1(mt_rand());
+			$user->ip = $_SERVER['REMOTE_ADDR'];
+			$user->promotion_code = md5(mt_rand());
+			$user->address_street = '';
+			$user->address_number = '';
+			$user->address_postal = '';
+			$user->address_city = '';
+			$user->email = Input::get('email');
+			$user->province_id = 1;
+			$user->country_id = 1;
+			$user->user_type = UserType::where('user_type','=','user')->first()->id;
+
+			$user->save();
+
+			return Redirect::back()->with('success', 'Account aangemaakt, er is een bevestingsmail verstuurd');
+		}
+
 	}
 
 }
