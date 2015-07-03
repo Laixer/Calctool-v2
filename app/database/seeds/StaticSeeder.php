@@ -22,8 +22,6 @@ class StaticSeeder extends Seeder {
 		DB::table('part_part_type')->delete();
 		DB::table('part_type')->delete();
 		DB::table('part')->delete();
-		DB::table('project_type_project_step')->delete();
-		DB::table('project_step')->delete();
 		DB::table('project_type')->delete();
 		DB::table('country')->delete();
 		DB::table('province')->delete();
@@ -448,33 +446,6 @@ class StaticSeeder extends Seeder {
 		$ProjectType3 = ProjectType::create(array('type_name' => 'blanco offerte'));
 		$ProjectType4 = ProjectType::create(array('type_name' => 'blanco factuur'));
 		$this->command->info('ProjectType created');
-
-		$ProjectStep1 = ProjectStep::create(array('step_name' => 'calculation'));
-		$ProjectStep2 = ProjectStep::create(array('step_name' => 'offer'));
-		$ProjectStep3 = ProjectStep::create(array('step_name' => 'contracting'));
-		$ProjectStep4 = ProjectStep::create(array('step_name' => 'estimate'));
-		$ProjectStep5 = ProjectStep::create(array('step_name' => 'more'));
-		$ProjectStep6 = ProjectStep::create(array('step_name' => 'less'));
-		$ProjectStep7 = ProjectStep::create(array('step_name' => 'invoice'));
-		$this->command->info('ProjectStep created');
-
-		$ProjectType1->projectStep()->attach($ProjectStep2->id);
-		$ProjectType1->projectStep()->attach($ProjectStep5->id);
-		$ProjectType1->projectStep()->attach($ProjectStep7->id);
-
-		$ProjectType2->projectStep()->attach($ProjectStep1->id);
-		$ProjectType2->projectStep()->attach($ProjectStep2->id);
-		$ProjectType2->projectStep()->attach($ProjectStep3->id);
-		$ProjectType2->projectStep()->attach($ProjectStep4->id);
-		$ProjectType2->projectStep()->attach($ProjectStep5->id);
-		$ProjectType2->projectStep()->attach($ProjectStep6->id);
-		$ProjectType2->projectStep()->attach($ProjectStep7->id);
-
-		$ProjectType3->projectStep()->attach($ProjectStep2->id);
-		$ProjectType3->projectStep()->attach($ProjectStep7->id);
-
-		$ProjectType4->projectStep()->attach($ProjectStep7->id);
-		$this->command->info('ProjectType / ProjectStep attached');
 
 		$Part1 = Part::create(array('part_name' => 'contracting'));
 		$Part2 = Part::create(array('part_name' => 'subcontracting'));

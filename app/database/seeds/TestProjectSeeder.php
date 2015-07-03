@@ -26,7 +26,6 @@ class TestProjectSeeder extends Seeder {
 		DB::table('chapter')->delete();
 		DB::table('iban')->delete();
 		DB::table('contact')->delete();
-		DB::table('status_date')->delete();
 		DB::table('project')->delete();
 		DB::table('relation')->delete();
 		DB::table('resource')->delete();
@@ -53,7 +52,6 @@ class TestProjectSeeder extends Seeder {
 		$test_detail_less = Detail::where('detail_name','=','less')->first();
 		$test_detail_more = Detail::where('detail_name','=','more')->first();
 
-		$test_step = ProjectStep::where('step_name','=','estimate')->first();
 		$test_deliver = DeliverTime::where('delivertime_name','=','3 weken')->first();
 		$test_valid = Valid::where('valid_name','=','3 maanden')->first();
 		$test_tax1 = Tax::where('tax_rate','=','21')->first();
@@ -111,7 +109,7 @@ class TestProjectSeeder extends Seeder {
 			'self_id' => NULL
 		));
 
-	$this->command->info('User created');
+		$this->command->info('User created');
 
 		Payment::create(array(
 			'payment_date' => '07-03-2015',
@@ -122,7 +120,7 @@ class TestProjectSeeder extends Seeder {
 			'user_id' => $test_user->id
 		));
 
-	$this->command->info('Payment created');
+		$this->command->info('Payment created');
 
 		$test_resource1 = Resource::create(array(
 			'resource_name' => 'resource naam',
@@ -133,7 +131,7 @@ class TestProjectSeeder extends Seeder {
 			'project_id' => NULL
 		));
 
-	$this->command->info('Resource created');
+		$this->command->info('Resource created');
 
 		$test_relation = Relation::create(array(
 			'company_name' => 'Beun Haas B.V.',
@@ -201,7 +199,7 @@ class TestProjectSeeder extends Seeder {
 		$test_user->self_id = $test_relation3->id;
 		$test_user->save();
 
-	$this->command->info('Relation created');
+		$this->command->info('Relation created');
 
 		$test_project = Project::create(array(
 			'project_name' => 'testproject',
@@ -227,14 +225,7 @@ class TestProjectSeeder extends Seeder {
 			'client_id' => $test_relation->id
 		));
 
-	$this->command->info('Project created');
-
-		ProjectStatus::create(array(
-			'finish' => '09-03-2015',
-			'step_id' => $test_step->id,
-			'project_id' => $test_project->id
-		));
-		$this->command->info('ProjectStatus created');
+		$this->command->info('Project created');
 
 		Resource::create(array(
 			'resource_name' => 'resource naam2',
@@ -245,7 +236,7 @@ class TestProjectSeeder extends Seeder {
 			'project_id' => $test_project->id
 		));
 
-	$this->command->info('Resource created');
+		$this->command->info('Resource created');
 
 		Contact::create(array(
 			'firstname' => 'Beun',
@@ -280,7 +271,7 @@ class TestProjectSeeder extends Seeder {
 			'function_id' => $test_contact_function->id
 		));
 
-	$this->command->info('Contact created');
+		$this->command->info('Contact created');
 
 		Iban::create(array(
 			'iban' => 'NL45RABO0123456789m',
@@ -303,20 +294,20 @@ class TestProjectSeeder extends Seeder {
 			'relation_id' => $test_relation3->id,
 		));
 
-	$this->command->info('Iban created');
+		$this->command->info('Iban created');
 
 		$test_chapter1 = Chapter::create(array(
 			'chapter_name' => 'CHPTR1',
-			'priority' => '1',
+			'priority' => 1,
 			'note' => 'Description_CHPTR1',
 			'project_id' => $test_project->id
 		));
 
-	$this->command->info('Chapter 1 created');
+		$this->command->info('Chapter 1 created');
 
 		$test_activity1 = Activity::create(array(
 			'activity_name' => 'CHPTR1_ACT1_CON',
-			'priority' => '1',
+			'priority' => 1,
 			'note' => 'Description_CHPTR1_ACT1_CON',
 			'chapter_id' => $test_chapter1->id,
 			'part_id' => $test_part_contract->id,
@@ -333,11 +324,11 @@ class TestProjectSeeder extends Seeder {
 			'tax_estimate_equipment_id' => $test_tax1->id
 		));
 
-	$this->command->info('Activity 1 created');
+		$this->command->info('Activity 1 created');
 
 		$test_activity2 = Activity::create(array(
 			'activity_name' => 'CHPTR1_ACT2_SUBCON',
-			'priority' => '2',
+			'priority' => 2,
 			'note' => 'Description_CHPTR1_ACT2_SUBCON',
 			'chapter_id' => $test_chapter1->id,
 			'part_id' => $test_part_subcontract->id,
@@ -354,20 +345,20 @@ class TestProjectSeeder extends Seeder {
 			'tax_estimate_equipment_id' => $test_tax2->id
 		));
 
-	$this->command->info('Activity 2 created');
+		$this->command->info('Activity 2 created');
 
 		$test_chapter2 = Chapter::create(array(
 			'chapter_name' => 'CHPTR2',
-			'priority' => '2',
+			'priority' => 2,
 			'note' => 'Description_CHPTR2',
 			'project_id' => $test_project->id
 		));
 
-	$this->command->info('Chapter 2 created');
+		$this->command->info('Chapter 2 created');
 
 		$test_activity3 = Activity::create(array(
 			'activity_name' => 'CHPTR2_ACT3_CON',
-			'priority' => '3',
+			'priority' => 3,
 			'note' => 'Description_CHPTR2_ACT3_CON',
 			'chapter_id' => $test_chapter2->id,
 			'part_id' => $test_part_contract->id,
@@ -384,11 +375,11 @@ class TestProjectSeeder extends Seeder {
 			'tax_estimate_equipment_id' => $test_tax3->id
 		));
 
-	$this->command->info('Activity 3 created');
+		$this->command->info('Activity 3 created');
 
 		$test_activity4 = Activity::create(array(
 			'activity_name' => 'CHPTR2_ACT4_SUBCON',
-			'priority' => '4',
+			'priority' => 4,
 			'note' => 'Description_CHPTR2_ACT4_SUBCON',
 			'chapter_id' => $test_chapter2->id,
 			'part_id' => $test_part_subcontract->id,
@@ -405,20 +396,20 @@ class TestProjectSeeder extends Seeder {
 			'tax_estimate_equipment_id' => $test_tax1->id
 		));
 
-	$this->command->info('Activity 4 created');
+		$this->command->info('Activity 4 created');
 
 		$test_chapter3 = Chapter::create(array(
 			'chapter_name' => 'CHPTR3',
-			'priority' => '3',
+			'priority' => 3,
 			'note' => 'Description_CHPTR3',
 			'project_id' => $test_project->id
 		));
 
-	$this->command->info('Chapter 3 created');
+		$this->command->info('Chapter 3 created');
 
 		$test_activity5 = Activity::create(array(
 			'activity_name' => 'CHPTR3_ACT5_CON',
-			'priority' => '5',
+			'priority' => 5,
 			'note' => 'Description_CHPTR3_ACT5_CON',
 			'chapter_id' => $test_chapter3->id,
 			'part_id' => $test_part_contract->id,
@@ -435,11 +426,11 @@ class TestProjectSeeder extends Seeder {
 			'tax_estimate_equipment_id' => $test_tax2->id
 		));
 
-	$this->command->info('Activity 5 created');
+		$this->command->info('Activity 5 created');
 
 		$test_activity6 = Activity::create(array(
 			'activity_name' => 'CHPTR3_ACT6_SUBCON',
-			'priority' => '6',
+			'priority' => 6,
 			'note' => 'Description_CHPTR3_ACT6_SUBCON',
 			'chapter_id' => $test_chapter3->id,
 			'part_id' => $test_part_subcontract->id,
@@ -456,11 +447,11 @@ class TestProjectSeeder extends Seeder {
 			'tax_estimate_equipment_id' => $test_tax3->id
 		));
 
-	$this->command->info('Activity 6 created');
+		$this->command->info('Activity 6 created');
 
 		$test_activity7 = Activity::create(array(
 			'activity_name' => 'CHPTR3_ACT7_CON_EST',
-			'priority' => '7',
+			'priority' => 7,
 			'note' => 'Description_CHPTR3_ACT7_CON_EST',
 			'chapter_id' => $test_chapter3->id,
 			'part_id' => $test_part_contract->id,
@@ -477,7 +468,7 @@ class TestProjectSeeder extends Seeder {
 			'tax_estimate_equipment_id' => $test_tax1->id
 		));
 
-	$this->command->info('Activity 7 created');
+		$this->command->info('Activity 7 created');
 
 		$test_activity8 = Activity::create(array(
 			'activity_name' => 'CHPTR3_ACT8_SUBCON_EST',
@@ -498,7 +489,7 @@ class TestProjectSeeder extends Seeder {
 			'tax_estimate_equipment_id' => $test_tax1->id
 		));
 
-	$this->command->info('Activity 8 created');
+		$this->command->info('Activity 8 created');
 
 		$test_chapter4 = Chapter::create(array(
 			'chapter_name' => 'CHPTR4',
@@ -507,7 +498,7 @@ class TestProjectSeeder extends Seeder {
 			'project_id' => $test_project->id
 		));
 
-	$this->command->info('Chapter 4 created');
+		$this->command->info('Chapter 4 created');
 
 		$test_activity9 = Activity::create(array(
 			'activity_name' => 'CHPTR4_ACT9_CON_EST',
@@ -528,7 +519,7 @@ class TestProjectSeeder extends Seeder {
 			'tax_estimate_equipment_id' => $test_tax2->id
 		));
 
-	$this->command->info('Activity 9 created');
+		$this->command->info('Activity 9 created');
 
 		$test_activity10 = Activity::create(array(
 			'activity_name' => 'CHPTR4_ACT10_SUBCON_EST',
@@ -549,11 +540,11 @@ class TestProjectSeeder extends Seeder {
 			'tax_estimate_equipment_id' => $test_tax3->id
 		));
 
-	$this->command->info('Activity 10 created');
+		$this->command->info('Activity 10 created');
 
 		$test_activity11 = Activity::create(array(
 			'activity_name' => 'CHPTR4_ACT11_CON_MORE',
-			'priority' => '11',
+			'priority' => 11,
 			'note' => 'Description_CHPTR4_ACT11_CON_MORE',
 			'chapter_id' => $test_chapter4->id,
 			'part_id' => $test_part_contract->id,
@@ -570,7 +561,7 @@ class TestProjectSeeder extends Seeder {
 			'tax_estimate_equipment_id' => $test_tax1->id
 		));
 
-	$this->command->info('Activity 11 created');
+		$this->command->info('Activity 11 created');
 
 		$test_activity12 = Activity::create(array(
 			'activity_name' => 'CHPTR4_ACT12_SUBCON_MORE',
@@ -591,7 +582,7 @@ class TestProjectSeeder extends Seeder {
 			'tax_estimate_equipment_id' => $test_tax1->id
 		));
 
-	$this->command->info('Activity 12 created');
+		$this->command->info('Activity 12 created');
 
 		$test_chapter5 = Chapter::create(array(
 			'chapter_name' => 'CHPTR5',
@@ -600,7 +591,7 @@ class TestProjectSeeder extends Seeder {
 			'project_id' => $test_project->id
 		));
 
-	$this->command->info('Chapter 5 created');
+		$this->command->info('Chapter 5 created');
 
 			$test_activity13 = Activity::create(array(
 			'activity_name' => 'CHPTR5_ACT13_CON_MORE',
@@ -621,7 +612,7 @@ class TestProjectSeeder extends Seeder {
 			'tax_estimate_equipment_id' => $test_tax1->id
 		));
 
-	$this->command->info('Activity 13 created');
+		$this->command->info('Activity 13 created');
 
 		$test_timesheet = Timesheet::create(array(
 			'register_date' => '09-10-2014',
@@ -631,7 +622,7 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity10->id
 		));
 
-	$this->command->info('Timesheet created');
+		$this->command->info('Timesheet created');
 
 		Purchase::create(array(
 			'amount' => '33',
@@ -642,7 +633,7 @@ class TestProjectSeeder extends Seeder {
 			'relation_id' => $test_relation->id
 		));
 
-	$this->command->info('Purchase created');
+		$this->command->info('Purchase created');
 
 		$calculation_labor_activity1 = CalculationLabor::create(array(
 			'rate' => '35.00',
@@ -651,7 +642,7 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity1->id
 		));
 
-	$this->command->info('CalculationLabor Activity 1 created');
+		$this->command->info('CalculationLabor Activity 1 created');
 
 		$calculation_material_activity1_1 = CalculationMaterial::create(array(
 			'material_name' => 'CHPTR1_ACT1_CON_1',
@@ -734,8 +725,8 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity1->id
 		));
 
-	$this->command->info('CalculationMaterial Activity 1 created');
-	$this->command->info('CalculationEquipment Activity 1 created');
+		$this->command->info('CalculationMaterial Activity 1 created');
+		$this->command->info('CalculationEquipment Activity 1 created');
 
 		$calculation_labor_activity2 = CalculationLabor::create(array(
 			'rate' => '35.00',
@@ -744,7 +735,7 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity2->id
 		));
 
-	$this->command->info('CalculationLabor Activity 2 created');
+		$this->command->info('CalculationLabor Activity 2 created');
 
 		$calculation_material_activity2_1 = CalculationMaterial::create(array(
 			'material_name' => 'CHPTR1_ACT2_SUBCON_1',
@@ -827,8 +818,8 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity2->id
 		));
 
-	$this->command->info('CalculationMaterial Activity 2 created');
-	$this->command->info('CalculationEquipment Activity 2 created');
+		$this->command->info('CalculationMaterial Activity 2 created');
+		$this->command->info('CalculationEquipment Activity 2 created');
 
 		$calculation_labor_activity3 = CalculationLabor::create(array(
 			'rate' => '35.00',
@@ -837,7 +828,7 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity3->id
 		));
 
-	$this->command->info('CalculationLabor Activity 3 created');
+		$this->command->info('CalculationLabor Activity 3 created');
 
 		$calculation_material_activity3_1 = CalculationMaterial::create(array(
 			'material_name' => 'CHPTR2_ACT3_CON_1',
@@ -920,8 +911,8 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity3->id
 		));
 
-	$this->command->info('CalculationMaterial Activity 3 created');
-	$this->command->info('CalculationEquipment Activity 3 created');
+		$this->command->info('CalculationMaterial Activity 3 created');
+		$this->command->info('CalculationEquipment Activity 3 created');
 
 		$calculation_labor_activity4 = CalculationLabor::create(array(
 			'rate' => '35.00',
@@ -930,7 +921,7 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity4->id
 		));
 
-	$this->command->info('CalculationLabor Activity 4 created');
+		$this->command->info('CalculationLabor Activity 4 created');
 
 		$calculation_material_activity4_1 = CalculationMaterial::create(array(
 			'material_name' => 'CHPTR2_ACT4_SUBCON_1',
@@ -1013,8 +1004,8 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity4->id
 		));
 
-	$this->command->info('CalculationMaterial Activity 4 created');
-	$this->command->info('CalculationEquipment Activity 4 created');
+		$this->command->info('CalculationMaterial Activity 4 created');
+		$this->command->info('CalculationEquipment Activity 4 created');
 
 		$calculation_labor_activity5 = CalculationLabor::create(array(
 			'rate' => '35.00',
@@ -1024,8 +1015,8 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity5->id
 		));
 
-	$this->command->info('CalculationLabor Activity 5 created');
-	$this->command->info('CalculationLabor Activity 5 LESS created');
+		$this->command->info('CalculationLabor Activity 5 created');
+		$this->command->info('CalculationLabor Activity 5 LESS created');
 
 		$calculation_material_activity5_1 = CalculationMaterial::create(array(
 			'material_name' => 'CHPTR3_ACT5_CON_1',
@@ -1116,10 +1107,10 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity5->id
 		));
 
-	$this->command->info('CalculationMaterial Activity 5 created');
-	$this->command->info('CalculationEquipment Activity 5 created');
-	$this->command->info('CalculationMaterial Activity 5 LESS created');
-	$this->command->info('CalculationEquipment Activity 5 LESS created');
+		$this->command->info('CalculationMaterial Activity 5 created');
+		$this->command->info('CalculationEquipment Activity 5 created');
+		$this->command->info('CalculationMaterial Activity 5 LESS created');
+		$this->command->info('CalculationEquipment Activity 5 LESS created');
 
 		$calculation_labor_activity6 = CalculationLabor::create(array(
 			'rate' => '35.00',
@@ -1129,8 +1120,8 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity6->id
 		));
 
-	$this->command->info('CalculationLabor Activity 6 created');
-	$this->command->info('CalculationLabor Activity 6 LESS created');
+		$this->command->info('CalculationLabor Activity 6 created');
+		$this->command->info('CalculationLabor Activity 6 LESS created');
 
 		$calculation_material_activity6_1 = CalculationMaterial::create(array(
 			'material_name' => 'CHPTR3_ACT6_SUBCON_1',
@@ -1221,10 +1212,10 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity6->id
 		));
 
-	$this->command->info('CalculationMaterial Activity 6 created');
-	$this->command->info('CalculationEquipment Activity 6 created');
-	$this->command->info('CalculationMaterial Activity 6 LESS created');
-	$this->command->info('CalculationEquipment Activity 6 LESS created');
+		$this->command->info('CalculationMaterial Activity 6 created');
+		$this->command->info('CalculationEquipment Activity 6 created');
+		$this->command->info('CalculationMaterial Activity 6 LESS created');
+		$this->command->info('CalculationEquipment Activity 6 LESS created');
 
 		$calculation_labor_activity7 = EstimateLabor::create(array(
 			'rate' => '35.00',
@@ -1234,7 +1225,7 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity7->id
 		));
 
-	$this->command->info('CalculationLabor Activity 7 ESTIM created');
+		$this->command->info('CalculationLabor Activity 7 ESTIM created');
 
 		$calculation_material_activity7_1 = EstimateMaterial::create(array(
 			'material_name' => 'CHPTR3_ACT7_SUBCON_1',
@@ -1331,8 +1322,8 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity7->id
 		));
 
-	$this->command->info('CalculationMaterial Activity 7 ESTIM created');
-	$this->command->info('CalculationEquipment Activity 7 ESTIM created');
+		$this->command->info('CalculationMaterial Activity 7 ESTIM created');
+		$this->command->info('CalculationEquipment Activity 7 ESTIM created');
 
 		$calculation_labor_activity8 = EstimateLabor::create(array(
 			'rate' => '35.00',
@@ -1343,7 +1334,7 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity8->id
 		));
 
-	$this->command->info('CalculationLabor ESTIM created');
+		$this->command->info('CalculationLabor ESTIM created');
 
 		$calculation_material_activity8_1 = EstimateMaterial::create(array(
 			'material_name' => 'CHPTR3_ACT8_SUBCON_1',
@@ -1436,8 +1427,8 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity8->id
 		));
 
-	$this->command->info('CalculationMaterial Activity 8 ESTIM created');
-	$this->command->info('CalculationEquipment Activity 8 ESTIM created');
+		$this->command->info('CalculationMaterial Activity 8 ESTIM created');
+		$this->command->info('CalculationEquipment Activity 8 ESTIM created');
 
 		$calculation_labor_activity9 = EstimateLabor::create(array(
 			'rate' => '35.00',
@@ -1448,7 +1439,7 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity9->id
 		));
 
-	$this->command->info('CalculationLabor Activity 9 ESTIM created');
+		$this->command->info('CalculationLabor Activity 9 ESTIM created');
 
 		$calculation_material_activity9_1 = EstimateMaterial::create(array(
 			'material_name' => 'CHPTR4_ACT9_CON_1',
@@ -1541,8 +1532,8 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity9->id
 		));
 
-	$this->command->info('CalculationMaterial Activity 9 ESTIM created');
-	$this->command->info('CalculationEquipment Activity 9 ESTIM created');
+		$this->command->info('CalculationMaterial Activity 9 ESTIM created');
+		$this->command->info('CalculationEquipment Activity 9 ESTIM created');
 
 		$calculation_labor_activity10 = EstimateLabor::create(array(
 			'rate' => '35.00',
@@ -1552,7 +1543,7 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity10->id
 		));
 
-	$this->command->info('CalculationLabor Activity 10 ESTIM created');
+		$this->command->info('CalculationLabor Activity 10 ESTIM created');
 
 		$calculation_material_activity10_1 = EstimateMaterial::create(array(
 			'material_name' => 'CHPTR4_ACT10_SUBCON_1',
@@ -1645,8 +1636,8 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity10->id
 		));
 
-	$this->command->info('CalculationMaterial Activity 10 ESTIM created');
-	$this->command->info('CalculationEquipment Activity 10 ESTIM created');
+		$this->command->info('CalculationMaterial Activity 10 ESTIM created');
+		$this->command->info('CalculationEquipment Activity 10 ESTIM created');
 
 		EstimateMaterial::create(array(
 			'set_material_name' => 'CHPTR4_ACT8_SUBCON_6_SET',
@@ -1741,8 +1732,8 @@ class TestProjectSeeder extends Seeder {
 		));
 		$this->command->info('Estimate_Set_Equipment_Created');
 
-	$this->command->info('EstimateMAterial SET Activity 8 added');
-	$this->command->info('EstimateEquipment SET Activity 8 added');
+		$this->command->info('EstimateMAterial SET Activity 8 added');
+		$this->command->info('EstimateEquipment SET Activity 8 added');
 
 		EstimateMaterial::create(array(
 			'set_material_name' => 'CHPTR4_ACT9_CON_6_SET',
@@ -1835,8 +1826,8 @@ class TestProjectSeeder extends Seeder {
 			'isset' => true,
 			'activity_id' => $test_activity9->id
 		));
-	$this->command->info('EstimateMaterial SET Activity 9 added');
-	$this->command->info('EstimateEquipment SET Activity 9 added');
+		$this->command->info('EstimateMaterial SET Activity 9 added');
+		$this->command->info('EstimateEquipment SET Activity 9 added');
 
 		$calculation_labor_activity11 = MoreLabor::create(array(
 			'rate' => '45',
@@ -1875,8 +1866,8 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity11->id
 		));
 
-	$this->command->info('MoreMaterial Activity 11 created');
-	$this->command->info('MoreEquipment Activity 11 created');
+		$this->command->info('MoreMaterial Activity 11 created');
+		$this->command->info('MoreEquipment Activity 11 created');
 
 			$calculation_labor_activity12 = MoreLabor::create(array(
 			'rate' => '45',
@@ -1915,8 +1906,8 @@ class TestProjectSeeder extends Seeder {
 			'activity_id' => $test_activity12->id
 		));
 
-	$this->command->info('MoreMaterial Activity 12 created');
-	$this->command->info('MoreEquipment Activity 12 created');
+		$this->command->info('MoreMaterial Activity 12 created');
+		$this->command->info('MoreEquipment Activity 12 created');
 
 		$calculation_labor_activity13 = MoreLabor::create(array(
 			'rate' => '45',
@@ -2021,29 +2012,7 @@ class TestProjectSeeder extends Seeder {
 			'offer_id' => '1',
 		));
 
-
-/*
-		$timesheet_activity9 = Timesheet::create(array(
-			'register_date' => '2015-05-07',
-			'register_hour' => '123',
-			'note' => 'geen',
-			'timesheet_kind_id' =>  '2',
-			'activity_id' => $test_activity9->id
-		));
-		$estimate_labor_activity9 = EstimateLabor::create(array(
-			'rate' => '35',
-			'set_amount' => '123',
-			'original' => false,
-			'isset' => true,
-			'hour_id' => $timesheet_activity9->id,
-			'activity_id' => $test_activity9->id
-		));
-*/
-
-	$this->command->info('MoreMaterial Activity 13 created');
-	$this->command->info('MoreEquipment Activity 13 created');
-
-		//$test_user->productFavorite()->attach($test_product->id);
-		//$this->command->info('Project favorite created');
+		$this->command->info('MoreMaterial Activity 13 created');
+		$this->command->info('MoreEquipment Activity 13 created');
 	}
  }

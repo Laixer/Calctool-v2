@@ -122,12 +122,6 @@ class CreateUsersTable extends Migration {
 			$table->string('type_name', 15)->unique();
 		});
 
-		Schema::create('project_step', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->string('step_name', 15)->unique();
-		});
-
 		Schema::create('project', function(Blueprint $table)
 		{
 			$table->increments('id');
@@ -149,13 +143,11 @@ class CreateUsersTable extends Migration {
 			$table->tinyInteger('profit_more_subcontr_equip')->unsigned()->default(0);
 			$table->nullableTimestamps();
 			$table->date('work_execution')->nullable();
-
 			$table->date('start_more')->nullable();
 			$table->date('update_more')->nullable();
 			$table->date('start_less')->nullable();
 			$table->date('update_less')->nullable();
 			$table->date('update_estimate')->nullable();
-
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('province_id')->unsigned();
@@ -164,17 +156,6 @@ class CreateUsersTable extends Migration {
 			$table->foreign('country_id')->references('id')->on('country')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('type_id')->unsigned();
 			$table->foreign('type_id')->references('id')->on('project_type')->onUpdate('cascade')->onDelete('restrict');
-		});
-
-		Schema::create('status_date', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->nullableTimestamps();
-			$table->date('finish')->nullable();
-			$table->integer('step_id')->unsigned();
-			$table->foreign('step_id')->references('id')->on('project_step')->onUpdate('cascade')->onDelete('cascade');
-			$table->integer('project_id')->unsigned();
-			$table->foreign('project_id')->references('id')->on('project')->onUpdate('cascade')->onDelete('cascade');
 		});
 
 		Schema::create('resource', function(Blueprint $table)
@@ -191,15 +172,6 @@ class CreateUsersTable extends Migration {
 			$table->foreign('project_id')->references('id')->on('project')->onUpdate('cascade')->onDelete('cascade');
 		});
 
-		Schema::create('project_type_project_step', function(Blueprint $table)
-		{
-			$table->integer('type_id')->unsigned();
-			$table->integer('step_id')->unsigned();
-			$table->foreign('type_id')->references('id')->on('project_type')->onUpdate('cascade')->onDelete('cascade');
-			$table->foreign('step_id')->references('id')->on('project_step')->onUpdate('cascade')->onDelete('cascade');
-			$table->primary(array('type_id', 'step_id'));
-		});
-
 		$seq_user_account = "ALTER SEQUENCE user_account_id_seq RESTART WITH 1000";
 		$seq_project = "ALTER SEQUENCE project_id_seq RESTART WITH 10000";
 
@@ -214,19 +186,9 @@ class CreateUsersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('project_type_project_step', function(Blueprint $table)
-		{
-			Schema::drop('project_type_project_step');
-		});
-
 		Schema::table('resource', function(Blueprint $table)
 		{
 			Schema::drop('resource');
-		});
-
-		Schema::table('status_date', function(Blueprint $table)
-		{
-			Schema::drop('status_date');
 		});
 
 		Schema::table('project', function(Blueprint $table)
@@ -234,16 +196,10 @@ class CreateUsersTable extends Migration {
 			Schema::drop('project');
 		});
 
-		Schema::table('project_step', function(Blueprint $table)
-		{
-			Schema::drop('project_step');
-		});
-
 		Schema::table('project_type', function(Blueprint $table)
 		{
 			Schema::drop('project_type');
 		});
-
 
 		Schema::table('payment', function(Blueprint $table)
 		{
