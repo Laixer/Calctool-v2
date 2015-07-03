@@ -311,23 +311,23 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							</div>
 							<div class="row">
 								<div class="col-md-3">Uitvoering</div>
-								<div class="col-md-3"><a href="#" id="wordexec" data-format="dd-mm-yyyy"></a></div>
+								<div class="col-md-3"><a href="#" id="wordexec" data-format="dd-mm-yyyy">{{ $project->work_execution ? date('d-m-Y', strtotime($project->work_execution)) : '' }}</a></div>
 								<div class="col-md-3"></div>
 							</div>
 							<div class="row">
 								<div class="col-md-3">Stelposten</div>
-								<div class="col-md-3">28-05-2015</div>
-								<div class="col-md-3">29-05-2015</div>
+								<div class="col-md-3"></div>
+								<div class="col-md-3">{{ $project->update_estimate ? date('d-m-Y', strtotime($project->update_estimate)) : '' }}</div>
 							</div>
 							<div class="row">
 								<div class="col-md-3">Meerwerk</div>
-								<div class="col-md-3">28-05-2015</div>
-								<div class="col-md-3">29-05-2015</div>
+								<div class="col-md-3">{{ $project->start_more ? date('d-m-Y', strtotime($project->start_more)) : '' }}</div>
+								<div class="col-md-3">{{ $project->update_more ? date('d-m-Y', strtotime($project->update_more)) : '' }}</div>
 							</div>
 							<div class="row">
 								<div class="col-md-3">Minderwerk</div>
-								<div class="col-md-3">28-05-2015</div>
-								<div class="col-md-3">29-05-2015</div>
+								<div class="col-md-3">{{ $project->start_less ? date('d-m-Y', strtotime($project->start_less)) : '' }}</div>
+								<div class="col-md-3">{{ $project->update_less ? date('d-m-Y', strtotime($project->update_less)) : '' }}</div>
 							</div>
 								<br>
 							<div class="row">
