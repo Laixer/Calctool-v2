@@ -161,38 +161,14 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 		$tpayment = false;
 		$("[name='toggle-payment']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 			if (state) {
-				//$('#tpayment').text('Aanbetaling');
 				$("#amount").prop('disabled', false);
 				$tpayment = true;
 			} else {
-				//$('#tpayment').text('1');
 				$("#amount").prop('disabled', true);
 				$tpayment = false;
 			}
 
 		});
-		/*$('#terms').blur(function(){
-			var q = $(this).val();
-			if($.isNumeric(q)&&(q>1)&&(q<=50)){
-				$('#tbl-term tbody tr').remove();
-				for(var i=0; i<q; i++){
-					if(i==(q-1)) {
-						$('#tbl-term tbody').append('<tr><td>Slottermijn</td><td><input id="eterm" disabled type="text" value="" class="form-control-sm-text" /></td></tr>');
-					} else if (i==0){
-						$('#tbl-term tbody').append('<tr><td id="tpayment">'+(i+1)+'</td><td><input type="text" value="" id="amount_'+i+'" name="amount['+i+']" class="adata form-control-sm-text" /></td></tr>');
-					} else {
-						$('#tbl-term tbody').append('<tr><td>'+(i+1)+'</td><td><input type="text" value="" id="amount_'+i+'" name="amount['+i+']" class="adata form-control-sm-text" /></td></tr>');
-					}
-				}
-				$('.adata').blur(function(){
-					$total = {{ CalculationEndresult::totalProject($project) }};
-					$('.adata').each(function(){
-						$total -= $(this).val();
-						$('#eterm').val($.number($total,2,',','.'));
-					});
-				});
-			}
-		});*/
 		$('#termModal').on('hidden.bs.modal', function() {
 			var q = $('#terms').val();
 			if($.isNumeric(q)&&(q>1)&&(q<=50)) {
@@ -200,9 +176,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				if ($tpayment)
 					$('#paymenttext').html('Het eerste termijn geldt hierbij als een aanbetaling van &euro; '+$('.adata').first().val());
 			}
-			//$('.adata').each(function(){
-			//	console.log('adata: '+ $(this).val());
-			//});
 		});
 		$('.osave').click(function(e){
 			e.preventDefault();
@@ -364,7 +337,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								@foreach (Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->get() as $offer)
 								<tr>
 									<td><a href="#">{{ $offer->id }}</a></td>
-									<td>{{ $offer->offer_finish }}</td>
+									<td>{{ date('d-m-Y', strtotime(DB::table('offer')->select('created_at')->where('id','=',$offer->id)->get()[0]->created_at)) }}</td>
 								</tr>
 								@endforeach
 							</tbody>
