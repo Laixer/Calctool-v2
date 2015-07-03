@@ -91,18 +91,11 @@ class AuthController extends \BaseController {
 			$user->username = strtolower(trim(Input::get('username')));
 			$user->secret = Hash::make(Input::get('secret'));
 			$user->firstname = $user->username;
-			$user->lastname = '';
 			$user->api = md5(mt_rand());
 			$user->token = sha1($user->secret);
-			$user->promotion_code = md5(mt_rand());
+			$user->referral_key = md5(mt_rand());
 			$user->ip = $_SERVER['REMOTE_ADDR'];
-			$user->address_street = '';
-			$user->address_number = '';
-			$user->address_postal = '';
-			$user->address_city = '';
 			$user->email = Input::get('email');
-			$user->province_id = Province::where('province_name','=','zuid-holland')->first()->id;
-			$user->country_id = Country::where('country_name','=','nederland')->first()->id;
 			$user->user_type = UserType::where('user_type','=','user')->first()->id;
 
 			Mail::queue('mail.confirm', array('api' => $user->api, 'token' => $user->token, 'username' => $user->username), function($message) {
@@ -167,7 +160,6 @@ class AuthController extends \BaseController {
 			return Redirect::to('login')->withErrors($errors);
 		}
 		$user->confirmed_mail = date('Y-m-d H:i:s');
-		$user->last_active = date('Y-m-d H:i:s');
 		$user->save();
 
 		DemoProjectTemplate::setup($user->id);
@@ -202,7 +194,7 @@ class AuthController extends \BaseController {
 
 			$data = array('api' => $user->api, 'token' => $user->token, 'username' => $user->username);
 			Mail::queue('mail.password', $data, function($message) use ($data) {
-				$message->to(Input::get('email'), strtolower(trim($data['username'])))->subject('Calctool - Wachtwoord vergeten');
+				$message->to(Input::get('email'), strtolower(trim($data['username'])))->subject('Calctool - Wachtwoord herstellen');
 			});
 
 			$user->save();
