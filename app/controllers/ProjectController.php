@@ -38,10 +38,7 @@ class ProjectController extends \BaseController {
 			'more_profit_equipment_1' => array('required','numeric','between:0,200'),
 			'more_profit_material_2' => array('required','numeric','between:0,200'),
 			'more_profit_equipment_2' => array('required','numeric','between:0,200')
-			///^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'
 		);
-
-
 
 		$validator = Validator::make(Input::all(), $rules);
 
@@ -64,7 +61,6 @@ class ProjectController extends \BaseController {
 
 			$project = new Project;
 			$project->project_name = Input::get('name');
-			$project->project_code = time();
 			$project->address_street = Input::get('street');
 			$project->address_number = Input::get('address_number');
 			$project->address_postal = Input::get('zipcode');
@@ -169,4 +165,29 @@ class ProjectController extends \BaseController {
 
 	}
 
+	public function doUpdateWorkExecution()
+	{
+		$rules = array(
+			'pk' => array('required','integer'),
+			'value' => array('required'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			// redirect our user back to the form with the errors from the validator
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+			$project = Project::find(Input::get('pk'));
+			$project->work_execution = date('Y-m-d', strtotime(Input::get('value')));
+
+			$project->save();
+
+			return json_encode(['success' => 1]);
+		}
+
+	}
 }
