@@ -149,6 +149,13 @@ class CreateUsersTable extends Migration {
 			$table->tinyInteger('profit_more_subcontr_equip')->unsigned()->default(0);
 			$table->nullableTimestamps();
 			$table->date('work_execution')->nullable();
+
+			$table->date('start_more')->nullable();
+			$table->date('update_more')->nullable();
+			$table->date('start_less')->nullable();
+			$table->date('update_less')->nullable();
+			$table->date('update_estimate')->nullable();
+
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('province_id')->unsigned();
