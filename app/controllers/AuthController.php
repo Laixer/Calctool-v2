@@ -20,6 +20,10 @@ class AuthController extends \BaseController {
 		return View::make('auth.registration');
 	}
 
+	public function getNewPassword()
+	{
+		return View::make('auth.password');
+	}
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -83,19 +87,15 @@ class AuthController extends \BaseController {
 
 			return Redirect::to('register')->withErrors($validator)->withInput(Input::all());
 		} else {
-			$part = Part::where('part_name','=','contracting')->first();
-			$part_type = PartType::where('type_name','=','calculation')->first();
-			$tax = Tax::where('tax_rate','=',21)->first();
-
 			$user = new User;
 			$user->username = strtolower(trim(Input::get('username')));
 			$user->secret = Hash::make(Input::get('secret'));
 			$user->firstname = $user->username;
 			$user->lastname = '';
 			$user->api = md5(mt_rand());
-			$user->token = sha1(mt_rand());
-			$user->ip = $_SERVER['REMOTE_ADDR'];
+			$user->token = sha1($user->secret);
 			$user->promotion_code = md5(mt_rand());
+			$user->ip = $_SERVER['REMOTE_ADDR'];
 			$user->address_street = '';
 			$user->address_number = '';
 			$user->address_postal = '';
@@ -121,7 +121,41 @@ class AuthController extends \BaseController {
 	 *
 	 * @return Route
 	 */
-	public function getActivate()
+	public function doNewPassword()
+	{
+		$rules = array(
+			'secret' => array('required','confirmed','min:5'),
+			'secret_confirmation' => array('required','min:5'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+			$user = User::where('token','=',Route::Input('token'))->where('api','=',Route::Input('api'))->first();
+			if (!$user) {
+				$errors = new MessageBag(['activate' => ['Activatielink is niet geldig']]);
+				return Redirect::to('login')->withErrors($errors);
+			}
+			$user->secret = Hash::make(Input::get('secret'));
+			$user->active = true;
+			$user->token = sha1($user->secret);
+			$user->save();
+
+			Auth::login($user);
+			return Redirect::to('/');
+		}
+
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function doActivate()
 	{
 		$user = User::where('token','=',Route::Input('token'))->where('api','=',Route::Input('api'))->first();
 		if (!$user) {
@@ -140,6 +174,42 @@ class AuthController extends \BaseController {
 
 		Auth::login($user);
 		return Redirect::to('/');
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function doBlockPassword()
+	{
+		$rules = array(
+			'email' => array('required','max:80','email')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+
+			return Redirect::to('login')->with('success', 1);
+		} else {
+			$user = User::where('email','=',Input::get('email'))->first();
+			if (!$user)
+				return Redirect::to('login')->with('success', 1);
+			$user->secret = Hash::make(mt_rand());
+			$user->active = false;
+			$user->api = md5(mt_rand());
+
+			$data = array('api' => $user->api, 'token' => $user->token, 'username' => $user->username);
+			Mail::queue('mail.password', $data, function($message) use ($data) {
+				$message->to(Input::get('email'), strtolower(trim($data['username'])))->subject('Calctool - Wachtwoord vergeten');
+			});
+
+			$user->save();
+
+			return Redirect::to('login')->with('success', 1);
+		}
+
 	}
 
 }

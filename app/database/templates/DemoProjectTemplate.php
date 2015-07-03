@@ -2,7 +2,7 @@
 
 /*
  * Static Models Only
- * Test are performed on other seeds
+ * Template for demo project
  */
 class DemoProjectTemplate {
 

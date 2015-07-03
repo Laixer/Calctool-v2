@@ -72,29 +72,22 @@
 						</p>
 
 						<?# -- alert success -- ?>
-						@if(isset($success))
+						@if(Session::get('success'))
 						<div class="alert alert-success">
 							<i class="fa fa-check-circle"></i>
-							<strong>Nieuw wachtwoord verzonden!</strong> Check je e-mail!
-						</div>
-						@endif
-
-						<?# -- alert failed -- ?>
-						@if(isset($error))
-						<div class="alert alert-danger">
-							<i class="fa fa-frown-o"></i>
-							<strong>E-mailadres</strong> niet gevonden!
+							<strong>Instructies verzonden.</strong> Check je e-mail!
 						</div>
 						@endif
 
 						<?# -- password form -- ?>
 						<label>Vul uw e-mailadres hier in</label>
-						<form class="input-group" method="post" action="#">
-							<input type="text" class="form-control" name="s" id="s" value="" placeholder="E-mailadres" />
+						{{-- Form::open(array('url' => 'password/reset', 'class' => 'input-group')) --}}
+						<form class="input-group" method="post" action="password/reset">
+							<input type="text" class="form-control" name="email" id="email" value="" placeholder="E-mail adres" />
 							<span class="input-group-btn">
 								<button class="btn btn-primary">Verzenden</button>
 							</span>
-						</form>
+						{{ Form::close() }}
 
 					</div>
 
