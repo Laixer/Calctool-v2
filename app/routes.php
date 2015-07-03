@@ -22,7 +22,7 @@ Route::post('password/{api}/{token}', array('before' => 'guest', 'as' => 'regist
 
 Route::any('testmail', function()
 {
-	return View::make('mail.password')->with(array('api' => 'VCDSVYC', 'token' => 'ABCS', 'username' => 'arie'));
+	return View::make('mail.confirm')->with(array('api' => 'VCDSVYC', 'token' => 'ABCS', 'username' => 'arie'));
 });
 
 Route::any('about-us', function()

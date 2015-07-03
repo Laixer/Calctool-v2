@@ -60,8 +60,6 @@ class TestProjectSeeder extends Seeder {
 		$test_tax2 = Tax::where('tax_rate','=','6')->first();
 		$test_tax3 = Tax::where('tax_rate','=','0')->first();
 
-		//$test_product = Product::where('description','=','Hoge kast deur links 60cm met nis 450/485/880mm')->first();
-
 		$test_user = User::create(array(
 			'username' => 'system',
 			'secret' => Hash::make('ABC@123'),
@@ -207,7 +205,6 @@ class TestProjectSeeder extends Seeder {
 
 		$test_project = Project::create(array(
 			'project_name' => 'testproject',
-			'project_code' => '123456',
 			'address_street' => 'teststraat',
 			'address_number' => '01',
 			'address_postal' => '1234AB',
