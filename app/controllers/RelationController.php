@@ -222,6 +222,96 @@ class RelationController extends \BaseController {
 		}
 	}
 
+	public function doNewIban()
+	{
+		$rules = array(
+			'id' => array('required','integer'),
+			'iban' => array('alpha_num'),
+			'iban_name' => array('required','max:50')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			// redirect our user back to the form with the errors from the validator
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+			$iban = new Iban;
+			$iban->iban = Input::get('iban');
+			$iban->iban_name = Input::get('iban_name');
+			$iban->relation_id = Input::get('id');
+
+			$iban->save();
+
+			return Redirect::back()->with('success', 1);
+		}
+	}
+
+	public function doNewMyCompany()
+	{
+		$rules = array(
+			/* Company */
+			'company_type' => array('required_if:relationkind,zakelijk','numeric'),
+			'company_name' => array('required_if:relationkind,zakelijk','max:50'),
+			'kvk' => array('numeric','min:12'),
+			'btw' => array('alpha_num','min:14'),
+			'telephone_comp' => array('alpha_num','max:12'),
+			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
+			'website' => array('url','max:180'),
+			/* Adress */
+			'street' => array('required','alpha','max:60'),
+			'address_number' => array('required','alpha_num','max:5'),
+			'zipcode' => array('required','size:6'),
+			'city' => array('required','alpha_num','max:35'),
+			'province' => array('required','numeric'),
+			'country' => array('required','numeric'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			// redirect our user back to the form with the errors from the validator
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+
+			/* General */
+			$relation = new Relation;
+			$relation->user_id = Auth::user()->id;
+			$relation->note = Input::get('note');
+			$relation->debtor_code = mt_rand();
+
+			/* Company */
+			$relation->kind_id = RelationKind::where('kind_name','=','zakelijk')->first()->id;
+			$relation->company_name = Input::get('company_name');
+			$relation->type_id = Input::get('company_type');
+			$relation->kvk = Input::get('kvk');
+			$relation->btw = Input::get('btw');
+			$relation->phone = Input::get('telephone_comp');
+			$relation->email = Input::get('email_comp');
+			$relation->website = Input::get('website');
+
+			/* Adress */
+			$relation->address_street = Input::get('street');
+			$relation->address_number = Input::get('address_number');
+			$relation->address_postal = Input::get('zipcode');
+			$relation->address_city = Input::get('city');
+			$relation->province_id = Input::get('province');
+			$relation->country_id = Input::get('country');
+
+			$relation->save();
+
+			$user = Auth::user();
+			$user->self_id = $relation->id;
+			$user->save();
+
+			return Redirect::back()->with('success', 1);
+		}
+	}
+
 	public function doNew()
 	{
 		$rules = array(
