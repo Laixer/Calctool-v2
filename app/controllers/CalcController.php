@@ -338,7 +338,10 @@ class CalcController extends BaseController {
 		} else {
 			$rate = Input::get('rate');
 			if (empty($rate)) {
-				$rate = Project::where('user_id','=', Auth::user()->id)->first()->hour_rate;
+				$_activity = Activity::find(Input::get('activity'));
+				$_chapter = Chapter::find($_activity->chapter_id);
+				$_project = Project::find($_chapter->project_id);
+				$rate = $_project->hour_rate;
 			} else {
 				$rate = str_replace(',', '.', str_replace('.', '' , $rate));
 			}
