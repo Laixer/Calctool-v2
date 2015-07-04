@@ -346,13 +346,13 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="col-md-3">{{ $invoice->bill_date }}</div>
 								<div class="col-md-3"><?php
 								if ($invoice->invoice_close && !$invoice->payment_date)
-									echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xs dopay">Betalen</a>';
+									echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs dopay">Betalen</a>';
 								elseif ($invoice->invoice_close && $invoice->payment_date)
 									echo 'Betaald op '.$invoice->payment_date;
 								elseif ($invoice->isclose)
-									echo '<a href="/invoice/project-'.$project->id.'/invoice-'.$invoice->id.'" class="btn btn-primary btn-xs">Bekijken</a>';
+									echo '<a href="/invoice/project-'.$project->id.'/invoice-'.$invoice->id.'" class="btn btn-primary btn-xxs">Bekijken</a>';
 								else
-									echo '<a href="/invoice/project-'.$project->id.'/term-invoice-'.$invoice->id.'" class="btn btn-primary btn-xs">Bekijken</a>';
+									echo '<a href="/invoice/project-'.$project->id.'/term-invoice-'.$invoice->id.'" class="btn btn-primary btn-xxs">Bekijken</a>';
 								?></div>
 								<div class="col-md-3"></div>
 							</div>
