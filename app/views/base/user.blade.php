@@ -32,7 +32,7 @@
 						<td class="col-md-2">{{ $users->lastname }}</td>
 						<td class="col-md-2">{{ $users->email }}</td>
 						<td class="col-md-2">{{ $users->active }}</td>
-						<td class="col-md-2">{{ $users->last_active }}</td>
+						<td class="col-md-2">{{ date('d-m-Y H:i:s', strtotime(DB::table('user_account')->select('updated_at')->where('id','=',$users->id)->get()[0]->updated_at)) }}</td>
 					</tr>
 				@endforeach
 				</tbody>

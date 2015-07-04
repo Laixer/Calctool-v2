@@ -9,8 +9,14 @@
 
 		<?# -- Logo text or image -- ?>
 		<a class="logo" href="/">
-			<img src="/images/logo2.png" width="200px" alt="Atropos" />
+			<img src="/images/logo2.png" width="200px" alt="Calctool" />
 		</a>
+
+		<?php
+		if (Auth::check()) {
+			Auth::user()->touch();
+		}
+		?>
 
 		<?#-- Top Nav -- ?>
 		<div class="navbar-collapse nav-main-collapse collapse pull-right">
