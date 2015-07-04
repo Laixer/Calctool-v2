@@ -15,10 +15,20 @@ class MoreController extends BaseController {
 	|
 	*/
 
+	public function updateMoreStatus($id)
+	{
+		$proj = Project::find($id);
+		if (!$proj->start_more)
+			$proj->start_more = date('Y-m-d');
+		$proj->update_more = date('Y-m-d');
+		$proj->save();
+	}
+
 	public function doNewMoreActivity()
 	{
 		$rules = array(
 			'activity' => array('required','max:50'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -52,6 +62,8 @@ class MoreController extends BaseController {
 
 			$activity->save();
 
+			$this->updateMoreStatus(Input::get('project'));
+
 			return Redirect::back()->with('success', 1);
 
 		}
@@ -64,7 +76,8 @@ class MoreController extends BaseController {
 			'unit' => array('required','max:10'),
 			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'activity' => array('required','integer','min:0')
+			'activity' => array('required','integer','min:0'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -82,6 +95,8 @@ class MoreController extends BaseController {
 				"activity_id" => Input::get('activity'),
 			));
 
+			$this->updateMoreStatus(Input::get('project'));
+
 			return json_encode(['success' => 1, 'id' => $material->id]);
 		}
 	}
@@ -93,7 +108,8 @@ class MoreController extends BaseController {
 			'unit' => array('required','max:10'),
 			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'activity' => array('required','integer','min:0')
+			'activity' => array('required','integer','min:0'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -111,6 +127,8 @@ class MoreController extends BaseController {
 				"activity_id" => Input::get('activity'),
 			));
 
+			$this->updateMoreStatus(Input::get('project'));
+
 			return json_encode(['success' => 1, 'id' => $equipment->id]);
 		}
 	}
@@ -120,7 +138,8 @@ class MoreController extends BaseController {
 		$rules = array(
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'activity' => array('required','integer','min:0')
+			'activity' => array('required','integer','min:0'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -145,6 +164,8 @@ class MoreController extends BaseController {
 				"activity_id" => Input::get('activity'),
 			));
 
+			$this->updateMoreStatus(Input::get('project'));
+
 			return json_encode(['success' => 1, 'id' => $labor->id]);
 		}
 	}
@@ -153,6 +174,7 @@ class MoreController extends BaseController {
 	{
 		$rules = array(
 			'id' => array('required','integer','min:0'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -164,6 +186,8 @@ class MoreController extends BaseController {
 		} else {
 			MoreMaterial::destroy(Input::get('id'));
 
+			$this->updateMoreStatus(Input::get('project'));
+
 			return json_encode(['success' => 1]);
 		}
 	}
@@ -172,6 +196,7 @@ class MoreController extends BaseController {
 	{
 		$rules = array(
 			'id' => array('required','integer','min:0'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -183,6 +208,8 @@ class MoreController extends BaseController {
 		} else {
 			MoreEquipment::destroy(Input::get('id'));
 
+			$this->updateMoreStatus(Input::get('project'));
+
 			return json_encode(['success' => 1]);
 		}
 	}
@@ -191,6 +218,7 @@ class MoreController extends BaseController {
 	{
 		$rules = array(
 			'id' => array('required','integer','min:0'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -201,6 +229,8 @@ class MoreController extends BaseController {
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
 			MoreLabor::destroy(Input::get('id'));
+
+			$this->updateMoreStatus(Input::get('project'));
 
 			return json_encode(['success' => 1]);
 		}
@@ -213,7 +243,8 @@ class MoreController extends BaseController {
 			'name' => array('max:50'),
 			'unit' => array('max:10'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
+			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -232,6 +263,8 @@ class MoreController extends BaseController {
 
 			$material->save();
 
+			$this->updateMoreStatus(Input::get('project'));
+
 			return json_encode(['success' => 1]);
 		}
 	}
@@ -243,7 +276,8 @@ class MoreController extends BaseController {
 			'name' => array('max:50'),
 			'unit' => array('max:10'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
+			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -262,6 +296,8 @@ class MoreController extends BaseController {
 
 			$equipment->save();
 
+			$this->updateMoreStatus(Input::get('project'));
+
 			return json_encode(['success' => 1]);
 		}
 	}
@@ -271,7 +307,8 @@ class MoreController extends BaseController {
 		$rules = array(
 			'id' => array('integer','min:0'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
+			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -296,6 +333,8 @@ class MoreController extends BaseController {
 			$labor->amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
 
 			$labor->save();
+
+			$this->updateMoreStatus(Input::get('project'));
 
 			return json_encode(['success' => 1]);
 		}

@@ -15,12 +15,22 @@ class LessController extends BaseController {
 	|
 	*/
 
+	public function updateLessStatus($id)
+	{
+		$proj = Project::find($id);
+		if (!$proj->start_less)
+			$proj->start_less = date('Y-m-d');
+		$proj->update_less = date('Y-m-d');
+		$proj->save();
+	}
+
 	public function doUpdateMaterial()
 	{
 		$rules = array(
 			'id' => array('integer','min:0'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
+			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -45,6 +55,8 @@ class LessController extends BaseController {
 
 			$material->save();
 
+			$this->updateLessStatus(Input::get('project'));
+
 			return json_encode(['success' => 1, 'less_rate' => number_format($material->less_rate, 2,",","."), 'less_amount' => number_format($material->less_amount, 2,",",".")]);
 		}
 	}
@@ -54,7 +66,8 @@ class LessController extends BaseController {
 		$rules = array(
 			'id' => array('integer','min:0'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
+			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -79,6 +92,8 @@ class LessController extends BaseController {
 
 			$equipment->save();
 
+			$this->updateLessStatus(Input::get('project'));
+
 			return json_encode(['success' => 1, 'less_rate' => number_format($equipment->less_rate, 2,",","."), 'less_amount' => number_format($equipment->less_amount, 2,",",".")]);
 		}
 	}
@@ -87,7 +102,8 @@ class LessController extends BaseController {
 	{
 		$rules = array(
 			'id' => array('integer','min:0'),
-			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
+			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -107,6 +123,8 @@ class LessController extends BaseController {
 
 			$labor->save();
 
+			$this->updateLessStatus(Input::get('project'));
+
 			return json_encode(['success' => 1, 'less_amount' => number_format($labor->less_amount, 2,",",".")]);
 		}
 	}
@@ -115,6 +133,7 @@ class LessController extends BaseController {
 	{
 		$rules = array(
 			'id' => array('integer','min:0'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -131,6 +150,8 @@ class LessController extends BaseController {
 
 			$material->save();
 
+			$this->updateLessStatus(Input::get('project'));
+
 			return json_encode(['success' => 1, 'rate' => number_format($material->rate, 2,",","."), 'amount' => number_format($material->amount, 2,",",".")]);
 		}
 	}
@@ -139,6 +160,7 @@ class LessController extends BaseController {
 	{
 		$rules = array(
 			'id' => array('integer','min:0'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -156,6 +178,8 @@ class LessController extends BaseController {
 
 			$equipment->save();
 
+			$this->updateLessStatus(Input::get('project'));
+
 			return json_encode(['success' => 1, 'rate' => number_format($equipment->rate, 2,",","."), 'amount' => number_format($equipment->amount, 2,",",".")]);
 		}
 	}
@@ -164,6 +188,7 @@ class LessController extends BaseController {
 	{
 		$rules = array(
 			'id' => array('integer','min:0'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -179,6 +204,8 @@ class LessController extends BaseController {
 			$labor->isless = False;
 
 			$labor->save();
+
+			$this->updateLessStatus(Input::get('project'));
 
 			return json_encode(['success' => 1, 'amount' => number_format($labor->amount, 2,",",".")]);
 		}

@@ -15,6 +15,13 @@ class EstimController extends BaseController {
 	|
 	*/
 
+	public function updateEstimateStatus($id)
+	{
+		$proj = Project::find($id);
+		$proj->update_estimate = date('Y-m-d');
+		$proj->save();
+	}
+
 	public function doNewEstimateMaterial()
 	{
 		$rules = array(
@@ -22,7 +29,8 @@ class EstimController extends BaseController {
 			'unit' => array('required','max:10'),
 			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'activity' => array('required','integer','min:0')
+			'activity' => array('required','integer','min:0'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -42,6 +50,8 @@ class EstimController extends BaseController {
 				"isset" => true
 			));
 
+			$this->updateEstimateStatus(Input::get('project'));
+
 			return json_encode(['success' => 1, 'id' => $material->id]);
 		}
 	}
@@ -53,7 +63,8 @@ class EstimController extends BaseController {
 			'unit' => array('required','max:10'),
 			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'activity' => array('required','integer','min:0')
+			'activity' => array('required','integer','min:0'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -73,6 +84,8 @@ class EstimController extends BaseController {
 				"isset" => true
 			));
 
+			$this->updateEstimateStatus(Input::get('project'));
+
 			return json_encode(['success' => 1, 'id' => $equipment->id]);
 		}
 	}
@@ -81,7 +94,8 @@ class EstimController extends BaseController {
 	{
 		$rules = array(
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'activity' => array('required','integer','min:0')
+			'activity' => array('required','integer','min:0'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -103,6 +117,8 @@ class EstimController extends BaseController {
 				"isset" => true
 			));
 
+			$this->updateEstimateStatus(Input::get('project'));
+
 			return json_encode(['success' => 1, 'id' => $labor->id]);
 		}
 	}
@@ -114,7 +130,8 @@ class EstimController extends BaseController {
 			'name' => array('max:50'),
 			'unit' => array('max:10'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
+			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -134,6 +151,8 @@ class EstimController extends BaseController {
 
 			$material->save();
 
+			$this->updateEstimateStatus(Input::get('project'));
+
 			return json_encode(['success' => 1]);
 		}
 	}
@@ -145,7 +164,8 @@ class EstimController extends BaseController {
 			'name' => array('max:50'),
 			'unit' => array('max:10'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
+			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -165,6 +185,8 @@ class EstimController extends BaseController {
 
 			$equipment->save();
 
+			$this->updateEstimateStatus(Input::get('project'));
+
 			return json_encode(['success' => 1]);
 		}
 	}
@@ -174,7 +196,8 @@ class EstimController extends BaseController {
 		$rules = array(
 			'id' => array('integer','min:0'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
+			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -201,6 +224,8 @@ class EstimController extends BaseController {
 
 			$labor->save();
 
+			$this->updateEstimateStatus(Input::get('project'));
+
 			return json_encode(['success' => 1]);
 		}
 	}
@@ -209,6 +234,7 @@ class EstimController extends BaseController {
 	{
 		$rules = array(
 			'id' => array('integer','min:0'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -228,6 +254,8 @@ class EstimController extends BaseController {
 
 			$material->save();
 
+			$this->updateEstimateStatus(Input::get('project'));
+
 			return json_encode(['success' => 1, 'name' => $material->material_name, 'unit' => $material->unit, 'rate' => number_format($material->rate, 2,",","."), 'amount' => number_format($material->amount, 2,",",".")]);
 		}
 	}
@@ -236,6 +264,7 @@ class EstimController extends BaseController {
 	{
 		$rules = array(
 			'id' => array('integer','min:0'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -255,6 +284,8 @@ class EstimController extends BaseController {
 
 			$equipment->save();
 
+			$this->updateEstimateStatus(Input::get('project'));
+
 			return json_encode(['success' => 1, 'name' => $equipment->equipment_name, 'unit' => $equipment->unit, 'rate' => number_format($equipment->rate, 2,",","."), 'amount' => number_format($equipment->amount, 2,",",".")]);
 		}
 	}
@@ -263,6 +294,7 @@ class EstimController extends BaseController {
 	{
 		$rules = array(
 			'id' => array('integer','min:0'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -280,6 +312,8 @@ class EstimController extends BaseController {
 
 			$labor->save();
 
+			$this->updateEstimateStatus(Input::get('project'));
+
 			return json_encode(['success' => 1, 'rate' => number_format($labor->rate, 2,",","."), 'amount' => number_format($labor->amount, 2,",",".")]);
 		}
 
@@ -289,6 +323,7 @@ class EstimController extends BaseController {
 	{
 		$rules = array(
 			'id' => array('required','integer','min:0'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -300,6 +335,8 @@ class EstimController extends BaseController {
 		} else {
 			EstimateMaterial::destroy(Input::get('id'));
 
+			$this->updateEstimateStatus(Input::get('project'));
+
 			return json_encode(['success' => 1]);
 		}
 	}
@@ -308,6 +345,7 @@ class EstimController extends BaseController {
 	{
 		$rules = array(
 			'id' => array('required','integer','min:0'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -319,6 +357,8 @@ class EstimController extends BaseController {
 		} else {
 			EstimaetEquipment::destroy(Input::get('id'));
 
+			$this->updateEstimateStatus(Input::get('project'));
+
 			return json_encode(['success' => 1]);
 		}
 	}
@@ -327,6 +367,7 @@ class EstimController extends BaseController {
 	{
 		$rules = array(
 			'id' => array('required','integer','min:0'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -337,6 +378,8 @@ class EstimController extends BaseController {
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
 			EstimateLabor::destroy(Input::get('id'));
+
+			$this->updateEstimateStatus(Input::get('project'));
 
 			return json_encode(['success' => 1]);
 		}
