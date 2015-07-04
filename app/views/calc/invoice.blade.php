@@ -2033,37 +2033,12 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 				</div>
 			</form>
 
-			<!--<hr class="half-margins invisible" />--><!-- separator -->
-
 			<!-- INVOICE FOOTER -->
 			<div class="row">
 
-				<div class="col-sm-6">
-					<!--<h4><strong>Contact</strong> Details</h4>
-
-					<p class="nomargin nopadding">
-						<strong>Note:</strong>
-						Like other components, easily make a panel more meaningful to a particular context by adding any of the contextual state classes.
-					</p><br />
-
-					<address>
-						PO Box 21132 <br>
-						Vivas 2355 Australia<br>
-						Phone: 1-800-565-2390 <br>
-						Fax: 1-800-565-2390 <br>
-						Email:support@yourname.com
-					</address>-->
-
-				</div>
+				<div class="col-sm-6"></div>
 
 				<div class="col-sm-6 text-right">
-
-					<!--<ul class="list-unstyled invoice-total-info">
-						<li><strong>Sub - Total Amount:</strong> $2162.00</li>
-						<li><strong>Discount:</strong> 10.0%</li>
-						<li><strong>VAT ($6):</strong> $12.0</li>
-						<li><strong>Grand Total:</strong> $1958.0</li>
-					</ul>-->
 
 					<div class="padding20">
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>

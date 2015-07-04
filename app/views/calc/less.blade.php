@@ -18,8 +18,6 @@ var n = this,
     j = (j = i.length) > 3 ? j % 3 : 0;
    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 };
-</script>
-<script type="text/javascript">
 	$(document).ready(function() {
 		$(".popdesc").popover({
 	        html: true,
@@ -105,10 +103,10 @@ var n = this,
 			$(this).val(parseFloat($(this).val().split('.').join('').replace(',', '.')).formatMoney(2, ',', '.'));
 		});
 		$(".radio-activity").change(function(){
-			$.post("/calculation/updatepart", {value: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
+			$.post("/calculation/updatepart", {project: {{ $project->id }}, value: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
 		});
 		$(".select-tax").change(function(){
-			$.post("/calculation/updatetax", {value: this.value, activity: $(this).attr("data-id"), type: $(this).attr("data-type")}).fail(function(e) { console.log(e); });
+			$.post("/calculation/updatetax", {project: {{ $project->id }}, value: this.value, activity: $(this).attr("data-id"), type: $(this).attr("data-type")}).fail(function(e) { console.log(e); });
 		});
 		$("body").on("change", ".dsave", function(){
 			var $curThis = $(this);
@@ -117,7 +115,8 @@ var n = this,
 					id: $curThis.closest("tr").attr("data-id"),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id")
+					activity: $curThis.closest("table").attr("data-id"),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					if (!json.success) {
@@ -157,7 +156,8 @@ var n = this,
 					id: $curThis.closest("tr").attr("data-id"),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id")
+					activity: $curThis.closest("table").attr("data-id"),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					if (!json.success) {
@@ -197,7 +197,8 @@ var n = this,
 					id: $curThis.closest("tr").attr("data-id"),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id")
+					activity: $curThis.closest("table").attr("data-id"),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					if (!json.success) {
@@ -245,7 +246,8 @@ var n = this,
 				$.post("/calculation/calc/newlabor", {
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id")
+					activity: $curThis.closest("table").attr("data-id"),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -287,7 +289,8 @@ var n = this,
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id")
+					activity: $curThis.closest("table").attr("data-id"),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -330,7 +333,8 @@ var n = this,
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id")
+					activity: $curThis.closest("table").attr("data-id"),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -367,6 +371,7 @@ var n = this,
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -403,6 +408,7 @@ var n = this,
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -437,6 +443,7 @@ var n = this,
 					id: $curThis.closest("tr").attr("data-id"),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -480,7 +487,8 @@ var n = this,
 				$.post("/calculation/estim/newlabor", {
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id")
+					activity: $curThis.closest("table").attr("data-id"),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -522,7 +530,8 @@ var n = this,
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id")
+					activity: $curThis.closest("table").attr("data-id"),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -566,6 +575,7 @@ var n = this,
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
 					activity: $curThis.closest("table").attr("data-id"),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -596,7 +606,7 @@ var n = this,
 		$("body").on("click", ".sresetrow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/less/resetmaterial", {id: $curThis.closest("tr").attr("data-id")}, function(data){
+				$.post("/less/resetmaterial", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input[name='rate']").val(json.rate);
 					$curThis.closest("tr").find("input[name='amount']").val(json.amount);
@@ -605,7 +615,7 @@ var n = this,
 		$("body").on("click", ".eresetrow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/less/resetequipment", {id: $curThis.closest("tr").attr("data-id")}, function(data){
+				$.post("/less/resetequipment", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input[name='rate']").val(json.rate);
 					$curThis.closest("tr").find("input[name='amount']").val(json.amount);
@@ -614,7 +624,7 @@ var n = this,
 		$("body").on("click", ".lresetrow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/less/resetlabor", {id: $curThis.closest("tr").attr("data-id")}, function(data){
+				$.post("/less/resetlabor", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input[name='amount']").val(json.amount);
 				}).fail(function(e) { console.log(e); });

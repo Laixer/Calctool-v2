@@ -119,6 +119,7 @@ var n = this,
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -154,6 +155,7 @@ var n = this,
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -180,83 +182,6 @@ var n = this,
 				});
 			}
 		});
-		/*$("body").on("change", ".lsave", function(){
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id")){
-				$.post("/estimate/updatelabor", {
-					id: $curThis.closest("tr").attr("data-id"),
-					rate: $curThis.closest("tr").find("input[name='rate']").val(),
-					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-				}, function(data){
-					var json = $.parseJSON(data);
-					$curThis.closest("tr").find("input").removeClass("error-input");
-					if (json.success) {
-						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = $curThis.closest("tr").find("input[name='rate']").val()
-						if (rate) {
-							rate.toString().split('.').join('').replace(',', '.');
-						} else {
-							rate = {{$project->hour_rate}};
-						}
-						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-					} else {
-						$.each(json.message, function(i, item) {
-							if(json.message['name'])
-								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-							if(json.message['unit'])
-								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-							if(json.message['rate'])
-								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-							if(json.message['amount'])
-								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-						});
-					}
-				}).fail(function(e){
-					console.log(e);
-				});
-			}
-		});
-		$("body").on("blur", ".lsave", function(){
-			var flag = true;
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				return false;
-			$curThis.closest("tr").find("input").each(function(){
-				if(!$(this).val())
-					flag = false;
-			});
-			if(flag){
-				$.post("/estimate/newlabor", {
-					rate: $curThis.closest("tr").find("input[name='rate']").val(),
-					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id")
-				}, function(data){
-					var json = $.parseJSON(data);
-					$curThis.closest("tr").find("input").removeClass("error-input");
-					if (json.success) {
-						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = $curThis.closest("tr").find("input[name='rate']").val()
-						if (rate) {
-							rate.toString().split('.').join('').replace(',', '.');
-						} else {
-							rate = {{$project->hour_rate}};
-						}
-						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-					} else {
-						$.each(json.message, function(i, item) {
-							if(json.message['rate'])
-								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-							if(json.message['amount'])
-								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-						});
-					}
-				}).fail(function(e){
-					console.log(e);
-				});
-			}
-		});*/
 		$("body").on("blur", ".dsave", function(){
 			var flag = true;
 			var $curThis = $(this);
@@ -272,7 +197,8 @@ var n = this,
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id")
+					activity: $curThis.closest("table").attr("data-id"),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -314,7 +240,8 @@ var n = this,
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id")
+					activity: $curThis.closest("table").attr("data-id"),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -350,6 +277,7 @@ var n = this,
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -385,6 +313,7 @@ var n = this,
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -418,6 +347,7 @@ var n = this,
 					id: $curThis.closest("tr").attr("data-id"),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -461,7 +391,8 @@ var n = this,
 				$.post("/estimate/newlabor", {
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id")
+					activity: $curThis.closest("table").attr("data-id"),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -503,7 +434,8 @@ var n = this,
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id")
+					activity: $curThis.closest("table").attr("data-id"),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -545,7 +477,8 @@ var n = this,
 					unit: $curThis.closest("tr").find("input[name='unit']").val(),
 					rate: $curThis.closest("tr").find("input[name='rate']").val(),
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id")
+					activity: $curThis.closest("table").attr("data-id"),
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -592,7 +525,8 @@ var n = this,
 					hour: $hour,
 					type: $type,
 					activity: $activity,
-					note: $note
+					note: $note,
+					project: {{ $project->id }},
 				}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input").removeClass("error-input");
@@ -629,21 +563,21 @@ var n = this,
 		$("body").on("click", ".xdeleterow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/timesheet/delete", {id: $curThis.closest("tr").attr("data-id")}, function(){
+				$.post("/timesheet/delete", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(){
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});
 		$("body").on("click", ".sdeleterow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/estimate/deletematerial", {id: $curThis.closest("tr").attr("data-id")}, function(){
+				$.post("/estimate/deletematerial", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(){
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});
 		$("body").on("click", ".sresetrow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/estimate/resetmaterial", {id: $curThis.closest("tr").attr("data-id")}, function(data){
+				$.post("/estimate/resetmaterial", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input[name='name']").val(json.name);
 					$curThis.closest("tr").find("input[name='unit']").val(json.unit);
@@ -658,14 +592,14 @@ var n = this,
 		$("body").on("click", ".edeleterow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/calculation/calc/deleteequipment", {id: $curThis.closest("tr").attr("data-id")}, function(){
+				$.post("/calculation/calc/deleteequipment", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(){
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});
 		$("body").on("click", ".eresetrow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/estimate/resetequipment", {id: $curThis.closest("tr").attr("data-id")}, function(data){
+				$.post("/estimate/resetequipment", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input[name='name']").val(json.name);
 					$curThis.closest("tr").find("input[name='unit']").val(json.unit);
@@ -680,21 +614,21 @@ var n = this,
 		$("body").on("click", ".sdeleterowe", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/estimate/deletematerial", {id: $curThis.closest("tr").attr("data-id")}, function(){
+				$.post("/estimate/deletematerial", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(){
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});
 		$("body").on("click", ".edeleterowe", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/calculation/estim/deleteequipment", {id: $curThis.closest("tr").attr("data-id")}, function(){
+				$.post("/calculation/estim/deleteequipment", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(){
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});
 		$("body").on("click", ".lresetrow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/estimate/resetlabor", {id: $curThis.closest("tr").attr("data-id")}, function(data){
+				$.post("/estimate/resetlabor", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(data){
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input[name='amount']").val(json.amount);
 					var rate = json.rate.toString().split('.').join('').replace(',', '.');
@@ -705,7 +639,7 @@ var n = this,
 		$("body").on("click", ".ldeleterow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/estimate/deletelabor", {id: $curThis.closest("tr").attr("data-id")}, function(){
+				$.post("/estimate/deletelabor", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(){
 					$curThis.closest("tr").find("input").val("0,00");
 					$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(0,2,',','.'));
 					$curThis.closest("tr").removeAttr("data-id");
@@ -717,7 +651,7 @@ var n = this,
 			if ($val.length > 3 && !$req) {
 				$group = $('#group').val();
 				$req = true;
-				$.post("/material/search", {query:$val,group:$group}, function(data) {
+				$.post("/material/search", {project: {{ $project->id }}, query: $val, group: $group}, function(data) {
 					if (data) {
 						$('#tbl-material tbody tr').remove();
 						$.each(data, function(i, item) {

@@ -22,7 +22,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				hour: $hour,
 				type: $type,
 				activity: $activity,
-				note: $note
+				note: $note,
+				project: {{ $project->id }},
 			}, function(data){
 				var $curTable = $curThis.closest("table");
 				var json = $.parseJSON(data);
@@ -70,7 +71,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			e.preventDefault();
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/timesheet/delete", {id: $curThis.closest("tr").attr("data-id")}, function(){
+				$.post("/timesheet/delete", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(){
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});
@@ -78,7 +79,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			$curThis = $(this);
 			$curproj = $(this).attr('data-project');
 			$curinv = $(this).attr('data-invoice');
-			$.post("/invoice/pay", {id: $curinv, projectid: $curproj}, function(data){
+			$.post("/invoice/pay", {project: {{ $project->id }}, id: $curinv, projectid: $curproj}, function(data){
 				$rs = jQuery.parseJSON(data);
 				console.log($rs);
 				$curThis.replaceWith('Betaald op ' +$rs.payment);

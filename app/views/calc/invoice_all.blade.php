@@ -13,12 +13,12 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 		$lastthis = null;
 		$lastthis2 = null;
 		$('#codeModal').on('hidden.bs.modal', function() {
-			$.post("/invoice/updatecode", {id: $termid, reference: $('#reference').val(), bookcode: $('#bookcode').val()}).fail(function(e) { console.log(e); });
+			$.post("/invoice/updatecode", {project: {{ $project->id }}, id: $termid, reference: $('#reference').val(), bookcode: $('#bookcode').val()}).fail(function(e) { console.log(e); });
 			$lastthis.attr('data-reference', $('#reference').val());
 			$lastthis.attr('data-bookcode', $('#bookcode').val());
 		});
 		$('#textModal').on('hidden.bs.modal', function() {
-			$.post("/invoice/updatedesc", {id: $termid, description: $('#description').val(), closure: $('#closure').val()}).fail(function(e) { console.log(e); });
+			$.post("/invoice/updatedesc", {project: {{ $project->id }}, id: $termid, description: $('#description').val(), closure: $('#closure').val()}).fail(function(e) { console.log(e); });
 			$lastthis2.attr('data-desc', $('#description').val());
 			$lastthis2.attr('data-closure', $('#closure').val());
 		});
@@ -56,13 +56,13 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			var q = $(this).val();
 			$termid = $(this).attr('data-id');
 			calcend();
-			$.post("/invoice/updateamount", {id: $termid, project: {{ $project->id }}, amount: q, totaal: $total}).fail(function(e) { console.log(e); });
+			$.post("/invoice/updateamount", {project: {{ $project->id }}, id: $termid, project: {{ $project->id }}, amount: q, totaal: $total}).fail(function(e) { console.log(e); });
 		});
 		<?php } ?>
 		$('.condition').change(function(e){
 			var $val = $(this).val();
 			$termid = $(this).attr('data-id');
-			$.post("/invoice/updatecondition", {id: $termid, condition: $val}).fail(function(e) { console.log(e); });
+			$.post("/invoice/updatecondition", {project: {{ $project->id }}, id: $termid, condition: $val}).fail(function(e) { console.log(e); });
 		});
 		$('#new-term').click(function(e) {
 			e.preventDefault();
