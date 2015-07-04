@@ -51,14 +51,20 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			$('#endterm').html('&euro; '+ $.number($total,2,',','.'));
 		};
 		calcend();
-		<?php if (Invoice::where('offer_id','=', $offer_last->id)->count()>1) { ?>
+		<?php
+		if ($offer_last) {
+		if (Invoice::where('offer_id','=', $offer_last->id)->count()>1) {
+		?>
 		$('.adata').change(function(){
 			var q = $(this).val();
 			$termid = $(this).attr('data-id');
 			calcend();
 			$.post("/invoice/updateamount", {project: {{ $project->id }}, id: $termid, project: {{ $project->id }}, amount: q, totaal: $total}).fail(function(e) { console.log(e); });
 		});
-		<?php } ?>
+		<?php
+		}
+		}
+		?>
 		$('.condition').change(function(e){
 			var $val = $(this).val();
 			$termid = $(this).attr('data-id');
@@ -178,6 +184,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 				<tbody>
 				<?php
+				if ($offer_last) {
 				$i=0;
 				$close = true;
 				$count = Invoice::where('offer_id','=', $offer_last->id)->count();
@@ -204,6 +211,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						<td class="col-md-2"><?php if ($invoice_end->invoice_close) { echo 'Gefactureerd'; } else if ($close) { echo '<form method="POST" id="frm-invoice" action="/invoice/close"><input name="id" value="'.$invoice_end->id.'" type="hidden"/><input name="projectid" value="'.$project->id.'" type="hidden"/><input type="submit" class="btn btn-primary btn-xs" value="Factureren"/></form>'; $close=false; } else { echo 'Open'; } ?></td></td>
 						<td class="col-md-1"><?php if (!$invoice_end->invoice_close) { ?><form method="POST" id="frm-delete" action="/invoice/term/delete"><input name="id" value="{{ $invoice_end->id }}" type="hidden"/><button class="btn btn-danger btn-xs fa fa-times deleterow"></button></form><?php } ?></td>
 					</tr>
+				<?php } ?>
 				</tbody>
 			</table>
 			<div class="row">
