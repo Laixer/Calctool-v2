@@ -42,18 +42,18 @@
  **************************************************************** **/
 	function Atropos() {
 		//_topNav();
-		_animate();
+		//_animate();
 		_superslide();
-		_owl_carousel();
-		_popover();
-		_lightbox();
+		//_owl_carousel();
+		//_popover();
+		//_lightbox();
 		_scrollTo();
-		_parallax();
+		//_parallax();
 		_masonry();
 		_toggle();
-		_bgimage();
+		//_bgimage();
 		_globalSearch();
-		_quickCart();
+		//_quickCart();
 		_placeholder();
 
 		/** Bootstrap Tooltip **/
