@@ -2,7 +2,8 @@
 $project = Project::find(Route::Input('project_id'));
 $relation = Relation::find($project->client_id);
 $relation_self = Relation::find(Auth::user()->self_id);
-$contact_self = Contact::where('relation_id','=',$relation_self->id);
+if ($relation_self)
+	$contact_self = Contact::where('relation_id','=',$relation_self->id);
 $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 ?>
 
@@ -202,6 +203,13 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 		</div>
 
 		<hr />
+
+		@if(!$relation_self)
+		<div class="alert alert-danger">
+			<i class="fa fa-frown-o"></i>
+			Geen bedrijfsgegevens bekend. Vul de <a href="/mycompany">bedrijfsgegevens</a> aan.
+		</div>
+		@else
 
 		@if(Session::get('success'))
 		<div class="alert alert-success">
@@ -1353,6 +1361,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 			</div>
 		</div>
+		@endif
 
 	</section>
 
