@@ -80,14 +80,13 @@
 						@endif
 
 						<?# -- password form -- ?>
-						<label>Vul uw e-mailadres hier in</label>
-						{{-- Form::open(array('url' => 'password/reset', 'class' => 'input-group')) --}}
+						<label class="nobold">Vul uw e-mailadres hier in</label>
 						<form class="input-group" method="post" action="password/reset">
 							<input type="text" class="form-control" name="email" id="email" value="" placeholder="E-mail adres" />
 							<span class="input-group-btn">
 								<button class="btn btn-primary">Verzenden</button>
 							</span>
-						{{ Form::close() }}
+						</form>
 
 					</div>
 
