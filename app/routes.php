@@ -56,9 +56,6 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('/', array('uses' => 'HomeController@getHome'));
 	Route::get('logout', array('as' => 'logout', 'uses' => 'AuthController@doLogout'));
 	Route::get('result/project-{project_id}', array('as' => 'result', 'uses' => 'ResultController@getResult'))->where('project_id', '[0-9]+');
-	Route::get('user/new', array('as' => 'user', 'uses' => 'UserController@getNew'));
-	Route::post('user/new', array('as' => 'user', 'uses' => 'UserController@doNew'));
-	Route::get('user', array('as' => 'user', 'uses' => 'UserController@getAll'));
 
 	/* Actions by calculation */
 	Route::post('calculation/newchapter/{project_id}', array('as' => 'calculation', 'uses' => 'CalcController@doNewChapter'))->where('project_id', '[0-9]+');
@@ -182,4 +179,12 @@ Route::group(array('before' => 'auth'), function()
 	/* Material database */
 	Route::get('material', array('as' => 'material', 'uses' => 'MaterialController@getList'));
 	Route::post('material/search', array('as' => 'material', 'uses' => 'MaterialController@doSearch'));
+});
+
+Route::group(array('before' => 'admin'), function()
+{
+	/* Admin */
+	Route::get('admin/user/new', array('as' => 'user', 'uses' => 'UserController@getNew'));
+	Route::post('admin/user/new', array('as' => 'user', 'uses' => 'UserController@doNew'));
+	Route::get('admin/user', array('as' => 'user', 'uses' => 'UserController@getAll'));
 });

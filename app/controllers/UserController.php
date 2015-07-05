@@ -10,12 +10,12 @@ class UserController extends \BaseController {
 	 */
 	public function getAll()
 	{
-		return View::make('base.user');
+		return View::make('admin.user');
 	}
 
 	public function getNew()
 	{
-		return View::make('base.new_user');
+		return View::make('admin.new_user');
 	}
 
 	public function doNew()

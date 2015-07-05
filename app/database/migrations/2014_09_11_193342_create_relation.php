@@ -99,8 +99,10 @@ class CreateRelation extends Migration {
 		});
 
 		$seq_relation = "ALTER SEQUENCE relation_id_seq RESTART WITH 10000";
+		$seq_contact = "ALTER SEQUENCE contact_id_seq RESTART WITH 100";
 
 		DB::unprepared($seq_relation);
+		DB::unprepared($seq_contact);
 	}
 
 	/**

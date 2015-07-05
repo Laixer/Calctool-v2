@@ -33,7 +33,7 @@ class TestProjectSeeder extends Seeder {
 		DB::table('user_account')->delete();
 		$this->command->info('Tables deleted');
 
-		$test_user_type = UserType::where('user_type','=','user')->first();
+		$test_user_type = UserType::where('user_type','=','system')->first();
 		$test_province = Province::where('province_name','=','zuid-holland')->first();
 		$test_country = Country::where('country_name','=','duitsland')->first();
 		$test_projecttype = ProjectType::where('type_name','=','calculatie')->first();
@@ -61,8 +61,7 @@ class TestProjectSeeder extends Seeder {
 		$test_user = User::create(array(
 			'username' => 'system',
 			'secret' => Hash::make('ABC@123'),
-			'firstname' => 'system_firtname',
-			'lastname' => 'system_lastname',
+			'firstname' => 'SYSTEM',
 			'api' => md5(mt_rand()),
 			'token' => sha1(Hash::make('ABC@123')),
 			'ip' => '127.0.0.1',

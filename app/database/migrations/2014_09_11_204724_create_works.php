@@ -60,6 +60,12 @@ class CreateWorks extends Migration {
 			$table->integer('tax_estimate_equipment_id')->unsigned();
 			$table->foreign('tax_estimate_equipment_id')->references('id')->on('tax')->onUpdate('cascade')->onDelete('restrict');
 		});
+
+		$seq_chapter = "ALTER SEQUENCE chapter_id_seq RESTART WITH 1000";
+		$seq_activity = "ALTER SEQUENCE activity_id_seq RESTART WITH 1000";
+
+		DB::unprepared($seq_chapter);
+		DB::unprepared($seq_activity);
 	}
 
 	/**
