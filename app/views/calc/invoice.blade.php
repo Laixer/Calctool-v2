@@ -225,7 +225,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 	<div class="pull-right">
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 
-		<button class="btn btn-primary osave">Offerte sluiten</button>
+		<button class="btn btn-primary osave">Factureren</button>
 	</div>
 
 	<!-- modal dialog -->
@@ -235,7 +235,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 
 				<div class="modal-header"><!-- modal header -->
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">Offerte opties</h4>
+					<h4 class="modal-title" id="myModalLabel">Factuur opties</h4>
 				</div><!-- /modal header -->
 
 				<!-- modal body -->
@@ -835,7 +835,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 					$cnt = Invoice::where('offer_id','=', $invoice->offer_id)->count();
 					if ($cnt>1) {
 					?>
-					<h4>Cumulatieven Offerte</h4>
+					<h4>Cumulatieven Factuur</h4>
 					<table class="table table-striped hide-btw2">
 						<?# -- table head -- ?>
 						<thead>
@@ -898,7 +898,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 
 					</table>
 
-					<h4>Cumulatieven Offerte</h4>
+					<h4>Cumulatieven Factuur</h4>
 					<table class="table table-striped hide-btw2">
 						<?# -- table head -- ?>
 						<thead>
@@ -2043,7 +2043,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 					<div class="padding20">
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 
-						<button class="btn btn-primary osave">Offerte sluiten</button>
+						<button class="btn btn-primary osave">Factureren</button>
 					</div>
 
 				</div>
