@@ -61,8 +61,7 @@ class TestProjectSeeder extends Seeder {
 		$test_user = User::create(array(
 			'username' => 'system',
 			'secret' => Hash::make('ABC@123'),
-			'firstname' => 'system_firtname',
-			'lastname' => 'system_lastname',
+			'firstname' => 'SYSTEM',
 			'api' => md5(mt_rand()),
 			'token' => sha1(Hash::make('ABC@123')),
 			'ip' => '127.0.0.1',

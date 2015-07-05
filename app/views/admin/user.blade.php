@@ -40,7 +40,7 @@ function userStatus($user)
 				<tbody>
 				@foreach (User::orderBy('created_at')->get() as $users)
 					<tr>
-						<td class="col-md-3">{{ HTML::link('/user-'.$users->id.'/edit', $users->username) . ' (' . $users->firstname . ', ' . $users->lastname . ')' }}</td>
+						<td class="col-md-3">{{ HTML::link('/user-'.$users->id.'/edit', $users->username) . ' (' . $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '') . ')' }}</td>
 						<td class="col-md-2">{{ $users->ip }}</td>
 						<td class="col-md-2">{{ $users->email }}</td>
 						<td class="col-md-2">{{ userStatus($users) }}</td>
