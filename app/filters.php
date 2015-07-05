@@ -78,9 +78,12 @@ Route::filter('admin', function()
 		return Redirect::guest('login');
 	}
 
-    if(!in_array(UserType::find(Auth::user()->user_type)->user_type, array('admin', 'system'))) {
-        return Redirect::to('/');
-    }
+	//if(!in_array(UserType::find(Auth::user()->user_type)->user_type, array('admin', 'system'))) {
+	if (!Auth::user()->isAdmin())
+	{
+		//return Redirect::to('/');
+		return Response::view('generic.404', array('url' => Request::path()), 404);
+	}
 
 });
 

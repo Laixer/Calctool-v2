@@ -184,6 +184,7 @@ Route::group(array('before' => 'auth'), function()
 Route::group(array('before' => 'admin'), function()
 {
 	/* Admin */
+	Route::get('admin', array('as' => 'admin', 'uses' => 'AdminController@getDashboard'));
 	Route::get('admin/user/new', array('as' => 'user', 'uses' => 'UserController@getNew'));
 	Route::post('admin/user/new', array('as' => 'user', 'uses' => 'UserController@doNew'));
 	Route::get('admin/user', array('as' => 'user', 'uses' => 'UserController@getAll'));

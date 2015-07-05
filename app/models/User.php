@@ -29,4 +29,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->belongsToMany('Product', 'product_favorite', 'user_id', 'product_id');
 	}
 
+	public function isAdmin() {
+		return in_array(UserType::find($this->user_type)->user_type, array('admin', 'system'));
+	}
+
 }

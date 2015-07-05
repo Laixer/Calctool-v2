@@ -27,6 +27,11 @@
 					<li>
 						{{ HTML::link('mijnaccount', 'Mijn account') }}
 					</li>
+					@if (Auth::check() && Auth::user()->isAdmin())
+					<li>
+						{{ HTML::link('admin', 'Admin CP') }}
+					</li>
+					@endif
 					<li class="active">
 					@if (Auth::check())
 						{{ HTML::link('/logout', 'Uitloggen') }}
