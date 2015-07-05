@@ -295,7 +295,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="col-md-3"><i>Laatste wijziging: <?php echo date('d-m-Y', strtotime(DB::table('project')->select('updated_at')->where('id','=',$project->id)->get()[0]->updated_at)); ?></i></div>
 							</div>
 							<div class="row">
-								<div class="col-md-3">Offerte aangemaakt</div>
+								<div class="col-md-3">Offerte opgesteld</div>
 								<div class="col-md-2"><?php if ($offer_last) { echo date('d-m-Y', strtotime(DB::table('offer')->select('created_at')->where('id','=',$offer_last->id)->get()[0]->created_at)); } ?></div>
 								<div class="col-md-3"><i>Laatste wijziging: <?php if ($offer_last) { echo date('d-m-Y', strtotime(DB::table('offer')->select('updated_at')->where('id','=',$offer_last->id)->get()[0]->updated_at)); } ?></i></div>
 							</div>
@@ -313,17 +313,17 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="col-md-3"></div>
 							</div>
 							<div class="row">
-								<div class="col-md-3">Stelposten</div>
+								<div class="col-md-3">Stelposten stellen</div>
 								<div class="col-md-2"></div>
 								<div class="col-md-3"><i>Laatste wijziging: {{ $project->update_estimate ? date('d-m-Y', strtotime($project->update_estimate)) : '' }}</i></div>
 							</div>
 							<div class="row">
-								<div class="col-md-3">Meerwerk</div>
+								<div class="col-md-3">Meerwerk toegevoegd</div>
 								<div class="col-md-2">{{ $project->start_more ? date('d-m-Y', strtotime($project->start_more)) : '' }}</div>
 								<div class="col-md-3"><i>Laatste wijziging: {{ $project->update_more ? date('d-m-Y', strtotime($project->update_more)) : '' }}</i></div>
 							</div>
 							<div class="row">
-								<div class="col-md-3">Minderwerk</div>
+								<div class="col-md-3">Minderwerk verwerkt</div>
 								<div class="col-md-2">{{ $project->start_less ? date('d-m-Y', strtotime($project->start_less)) : '' }}</div>
 								<div class="col-md-3"><i>Laatste wijziging: {{ $project->update_less ? date('d-m-Y', strtotime($project->update_less)) : '' }}</i></div>
 							</div>
@@ -341,7 +341,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							@foreach (Invoice::where('offer_id','=', $offer_last->id)->orderBy('priority')->get() as $invoice)
 							<div class="row">
 								<div class="col-md-3">{{ ($invoice->isclose ? 'Eindfactuur' : ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1))) }}</div>
-								<div class="col-md-3">{{ $invoice->bill_date }}</div>
+								<div class="col-md-2">{{ $invoice->bill_date }}</div>
 								<div class="col-md-3"><?php
 								if ($invoice->invoice_close && !$invoice->payment_date)
 									echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs dopay">Betalen</a>';
