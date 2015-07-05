@@ -287,53 +287,50 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						<div id="status" class="tab-pane">
 							<div class="row">
 								<div class="col-md-3"><strong>Offerte stadium</strong></div>
-								<div class="col-md-3"><strong>Datum</strong></div>
-								<div class="col-md-3"><strong>Laatste wijziging</strong></div>
+								<div class="col-md-2"><strong></strong></div>
 							</div>
 							<div class="row">
-								<div class="col-md-3">Calculatie</div>
-								<div class="col-md-3"><?php echo date('d-m-Y', strtotime(DB::table('project')->select('created_at')->where('id','=',$project->id)->get()[0]->created_at)); ?></div>
-								<div class="col-md-3"><?php echo date('d-m-Y', strtotime(DB::table('project')->select('updated_at')->where('id','=',$project->id)->get()[0]->updated_at)); ?></div>
+								<div class="col-md-3">Calculatie gestart</div>
+								<div class="col-md-2"><?php echo date('d-m-Y', strtotime(DB::table('project')->select('created_at')->where('id','=',$project->id)->get()[0]->created_at)); ?></div>
+								<div class="col-md-3"><i>Laatste wijziging: <?php echo date('d-m-Y', strtotime(DB::table('project')->select('updated_at')->where('id','=',$project->id)->get()[0]->updated_at)); ?></i></div>
 							</div>
 							<div class="row">
-								<div class="col-md-3">Offerte verzonden</div>
-								<div class="col-md-3"><?php if ($offer_last) { echo date('d-m-Y', strtotime(DB::table('offer')->select('created_at')->where('id','=',$offer_last->id)->get()[0]->created_at)); } ?></div>
-								<div class="col-md-3"></div>
+								<div class="col-md-3">Offerte aangemaakt</div>
+								<div class="col-md-2"><?php if ($offer_last) { echo date('d-m-Y', strtotime(DB::table('offer')->select('created_at')->where('id','=',$offer_last->id)->get()[0]->created_at)); } ?></div>
+								<div class="col-md-3"><i>Laatste wijziging: <?php if ($offer_last) { echo date('d-m-Y', strtotime(DB::table('offer')->select('updated_at')->where('id','=',$offer_last->id)->get()[0]->updated_at)); } ?></i></div>
 							</div>
 							<div class="row">
 								<div class="col-md-3">Opdracht ontvangen</div>
-								<div class="col-md-3"><?php if ($offer_last && $offer_last->offer_finish) { echo date('d-m-Y', strtotime($offer_last->offer_finish)); }else{ ?><a href="#" id="dob" data-format="dd-mm-yyyy"></a><?php } ?></div>
+								<div class="col-md-2"><?php if ($offer_last && $offer_last->offer_finish) { echo date('d-m-Y', strtotime($offer_last->offer_finish)); }else{ ?><a href="#" id="dob" data-format="dd-mm-yyyy"></a><?php } ?></div>
 							</div>
 								<br>
 							<div class="row">
 								<div class="col-md-3"><strong>Opdracht stadium</strong></div>
-								<div class="col-md-3"><strong>Datum</strong></div>
-								<div class="col-md-3"><strong>Laatste wijziging</strong></div>
 							</div>
 							<div class="row">
-								<div class="col-md-3">Uitvoering</div>
-								<div class="col-md-3"><a href="#" id="wordexec" data-format="dd-mm-yyyy">{{ $project->work_execution ? date('d-m-Y', strtotime($project->work_execution)) : '' }}</a></div>
+								<div class="col-md-3">Sart uitvoering</div>
+								<div class="col-md-2"><a href="#" id="wordexec" data-format="dd-mm-yyyy">{{ $project->work_execution ? date('d-m-Y', strtotime($project->work_execution)) : '' }}</a></div>
 								<div class="col-md-3"></div>
 							</div>
 							<div class="row">
 								<div class="col-md-3">Stelposten</div>
-								<div class="col-md-3"></div>
-								<div class="col-md-3">{{ $project->update_estimate ? date('d-m-Y', strtotime($project->update_estimate)) : '' }}</div>
+								<div class="col-md-2"></div>
+								<div class="col-md-3"><i>Laatste wijziging: {{ $project->update_estimate ? date('d-m-Y', strtotime($project->update_estimate)) : '' }}</i></div>
 							</div>
 							<div class="row">
 								<div class="col-md-3">Meerwerk</div>
-								<div class="col-md-3">{{ $project->start_more ? date('d-m-Y', strtotime($project->start_more)) : '' }}</div>
-								<div class="col-md-3">{{ $project->update_more ? date('d-m-Y', strtotime($project->update_more)) : '' }}</div>
+								<div class="col-md-2">{{ $project->start_more ? date('d-m-Y', strtotime($project->start_more)) : '' }}</div>
+								<div class="col-md-3"><i>Laatste wijziging: {{ $project->update_more ? date('d-m-Y', strtotime($project->update_more)) : '' }}</i></div>
 							</div>
 							<div class="row">
 								<div class="col-md-3">Minderwerk</div>
-								<div class="col-md-3">{{ $project->start_less ? date('d-m-Y', strtotime($project->start_less)) : '' }}</div>
-								<div class="col-md-3">{{ $project->update_less ? date('d-m-Y', strtotime($project->update_less)) : '' }}</div>
+								<div class="col-md-2">{{ $project->start_less ? date('d-m-Y', strtotime($project->start_less)) : '' }}</div>
+								<div class="col-md-3"><i>Laatste wijziging: {{ $project->update_less ? date('d-m-Y', strtotime($project->update_less)) : '' }}</i></div>
 							</div>
 								<br>
 							<div class="row">
 								<div class="col-md-3"><strong>Financieel</strong></div>
-								<div class="col-md-3"><strong>Gefactureerd</strong></div>
+								<div class="col-md-2"><strong>Gefactureerd</strong></div>
 								<div class="col-md-3"><strong>Acties</strong></div>
 								<div class="col-md-3"></div>
 							</div>

@@ -236,7 +236,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
 
-		<button class="btn btn-primary osave">Offerte sluiten</button>
+		<button class="btn btn-primary osave">Offerte  maken</button>
 	</div>
 	<?php } ?>
 
