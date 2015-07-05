@@ -25,7 +25,14 @@
 
 				<!-- table items -->
 				<tbody>
-				@foreach (Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
+				<?php
+				$userid = Auth::user()->self_id;
+				if(Auth::user()->self_id)
+					$userid = Auth::user()->self_id;
+				else
+					$userid = -1;
+				foreach (Relation::where('user_id','=', Auth::user()->id)->where('id','!=',$userid)->get() as $relation) {
+				?>
 					<tr>
 						<td class="col-md-3">{{ HTML::link('relation-'.$relation->id.'/edit', $relation->company_name) }}</td>
 						<td class="col-md-1">{{ RelationKind::find($relation->kind_id)->kind_name }}</td>
@@ -34,7 +41,7 @@
 						<td class="col-md-2">{{ $relation->address_city }}</td>
 						<td class="col-md-2">{{ $relation->website }}</td>
 					</tr>
-				@endforeach
+				<?php } ?>
 				</tbody>
 			</table>
 			<div class="row">

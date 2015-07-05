@@ -175,8 +175,8 @@ class CreateUsersTable extends Migration {
 		$seq_user_account = "ALTER SEQUENCE user_account_id_seq RESTART WITH 1000";
 		$seq_project = "ALTER SEQUENCE project_id_seq RESTART WITH 10000";
 
-        DB::unprepared($seq_user_account);
-        DB::unprepared($seq_project);
+		DB::unprepared($seq_user_account);
+		DB::unprepared($seq_project);
 	}
 
 	/**

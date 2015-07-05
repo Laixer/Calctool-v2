@@ -97,6 +97,10 @@ class CreateRelation extends Migration {
 			$table->integer('client_id')->unsigned();
 			$table->foreign('client_id')->references('id')->on('relation')->onUpdate('cascade')->onDelete('restrict');
 		});
+
+		$seq_relation = "ALTER SEQUENCE relation_id_seq RESTART WITH 10000";
+
+		DB::unprepared($seq_relation);
 	}
 
 	/**
