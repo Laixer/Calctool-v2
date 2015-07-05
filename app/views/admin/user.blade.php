@@ -39,7 +39,7 @@
 			</table>
 			<div class="row">
 				<div class="col-md-12">
-					<a href="project/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuwe gebruiker</a>
+					<a href="/admin/user/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuwe gebruiker</a>
 				</div>
 			</div>
 		</div>
