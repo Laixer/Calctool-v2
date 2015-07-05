@@ -6,6 +6,31 @@ $project = Project::find(Route::Input('project_id'));
 
 @section('content')
 
+<script type="text/javascript">
+$(document).ready(function() {
+
+	$('#tab-result').click(function(e){
+		sessionStorage.toggleTabRes{{Auth::user()->id}} = 'result';
+	});
+	$('#tab-budget').click(function(e){
+		sessionStorage.toggleTabRes{{Auth::user()->id}} = 'budget';
+	});
+	$('#tab-hour_overview').click(function(e){
+		sessionStorage.toggleTabRes{{Auth::user()->id}} = 'hour_overview';
+	});
+
+	if (sessionStorage.toggleTabRes{{Auth::user()->id}}){
+		$toggleOpenTab = sessionStorage.toggleTabRes{{Auth::user()->id}};
+		$('#tab-'+$toggleOpenTab).addClass('active');
+		$('#'+$toggleOpenTab).addClass('active');
+	} else {
+		sessionStorage.toggleTabRes{{Auth::user()->id}} = 'result';
+		$('#tab-result').addClass('active');
+		$('#result').addClass('active');
+	}
+
+});
+</script>
 <div id="wrapper">
 
 	<section class="container fix-footer-bottom">
