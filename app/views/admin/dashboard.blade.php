@@ -59,19 +59,18 @@
 						<div class="col-sm-6 col-md-3"><!-- item -->
 							<div class="item-box fixed-box">
 								<figure>
-									<a class="item-hover" href="shop-product-full-width.html">
+									<a class="item-hover" href="/admin/phpinfo">
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-plus fsize20"></span>
 											<strong>PRODUCT</strong> DETAIL
 										</span>
 									</a>
-									<a href="shop-cart.html?action=cart_add&amp;product_id=1&amp;product_color=red&amp;product_size=l&amp;product_qty=1" class="btn btn-primary add_to_cart"><i class="fa fa-shopping-cart"></i> ADD TO CART</a>
+									<a href="/admin/phpinfo" class="btn btn-primary add_to_cart"><i class="fa fa-shopping-cart"></i> PHP configuratie</a>
 									<img class="img-responsive" src="assets/images/demo/shop/3.jpg" width="260" height="260" alt="">
 								</figure>
 								<div class="item-box-desc">
-									<h4>James Bond Watch - Titanium Case</h4>
-									<small class="styleColor"><span>$180</span> $150</small>
+									<h4>PHP Info</h4>
 								</div>
 							</div>
 						</div>

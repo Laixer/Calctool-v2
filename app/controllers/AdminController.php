@@ -25,6 +25,11 @@ class AdminController extends BaseController {
 		return View::make('admin.alert');
 	}
 
+	public function getPHPInfo()
+	{
+		return View::make('admin.phpinfo');
+	}
+
 	public function doNewAlert()
 	{
 		$rules = array(

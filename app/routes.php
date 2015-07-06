@@ -197,4 +197,5 @@ Route::group(array('before' => 'admin'), function()
 	Route::get('admin/alert', array('as' => 'user', 'uses' => 'AdminController@getAlert'));
 	Route::post('admin/alert/new', array('as' => 'user', 'uses' => 'AdminController@doNewAlert'));
 	Route::post('admin/alert/delete', array('as' => 'user', 'uses' => 'AdminController@doDeleteAlert'));
+	Route::get('admin/phpinfo', array('as' => 'user', 'uses' => 'AdminController@getPHPInfo'));
 });
