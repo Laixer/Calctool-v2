@@ -46,6 +46,7 @@ class CreateUsersTable extends Migration {
 			$table->char('token', 40)->unique();
 			$table->string('ip', 45);
 			$table->boolean('active')->default('Y');
+			$table->boolean('api_access')->default('N');
 			$table->dateTime('banned')->nullable();
 			$table->dateTime('confirmed_mail')->nullable();
 			$table->date('registration_date')->default(DB::raw('now()::timestamp(0)'));
