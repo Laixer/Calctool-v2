@@ -194,4 +194,7 @@ Route::group(array('before' => 'admin'), function()
 	Route::get('admin/user/new', array('as' => 'user', 'uses' => 'UserController@getNew'));
 	Route::post('admin/user/new', array('as' => 'user', 'uses' => 'UserController@doNew'));
 	Route::get('admin/user', array('as' => 'user', 'uses' => 'UserController@getAll'));
+	Route::get('admin/alert', array('as' => 'user', 'uses' => 'AdminController@getAlert'));
+	Route::post('admin/alert/new', array('as' => 'user', 'uses' => 'AdminController@doNewAlert'));
+	Route::post('admin/alert/delete', array('as' => 'user', 'uses' => 'AdminController@doDeleteAlert'));
 });

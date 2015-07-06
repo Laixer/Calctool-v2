@@ -8,7 +8,12 @@
 
 	<section class="container">
 
-		<?# -- BORN TO BE A WINNER -- ?>
+		@if (SystemMessage::where('active','=',true)->count()>0)
+		<div class="alert alert-warning">
+			<i class="fa fa-warning"></i>
+			<strong>{{ SystemMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->title }}</strong> {{ SystemMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->content }}
+		</div>
+		@endif
 
 		<h2><strong>Navigatie</strong> koppelingen</h2>
 		<article class="row">
