@@ -23,6 +23,36 @@ class UserController extends \BaseController {
 		return View::make('user.myaccount');
 	}
 
+	public function doUpdateSecurity()
+	{
+		$rules = array(
+			'secret' => array('confirmed','min:5'),
+			'secret_confirmation' => array('min:5'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			// redirect our user back to the form with the errors from the validator
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+
+			$user = Auth::user();
+			if (Input::get('secret'))
+				$user->secret = Hash::make(Input::get('secret'));
+			if (Input::get('toggle-api'))
+				$user->api_access = true;
+			else
+				$user->api_access = false;
+
+			$user->save();
+
+			return Redirect::back()->with('success', 1);
+		}
+	}
+
 	public function doMyAccountUser()
 	{
 		$rules = array(

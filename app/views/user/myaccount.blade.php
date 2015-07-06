@@ -36,6 +36,18 @@ $(document).ready(function() {
 			$(this).parent().removeClass('has-error');
 		}
 	});
+
+	$("[name='toggle-api']").bootstrapSwitch();
+	/*.on('switchChange.bootstrapSwitch', function(event, state) {
+	  if (state) {
+	  	$('.show-all').show();
+	  	$('.show-totals').hide();
+	  } else {
+	  	$('.show-all').hide();
+	  	$('.show-totals').show();
+	  }
+	});*/
+
 });
 </script>
 
@@ -76,9 +88,6 @@ $(document).ready(function() {
 						</li>
 						<li>
 							<a href="#contact" data-toggle="tab">Beveiliging</a>
-						</li>
-						<li>
-							<a href="#instellingen" data-toggle="tab">Instellingen</a>
 						</li>
 					</ul>
 
@@ -229,45 +238,67 @@ $(document).ready(function() {
 							{{ Form::close() }}
 						</div>
 						<div id="contact" class="tab-pane">
-							<h4>Contactpersonen</h4>
-							<table class="table table-striped">
-								<?# -- table head -- ?>
-								<thead>
-									<tr>
-										<th class="col-md-2">Naam</th>
-										<th class="col-md-2">Voornaam</th>
-										<th class="col-md-2">Functie</th>
-										<th class="col-md-2">Telefoon</th>
-										<th class="col-md-2">Mobiel</th>
-										<th class="col-md-2">Email</th>
-									</tr>
-								</thead>
 
-								<!-- table items -->
-								<tbody>
-									<?php if (0) { ?>
-									@foreach (Contact::where('relation_id','=', $relation->id)->get() as $contact)
-									<tr><!-- item -->
-										<td class="col-md-2"><a href="/relation-{{-- $relation->id }}/contact-{{ $contact->id --}}/edit">{{ $contact->lastname }}</a></td>
-										<td class="col-md-2">{{ $contact->firstname }}</td>
-										<td class="col-md-2">{{ ContactFunction::find($contact->function_id)->function_name }}</td>
-										<td class="col-md-2">{{ $contact->phone }}</td>
-										<td class="col-md-2">{{ $contact->mobile }}</td>
-										<td class="col-md-2">{{ $contact->email }}</td>
-									</tr>
-									@endforeach
-									<?php } ?>
-								</tbody>
-							</table>
+							{{ Form::open(array('url' => 'myaccount/security/update')) }}
+
+							<h4 class="company">Wachtwoord veranderen</h4>
+							<div class="row company">
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="secret">Wachtwoord</label>
+										<input name="secret" id="secret" type="password" class="form-control" />
+									</div>
+								</div>
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="secret_confirmation">Herhaal wachtwoord</label>
+										<input name="secret_confirmation" id="secret_confirmation" type="password" class="form-control"/>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="row">
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="api">API key</label>
+										<input name="api" id="api" type="text" readonly="readonly" value="{{ $user->api }}" class="form-control"/>
+									</div>
+								</div>
+
+							</div>
+							<div class="row">
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="api">Referral key</label>
+										<input name="api" id="api" type="text" readonly="readonly" value="{{ $user->referral_key }}" class="form-control"/>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="row">
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="toggle-api" style="display:block;">API toegang</label>
+										<input name="toggle-api" type="checkbox" {{ $user->api_access ? 'checked' : '' }}>
+									</div>
+								</div>
+
+							</div>
+
 							<div class="row">
 								<div class="col-md-12">
-									<a href="/relation-{{-- $relation ? $relation->id : '' --}}/contact/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
+									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 								</div>
 							</div>
-						</div>
-						<div id="instellingen" class="tab-pane">
-							<h4>Instellingen</h4>
-							Hier komen de API ed
+						{{ Form::close() }}
+
 						</div>
 					</div>
 				</div>
