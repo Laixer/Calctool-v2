@@ -478,10 +478,22 @@ class RelationController extends \BaseController {
 				$resource->file_location = 'user-content/' . $newname;
 				$resource->file_size = $image->filesize();
 				$resource->user_id = Auth::user()->id;
+				$resource->description = 'Relatielogo';
 
 				$resource->save();
 
+				$relation = Relation::find(Input::get('id'));
+				$relation->logo_id = $resource->id;
+
+				$relation->save();
+
 				return Redirect::back()->with('success', 1);
+			} else {
+
+				$messages->add('file', 'Geen afbeelding geupload');
+
+				// redirect our user back to the form with the errors from the validator
+				return Redirect::back()->withErrors($messages);
 			}
 
 		}

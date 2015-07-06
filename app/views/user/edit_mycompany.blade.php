@@ -294,6 +294,8 @@ $(document).ready(function() {
 							{{ Form::open(array('url' => 'relation/logo/save', 'files'=> true)) }}
 							<input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
 
+							{{ ($relation && $relation->logo_id) ? "<div><h5>Huidige logo</h5><img src=\"/".Resource::find($relation->logo_id)->file_location."\"/></div>" : '' }}
+
 							<div class="form-group">
     							{{ Form::label('Afbeelding uploaden') }}
     							{{ Form::file('image', null) }}
