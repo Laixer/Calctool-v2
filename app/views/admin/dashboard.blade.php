@@ -23,12 +23,11 @@
 									<a class="item-hover" href="/admin/user">
 										<span class="overlay color2"></span>
 										<span class="inner">
-											<span class="block fa fa-plus fsize20"></span>
-											<strong>PRODUCT</strong> DETAIL
+											<span class="block fa fa-user fsize60"></span>
+											<strong>Gebruikers</strong>
 										</span>
 									</a>
 									<a href="/admin/user" class="btn btn-primary add_to_cart"><i class="fa fa-user"></i> Beheer gebruikers</a>
-									<img class="img-responsive" src="assets/images/demo/shop/9.jpg" width="260" height="260" alt="">
 								</figure>
 								<div class="item-box-desc">
 									<h4>Gebruikers</h4>
@@ -43,12 +42,12 @@
 									<a class="item-hover" href="/admin/alert">
 										<span class="overlay color2"></span>
 										<span class="inner">
-											<span class="block fa fa-plus fsize20"></span>
-											<strong>PRODUCT</strong> DETAIL
+											<span class="block fa fa-warning fsize60"></span>
+											<strong>Alerts</strong>
 										</span>
 									</a>
 									<a href="/admin/alert" class="btn btn-primary add_to_cart"><i class="fa fa-warning"></i> Beheer alerts</a>
-									<img class="img-responsive" src="assets/images/demo/shop/2.jpg" width="260" height="260" alt="">
+
 								</figure>
 								<div class="item-box-desc">
 									<h4>Alerts</h4>
@@ -62,35 +61,14 @@
 									<a class="item-hover" href="/admin/phpinfo">
 										<span class="overlay color2"></span>
 										<span class="inner">
-											<span class="block fa fa-plus fsize20"></span>
-											<strong>PRODUCT</strong> DETAIL
+											<span class="block fa fa-wrench fsize60"></span>
+											<strong>PHP Info</strong>
 										</span>
 									</a>
-									<a href="/admin/phpinfo" class="btn btn-primary add_to_cart"><i class="fa fa-shopping-cart"></i> PHP configuratie</a>
-									<img class="img-responsive" src="assets/images/demo/shop/3.jpg" width="260" height="260" alt="">
+									<a href="/admin/phpinfo" class="btn btn-primary add_to_cart"><i class="fa fa-wrench"></i> PHP configuratie</a>
 								</figure>
 								<div class="item-box-desc">
 									<h4>PHP Info</h4>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-sm-6 col-md-3"><!-- item -->
-							<div class="item-box fixed-box">
-								<figure>
-									<a class="item-hover" href="shop-product-full-width.html">
-										<span class="overlay color2"></span>
-										<span class="inner">
-											<span class="block fa fa-plus fsize20"></span>
-											<strong>PRODUCT</strong> DETAIL
-										</span>
-									</a>
-									<a href="shop-cart.html?action=cart_add&amp;product_id=1&amp;product_color=red&amp;product_size=l&amp;product_qty=1" class="btn btn-primary add_to_cart"><i class="fa fa-shopping-cart"></i> ADD TO CART</a>
-									<img class="img-responsive" src="assets/images/demo/shop/4.jpg" width="260" height="260" alt="">
-								</figure>
-								<div class="item-box-desc">
-									<h4>Pink Lady Shoes</h4>
-									<small class="styleColor"><span>$180</span> $150</small>
 								</div>
 							</div>
 						</div>

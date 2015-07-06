@@ -297,7 +297,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<div class="row">
 								<div class="col-md-3">Offerte opgesteld</div>
 								<div class="col-md-2"><?php if ($offer_last) { echo date('d-m-Y', strtotime(DB::table('offer')->select('created_at')->where('id','=',$offer_last->id)->get()[0]->created_at)); } ?></div>
-								<div class="col-md-3"><i>Laatste wijziging: <?php if ($offer_last) { echo date('d-m-Y', strtotime(DB::table('offer')->select('updated_at')->where('id','=',$offer_last->id)->get()[0]->updated_at)); } ?></i></div>
+								<div class="col-md-3"><i><?php if ($offer_last) { echo 'Laatste wijziging: '.date('d-m-Y', strtotime(DB::table('offer')->select('updated_at')->where('id','=',$offer_last->id)->get()[0]->updated_at)); } ?></i></div>
 							</div>
 							<div class="row">
 								<div class="col-md-3">Opdracht ontvangen</div>
