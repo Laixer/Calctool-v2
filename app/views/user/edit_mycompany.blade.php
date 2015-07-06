@@ -82,10 +82,10 @@ $(document).ready(function() {
 							<a href="#contact" data-toggle="tab">Contacten</a>
 						</li>
 						<li>
-							<a href="#voorkeuren" data-toggle="tab">Voorkeuren</a>
+							<a href="#logo" data-toggle="tab">Logo</a>
 						</li>
 						<li>
-							<a href="#instellingen" data-toggle="tab">Instellingen</a>
+							<a href="#voorkeuren" data-toggle="tab">Voorkeuren</a>
 						</li>
 					</ul>
 
@@ -289,13 +289,27 @@ $(document).ready(function() {
 								</div>
 							</div>
 						</div>
+						<div id="logo" class="tab-pane">
+							<h4>Logo</h4>
+							{{ Form::open(array('url' => 'relation/logo/save', 'files'=> true)) }}
+							<input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
+
+							<div class="form-group">
+    							{{ Form::label('Afbeelding uploaden') }}
+    							{{ Form::file('image', null) }}
+							</div>
+
+							<div class="row">
+								<div class="col-md-12">
+									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+								</div>
+							</div>
+
+							{{ Form::close() }}
+						</div>
 						<div id="voorkeuren" class="tab-pane">
 							<h4>Voorkeuren</h4>
 							Hier komen voorkeuren voor de prefs
-							</div>
-						<div id="instellingen" class="tab-pane">
-							<h4>Instellingen</h4>
-							Hier komen de API ed
 						</div>
 					</div>
 				</div>

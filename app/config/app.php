@@ -124,6 +124,7 @@ return array(
 
 		'Barryvdh\DomPDF\ServiceProvider',
 		'Nathanmac\Utilities\Parser\ParserServiceProvider',
+		'Intervention\Image\ImageServiceProvider',
 
 	),
 
@@ -193,6 +194,7 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 		'PDF' 		=> 'Barryvdh\DomPDF\Facade',
 		'Parser' 	=> 'Nathanmac\Utilities\Parser\Facades\Parser',
+		'Image'		=> 'Intervention\Image\Facades\Image',
 
 	),
 

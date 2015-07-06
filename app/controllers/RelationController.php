@@ -450,4 +450,41 @@ class RelationController extends \BaseController {
 		return View::make('user.relation');
 	}
 
+	public function doNewLogo()
+	{
+		$rules = array(
+			'id' => array('required','integer'),
+			'image' => array('required', 'mimes:jpeg,bmp,png'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			// redirect our user back to the form with the errors from the validator
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+
+			if (Input::hasFile('image')) {
+				$file = Input::file('image');
+				$newname = md5(mt_rand()).$file->getClientOriginalName();
+				$file->move('user-content', $newname);
+
+				$image = Image::make('user-content/' . $newname)->resize(350, 100)->save();
+
+				$resource = new Resource;
+				$resource->resource_name = $file->getClientOriginalName();
+				$resource->file_location = 'user-content/' . $newname;
+				$resource->file_size = $image->filesize();
+				$resource->user_id = Auth::user()->id;
+
+				$resource->save();
+
+				return Redirect::back()->with('success', 1);
+			}
+
+		}
+	}
+
 }
