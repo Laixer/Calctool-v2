@@ -20,9 +20,9 @@ Route::post('password/reset', array('before' => 'guest', 'as' => 'reset', 'uses'
 Route::get('password/{api}/{token}', array('before' => 'guest', 'as' => 'register', 'uses' => 'AuthController@getNewPassword'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
 Route::post('password/{api}/{token}', array('before' => 'guest', 'as' => 'register', 'uses' => 'AuthController@doNewPassword'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
 
-Route::any('overons', function()
+Route::any('about', function()
 {
-	return View::make('generic.overons');
+	return View::make('generic.about');
 });
 
 Route::any('support', function()
