@@ -144,5 +144,55 @@ class UserController extends \BaseController {
 		}
 	}
 
+	public function doUpdateIban()
+	{
+		$rules = array(
+			'id' => array('required','integer'),
+			'iban' => array('alpha_num'),
+			'iban_name' => array('required','max:50')
+		);
 
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			// redirect our user back to the form with the errors from the validator
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+			$iban = Iban::find(Input::get('id'));
+			$iban->iban = Input::get('iban');
+			$iban->iban_name = Input::get('iban_name');
+
+			$iban->save();
+
+			return Redirect::back()->with('success', 1);
+		}
+	}
+
+	public function doNewIban()
+	{
+		$rules = array(
+			'iban' => array('alpha_num'),
+			'iban_name' => array('required','max:50')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			// redirect our user back to the form with the errors from the validator
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+			$iban = new Iban;
+			$iban->iban = Input::get('iban');
+			$iban->iban_name = Input::get('iban_name');
+			$iban->user_id = Auth::user()->id;
+
+			$iban->save();
+
+			return Redirect::back()->with('success', 1);
+		}
+	}
 }

@@ -58,6 +58,8 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('result/project-{project_id}', array('as' => 'result', 'uses' => 'ResultController@getResult'))->where('project_id', '[0-9]+');
 	Route::get('myaccount', array('as' => 'account', 'uses' => 'UserController@getMyAccount'));
 	Route::post('myaccount/updateuser', array('as' => 'account', 'uses' => 'UserController@doMyAccountUser'));
+	Route::post('myaccount/iban/update', array('as' => 'iban.update', 'uses' => 'UserController@doUpdateIban'));
+	Route::post('myaccount/iban/new', array('as' => 'iban.update', 'uses' => 'UserController@doNewIban'));
 
 	/* Actions by calculation */
 	Route::post('calculation/newchapter/{project_id}', array('as' => 'calculation', 'uses' => 'CalcController@doNewChapter'))->where('project_id', '[0-9]+');

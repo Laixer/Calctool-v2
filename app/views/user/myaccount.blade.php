@@ -1,9 +1,6 @@
 <?php
 $user = Auth::user();
-/*if ($relation)
-	$iban = Iban::where('relation_id','=',$relation->id)->first();
-else
-	$iban = null;*/
+$iban = Iban::where('user_id','=',$user->id)->where('relation_id','=',null)->first();
 ?>
 
 @extends('layout.master')
@@ -206,21 +203,21 @@ $(document).ready(function() {
 						</div>
 						<div id="payment" class="tab-pane">
 							<h4>Betalingsgegevens</h4>
-							{{-- $iban ? Form::open(array('url' => 'relation/iban/update')) : Form::open(array('url' => 'relation/iban/new')) --}}
+							{{ $iban ? Form::open(array('url' => 'myaccount/iban/update')) : Form::open(array('url' => 'myaccount/iban/new')) }}
 							<div class="row">
 
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="iban">IBAN rekeningnummer</label>
-										<input name="iban" id="iban" type="text" value="{{-- Input::old('iban') ? Input::old('iban') : ($iban ? $iban->iban : '') --}}" class="form-control"/>
-										<input type="hidden" name="id" id="id" value="{{-- $iban ? $iban->id : ($relation ? $relation->id : '') --}}"/>
+										<input name="iban" id="iban" type="text" value="{{ Input::old('iban') ? Input::old('iban') : ($iban ? $iban->iban : '') }}" class="form-control"/>
+										<input type="hidden" name="id" id="id" value="{{ $iban ? $iban->id : '' }}"/>
 									</div>
 								</div>
 
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="btw">Naam rekeninghouder</label>
-										<input name="iban_name" id="iban_name" type="text" value="{{-- Input::old('iban_name') ? Input::old('iban_name') : ($iban ? $iban->iban_name : '') --}}" class="form-control"/>
+										<input name="iban_name" id="iban_name" type="text" value="{{ Input::old('iban_name') ? Input::old('iban_name') : ($iban ? $iban->iban_name : '') }}" class="form-control"/>
 									</div>
 								</div>
 							</div>
