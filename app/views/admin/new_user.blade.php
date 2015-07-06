@@ -52,7 +52,7 @@ $(document).ready(function() {
 
 			<h2><strong>Nieuwe</strong> gebruiker</h2>
 
-				{{ Form::open(array('url' => 'user/new')) }}
+				{{ Form::open(array('url' => '/admin/user/new')) }}
 
 				<h4 class="company">Gebruikersgegevens</h4>
 				<div class="row company">

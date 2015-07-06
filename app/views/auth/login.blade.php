@@ -30,7 +30,7 @@
 						<div class="row">
 							<div class="form-group">
 								<div class="col-md-12">
-									{{ Form::label('username', 'Gebruikersnaam') }}
+									{{ Form::label('username', 'Gebruikersnaam of e-mailadres') }}
 									{{ Form::text('username', Input::old('username'), array('class' => 'form-control')) }}
 								</div>
 							</div>

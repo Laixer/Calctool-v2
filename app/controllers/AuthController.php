@@ -40,9 +40,16 @@ class AuthController extends \BaseController {
 			'banned' 	=> NULL
 		);
 
+		$userdata2 = array(
+			'email' 	=> strtolower(trim(Input::get('username'))),
+			'password' 	=> Input::get('secret'),
+			'active' 	=> 1,
+			'banned' 	=> NULL
+		);
+
 		$remember = Input::get('rememberme') ? true : false;
 
-		if(Auth::attempt($userdata, $remember)){
+		if(Auth::attempt($userdata, $remember) || Auth::attempt($userdata2, $remember)){
 
 			// Email must be confirmed
 			if (Auth::user()->confirmed_mail == NULL) {
