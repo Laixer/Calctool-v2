@@ -40,7 +40,7 @@
 		{{ HTML::script('plugins/modernizr.min.js') }}
 
 		<?# -- JQuery -- ?>
-		{{ HTML::script('plugins/jquery-2.0.3.min.js') }}
+		{{ HTML::script('plugins/jquery-2.1.4.min.js') }}
 	</head>
 	<body>
 		<?# -- ONLY DEV -- ?>
