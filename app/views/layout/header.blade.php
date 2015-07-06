@@ -27,6 +27,9 @@
 					<li>
 						{{ HTML::link('myaccount', 'Mijn account') }}
 					</li>
+					<li>
+						{{ HTML::link('overons', 'Over ons') }}
+					</li>
 					@if (Auth::check() && Auth::user()->isAdmin())
 					<li>
 						{{ HTML::link('admin', 'Admin CP') }}
