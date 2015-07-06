@@ -25,6 +25,12 @@ Route::any('about', function()
 	return View::make('generic.about');
 });
 
+//Voor de mail blades
+//Route::any('mail', function()
+//{
+//	return View::make('mail.password')->with('username', 'Kaas')->with('api', 'Kaas')->with('token', 'Kaas');
+//});
+
 Route::any('support', function()
 {
 	return View::make('generic.contact');

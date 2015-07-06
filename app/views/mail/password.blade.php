@@ -42,20 +42,18 @@
 													<td width="100%" height="30"></td>
 												</tr>
 												<tr>
-													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 13px; text-align: left; color:#2E363F; line-height: 24px;">
-														Beste <strong>{{ ucfirst($username) }}</strong>,
+													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; line-height: 24px; color:#8E8E8E;">
+														Goedendag <strong>{{ ucfirst($username) }}</strong>,
 													</td>
 												</tr>
 												<tr>
 													<td width="100%" height="10"></td>
 												</tr>
 												<tr>
-													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#87919F;">
-														Lorem ipsum dolor sit amet, consectetur adipis icing elit, sed do eiusmod tempor
-														incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam. Duis aute
-														irure dolor in repreh enderit in voluptate velit esse cill fugiat nulla pariatur.
-														Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-														mollit anim id est laborum. Kortom klik op wachtwoord herstellen
+													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
+														Je hebt zojuist een verzoek ingediend voor het resetten van je wachtwoord van je gebruikersaccount van de <strong>CalculatieTool</strong>.
+
+														Klik hieronder op wachtwoord herstellen om je wachtwoord te resetten.
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->
@@ -64,8 +62,8 @@
 												<tr>
 													<!--<td width="100%" height="15"></td>-->
 													<td width="100%" style="text-align:center;">
-														<a href="{{ URL::to('password/' . $api . '/' . $token) }}" style="text-decoration:none; font-family: helvetica, Arial, sans-serif; font-size: 12px; letter-spacing: 0px; text-align: center; text-transform: uppercase; padding:10px; color:#ffffff; background-color:#F07057; border-radius:6px;">
-															Wachtwoord herstellen
+														<a href="{{ URL::to('password/' . $api . '/' . $token) }}" style="text-decoration:none; font-family: helvetica, Arial, sans-serif; font-size: 12px; letter-spacing: 0px; text-align: center; text-transform: uppercase; padding:10px; color:#ffffff; background-color:#79BB00; border-radius:6px;">
+															Wachtwoord resetten
 														</a>
 													</td>
 												</tr>
@@ -73,8 +71,16 @@
 													<td width="100%" height="20"></td>
 												</tr>
 												<tr>
-													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#87919F; line-height: 24px;">
-														Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
+														Indien je geen verzoek hebt ingediend voor het reseetten van je wachtwoord kunn je deze mail beschouwen als niet verzonden.
+														<br>
+														<br>
+															Hartelijk dank,
+														<br>
+														<br>
+															<strong>Cal</strong>, van de <a href="https://calctool.nl"><strong>CalculatieTool</strong></a>
+														<br>
+														<br>
 													</td>
 												</tr>
 											</tbody>
