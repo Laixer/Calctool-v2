@@ -314,18 +314,18 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							</div>
 							<div class="row">
 								<div class="col-md-3">Stelposten stellen</div>
-								<div class="col-md-2"></div>
-								<div class="col-md-3"><i>Laatste wijziging: {{ $project->update_estimate ? date('d-m-Y', strtotime($project->update_estimate)) : '' }}</i></div>
+								<div class="col-md-2"><i>{{ $project->start_estimate ? date('d-m-Y', strtotime($project->start_estimate)) : '' }}</i></div>
+								<div class="col-md-3"><i>{{ $project->update_estimate ? 'Laatste wijziging: '.date('d-m-Y', strtotime($project->update_estimate)) : '' }}</i></div>
 							</div>
 							<div class="row">
 								<div class="col-md-3">Meerwerk toegevoegd</div>
 								<div class="col-md-2">{{ $project->start_more ? date('d-m-Y', strtotime($project->start_more)) : '' }}</div>
-								<div class="col-md-3"><i>Laatste wijziging: {{ $project->update_more ? date('d-m-Y', strtotime($project->update_more)) : '' }}</i></div>
+								<div class="col-md-3"><i>{{ $project->update_more ? 'Laatste wijziging: '.date('d-m-Y', strtotime($project->update_more)) : '' }}</i></div>
 							</div>
 							<div class="row">
 								<div class="col-md-3">Minderwerk verwerkt</div>
 								<div class="col-md-2">{{ $project->start_less ? date('d-m-Y', strtotime($project->start_less)) : '' }}</div>
-								<div class="col-md-3"><i>Laatste wijziging: {{ $project->update_less ? date('d-m-Y', strtotime($project->update_less)) : '' }}</i></div>
+								<div class="col-md-3"><i>{{ $project->update_less ? 'Laatste wijziging: '.date('d-m-Y', strtotime($project->update_less)) : '' }}</i></div>
 							</div>
 								<br>
 							<div class="row">

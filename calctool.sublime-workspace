@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"arr",
+				"array"
+			],
+			[
 				"ac",
 				"activity_id"
 			],
@@ -243,6 +247,30 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "app/database/seeds/TestProjectSeeder.php",
+			"settings":
+			{
+				"buffer_size": 62847,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/admin/dashboard.blade.php",
+			"settings":
+			{
+				"buffer_size": 2337,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/css/essentials.css",
+			"settings":
+			{
+				"buffer_size": 46750,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -419,8 +447,12 @@
 	[
 		"/var/www/calctool-v2",
 		"/var/www/calctool-v2/app",
+		"/var/www/calctool-v2/app/config",
 		"/var/www/calctool-v2/app/controllers",
+		"/var/www/calctool-v2/app/database",
+		"/var/www/calctool-v2/app/database/seeds",
 		"/var/www/calctool-v2/app/views",
+		"/var/www/calctool-v2/app/views/admin",
 		"/var/www/calctool-v2/app/views/auth",
 		"/var/www/calctool-v2/app/views/base",
 		"/var/www/calctool-v2/app/views/calc",
@@ -431,32 +463,71 @@
 		"/var/www/calctool-v2/app/views/material",
 		"/var/www/calctool-v2/app/views/user",
 		"/var/www/calctool-v2/bootstrap",
-		"/var/www/calctool-v2/public"
+		"/var/www/calctool-v2/public",
+		"/var/www/calctool-v2/public/css"
 	],
 	"file_history":
 	[
-		"/var/www/calctool-v2/app/controllers/EstimController.php",
+		"/var/www/calctool-v2/app/views/base/home.blade.php",
 		"/var/www/calctool-v2/app/routes.php",
+		"/var/www/calctool-v2/app/views/admin/phpinfo.blade.php",
+		"/var/www/calctool-v2/app/views/admin/phpinfo.php",
+		"/var/www/calctool-v2/app/views/admin/alert.blade.php",
+		"/var/www/calctool-v2/app/controllers/AdminController.php",
+		"/var/www/calctool-v2/app/database/seeds/StaticSeeder.php",
+		"/var/www/calctool-v2/app/database/migrations/2014_09_11_225236_create_system_table.php",
+		"/var/www/calctool-v2/app/views/layout/header.blade.php",
+		"/var/www/calctool-v2/app/views/layout/master.blade.php",
+		"/var/www/calctool-v2/app/controllers/RelationController.php",
+		"/var/www/calctool-v2/app/views/user/edit_mycompany.blade.php",
+		"/var/www/calctool-v2/app/views/calc/offer.blade.php",
+		"/var/www/calctool-v2/app/views/calc/invoice.blade.php",
+		"/var/www/calctool-v2/app/views/calc/invoice_term.blade.php",
+		"/var/www/calctool-v2/composer.json",
+		"/var/www/calctool-v2/.gitignore",
+		"/var/www/calctool-v2/app/config/app.php",
+		"/var/www/calctool-v2/app/controllers/UserController.php",
+		"/var/www/calctool-v2/app/views/user/myaccount.blade.php",
+		"/var/www/calctool-v2/app/controllers/AuthController.php",
+		"/var/www/calctool-v2/app/database/migrations/2014_09_09_204054_create_users_table.php",
+		"/var/www/calctool-v2/app/views/auth/login.blade.php",
+		"/var/www/calctool-v2/app/views/admin/new_user.blade.php",
+		"/var/www/calctool-v2/app/models/User.php",
+		"/var/www/calctool-v2/app/filters.php",
+		"/var/www/calctool-v2/app/views/admin/dashboard.blade.php",
+		"/var/www/calctool-v2/app/views/layout/footer.blade.php",
+		"/var/www/calctool-v2/app/views/generic/contact.blade.php",
+		"/var/www/calctool-v2/app/database/seeds/TestProjectSeeder.php",
+		"/var/www/calctool-v2/app/views/admin/user.blade.php",
+		"/var/www/calctool-v2/app/database/migrations/2014_09_11_204724_create_works.php",
+		"/var/www/calctool-v2/app/database/migrations/2014_09_11_193342_create_relation.php",
+		"/var/www/calctool-v2/app/views/calc/result.blade.php",
+		"/var/www/calctool-v2/app/views/user/relation.blade.php",
+		"/var/www/calctool-v2/public/css/custom.css",
+		"/var/www/calctool-v2/app/views/calc/invoice_all.blade.php",
+		"/var/www/calctool-v2/public/css/essentials.css",
+		"/var/www/calctool-v2/public/js/scripts.js",
+		"/var/www/calctool-v2/app/controllers/MoreController.php",
+		"/var/www/calctool-v2/app/controllers/LessController.php",
+		"/var/www/calctool-v2/app/controllers/EstimController.php",
+		"/var/www/calctool-v2/app/views/user/edit_relation.blade.php",
+		"/var/www/calctool-v2/app/views/user/edit_project.blade.php",
+		"/var/www/calctool-v2/app/views/calc/more.blade.php",
+		"/var/www/calctool-v2/app/views/calc/less.blade.php",
+		"/var/www/calctool-v2/app/views/calc/invoicepdf.blade.php",
+		"/var/www/calctool-v2/app/views/calc/estimate.blade.php",
+		"/var/www/calctool-v2/app/views/calc/calculation.blade.php",
+		"/var/www/calctool-v2/app/views/base/new_user.blade.php",
+		"/var/www/calctool-v2/app/views/base/user.blade.php",
 		"/var/www/calctool-v2/app/controllers/CalcController.php",
 		"/var/www/calctool-v2/app/controllers/CostController.php",
-		"/var/www/calctool-v2/app/controllers/MoreController.php",
 		"/var/www/calctool-v2/app/calculus/LessRegister.php",
-		"/var/www/calctool-v2/app/views/user/edit_project.blade.php",
-		"/var/www/calctool-v2/app/database/seeds/TestProjectSeeder.php",
-		"/var/www/calctool-v2/app/database/migrations/2014_09_09_204054_create_users_table.php",
-		"/var/www/calctool-v2/app/database/seeds/StaticSeeder.php",
-		"/var/www/calctool-v2/app/views/user/edit_mycompany.blade.php",
-		"/var/www/calctool-v2/app/controllers/RelationController.php",
 		"/var/www/calctool-v2/app/controllers/ProjectController.php",
-		"/var/www/calctool-v2/app/database/migrations/2014_09_11_225236_create_system_table.php",
 		"/var/www/calctool-v2/app/config/queue.php",
-		"/var/www/calctool-v2/app/controllers/AuthController.php",
 		"/var/www/calctool-v2/app/views/auth/password.blade.php",
 		"/var/www/calctool-v2/app/views/mail/password.blade.php",
-		"/var/www/calctool-v2/app/views/auth/login.blade.php",
 		"/var/www/calctool-v2/app/views/mail/confirm.blade.php",
 		"/var/www/calctool-v2/app/database/templates/DemoProjectTemplate.php",
-		"/var/www/calctool-v2/composer.json",
 		"/var/www/calctool-v2/app/database/template/DemoProjectTemplate.php",
 		"/var/www/calctool-v2/app/start/global.php",
 		"/var/www/calctool-v2/vendor/laravel/framework/src/Illuminate/Database/Seeder.php",
@@ -466,30 +537,19 @@
 		"/var/www/calctool-v2/app/config/mail.php",
 		"/var/www/calctool-v2/app/config/local/mail.php",
 		"/var/www/calctool-v2/app/views/generic/mail_confirm.blade.php",
-		"/var/www/calctool-v2/app/views/calc/offer.blade.php",
 		"/var/www/calctool-v2/app/controllers/InvoiceController.php",
 		"/var/www/calctool-v2/app/controllers/OfferController.php",
 		"/var/www/calctool-v2/app/controllers/HomeController.php",
-		"/var/www/calctool-v2/app/views/base/home.blade.php",
 		"/var/www/calctool-v2/app/calculus/CalculationEndresult.php",
-		"/var/www/calctool-v2/app/views/calc/invoice.blade.php",
-		"/var/www/calctool-v2/app/views/calc/invoice_term.blade.php",
-		"/var/www/calctool-v2/app/views/calc/invoice_all.blade.php",
-		"/var/www/calctool-v2/app/controllers/UserController.php",
 		"/var/www/calctool-v2/app/config/local/session.php",
 		"/var/www/calctool-v2/bootstrap/start.php",
 		"/var/www/calctool-v2/app/calculus/ResultEndresult.php",
 		"/var/www/calctool-v2/app/calculus/InvoiceTerm.php",
 		"/var/www/calctool-v2/app/database/migrations/2014_09_11_212442_create_financial.php",
 		"/var/www/calctool-v2/app/calculus/CalculationOverview.php",
-		"/var/www/calctool-v2/app/config/app.php",
 		"/var/www/calctool-v2/app/storage/meta/services.json",
-		"/var/www/calctool-v2/app/views/base/user.blade.php",
 		"/var/www/calctool-v2/app/views/user/new_project.blade.php",
 		"/var/www/calctool-v2/app/controllers/offerController.php",
-		"/var/www/calctool-v2/app/views/calc/more.blade.php",
-		"/var/www/calctool-v2/app/views/calc/estimate.blade.php",
-		"/var/www/calctool-v2/app/views/calc/calculation.blade.php",
 		"/var/www/calctool-v2/app/controllers/MaterialController.php",
 		"/var/www/calctool-v2/app/views/material/list.blade.php",
 		"/var/www/calctool-v2/app/views/generic/countdown.blade.php",
@@ -500,35 +560,24 @@
 		"/var/www/calctool-v2/app/commands/MaterialImport.php",
 		"/var/www/calctool-v2/material.xml",
 		"/var/www/calctool-v2/app/database/migrations/2014_09_11_202219_create_material_storage.php",
-		"/var/www/calctool-v2/app/views/layout/master.blade.php",
-		"/var/www/calctool-v2/app/views/layout/header.blade.php",
 		"/var/www/calctool-v2/public/css/layout.css",
 		"/var/www/calctool-v2/out.txt",
 		"/var/www/calctool-v2/SidB.xml",
-		"/var/www/calctool-v2/public/js/scripts.js",
 		"/var/www/calctool-v2/public/css/font-awesome.css",
-		"/var/www/calctool-v2/app/views/calc/result.blade.php",
-		"/var/www/calctool-v2/app/views/calc/less.blade.php",
-		"/var/www/calctool-v2/.gitignore",
 		"/var/www/calctool-v2/app/calculus/TimesheetOverview.php",
 		"/var/www/calctool-v2/app/calculus/MoreOverview.php",
-		"/var/www/calctool-v2/app/controllers/LessController.php",
-		"/var/www/calctool-v2/public/css/custom.css",
 		"/var/www/calctool-v2/app/views/user/new_relation.blade.php",
-		"/var/www/calctool-v2/app/views/user/edit_relation.blade.php",
 		"/var/www/calctool-v2/app/calculus/EstimateEndresult.php",
 		"/var/www/calctool-v2/app/calculus/LessEndresult.php",
 		"/var/www/calctool-v2/app/calculus/EstimateOverview.php",
 		"/var/www/calctool-v2/app/database/migrations/2014_09_11_220407_create_calculation.php",
 		"/var/www/calctool-v2/app/controllers/ResultController.php",
-		"/var/www/calctool-v2/app/views/layout/footer.blade.php",
 		"/var/www/calctool-v2/app/calculus/CalculationRegister.php",
 		"/var/www/calctool-v2/app/calculus/MoreEndresult.php",
 		"/var/www/calctool-v2/app/calculus/MoreRegister.php",
 		"/var/www/calctool-v2/app/views/user/edit_contact.blade.php",
 		"/var/www/calctool-v2/public/js/iban.js",
 		"/var/www/calctool-v2/app/views/user/new_contact.blade.php",
-		"/var/www/calctool-v2/app/views/user/relation.blade.php",
 		"/var/www/calctool-v2/app/database/migrations/2014_09_11_210838_create_cost_registration.php",
 		"/var/www/calctool-v2/app/models/Activity.php",
 		"/var/www/calctool-v2/app/calculus/EstimateRegister.php",
@@ -546,27 +595,11 @@
 		"/var/www/calctool-v2/app/models/CalculationLabor.php",
 		"/var/www/calctool-v2/calctool.sublime-project",
 		"/var/www/calctool-v2/app/models/CalculationMaterial.php",
-		"/var/www/calctool-v2/public/plugins/superslides/jquery.number.min.js",
-		"/var/www/calctool-v2/public/plugins/jquery.numberformatter.js",
-		"/var/www/calctool-v2/public/test.php",
-		"/var/www/calctool-v2/app/database/migrations/2014_09_11_193342_create_relation.php",
-		"/var/www/calctool-v2/app/config/dev/session.php",
-		"/var/www/calctool-v2/app/config/session.php",
-		"/var/www/calctool-v2/app/config/services.php",
-		"/var/www/calctool-v2/app/config/dev/database.php",
-		"/var/www/calctool-v2/app/config/dev/app.php",
-		"/var/www/calctool/app/views/placeholder.php",
-		"/var/www/calctool/app/views/user/relation.blade.php",
-		"/var/www/calctool/app/routes.php",
-		"/var/www/calctool/app/controllers/RelationController.php",
-		"/home/yorickdewid/prod_databasename.sql",
-		"/var/www/calctool/app/views/calc/calculation.blade.php",
-		"/var/www/calctool/app/views/user/new_relation.blade.php",
-		"/var/www/calctool/app/views/user/new_project.blade.php"
+		"/var/www/calctool-v2/public/plugins/superslides/jquery.number.min.js"
 	],
 	"find":
 	{
-		"height": 34.0
+		"height": 46.0
 	},
 	"find_in_files":
 	{
@@ -583,6 +616,13 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			">\n",
+			"Protection",
+			"content",
+			")->",
+			"_animate",
+			"doUpdateEstimateEquipment",
+			" $",
 			"Auth::user()->id)->first()->hour_rate",
 			"Auth::user()",
 			"lsave",
@@ -703,14 +743,7 @@
 			"_calc",
 			"Calcu",
 			"eCh",
-			"nOver",
-			"Over",
-			"est",
-			"Calcu",
-			"calc",
-			"esti",
-			"CalculationO",
-			"Calculatio"
+			"nOver"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -733,8 +766,96 @@
 	"groups":
 	[
 		{
+			"selected": 1,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "app/database/seeds/TestProjectSeeder.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 62847,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6483,
+								6483
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1755.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/views/admin/dashboard.blade.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2337,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								298,
+								298
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "public/css/essentials.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 46750,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								801,
+								801
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -827,7 +948,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 316.0,
+	"side_bar_width": 488.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

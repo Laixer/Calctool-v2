@@ -18,6 +18,8 @@ class EstimController extends BaseController {
 	public function updateEstimateStatus($id)
 	{
 		$proj = Project::find($id);
+		if (!$proj->start_estimate)
+			$proj->start_estimate = date('Y-m-d');
 		$proj->update_estimate = date('Y-m-d');
 		$proj->save();
 	}

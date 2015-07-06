@@ -148,6 +148,7 @@ class CreateUsersTable extends Migration {
 			$table->date('update_more')->nullable();
 			$table->date('start_less')->nullable();
 			$table->date('update_less')->nullable();
+			$table->date('start_estimate')->nullable();
 			$table->date('update_estimate')->nullable();
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
