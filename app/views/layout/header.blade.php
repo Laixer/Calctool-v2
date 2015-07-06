@@ -25,7 +25,7 @@
 						{{ HTML::link('help', 'Help') }}
 					</li>
 					<li>
-						{{ HTML::link('mijnaccount', 'Mijn account') }}
+						{{ HTML::link('myaccount', 'Mijn account') }}
 					</li>
 					@if (Auth::check() && Auth::user()->isAdmin())
 					<li>

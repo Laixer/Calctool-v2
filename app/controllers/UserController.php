@@ -18,6 +18,62 @@ class UserController extends \BaseController {
 		return View::make('admin.new_user');
 	}
 
+	public function getMyAccount()
+	{
+		return View::make('user.myaccount');
+	}
+
+	public function doMyAccountUser()
+	{
+		$rules = array(
+			'lastname' => array('required','max:50'),
+			'firstname' => array('required','max:30'),
+			'mobile' => array('alpha_num','max:14'),
+			'telephone' => array('alpha_num','max:14'),
+			'email' => array('required','email','max:80'),
+			'website' => array('url','max:180'),
+			'address_street' => array('required','alpha','max:60'),
+			'address_number' => array('required','alpha_num','max:5'),
+			'address_zipcode' => array('required','size:6'),
+			'address_city' => array('required','alpha_num','max:35'),
+			'province' => array('required','numeric'),
+			'country' => array('required','numeric'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			// redirect our user back to the form with the errors from the validator
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+
+			/* General */
+			$user = Auth::user();
+
+			/* Contact */
+			$user->firstname = Input::get('firstname');
+			$user->lastname = Input::get('lastname');
+			$user->email = Input::get('email');
+			$user->mobile = Input::get('mobile');
+			$user->phone = Input::get('phone');
+			$user->website = Input::get('website');
+
+			/* Adress */
+			$user->address_street = Input::get('address_street');
+			$user->address_number = Input::get('address_number');
+			$user->address_postal = Input::get('address_zipcode');
+			$user->address_city = Input::get('address_city');
+			$user->province_id = Input::get('province');
+			$user->country_id = Input::get('country');
+
+			$user->save();
+
+			return Redirect::back()->with('success', 1);
+		}
+	}
+
 	public function doNew()
 	{
 		$rules = array(
@@ -80,7 +136,7 @@ class UserController extends \BaseController {
 			/* System */
 			$user->api = md5(mt_rand());
 			$user->ip = $_SERVER['REMOTE_ADDR'];
-			$user->promotion_code = md5(mt_rand());
+			$user->referral_key = md5(mt_rand());
 
 			$user->save();
 
