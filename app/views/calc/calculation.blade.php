@@ -1735,11 +1735,11 @@ var n = this,
 							<thead>
 								<tr>
 									<th class="col-md-5">&nbsp;</th>
-									<th class="col-md-2">Bedrag (excl. BTW</th>
+									<th class="col-md-2">Bedrag (excl. BTW)</th>
 									<th class="col-md-1">&nbsp;</th>
 									<th class="col-md-1">&nbsp;</th>
 									<th class="col-md-1">BTW bedrag</th>
-									<th class="col-md-2"><span class="pull-right">Bedrag (incl. BTW</span></th>
+									<th class="col-md-2"><span class="pull-right">Bedrag (incl. BTW)</span></th>
 								</tr>
 							</thead>
 
