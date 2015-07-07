@@ -1605,7 +1605,7 @@ var n = this,
 								</tr>
 
 								<tr><!-- item -->
-									<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
+									<td class="col-md-4"><strong>Totaal Aanneming</strong></td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-1">&nbsp;</td>
