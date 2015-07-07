@@ -121,10 +121,9 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
-
-		'Barryvdh\DomPDF\ServiceProvider',
 		'Nathanmac\Utilities\Parser\ParserServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
+		'Barryvdh\Snappy\ServiceProvider',
 
 	),
 
@@ -192,9 +191,9 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
-		'PDF' 		=> 'Barryvdh\DomPDF\Facade',
-		'Parser' 	=> 'Nathanmac\Utilities\Parser\Facades\Parser',
-		'Image'		=> 'Intervention\Image\Facades\Image',
+		'Parser'          => 'Nathanmac\Utilities\Parser\Facades\Parser',
+		'Image'           => 'Intervention\Image\Facades\Image',
+		'PDF'             => 'Barryvdh\Snappy\Facades\SnappyPdf',
 
 	),
 

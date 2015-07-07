@@ -94,6 +94,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('offer/project-{project_id}', array('as' => 'invoice', 'uses' => 'OfferController@doNewOffer'));
 	Route::post('offer/close', array('as' => 'invoice', 'uses' => 'OfferController@doOfferClose'));
 
+	Route::get('offer/raw/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOfferRaw'))->where('project_id', '[0-9]+');
 	Route::get('offer/pdf/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOfferPDF'))->where('project_id', '[0-9]+');
 
 	/* Calculation acions by calculation */
