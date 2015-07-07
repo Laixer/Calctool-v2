@@ -496,7 +496,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<thead>
 								<tr>
 									<th class="col-md-4">&nbsp;</th>
-									<th class="col-md-1">Manuren</th>
+									<th class="col-md-1">Uren</th>
 									<th class="col-md-2">Bedrag (excl. BTW)</th>
 									<th class="col-md-1">&nbsp;</th>
 									<th class="col-md-1">BTW</th>
@@ -608,7 +608,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<thead>
 								<tr>
 									<th class="col-md-4">&nbsp;</th>
-									<th class="col-md-1">Manuren</th>
+									<th class="col-md-1">Uren</th>
 									<th class="col-md-2">Bedrag (excl. BTW)</th>
 									<th class="col-md-1">&nbsp;</th>
 									<th class="col-md-1">BTW</th>
@@ -784,12 +784,12 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<thead>
 								<tr>
 									<th class="col-md-4">&nbsp;</th>
-									<th class="col-md-1">Manuren</th>
+									<th class="col-md-1">Uren</th>
 									<th class="col-md-2">Bedrag (excl. BTW)</th>
 									<th class="col-md-1">&nbsp;</th>
 									<th class="col-md-1">BTW</th>
-									<th class="col-md-2">BTW bedrag</th>
-									<th class="col-md-1">&nbsp;</th>
+									<th class="col-md-1">BTW bedrag</th>
+									<th class="col-md-2">&nbsp;</th>
 								</tr>
 							</thead>
 
@@ -801,8 +801,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax1Amount($project)+CalculationEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">21%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax1AmountTax($project)+CalculationEndresult::subconCalcLaborActivityTax1AmountTax($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax1AmountTax($project)+CalculationEndresult::subconCalcLaborActivityTax1AmountTax($project), 2, ",",".") }}</td>
+									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
@@ -810,8 +810,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax2Amount($project)+CalculationEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">6%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax2AmountTax($project)+CalculationEndresult::subconCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax2AmountTax($project)+CalculationEndresult::subconCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
+									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
@@ -819,8 +819,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax3Amount($project)+CalculationEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">0%</td>
-									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2">&nbsp;</td>
 								</tr>
 
 								<tr><!-- item -->
@@ -829,8 +829,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1Amount($project)+CalculationEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">21%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1AmountTax($project)+CalculationEndresult::subconCalcMaterialActivityTax1AmountTax($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1AmountTax($project)+CalculationEndresult::subconCalcMaterialActivityTax1AmountTax($project), 2, ",",".") }}</td>
+									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
@@ -838,8 +838,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax2Amount($project)+CalculationEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">6%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax2AmountTax($project)+CalculationEndresult::subconCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax2AmountTax($project)+CalculationEndresult::subconCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
+									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
@@ -847,8 +847,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax3Amount($project)+CalculationEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">0%</td>
-									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2">&nbsp;</td>
 								</tr>
 
 								<tr><!-- item -->
@@ -857,8 +857,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax1Amount($project)+CalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">21%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax1AmountTax($project)+CalculationEndresult::subconCalcEquipmentActivityTax1AmountTax($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax1AmountTax($project)+CalculationEndresult::subconCalcEquipmentActivityTax1AmountTax($project), 2, ",",".") }}</td>
+									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
@@ -866,8 +866,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax2Amount($project)+CalculationEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">6%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax2AmountTax($project)+CalculationEndresult::subconCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax2AmountTax($project)+CalculationEndresult::subconCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
+									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
@@ -875,18 +875,18 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax3Amount($project)+CalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">0%</td>
-									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2">&nbsp;</td>
 								</tr>
 
 								<tr><!-- item -->
 									<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
 									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContracting($project)+CalculationEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
+									<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContracting($project)+CalculationEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax($project)+CalculationEndresult::totalSubcontractingTax($project), 2, ",",".") }}</strong></td>
+									<td class="col-md-2">&nbsp;</td>
 								</tr>
 							</tbody>
 						</table>
@@ -896,44 +896,59 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<?# -- table head -- ?>
 							<thead>
 								<tr>
-									<th class="col-md-6">&nbsp;</th>
+									<th class="col-md-5">&nbsp;</th>
 									<th class="col-md-2">Bedrag (excl. BTW)</th>
-									<th class="col-md-2">BTW bedrag</th>
-									<th class="col-md-2">&nbsp;</th>
+									<th class="col-md-1">&nbsp;</th>
+									<th class="col-md-1">&nbsp;</th>
+									<th class="col-md-1">BTW bedrag</th>
+									<th class="col-md-2"><span class="pull-right">Bedrag (incl. BTW)</span></th>
 								</tr>
 							</thead>
 
 							<!-- table items -->
 							<tbody>
 								<tr><!-- item -->
-									<td class="col-md-6">Calculatief te offereren (excl. BTW)</td>
+									<td class="col-md-5">Calculatief te offereren (excl. BTW)</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</td>
+									<th class="col-md-1">&nbsp;</th>
+									<th class="col-md-1">&nbsp;</th>
+									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
+
+								</tr>
+								<tr><!-- item -->
+									<td class="col-md-5">BTW bedrag calculatie belast met 21%</td>
+									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax1($project)+CalculationEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
+									<td class="col-md-2">&nbsp;</td>
+								</tr>
+
+								<tr><!-- item -->
+									<td class="col-md-5">BTW bedrag calculatie belast met 6%</td>
+									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax2($project)+CalculationEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag calculatie belast met 21%</td>
+									<td class="col-md-5">Te offereren BTW bedrag</td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax1($project)+CalculationEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
-									<td class="col-md-2">&nbsp;</td>
-								</tr>
-								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag calculatie belast met 6%</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax2($project)+CalculationEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProjectTax($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">Te offereren BTW bedrag</td>
+									<td class="col-md-5"><strong>Calculatief te offereren (Incl. BTW)</strong></td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::totalProjectTax($project), 2, ",",".") }}</td>
-								</tr>
-								<tr><!-- item -->
-									<td class="col-md-6"><strong>Calculatief te offereren (Incl. BTW)</strong></td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2"><strong class="pull-right">{{ '&euro; '.number_format(CalculationEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
+
 								</tr>
 
 							</tbody>
@@ -1024,8 +1039,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 										@endforeach
 										@endforeach
 										<tr><!-- item -->
-											<td class="col-md-3"><strong>Totaal aanneming</strong></td>
-											<td class="col-md-2">&nbsp;</td>
+											<td class="col-md-2"><strong>Totaal aanneming</strong></td>
+											<td class="col-md-3">&nbsp;</td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::contrLaborTotalAmount($project) }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1070,8 +1085,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 										@endforeach
 										@endforeach
 										<tr><!-- item -->
-											<td class="col-md-3"><strong>Totaal onderaanneming</strong></td>
-											<td class="col-md-2">&nbsp;</td>
+											<td class="col-md-2"><strong>Totaal onderaanneming</strong></td>
+											<td class="col-md-3">&nbsp;</td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::subcontrLaborTotalAmount($project) }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1088,8 +1103,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<?# -- table head -- ?>
 									<thead>
 										<tr>
-											<th class="col-md-3">&nbsp;</th>
 											<th class="col-md-2">&nbsp;</th>
+											<th class="col-md-3">&nbsp;</th>
 											<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 											<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 											<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
@@ -1102,13 +1117,13 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<!-- table items -->
 									<tbody>
 										<tr><!-- item -->
-											<td class="col-md-3">&nbsp;</td>
 											<td class="col-md-2">&nbsp;</td>
-											<td class="col-md-1"><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>
-											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
-											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
-											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
-											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
+											<td class="col-md-3">&nbsp;</td>
+											<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></strong></td>
+											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></strong></td>
+											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></strong></td>
+											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></strong></td>
+											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
@@ -1167,14 +1182,14 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									</tbody>
 								</table>
 
-								<h4>Totalen project</h4>
+								<h4>Totaalkosten project</h4>
 
 								<table class="table table-striped only-end-total">
 									<?# -- table head -- ?>
 									<thead>
 										<tr>
-											<th class="col-md-3">&nbsp;</th>
 											<th class="col-md-2">&nbsp;</th>
+											<th class="col-md-3">&nbsp;</th>
 											<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 											<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 											<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
@@ -1187,8 +1202,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<!-- table items -->
 									<tbody>
 										<tr><!-- item -->
-											<td class="col-md-3">&nbsp;</td>
 											<td class="col-md-2">&nbsp;</td>
+											<td class="col-md-3">&nbsp;</td>
 											<td class="col-md-1"><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
