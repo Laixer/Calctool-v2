@@ -28,7 +28,7 @@
 						{{ HTML::link('myaccount', 'Mijn account') }}
 					</li>
 					<li>
-						{{ HTML::link('overons', 'Over ons') }}
+						{{ HTML::link('about', 'Over ons') }}
 					</li>
 					@if (Auth::check() && Auth::user()->isAdmin())
 					<li>
