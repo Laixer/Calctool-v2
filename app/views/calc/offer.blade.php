@@ -943,7 +943,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 					<textarea name="closure" id="closure" rows="10" class="form-control">{{ ($offer_last ? $offer_last->closure : '') }}</textarea>
 
-					<p id="termtext">Indien opdracht wordt verstrekt, wordt gefactureerd middels 1 eindfactuur</p>
+					<p id="termtext">Indien opdracht gegund word, ontvangt u één eindfactuur.</p>
 					<p id="paymenttext"></p>
 
 					<p>Wij kunnen de werkzaamheden starten binnen
@@ -955,12 +955,12 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						na uw opdrachtbevestiging.
 					</p>
 
-					<p>Deze offerte doet stand tot
+					<p>Deze offerte is geldig tot
 						<select name="valid" id="valid">
 							@foreach (Valid::all() as $valid)
 							<option {{ ($offer_last ? ($offer_last->valid_id == $valid->id ? 'selected' : '') : '') }} value="{{ $valid->id }}">{{ $valid->valid_name }}</option>
 							@endforeach
-						</select> na dagtekening
+						</select> na dagtekening.
 					</p>
 
 				</div>
@@ -1199,7 +1199,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									</tbody>
 								</table>
 							</div>
-						<h5>Weergegeven bedragen zijn exclusief BTW</h5>
+						<h5><stong>Weergegeven bedragen zijn exclusief BTW</stong></h5>
 
 				</div>
 
