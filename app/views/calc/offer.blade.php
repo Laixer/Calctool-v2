@@ -452,10 +452,10 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					<div class="col-sm-6">
 
 						<ul class="list-unstyled">
-							<li>uitlijning omlaag</li>
-							<li>uitlijning omlaag</li>
-							<li>uitlijning omlaag</li>
-							<li>uitlijning omlaag</li>
+							<br>
+							<br>
+							<br>
+							<br>
 							<li>{{ $relation->company_name }}</li>
 							<li>t.a.v. -hier moet een selectlist komen van de contacten van dit bedrijf-</li>
 							<li>{{ $relation->address_street . ' ' . $relation->address_number }}<br /> {{ $relation->address_postal . ', ' . $relation->address_city }}</li>
@@ -487,8 +487,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 				</div>
 
-					<textarea name="description" id="description" rows="10" class="form-control">{{ ($offer_last ? $offer_last->description : '') }}</textarea>
-
+					<textarea name="description" id="description" rows="5" class="form-control">{{ ($offer_last ? $offer_last->description : '') }}</textarea>
+					<br>
 					<div class="show-all" style="display:none;">
 						<h4 class="only-total">Aanneming</h4>
 						<table class="table table-striped hide-btw1">
@@ -778,7 +778,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					</div>
 
 					<div class="show-totals">
-						<h4 class="only-total">Calculatie</h4>
+						<h4 class="only-total">Totaalkosten project</h4>
 						<table class="table table-striped hide-btw1">
 							<?# -- table head -- ?>
 							<thead>
@@ -941,9 +941,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						</table>
 					</div>
 
-					<textarea name="closure" id="closure" rows="10" class="form-control">{{ ($offer_last ? $offer_last->closure : '') }}</textarea>
-
-					<p id="termtext">Indien opdracht gegund word, ontvangt u één eindfactuur.</p>
+					<textarea name="closure" id="closure" rows="5" class="form-control">{{ ($offer_last ? $offer_last->closure : '') }}</textarea>
+					<br>
+					<p id="termtext">Indien opdracht gegund wordt, ontvangt u één eindfactuur.</p>
 					<p id="paymenttext"></p>
 
 					<p>Wij kunnen de werkzaamheden starten binnen
@@ -1117,7 +1117,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 							<div class="show-totals">
 
-								<h4>Calculatie</h4>
+								<h4>Totaalkosten per werkzaamheden</h4>
 
 								<table class="table table-striped only-end-total">
 									<?# -- table head -- ?>
@@ -1199,7 +1199,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									</tbody>
 								</table>
 							</div>
-						<h5><stong>Weergegeven bedragen zijn exclusief BTW</stong></h5>
+						<h5><strong>Weergegeven bedragen zijn exclusief BTW</strong></h5>
 
 				</div>
 
@@ -1282,7 +1282,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							</div>
 
 							<div class="show-totals">
-								<h4>Calculatie</h4>
+								<h4>Omschrijving werkzaamheden</h4>
 
 								<table class="table table-striped">
 									<?# -- table head -- ?>
