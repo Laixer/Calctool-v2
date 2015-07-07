@@ -2059,6 +2059,10 @@ p.dropcap.color:first-letter {
 		visibility: visible;
 	}
 
+	.no-print, .no-print * {
+		display: none !important;
+	}
+
 	/* print resets */
 	#wrapper {
 		margin:0 !important;
