@@ -50,6 +50,7 @@ class CreateUsersTable extends Migration {
 			$table->dateTime('banned')->nullable();
 			$table->dateTime('confirmed_mail')->nullable();
 			$table->date('registration_date')->default(DB::raw('now()::timestamp(0)'));
+			$table->date('expiration_date');
 			$table->char('referral_key', 32)->unique();
 			$table->string('address_street', 60)->nullable();
 			$table->string('address_number', 5)->nullable();
@@ -175,11 +176,24 @@ class CreateUsersTable extends Migration {
 			$table->foreign('project_id')->references('id')->on('project')->onUpdate('cascade')->onDelete('cascade');
 		});
 
+		Schema::create('order', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('transaction', 16);
+			$table->decimal('amount', 9, 2);
+			$table->string('description', 100);
+			$table->timestamps();
+			$table->integer('user_id')->unsigned();
+			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
+		});
+
 		$seq_user_account = "ALTER SEQUENCE user_account_id_seq RESTART WITH 1000";
 		$seq_project = "ALTER SEQUENCE project_id_seq RESTART WITH 10000";
+		$seq_order = "ALTER SEQUENCE project_id_seq RESTART WITH 1000";
 
 		DB::unprepared($seq_user_account);
 		DB::unprepared($seq_project);
+		DB::unprepared($seq_order);
 	}
 
 	/**
@@ -189,6 +203,12 @@ class CreateUsersTable extends Migration {
 	 */
 	public function down()
 	{
+
+		Schema::table('order', function(Blueprint $table)
+		{
+			Schema::drop('order');
+		});
+
 		Schema::table('resource', function(Blueprint $table)
 		{
 			Schema::drop('resource');

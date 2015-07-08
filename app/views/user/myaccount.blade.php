@@ -84,7 +84,7 @@ $(document).ready(function() {
 							<a href="#company" data-toggle="tab">Gebruikersgegevens</a>
 						</li>
 						<li>
-							<a href="#payment" data-toggle="tab">Betalingsgegevens</a>
+							<a href="#payment" data-toggle="tab">Abonementsgegevens</a>
 						</li>
 						<li>
 							<a href="#contact" data-toggle="tab">Beveiliging</a>
@@ -211,31 +211,38 @@ $(document).ready(function() {
 
 						</div>
 						<div id="payment" class="tab-pane">
-							<h4>Betalingsgegevens</h4>
-							{{ $iban ? Form::open(array('url' => 'myaccount/iban/update')) : Form::open(array('url' => 'myaccount/iban/new')) }}
-							<div class="row">
 
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="iban">IBAN rekeningnummer</label>
-										<input name="iban" id="iban" type="text" value="{{ Input::old('iban') ? Input::old('iban') : ($iban ? $iban->iban : '') }}" class="form-control"/>
-										<input type="hidden" name="id" id="id" value="{{ $iban ? $iban->id : '' }}"/>
-									</div>
-								</div>
+							<div class="pull-right">
+								<a href="/payment" class="btn btn-primary">Abonement verlengen</a>
+							</div>
 
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="btw">Naam rekeninghouder</label>
-										<input name="iban_name" id="iban_name" type="text" value="{{ Input::old('iban_name') ? Input::old('iban_name') : ($iban ? $iban->iban_name : '') }}" class="form-control"/>
-									</div>
-								</div>
-							</div>
+							<h4>Abonementsgegevens</h4>
 							<div class="row">
-								<div class="col-md-12">
-									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
-								</div>
+								<div class="col-md-2"><strong>Abonement actief tot:</strong></div>
+								<div class="col-md-2">{{ date('j F Y', strtotime($user->expiration_date)) }}</div>
 							</div>
-							{{ Form::close() }}
+							<br />
+							<h4>Geschiedenis</h4>
+							<table class="table table-striped">
+								<?# -- table head -- ?>
+								<thead>
+									<tr>
+										<th class="col-md-2">Datum</th>
+										<th class="col-md-4">Bedrag</th>
+										<th class="col-md-6">Omschrijving</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									@foreach (Order::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $order)
+									<tr>
+										<td class="col-md-2"><strong>{{ date('d-m-Y H:i:s', strtotime(DB::table('order')->select('created_at')->where('id','=',$order->id)->get()[0]->created_at)) }}</strong></td>
+										<td class="col-md-4">{{ '&euro; '.number_format($order->amount, 2,",",".") }}</td>
+										<td class="col-md-6">{{ $order->description }}</td>
+									</tr>
+									@endforeach
+								</tbody>
+							</table>
 						</div>
 						<div id="contact" class="tab-pane">
 

@@ -23,6 +23,11 @@ class UserController extends \BaseController {
 		return View::make('user.myaccount');
 	}
 
+	public function getPayment()
+	{
+		return View::make('user.payment');
+	}
+
 	public function doUpdateSecurity()
 	{
 		$rules = array(

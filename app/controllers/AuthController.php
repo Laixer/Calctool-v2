@@ -103,6 +103,7 @@ class AuthController extends \BaseController {
 			$user->referral_key = md5(mt_rand());
 			$user->ip = $_SERVER['REMOTE_ADDR'];
 			$user->email = Input::get('email');
+			$user->expiration_date = date('Y-m-d', strtotime("+1 month", time()));
 			$user->user_type = UserType::where('user_type','=','user')->first()->id;
 
 			Mail::queue('mail.confirm', array('api' => $user->api, 'token' => $user->token, 'username' => $user->username), function($message) {

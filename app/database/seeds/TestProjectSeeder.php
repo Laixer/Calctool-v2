@@ -68,6 +68,7 @@ class TestProjectSeeder extends Seeder {
 			'active' => 'Y',
 			'confirmed_mail' => date('Y-m-d'),
 			'registration_date' => date('Y-m-d'),
+			'expiration_date' => date('Y-m-d', strtotime("+1 month", time())),
 			'referral_key' => md5(mt_rand()),
 			'address_street' => 'adressystem',
 			'address_number' => '1B',
