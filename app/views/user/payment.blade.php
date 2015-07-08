@@ -1,22 +1,3 @@
-<?php
-/*$mollie = new Mollie_API_Client;
-$mollie->setApiKey("test_GgXY6mWGW56AAfgC6NDBDXf4bCMfpz");
-
-$payment = $mollie->payments->create(array(
-    "amount"      => 6000.00,
-    "description" => "My first API payment",
-    "redirectUrl" => "https://webshop.example.org/order/12345/",
-));
-
-    if ($payment->isPaid())
-    {
-        echo "Payment received.";
-    }*/
-	//print_r($payment);
-
-
-?>
-
 @extends('layout.master')
 
 @section('content')
@@ -38,7 +19,7 @@ $payment = $mollie->payments->create(array(
 			<div class="row">
 				<div class="col-md-1"><input type="radio" name="payoption" value="1" /></div>
 				<div class="col-md-2">Maand</div>
-				<div class="col-md-2">&euro; 80</div>
+				<div class="col-md-2">&euro; 22,50</div>
 			</div>
 			<div class="row">
 				<div class="col-md-1"><input type="radio" name="payoption" value="4" /></div>
