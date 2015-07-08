@@ -10,7 +10,7 @@
 }
 
 a {
-  color: #0087C3;
+  color: #blue;
   text-decoration: none;
 }
 
@@ -19,7 +19,7 @@ body {
   width: 21cm;
   height: 29.7cm;
   margin: 0 auto;
-  color: #555555;
+  color: #4E4E4E;
   background: #FFFFFF;
   font-family: Arial, sans-serif;
   font-size: 14px;
@@ -51,30 +51,13 @@ header {
   margin-bottom: 50px;
 }
 
-#client {
-  padding-left: 6px;
-  border-left: 6px solid #0087C3;
-  float: left;
-}
-
-#client .to {
-  color: #777777;
-}
-
-h2.name {
-  font-size: 1.4em;
-  font-weight: normal;
-  margin: 0;
-}
-
 #invoice {
   float: right;
   text-align: right;
 }
 
 #invoice h1 {
-  color: #0087C3;
-  font-size: 2.4em;
+  font-size: 1.6em;
   line-height: 1em;
   font-weight: normal;
   margin: 0  0 10px 0;
@@ -82,65 +65,134 @@ h2.name {
 
 #invoice .date {
   font-size: 1.1em;
-  color: #777777;
 }
+
+
+
+
+/*DZA aproved*/
+h1.name {
+  font-size: 18px;
+  font-weight: normal;
+  margin: 5px;
+  background: #e8e8e8;
+  padding-left: 10px;
+}
+
+h2.name {
+  font-size: 18px;
+  font-weight: normal;
+  margin: 5px 0 5px 0;
+  padding-left: 10px;
+}
+
+h3.name {
+  font-size: 22px;
+  font-weight: normal;
+  margin: 0;
+  padding-left: 10px;
+}
+
+h4.name {
+  font-size: 18px;
+  font-weight: normal;
+  margin: 0px;
+  padding-left: 10px;
+}
+
+#client {
+  padding-left: 10px;
+  font-size: 14px;
+  float: left;
+}
+
+.openingtext {
+  font-size: 14px;
+  margin: 20px  0 20px 0;
+  padding-left: 10px;
+}
+
+.closingtext {
+  font-size: 14px;
+  margin: 20px  0 20px 0;
+  padding-left: 10px;
+}
+
+.statements {
+  font-size: 14px;
+  margin: 0  0 10px 0;
+  padding-left:10px;
+}
+
+.name {
+  font-size: 14px;
+}
+
+.signing {
+  font-size: 14px;
+  margin: 20px  0 20px 0;
+  padding-left: 10px;
+}
+/*DZA aproved*/
+
+
+
+
 
 table {
   width: 100%;
   border-spacing: 0;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
+  padding: 0 0 0 10px;
 }
 
-table th,
 table td {
-  padding: 20px;
+  padding: 1px;
   background: #EEEEEE;
-  text-align: center;
+  text-align: left;
   border-bottom: 1px solid #FFFFFF;
 }
 
 table th {
-  white-space: nowrap;
-  font-weight: normal;
+ white-space: nowrap;
+ font-weight: bold;
+ padding: 1px;
+ background: #EEEEEE;
+ text-align: left;
+ border-bottom: 2px solid #FFFFFF;
 }
 
 table td {
-  text-align: right;
-}
-
-table td h3{
-  color: #57B223;
-  font-size: 1.2em;
-  font-weight: normal;
-  margin: 0 0 0.2em 0;
+ /*text-align: right;*/
 }
 
 table .no {
-  color: #FFFFFF;
-  font-size: 1.6em;
-  background: #57B223;
+  background: #ffffff;
 }
 
 table .desc {
   text-align: left;
+  background: #ffffff;
 }
 
 table .unit {
-  background: #DDDDDD;
+  background: #ffffff;
 }
 
 table .qty {
+  background: #ffffff;
 }
 
 table .total {
-  background: #57B223;
-  color: #FFFFFF;
+  background: #ffffff;
 }
 
+table td.no,
+table td.desc,
 table td.unit,
 table td.qty,
 table td.total {
-  font-size: 1.2em;
+  font-size: 1.0em;
 }
 
 table tbody tr:last-child td {
@@ -148,7 +200,7 @@ table tbody tr:last-child td {
 }
 
 table tfoot td {
-  padding: 10px 20px;
+  padding: 5px 5px;
   background: #FFFFFF;
   border-bottom: none;
   font-size: 1.2em;
@@ -161,7 +213,7 @@ table tfoot tr:first-child td {
 }
 
 table tfoot tr:last-child td {
-  color: #57B223;
+ /* color: #57B223;*/
   font-size: 1.4em;
   border-top: 1px solid #57B223;
 
@@ -178,7 +230,7 @@ table tfoot tr td:first-child {
 
 #notices{
   padding-left: 6px;
-  border-left: 6px solid #0087C3;
+  border-left: 6px solid #e8e8e8;
 }
 
 #notices .notice {
@@ -188,8 +240,8 @@ table tfoot tr td:first-child {
 footer {
   color: #777777;
   width: 100%;
-  height: 30px;
-  position: absolute;
+  height: 10px;
+
   bottom: 0;
   border-top: 1px solid #AAAAAA;
   padding: 8px 0;
