@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\MessageBag;
-//use App\Database\DemoProjectTemplate;
 
 class AuthController extends \BaseController {
 

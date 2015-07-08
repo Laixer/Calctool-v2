@@ -62,6 +62,10 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('myaccount/iban/new', array('as' => 'iban.update', 'uses' => 'UserController@doNewIban'));
 	Route::post('myaccount/security/update', array('as' => 'security.update', 'uses' => 'UserController@doUpdateSecurity'));
 
+	Route::get('payment', array('as' => 'security.update', 'uses' => 'UserController@getPayment'));
+	Route::post('payment', array('as' => 'security.update', 'uses' => 'UserController@doPayment'));
+	Route::get('payment/order/{token}', array('as' => 'security.update', 'uses' => 'UserController@getPaymentFinish'))->where('token', '[0-9a-z]{40}');
+
 	/* Actions by calculation */
 	Route::post('calculation/newchapter/{project_id}', array('as' => 'calculation', 'uses' => 'CalcController@doNewChapter'))->where('project_id', '[0-9]+');
 	Route::post('calculation/calc/newactivity/{chapter_id}', array('as' => 'calculation', 'uses' => 'CalcController@doNewCalculationActivity'))->where('chapter_id', '[0-9]+');

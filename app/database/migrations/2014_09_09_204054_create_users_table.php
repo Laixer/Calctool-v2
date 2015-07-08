@@ -180,8 +180,11 @@ class CreateUsersTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('transaction', 16);
+			$table->char('token', 40)->unique();
+			$table->string('status', 16);
 			$table->decimal('amount', 9, 2);
 			$table->string('description', 100);
+			$table->integer('increment');
 			$table->timestamps();
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');

@@ -228,7 +228,8 @@ $(document).ready(function() {
 								<thead>
 									<tr>
 										<th class="col-md-2">Datum</th>
-										<th class="col-md-4">Bedrag</th>
+										<th class="col-md-2">Bedrag</th>
+										<th class="col-md-2">Status</th>
 										<th class="col-md-6">Omschrijving</th>
 									</tr>
 								</thead>
@@ -237,7 +238,8 @@ $(document).ready(function() {
 									@foreach (Order::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $order)
 									<tr>
 										<td class="col-md-2"><strong>{{ date('d-m-Y H:i:s', strtotime(DB::table('order')->select('created_at')->where('id','=',$order->id)->get()[0]->created_at)) }}</strong></td>
-										<td class="col-md-4">{{ '&euro; '.number_format($order->amount, 2,",",".") }}</td>
+										<td class="col-md-2">{{ '&euro; '.number_format($order->amount, 2,",",".") }}</td>
+										<td class="col-md-2">{{ $order->status }}</td>
 										<td class="col-md-6">{{ $order->description }}</td>
 									</tr>
 									@endforeach

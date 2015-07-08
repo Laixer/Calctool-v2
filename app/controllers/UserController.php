@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\MessageBag;
+
 class UserController extends \BaseController {
 
 	/**
@@ -26,6 +28,113 @@ class UserController extends \BaseController {
 	public function getPayment()
 	{
 		return View::make('user.payment');
+	}
+
+	public function doPayment()
+	{
+		$rules = array(
+			'payoption' => array('required'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			// redirect our user back to the form with the errors from the validator
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+
+			$mollie = new Mollie_API_Client;
+			$mollie->setApiKey("test_GgXY6mWGW56AAfgC6NDBDXf4bCMfpz");
+
+			$amount = 0;
+			$description = 'None';
+			$increment_months = 0;
+			switch (Input::get('payoption')) {
+				case 1:
+					$amount = 22.50;
+					$description = 'Verleng met een maand';
+					$increment_months = 1;
+					break;
+				case 4:
+					$amount = 80;
+					$description = 'Verleng met 4 maanden';
+					$increment_months = 4;
+					break;
+				case 6:
+					$amount = 110;
+					$description = 'Verleng met 6 maanden';
+					$increment_months = 6;
+					break;
+				case 12:
+					$amount = 200;
+					$description = 'Verleng met 12 maanden';
+					$increment_months = 12;
+					break;
+				case 13:
+					$amount = 6000;
+					$description = 'Goudse Kaas';
+					$increment_months = (12*40);
+					break;
+
+				default:
+					$errors = new MessageBag(['status' => ['Geen geldige optie']]);
+					return Redirect::to('myaccount')->withErrors($errors);
+			}
+
+			$token = sha1(mt_rand().time());
+
+			$payment = $mollie->payments->create(array(
+				"amount"      => $amount,
+				"description" => $description,
+				"redirectUrl" => url('payment/order/'.$token),
+			));
+
+			$order = new Order;
+			$order->transaction = $payment->id;
+			$order->token = $token;
+			$order->amount = $amount;
+			$order->status = 'PENDING';
+			$order->increment = $increment_months;
+			$order->description = $description;
+			$order->user_id = Auth::user()->id;
+
+			$order->save();
+
+			return Redirect::to($payment->links->paymentUrl);
+		}
+	}
+
+	public function getPaymentFinish()
+	{
+		$order = Order::where('token','=',Route::Input('token'))->where('status','=','PENDING')->first();
+		if (!$order) {
+			$errors = new MessageBag(['status' => ['Transactie niet geldig']]);
+			return Redirect::to('myaccount')->withErrors($errors);
+		}
+
+		$mollie = new Mollie_API_Client;
+		$mollie->setApiKey("test_GgXY6mWGW56AAfgC6NDBDXf4bCMfpz");
+
+		$payment = $mollie->payments->get($order->transaction);
+		if ($payment->isPaid()) {
+			$order->status = 'COMPLETE';
+			$order->save();
+		} else {
+			$order->status = 'CANCELED';
+			$order->save();
+			$errors = new MessageBag(['status' => ['Transactie niet afgerond']]);
+			return Redirect::to('myaccount')->withErrors($errors);
+		}
+		$user = Auth::user();
+		$expdate = $user->expiration_date;
+		//echo 'new date ' . date('Y-m-d', strtotime("+".$order->increment." month", strtotime($expdate)));
+		$user->expiration_date = date('Y-m-d', strtotime("+".$order->increment." month", strtotime($expdate)));
+
+		$user->save();
+
+		return Redirect::to('myaccount')->with('success','Betaald');
 	}
 
 	public function doUpdateSecurity()
