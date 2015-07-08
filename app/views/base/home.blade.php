@@ -87,16 +87,20 @@
 				<div class="col-md-3">
 					<div class="featured-box nobg">
 						<div class="box-content">
-							<i class="fa fa-calendar"></i>
-							<h5>Uren</h5>
+							<a href="/timesheet">
+								<i class="fa fa-calendar"></i>
+								<h5>Uren</h5>
+							</a>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-3">
 					<div class="featured-box nobg">
 						<div class="box-content">
-							<i class="fa fa-shopping-cart"></i>
-							<h5>Inkoop</h5>
+							<a href="/purchase">
+								<i class="fa fa-shopping-cart"></i>
+								<h5>Inkoop</h5>
+							</a>
 						</div>
 					</div>
 				</div>

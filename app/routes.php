@@ -25,12 +25,6 @@ Route::any('about', function()
 	return View::make('generic.about');
 });
 
-//Voor de mail blades
-//Route::any('mail', function()
-//{
-//	return View::make('mail.password')->with('username', 'Kaas')->with('api', 'Kaas')->with('token', 'Kaas');
-//});
-
 Route::any('support', function()
 {
 	return View::make('generic.contact');
@@ -181,6 +175,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('project', array('as' => 'project', 'uses' => 'ProjectController@getAll'));
 	Route::get('project-{project_id}/edit', array('as' => 'project.edit', 'uses' => 'ProjectController@getEdit'))->where('project_id', '[0-9]+');
 	Route::post('project/updateworkexecution', array('as' => 'project.edit', 'uses' => 'ProjectController@doUpdateWorkExecution'));
+	Route::post('project/updateprojectclose', array('as' => 'project.edit', 'uses' => 'ProjectController@doUpdateProjectClose'));
 
 	/* Cost pages */
 	Route::get('timesheet', array('as' => 'timesheet', 'uses' => 'CostController@getTimesheet'));
@@ -188,6 +183,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('timesheet/delete', array('as' => 'timesheet', 'uses' => 'CostController@doDeleteTimesheet'));
 	Route::get('purchase', array('as' => 'purchase', 'uses' => 'CostController@getPurchase'));
 	Route::post('purchase/new', array('as' => 'purchase', 'uses' => 'CostController@doNewPurchase'));
+	Route::post('purchase/delete', array('as' => 'timesheet', 'uses' => 'CostController@doDeletePurchase'));
 
 	/* Material database */
 	Route::get('material', array('as' => 'material', 'uses' => 'MaterialController@getList'));

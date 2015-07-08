@@ -2,6 +2,48 @@
 
 @section('content')
 <?# -- WRAPPER -- ?>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#addnewpurchase').click(function(e) {
+			$curThis = $(this);
+			e.preventDefault();
+			$date = $curThis.closest("tr").find("input[name='date']").val();
+			$hour = $curThis.closest("tr").find("input[name='hour']").val();
+			$type = $curThis.closest("tr").find("select[name='typename']").val();
+			$relation = $curThis.closest("tr").find("select[name='relation']").val();
+			$note = $curThis.closest("tr").find("input[name='note']").val();
+			$project = $curThis.closest("tr").find("select[name='projname']").val();
+			$.post("/purchase/new", {
+				date: $date,
+				hour: $hour,
+				type: $type,
+				relation: $relation,
+				note: $note,
+				project: $project
+			}, function(data){
+				var $curTable = $curThis.closest("table");
+				var json = $.parseJSON(data);
+				$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
+				.find("td:eq(0)").text($date).end()
+				.find("td:eq(1)").text(json.relation).end()
+				.find("td:eq(2)").text(json.amount).end()
+				.find("td:eq(3)").text(json.type).end()
+				.find("td:eq(4)").text($note).end()
+				.prependTo($curTable);
+				$curThis.closest("tr").find("input").val("");
+				$curThis.closest("tr").find("select").val("");
+			});
+		});
+		$("body").on("click", ".deleterow", function(e){
+			e.preventDefault();
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id"))
+				$.post("/purchase/delete", {id: $curThis.closest("tr").attr("data-id")}, function(){
+					$curThis.closest("tr").hide("slow");
+				}).fail(function(e) { console.log(e); });
+		});
+	});
+</script>
 <div id="wrapper">
 
 	<section class="container">
@@ -14,49 +56,64 @@
 					<?# -- table head -- ?>
 					<thead>
 						<tr>
-							<th class="col-md-4">Leverancier</th>
-							<th class="col-md-3">Factuurbedrag (excl. BTW)</th>
-							<th class="col-md-3">Factuur behorende bij</th>
+							<th class="col-md-1">Datum</th>
+							<th class="col-md-2">Relatie</th>
+							<th class="col-md-1">Factuurbedrag</th>
+							<th class="col-md-2">Project</th>
+							<th class="col-md-1">Soort</th>
+							<th class="col-md-2">Omschrijving</th>
+							<th class="col-md-1">&nbsp;</th>
 							<th class="col-md-1">&nbsp;</th>
 							<th class="col-md-1">&nbsp;</th>
 						</tr>
 					</thead>
 
-					<!-- table items -->
 					<tbody>
-						<tr><!-- item -->
-							<td class="col-md-4">Destil</td>
-							<td class="col-md-3">$206,01</td>
-							<td class="col-md-3">Aanneming</td>
-							<td class="col-md-1"><button class="btn btn-primary btn-xs fa fa-comment-o"> Notitie</button></td>
-							<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
+						@foreach (Project::where('user_id','=',Auth::user()->id)->get() as $project)
+						@foreach (Purchase::where('project_id','=', $project->id)->get() as $purchase)
+						<tr data-id="{{ $purchase->id }}">
+							<td class="col-md-1">{{ $purchase->register_date }}</td>
+							<td class="col-md-2">{{ Relation::find($purchase->relation_id)->company_name }}</td>
+							<td class="col-md-1">{{ number_format($purchase->amount, 2,",",".") }}</td>
+							<td class="col-md-2">{{ $project->project_name }}</td>
+							<td class="col-md-1">{{ ucwords(PurchaseKind::find($purchase->kind_id)->kind_name) }}</td>
+							<td class="col-md-2">{{ $purchase->note }}</td>
+							<td class="col-md-1">&nbsp;</td>
+							<td class="col-md-1">&nbsp;</td>
+							<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times deleterow"></button></td>
 						</tr>
-						<tr><!-- item -->
-							<td class="col-md-4">Destil</td>
-							<td class="col-md-3">$206,01</td>
-							<td class="col-md-3">Aanneming</td>
-							<td class="col-md-1"><button class="btn btn-primary btn-xs fa fa-comment-o"> Notitie</button></td>
-							<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
-						</tr>
-						<tr><!-- item -->
-							<td class="col-md-4">Destil</td>
-							<td class="col-md-3">$206,01</td>
-							<td class="col-md-3">Aanneming</td>
-							<td class="col-md-1"><button class="btn btn-primary btn-xs fa fa-comment-o"> Notitie</button></td>
-							<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
-						</tr>
-						<tr><!-- item -->
-							<td class="col-md-4"><input type="text" class="form-control control-sm"/></td>
-							<td class="col-md-3"><input type="number" class="form-control control-sm"/></td>
-							<td class="col-md-3">
-								<select name="type" id="type" class="form-control pointer control-sm">
-									<option value="" selected="selected">Aanneming</option>
-									<option value="" selected="selected">Meerwerk</option>
-									<option value="" selected="selected">Stelpost</option>
+						@endforeach
+						@endforeach
+						<tr>
+							<td class="col-md-1">
+								<input type="date" name="date" id="date" class="form-control-sm-text"/>
+							</td>
+							<td class="col-md-2">
+								<select name="relation" id="relation" class="form-control-sm-text">
+								@foreach (Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
+									<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
+								@endforeach
 								</select>
 							</td>
-							<td class="col-md-1"><button class="btn btn-primary btn-xs fa fa-comment-o"> Notitie</button></td>
+							<td class="col-md-1"><input type="number" min="0" name="hour" id="hour" class="form-control-sm-text"/></td>
+							<td class="col-md-2">
+								<select name="projname" id="projname" class="form-control-sm-text">
+								@foreach (Project::where('user_id','=',Auth::user()->id)->get() as $projectname)
+									<option value="{{ $projectname->id }}">{{ ucwords($projectname->project_name) }}</option>
+								@endforeach
+								</select>
+							</td>
+							<td class="col-md-1">
+								<select name="typename" id="typename" class="form-control-sm-text">
+								@foreach (PurchaseKind::all() as $typename)
+									<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
+								@endforeach
+								</select>
+							</td>
+							<td class="col-md-2"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
 							<td class="col-md-1">&nbsp;</td>
+							<td class="col-md-1">&nbsp;</td>
+							<td class="col-md-1"><button id="addnewpurchase" class="btn btn-primary btn-xs"> Toevoegen</button></td>
 						</tr>
 					</tbody>
 				</table>

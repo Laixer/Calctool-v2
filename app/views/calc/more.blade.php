@@ -884,6 +884,7 @@ var n = this,
 
 											<div class="input-group">
 												<input type="text" class="form-control" name="activity" id="activity" value="" placeholder="Nieuwe Werkzaamheid">
+												<input type="hidden" name="project" value="{{ $project->id }}">
 												<span class="input-group-btn">
 													<button class="btn btn-primary btn-primary-activity">Voeg toe</button>
 												</span>
@@ -904,6 +905,7 @@ var n = this,
 							<div class="col-md-6">
 								<div class="input-group">
 									<input type="text" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw Hoofdstuk">
+									<input type="hidden" name="project" value="{{ $project->id }}">
 									<span class="input-group-btn">
 										<button class="btn btn-primary btn-primary-chapter">Voeg toe</button>
 									</span>

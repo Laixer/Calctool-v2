@@ -75,6 +75,14 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});
+		$("body").on("click", ".deleterowp", function(e){
+			e.preventDefault();
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id"))
+				$.post("/purchase/delete", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(){
+					$curThis.closest("tr").hide("slow");
+				}).fail(function(e) { console.log(e); });
+		});
 		$('.dopay').click(function(e){
 			$curThis = $(this);
 			$curproj = $(this).attr('data-project');
@@ -84,6 +92,19 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				console.log($rs);
 				$curThis.replaceWith('Betaald op ' +$rs.payment);
 			}).fail(function(e) { console.log(e); });
+		});
+		$('#projclose').editable({
+			type:  'date',
+			pk:    {{ $project->id }},
+			name:  'wordexec',
+			url:   '/project/updateprojectclose',
+			send:  'always',
+			emptytext: 'Bewerk',
+			title: 'Selecteer einddatum',
+			validate: function(value) {
+				if($.trim(value) == '')
+					return 'Vul een datum in';
+				}
 		});
 		$('#wordexec').editable({
 			type:  'date',
@@ -361,6 +382,12 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="col-md-12">Geen uurtjes factuurtjes</div>
 							</div>
 							<?php } ?>
+								<br>
+							<div class="row">
+								<div class="col-md-3"><strong>Project gesloten</strong></div>
+								<div class="col-md-2"><a href="#" id="projclose" data-format="dd-mm-yyyy">{{ $project->project_close ? date('d-m-Y', strtotime($project->project_close)) : '' }}</a></div>
+								<div class="col-md-3"></div>
+							</div>
 						</div>
 
 						<div id="calc" class="tab-pane">
@@ -628,7 +655,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 												<td class="col-md-1">{{ $purchase->note }}</td>
 												<td class="col-md-1">&nbsp;</td>
 												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times deleterow"></button></td>
+												<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times deleterowp"></button></td>
 											</tr>
 											@endforeach
 											<tr>
