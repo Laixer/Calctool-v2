@@ -53,27 +53,27 @@ class UserController extends \BaseController {
 			$increment_months = 0;
 			switch (Input::get('payoption')) {
 				case 1:
-					$amount = 22.50;
+					$amount = 29.95;
 					$description = 'Verleng met een maand';
 					$increment_months = 1;
 					break;
 				case 4:
-					$amount = 80;
+					$amount = 107.95;
 					$description = 'Verleng met 4 maanden';
 					$increment_months = 4;
 					break;
 				case 6:
-					$amount = 110;
+					$amount = 152.95;
 					$description = 'Verleng met 6 maanden';
 					$increment_months = 6;
 					break;
 				case 12:
-					$amount = 200;
+					$amount = 287.95;
 					$description = 'Verleng met 12 maanden';
 					$increment_months = 12;
 					break;
 				case 13:
-					$amount = 6000;
+					$amount = 15000.95;
 					$description = 'Goudse Kaas';
 					$increment_months = (12*40);
 					break;

@@ -19,27 +19,27 @@
 			<div class="row">
 				<div class="col-md-1"><input type="radio" name="payoption" value="1" /></div>
 				<div class="col-md-2">Maand</div>
-				<div class="col-md-2">&euro; 22,50</div>
+				<div class="col-md-2">&euro; 29,95</div>
 			</div>
 			<div class="row">
 				<div class="col-md-1"><input type="radio" name="payoption" value="4" /></div>
 				<div class="col-md-2">Kwartaal</div>
-				<div class="col-md-2">&euro; 80</div>
+				<div class="col-md-2">&euro; 107,95</div>
 			</div>
 			<div class="row">
 				<div class="col-md-1"><input type="radio" name="payoption" value="6" /></div>
 				<div class="col-md-2">Half jaar</div>
-				<div class="col-md-2">&euro; 110</div>
+				<div class="col-md-2">&euro; 152,95</div>
 			</div>
 			<div class="row">
 				<div class="col-md-1"><input type="radio" name="payoption" value="12" /></div>
 				<div class="col-md-2">Jaar</div>
-				<div class="col-md-2">&euro; 200</div>
+				<div class="col-md-2">&euro; 287,95</div>
 			</div>
 			<div class="row">
 				<div class="col-md-1"><input type="radio" name="payoption" value="13" checked /></div>
 				<div class="col-md-2">Goudse Kaas</div>
-				<div class="col-md-2">&euro; 6.000</div>
+				<div class="col-md-2">&euro; 15.000,95</div>
 			</div><br />
 
 			<div class="row">
