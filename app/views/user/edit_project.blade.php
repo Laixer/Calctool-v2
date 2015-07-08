@@ -75,6 +75,14 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});
+		$("body").on("click", ".deleterowp", function(e){
+			e.preventDefault();
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id"))
+				$.post("/purchase/delete", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(){
+					$curThis.closest("tr").hide("slow");
+				}).fail(function(e) { console.log(e); });
+		});
 		$('.dopay').click(function(e){
 			$curThis = $(this);
 			$curproj = $(this).attr('data-project');
@@ -647,7 +655,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 												<td class="col-md-1">{{ $purchase->note }}</td>
 												<td class="col-md-1">&nbsp;</td>
 												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times deleterow"></button></td>
+												<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times deleterowp"></button></td>
 											</tr>
 											@endforeach
 											<tr>
