@@ -147,6 +147,143 @@
 
 					<div id="summary" class="tab-pane">
 
+							<div class="toogle"><!-- -->
+								<div class="toggle active">
+									<label>Actieve projecten</label>
+									<div class="toggle-content">
+									<table class="table table-striped">
+										<?# -- table head -- ?>
+										<thead>
+											<tr>
+												<th class="col-md-2">&nbsp;</th>
+												<th class="col-md-2">&nbsp;</th>
+												<th class="col-md-2">&nbsp;</th>
+												<th class="col-md-2">Gecalculeerde uren</th>
+												<th class="col-md-2">Geregistreerde uren</th>
+												<th class="col-md-2">Verschil</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											@foreach (Project::where('user_id','=',Auth::user()->id)->where('project_close','=',null)->get() as $project)
+											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->get() as $activity)
+											<tr>
+												<td class="col-md-2"><strong>{{ $project->project_name }}</strong></td>
+												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+												<td class="col-md-2">{{ $activity->activity_name }}</td>
+												<td class="col-md-2">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id), 2,",","."); }}</td>
+												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-2">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+											</tr>
+											@endforeach
+											@endforeach
+											@endforeach
+
+											@foreach (Project::where('user_id','=',Auth::user()->id)->where('project_close','=',null)->get() as $project)
+											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->get() as $activity)
+											<tr>
+												<td class="col-md-2"><strong>{{ $project->project_name }}</strong></td>
+												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+												<td class="col-md-2">{{ $activity->activity_name }}</td>
+												<td class="col-md-2">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id), 2,",","."); }}</td>
+												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-2">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+											</tr>
+											@endforeach
+											@endforeach
+											@endforeach
+
+											@foreach (Project::where('user_id','=',Auth::user()->id)->where('project_close','=',null)->get() as $project)
+											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
+											<tr>
+												<td class="col-md-2"><strong>{{ $project->project_name }}</strong></td>
+												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+												<td class="col-md-2">{{ $activity->activity_name }}</td>
+												<td class="col-md-2">&nbsp;</td>
+												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-2">&nbsp;</td>
+											</tr>
+											@endforeach
+											@endforeach
+											@endforeach
+										</tbody>
+									</table>
+									</div>
+								</div>
+
+								<div class="toggle">
+									<label>Gesloten projecten</label>
+									<div class="toggle-content">
+
+									<table class="table table-striped">
+										<?# -- table head -- ?>
+										<thead>
+											<tr>
+												<th class="col-md-2">&nbsp;</th>
+												<th class="col-md-2">&nbsp;</th>
+												<th class="col-md-2">&nbsp;</th>
+												<th class="col-md-2">Gecalculeerde uren</th>
+												<th class="col-md-2">Geregistreerde uren</th>
+												<th class="col-md-2">Verschil</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											@foreach (Project::where('user_id','=',Auth::user()->id)->whereNotNull('project_close')->get() as $project)
+											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->get() as $activity)
+											<tr>
+												<td class="col-md-2"><strong>{{ $project->project_name }}</strong></td>
+												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+												<td class="col-md-2">{{ $activity->activity_name }}</td>
+												<td class="col-md-2">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id), 2,",","."); }}</td>
+												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-2">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+											</tr>
+											@endforeach
+											@endforeach
+											@endforeach
+
+											@foreach (Project::where('user_id','=',Auth::user()->id)->whereNotNull('project_close')->get() as $project)
+											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->get() as $activity)
+											<tr>
+												<td class="col-md-2"><strong>{{ $project->project_name }}</strong></td>
+												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+												<td class="col-md-2">{{ $activity->activity_name }}</td>
+												<td class="col-md-2">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id), 2,",","."); }}</td>
+												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-2">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+											</tr>
+											@endforeach
+											@endforeach
+											@endforeach
+
+											@foreach (Project::where('user_id','=',Auth::user()->id)->whereNotNull('project_close')->get() as $project)
+											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
+											<tr>
+												<td class="col-md-2"><strong>{{ $project->project_name }}</strong></td>
+												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+												<td class="col-md-2">{{ $activity->activity_name }}</td>
+												<td class="col-md-2">&nbsp;</td>
+												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-2">&nbsp;</td>
+											</tr>
+											@endforeach
+											@endforeach
+											@endforeach
+										</tbody>
+									</table>
+
+									</div>
+								</div>
+
+							</div><!-- -->
+
 					</div>
 
 				</div>
