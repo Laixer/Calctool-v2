@@ -131,4 +131,25 @@ class CostController extends BaseController {
 			return json_encode(['success' => 1, 'type' => PurchaseKind::find(Input::get('type'))->kind_name, 'amount' => number_format($purchase->amount, 2,",","."), 'id' => $purchase->id]);
 		}
 	}
+
+	public function doDeletePurchase()
+	{
+		$rules = array(
+			'id' => array('required','integer')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+			Purchase::destroy(Input::get('id'));
+
+			return json_encode(['success' => 1]);
+		}
+	}
+
 }
