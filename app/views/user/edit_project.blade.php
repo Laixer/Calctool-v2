@@ -85,6 +85,19 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				$curThis.replaceWith('Betaald op ' +$rs.payment);
 			}).fail(function(e) { console.log(e); });
 		});
+		$('#projclose').editable({
+			type:  'date',
+			pk:    {{ $project->id }},
+			name:  'wordexec',
+			url:   '/project/updateprojectclose',
+			send:  'always',
+			emptytext: 'Bewerk',
+			title: 'Selecteer einddatum',
+			validate: function(value) {
+				if($.trim(value) == '')
+					return 'Vul een datum in';
+				}
+		});
 		$('#wordexec').editable({
 			type:  'date',
 			pk:    {{ $project->id }},
@@ -361,6 +374,12 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="col-md-12">Geen uurtjes factuurtjes</div>
 							</div>
 							<?php } ?>
+								<br>
+							<div class="row">
+								<div class="col-md-3"><strong>Project gesloten</strong></div>
+								<div class="col-md-2"><a href="#" id="projclose" data-format="dd-mm-yyyy">{{ $project->project_close ? date('d-m-Y', strtotime($project->project_close)) : '' }}</a></div>
+								<div class="col-md-3"></div>
+							</div>
 						</div>
 
 						<div id="calc" class="tab-pane">
