@@ -8,6 +8,13 @@
     # Redirect Trailing Slashes...
     RewriteRule ^(.*)/$ /$1 [L,R=301]
 
+    # Block known bots
+    SetEnvIfNoCase User-Agent ^libwww-perl bad_bot
+
+    Order Allow,Deny
+    Allow from ALL
+    Deny from env=bad_bot
+
     # Handle Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
