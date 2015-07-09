@@ -67,9 +67,15 @@ class CalcController extends BaseController {
 		return View::make('calc.invoice_all');
 	}
 
-	public function getInvoicepdf()
+	public function getInvoiceRaw()
 	{
-		return View::make('calc.invoicepdf');
+		return View::make('calc.invoice_pdf');
+	}
+
+	public function getInvoicePDF()
+	{
+		$pdf = PDF::loadView('calc.invoice_pdf');
+		return $pdf->stream();
 	}
 
 	public function doNewChapter()
