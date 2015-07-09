@@ -24,7 +24,7 @@
 			<div class="row">
 				<div class="col-md-1"><input type="radio" name="payoption" value="4" /></div>
 				<div class="col-md-2">Kwartaal</div>
-				<div class="col-md-2">&euro; 107,95</div>
+				<div class="col-md-2">&euro; 82,95</div>
 			</div>
 			<div class="row">
 				<div class="col-md-1"><input type="radio" name="payoption" value="6" /></div>

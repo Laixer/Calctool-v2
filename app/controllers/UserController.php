@@ -58,7 +58,7 @@ class UserController extends \BaseController {
 					$increment_months = 1;
 					break;
 				case 4:
-					$amount = 107.95;
+					$amount = 82.95;
 					$description = 'Verleng met 4 maanden';
 					$increment_months = 4;
 					break;
