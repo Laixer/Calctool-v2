@@ -481,7 +481,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
 											@foreach (Timesheet::where('activity_id','=', $activity->id)->get() as $timesheet)
 											<tr data-id="{{ $timesheet->id }}"><!-- item -->
-												<td class="col-md-1">{{ $timesheet->register_date }}</td>
+												<td class="col-md-1">{{ date('d-m-Y', strtotime($timesheet->register_date)) }}</td>
 												<td class="col-md-1">{{ number_format($timesheet->register_hour, 2,",",".") }}</td>
 												<td class="col-md-1">{{ ucwords(TimesheetKind::find($timesheet->timesheet_kind_id)->kind_name) }}</td>
 												<td class="col-md-4">{{ $activity->activity_name }}</td>
@@ -648,9 +648,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 										<tbody>
 											@foreach (Purchase::where('project_id','=', $project->id)->get() as $purchase)
 											<tr data-id="{{ $purchase->id }}">
-												<td class="col-md-1">{{ $purchase->register_date }}</td>
+												<td class="col-md-1">{{ date('d-m-Y', strtotime($purchase->register_date)) }}</td>
 												<td class="col-md-4">{{ Relation::find($purchase->relation_id)->company_name }}</td>
-												<td class="col-md-1">{{ number_format($purchase->amount, 2,",",".") }}</td>
+												<td class="col-md-1">{{ '&euro; '.number_format($purchase->amount, 2,",",".") }}</td>
 												<td class="col-md-1">{{ ucwords(PurchaseKind::find($purchase->kind_id)->kind_name) }}</td>
 												<td class="col-md-1">{{ $purchase->note }}</td>
 												<td class="col-md-1">&nbsp;</td>

@@ -72,9 +72,9 @@
 						@foreach (Project::where('user_id','=',Auth::user()->id)->get() as $project)
 						@foreach (Purchase::where('project_id','=', $project->id)->get() as $purchase)
 						<tr data-id="{{ $purchase->id }}">
-							<td class="col-md-1">{{ $purchase->register_date }}</td>
+							<td class="col-md-1">{{ date('d-m-Y', strtotime($purchase->register_date)) }}</td>
 							<td class="col-md-2">{{ Relation::find($purchase->relation_id)->company_name }}</td>
-							<td class="col-md-1">{{ number_format($purchase->amount, 2,",",".") }}</td>
+							<td class="col-md-1">{{ '&euro; '.number_format($purchase->amount, 2,",",".") }}</td>
 							<td class="col-md-2">{{ $project->project_name }}</td>
 							<td class="col-md-1">{{ ucwords(PurchaseKind::find($purchase->kind_id)->kind_name) }}</td>
 							<td class="col-md-2">{{ $purchase->note }}</td>

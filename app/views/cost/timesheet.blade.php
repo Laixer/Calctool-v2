@@ -94,7 +94,7 @@
 								@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
 								@foreach (Timesheet::where('activity_id','=', $activity->id)->get() as $timesheet)
 								<tr data-id="{{ $timesheet->id }}"><!-- item -->
-									<td class="col-md-1">{{ $timesheet->register_date }}</td>
+									<td class="col-md-1">{{ date('d-m-Y', strtotime($timesheet->register_date)) }}</td>
 									<td class="col-md-1">{{ number_format($timesheet->register_hour, 2,",",".") }}</td>
 									<td class="col-md-1">{{ ucwords(TimesheetKind::find($timesheet->timesheet_kind_id)->kind_name) }}</td>
 									<td class="col-md-1">{{ $project->project_name }}</td>
