@@ -128,7 +128,7 @@ class CostController extends BaseController {
 				'project_id' => Input::get('project')
 			));
 
-			return json_encode(['success' => 1, 'type' => PurchaseKind::find(Input::get('type'))->kind_name, 'amount' => number_format($purchase->amount, 2,",","."), 'id' => $purchase->id]);
+			return json_encode(['success' => 1,'relation' => Relation::find(Input::get('relation'))->company_name, 'type' => ucfirst(PurchaseKind::find(Input::get('type'))->kind_name), 'date' => date('d-m-Y', strtotime(Input::get('date'))), 'amount' => '&euro; '.number_format($purchase->amount, 2,",","."), 'id' => $purchase->id]);
 		}
 	}
 

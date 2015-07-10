@@ -78,11 +78,6 @@ class CalcController extends BaseController {
 		return $pdf->stream();
 	}
 
-
-
-
-
-
 	public function getInvoiceWithTermRaw()
 	{
 		return View::make('calc.invoice_withterm_pdf');
@@ -93,11 +88,6 @@ class CalcController extends BaseController {
 		$pdf = PDF::loadView('calc.invoice_withterm_pdf');
 		return $pdf->stream();
 	}
-
-
-
-
-
 
 	public function doNewChapter()
 	{

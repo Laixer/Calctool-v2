@@ -24,11 +24,11 @@
 				var $curTable = $curThis.closest("table");
 				var json = $.parseJSON(data);
 				$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
-				.find("td:eq(0)").text($date).end()
+				.find("td:eq(0)").text(json.date).end()
 				.find("td:eq(1)").text(json.relation).end()
-				.find("td:eq(2)").text(json.amount).end()
-				.find("td:eq(3)").text(json.type).end()
-				.find("td:eq(4)").text($note).end()
+				.find("td:eq(2)").html(json.amount).end()
+				.find("td:eq(4)").text(json.type).end()
+				.find("td:eq(5)").text($note).end()
 				.prependTo($curTable);
 				$curThis.closest("tr").find("input").val("");
 				$curThis.closest("tr").find("select").val("");
@@ -95,7 +95,7 @@
 								@endforeach
 								</select>
 							</td>
-							<td class="col-md-1"><input type="number" min="0" name="hour" id="hour" class="form-control-sm-text"/></td>
+							<td class="col-md-1"><input type="text" min="0" name="hour" id="hour" class="form-control-sm-text"/></td>
 							<td class="col-md-2">
 								<select name="projname" id="projname" class="form-control-sm-text">
 								@foreach (Project::where('user_id','=',Auth::user()->id)->get() as $projectname)
