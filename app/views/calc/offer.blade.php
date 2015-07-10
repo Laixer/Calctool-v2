@@ -381,7 +381,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 						<div class="modal-header"><!-- modal header -->
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h4 class="modal-title" id="myModalLabel2">Offerte versies</h4>
+							<h4 class="modal-title" id="myModalLabel2">Termijnfacturen</h4>
 						</div><!-- /modal header -->
 
 						<!-- modal body -->
@@ -390,7 +390,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="form-group">
 									<div class="col-md-6">
 										<label>Termijnen</label>
-										<input value="{{ ($offer_last ? $offer_last->invoice_quantity : '2') }}" name="terms" id="terms" min="2" max="50" type="number" class="form-control" />
+										<input value="{{ ($offer_last ? $offer_last->invoice_quantity : '1') }}" name="terms" id="terms" min="1" max="50" type="number" class="form-control" />
 									</div>
 								</div>
 								<div class="form-horizontal">
