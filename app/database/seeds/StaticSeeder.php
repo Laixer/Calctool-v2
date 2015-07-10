@@ -544,8 +544,8 @@ class StaticSeeder extends Seeder {
 		RelationType::create(array('type_name' => 'zonwering'));
 		$this->command->info('RelationType created');
 
-		RelationKind::create(array('kind_name' => 'zakelijk'));
-		RelationKind::create(array('kind_name' => 'particulier'));
+		RelationKind::create(array('kind_name' => 'Zakelijk'));
+		RelationKind::create(array('kind_name' => 'Particulier'));
 		$this->command->info('RelationKind created');
 
 		Valid::create(array('valid_name' => '5 dagen'));
