@@ -729,7 +729,7 @@ var n = this,
 				<a href="/project-{{ $project->id }}/edit">Project</a>
 				<a href="/calculation/project-{{ $project->id }}">Calculatie</a>
 				<a href="/offer/project-{{ $project->id }}">Offerte</a>
-				<a href="javascript:void(0);" class="current">Stelpost stellen</a>
+				<a href="javascript:void(0);" class="current">Stelpost</a>
 				<a href="/less/project-{{ $project->id }}">Minderwerk</a>
 				<a href="/more/project-{{ $project->id }}">Meerwerk</a>
 				<a href="/invoice/project-{{ $project->id }}">Factuur</a>
@@ -1419,7 +1419,7 @@ var n = this,
 							</tbody>
 						</table>
 
-						<h4>Cumulatieven Offerte</h4>
+						<h4>Cumulatieven Stelpost</h4>
 						<table class="table table-striped">
 							<?# -- table head -- ?>
 							<thead>
@@ -1434,7 +1434,7 @@ var n = this,
 							<!-- table items -->
 							<tbody>
 								<tr><!-- item -->
-									<td class="col-md-6">Calculatief te offereren (excl. BTW)</td>
+									<td class="col-md-6">Calculatief te factureren (excl. BTW)</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::totalProject($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
@@ -1464,13 +1464,13 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">Te offereren BTW bedrag</td>
+									<td class="col-md-6">Te factureren BTW bedrag</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::totalProjectTax($project), 2, ",",".") }}</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6"><strong>Calculatief te offereren (Incl. BTW)</strong></td>
+									<td class="col-md-6"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2"><strong>{{ '&euro; '.number_format(EstimateEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
