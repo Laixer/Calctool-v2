@@ -33,4 +33,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return in_array(UserType::find($this->user_type)->user_type, array('admin', 'system'));
 	}
 
+	public function hasPayed() {
+		return (strtotime($this->expiration_date) >= strtotime(date('Y-m-d')));
+	}
+
 }

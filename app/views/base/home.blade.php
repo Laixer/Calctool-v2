@@ -15,6 +15,13 @@
 		</div>
 		@endif
 
+		@if (!Auth::user()->hasPayed())
+		<div class="alert alert-danger">
+			<i class="fa fa-danger"></i>
+			Account is gedeactiveerd, abonnement is verlopen.
+		</div>
+		@endif
+
 		<h2><strong>Navigatie</strong> koppelingen</h2>
 		<article class="row">
 			<div class="col-md-12">
