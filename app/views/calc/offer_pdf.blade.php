@@ -1,7 +1,7 @@
 <?php
-$totaal=Input::get("totaal");
-$specificatie=Input::get("specificatie");
-$omschrijving=Input::get("omschrijving");
+$total=Input::get("total");
+$specification=Input::get("specification");
+$description=Input::get("description");
 $c=false;
 
 $project = Project::find(Route::Input('project_id'));
@@ -50,8 +50,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       <div class="openingtext">Geachte</div>
       <div class="openingtext">{{ ($offer_last ? $offer_last->description : '') }}</div>
 
-      <h1 class="name">Totaalkosten project</h1>
-      @if ($totaal)
+      <h1 class="name">totalkosten project</h1>
+      @if ($total)
       <table border="0" cellspacing="0" cellpadding="0">
         <thead>
           <tr style="page-break-after: always;">
@@ -275,7 +275,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty">&nbsp;</td>
           </tr>
           <tr style="page-break-after: always;">
-            <td class="no"><strong>Totaal Aanneming </strong></td>
+            <td class="no"><strong>total Aanneming </strong></td>
             <td class="desc">&nbsp;</td>
             <td class="unit"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
             <td class="qty">&nbsp;</td>
@@ -361,7 +361,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty">&nbsp;</td>
           </tr>
           <tr style="page-break-after: always;">
-            <td class="no"><strong>Totaal Onderaanneming </strong></td>
+            <td class="no"><strong>total Onderaanneming </strong></td>
             <td class="desc">&nbsp;</td>
             <td class="unit"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
             <td class="qty">&nbsp;</td>
@@ -455,8 +455,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
     </footer>
  @endif
 
-    @if ($specificatie)
-    @if ($totaal)
+    @if ($specification)
+    @if ($total)
     <div style="page-break-after:always;"></div>
     <header class="clearfix">
       <div id="logo">
@@ -469,7 +469,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         </div>
     </header>
 
-     <h1 class="name">Totaalkosten per werkzaamheid</h1>
+     <h1 class="name">totalkosten per werkzaamheid</h1>
      <table border="0" cellspacing="0" cellpadding="0">
         <thead>
           <tr style="page-break-after: always;">
@@ -479,7 +479,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <th class="desc">Arbeid</th>
             <th class="unit">Materiaal</th>
             <th class="qty">Materieel</th>
-            <th class="qty">Totaal</th>
+            <th class="qty">total</th>
             <th class="total">Stelpost</th>
           </tr>
         </thead>
@@ -532,7 +532,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <th class="desc">Arbeid</th>
             <th class="unit">Materiaal</th>
             <th class="qty">Materieel</th>
-            <th class="qty">Totaal</th>
+            <th class="qty">total</th>
           </tr>
         </thead>
         <tbody>
@@ -569,7 +569,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <th class="desc">Arbeid</th>
             <th class="unit">Materiaal</th>
             <th class="qty">Materieel</th>
-            <th class="qty">Totaal</th>
+            <th class="qty">total</th>
             <th class="total">Stelpost</th>
           </tr>
         </thead>
@@ -595,7 +595,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             @endforeach
             @endforeach
           <tr style="page-break-after: always;">
-                <td class="no"><strong>Totaal aanneming</strong></td>
+                <td class="no"><strong>total aanneming</strong></td>
                 <td class="desc">&nbsp;</td>
                 <td class="no"><strong><span class="pull-right">{{ CalculationOverview::contrLaborTotalAmount($project) }}</span></strong></td>
                 <td class="desc"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
@@ -615,7 +615,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <th class="desc">Arbeid</th>
             <th class="unit">Materiaal</th>
             <th class="qty">Materieel</th>
-            <th class="qty">Totaal</th>
+            <th class="qty">total</th>
             <th class="total">Stelpost</th>
           </tr>
         </thead>
@@ -641,7 +641,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           @endforeach
           @endforeach
           <tr style="page-break-after: always;">
-            <td class="no"><strong>Totaal onderaanneming</strong></td>
+            <td class="no"><strong>total onderaanneming</strong></td>
             <td class="desc">&nbsp;</td>
             <td class="no"><strong><span class="pull-right">{{ CalculationOverview::subcontrLaborTotalAmount($project) }}</span></strong></td>
             <td class="desc"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
@@ -661,7 +661,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <th class="desc">Arbeid</th>
             <th class="unit">Materiaal</th>
             <th class="qty">Materieel</th>
-            <th class="qty">Totaal</th>
+            <th class="qty">total</th>
             <th class="total">&nbsp;</th>
           </tr>
         </thead>
@@ -680,8 +680,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       @endif
       @endif
 
-    @if ($omschrijving)
-    @if ($totaal)
+    @if ($description)
+    @if ($total)
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
         <div id="logo">
@@ -693,13 +693,13 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <div class="date">{{ date("j M Y") }}</div>
         </div>
     </header>
-    <h1 class="name">Omschrijving werkzaamheden</h1>
+    <h1 class="name">description werkzaamheden</h1>
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
           <th class="no">Hoofdstuk</th>
           <th class="desc">Werkzaamheid</th>
-          <th class="no">Omschrijving</th>
+          <th class="no">description</th>
         </tr>
       </thead>
       <tbody>
@@ -726,14 +726,14 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         <div class="date">{{ date("j M Y") }}</div>
       </div>
     </header>
-    <h1 class="name">Omschrijving werkzaamheden</h1>
+    <h1 class="name">description werkzaamheden</h1>
     <h2 class="name">Aanneming</h2>
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
           <th class="no">Hoofdstuk</th>
           <th class="desc">Werkzaamheid</th>
-          <th class="no">Omschrijving</th>
+          <th class="no">description</th>
         </tr>
       </thead>
       <tbody>
@@ -754,7 +754,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         <tr style="page-break-after: always;">
           <th class="no">Hoofdstuk</th>
           <th class="desc">Werkzaamheid</th>
-          <th class="no">Omschrijving</th>
+          <th class="no">description</th>
         </tr>
       </thead>
       <tbody>
