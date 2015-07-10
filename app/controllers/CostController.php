@@ -78,7 +78,7 @@ class CostController extends BaseController {
 				));
 			}
 
-			return json_encode(['success' => 1, 'type' => $type, 'activity' => Activity::find($timesheet->activity_id)->activity_name, 'hour' => number_format($timesheet->register_hour, 2,",","."), 'project' => $_project->project_name, 'id' => $timesheet->id]);
+			return json_encode(['success' => 1, 'type' => $type, 'activity' => Activity::find($timesheet->activity_id)->activity_name, 'hour' => number_format($timesheet->register_hour, 2,",","."), 'date' => date('d-m-Y', strtotime(Input::get('date'))), 'project' => $_project->project_name, 'id' => $timesheet->id]);
 		}
 	}
 

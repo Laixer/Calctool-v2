@@ -22,8 +22,8 @@
 				var $curTable = $curThis.closest("table");
 				var json = $.parseJSON(data);
 				$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
-				.find("td:eq(0)").text($date).end()
-				.find("td:eq(1)").text(json.hour).end()
+				.find("td:eq(0)").text(json.date).end()
+				.find("td:eq(1)").html(json.hour).end()
 				.find("td:eq(2)").text(json.type).end()
 				.find("td:eq(3)").text(json.project).end()
 				.find("td:eq(4)").text(json.activity).end()
@@ -110,7 +110,7 @@
 								@endforeach
 								<tr><!-- item -->
 									<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text"/></td>
-									<td class="col-md-1"><input type="number" min="0" name="hour" id="hour" class="form-control-sm-text"/></td>
+									<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
 									<td class="col-md-1">
 										<select name="typename" id="typename" class="form-control-sm-text">
 										@foreach (TimesheetKind::all() as $typename)
