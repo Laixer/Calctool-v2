@@ -21,7 +21,7 @@
 				<div class="col-md-2"><strong>Te betalen</strong></div>
 			</div>
 			<div class="row">
-				<div class="col-md-1"><input type="radio" name="payoption" value="1" /></div>
+				<div class="col-md-1"><input type="radio" name="payoption" value="1" checked /></div>
 				<div class="col-md-1">Maand</div>
 				<div class="col-md-1">&euro; 29,95</div>
 				<div class="col-md-1">0%</div>
