@@ -1375,7 +1375,7 @@ var n = this,
 												<th class="col-md-1"><span class="pull-right">Materiaal</th>
 												<th class="col-md-1"><span class="pull-right">Materieel</th>
 												<th class="col-md-1"><span class="pull-right">Totaal</th>
-												<th class="col-md-1"><span class="text-center">Stelpost</th>
+												<th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
 											</tr>
 										</thead>
 
@@ -1426,7 +1426,7 @@ var n = this,
 												<th class="col-md-1"><span class="pull-right">Materiaal</th>
 												<th class="col-md-1"><span class="pull-right">Materieel</th>
 												<th class="col-md-1"><span class="pull-right">Totaal</th>
-												<th class="col-md-1"><span class="text-center">Stelpost</th>
+												<th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
 											</tr>
 										</thead>
 
