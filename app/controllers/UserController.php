@@ -58,26 +58,20 @@ class UserController extends \BaseController {
 					$increment_months = 1;
 					break;
 				case 4:
-					$amount = 82.95;
+					$amount = 80.85;
 					$description = 'Verleng met 4 maanden';
 					$increment_months = 4;
 					break;
 				case 6:
-					$amount = 152.95;
+					$amount = 152.75;
 					$description = 'Verleng met 6 maanden';
 					$increment_months = 6;
 					break;
 				case 12:
-					$amount = 287.95;
+					$amount = 287.52;
 					$description = 'Verleng met 12 maanden';
 					$increment_months = 12;
 					break;
-				case 13:
-					$amount = 15000.95;
-					$description = 'Goudse Kaas';
-					$increment_months = (12*40);
-					break;
-
 				default:
 					$errors = new MessageBag(['status' => ['Geen geldige optie']]);
 					return Redirect::to('myaccount')->withErrors($errors);

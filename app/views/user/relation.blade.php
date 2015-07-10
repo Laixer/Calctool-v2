@@ -19,7 +19,7 @@
 						<th class="col-md-2">Telefoon</th>
 						<th class="col-md-2">Email</th>
 						<th class="col-md-2">Plaats</th>
-						<?# --<th class="col-md-2">Website</th>-- ?>
+						<!-- <th class="col-md-2">Website</th> -->
 					</tr>
 				</thead>
 
@@ -39,7 +39,7 @@
 						<td class="col-md-2">{{ $relation->phone }}</td>
 						<td class="col-md-2">{{ $relation->email }}</td>
 						<td class="col-md-2">{{ $relation->address_city }}</td>
-						<?# --<td class="col-md-2">{{ $relation->website }}</td>-- ?>
+						<!--m<td class="col-md-2">{{ $relation->website }}</td> -->
 					</tr>
 				<?php } ?>
 				</tbody>
