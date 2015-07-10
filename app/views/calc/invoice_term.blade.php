@@ -80,57 +80,11 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 			$('.show-activity').hide();
 		  }
 		});
-		$("[name='toggle-subcontr']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
-		  if (state) {
-		  	$('.show-all').show();
-		  	$('.show-totals').hide();
-		  } else {
-		  	$('.show-all').hide();
-		  	$('.show-totals').show();
-		  }
-		});
 		$("[name='toggle-note']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-note').show();
 		  } else {
 			$('.show-note').hide();
-		  }
-		});
-		$("[name='toggle-endresult']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
-		  if (state) {
-		  	$('.only-total').hide();
-		  	$('.hide-btw1').hide();
-	        $('.hide-btw2 tr').each(function() {
-                $(this).find("td").eq(2).hide();
-                $(this).find("th").eq(2).hide();
-                $(this).find("td").eq(3).hide();
-                $(this).find("th").eq(3).hide();
-	        });
-	        $('.hide-btw2').each(function() {
-	        	$(this).find("tr").eq(2).hide();
-	        	$(this).find("tr").eq(3).hide();
-	        	$(this).find("tr").eq(4).hide();
-	        	$(this).find("tr").eq(5).hide();
-	        	$(this).find("tr").eq(6).hide();
-	        	$(this).find("tr").eq(7).hide();
-	        });
-		  } else {
-		  	$('.only-total').show();
-			$('.hide-btw1').show();
-	        $('.hide-btw2 tr').each(function() {
-                $(this).find("td").eq(2).show();
-                $(this).find("th").eq(2).show();
-                $(this).find("td").eq(3).show();
-                $(this).find("th").eq(3).show();
-	        });
-	        $('.hide-btw2').each(function() {
-	        	$(this).find("tr").eq(2).show();
-	        	$(this).find("tr").eq(3).show();
-	        	$(this).find("tr").eq(4).show();
-	        	$(this).find("tr").eq(5).show();
-	        	$(this).find("tr").eq(6).show();
-	        	$(this).find("tr").eq(7).show();
-	        });
 		  }
 		});
 		$("[name='toggle-summary']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
@@ -245,24 +199,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 						      <div class="checkbox">
 						        <label>
 						          <input name="toggle-tax" type="checkbox" checked> BTW bedragen gespecificeerd weergeven
-						        </label>
-						      </div>
-						    </div>
-						  </div>
-						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
-						      <div class="checkbox">
-						        <label>
-						          <input name="toggle-endresult" type="checkbox"> Alleen eindbedrag weergeven
-						        </label>
-						      </div>
-						    </div>
-						  </div>
-						   <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
-						      <div class="checkbox">
-						        <label>
-						          <input name="toggle-subcontr" type="checkbox"> Onderaanneming gespecificeerd weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -440,9 +376,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 						</table>
 					</div>
 
-
-					Hier moet nog onderaanneming - aanneming komen
-
 					<textarea name="closure" id="closure" rows="10" class="form-control">{{ ($invoice ? $invoice->closure : '') }}</textarea>
 
 					<h5>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</h5>
@@ -456,32 +389,9 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 			<!-- INVOICE FOOTER -->
 			<div class="row">
 
-				<div class="col-sm-6">
-					<!--<h4><strong>Contact</strong> Details</h4>
-
-					<p class="nomargin nopadding">
-						<strong>Note:</strong>
-						Like other components, easily make a panel more meaningful to a particular context by adding any of the contextual state classes.
-					</p><br />
-
-					<address>
-						PO Box 21132 <br>
-						Vivas 2355 Australia<br>
-						Phone: 1-800-565-2390 <br>
-						Fax: 1-800-565-2390 <br>
-						Email:support@yourname.com
-					</address>-->
-
-				</div>
+				<div class="col-sm-6"></div>
 
 				<div class="col-sm-6 text-right">
-
-					<!--<ul class="list-unstyled invoice-total-info">
-						<li><strong>Sub - Total Amount:</strong> $2162.00</li>
-						<li><strong>Discount:</strong> 10.0%</li>
-						<li><strong>VAT ($6):</strong> $12.0</li>
-						<li><strong>Grand Total:</strong> $1958.0</li>
-					</ul>-->
 
 					<div class="padding20">
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>

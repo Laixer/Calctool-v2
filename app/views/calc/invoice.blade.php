@@ -309,7 +309,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 		</div>
 	</div>
 
-	<h2><strong>Factuur</strong></h2>
+	<h2><strong>Eindfactuur</strong></h2>
 	<form method="POST" id="frm-invoice" action="/invoice/close">
 		<input name="id" value="{{ $invoice->id }}" type="hidden"/>
 		<input name="projectid" value="{{ $project->id }}" type="hidden"/>

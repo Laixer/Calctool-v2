@@ -209,7 +209,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						<td class="col-md-4"><a href="#" data-toggle="modal" class="changedesc" data-desc="{{ $invoice_end->description }}" data-closure="{{ $invoice_end->closure }}" data-id="{{ $invoice_end->id }}" data-target="#textModal">{{ $invoice_end->description }}</a></td>
 						<td class="col-md-2"><input type="number" name="condition" data-id="{{ $invoice_end->id }}" value="{{ $invoice_end->payment_condition }}" class="form-control condition" /></td>
 						<td class="col-md-2"><?php if ($invoice_end->invoice_close) { echo 'Gefactureerd'; } else if ($close) { echo '<form method="POST" id="frm-invoice" action="/invoice/close"><input name="id" value="'.$invoice_end->id.'" type="hidden"/><input name="projectid" value="'.$project->id.'" type="hidden"/><input type="submit" class="btn btn-primary btn-xs" value="Factureren"/></form>'; $close=false; } else { echo 'Open'; } ?></td></td>
-						<td class="col-md-1"><?php if (!$invoice_end->invoice_close) { ?><form method="POST" id="frm-delete" action="/invoice/term/delete"><input name="id" value="{{ $invoice_end->id }}" type="hidden"/><button class="btn btn-danger btn-xs fa fa-times deleterow"></button></form><?php } ?></td>
+						<td class="col-md-1"></td>
 					</tr>
 				<?php } ?>
 				</tbody>
