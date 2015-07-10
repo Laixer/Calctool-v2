@@ -11,6 +11,7 @@
 			<h2><strong>Abonnementskeuze</strong></h2>
 			{{ Form::open() }}
 
+			<div class="white-row">
 			<div class="row">
 				<div class="col-md-1"></div>
 				<div class="col-md-1"><strong>Periode</strong></div>
@@ -56,6 +57,7 @@
 				<div class="col-md-12">
 					<button class="btn btn-primary"><i class="fa fa-check"></i>Bevestigen</button>
 				</div>
+			</div>
 			</div>
 			{{ Form::close() }}
 
