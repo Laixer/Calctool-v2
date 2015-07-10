@@ -246,7 +246,7 @@ class TestProjectSeeder extends Seeder {
 			'function_id' => $test_contact_function->id
 		));
 
-		Contact::create(array(
+		$test_contact_1=Contact::create(array(
 			'firstname' => 'K',
 			'lastname' => 'Aas',
 			'email' => 'k@kaas.nl',
@@ -257,7 +257,7 @@ class TestProjectSeeder extends Seeder {
 			'function_id' => $test_contact_function->id
 		));
 
-		Contact::create(array(
+		$test_contact_2=Contact::create(array(
 			'firstname' => 'H',
 			'lastname' => 'Blub',
 			'email' => 'h@mycorp.com',
@@ -1952,6 +1952,8 @@ class TestProjectSeeder extends Seeder {
 			'offer_finish' => '2015-07-02',
 			'deliver_id' => '1',
 			'valid_id' => '1',
+			'to_contact_id' => $test_contact_1->id,
+			'from_contact_id' => $test_contact_2->id,
 			'invoice_quantity' => '3',
 			'project_id' => '1',
 			'resource_id' => '1',
