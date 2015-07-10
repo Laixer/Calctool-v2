@@ -441,10 +441,10 @@ class StaticSeeder extends Seeder {
 		Country::create(array('country_name' => 'zwitserland'));
 		$this->command->info('Country created');
 
-		$ProjectType1 = ProjectType::create(array('type_name' => 'regie'));
-		$ProjectType2 = ProjectType::create(array('type_name' => 'calculatie'));
-		$ProjectType3 = ProjectType::create(array('type_name' => 'blanco offerte'));
-		$ProjectType4 = ProjectType::create(array('type_name' => 'blanco factuur'));
+		$ProjectType1 = ProjectType::create(array('type_name' => 'Regie'));
+		$ProjectType2 = ProjectType::create(array('type_name' => 'Calculatie'));
+		$ProjectType3 = ProjectType::create(array('type_name' => 'Blanco offerte'));
+		$ProjectType4 = ProjectType::create(array('type_name' => 'Blanco factuur'));
 		$this->command->info('ProjectType created');
 
 		$Part1 = Part::create(array('part_name' => 'contracting'));
