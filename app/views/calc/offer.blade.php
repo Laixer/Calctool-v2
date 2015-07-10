@@ -230,7 +230,19 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 	<div class="pull-right">
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Versies</a>
-		<a href="/offer/pdf/project-1001/download" class="btn btn-primary">PDF</a>
+
+		<div class="btn-group">
+		  <a href="/offer/pdf/project-1001/download" class="btn btn-primary">PDF</a>
+		  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    <span class="caret"></span>
+		    <span class="sr-only">Toggle Dropdown</span>
+		  </button>
+		  <ul class="dropdown-menu">
+		    <li><a href="/offer/pdf/project-1001/download">Download</a></li>
+		    <li><a href="/offer/pdf/project-1001">Bekijk</a></li>
+		  </ul>
+		</div>
+
 		<?php if (!($offer_last && $offer_last->offer_finish)) { ?>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
@@ -1334,7 +1346,19 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				<div class="col-sm-6 text-right">
 					<div class="padding20">
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Versies</a>
-						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#pdfModal">PDF</a>
+
+						<div class="btn-group">
+						  <a href="/offer/pdf/project-1001/download" class="btn btn-primary">PDF</a>
+						  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    <span class="caret"></span>
+						    <span class="sr-only">Toggle Dropdown</span>
+						  </button>
+						  <ul class="dropdown-menu">
+						    <li><a href="/offer/pdf/project-1001/download">Download</a></li>
+						    <li><a href="/offer/pdf/project-1001">Bekijk</a></li>
+						  </ul>
+						</div>
+
 						<?php if (!($offer_last && $offer_last->offer_finish)) { ?>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
