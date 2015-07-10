@@ -95,6 +95,7 @@ Route::group(array('before' => 'auth'), function()
 
 	Route::get('offer/raw/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOfferRaw'))->where('project_id', '[0-9]+');
 	Route::get('offer/pdf/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOfferPDF'))->where('project_id', '[0-9]+');
+	Route::get('offer/pdf/project-{project_id}/download', array('as' => 'invoice', 'uses' => 'CalcController@getOfferDownloadPDF'))->where('project_id', '[0-9]+');
 
 	Route::get('invoice/raw/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoiceRaw'))->where('project_id', '[0-9]+');
 	Route::get('invoice/pdf/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoicePDF'))->where('project_id', '[0-9]+');

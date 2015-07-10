@@ -23,7 +23,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
   <body>
     <header class="clearfix">
       <div id="logo">
-            {{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+      <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
       </div>
       <div id="company">
         <h3 class="name">{{ $relation_self->company_name }}</h3>
@@ -428,7 +428,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         <div style="page-break-after:always;"></div>
         <header class="clearfix">
         <div id="logo">
-              {{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+      <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
         </div>>
              <div id="invoice">
               <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
@@ -455,24 +455,12 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
     </footer>
  @endif
 
-
-
-
-
-
-
-
-
-
-
-
-
     @if ($specificatie)
     @if ($totaal)
     <div style="page-break-after:always;"></div>
     <header class="clearfix">
       <div id="logo">
-            {{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+      <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
       </div>
          <div id="invoice">
           <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
@@ -520,7 +508,13 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="unit"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
-            <td class="total text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
+            <td class="total text-center">
+            <?php
+              if (PartType::find($activity->part_type_id)->type_name=='estimate') {
+                echo "<strong>Ja</strong>";
+              }
+            ?>
+            </td>
           </tr>
           @endforeach
           @endforeach
@@ -555,7 +549,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
         <div id="logo">
-              {{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+      <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
         </div>
          <div id="invoice">
           <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
@@ -590,7 +584,13 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
               <td class="unit"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
               <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
               <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-              <td class="total text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
+              <td class="total text-center">
+            <?php
+              if (PartType::find($activity->part_type_id)->type_name=='estimate') {
+                echo "<strong>Ja</strong>";
+              }
+            ?>
+              </td>
             </tr>
             @endforeach
             @endforeach
@@ -630,7 +630,13 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="unit"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
-            <td class="total text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
+            <td class="total text-center">
+            <?php
+              if (PartType::find($activity->part_type_id)->type_name=='estimate') {
+                echo "<strong>Ja</strong>";
+              }
+            ?>
+            </td>
           </tr>
           @endforeach
           @endforeach
@@ -674,22 +680,12 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       @endif
       @endif
 
-
-
-
-
-
-
-
-
-
-
     @if ($omschrijving)
     @if ($totaal)
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
         <div id="logo">
-            {{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+      <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
         </div>
          <div id="invoice">
           <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
@@ -722,7 +718,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
     <div style="page-break-after:always;"></div>
     <header class="clearfix">
         <div id="logo">
-           {{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+      <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
        </div>
        <div id="invoice">
         <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>

@@ -20,7 +20,6 @@ class CalcController extends BaseController {
 		return View::make('calc.calculation');
 	}
 
-
 	public function getEstimate()
 	{
 		return View::make('calc.estimate');
@@ -60,6 +59,12 @@ class CalcController extends BaseController {
 	{
 		$pdf = PDF::loadView('calc.offer_pdf');
 		return $pdf->stream();
+	}
+
+	public function getOfferDownloadPDF()
+	{
+		$pdf = PDF::loadView('calc.offer_pdf');
+		return $pdf->download();
 	}
 
 	public function getInvoiceAll()

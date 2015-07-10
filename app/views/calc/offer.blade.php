@@ -228,17 +228,15 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 		</div>
 		@endif
 
-	<?php if (!($offer_last && $offer_last->offer_finish)) { ?>
 	<div class="pull-right">
-		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
-
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Versies</a>
-
+		<a href="/offer/pdf/project-1001/download" class="btn btn-primary">PDF</a>
+		<?php if (!($offer_last && $offer_last->offer_finish)) { ?>
+		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
-
 		<button class="btn btn-primary osave">Offerte  maken</button>
+		<?php } ?>
 	</div>
-	<?php } ?>
 
 	<!-- modal dialog -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -1328,51 +1326,22 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				</div>
 			</form>
 
-			<!--<hr class="half-margins invisible" />--><!-- separator -->
-
 			<!-- INVOICE FOOTER -->
 			<div class="row">
 
-				<div class="col-sm-6">
-					<!--<h4><strong>Contact</strong> Details</h4>
+				<div class="col-sm-6"></div>
 
-					<p class="nomargin nopadding">
-						<strong>Note:</strong>
-						Like other components, easily make a panel more meaningful to a particular context by adding any of the contextual state classes.
-					</p><br />
-
-					<address>
-						PO Box 21132 <br>
-						Vivas 2355 Australia<br>
-						Phone: 1-800-565-2390 <br>
-						Fax: 1-800-565-2390 <br>
-						Email:support@yourname.com
-					</address>-->
-
-				</div>
-
-				<?php if (!($offer_last && $offer_last->offer_finish)) { ?>
 				<div class="col-sm-6 text-right">
-
-					<!--<ul class="list-unstyled invoice-total-info">
-						<li><strong>Sub - Total Amount:</strong> $2162.00</li>
-						<li><strong>Discount:</strong> 10.0%</li>
-						<li><strong>VAT ($6):</strong> $12.0</li>
-						<li><strong>Grand Total:</strong> $1958.0</li>
-					</ul>-->
-
 					<div class="padding20">
-						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
-
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Versies</a>
-
+						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#pdfModal">PDF</a>
+						<?php if (!($offer_last && $offer_last->offer_finish)) { ?>
+						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
-						<!--<button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>-->
-						<button class="btn btn-primary osave">Offerte sluiten</button>
+						<button class="btn btn-primary osave">Offerte maken</button>
+						<?php } ?>
 					</div>
-
 				</div>
-				<?php } ?>
 
 			</div>
 		</div>
