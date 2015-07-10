@@ -475,7 +475,13 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<br>
 							<br>
 							<li>{{ $relation->company_name }}</li>
-							<li>t.a.v. -hier moet een selectlist komen van de contacten van dit bedrijf-</li>
+							<li>t.a.v.
+							<select name="to_contact" id="to_contact">
+								@foreach (Contact::where('relation_id','=',$relation->id)->get() as $contact)
+								<option value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
+								@endforeach
+							</select>
+							</li>
 							<li>{{ $relation->address_street . ' ' . $relation->address_number }}<br /> {{ $relation->address_postal . ', ' . $relation->address_city }}</li>
 						</ul>
 
@@ -994,6 +1000,14 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<option {{ ($offer_last ? ($offer_last->valid_id == $valid->id ? 'selected' : '') : '') }} value="{{ $valid->id }}">{{ $valid->valid_name }}</option>
 							@endforeach
 						</select> na dagtekening.
+					</p>
+
+					<p>Cheers,
+						<select name="from_contact" id="from_contact">
+							@foreach (Contact::where('relation_id','=',$relation_self->id)->get() as $contact)
+							<option value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
+							@endforeach
+						</select>
 					</p>
 
 				</div>

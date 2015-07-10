@@ -20,7 +20,9 @@ class OfferController extends BaseController {
 		$rules = array(
 			'deliver' => array('required','integer','min:0'),
 			'terms' => array('integer','min:0'),
-			'valid' => array('required','integer','min:0')
+			'valid' => array('required','integer','min:0'),
+			'to_contact' => array('required'),
+			'from_contact' => array('required'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -31,6 +33,8 @@ class OfferController extends BaseController {
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 			$offer = new Offer;
+			$offer->to_contact_id = Input::get('to_contact');
+			$offer->from_contact_id = Input::get('from_contact');
 			$offer->description = Input::get('description');
 			$offer->closure = Input::get('closure');
 			if (Input::get('toggle-payment'))
