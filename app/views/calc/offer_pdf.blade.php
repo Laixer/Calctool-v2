@@ -31,8 +31,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         <div>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</div>
         <div>{{ $relation_self->phone }}</div>
         <div>Email:<a href="mailto:{{ $relation_self->email }}">{{ $relation_self->email }}</a></div>
-      </div>
-      </div>
     </header>
     <main>
       <div id="details" class="clearfix">
@@ -429,16 +427,14 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
         <div style="page-break-after:always;"></div>
         <header class="clearfix">
-          <div id="logo">
-            <img src="{{ asset('images/logo2.png') }}">
-          </div>
+        <div id="logo">
+              {{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+        </div>>
              <div id="invoice">
               <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
               <div class="date">{{ $project->project_name }}</div>
               <div class="date">{{ date("j M Y") }}</div>
             </div>
-          </div>
-          </div>
         </header>
 
 
@@ -476,15 +472,13 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
     <div style="page-break-after:always;"></div>
     <header class="clearfix">
       <div id="logo">
-        <img src="{{ asset('images/logo2.png') }}">
+            {{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
       </div>
          <div id="invoice">
           <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
           <div class="date">{{ $project->project_name }}</div>
           <div class="date">{{ date("j M Y") }}</div>
         </div>
-      </div>
-      </div>
     </header>
 
      <h1 class="name">Totaalkosten per werkzaamheid</h1>
@@ -512,7 +506,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="unit"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-            <td class="total text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
+            <td class="total text-center ($activity)"></td>
           </tr>
           @endforeach
           @endforeach
@@ -545,7 +539,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <th class="unit">Materiaal</th>
             <th class="qty">Materieel</th>
             <th class="qty">Totaal</th>
-            <th class="total">Stelpost</th>
           </tr>
         </thead>
         <tbody>
@@ -556,22 +549,19 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="unit"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
-          <td class="total">&nbsp;</td>
         </tbody>
       </table>
       @else
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
-      <div id="logo">
-        <img src="{{ asset('images/logo2.png') }}">
-      </div>
+        <div id="logo">
+              {{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+        </div>
          <div id="invoice">
           <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
           <div class="date">{{ $project->project_name }}</div>
           <div class="date">{{ date("j M Y") }}</div>
         </div>
-      </div>
-      </div>
      </header>
 
      <h1 class="name">Totalen per project</h1>
@@ -698,16 +688,14 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
     @if ($totaal)
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
-      <div id="logo">
-        <img src="{{ asset('images/logo2.png') }}">
-      </div>
+        <div id="logo">
+            {{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+        </div>
          <div id="invoice">
           <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
           <div class="date">{{ $project->project_name }}</div>
           <div class="date">{{ date("j M Y") }}</div>
         </div>
-      </div>
-      </div>
     </header>
     <h1 class="name">Omschrijving werkzaamheden</h1>
     <table border="0" cellspacing="0" cellpadding="0">
@@ -719,25 +707,27 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         </tr>
       </thead>
       <tbody>
-        <tr style="page-break-after: always;">
-          <td class="no">Hoofdstuk</td>
-          <td class="desc">Werkzaamheid</td>
-          <td class="no">Omschrijving</td>
-         </tr>
+        @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+        @foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
+        <tr><!-- item -->
+          <td class="no"><strong>{{ $chapter->chapter_name }}</strong></td>
+          <td class="desc">{{ $activity->activity_name }}</td>
+          <td class="no"><span>{{ $activity->note }}</td>
+        </tr>
+        @endforeach
+        @endforeach
       </tbody>
     </table>
     @else
     <div style="page-break-after:always;"></div>
     <header class="clearfix">
-      <div id="logo">
-        <img src="{{ asset('images/logo2.png') }}">
-      </div>
-         <div id="invoice">
-          <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
-          <div class="date">{{ $project->project_name }}</div>
-          <div class="date">{{ date("j M Y") }}</div>
-        </div>
-      </div>
+        <div id="logo">
+           {{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+       </div>
+       <div id="invoice">
+        <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
+        <div class="date">{{ $project->project_name }}</div>
+        <div class="date">{{ date("j M Y") }}</div>
       </div>
     </header>
     <h1 class="name">Omschrijving werkzaamheden</h1>
@@ -751,11 +741,15 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         </tr>
       </thead>
       <tbody>
-        <tr style="page-break-after: always;">
-          <td class="no">Hoofdstuk</td>
-          <td class="desc">Werkzaamheid</td>
-          <td class="no">Omschrijving</td>
-         </tr>
+        @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+        @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+        <tr><!-- item -->
+          <td class="no"><strong>{{ $chapter->chapter_name }}</strong></td>
+          <td class="desc">{{ $activity->activity_name }}</td>
+          <td class="no"><span>{{ $activity->note }}</td>
+        </tr>
+        @endforeach
+        @endforeach
       </tbody>
     </table>
      <h2 class="name">Onderaanneming</h2>
@@ -768,30 +762,18 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         </tr>
       </thead>
       <tbody>
-        <tr style="page-break-after: always;">
-          <td class="no">Hoofdstuk</td>
-          <td class="desc">Werkzaamheid</td>
-          <td class="no">Omschrijving</td>
-         </tr>
+        @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+        @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+        <tr><!-- item -->
+          <td class="no"><strong>{{ $chapter->chapter_name }}</strong></td>
+          <td class="desc">{{ $activity->activity_name }}</td>
+          <td class="no"><span>{{ $activity->note }}</td>
+        </tr>
+        @endforeach
+        @endforeach
       </tbody>
     </table>
     @endif
     @endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   </body>
 </html>
