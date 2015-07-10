@@ -104,7 +104,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			validate: function(value) {
 				if($.trim(value) == '')
 					return 'Vul een datum in';
-				}
+			}
 		});
 		$('#wordexec').editable({
 			type:  'date',
@@ -131,7 +131,11 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			validate: function(value) {
 				if($.trim(value) == '')
 					return 'Vul een datum in';
-				}
+			},
+			params: function (params) {
+				params.project_id = {{ $project->id }};
+				return params;
+			}
 		});
 		<?php } ?>
 	});

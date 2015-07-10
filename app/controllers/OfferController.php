@@ -57,7 +57,8 @@ class OfferController extends BaseController {
 		$rules = array(
 			'name' => array('required'),
 			'value' => array('required'),
-			'pk' => array('required','integer')
+			'pk' => array('required','integer'),
+			'project_id' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -67,9 +68,12 @@ class OfferController extends BaseController {
 
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
+
 			$offer = Offer::find(Input::get('pk'));
 			$offer->offer_finish = date('Y-m-d', strtotime(Input::get('value')));
 			$offer->save();
+
+			$downpayment_id = 0;
 
 			for ($i=0; $i < $offer->invoice_quantity; $i++) {
 				$invoice = new Invoice;
@@ -82,6 +86,13 @@ class OfferController extends BaseController {
 				if ($i == 0 && $offer->downpayment)
 					$invoice->amount = $offer->downpayment_amount;
 				$invoice->save();
+				if ($i == 0 && $offer->downpayment)
+					$downpayment_id = $invoice->id;
+			}
+
+			if ($offer->invoice_quantity>1) {
+				$input = array('id' => $downpayment_id, 'project' => Input::get('project_id'), 'amount' => $offer->downpayment_amount);
+				return App::make('InvoiceController')->doUpdateAmount(Input::merge($input));
 			}
 
 			return json_encode(['success' => 1]);
