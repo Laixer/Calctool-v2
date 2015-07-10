@@ -440,6 +440,9 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 						</table>
 					</div>
 
+
+					Hier moet nog onderaanneming - aanneming komen
+
 					<textarea name="closure" id="closure" rows="10" class="form-control">{{ ($invoice ? $invoice->closure : '') }}</textarea>
 
 					<h5>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</h5>
