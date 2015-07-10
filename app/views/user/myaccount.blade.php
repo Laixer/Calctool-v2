@@ -72,13 +72,13 @@ $(document).ready(function() {
 					<?# -- tabs -- ?>
 					<ul class="nav nav-tabs">
 						<li class="active">
-							<a href="#company" data-toggle="tab">Gebruikersgegevens</a>
+							<a href="#company" data-toggle="tab">Mijn gegevens</a>
 						</li>
 						<li>
-							<a href="#payment" data-toggle="tab">Abonementsgegevens</a>
+							<a href="#payment" data-toggle="tab">Mijn abonnement</a>
 						</li>
 						<li>
-							<a href="#contact" data-toggle="tab">Beveiliging</a>
+							<a href="#contact" data-toggle="tab">Wacthwoord</a>
 						</li>
 						<li>
 							<a href="#prefs" data-toggle="tab">Voorkeuren</a>
@@ -91,7 +91,7 @@ $(document).ready(function() {
 
 							{{ Form::open(array('url' => 'myaccount/updateuser')) }}
 
-							<h4 class="company">Gebruikersgegevens</h4>
+							<h4 class="company">Contactgegevens</h4>
 							<div class="row company">
 
 								<div class="col-md-4">
@@ -207,16 +207,17 @@ $(document).ready(function() {
 						<div id="payment" class="tab-pane">
 
 							<div class="pull-right">
-								<a href="/payment" class="btn btn-primary">Abonement verlengen</a>
+								<a href="/payment" class="btn btn-primary">Abonnement verlengen</a>
 							</div>
 
-							<h4>Abonementsgegevens</h4>
+							<h4>Abonnementsduur</h4>
 							<div class="row">
-								<div class="col-md-2"><strong>Abonement actief tot:</strong></div>
+								<div class="col-md-3"><strong>Abonnement actief tot:</strong></div>
 								<div class="col-md-2">{{ date('j F Y', strtotime($user->expiration_date)) }}</div>
+								<div class="col-md-7">&nbsp;</div>
 							</div>
 							<br />
-							<h4>Geschiedenis</h4>
+							<h4>Betalingsgeschiedenis</h4>
 							<table class="table table-striped">
 								<?# -- table head -- ?>
 								<thead>
@@ -244,7 +245,7 @@ $(document).ready(function() {
 
 							{{ Form::open(array('url' => 'myaccount/security/update')) }}
 
-							<h4 class="company">Wachtwoord veranderen</h4>
+							<h4 class="company">Wachtwoord wijzigen</h4>
 							<div class="row company">
 
 								<div class="col-md-4">
