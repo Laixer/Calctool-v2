@@ -562,12 +562,12 @@ var n = this,
 				<ul class="nav nav-tabs">
 					<li id="tab-calculate">
 						<a href="#calculate" data-toggle="tab">
-							<i class="fa fa-list-ol"></i> Calculeren
+							<i class="fa fa-list"></i> Calculeren
 						</a>
 					</li>
 					<li id="tab-summary">
 						<a href="#summary" data-toggle="tab">
-							<i class="fa fa-sort-amount-desc"></i> Uittrekstaat
+							<i class="fa fa-align-justify"></i> Uittrekstaat
 						</a>
 					</li>
 					<li id="tab-endresult">

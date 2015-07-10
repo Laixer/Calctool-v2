@@ -746,21 +746,20 @@ var n = this,
 				<ul class="nav nav-tabs">
 					<li id="tab-estimate">
 						<a href="#estimate" data-toggle="tab">
-							<i class="fa fa-sort-amount-desc"></i> Stelposten stellen
+							<i class="fa fa-align-justify"></i> Stelposten stellen
 						</a>
 					</li>
 					<li id="tab-summary">
 						<a href="#summary" data-toggle="tab">
-							<i class="fa fa-sort-amount-desc"></i> Uittrekstaat
+							<i class="fa fa-sort-amount-asc"></i> Uittrekstaat
 						</a>
 					</li>
 					<li id="tab-endresult">
 						<a href="#endresult" data-toggle="tab">
-							<i class="fa fa-sort-amount-desc"></i> Eindresultaat
+							<i class="fa fa-check-circle-o"></i> Eindresultaat
 						</a>
 					</li>
 				</ul>
-
 				<!-- tabs content -->
 				<div class="tab-content">
 
