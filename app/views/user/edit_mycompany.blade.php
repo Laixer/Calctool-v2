@@ -84,9 +84,6 @@ $(document).ready(function() {
 						<li>
 							<a href="#logo" data-toggle="tab">Logo</a>
 						</li>
-						<li>
-							<a href="#voorkeuren" data-toggle="tab">Voorkeuren</a>
-						</li>
 					</ul>
 
 					<?# -- tabs content -- ?>
@@ -308,10 +305,6 @@ $(document).ready(function() {
 							</div>
 
 							{{ Form::close() }}
-						</div>
-						<div id="voorkeuren" class="tab-pane">
-							<h4>Voorkeuren</h4>
-							Hier komen voorkeuren voor de prefs
 						</div>
 					</div>
 				</div>
