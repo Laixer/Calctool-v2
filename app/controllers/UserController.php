@@ -339,4 +339,47 @@ class UserController extends \BaseController {
 			return Redirect::back()->with('success', 1);
 		}
 	}
+
+	public function doUpdatePreferences()
+	{
+		print_r(Input::all());
+
+		$user = Auth::user();
+		if (Input::get('pref_mailings_optin'))
+			$user->pref_mailings_optin = true;
+		else
+			$user->pref_mailings_optin = false;
+
+		$user->pref_hourrate_calc = Input::get('pref_hourrate_calc');
+		$user->pref_hourrate_more = Input::get('pref_hourrate_more');
+		$user->pref_profit_calc_contr_mat = Input::get('pref_profit_calc_contr_mat');
+		$user->pref_profit_calc_contr_equip = Input::get('pref_profit_calc_contr_equip');
+		$user->pref_profit_calc_subcontr_mat = Input::get('pref_profit_calc_subcontr_mat');
+		$user->pref_profit_calc_subcontr_equip = Input::get('pref_profit_calc_subcontr_equip');
+		$user->pref_profit_more_contr_mat = Input::get('pref_profit_more_contr_mat');
+		$user->pref_profit_more_contr_equip = Input::get('pref_profit_more_contr_equip');
+		$user->pref_profit_more_subcontr_mat = Input::get('pref_profit_more_subcontr_mat');
+		$user->pref_profit_more_subcontr_equip = Input::get('pref_profit_more_subcontr_equip');
+
+		$user->pref_email_offer = Input::get('pref_email_offer');
+		$user->pref_offer_description = Input::get('pref_offer_description');
+		$user->pref_closure_offer = Input::get('pref_closure_offer');
+		$user->pref_email_invoice = Input::get('pref_email_invoice');
+		$user->pref_invoice_description = Input::get('pref_invoice_description');
+		$user->pref_invoice_closure = Input::get('pref_invoice_closure');
+		$user->pref_email_invoice_first_reminder = Input::get('pref_email_invoice_first_reminder');
+		$user->pref_email_invoice_last_reminder = Input::get('pref_email_invoice_last_reminder');
+		$user->pref_email_invoice_first_demand = Input::get('pref_email_invoice_first_demand');
+		$user->pref_email_invoice_last_demand = Input::get('pref_email_invoice_last_demand');
+
+		$user->offernumber_prefix = Input::get('offernumber_prefix');
+		$user->offer_counter = Input::get('offer_counter');
+		$user->invoicenumber_prefix = Input::get('invoicenumber_prefix');
+		$user->invoice_counter = Input::get('invoice_counter');
+		$user->administration_cost = Input::get('administration_cost');
+
+		$user->save();
+
+		return Redirect::back()->with('success', 1);
+	}
 }
