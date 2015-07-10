@@ -454,7 +454,7 @@ class RelationController extends \BaseController {
 	{
 		$rules = array(
 			'id' => array('required','integer'),
-			'image' => array('required', 'mimes:jpeg,bmp,png'),
+			'image' => array('required', 'mimes:jpeg,bmp,png,gif'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -468,13 +468,13 @@ class RelationController extends \BaseController {
 
 			if (Input::hasFile('image')) {
 				$file = Input::file('image');
-				$newname = md5(mt_rand()).$file->getClientOriginalName();
+				$newname = Auth::id().'-'.md5(mt_rand()).'.'.$file->getClientOriginalExtension();
 				$file->move('user-content', $newname);
 
 				$image = Image::make('user-content/' . $newname)->resize(350, 100)->save();
 
 				$resource = new Resource;
-				$resource->resource_name = $file->getClientOriginalName();
+				$resource->resource_name = $newname;
 				$resource->file_location = 'user-content/' . $newname;
 				$resource->file_size = $image->filesize();
 				$resource->user_id = Auth::user()->id;
