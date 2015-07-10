@@ -2,8 +2,12 @@
 $totaal=Input::get("totaal");
 $specificatie=Input::get("specificatie");
 $omschrijving=Input::get("omschrijving");
+$termijn=Input::get("termijn");
 $c=false;
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -42,6 +46,10 @@ $c=false;
           <div class="date">Datum factuur</div>
         </div>
       </div>
+
+
+
+
 
       <div class="openingtext">Geachte</div>
       <div class="openingtext">
@@ -140,75 +148,8 @@ $c=false;
           </tr>
         </tbody>
       </table>
-
-      <h1 class="name">Cumulatieven factuur</h1>
-      <table border="0" cellspacing="0" cellpadding="0">
-        <thead>
-          <tr style="page-break-after: always;">
-            <th class="no">&nbsp;</th>
-            <th class="unit">Bedrag (excl. BTW)</th>
-            <th class="qty">BTW bedrag</th>
-            <th class="total">Bedrag (incl. BTW)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="page-break-after: always;">
-            <td class="no"><strong>Calculatief te offereren (excl. BTW)</strong></td>
-            <td class="unit">Bedrag (excl. BTW)</td>
-            <td class="qty">BTW bedrag</td>
-            <td class="total">Bedrag (incl. BTW)</td>
-          </tr>
-          <tr style="page-break-after: always;">
-            <td class="no"><strong>BTW bedrag calculatie belast met 21%</strong>&nbsp;</td>
-            <td class="unit">Bedrag (excl. BTW)</td>
-            <td class="qty">BTW bedrag</td>
-            <td class="total">Bedrag (incl. BTW)</td>
-          </tr>
-          <tr style="page-break-after: always;">
-            <td class="no"><strong>BTW bedrag calculatie belast met 6%</strong></td>
-            <td class="unit">Bedrag (excl. BTW)</td>
-            <td class="qty">BTW bedrag</td>
-            <td class="total">Bedrag (incl. BTW)</td>
-          </tr>
-          <tr style="page-break-after: always;">
-            <td class="no"><strong>Te offereren BTW bedrag</strong></td>
-            <td class="unit">Bedrag (excl. BTW)</td>
-            <td class="qty">BTW bedrag</td>
-            <td class="total">Bedrag (incl. BTW)</td>
-          </tr>
-          <tr style="page-break-after: always;">
-            <td class="no"><strong>Calculatief te offereren (Incl. BTW)</strong></td>
-            <td class="unit">Bedrag (excl. BTW)</td>
-            <td class="qty">BTW bedrag</td>
-            <td class="total">Bedrag (incl. BTW)</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="closingtext">
-        Omschrijving voor op de factuur mag hier komen te staan.  Dez emag zo groot zijn als je maar wilt maar natuurlijk zitten er grenzen aan.
-        Omschrijving voor op de factuur mag hier komen te staan.  Dez emag zo groot zijn als je maar wilt maar natuurlijk zitten er grenzen aan.
-        Omschrijving voor op de factuur mag hier komen te staan.  Dez emag zo groot zijn als je maar wilt maar natuurlijk zitten er grenzen aan.
-      </div>
-
-      <h1 class="name">Bepalingen</h1>
-      <div class="statements">
-        <li>Indien opdracht gegund wordt, ontvangt u één eindfactuur.</li>
-        <li>Wij kunnen de werkzaamheden starten binnen   na uw opdrachtbevestiging.</li>
-        <li>Deze factuur is geldig tot   na dagtekening.</li>
-      </div>
-      <div class="signing">Met vriendelijke groet,</div>
-      <div class="signing">Mijn Naam</div>
-    </main>
-
-    <footer>
-      Deze factuur is op de computer gegenereerd en is geldig zonder handtekening.
-    </footer>
       @else
-
-
-
-
-     <h2 class="name">Aanneming</h2>
+           <h2 class="name">Aanneming</h2>
      <table border="0" cellspacing="0" cellpadding="0">
         <thead>
           <tr style="page-break-after: always;">
@@ -364,6 +305,8 @@ $c=false;
             <td class="total">Bedrag (incl. BTW)</td>
           </tr>
       </table>
+      @endif
+
       <h1 class="name">Cumulatieven factuur</h1>
       <table border="0" cellspacing="0" cellpadding="0">
         <thead>
@@ -408,8 +351,10 @@ $c=false;
         </tbody>
       </table>
 
-    <div style="page-break-after:always;"></div>
-    <header class="clearfix">
+      @if ($totaal)
+      @else
+      <div style="page-break-after:always;"></div>
+       <header class="clearfix">
       <div id="logo">
         <img src="{{ asset('images/logo2.png') }}">
       </div>
@@ -423,14 +368,14 @@ $c=false;
       </div>
       </div>
     </header>
-
-    <div class="closingtext">
+      @endif
+      <div class="closingtext">
         Omschrijving voor op de factuur mag hier komen te staan.  Dez emag zo groot zijn als je maar wilt maar natuurlijk zitten er grenzen aan.
         Omschrijving voor op de factuur mag hier komen te staan.  Dez emag zo groot zijn als je maar wilt maar natuurlijk zitten er grenzen aan.
         Omschrijving voor op de factuur mag hier komen te staan.  Dez emag zo groot zijn als je maar wilt maar natuurlijk zitten er grenzen aan.
       </div>
 
-     <h1 class="name">Bepalingen</h1>
+      <h1 class="name">Bepalingen</h1>
       <div class="statements">
         <li>Indien opdracht gegund wordt, ontvangt u één eindfactuur.</li>
         <li>Wij kunnen de werkzaamheden starten binnen   na uw opdrachtbevestiging.</li>
@@ -443,7 +388,18 @@ $c=false;
     <footer>
       Deze factuur is op de computer gegenereerd en is geldig zonder handtekening.
     </footer>
-     @endif
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1065,7 +1021,23 @@ $c=false;
 
 
 
-Daarna zelfd etruc voor onderstaande:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1165,19 +1137,6 @@ Daarna zelfd etruc voor onderstaande:
     </table>
     @endif
     @endif
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

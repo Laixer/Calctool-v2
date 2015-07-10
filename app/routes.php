@@ -98,6 +98,9 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('invoice/raw/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoiceRaw'))->where('project_id', '[0-9]+');
 	Route::get('invoice/pdf/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoicePDF'))->where('project_id', '[0-9]+');
 
+	Route::get('invoice_withterm/raw/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoiceWithTermRaw'))->where('project_id', '[0-9]+');
+	Route::get('invoice_withterm/pdf/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoiceWithTermPDF'))->where('project_id', '[0-9]+');
+
 	/* Calculation acions by calculation */
 	Route::post('calculation/calc/newmaterial', array('as' => 'calculation', 'uses' => 'CalcController@doNewCalculationMaterial'));
 	Route::post('calculation/calc/newequipment', array('as' => 'calculation', 'uses' => 'CalcController@doNewCalculationEquipment'));

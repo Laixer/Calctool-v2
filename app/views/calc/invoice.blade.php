@@ -835,7 +835,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 					$cnt = Invoice::where('offer_id','=', $invoice->offer_id)->count();
 					if ($cnt>1) {
 					?>
-					<h4>Cumulatieven Factuur</h4>
+					<h4>Reeds betaald</h4>
 					<table class="table table-striped hide-btw2">
 						<?# -- table head -- ?>
 						<thead>
@@ -898,7 +898,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 
 					</table>
 
-					<h4>Cumulatieven Factuur</h4>
+					<h4>Resterend te betalen</h4>
 					<table class="table table-striped hide-btw2">
 						<?# -- table head -- ?>
 						<thead>
