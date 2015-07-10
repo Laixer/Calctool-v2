@@ -502,14 +502,38 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           </tr>
         </thead>
         <tbody>
-
-
-
-
-
-
-
+          @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+          @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+          <tr><!-- item -->
+            <td class="no"><strong>{{ $chapter->chapter_name }}</strong></td>
+            <td class="desc">{{ $activity->activity_name }}</td>
+            <td class="no"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
+            <td class="desc"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
+            <td class="unit"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
+            <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
+            <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
+            <td class="total text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
+          </tr>
+          @endforeach
+          @endforeach
+          @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+          @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+          <tr><!-- item -->
+            <td class="no"><strong>{{ $chapter->chapter_name }}</strong></td>
+            <td class="desc">{{ $activity->activity_name }}</td>
+            <td class="no"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
+            <td class="desc"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
+            <td class="unit"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
+            <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
+            <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
+            <td class="total text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
+          </tr>
+          @endforeach
+          @endforeach
+        </tbody>
      </table>
+
+
      <h1 class="name">Totalen per project</h1>
      <table border="0" cellspacing="0" cellpadding="0">
         <thead>
@@ -525,16 +549,15 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           </tr>
         </thead>
         <tbody>
-          <tr style="page-break-after: always;">
-            <td class="no">&nbsp;</td>
-            <td class="desc">&nbsp;</td>
-            <td class="no">Arbeidskosten</td>
-            <td class="desc">Uren</td>
-            <td class="unit">Bedrag (excl. BTW)</td>
-            <td class="qty">BTW %</td>
-            <td class="qty">BTW bedrag</td>
-            <td class="total">Bedrag (incl. BTW)</td>
-          </tr>
+          <td class="no">&nbsp;</td>
+          <td class="desc">&nbsp;</td>
+          <td class="no"><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>
+          <td class="desc"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
+          <td class="unit"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
+          <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
+          <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
+          <td class="total">&nbsp;</td>
+        </tbody>
       </table>
       @else
       <div style="page-break-after:always;"></div>
