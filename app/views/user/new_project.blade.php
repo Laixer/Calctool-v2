@@ -67,7 +67,7 @@
 
 				</div>
 
-				<h4>Project adresgegevens</h4>
+				<h4>Adres project</h4>
 				<div class="row">
 
 					<div class="col-md-4">
