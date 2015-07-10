@@ -441,10 +441,10 @@ class StaticSeeder extends Seeder {
 		Country::create(array('country_name' => 'zwitserland'));
 		$this->command->info('Country created');
 
-		$ProjectType1 = ProjectType::create(array('type_name' => 'Regie'));
-		$ProjectType2 = ProjectType::create(array('type_name' => 'Calculatie'));
-		$ProjectType3 = ProjectType::create(array('type_name' => 'Blanco offerte'));
-		$ProjectType4 = ProjectType::create(array('type_name' => 'Blanco factuur'));
+		$ProjectType1 = ProjectType::create(array('type_name' => 'regie'));
+		$ProjectType2 = ProjectType::create(array('type_name' => 'calculatie'));
+		$ProjectType3 = ProjectType::create(array('type_name' => 'blanco offerte'));
+		$ProjectType4 = ProjectType::create(array('type_name' => 'blanco factuur'));
 		$this->command->info('ProjectType created');
 
 		$Part1 = Part::create(array('part_name' => 'contracting'));
@@ -544,8 +544,8 @@ class StaticSeeder extends Seeder {
 		RelationType::create(array('type_name' => 'zonwering'));
 		$this->command->info('RelationType created');
 
-		RelationKind::create(array('kind_name' => 'Zakelijk'));
-		RelationKind::create(array('kind_name' => 'Particulier'));
+		RelationKind::create(array('kind_name' => 'zakelijk'));
+		RelationKind::create(array('kind_name' => 'particulier'));
 		$this->command->info('RelationKind created');
 
 		Valid::create(array('valid_name' => '5 dagen'));
