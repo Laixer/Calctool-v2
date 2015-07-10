@@ -24,7 +24,7 @@
 
 		<h2><strong>Navigatie</strong> koppelingen</h2>
 		<article class="row">
-			<div class="col-md-12">
+			<div class="col-md-6">
 				<!--<h4>Navigatie</h4>-->
 				<div class="col-md-3">
 					<div class="featured-box nobg">
@@ -32,6 +32,16 @@
 							<a href="/project">
 								<i class="fa fa-folder-open"></i>
 								<h5>Projecten</h5>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="featured-box nobg">
+						<div class="box-content">
+							<a href="/project/new">
+								<i class="fa fa-pencil"></i>
+								<h5>Nieuw project</h5>
 							</a>
 						</div>
 					</div>
@@ -49,6 +59,18 @@
 				<div class="col-md-3">
 					<div class="featured-box nobg">
 						<div class="box-content">
+							<a href="/relation/new">
+								<i class="fa fa-user"></i>
+								<h5>Nieuwe relatie</h5>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="col-md-3">
+					<div class="featured-box nobg">
+						<div class="box-content">
 							<a href="/material">
 								<i class="fa fa-sort-alpha-desc"></i>
 								<h5>Materialen</h5>
@@ -62,31 +84,6 @@
 							<a href="/mycompany">
 								<i class="fa fa-files-o"></i>
 								<h5>Bedrijf</h5>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</article>
-		<article class="row">
-			<div class="col-md-12">
-				<!--<h4>Navigatie</h4>-->
-				<div class="col-md-3">
-					<div class="featured-box nobg">
-						<div class="box-content">
-							<a href="/project/new">
-								<i class="fa fa-pencil"></i>
-								<h5>Nieuw project</h5>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="featured-box nobg">
-						<div class="box-content">
-							<a href="/relation/new">
-								<i class="fa fa-user"></i>
-								<h5>Nieuwe relatie</h5>
 							</a>
 						</div>
 					</div>
@@ -112,7 +109,7 @@
 					</div>
 				</div>
 			</div>
-		</article>
+
 
 <!--
 http://ashobiz.asia/boot-extended14/ui/ui-117.html#
@@ -368,7 +365,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 									</div><!-- /.masonry-container -->
 									<!-- CALLOUT -->
 									<div class="bs-callout text-center nomargin-bottom">
-										<h3>Do you like what you see? <a href="contact-us.html" target="_blank" class="btn btn-primary btn-lg">Yes, let's work together!</a></h3>
+										<h3>Ben je tevreden met de CalcTool?? <a href="about" target="_blank" class="btn btn-primary btn-lg">Ja? We horen het graag!</a></h3>
 									</div>
 									<!-- /CALLOUT -->
 								</section>
