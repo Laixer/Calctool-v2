@@ -2,8 +2,6 @@
 $totaal=Input::get("totaal");
 $specificatie=Input::get("specificatie");
 $omschrijving=Input::get("omschrijving");
-$termijn=Input::get("termijn");
-$c=false;
 ?>
 
 
