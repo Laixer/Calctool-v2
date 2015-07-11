@@ -51,7 +51,7 @@ return array(
 			'host'     => 'localhost',
 			'database' => 'calctoolv2',
 			'username' => 'user_laravel',
-			'password' => '13R4bZB5Xb4gGqFwmJQ2Ky7u7e4PcF523X2HNwed',
+			'password' => 'wgn3v9FwweJUY7rc4MR3XZFl0IJ6WakjABYbBrEK',
 			'charset'  => 'utf8',
 			'prefix'   => '',
 			'schema'   => 'public',
