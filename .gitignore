@@ -1,4 +1,4 @@
-/bootstrap/compiled.php
+bootstrap/compiled.php
 composer.lock
 vendor/
 .env.*.php
@@ -8,5 +8,5 @@ vendor/
 Thumbs.db
 TODO
 *.sublime*
-/.revision
-public/user-content
+.revision
+# public/user-content/
