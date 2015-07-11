@@ -20,7 +20,9 @@ class CreateSystemTable extends Migration {
 		Schema::create('system_message', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->text('message_content');
+			$table->string('title', 30);
+			$table->text('content');
+			$table->boolean('active')->default('N');
 			$table->nullableTimestamps();
 		});
 

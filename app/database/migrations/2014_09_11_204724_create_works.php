@@ -17,10 +17,16 @@ class CreateWorks extends Migration {
 	 */
 	public function up()
 	{
+		Schema::create('tax', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->integer('tax_rate')->unsigned();
+		});
+
 		Schema::create('chapter', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('chapter_name', 10);
+			$table->string('chapter_name', 50);
 			$table->smallInteger('priority')->index();
 			$table->text('note')->nullable();
 			$table->integer('project_id')->unsigned();
@@ -35,7 +41,31 @@ class CreateWorks extends Migration {
 			$table->text('note')->nullable();
 			$table->integer('chapter_id')->unsigned();
 			$table->foreign('chapter_id')->references('id')->on('chapter')->onUpdate('cascade')->onDelete('cascade');
+			$table->integer('tax_calc_labor_id')->unsigned();
+			$table->foreign('tax_calc_labor_id')->references('id')->on('tax')->onUpdate('cascade')->onDelete('restrict');
+			$table->integer('tax_calc_material_id')->unsigned();
+			$table->foreign('tax_calc_material_id')->references('id')->on('tax')->onUpdate('cascade')->onDelete('restrict');
+			$table->integer('tax_calc_equipment_id')->unsigned();
+			$table->foreign('tax_calc_equipment_id')->references('id')->on('tax')->onUpdate('cascade')->onDelete('restrict');
+			$table->integer('tax_more_labor_id')->unsigned();
+			$table->foreign('tax_more_labor_id')->references('id')->on('tax')->onUpdate('cascade')->onDelete('restrict');
+			$table->integer('tax_more_material_id')->unsigned();
+			$table->foreign('tax_more_material_id')->references('id')->on('tax')->onUpdate('cascade')->onDelete('restrict');
+			$table->integer('tax_more_equipment_id')->unsigned();
+			$table->foreign('tax_more_equipment_id')->references('id')->on('tax')->onUpdate('cascade')->onDelete('restrict');
+			$table->integer('tax_estimate_labor_id')->unsigned();
+			$table->foreign('tax_estimate_labor_id')->references('id')->on('tax')->onUpdate('cascade')->onDelete('restrict');
+			$table->integer('tax_estimate_material_id')->unsigned();
+			$table->foreign('tax_estimate_material_id')->references('id')->on('tax')->onUpdate('cascade')->onDelete('restrict');
+			$table->integer('tax_estimate_equipment_id')->unsigned();
+			$table->foreign('tax_estimate_equipment_id')->references('id')->on('tax')->onUpdate('cascade')->onDelete('restrict');
 		});
+
+		$seq_chapter = "ALTER SEQUENCE chapter_id_seq RESTART WITH 1000";
+		$seq_activity = "ALTER SEQUENCE activity_id_seq RESTART WITH 1000";
+
+		DB::unprepared($seq_chapter);
+		DB::unprepared($seq_activity);
 	}
 
 	/**
@@ -53,6 +83,11 @@ class CreateWorks extends Migration {
 		Schema::table('chapter', function(Blueprint $table)
 		{
 			Schema::drop('chapter');
+		});
+
+		Schema::table('tax', function(Blueprint $table)
+		{
+			Schema::drop('tax');
 		});
 	}
 

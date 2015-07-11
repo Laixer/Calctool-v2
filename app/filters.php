@@ -37,21 +37,8 @@ Route::filter('auth', function()
 {
 	if (Auth::guest())
 	{
-		if (Request::ajax())
-		{
-			return Response::make('Unauthorized', 401);
-		}
-		else
-		{
-			return Redirect::guest('login');
-		}
+		return Redirect::guest('login');
 	}
-});
-
-
-Route::filter('auth.basic', function()
-{
-	return Auth::basic();
 });
 
 /*
@@ -67,8 +54,39 @@ Route::filter('auth.basic', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) return Redirect::to('/');
+	if (Auth::check())
+	{
+		 return Redirect::to('/');
+	}
 });
+
+/*
+|--------------------------------------------------------------------------
+| Admin Filters
+|--------------------------------------------------------------------------
+|
+| The following filters are used to verify that the user of the current
+| session is logged into this application. The "basic" filter easily
+| integrates HTTP Basic authentication for quick, simple checking.
+|
+*/
+
+Route::filter('admin', function()
+{
+	if (Auth::guest())
+	{
+		return Redirect::guest('login');
+	}
+
+	//if(!in_array(UserType::find(Auth::user()->user_type)->user_type, array('admin', 'system'))) {
+	if (!Auth::user()->isAdmin())
+	{
+		//return Redirect::to('/');
+		return Response::view('generic.404', array('url' => Request::path()), 404);
+	}
+
+});
+
 
 /*
 |--------------------------------------------------------------------------
@@ -87,4 +105,19 @@ Route::filter('csrf', function()
 	{
 		throw new Illuminate\Session\TokenMismatchException;
 	}
+});
+
+/*
+|--------------------------------------------------------------------------
+| Missing page
+|--------------------------------------------------------------------------
+|
+| If a page could not be found an 404 error page is sumbitted to the
+| client. Here a view can be registred as an 404 error page.
+|
+*/
+
+App::missing(function($exception)
+{
+    return Response::view('generic.404', array('url' => Request::path()), 404);
 });

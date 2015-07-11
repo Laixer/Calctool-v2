@@ -1,6 +1,12 @@
-composer.phar
+/bootstrap/compiled.php
 composer.lock
+vendor/
 .env.*.php
 .env.php
+.env*
 .DS_Store
 Thumbs.db
+TODO
+*.sublime*
+/.revision
+public/user-content

@@ -2,23 +2,19 @@
 
 class Project extends Eloquent {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'project';
-
-	protected $fillable = array('project_name');
-
 	protected $guarded = array('id', 'project_code');
 
 	public function user() {
 		return $this->hasOne('User');
 	}
 
-	public function provance() {
-		return $this->hasOne('Provance');
+	public function contactor() {
+		return $this->hasOne('Relation', 'id', 'client_id');
+	}
+
+	public function province() {
+		return $this->hasOne('Province');
 	}
 
 	public function country() {
@@ -26,6 +22,7 @@ class Project extends Eloquent {
 	}
 
 	public function type() {
-		return $this->hasOne('ProjectType');
+		return $this->hasOne('ProjectType', 'id', 'type_id');
 	}
+
 }

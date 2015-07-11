@@ -2,14 +2,8 @@
 
 class PartType extends Eloquent {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'part_type';
-
-	protected $fillable = array('type_name');
+	protected $guarded = array('id');
 
 	public $timestamps = false;
 
@@ -20,4 +14,5 @@ class PartType extends Eloquent {
 	public function detail() {
 		return $this->belongsToMany('Detail', 'part_part_detail', 'detail_id', 'type_id');
 	}
+
 }

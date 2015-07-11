@@ -2,16 +2,8 @@
 
 class Purchase extends Eloquent {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'purchase';
-
 	protected $guarded = array('id');
-
-	protected $fillable = array('note');
 
 	public $timestamps = false;
 
@@ -26,4 +18,5 @@ class Purchase extends Eloquent {
 	public function relation() {
 		return $this->hasOne('Relation');
 	}
+
 }

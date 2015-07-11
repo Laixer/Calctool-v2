@@ -26,7 +26,8 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(array(
 
-	'local' => array('webdev'),
+	'local' => array('webdev', 'webdev2', 'don-VirtualBox', 'alnx17', 'debdev', 'ctdev'),
+	'dev' => array('dev'),
 
 ));
 
@@ -54,8 +55,7 @@ $app->bindInstallPaths(require __DIR__.'/paths.php');
 |
 */
 
-$framework = $app['path.base'].
-                 '/vendor/laravel/framework/src';
+$framework = $app['path.base'].'/vendor/laravel/framework/src';
 
 require $framework.'/Illuminate/Foundation/start.php';
 

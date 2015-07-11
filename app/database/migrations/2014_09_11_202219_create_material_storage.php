@@ -20,6 +20,7 @@ class CreateMaterialStorage extends Migration {
 		Schema::create('sub_group', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->string('reference_code', 10)->index();
 			$table->string('group_type', 50)->unique();
 		});
 
@@ -35,9 +36,12 @@ class CreateMaterialStorage extends Migration {
 		{
 			$table->increments('id');
 			$table->string('unit', 30)->nullable();
-			$table->string('unit_price', 30);
+			$table->integer('article_code')->unsigned();
 			$table->decimal('price', 9, 2)->index()->unsigned();
-			$table->decimal('package_length', 9, 2)->index()->unsigned();
+			$table->decimal('package_height', 9, 2)->unsigned();
+			$table->decimal('package_length', 9, 2)->unsigned();
+			$table->decimal('package_width', 9, 2)->unsigned();
+			$table->decimal('minimum_quantity', 9, 2)->unsigned();
 			$table->string('description');
 			$table->integer('group_id')->unsigned();
 			$table->foreign('group_id')->references('id')->on('sub_group')->onUpdate('cascade')->onDelete('cascade');
@@ -51,6 +55,7 @@ class CreateMaterialStorage extends Migration {
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('product_id')->unsigned();
 			$table->foreign('product_id')->references('id')->on('product')->onUpdate('cascade')->onDelete('cascade');
+			$table->primary(array('user_id', 'product_id'));
 		});
 	}
 

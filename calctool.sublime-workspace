@@ -4,6 +4,222 @@
 		"selected_items":
 		[
 			[
+				"arr",
+				"array"
+			],
+			[
+				"ac",
+				"activity_id"
+			],
+			[
+				"activity",
+				"activity_id"
+			],
+			[
+				"cha",
+				"chapter_id"
+			],
+			[
+				"relation",
+				"relation_id"
+			],
+			[
+				"confir",
+				"confirmed_mail"
+			],
+			[
+				"offer_",
+				"offer_finish"
+			],
+			[
+				"invoice",
+				"invoice_quantity"
+			],
+			[
+				"for",
+				"for	for …"
+			],
+			[
+				"project",
+				"projectid"
+			],
+			[
+				"con",
+				"console"
+			],
+			[
+				"invoi",
+				"invoice"
+			],
+			[
+				"sta",
+				"static"
+			],
+			[
+				"op",
+				"option	Tag"
+			],
+			[
+				"c",
+				"class	Attr"
+			],
+			[
+				"des",
+				"description"
+			],
+			[
+				"end",
+				"endforeach"
+			],
+			[
+				"ver",
+				"verstrekt"
+			],
+			[
+				"tr",
+				"true"
+			],
+			[
+				"tot",
+				"total"
+			],
+			[
+				"Aan",
+				"Aanbetaling"
+			],
+			[
+				"s",
+				"script"
+			],
+			[
+				"edit",
+				"editable"
+			],
+			[
+				"sat",
+				"static"
+			],
+			[
+				"marg",
+				"margin-bottom"
+			],
+			[
+				"wi",
+				"width"
+			],
+			[
+				"row",
+				"rows"
+			],
+			[
+				"less",
+				"less_amount"
+			],
+			[
+				"Estia",
+				"EstimateLabor"
+			],
+			[
+				"cur",
+				"curThis"
+			],
+			[
+				"in",
+				"input"
+			],
+			[
+				"type",
+				"type_name"
+			],
+			[
+				"calcu",
+				"calculate"
+			],
+			[
+				"pro",
+				"profit"
+			],
+			[
+				"conCalcE",
+				"conCalcEquipmentActivityTax1AmountTax"
+			],
+			[
+				"conCalcMa",
+				"conCalcMaterialActivityTax1AmountTax"
+			],
+			[
+				"conCalcL",
+				"conCalcLaborActivityTax1AmountTax"
+			],
+			[
+				"calcLabor",
+				"calcLaborActivityTax1"
+			],
+			[
+				"tax",
+				"tax_id"
+			],
+			[
+				"calc",
+				"calculus"
+			],
+			[
+				"da",
+				"data-id"
+			],
+			[
+				"clo",
+				"closest"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"jso",
+				"json_encode"
+			],
+			[
+				"pu",
+				"public"
+			],
+			[
+				"kin",
+				"kind_name"
+			],
+			[
+				"i",
+				"id	Attr"
+			],
+			[
+				"ech",
+				"echo"
+			],
+			[
+				"print",
+				"print_r"
+			],
+			[
+				"ex",
+				"exit"
+			],
+			[
+				"prin",
+				"print_r"
+			],
+			[
+				"pri",
+				"print_r"
+			],
+			[
+				"pay",
+				"payment"
+			],
+			[
+				"test_pa",
+				"test_part"
+			],
+			[
 				"Project",
 				"projectStep"
 			],
@@ -20,14 +236,6 @@
 				"unique"
 			],
 			[
-				"pro",
-				"project_step"
-			],
-			[
-				"project",
-				"project_type"
-			],
-			[
 				"res",
 				"restrict"
 			],
@@ -40,31 +248,190 @@
 	"buffers":
 	[
 		{
-			"contents": "",
 			"file": "app/database/seeds/TestProjectSeeder.php",
-			"file_size": 2935,
-			"file_write_time": 130573326403078816,
 			"settings":
 			{
-				"buffer_size": 0,
+				"buffer_size": 62847,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/admin/dashboard.blade.php",
+			"settings":
+			{
+				"buffer_size": 2337,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "public/css/essentials.css",
+			"settings":
+			{
+				"buffer_size": 46750,
 				"line_ending": "Unix"
 			}
 		}
 	],
 	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
 	"command_palette":
 	{
-		"height": 392.0,
+		"height": 92.0,
+		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"git pull",
+				"Git: Pull"
+			],
+			[
+				"git fet",
+				"Git: Fetch"
+			],
+			[
+				"git log",
+				"Git: Log All"
+			],
+			[
+				"git pu",
+				"Git: Push"
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
+			[
+				"git ad",
+				"Git: Add..."
+			],
+			[
+				"git st",
+				"Git: Status"
+			],
+			[
+				"git p",
+				"Git: Push"
+			],
+			[
+				"git om",
+				"Git: Commit"
+			],
+			[
+				"git pus",
+				"Git: Push"
+			],
+			[
+				"git add",
+				"Git: Add..."
+			],
+			[
+				"git br",
+				"Git: Change Branch"
+			],
+			[
+				"git bran",
+				"Git: Pull Current Branch"
+			],
+			[
+				"git branch",
+				"Git: Change Branch"
+			],
+			[
+				"git a",
+				"Git: Add..."
+			],
+			[
+				"git sat",
+				"Git: Status"
+			],
+			[
+				" git pu",
+				"Git: Push"
+			],
+			[
+				"git stta",
+				"Git: Status"
+			],
+			[
+				"git status",
+				"Git: Status"
+			],
+			[
+				"git c	",
+				"Git: Commit"
+			],
+			[
+				"git stat",
+				"Git: Status"
+			],
+			[
+				"artisan route",
+				"Laravel Artisan: Routes"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"git lo",
+				"Git: Log All"
+			],
+			[
+				"git fe",
+				"Git: Fetch"
+			],
+			[
+				"git c",
+				"Git: Commit"
+			],
+			[
+				"git com	",
+				"Git: Commit"
+			],
+			[
+				"git s",
+				"Git: Status"
+			],
+			[
+				"git",
+				"Git: Amend Commit"
+			],
+			[
+				"git co",
+				"Git: Commit history"
+			],
+			[
+				"git ",
+				"Git: Push"
+			],
+			[
+				"gi",
+				"Git: Commit"
+			],
+			[
+				"git sta",
+				"Git: Status"
+			],
+			[
+				"git tat",
+				"Git: Status"
+			],
+			[
+				"Package Control: git",
+				"Package Control: Upgrade/Overwrite All Packages"
+			]
 		],
-		"width": 440.0
+		"width": 467.0
 	},
 	"console":
 	{
-		"height": 0.0,
+		"height": 51.0,
 		"history":
 		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
 		]
 	},
 	"distraction_free":
@@ -78,112 +445,170 @@
 	},
 	"expanded_folders":
 	[
-		"/var/www/calctool/app",
-		"/var/www/calctool/app/commands",
-		"/var/www/calctool/app/config",
-		"/var/www/calctool/app/controllers",
-		"/var/www/calctool/app/database",
-		"/var/www/calctool/app/database/migrations",
-		"/var/www/calctool/app/database/seeds",
-		"/var/www/calctool/app/lang",
-		"/var/www/calctool/app/models",
-		"/var/www/calctool/app/views",
-		"/var/www/calctool/bootstrap",
-		"/var/www/calctool/public"
+		"/var/www/calctool-v2",
+		"/var/www/calctool-v2/app",
+		"/var/www/calctool-v2/app/config",
+		"/var/www/calctool-v2/app/controllers",
+		"/var/www/calctool-v2/app/database",
+		"/var/www/calctool-v2/app/database/seeds",
+		"/var/www/calctool-v2/app/views",
+		"/var/www/calctool-v2/app/views/admin",
+		"/var/www/calctool-v2/app/views/auth",
+		"/var/www/calctool-v2/app/views/base",
+		"/var/www/calctool-v2/app/views/calc",
+		"/var/www/calctool-v2/app/views/cost",
+		"/var/www/calctool-v2/app/views/generic",
+		"/var/www/calctool-v2/app/views/layout",
+		"/var/www/calctool-v2/app/views/mail",
+		"/var/www/calctool-v2/app/views/material",
+		"/var/www/calctool-v2/app/views/user",
+		"/var/www/calctool-v2/bootstrap",
+		"/var/www/calctool-v2/public",
+		"/var/www/calctool-v2/public/css"
 	],
 	"file_history":
 	[
-		"/var/www/calctool/app/config/cache.php",
-		"/var/www/calctool/app/database/migrations/2014_09_09_204054_create_users_table.php",
-		"/var/www/calctool/app/views/placeholder.php",
-		"/var/www/calctool/app/controllers/HomeController.php",
-		"/var/www/calctool/app/routes.php",
-		"/var/www/calctool/app/views/hello.php",
-		"/var/www/calctool/app/lang/nl/validation.php",
-		"/var/www/calctool/app/lang/nl/reminders.php",
-		"/var/www/calctool/app/lang/nl/pagination.php",
-		"/var/www/calctool/TODO",
-		"/var/www/calctool/app/config/app.php",
-		"/var/www/calctool/app/config/auth.php",
-		"/var/www/calctool/app/database/seeds/TestProjectSeeder.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_220407_create_calculation.php",
-		"/var/www/calctool/app/models/EstimateEquipment.php",
-		"/var/www/calctool/app/models/EstimateMaterial.php",
-		"/var/www/calctool/app/models/EstimateLabor.php",
-		"/var/www/calctool/app/models/MoreEquipment.php",
-		"/var/www/calctool/app/models/MoreMaterial.php",
-		"/var/www/calctool/app/database/seeds/StaticSeeder.php",
-		"/var/www/calctool/app/database/seeds/MaterialStorageSeeder.php",
-		"/var/www/calctool/app/models/MoreLabor.php",
-		"/var/www/calctool/app/models/LessEquipment.php",
-		"/var/www/calctool/app/models/LessMaterial.php",
-		"/var/www/calctool/app/models/LessLabor.php",
-		"/var/www/calctool/app/models/CalculationEquipment.php",
-		"/var/www/calctool/app/models/CalculationMaterial.php",
-		"/var/www/calctool/app/models/Tax.php",
-		"/var/www/calctool/app/database/migrations/Tax.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_202219_create_material_storage.php",
-		"/var/www/calctool/app/models/CalculationLabor.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_225236_create_system_table.php",
-		"/var/www/calctool/app/models/SystemTooltip.php",
-		"/var/www/calctool/app/models/SystemMessage.php",
-		"/var/www/calctool/app/models/Purchase.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_210838_create_cost_registration.php",
-		"/var/www/calctool/app/models/Timesheet.php",
-		"/var/www/calctool/app/models/Chapter.php",
-		"/var/www/calctool/app/models/Activity.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_205753_create_part.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_204724_create_works.php",
-		"/var/www/calctool/app/models/Product.php",
-		"/var/www/calctool/app/database/seeds/DatabaseSeeder.php",
-		"/var/www/calctool/app/models/User.php",
-		"/var/www/calctool/app/models/PartType.php",
-		"/var/www/calctool/app/models/Supplier.php",
-		"/var/www/calctool/app/models/SubGroup.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_212442_create_financial.php",
-		"/var/www/calctool/app/models/SystemOption.php",
-		"/var/www/calctool/app/models/InvoiceType.php",
-		"/var/www/calctool/app/models/Offer.php",
-		"/var/www/calctool/app/models/Invoice.php",
-		"/var/www/calctool/app/models/Valid.php",
-		"/var/www/calctool/app/models/Specification.php",
-		"/var/www/calctool/app/models/DeliverTime.php",
-		"/var/www/calctool/app/database/migrations/2014_09_11_193342_create_relation.php",
-		"/var/www/calctool/app/models/Contact.php",
-		"/var/www/calctool/app/models/RelationKind.php",
-		"/var/www/calctool/app/models/RelationType.php",
-		"/var/www/calctool/app/models/Relation.php",
-		"/var/www/calctool/app/models/Resource.php",
-		"/var/www/calctool/app/models/ContactFunction.php",
-		"/var/www/calctool/app/models/ProjectType.php",
-		"/var/www/calctool/app/models/Detail.php",
-		"/var/www/calctool/app/models/ProjectStep.php",
-		"/var/www/calctool/app/models/Part.php",
-		"/var/www/calctool/app/models/Iban.php",
-		"/var/www/calctool/app/config/remote.php",
-		"/var/www/calctool/app/models/ProjectStatus.php",
-		"/var/www/calctool/app/models/Project.php",
-		"/var/www/calctool/app/models/Payment.php",
-		"/var/www/calctool/app/database/seeds/UserSeeder.php",
-		"/var/www/calctool/app/models/ProjectStepType.php",
-		"/var/www/calctool/app/database/seeds/ProvanceSeeder.php",
-		"/var/www/calctool/app/models/UserType.php",
-		"/var/www/calctool/app/database/seeds/CountrySeeder.php",
-		"/var/www/calctool/app/models/Country.php",
-		"/var/www/calctool/app/models/Provance.php",
-		"/var/www/calctool/app/config/database.php",
-		"/var/www/calctool/bootstrap/start.php",
-		"/var/www/calctool/app/config/local/database.php"
+		"/var/www/calctool-v2/app/views/base/home.blade.php",
+		"/var/www/calctool-v2/app/routes.php",
+		"/var/www/calctool-v2/app/views/admin/phpinfo.blade.php",
+		"/var/www/calctool-v2/app/views/admin/phpinfo.php",
+		"/var/www/calctool-v2/app/views/admin/alert.blade.php",
+		"/var/www/calctool-v2/app/controllers/AdminController.php",
+		"/var/www/calctool-v2/app/database/seeds/StaticSeeder.php",
+		"/var/www/calctool-v2/app/database/migrations/2014_09_11_225236_create_system_table.php",
+		"/var/www/calctool-v2/app/views/layout/header.blade.php",
+		"/var/www/calctool-v2/app/views/layout/master.blade.php",
+		"/var/www/calctool-v2/app/controllers/RelationController.php",
+		"/var/www/calctool-v2/app/views/user/edit_mycompany.blade.php",
+		"/var/www/calctool-v2/app/views/calc/offer.blade.php",
+		"/var/www/calctool-v2/app/views/calc/invoice.blade.php",
+		"/var/www/calctool-v2/app/views/calc/invoice_term.blade.php",
+		"/var/www/calctool-v2/composer.json",
+		"/var/www/calctool-v2/.gitignore",
+		"/var/www/calctool-v2/app/config/app.php",
+		"/var/www/calctool-v2/app/controllers/UserController.php",
+		"/var/www/calctool-v2/app/views/user/myaccount.blade.php",
+		"/var/www/calctool-v2/app/controllers/AuthController.php",
+		"/var/www/calctool-v2/app/database/migrations/2014_09_09_204054_create_users_table.php",
+		"/var/www/calctool-v2/app/views/auth/login.blade.php",
+		"/var/www/calctool-v2/app/views/admin/new_user.blade.php",
+		"/var/www/calctool-v2/app/models/User.php",
+		"/var/www/calctool-v2/app/filters.php",
+		"/var/www/calctool-v2/app/views/admin/dashboard.blade.php",
+		"/var/www/calctool-v2/app/views/layout/footer.blade.php",
+		"/var/www/calctool-v2/app/views/generic/contact.blade.php",
+		"/var/www/calctool-v2/app/database/seeds/TestProjectSeeder.php",
+		"/var/www/calctool-v2/app/views/admin/user.blade.php",
+		"/var/www/calctool-v2/app/database/migrations/2014_09_11_204724_create_works.php",
+		"/var/www/calctool-v2/app/database/migrations/2014_09_11_193342_create_relation.php",
+		"/var/www/calctool-v2/app/views/calc/result.blade.php",
+		"/var/www/calctool-v2/app/views/user/relation.blade.php",
+		"/var/www/calctool-v2/public/css/custom.css",
+		"/var/www/calctool-v2/app/views/calc/invoice_all.blade.php",
+		"/var/www/calctool-v2/public/css/essentials.css",
+		"/var/www/calctool-v2/public/js/scripts.js",
+		"/var/www/calctool-v2/app/controllers/MoreController.php",
+		"/var/www/calctool-v2/app/controllers/LessController.php",
+		"/var/www/calctool-v2/app/controllers/EstimController.php",
+		"/var/www/calctool-v2/app/views/user/edit_relation.blade.php",
+		"/var/www/calctool-v2/app/views/user/edit_project.blade.php",
+		"/var/www/calctool-v2/app/views/calc/more.blade.php",
+		"/var/www/calctool-v2/app/views/calc/less.blade.php",
+		"/var/www/calctool-v2/app/views/calc/invoicepdf.blade.php",
+		"/var/www/calctool-v2/app/views/calc/estimate.blade.php",
+		"/var/www/calctool-v2/app/views/calc/calculation.blade.php",
+		"/var/www/calctool-v2/app/views/base/new_user.blade.php",
+		"/var/www/calctool-v2/app/views/base/user.blade.php",
+		"/var/www/calctool-v2/app/controllers/CalcController.php",
+		"/var/www/calctool-v2/app/controllers/CostController.php",
+		"/var/www/calctool-v2/app/calculus/LessRegister.php",
+		"/var/www/calctool-v2/app/controllers/ProjectController.php",
+		"/var/www/calctool-v2/app/config/queue.php",
+		"/var/www/calctool-v2/app/views/auth/password.blade.php",
+		"/var/www/calctool-v2/app/views/mail/password.blade.php",
+		"/var/www/calctool-v2/app/views/mail/confirm.blade.php",
+		"/var/www/calctool-v2/app/database/templates/DemoProjectTemplate.php",
+		"/var/www/calctool-v2/app/database/template/DemoProjectTemplate.php",
+		"/var/www/calctool-v2/app/start/global.php",
+		"/var/www/calctool-v2/vendor/laravel/framework/src/Illuminate/Database/Seeder.php",
+		"/var/www/calctool-v2/app/database/seeds/TemplateProjectSeeder.php",
+		"/var/www/calctool-v2/app/views/auth/registration.blade.php",
+		"/var/www/calctool-v2/public/mail.php",
+		"/var/www/calctool-v2/app/config/mail.php",
+		"/var/www/calctool-v2/app/config/local/mail.php",
+		"/var/www/calctool-v2/app/views/generic/mail_confirm.blade.php",
+		"/var/www/calctool-v2/app/controllers/InvoiceController.php",
+		"/var/www/calctool-v2/app/controllers/OfferController.php",
+		"/var/www/calctool-v2/app/controllers/HomeController.php",
+		"/var/www/calctool-v2/app/calculus/CalculationEndresult.php",
+		"/var/www/calctool-v2/app/config/local/session.php",
+		"/var/www/calctool-v2/bootstrap/start.php",
+		"/var/www/calctool-v2/app/calculus/ResultEndresult.php",
+		"/var/www/calctool-v2/app/calculus/InvoiceTerm.php",
+		"/var/www/calctool-v2/app/database/migrations/2014_09_11_212442_create_financial.php",
+		"/var/www/calctool-v2/app/calculus/CalculationOverview.php",
+		"/var/www/calctool-v2/app/storage/meta/services.json",
+		"/var/www/calctool-v2/app/views/user/new_project.blade.php",
+		"/var/www/calctool-v2/app/controllers/offerController.php",
+		"/var/www/calctool-v2/app/controllers/MaterialController.php",
+		"/var/www/calctool-v2/app/views/material/list.blade.php",
+		"/var/www/calctool-v2/app/views/generic/countdown.blade.php",
+		"/var/www/calctool-v2/app/views/generic/404.blade.php",
+		"/var/www/calctool-v2/app/views/user/project.blade.php",
+		"/var/www/calctool-v2/app/database/seeds/MaterialStorageSeeder.php",
+		"/var/www/calctool-v2/app/database/seeds/DatabaseSeeder.php",
+		"/var/www/calctool-v2/app/commands/MaterialImport.php",
+		"/var/www/calctool-v2/material.xml",
+		"/var/www/calctool-v2/app/database/migrations/2014_09_11_202219_create_material_storage.php",
+		"/var/www/calctool-v2/public/css/layout.css",
+		"/var/www/calctool-v2/out.txt",
+		"/var/www/calctool-v2/SidB.xml",
+		"/var/www/calctool-v2/public/css/font-awesome.css",
+		"/var/www/calctool-v2/app/calculus/TimesheetOverview.php",
+		"/var/www/calctool-v2/app/calculus/MoreOverview.php",
+		"/var/www/calctool-v2/app/views/user/new_relation.blade.php",
+		"/var/www/calctool-v2/app/calculus/EstimateEndresult.php",
+		"/var/www/calctool-v2/app/calculus/LessEndresult.php",
+		"/var/www/calctool-v2/app/calculus/EstimateOverview.php",
+		"/var/www/calctool-v2/app/database/migrations/2014_09_11_220407_create_calculation.php",
+		"/var/www/calctool-v2/app/controllers/ResultController.php",
+		"/var/www/calctool-v2/app/calculus/CalculationRegister.php",
+		"/var/www/calctool-v2/app/calculus/MoreEndresult.php",
+		"/var/www/calctool-v2/app/calculus/MoreRegister.php",
+		"/var/www/calctool-v2/app/views/user/edit_contact.blade.php",
+		"/var/www/calctool-v2/public/js/iban.js",
+		"/var/www/calctool-v2/app/views/user/new_contact.blade.php",
+		"/var/www/calctool-v2/app/database/migrations/2014_09_11_210838_create_cost_registration.php",
+		"/var/www/calctool-v2/app/models/Activity.php",
+		"/var/www/calctool-v2/app/calculus/EstimateRegister.php",
+		"/var/www/calctool-v2/app/start/artisan.php",
+		"/var/www/calctool-v2/app/commands/DropHard.php",
+		"/var/www/calctool-v2/app/calculus/Endresult.php",
+		"/var/www/calctool-v2/app/calculus/OverviewCalc.php",
+		"/var/www/calctool-v2/app/calculus/Register.php",
+		"/var/www/calctool-v2/app/models/Timesheet.php",
+		"/home/dinux/Projects/cve/new.c",
+		"/home/dinux/Projects/cve/29290.c",
+		"/var/www/calctool-v2/app/calculus/Helpers.php",
+		"/var/www/calctool-v2/workbench/calctool/calculus/src/Calctool/Calculus/CalculusServiceProvider.php",
+		"/var/www/calctool-v2/workbench/calctool/calculus/src/Calctool/Calculus/Calculus.php",
+		"/var/www/calctool-v2/app/models/CalculationLabor.php",
+		"/var/www/calctool-v2/calctool.sublime-project",
+		"/var/www/calctool-v2/app/models/CalculationMaterial.php",
+		"/var/www/calctool-v2/public/plugins/superslides/jquery.number.min.js"
 	],
 	"find":
 	{
-		"height": 34.0
+		"height": 46.0
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 90.0,
 		"where_history":
 		[
+			"/var/www/calctool-v2",
+			"/var/www/calctool/app",
+			"<open files>,<open folders>"
 		]
 	},
 	"find_state":
@@ -191,10 +616,134 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"self",
-			"equipments",
-			"bll",
-			"closu"
+			">\n",
+			"Protection",
+			"content",
+			")->",
+			"_animate",
+			"doUpdateEstimateEquipment",
+			" $",
+			"Auth::user()->id)->first()->hour_rate",
+			"Auth::user()",
+			"lsave",
+			"priority",
+			"prio",
+			"stat",
+			"step",
+			"test_ste",
+			"activi",
+			"ProjectS",
+			"status_date",
+			"status_da",
+			"_step",
+			"status_d",
+			"project_type_pro",
+			"project_c",
+			"last_ac",
+			"last_a",
+			"calculus",
+			"dob",
+			"frm-offer",
+			"offerte s",
+			"Auth::U",
+			"curinv",
+			"');\n",
+			"purchase",
+			"InvoiceTermt",
+			"ResultEndresul",
+			"payment",
+			"$offer",
+			"offer",
+			"offer_last",
+			"<?php\n$project = Project::find(Route::Input('project_id'));\n$relation = Relation::find($project->client_id);\n$relation_self = Relation::find(Auth::user()->self_id);\n$contact_self = Contact::where('relation_id','=',$relation_self->id);\n$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();\n?>\n\n@extends('layout.master')\n\n@section('content')\n<?# -- WRAPPER -- ?>\n<script type=\"text/javascript\">\n	$(document).ready(function() {\n        $('.only-end-total tr').each(function() {\n            $(this).find(\"td\").eq(2).hide();\n            $(this).find(\"th\").eq(2).hide();\n            $(this).find(\"td\").eq(3).hide();\n            $(this).find(\"th\").eq(3).hide();\n            $(this).find(\"td\").eq(4).hide();\n            $(this).find(\"th\").eq(4).hide();\n            $(this).find(\"td\").eq(5).hide();\n            $(this).find(\"th\").eq(5).hide();\n        });\n		$(\"[name='toggle-tax']\").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {\n		  if (state) {\n		        $('.hide-btw1 tr').each(function() {\n	                $(this).find(\"td\").eq(4).show();\n	                $(this).find(\"th\").eq(4).show();\n	                $(this).find(\"td\").eq(5).show();\n	                $(this).find(\"th\").eq(5).show();\n	                $(this).find(\"td\").eq(6).show();\n	                $(this).find(\"th\").eq(6).show();\n		        });\n		        $('.hide-btw2 tr').each(function() {\n	                $(this).find(\"td\").eq(2).show();\n	                $(this).find(\"th\").eq(2).show();\n	                $(this).find(\"td\").eq(3).show();\n	                $(this).find(\"th\").eq(3).show();\n		        });\n		        $('.hide-btw2').each(function() {\n		        	$(this).find(\"tr\").eq(2).show();\n		        	$(this).find(\"tr\").eq(3).show();\n		        	$(this).find(\"tr\").eq(4).show();\n		        	$(this).find(\"tr\").eq(5).show();\n		        	$(this).find(\"tr\").eq(6).show();\n		        	$(this).find(\"tr\").eq(7).show();\n		        });\n		  } else {\n		        $('.hide-btw1 tr').each(function() {\n	                $(this).find(\"td\").eq(4).hide();\n	                $(this).find(\"th\").eq(4).hide();\n	                $(this).find(\"td\").eq(5).hide();\n	                $(this).find(\"th\").eq(5).hide();\n	                $(this).find(\"td\").eq(6).hide();\n	                $(this).find(\"th\").eq(6).hide();\n		        });\n		        $('.hide-btw2 tr').each(function() {\n	                $(this).find(\"td\").eq(2).hide();\n	                $(this).find(\"th\").eq(2).hide();\n	                $(this).find(\"td\").eq(3).hide();\n	                $(this).find(\"th\").eq(3).hide();\n		        });\n		        $('.hide-btw2').each(function() {\n		        	$(this).find(\"tr\").eq(2).hide();\n		        	$(this).find(\"tr\").eq(3).hide();\n		        	$(this).find(\"tr\").eq(4).hide();\n		        	$(this).find(\"tr\").eq(5).hide();\n		        	$(this).find(\"tr\").eq(6).hide();\n		        	$(this).find(\"tr\").eq(7).hide();\n		        });\n		  }\n		});\n		$(\"[name='toggle-activity']\").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {\n		  if (state) {\n		  	$('.show-activity').show();\n		  	$(\"[name='toggle-summary']\").bootstrapSwitch('toggleDisabled');\n		  } else {\n		  	$(\"[name='toggle-summary']\").bootstrapSwitch('toggleDisabled');\n			$('.show-activity').hide();\n		  }\n		});\n		$(\"[name='toggle-subcontr']\").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {\n		  if (state) {\n		  	$('.show-all').show();\n		  	$('.show-totals').hide();\n		  } else {\n		  	$('.show-all').hide();\n		  	$('.show-totals').show();\n		  }\n		});\n		$(\"[name='toggle-note']\").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {\n		  if (state) {\n		  	$('.show-note').show();\n		  } else {\n			$('.show-note').hide();\n		  }\n		});\n		$(\"[name='toggle-endresult']\").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {\n		  if (state) {\n		  	$('.only-total').hide();\n		  	$('.hide-btw1').hide();\n	        $('.hide-btw2 tr').each(function() {\n                $(this).find(\"td\").eq(2).hide();\n                $(this).find(\"th\").eq(2).hide();\n                $(this).find(\"td\").eq(3).hide();\n                $(this).find(\"th\").eq(3).hide();\n	        });\n	        $('.hide-btw2').each(function() {\n	        	$(this).find(\"tr\").eq(2).hide();\n	        	$(this).find(\"tr\").eq(3).hide();\n	        	$(this).find(\"tr\").eq(4).hide();\n	        	$(this).find(\"tr\").eq(5).hide();\n	        	$(this).find(\"tr\").eq(6).hide();\n	        	$(this).find(\"tr\").eq(7).hide();\n	        });\n		  } else {\n		  	$('.only-total').show();\n			$('.hide-btw1').show();\n	        $('.hide-btw2 tr').each(function() {\n                $(this).find(\"td\").eq(2).show();\n                $(this).find(\"th\").eq(2).show();\n                $(this).find(\"td\").eq(3).show();\n                $(this).find(\"th\").eq(3).show();\n	        });\n	        $('.hide-btw2').each(function() {\n	        	$(this).find(\"tr\").eq(2).show();\n	        	$(this).find(\"tr\").eq(3).show();\n	        	$(this).find(\"tr\").eq(4).show();\n	        	$(this).find(\"tr\").eq(5).show();\n	        	$(this).find(\"tr\").eq(6).show();\n	        	$(this).find(\"tr\").eq(7).show();\n	        });\n		  }\n		});\n		$(\"[name='toggle-summary']\").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {\n		  if (state) {\n	        $('.only-end-total tr').each(function() {\n                $(this).find(\"td\").eq(2).show();\n                $(this).find(\"th\").eq(2).show();\n                $(this).find(\"td\").eq(3).show();\n                $(this).find(\"th\").eq(3).show();\n                $(this).find(\"td\").eq(4).show();\n                $(this).find(\"th\").eq(4).show();\n                $(this).find(\"td\").eq(5).show();\n                $(this).find(\"th\").eq(5).show();\n	        });\n		  } else {\n	        $('.only-end-total tr').each(function() {\n                $(this).find(\"td\").eq(2).hide();\n                $(this).find(\"th\").eq(2).hide();\n                $(this).find(\"td\").eq(3).hide();\n                $(this).find(\"th\").eq(3).hide();\n                $(this).find(\"td\").eq(4).hide();\n                $(this).find(\"th\").eq(4).hide();\n                $(this).find(\"td\").eq(5).hide();\n                $(this).find(\"th\").eq(5).hide();\n	        });\n		  }\n		});\n		$tpayment = false;\n		$(\"[name='toggle-payment']\").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {\n			if (state) {\n				//$('#tpayment').text('Aanbetaling');\n				$(\"#amount\").prop('disabled', false);\n				$tpayment = true;\n			} else {\n				//$('#tpayment').text('1');\n				$(\"#amount\").prop('disabled', true);\n				$tpayment = false;\n			}\n\n		});\n		/*$('#terms').blur(function(){\n			var q = $(this).val();\n			if($.isNumeric(q)&&(q>1)&&(q<=50)){\n				$('#tbl-term tbody tr').remove();\n				for(var i=0; i<q; i++){\n					if(i==(q-1)) {\n						$('#tbl-term tbody').append('<tr><td>Slottermijn</td><td><input id=\"eterm\" disabled type=\"text\" value=\"\" class=\"form-control-sm-text\" /></td></tr>');\n					} else if (i==0){\n						$('#tbl-term tbody').append('<tr><td id=\"tpayment\">'+(i+1)+'</td><td><input type=\"text\" value=\"\" id=\"amount_'+i+'\" name=\"amount['+i+']\" class=\"adata form-control-sm-text\" /></td></tr>');\n					} else {\n						$('#tbl-term tbody').append('<tr><td>'+(i+1)+'</td><td><input type=\"text\" value=\"\" id=\"amount_'+i+'\" name=\"amount['+i+']\" class=\"adata form-control-sm-text\" /></td></tr>');\n					}\n				}\n				$('.adata').blur(function(){\n					$total = {{ CalculationEndresult::totalProject($project) }};\n					$('.adata').each(function(){\n						$total -= $(this).val();\n						$('#eterm').val($.number($total,2,',','.'));\n					});\n				});\n			}\n		});*/\n		$('#termModal').on('hidden.bs.modal', function() {\n			var q = $('#terms').val();\n			if($.isNumeric(q)&&(q>1)&&(q<=50)) {\n				$('#termtext').text('Indien opdracht wordt verstrekt, wordt gefactureerd in '+q+' termijnen');\n				if ($tpayment)\n					$('#paymenttext').html('Het eerste termijn geldt hierbij als een aanbetaling van &euro; '+$('.adata').first().val());\n			}\n			//$('.adata').each(function(){\n			//	console.log('adata: '+ $(this).val());\n			//});\n		});\n		$('.osave').click(function(e){\n			e.preventDefault();\n			$('#frm-offer').submit();\n		});\n	});\n</script>\n<div id=\"wrapper\">\n\n	<section class=\"container printable fix-footer-bottom\">\n\n		<div class=\"col-md-12\">\n\n		<div class=\"wizard\">\n			<a href=\"/\"> Home</a>\n			<a href=\"/project-{{ $project->id }}/edit\">Project</a>\n			<a href=\"/calculation/project-{{ $project->id }}\">Calculatie</a>\n			<a href=\"/offer/project-{{ $project->id }}\" class=\"current\">Offerte</a>\n			<a href=\"/estimate/project-{{ $project->id }}\">Stelpost</a>\n			<a href=\"/less/project-{{ $project->id }}\">Minderwerk</a>\n			<a href=\"/more/project-{{ $project->id }}\">Meerwerk</a>\n			<a href=\"/invoice/project-{{ $project->id }}\">Factuur</a>\n			<a href=\"/result/project-{{ $project->id }}\">Resultaat</a>\n		</div>\n\n		<hr />\n\n		@if(Session::get('success'))\n		<div class=\"alert alert-success\">\n			<i class=\"fa fa-check-circle\"></i>\n			<strong>Opgeslagen</strong>\n		</div>\n		@endif\n\n		@if($errors->has())\n		<div class=\"alert alert-danger\">\n			<i class=\"fa fa-frown-o\"></i>\n			<strong>Fout</strong>\n			@foreach ($errors->all() as $error)\n				{{ $error }}\n			@endforeach\n		</div>\n		@endif\n\n	<div class=\"pull-right\">\n		<a href=\"#\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#myModal\">Opties</a>\n\n		<a href=\"#\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#historyModal\">Versies</a>\n\n		<a href=\"#\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#termModal\">Termijnen</a>\n\n		<button class=\"btn btn-primary osave\">Offerte sluiten</button>\n	</div>\n\n	<!-- modal dialog -->\n	<div class=\"modal fade\" id=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">\n		<div class=\"modal-dialog\">\n			<div class=\"modal-content\">\n\n				<div class=\"modal-header\"><!-- modal header -->\n					<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n					<h4 class=\"modal-title\" id=\"myModalLabel\">Offerte opties</h4>\n				</div><!-- /modal header -->\n\n				<!-- modal body -->\n				<div class=\"modal-body\">\n					<div class=\"form-horizontal\">\n\n						 <div class=\"form-group\">\n						    <div class=\"col-sm-offset-0 col-sm-10\">\n						      <div class=\"checkbox\">\n						        <label>\n						          <input name=\"toggle-tax\" type=\"checkbox\" checked> BTW bedragen gespecificeerd weergeven\n						        </label>\n						      </div>\n						    </div>\n						  </div>\n						  <div class=\"form-group\">\n						    <div class=\"col-sm-offset-0 col-sm-10\">\n						      <div class=\"checkbox\">\n						        <label>\n						          <input name=\"toggle-endresult\" type=\"checkbox\"> Alleen eindbedrag weergeven\n						        </label>\n						      </div>\n						    </div>\n						  </div>\n						   <div class=\"form-group\">\n						    <div class=\"col-sm-offset-0 col-sm-10\">\n						      <div class=\"checkbox\">\n						        <label>\n						          <input name=\"toggle-subcontr\" type=\"checkbox\"> Onderaanneming gespecificeerd weergeven\n						        </label>\n						      </div>\n						    </div>\n						  </div>\n						  <div class=\"form-group\">\n						    <div class=\"col-sm-offset-0 col-sm-10\">\n						      <div class=\"checkbox\">\n						        <label>\n						          <input name=\"toggle-activity\" type=\"checkbox\" checked> Overzicht werkzaamheden weergeven\n						        </label>\n						      </div>\n						    </div>\n						  </div>\n						  <div class=\"form-group\">\n						    <div class=\"col-sm-offset-0 col-sm-10\">\n						      <div class=\"checkbox\">\n						        <label>\n						          <input name=\"toggle-summary\" type=\"checkbox\"> Specificatie overzicht werkzaamheden weergeven\n						        </label>\n						      </div>\n						    </div>\n						  </div>\n						  <div class=\"form-group\">\n						    <div class=\"col-sm-offset-0 col-sm-10\">\n						      <div class=\"checkbox\">\n						        <label>\n						          <input name=\"toggle-note\" type=\"checkbox\" checked> Omschrijving werkzaamheden opnemen\n						        </label>\n						      </div>\n						    </div>\n						  </div>\n\n					</div>\n				</div>\n				<!-- /modal body -->\n\n				<div class=\"modal-footer\"><!-- modal footer -->\n					<button class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n				</div><!-- /modal footer -->\n\n			</div>\n		</div>\n	</div>\n\n	<!-- modal dialog -->\n	<div class=\"modal fade\" id=\"historyModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel2\" aria-hidden=\"true\">\n		<div class=\"modal-dialog\">\n			<div class=\"modal-content\">\n\n				<div class=\"modal-header\"><!-- modal header -->\n					<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n					<h4 class=\"modal-title\" id=\"myModalLabel2\">Offerte versies</h4>\n				</div><!-- /modal header -->\n\n				<!-- modal body -->\n				<div class=\"modal-body\">\n					<div class=\"table-responsive\">\n						<table class=\"table table-hover\">\n							<thead>\n								<tr>\n									<th>Offerte</th>\n									<th>Datum</th>\n								</tr>\n							</thead>\n							<tbody>\n								@foreach (Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->get() as $offer)\n								<tr>\n									<td><a href=\"#\">{{ $offer->id }}</a></td>\n									<td>{{ $offer->offer_finish }}</td>\n								</tr>\n								@endforeach\n							</tbody>\n						</table>\n					</div>\n\n				</div>\n				<!-- /modal body -->\n\n				<div class=\"modal-footer\"><!-- modal footer -->\n					<button class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n				</div><!-- /modal footer -->\n\n			</div>\n		</div>\n	</div>\n\n	<h2><strong>Offerte</strong></h2>\n	<form method=\"POST\" id=\"frm-offer\">\n			<div class=\"modal fade\" id=\"termModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel2\" aria-hidden=\"true\">\n				<div class=\"modal-dialog\">\n					<div class=\"modal-content\">\n\n						<div class=\"modal-header\"><!-- modal header -->\n							<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>\n							<h4 class=\"modal-title\" id=\"myModalLabel2\">Offerte versies</h4>\n						</div><!-- /modal header -->\n\n						<!-- modal body -->\n						<div class=\"modal-body\">\n							<div class=\"form-horizontal\">\n								<div class=\"form-group\">\n									<div class=\"col-md-6\">\n										<label>Termijnen</label>\n										<input value=\"{{ ($offer_last ? $offer_last->invoice_quantity : '') }}\" name=\"terms\" id=\"terms\" min=\"2\" max=\"50\" type=\"text\" value=\"\" class=\"form-control\" />\n									</div>\n									<div class=\"col-md-6\">\n									  <div class=\"form-group\">\n									  <label>Aanbetaling</label>\n									    <div class=\"col-sm-offset-0 col-sm-10\">\n									      <div class=\"checkbox\">\n									        <label>\n									          <input {{ ($offer_last ? ($offer_last->downpayment ? 'checked' : '') : '') }} name=\"toggle-payment\" type=\"checkbox\">\n									        </label>\n									      </div>\n									    </div>\n									  </div>\n									</div>\n								</div>\n							</div>\n							<div class=\"table-responsive\">\n								<table id=\"tbl-term\" class=\"table table-hover\">\n									<thead>\n										<tr>\n											<th>Termijnnummer</th>\n											<th>Bedrag</th>\n										</tr>\n									</thead>\n									<tbody>\n										<tr>\n											<td>Aanbetaling</td>\n											<td><input {{ ($offer_last ? ($offer_last->downpayment ? '' : 'disabled') : 'disabled') }} type=\"text\" value=\"{{ ($offer_last ? $offer_last->downpayment_amount : '') }}\" id=\"amount\" name=\"amount\" class=\"form-control-sm-text\" /></td>\n										</tr>\n									</tbody>\n								</table>\n							</div>\n\n						</div>\n						<!-- /modal body -->\n\n						<div class=\"modal-footer\"><!-- modal footer -->\n							<button class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n						</div><!-- /modal footer -->\n\n					</div>\n				</div>\n			</div>\n\n			<div class=\"white-row\">\n\n				<div class=\"row\">\n\n					<div class=\"col-sm-6\">\n						<img class=\"img-responsive\" src=\"/images/logo2.png\" style=\"height: 75px;\" alt=\"\" />\n					</div>\n\n					<div class=\"col-sm-6 text-right\">\n						<p>\n							#{{ sprintf(\"%06d\", $project->id) }} &bull; <strong>{{ date(\"j M Y\") }}</strong>\n							<br />\n							{{ $project->project_name }}\n						</p>\n					</div>\n\n				</div>\n\n				<hr class=\"margin-top10 margin-bottom10\" /><!-- separator -->\n\n				<!-- DETAILS -->\n				<div class=\"row\">\n\n					<div class=\"col-sm-6\">\n\n						<h4><strong>Klantgegevens</strong></h4>\n						<ul class=\"list-unstyled\">\n							<li><strong>Naam:</strong> {{ $relation->company_name }}</li>\n							<li><strong>Voornaam:</strong> Doe</li>\n							<li>{{ $relation->address_street . ' ' . $relation->address_number }}<br /> {{ $relation->address_postal . ', ' . $relation->address_city }}</li>\n							<li><strong>Land:</strong> U.S.A.</li>\n						</ul>\n\n					</div>\n\n					<div class=\"col-sm-2\"></div>\n\n					<div class=\"col-sm-4\">\n\n						<h4><strong>Opdrachtgever</strong></h4>\n						<ul class=\"list-unstyled\">\n							<li><strong>Bedrijfsnaam:</strong> {{ $relation_self->company_name }}</li>\n							<li><strong>Adres:</strong> {{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>\n							<li style=\"margin-left: 48px;\">{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>\n							<li><strong>Telefoon:</strong> {{ $relation_self->phone }}</li>\n							<li><strong>Email:</strong> {{ $relation_self->email }}</li>\n							<li><strong>KVK:</strong>{{ $relation_self->kvk }}</li>\n						</ul>\n\n						<h4><strong>Offerte gegevens</strong></h4>\n						<ul class=\"list-unstyled\">\n							<li><strong>Offertedatum:</strong> {{ date(\"j M Y\") }}</li>\n							<li><strong>Offertenummer:</strong> #{{ sprintf(\"%06d\", $project->id) }}</li>\n						</ul>\n\n					</div>\n\n				</div>\n\n					<textarea name=\"description\" id=\"description\" rows=\"10\" class=\"form-control\">{{ ($offer_last ? $offer_last->description : '') }}</textarea>\n\n					<div class=\"show-all\" style=\"display:none;\">\n						<h4 class=\"only-total\">Aanneming</h4>\n						<table class=\"table table-striped hide-btw1\">\n							<?# -- table head -- ?>\n							<thead>\n								<tr>\n									<th class=\"col-md-4\">&nbsp;</th>\n									<th class=\"col-md-1\">Manuren</th>\n									<th class=\"col-md-2\">Bedrag (excl. BTW)</th>\n									<th class=\"col-md-1\">&nbsp;</th>\n									<th class=\"col-md-1\">BTW</th>\n									<th class=\"col-md-2\">BTW bedrag</th>\n									<th class=\"col-md-1\">&nbsp;</th>\n								</tr>\n							</thead>\n\n							<tbody>\n								<tr><!-- item -->\n									<td class=\"col-md-4\">Arbeidskosten</td>\n									<td class=\"col-md-1\">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax1($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax1Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">21%</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax1AmountTax($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-4\">&nbsp;</td>\n									<td class=\"col-md-1\">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax2($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax2Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">6%</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax2AmountTax($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-4\">&nbsp;</td>\n									<td class=\"col-md-1\">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax3($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax3Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">0%</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n\n								<tr><!-- item -->\n									<td class=\"col-md-4\">Materiaalkosten</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">21%</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1AmountTax($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-4\">&nbsp;</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax2Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">6%</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax2AmountTax($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-4\">&nbsp;</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax3Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">0%</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n\n								<tr><!-- item -->\n									<td class=\"col-md-4\">Materieelkosten</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax1Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">21%</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax1AmountTax($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-4\">&nbsp;</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax2Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">6%</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax2AmountTax($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-4\">&nbsp;</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax3Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">0%</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n\n								<tr><!-- item -->\n									<td class=\"col-md-4\"><strong>Totaal Aanneming </strong></td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-1\"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContracting($project), 2, \",\",\".\") }}</strong></td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-1\"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax($project), 2, \",\",\".\") }}</strong></td>\n								</tr>\n							</tbody>\n						</table>\n\n						<h4 class=\"only-total\">Onderaanneming</h4>\n						<table class=\"table table-striped hide-btw1\">\n							<?# -- table head -- ?>\n							<thead>\n								<tr>\n									<th class=\"col-md-4\">&nbsp;</th>\n									<th class=\"col-md-1\">Manuren</th>\n									<th class=\"col-md-2\">Bedrag (excl. BTW)</th>\n									<th class=\"col-md-1\">&nbsp;</th>\n									<th class=\"col-md-1\">BTW</th>\n									<th class=\"col-md-2\">BTW bedrag</th>\n									<th class=\"col-md-1\">&nbsp;</th>\n								</tr>\n							</thead>\n\n							<!-- table items -->\n							<tbody>\n								<tr><!-- item -->\n									<td class=\"col-md-4\">Arbeidskosten</td>\n									<td class=\"col-md-1\">{{ '&euro; '.number_format(CalculationEndresult::subconCalcLaborActivityTax1($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::subconCalcLaborActivityTax1Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">21%</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::subconCalcLaborActivityTax1AmountTax($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-4\">&nbsp;</td>\n									<td class=\"col-md-1\">{{ '&euro; '.number_format(CalculationEndresult::subconCalcLaborActivityTax2($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::subconCalcLaborActivityTax2Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">6%</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::subconCalcLaborActivityTax2AmountTax($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-4\">&nbsp;</td>\n									<td class=\"col-md-1\">{{ '&euro; '.number_format(CalculationEndresult::subconCalcLaborActivityTax3($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::subconCalcLaborActivityTax3Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">0%</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n\n								<tr><!-- item -->\n									<td class=\"col-md-4\">Materiaalkosten</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::subconCalcMaterialActivityTax1Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">21%</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::subconCalcMaterialActivityTax1AmountTax($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-4\">&nbsp;</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::subconCalcMaterialActivityTax2Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">6%</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::subconCalcMaterialActivityTax2AmountTax($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-4\">&nbsp;</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::subconCalcMaterialActivityTax3Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">0%</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n\n								<tr><!-- item -->\n									<td class=\"col-md-4\">Materieelkosten</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">21%</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax1AmountTax($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-4\">&nbsp;</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">6%</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax2AmountTax($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-4\">&nbsp;</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">0%</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n\n								<tr><!-- item -->\n									<td class=\"col-md-4\"><strong>Totaal Onderaanneming </strong></td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-1\"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontracting($project), 2, \",\",\".\") }}</strong></td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-1\"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontractingTax($project), 2, \",\",\".\") }}</strong></td>\n								</tr>\n							</tbody>\n						</table>\n\n						<h4>Cumulatieven Offerte</h4>\n						<table class=\"table table-striped hide-btw2\">\n							<?# -- table head -- ?>\n							<thead>\n								<tr>\n									<th class=\"col-md-6\">&nbsp;</th>\n									<th class=\"col-md-2\">Bedrag (excl. BTW)</th>\n									<th class=\"col-md-2\">BTW bedrag</th>\n									<th class=\"col-md-2\">&nbsp;</th>\n								</tr>\n							</thead>\n\n							<!-- table items -->\n							<tbody>\n								<tr><!-- item -->\n									<td class=\"col-md-6\">Calculatief te offereren (excl. BTW)</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-6\">BTW bedrag aanneming belast met 21%</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax1($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-6\">BTW bedrag aanneming belast met 6%</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax2($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-6\">BTW bedrag onderaanneming belast met 21%</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::totalSubcontractingTax1($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-6\">BTW bedrag onderaanneming belast met 6%</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::totalSubcontractingTax2($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-6\">Te offereren BTW bedrag</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::totalProjectTax($project), 2, \",\",\".\") }}</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-6\"><strong>Calculatief te offereren (Incl. BTW)</strong></td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-2\"><strong>{{ '&euro; '.number_format(CalculationEndresult::superTotalProject($project), 2, \",\",\".\") }}</strong></td>\n								</tr>\n\n							</tbody>\n\n						</table>\n					</div>\n\n					<div class=\"show-totals\">\n						<h4 class=\"only-total\">Calculatie</h4>\n						<table class=\"table table-striped hide-btw1\">\n							<?# -- table head -- ?>\n							<thead>\n								<tr>\n									<th class=\"col-md-4\">&nbsp;</th>\n									<th class=\"col-md-1\">Manuren</th>\n									<th class=\"col-md-2\">Bedrag (excl. BTW)</th>\n									<th class=\"col-md-1\">&nbsp;</th>\n									<th class=\"col-md-1\">BTW</th>\n									<th class=\"col-md-2\">BTW bedrag</th>\n									<th class=\"col-md-1\">&nbsp;</th>\n								</tr>\n							</thead>\n\n							<!-- table items -->\n							<tbody>\n								<tr><!-- item -->\n									<td class=\"col-md-4\">Arbeidskosten</td>\n									<td class=\"col-md-1\">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax1($project)+CalculationEndresult::subconCalcLaborActivityTax1($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax1Amount($project)+CalculationEndresult::subconCalcLaborActivityTax1Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">21%</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax1AmountTax($project)+CalculationEndresult::subconCalcLaborActivityTax1AmountTax($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-4\">&nbsp;</td>\n									<td class=\"col-md-1\">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax2($project)+CalculationEndresult::subconCalcLaborActivityTax2($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax2Amount($project)+CalculationEndresult::subconCalcLaborActivityTax2Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">6%</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax2AmountTax($project)+CalculationEndresult::subconCalcLaborActivityTax2AmountTax($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-4\">&nbsp;</td>\n									<td class=\"col-md-1\">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax3($project)+CalculationEndresult::subconCalcLaborActivityTax3($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax3Amount($project)+CalculationEndresult::conCalcLaborActivityTax3Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">0%</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n\n								<tr><!-- item -->\n									<td class=\"col-md-4\">Materiaalkosten</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1Amount($project)+CalculationEndresult::conCalcMaterialActivityTax1Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">21%</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1AmountTax($project)+CalculationEndresult::subconCalcMaterialActivityTax1AmountTax($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-4\">&nbsp;</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax2Amount($project)+CalculationEndresult::subconCalcMaterialActivityTax2Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">6%</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax2AmountTax($project)+CalculationEndresult::subconCalcMaterialActivityTax2AmountTax($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-4\">&nbsp;</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax3Amount($project)+CalculationEndresult::subconCalcMaterialActivityTax3Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">0%</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n\n								<tr><!-- item -->\n									<td class=\"col-md-4\">Materieelkosten</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax1Amount($project)+CalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">21%</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax1AmountTax($project)+CalculationEndresult::subconCalcEquipmentActivityTax1AmountTax($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-4\">&nbsp;</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax2Amount($project)+CalculationEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">6%</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax2AmountTax($project)+CalculationEndresult::subconCalcEquipmentActivityTax2AmountTax($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-4\">&nbsp;</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax3Amount($project)+CalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-1\">0%</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-1\">&nbsp;</td>\n								</tr>\n\n								<tr><!-- item -->\n									<td class=\"col-md-4\"><strong>Totaal Aanneming </strong></td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-1\"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContracting($project)+CalculationEndresult::totalSubcontracting($project), 2, \",\",\".\") }}</strong></td>\n									<td class=\"col-md-1\">&nbsp;</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-1\"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax($project)+CalculationEndresult::totalSubcontractingTax($project), 2, \",\",\".\") }}</strong></td>\n								</tr>\n							</tbody>\n						</table>\n\n						<h4>Cumulatieven Offerte</h4>\n						<table class=\"table table-striped hide-btw2\">\n							<?# -- table head -- ?>\n							<thead>\n								<tr>\n									<th class=\"col-md-6\">&nbsp;</th>\n									<th class=\"col-md-2\">Bedrag (excl. BTW)</th>\n									<th class=\"col-md-2\">BTW bedrag</th>\n									<th class=\"col-md-2\">&nbsp;</th>\n								</tr>\n							</thead>\n\n							<!-- table items -->\n							<tbody>\n								<tr><!-- item -->\n									<td class=\"col-md-6\">Calculatief te offereren (excl. BTW)</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-6\">BTW bedrag calculatie belast met 21%</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax1($project)+CalculationEndresult::totalSubcontractingTax1($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-6\">BTW bedrag calculatie belast met 6%</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax2($project)+CalculationEndresult::totalSubcontractingTax2($project), 2, \",\",\".\") }}</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-6\">Te offereren BTW bedrag</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-2\">{{ '&euro; '.number_format(CalculationEndresult::totalProjectTax($project), 2, \",\",\".\") }}</td>\n								</tr>\n								<tr><!-- item -->\n									<td class=\"col-md-6\"><strong>Calculatief te offereren (Incl. BTW)</strong></td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-2\">&nbsp;</td>\n									<td class=\"col-md-2\"><strong>{{ '&euro; '.number_format(CalculationEndresult::superTotalProject($project), 2, \",\",\".\") }}</strong></td>\n								</tr>\n\n							</tbody>\n\n						</table>\n					</div>\n\n					<textarea name=\"closure\" id=\"closure\" rows=\"10\" class=\"form-control\">{{ ($offer_last ? $offer_last->closure : '') }}</textarea>\n\n					<p id=\"termtext\">Indien opdracht wordt verstrekt, wordt gefactureerd middels 1 eindfactuur</p>\n					<p id=\"paymenttext\"></p>\n\n					<p>Wij kunnen de werkzaamheden starten binnen\n						<select name=\"deliver\" id=\"deliver\">\n							@foreach (DeliverTime::all() as $deliver)\n							<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value=\"{{ $deliver->id }}\">{{ $deliver->delivertime_name }}</option>\n							@endforeach\n						</select>\n					</p>\n\n					<p>Deze offerte doet stand tot\n						<select name=\"valid\" id=\"valid\">\n							@foreach (Valid::all() as $valid)\n							<option {{ ($offer_last ? ($offer_last->valid_id == $valid->id ? 'selected' : '') : '') }} value=\"{{ $valid->id }}\">{{ $valid->valid_name }}</option>\n							@endforeach\n						</select> na dagtekening\n					</p>\n\n				</div>\n\n			<div class=\"white-row show-activity\">\n\n				<div class=\"row\">\n\n					<div class=\"col-sm-6\">\n						<img class=\"img-responsive\" src=\"/images/logo2.png\" style=\"height: 75px;\" alt=\"\" />\n					</div>\n\n					<div class=\"col-sm-6 text-right\">\n						<p>\n							#{{ sprintf(\"%06d\", $project->id) }} &bull; <strong>{{ date(\"j M Y\") }}</strong>\n							<br />\n							{{ $project->project_name }}\n						</p>\n					</div>\n\n				</div>\n\n				<hr class=\"margin-top10 margin-bottom10\" /><!-- separator -->\n\n\n				<!-- /DETAILS -->\n\n							<div class=\"show-all\" style=\"display:none;\">\n\n								<h4>Aanneming</h4>\n\n								<table class=\"table table-striped only-end-total\">\n									<?# -- table head -- ?>\n									<thead>\n										<tr>\n											<th class=\"col-md-2\">&nbsp;</th>\n											<th class=\"col-md-3\">&nbsp;</th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Arbeidsuren</th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Arbeid</th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Materiaal</th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Materieel</th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Totaal</th>\n											<th class=\"col-md-1\"><span class=\"text-center\">Stelpost</th>\n										</tr>\n									</thead>\n\n									<!-- table items -->\n									<tbody>\n										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)\n										<tr><!-- item -->\n											<td class=\"col-md-2\"><strong>{{ $chapter->chapter_name }}</strong></td>\n											<td class=\"col-md-3\">{{ $activity->activity_name }}</td>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ number_format(CalculationOverview::laborTotal($activity), 2, \",\",\".\") }}</td>\n											<td class=\"col-md-1\"><span class=\"pull-right total-ex-tax\">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, \",\",\".\") }}</span></td>\n											<td class=\"col-md-1\"><span class=\"pull-right total-ex-tax\">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, \",\",\".\") }}</span></td>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, \",\",\".\") }}</span></td>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, \",\",\".\") }} </td>\n											<td class=\"col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}\"></td>\n										</tr>\n										@endforeach\n										@endforeach\n										<tr><!-- item -->\n											<th class=\"col-md-3\"><strong>Totaal aanneming</strong></th>\n											<th class=\"col-md-2\">&nbsp;</th>\n											<td class=\"col-md-1\"><strong><span class=\"pull-right\">{{ CalculationOverview::contrLaborTotalAmount($project) }}</span></strong></td>\n											<td class=\"col-md-1\"><strong><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::contrLaborTotal($project), 2, \",\",\".\") }}</span></strong></td>\n											<td class=\"col-md-1\"><strong><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::contrMaterialTotal($project), 2, \",\",\".\") }}</span></strong></td>\n											<td class=\"col-md-1\"><strong><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::contrEquipmentTotal($project), 2, \",\",\".\") }}</span></strong></td>\n											<td class=\"col-md-1\"><strong><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::contrTotal($project), 2, \",\",\".\") }}</span></strong></td>\n											<th class=\"col-md-1\">&nbsp;</th>\n										</tr>\n									</tbody>\n								</table>\n\n								<h4>Onderaanneming</h4>\n\n								<table class=\"table table-striped only-end-total\">\n									<?# -- table head -- ?>\n									<thead>\n										<tr>\n											<th class=\"col-md-2\">&nbsp;</th>\n											<th class=\"col-md-3\">&nbsp;</th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Arbeidsuren</th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Arbeid</th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Materiaal</th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Materieel</th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Totaal</th>\n											<th class=\"col-md-1\"><span class=\"text-center\">Stelpost</th>\n										</tr>\n									</thead>\n\n									<!-- table items -->\n									<tbody>\n										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)\n										<tr><!-- item -->\n											<td class=\"col-md-2\"><strong>{{ $chapter->chapter_name }}</strong></td>\n											<td class=\"col-md-3\">{{ $activity->activity_name }}</td>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ number_format(CalculationOverview::laborTotal($activity), 2, \",\",\".\") }}</td>\n											<td class=\"col-md-1\"><span class=\"pull-right total-ex-tax\">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, \",\",\".\") }}</span></td>\n											<td class=\"col-md-1\"><span class=\"pull-right total-ex-tax\">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, \",\",\".\") }}</span></td>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, \",\",\".\") }}</span></td>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, \",\",\".\") }} </td>\n											<td class=\"col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}\"></td>\n										</tr>\n										@endforeach\n										@endforeach\n										<tr><!-- item -->\n											<th class=\"col-md-3\"><strong>Totaal onderaanneming</strong></th>\n											<th class=\"col-md-2\">&nbsp;</th>\n											<td class=\"col-md-1\"><strong><span class=\"pull-right\">{{ CalculationOverview::subcontrLaborTotalAmount($project) }}</span></strong></td>\n											<td class=\"col-md-1\"><strong><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::subcontrLaborTotal($project), 2, \",\",\".\") }}</span></strong></td>\n											<td class=\"col-md-1\"><strong><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::subcontrMaterialTotal($project), 2, \",\",\".\") }}</span></strong></td>\n											<td class=\"col-md-1\"><strong><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, \",\",\".\") }}</span></strong></td>\n											<td class=\"col-md-1\"><strong><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::subcontrTotal($project), 2, \",\",\".\") }}</span></strong></td>\n											<th class=\"col-md-1\">&nbsp;</th>\n										</tr>\n									</tbody>\n								</table>\n\n								<h4>Totalen project</h4>\n\n								<table class=\"table table-striped only-end-total\">\n									<?# -- table head -- ?>\n									<thead>\n										<tr>\n											<th class=\"col-md-3\">&nbsp;</th>\n											<th class=\"col-md-2\">&nbsp;</th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Arbeidsuren</span></th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Arbeid</span></th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Materiaal</span></th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Materieel</span></th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Totaal</span></th>\n											<th class=\"col-md-1\">&nbsp;</th>\n										</tr>\n									</thead>\n\n									<!-- table items -->\n									<tbody>\n										<tr><!-- item -->\n											<th class=\"col-md-3\">&nbsp;</th>\n											<th class=\"col-md-2\">&nbsp;</th>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, \",\",\".\") }}</span></td>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, \",\",\".\") }}</span></td>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, \",\",\".\") }}</span></td>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, \",\",\".\") }}</span></td>\n											<th class=\"col-md-1\">&nbsp;</th>\n										</tr>\n									</tbody>\n								</table>\n							</div>\n\n							<div class=\"show-totals\">\n\n								<h4>Calculatie</h4>\n\n								<table class=\"table table-striped only-end-total\">\n									<?# -- table head -- ?>\n									<thead>\n										<tr>\n											<th class=\"col-md-2\">&nbsp;</th>\n											<th class=\"col-md-3\">&nbsp;</th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Arbeidsuren</th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Arbeid</th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Materiaal</th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Materieel</th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Totaal</th>\n											<th class=\"col-md-1\"><span class=\"text-center\">Stelpost</th>\n										</tr>\n									</thead>\n\n									<!-- table items -->\n									<tbody>\n										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)\n										<tr><!-- item -->\n											<td class=\"col-md-2\"><strong>{{ $chapter->chapter_name }}</strong></td>\n											<td class=\"col-md-3\">{{ $activity->activity_name }}</td>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ number_format(CalculationOverview::laborTotal($activity), 2, \",\",\".\") }}</td>\n											<td class=\"col-md-1\"><span class=\"pull-right total-ex-tax\">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, \",\",\".\") }}</span></td>\n											<td class=\"col-md-1\"><span class=\"pull-right total-ex-tax\">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, \",\",\".\") }}</span></td>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, \",\",\".\") }}</span></td>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, \",\",\".\") }} </td>\n											<td class=\"col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}\"></td>\n										</tr>\n										@endforeach\n										@endforeach\n										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)\n										<tr><!-- item -->\n											<td class=\"col-md-2\"><strong>{{ $chapter->chapter_name }}</strong></td>\n											<td class=\"col-md-3\">{{ $activity->activity_name }}</td>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ number_format(CalculationOverview::laborTotal($activity), 2, \",\",\".\") }}</td>\n											<td class=\"col-md-1\"><span class=\"pull-right total-ex-tax\">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, \",\",\".\") }}</span></td>\n											<td class=\"col-md-1\"><span class=\"pull-right total-ex-tax\">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, \",\",\".\") }}</span></td>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, \",\",\".\") }}</span></td>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, \",\",\".\") }} </td>\n											<td class=\"col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}\"></td>\n										</tr>\n										@endforeach\n										@endforeach\n									</tbody>\n								</table>\n\n								<h4>Totalen project</h4>\n\n								<table class=\"table table-striped only-end-total\">\n									<?# -- table head -- ?>\n									<thead>\n										<tr>\n											<th class=\"col-md-3\">&nbsp;</th>\n											<th class=\"col-md-2\">&nbsp;</th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Arbeidsuren</span></th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Arbeid</span></th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Materiaal</span></th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Materieel</span></th>\n											<th class=\"col-md-1\"><span class=\"pull-right\">Totaal</span></th>\n											<th class=\"col-md-1\">&nbsp;</th>\n										</tr>\n									</thead>\n\n									<!-- table items -->\n									<tbody>\n										<tr><!-- item -->\n											<th class=\"col-md-3\">&nbsp;</th>\n											<th class=\"col-md-2\">&nbsp;</th>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, \",\",\".\") }}</span></td>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, \",\",\".\") }}</span></td>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, \",\",\".\") }}</span></td>\n											<td class=\"col-md-1\"><span class=\"pull-right\">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, \",\",\".\") }}</span></td>\n											<th class=\"col-md-1\">&nbsp;</th>\n										</tr>\n									</tbody>\n								</table>\n							</div>\n						<h5>Weergegeven bedragen zijn exclusief BTW</h5>\n\n				</div>\n\n			<div class=\"white-row show-note\">\n\n				<div class=\"row\">\n\n					<div class=\"col-sm-6\">\n						<img class=\"img-responsive\" src=\"/images/logo2.png\" style=\"height: 75px;\" alt=\"\" />\n					</div>\n\n					<div class=\"col-sm-6 text-right\">\n						<p>\n							#{{ sprintf(\"%06d\", $project->id) }} &bull; <strong>{{ date(\"j M Y\") }}</strong>\n							<br />\n							{{ $project->project_name }}\n						</p>\n					</div>\n\n				</div>\n\n				<hr class=\"margin-top10 margin-bottom10\" /><!-- separator -->\n\n\n				<!-- /DETAILS -->\n\n							<div class=\"show-all\" style=\"display:none;\">\n\n								<h4>Aanneming</h4>\n\n								<table class=\"table table-striped\">\n									<?# -- table head -- ?>\n									<thead>\n										<tr>\n											<th class=\"col-md-2\">&nbsp;</th>\n											<th class=\"col-md-3\">&nbsp;</th>\n											<th class=\"col-md-7\"><span>Omschrijving</th>\n										</tr>\n									</thead>\n\n									<!-- table items -->\n									<tbody>\n										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)\n										<tr><!-- item -->\n											<td class=\"col-md-2\"><strong>{{ $chapter->chapter_name }}</strong></td>\n											<td class=\"col-md-3\">{{ $activity->activity_name }}</td>\n											<td class=\"col-md-7\"><span>{{ $activity->note }}</td>\n										</tr>\n										@endforeach\n										@endforeach\n									</tbody>\n								</table>\n\n								<h4>Onderaanneming</h4>\n\n								<table class=\"table table-striped\">\n									<?# -- table head -- ?>\n									<thead>\n										<tr>\n											<th class=\"col-md-2\">&nbsp;</th>\n											<th class=\"col-md-3\">&nbsp;</th>\n											<th class=\"col-md-7\"><span>Omschrijving</th>\n										</tr>\n									</thead>\n\n									<!-- table items -->\n									<tbody>\n										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)\n										<tr><!-- item -->\n											<td class=\"col-md-2\"><strong>{{ $chapter->chapter_name }}</strong></td>\n											<td class=\"col-md-3\">{{ $activity->activity_name }}</td>\n											<td class=\"col-md-7\"><span>{{ $activity->note }}</td>\n										</tr>\n										@endforeach\n										@endforeach\n									</tbody>\n								</table>\n							</div>\n\n							<div class=\"show-totals\">\n								<h4>Calculatie</h4>\n\n								<table class=\"table table-striped\">\n									<?# -- table head -- ?>\n									<thead>\n										<tr>\n											<th class=\"col-md-2\">&nbsp;</th>\n											<th class=\"col-md-3\">&nbsp;</th>\n											<th class=\"col-md-7\"><span>Omschrijving</th>\n										</tr>\n									</thead>\n\n									<!-- table items -->\n									<tbody>\n										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)\n										@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)\n										<tr><!-- item -->\n											<td class=\"col-md-2\"><strong>{{ $chapter->chapter_name }}</strong></td>\n											<td class=\"col-md-3\">{{ $activity->activity_name }}</td>\n											<td class=\"col-md-7\"><span>{{ $activity->note }}</td>\n										</tr>\n										@endforeach\n										@endforeach\n									</tbody>\n								</table>\n\n							</div>\n\n				</div>\n			</form>\n\n			<!--<hr class=\"half-margins invisible\" />--><!-- separator -->\n\n			<!-- INVOICE FOOTER -->\n			<div class=\"row\">\n\n				<div class=\"col-sm-6\">\n					<!--<h4><strong>Contact</strong> Details</h4>\n\n					<p class=\"nomargin nopadding\">\n						<strong>Note:</strong>\n						Like other components, easily make a panel more meaningful to a particular context by adding any of the contextual state classes.\n					</p><br />\n\n					<address>\n						PO Box 21132 <br>\n						Vivas 2355 Australia<br>\n						Phone: 1-800-565-2390 <br>\n						Fax: 1-800-565-2390 <br>\n						Email:support@yourname.com\n					</address>-->\n\n				</div>\n\n				<div class=\"col-sm-6 text-right\">\n\n					<!--<ul class=\"list-unstyled invoice-total-info\">\n						<li><strong>Sub - Total Amount:</strong> $2162.00</li>\n						<li><strong>Discount:</strong> 10.0%</li>\n						<li><strong>VAT ($6):</strong> $12.0</li>\n						<li><strong>Grand Total:</strong> $1958.0</li>\n					</ul>-->\n\n					<div class=\"padding20\">\n						<a href=\"#\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#myModal\">Opties</a>\n\n						<a href=\"#\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#historyModal\">Versies</a>\n\n						<a href=\"#\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#termModal\">Termijnen</a>\n						<!--<button class=\"btn btn-default\" onclick=\"window.print();\"><i class=\"fa fa-print\"></i> Print</button>-->\n						<button class=\"btn btn-primary osave\">Offerte sluiten</button>\n					</div>\n\n				</div>\n\n			</div>\n		</div>\n\n	</section>\n\n</div>\n<!-- /WRAPPER -->\n@stop\n",
+			"());\n",
+			"');\n",
+			"termModal",
+			"$tpayment",
+			"$offer_last",
+			"Offerte s",
+			"date(",
+			"date",
+			"closure",
+			"\n	",
+			"@foreach",
+			"());\n",
+			"disabled",
+			"cumul",
+			">\n",
+			"myModal",
+			"Diversen",
+			"number",
+			"();\n",
+			"http://www.gs1.nl Artikelbericht_bou003_31012010.xsd",
+			"show-all",
+			"show-totals",
+			"only-t",
+			"show-total",
+			"show-note",
+			"wh",
+			"hide-btw2",
+			"hide-btw1",
+			"wh",
+			"activity",
+			"();\n",
+			"tax",
+			"--}}\n",
+			"test_relation2",
+			"'}\n",
+			"}}\n",
+			"calcTotalTimesheet",
+			">\n",
+			"');\n",
+			"labor",
+			"lresetrow",
+			"'));\n",
+			"doNewEstimateLabor",
+			"lresetrow",
+			"footer",
+			"footer	",
+			"container",
+			"updateequipment",
+			"sresetrow",
+			"activityTotalProfit",
+			"laborActivity",
+			");\n",
+			"subconEquipmentBalanceTax2",
+			"subconEquipmentBalanceTax1AmountTax",
+			"number_format",
+			";\n",
+			"isless",
+			"lessLaborDeltaTotal",
+			"subconCalcMaterialActivityTax1Amount",
+			"conCalcMaterialActivityTax2Amount",
+			"laborActivity",
+			"test_relation",
+			"CalculationEndresult",
+			"conCalcLaborActivityTax2AmountTax",
+			"();\n",
+			"CalculationEndresult",
+			"endresult",
+			"Aut",
+			"amount",
+			">\n",
+			"123",
+			"xdeleterow",
+			"tsave",
+			"lsave",
+			"deleterow",
+			"xdeleterow",
+			"edeleterow",
+			"sdeleterow",
+			"lsave",
+			"CalculationO",
+			"Cal",
+			"Calculation",
+			"CalculationE",
+			"Calcu",
+			"_calc",
+			"Calcu",
+			"eCh",
+			"nOver"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -202,6 +751,11 @@
 		"regex": false,
 		"replace_history":
 		[
+			"InvoiceTerm",
+			"http://www.gs1.nl_Artikelbericht_bou003_31012010.xsd",
+			"EstimateEndresult",
+			"127.0.0.1",
+			"719E00"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -212,7 +766,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -221,15 +775,44 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 0,
+						"buffer_size": 62847,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								6483,
+								6483
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1755.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/views/admin/dashboard.blade.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2337,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								298,
+								298
 							]
 						],
 						"settings":
@@ -242,6 +825,35 @@
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "public/css/essentials.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 46750,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								801,
+								801
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -278,10 +890,23 @@
 		]
 	},
 	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 25.0
+	},
 	"output.find_results":
 	{
 		"height": 0.0
 	},
+	"output.git":
+	{
+		"height": 25.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 25.0
+	},
+	"pinned_build_system": "",
 	"project": "calctool.sublime-project",
 	"replace":
 	{
@@ -291,6 +916,7 @@
 	"select_file":
 	{
 		"height": 0.0,
+		"last_filter": "",
 		"selected_items":
 		[
 		],
@@ -298,19 +924,21 @@
 	},
 	"select_project":
 	{
-		"height": 0.0,
+		"height": 500.0,
+		"last_filter": "",
 		"selected_items":
 		[
 		],
-		"width": 0.0
+		"width": 380.0
 	},
 	"select_symbol":
 	{
-		"height": 0.0,
+		"height": 392.0,
+		"last_filter": "",
 		"selected_items":
 		[
 		],
-		"width": 0.0
+		"width": 1196.0
 	},
 	"selected_group": 0,
 	"settings":
@@ -320,7 +948,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 402.0,
+	"side_bar_width": 488.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

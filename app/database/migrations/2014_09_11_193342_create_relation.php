@@ -38,16 +38,16 @@ class CreateRelation extends Migration {
 		Schema::create('relation', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('company_name', 50)->index();
+			$table->string('company_name', 50)->nullable();
 			$table->string('address_street', 50);
 			$table->string('address_number', 5);
 			$table->string('address_postal', 6);
 			$table->string('address_city', 35);
-			$table->integer('kvk')->nullable();
-			$table->string('btw', 14)->nullable();
+			$table->char('kvk', 12)->nullable();
+			$table->char('btw', 14)->nullable();
 			$table->string('debtor_code', 10)->index();
-			$table->integer('phone')->nullable()->unsigned();
-			$table->string('email', 80);
+			$table->string('phone', 12)->nullable();
+			$table->string('email', 80)->nullable();
 			$table->text('note')->nullable();
 			$table->string('website', 180)->nullable();
 			$table->nullableTimestamps();
@@ -55,12 +55,12 @@ class CreateRelation extends Migration {
 			$table->foreign('logo_id')->references('id')->on('resource')->onUpdate('cascade')->onDelete('set null');
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
-			$table->integer('type_id')->unsigned();
+			$table->integer('type_id')->unsigned()->nullable();
 			$table->foreign('type_id')->references('id')->on('relation_type')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('kind_id')->unsigned();
 			$table->foreign('kind_id')->references('id')->on('relation_kind')->onUpdate('cascade')->onDelete('restrict');
-			$table->integer('provance_id')->unsigned();
-			$table->foreign('provance_id')->references('id')->on('provance')->onUpdate('cascade')->onDelete('restrict');
+			$table->integer('province_id')->unsigned();
+			$table->foreign('province_id')->references('id')->on('province')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('country_id')->unsigned();
 			$table->foreign('country_id')->references('id')->on('country')->onUpdate('cascade')->onDelete('restrict');
 		});
@@ -70,9 +70,9 @@ class CreateRelation extends Migration {
 			$table->increments('id');
 			$table->string('firstname', 30)->nullable();
 			$table->string('lastname', 50);
-			$table->string('email', 80)->unique();
-			$table->integer('mobile')->nullable()->unsigned();
-			$table->integer('phone')->nullable()->unsigned();
+			$table->string('email', 80);
+			$table->string('mobile', 12)->nullable();
+			$table->string('phone', 12)->nullable();
 			$table->text('note')->nullable();
 			$table->integer('relation_id')->unsigned();
 			$table->foreign('relation_id')->references('id')->on('relation')->onUpdate('cascade')->onDelete('cascade');
@@ -88,7 +88,7 @@ class CreateRelation extends Migration {
 
 		Schema::table('iban', function(Blueprint $table)
 		{
-			$table->integer('relation_id')->unsigned();
+			$table->integer('relation_id')->unsigned()->nullable();
 			$table->foreign('relation_id')->references('id')->on('relation')->onUpdate('cascade')->onDelete('cascade');
 		});
 
@@ -97,6 +97,12 @@ class CreateRelation extends Migration {
 			$table->integer('client_id')->unsigned();
 			$table->foreign('client_id')->references('id')->on('relation')->onUpdate('cascade')->onDelete('restrict');
 		});
+
+		$seq_relation = "ALTER SEQUENCE relation_id_seq RESTART WITH 10000";
+		$seq_contact = "ALTER SEQUENCE contact_id_seq RESTART WITH 100";
+
+		DB::unprepared($seq_relation);
+		DB::unprepared($seq_contact);
 	}
 
 	/**

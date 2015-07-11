@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="ie ie8"><![endif]-->
+<!--[if IE 9]><html class="ie ie9"><![endif]-->
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>{{{ $title or 'Calctool' }}}</title>
+		<meta name="keywords" content="HTML5,CSS3,Template" />
+		<meta name="description" content="" />
+		<meta name="Author" content="Dorin Grigoras [www.stepofweb.com]" />
+
+		<?# -- mobile settings -- ?>
+		<meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
+
+		<?# -- WEB FONTS -- ?>
+		{{ HTML::style('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800') }}
+
+		<?# -- CORE CSS -- ?>
+		{{ HTML::style('plugins/bootstrap/css/bootstrap.min.css') }}
+		{{ HTML::style('css/font-awesome.css') }}
+		{{ HTML::style('plugins/owl-carousel/owl.carousel.css') }}
+		{{ HTML::style('plugins/owl-carousel/owl.theme.css') }}
+		{{ HTML::style('plugins/owl-carousel/owl.transitions.css') }}
+		{{ HTML::style('plugins/x-editable/css/bootstrap-editable.css') }}
+		{{ HTML::style('plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css') }}
+
+		<?# -- SHOP CSS -- ?>
+		{{ HTML::style('css/shop.css') }}
+
+		<?#-- THEME CSS -- ?>
+		{{ HTML::style('css/essentials.css') }}
+		{{ HTML::style('css/layout.css') }}
+		{{ HTML::style('css/layout-responsive.css') }}
+		{{ HTML::style('css/darkgreen.css') }}
+
+		<?# -- CUSTOM CSS -- ?>
+		{{ HTML::style('css/custom.css') }}
+
+		<?# -- Morenizr -- ?>
+		{{ HTML::script('plugins/modernizr.min.js') }}
+
+		<?# -- JQuery -- ?>
+		{{ HTML::script('plugins/jquery-2.1.4.min.js') }}
+	</head>
+	<body>
+		<?# -- ONLY DEV -- ?>
+		@if(App::environment('dev'))
+		<div style="background-color:red;z-index:200;position:fixed;top:0px;left:45%;width: 100px;text-align: center;"><a href="https://bitbucket.org/calctool/calctool-v2/commits/{{ File::get('../.revision') }}" style="color: black;">{{ 'REV: ' . substr(File::get('../.revision'), 0, 7) }}</a></div>
+		@elseif(App::environment('local'))
+		<div style="background-color:green;z-index:200;position:fixed;top:0px;left:45%;width: 100px;text-align: center;">local</div>
+		@endif
+
+		<?# -- HEADER -- ?>
+		@section('header')
+			@include('layout.header')
+		@show
+
+		<?# -- MAIN CONTENT -- ?>
+		@yield('content')
+
+
+		<?# -- FOOTER -- ?>
+		@section('footer')
+			@include('layout.footer')
+		@show
+
+		<?# -- JAVASCRIPT FILES -- ?>
+		{{ HTML::script('plugins/jquery.easing.1.3.js') }}
+		{{ HTML::script('plugins/jquery.cookie.js') }}
+		{{ HTML::script('plugins/jquery.appear.js') }}
+		{{ HTML::script('plugins/jquery.isotope.js') }}
+		{{ HTML::script('plugins/jquery.number.min.js') }}
+		{{ HTML::script('plugins/masonry.js') }}
+
+		{{ HTML::script('plugins/bootstrap/js/bootstrap.min.js') }}
+		{{ HTML::script('plugins/owl-carousel/owl.carousel.min.js') }}
+		{{ HTML::script('plugins/x-editable/js/bootstrap-editable.min.js') }}
+		{{ HTML::script('plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}
+
+		{{ HTML::script('js/scripts.js') }}
+
+	</body>
+</html>

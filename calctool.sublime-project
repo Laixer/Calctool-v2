@@ -3,19 +3,16 @@
 	[
 		{
 			"follow_symlinks": true,
-			"path": "app"
-		},
-		{
-			"follow_symlinks": true,
-			"path": "bootstrap"
-		},
-		{
-			"follow_symlinks": true,
-			"path": "public"
-		},
-		{
-			"follow_symlinks": true,
-			"path": "vendor"
+			"path": "."
 		}
-	]
+	],
+    "settings":
+    {
+		"ensure_newline_at_eof_on_save": true,
+		"show_full_path": true,
+		"tab_size": 4,
+		"translate_tabs_to_spaces": false,
+		"trim_trailing_white_space_on_save": true,
+		"word_wrap": false
+    },
 }

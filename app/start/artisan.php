@@ -11,3 +11,5 @@
 |
 */
 
+Artisan::add(new DropHard);
+Artisan::add(new MaterialImport);

@@ -2,12 +2,9 @@
 
 class Country extends Eloquent {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'country';
+	protected $guarded = array('id');
 
 	public $timestamps = false;
+
 }

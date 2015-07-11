@@ -2,12 +2,9 @@
 
 class UserType extends Eloquent {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'user_type';
+	protected $guarded = array('id');
 
 	public $timestamps = false;
+
 }

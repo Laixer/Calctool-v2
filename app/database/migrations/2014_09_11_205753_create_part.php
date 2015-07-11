@@ -41,6 +41,7 @@ class CreatePart extends Migration {
 			$table->foreign('part_id')->references('id')->on('part')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('type_id')->unsigned();
 			$table->foreign('type_id')->references('id')->on('part_type')->onUpdate('cascade')->onDelete('cascade');
+			$table->primary(array('part_id', 'type_id'));
 		});
 
 		Schema::create('part_part_detail', function(Blueprint $table)
@@ -49,12 +50,17 @@ class CreatePart extends Migration {
 			$table->foreign('detail_id')->references('id')->on('detail')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('type_id')->unsigned();
 			$table->foreign('type_id')->references('id')->on('part_type')->onUpdate('cascade')->onDelete('cascade');
+			$table->primary(array('detail_id', 'type_id'));
 		});
 
 		Schema::table('activity', function(Blueprint $table)
 		{
 			$table->integer('part_id')->unsigned();
 			$table->foreign('part_id')->references('id')->on('part')->onUpdate('cascade')->onDelete('restrict');
+			$table->integer('part_type_id')->unsigned();
+			$table->foreign('part_type_id')->references('id')->on('part_type')->onUpdate('cascade')->onDelete('restrict');
+			$table->integer('detail_id')->nullable()->unsigned();
+			$table->foreign('detail_id')->references('id')->on('detail')->onUpdate('cascade')->onDelete('restrict');
 		});
 	}
 
@@ -65,6 +71,16 @@ class CreatePart extends Migration {
 	 */
 	public function down()
 	{
+		Schema::table('activity', function(Blueprint $table)
+		{
+			$table->dropForeign('activity_detail_id_foreign');
+		});
+
+		Schema::table('activity', function(Blueprint $table)
+		{
+			$table->dropForeign('activity_part_type_id_foreign');
+		});
+
 		Schema::table('activity', function(Blueprint $table)
 		{
 			$table->dropForeign('activity_part_id_foreign');

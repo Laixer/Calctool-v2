@@ -2,18 +2,13 @@
 
 class Iban extends Eloquent {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'iban';
+	protected $guarded = array('id');
 
-	protected $fillable = array('iban_name');
+	public $timestamps = false;
 
 	public function user() {
 		return $this->hasOne('User');
 	}
 
-	public $timestamps = false;
 }

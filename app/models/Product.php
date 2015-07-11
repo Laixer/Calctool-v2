@@ -2,14 +2,8 @@
 
 class Product extends Eloquent {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'product';
-
-	protected $fillable = array('description', 'unit', 'unit_price');
+	protected $guarded = array('id');
 
 	public $timestamps = false;
 
@@ -24,4 +18,5 @@ class Product extends Eloquent {
 	public function user() {
 		return $this->belongsToMany('User', 'product_favorite', 'product_id', 'user_id');
 	}
+
 }

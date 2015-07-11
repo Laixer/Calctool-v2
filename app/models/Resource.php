@@ -2,12 +2,8 @@
 
 class Resource extends Eloquent {
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'resource';
+	protected $guarded = array('id');
 
 	public function user() {
 		return $this->hasOne('User');
@@ -16,4 +12,5 @@ class Resource extends Eloquent {
 	public function project() {
 		return $this->hasOne('Project');
 	}
+
 }
