@@ -1,7 +1,9 @@
 # **CalcTool | CalculatieTool** #
 
-[![Deployment status for Development](https://calctool.deploybot.com/badge/88313865850840/14441.svg)](http://deploybot.com)
+## status for Production
 [![Deployment status from Production](https://calctool.deploybot.com/badge/77558059864400/10989.svg)](http://deploybot.com)
+## status for Development
+[![Deployment status for Development](https://calctool.deploybot.com/badge/88313865850840/14441.svg)](http://deploybot.com)
 
 ###Calculeren, Offreren, Factureren, Urenregistratie, Nacalculatie , Meer- minderwerk. De CalcTool is een alles in 1-pakket dat al deze facetten bundelt.###
 
