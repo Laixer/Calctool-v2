@@ -59,7 +59,7 @@
 							<label for="type">Type</label>
 							<select name="type" id="type" class="form-control pointer">
 								@foreach (ProjectType::all() as $type)
-									<option value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
+									<option {{ $type->type_name=='calculatie' ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
 								@endforeach
 							</select>
 						</div>
@@ -113,7 +113,7 @@
 							<label for="country">Land</label>
 							<select name="country" id="country" class="form-control pointer">
 								@foreach (Country::all() as $country)
-									<option value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
+									<option {{ $country->country_name=='nederland' ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
 								@endforeach
 							</select>
 						</div>
@@ -152,10 +152,10 @@
 								<div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
 								<div class="col-md-1"><div class="pull-right">&euro;</div></div>
 								<div class="col-md-2">
-									<input name="hour_rate" id="hour_rate" type="text" min="0" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : 0 }}" class="form-control-sm-number"/>
+									<input name="hour_rate" id="hour_rate" type="text" min="0" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : str_replace('.', ',', Auth::user()->pref_hourrate_calc) }}" class="form-control-sm-number"/>
 								</div>
 								<div class="col-md-2">
-									<input name="more_hour_rate" id="more_hour_rate" type="text" min="0" max="1000" value="{{ Input::old('more_hour_rate') ? Input::old('more_hour_rate') : 0 }}" class="form-control-sm-number"/>
+									<input name="more_hour_rate" id="more_hour_rate" type="text" min="0" max="1000" value="{{ Input::old('more_hour_rate') ? Input::old('more_hour_rate') : str_replace('.', ',', Auth::user()->pref_hourrate_more) }}" class="form-control-sm-number"/>
 								</div>
 							</div>
 							<h5><strong>Aanneming</strong></h5>
