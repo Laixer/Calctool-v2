@@ -236,6 +236,30 @@ class CalcController extends BaseController {
 		}
 	}
 
+
+	public function doUpdateNote()
+	{
+		$rules = array(
+			'note' => array('required'),
+			'activity' => array('required','integer')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+			$activity = Activity::find(Input::get('activity'));
+			$activity->note = Input::get('note');
+
+			$activity->save();
+
+			return json_encode(['success' => 1]);
+		}
+	}
+
 	public function doDeleteActivity()
 	{
 		$rules = array(
