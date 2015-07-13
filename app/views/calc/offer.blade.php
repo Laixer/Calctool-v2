@@ -478,7 +478,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<li>t.a.v.
 							<select name="to_contact" id="to_contact">
 								@foreach (Contact::where('relation_id','=',$relation->id)->get() as $contact)
-								<option {{ $offer_last->to_contact_id==$contact->id ? 'selected' : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
+								<option {{ $offer_last ? ($offer_last->to_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
 								@endforeach
 							</select>
 							</li>
@@ -1005,7 +1005,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					<p>Cheers,
 						<select name="from_contact" id="from_contact">
 							@foreach (Contact::where('relation_id','=',$relation_self->id)->get() as $contact)
-							<option {{ $offer_last->from_contact_id==$contact->id ? 'selected' : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
+							<option {{ $offer_last ? ($offer_last->from_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
 							@endforeach
 						</select>
 					</p>
