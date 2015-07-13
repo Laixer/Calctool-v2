@@ -47,7 +47,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         <div id="invoice">
           <h3 class="name">{{ InvoiceController::getInvoiceCode($project->id) }}</h3>
           <div class="date">{{ $project->project_name }}</div>
-
+          <div class="date">{{ $invoice->invoice_code }}</div>
+          <div class="date">{{ $invoice->reference }}</div>
+          <div class="date">{{ $invoice->book_code }}</div>
           <div class="date">{{ date("j M Y") }}</div>
         </div>
       </div>

@@ -224,7 +224,7 @@ $(document).ready(function() {
 						</div>
 						<div id="payment" class="tab-pane">
 							<h4>Betalingsgegevens</h4>
-							{{ $iban ? Form::open(array('url' => 'relation/iban/update')) : Form::open(array('url' => 'relation/iban/new')) }}
+							{{ $iban ? Form::open(array('url' => 'mycompany/iban/update')) : Form::open(array('url' => 'relation/iban/new')) }}
 							<div class="row">
 
 								<div class="col-md-3">

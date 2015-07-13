@@ -90,7 +90,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			$.post("/invoice/pay", {project: {{ $project->id }}, id: $curinv, projectid: $curproj}, function(data){
 				$rs = jQuery.parseJSON(data);
 				console.log($rs);
-				$curThis.replaceWith('Betaald op ' +$rs.payment);
+				$curThis.replaceWith('Gefactureerd op ' +$rs.payment);
 			}).fail(function(e) { console.log(e); });
 		});
 		$('#projclose').editable({
@@ -333,7 +333,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="col-md-3"><strong>Opdracht stadium</strong></div>
 							</div>
 							<div class="row">
-								<div class="col-md-3">Sart uitvoering</div>
+								<div class="col-md-3">Start uitvoering</div>
 								<div class="col-md-2"><a href="#" id="wordexec" data-format="dd-mm-yyyy">{{ $project->work_execution ? date('d-m-Y', strtotime($project->work_execution)) : '' }}</a></div>
 								<div class="col-md-3"></div>
 							</div>
@@ -371,7 +371,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								if ($invoice->invoice_close && !$invoice->payment_date)
 									echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs dopay">Betalen</a>';
 								elseif ($invoice->invoice_close && $invoice->payment_date)
-									echo 'Betaald op '.$invoice->payment_date;
+									echo 'Gefactureerd op '.$invoice->payment_date;
 								elseif ($invoice->isclose)
 									echo '<a href="/invoice/project-'.$project->id.'/invoice-'.$invoice->id.'" class="btn btn-primary btn-xxs">Bekijken</a>';
 								else
@@ -383,7 +383,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							@endforeach
 							<?php }else{ ?>
 							<div class="row">
-								<div class="col-md-12">Geen uurtjes factuurtjes</div>
+								<div class="col-md-12">Geen geregistreerde uren</div>
 							</div>
 							<?php } ?>
 								<br>
@@ -469,9 +469,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 											<tr>
 												<th class="col-md-1">Datum</th>
 												<th class="col-md-1">Uren</th>
-												<th class="col-md-1">Soort</th>
+												<th class="col-md-3">Soort</th>
 												<th class="col-md-1">Werkzaamheid</th>
-												<th class="col-md-4">Omschrijving</th>
+												<th class="col-md-3">Omschrijving</th>
 												<th class="col-md-1">&nbsp;</th>
 												<th class="col-md-1">&nbsp;</th>
 												<th class="col-md-1">&nbsp;</th>
@@ -479,7 +479,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 											</tr>
 										</thead>
 
-										<!-- table items -->
+										<!--3table items -->
 										<tbody>
 											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
@@ -487,8 +487,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 											<tr data-id="{{ $timesheet->id }}"><!-- item -->
 												<td class="col-md-1">{{ date('d-m-Y', strtotime($timesheet->register_date)) }}</td>
 												<td class="col-md-1">{{ number_format($timesheet->register_hour, 2,",",".") }}</td>
-												<td class="col-md-1">{{ ucwords(TimesheetKind::find($timesheet->timesheet_kind_id)->kind_name) }}</td>
-												<td class="col-md-4">{{ $activity->activity_name }}</td>
+												<td class="col-md-3">{{ ucwords(TimesheetKind::find($timesheet->timesheet_kind_id)->kind_name) }}</td>
+												<td class="col-md-3">{{ $activity->activity_name }}</td>
 												<td class="col-md-1">{{ $timesheet->note }}</td>
 												<td class="col-md-1">&nbsp;</td>
 												<td class="col-md-1">&nbsp;</td>
@@ -500,7 +500,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 											<tr><!-- item -->
 												<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text"/></td>
 												<td class="col-md-1"><input type="number" min="0" name="hour" id="hour" class="form-control-sm-text"/></td>
-												<td class="col-md-1">
+												<td class="col-md-2">
 													<select name="typename" id="typename" class="form-control-sm-text">
 													@foreach (TimesheetKind::all() as $typename)
 														<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
@@ -530,7 +530,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						<div id="hour_overview" class="tab-pane">
 							<div class="toogle">
 								<div class="toggle active">
-									<label>Anneming</label>
+									<label>Aanneming</label>
 									<div class="toggle-content">
 									<table class="table table-striped">
 										<?# -- table head -- ?>
@@ -639,9 +639,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 											<tr>
 												<th class="col-md-1">Datum</th>
 												<th class="col-md-1">Relatie</th>
-												<th class="col-md-1">Factuurbedrag</th>
+												<th class="col-md-3">Factuurbedrag</th>
 												<th class="col-md-1">Soort</th>
-												<th class="col-md-4">Omschrijving</th>
+												<th class="col-md-2">Omschrijving</th>
 												<th class="col-md-1">&nbsp;</th>
 												<th class="col-md-1">&nbsp;</th>
 												<th class="col-md-1">&nbsp;</th>
@@ -653,10 +653,10 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 											@foreach (Purchase::where('project_id','=', $project->id)->get() as $purchase)
 											<tr data-id="{{ $purchase->id }}">
 												<td class="col-md-1">{{ date('d-m-Y', strtotime($purchase->register_date)) }}</td>
-												<td class="col-md-4">{{ Relation::find($purchase->relation_id)->company_name }}</td>
-												<td class="col-md-1">{{ '&euro; '.number_format($purchase->amount, 2,",",".") }}</td>
+												<td class="col-md-1">{{ Relation::find($purchase->relation_id)->company_name }}</td>
+												<td class="col-md-3">{{ '&euro; '.number_format($purchase->amount, 2,",",".") }}</td>
 												<td class="col-md-1">{{ ucwords(PurchaseKind::find($purchase->kind_id)->kind_name) }}</td>
-												<td class="col-md-1">{{ $purchase->note }}</td>
+												<td class="col-md-3">{{ $purchase->note }}</td>
 												<td class="col-md-1">&nbsp;</td>
 												<td class="col-md-1">&nbsp;</td>
 												<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times deleterowp"></button></td>
@@ -673,7 +673,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 													@endforeach
 													</select>
 												</td>
-												<td class="col-md-1"><input type="number" min="0" name="hour" id="hour" class="form-control-sm-text"/></td>
+												<td class="col-md-2"><input type="number" min="0" name="hour" id="hour" class="form-control-sm-text"/></td>
 												<td class="col-md-1">
 													<select name="typename" id="typename" class="form-control-sm-text">
 													@foreach (PurchaseKind::all() as $typename)

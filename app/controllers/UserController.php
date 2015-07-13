@@ -157,6 +157,11 @@ class UserController extends \BaseController {
 
 			$user->save();
 
+			$data = array('email' => Auth::user()->email, 'username' => Auth::user()->username);
+			Mail::queue('mail.password_update', $data, function($message) use ($data) {
+				$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Wachtwoord aangepast');
+			});
+
 			return Redirect::back()->with('success', 1);
 		}
 	}
@@ -303,6 +308,11 @@ class UserController extends \BaseController {
 			$iban->iban_name = Input::get('iban_name');
 
 			$iban->save();
+
+			$data = array('email' => Auth::user()->email, 'username' => Auth::user()->username);
+			Mail::queue('mail.iban_update', $data, function($message) use ($data) {
+				$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Betaalgegevens aangepast');
+			});
 
 			return Redirect::back()->with('success', 1);
 		}

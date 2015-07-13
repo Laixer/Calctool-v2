@@ -237,21 +237,25 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 		@endif
 
 	<div class="pull-right">
+		<?php if ($offer_last) { ?>
+		<?php if (!$offer_last->offer_finish) { ?>
+		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
+		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
+		<button class="btn btn-primary osave">Offerte  maken</button>
+		<?php } ?>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Versies</a>
 
 		<div class="btn-group">
-		  <a href="/offer/pdf/project-{{ $project->id }}/download" class="btn btn-primary">PDF</a>
+		  <a target="blank" href="/offer/pdf/project-{{ $project->id }}" class="btn btn-primary">PDF</a>
 		  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		    <span class="caret"></span>
 		    <span class="sr-only">Toggle Dropdown</span>
 		  </button>
 		  <ul class="dropdown-menu">
-		    <li><a href="/offer/pdf/project-{{ $project->id }}/download">Download</a></li>
-		    <li><a href="/offer/pdf/project-{{ $project->id }}">Bekijk</a></li>
+		    <li><a href="/offer/pdf/project-{{ $project->id }}/download?file={{ OfferController::getOfferCode($project->id).'-offerte.pdf' }}">Download</a></li>
 		  </ul>
 		</div>
-
-		<?php if (!($offer_last && $offer_last->offer_finish)) { ?>
+		<?php }else{ ?>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
 		<button class="btn btn-primary osave">Offerte  maken</button>
@@ -1017,7 +1021,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				<div class="row">
 
 					<div class="col-sm-6">
-						<img class="img-responsive" src="/images/logo2.png" style="height: 75px;" alt="" />
+						{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
 					</div>
 
 					<div class="col-sm-6 text-right">
@@ -1255,7 +1259,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				<div class="row">
 
 					<div class="col-sm-6">
-						<img class="img-responsive" src="/images/logo2.png" style="height: 75px;" alt="" />
+						{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
 					</div>
 
 					<div class="col-sm-6 text-right">
@@ -1365,26 +1369,30 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 				<div class="col-sm-6"></div>
 
-				<div class="col-sm-6 text-right">
+				<div class="col-sm-6">
 					<div class="padding20">
+						<?php if ($offer_last) { ?>
+						<?php if (!$offer_last->offer_finish) { ?>
+						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
+						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
+						<button class="btn btn-primary osave">Offerte  maken</button>
+						<?php } ?>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Versies</a>
 
 						<div class="btn-group">
-						  <a href="/offer/pdf/project-{{ $project->id }}/download" class="btn btn-primary">PDF</a>
+						  <a target="blank" href="/offer/pdf/project-{{ $project->id }}" class="btn btn-primary">PDF</a>
 						  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						    <span class="caret"></span>
 						    <span class="sr-only">Toggle Dropdown</span>
 						  </button>
 						  <ul class="dropdown-menu">
-						    <li><a href="/offer/pdf/project-{{ $project->id }}/download">Download</a></li>
-						    <li><a href="/offer/pdf/project-{{ $project->id }}">Bekijk</a></li>
+						    <li><a href="/offer/pdf/project-{{ $project->id }}/download?file={{ OfferController::getOfferCode($project->id).'-offerte.pdf' }}">Download</a></li>
 						  </ul>
 						</div>
-
-						<?php if (!($offer_last && $offer_last->offer_finish)) { ?>
+						<?php }else{ ?>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
-						<button class="btn btn-primary osave">Offerte maken</button>
+						<button class="btn btn-primary osave">Offerte  maken</button>
 						<?php } ?>
 					</div>
 				</div>

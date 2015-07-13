@@ -30,24 +30,34 @@ $relation = Relation::find(Route::Input('relation_id'));
 			</div>
 			@endif
 
+			<div>
+			<ol class="breadcrumb">
+			  <li><a href="/">Home</a></li>
+			  <li><a href="/relation">Relaties</a></li>
+			  <li>moet nog worden toegevoegd, zie 2Do</li>
+			 <li class="active" /relation-{{ $relation->id }}/contact/new">nieuw contact</li>
+			</ol>
+			<div>
+			<br>
+
 			<h2><strong>Nieuw</strong> contact</h2>
 
 				{{ Form::open(array('url' => 'relation/contact/new')) }}
 				<h4>Contactgegevens</h4>
 				<div class="row">
 
-					<div class="col-md-3">
-						<div class="form-group">
-							<label for="contact_name">Naam</label>
-							<input name="contact_name" id="contact_name" type="text" value="{{ Input::old('contact_name') }}" class="form-control"/>
-							<input type="hidden" name="id" id="id" value="{{ $relation->id }}"/>
-						</div>
-					</div>
-
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="contact_firstname">Voornaam</label>
 							<input name="contact_firstname" id="contact_firstname" type="text" value="{{ Input::old('contact_firstname') }}" class="form-control"/>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="contact_name">Achternaam</label>
+							<input name="contact_name" id="contact_name" type="text" value="{{ Input::old('contact_name') }}" class="form-control"/>
+							<input type="hidden" name="id" id="id" value="{{ $relation->id }}"/>
 						</div>
 					</div>
 

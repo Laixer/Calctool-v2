@@ -8,6 +8,14 @@
 
 		<div class="col-md-12">
 
+			<div>
+			<ol class="breadcrumb">
+			  <li><a href="/">Home</a></li>
+			  <li>Relaties</li>
+			</ol>
+			<div>
+			<br>
+
 			<h2><strong>Relaties</strong></h2>
 
 			<table class="table table-striped">
@@ -32,9 +40,10 @@
 				else
 					$userid = -1;
 				foreach (Relation::where('user_id','=', Auth::user()->id)->where('id','!=',$userid)->get() as $relation) {
+					$contact = Contact::where('relation_id','=',$relation->id)->first();
 				?>
 					<tr>
-						<td class="col-md-4">{{ HTML::link('relation-'.$relation->id.'/edit', $relation->company_name) }}</td>
+						<td class="col-md-4">{{ HTML::link('relation-'.$relation->id.'/edit', $relation->company_name ? $relation->company_name : $contact->firstname .' '. $contact->lastname) }}</td>
 						<td class="col-md-2">{{ RelationKind::find($relation->kind_id)->kind_name }}</td>
 						<td class="col-md-2">{{ $relation->phone }}</td>
 						<td class="col-md-2">{{ $relation->email }}</td>

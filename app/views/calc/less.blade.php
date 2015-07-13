@@ -936,14 +936,13 @@ var n = this,
 										<?# -- table head -- ?>
 										<thead>
 											<tr>
-												<th class="col-md-2">&nbsp;</th>
 												<th class="col-md-3">&nbsp;</th>
+												<th class="col-md-4">&nbsp;</th>
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</th>
 												<th class="col-md-1"><span class="pull-right">Materieel</th>
 												<th class="col-md-1"><span class="pull-right">Totaal</th>
-												<th class="col-md-1"><span class="text-center">Stelpost</th>
 											</tr>
 										</thead>
 
@@ -952,26 +951,24 @@ var n = this,
 											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
 											<tr><!-- item -->
-												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-3">{{ $activity->activity_name }}</td>
+												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
+												<td class="col-md-4">{{ $activity->activity_name }}</td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }}</td>
 												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::laborActivity($activity), 2, ",",".") }}</span></td>
 												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
 												<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
 												<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-												<td class="col-md-1 text-center {{-- LessOverview::estimateCheck($activity) --}}"></td>
 											</tr>
 											@endforeach
 											@endforeach
 											<tr><!-- item -->
-												<th class="col-md-3"><strong>Totaal aanneming</strong></th>
+												<th class="col-md-3"><strong>Totaal Aanneming</strong></th>
 												<th class="col-md-2">&nbsp;</th>
 												<td class="col-md-1"><strong><span class="pull-right">{{ LessOverview::contrLaborTotalAmount($project) }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
-												<th class="col-md-1">&nbsp;</th>
 											</tr>
 										</tbody>
 									</table>
@@ -987,14 +984,13 @@ var n = this,
 										<?# -- table head -- ?>
 										<thead>
 											<tr>
-												<th class="col-md-2">&nbsp;</th>
 												<th class="col-md-3">&nbsp;</th>
+												<th class="col-md-4">&nbsp;</th>
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</th>
 												<th class="col-md-1"><span class="pull-right">Materieel</th>
 												<th class="col-md-1"><span class="pull-right">Totaal</th>
-												<th class="col-md-1"><span class="text-center">Stelpost</th>
 											</tr>
 										</thead>
 
@@ -1003,8 +999,8 @@ var n = this,
 											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
 											<tr><!-- item -->
-												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-3">{{ $activity->activity_name }}</td>
+												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
+												<td class="col-md-4">{{ $activity->activity_name }}</td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }}</td>
 												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::laborActivity($activity), 2, ",",".") }}</span></td>
 												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
@@ -1015,14 +1011,13 @@ var n = this,
 											@endforeach
 											@endforeach
 											<tr><!-- item -->
-												<th class="col-md-3"><strong>Totaal onderaanneming</strong></th>
-												<th class="col-md-2">&nbsp;</th>
+												<th class="col-md-3"><strong>Totaal Onderaanneming</strong></th>
+												<th class="col-md-4">&nbsp;</th>
 												<td class="col-md-1"><strong><span class="pull-right">{{ LessOverview::subcontrLaborTotalAmount($project) }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
-												<th class="col-md-1">&nbsp;</th>
 											</tr>
 										</tbody>
 									</table>
@@ -1037,32 +1032,30 @@ var n = this,
 										<?# -- table head -- ?>
 										<thead>
 											<tr>
+												<th class="col-md-4">&nbsp;</th>
 												<th class="col-md-3">&nbsp;</th>
-												<th class="col-md-2">&nbsp;</th>
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 												<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
 												<th class="col-md-1"><span class="pull-right">Materieel</span></th>
 												<th class="col-md-1"><span class="pull-right">Totaal</span></th>
-												<th class="col-md-1">&nbsp;</th>
 											</tr>
 										</thead>
 
 										<!-- table items -->
 										<tbody>
 											<tr><!-- item -->
+												<th class="col-md-4">&nbsp;</th>
 												<th class="col-md-3">&nbsp;</th>
-												<th class="col-md-2">&nbsp;</th>
-												<td class="col-md-1"><span class="pull-right">{{ LessOverview::laborSuperTotalAmount($project) }}</span></td>
-												<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
-												<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
-												<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
-												<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::superTotal($project), 2, ",",".") }}</span></td>
-												<th class="col-md-1">&nbsp;</th>
+												<td class="col-md-1"><span class="pull-right"><strong>{{ LessOverview::laborSuperTotalAmount($project) }}</strong></span></td>
+												<td class="col-md-1"><span class="pull-right"><strong>{{ '&euro; '.number_format(LessOverview::laborSuperTotal($project), 2, ",",".") }}</strong></span></td>
+												<td class="col-md-1"><span class="pull-right"><strong>{{ '&euro; '.number_format(LessOverview::materialSuperTotal($project), 2, ",",".") }}</strong></span></td>
+												<td class="col-md-1"><span class="pull-right"><strong>{{ '&euro; '.number_format(LessOverview::equipmentSuperTotal($project), 2, ",",".") }}</strong></span></td>
+												<td class="col-md-1"><span class="pull-right"><strong>{{ '&euro; '.number_format(LessOverview::superTotal($project), 2, ",",".") }}</strong></span></td>
 											</tr>
 										</tbody>
 									</table>
-									<h5>Weergegeven bedragen zijn exclusief BTW</h5>
+									<h5><strong>Weergegeven bedragen zijn exclusief BTW</strong></h5>
 								</div>
 							</div>
 
@@ -1312,7 +1305,7 @@ var n = this,
 							<!-- table items -->
 							<tbody>
 								<tr><!-- item -->
-									<td class="col-md-6">Calculatief te offereren (excl. BTW)</td>
+									<td class="col-md-6">Calculatief in mindering te brengen (excl. BTW)</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::totalProject($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
@@ -1342,13 +1335,13 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">Te offereren BTW bedrag</td>
+									<td class="col-md-6">In mindering te brengen BTW bedrag</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::totalProjectTax($project), 2, ",",".") }}</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6"><strong>Calculatief te offereren (Incl. BTW)</strong></td>
+									<td class="col-md-6"><strong>Calculatief in mindering te brengen (Incl. BTW)</strong></td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2"><strong>{{ '&euro; '.number_format(LessEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>

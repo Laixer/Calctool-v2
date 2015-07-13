@@ -100,7 +100,6 @@ class RelationController extends \BaseController {
 		$rules = array(
 			/* General */
 			'id' => array('required','integer'),
-			'relationkind' => array('required','numeric'),
 			'debtor' => array('required','alpha_num','max:10'),
 			/* Company */
 			'company_type' => array('required_if:relationkind,zakelijk','numeric'),
@@ -131,7 +130,6 @@ class RelationController extends \BaseController {
 			/* General */
 			$relation = Relation::find(Input::get('id'));
 			$relation->note = Input::get('note');
-			$relation->kind_id = Input::get('relationkind');
 			$relation->debtor_code = Input::get('debtor');
 
 			/* Company */
@@ -385,8 +383,8 @@ class RelationController extends \BaseController {
 
 			/* Contact */
 			$contact = new Contact;
-			$contact->firstname = Input::get('contact_name');
-			$contact->lastname = Input::get('contact_firstname');
+			$contact->firstname = Input::get('contact_firstname');
+			$contact->lastname = Input::get('contact_name');
 			$contact->mobile = Input::get('mobile');
 			$contact->phone = Input::get('telephone');
 			$contact->email = Input::get('email');
@@ -404,7 +402,7 @@ class RelationController extends \BaseController {
 
 			$iban->save();
 
-			return Redirect::back()->with('success', 1);
+			return Redirect::to('/relation-'.$relation->id.'/edit')->with('success', 1);
 		}
 	}
 
@@ -441,7 +439,7 @@ class RelationController extends \BaseController {
 
 			$contact->save();
 
-			return Redirect::back()->with('success', 1);
+			return Redirect::to('/relation-'.Input::get('id').'/edit')->with('success', 1);
 		}
 	}
 

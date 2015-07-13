@@ -58,7 +58,6 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('result/project-{project_id}', array('as' => 'result', 'uses' => 'ResultController@getResult'))->where('project_id', '[0-9]+');
 	Route::get('myaccount', array('as' => 'account', 'uses' => 'UserController@getMyAccount'));
 	Route::post('myaccount/updateuser', array('as' => 'account', 'uses' => 'UserController@doMyAccountUser'));
-	Route::post('myaccount/iban/update', array('as' => 'iban.update', 'uses' => 'UserController@doUpdateIban'));
 	Route::post('myaccount/iban/new', array('as' => 'iban.update', 'uses' => 'UserController@doNewIban'));
 	Route::post('myaccount/security/update', array('as' => 'security.update', 'uses' => 'UserController@doUpdateSecurity'));
 	Route::post('myaccount/preferences/update', array('as' => 'preferences.update', 'uses' => 'UserController@doUpdatePreferences'));
@@ -73,6 +72,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('calculation/estim/newactivity/{chapter_id}', array('as' => 'calculation', 'uses' => 'CalcController@doNewEstimateActivity'))->where('chapter_id', '[0-9]+');
 	Route::post('calculation/updatepart', array('as' => 'calculation', 'uses' => 'CalcController@doUpdatePart'));
 	Route::post('calculation/updatetax', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateTax'));
+	Route::post('calculation/noteactivity', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateNote'));
 	Route::post('calculation/deleteactivity', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteActivity'));
 	Route::post('calculation/deletechapter', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteChapter'));
 
@@ -99,6 +99,7 @@ Route::group(array('before' => 'auth'), function()
 
 	Route::get('invoice/raw/project-{project_id}/invoice-{invoice_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoiceRaw'))->where('project_id', '[0-9]+');
 	Route::get('invoice/pdf/project-{project_id}/invoice-{invoice_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoicePDF'))->where('project_id', '[0-9]+');
+	Route::get('invoice/pdf/project-{project_id}/invoice-{invoice_id}/download', array('as' => 'invoice', 'uses' => 'CalcController@getInvoiceDownloadPDF'))->where('project_id', '[0-9]+');
 
 	/* Calculation acions by calculation */
 	Route::post('calculation/calc/newmaterial', array('as' => 'calculation', 'uses' => 'CalcController@doNewCalculationMaterial'));
@@ -174,6 +175,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('relation-{relation_id}/contact/new', array('as' => 'relation.contact.new', 'uses' => 'RelationController@getNewContact'))->where('relation_id', '[0-9]+');
 	Route::get('relation-{relation_id}/contact-{contact_id}/edit', array('as' => 'contact.edit', 'uses' => 'RelationController@getEditContact'))->where('relation_id', '[0-9]+')->where('contact_id', '[0-9]+');
 	Route::get('mycompany', array('as' => 'mycompany', 'uses' => 'RelationController@getMyCompany'));
+	Route::post('mycompany/iban/update', array('as' => 'iban.update', 'uses' => 'UserController@doUpdateIban'));
 	Route::post('relation/updatemycompany', array('as' => 'relation.update', 'uses' => 'RelationController@doUpdateMyCompany'));
 	Route::post('relation/newmycompany', array('as' => 'relation.new', 'uses' => 'RelationController@doNewMyCompany'));
 	Route::post('relation/logo/save', array('as' => 'relation.logo', 'uses' => 'RelationController@doNewLogo'));

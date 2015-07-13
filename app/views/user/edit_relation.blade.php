@@ -63,6 +63,15 @@ $(document).ready(function() {
 			</div>
 			@endif
 
+			<div>
+			<ol class="breadcrumb">
+			  <li><a href="/">Home</a></li>
+			  <li><a href="/relation">Relaties</a></li>
+			 <li>moet nog worden toegevoegd, zie 2Do</li>
+			</ol>
+			<div>
+			<br>
+
 			<h2><strong>Relatie</strong> {{ $relation->company_name }}</h2>
 
 				<div class="tabs nomargin-top">
@@ -85,19 +94,8 @@ $(document).ready(function() {
 						<div id="company" class="tab-pane active">
 
 							{{ Form::open(array('url' => 'relation/update')) }}
+							<h4>{{ ucfirst( RelationKind::find($relation->kind_id)->kind_name) }}relatie</h4>
 							<div class="row">
-
-								<div class="col-md-2">
-									<div class="form-group">
-										<label for="relationkind">Relatiesoort</label>
-										<select name="relationkind" id="relationkind" class="form-control pointer">
-										@foreach (RelationKind::all() as $kind)
-											<option {{ $relation->kind_id==$kind->id ? 'selected' : '' }} value="{{ $kind->id }}">{{ ucwords($kind->kind_name) }}</option>
-										@endforeach
-										</select>
-									</div>
-								</div>
-
 								<div class="col-md-2">
 									<div class="form-group">
 										<label for="debtor">Debiteurennummer</label>
@@ -266,13 +264,13 @@ $(document).ready(function() {
 							{{ Form::close() }}
 						</div>
 						<div id="contact" class="tab-pane">
-							<label>Contactpersonen</label>
+							<h4>Contactpersonen</h4>
 							<table class="table table-striped">
 								<?# -- table head -- ?>
 								<thead>
 									<tr>
-										<th class="col-md-2">Naam</th>
 										<th class="col-md-2">Voornaam</th>
+										<th class="col-md-2">Achternaam</th>
 										<th class="col-md-2">Functie</th>
 										<th class="col-md-2">Telefoon</th>
 										<th class="col-md-2">Mobiel</th>
@@ -284,8 +282,8 @@ $(document).ready(function() {
 								<tbody>
 									@foreach (Contact::where('relation_id','=', $relation->id)->get() as $contact)
 									<tr><!-- item -->
-										<td class="col-md-2"><a href="/relation-{{ $relation->id }}/contact-{{ $contact->id }}/edit">{{ $contact->lastname }}</a></td>
-										<td class="col-md-2">{{ $contact->firstname }}</td>
+										<td class="col-md-2"><a href="/relation-{{ $relation->id }}/contact-{{ $contact->id }}/edit">{{ $contact->firstname }}</a></td>
+										<td class="col-md-2">{{ $contact->lastname }}</td>
 										<td class="col-md-2">{{ ContactFunction::find($contact->function_id)->function_name }}</td>
 										<td class="col-md-2">{{ $contact->phone }}</td>
 										<td class="col-md-2">{{ $contact->mobile }}</td>

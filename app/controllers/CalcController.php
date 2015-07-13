@@ -50,11 +50,6 @@ class CalcController extends BaseController {
 		return View::make('calc.offer');
 	}
 
-	public function getOfferRaw()
-	{
-		return View::make('calc.offer_pdf');
-	}
-
 	public function getOfferPDF()
 	{
 		$pdf = PDF::loadView('calc.offer_pdf');
@@ -64,7 +59,7 @@ class CalcController extends BaseController {
 	public function getOfferDownloadPDF()
 	{
 		$pdf = PDF::loadView('calc.offer_pdf');
-		return $pdf->download();
+		return $pdf->download(Input::get('file'));
 	}
 
 	public function getInvoiceAll()
@@ -72,15 +67,16 @@ class CalcController extends BaseController {
 		return View::make('calc.invoice_all');
 	}
 
-	public function getInvoiceRaw()
-	{
-		return View::make('calc.invoice_pdf');
-	}
-
 	public function getInvoicePDF()
 	{
 		$pdf = PDF::loadView('calc.invoice_pdf');
 		return $pdf->stream();
+	}
+
+	public function getInvoiceDownloadPDF()
+	{
+		$pdf = PDF::loadView('calc.invoice_pdf');
+		return $pdf->download(Input::get('file'));
 	}
 
 	public function doNewChapter()
@@ -234,6 +230,30 @@ class CalcController extends BaseController {
 
 			$activity = Activity::find(Input::get('activity'));
 			$activity->part_id = Input::get('value');
+			$activity->save();
+
+			return json_encode(['success' => 1]);
+		}
+	}
+
+
+	public function doUpdateNote()
+	{
+		$rules = array(
+			'note' => array('required'),
+			'activity' => array('required','integer')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+			$activity = Activity::find(Input::get('activity'));
+			$activity->note = Input::get('note');
+
 			$activity->save();
 
 			return json_encode(['success' => 1]);

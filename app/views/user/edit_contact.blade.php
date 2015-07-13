@@ -1,5 +1,6 @@
 <?php
 $contact = Contact::find(Route::Input('contact_id'));
+$relation = Relation::find(Route::Input('relation_id'));
 ?>
 
 @extends('layout.master')
@@ -38,24 +39,34 @@ $contact = Contact::find(Route::Input('contact_id'));
 			</div>
 			@endif
 
+			<div>
+			<ol class="breadcrumb">
+			  <li><a href="/">Home</a></li>
+			  <li><a href="/relation">Relaties</a></li>
+			  <li>moet nog wordne toegevogd, zie Do</li>
+			  <li class="active" /relation-{{ $relation->id }}/contact-{{ $contact->id }}/edit">contact bewerken</li>
+			</ol>
+			<div>
+			<br>
+
 			<h2><strong>Contact</strong> {{ $contact->lastname }}</h2>
 
 				{{ Form::open(array('url' => 'relation/contact/update')) }}
 				<h4>Contactgegevens</h4>
 				<div class="row">
 
-					<div class="col-md-3">
-						<div class="form-group">
-							<label for="contact_name">Naam</label>
-							<input name="contact_name" id="contact_name" type="text" value="{{ Input::old('contact_name') ? Input::old('contact_name') : $contact->lastname }}" class="form-control"/>
-							<input type="hidden" name="id" id="id" value="{{ $contact->id }}"/>
-						</div>
-					</div>
-
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="contact_firstname">Voornaam</label>
 							<input name="contact_firstname" id="contact_firstname" type="text" value="{{ Input::old('contact_firstname') ? Input::old('contact_firstname') : $contact->firstname }}" class="form-control"/>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="contact_name">Achternaam</label>
+							<input name="contact_name" id="contact_name" type="text" value="{{ Input::old('contact_name') ? Input::old('contact_name') : $contact->lastname }}" class="form-control"/>
+							<input type="hidden" name="id" id="id" value="{{ $contact->id }}"/>
 						</div>
 					</div>
 

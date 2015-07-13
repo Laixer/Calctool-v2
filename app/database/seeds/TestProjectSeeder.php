@@ -64,7 +64,7 @@ class TestProjectSeeder extends Seeder {
 			'firstname' => 'SYSTEM',
 			'api' => md5(mt_rand()),
 			'token' => sha1(Hash::make('ABC@123')),
-			'ip' => '127.0.0.1',
+			'ip' => '::1',
 			'active' => 'Y',
 			'confirmed_mail' => date('Y-m-d'),
 			'registration_date' => date('Y-m-d'),
