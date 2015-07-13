@@ -8,6 +8,14 @@
 
 		<div class="col-md-12">
 
+			<div>
+			<ol class="breadcrumb">
+			  <li><a href="/">Home</a></li>
+			  <li>Relaties</li>
+			</ol>
+			<div>
+			<br>
+
 			<h2><strong>Relaties</strong></h2>
 
 			<table class="table table-striped">

@@ -100,7 +100,6 @@ class RelationController extends \BaseController {
 		$rules = array(
 			/* General */
 			'id' => array('required','integer'),
-			'relationkind' => array('required','numeric'),
 			'debtor' => array('required','alpha_num','max:10'),
 			/* Company */
 			'company_type' => array('required_if:relationkind,zakelijk','numeric'),
@@ -131,7 +130,6 @@ class RelationController extends \BaseController {
 			/* General */
 			$relation = Relation::find(Input::get('id'));
 			$relation->note = Input::get('note');
-			$relation->kind_id = Input::get('relationkind');
 			$relation->debtor_code = Input::get('debtor');
 
 			/* Company */

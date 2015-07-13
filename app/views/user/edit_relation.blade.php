@@ -63,6 +63,15 @@ $(document).ready(function() {
 			</div>
 			@endif
 
+			<div>
+			<ol class="breadcrumb">
+			  <li><a href="/">Home</a></li>
+			  <li><a href="/relation">Relaties</a></li>
+			  <li>{{ $relation->company_name ? $relation->company_name : $contact->firstname .' '. $contact->lastname }}</li>
+			</ol>
+			<div>
+			<br>
+
 			<h2><strong>Relatie</strong> {{ $relation->company_name }}</h2>
 
 				<div class="tabs nomargin-top">
@@ -85,8 +94,8 @@ $(document).ready(function() {
 						<div id="company" class="tab-pane active">
 
 							{{ Form::open(array('url' => 'relation/update')) }}
+							<h4>{{ ucfirst( RelationKind::find($relation->kind_id)->kind_name) }}</h4>
 							<div class="row">
-
 								<div class="col-md-2">
 									<div class="form-group">
 										<label for="debtor">Debiteurennummer</label>

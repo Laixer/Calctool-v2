@@ -30,6 +30,16 @@ $relation = Relation::find(Route::Input('relation_id'));
 			</div>
 			@endif
 
+			<div>
+			<ol class="breadcrumb">
+			  <li><a href="/">Home</a></li>
+			  <li><a href="/relation">Relaties</a></li>
+			  <li>{{ HTML::link('relation-'.$relation->id.'/edit', $relation->company_name ? $relation->company_name : $contact->firstname .' '. $contact->lastname) }}</li>
+			 <li class="active" /relation-{{ $relation->id }}/contact/new">nieuw contact</li>
+			</ol>
+			<div>
+			<br>
+
 			<h2><strong>Nieuw</strong> contact</h2>
 
 				{{ Form::open(array('url' => 'relation/contact/new')) }}

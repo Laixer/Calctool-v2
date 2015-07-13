@@ -1,5 +1,6 @@
 <?php
 $contact = Contact::find(Route::Input('contact_id'));
+$relation = Relation::find(Route::Input('relation_id'));
 ?>
 
 @extends('layout.master')
@@ -37,6 +38,16 @@ $contact = Contact::find(Route::Input('contact_id'));
 				@endforeach
 			</div>
 			@endif
+
+			<div>
+			<ol class="breadcrumb">
+			  <li><a href="/">Home</a></li>
+			  <li><a href="/relation">Relaties</a></li>
+			  <li>{{ HTML::link('relation-'.$relation->id.'/edit', $relation->company_name ? $relation->company_name : $contact->firstname .' '. $contact->lastname) }}</li>
+			 <li class="active" /relation-{{ $relation->id }}/contact-{{ $contact->id }}/edit">contact bewerken</li>
+			</ol>
+			<div>
+			<br>
 
 			<h2><strong>Contact</strong> {{ $contact->lastname }}</h2>
 
