@@ -188,7 +188,7 @@ $(document).ready(function() {
 										<label for="country">Land</label>
 										<select name="country" id="country" class="form-control pointer">
 											@foreach (Country::all() as $country)
-												<option {{ $user->country_id==$country->id ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
+												<option {{ $user->country_id==$country->id ? 'selected' : ($country->country_name=='nederland' ? 'selected' : '') }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
 											@endforeach
 										</select>
 									</div>

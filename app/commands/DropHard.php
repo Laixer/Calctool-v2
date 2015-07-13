@@ -41,7 +41,7 @@ class DropHard extends Command {
 	{
 		$rs = DB::select("SELECT tablename FROM pg_tables WHERE schemaname = 'public'");
 		foreach ($rs as $value) {
-			DB::statement("DROP TABLE ".$value->tablename." CASCADE");
+			DB::statement("DROP TABLE public.".$value->tablename." CASCADE");
 		}
 		Artisan::call('migrate');
 		Artisan::call('db:seed');

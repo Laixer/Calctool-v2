@@ -3,6 +3,12 @@
 @section('content')
 <?# -- WRAPPER -- ?>
 
+<?php
+function getNewDebtorCode() {
+	return mt_rand(1000000, 9999999);
+}
+?>
+
 <script type="text/javascript">
 $(document).ready(function() {
 	function prefixURL(field) {
@@ -69,7 +75,7 @@ $(document).ready(function() {
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="debtor">Debiteurennummer</label>
-							<input name="debtor" id="debtor" type="text" value="{{ Input::old('debtor') }}" class="form-control"/>
+							<input name="debtor" id="debtor" type="text" value="{{ Input::old('debtor') ? Input::old('debtor') : getNewDebtorCode() }}" class="form-control"/>
 						</div>
 					</div>
 
@@ -231,7 +237,7 @@ $(document).ready(function() {
 							<label for="country">Land</label>
 							<select name="country" id="country" class="form-control pointer">
 								@foreach (Country::all() as $country)
-									<option value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
+									<option {{ $country->country_name=='nederland' ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
 								@endforeach
 							</select>
 						</div>

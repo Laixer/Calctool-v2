@@ -240,14 +240,14 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Versies</a>
 
 		<div class="btn-group">
-		  <a href="/offer/pdf/project-1001/download" class="btn btn-primary">PDF</a>
+		  <a href="/offer/pdf/project-{{ $project->id }}/download" class="btn btn-primary">PDF</a>
 		  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		    <span class="caret"></span>
 		    <span class="sr-only">Toggle Dropdown</span>
 		  </button>
 		  <ul class="dropdown-menu">
-		    <li><a href="/offer/pdf/project-1001/download">Download</a></li>
-		    <li><a href="/offer/pdf/project-1001">Bekijk</a></li>
+		    <li><a href="/offer/pdf/project-{{ $project->id }}/download">Download</a></li>
+		    <li><a href="/offer/pdf/project-{{ $project->id }}">Bekijk</a></li>
 		  </ul>
 		</div>
 
@@ -478,7 +478,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<li>t.a.v.
 							<select name="to_contact" id="to_contact">
 								@foreach (Contact::where('relation_id','=',$relation->id)->get() as $contact)
-								<option value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
+								<option {{ $offer_last ? ($offer_last->to_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
 								@endforeach
 							</select>
 							</li>
@@ -1005,7 +1005,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					<p>Cheers,
 						<select name="from_contact" id="from_contact">
 							@foreach (Contact::where('relation_id','=',$relation_self->id)->get() as $contact)
-							<option value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
+							<option {{ $offer_last ? ($offer_last->from_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
 							@endforeach
 						</select>
 					</p>
@@ -1370,14 +1370,14 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Versies</a>
 
 						<div class="btn-group">
-						  <a href="/offer/pdf/project-1001/download" class="btn btn-primary">PDF</a>
+						  <a href="/offer/pdf/project-{{ $project->id }}/download" class="btn btn-primary">PDF</a>
 						  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						    <span class="caret"></span>
 						    <span class="sr-only">Toggle Dropdown</span>
 						  </button>
 						  <ul class="dropdown-menu">
-						    <li><a href="/offer/pdf/project-1001/download">Download</a></li>
-						    <li><a href="/offer/pdf/project-1001">Bekijk</a></li>
+						    <li><a href="/offer/pdf/project-{{ $project->id }}/download">Download</a></li>
+						    <li><a href="/offer/pdf/project-{{ $project->id }}">Bekijk</a></li>
 						  </ul>
 						</div>
 

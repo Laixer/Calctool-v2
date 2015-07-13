@@ -6,6 +6,14 @@ $contact = Contact::find(Route::Input('contact_id'));
 
 @section('content')
 <?# -- WRAPPER -- ?>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#rmuser').click(function(e){
+			e.preventDefault();
+			$.post('/relation/contact/delete', {id: {{ $contact->id }}}).fail(function(e) { console.log(e); });
+		});
+	});
+</script>
 
 <div id="wrapper">
 
@@ -84,6 +92,7 @@ $contact = Contact::find(Route::Input('contact_id'));
 					</div>
 					<div class="col-md-12">
 						<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+						<!--<button class="btn btn-danger" id="rmuser"><i class="fa fa-trash"></i> Verwijderen</button>-->
 					</div>
 
 				</div>

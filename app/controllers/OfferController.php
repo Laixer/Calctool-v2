@@ -77,7 +77,7 @@ class OfferController extends BaseController {
 			$offer->offer_finish = date('Y-m-d', strtotime(Input::get('value')));
 			$offer->save();
 
-			$downpayment_id = 0;
+			$first_id = 0;
 
 			for ($i=0; $i < $offer->invoice_quantity; $i++) {
 				$invoice = new Invoice;
@@ -90,12 +90,17 @@ class OfferController extends BaseController {
 				if ($i == 0 && $offer->downpayment)
 					$invoice->amount = $offer->downpayment_amount;
 				$invoice->save();
-				if ($i == 0 && $offer->downpayment)
-					$downpayment_id = $invoice->id;
+				if ($i == 0)
+					$first_id = $invoice->id;
 			}
 
 			if ($offer->invoice_quantity>1) {
-				$input = array('id' => $downpayment_id, 'project' => Input::get('project_id'), 'amount' => $offer->downpayment_amount);
+				$invamount = 0;
+				$invtotal = ResultEndresult::totalProject(Project::find(Input::get('project_id')));
+				if ($offer->downpayment)
+					$invamount = $offer->downpayment_amount;
+				$invtotal-=$invamount;
+				$input = array('id' => $first_id, 'project' => Input::get('project_id'), 'amount' => $invamount, 'totaal' => $invtotal);
 				return App::make('InvoiceController')->doUpdateAmount(Input::merge($input));
 			}
 

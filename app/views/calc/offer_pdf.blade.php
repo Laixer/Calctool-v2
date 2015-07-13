@@ -9,7 +9,7 @@ $relation = Relation::find($project->client_id);
 $relation_self = Relation::find(Auth::user()->self_id);
 if ($relation_self)
 
-  $contact_self = Contact::where('relation_id','=',$relation_self->id);
+$contact_self = Contact::where('relation_id','=',$relation_self->id);
 $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 ?>
 
@@ -36,7 +36,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       <div id="details" class="clearfix">
         <div id="client">
           <div>{{ $relation->company_name }}</div>
-          <div>t.a.v. XXXXX</div>
+          <div>{{ Contact::find($offer_last->to_contact_id)->firstname ." ". Contact::find($offer_last->to_contact_id)->lastname }}</div>
           <div>{{ $relation->address_street . ' ' . $relation->address_number }}</div>
           <div>{{ $relation->address_postal . ', ' . $relation->address_city }}</div>
         </div>
@@ -189,7 +189,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         <li>Deze offerte is geldig tot {{ Valid::find($offer_last->valid_id)->valid_name }} na dagtekening.</li>
       </div>
       <div class="signing">Met vriendelijke groet,</div>
-      <div class="signing">Mijn Naam</div>
+      <div class="signing">{{ Contact::find($offer_last->from_contact_id)->firstname ." ". Contact::find($offer_last->from_contact_id)->lastname }}</div>
     </main>
 
     <footer>
@@ -429,7 +429,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         <header class="clearfix">
         <div id="logo">
       <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
-        </div>>
+        </div>
              <div id="invoice">
               <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
               <div class="date">{{ $project->project_name }}</div>
@@ -447,7 +447,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         <li>Deze offerte is geldig tot {{ Valid::find($offer_last->valid_id)->valid_name }} na dagtekening.</li>
       </div>
       <div class="signing">Met vriendelijke groet,</div>
-      <div class="signing">Mijn Naam</div>
+      <div class="signing">{{ Contact::find($offer_last->from_contact_id)->firstname ." ". Contact::find($offer_last->from_contact_id)->lastname }}</div>
     </main>
 
     <footer>

@@ -182,8 +182,8 @@ class RelationController extends \BaseController {
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 			$contact = Contact::find(Input::get('id'));
-			$contact->firstname = Input::get('contact_name');
-			$contact->lastname = Input::get('contact_firstname');
+			$contact->firstname = Input::get('contact_firstname');
+			$contact->lastname = Input::get('contact_name');
 			$contact->mobile = Input::get('mobile');
 			$contact->phone = Input::get('telephone');
 			$contact->email = Input::get('email');
@@ -282,7 +282,7 @@ class RelationController extends \BaseController {
 			$relation = new Relation;
 			$relation->user_id = Auth::user()->id;
 			$relation->note = Input::get('note');
-			$relation->debtor_code = mt_rand();
+			$relation->debtor_code = mt_rand(1000000, 9999999);
 
 			/* Company */
 			$relation->kind_id = RelationKind::where('kind_name','=','zakelijk')->first()->id;
@@ -440,6 +440,26 @@ class RelationController extends \BaseController {
 			$contact->function_id = Input::get('contactfunction');
 
 			$contact->save();
+
+			return Redirect::back()->with('success', 1);
+		}
+	}
+
+	public function doDeleteContact()
+	{
+		$rules = array(
+			'id' => array('required','integer'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			// redirect our user back to the form with the errors from the validator
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+			Contact::destroy(Input::get('id'));
 
 			return Redirect::back()->with('success', 1);
 		}
