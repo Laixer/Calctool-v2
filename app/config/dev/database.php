@@ -23,9 +23,9 @@ return array(
 		'pgsql' => array(
 			'driver'   => 'pgsql',
 			'host'     => 'localhost',
-			'database' => 'calctool',
-			'username' => 'calctool',
-			'password' => 'q',
+			'database' => 'calctoolv2',
+			'username' => 'user_laravel',
+			'password' => '1aSdk0AFe2bzz67f3uUHiBhscwCUc5t4VvXKox74',
 			'charset'  => 'utf8',
 			'prefix'   => '',
 			'schema'   => 'public',
@@ -52,6 +52,7 @@ return array(
 			'host'     => '127.0.0.1',
 			'port'     => 6379,
 			'database' => 0,
+			'password' => 'dz85yh5iwc75u0ikuejrqpuz5kj4c0ap',
 		),
 
 	),

@@ -4,22 +4,6 @@ return array(
 
 	/*
 	|--------------------------------------------------------------------------
-	| Default Session Driver
-	|--------------------------------------------------------------------------
-	|
-	| This option controls the default session "driver" that will be used on
-	| requests. By default, we will use the lightweight native driver but
-	| you may specify any of the other wonderful drivers provided here.
-	|
-	| Supported: "file", "cookie", "database", "apc",
-	|            "memcached", "redis", "array"
-	|
-	*/
-
-	'driver' => 'redis',
-
-	/*
-	|--------------------------------------------------------------------------
 	| Session Lifetime
 	|--------------------------------------------------------------------------
 	|
@@ -29,35 +13,7 @@ return array(
 	|
 	*/
 
-	'lifetime' => 120,
-
 	'expire_on_close' => true,
-
-	/*
-	|--------------------------------------------------------------------------
-	| Session File Location
-	|--------------------------------------------------------------------------
-	|
-	| When using the native session driver, we need a location where session
-	| files may be stored. A default has been set for you but a different
-	| location may be specified. This is only needed for file sessions.
-	|
-	*/
-
-	'files' => storage_path().'/sessions',
-
-	/*
-	|--------------------------------------------------------------------------
-	| Session Sweeping Lottery
-	|--------------------------------------------------------------------------
-	|
-	| Some session drivers must manually sweep their storage location to get
-	| rid of old sessions from storage. Here are the chances that it will
-	| happen on a given request. By default, the odds are 2 out of 100.
-	|
-	*/
-
-	'lottery' => array(2, 100),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -71,19 +27,6 @@ return array(
 	*/
 
 	'cookie' => 'dev_session',
-
-	/*
-	|--------------------------------------------------------------------------
-	| Session Cookie Path
-	|--------------------------------------------------------------------------
-	|
-	| The session cookie path determines the path for which the cookie will
-	| be regarded as available. Typically, this will be the root path of
-	| your application but you are free to change this when necessary.
-	|
-	*/
-
-	'path' => '/',
 
 	/*
 	|--------------------------------------------------------------------------
