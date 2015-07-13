@@ -75,7 +75,6 @@ class AuthController extends \BaseController {
 			// Count the failed logins
 			$failcount = Redis::get('auth:'.$username.':fail');
 			if ($failcount == 5) {
-				echo "Nu is t wel klaar";
 				Redis::set('auth:'.$username.':block', true);
 				Redis::expire('auth:'.$username.':block', 900);
 			} else {
