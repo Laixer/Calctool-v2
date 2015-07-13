@@ -166,6 +166,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('relation/update', array('as' => 'relation.update', 'uses' => 'RelationController@doUpdate'));
 	Route::post('relation/contact/new', array('as' => 'relation.new', 'uses' => 'RelationController@doNewContact'));
 	Route::post('relation/contact/update', array('as' => 'contact.update', 'uses' => 'RelationController@doUpdateContact'));
+	Route::post('relation/contact/delete', array('as' => 'contact.update', 'uses' => 'RelationController@doDeleteContact'));
 	Route::post('relation/iban/update', array('as' => 'iban.update', 'uses' => 'RelationController@doUpdateIban'));
 	Route::post('relation/iban/new', array('as' => 'iban.update', 'uses' => 'RelationController@doNewIban'));
 	Route::get('relation', array('as' => 'relation', 'uses' => 'RelationController@getAll'));
