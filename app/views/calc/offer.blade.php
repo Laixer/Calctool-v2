@@ -240,14 +240,14 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Versies</a>
 
 		<div class="btn-group">
-		  <a href="/offer/pdf/project-1001/download" class="btn btn-primary">PDF</a>
+		  <a href="/offer/pdf/project-{{ $project->id }}/download" class="btn btn-primary">PDF</a>
 		  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		    <span class="caret"></span>
 		    <span class="sr-only">Toggle Dropdown</span>
 		  </button>
 		  <ul class="dropdown-menu">
-		    <li><a href="/offer/pdf/project-1001/download">Download</a></li>
-		    <li><a href="/offer/pdf/project-1001">Bekijk</a></li>
+		    <li><a href="/offer/pdf/project-{{ $project->id }}/download">Download</a></li>
+		    <li><a href="/offer/pdf/project-{{ $project->id }}">Bekijk</a></li>
 		  </ul>
 		</div>
 
@@ -1370,14 +1370,14 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Versies</a>
 
 						<div class="btn-group">
-						  <a href="/offer/pdf/project-1001/download" class="btn btn-primary">PDF</a>
+						  <a href="/offer/pdf/project-{{ $project->id }}/download" class="btn btn-primary">PDF</a>
 						  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						    <span class="caret"></span>
 						    <span class="sr-only">Toggle Dropdown</span>
 						  </button>
 						  <ul class="dropdown-menu">
-						    <li><a href="/offer/pdf/project-1001/download">Download</a></li>
-						    <li><a href="/offer/pdf/project-1001">Bekijk</a></li>
+						    <li><a href="/offer/pdf/project-{{ $project->id }}/download">Download</a></li>
+						    <li><a href="/offer/pdf/project-{{ $project->id }}">Bekijk</a></li>
 						  </ul>
 						</div>
 

@@ -9,7 +9,7 @@ $relation = Relation::find($project->client_id);
 $relation_self = Relation::find(Auth::user()->self_id);
 if ($relation_self)
 
-  $contact_self = Contact::where('relation_id','=',$relation_self->id);
+$contact_self = Contact::where('relation_id','=',$relation_self->id);
 $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 ?>
 
@@ -36,7 +36,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       <div id="details" class="clearfix">
         <div id="client">
           <div>{{ $relation->company_name }}</div>
-          <div>{{ $offer_last->to_contact_id==$contact->id ? 'selected' : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</div>
+          <div>{{ Contact::find($offer_last->to_contact_id)->firstname ." ". Contact::find($offer_last->to_contact_id)->lastname }}</div>
           <div>{{ $relation->address_street . ' ' . $relation->address_number }}</div>
           <div>{{ $relation->address_postal . ', ' . $relation->address_city }}</div>
         </div>
