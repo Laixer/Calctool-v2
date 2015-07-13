@@ -36,7 +36,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       <div id="details" class="clearfix">
         <div id="client">
           <div>{{ $relation->company_name }}</div>
-          <div>t.a.v. XXXXX</div>
+          <div>{{ $offer_last->to_contact_id==$contact->id ? 'selected' : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</div>
           <div>{{ $relation->address_street . ' ' . $relation->address_number }}</div>
           <div>{{ $relation->address_postal . ', ' . $relation->address_city }}</div>
         </div>
