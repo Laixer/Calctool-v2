@@ -89,17 +89,6 @@ $(document).ready(function() {
 
 								<div class="col-md-2">
 									<div class="form-group">
-										<label for="relationkind">Relatiesoort</label>
-										<select name="relationkind" id="relationkind" class="form-control pointer">
-										@foreach (RelationKind::all() as $kind)
-											<option {{ $relation->kind_id==$kind->id ? 'selected' : '' }} value="{{ $kind->id }}">{{ ucwords($kind->kind_name) }}</option>
-										@endforeach
-										</select>
-									</div>
-								</div>
-
-								<div class="col-md-2">
-									<div class="form-group">
 										<label for="debtor">Debiteurennummer</label>
 										<input name="debtor" id="debtor" type="text" value="{{ Input::old('debtor') ? Input::old('debtor') : $relation->debtor_code }}" class="form-control"/>
 										<input type="hidden" name="id" id="id" value="{{ $relation->id }}"/>
@@ -271,8 +260,8 @@ $(document).ready(function() {
 								<?# -- table head -- ?>
 								<thead>
 									<tr>
-										<th class="col-md-2">Naam</th>
 										<th class="col-md-2">Voornaam</th>
+										<th class="col-md-2">Achternaam</th>
 										<th class="col-md-2">Functie</th>
 										<th class="col-md-2">Telefoon</th>
 										<th class="col-md-2">Mobiel</th>
@@ -284,8 +273,8 @@ $(document).ready(function() {
 								<tbody>
 									@foreach (Contact::where('relation_id','=', $relation->id)->get() as $contact)
 									<tr><!-- item -->
-										<td class="col-md-2"><a href="/relation-{{ $relation->id }}/contact-{{ $contact->id }}/edit">{{ $contact->lastname }}</a></td>
-										<td class="col-md-2">{{ $contact->firstname }}</td>
+										<td class="col-md-2"><a href="/relation-{{ $relation->id }}/contact-{{ $contact->id }}/edit">{{ $contact->firstname }}</a></td>
+										<td class="col-md-2">{{ $contact->lastname }}</td>
 										<td class="col-md-2">{{ ContactFunction::find($contact->function_id)->function_name }}</td>
 										<td class="col-md-2">{{ $contact->phone }}</td>
 										<td class="col-md-2">{{ $contact->mobile }}</td>

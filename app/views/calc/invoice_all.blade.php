@@ -188,6 +188,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				$i=0;
 				$close = true;
 				$count = Invoice::where('offer_id','=', $offer_last->id)->count();
+				$invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first();
 				?>
 				@foreach (Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority')->get() as $invoice)
 					<tr>
@@ -201,7 +202,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					</tr>
 				<?php $i++; ?>
 				@endforeach
-				<?php $invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first(); ?>
+				<?php if ($invoice_end) { ?>
 					<tr>
 						<td class="col-md-4"><a href="/invoice/project-{{ $project->id }}/invoice-{{ $invoice_end->id }}">Eindfactuur</a></td>
 						<td class="col-md-2"><span id="endterm">0</span></td>
@@ -211,7 +212,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						<td class="col-md-2"><?php if ($invoice_end->invoice_close) { echo 'Gefactureerd'; } else if ($close) { echo '<form method="POST" id="frm-invoice" action="/invoice/close"><input name="id" value="'.$invoice_end->id.'" type="hidden"/><input name="projectid" value="'.$project->id.'" type="hidden"/><input type="submit" class="btn btn-primary btn-xs" value="Factureren"/></form>'; $close=false; } else { echo 'Open'; } ?></td></td>
 						<td class="col-md-1"></td>
 					</tr>
-				<?php } ?>
+				<?php }} ?>
 				</tbody>
 			</table>
 			<div class="row">
