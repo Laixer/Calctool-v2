@@ -50,11 +50,6 @@ class CalcController extends BaseController {
 		return View::make('calc.offer');
 	}
 
-	public function getOfferRaw()
-	{
-		return View::make('calc.offer_pdf');
-	}
-
 	public function getOfferPDF()
 	{
 		$pdf = PDF::loadView('calc.offer_pdf');
@@ -64,7 +59,7 @@ class CalcController extends BaseController {
 	public function getOfferDownloadPDF()
 	{
 		$pdf = PDF::loadView('calc.offer_pdf');
-		return $pdf->download();
+		return $pdf->download(Input::get('file'));
 	}
 
 	public function getInvoiceAll()
@@ -72,15 +67,16 @@ class CalcController extends BaseController {
 		return View::make('calc.invoice_all');
 	}
 
-	public function getInvoiceRaw()
-	{
-		return View::make('calc.invoice_pdf');
-	}
-
 	public function getInvoicePDF()
 	{
 		$pdf = PDF::loadView('calc.invoice_pdf');
 		return $pdf->stream();
+	}
+
+	public function getInvoiceDownloadPDF()
+	{
+		$pdf = PDF::loadView('calc.invoice_pdf');
+		return $pdf->download(Input::get('file'));
 	}
 
 	public function doNewChapter()
