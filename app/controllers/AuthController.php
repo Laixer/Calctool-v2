@@ -32,21 +32,27 @@ class AuthController extends \BaseController {
 	{
 		$errors = new MessageBag;
 
+		$username = strtolower(trim(Input::get('username')));
 		$userdata = array(
-			'username' 	=> strtolower(trim(Input::get('username'))),
+			'username' 	=> $username,
 			'password' 	=> Input::get('secret'),
 			'active' 	=> 1,
 			'banned' 	=> NULL
 		);
 
 		$userdata2 = array(
-			'email' 	=> strtolower(trim(Input::get('username'))),
+			'email' 	=> $username,
 			'password' 	=> Input::get('secret'),
 			'active' 	=> 1,
 			'banned' 	=> NULL
 		);
 
 		$remember = Input::get('rememberme') ? true : false;
+
+		if (Redis::exists('auth:'.$username.':block')) {
+			$errors = new MessageBag(['auth' => ['Account geblokkeerd voor 15 minuten']]);
+			return Redirect::to('login')->withErrors($errors)->withInput(Input::except('secret'));
+		}
 
 		if(Auth::attempt($userdata, $remember) || Auth::attempt($userdata2, $remember)){
 
@@ -57,12 +63,25 @@ class AuthController extends \BaseController {
 				return Redirect::to('login')->withErrors($errors)->withInput(Input::except('secret'));
 			}
 
+			Redis::del('auth:'.$username.':fail', 'auth:'.$username.':block');
+
 			// Redirect to dashboard
 			return Redirect::to('/');
 		}else{
 
 			// Login failed
 			$errors = new MessageBag(['password' => ['Gebruikersnaam of wachtwoord verkeerd']]);
+
+			// Count the failed logins
+			$failcount = Redis::get('auth:'.$username.':fail');
+			if ($failcount == 5) {
+				echo "Nu is t wel klaar";
+				Redis::set('auth:'.$username.':block', true);
+				Redis::expire('auth:'.$username.':block', 900);
+			} else {
+				Redis::incr('auth:'.$username.':fail');
+			}
+
 			return Redirect::to('login')->withErrors($errors)->withInput(Input::except('secret'));
 		}
 	}
