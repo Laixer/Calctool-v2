@@ -174,7 +174,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					<tr>
 						<th class="col-md-4">Onderdeel</th>
 						<th class="col-md-2">Factuurbedrag</th>
-						<th class="col-md-1">Faxtuurnummer</th>
+						<th class="col-md-1">Factuurnummer</th>
 						<th class="col-md-4">Omschrijving</th>
 						<th class="col-md-2">Betalingscondities</th>
 						<th class="col-md-2">Status</th>
@@ -219,7 +219,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				<div class="col-md-12">
 					<form method="POST" id="frm-add" action="/invoice/term/add">
 						<input type="hidden" value="{{ $project->id }}" name="projectid" />
-						<a href="#" id="new-term" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw termijn</a>
+						<a href="#" id="new-term" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw termijn toevoegen</a>
 					</form>
 				</div>
 			</div>

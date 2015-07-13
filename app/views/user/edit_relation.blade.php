@@ -264,7 +264,7 @@ $(document).ready(function() {
 							{{ Form::close() }}
 						</div>
 						<div id="contact" class="tab-pane">
-							<label>Contactpersonen</label>
+							<h4>Contactpersonen</h4>
 							<table class="table table-striped">
 								<?# -- table head -- ?>
 								<thead>
