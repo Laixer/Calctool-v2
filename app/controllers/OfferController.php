@@ -96,10 +96,11 @@ class OfferController extends BaseController {
 
 			if ($offer->invoice_quantity>1) {
 				$invamount = 0;
-				$invtotaal = ResultEndresult::totalProject(Project::find(Input::get('project_id')));
+				$invtotal = ResultEndresult::totalProject(Project::find(Input::get('project_id')));
 				if ($offer->downpayment)
 					$invamount = $offer->downpayment_amount;
-				$input = array('id' => $first_id, 'project' => Input::get('project_id'), 'amount' => $invamount, 'totaal' => $invtotaal);
+				$invtotal-=$invamount;
+				$input = array('id' => $first_id, 'project' => Input::get('project_id'), 'amount' => $invamount, 'totaal' => $invtotal);
 				return App::make('InvoiceController')->doUpdateAmount(Input::merge($input));
 			}
 
