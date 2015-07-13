@@ -67,7 +67,7 @@ $(document).ready(function() {
 			<ol class="breadcrumb">
 			  <li><a href="/">Home</a></li>
 			  <li><a href="/relation">Relaties</a></li>
-			  <li>{{ $relation->company_name ? $relation->company_name : $contact->firstname .' '. $contact->lastname }}</li>
+			 <!-- <li>{{ $relation->company_name ? $relation->company_name : $contact->firstname .' '. $contact->lastname }}</li> -->
 			</ol>
 			<div>
 			<br>
