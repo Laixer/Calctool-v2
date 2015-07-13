@@ -90,7 +90,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			$.post("/invoice/pay", {project: {{ $project->id }}, id: $curinv, projectid: $curproj}, function(data){
 				$rs = jQuery.parseJSON(data);
 				console.log($rs);
-				$curThis.replaceWith('Betaald op ' +$rs.payment);
+				$curThis.replaceWith('Gefactureerd op ' +$rs.payment);
 			}).fail(function(e) { console.log(e); });
 		});
 		$('#projclose').editable({
@@ -371,7 +371,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								if ($invoice->invoice_close && !$invoice->payment_date)
 									echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs dopay">Betalen</a>';
 								elseif ($invoice->invoice_close && $invoice->payment_date)
-									echo 'Betaald op '.$invoice->payment_date;
+									echo 'Gefactureerd op '.$invoice->payment_date;
 								elseif ($invoice->isclose)
 									echo '<a href="/invoice/project-'.$project->id.'/invoice-'.$invoice->id.'" class="btn btn-primary btn-xxs">Bekijken</a>';
 								else
