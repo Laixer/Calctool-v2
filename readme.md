@@ -1,5 +1,10 @@
 # **CalcTool | CalculatieTool** #
 
+## status for Production
+[![Deployment status from Production](https://calctool.deploybot.com/badge/77558059864400/10989.svg)](http://deploybot.com)
+## status for Development
+[![Deployment status for Development](https://calctool.deploybot.com/badge/88313865850840/14441.svg)](http://deploybot.com)
+
 ###Calculeren, Offreren, Factureren, Urenregistratie, Nacalculatie , Meer- minderwerk. De CalcTool is een alles in 1-pakket dat al deze facetten bundelt.###
 
 Buiten het feit dat het werk van een zzp’er van goede kwaliteit moet zijn om genoeg werk te behouden, is het minstens zo belangrijk om een goede geordende administratie bij te houden. Ook de offertes en facturen dienen van goede kwaliteit te zijn voor het genereren terugkerende klanten en het zo effectief mogelijk inzetten van de hiervoor te besteden tijd.

@@ -2,8 +2,8 @@
 
 @section('content')
 <?# -- WRAPPER -- ?>
-<link href="http://vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
-<script src="http://vjs.zencdn.net/4.12/video.js"></script>
+<link href="https://vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
+<script src="https://vjs.zencdn.net/4.12/video.js"></script>
 <div id="wrapper">
 
 	<section class="container">
@@ -112,8 +112,8 @@
 
 
 <!--
-http://ashobiz.asia/boot-extended14/ui/ui-117.html#
-http://wrapbootstrap.com/preview/WB0DS0351
+https://ashobiz.asia/boot-extended14/ui/ui-117.html#
+https://wrapbootstrap.com/preview/WB0DS0351
 -->
 
 
@@ -144,7 +144,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 																<strong>PROJECT</strong> DETAIL
 															</span>
 														</a>
-														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -156,14 +156,14 @@ http://wrapbootstrap.com/preview/WB0DS0351
 											<li class="isotope-item col-sm-6 col-md-3 photography" style="position: absolute; left: 0px; top: 0px; transform: translate3d(293px, 0px, 0px);"><!-- item 2 -->
 												<div class="item-box">
 													<figure>
-														<a class="item-hover lightbox" href="http://www.youtube.com/watch?v=W7Las-MJnJo" data-plugin-options="{&quot;type&quot;:&quot;iframe&quot;}">
+														<a class="item-hover lightbox" href="https://www.youtube.com/watch?v=W7Las-MJnJo" data-plugin-options="{&quot;type&quot;:&quot;iframe&quot;}">
 															<span class="overlay color2"></span>
 															<span class="inner">
 																<span class="block fa fa-plus fsize20"></span>
 																<strong>VIEW</strong> VIDEO
 															</span>
 														</a>
-														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -182,7 +182,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 																<strong>PROJECT</strong> DETAIL
 															</span>
 														</a>
-														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -201,7 +201,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 																<strong>PROJECT</strong> DETAIL
 															</span>
 														</a>
-														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -213,14 +213,14 @@ http://wrapbootstrap.com/preview/WB0DS0351
 											<li class="isotope-item col-sm-6 col-md-3 development" style="position: absolute; left: 0px; top: 0px; transform: translate3d(0px, 277px, 0px);"><!-- item 5 -->
 												<div class="item-box">
 													<figure>
-														<a class="item-hover lightbox" href="http://www.youtube.com/watch?v=W7Las-MJnJo" data-plugin-options="{&quot;type&quot;:&quot;iframe&quot;}">
+														<a class="item-hover lightbox" href="https://www.youtube.com/watch?v=W7Las-MJnJo" data-plugin-options="{&quot;type&quot;:&quot;iframe&quot;}">
 															<span class="overlay color2"></span>
 															<span class="inner">
 																<span class="block fa fa-plus fsize20"></span>
 																<strong>VIEW</strong> VIDEO
 															</span>
 														</a>
-														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -239,7 +239,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 																<strong>PROJECT</strong> DETAIL
 															</span>
 														</a>
-														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -258,7 +258,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 																<strong>PROJECT</strong> DETAIL
 															</span>
 														</a>
-														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -277,7 +277,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 																<strong>PROJECT</strong> DETAIL
 															</span>
 														</a>
-														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -289,14 +289,14 @@ http://wrapbootstrap.com/preview/WB0DS0351
 											<li class="isotope-item col-sm-6 col-md-3 development" style="position: absolute; left: 0px; top: 0px; transform: translate3d(0px, 555px, 0px);"><!-- item -->
 												<div class="item-box">
 													<figure>
-														<a class="item-hover lightbox" href="http://www.youtube.com/watch?v=W7Las-MJnJo" data-plugin-options="{&quot;type&quot;:&quot;iframe&quot;}">
+														<a class="item-hover lightbox" href="https://www.youtube.com/watch?v=W7Las-MJnJo" data-plugin-options="{&quot;type&quot;:&quot;iframe&quot;}">
 															<span class="overlay color2"></span>
 															<span class="inner">
 																<span class="block fa fa-plus fsize20"></span>
 																<strong>VIEW</strong> VIDEO
 															</span>
 														</a>
-														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -315,7 +315,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 																<strong>PROJECT</strong> DETAIL
 															</span>
 														</a>
-														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -334,7 +334,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 																<strong>PROJECT</strong> DETAIL
 															</span>
 														</a>
-														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
@@ -353,7 +353,7 @@ http://wrapbootstrap.com/preview/WB0DS0351
 																<strong>PROJECT</strong> DETAIL
 															</span>
 														</a>
-														<img class="img-responsive" src="http://www.voedingswaardetabel.nl/_lib/img/prod/big/kaas40.jpg" width="260" height="260" alt="">
+														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
 													</figure>
 													<div class="item-box-desc">
 														<h4>Atropos Project</h4>
