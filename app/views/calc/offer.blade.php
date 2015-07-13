@@ -1021,7 +1021,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				<div class="row">
 
 					<div class="col-sm-6">
-						<img class="img-responsive" src="/images/logo2.png" style="height: 75px;" alt="" />
+						{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
 					</div>
 
 					<div class="col-sm-6 text-right">
@@ -1259,7 +1259,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				<div class="row">
 
 					<div class="col-sm-6">
-						<img class="img-responsive" src="/images/logo2.png" style="height: 75px;" alt="" />
+						{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
 					</div>
 
 					<div class="col-sm-6 text-right">
