@@ -589,8 +589,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 												<th class="col-md-2">&nbsp;</th>
 												<th class="col-md-4">&nbsp;</th>
 												<th class="col-md-2">&nbsp;</th>
-												<th class="col-md-2">&nbsp;</th>
 												<th class="col-md-2">Geregistreerde uren</th>
+												<th class="col-md-2">&nbsp;</th>
 											</tr>
 										</thead>
 
@@ -601,8 +601,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-4">{{ $activity->activity_name }}</td>
 												<td class="col-md-2">&nbsp;</td>
-												<td class="col-md-2">&nbsp;</td>
 												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-2">&nbsp;</td>
 											</tr>
 											@endforeach
 											@endforeach
