@@ -200,11 +200,11 @@ $project = Project::find(Route::Input('project_id'));
 												<div class="row">
 													<div class="col-md-2"><h4>Materiaal</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2"><div class="col-md-2">{{ Tax::find($activity->tax_more_material_id)->tax_rate }}%</div>
-													<div class="col-md-2"></div>
+													<div class="col-md-2">{{ Tax::find($activity->tax_more_material_id)->tax_rate }}%</div>
+													<div class="col-md-8"></div>
 												</div>
 
-												<table class="table table-striped" data-id="{{ $activity->id }}">
+												<table class="table table-striped">
 													<thead>
 														<tr>
 															<th class="col-md-5">Omschrijving</th>
@@ -247,7 +247,7 @@ $project = Project::find(Route::Input('project_id'));
 												<div class="row">
 													<div class="col-md-2"><h4>Materieel</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2"><div class="col-md-2">{{ Tax::find($activity->tax_more_equipment_id)->tax_rate }}%</div>
+													<div class="col-md-2">{{ Tax::find($activity->tax_more_equipment_id)->tax_rate }}%</div>
 													<div class="col-md-8"></div>
 												</div>
 
