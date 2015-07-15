@@ -144,7 +144,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 	<section class="container fix-footer-bottom">
 
-		@include('calc.wizard')
+			@include('calc.wizard', array('page' => 'project'))
 
 			@if(Session::get('success'))
 			<div class="alert alert-success">
