@@ -83,7 +83,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 	<section class="container">
 
-		@include('calc.wizard')
+		@include('calc.wizard', array('page' => 'invoice_all'))
 
 			<div class="modal fade" id="codeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
 				<div class="modal-dialog">

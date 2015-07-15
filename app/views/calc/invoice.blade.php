@@ -189,7 +189,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 
 	<section class="container printable fix-footer-bottom">
 
-		@include('calc.wizard')
+		@include('calc.wizard', array('page' => 'invoice'))
 
 		@if(Session::get('success'))
 		<div class="alert alert-success">

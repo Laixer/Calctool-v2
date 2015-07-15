@@ -740,7 +740,7 @@ var n = this,
 
 	<section class="container fix-footer-bottom">
 
-		@include('calc.wizard')
+		@include('calc.wizard', array('page' => 'calculation'))
 
 			<h2><strong>Calculeren</strong></h2>
 

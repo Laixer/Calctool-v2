@@ -196,7 +196,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 	<section class="container printable fix-footer-bottom">
 
-		@include('calc.wizard')
+		@include('calc.wizard', array('page' => 'offer'))
 
 		@if(!$relation_self)
 		<div class="alert alert-danger">

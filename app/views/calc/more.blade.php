@@ -538,7 +538,7 @@ var n = this,
 
 	<section class="container fix-footer-bottom">
 
-		@include('calc.wizard')
+		@include('calc.wizard', array('page' => 'more'))
 
 			<h2><strong>Meerwerk</strong></h2>
 

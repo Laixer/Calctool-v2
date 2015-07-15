@@ -35,7 +35,7 @@ $(document).ready(function() {
 
 	<section class="container fix-footer-bottom">
 
-		@include('calc.wizard')
+		@include('calc.wizard', array('page' => 'result'))
 
 			<h2><strong>Resultaat</strong></h2>
 
