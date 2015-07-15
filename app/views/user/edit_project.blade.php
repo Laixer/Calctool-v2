@@ -312,7 +312,19 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							</div>
 							<div class="row">
 								<div class="col-md-3">Opdracht ontvangen</div>
-								<div class="col-md-2"><?php if ($offer_last && $offer_last->offer_finish) { echo date('d-m-Y', strtotime($offer_last->offer_finish)); }else{ ?><a href="#" id="dob" data-format="dd-mm-yyyy"></a><?php } ?></div>
+								<div class="col-md-2">
+									<?php
+										if (!CalculationEndresult::totalProject($project)) {
+											echo "Geen offerte bedrag";
+										} else {
+											if ($offer_last && $offer_last->offer_finish) {
+												echo date('d-m-Y', strtotime($offer_last->offer_finish));
+											} else {
+												echo '<a href="#" id="dob" data-format="dd-mm-yyyy"></a>';
+											}
+										}
+									?>
+								</div>
 							</div>
 								<br>
 							<div class="row">

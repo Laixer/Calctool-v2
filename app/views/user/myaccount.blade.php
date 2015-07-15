@@ -320,7 +320,7 @@ $(document).ready(function() {
 							<div class="row">
 								<div class="col-md-3">
 									<div class="form-group">
-										<label for="pref_hourrate_calc">pref_hourrate_calc</label>
+										<label for="pref_hourrate_calc">Standaard uurtarief eigen werk</label>
 										<input name="pref_hourrate_calc" id="pref_hourrate_calc" type="text" class="form-control" value="{{ $user->pref_hourrate_calc }}" />
 									</div>
 								</div>
@@ -328,7 +328,7 @@ $(document).ready(function() {
 							<div class="row">
 								<div class="col-md-3">
 									<div class="form-group">
-										<label for="pref_hourrate_more">pref_hourrate_more</label>
+										<label for="pref_hourrate_more">Standaard uurtarief onderaanneming</label>
 										<input name="pref_hourrate_more" id="pref_hourrate_more" type="text" class="form-control" value="{{ $user->pref_hourrate_more }}" />
 									</div>
 								</div>
@@ -337,7 +337,7 @@ $(document).ready(function() {
 							<div class="row">
 								<div class="col-md-3">
 									<div class="form-group">
-										<label for="pref_profit_calc_contr_mat">pref_profit_calc_contr_mat</label>
+										<label for="pref_profit_calc_contr_mat">Standaard winstpercentage materiaal</label>
 										<input name="pref_profit_calc_contr_mat" id="pref_profit_calc_contr_mat" type="text" class="form-control" value="{{ $user->pref_profit_calc_contr_mat }}" />
 									</div>
 								</div>
@@ -345,7 +345,7 @@ $(document).ready(function() {
 							<div class="row">
 								<div class="col-md-3">
 									<div class="form-group">
-										<label for="pref_profit_calc_contr_equip">pref_profit_calc_contr_equip</label>
+										<label for="pref_profit_calc_contr_equip">Standaard winstpercentage materieel</label>
 										<input name="pref_profit_calc_contr_equip" id="pref_profit_calc_contr_equip" type="text" class="form-control" value="{{ $user->pref_profit_calc_contr_equip }}" />
 									</div>
 								</div>
@@ -354,7 +354,7 @@ $(document).ready(function() {
 							<div class="row">
 								<div class="col-md-3">
 									<div class="form-group">
-										<label for="pref_profit_calc_subcontr_mat">pref_profit_calc_subcontr_mat</label>
+										<label for="pref_profit_calc_subcontr_mat">Standaard winstpercentage materiaal onderaanneming</label>
 										<input name="pref_profit_calc_subcontr_mat" id="pref_profit_calc_subcontr_mat" type="text" class="form-control" value="{{ $user->pref_profit_calc_subcontr_mat }}" />
 									</div>
 								</div>
@@ -362,7 +362,7 @@ $(document).ready(function() {
 							<div class="row">
 								<div class="col-md-3">
 									<div class="form-group">
-										<label for="pref_profit_calc_subcontr_equip">pref_profit_calc_subcontr_equip</label>
+										<label for="pref_profit_calc_subcontr_equip">Standaard winstpercentage materiaal onderaanneming</label>
 										<input name="pref_profit_calc_subcontr_equip" id="pref_profit_calc_subcontr_equip" type="text" class="form-control" value="{{ $user->pref_profit_calc_subcontr_equip }}" />
 									</div>
 								</div>
@@ -371,7 +371,7 @@ $(document).ready(function() {
 							<div class="row">
 								<div class="col-md-3">
 									<div class="form-group">
-										<label for="pref_profit_more_contr_mat">pref_profit_more_contr_mat</label>
+										<label for="pref_profit_more_contr_mat">Standaard winstpercentage materiaal bij meerwerk</label>
 										<input name="pref_profit_more_contr_mat" id="pref_profit_more_contr_mat" type="text" class="form-control" value="{{ $user->pref_profit_more_contr_mat }}" />
 									</div>
 								</div>
@@ -379,7 +379,7 @@ $(document).ready(function() {
 							<div class="row">
 								<div class="col-md-3">
 									<div class="form-group">
-										<label for="pref_profit_more_contr_equip">pref_profit_more_contr_equip</label>
+										<label for="pref_profit_more_contr_equip">Standaard winstpercentage materieel bij meerwerk</label>
 										<input name="pref_profit_more_contr_equip" id="pref_profit_more_contr_equip" type="text" class="form-control" value="{{ $user->pref_profit_more_contr_equip }}" />
 									</div>
 								</div>
@@ -388,7 +388,7 @@ $(document).ready(function() {
 							<div class="row">
 								<div class="col-md-3">
 									<div class="form-group">
-										<label for="pref_profit_more_subcontr_mat">pref_profit_more_subcontr_mat</label>
+										<label for="pref_profit_more_subcontr_mat">Standaard winstpercentage materiaal onderaanneming bij meerwerk</label>
 										<input name="pref_profit_more_subcontr_mat" id="pref_profit_more_subcontr_mat" type="text" class="form-control" value="{{ $user->pref_profit_more_subcontr_mat }}" />
 									</div>
 								</div>
@@ -396,7 +396,7 @@ $(document).ready(function() {
 							<div class="row">
 								<div class="col-md-3">
 									<div class="form-group">
-										<label for="pref_profit_more_subcontr_equip">pref_profit_more_subcontr_equip</label>
+										<label for="pref_profit_more_subcontr_equip">Standaard winstpercentage materieel onderaanneming bij meerwerk</label>
 										<input name="pref_profit_more_subcontr_equip" id="pref_profit_more_subcontr_equip" type="text" class="form-control" value="{{ $user->pref_profit_more_subcontr_equip }}" />
 									</div>
 								</div>
