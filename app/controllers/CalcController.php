@@ -17,6 +17,10 @@ class CalcController extends BaseController {
 
 	public function getCalculation()
 	{
+		$project = Project::find(Route::Input('project_id'));
+		$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+		if ($offer_last && $offer_last->offer_finish)
+			return View::make('calc.calculation_closed');
 		return View::make('calc.calculation');
 	}
 
