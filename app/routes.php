@@ -12,13 +12,13 @@
 */
 
 Route::get('login', function(){ return View::make('auth.login'); });
-Route::post('login', array('before' => 'guest', 'uses' => 'AuthController@doLogin'));
+Route::post('login', array('before' => 'guest|csrf', 'uses' => 'AuthController@doLogin'));
 Route::get('register', function(){ return View::make('auth.registration'); });
-Route::post('register', array('before' => 'guest', 'as' => 'register', 'uses' => 'AuthController@doRegister'));
+Route::post('register', array('before' => 'guest|csrf', 'as' => 'register', 'uses' => 'AuthController@doRegister'));
 Route::get('confirm/{api}/{token}', array('before' => 'guest', 'as' => 'register', 'uses' => 'AuthController@doActivate'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
-Route::post('password/reset', array('before' => 'guest', 'as' => 'reset', 'uses' => 'AuthController@doBlockPassword'));
+Route::post('password/reset', array('before' => 'guest|csrf', 'as' => 'reset', 'uses' => 'AuthController@doBlockPassword'));
 Route::get('password/{api}/{token}', function(){ return View::make('auth.password'); })->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
-Route::post('password/{api}/{token}', array('before' => 'guest', 'as' => 'register', 'uses' => 'AuthController@doNewPassword'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
+Route::post('password/{api}/{token}', array('before' => 'guest|csrf', 'as' => 'register', 'uses' => 'AuthController@doNewPassword'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
 
 Route::get('about', function() { return View::make('generic.about'); });
 Route::get('support', function() { return View::make('generic.contact'); });
