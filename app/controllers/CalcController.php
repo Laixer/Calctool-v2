@@ -39,6 +39,9 @@ class CalcController extends BaseController {
 
 	public function getMore()
 	{
+		$project = Project::find(Route::Input('project_id'));
+		if ($project->project_close)
+			return View::make('calc.more_closed');
 		return View::make('calc.more');
 	}
 
