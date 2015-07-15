@@ -83,19 +83,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 	<section class="container">
 
-		<div class="col-md-12">
-
-			<div class="wizard">
-				<a href="/"> Home</a>
-				<a href="/project-{{ $project->id }}/edit">Project</a>
-				<a href="/calculation/project-{{ $project->id }}">Calculatie</a>
-				<a href="/offer/project-{{ $project->id }}">Offerte</a>
-				<a href="/estimate/project-{{ $project->id }}">Stelpost</a>
-				<a href="/less/project-{{ $project->id }}">Minderwerk</a>
-				<a href="/more/project-{{ $project->id }}">Meerwerk</a>
-				<a href="/invoice/project-{{ $project->id }}" class="current">Factuur</a>
-				<a href="/result/project-{{ $project->id }}">Resultaat</a>
-			</div>
+		@include('calc.wizard')
 
 			<div class="modal fade" id="codeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
 				<div class="modal-dialog">
@@ -164,8 +152,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					</div>
 				</div>
 			</div>
-
-			<hr />
 
 			<h2><strong>Factuurbeheer</strong></h2>
 			<table class="table table-striped">

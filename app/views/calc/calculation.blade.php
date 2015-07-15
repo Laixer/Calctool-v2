@@ -740,21 +740,7 @@ var n = this,
 
 	<section class="container fix-footer-bottom">
 
-		<div class="col-md-12">
-
-			<div class="wizard">
-				<a href="/"> Home</a>
-				<a href="/project-{{ $project->id }}/edit">Project</a>
-				<a href="javascript:void(0);" class="current">Calculatie</a>
-				<a href="/offer/project-{{ $project->id }}">Offerte</a>
-				<a href="/estimate/project-{{ $project->id }}">Stelpost</a>
-				<a href="/less/project-{{ $project->id }}">Minderwerk</a>
-				<a href="/more/project-{{ $project->id }}">Meerwerk</a>
-				<a href="/invoice/project-{{ $project->id }}">Factuur</a>
-				<a href="/result/project-{{ $project->id }}">Resultaat</a>
-			</div>
-
-			<hr />
+		@include('calc.wizard')
 
 			<h2><strong>Calculeren</strong></h2>
 

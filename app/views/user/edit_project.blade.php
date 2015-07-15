@@ -144,7 +144,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 	<section class="container fix-footer-bottom">
 
-		<div class="col-md-12">
+		@include('calc.wizard')
 
 			@if(Session::get('success'))
 			<div class="alert alert-success">
@@ -163,20 +163,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			</div>
 			@endif
 
-			<div class="wizard">
-			    <a href="/"> Home</a>
-			    <a href="javascript:void(0);" class="current">Project</a>
-			    <a href="/calculation/project-{{ $project->id }}">Calculatie</a>
-			    <a href="/offer/project-{{ $project->id }}">Offerte</a>
-		    	<a href="/estimate/project-{{ $project->id }}">Stelpost</a>
-		  		<a href="/less/project-{{ $project->id }}">Minderwerk</a>
-		  		<a href="/more/project-{{ $project->id }}">Meerwerk</a>
-			    <a href="/invoice/project-{{ $project->id }}">Factuur</a>
-				<a href="/result/project-{{ $project->id }}">Resultaat</a>
-			</div>
-
-			<hr />
-
 			<h2><strong>Project</strong> {{$project->project_name}}</h2>
 
 			@if(!Relation::where('user_id','=', Auth::user()->id)->count())
@@ -188,7 +174,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 			{{ Form::open(array('url' => 'project/update')) }}
 
-				<div class="tabs nomargin-top">
+				<div class="tabs nomargin">
 
 					<?# -- tabs -- ?>
 					<ul class="nav nav-tabs">
