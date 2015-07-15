@@ -664,7 +664,7 @@ var n = this,
 														<tr {{ $labor ? ('data-id="'.$labor->id.'"') : '' }} >
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">{{ $labor ? number_format($project->hour_rate_more, 2,",",".") : '' }}</td>
+															<td class="col-md-1">{{ number_format($project->hour_rate_more, 2,",",".") }}</td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ $labor ? number_format($labor->amount, 2, ",",".") : '' }}" class="form-control-sm-number labor-amount lsave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ $labor ? ('&euro; '.number_format(MoreRegister::laborTotal($labor->rate, $labor->amount, 2, ",","."))) : '' }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
