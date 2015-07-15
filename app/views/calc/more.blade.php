@@ -877,9 +877,6 @@ var n = this,
 												</span>
 											</div>
 										</div>
-										<div class="col-md-6 text-right">
-											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Verwijderen</button>
-										</div>
 									</div>
 									{{ Form::close() }}
 								</div>
