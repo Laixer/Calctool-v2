@@ -70,22 +70,21 @@
 
 					<div class="white-row">
 
-						<h4>Registration is fast, easy, and free.</h4>
+						<h4>Registreren is snel, makkelijk en gratis</h4>
 
-						<p>Once you're registered, you can:</p>
+						<p>Als je eenmaal geregistreerd bent, kun je:</p>
 						<ul class="list-icon check">
-							<li>Buy, sell, and interact with other members.</li>
-							<li>Save your favorite searches and get notified.</li>
-							<li>Watch the status of up to 200 items.</li>
-							<li>View your Atropos information from any computer in the world.</li>
-							<li>Connect with the Atropos community.</li>
+							<li>Alle opties van het programma gebruiken.</li>
+							<li>Calculaties van A-Z opzetten.</li>
+							<li>In één handomdraai offertes en facturen genereren.</li>
+							<li>Een totale administratie voeren voor elk gewenst project.</li>
 						</ul>
 
 						<hr class="half-margins">
 
 						<p>
-							Already have an account?
-							<a href="/login">Click to Sign In</a>
+							Heb je al een account?
+							<a href="/login">log dan hier in</a>
 						</p>
 					</div>
 
@@ -95,12 +94,11 @@
 			</div>
 
 			<div class="white-row">
-						<h4>Contact Customer Support</h4>
+						<h4>Klantenservice</h4>
 						<p>
-							If you're looking for more help or have a question to ask, please <a href="contact-us.html">contact us</a>.
+							Als u op zoek bent naar hulp of gewoon een vraag wilt stellen, neem dan <a href="about">contact</a> met ons op.
 						</p>
 					</div>
-
 		</section>
 
 	</div>
