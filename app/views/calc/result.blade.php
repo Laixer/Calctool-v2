@@ -312,7 +312,7 @@ $(document).ready(function() {
 							</tbody>
 						</table>
 
-						<h4>Cumulatieven gecalculeerd</h4>
+						<h4>Cumulatieven</h4>
 						<table class="table table-striped">
 							<?# -- table head -- ?>
 							<thead>
@@ -328,7 +328,7 @@ $(document).ready(function() {
 							<!-- table items -->
 							<tbody>
 								<tr><!-- item -->
-									<td class="col-md-4">Calculatief gecalculeerd (excl. BTW)</td>
+									<td class="col-md-4">Cumulatief project (excl. BTW)</td>
 									<td class="col-md-3">&nbsp;</td>
 									<td class="col-md-2"><strong>{{ '&euro; '.number_format(ResultEndresult::totalProject($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-1">&nbsp;</td>
@@ -363,14 +363,14 @@ $(document).ready(function() {
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-4">Gecalculeerd BTW bedrag</td>
+									<td class="col-md-4">Cumulatief BTW bedrag</td>
 									<th class="col-md-3">&nbsp;</th>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1"><strong>{{ '&euro; '.number_format(ResultEndresult::totalProjectTax($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-4"><strong>Calculatief gecalculeerd (Incl. BTW)</strong></td>
+									<td class="col-md-4"><strong>Cumulatief project (Incl. BTW)</strong></td>
 									<th class="col-md-3">&nbsp;</th>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -383,18 +383,18 @@ $(document).ready(function() {
 						<div id="hour_overview" class="tab-pane">
 							<div class="toogle">
 								<div class="toggle active">
-									<label>Anneming</label>
+									<label>Aanneming</label>
 									<div class="toggle-content">
 									<table class="table table-striped">
 										<?# -- table head -- ?>
 										<thead>
 											<tr>
+												<th class="col-md-3">&nbsp;</th>
 												<th class="col-md-2">&nbsp;</th>
-												<th class="col-md-4">&nbsp;</th>
-												<th class="col-md-2">Gecalculeerde uren</th>
-												<th class="col-md-2">Geregistreerde uren</th>
-												<th class="col-md-1">Verschil</th>
-												<th class="col-md-1">Totaal aanneming</th>
+												<th class="col-md-2"><span class="pull-right">Gecalculeerde uren</span></th>
+												<th class="col-md-2"><span class="pull-right">Geregistreerde uren</span></th>
+												<th class="col-md-1"><span class="pull-right">Verschil</span></th>
+												<th class="col-md-2"><span class="pull-right">Uren totaal</span></th>
 											</tr>
 										</thead>
 
@@ -402,22 +402,22 @@ $(document).ready(function() {
 											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->get() as $activity)
 											<tr>
-												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-4">{{ $activity->activity_name }}</td>
-												<td class="col-md-2">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id), 2,",","."); }}</td>
-												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-1">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-1">{{ number_format((TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'))*$project->hour_rate, 2,",","."); }}</td>
+												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
+												<td class="col-md-2">{{ $activity->activity_name }}</td>
+												<td class="col-md-2"><span class="pull-right">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id), 2,",","."); }}</span></td>
+												<td class="col-md-2"><span class="pull-right">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</span></td>
+												<td class="col-md-1"><span class="pull-right">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</span></td>
+												<td class="col-md-2"><span class="pull-right">{{ number_format((TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'))*$project->hour_rate, 2,",","."); }}</span></td>
 											</tr>
 											@endforeach
 											@endforeach
 											<tr>
-												<th class="col-md-2"><strong>Totaal aanneming</strong></th>
-												<th class="col-md-4">&nbsp;</th>
+												<th class="col-md-3"><strong>Totaal Aanneming</strong></th>
+												<th class="col-md-2">&nbsp;</th>
 												<td class="col-md-2"><strong><span class="pull-right">{{ number_format(TimesheetOverview::calcTotalCalculation($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-2"><strong><span class="pull-right">{{ number_format(TimesheetOverview::calcTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(TimesheetOverview::calcTotalCalculation($project)-TimesheetOverview::calcTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format((TimesheetOverview::calcTotalCalculation($project)-TimesheetOverview::calcTotalTimesheet($project))*$project->hour_rate, 2, ",",".") }}</span></strong></td>
+												<td class="col-md-2"><strong><span class="pull-right">{{ '&euro; '.number_format((TimesheetOverview::calcTotalCalculation($project)-TimesheetOverview::calcTotalTimesheet($project))*$project->hour_rate, 2, ",",".") }}</span></strong></td>
 											</tr>
 										</tbody>
 									</table>
@@ -425,18 +425,18 @@ $(document).ready(function() {
 								</div>
 
 								<div class="toggle active">
-									<label>Stelpost</label>
+									<label>Onderaanneming</label>
 									<div class="toggle-content">
 									<table class="table table-striped">
 										<?# -- table head -- ?>
 										<thead>
 											<tr>
+												<th class="col-md-3">&nbsp;</th>
 												<th class="col-md-2">&nbsp;</th>
-												<th class="col-md-4">&nbsp;</th>
-												<th class="col-md-2">Gecalculeerde uren</th>
-												<th class="col-md-2">Geregistreerde uren</th>
-												<th class="col-md-1">Verschil</th>
-												<th class="col-md-1">Totaal Stelposten</th>
+												<th class="col-md-2"><span class="pull-right">Gecalculeerde uren</span></th>
+												<th class="col-md-2"><span class="pull-right">Geregistreerde uren</span></th>
+												<th class="col-md-1"><span class="pull-right">Verschil</span></th>
+												<th class="col-md-2"><span class="pull-right">Uren totaal</span></th>
 											</tr>
 										</thead>
 
@@ -444,22 +444,22 @@ $(document).ready(function() {
 											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->get() as $activity)
 											<tr>
-												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-4">{{ $activity->activity_name }}</td>
-												<td class="col-md-2">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id), 2,",","."); }}</td>
-												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-1">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-1">{{ number_format((TimesheetOverview::estimTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'))*$project->hour_rate, 2,",","."); }}</td>
+												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
+												<td class="col-md-2">{{ $activity->activity_name }}</td>
+												<td class="col-md-2"><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id), 2,",","."); }}</span></td>
+												<td class="col-md-2"><span class="pull-right">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</span></td>
+												<td class="col-md-1"><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</span></td>
+												<td class="col-md-2"><span class="pull-right">{{ number_format((TimesheetOverview::estimTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'))*$project->hour_rate, 2,",","."); }}</span></td>
 											</tr>
 											@endforeach
 											@endforeach
 											<tr>
-												<th class="col-md-2"><strong>Totaal onderaanneming</strong></th>
-												<th class="col-md-4">&nbsp;</th>
+												<th class="col-md-3"><strong>Totaal Onderaanneming</strong></th>
+												<th class="col-md-2">&nbsp;</th>
 												<td class="col-md-2"><strong><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalCalculation($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-2"><strong><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalCalculation($project)-TimesheetOverview::estimTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format((TimesheetOverview::estimTotalCalculation($project)-TimesheetOverview::estimTotalTimesheet($project))*$project->hour_rate, 2, ",",".") }}</span></strong></td>
+												<td class="col-md-2"><strong><span class="pull-right">{{ '&euro; '.number_format((TimesheetOverview::estimTotalCalculation($project)-TimesheetOverview::estimTotalTimesheet($project))*$project->hour_rate, 2, ",",".") }}</span></strong></td>
 											</tr>
 										</tbody>
 									</table>
@@ -471,34 +471,33 @@ $(document).ready(function() {
 
 						<div id="budget" class="tab-pane">
 
-							<h4>Aanneming</h4>
 							<table class="table table-striped">
 								<?# -- table head -- ?>
 								<thead>
 									<tr>
-										<th class="col-md-4">&nbsp;</th>
-										<th class="col-md-2">Balans</th>
-										<th class="col-md-1">Urenregistratie</th>
-										<th class="col-md-1">Inkoop</th>
-										<th class="col-md-4">Winst / Verlies</th>
+										<th class="col-md-2">&nbsp;</th>
+										<th class="col-md-2">Balans project</th>
+										<th class="col-md-3">Totaalkosten urenregistratie</th>
+										<th class="col-md-3">Totaalkosten inkoopfacturen</th>
+										<th class="col-md-2">Winst / Verlies project</th>
 									</tr>
 								</thead>
 
 								<!-- table items -->
 								<tbody>
 									<tr><!-- item -->
-										<td class="col-md-4">Aanneming</td>
+										<td class="col-md-2"><strong>Aanneming</strong></td>
 										<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalContracting($project), 2, ",",".") }}</td>
-										<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::totalTimesheet($project), 2, ",",".") }}</td>
-										<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::totalContractingPurchase($project), 2, ",",".") }}</td>
-										<td class="col-md-4">{{ '&euro; '.number_format(ResultEndresult::totalContractingBudget($project), 2, ",",".") }}</td>
+										<td class="col-md-3">{{ '&euro; '.number_format(ResultEndresult::totalTimesheet($project), 2, ",",".") }}</td>
+										<td class="col-md-3">{{ '&euro; '.number_format(ResultEndresult::totalContractingPurchase($project), 2, ",",".") }}</td>
+										<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalContractingBudget($project), 2, ",",".") }}</td>
 									</tr>
 									<tr><!-- item -->
-										<td class="col-md-4">Onderaanneming</td>
+										<td class="col-md-2"><strong>Onderaanneming</strong></td>
 										<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalSubcontracting($project), 2, ",",".") }}</td>
-										<td class="col-md-1">-</td>
-										<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::totalSubcontractingPurchase($project), 2, ",",".") }}</td>
-										<td class="col-md-4">{{ '&euro; '.number_format(ResultEndresult::totalSubcontractingBudget($project), 2, ",",".") }}</td>
+										<td class="col-md-3">-</td>
+										<td class="col-md-3">{{ '&euro; '.number_format(ResultEndresult::totalSubcontractingPurchase($project), 2, ",",".") }}</td>
+										<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalSubcontractingBudget($project), 2, ",",".") }}</td>
 									</tr>
 								</tbody>
 							</table>
