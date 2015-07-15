@@ -1,6 +1,7 @@
 <?php
 $relation = Relation::find(Route::Input('relation_id'));
 $iban = Iban::where('relation_id','=',$relation->id)->first();
+$contact = Contact::where('relation_id','=',$relation->id)->first();
 ?>
 
 @extends('layout.master')
@@ -67,12 +68,12 @@ $(document).ready(function() {
 			<ol class="breadcrumb">
 			  <li><a href="/">Home</a></li>
 			  <li><a href="/relation">Relaties</a></li>
-			 <li>moet nog worden toegevoegd, zie 2Do</li>
+			 <li>{{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</li>
 			</ol>
 			<div>
 			<br>
 
-			<h2><strong>Relatie</strong> {{ $relation->company_name }}</h2>
+			<h2><strong>Relatie</strong> {{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</h2>
 
 				<div class="tabs nomargin-top">
 

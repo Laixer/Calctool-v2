@@ -43,7 +43,7 @@ $relation = Relation::find(Route::Input('relation_id'));
 			<ol class="breadcrumb">
 			  <li><a href="/">Home</a></li>
 			  <li><a href="/relation">Relaties</a></li>
-			  <li>moet nog wordne toegevogd, zie Do</li>
+			  <li><a href="/relation-{{ $relation->id }}/edit">{{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</a></li>
 			  <li class="active" /relation-{{ $relation->id }}/contact-{{ $contact->id }}/edit">contact bewerken</li>
 			</ol>
 			<div>

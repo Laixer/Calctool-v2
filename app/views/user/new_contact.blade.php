@@ -1,5 +1,6 @@
 <?php
 $relation = Relation::find(Route::Input('relation_id'));
+$contact = Contact::where('relation_id','=',$relation->id)->first();
 ?>
 
 @extends('layout.master')
@@ -34,7 +35,7 @@ $relation = Relation::find(Route::Input('relation_id'));
 			<ol class="breadcrumb">
 			  <li><a href="/">Home</a></li>
 			  <li><a href="/relation">Relaties</a></li>
-			  <li>moet nog worden toegevoegd, zie 2Do</li>
+			  <li><a href="/relation-{{ $relation->id }}/edit">{{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</a></li>
 			 <li class="active" /relation-{{ $relation->id }}/contact/new">nieuw contact</li>
 			</ol>
 			<div>

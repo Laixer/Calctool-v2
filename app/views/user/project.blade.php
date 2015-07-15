@@ -32,7 +32,7 @@
 						<td class="col-md-1">{{ $project->type->type_name }}</td>
 						<td class="col-md-3">{{ $project->address_street }}</td>
 						<td class="col-md-2">{{ $project->address_city }}</td>
-						<td class="col-md-1">Status</td>
+						<td class="col-md-1">{{ $project->project_close ? 'Gesloten' : 'Open' }}</td>
 					</tr>
 				@endforeach
 				</tbody>
