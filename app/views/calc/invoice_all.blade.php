@@ -48,7 +48,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				if (!isNaN($sint))
 					$total -= $sint;
 			});
-			$('#endterm').html('&euro; '+ $.number($total,2,',','.'));
+			$('#endterm').html($.number($total,2,',','.'));
 		};
 		calcend();
 		<?php
@@ -83,7 +83,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 	<section class="container">
 
-		@include('calc.wizard', array('page' => 'invoice_all'))
+		@include('calc.wizard', array('page' => 'invoice'))
 
 			<div class="modal fade" id="codeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
 				<div class="modal-dialog">
@@ -159,7 +159,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				<thead>
 					<tr>
 						<th class="col-md-2">Onderdeel</th>
-						<th class="col-md-2">Factuurbedrag</th>
+						<th class="col-md-2">&euro; Factuurbedrag</th>
 						<th class="col-md-2">Factuurnummer</th>
 						<th class="col-md-2">Administratie</th>
 						<th class="col-md-2">Omschrijving</th>
