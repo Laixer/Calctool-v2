@@ -466,11 +466,15 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<br>
 							<li>{{ $relation->company_name }}</li>
 							<li>t.a.v.
+							@if ($offer_last && $offer_last->offer_finish)
+							{{ Contact::find($offer_last->to_contact_id)->firstname . ' ' . Contact::find($offer_last->to_contact_id)->lastname }}
+							@else
 							<select name="to_contact" id="to_contact">
 								@foreach (Contact::where('relation_id','=',$relation->id)->get() as $contact)
 								<option {{ $offer_last ? ($offer_last->to_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
 								@endforeach
 							</select>
+							@endif
 							</li>
 							<li>{{ $relation->address_street . ' ' . $relation->address_number }}<br /> {{ $relation->address_postal . ', ' . $relation->address_city }}</li>
 						</ul>
@@ -501,7 +505,11 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 				</div>
 
+					@if ($offer_last && $offer_last->offer_finish)
+					{{ $offer_last->description }}
+					@else
 					<textarea name="description" id="description" rows="5" class="form-control">{{ ($offer_last ? $offer_last->description : '') }}</textarea>
+					@endif
 					<br>
 					<div class="show-all" style="display:none;">
 						<h4 class="only-total">Aanneming</h4>
@@ -970,34 +978,50 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						</table>
 					</div>
 
+					@if ($offer_last && $offer_last->offer_finish)
+					{{ $offer_last->closure }}
+					@else
 					<textarea name="closure" id="closure" rows="5" class="form-control">{{ ($offer_last ? $offer_last->closure : '') }}</textarea>
+					@endif
 					<br>
 					<p id="termtext">Indien opdracht gegund wordt, ontvangt u één eindfactuur.</p>
 					<p id="paymenttext"></p>
 
 					<p>Wij kunnen de werkzaamheden starten binnen
+						@if ($offer_last && $offer_last->offer_finish)
+						{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
+						@else
 						<select name="deliver" id="deliver">
 							@foreach (DeliverTime::all() as $deliver)
 							<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
 							@endforeach
 						</select>
+						@endif
 						na uw opdrachtbevestiging.
 					</p>
 
 					<p>Deze offerte is geldig tot
+						@if ($offer_last && $offer_last->offer_finish)
+						{{ Valid::find($offer_last->valid_id)->valid_name }}
+						@else
 						<select name="valid" id="valid">
 							@foreach (Valid::all() as $valid)
 							<option {{ ($offer_last ? ($offer_last->valid_id == $valid->id ? 'selected' : '') : '') }} value="{{ $valid->id }}">{{ $valid->valid_name }}</option>
 							@endforeach
 						</select> na dagtekening.
+						@endif
 					</p>
 
 					<p>Cheers,
+						@if ($offer_last && $offer_last->offer_finish)
+						{{ Contact::find($offer_last->from_contact_id)->firstname . ' ' . Contact::find($offer_last->from_contact_id)->lastname }}
+						@else
 						<select name="from_contact" id="from_contact">
 							@foreach (Contact::where('relation_id','=',$relation_self->id)->get() as $contact)
 							<option {{ $offer_last ? ($offer_last->from_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
 							@endforeach
 						</select>
+						@endif
 					</p>
 
 				</div>
@@ -1356,7 +1380,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				<div class="col-sm-6"></div>
 
 				<div class="col-sm-6">
-					<div class="padding20">
+					<div class="padding20 pull-right">
 						<?php if ($offer_last) { ?>
 						<?php if (!$offer_last->offer_finish) { ?>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
