@@ -266,7 +266,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						    <div class="col-sm-offset-0 col-sm-10">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-tax" type="checkbox" checked> BTW bedragen gespecificeerd weergeven
+						          <input name="toggle-tax" type="checkbox" checked> BTW bedragen weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -275,7 +275,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						    <div class="col-sm-offset-0 col-sm-10">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-endresult" type="checkbox"> Alleen eindbedrag weergeven
+						          <input name="toggle-endresult" type="checkbox"> Alleen het totale offertebedrag weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -284,7 +284,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						    <div class="col-sm-offset-0 col-sm-10">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-subcontr" type="checkbox"> Onderaanneming gespecificeerd weergeven
+						          <input name="toggle-subcontr" type="checkbox"> Kosten onderaanneming apart weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -293,7 +293,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						    <div class="col-sm-offset-0 col-sm-10">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-activity" type="checkbox" checked> Overzicht werkzaamheden weergeven
+						          <input name="toggle-activity" type="checkbox" checked> Hoofdstukken en werkzaamheden weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -302,7 +302,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						    <div class="col-sm-offset-0 col-sm-10">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-summary" type="checkbox"> Specificatie overzicht werkzaamheden weergeven
+						          <input name="toggle-summary" type="checkbox"> Kosten werkzaamheden specificeren in arbeid, materiaal en materieel
 						        </label>
 						      </div>
 						    </div>
@@ -311,7 +311,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						    <div class="col-sm-offset-0 col-sm-10">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden opnemen
+						          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden in bijlage weergeven
 						        </label>
 						      </div>
 						    </div>
