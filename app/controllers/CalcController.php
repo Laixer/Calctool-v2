@@ -26,6 +26,9 @@ class CalcController extends BaseController {
 
 	public function getEstimate()
 	{
+		$project = Project::find(Route::Input('project_id'));
+		if ($project->project_close)
+			return View::make('calc.estimate_closed');
 		return View::make('calc.estimate');
 	}
 
@@ -217,6 +220,35 @@ class CalcController extends BaseController {
 				$activity->tax_calc_material_id = Input::get('value');
 			if ($type == 'calc-equipment')
 				$activity->tax_calc_equipment_id = Input::get('value');
+			$activity->save();
+
+			return json_encode(['success' => 1]);
+		}
+	}
+
+	public function doUpdateEstimateTax()
+	{
+		$rules = array(
+			'value' => array('required','integer'),
+			'type' => array('required'),
+			'activity' => array('required','integer')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+			$type = Input::get('type');
+			$activity = Activity::find(Input::get('activity'));
+			if ($type == 'calc-labor')
+				$activity->tax_estimate_labor_id = Input::get('value');
+			if ($type == 'calc-material')
+				$activity->tax_estimate_material_id = Input::get('value');
+			if ($type == 'calc-equipment')
+				$activity->tax_estimate_equipment_id = Input::get('value');
 			$activity->save();
 
 			return json_encode(['success' => 1]);
