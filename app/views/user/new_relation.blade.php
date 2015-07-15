@@ -139,57 +139,6 @@ $(document).ready(function() {
 
 				</div>
 
-				<h4>Contactgegevens</h4>
-				<div class="row">
-
-					<div class="col-md-2">
-						<div class="form-group">
-							<label for="contact_firstname">Voornaam</label>
-							<input name="contact_firstname" id="contact_firstname" type="text" value="{{ Input::old('contact_firstname') }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-3">
-						<div class="form-group">
-							<label for="contact_name">Achternaam</label>
-							<input name="contact_name" id="contact_name" type="text" value="{{ Input::old('contact_name') }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-2">
-						<div class="form-group">
-							<label for="mobile">Mobiel</label>
-							<input name="mobile" id="mobile" type="text" maxlength="12" value="{{ Input::old('mobile') }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-2">
-						<div class="form-group">
-							<label for="telephone">Telefoonnummer</label>
-							<input name="telephone" id="telephone" type="text" maxlength="12" value="{{ Input::old('telephone') }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-3">
-						<div class="form-group">
-							<label for="email">Email</label>
-							<input name="email" id="email" type="email" value="{{ Input::old('email') }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-4 company">
-						<div class="form-group">
-							<label for="contactfunction">Functie</label>
-							<select name="contactfunction" id="contactfunction" class="form-control pointer">
-							@foreach (ContactFunction::all() as $function)
-								<option value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
-							@endforeach
-							</select>
-						</div>
-					</div>
-
-				</div>
-
 				<h4>Adresgegevens</h4>
 				<div class="row">
 
@@ -239,6 +188,56 @@ $(document).ready(function() {
 								@foreach (Country::all() as $country)
 									<option {{ $country->country_name=='nederland' ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
 								@endforeach
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<h4>Contactgegevens</h4>
+				<div class="row">
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="contact_firstname">Voornaam</label>
+							<input name="contact_firstname" id="contact_firstname" type="text" value="{{ Input::old('contact_firstname') }}" class="form-control"/>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="contact_name">Achternaam</label>
+							<input name="contact_name" id="contact_name" type="text" value="{{ Input::old('contact_name') }}" class="form-control"/>
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="mobile">Mobiel</label>
+							<input name="mobile" id="mobile" type="text" maxlength="12" value="{{ Input::old('mobile') }}" class="form-control"/>
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="telephone">Telefoonnummer</label>
+							<input name="telephone" id="telephone" type="text" maxlength="12" value="{{ Input::old('telephone') }}" class="form-control"/>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="email">Email</label>
+							<input name="email" id="email" type="email" value="{{ Input::old('email') }}" class="form-control"/>
+						</div>
+					</div>
+
+					<div class="col-md-4 company">
+						<div class="form-group">
+							<label for="contactfunction">Functie</label>
+							<select name="contactfunction" id="contactfunction" class="form-control pointer">
+							@foreach (ContactFunction::all() as $function)
+								<option value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
+							@endforeach
 							</select>
 						</div>
 					</div>
