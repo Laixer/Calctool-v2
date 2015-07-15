@@ -31,6 +31,9 @@ class CalcController extends BaseController {
 
 	public function getLess()
 	{
+		$project = Project::find(Route::Input('project_id'));
+		if ($project->project_close)
+			return View::make('calc.less_closed');
 		return View::make('calc.less');
 	}
 
