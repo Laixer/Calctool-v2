@@ -100,11 +100,11 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="form-group">
 									<div class="col-md-6">
 										<label>Referentie</label>
-										<input value="" name="reference" id="reference" min="2" max="50" type="text" value="" class="form-control" />
+										<input {{ $project->project_close ? 'disabled' : '' }} value="" name="reference" id="reference" min="2" max="50" type="text" value="" class="form-control" />
 									</div>
 									<div class="col-md-6">
 										<label>Boekhoudkundignummer</label>
-										<input value="" name="bookcode" id="bookcode" min="2" max="50" type="text" value="" class="form-control" />
+										<input {{ $project->project_close ? 'disabled' : '' }} value="" name="bookcode" id="bookcode" min="2" max="50" type="text" value="" class="form-control" />
 									</div>
 								</div>
 							</div>
@@ -134,11 +134,11 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="form-group">
 									<div class="col-md-12">
 										<label>Omschrijving voor</label>
-										<textarea name="description" id="description" rows="5" class="form-control"></textarea>
+										<textarea {{ $project->project_close ? 'disabled' : '' }} name="description" id="description" rows="5" class="form-control"></textarea>
 									</div>
 									<div class="col-md-12">
 										<label>Omschrijving na</label>
-										<textarea name="closure" id="closure" rows="5" class="form-control"></textarea>
+										<textarea {{ $project->project_close ? 'disabled' : '' }} name="closure" id="closure" rows="5" class="form-control"></textarea>
 									</div>
 								</div>
 							</div>
@@ -180,13 +180,13 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				@foreach (Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority')->get() as $invoice)
 					<tr>
 						<td class="col-md-2"><a href="/invoice/project-{{ $project->id }}/term-invoice-{{ $invoice->id }}">{{ ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1)) }}</a></td>
-						<td class="col-md-2"><?php if ($invoice->invoice_close){ echo "<span class='sdata'>".$invoice->amount."</span>"; } else  { ?><input data-id="{{ $invoice->id }}" class="form-control-sm-text adata" name="amount" type="text" value="{{ $invoice->amount }}" /><?php } ?></td>
+						<td class="col-md-2"><?php if ($invoice->invoice_close || $project->project_close){ echo "<span class='sdata'>".$invoice->amount."</span>"; } else  { ?><input data-id="{{ $invoice->id }}" class="form-control-sm-text adata" name="amount" type="text" value="{{ $invoice->amount }}" /><?php } ?></td>
 						<td class="col-md-2">{{ $invoice->invoice_code }}</td>
-						<td class="col-md-2"><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice->reference }}" data-bookcode="{{ $invoice->book_code }}" data-id="{{ $invoice->id }}" data-target="#codeModal">bewerk</a></td>
-						<td class="col-md-2"><a href="#" data-toggle="modal" class="changedesc" data-desc="{{ $invoice->description }}" data-closure="{{ $invoice->closure }}" data-id="{{ $invoice->id }}" data-target="#textModal">bewerk</a></td>
-						<td class="col-md-1"><input type="number" name="condition" data-id="{{ $invoice->id }}" value="{{ $invoice->payment_condition }}" class="condition form-control" /></td>
-						<td class="col-md-1"><?php if ($invoice->invoice_close) { echo 'Gefactureerd'; } else if ($close) { echo '<form method="POST" id="frm-invoice" action="/invoice/close"><input name="id" value="'.$invoice->id.'" type="hidden"/><input name="projectid" value="'.$project->id.'" type="hidden"/><input type="submit" class="btn btn-primary btn-xs" value="Factureren"/></form>'; $close=false; } else { echo 'Open'; } ?></td></td>
-						<td class="col-md-1"><?php if (!$invoice->invoice_close) { ?><form method="POST" id="frm-delete" action="/invoice/term/delete"><input name="id" value="{{ $invoice->id }}" type="hidden"/><button class="btn btn-danger btn-xs fa fa-times deleterow"></button></form><?php } ?></td>
+						<td class="col-md-2"><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice->reference }}" data-bookcode="{{ $invoice->book_code }}" data-id="{{ $invoice->id }}" data-target="#codeModal">{{ $project->project_close ? 'bekijk' : 'bewerk' }}</a></td>
+						<td class="col-md-2"><a href="#" data-toggle="modal" class="changedesc" data-desc="{{ $invoice->description }}" data-closure="{{ $invoice->closure }}" data-id="{{ $invoice->id }}" data-target="#textModal">{{ $project->project_close ? 'bekijk' : 'bewerk' }}</a></td>
+						<td class="col-md-1"><input {{ $project->project_close ? 'disabled' : '' }} type="number" name="condition" data-id="{{ $invoice->id }}" value="{{ $invoice->payment_condition }}" class="condition form-control form-control-sm-number" /></td>
+						<td class="col-md-1"><?php if ($invoice->invoice_close) { echo 'Gefactureerd'; } else if ($close && !$project->project_close) { echo '<form method="POST" id="frm-invoice" action="/invoice/close"><input name="id" value="'.$invoice->id.'" type="hidden"/><input name="projectid" value="'.$project->id.'" type="hidden"/><input type="submit" class="btn btn-primary btn-xs" value="Factureren"/></form>'; $close=false; } else { echo 'Open'; } ?></td></td>
+						<td class="col-md-1"><?php if (!$invoice->invoice_close && !$project->project_close) { ?><form method="POST" id="frm-delete" action="/invoice/term/delete"><input name="id" value="{{ $invoice->id }}" type="hidden"/><button class="btn btn-danger btn-xs fa fa-times deleterow"></button></form><?php } ?></td>
 					</tr>
 				<?php $i++; ?>
 				@endforeach
@@ -195,15 +195,16 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						<td class="col-md-2"><a href="/invoice/project-{{ $project->id }}/invoice-{{ $invoice_end->id }}">Eindfactuur</a></td>
 						<td class="col-md-2"><span id="endterm">0</span></td>
 						<td class="col-md-2">{{ $invoice_end->invoice_code }}</td>
-						<td class="col-md-2"><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice_end->reference }}" data-bookcode="{{ $invoice_end->book_code }}" data-id="{{ $invoice_end->id }}" data-target="#codeModal">bewerk</a></td>
-						<td class="col-md-2"><a href="#" data-toggle="modal" class="changedesc" data-desc="{{ $invoice_end->description }}" data-closure="{{ $invoice_end->closure }}" data-id="{{ $invoice_end->id }}" data-target="#textModal">bewerk</a></td>
-						<td class="col-md-1"><input type="number" name="condition" data-id="{{ $invoice_end->id }}" value="{{ $invoice_end->payment_condition }}" class="form-control condition" /></td>
-						<td class="col-md-1"><?php if ($invoice_end->invoice_close) { echo 'Gefactureerd'; } else if ($close) { echo '<form method="POST" id="frm-invoice" action="/invoice/close"><input name="id" value="'.$invoice_end->id.'" type="hidden"/><input name="projectid" value="'.$project->id.'" type="hidden"/><input type="submit" class="btn btn-primary btn-xs" value="Factureren"/></form>'; $close=false; } else { echo 'Open'; } ?></td></td>
+						<td class="col-md-2"><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice_end->reference }}" data-bookcode="{{ $invoice_end->book_code }}" data-id="{{ $invoice_end->id }}" data-target="#codeModal">{{ $project->project_close ? 'bekijk' : 'bewerk' }}</a></td>
+						<td class="col-md-2"><a href="#" data-toggle="modal" class="changedesc" data-desc="{{ $invoice_end->description }}" data-closure="{{ $invoice_end->closure }}" data-id="{{ $invoice_end->id }}" data-target="#textModal">{{ $project->project_close ? 'bekijk' : 'bewerk' }}</a></td>
+						<td class="col-md-1"><input {{ $project->project_close ? 'disabled' : '' }} type="number" name="condition" data-id="{{ $invoice_end->id }}" value="{{ $invoice_end->payment_condition }}" class="form-control form-control-sm-number condition" /></td>
+						<td class="col-md-1"><?php if ($invoice_end->invoice_close) { echo 'Gefactureerd'; } else if ($close && !$project->project_close) { echo '<form method="POST" id="frm-invoice" action="/invoice/close"><input name="id" value="'.$invoice_end->id.'" type="hidden"/><input name="projectid" value="'.$project->id.'" type="hidden"/><input type="submit" class="btn btn-primary btn-xs" value="Factureren"/></form>'; $close=false; } else { echo 'Open'; } ?></td></td>
 						<td class="col-md-1"></td>
 					</tr>
 				<?php }} ?>
 				</tbody>
 			</table>
+			@if (!$project->project_close)
 			<div class="row">
 				<div class="col-md-12">
 					<form method="POST" id="frm-add" action="/invoice/term/add">
@@ -212,6 +213,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					</form>
 				</div>
 			</div>
+			@endif
 		</div>
 
 	</section>
