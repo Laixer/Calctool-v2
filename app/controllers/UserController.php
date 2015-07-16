@@ -82,16 +82,23 @@ class UserController extends \BaseController {
 			$payment = $mollie->payments->create(array(
 				"amount"      => $amount,
 				"description" => $description,
+				"webhookUrl" => url('payment/webhook/'),
 				"redirectUrl" => url('payment/order/'.$token),
+				"metadata"    => array(
+					"token" => $token,
+					"uid" => Auth::id(),
+					"incr" => $increment_months
+				),
 			));
 
-			$order = new Order;
+			$order = new Payment;
 			$order->transaction = $payment->id;
 			$order->token = $token;
 			$order->amount = $amount;
-			$order->status = 'PENDING';
+			$order->status = $payment->status;
 			$order->increment = $increment_months;
 			$order->description = $description;
+			$order->method = '';
 			$order->user_id = Auth::user()->id;
 
 			$order->save();
@@ -100,9 +107,33 @@ class UserController extends \BaseController {
 		}
 	}
 
+	public function doPaymentUpdate()
+	{
+		$order = Payment::where('transaction','=',Input::get('id'))->where('status','=','open')->first();
+		if (!$order) {
+			return;
+		}
+
+		$mollie = new Mollie_API_Client;
+		$mollie->setApiKey("test_GgXY6mWGW56AAfgC6NDBDXf4bCMfpz");
+
+		$payment = $mollie->payments->get($order->transaction);
+		$order->status = $payment->status;
+		$order->method = $payment->method;
+		$order->save();
+
+		if ($payment->isPaid()) {
+			$user = User::find($order->user_id);
+			$expdate = $user->expiration_date;
+			$user->expiration_date = date('Y-m-d', strtotime("+".$order->increment." month", strtotime($expdate)));
+			$user->save();
+		}
+		return json_encode(['success' => 1]);
+	}
+
 	public function getPaymentFinish()
 	{
-		$order = Order::where('token','=',Route::Input('token'))->where('status','=','PENDING')->first();
+		$order = Payment::where('token','=',Route::Input('token'))->first();
 		if (!$order) {
 			$errors = new MessageBag(['status' => ['Transactie niet geldig']]);
 			return Redirect::to('myaccount')->withErrors($errors);
@@ -112,22 +143,26 @@ class UserController extends \BaseController {
 		$mollie->setApiKey("test_GgXY6mWGW56AAfgC6NDBDXf4bCMfpz");
 
 		$payment = $mollie->payments->get($order->transaction);
+		print_r($payment); exit();
+		$order->status = $payment->status;
+		$order->method = $payment->method;
+		$order->save();
+
+
 		if ($payment->isPaid()) {
-			$order->status = 'COMPLETE';
-			$order->save();
-		} else {
-			$order->status = 'CANCELED';
-			$order->save();
+
+
+		} elseif (!$payment->isOpen()) {
+			print_r($payment); exit();
 			$errors = new MessageBag(['status' => ['Transactie niet afgerond']]);
 			return Redirect::to('myaccount')->withErrors($errors);
 		}
 		$user = Auth::user();
 		$expdate = $user->expiration_date;
-		//echo 'new date ' . date('Y-m-d', strtotime("+".$order->increment." month", strtotime($expdate)));
 		$user->expiration_date = date('Y-m-d', strtotime("+".$order->increment." month", strtotime($expdate)));
 
 		$user->save();
-
+print_r($payment); exit();
 		return Redirect::to('myaccount')->with('success','Betaald');
 	}
 
