@@ -96,12 +96,12 @@ $payment = $mollie->payments->get(Route::Input('transcode'));
 			<div class="white-row">
 				<h4>Terugstortingen ({{ $mollie->payments_refunds->with($payment)->all()->totalCount }})</h4>
 				@if ($mollie->payments_refunds->with($payment)->all()->totalCount > 0)
-				@foreach ($mollie->payments_refunds->with($payment)->all() as $refund)
 				<div class="row">
 					<div class="col-md-2"><strong>Terugstortcode</strong></div>
 					<div class="col-md-2"><strong>Bedrag</strong></div>
 					<div class="col-md-4"><strong>Datum</strong></div>
 				</div>
+				@foreach ($mollie->payments_refunds->with($payment)->all() as $refund)
 				<div class="row">
 					<div class="col-md-2">{{ $refund->id }}</div>
 					<div class="col-md-2">{{ '&euro; '.number_format($refund->amount, 2,",",".") }}</div>
