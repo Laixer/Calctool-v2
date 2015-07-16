@@ -46,7 +46,7 @@ class UserController extends \BaseController {
 		} else {
 
 			$mollie = new Mollie_API_Client;
-			$mollie->setApiKey("test_GgXY6mWGW56AAfgC6NDBDXf4bCMfpz");
+			$mollie->setApiKey("live_dUapTi8xt2DujzS6WkPyGt8T7UpqY3");
 
 			$amount = 0;
 			$description = 'None';
