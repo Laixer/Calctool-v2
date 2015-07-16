@@ -722,21 +722,7 @@ var n = this,
 
 	<section class="container fix-footer-bottom">
 
-		<div class="col-md-12">
-
-			<div class="wizard">
-				<a href="/"> Home</a>
-				<a href="/project-{{ $project->id }}/edit">Project</a>
-				<a href="/calculation/project-{{ $project->id }}">Calculatie</a>
-				<a href="/offer/project-{{ $project->id }}">Offerte</a>
-				<a href="javascript:void(0);" class="current">Stelpost</a>
-				<a href="/less/project-{{ $project->id }}">Minderwerk</a>
-				<a href="/more/project-{{ $project->id }}">Meerwerk</a>
-				<a href="/invoice/project-{{ $project->id }}">Factuur</a>
-				<a href="/result/project-{{ $project->id }}">Resultaat</a>
-			</div>
-
-			<hr />
+		@include('calc.wizard', array('page' => 'estimate'))
 
 			<h2><strong>Stelpost</strong> stellen</h2>
 
@@ -778,7 +764,16 @@ var n = this,
 
 									<div class="toogle">
 
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->get() as $activity)
+										<?php
+										foreach(Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->get() as $activity) {
+											if (Part::find($activity->part_id)->part_name=='contracting') {
+												$profit_mat = $project->profit_calc_contr_mat;
+												$profit_equip = $project->profit_calc_contr_equip;
+											} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+												$profit_mat = $project->profit_calc_subcontr_mat;
+												$profit_equip = $project->profit_calc_subcontr_equip;
+											}
+										?>
 										<div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
 											<label>{{ $activity->activity_name }}</label>
 											<div class="toggle-content">
@@ -792,7 +787,7 @@ var n = this,
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2"><strong>{{ Tax::find($activity->tax_calc_labor_id)['tax_rate'] }}%</strong></div>
+													<div class="col-md-2"><strong>{{ Tax::find($activity->tax_estimate_labor_id)->tax_rate }}%</strong></div>
 													<div class="col-md-6"></div>
 												</div>
 												<table class="table table-striped" data-id="{{ $activity->id }}">
@@ -876,7 +871,7 @@ var n = this,
 												<div class="row">
 													<div class="col-md-2"><h4>Materiaal</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2"><strong>{{ Tax::find($activity->tax_calc_labor_id)['tax_rate'] }}%</strong></div>
+													<div class="col-md-2"><strong>{{ Tax::find($activity->tax_estimate_material_id)->tax_rate }}%</strong></div>
 													<div class="col-md-2"></div>
 												</div>
 
@@ -903,15 +898,7 @@ var n = this,
 															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->original ? ($material->isset ? $material->set_rate : $material->rate) : $material->set_rate, 2,",",".") }}" class="form-control-sm-number dsavee" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->original ? ($material->isset ? $material->set_amount : $material->amount) : $material->set_amount, 2,",",".") }}" class="form-control-sm-number dsavee" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->original ? ($material->isset ? $material->set_rate * $material->set_amount : $material->rate * $material->amount) : $material->set_rate * $material->set_amount, 2,",",".") }}</span></td>
-															<td class="col-md-1"><span class="total-incl-tax">
-															<?php
-																if (Part::find($activity->part_id)->part_name=='contracting') {
-																	$profit = $project->profit_calc_contr_mat;
-																} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
-																	$profit = $project->profit_calc_subcontr_mat;
-																}
-																echo '&euro; '.number_format(($material->original ? ($material->isset ? $material->set_rate * $material->set_amount : $material->rate * $material->amount) : $material->set_rate * $material->set_amount) *((100+$profit)/100), 2,",",".")
-															?></span></td>
+															<td class="col-md-1"><span class="total-incl-tax">{{ '&euro; '.number_format(($material->original ? ($material->isset ? $material->set_rate * $material->set_amount : $material->rate * $material->amount) : $material->set_rate * $material->set_amount) *((100+$profit_mat)/100), 2,",",".") }}</span></td>
 															<td class="col-md-1 text-right">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-xs fa {{$material->original ? 'btn-warning fa-undo sresetrow' : 'btn-danger fa-times sdeleterow'}}"></button>
@@ -937,24 +924,8 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>
-															<?php
-															if (Part::find($activity->part_id)->part_name=='contracting') {
-																$profit = $project->profit_calc_contr_mat;
-															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
-																$profit = $project->profit_calc_subcontr_mat;
-															}
-															echo '&euro; '.number_format(EstimateRegister::estimMaterialTotal($activity->id, $profit), 2, ",",".");
-															?></span></td>
-															<td class="col-md-1"><strong>
-															<?php
-															if (Part::find($activity->part_id)->part_name=='contracting') {
-																$profit = $project->profit_calc_contr_mat;
-															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
-																$profit = $project->profit_calc_subcontr_mat;
-															}
-															echo '&euro; '.number_format(EstimateRegister::estimMaterialTotalProfit($activity->id, $profit), 2, ",",".");
-															?></span></td>
+															<td class="col-md-1"><strong>{{ '&euro; '.number_format(EstimateRegister::estimMaterialTotal($activity->id, $profit_mat), 2, ",",".") }}</span></td>
+															<td class="col-md-1"><strong>{{ '&euro; '.number_format(EstimateRegister::estimMaterialTotalProfit($activity->id, $profit_mat), 2, ",",".") }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -963,7 +934,7 @@ var n = this,
 												<div class="row">
 													<div class="col-md-2"><h4>Materieel</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2"><strong>{{ Tax::find($activity->tax_calc_labor_id)['tax_rate'] }}%</strong></div>
+													<div class="col-md-2"><strong>{{ Tax::find($activity->tax_estimate_equipment_id)->tax_rate }}%</strong></div>
 													<div class="col-md-8"></div>
 												</div>
 
@@ -990,15 +961,7 @@ var n = this,
 															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($equipment->original ? ($equipment->isset ? $equipment->set_rate : $equipment->rate) : $equipment->set_rate, 2,",",".") }}" class="form-control-sm-number esavee" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($equipment->original ? ($equipment->isset ? $equipment->set_amount : $equipment->amount) : $equipment->set_amount, 2,",",".") }}" class="form-control-sm-number esavee" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->original ? ($equipment->isset ? $equipment->set_rate * $equipment->set_amount : $equipment->rate * $equipment->amount) : $equipment->set_rate * $equipment->set_amount, 2,",",".") }}</span></td>
-															<td class="col-md-1"><span class="total-incl-tax">
-															<?php
-																if (Part::find($activity->part_id)->part_name=='contracting') {
-																	$profit = $project->profit_calc_contr_equip;
-																} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
-																	$profit = $project->profit_calc_subcontr_equip;
-																}
-																echo '&euro; '.number_format(($equipment->original ? ($equipment->isset ? $equipment->set_rate * $equipment->set_amount : $equipment->rate * $equipment->amount) : $equipment->set_rate * $equipment->set_amount)*((100+$profit)/100), 2,",",".")
-															?></span></td>
+															<td class="col-md-1"><span class="total-incl-tax">{{ '&euro; '.number_format(($equipment->original ? ($equipment->isset ? $equipment->set_rate * $equipment->set_amount : $equipment->rate * $equipment->amount) : $equipment->set_rate * $equipment->set_amount)*((100+$profit_equip)/100), 2,",",".") }}</span></td>
 															<td class="col-md-1 text-right">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-xs fa {{$equipment->original ? 'btn-warning fa-undo eresetrow' : 'btn-danger fa-times edeleterow'}}"></button>
@@ -1024,31 +987,15 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>
-															<?php
-															if (Part::find($activity->part_id)->part_name=='contracting') {
-																$profit = $project->profit_calc_contr_equip;
-															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
-																$profit = $project->profit_calc_subcontr_equip;
-															}
-															echo '&euro; '.number_format(EstimateRegister::estimEquipmentTotal($activity->id, $profit), 2, ",",".");
-															?></span></td>
-															<td class="col-md-1"><strong>
-															<?php
-															if (Part::find($activity->part_id)->part_name=='contracting') {
-																$profit = $project->profit_calc_contr_equip;
-															} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
-																$profit = $project->profit_calc_subcontr_equip;
-															}
-															echo '&euro; '.number_format(EstimateRegister::estimEquipmentTotalProfit($activity->id, $profit), 2, ",",".");
-															?></span></td>
+															<td class="col-md-1"><strong>{{ '&euro; '.number_format(EstimateRegister::estimEquipmentTotal($activity->id, $profit_equip), 2, ",",".") }}</span></td>
+															<td class="col-md-1"><strong>{{ '&euro; '.number_format(EstimateRegister::estimEquipmentTotalProfit($activity->id, $profit_equip), 2, ",",".") }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
 												</table>
 											</div>
 										</div>
-										@endforeach
+										<?php } ?>
 									</div>
 								</div>
 							</div>

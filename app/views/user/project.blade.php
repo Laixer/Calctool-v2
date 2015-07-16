@@ -14,11 +14,12 @@
 				<?# -- table head -- ?>
 				<thead>
 					<tr>
-						<th class="col-md-4">Projectnaam</th>
+						<th class="col-md-3">Projectnaam</th>
 						<th class="col-md-2">Opdrachtgever</th>
 						<th class="col-md-1">Type</th>
 						<th class="col-md-3">Adres</th>
 						<th class="col-md-2">Plaats</th>
+						<th class="col-md-1">Status</th>
 					</tr>
 				</thead>
 
@@ -26,11 +27,12 @@
 				<tbody>
 				@foreach (Project::where('user_id','=', Auth::user()->id)->get() as $project)
 					<tr>
-						<td class="col-md-4">{{ HTML::link('/project-'.$project->id.'/edit', $project->project_name) }}</td>
+						<td class="col-md-3">{{ HTML::link('/project-'.$project->id.'/edit', $project->project_name) }}</td>
 						<td class="col-md-2">{{ $project->contactor->company_name }}</td>
 						<td class="col-md-1">{{ $project->type->type_name }}</td>
 						<td class="col-md-3">{{ $project->address_street }}</td>
 						<td class="col-md-2">{{ $project->address_city }}</td>
+						<td class="col-md-1">{{ $project->project_close ? 'Gesloten' : 'Open' }}</td>
 					</tr>
 				@endforeach
 				</tbody>

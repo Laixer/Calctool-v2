@@ -144,7 +144,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 	<section class="container fix-footer-bottom">
 
-		<div class="col-md-12">
+			@include('calc.wizard', array('page' => 'project'))
 
 			@if(Session::get('success'))
 			<div class="alert alert-success">
@@ -163,20 +163,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			</div>
 			@endif
 
-			<div class="wizard">
-			    <a href="/"> Home</a>
-			    <a href="javascript:void(0);" class="current">Project</a>
-			    <a href="/calculation/project-{{ $project->id }}">Calculatie</a>
-			    <a href="/offer/project-{{ $project->id }}">Offerte</a>
-		    	<a href="/estimate/project-{{ $project->id }}">Stelpost</a>
-		  		<a href="/less/project-{{ $project->id }}">Minderwerk</a>
-		  		<a href="/more/project-{{ $project->id }}">Meerwerk</a>
-			    <a href="/invoice/project-{{ $project->id }}">Factuur</a>
-				<a href="/result/project-{{ $project->id }}">Resultaat</a>
-			</div>
-
-			<hr />
-
 			<h2><strong>Project</strong> {{$project->project_name}}</h2>
 
 			@if(!Relation::where('user_id','=', Auth::user()->id)->count())
@@ -188,7 +174,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 			{{ Form::open(array('url' => 'project/update')) }}
 
-				<div class="tabs nomargin-top">
+				<div class="tabs nomargin">
 
 					<?# -- tabs -- ?>
 					<ul class="nav nav-tabs">
@@ -326,7 +312,19 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							</div>
 							<div class="row">
 								<div class="col-md-3">Opdracht ontvangen</div>
-								<div class="col-md-2"><?php if ($offer_last && $offer_last->offer_finish) { echo date('d-m-Y', strtotime($offer_last->offer_finish)); }else{ ?><a href="#" id="dob" data-format="dd-mm-yyyy"></a><?php } ?></div>
+								<div class="col-md-2">
+									<?php
+										if (!CalculationEndresult::totalProject($project)) {
+											echo "Geen offerte bedrag";
+										} else {
+											if ($offer_last && $offer_last->offer_finish) {
+												echo date('d-m-Y', strtotime($offer_last->offer_finish));
+											} else {
+												echo '<a href="#" id="dob" data-format="dd-mm-yyyy"></a>';
+											}
+										}
+									?>
+								</div>
 							</div>
 								<br>
 							<div class="row">
@@ -603,8 +601,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 												<th class="col-md-2">&nbsp;</th>
 												<th class="col-md-4">&nbsp;</th>
 												<th class="col-md-2">&nbsp;</th>
-												<th class="col-md-2">&nbsp;</th>
 												<th class="col-md-2">Geregistreerde uren</th>
+												<th class="col-md-2">&nbsp;</th>
 											</tr>
 										</thead>
 
@@ -615,8 +613,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-4">{{ $activity->activity_name }}</td>
 												<td class="col-md-2">&nbsp;</td>
-												<td class="col-md-2">&nbsp;</td>
 												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-2">&nbsp;</td>
 											</tr>
 											@endforeach
 											@endforeach

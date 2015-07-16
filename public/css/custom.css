@@ -178,6 +178,57 @@ div.toggle-activity > label:hover {
 	display: inline-block;
 	text-decoration: none;
 }
+.wizard span {
+	padding: 10px 20px 10px 37px;
+	margin-right: 5px;
+	background: #E8E8E8;
+	position: relative;
+	display: inline-block;
+	text-decoration: none;
+	color: #666;
+}
+
+.wizard span:before {
+	width: 0;
+	height: 0;
+	border-top: 22px inset transparent;
+	border-bottom: 21px inset transparent;
+	border-left: 20px solid rgba(244,245,247,1);
+	position: absolute;
+	content: "";
+	top: 0;
+	left: 0;
+}
+.wizard span:after {
+	width: 0;
+	height: 0;
+	border-top: 22px inset transparent;
+	border-bottom: 21px inset transparent;
+	border-left: 20px solid #E8E8E8;
+	position: absolute;
+	content: "";
+	top: 0;
+	right: -20px;
+	z-index: 2;
+}
+.wizard span:first-child:before,
+.wizard span:last-child:after {
+	border: none;
+}
+.wizard span:first-child {
+	-webkit-border-radius: 4px 0 0 4px;
+	-moz-border-radius: 4px 0 0 4px;
+	border-radius: 4px 0 0 4px;
+}
+.wizard span:last-child {
+	-webkit-border-radius: 0 4px 4px 0;
+	-moz-border-radius: 0 4px 4px 0;
+	border-radius: 0 4px 4px 0;
+}
+.wizard span:first-child .badge {
+	margin-left: 0;
+}
+
 .wizard a:before {
 	width: 0;
 	height: 0;
@@ -214,11 +265,6 @@ div.toggle-activity > label:hover {
 	-webkit-border-radius: 0 4px 4px 0;
 	-moz-border-radius: 0 4px 4px 0;
 	border-radius: 0 4px 4px 0;
-}
-.wizard .badge {
-	margin: 0 5px 0 18px;
-	position: relative;
-	top: -1px;
 }
 .wizard a:first-child .badge {
 	margin-left: 0;

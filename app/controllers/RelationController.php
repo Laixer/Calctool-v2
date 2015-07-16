@@ -46,7 +46,7 @@ class RelationController extends \BaseController {
 			'btw' => array('alpha_num','min:14'),
 			'telephone_comp' => array('alpha_num','max:12'),
 			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
-			'website' => array('url','max:180'),
+			//'website' => array('url','max:180'),
 			/* Adress */
 			'street' => array('required','alpha','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
@@ -104,11 +104,11 @@ class RelationController extends \BaseController {
 			/* Company */
 			'company_type' => array('required_if:relationkind,zakelijk','numeric'),
 			'company_name' => array('required_if:relationkind,zakelijk','max:50'),
-			'kvk' => array('numeric','min:12'),
-			'btw' => array('alpha_num','min:14'),
-			'telephone_comp' => array('alpha_num','max:12'),
+			//'kvk' => array('numeric','min:12'),
+			//'btw' => array('alpha_num','min:14'),
+			//'telephone_comp' => array('alpha_num','max:12'),
 			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
-			'website' => array('url','max:180'),
+			//'website' => array('url','max:180'),
 			/* Adress */
 			'street' => array('required','alpha','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
@@ -165,8 +165,8 @@ class RelationController extends \BaseController {
 			'id' => array('required','integer'),
 			'contact_name' => array('required','max:50'),
 			'contact_firstname' => array('required','max:30'),
-			'mobile' => array('alpha_num','max:14'),
-			'telephone' => array('alpha_num','max:14'),
+			//'mobile' => array('alpha_num','max:14'),
+			//'telephone' => array('alpha_num','max:14'),
 			'email' => array('required','email','max:80'),
 			'contactfunction' => array('required','numeric'),
 		);
@@ -197,9 +197,9 @@ class RelationController extends \BaseController {
 	public function doUpdateIban()
 	{
 		$rules = array(
-			'id' => array('required','integer'),
-			'iban' => array('alpha_num'),
-			'iban_name' => array('required','max:50')
+			//'id' => array('required','integer'),
+			//'iban' => array('alpha_num'),
+			//'iban_name' => array('required','max:50')
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -223,9 +223,9 @@ class RelationController extends \BaseController {
 	public function doNewIban()
 	{
 		$rules = array(
-			'id' => array('required','integer'),
-			'iban' => array('alpha_num'),
-			'iban_name' => array('required','max:50')
+			//'id' => array('required','integer'),
+			//'iban' => array('alpha_num'),
+			//'iban_name' => array('required','max:50')
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -257,7 +257,7 @@ class RelationController extends \BaseController {
 			'btw' => array('alpha_num','min:14'),
 			'telephone_comp' => array('alpha_num','max:12'),
 			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
-			'website' => array('url','max:180'),
+			//'website' => array('url','max:180'),
 			/* Adress */
 			'street' => array('required','alpha','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
@@ -319,16 +319,16 @@ class RelationController extends \BaseController {
 			/* Company */
 			'company_type' => array('required_if:relationkind,zakelijk','numeric'),
 			'company_name' => array('required_if:relationkind,zakelijk','max:50'),
-			'kvk' => array('numeric','min:12'),
-			'btw' => array('alpha_num','min:14'),
-			'telephone_comp' => array('alpha_num','max:12'),
+			//'kvk' => array('numeric','min:12'),
+			//'btw' => array('alpha_num','min:14'),
+			//'telephone_comp' => array('alpha_num','max:12'),
 			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
-			'website' => array('url','max:180'),
+			//'website' => array('url','max:180'),
 			/* Contact */
 			'contact_name' => array('required','max:50'),
 			'contact_firstname' => array('required','max:30'),
-			'mobile' => array('alpha_num','max:14'),
-			'telephone' => array('alpha_num','max:14'),
+			//'mobile' => array('alpha_num','max:14'),
+			//'telephone' => array('alpha_num','max:14'),
 			'email' => array('required','email','max:80'),
 			'contactfunction' => array('required','numeric'),
 			/* Adress */
@@ -339,8 +339,8 @@ class RelationController extends \BaseController {
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric'),
 			/* Payment */
-			'iban' => array('alpha_num'),
-			'iban_name' => array('required','max:50')
+			//'iban' => array('alpha_num'),
+			//'iban_name' => array('required','max:50')
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -413,8 +413,8 @@ class RelationController extends \BaseController {
 			'id' => array('required','integer'),
 			'contact_name' => array('required','max:50'),
 			'contact_firstname' => array('required','max:30'),
-			'mobile' => array('alpha_num','max:14'),
-			'telephone' => array('alpha_num','max:14'),
+			//'mobile' => array('alpha_num','max:14'),
+			//'telephone' => array('alpha_num','max:14'),
 			'email' => array('required','email','max:80'),
 			'contactfunction' => array('required','numeric'),
 		);

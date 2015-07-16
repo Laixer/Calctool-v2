@@ -11,49 +11,26 @@
 |
 */
 
-Route::get('login', array('before' => 'guest', 'as' => 'login', 'uses' => 'AuthController@getLogin'));
-Route::post('login', array('before' => 'guest', 'uses' => 'AuthController@doLogin'));
-Route::get('register', array('before' => 'guest', 'as' => 'register', 'uses' => 'AuthController@getRegister'));
-Route::post('register', array('before' => 'guest', 'as' => 'register', 'uses' => 'AuthController@doRegister'));
+Route::get('login', function(){ return View::make('auth.login'); });
+Route::post('login', array('before' => 'guest|csrf', 'uses' => 'AuthController@doLogin'));
+Route::get('register', function(){ return View::make('auth.registration'); });
+Route::post('register', array('before' => 'guest|csrf', 'as' => 'register', 'uses' => 'AuthController@doRegister'));
 Route::get('confirm/{api}/{token}', array('before' => 'guest', 'as' => 'register', 'uses' => 'AuthController@doActivate'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
-Route::post('password/reset', array('before' => 'guest', 'as' => 'reset', 'uses' => 'AuthController@doBlockPassword'));
-Route::get('password/{api}/{token}', array('before' => 'guest', 'as' => 'register', 'uses' => 'AuthController@getNewPassword'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
-Route::post('password/{api}/{token}', array('before' => 'guest', 'as' => 'register', 'uses' => 'AuthController@doNewPassword'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
+Route::post('password/reset', array('before' => 'guest|csrf', 'as' => 'reset', 'uses' => 'AuthController@doBlockPassword'));
+Route::get('password/{api}/{token}', function(){ return View::make('auth.password'); })->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
+Route::post('password/{api}/{token}', array('before' => 'guest|csrf', 'as' => 'register', 'uses' => 'AuthController@doNewPassword'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
 
-Route::any('about', function()
-{
-	return View::make('generic.about');
-});
-
-Route::any('support', function()
-{
-	return View::make('generic.contact');
-});
-
-Route::any('faq', function()
-{
-	return View::make('generic.faq');
-});
-
-Route::any('terms-and-conditions', function()
-{
-	return View::make('generic.terms');
-});
-
-Route::any('privacy-policy', function()
-{
-	return View::make('generic.privacy');
-});
-
-Route::any('countdown', function()
-{
-	return View::make('generic.countdown');
-});
+Route::get('about', function() { return View::make('generic.about'); });
+Route::get('support', function() { return View::make('generic.contact'); });
+Route::get('faq', function() { return View::make('generic.faq'); });
+Route::get('terms-and-conditions', function() { return View::make('generic.terms'); });
+Route::get('privacy-policy', function() { return View::make('generic.privacy'); });
+Route::get('countdown', function() { return View::make('generic.countdown'); });
 
 Route::group(array('before' => 'auth'), function()
 {
 	/* Generic pages */
-	Route::get('/', array('uses' => 'HomeController@getHome'));
+	Route::get('/', function(){ return View::make('base.home'); });
 	Route::get('logout', array('as' => 'logout', 'uses' => 'AuthController@doLogout'));
 	Route::get('result/project-{project_id}', array('as' => 'result', 'uses' => 'ResultController@getResult'))->where('project_id', '[0-9]+');
 	Route::get('myaccount', array('as' => 'account', 'uses' => 'UserController@getMyAccount'));
@@ -72,6 +49,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('calculation/estim/newactivity/{chapter_id}', array('as' => 'calculation', 'uses' => 'CalcController@doNewEstimateActivity'))->where('chapter_id', '[0-9]+');
 	Route::post('calculation/updatepart', array('as' => 'calculation', 'uses' => 'CalcController@doUpdatePart'));
 	Route::post('calculation/updatetax', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateTax'));
+	Route::post('calculation/updateestimatetax', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateEstimateTax'));
 	Route::post('calculation/noteactivity', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateNote'));
 	Route::post('calculation/deleteactivity', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteActivity'));
 	Route::post('calculation/deletechapter', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteChapter'));

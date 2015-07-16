@@ -141,21 +141,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 
 	<section class="container printable fix-footer-bottom">
 
-		<div class="col-md-12">
-
-		<div class="wizard">
-			<a href="/"> Home</a>
-			<a href="/project-{{ $project->id }}/edit">Project</a>
-			<a href="/calculation/project-{{ $project->id }}">Calculatie</a>
-			<a href="/offer/project-{{ $project->id }}">Offerte</a>
-			<a href="/estimate/project-{{ $project->id }}">Stelpost</a>
-			<a href="/less/project-{{ $project->id }}">Minderwerk</a>
-			<a href="/more/project-{{ $project->id }}">Meerwerk</a>
-			<a href="/invoice/project-{{ $project->id }}" class="current">Factuur</a>
-			<a href="/result/project-{{ $project->id }}">Resultaat</a>
-		</div>
-
-		<hr />
+		@include('calc.wizard', array('page' => 'invoice'))
 
 		@if(Session::get('success'))
 		<div class="alert alert-success">
@@ -175,9 +161,32 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 		@endif
 
 	<div class="pull-right">
+		@if (!$invoice->invoice_close)
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
-
-		<button class="btn btn-primary osave">Factureren</button>
+		<?php
+		$prev = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->where('priority','<',$invoice->priority)->orderBy('priority', 'desc')->first();
+		$next = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->where('priority','>',$invoice->priority)->orderBy('priority')->first();
+		$end = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',true)->first();
+		if ($prev && $prev->invoice_close && $next && !$next->invoice_close) {
+			echo '<button class="btn btn-primary osave">Factureren</button>';
+		} else if (!$prev && $next && !$next->invoice_close) {
+			echo '<button class="btn btn-primary osave">Factureren</button>';
+		} else if ($prev && $prev->invoice_close && $end && !$end->invoice_close) {
+			echo '<button class="btn btn-primary osave">Factureren</button>';
+		}
+		?>
+		@else
+		<div class="btn-group">
+		  <a target="blank" href="/invoice/pdf/project-{{ $project->id }}/term-invoice-{{ $invoice->id }}" class="btn btn-primary">PDF</a>
+		  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    <span class="caret"></span>
+		    <span class="sr-only">Toggle Dropdown</span>
+		  </button>
+		  <ul class="dropdown-menu">
+		    <li><a href="/invoice/pdf/project-{{ $project->id }}/term-invoice-{{ $invoice->id }}/download?file={{ InvoiceController::getInvoiceCode($project->id).'-invoice.pdf' }}">Download</a></li>
+		  </ul>
+		</div>
+		@endif
 	</div>
 
 	<!-- modal dialog -->
@@ -394,9 +403,32 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 				<div class="col-sm-6 text-right">
 
 					<div class="padding20">
+						@if (!$invoice->invoice_close)
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
-
-						<button class="btn btn-primary osave">Factureren</button>
+						<?php
+						$prev = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->where('priority','<',$invoice->priority)->orderBy('priority', 'desc')->first();
+						$next = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->where('priority','>',$invoice->priority)->orderBy('priority')->first();
+						$end = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',true)->first();
+						if ($prev && $prev->invoice_close && $next && !$next->invoice_close) {
+							echo '<button class="btn btn-primary osave">Factureren</button>';
+						} else if (!$prev && $next && !$next->invoice_close) {
+							echo '<button class="btn btn-primary osave">Factureren</button>';
+						} else if ($prev && $prev->invoice_close && $end && !$end->invoice_close) {
+							echo '<button class="btn btn-primary osave">Factureren</button>';
+						}
+						?>
+						@else
+						<div class="btn-group">
+						  <a target="blank" href="/invoice/pdf/project-{{ $project->id }}/term-invoice-{{ $invoice->id }}" class="btn btn-primary">PDF</a>
+						  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    <span class="caret"></span>
+						    <span class="sr-only">Toggle Dropdown</span>
+						  </button>
+						  <ul class="dropdown-menu">
+						    <li><a href="/invoice/pdf/project-{{ $project->id }}/term-invoice-{{ $invoice->id }}/download?file={{ InvoiceController::getInvoiceCode($project->id).'-invoice.pdf' }}">Download</a></li>
+						  </ul>
+						</div>
+						@endif
 					</div>
 
 				</div>

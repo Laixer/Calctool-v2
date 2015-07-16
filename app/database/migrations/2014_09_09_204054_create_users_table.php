@@ -83,9 +83,9 @@ class CreateUsersTable extends Migration {
 			$table->text('pref_email_invoice_first_demand')->nullable();
 			$table->text('pref_email_invoice_last_demand')->nullable();
 			$table->string('offernumber_prefix', 10)->default('OF');
-			$table->smallinteger('offer_counter')->default(0)->unsigned();
+			$table->smallinteger('offer_counter')->default(1)->unsigned();
 			$table->string('invoicenumber_prefix', 10)->default('FA');
-			$table->smallinteger('invoice_counter')->default(0)->unsigned();
+			$table->smallinteger('invoice_counter')->default(1)->unsigned();
 			$table->decimal('administration_cost', 5, 2)->nullable();
 			$table->rememberToken();
 			$table->nullableTimestamps();

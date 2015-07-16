@@ -5,25 +5,6 @@ use Illuminate\Support\MessageBag;
 class AuthController extends \BaseController {
 
 	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function getLogin()
-	{
-		return View::make('auth.login');
-	}
-
-	public function getRegister()
-	{
-		return View::make('auth.registration');
-	}
-
-	public function getNewPassword()
-	{
-		return View::make('auth.password');
-	}
-	/**
 	 * Show the form for creating a new resource.
 	 *
 	 * @return Route

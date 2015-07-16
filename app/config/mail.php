@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'smarthost@calctool.nl', 'name' => 'Calctool'),
+	'from' => array('address' => 'info@calctool.nl', 'name' => 'Calctool'),
 
 	/*
 	|--------------------------------------------------------------------------

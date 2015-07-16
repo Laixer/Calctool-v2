@@ -189,21 +189,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 
 	<section class="container printable fix-footer-bottom">
 
-		<div class="col-md-12">
-
-		<div class="wizard">
-			<a href="/"> Home</a>
-			<a href="/project-{{ $project->id }}/edit">Project</a>
-			<a href="/calculation/project-{{ $project->id }}">Calculatie</a>
-			<a href="/offer/project-{{ $project->id }}">Offerte</a>
-			<a href="/estimate/project-{{ $project->id }}">Stelpost</a>
-			<a href="/less/project-{{ $project->id }}">Minderwerk</a>
-			<a href="/more/project-{{ $project->id }}">Meerwerk</a>
-			<a href="/invoice/project-{{ $project->id }}" class="current">Factuur</a>
-			<a href="/result/project-{{ $project->id }}">Resultaat</a>
-		</div>
-
-		<hr />
+		@include('calc.wizard', array('page' => 'invoice'))
 
 		@if(Session::get('success'))
 		<div class="alert alert-success">
@@ -243,55 +229,55 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 					<div class="form-horizontal">
 
 						 <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
+						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-tax" type="checkbox" checked> BTW bedragen gespecificeerd weergeven
+						          <input name="toggle-tax" type="checkbox" checked> BTW bedragen weergeven
 						        </label>
 						      </div>
 						    </div>
 						  </div>
 						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
+						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-endresult" type="checkbox"> Alleen eindbedrag weergeven
+						          <input name="toggle-endresult" type="checkbox"> Alleen het totale factuurbedrag weergeven
 						        </label>
 						      </div>
 						    </div>
 						  </div>
 						   <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
+						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-subcontr" type="checkbox"> Onderaanneming gespecificeerd weergeven
+						          <input name="toggle-subcontr" type="checkbox"> Kosten onderaanneming apart weergeven
 						        </label>
 						      </div>
 						    </div>
 						  </div>
 						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
+						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-activity" type="checkbox" checked> Overzicht werkzaamheden weergeven
+						          <input name="toggle-activity" type="checkbox" checked> Hoofdstukken en werkzaamheden weergeven
 						        </label>
 						      </div>
 						    </div>
 						  </div>
 						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
+						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-summary" type="checkbox"> Specificatie overzicht werkzaamheden weergeven
+						          <input name="toggle-summary" type="checkbox"> Kosten werkzaamheden specificeren
 						        </label>
 						      </div>
 						    </div>
 						  </div>
 						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
+						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden opnemen
+						          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden in bijlage weergeven
 						        </label>
 						      </div>
 						    </div>

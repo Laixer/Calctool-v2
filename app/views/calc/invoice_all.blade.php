@@ -48,7 +48,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				if (!isNaN($sint))
 					$total -= $sint;
 			});
-			$('#endterm').html('&euro; '+ $.number($total,2,',','.'));
+			$('#endterm').html($.number($total,2,',','.'));
 		};
 		calcend();
 		<?php
@@ -83,19 +83,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 	<section class="container">
 
-		<div class="col-md-12">
-
-			<div class="wizard">
-				<a href="/"> Home</a>
-				<a href="/project-{{ $project->id }}/edit">Project</a>
-				<a href="/calculation/project-{{ $project->id }}">Calculatie</a>
-				<a href="/offer/project-{{ $project->id }}">Offerte</a>
-				<a href="/estimate/project-{{ $project->id }}">Stelpost</a>
-				<a href="/less/project-{{ $project->id }}">Minderwerk</a>
-				<a href="/more/project-{{ $project->id }}">Meerwerk</a>
-				<a href="/invoice/project-{{ $project->id }}" class="current">Factuur</a>
-				<a href="/result/project-{{ $project->id }}">Resultaat</a>
-			</div>
+		@include('calc.wizard', array('page' => 'invoice'))
 
 			<div class="modal fade" id="codeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
 				<div class="modal-dialog">
@@ -165,15 +153,13 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				</div>
 			</div>
 
-			<hr />
-
 			<h2><strong>Factuurbeheer</strong></h2>
 			<table class="table table-striped">
 				<?# -- table head -- ?>
 				<thead>
 					<tr>
 						<th class="col-md-2">Onderdeel</th>
-						<th class="col-md-2">Factuurbedrag</th>
+						<th class="col-md-2">&euro; Factuurbedrag</th>
 						<th class="col-md-2">Factuurnummer</th>
 						<th class="col-md-2">Administratie</th>
 						<th class="col-md-2">Omschrijving</th>

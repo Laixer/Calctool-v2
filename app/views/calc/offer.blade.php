@@ -196,21 +196,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 	<section class="container printable fix-footer-bottom">
 
-		<div class="col-md-12">
-
-		<div class="wizard">
-			<a href="/"> Home</a>
-			<a href="/project-{{ $project->id }}/edit">Project</a>
-			<a href="/calculation/project-{{ $project->id }}">Calculatie</a>
-			<a href="/offer/project-{{ $project->id }}" class="current">Offerte</a>
-			<a href="/estimate/project-{{ $project->id }}">Stelpost</a>
-			<a href="/less/project-{{ $project->id }}">Minderwerk</a>
-			<a href="/more/project-{{ $project->id }}">Meerwerk</a>
-			<a href="/invoice/project-{{ $project->id }}">Factuur</a>
-			<a href="/result/project-{{ $project->id }}">Resultaat</a>
-		</div>
-
-		<hr />
+		@include('calc.wizard', array('page' => 'offer'))
 
 		@if(!$relation_self)
 		<div class="alert alert-danger">
@@ -277,55 +263,55 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					<div class="form-horizontal">
 
 						 <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
+						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-tax" type="checkbox" checked> BTW bedragen gespecificeerd weergeven
+						          <input name="toggle-tax" type="checkbox" checked> BTW bedragen weergeven
 						        </label>
 						      </div>
 						    </div>
 						  </div>
 						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
+						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-endresult" type="checkbox"> Alleen eindbedrag weergeven
+						          <input name="toggle-endresult" type="checkbox"> Alleen het totale offertebedrag weergeven
 						        </label>
 						      </div>
 						    </div>
 						  </div>
 						   <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
+						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-subcontr" type="checkbox"> Onderaanneming gespecificeerd weergeven
+						          <input name="toggle-subcontr" type="checkbox"> Kosten onderaanneming apart weergeven
 						        </label>
 						      </div>
 						    </div>
 						  </div>
 						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
+						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-activity" type="checkbox" checked> Overzicht werkzaamheden weergeven
+						          <input name="toggle-activity" type="checkbox" checked> Hoofdstukken en werkzaamheden weergeven
 						        </label>
 						      </div>
 						    </div>
 						  </div>
 						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
+						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-summary" type="checkbox"> Specificatie overzicht werkzaamheden weergeven
+						          <input name="toggle-summary" type="checkbox"> Kosten werkzaamheden specificeren
 						        </label>
 						      </div>
 						    </div>
 						  </div>
 						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
+						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden opnemen
+						          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden in bijlage weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -409,7 +395,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<div class="col-md-6">
 									  <div class="form-group">
 									  <label>Aanbetaling</label>
-									    <div class="col-sm-offset-0 col-sm-10">
+									    <div class="col-sm-offset-0 col-sm-12">
 									      <div class="checkbox">
 									        <label>
 									          <input {{ ($offer_last ? ($offer_last->downpayment ? 'checked' : '') : '') }} name="toggle-payment" type="checkbox">
@@ -480,11 +466,15 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<br>
 							<li>{{ $relation->company_name }}</li>
 							<li>t.a.v.
+							@if ($offer_last && $offer_last->offer_finish)
+							{{ Contact::find($offer_last->to_contact_id)->firstname . ' ' . Contact::find($offer_last->to_contact_id)->lastname }}
+							@else
 							<select name="to_contact" id="to_contact">
 								@foreach (Contact::where('relation_id','=',$relation->id)->get() as $contact)
 								<option {{ $offer_last ? ($offer_last->to_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
 								@endforeach
 							</select>
+							@endif
 							</li>
 							<li>{{ $relation->address_street . ' ' . $relation->address_number }}<br /> {{ $relation->address_postal . ', ' . $relation->address_city }}</li>
 						</ul>
@@ -515,7 +505,11 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 				</div>
 
+					@if ($offer_last && $offer_last->offer_finish)
+					{{ $offer_last->description }}
+					@else
 					<textarea name="description" id="description" rows="5" class="form-control">{{ ($offer_last ? $offer_last->description : '') }}</textarea>
+					@endif
 					<br>
 					<div class="show-all" style="display:none;">
 						<h4 class="only-total">Aanneming</h4>
@@ -984,34 +978,50 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						</table>
 					</div>
 
+					@if ($offer_last && $offer_last->offer_finish)
+					{{ $offer_last->closure }}
+					@else
 					<textarea name="closure" id="closure" rows="5" class="form-control">{{ ($offer_last ? $offer_last->closure : '') }}</textarea>
+					@endif
 					<br>
 					<p id="termtext">Indien opdracht gegund wordt, ontvangt u één eindfactuur.</p>
 					<p id="paymenttext"></p>
 
 					<p>Wij kunnen de werkzaamheden starten binnen
+						@if ($offer_last && $offer_last->offer_finish)
+						{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
+						@else
 						<select name="deliver" id="deliver">
 							@foreach (DeliverTime::all() as $deliver)
 							<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
 							@endforeach
 						</select>
+						@endif
 						na uw opdrachtbevestiging.
 					</p>
 
 					<p>Deze offerte is geldig tot
+						@if ($offer_last && $offer_last->offer_finish)
+						{{ Valid::find($offer_last->valid_id)->valid_name }}
+						@else
 						<select name="valid" id="valid">
 							@foreach (Valid::all() as $valid)
 							<option {{ ($offer_last ? ($offer_last->valid_id == $valid->id ? 'selected' : '') : '') }} value="{{ $valid->id }}">{{ $valid->valid_name }}</option>
 							@endforeach
 						</select> na dagtekening.
+						@endif
 					</p>
 
 					<p>Cheers,
+						@if ($offer_last && $offer_last->offer_finish)
+						{{ Contact::find($offer_last->from_contact_id)->firstname . ' ' . Contact::find($offer_last->from_contact_id)->lastname }}
+						@else
 						<select name="from_contact" id="from_contact">
 							@foreach (Contact::where('relation_id','=',$relation_self->id)->get() as $contact)
 							<option {{ $offer_last ? ($offer_last->from_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
 							@endforeach
 						</select>
+						@endif
 					</p>
 
 				</div>
@@ -1370,7 +1380,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				<div class="col-sm-6"></div>
 
 				<div class="col-sm-6">
-					<div class="padding20">
+					<div class="padding20 pull-right">
 						<?php if ($offer_last) { ?>
 						<?php if (!$offer_last->offer_finish) { ?>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>

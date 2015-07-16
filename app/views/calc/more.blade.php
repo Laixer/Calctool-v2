@@ -538,21 +538,7 @@ var n = this,
 
 	<section class="container fix-footer-bottom">
 
-		<div class="col-md-12">
-
-			<div class="wizard">
-				<a href="/"> Home</a>
-				<a href="/project-{{ $project->id }}/edit">Project</a>
-				<a href="/calculation/project-{{ $project->id }}">Calculatie</a>
-				<a href="/offer/project-{{ $project->id }}">Offerte</a>
-				<a href="/estimate/project-{{ $project->id }}">Stelpost</a>
-				<a href="/less/project-{{ $project->id }}">Minderwerk</a>
-				<a href="javascript:void(0);" class="current">Meerwerk</a>
-				<a href="/invoice/project-{{ $project->id }}">Factuur</a>
-				<a href="/result/project-{{ $project->id }}">Resultaat</a>
-			</div>
-
-			<hr />
+		@include('calc.wizard', array('page' => 'more'))
 
 			<h2><strong>Meerwerk</strong></h2>
 
@@ -678,7 +664,7 @@ var n = this,
 														<tr {{ $labor ? ('data-id="'.$labor->id.'"') : '' }} >
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">{{ $labor ? number_format($project->hour_rate_more, 2,",",".") : '' }}</td>
+															<td class="col-md-1">{{ number_format($project->hour_rate_more, 2,",",".") }}</td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ $labor ? number_format($labor->amount, 2, ",",".") : '' }}" class="form-control-sm-number labor-amount lsave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ $labor ? ('&euro; '.number_format(MoreRegister::laborTotal($labor->rate, $labor->amount, 2, ",","."))) : '' }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
@@ -890,9 +876,6 @@ var n = this,
 													<button class="btn btn-primary btn-primary-activity">Voeg toe</button>
 												</span>
 											</div>
-										</div>
-										<div class="col-md-6 text-right">
-											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Verwijderen</button>
 										</div>
 									</div>
 									{{ Form::close() }}
