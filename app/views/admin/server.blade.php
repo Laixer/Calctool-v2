@@ -65,6 +65,7 @@ function convert($size) {
 			<div class="white-row">
 				<h4>Omgevingsvariabelen</h4>
 				@foreach ($envvars[0] as $envkey => $envval)
+				<?php if (strpos($envkey,'PASSWORD') !== false) continue; ?>
 				<div class="row">
 					<div class="col-md-2">{{ $envkey }}</div>
 					<div class="col-md-4">{{ $envval }}</div>
