@@ -22,13 +22,13 @@ return array(
 
 		'pgsql' => array(
 			'driver'   => 'pgsql',
-			'host'     => 'localhost',
-			'database' => 'calctool',
-			'username' => 'calctool',
-			'password' => 'q',
+			'host'     => $_ENV['DB_HOST'],
+			'database' => $_ENV['DB_NAME'],
+			'username' => $_ENV['DB_USERNAME'],
+			'password' => $_ENV['DB_PASSWORD'],
 			'charset'  => 'utf8',
 			'prefix'   => '',
-			'schema'   => 'public',
+			'schema'   => $_ENV['DB_SCHEMA'],
 		),
 
 	),
@@ -49,9 +49,9 @@ return array(
 		'cluster' => false,
 
 		'default' => array(
-			'host'     => '127.0.0.1',
-			'port'     => 6379,
-			'database' => 0,
+			'host'     => $_ENV['RDS_HOST'],
+			'port'     => $_ENV['RDS_PORT'],
+			'database' => $_ENV['RDS_DATABASE'],
 		),
 
 	),

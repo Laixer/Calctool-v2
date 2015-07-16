@@ -9,8 +9,8 @@ return array(
 	 *
 	 */
 	'from' => array(
-		'address' => 'info@calctool.nl',
-		'name' => 'Calctool'
+		'address' => $_ENV['MGUN_ADDRESS'],
+		'name' => $_ENV['MGUN_NAME'],
 	),
 
 
@@ -18,26 +18,26 @@ return array(
 	 * Global reply-to e-mail address
 	 *
 	 */
-	'reply_to' => 'info@calctool.nl',
+	'reply_to' => $_ENV['MGUN_ADDRESS'],
 
 
 	/**
 	 * Mailgun (private) API key
 	 *
 	 */
-	'api_key' => 'key-939dcd2afaf30eb9dabf874c47c6de50',
+	'api_key' => $_ENV['MGUN_API'],
 
 	/**
 	 * Mailgun public API key
 	 *
 	 */
-	'public_api_key' => 'pubkey-5ad82f40a86568d0b05fbd5e1cd21b70',
+	'public_api_key' => $_ENV['MGUN_PUBLIC_API'],
 
 	/**
 	 * Domain name registered with Mailgun
 	 *
 	 */
-	'domain' => 'mail.calctool.nl',
+	'domain' => $_ENV['MGUN_DOMAIN'],
 
 	/**
 	 * Force the from address

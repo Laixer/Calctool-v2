@@ -4,13 +4,13 @@ return array(
 
 	'pdf' => array(
 		'enabled' => true,
-		'binary' => '/usr/local/bin/wkhtmltopdf',
+		'binary' => $_ENV['WKHTML_PDF_BIN'],
 		'timeout' => false,
 		'options' => array(),
 	),
 	'image' => array(
 		'enabled' => true,
-		'binary' => '/usr/local/bin/wkhtmltoimage',
+		'binary' => $_ENV['WKHTML_IMG_BIN'],
 		'timeout' => false,
 		'options' => array(),
 	),
