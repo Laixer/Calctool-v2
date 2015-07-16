@@ -138,7 +138,7 @@ class UserController extends \BaseController {
 			$expdate = $user->expiration_date;
 			$user->expiration_date = date('Y-m-d', strtotime("+".$order->increment." month", strtotime($expdate)));
 
-			$data = array('amount' => number_format($order->amount, 2,",","."), 'expdate' => date('j F Y', strtotime($user->expiration_date)), 'username' => $user->username);
+			$data = array('email' => $user->email, 'amount' => number_format($order->amount, 2,",","."), 'expdate' => date('j F Y', strtotime($user->expiration_date)), 'username' => $user->username);
 			Mailgun::send('mail.paid', $data, function($message) use ($data) {
 				$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Abonement verlengt');
 			});
