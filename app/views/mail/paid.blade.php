@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<title>Calctool.nl - Wachtwoord aangepast</title>
+		<title>CalcTool.nl - Abonement verlengt</title>
 	</head>
 
 	<body style="margin:0; margin-top:30px; margin-bottom:30px; padding:0; width:100%; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; background-color: #F4F5F7;">
@@ -51,7 +51,8 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Het wachtwoord van je account voor de<strong>CalcTool.nl</strong> is aangepast.
+														Betaling van {{ $amount }} ontvangen.
+														Account verlengt tot {{ $expdate }}
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->
@@ -59,10 +60,10 @@
 												</tr>
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
-														Indien je geen verzoek hebt ingediend voor het resetten van je wachtwoord kan je deze mail beschouwen als niet verzonden.
+														Indien je geen wijzigingen hebt doorgevoerd in je betalingsgegevens kan je deze mail beschouwen als niet verzonden.
 														<br>
 														<br>
-															Met vriendelijke groet,
+															Hartelijk dank,
 														<br>
 														<br>
 															<strong>Cal</strong>, van de <a href="https://calctool.nl"><strong>CalcTool.nl</strong></a>
