@@ -29,7 +29,7 @@ return array(
 	'RDS_HOST'			=> '',
 	'RDS_PORT'			=> 0,
 	'RDS_DATABASE'		=> 0,
-
+	'RDS_PASSWORD'		=> '',
 
 	/* Mollie keys */
 	'MOLLIE_TEST_API'	=> '',

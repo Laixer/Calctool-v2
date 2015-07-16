@@ -22,13 +22,13 @@ return array(
 
 		'pgsql' => array(
 			'driver'   => 'pgsql',
-			'host'     => 'localhost',
-			'database' => 'calctoolv2',
-			'username' => 'user_laravel',
-			'password' => '1aSdk0AFe2bzz67f3uUHiBhscwCUc5t4VvXKox74',
+			'host'     => $_ENV['DB_HOST'],
+			'database' => $_ENV['DB_NAME'],
+			'username' => $_ENV['DB_USERNAME'],
+			'password' => $_ENV['DB_PASSWORD'],
 			'charset'  => 'utf8',
 			'prefix'   => '',
-			'schema'   => 'public',
+			'schema'   => $_ENV['DB_SCHEMA'],
 		),
 
 	),
@@ -49,10 +49,10 @@ return array(
 		'cluster' => false,
 
 		'default' => array(
-			'host'     => '127.0.0.1',
-			'port'     => 6379,
-			'database' => 0,
-			'password' => 'dz85yh5iwc75u0ikuejrqpuz5kj4c0ap',
+			'host'     => $_ENV['RDS_HOST'],
+			'port'     => $_ENV['RDS_PORT'],
+			'database' => $_ENV['RDS_DATABASE'],
+			'password' => $_ENV['RDS_PASSWORD'],
 		),
 
 	),
