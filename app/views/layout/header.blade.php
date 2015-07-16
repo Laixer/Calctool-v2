@@ -24,9 +24,11 @@
 					<li>
 						{{ HTML::link('help', 'Help') }}
 					</li>
+					@if (Auth::check())
 					<li>
 						{{ HTML::link('myaccount', 'Mijn account') }}
 					</li>
+					@endif
 					<li>
 						{{ HTML::link('about', 'Over ons') }}
 					</li>
