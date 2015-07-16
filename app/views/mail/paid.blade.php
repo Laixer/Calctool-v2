@@ -51,8 +51,8 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Betaling van {{ $amount }} ontvangen.
-														Account verlengt tot {{ $expdate }}
+														Betaling van {{ $amount }} is ontvangen.
+														Uw accountis verlengt tot {{ $expdate }}
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->
@@ -60,10 +60,9 @@
 												</tr>
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
-														Indien je geen wijzigingen hebt doorgevoerd in je betalingsgegevens kan je deze mail beschouwen als niet verzonden.
 														<br>
 														<br>
-															Hartelijk dank,
+															Met vriendelijke groet,
 														<br>
 														<br>
 															<strong>Cal</strong>, van de <a href="https://calctool.nl"><strong>CalcTool.nl</strong></a>

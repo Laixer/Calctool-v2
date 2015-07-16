@@ -161,7 +161,7 @@ class UserController extends \BaseController {
 
 		$payment = $mollie->payments->get($order->transaction);
 		if ($payment->isPaid()) {
-			return Redirect::to('myaccount')->with('success','Bedankt voor je knake');
+			return Redirect::to('myaccount')->with('success','Bedankt voor uw betaling');
 		} else if ($payment->isOpen() || $payment->isPending()) {
 			return Redirect::to('myaccount')->with('success','Betaling is nog niet bevestigd, dit kan enkele dagen duren');
 		} else if ($payment->isCancelled()) {
