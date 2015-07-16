@@ -31,7 +31,7 @@ return array(
 	 * Mailgun public API key
 	 *
 	 */
-	'public_api_key' => '',
+	'public_api_key' => 'pubkey-5ad82f40a86568d0b05fbd5e1cd21b70',
 
 	/**
 	 * Domain name registered with Mailgun

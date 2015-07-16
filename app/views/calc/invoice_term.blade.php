@@ -161,18 +161,20 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 		@endif
 
 	<div class="pull-right">
-		@if (!$invoice->invoice_close && !$project->project_close)
+		@if (!$invoice->invoice_close)
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 		<?php
-		$prev = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->where('priority','<',$invoice->priority)->orderBy('priority', 'desc')->first();
-		$next = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->where('priority','>',$invoice->priority)->orderBy('priority')->first();
-		$end = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',true)->first();
-		if ($prev && $prev->invoice_close && $next && !$next->invoice_close) {
-			echo '<button class="btn btn-primary osave">Factureren</button>';
-		} else if (!$prev && $next && !$next->invoice_close) {
-			echo '<button class="btn btn-primary osave">Factureren</button>';
-		} else if ($prev && $prev->invoice_close && $end && !$end->invoice_close) {
-			echo '<button class="btn btn-primary osave">Factureren</button>';
+		if (!$project->project_close) {
+			$prev = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->where('priority','<',$invoice->priority)->orderBy('priority', 'desc')->first();
+			$next = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->where('priority','>',$invoice->priority)->orderBy('priority')->first();
+			$end = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',true)->first();
+			if ($prev && $prev->invoice_close && $next && !$next->invoice_close) {
+				echo '<button class="btn btn-primary osave">Factureren</button>';
+			} else if (!$prev && $next && !$next->invoice_close) {
+				echo '<button class="btn btn-primary osave">Factureren</button>';
+			} else if ($prev && $prev->invoice_close && $end && !$end->invoice_close) {
+				echo '<button class="btn btn-primary osave">Factureren</button>';
+			}
 		}
 		?>
 		@else
@@ -403,18 +405,20 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 				<div class="col-sm-6 text-right">
 
 					<div class="padding20">
-						@if (!$invoice->invoice_close && !$project->project_close)
+						@if (!$invoice->invoice_close)
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 						<?php
-						$prev = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->where('priority','<',$invoice->priority)->orderBy('priority', 'desc')->first();
-						$next = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->where('priority','>',$invoice->priority)->orderBy('priority')->first();
-						$end = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',true)->first();
-						if ($prev && $prev->invoice_close && $next && !$next->invoice_close) {
-							echo '<button class="btn btn-primary osave">Factureren</button>';
-						} else if (!$prev && $next && !$next->invoice_close) {
-							echo '<button class="btn btn-primary osave">Factureren</button>';
-						} else if ($prev && $prev->invoice_close && $end && !$end->invoice_close) {
-							echo '<button class="btn btn-primary osave">Factureren</button>';
+						if (!$project->project_close) {
+							$prev = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->where('priority','<',$invoice->priority)->orderBy('priority', 'desc')->first();
+							$next = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->where('priority','>',$invoice->priority)->orderBy('priority')->first();
+							$end = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',true)->first();
+							if ($prev && $prev->invoice_close && $next && !$next->invoice_close) {
+								echo '<button class="btn btn-primary osave">Factureren</button>';
+							} else if (!$prev && $next && !$next->invoice_close) {
+								echo '<button class="btn btn-primary osave">Factureren</button>';
+							} else if ($prev && $prev->invoice_close && $end && !$end->invoice_close) {
+								echo '<button class="btn btn-primary osave">Factureren</button>';
+							}
 						}
 						?>
 						@else
