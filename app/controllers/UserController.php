@@ -72,6 +72,11 @@ class UserController extends \BaseController {
 					$description = 'Verleng met 12 maanden';
 					$increment_months = 12;
 					break;
+				case 13:
+					$amount = 1.95;
+					$description = 'Kaasbetaling';
+					$increment_months = 1;
+					break;
 				default:
 					$errors = new MessageBag(['status' => ['Geen geldige optie']]);
 					return Redirect::to('myaccount')->withErrors($errors);
@@ -118,6 +123,12 @@ class UserController extends \BaseController {
 		$mollie->setApiKey("test_GgXY6mWGW56AAfgC6NDBDXf4bCMfpz");
 
 		$payment = $mollie->payments->get($order->transaction);
+		if ($payment->metadata->token != $order->token)
+			return;
+
+		if ($payment->metadata->uid != $order->user_id)
+			return;
+
 		$order->status = $payment->status;
 		$order->method = $payment->method;
 		$order->save();
@@ -143,27 +154,13 @@ class UserController extends \BaseController {
 		$mollie->setApiKey("test_GgXY6mWGW56AAfgC6NDBDXf4bCMfpz");
 
 		$payment = $mollie->payments->get($order->transaction);
-		print_r($payment); exit();
-		$order->status = $payment->status;
-		$order->method = $payment->method;
-		$order->save();
-
-
 		if ($payment->isPaid()) {
-
-
-		} elseif (!$payment->isOpen()) {
-			print_r($payment); exit();
-			$errors = new MessageBag(['status' => ['Transactie niet afgerond']]);
-			return Redirect::to('myaccount')->withErrors($errors);
+			return Redirect::to('myaccount')->with('success','Bedankt voor je knake');
+		} elseif ($payment->isOpen() || $payment->isPending()) {
+			return Redirect::to('myaccount')->with('success','Betaling is nog niet bevestigd, dit kan enkele dagen duren');
 		}
-		$user = Auth::user();
-		$expdate = $user->expiration_date;
-		$user->expiration_date = date('Y-m-d', strtotime("+".$order->increment." month", strtotime($expdate)));
-
-		$user->save();
-print_r($payment); exit();
-		return Redirect::to('myaccount')->with('success','Betaald');
+		$errors = new MessageBag(['status' => ['Transactie niet afgerond ('.$payment->status.')']]);
+		return Redirect::to('myaccount')->withErrors($errors);
 	}
 
 	public function doUpdateSecurity()

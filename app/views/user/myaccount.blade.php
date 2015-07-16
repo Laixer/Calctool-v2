@@ -51,7 +51,7 @@ $(document).ready(function() {
 			@if(Session::get('success'))
 			<div class="alert alert-success">
 				<i class="fa fa-check-circle"></i>
-				<strong>Opgeslagen</strong>
+				<strong>{{ Session::get('success') }}</strong>
 			</div>
 			@endif
 
