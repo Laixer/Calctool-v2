@@ -51,7 +51,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Je hebt je zojuist succesvol geregistreerd voor een gebruikersaccount van de <strong>CalculatieTool</strong>.
+														Je hebt je zojuist succesvol geregistreerd voor een gebruikersaccount van de <strong>CalcuTool.nl</strong>.
 
 														Klik hieronder op bevestigingsknop om uw gratis account te activeren.
 													</td>
@@ -73,10 +73,10 @@
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
 														<br>
-															Je wordt na de bevestiging direct doorgestuurd naar de <strong>CalculatieTool</strong> en kunt 30 dagen lang gebruikmaken van alles wat de <strong>CalculatieTool</strong> te bieden heeft. Zonder restricties, afgeschermde delen of verborgen kosten.
+															Je wordt na de bevestiging direct doorgestuurd naar de <strong>CalcTool.nl</strong> en kunt 30 dagen lang gebruikmaken van alles wat de <strong>CalcTool.nl</strong> te bieden heeft. Zonder restricties, afgeschermde delen of verborgen kosten.
 														<br>
 														<br>
-															Hartelijk dank,
+															Met vriendelijke groet,
 														<br>
 														<br>
 															<strong>Cal</strong>, van de <a href="https://calctool.nl"><strong>CalculatieTool</strong></a>

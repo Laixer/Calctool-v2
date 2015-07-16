@@ -50,7 +50,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       <div class="openingtext">Geachte</div>
       <div class="openingtext">{{ ($offer_last ? $offer_last->description : '') }}</div>
 
-      <h1 class="name">totalkosten project</h1>
+      <h1 class="name">Totaalkosten project</h1>
       @if ($total)
       <table border="0" cellspacing="0" cellpadding="0">
         <thead>
@@ -275,7 +275,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty">&nbsp;</td>
           </tr>
           <tr style="page-break-after: always;">
-            <td class="no"><strong>total Aanneming </strong></td>
+            <td class="no"><strong>Totaal Aanneming </strong></td>
             <td class="desc">&nbsp;</td>
             <td class="unit"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
             <td class="qty">&nbsp;</td>
@@ -469,7 +469,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         </div>
     </header>
 
-     <h1 class="name">totalkosten per werkzaamheid</h1>
+     <h1 class="name">Totaalkosten per werkzaamheid</h1>
      <table border="0" cellspacing="0" cellpadding="0">
         <thead>
           <tr style="page-break-after: always;">

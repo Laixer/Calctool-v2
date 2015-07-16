@@ -62,7 +62,7 @@
 														Indien je geen wijzigingen hebt doorgevoerd in je betalingsgegevens kan je deze mail beschouwen als niet verzonden.
 														<br>
 														<br>
-															Hartelijk dank,
+															Met vriendelijke groet,
 														<br>
 														<br>
 															<strong>Cal</strong>, van de <a href="https://calctool.nl"><strong>CalcTool.nl</strong></a>
