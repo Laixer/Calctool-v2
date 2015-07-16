@@ -781,9 +781,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
     @endif
      <!--INCLUDE TERM END-->
 
-    @endif
-    <!--CON & SUBCONTR END-->
-
     <div class="closingtext">{{ ($offer_last ? $offer_last->closure : '') }}</div>
 
     <h1 class="name">Bepalingen</h1>
@@ -798,28 +795,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
     Deze offerte is op de computer gegenereerd en is geldig zonder handtekening.
   </footer>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  @endif
+  <!--CON & SUBCONTR END-->
 
 
 
@@ -856,12 +833,11 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <th class="unit">Materiaal</th>
           <th class="qty">Materieel</th>
           <th class="qty">total</th>
-          <th class="total">Stelpost</th>
         </tr>
       </thead>
       <tbody>
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-        @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+        @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->whereNull('detail_id')->get() as $activity)
         <tr><!-- item -->
           <td class="no"><strong>{{ $chapter->chapter_name }}</strong></td>
           <td class="desc">{{ $activity->activity_name }}</td>
@@ -870,12 +846,11 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="unit"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-          <td class="total text-center ($activity)"></td>
         </tr>
         @endforeach
         @endforeach
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-        @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+        @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->whereNull('detail_id')->get() as $activity)
         <tr><!-- item -->
           <td class="no"><strong>{{ $chapter->chapter_name }}</strong></td>
           <td class="desc">{{ $activity->activity_name }}</td>
@@ -884,12 +859,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="unit"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
-          <td class="total text-center">
-          <?php
-            if (PartType::find($activity->part_type_id)->type_name=='estimate') {
-              echo "<strong>Ja</strong>";
-            }
-          ?>
           </td>
         </tr>
         @endforeach
@@ -900,21 +869,21 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
-          <th class="no">&nbsp;</th>
-          <th class="desc">&nbsp;</th>
-          <th class="no">Arbeidsuren</th>
-          <th class="desc">Arbeid</th>
-          <th class="unit">Materiaal</th>
+          <th class="qty">&nbsp;</th>
+          <th class="qty">&nbsp;</th>
+          <th class="qty">Arbeidsuren</th>
+          <th class="qty">Arbeid</th>
+          <th class="qty">Materiaal</th>
           <th class="qty">Materieel</th>
           <th class="qty">total</th>
         </tr>
       </thead>
       <tbody>
-        <td class="no">&nbsp;</td>
-        <td class="desc">&nbsp;</td>
-        <td class="no"><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>
-        <td class="desc"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
-        <td class="unit"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
+        <td class="qty">&nbsp;</td>
+        <td class="qty">&nbsp;</td>
+        <td class="qty"><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>
+        <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
+        <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
         <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
         <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
       </tbody>
@@ -940,19 +909,22 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
      <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
-          <th class="no">Hoofdstuk</th>
-          <th class="desc">Werkzaamheid</th>
-          <th class="no">Arbeidsuren</th>
-          <th class="desc">Arbeid</th>
-          <th class="unit">Materiaal</th>
+          <th class="qty">Hoofdstuk</th>
+          <th class="qty">Werkzaamheid</th>
+          <th class="qty">Arbeidsuren</th>
+          <th class="qty">Arbeid</th>
+          <th class="qty">Materiaal</th>
           <th class="qty">Materieel</th>
           <th class="qty">total</th>
-          <th class="total">Stelpost</th>
         </tr>
       </thead>
       <tbody>
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
         @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+        <?php
+          if (!EstimateOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip))
+            continue;
+        ?>
         <tr><!-- item -->
           <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
           <td class="qty">{{ $activity->activity_name }}</td>
@@ -961,12 +933,15 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-          <td class="qty"></td>
         </tr>
         @endforeach
         @endforeach
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
         @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+        <?php
+          if (!EstimateOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip))
+            continue;
+        ?>
         <tr><!-- item -->
           <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
           <td class="qty">{{ $activity->activity_name }}</td>
@@ -975,7 +950,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
-          <td class="qty"></td>
         </tr>
         @endforeach
         @endforeach
@@ -985,11 +959,11 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
      <table border="0" cellspacing="0" cellpadding="0">
         <thead>
           <tr style="page-break-after: always;">
-            <th class="no">&nbsp;</th>
-            <th class="desc">&nbsp;</th>
-            <th class="no">Arbeidsuren</th>
-            <th class="desc">Arbeid</th>
-            <th class="unit">Materiaal</th>
+            <th class="qty">&nbsp;</th>
+            <th class="qty">&nbsp;</th>
+            <th class="qty">Arbeidsuren</th>
+            <th class="qty">Arbeid</th>
+            <th class="qty">Materiaal</th>
             <th class="qty">Materieel</th>
             <th class="qty">total</th>
           </tr>
@@ -1002,7 +976,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::superTotal($project), 2, ",",".") }}</span></td>
-            <td class="qty">&nbsp;</td>
         </tbody>
       </table>
     <!--ESTIMATE TOTAL END-->
@@ -1033,12 +1006,15 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <th class="unit">Materiaal</th>
           <th class="qty">Materieel</th>
           <th class="qty">total</th>
-          <th class="total">Stelpost</th>
         </tr>
       </thead>
       <tbody>
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
         @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+        <?php
+          if (!LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip))
+            continue;
+        ?>
         <tr><!-- item -->
           <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
           <td class="qty">{{ $activity->activity_name }}</td>
@@ -1047,12 +1023,15 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-          <td class="qty"></td>
         </tr>
         @endforeach
         @endforeach
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
         @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+        <?php
+          if (!LessOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip))
+            continue;
+        ?>
         <tr><!-- item -->
           <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
           <td class="qty">{{ $activity->activity_name }}</td>
@@ -1061,7 +1040,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
-          <td class="qty"></td>
         </tr>
         @endforeach
         @endforeach
@@ -1088,7 +1066,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::superTotal($project), 2, ",",".") }}</span></td>
-            <td class="qty">&nbsp;</td>
         </tbody>
       </table>
     <!--LESS TOTAL END-->
@@ -1123,7 +1100,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       </thead>
       <tbody>
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-        @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+        @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
         <tr><!-- item -->
           <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
           <td class="qty">{{ $activity->activity_name }}</td>
@@ -1136,7 +1113,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         @endforeach
         @endforeach
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-        @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+        @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
         <tr><!-- item -->
           <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
           <td class="qty">{{ $activity->activity_name }}</td>
@@ -1171,7 +1148,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::superTotal($project), 2, ",",".") }}</span></td>
-            <td class="qty">&nbsp;</td>
         </tbody>
       </table>
     <!--MORE TOTAL END-->
@@ -1207,12 +1183,11 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <th class="unit">Materiaal</th>
           <th class="qty">Materieel</th>
           <th class="qty">total</th>
-          <th class="total">Stelpost</th>
         </tr>
       </thead>
       <tbody>
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-        @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->get() as $activity)
+        @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->whereNull('detail_id')->get() as $activity)
         <tr><!-- item -->
           <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
           <td class="qty">{{ $activity->activity_name }}</td>
@@ -1221,7 +1196,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-          <td class="qty"></td>
         </tr>
         @endforeach
         @endforeach
@@ -1233,7 +1207,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
           <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
           <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
-          <th class="qty">&nbsp;</th>
         </tr>
       </table>
      <h2 class="name">Onderaanneming</h2>
@@ -1247,12 +1220,11 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <th class="unit">Materiaal</th>
             <th class="qty">Materieel</th>
             <th class="qty">total</th>
-            <th class="total">Stelpost</th>
           </tr>
         </thead>
         <tbody>
           @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-          @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->get() as $activity)
+          @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->whereNull('detail_id')->get() as $activity)
           <tr><!-- item -->
             <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
             <td class="qty">{{ $activity->activity_name }}</td>
@@ -1261,7 +1233,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
-            <td class="qty"></td>
           </tr>
           @endforeach
           @endforeach
@@ -1273,7 +1244,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
             <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
             <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
-            <th class="qty">&nbsp;</th>
           </tr>
         </tbody>
      </table>
@@ -1288,7 +1258,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <th class="unit">Materiaal</th>
             <th class="qty">Materieel</th>
             <th class="qty">total</th>
-            <th class="total">&nbsp;</th>
           </tr>
         </thead>
         <tbody>
@@ -1300,7 +1269,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
-            <td class="qty">&nbsp;</td>
           </tr>
       </table>
       <!--CALCULATION CONT & SUBCONT END-->
@@ -1332,12 +1300,15 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <th class="unit">Materiaal</th>
             <th class="qty">Materieel</th>
             <th class="qty">total</th>
-            <th class="total">Stelpost</th>
           </tr>
         </thead>
         <tbody>
           @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
           @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+          <?php
+            if (!EstimateOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip))
+              continue;
+          ?>
           <tr><!-- item -->
             <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
             <td class="qty">{{ $activity->activity_name }}</td>
@@ -1346,7 +1317,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-            <td class="qty"></td>
           </tr>
           @endforeach
           @endforeach
@@ -1358,7 +1328,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
             <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
             <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
-            <th class="qty">&nbsp;</th>
           </tr>
         </tbody>
       </table>
@@ -1373,12 +1342,15 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <th class="unit">Materiaal</th>
             <th class="qty">Materieel</th>
             <th class="qty">total</th>
-            <th class="total">Stelpost</th>
           </tr>
         </thead>
         <tbody>
           @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
           @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+          <?php
+            if (!EstimateOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip))
+              continue;
+          ?>
           <tr><!-- item -->
             <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
             <td class="qty">{{ $activity->activity_name }}</td>
@@ -1387,7 +1359,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
-            <td class="qty"></td>
           </tr>
           @endforeach
           @endforeach
@@ -1398,7 +1369,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
             <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
             <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
-            <th class="qty">&nbsp;</th>
           </tr>
         </tbody>
      </table>
@@ -1413,7 +1383,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <th class="unit">Materiaal</th>
             <th class="qty">Materieel</th>
             <th class="qty">total</th>
-            <th class="total">&nbsp;</th>
           </tr>
         </thead>
         <tbody>
@@ -1425,7 +1394,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::superTotal($project), 2, ",",".") }}</span></td>
-            <td class="qty">&nbsp;</td>
           </tr>
       </table>
       <!--ESTIMATE CONT & SUBCOINT END-->
@@ -1457,12 +1425,15 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <th class="unit">Materiaal</th>
             <th class="qty">Materieel</th>
             <th class="qty">total</th>
-            <th class="total">Stelpost</th>
           </tr>
         </thead>
         <tbody>
           @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
           @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+          <?php
+            if (!LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip))
+              continue;
+          ?>
           <tr><!-- item -->
             <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
             <td class="qty">{{ $activity->activity_name }}</td>
@@ -1471,7 +1442,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-            <td class="qty"></td>
           </tr>
           @endforeach
           @endforeach
@@ -1483,7 +1453,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
             <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
             <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
-            <td class="qty">&nbsp;</td>
           </tr>
         </tbody>
      </table>
@@ -1498,12 +1467,15 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <th class="unit">Materiaal</th>
             <th class="qty">Materieel</th>
             <th class="qty">total</th>
-            <th class="total">Stelpost</th>
           </tr>
         </thead>
         <tbody>
           @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
           @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+          <?php
+            if (!LessOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip))
+              continue;
+          ?>
           <tr><!-- item -->
             <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
             <td class="qty">{{ $activity->activity_name }}</td>
@@ -1512,7 +1484,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
-            <td class="qty"></td>
           </tr>
           @endforeach
           @endforeach
@@ -1523,7 +1494,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
             <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
             <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
-            <td class="qty">&nbsp;</td>
           </tr>
         </tbody>
      </table>
@@ -1538,7 +1508,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <th class="unit">Materiaal</th>
             <th class="qty">Materieel</th>
             <th class="qty">total</th>
-            <th class="total">&nbsp;</th>
           </tr>
         </thead>
         <tbody>
@@ -1550,7 +1519,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::superTotal($project), 2, ",",".") }}</span></td>
-            <td class="qty">&nbsp;</td>
           </tr>
       </table>
       <!--LESS CONT & SUBCOINT END-->
@@ -1582,12 +1550,11 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <th class="unit">Materiaal</th>
             <th class="qty">Materieel</th>
             <th class="qty">total</th>
-            <th class="total">Stelpost</th>
           </tr>
         </thead>
         <tbody>
           @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-          @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+          @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
           <tr><!-- item -->
             <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
             <td class="qty">{{ $activity->activity_name }}</td>
@@ -1596,7 +1563,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(MoreOverview::materialActivityProfit($activity, $project->profit_more_contr_mat), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::equipmentActivityProfit($activity, $project->profit_more_contr_equip), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::activityTotalProfit($activity, $project->profit_more_contr_mat, $project->profit_more_contr_equip), 2, ",",".") }} </td>
-            <td class="qty"></td>
           </tr>
           @endforeach
           @endforeach
@@ -1608,7 +1574,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
             <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
             <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
-            <th class="qty">&nbsp;</th>
           </tr>
         </tbody>
      </table>
@@ -1623,12 +1588,11 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <th class="unit">Materiaal</th>
             <th class="qty">Materieel</th>
             <th class="qty">total</th>
-            <th class="total">Stelpost</th>
           </tr>
         </thead>
         <tbody>
           @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-          @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+          @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
           <tr><!-- item -->
             <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
             <td class="qty">{{ $activity->activity_name }}</td>
@@ -1637,7 +1601,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(MoreOverview::materialActivityProfit($activity, $project->profit_more_subcontr_mat), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::equipmentActivityProfit($activity, $project->profit_more_subcontr_equip), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::activityTotalProfit($activity, $project->profit_more_subcontr_mat, $project->profit_more_subcontr_equip), 2, ",",".") }} </td>
-            <td class="qty"></td>
           </tr>
           @endforeach
           @endforeach
@@ -1648,7 +1611,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
             <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
             <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
-            <td class="qty">&nbsp;</td>
           </tr>
         </tbody>
      </table>
@@ -1663,7 +1625,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <th class="unit">Materiaal</th>
             <th class="qty">Materieel</th>
             <th class="qty">total</th>
-            <th class="total">&nbsp;</th>
           </tr>
         </thead>
         <tbody>
@@ -1675,7 +1636,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
             <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::superTotal($project), 2, ",",".") }}</span></td>
-            <td class="qty">&nbsp;</td>
           </tr>
       </table>
       <!--LESS CONT & SUBCOINT END-->
