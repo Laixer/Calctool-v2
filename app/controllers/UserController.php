@@ -120,7 +120,7 @@ class UserController extends \BaseController {
 		}
 
 		$mollie = new Mollie_API_Client;
-		$mollie->setApiKey("test_GgXY6mWGW56AAfgC6NDBDXf4bCMfpz");
+		$mollie->setApiKey("live_dUapTi8xt2DujzS6WkPyGt8T7UpqY3");
 
 		$payment = $mollie->payments->get($order->transaction);
 		if ($payment->metadata->token != $order->token)
@@ -157,7 +157,7 @@ class UserController extends \BaseController {
 		}
 
 		$mollie = new Mollie_API_Client;
-		$mollie->setApiKey("test_GgXY6mWGW56AAfgC6NDBDXf4bCMfpz");
+		$mollie->setApiKey("live_dUapTi8xt2DujzS6WkPyGt8T7UpqY3");
 
 		$payment = $mollie->payments->get($order->transaction);
 		if ($payment->isPaid()) {
