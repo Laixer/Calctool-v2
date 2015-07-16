@@ -100,10 +100,14 @@ class AdminController extends BaseController {
 
 			$payment = $mollie->payments->get(Route::Input('transcode'));
 
-			if ($subtract > $payment->amount)
+			if ($subtract > ($payment->amount-$payment->amountRefunded))
 				return Redirect::back()->withErrors($validator)->withInput(Input::all());
 
 			$mollie->payments->refund($payment, $subtract);
+
+			$order = Payment::where('transaction','=',$payment->id)->first();
+			$order->status = $payment->status;
+			$order->save();
 
 			return Redirect::back()->with('success', 1);
 		}

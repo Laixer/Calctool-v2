@@ -21,6 +21,15 @@
 
 		<div class="col-md-12">
 
+			<div>
+			<ol class="breadcrumb">
+			  <li><a href="/">Home</a></li>
+			  <li><a href="/admin">Admin CP</a></li>
+			  <li class="active">Alerts</li>
+			</ol>
+			<div>
+			<br />
+
 			<h2><strong>Meldingen</strong></h2>
 
 			<table class="table table-striped">

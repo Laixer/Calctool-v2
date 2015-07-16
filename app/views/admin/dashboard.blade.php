@@ -82,13 +82,13 @@
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-server fsize60"></span>
-											<strong>Omgeving</strong>
+											<strong>Server & Config</strong>
 										</span>
 									</a>
-									<a href="/admin/environment" class="btn btn-primary add_to_cart"><i class="fa fa-server"></i> Omgeving</a>
+									<a href="/admin/environment" class="btn btn-primary add_to_cart"><i class="fa fa-server"></i> Server & Config</a>
 								</figure>
 								<div class="item-box-desc">
-									<a href="/admin/environment" ><h4>Omgeving</h4></a>
+									<a href="/admin/environment" ><h4>Server & Config</h4></a>
 								</div>
 							</div>
 						</div>

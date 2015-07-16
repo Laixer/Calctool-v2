@@ -49,7 +49,7 @@ $payment = $mollie->payments->get(Route::Input('transcode'));
 					<div class="col-md-2">{{ '&euro; '.number_format($payment->amountRefunded, 2,",",".") }}</div>
 				</div>
 				<div class="row">
-					<div class="col-md-2">Bedrag niet voldaan</div>
+					<div class="col-md-2">Bedrag niet teruggestort</div>
 					<div class="col-md-2">{{ '&euro; '.number_format($payment->amountRemaining, 2,",",".") }}</div>
 				</div>
 				<div class="row">
@@ -111,10 +111,10 @@ $payment = $mollie->payments->get(Route::Input('transcode'));
 				@endif
 				<br />
 				<form name="frm-refund" action="/admin/transaction/{{ $payment->id }}/refund" method="post">
-					<div class="input-group col-md-5">
+					<div class="input-group col-md-3">
 					  <input type="text" name="amount" {{ $payment->amount-$payment->amountRefunded ? '' : 'disabled' }} value="{{ ($payment->amount-$payment->amountRefunded) }}" class="form-control">
 				      <span class="input-group-btn">
-				        <input type="submt" class="btn btn-primary {{ $payment->amount-$payment->amountRefunded ? '' : 'disabled' }}" value="Terugstorten" />
+				        <input type="submit" class="btn btn-primary {{ $payment->amount-$payment->amountRefunded ? '' : 'disabled' }}" value="Terugstorten" />
 				      </span>
 					</div>
 				</form>
