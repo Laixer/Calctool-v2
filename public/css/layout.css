@@ -1328,7 +1328,10 @@ span.js_loader {
 	opacity: 1;
 	filter: alpha(opacity=100);
 }
-
+.item-box-show .item-hover {
+	opacity: 1;
+	filter: alpha(opacity=100);
+}
 
 
 

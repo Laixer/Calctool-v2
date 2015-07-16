@@ -18,7 +18,7 @@
 					<div class="row">
 
 						<div class="col-sm-6 col-md-3"><!-- item -->
-							<div class="item-box fixed-box">
+							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/user">
 										<span class="overlay color2"></span>
@@ -30,14 +30,14 @@
 									<a href="/admin/user" class="btn btn-primary add_to_cart"><i class="fa fa-user"></i> Beheer gebruikers</a>
 								</figure>
 								<div class="item-box-desc">
-									<h4>Gebruikers</h4>
-									<small class="styleColor">180 actieve gebruikers</small>
+									<a href="/admin/user" ><h4>Gebruikers</h4></a>
+									<small class="styleColor">{{ User::count() }} actieve gebruikers</small>
 								</div>
 							</div>
 						</div>
 
 						<div class="col-sm-6 col-md-3"><!-- item -->
-							<div class="item-box fixed-box">
+							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/alert">
 										<span class="overlay color2"></span>
@@ -50,13 +50,31 @@
 
 								</figure>
 								<div class="item-box-desc">
-									<h4>Alerts</h4>
+									<a href="/admin/alert" ><h4>Alerts</h4></a>
 								</div>
 							</div>
 						</div>
 
 						<div class="col-sm-6 col-md-3"><!-- item -->
-							<div class="item-box fixed-box">
+							<div class="item-box item-box-show fixed-box">
+								<figure>
+									<a class="item-hover" href="/admin/payment">
+										<span class="overlay color2"></span>
+										<span class="inner">
+											<span class="block fa fa-usd fsize60"></span>
+											<strong>Betalingen</strong>
+										</span>
+									</a>
+									<a href="/admin/payment" class="btn btn-primary add_to_cart"><i class="fa fa-usd"></i> Transacties & Betalingen</a>
+								</figure>
+								<div class="item-box-desc">
+									<a href="/admin/payment"><h4>Betalingen</h4></a>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-md-3"><!-- item -->
+							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/phpinfo">
 										<span class="overlay color2"></span>
@@ -68,7 +86,7 @@
 									<a href="/admin/phpinfo" class="btn btn-primary add_to_cart"><i class="fa fa-wrench"></i> PHP configuratie</a>
 								</figure>
 								<div class="item-box-desc">
-									<h4>PHP Info</h4>
+									<a href="/admin/phpinfo" ><h4>PHP Info</h4></a>
 								</div>
 							</div>
 						</div>
