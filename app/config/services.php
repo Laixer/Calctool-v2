@@ -15,8 +15,8 @@ return array(
 	*/
 
 	'mailgun' => array(
-		'domain' => 'mail.calctool.nl',
-		'secret' => 'key-939dcd2afaf30eb9dabf874c47c6de5',
+		'domain' => '',
+		'secret' => '',
 	),
 
 	'mandrill' => array(
