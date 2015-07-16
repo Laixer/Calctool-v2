@@ -49,6 +49,16 @@ class OfferController extends BaseController {
 			$offer->project_id = Route::Input('project_id');
 			$offer->resource_id = 1;
 
+			$options = [];
+			if (Input::get('toggle-note'))
+				$options['description'] = 1;
+			if (Input::get('toggle-subcontr'))
+				$options['total'] = 1;
+			if (Input::get('toggle-activity'))
+				$options['specification'] = 1;
+
+			$offer->option_query = http_build_query($options);
+
 			$offer->save();
 
 			return Redirect::back()->with('success', 'Opgeslagen');

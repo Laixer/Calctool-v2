@@ -40,6 +40,7 @@ class CreateFinancial extends Migration {
 			$table->integer('downpayment_amount')->unsigned()->nullable();
 			$table->boolean('auto_email_reminder')->default('Y');
 			$table->nullableTimestamps();
+			$table->string('option_query', 150)->nullable();
 			$table->date('offer_finish')->nullable();
 			$table->integer('deliver_id')->unsigned();
 			$table->foreign('deliver_id')->references('id')->on('deliver_time')->onUpdate('cascade')->onDelete('restrict');
