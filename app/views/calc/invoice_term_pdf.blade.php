@@ -113,7 +113,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         </tr>
       </tbody>
     </table>
-    <?php } ?>
 
     <div class="closingtext">{{ ($offer_last ? $offer_last->closure : '') }}</div>
 
