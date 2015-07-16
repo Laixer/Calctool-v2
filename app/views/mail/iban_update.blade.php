@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<title>Calctool - Betaalgegevens aangepast</title>
+		<title>CalcTool.nl - Betalingsgegevens aangepast</title>
 	</head>
 
 	<body style="margin:0; margin-top:30px; margin-bottom:30px; padding:0; width:100%; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; background-color: #F4F5F7;">
@@ -51,9 +51,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Het IBAN en/of naam van je betaalinfo is aangepast op <strong>CalculatieTool</strong>.
-
-														Klik hieronder op wachtwoord herstellen om je wachtwoord te resetten.
+														Het IBAN rekeningnummer en/of de tenaam van je betaalingsformatie is aangepast op <strong>CalcTool.nl</strong>.
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->
@@ -61,13 +59,13 @@
 												</tr>
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
-														Indien je geen verzoek hebt ingediend voor het reseetten van je wachtwoord kunn je deze mail beschouwen als niet verzonden.
+														Indien je geen wijzigingen hebt doorgevoerd in je betalingsgegevens kan je deze mail beschouwen als niet verzonden.
 														<br>
 														<br>
 															Hartelijk dank,
 														<br>
 														<br>
-															<strong>Cal</strong>, van de <a href="https://calctool.nl"><strong>CalculatieTool</strong></a>
+															<strong>Cal</strong>, van de <a href="https://calctool.nl"><strong>CalcTool.nl</strong></a>
 														<br>
 														<br>
 													</td>

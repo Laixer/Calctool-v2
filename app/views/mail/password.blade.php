@@ -51,7 +51,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Je hebt zojuist een verzoek ingediend voor het resetten van je wachtwoord van je gebruikersaccount van de <strong>CalculatieTool</strong>.
+														Je hebt zojuist een verzoek ingediend voor het resetten van je wachtwoord van je gebruikersaccount van de <strong>CalcTool.nl</strong>.
 
 														Klik hieronder op wachtwoord herstellen om je wachtwoord te resetten.
 													</td>
@@ -75,10 +75,10 @@
 														Indien je geen verzoek hebt ingediend voor het reseetten van je wachtwoord kunn je deze mail beschouwen als niet verzonden.
 														<br>
 														<br>
-															Hartelijk dank,
+															Met vriendelijke groet,k,
 														<br>
 														<br>
-															<strong>Cal</strong>, van de <a href="https://calctool.nl"><strong>CalculatieTool</strong></a>
+															<strong>Cal</strong>, van de <a href="https://calctool.nl"><strong>CalcTool.nl</strong></a>
 														<br>
 														<br>
 													</td>
