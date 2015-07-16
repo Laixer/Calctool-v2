@@ -156,8 +156,18 @@ class UserController extends \BaseController {
 		$payment = $mollie->payments->get($order->transaction);
 		if ($payment->isPaid()) {
 			return Redirect::to('myaccount')->with('success','Bedankt voor je knake');
-		} elseif ($payment->isOpen() || $payment->isPending()) {
+		} else if ($payment->isOpen() || $payment->isPending()) {
 			return Redirect::to('myaccount')->with('success','Betaling is nog niet bevestigd, dit kan enkele dagen duren');
+		} else if ($payment->isCancelled()) {
+			$order->status = $payment->status;
+			$order->save();
+			$errors = new MessageBag(['status' => ['Betaling is afgebroken']]);
+			return Redirect::to('myaccount')->withErrors($errors);
+		} else if ($payment->isExpired()) {
+			$order->status = $payment->status;
+			$order->save();
+			$errors = new MessageBag(['status' => ['Betaling is verlopen']]);
+			return Redirect::to('myaccount')->withErrors($errors);
 		}
 		$errors = new MessageBag(['status' => ['Transactie niet afgerond ('.$payment->status.')']]);
 		return Redirect::to('myaccount')->withErrors($errors);
