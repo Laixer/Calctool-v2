@@ -61,12 +61,12 @@
 
 				<h2>Details</h2>
 
-				<p>
+				<!--<p>
 					<span class="block"><strong><i class="fa fa-envelope"></i> Email:</strong> <a href="mailto:tech@calctool.nl">tech@calctool.nl</a></span>
-					<span class="block"><strong><i class="fa fa-wrench"></i> Versie:</strong> 0.6-{{ substr(File::get('../.revision'), 0, 7) }}</span>
-					<span class="block"><strong><i class="fa fa-code"></i> Upstream:</strong> {{ date('Y-m-d\TH:i:s') }}</span>
-					<span class="block"><strong><i class="fa fa-server"></i> Server:</strong> {{ gethostname() }}</span>
-				</p>
+					<span class="block"><strong><i class="fa fa-wrench"></i> Versie:</strong> 0.6-{{-- substr(File::get('../.revision'), 0, 7) --}}</span>
+					<span class="block"><strong><i class="fa fa-code"></i> Upstream:</strong> {{-- date('Y-m-d\TH:i:s') --}}</span>
+					<span class="block"><strong><i class="fa fa-server"></i> Server:</strong> {{-- gethostname() --}}</span>
+				</p>-->
 
 			</div>
 			<?# -- /INFO -- ?>

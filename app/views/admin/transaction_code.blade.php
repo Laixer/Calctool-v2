@@ -111,10 +111,10 @@ $payment = $mollie->payments->get(Route::Input('transcode'));
 				@endif
 				<br />
 				<form name="frm-refund" action="/admin/transaction/{{ $payment->id }}/refund" method="post">
-					<div class="input-group col-md-4">
+					<div class="input-group col-md-5">
 					  <input type="text" name="amount" {{ $payment->amount-$payment->amountRefunded ? '' : 'disabled' }} value="{{ ($payment->amount-$payment->amountRefunded) }}" class="form-control">
 				      <span class="input-group-btn">
-				        <button class="btn btn-primary {{ $payment->amount-$payment->amountRefunded ? '' : 'disabled' }}" type="button"><i class="fa fa-undo"></i>Terugstorten</button>
+				        <input type="submt" class="btn btn-primary {{ $payment->amount-$payment->amountRefunded ? '' : 'disabled' }}" value="Terugstorten" />
 				      </span>
 					</div>
 				</form>

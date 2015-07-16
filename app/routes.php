@@ -199,4 +199,7 @@ Route::group(array('before' => 'admin'), function()
 	Route::get('admin/transaction/{transcode}', function() {
 		return View::make('admin.transaction_code');
 	});
+	Route::get('admin/environment', function() {
+		return View::make('admin.server');
+	});
 });
