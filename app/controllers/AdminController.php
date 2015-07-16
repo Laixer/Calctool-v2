@@ -80,4 +80,34 @@ class AdminController extends BaseController {
 
 	}
 
+	public function doRefund()
+	{
+		$rules = array(
+			'amount' => array('required'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+
+			$subtract = Input::get('amount');
+
+			$mollie = new Mollie_API_Client;
+			$mollie->setApiKey($_ENV['MOLLIE_API']);
+
+			$payment = $mollie->payments->get(Route::Input('transcode'));
+
+			if ($subtract > $payment->amount)
+				return Redirect::back()->withErrors($validator)->withInput(Input::all());
+
+			$mollie->payments->refund($payment, $subtract);
+
+			return Redirect::back()->with('success', 1);
+		}
+
+	}
+
 }

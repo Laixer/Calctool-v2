@@ -51,6 +51,7 @@
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/alert" ><h4>Alerts</h4></a>
+									<small class="styleColor">{{ SystemMessage::count() }} alerts</small>
 								</div>
 							</div>
 						</div>
@@ -69,6 +70,25 @@
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/payment"><h4>Betalingen</h4></a>
+									<small class="styleColor">{{ Payment::count() }} transacties</small>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-md-3"><!-- item -->
+							<div class="item-box item-box-show fixed-box">
+								<figure>
+									<a class="item-hover" href="/admin/environment">
+										<span class="overlay color2"></span>
+										<span class="inner">
+											<span class="block fa fa-server fsize60"></span>
+											<strong>Omgeving</strong>
+										</span>
+									</a>
+									<a href="/admin/environment" class="btn btn-primary add_to_cart"><i class="fa fa-server"></i> Omgeving</a>
+								</figure>
+								<div class="item-box-desc">
+									<a href="/admin/environment" ><h4>Omgeving</h4></a>
 								</div>
 							</div>
 						</div>
