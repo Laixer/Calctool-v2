@@ -12,7 +12,6 @@ class StaticSeeder extends Seeder {
 		DB::table('sub_group')->delete();
 		DB::table('supplier')->delete();
 		DB::table('tax')->delete();
-		DB::table('system_option')->delete();
 		DB::table('deliver_time')->delete();
 		DB::table('valid')->delete();
 		DB::table('relation_kind')->delete();
@@ -560,9 +559,6 @@ class StaticSeeder extends Seeder {
 		DeliverTime::create(array('delivertime_name' => '3 weken'));
 		DeliverTime::create(array('delivertime_name' => '1 maand'));
 		$this->command->info('DeliverTime created');
-
-		SystemOption::create(array('option_key' => 'tool_name', 'option_value' => 'Calctool'));
-		$this->command->info('SystemOption created');
 
 		Tax::create(array('tax_rate' => 0));
 		Tax::create(array('tax_rate' => 6));
