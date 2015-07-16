@@ -387,7 +387,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<br>
 							<div class="row">
 								<div class="col-md-3"><strong>Project gesloten</strong></div>
-								<div class="col-md-2"><a href="#" id="projclose" data-format="dd-mm-yyyy">{{ $project->project_close ? date('d-m-Y', strtotime($project->project_close)) : '' }}</a></div>
+								<div class="col-md-2">{{ $project->project_close ? date('d-m-Y', strtotime($project->project_close)) : '<a href="#" id="projclose" data-format="dd-mm-yyyy">' }}</a></div>
 								<div class="col-md-3"></div>
 							</div>
 						</div>
@@ -399,6 +399,14 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="col-md-2"><h5><strong>Calculatie</strong></h5></div>
 								<div class="col-md-2"><h5><strong>Meerwerk</strong></h5></div>
 							</div>
+							@if ($project->project_close)
+							<div class="row">
+								<div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
+								<div class="col-md-1"><div class="pull-right">&euro;</div></div>
+								<div class="col-md-2">{{ number_format($project->hour_rate, 2,",",".") }}</div>
+								<div class="col-md-2">{{ number_format($project->hour_rate_more, 2,",",".") }}</div>
+							</div>
+							@else
 							<div class="row">
 								<div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
 								<div class="col-md-1"><div class="pull-right">&euro;</div></div>
@@ -409,8 +417,23 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<input name="more_hour_rate" id="more_hour_rate" type="text" value="{{ Input::old('more_hour_rate') ? Input::old('more_hour_rate') : number_format($project->hour_rate_more, 2,",",".") }}" class="form-control-sm-number"/>
 								</div>
 							</div>
+							@endif
 
 							<h5><strong>Aanneming</strong></h5>
+							@if ($project->project_close)
+							<div class="row">
+								<div class="col-md-3"><label for="profit_material_1">Winstpercentage materiaal</label></div>
+								<div class="col-md-1"><div class="pull-right">%</div></div>
+								<div class="col-md-2">{{ $project->profit_calc_contr_mat }}</div>
+								<div class="col-md-2">{{ $project->profit_more_contr_mat }}</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage materieel</label></div>
+								<div class="col-md-1"><div class="pull-right">%</div></div>
+								<div class="col-md-2">{{ $project->profit_calc_contr_equip }}</div>
+								<div class="col-md-2">{{ $project->profit_more_contr_equip }}</div>
+							</div>
+							@else
 							<div class="row">
 								<div class="col-md-3"><label for="profit_material_1">Winstpercentage materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
@@ -431,8 +454,23 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<input name="more_profit_equipment_1" id="more_profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_1') ? Input::old('more_profit_equipment_1') : $project->profit_more_contr_equip }}" class="form-control-sm-number"/>
 								</div>
 							</div>
+							@endif
 
 							<h5><strong>Onderaanneming</strong></h5>
+							@if ($project->project_close)
+							<div class="row">
+								<div class="col-md-3"><label for="profit_material_2">Winstpercentage materiaal</label></div>
+								<div class="col-md-1"><div class="pull-right">%</div></div>
+								<div class="col-md-2">{{ $project->profit_calc_subcontr_mat }}</div>
+								<div class="col-md-2">{{ $project->profit_more_subcontr_mat }}</div>
+							</div>
+							<div class="row">
+								<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage materieel</label></div>
+								<div class="col-md-1"><div class="pull-right">%</div></div>
+								<div class="col-md-2">{{ $project->profit_calc_subcontr_equip }}</div>
+								<div class="col-md-2">{{ $project->profit_more_subcontr_equip }}</div>
+							</div>
+							@else
 							<div class="row">
 								<div class="col-md-3"><label for="profit_material_2">Winstpercentage materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
@@ -453,6 +491,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<input name="more_profit_equipment_2" id="more_profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_2') ? Input::old('more_profit_equipment_2') : $project->profit_more_subcontr_equip }}" class="form-control-sm-number"/>
 								</div>
 							</div>
+							@endif
 
 						</div>
 
@@ -490,11 +529,12 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 												<td class="col-md-1">{{ $timesheet->note }}</td>
 												<td class="col-md-1">&nbsp;</td>
 												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times deleterow"></button></td>
+												<td class="col-md-1">@if (!$project->project_close)<button class="btn btn-danger btn-xs fa fa-times deleterow"></button>@endif</td>
 											</tr>
 											@endforeach
 											@endforeach
 											@endforeach
+											@if (!$project->project_close)
 											<tr><!-- item -->
 												<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text"/></td>
 												<td class="col-md-1"><input type="number" min="0" name="hour" id="hour" class="form-control-sm-text"/></td>
@@ -519,6 +559,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 												<td class="col-md-1">&nbsp;</td>
 												<td class="col-md-1"><button id="addnew" class="btn btn-primary btn-xs"> Toevoegen</button></td>
 											</tr>
+											@endif
 										</tbody>
 									</table>
 								<!--</div>
@@ -657,9 +698,10 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 												<td class="col-md-3">{{ $purchase->note }}</td>
 												<td class="col-md-1">&nbsp;</td>
 												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times deleterowp"></button></td>
+												<td class="col-md-1">@if (!$project->project_close)<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>@endif</td>
 											</tr>
 											@endforeach
+											@if (!$project->project_close)
 											<tr>
 												<td class="col-md-1">
 													<input type="date" name="date" id="date" class="form-control-sm-text"/>
@@ -684,6 +726,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 												<td class="col-md-1">&nbsp;</td>
 												<td class="col-md-1"><button id="addnewpurchase" class="btn btn-primary btn-xs"> Toevoegen</button></td>
 											</tr>
+											@endif
 										</tbody>
 									</table>
 								<!--</div>
