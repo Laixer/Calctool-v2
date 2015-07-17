@@ -103,7 +103,10 @@ class AdminController extends BaseController {
 			if ($subtract > ($payment->amount-$payment->amountRefunded))
 				return Redirect::back()->withErrors($validator)->withInput(Input::all());
 
-			$mollie->payments->refund($payment, $subtract);
+			$x = $mollie->payments->refund($payment, $subtract);
+
+			print_r($x);
+			exit();
 
 			$order = Payment::where('transaction','=',$payment->id)->first();
 			$order->status = $payment->status;

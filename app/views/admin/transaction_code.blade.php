@@ -59,7 +59,7 @@ $payment = $mollie->payments->get(Route::Input('transcode'));
 					<div class="col-md-2">{{ '&euro; '.number_format($payment->amountRefunded, 2,",",".") }}</div>
 				</div>
 				<div class="row">
-					<div class="col-md-2">Bedrag niet teruggestort</div>
+					<div class="col-md-2">Restbedrag</div>
 					<div class="col-md-2">{{ '&euro; '.number_format($payment->amountRemaining, 2,",",".") }}</div>
 				</div>
 				<div class="row">

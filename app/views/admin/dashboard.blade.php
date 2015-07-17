@@ -7,7 +7,7 @@
 			<section class="container text-center">
 				<h1 class="text-center">
 					<strong>Admin</strong> dashboard
-					<span class="subtitle">BEST PRODUCTS YOU EVER SEEN!</span>
+					<span class="subtitle">POWER TO THE ADMIN!</span>
 				</h1>
 			</section>
 
@@ -137,13 +137,13 @@
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-list-alt fsize60"></span>
-											<strong>Logs</strong>
+											<strong>Applicatie logs</strong>
 										</span>
 									</a>
 									<a href="/admin/log" class="btn btn-primary add_to_cart"><i class="fa fa-list-alt"></i> Logviewer</a>
 								</figure>
 								<div class="item-box-desc">
-									<a href="/admin/log" ><h4>Log</h4></a>
+									<a href="/admin/log" ><h4>Applicatie logs</h4></a>
 								</div>
 							</div>
 						</div>
