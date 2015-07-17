@@ -213,7 +213,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				@endforeach
 				<?php if ($invoice_end) { ?>
 					<tr>
-						<td class="col-md-2"><?php if (!$invoice->invoice_close && !$project->project_close) { echo '<a href="/invoice/project-{{ $project->id }}/invoice-{{ $invoice_end->id }}">Eindfactuur</a>'; } else { echo 'Eindfactuur'; } ?></td>
+						<td class="col-md-2"><?php if (!$invoice->invoice_close && !$project->project_close) { echo '<a href="/invoice/project-' . $project->id . '/invoice-' . $invoice_end->id . '">Eindfactuur</a>'; } else { echo 'Eindfactuur'; } ?></td>
 						<td class="col-md-2"><span id="endterm">0</span></td>
 						<td class="col-md-2">{{ $invoice_end->invoice_code }}</td>
 						<td class="col-md-2"><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice_end->reference }}" data-bookcode="{{ $invoice_end->book_code }}" data-id="{{ $invoice_end->id }}" data-target="#codeModal">{{ $project->project_close ? 'bekijk' : 'bewerk' }}</a></td>
