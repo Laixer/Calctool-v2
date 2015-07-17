@@ -2,6 +2,8 @@
 
 <?php
 $next_step = Cookie::get('nstep');
+if (Input::get('nstep') == 'intro')
+	$next_step = 'intro';
 ?>
 
 @section('content')

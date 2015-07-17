@@ -17,6 +17,7 @@ return array(
 	| choice installed on your machine before you begin development.
 	|
 	*/
+	'CT_VERSION'		=> 0,
 
 	/* Database */
 	'DB_HOST'			=> '',

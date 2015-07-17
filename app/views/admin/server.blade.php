@@ -62,6 +62,10 @@ function convert($size) {
 					<div class="col-md-4">{{ date('Y-m-d\TH:i:s') }}</div>
 				</div>
 				<div class="row">
+					<div class="col-md-2">Versie</div>
+					<div class="col-md-4">{{ $_ENV['CT_VERSION'] }}</div>
+				</div>
+				<div class="row">
 					<div class="col-md-2">Revisie</div>
 					<div class="col-md-4">{{ substr(File::get('../.revision'), 0, 7) }}</div>
 				</div>

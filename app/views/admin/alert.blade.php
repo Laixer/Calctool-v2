@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('content')
-<?# -- WRAPPER -- ?>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('.arm').click(function(e) {
@@ -9,7 +9,8 @@
 
 			var $curThis = $(this);
 			$.post("/admin/alert/delete", {id: $curThis.attr("data-id")}, function(){
-				$curThis.closest("tr").hide("slow");
+				$curThis.hide("slow");
+				$curThis.closest('tr').find("td").eq(2).text('Nee');
 			}).fail(function(e) { console.log(e); });
 
 		});
@@ -33,7 +34,6 @@
 			<h2><strong>Meldingen</strong></h2>
 
 			<table class="table table-striped">
-				<?# -- table head -- ?>
 				<thead>
 					<tr>
 						<th class="col-md-2">Titel</th>
@@ -44,7 +44,6 @@
 					</tr>
 				</thead>
 
-				<!-- table items -->
 				<tbody>
 				@foreach (SystemMessage::take(3)->orderBy('created_at', 'desc')->get() as $message)
 					<tr>
