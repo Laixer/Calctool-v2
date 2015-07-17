@@ -21,12 +21,16 @@
 					<li>
 						{{ HTML::link('/', 'Home') }}
 					</li>
+					@if (0)
 					<li>
 						{{ HTML::link('help', 'Help') }}
 					</li>
+					@endif
+					@if (Auth::check())
 					<li>
 						{{ HTML::link('myaccount', 'Mijn account') }}
 					</li>
+					@endif
 					<li>
 						{{ HTML::link('about', 'Over ons') }}
 					</li>

@@ -191,9 +191,12 @@ class InvoiceController extends BaseController {
 		} else {
 			$invoice = Invoice::find(Input::get('id'));
 			$invoice->invoice_close = true;
+			$invoice->invoice_code = InvoiceController::getInvoiceCode(Input::get('projectid'));
 			$invoice->bill_date = date('Y-m-d H:i:s');
 
 			$invoice->save();
+			Auth::user()->invoice_counter++;
+			Auth::user()->save();
 
 			return Redirect::to('/invoice/project-'.Input::get('projectid'));
 		}
@@ -222,8 +225,16 @@ class InvoiceController extends BaseController {
 		}
 	}
 
+	/* id = $project->id */
 	public static function getInvoiceCode($id)
 	{
 		return sprintf("%s%05d-%03d-%s", Auth::user()->invoicenumber_prefix, $id, Auth::user()->invoice_counter, date('y'));
 	}
+
+	/* id = $project->id */
+	public static function getInvoiceCodeConcept($id)
+	{
+		return sprintf("%s%05d-CONCEPT-%s", Auth::user()->invoicenumber_prefix, $id, date('y'));
+	}
+
 }

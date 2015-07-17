@@ -6,7 +6,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 @extends('layout.master')
 
 @section('content')
-<?# -- WRAPPER -- ?>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#addnew').click(function(e) {
@@ -174,7 +174,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 			{{ Form::open(array('url' => 'project/update')) }}
 
-				<div class="tabs nomargin">
+				<div class="tabs nomargin-top">
 
 					<?# -- tabs -- ?>
 					<ul class="nav nav-tabs">
@@ -207,14 +207,14 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="name">Projectnaam</label>
-											<input name="name" id="name" type="text" value="{{ Input::old('name') ? Input::old('name') : $project->project_name }}" class="form-control" />
+											<input name="name" id="name" type="text" {{ $project->project_close ? 'disabled' : '' }} value="{{ Input::old('name') ? Input::old('name') : $project->project_name }}" class="form-control" />
 											<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label for="contractor">Opdrachtgever</label>
-											<select name="contractor" id="contractor" class="form-control pointer">
+											<select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : '' }} class="form-control pointer">
 											@foreach (Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
 												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
 											@endforeach
@@ -224,7 +224,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<div class="col-md-2">
 										<div class="form-group">
 											<label for="type">Type</label>
-											<select name="type" id="type" class="form-control pointer">
+											<select name="type" id="type" {{ $project->project_close ? 'disabled' : '' }} class="form-control pointer">
 												@foreach (ProjectType::all() as $type)
 													<option {{ $project->type_id==$type->id ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
 												@endforeach
@@ -238,34 +238,34 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<div class="col-md-4">
 										<div class="form-group">
 											<label for="street">Straat</label>
-											<input name="street" id="street" type="text" value="{{ Input::old('street') ? Input::old('street') : $project->address_street}}" class="form-control"/>
+											<input name="street" id="street" {{ $project->project_close ? 'disabled' : '' }} type="text" value="{{ Input::old('street') ? Input::old('street') : $project->address_street}}" class="form-control"/>
 										</div>
 									</div>
 									<div class="col-md-1">
 										<div class="form-group">
 											<label for="address_number">Huis nr.</label>
-											<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') ? Input::old('address_number') : $project->address_number }}" class="form-control"/>
+											<input name="address_number" {{ $project->project_close ? 'disabled' : '' }} id="address_number" type="text" value="{{ Input::old('address_number') ? Input::old('address_number') : $project->address_number }}" class="form-control"/>
 										</div>
 									</div>
 
 									<div class="col-md-2">
 										<div class="form-group">
 											<label for="zipcode">Postcode</label>
-											<input name="zipcode" id="zipcode" type="text" maxlength="6" value="{{ Input::old('zipcode') ? Input::old('zipcode') : $project->address_postal }}" class="form-control"/>
+											<input name="zipcode" {{ $project->project_close ? 'disabled' : '' }} id="zipcode" type="text" maxlength="6" value="{{ Input::old('zipcode') ? Input::old('zipcode') : $project->address_postal }}" class="form-control"/>
 										</div>
 									</div>
 
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="city">Plaats</label>
-											<input name="city" id="city" type="text" value="{{ Input::old('city') ? Input::old('city'): $project->address_city }}" class="form-control"/>
+											<input name="city" {{ $project->project_close ? 'disabled' : '' }} id="city" type="text" value="{{ Input::old('city') ? Input::old('city'): $project->address_city }}" class="form-control"/>
 										</div>
 									</div>
 
 									<div class="col-md-2">
 										<div class="form-group">
 											<label for="province">Provincie</label>
-											<select name="province" id="province" class="form-control pointer">
+											<select name="province" {{ $project->project_close ? 'disabled' : '' }} id="province" class="form-control pointer">
 												@foreach (Province::all() as $province)
 													<option {{ $project->province_id==$province->id ? 'selected' : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
 												@endforeach
@@ -276,7 +276,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<div class="col-md-4">
 										<div class="form-group">
 											<label for="country">Land</label>
-											<select name="country" id="country" class="form-control pointer">
+											<select name="country" {{ $project->project_close ? 'disabled' : '' }} id="country" class="form-control pointer">
 												@foreach (Country::all() as $country)
 													<option {{ $project->country_id==$country->id ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
 												@endforeach
@@ -387,7 +387,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<br>
 							<div class="row">
 								<div class="col-md-3"><strong>Project gesloten</strong></div>
-								<div class="col-md-2"><a href="#" id="projclose" data-format="dd-mm-yyyy">{{ $project->project_close ? date('d-m-Y', strtotime($project->project_close)) : '' }}</a></div>
+								<div class="col-md-2">{{ $project->project_close ? date('d-m-Y', strtotime($project->project_close)) : '<a href="#" id="projclose" data-format="dd-mm-yyyy">' }}</a></div>
 								<div class="col-md-3"></div>
 							</div>
 						</div>
@@ -403,10 +403,10 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
 								<div class="col-md-1"><div class="pull-right">&euro;</div></div>
 								<div class="col-md-2">
-									<input name="hour_rate" id="hour_rate" type="text" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : number_format($project->hour_rate, 2,",",".") }}" class="form-control-sm-number"/>
+									<input name="hour_rate" {{ $project->project_close ? 'disabled' : '' }} id="hour_rate" type="text" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : number_format($project->hour_rate, 2,",",".") }}" class="form-control form-control-sm-number"/>
 								</div>
 								<div class="col-md-2">
-									<input name="more_hour_rate" id="more_hour_rate" type="text" value="{{ Input::old('more_hour_rate') ? Input::old('more_hour_rate') : number_format($project->hour_rate_more, 2,",",".") }}" class="form-control-sm-number"/>
+									<input name="more_hour_rate" {{ $project->project_close ? 'disabled' : '' }} id="more_hour_rate" type="text" value="{{ Input::old('more_hour_rate') ? Input::old('more_hour_rate') : number_format($project->hour_rate_more, 2,",",".") }}" class="form-control form-control-sm-number"/>
 								</div>
 							</div>
 
@@ -415,20 +415,20 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="col-md-3"><label for="profit_material_1">Winstpercentage materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_material_1" id="profit_material_1" type="number" min="0" max="200" value="{{ Input::old('profit_material_1') ? Input::old('profit_material_1') : $project->profit_calc_contr_mat }}" class="form-control-sm-number"/>
+									<input name="profit_material_1" {{ $project->project_close ? 'disabled' : '' }} id="profit_material_1" type="number" min="0" max="200" value="{{ Input::old('profit_material_1') ? Input::old('profit_material_1') : $project->profit_calc_contr_mat }}" class="form-control form-control-sm-number"/>
 								</div>
 								<div class="col-md-2">
-									<input name="more_profit_material_1" id="more_profit_material_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_1') ? Input::old('more_profit_material_1') : $project->profit_more_contr_mat }}" class="form-control-sm-number"/>
+									<input name="more_profit_material_1" {{ $project->project_close ? 'disabled' : '' }} id="more_profit_material_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_1') ? Input::old('more_profit_material_1') : $project->profit_more_contr_mat }}" class="form-control form-control-sm-number"/>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage materieel</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_equipment_1" id="profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_1') ? Input::old('profit_equipment_1') : $project->profit_calc_contr_equip }}" class="form-control-sm-number"/>
+									<input name="profit_equipment_1" {{ $project->project_close ? 'disabled' : '' }} id="profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_1') ? Input::old('profit_equipment_1') : $project->profit_calc_contr_equip }}" class="form-control form-control-sm-number"/>
 								</div>
 								<div class="col-md-2">
-									<input name="more_profit_equipment_1" id="more_profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_1') ? Input::old('more_profit_equipment_1') : $project->profit_more_contr_equip }}" class="form-control-sm-number"/>
+									<input name="more_profit_equipment_1" {{ $project->project_close ? 'disabled' : '' }} id="more_profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_1') ? Input::old('more_profit_equipment_1') : $project->profit_more_contr_equip }}" class="form-control form-control-sm-number"/>
 								</div>
 							</div>
 
@@ -437,20 +437,20 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="col-md-3"><label for="profit_material_2">Winstpercentage materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_material_2" id="profit_material_2" type="number" min="0" max="200" value="{{ Input::old('profit_material_2') ? Input::old('profit_material_2') : $project->profit_calc_subcontr_mat }}" class="form-control-sm-number"/>
+									<input name="profit_material_2" {{ $project->project_close ? 'disabled' : '' }} id="profit_material_2" type="number" min="0" max="200" value="{{ Input::old('profit_material_2') ? Input::old('profit_material_2') : $project->profit_calc_subcontr_mat }}" class="form-control form-control-sm-number"/>
 								</div>
 								<div class="col-md-2">
-									<input name="more_profit_material_2" id="more_profit_material_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_2') ? Input::old('more_profit_material_2') : $project->profit_more_subcontr_mat }}" class="form-control-sm-number"/>
+									<input name="more_profit_material_2" {{ $project->project_close ? 'disabled' : '' }} id="more_profit_material_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_2') ? Input::old('more_profit_material_2') : $project->profit_more_subcontr_mat }}" class="form-control form-control-sm-number"/>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage materieel</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_equipment_2" id="profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_2') ? Input::old('profit_equipment_2') : $project->profit_calc_subcontr_equip }}" class="form-control-sm-number"/>
+									<input name="profit_equipment_2" {{ $project->project_close ? 'disabled' : '' }} id="profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_2') ? Input::old('profit_equipment_2') : $project->profit_calc_subcontr_equip }}" class="form-control form-control-sm-number"/>
 								</div>
 								<div class="col-md-2">
-									<input name="more_profit_equipment_2" id="more_profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_2') ? Input::old('more_profit_equipment_2') : $project->profit_more_subcontr_equip }}" class="form-control-sm-number"/>
+									<input name="more_profit_equipment_2" {{ $project->project_close ? 'disabled' : '' }} id="more_profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_2') ? Input::old('more_profit_equipment_2') : $project->profit_more_subcontr_equip }}" class="form-control form-control-sm-number"/>
 								</div>
 							</div>
 
@@ -490,11 +490,12 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 												<td class="col-md-1">{{ $timesheet->note }}</td>
 												<td class="col-md-1">&nbsp;</td>
 												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times deleterow"></button></td>
+												<td class="col-md-1">@if (!$project->project_close)<button class="btn btn-danger btn-xs fa fa-times deleterow"></button>@endif</td>
 											</tr>
 											@endforeach
 											@endforeach
 											@endforeach
+											@if (!$project->project_close)
 											<tr><!-- item -->
 												<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text"/></td>
 												<td class="col-md-1"><input type="number" min="0" name="hour" id="hour" class="form-control-sm-text"/></td>
@@ -519,6 +520,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 												<td class="col-md-1">&nbsp;</td>
 												<td class="col-md-1"><button id="addnew" class="btn btn-primary btn-xs"> Toevoegen</button></td>
 											</tr>
+											@endif
 										</tbody>
 									</table>
 								<!--</div>
@@ -657,9 +659,10 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 												<td class="col-md-3">{{ $purchase->note }}</td>
 												<td class="col-md-1">&nbsp;</td>
 												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times deleterowp"></button></td>
+												<td class="col-md-1">@if (!$project->project_close)<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>@endif</td>
 											</tr>
 											@endforeach
+											@if (!$project->project_close)
 											<tr>
 												<td class="col-md-1">
 													<input type="date" name="date" id="date" class="form-control-sm-text"/>
@@ -684,6 +687,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 												<td class="col-md-1">&nbsp;</td>
 												<td class="col-md-1"><button id="addnewpurchase" class="btn btn-primary btn-xs"> Toevoegen</button></td>
 											</tr>
+											@endif
 										</tbody>
 									</table>
 								<!--</div>

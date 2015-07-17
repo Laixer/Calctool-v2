@@ -629,9 +629,43 @@ var n = this,
 					$curThis.closest("tr").find("input[name='amount']").val(json.amount);
 				}).fail(function(e) { console.log(e); });
 		});
+		$('.notemod').click(function(e) {
+			$curval = $(this).attr('data-note');
+			$curid = $(this).attr('data-id');
+			$('#note').val($curval);
+			$('#noteact').val($curid);
+		});
+		$('#descModal').on('hidden.bs.modal', function() {
+			$.post("/calculation/noteactivity", {project: {{ $project->id }}, activity: $('#noteact').val(), note: $('#note').val()}, function(){
+				$('#toggle-activity-'+$curThis.attr("data-id")).hide('slow');
+			}).fail(function(e) { console.log(e); });
+		});
 	});
 </script>
+<div class="modal fade" id="descModal" tabindex="-1" role="dialog" aria-labelledby="descModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header"><!-- modal header -->
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel">Omschrijving werkzaamheid</h4>
+			</div>
 
+			<div class="modal-body">
+				<div class="form-group">
+					<div class="col-md-12">
+						<textarea name="note" id="note" rows="5" class="form-control"></textarea>
+						<input type="hidden" name="noteact" id="noteact" />
+					</div>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<button class="btn btn-default" data-dismiss="modal">Sluiten</button>
+			</div>
+
+		</div>
+	</div>
+</div>
 <div id="wrapper">
 
 	<section class="container fix-footer-bottom">
@@ -682,7 +716,7 @@ var n = this,
 													<div class="col-md-2"></div>
 	    											<div class="col-md-2"></div>
 													<div class="col-md-1 text-right"><strong>{{ Part::find($activity->part_id)->part_name=='subcontracting' ? 'Onderaanneming' : 'Aanneming' }}</strong></div>
-													<div class="col-md-3 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-container="body" data-toggle="popover" data-placement="bottom" data-content="<textarea></textarea>" data-original-title="A Title" title="" aria-describedby="popover499619" class="btn btn-info btn-xs popdesc">Omschrijving toevoegen</button></div>
+													<div class="col-md-3 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving toevoegen</button></div>
 												</div>
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>

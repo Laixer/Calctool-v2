@@ -124,6 +124,7 @@ return array(
 		'Nathanmac\Utilities\Parser\ParserServiceProvider',
 		'Intervention\Image\ImageServiceProvider',
 		'Barryvdh\Snappy\ServiceProvider',
+		'Bogardo\Mailgun\MailgunServiceProvider',
 
 	),
 

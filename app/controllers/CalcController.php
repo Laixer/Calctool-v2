@@ -92,6 +92,18 @@ class CalcController extends BaseController {
 		return $pdf->download(Input::get('file'));
 	}
 
+	public function getTermInvoicePDF()
+	{
+		$pdf = PDF::loadView('calc.invoice_term_pdf');
+		return $pdf->stream();
+	}
+
+	public function getTermInvoiceDownloadPDF()
+	{
+		$pdf = PDF::loadView('calc.invoice_term_pdf');
+		return $pdf->download(Input::get('file'));
+	}
+
 	public function doNewChapter()
 	{
 		$rules = array(

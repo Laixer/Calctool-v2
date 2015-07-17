@@ -232,13 +232,13 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Versies</a>
 
 		<div class="btn-group">
-		  <a target="blank" href="/offer/pdf/project-{{ $project->id }}" class="btn btn-primary">PDF</a>
+		  <a target="blank" href="/offer/pdf/project-{{ $project->id }}{{ $offer_last->option_query ? '?'.$offer_last->option_query : '' }}" class="btn btn-primary">PDF</a>
 		  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		    <span class="caret"></span>
 		    <span class="sr-only">Toggle Dropdown</span>
 		  </button>
 		  <ul class="dropdown-menu">
-		    <li><a href="/offer/pdf/project-{{ $project->id }}/download?file={{ OfferController::getOfferCode($project->id).'-offerte.pdf' }}">Download</a></li>
+		    <li><a href="/offer/pdf/project-{{ $project->id }}/download?file={{ OfferController::getOfferCode($project->id).'-offerte.pdf' }}{{ $offer_last->option_query ? '&'.$offer_last->option_query : '' }}">Download</a></li>
 		  </ul>
 		</div>
 		<?php }else{ ?>
@@ -246,87 +246,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
 		<button class="btn btn-primary osave">Offerte  maken</button>
 		<?php } ?>
-	</div>
-
-	<!-- modal dialog -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-
-				<div class="modal-header"><!-- modal header -->
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">Offerte opties</h4>
-				</div><!-- /modal header -->
-
-				<!-- modal body -->
-				<div class="modal-body">
-					<div class="form-horizontal">
-
-						 <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-12">
-						      <div class="checkbox">
-						        <label>
-						          <input name="toggle-tax" type="checkbox" checked> BTW bedragen weergeven
-						        </label>
-						      </div>
-						    </div>
-						  </div>
-						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-12">
-						      <div class="checkbox">
-						        <label>
-						          <input name="toggle-endresult" type="checkbox"> Alleen het totale offertebedrag weergeven
-						        </label>
-						      </div>
-						    </div>
-						  </div>
-						   <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-12">
-						      <div class="checkbox">
-						        <label>
-						          <input name="toggle-subcontr" type="checkbox"> Kosten onderaanneming apart weergeven
-						        </label>
-						      </div>
-						    </div>
-						  </div>
-						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-12">
-						      <div class="checkbox">
-						        <label>
-						          <input name="toggle-activity" type="checkbox" checked> Hoofdstukken en werkzaamheden weergeven
-						        </label>
-						      </div>
-						    </div>
-						  </div>
-						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-12">
-						      <div class="checkbox">
-						        <label>
-						          <input name="toggle-summary" type="checkbox"> Kosten werkzaamheden specificeren
-						        </label>
-						      </div>
-						    </div>
-						  </div>
-						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-12">
-						      <div class="checkbox">
-						        <label>
-						          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden in bijlage weergeven
-						        </label>
-						      </div>
-						    </div>
-						  </div>
-
-					</div>
-				</div>
-				<!-- /modal body -->
-
-				<div class="modal-footer"><!-- modal footer -->
-					<button class="btn btn-default" data-dismiss="modal">Close</button>
-				</div><!-- /modal footer -->
-
-			</div>
-		</div>
 	</div>
 
 	<!-- modal dialog -->
@@ -423,6 +342,87 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								</table>
 							</div>
 
+						</div>
+						<!-- /modal body -->
+
+						<div class="modal-footer"><!-- modal footer -->
+							<button class="btn btn-default" data-dismiss="modal">Close</button>
+						</div><!-- /modal footer -->
+
+					</div>
+				</div>
+			</div>
+
+			<!-- modal dialog -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+
+						<div class="modal-header"><!-- modal header -->
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title" id="myModalLabel">Offerte opties</h4>
+						</div><!-- /modal header -->
+
+						<!-- modal body -->
+						<div class="modal-body">
+							<div class="form-horizontal">
+
+								 <div class="form-group">
+								    <div class="col-sm-offset-0 col-sm-12">
+								      <div class="checkbox">
+								        <label>
+								          <input name="toggle-tax" type="checkbox" checked> BTW bedragen weergeven
+								        </label>
+								      </div>
+								    </div>
+								  </div>
+								  <div class="form-group">
+								    <div class="col-sm-offset-0 col-sm-12">
+								      <div class="checkbox">
+								        <label>
+								          <input name="toggle-endresult" type="checkbox"> Alleen het totale offertebedrag weergeven
+								        </label>
+								      </div>
+								    </div>
+								  </div>
+								   <div class="form-group">
+								    <div class="col-sm-offset-0 col-sm-12">
+								      <div class="checkbox">
+								        <label>
+								          <input name="toggle-subcontr" type="checkbox"> Kosten onderaanneming apart weergeven
+								        </label>
+								      </div>
+								    </div>
+								  </div>
+								  <div class="form-group">
+								    <div class="col-sm-offset-0 col-sm-12">
+								      <div class="checkbox">
+								        <label>
+								          <input name="toggle-activity" type="checkbox" checked> Hoofdstukken en werkzaamheden weergeven
+								        </label>
+								      </div>
+								    </div>
+								  </div>
+								  <div class="form-group">
+								    <div class="col-sm-offset-0 col-sm-12">
+								      <div class="checkbox">
+								        <label>
+								          <input name="toggle-summary" type="checkbox"> Kosten werkzaamheden specificeren
+								        </label>
+								      </div>
+								    </div>
+								  </div>
+								  <div class="form-group">
+								    <div class="col-sm-offset-0 col-sm-12">
+								      <div class="checkbox">
+								        <label>
+								          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden in bijlage weergeven
+								        </label>
+								      </div>
+								    </div>
+								  </div>
+
+							</div>
 						</div>
 						<!-- /modal body -->
 

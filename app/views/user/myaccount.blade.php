@@ -51,7 +51,7 @@ $(document).ready(function() {
 			@if(Session::get('success'))
 			<div class="alert alert-success">
 				<i class="fa fa-check-circle"></i>
-				<strong>Opgeslagen</strong>
+				<strong>{{ Session::get('success') }}</strong>
 			</div>
 			@endif
 
@@ -225,17 +225,19 @@ $(document).ready(function() {
 										<th class="col-md-2">Datum</th>
 										<th class="col-md-2">Bedrag</th>
 										<th class="col-md-2">Status</th>
-										<th class="col-md-6">Omschrijving</th>
+										<th class="col-md-4">Omschrijving</th>
+										<th class="col-md-2">Betalingswijze</th>
 									</tr>
 								</thead>
 
 								<tbody>
-									@foreach (Order::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $order)
+									@foreach (Payment::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $order)
 									<tr>
-										<td class="col-md-2"><strong>{{ date('d-m-Y H:i:s', strtotime(DB::table('order')->select('created_at')->where('id','=',$order->id)->get()[0]->created_at)) }}</strong></td>
+										<td class="col-md-2"><strong>{{ date('d-m-Y H:i:s', strtotime(DB::table('payment')->select('created_at')->where('id','=',$order->id)->get()[0]->created_at)) }}</strong></td>
 										<td class="col-md-2">{{ '&euro; '.number_format($order->amount, 2,",",".") }}</td>
 										<td class="col-md-2">{{ $order->status }}</td>
-										<td class="col-md-6">{{ $order->description }}</td>
+										<td class="col-md-4">{{ $order->description }}</td>
+										<td class="col-md-2">{{ $order->method }}</td>
 									</tr>
 									@endforeach
 								</tbody>

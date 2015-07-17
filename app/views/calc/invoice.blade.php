@@ -209,9 +209,30 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 		@endif
 
 	<div class="pull-right">
+		@if (!$invoice->invoice_close)
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
-
-		<button class="btn btn-primary osave">Factureren</button>
+		<?php
+		if (!$project->project_close) {
+			$prev = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->orderBy('priority', 'desc')->first();
+			if ($prev && $prev->invoice_close) {
+				echo '<button class="btn btn-primary osave">Factureren</button>';
+			} else if (!$prev) {
+				echo '<button class="btn btn-primary osave">Factureren</button>';
+			}
+		}
+		?>
+		@else
+		<div class="btn-group">
+		  <a target="blank" href="/invoice/pdf/project-{{ $project->id }}/invoice-{{ $invoice->id }}" class="btn btn-primary">PDF</a>
+		  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    <span class="caret"></span>
+		    <span class="sr-only">Toggle Dropdown</span>
+		  </button>
+		  <ul class="dropdown-menu">
+		    <li><a href="/invoice/pdf/project-{{ $project->id }}/invoice-{{ $invoice->id }}/download?file={{ InvoiceController::getInvoiceCode($project->id).'-invoice.pdf' }}">Download</a></li>
+		  </ul>
+		</div>
+		@endif
 	</div>
 
 	<!-- modal dialog -->
@@ -607,7 +628,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 							<!-- table items -->
 							<tbody>
 								<tr><!-- item -->
-									<td class="col-md-6">Calculatief te offereren (excl. BTW)</td>
+									<td class="col-md-6">Calculatief te factureren (excl. BTW)</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalProject($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
@@ -643,7 +664,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalProjectTax($project), 2, ",",".") }}</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6"><strong>Calculatief te offereren (Incl. BTW)</strong></td>
+									<td class="col-md-6"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2"><strong>{{ '&euro; '.number_format(ResultEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
@@ -995,14 +1016,13 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<th class="col-md-1"><span class="pull-right">Materiaal</th>
 											<th class="col-md-1"><span class="pull-right">Materieel</th>
 											<th class="col-md-1"><span class="pull-right">Totaal</th>
-											<th class="col-md-1"><span class="text-center"></th>
 										</tr>
 									</thead>
 
 									<!-- table items -->
 									<tbody>
 										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->get() as $activity)
+										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->whereNull('detail_id')->get() as $activity)
 										<tr><!-- item -->
 											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 											<td class="col-md-3">{{ $activity->activity_name }}</td>
@@ -1011,7 +1031,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-											<td class="col-md-1"></td>
 										</tr>
 										@endforeach
 										@endforeach
@@ -1023,7 +1042,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
-											<th class="col-md-1">&nbsp;</th>
 										</tr>
 									</tbody>
 								</table>
@@ -1041,14 +1059,13 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<th class="col-md-1"><span class="pull-right">Materiaal</th>
 											<th class="col-md-1"><span class="pull-right">Materieel</th>
 											<th class="col-md-1"><span class="pull-right">Totaal</th>
-											<th class="col-md-1"><span class="text-center"></th>
 										</tr>
 									</thead>
 
 									<!-- table items -->
 									<tbody>
 										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->get() as $activity)
+										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->whereNull('detail_id')->get() as $activity)
 										<tr><!-- item -->
 											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 											<td class="col-md-3">{{ $activity->activity_name }}</td>
@@ -1057,7 +1074,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
-											<td class="col-md-1"></td>
 										</tr>
 										@endforeach
 										@endforeach
@@ -1069,7 +1085,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
-											<th class="col-md-1">&nbsp;</th>
 										</tr>
 									</tbody>
 								</table>
@@ -1087,7 +1102,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
 											<th class="col-md-1"><span class="pull-right">Materieel</span></th>
 											<th class="col-md-1"><span class="pull-right">Totaal</span></th>
-											<th class="col-md-1">&nbsp;</th>
 										</tr>
 									</thead>
 
@@ -1101,7 +1115,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
-											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
@@ -1122,14 +1135,13 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<th class="col-md-1"><span class="pull-right">Materiaal</th>
 											<th class="col-md-1"><span class="pull-right">Materieel</th>
 											<th class="col-md-1"><span class="pull-right">Totaal</th>
-											<th class="col-md-1"><span class="text-center"></th>
 										</tr>
 									</thead>
 
 									<!-- table items -->
 									<tbody>
 										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->get() as $activity)
+										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->whereNull('detail_id')->get() as $activity)
 										<tr><!-- item -->
 											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 											<td class="col-md-3">{{ $activity->activity_name }}</td>
@@ -1138,12 +1150,11 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-											<td class="col-md-1"></td>
 										</tr>
 										@endforeach
 										@endforeach
 										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->get() as $activity)
+										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->whereNull('detail_id')->get() as $activity)
 										<tr><!-- item -->
 											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 											<td class="col-md-3">{{ $activity->activity_name }}</td>
@@ -1152,7 +1163,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
-											<td class="col-md-1"></td>
 										</tr>
 										@endforeach
 										@endforeach
@@ -1172,7 +1182,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
 											<th class="col-md-1"><span class="pull-right">Materieel</span></th>
 											<th class="col-md-1"><span class="pull-right">Totaal</span></th>
-											<th class="col-md-1">&nbsp;</th>
 										</tr>
 									</thead>
 
@@ -1186,7 +1195,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
-											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
@@ -1233,7 +1241,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<th class="col-md-1"><span class="pull-right">Materiaal</th>
 											<th class="col-md-1"><span class="pull-right">Materieel</th>
 											<th class="col-md-1"><span class="pull-right">Totaal</th>
-											<th class="col-md-1"><span class="text-center"></th>
 										</tr>
 									</thead>
 
@@ -1241,6 +1248,10 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<tbody>
 										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+										<?php
+											if (!EstimateOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip))
+												continue;
+										?>
 										<tr><!-- item -->
 											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 											<td class="col-md-3">{{ $activity->activity_name }}</td>
@@ -1249,8 +1260,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-											<td class="col-md-1"></td>
-										</tr>
+											</tr>
 										@endforeach
 										@endforeach
 										<tr><!-- item -->
@@ -1261,7 +1271,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
-											<th class="col-md-1">&nbsp;</th>
 										</tr>
 									</tbody>
 								</table>
@@ -1279,7 +1288,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<th class="col-md-1"><span class="pull-right">Materiaal</th>
 											<th class="col-md-1"><span class="pull-right">Materieel</th>
 											<th class="col-md-1"><span class="pull-right">Totaal</th>
-											<th class="col-md-1"><span class="text-center"></th>
 										</tr>
 									</thead>
 
@@ -1287,6 +1295,10 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<tbody>
 										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+										<?php
+											if (!EstimateOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip))
+												continue;
+										?>
 										<tr><!-- item -->
 											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 											<td class="col-md-3">{{ $activity->activity_name }}</td>
@@ -1295,7 +1307,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
-											<td class="col-md-1"></td>
 										</tr>
 										@endforeach
 										@endforeach
@@ -1307,7 +1318,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
-											<th class="col-md-1">&nbsp;</th>
 										</tr>
 									</tbody>
 								</table>
@@ -1325,7 +1335,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
 											<th class="col-md-1"><span class="pull-right">Materieel</span></th>
 											<th class="col-md-1"><span class="pull-right">Totaal</span></th>
-											<th class="col-md-1">&nbsp;</th>
 										</tr>
 									</thead>
 
@@ -1339,7 +1348,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::superTotal($project), 2, ",",".") }}</span></td>
-											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
@@ -1360,7 +1368,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<th class="col-md-1"><span class="pull-right">Materiaal</th>
 											<th class="col-md-1"><span class="pull-right">Materieel</th>
 											<th class="col-md-1"><span class="pull-right">Totaal</th>
-											<th class="col-md-1"><span class="text-center"></th>
 										</tr>
 									</thead>
 
@@ -1368,6 +1375,10 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<tbody>
 										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+										<?php
+											if (!EstimateOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip))
+												continue;
+										?>
 										<tr><!-- item -->
 											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 											<td class="col-md-3">{{ $activity->activity_name }}</td>
@@ -1376,12 +1387,15 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-											<td class="col-md-1"></td>
 										</tr>
 										@endforeach
 										@endforeach
 										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+										<?php
+											if (!EstimateOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip))
+												continue;
+										?>
 										<tr><!-- item -->
 											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 											<td class="col-md-3">{{ $activity->activity_name }}</td>
@@ -1390,7 +1404,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
-											<td class="col-md-1"></td>
 										</tr>
 										@endforeach
 										@endforeach
@@ -1410,7 +1423,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
 											<th class="col-md-1"><span class="pull-right">Materieel</span></th>
 											<th class="col-md-1"><span class="pull-right">Totaal</span></th>
-											<th class="col-md-1">&nbsp;</th>
 										</tr>
 									</thead>
 
@@ -1424,7 +1436,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::superTotal($project), 2, ",",".") }}</span></td>
-											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
@@ -1471,7 +1482,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<th class="col-md-1"><span class="pull-right">Materiaal</th>
 											<th class="col-md-1"><span class="pull-right">Materieel</th>
 											<th class="col-md-1"><span class="pull-right">Totaal</th>
-											<th class="col-md-1"><span class="text-center"></th>
 										</tr>
 									</thead>
 
@@ -1479,6 +1489,10 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<tbody>
 										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+										<?php
+											if (!LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip))
+												continue;
+										?>
 										<tr><!-- item -->
 											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 											<td class="col-md-3">{{ $activity->activity_name }}</td>
@@ -1487,7 +1501,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-											<td class="col-md-1"></td>
 										</tr>
 										@endforeach
 										@endforeach
@@ -1499,7 +1512,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
-											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
@@ -1517,7 +1529,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<th class="col-md-1"><span class="pull-right">Materiaal</th>
 											<th class="col-md-1"><span class="pull-right">Materieel</th>
 											<th class="col-md-1"><span class="pull-right">Totaal</th>
-											<th class="col-md-1"><span class="text-center"></th>
 										</tr>
 									</thead>
 
@@ -1525,6 +1536,10 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<tbody>
 										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+										<?php
+											if (!LessOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip))
+												continue;
+										?>
 										<tr><!-- item -->
 											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 											<td class="col-md-3">{{ $activity->activity_name }}</td>
@@ -1533,7 +1548,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
-											<td class="col-md-1"></td>
 										</tr>
 										@endforeach
 										@endforeach
@@ -1545,8 +1559,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
-											<td class="col-md-1">&nbsp;</td>
-										</tr>
+											</tr>
 									</tbody>
 								</table>
 
@@ -1563,7 +1576,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
 											<th class="col-md-1"><span class="pull-right">Materieel</span></th>
 											<th class="col-md-1"><span class="pull-right">Totaal</span></th>
-											<th class="col-md-1">&nbsp;</th>
 										</tr>
 									</thead>
 
@@ -1577,7 +1589,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::superTotal($project), 2, ",",".") }}</span></td>
-											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
@@ -1598,7 +1609,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<th class="col-md-1"><span class="pull-right">Materiaal</th>
 											<th class="col-md-1"><span class="pull-right">Materieel</th>
 											<th class="col-md-1"><span class="pull-right">Totaal</th>
-											<th class="col-md-1"><span class="text-center"></th>
 										</tr>
 									</thead>
 
@@ -1606,6 +1616,10 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<tbody>
 										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+										<?php
+											if (!LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip))
+												continue;
+										?>
 										<tr><!-- item -->
 											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 											<td class="col-md-3">{{ $activity->activity_name }}</td>
@@ -1614,12 +1628,15 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-											<td class="col-md-1"></td>
 										</tr>
 										@endforeach
 										@endforeach
 										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+										<?php
+											if (!LessOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip))
+												continue;
+										?>
 										<tr><!-- item -->
 											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 											<td class="col-md-3">{{ $activity->activity_name }}</td>
@@ -1628,7 +1645,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
-											<td class="col-md-1"></td>
 										</tr>
 										@endforeach
 										@endforeach
@@ -1648,7 +1664,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
 											<th class="col-md-1"><span class="pull-right">Materieel</span></th>
 											<th class="col-md-1"><span class="pull-right">Totaal</span></th>
-											<th class="col-md-1">&nbsp;</th>
 										</tr>
 									</thead>
 
@@ -1662,7 +1677,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::superTotal($project), 2, ",",".") }}</span></td>
-											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
@@ -1709,14 +1723,13 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<th class="col-md-1"><span class="pull-right">Materiaal</th>
 											<th class="col-md-1"><span class="pull-right">Materieel</th>
 											<th class="col-md-1"><span class="pull-right">Totaal</th>
-											<th class="col-md-1"><span class="text-center"></th>
 										</tr>
 									</thead>
 
 									<!-- table items -->
 									<tbody>
 										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
 										<tr><!-- item -->
 											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 											<td class="col-md-3">{{ $activity->activity_name }}</td>
@@ -1725,7 +1738,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(MoreOverview::materialActivityProfit($activity, $project->profit_more_contr_mat), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::equipmentActivityProfit($activity, $project->profit_more_contr_equip), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::activityTotalProfit($activity, $project->profit_more_contr_mat, $project->profit_more_contr_equip), 2, ",",".") }} </td>
-											<td class="col-md-1"></td>
 										</tr>
 										@endforeach
 										@endforeach
@@ -1737,7 +1749,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
-											<th class="col-md-1">&nbsp;</th>
 										</tr>
 									</tbody>
 								</table>
@@ -1755,14 +1766,13 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<th class="col-md-1"><span class="pull-right">Materiaal</th>
 											<th class="col-md-1"><span class="pull-right">Materieel</th>
 											<th class="col-md-1"><span class="pull-right">Totaal</th>
-											<th class="col-md-1"><span class="text-center"></th>
 										</tr>
 									</thead>
 
 									<!-- table items -->
 									<tbody>
 										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
 										<tr><!-- item -->
 											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 											<td class="col-md-3">{{ $activity->activity_name }}</td>
@@ -1771,7 +1781,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(MoreOverview::materialActivityProfit($activity, $project->profit_more_subcontr_mat), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::equipmentActivityProfit($activity, $project->profit_more_subcontr_equip), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::activityTotalProfit($activity, $project->profit_more_subcontr_mat, $project->profit_more_subcontr_equip), 2, ",",".") }} </td>
-											<td class="col-md-1"></td>
 										</tr>
 										@endforeach
 										@endforeach
@@ -1783,7 +1792,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
 											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
-											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
@@ -1801,7 +1809,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
 											<th class="col-md-1"><span class="pull-right">Materieel</span></th>
 											<th class="col-md-1"><span class="pull-right">Totaal</span></th>
-											<th class="col-md-1">&nbsp;</th>
 										</tr>
 									</thead>
 
@@ -1815,7 +1822,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::superTotal($project), 2, ",",".") }}</span></td>
-											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
@@ -1836,14 +1842,13 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<th class="col-md-1"><span class="pull-right">Materiaal</th>
 											<th class="col-md-1"><span class="pull-right">Materieel</th>
 											<th class="col-md-1"><span class="pull-right">Totaal</th>
-											<th class="col-md-1"><span class="text-center"></th>
-										</tr>
+												</tr>
 									</thead>
 
 									<!-- table items -->
 									<tbody>
 										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
 										<tr><!-- item -->
 											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 											<td class="col-md-3">{{ $activity->activity_name }}</td>
@@ -1852,12 +1857,11 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(MoreOverview::materialActivityProfit($activity, $project->profit_more_contr_mat), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::equipmentActivityProfit($activity, $project->profit_more_contr_equip), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::activityTotalProfit($activity, $project->profit_more_contr_mat, $project->profit_more_contr_equip), 2, ",",".") }} </td>
-											<td class="col-md-1"></td>
 										</tr>
 										@endforeach
 										@endforeach
 										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
 										<tr><!-- item -->
 											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 											<td class="col-md-3">{{ $activity->activity_name }}</td>
@@ -1866,7 +1870,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(MoreOverview::materialActivityProfit($activity, $project->profit_more_subcontr_mat), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::equipmentActivityProfit($activity, $project->profit_more_subcontr_equip), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::activityTotalProfit($activity, $project->profit_more_subcontr_mat, $project->profit_more_subcontr_equip), 2, ",",".") }} </td>
-											<td class="col-md-1"></td>
 										</tr>
 										@endforeach
 										@endforeach
@@ -1886,7 +1889,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
 											<th class="col-md-1"><span class="pull-right">Materieel</span></th>
 											<th class="col-md-1"><span class="pull-right">Totaal</span></th>
-											<th class="col-md-1">&nbsp;</th>
 										</tr>
 									</thead>
 
@@ -1900,7 +1902,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
 											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::superTotal($project), 2, ",",".") }}</span></td>
-											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
 								</table>
@@ -2027,9 +2028,30 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 				<div class="col-sm-6 text-right">
 
 					<div class="padding20">
+						@if (!$invoice->invoice_close)
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
-
-						<button class="btn btn-primary osave">Factureren</button>
+						<?php
+						if (!$project->project_close) {
+							$prev = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->orderBy('priority', 'desc')->first();
+							if ($prev && $prev->invoice_close) {
+								echo '<button class="btn btn-primary osave">Factureren</button>';
+							} else if (!$prev) {
+								echo '<button class="btn btn-primary osave">Factureren</button>';
+							}
+						}
+						?>
+						@else
+						<div class="btn-group">
+						  <a target="blank" href="/invoice/pdf/project-{{ $project->id }}/invoice-{{ $invoice->id }}" class="btn btn-primary">PDF</a>
+						  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    <span class="caret"></span>
+						    <span class="sr-only">Toggle Dropdown</span>
+						  </button>
+						  <ul class="dropdown-menu">
+						    <li><a href="/invoice/pdf/project-{{ $project->id }}/invoice-{{ $invoice->id }}/download?file={{ InvoiceController::getInvoiceCode($project->id).'-invoice.pdf' }}">Download</a></li>
+						  </ul>
+						</div>
+						@endif
 					</div>
 
 				</div>

@@ -8,7 +8,8 @@
 		"Nathanmac/Parser": "2.*",
 		"intervention/image": "dev-master",
 		"barryvdh/laravel-snappy": "0.1.x",
-		"mollie/mollie-api-php": "1.2.x"
+		"mollie/mollie-api-php": "1.2.x",
+		"bogardo/mailgun": "3.1.*"
 	},
 	"autoload": {
 		"classmap": [

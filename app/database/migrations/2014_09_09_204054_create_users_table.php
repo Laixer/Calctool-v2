@@ -106,18 +106,6 @@ class CreateUsersTable extends Migration {
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
 		});
 
-		Schema::create('payment', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->date('payment_date');
-			$table->date('due_date');
-			$table->decimal('amount', 9, 2)->index();
-			$table->boolean('payed')->default('N');
-			$table->text('note')->nullable();
-			$table->integer('user_id')->unsigned();
-			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
-		});
-
 		Schema::create('project_type', function(Blueprint $table)
 		{
 			$table->increments('id');
@@ -169,6 +157,7 @@ class CreateUsersTable extends Migration {
 			$table->string('file_location', 120)->unique();
 			$table->integer('file_size')->unsigned();
 			$table->text('description')->nullable();
+			$table->boolean('unlinked')->default('N');
 			$table->nullableTimestamps();
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
@@ -176,7 +165,7 @@ class CreateUsersTable extends Migration {
 			$table->foreign('project_id')->references('id')->on('project')->onUpdate('cascade')->onDelete('cascade');
 		});
 
-		Schema::create('order', function(Blueprint $table)
+		Schema::create('payment', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->string('transaction', 16);
@@ -184,6 +173,7 @@ class CreateUsersTable extends Migration {
 			$table->string('status', 16);
 			$table->decimal('amount', 9, 2);
 			$table->string('description', 100);
+			$table->string('method', 25);
 			$table->integer('increment');
 			$table->timestamps();
 			$table->integer('user_id')->unsigned();
@@ -207,9 +197,9 @@ class CreateUsersTable extends Migration {
 	public function down()
 	{
 
-		Schema::table('order', function(Blueprint $table)
+		Schema::table('payment', function(Blueprint $table)
 		{
-			Schema::drop('order');
+			Schema::drop('payment');
 		});
 
 		Schema::table('resource', function(Blueprint $table)
@@ -225,11 +215,6 @@ class CreateUsersTable extends Migration {
 		Schema::table('project_type', function(Blueprint $table)
 		{
 			Schema::drop('project_type');
-		});
-
-		Schema::table('payment', function(Blueprint $table)
-		{
-			Schema::drop('payment');
 		});
 
 		Schema::table('iban', function(Blueprint $table)

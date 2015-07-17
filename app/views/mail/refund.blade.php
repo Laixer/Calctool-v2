@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<title>Calctool - Wachtwoord vergeten</title>
+		<title>CalcTool.nl - Terugstorting</title>
 	</head>
 
 	<body style="margin:0; margin-top:30px; margin-bottom:30px; padding:0; width:100%; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; background-color: #F4F5F7;">
@@ -51,20 +51,8 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Je hebt zojuist een verzoek ingediend voor het resetten van je wachtwoord van je gebruikersaccount van de <strong>CalcTool.nl</strong>.
-
-														Klik hieronder op wachtwoord herstellen om je wachtwoord te resetten.
-													</td>
-												</tr>
-												<tr><!-- spacer after the line -->
-													<td width="100%" height="20"></td>
-												</tr>
-												<tr>
-													<!--<td width="100%" height="15"></td>-->
-													<td width="100%" style="text-align:center;">
-														<a href="{{ URL::to('password/' . $api . '/' . $token) }}" style="text-decoration:none; font-family: helvetica, Arial, sans-serif; font-size: 12px; letter-spacing: 0px; text-align: center; text-transform: uppercase; padding:10px; color:#ffffff; background-color:#79BB00; border-radius:6px;">
-															Wachtwoord resetten
-														</a>
+														Het volledige bedrag van {{ $amount }} is teruggestort.
+														Het abonnement is hierop aangepast.
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->
@@ -72,10 +60,9 @@
 												</tr>
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
-														Indien je geen verzoek hebt ingediend voor het reseetten van je wachtwoord kunn je deze mail beschouwen als niet verzonden.
 														<br>
 														<br>
-															Met vriendelijke groet,k,
+															Met vriendelijke groet,
 														<br>
 														<br>
 															<strong>Cal</strong>, van de <a href="https://calctool.nl"><strong>CalcTool.nl</strong></a>

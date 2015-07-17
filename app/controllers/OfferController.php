@@ -49,7 +49,19 @@ class OfferController extends BaseController {
 			$offer->project_id = Route::Input('project_id');
 			$offer->resource_id = 1;
 
+			$options = [];
+			if (Input::get('toggle-note'))
+				$options['description'] = 1;
+			if (Input::get('toggle-subcontr'))
+				$options['total'] = 1;
+			if (Input::get('toggle-activity'))
+				$options['specification'] = 1;
+
+			$offer->option_query = http_build_query($options);
+
 			$offer->save();
+			Auth::user()->offer_counter++;
+			Auth::user()->save();
 
 			return Redirect::back()->with('success', 'Opgeslagen');
 		}
@@ -82,7 +94,7 @@ class OfferController extends BaseController {
 			for ($i=0; $i < $offer->invoice_quantity; $i++) {
 				$invoice = new Invoice;
 				$invoice->priority = $i;
-				$invoice->invoice_code = sprintf("%s%05d-CONCEPT-%s", Auth::user()->invoicenumber_prefix, 10000, date('y'));
+				$invoice->invoice_code = InvoiceController::getInvoiceCodeConcept(Input::get('project_id'));
 				$invoice->payment_condition = 1;
 				$invoice->offer_id = $offer->id;
 				if (($i+1) == $offer->invoice_quantity)
@@ -109,6 +121,7 @@ class OfferController extends BaseController {
 
 	}
 
+	/* id = $project->id */
 	public static function getOfferCode($id)
 	{
 		return sprintf("%s%05d-%03d-%s", Auth::user()->offernumber_prefix, $id, Auth::user()->offer_counter, date('y'));

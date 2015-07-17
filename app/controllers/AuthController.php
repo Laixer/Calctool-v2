@@ -104,7 +104,7 @@ class AuthController extends \BaseController {
 			$user->expiration_date = date('Y-m-d', strtotime("+1 month", time()));
 			$user->user_type = UserType::where('user_type','=','user')->first()->id;
 
-			Mail::queue('mail.confirm', array('api' => $user->api, 'token' => $user->token, 'username' => $user->username), function($message) {
+			Mailgun::send('mail.confirm', array('api' => $user->api, 'token' => $user->token, 'username' => $user->username), function($message) {
 				$message->to(Input::get('email'), strtolower(trim(Input::get('username'))))->subject('Calctool - Account activatie');
 			});
 
@@ -171,7 +171,7 @@ class AuthController extends \BaseController {
 		DemoProjectTemplate::setup($user->id);
 
 		Auth::login($user);
-		return Redirect::to('/');
+		return Redirect::to('/')->withCookie(Cookie::make('nstep', 'intro', 60*24*3));
 	}
 
 	/**
@@ -199,7 +199,7 @@ class AuthController extends \BaseController {
 			$user->api = md5(mt_rand());
 
 			$data = array('api' => $user->api, 'token' => $user->token, 'username' => $user->username);
-			Mail::queue('mail.password', $data, function($message) use ($data) {
+			Mailgun::send('mail.password', $data, function($message) use ($data) {
 				$message->to(Input::get('email'), strtolower(trim($data['username'])))->subject('Calctool - Wachtwoord herstellen');
 			});
 

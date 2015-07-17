@@ -27,6 +27,8 @@ Route::get('terms-and-conditions', function() { return View::make('generic.terms
 Route::get('privacy-policy', function() { return View::make('generic.privacy'); });
 Route::get('countdown', function() { return View::make('generic.countdown'); });
 
+Route::post('payment/webhook/', array('as' => 'payment.order', 'uses' => 'UserController@doPaymentUpdate'));
+
 Route::group(array('before' => 'auth'), function()
 {
 	/* Generic pages */
@@ -61,7 +63,6 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('invoice/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoiceAll'))->where('project_id', '[0-9]+');
 	Route::get('invoice/project-{project_id}/invoice-{invoice_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoice'))->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
 	Route::get('invoice/project-{project_id}/term-invoice-{invoice_id}', array('as' => 'invoice', 'uses' => 'CalcController@getTermInvoice'))->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
-	//Route::get('invoice/project-{project_id}/invoice-{invoice_id}/pdf', array('as' => 'invoicepdf', 'uses' => 'CalcController@getInvoicepdf'))->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
 	Route::post('invoice/close', array('as' => 'invoice', 'uses' => 'InvoiceController@doInvoiceClose'));
 	Route::post('invoice/pay', array('as' => 'invoice', 'uses' => 'InvoiceController@doInvoicePay'));
 	Route::post('invoice/term/add', array('as' => 'invoice', 'uses' => 'InvoiceController@doInvoiceNewTerm'));
@@ -71,13 +72,13 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('offer/project-{project_id}', array('as' => 'invoice', 'uses' => 'OfferController@doNewOffer'));
 	Route::post('offer/close', array('as' => 'invoice', 'uses' => 'OfferController@doOfferClose'));
 
-	Route::get('offer/raw/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOfferRaw'))->where('project_id', '[0-9]+');
 	Route::get('offer/pdf/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOfferPDF'))->where('project_id', '[0-9]+');
 	Route::get('offer/pdf/project-{project_id}/download', array('as' => 'invoice', 'uses' => 'CalcController@getOfferDownloadPDF'))->where('project_id', '[0-9]+');
 
-	Route::get('invoice/raw/project-{project_id}/invoice-{invoice_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoiceRaw'))->where('project_id', '[0-9]+');
 	Route::get('invoice/pdf/project-{project_id}/invoice-{invoice_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoicePDF'))->where('project_id', '[0-9]+');
 	Route::get('invoice/pdf/project-{project_id}/invoice-{invoice_id}/download', array('as' => 'invoice', 'uses' => 'CalcController@getInvoiceDownloadPDF'))->where('project_id', '[0-9]+');
+	Route::get('invoice/pdf/project-{project_id}/term-invoice-{invoice_id}', array('as' => 'invoice', 'uses' => 'CalcController@getTermInvoicePDF'))->where('project_id', '[0-9]+');
+	Route::get('invoice/pdf/project-{project_id}/term-invoice-{invoice_id}/download', array('as' => 'invoice', 'uses' => 'CalcController@getTermInvoiceDownloadPDF'))->where('project_id', '[0-9]+');
 
 	/* Calculation acions by calculation */
 	Route::post('calculation/calc/newmaterial', array('as' => 'calculation', 'uses' => 'CalcController@doNewCalculationMaterial'));
@@ -154,6 +155,11 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('relation-{relation_id}/contact-{contact_id}/edit', array('as' => 'contact.edit', 'uses' => 'RelationController@getEditContact'))->where('relation_id', '[0-9]+')->where('contact_id', '[0-9]+');
 	Route::get('mycompany', array('as' => 'mycompany', 'uses' => 'RelationController@getMyCompany'));
 	Route::post('mycompany/iban/update', array('as' => 'iban.update', 'uses' => 'UserController@doUpdateIban'));
+	Route::post('mycompany/contact/new', array('as' => 'relation.new', 'uses' => 'RelationController@doMyCompanyNewContact'));
+	Route::get('mycompany/contact/new', function(){
+		return View::make('user.mycompany_contact');
+	});
+
 	Route::post('relation/updatemycompany', array('as' => 'relation.update', 'uses' => 'RelationController@doUpdateMyCompany'));
 	Route::post('relation/newmycompany', array('as' => 'relation.new', 'uses' => 'RelationController@doNewMyCompany'));
 	Route::post('relation/logo/save', array('as' => 'relation.logo', 'uses' => 'RelationController@doNewLogo'));
@@ -185,10 +191,33 @@ Route::group(array('before' => 'admin'), function()
 	/* Admin */
 	Route::get('admin', array('as' => 'admin', 'uses' => 'AdminController@getDashboard'));
 	Route::get('admin/user/new', array('as' => 'user', 'uses' => 'UserController@getNew'));
-	Route::post('admin/user/new', array('as' => 'user', 'uses' => 'UserController@doNew'));
+	Route::post('admin/user/new', array('as' => 'user', 'uses' => 'AdminController@doNewUser'));
 	Route::get('admin/user', array('as' => 'user', 'uses' => 'UserController@getAll'));
+	Route::get('admin/user-{user_id}/edit', function() {
+		return View::make('admin.edit_user');
+	});
+	Route::get('admin/user-{user_id}/switch', array('as' => 'user', 'uses' => 'AdminController@getSwitchSession'));
+	Route::post('admin/user-{user_id}/edit', array('as' => 'user', 'uses' => 'AdminController@doUpdateUser'));
 	Route::get('admin/alert', array('as' => 'user', 'uses' => 'AdminController@getAlert'));
 	Route::post('admin/alert/new', array('as' => 'user', 'uses' => 'AdminController@doNewAlert'));
 	Route::post('admin/alert/delete', array('as' => 'user', 'uses' => 'AdminController@doDeleteAlert'));
 	Route::get('admin/phpinfo', array('as' => 'user', 'uses' => 'AdminController@getPHPInfo'));
+	Route::post('admin/transaction/{transcode}/refund', array('as' => 'user', 'uses' => 'AdminController@doRefund'));
+	Route::get('admin/payment', function() {
+		return View::make('admin.transaction');
+	});
+	Route::get('admin/transaction/{transcode}', function() {
+		return View::make('admin.transaction_code');
+	});
+	Route::get('admin/environment', function() {
+		return View::make('admin.server');
+	});
+	Route::get('admin/resource', function() {
+		return View::make('admin.resource');
+	});
+	Route::post('admin/resource/delete', array('as' => 'user', 'uses' => 'AdminController@doDeleteResource'));
+	Route::get('admin/log', function() {
+		return View::make('admin.log');
+	});
+	Route::get('admin/log/truncate', array('as' => 'user', 'uses' => 'AdminController@doTruncateLog'));
 });

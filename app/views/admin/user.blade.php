@@ -13,6 +13,16 @@ function userStatus($user)
 		return "Actief";
 	return "Inactief";
 }
+function userActive($user) {
+	$time_updated = strtotime(DB::table('user_account')->select('updated_at')->where('id','=',$user->id)->get()[0]->updated_at);
+	if (time()-$time_updated < 120)
+		return 'Online';
+	if (time()-$time_updated < 3600)
+		return floor((time()-$time_updated)/60) .' minuten geleden';
+	if (time()-$time_updated < 43200)
+		return floor((time()-$time_updated)/3600) .' uur geleden';
+	return date('d-m-Y H:i:s', $time_updated);
+}
 ?>
 <?# -- WRAPPER -- ?>
 <div id="wrapper">
@@ -20,6 +30,15 @@ function userStatus($user)
 	<section class="container">
 
 		<div class="col-md-12">
+
+			<div>
+			<ol class="breadcrumb">
+			  <li><a href="/">Home</a></li>
+			  <li><a href="/admin">Admin CP</a></li>
+			  <li class="active">Gebruikers</li>
+			</ol>
+			<div>
+			<br />
 
 			<h2><strong>Gebruikers</strong></h2>
 
@@ -40,12 +59,12 @@ function userStatus($user)
 				<tbody>
 				@foreach (User::orderBy('created_at')->get() as $users)
 					<tr>
-						<td class="col-md-3">{{ HTML::link('/user-'.$users->id.'/edit', $users->username) . ' (' . $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '') . ')' }}</td>
+						<td class="col-md-3">{{ (UserType::find($users->user_type)->user_type=='system') ? $users->username : HTML::link('/admin/user-'.$users->id.'/edit', $users->username) . ' (' . $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '') . ')' }}</td>
 						<td class="col-md-2">{{ $users->ip }}</td>
 						<td class="col-md-2">{{ $users->email }}</td>
 						<td class="col-md-2">{{ userStatus($users) }}</td>
 						<td class="col-md-1">{{ ucfirst(UserType::find($users->user_type)->user_type) }}</td>
-						<td class="col-md-2">{{ date('d-m-Y H:i:s', strtotime(DB::table('user_account')->select('updated_at')->where('id','=',$users->id)->get()[0]->updated_at)) }}</td>
+						<td class="col-md-2">{{ userActive($users) }}</td>
 					</tr>
 				@endforeach
 				</tbody>

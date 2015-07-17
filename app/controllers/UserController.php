@@ -46,7 +46,7 @@ class UserController extends \BaseController {
 		} else {
 
 			$mollie = new Mollie_API_Client;
-			$mollie->setApiKey("test_GgXY6mWGW56AAfgC6NDBDXf4bCMfpz");
+			$mollie->setApiKey($_ENV['MOLLIE_API']);
 
 			$amount = 0;
 			$description = 'None';
@@ -72,6 +72,11 @@ class UserController extends \BaseController {
 					$description = 'Verleng met 12 maanden';
 					$increment_months = 12;
 					break;
+				case 13:
+					$amount = 1.95;
+					$description = 'Kaasbetaling';
+					$increment_months = 1;
+					break;
 				default:
 					$errors = new MessageBag(['status' => ['Geen geldige optie']]);
 					return Redirect::to('myaccount')->withErrors($errors);
@@ -82,16 +87,23 @@ class UserController extends \BaseController {
 			$payment = $mollie->payments->create(array(
 				"amount"      => $amount,
 				"description" => $description,
+				"webhookUrl" => url('payment/webhook/'),
 				"redirectUrl" => url('payment/order/'.$token),
+				"metadata"    => array(
+					"token" => $token,
+					"uid" => Auth::id(),
+					"incr" => $increment_months
+				),
 			));
 
-			$order = new Order;
+			$order = new Payment;
 			$order->transaction = $payment->id;
 			$order->token = $token;
 			$order->amount = $amount;
-			$order->status = 'PENDING';
+			$order->status = $payment->status;
 			$order->increment = $increment_months;
 			$order->description = $description;
+			$order->method = '';
 			$order->user_id = Auth::user()->id;
 
 			$order->save();
@@ -100,35 +112,71 @@ class UserController extends \BaseController {
 		}
 	}
 
+	public function doPaymentUpdate()
+	{
+		$order = Payment::where('transaction','=',Input::get('id'))->where('status','=','open')->first();
+		if (!$order) {
+			return;
+		}
+
+		$mollie = new Mollie_API_Client;
+		$mollie->setApiKey($_ENV['MOLLIE_API']);
+
+		$payment = $mollie->payments->get($order->transaction);
+		if ($payment->metadata->token != $order->token)
+			return;
+
+		if ($payment->metadata->uid != $order->user_id)
+			return;
+
+		$order->status = $payment->status;
+		$order->method = $payment->method;
+		$order->save();
+
+		if ($payment->isPaid()) {
+			$user = User::find($order->user_id);
+			$expdate = $user->expiration_date;
+			$user->expiration_date = date('Y-m-d', strtotime("+".$order->increment." month", strtotime($expdate)));
+
+			$data = array('email' => $user->email, 'amount' => number_format($order->amount, 2,",","."), 'expdate' => date('j F Y', strtotime($user->expiration_date)), 'username' => $user->username);
+			Mailgun::send('mail.paid', $data, function($message) use ($data) {
+				$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Abonement verlengt');
+			});
+
+			$user->save();
+		}
+		return json_encode(['success' => 1]);
+	}
+
 	public function getPaymentFinish()
 	{
-		$order = Order::where('token','=',Route::Input('token'))->where('status','=','PENDING')->first();
+		$order = Payment::where('token','=',Route::Input('token'))->first();
 		if (!$order) {
 			$errors = new MessageBag(['status' => ['Transactie niet geldig']]);
 			return Redirect::to('myaccount')->withErrors($errors);
 		}
 
 		$mollie = new Mollie_API_Client;
-		$mollie->setApiKey("test_GgXY6mWGW56AAfgC6NDBDXf4bCMfpz");
+		$mollie->setApiKey($_ENV['MOLLIE_API']);
 
 		$payment = $mollie->payments->get($order->transaction);
 		if ($payment->isPaid()) {
-			$order->status = 'COMPLETE';
+			return Redirect::to('myaccount')->with('success','Bedankt voor uw betaling');
+		} else if ($payment->isOpen() || $payment->isPending()) {
+			return Redirect::to('myaccount')->with('success','Betaling is nog niet bevestigd, dit kan enkele dagen duren');
+		} else if ($payment->isCancelled()) {
+			$order->status = $payment->status;
 			$order->save();
-		} else {
-			$order->status = 'CANCELED';
+			$errors = new MessageBag(['status' => ['Betaling is afgebroken']]);
+			return Redirect::to('myaccount')->withErrors($errors);
+		} else if ($payment->isExpired()) {
+			$order->status = $payment->status;
 			$order->save();
-			$errors = new MessageBag(['status' => ['Transactie niet afgerond']]);
+			$errors = new MessageBag(['status' => ['Betaling is verlopen']]);
 			return Redirect::to('myaccount')->withErrors($errors);
 		}
-		$user = Auth::user();
-		$expdate = $user->expiration_date;
-		//echo 'new date ' . date('Y-m-d', strtotime("+".$order->increment." month", strtotime($expdate)));
-		$user->expiration_date = date('Y-m-d', strtotime("+".$order->increment." month", strtotime($expdate)));
-
-		$user->save();
-
-		return Redirect::to('myaccount')->with('success','Betaald');
+		$errors = new MessageBag(['status' => ['Transactie niet afgerond ('.$payment->status.')']]);
+		return Redirect::to('myaccount')->withErrors($errors);
 	}
 
 	public function doUpdateSecurity()
@@ -158,7 +206,7 @@ class UserController extends \BaseController {
 			$user->save();
 
 			$data = array('email' => Auth::user()->email, 'username' => Auth::user()->username);
-			Mail::queue('mail.password_update', $data, function($message) use ($data) {
+			Mailgun::send('mail.password_update', $data, function($message) use ($data) {
 				$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Wachtwoord aangepast');
 			});
 
@@ -310,7 +358,7 @@ class UserController extends \BaseController {
 			$iban->save();
 
 			$data = array('email' => Auth::user()->email, 'username' => Auth::user()->username);
-			Mail::queue('mail.iban_update', $data, function($message) use ($data) {
+			Mailgun::send('mail.iban_update', $data, function($message) use ($data) {
 				$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Betaalgegevens aangepast');
 			});
 

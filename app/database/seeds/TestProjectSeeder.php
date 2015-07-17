@@ -111,17 +111,6 @@ class TestProjectSeeder extends Seeder {
 
 		$this->command->info('User created');
 
-		Payment::create(array(
-			'payment_date' => '07-03-2015',
-			'due_date' => '09-03-2015',
-			'amount' => '1250',
-			'payed' => 'N',
-			'note' => 'note on payment',
-			'user_id' => $test_user->id
-		));
-
-		$this->command->info('Payment created');
-
 		$test_resource1 = Resource::create(array(
 			'resource_name' => 'resource naam',
 			'file_location' => 'dit is natuurlijk een link',
