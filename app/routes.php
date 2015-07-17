@@ -211,4 +211,8 @@ Route::group(array('before' => 'admin'), function()
 		return View::make('admin.resource');
 	});
 	Route::post('admin/resource/delete', array('as' => 'user', 'uses' => 'AdminController@doDeleteResource'));
+	Route::get('admin/log', function() {
+		return View::make('admin.log');
+	});
+	Route::get('admin/log/truncate', array('as' => 'user', 'uses' => 'AdminController@doTruncateLog'));
 });

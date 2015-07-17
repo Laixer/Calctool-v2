@@ -332,4 +332,15 @@ class AdminController extends BaseController {
 		}
 	}
 
+
+	public function doTruncateLog()
+	{
+		if (!Auth::user()->isAdmin())
+			return Redirect::back();
+
+		File::put('../app/storage/logs/laravel.log', '');
+
+		return Redirect::back()->with('success', 1);
+	}
+
 }
