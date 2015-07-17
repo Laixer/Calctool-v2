@@ -40,6 +40,33 @@ $(document).ready(function() {
 			$(this).parent().removeClass('has-error');
 		}
 	});
+
+
+
+
+
+$(document).on('change', '.btn-file :file', function() {
+  var input = $(this),
+      numFiles = input.get(0).files ? input.get(0).files.length : 1,
+      label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+  input.trigger('fileselect', [numFiles, label]);
+});
+
+$(document).ready( function() {
+    $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+
+        var input = $(this).parents('.input-group').find(':text'),
+            log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+        if( input.length ) {
+            input.val(log);
+        } else {
+            if( log ) alert(log);
+        }
+
+    });
+});
+
 });
 </script>
 
@@ -230,7 +257,7 @@ $(document).ready(function() {
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="iban">IBAN rekeningnummer</label>
-										<input name="iban" id="iban" type="text" value="{{ Input::old('iban') ? Input::old('iban') : ($iban ? $iban->iban : '') }}" class="form-control"/>
+										<input name="iban" id="iban" type="text" value="{{ Input::old('iban') ? Input::old('iban') : ($iban ? $iban->iban : '') }}" {{ $relation ? '' : 'disabled' }} class="form-control"/>
 										<input type="hidden" name="id" id="id" value="{{ $iban ? $iban->id : ($relation ? $relation->id : '') }}"/>
 									</div>
 								</div>
@@ -238,13 +265,13 @@ $(document).ready(function() {
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="btw">Naam rekeninghouder</label>
-										<input name="iban_name" id="iban_name" type="text" value="{{ Input::old('iban_name') ? Input::old('iban_name') : ($iban ? $iban->iban_name : '') }}" class="form-control"/>
+										<input name="iban_name" id="iban_name" type="text" {{ $relation ? '' : 'disabled' }} value="{{ Input::old('iban_name') ? Input::old('iban_name') : ($iban ? $iban->iban_name : '') }}" class="form-control"/>
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-12">
-									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+									<button class="btn btn-primary {{ $relation ? '' : 'disabled' }}"><i class="fa fa-check"></i> Opslaan</button>
 								</div>
 							</div>
 							{{ Form::close() }}
@@ -282,7 +309,7 @@ $(document).ready(function() {
 							</table>
 							<div class="row">
 								<div class="col-md-12">
-									<a href="/relation-{{ $relation ? $relation->id : '' }}/contact/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
+									<a href="/relation-{{ $relation ? $relation->id : '' }}/contact/new" {{ $relation ? '' : 'disabled' }} class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
 								</div>
 							</div>
 						</div>
@@ -294,13 +321,20 @@ $(document).ready(function() {
 							{{ ($relation && $relation->logo_id) ? "<div><h5>Huidige logo</h5><img src=\"/".Resource::find($relation->logo_id)->file_location."\"/></div>" : '' }}
 
 							<div class="form-group">
-    							{{ Form::label('Afbeelding uploaden') }}
-    							{{ Form::file('image', null) }}
-							</div>
+								<label for="image">Afbeelding Uploaden</label>
+								<div class="input-group col-md-4">
+					                <span class="input-group-btn">
+					                    <span class="btn btn-primary btn-file {{ $relation ? '' : 'disabled' }}">
+					                        Browse&hellip; <input {{ $relation ? '' : 'disabled' }} name="image" type="file" multiple>
+					                    </span>
+					                </span>
+					                <input type="text" class="form-control" readonly>
+					            </div>
+				            </div>
 
 							<div class="row">
 								<div class="col-md-12">
-									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+									<button class="btn btn-primary {{ $relation ? '' : 'disabled' }}"><i class="fa fa-check"></i> Opslaan</button>
 								</div>
 							</div>
 
