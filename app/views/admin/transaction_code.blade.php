@@ -15,6 +15,16 @@ $payment = $mollie->payments->get(Route::Input('transcode'));
 
 		<div class="col-md-12">
 
+			<div>
+			<ol class="breadcrumb">
+			  <li><a href="/">Home</a></li>
+			  <li><a href="/admin">Admin CP</a></li>
+			  <li><a href="/admin/payment">Transacties & Betalingen</a></li>
+			  <li class="active">{{ Route::Input('transcode') }}</li>
+			</ol>
+			<div>
+			<br />
+
 			<h2><strong>Transactie {{ Route::Input('transcode') }}</strong></h2>
 
 			<div class="white-row">

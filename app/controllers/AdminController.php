@@ -114,4 +114,181 @@ class AdminController extends BaseController {
 
 	}
 
+	public function doNewUser()
+	{
+		$rules = array(
+			/* General */
+			'username' => array('required'),
+			'secret' => array('required'),
+			'type' => array('required'),
+
+			/* Contact */
+			'lastname' => array('max:50'),
+			'firstname' => array('max:30'),
+			'mobile' => array('numeric'),
+			'telephone' => array('numeric'),
+			'email' => array('required','email','max:80'),
+			'website' => array('url','max:180'),
+
+			/* Adress */
+			'address_street' => array('alpha','max:60'),
+			'address_number' => array('alpha_num','max:5'),
+			'address_zipcode' => array('size:6'),
+			'address_city' => array('alpha_num','max:35'),
+			'province' => array('numeric'),
+			'country' => array('numeric'),
+
+			'expdate' => array('required'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			// redirect our user back to the form with the errors from the validator
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+
+			/* General */
+			$user = new User;
+			$user->username = strtolower(trim(Input::get('username')));
+			$user->secret = Hash::make(Input::get('secret'));
+			$user->user_type = Input::get('type');
+
+			/* Server */
+			$user->api = md5(mt_rand());
+			$user->token = sha1($user->secret);
+			$user->referral_key = md5(mt_rand());
+			$user->ip = $_SERVER['REMOTE_ADDR'];
+
+			/* Contact */
+			if (Input::get('firstname'))
+				$user->firstname = Input::get('firstname');
+			else
+				$user->firstname = $user->username;
+			if (Input::get('lastname'))
+				$user->lastname = Input::get('lastname');
+			$user->email = Input::get('email');
+			if (Input::get('mobile'))
+				$user->mobile = Input::get('mobile');
+			if (Input::get('telephone'))
+				$user->phone = Input::get('telephone');
+			if (Input::get('website'))
+				$user->website = Input::get('website');
+
+			/* Adress */
+			if (Input::get('address_street'))
+				$user->address_street = Input::get('address_street');
+			if (Input::get('address_number'))
+				$user->address_number = Input::get('address_number');
+			if (Input::get('address_zipcode'))
+				$user->address_postal = Input::get('address_zipcode');
+			if (Input::get('address_city'))
+				$user->address_city = Input::get('address_city');
+			$user->province_id = Input::get('province');
+			$user->country_id = Input::get('country');
+
+			/* Overig */
+			$user->expiration_date = Input::get('expdate');
+			if (Input::get('note'))
+				$user->note = Input::get('note');
+			if (Input::get('confirmdate'))
+				$user->confirmed_mail = Input::get('confirmdate');
+			if (Input::get('bandate'))
+				$user->banned = Input::get('bandate');
+			if (Input::get('toggle-active'))
+				$user->active = true;
+			else
+				$user->active = false;
+			if (Input::get('toggle-api'))
+				$user->api_access = true;
+			else
+				$user->api_access = false;
+
+			$user->save();
+
+			return Redirect::back()->with('success', 1);
+		}
+	}
+
+	public function doUpdateUser()
+	{
+		$rules = array(
+			/* General */
+			'username' => array('required'),
+			'email' => array('required','email','max:80'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			// redirect our user back to the form with the errors from the validator
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+
+			/* General */
+			$user = User::find(Route::input('user_id'));
+			if (Input::get('username'))
+				$user->username = strtolower(trim(Input::get('username')));
+			if (Input::get('secret'))
+				$user->secret = Hash::make(Input::get('secret'));
+			if (Input::get('type'))
+				$user->user_type = Input::get('type');
+
+			/* Contact */
+			if (Input::get('firstname'))
+				$user->firstname = Input::get('firstname');
+			else
+				$user->firstname = $user->username;
+			if (Input::get('lastname'))
+				$user->lastname = Input::get('lastname');
+			if (Input::get('email'))
+				$user->email = Input::get('email');
+			if (Input::get('mobile'))
+				$user->mobile = Input::get('mobile');
+			if (Input::get('telephone'))
+				$user->phone = Input::get('telephone');
+			if (Input::get('website'))
+				$user->website = Input::get('website');
+
+			/* Adress */
+			if (Input::get('address_street'))
+				$user->address_street = Input::get('address_street');
+			if (Input::get('address_number'))
+				$user->address_number = Input::get('address_number');
+			if (Input::get('address_zipcode'))
+				$user->address_postal = Input::get('address_zipcode');
+			if (Input::get('address_city'))
+				$user->address_city = Input::get('address_city');
+			$user->province_id = Input::get('province');
+			$user->country_id = Input::get('country');
+
+			/* Overig */
+			if (Input::get('expdate'))
+				$user->expiration_date = Input::get('expdate');
+			if (Input::get('note'))
+				$user->note = Input::get('note');
+			if (Input::get('confirmdate'))
+				$user->confirmed_mail = Input::get('confirmdate');
+			if (Input::get('bandate'))
+				$user->banned = Input::get('bandate');
+			else
+				$user->banned = null;
+			if (Input::get('toggle-active'))
+				$user->active = true;
+			else
+				$user->active = false;
+			if (Input::get('toggle-api'))
+				$user->api_access = true;
+			else
+				$user->api_access = false;
+
+			$user->save();
+
+			return Redirect::back()->with('success', 1);
+		}
+	}
 }

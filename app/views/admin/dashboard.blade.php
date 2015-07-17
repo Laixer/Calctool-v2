@@ -78,6 +78,25 @@
 						<div class="col-sm-6 col-md-3"><!-- item -->
 							<div class="item-box item-box-show fixed-box">
 								<figure>
+									<a class="item-hover" href="/admin/resource">
+										<span class="overlay color2"></span>
+										<span class="inner">
+											<span class="block fa fa-file fsize60"></span>
+											<strong>Bestanden</strong>
+										</span>
+									</a>
+									<a href="/admin/resource" class="btn btn-primary add_to_cart"><i class="fa fa-file"></i> Bestandsbeheer</a>
+								</figure>
+								<div class="item-box-desc">
+									<a href="/admin/resource"><h4>Bestanden</h4></a>
+									<small class="styleColor">{{ Resource::count() }} bestanden</small>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-md-3"><!-- item -->
+							<div class="item-box item-box-show fixed-box">
+								<figure>
 									<a class="item-hover" href="/admin/environment">
 										<span class="overlay color2"></span>
 										<span class="inner">
@@ -107,6 +126,26 @@
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/phpinfo" ><h4>PHP Info</h4></a>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-md-3"><!-- item -->
+							<div class="item-box item-box-show fixed-box">
+								<figure>
+									<a class="item-hover" href="/admin/support">
+										<span class="overlay color2"></span>
+										<span class="inner">
+											<span class="block fa fa-question-circle fsize60"></span>
+											<strong>Support & Ondersteuning</strong>
+										</span>
+									</a>
+									<a href="/admin/support" class="btn btn-primary add_to_cart"><i class="fa fa-question-circle"></i> Ticketsysteem</a>
+								</figure>
+								<div class="item-box-desc">
+									<a href="/admin/support" ><h4>Support & Ondersteuning</h4></a>
+									<small class="styleColor">{{ Resource::count() }} nieuwe tickets</small>
+									<small class="styleColor">{{ Resource::count() }} open tickets</small>
 								</div>
 							</div>
 						</div>
