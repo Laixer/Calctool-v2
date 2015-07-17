@@ -17,12 +17,18 @@ class DemoProjectTemplate {
 
 		$relation = new Relation;
 		$relation->company_name		= 'Demo bedrijf';
-		$relation->address_street	= 'Dorpsstraat';
-		$relation->address_number	= '7';
-		$relation->address_postal	= '3184EA';
-		$relation->address_city		= 'Schiedam';
-		$relation->debtor_code 		= 'CPTEA72';
-		$relation->note 			= 'Dit is een voorbeeld relatie';
+		$relation->address_street	= 'Demostraat';
+		$relation->address_number	= '1';
+		$relation->address_postal	= '1234DE';
+		$relation->address_city		= 'Demostad';
+		$relation->debtor_code 		= 'DEMO123';
+		$relation->kvk		 		= '1234567890';
+		$relation->btw 				= 'NL1234567890B1';
+		$relation->note 			= 'Dit is een demo relatie';
+		$relation->email 			= 'demo@relatie.nl';
+		$relation->mobile 			= '0611111111';
+		$relation->phone 			= '0101111111';
+		$relation->website 			= 'http://www.demobedrijf.nl';
 		$relation->user_id 			= $userid;
 		$relation->type_id 			= $relationtype->id;
 		$relation->kind_id 			= $relationkind->id;
@@ -33,12 +39,12 @@ class DemoProjectTemplate {
 
 		$project = new Project;
 		$project->project_name 		= 'Demo project';
-		$project->address_street 	= 'Coolsingel';
-		$project->address_number 	= '40A';
-		$project->address_postal 	= '3174EA';
-		$project->address_city 		= 'Rotterdam';
-		$project->note 				= 'Dit is een voorbeeld project';
-		$project->hour_rate 		= 25;
+		$project->address_street 	= 'Demolaan';
+		$project->address_number 	= '2';
+		$project->address_postal 	= '5678MO';
+		$project->address_city 		= 'Demodorp';
+		$project->note 				= 'Dit is een demo project';
+		$project->hour_rate 		= 35;
 		$project->user_id 			= $userid;
 		$project->province_id 		= $province->id;
 		$project->country_id 		= $country->id;
@@ -48,13 +54,23 @@ class DemoProjectTemplate {
 		$project->save();
 
 		$contact = new Contact;
-		$contact->firstname 		= 'Stoffer';
-		$contact->lastname 			= 'Blik';
-		$contact->email 			= 'stoffer@blik.nl';
-		$contact->note 				= 'Voorbeeld contactpersoon';
+		$contact->firstname 		= 'Demo';
+		$contact->lastname 			= 'Eigenaar';
+		$contact->email 			= 'demo@eigenaar.nl';
+		$contact->mobile 			= '0622222222';
+		$contact->phone 			= '0102222222';
+		$contact->note 				= 'Demo contactpersoon van relatie';
 		$contact->relation_id 		= $relation->id;
 		$contact->function_id 		= $contact_function->id;
 
 		$contact->save();
+
+		$iban = new Iban;
+		$iban->iban					='NL45ING0111111111';
+		$iban->iban_name			='Demo Eigenaar';
+		$iban->user_id				= $userid;
+		$iban->relation_id			= $relation->id;
+
+		$iban->save();
 	}
  }
