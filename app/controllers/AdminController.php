@@ -103,14 +103,25 @@ class AdminController extends BaseController {
 			if ($subtract > ($payment->amount-$payment->amountRefunded))
 				return Redirect::back()->withErrors($validator)->withInput(Input::all());
 
-			$x = $mollie->payments->refund($payment, $subtract);
-
-			print_r($x);
-			exit();
+			$mollie->payments->refund($payment, $subtract);
 
 			$order = Payment::where('transaction','=',$payment->id)->first();
 			$order->status = $payment->status;
+			$order->amount = $payment->amountRefunded;
 			$order->save();
+
+			if ($payment->amountRefunded == $payment->amount) {
+				$user = User::find($order->user_id);
+				$expdate = $user->expiration_date;
+				$user->expiration_date = date('Y-m-d', strtotime("-".$order->increment." month", strtotime($expdate)));
+
+				$data = array('email' => $user->email, 'amount' => number_format($order->amount, 2,",","."), 'username' => $user->username);
+				Mailgun::send('mail.refund', $data, function($message) use ($data) {
+					$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Abonement verlengt');
+				});
+
+				$user->save();
+			}
 
 			return Redirect::back()->with('success', 1);
 		}
