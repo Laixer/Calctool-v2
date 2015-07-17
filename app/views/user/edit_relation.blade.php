@@ -138,7 +138,7 @@ $(document).ready(function() {
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="kvk">K.v.K nummer</label>
-										<input name="kvk" id="kvk" type="text" maxlength="12" value="{{ Input::old('kvk') ? Input::old('kvk') : $relation->kvk }}" class="form-control"/>
+										<input name="kvk" id="kvk" type="text" maxlength="12" value="{{ Input::old('kvk') ? Input::old('kvk') : trim($relation->kvk) }}" class="form-control"/>
 									</div>
 								</div>
 

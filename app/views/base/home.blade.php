@@ -192,12 +192,12 @@ if (Input::get('nstep') == 'intro')
 			</div>
 
 
-<!--
-https://ashobiz.asia/boot-extended14/ui/ui-117.html#
-https://wrapbootstrap.com/preview/WB0DS0351
--->
+<?php
+// https://ashobiz.asia/boot-extended14/ui/ui-117.html#
+// https://wrapbootstrap.com/preview/WB0DS0351
+?>
 
-
+						@if (0)
 						<article class="row">
 							<div class="col-md-12">
 								<section id="portfolio">
@@ -452,7 +452,8 @@ https://wrapbootstrap.com/preview/WB0DS0351
 								</section>
 							</div>
 						</article>
-					</div>
+
+					@endif
 
 <!--
 					<div id="tab2" class="tab-pane">

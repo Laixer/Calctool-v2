@@ -87,7 +87,7 @@ $contact = Contact::where('relation_id','=',$relation->id)->first();
 							<label for="contactfunction">Functie</label>
 							<select name="contactfunction" id="contactfunction" class="form-control pointer">
 							@foreach (ContactFunction::all() as $function)
-								<option value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
+								<option {{ $function->function_name=='directeur' ? 'selected' : '' }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
 							@endforeach
 							</select>
 						</div>

@@ -271,7 +271,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<tbody>
 								@foreach (Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->get() as $offer)
 								<tr>
-									<td><a href="#">{{ $offer->id }}</a></td>
+									<td><a href="#">Offerteversienummer {{ $offer->id }}</a></td>
 									<td>{{ date('d-m-Y', strtotime(DB::table('offer')->select('created_at')->where('id','=',$offer->id)->get()[0]->created_at)) }}</td>
 								</tr>
 								@endforeach
