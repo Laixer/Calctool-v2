@@ -207,4 +207,8 @@ Route::group(array('before' => 'admin'), function()
 	Route::get('admin/environment', function() {
 		return View::make('admin.server');
 	});
+	Route::get('admin/resource', function() {
+		return View::make('admin.resource');
+	});
+	Route::post('admin/resource/delete', array('as' => 'user', 'uses' => 'AdminController@doDeleteResource'));
 });

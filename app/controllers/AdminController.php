@@ -304,4 +304,32 @@ class AdminController extends BaseController {
 
 	}
 
+	public function doDeleteResource()
+	{
+		$rules = array(
+			/* General */
+			'id' => array('required'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			// redirect our user back to the form with the errors from the validator
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+			/* General */
+			$resource = Resource::find(Input::get('id'));
+			$resource->unlinked = true;
+
+			File::delete($resource->file_location);
+
+			$resource->save();
+
+			return json_encode(['success' => 1]);
+		}
+	}
+
 }

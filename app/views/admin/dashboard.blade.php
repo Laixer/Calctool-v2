@@ -133,6 +133,24 @@
 						<div class="col-sm-6 col-md-3"><!-- item -->
 							<div class="item-box item-box-show fixed-box">
 								<figure>
+									<a class="item-hover" href="/admin/log">
+										<span class="overlay color2"></span>
+										<span class="inner">
+											<span class="block fa fa-list-alt fsize60"></span>
+											<strong>Logs</strong>
+										</span>
+									</a>
+									<a href="/admin/log" class="btn btn-primary add_to_cart"><i class="fa fa-list-alt"></i> Logviewer</a>
+								</figure>
+								<div class="item-box-desc">
+									<a href="/admin/log" ><h4>Log</h4></a>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-md-3"><!-- item -->
+							<div class="item-box item-box-show fixed-box">
+								<figure>
 									<a class="item-hover" href="/admin/support">
 										<span class="overlay color2"></span>
 										<span class="inner">

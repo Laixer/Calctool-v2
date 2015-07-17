@@ -6,7 +6,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 @extends('layout.master')
 
 @section('content')
-<?# -- WRAPPER -- ?>
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#addnew').click(function(e) {

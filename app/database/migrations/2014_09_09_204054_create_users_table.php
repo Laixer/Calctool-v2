@@ -157,6 +157,7 @@ class CreateUsersTable extends Migration {
 			$table->string('file_location', 120)->unique();
 			$table->integer('file_size')->unsigned();
 			$table->text('description')->nullable();
+			$table->boolean('unlinked')->default('N');
 			$table->nullableTimestamps();
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
