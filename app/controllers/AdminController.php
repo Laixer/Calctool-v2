@@ -117,7 +117,7 @@ class AdminController extends BaseController {
 
 				$data = array('email' => $user->email, 'amount' => number_format($order->amount, 2,",","."), 'username' => $user->username);
 				Mailgun::send('mail.refund', $data, function($message) use ($data) {
-					$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Abonement verlengt');
+					$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Terugstorting');
 				});
 
 				$user->save();
