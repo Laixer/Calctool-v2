@@ -59,7 +59,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
 				.find("td:eq(0)").text($date).end()
 				.find("td:eq(1)").text(json.relation).end()
-				.find("td:eq(2)").text(json.amount).end()
+				.find("td:eq(2)").html(json.amount).end()
 				.find("td:eq(3)").text(json.type).end()
 				.find("td:eq(4)").text($note).end()
 				.prependTo($curTable);
@@ -90,7 +90,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			$.post("/invoice/pay", {project: {{ $project->id }}, id: $curinv, projectid: $curproj}, function(data){
 				$rs = jQuery.parseJSON(data);
 				console.log($rs);
-				$curThis.replaceWith('Gefactureerd op ' +$rs.payment);
+				$curThis.replaceWith('Betaald op ' +$rs.payment);
 			}).fail(function(e) { console.log(e); });
 		});
 		$('#projclose').editable({
@@ -367,9 +367,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="col-md-2">{{ $invoice->bill_date }}</div>
 								<div class="col-md-3"><?php
 								if ($invoice->invoice_close && !$invoice->payment_date)
-									echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs dopay">Betalen</a>';
+									echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs dopay">Betaald</a>';
 								elseif ($invoice->invoice_close && $invoice->payment_date)
-									echo 'Gefactureerd op '.$invoice->payment_date;
+									echo 'Betaald op '.$invoice->payment_date;
 								elseif ($invoice->isclose)
 									echo '<a href="/invoice/project-'.$project->id.'/invoice-'.$invoice->id.'" class="btn btn-primary btn-xxs">Bekijken</a>';
 								else

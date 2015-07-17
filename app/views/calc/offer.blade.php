@@ -310,7 +310,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 										<input value="{{ ($offer_last ? $offer_last->invoice_quantity : '1') }}" name="terms" id="terms" min="1" max="50" type="number" class="form-control" />
 									</div>
 								</div>
-								<div class="form-horizontal noterms" style="display:none;">
+								<div class="form-horizontal noterms" {{ ($offer_last && $offer_last->invoice_quantity >1 ? '' : 'style="display:none;"') }} >
 									<div class="col-md-6">
 									  <div class="form-group">
 									  <label>Aanbetaling</label>
@@ -325,7 +325,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									</div>
 								</div>
 							</div>
-							<div class="table-responsive noterms" style="display:none;">
+							<div class="table-responsive noterms" {{ ($offer_last && $offer_last->invoice_quantity >1 ? '' : 'style="display:none;"') }}>
 								<table id="tbl-term" class="table table-hover">
 									<thead>
 										<tr>

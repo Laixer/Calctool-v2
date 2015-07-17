@@ -244,7 +244,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				<?php }} ?>
 				</tbody>
 			</table>
-			@if (!$project->project_close)
+			@if (!$project->project_close && !$invoice_end->invoice_close)
 			<div class="row">
 				<div class="col-md-12">
 					<form method="POST" id="frm-add" action="/invoice/term/add">
