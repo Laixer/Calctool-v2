@@ -216,9 +216,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						<td class="col-md-2"><?php if (!$invoice_end->invoice_close && !$project->project_close) { echo '<a href="/invoice/project-' . $project->id . '/invoice-' . $invoice_end->id . '">Eindfactuur</a>'; } else { echo 'Eindfactuur'; } ?></td>
 						<td class="col-md-2"><span id="endterm">0</span></td>
 						<td class="col-md-2">{{ $invoice_end->invoice_code }}</td>
-						<td class="col-md-2"><?php if (!$invoice->invoice_close && !$project->project_close) { ?><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice_end->reference }}" data-bookcode="{{ $invoice_end->book_code }}" data-id="{{ $invoice_end->id }}" data-target="#codeModal">bewerk</a><?php } ?></td>
-						<td class="col-md-2"><?php if (!$invoice->invoice_close && !$project->project_close) { ?><a href="#" data-toggle="modal" class="changedesc" data-desc="{{ $invoice_end->description }}" data-closure="{{ $invoice_end->closure }}" data-id="{{ $invoice_end->id }}" data-target="#textModal">bewerk</a><?php } ?></td>
-						<td class="col-md-1"><input {{ $project->project_close || $invoice->invoice_close ? 'disabled' : '' }} type="number" name="condition" data-id="{{ $invoice_end->id }}" value="{{ $invoice_end->payment_condition }}" class="form-control form-control-sm-number condition" /></td>
+						<td class="col-md-2"><?php if (!$invoice_end->invoice_close && !$project->project_close) { ?><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice_end->reference }}" data-bookcode="{{ $invoice_end->book_code }}" data-id="{{ $invoice_end->id }}" data-target="#codeModal">bewerk</a><?php } ?></td>
+						<td class="col-md-2"><?php if (!$invoice_end->invoice_close && !$project->project_close) { ?><a href="#" data-toggle="modal" class="changedesc" data-desc="{{ $invoice_end->description }}" data-closure="{{ $invoice_end->closure }}" data-id="{{ $invoice_end->id }}" data-target="#textModal">bewerk</a><?php } ?></td>
+						<td class="col-md-1"><input {{ $project->project_close || $invoice_end->invoice_close ? 'disabled' : '' }} type="number" name="condition" data-id="{{ $invoice_end->id }}" value="{{ $invoice_end->payment_condition }}" class="form-control form-control-sm-number condition" /></td>
 						<td class="col-md-1">
 						<?php
 						if ($invoice_end->invoice_close) {
