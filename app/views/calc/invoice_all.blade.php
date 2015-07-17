@@ -179,7 +179,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				?>
 				@foreach (Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority')->get() as $invoice)
 					<tr>
-						<td class="col-md-2"><?php if (!$invoice->invoice_close && !$project->project_close) { echo '<a href="/invoice/project-{{ $project->id }}/term-invoice-{{ $invoice->id }}">'; } ?>{{ ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1)) }}<?php if ($invoice->invoice_close) { echo '</a>'; }?></td>
+						<td class="col-md-2"><?php if (!$invoice->invoice_close && !$project->project_close) { echo '<a href="/invoice/project-' . $project->id . '/term-invoice-' . $invoice->id . '">'; } ?>{{ ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1)) }}<?php if ($invoice->invoice_close) { echo '</a>'; }?></td>
 						<td class="col-md-2"><?php if ($invoice->invoice_close || $project->project_close){ echo "<span class='sdata'>".$invoice->amount."</span>"; } else  { ?><input data-id="{{ $invoice->id }}" class="form-control-sm-text adata" name="amount" type="text" value="{{ $invoice->amount }}" /><?php } ?></td>
 						<td class="col-md-2">{{ $invoice->invoice_code }}</td>
 						<td class="col-md-2"><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice->reference }}" data-bookcode="{{ $invoice->book_code }}" data-id="{{ $invoice->id }}" data-target="#codeModal">{{ $project->project_close ? 'bekijk' : 'bewerk' }}</a></td>
