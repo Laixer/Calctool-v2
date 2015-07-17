@@ -309,7 +309,7 @@ $(document).ready( function() {
 							</table>
 							<div class="row">
 								<div class="col-md-12">
-									<a href="/relation-{{ $relation ? $relation->id : '' }}/contact/new" {{ $relation ? '' : 'disabled' }} class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
+									<a href="/mycompany/contact/new" {{ $relation ? '' : 'disabled' }} class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
 								</div>
 							</div>
 						</div>
