@@ -59,7 +59,7 @@
 							<label for="type">Type</label>
 							<select name="type" id="type" class="form-control pointer">
 								@foreach (ProjectType::all() as $type)
-									<option {{ $type->type_name=='calculatie' ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
+									<option {{ $type->type_name=='calculatie' ? 'selected' : 'disabled' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
 								@endforeach
 							</select>
 						</div>
