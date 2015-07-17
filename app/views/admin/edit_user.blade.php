@@ -72,6 +72,18 @@ $(document).ready(function() {
 			</div>
 			@endif
 
+			<div class="pull-right">
+				<div class="btn-group" role="group">
+				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				  Opties
+				  <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+				  <li><a href="/admin/user-{{ $user->id }}/switch">Gebruker overnemen</a></li>
+				</ul>
+				</div>
+			</div>
+
 			<h2><strong>Gebruiker</strong> {{ $user->username }}</h2>
 
 				<form method="post" action="">

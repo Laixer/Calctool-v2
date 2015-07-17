@@ -191,6 +191,7 @@ Route::group(array('before' => 'admin'), function()
 	Route::get('admin/user-{user_id}/edit', function() {
 		return View::make('admin.edit_user');
 	});
+	Route::get('admin/user-{user_id}/switch', array('as' => 'user', 'uses' => 'AdminController@getSwitchSession'));
 	Route::post('admin/user-{user_id}/edit', array('as' => 'user', 'uses' => 'AdminController@doUpdateUser'));
 	Route::get('admin/alert', array('as' => 'user', 'uses' => 'AdminController@getAlert'));
 	Route::post('admin/alert/new', array('as' => 'user', 'uses' => 'AdminController@doNewAlert'));

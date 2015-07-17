@@ -291,4 +291,17 @@ class AdminController extends BaseController {
 			return Redirect::back()->with('success', 1);
 		}
 	}
+
+	public function getSwitchSession()
+	{
+		if (!Auth::user()->isAdmin())
+			return Redirect::back();
+
+		Auth::logout();
+		Auth::loginUsingId(Route::input('user_id'));
+
+		return Redirect::to('/');
+
+	}
+
 }
