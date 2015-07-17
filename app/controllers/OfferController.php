@@ -95,7 +95,7 @@ class OfferController extends BaseController {
 				$invoice = new Invoice;
 				$invoice->priority = $i;
 				$invoice->invoice_code = InvoiceController::getInvoiceCodeConcept(Input::get('project_id'));
-				$invoice->payment_condition = 1;
+				$invoice->payment_condition = 30;
 				$invoice->offer_id = $offer->id;
 				if (($i+1) == $offer->invoice_quantity)
 					$invoice->isclose = true;

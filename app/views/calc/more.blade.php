@@ -490,7 +490,9 @@ var n = this,
 			$newinputtr.find(".newrow").change();
 			$('#myModal').modal('toggle');
 		}
+		var $notecurr;
 		$('.notemod').click(function(e) {
+			$notecurr = $(this);
 			$curval = $(this).attr('data-note');
 			$curid = $(this).attr('data-id');
 			$('#note').val($curval);
@@ -498,7 +500,7 @@ var n = this,
 		});
 		$('#descModal').on('hidden.bs.modal', function() {
 			$.post("/calculation/noteactivity", {project: {{ $project->id }}, activity: $('#noteact').val(), note: $('#note').val()}, function(){
-				$('#toggle-activity-'+$curThis.attr("data-id")).hide('slow');
+				$notecurr.attr('data-note', $('#note').val());
 			}).fail(function(e) { console.log(e); });
 		});
 	});

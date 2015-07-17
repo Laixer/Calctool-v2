@@ -323,7 +323,7 @@ $(document).ready(function() {
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="pref_hourrate_calc">Standaard uurtarief eigen werk</label>
-										<input name="pref_hourrate_calc" id="pref_hourrate_calc" type="text" class="form-control" value="{{ $user->pref_hourrate_calc }}" />
+										<input name="pref_hourrate_calc" id="pref_hourrate_calc" type="text" class="form-control" value="{{ str_replace('.', ',', $user->pref_hourrate_calc) }}" />
 									</div>
 								</div>
 							</div>
@@ -331,7 +331,7 @@ $(document).ready(function() {
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="pref_hourrate_more">Standaard uurtarief onderaanneming</label>
-										<input name="pref_hourrate_more" id="pref_hourrate_more" type="text" class="form-control" value="{{ $user->pref_hourrate_more }}" />
+										<input name="pref_hourrate_more" id="pref_hourrate_more" type="text" class="form-control" value="{{ str_replace('.', ',', $user->pref_hourrate_more) }}" />
 									</div>
 								</div>
 							</div>
@@ -502,14 +502,6 @@ $(document).ready(function() {
 									</div>
 								</div>
 							</div>
-							<div class="row">
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="offer_counter">offer_counter</label>
-										<input name="offer_counter" id="offer_counter" type="text" class="form-control" value="{{ $user->offer_counter }}" />
-									</div>
-								</div>
-							</div>
 
 							<div class="row">
 								<div class="col-md-3">
@@ -519,20 +511,12 @@ $(document).ready(function() {
 									</div>
 								</div>
 							</div>
-							<div class="row">
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="invoice_counter">invoice_counter</label>
-										<input name="invoice_counter" id="invoice_counter" type="text" class="form-control" value="{{ $user->invoice_counter }}" />
-									</div>
-								</div>
-							</div>
 
 							<div class="row">
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="administration_cost">administration_cost</label>
-										<input name="administration_cost" id="administration_cost" type="text" class="form-control" value="{{ $user->administration_cost }}" />
+										<input name="administration_cost" id="administration_cost" type="text" class="form-control" value="{{ str_replace('.', ',', $user->administration_cost) }}" />
 									</div>
 								</div>
 							</div>
