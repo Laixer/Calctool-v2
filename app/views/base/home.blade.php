@@ -1,9 +1,88 @@
 @extends('layout.master')
 
+<?php
+$next_step = Cookie::get('nstep');
+?>
+
 @section('content')
-<?# -- WRAPPER -- ?>
-<link href="https://vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
-<script src="https://vjs.zencdn.net/4.12/video.js"></script>
+
+@if ($next_step && $next_step=='intro')
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#tutModal').modal('toggle');
+	});
+</script>
+<div class="modal fade" id="tutModal" tabindex="-1" role="dialog" aria-labelledby="tutModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header" style="background-color: #333">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel">Welkom bij de Calculatietool</h4>
+			</div>
+
+			<div class="modal-body">
+				<h2>Volg de stappen om je account op te zetten</h2>
+
+				<div class="tabs">
+
+					<!-- tabs -->
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#service-1" data-toggle="tab" aria-expanded="true"><i class="fa fa-heart-o"></i> Intro</a></li>
+						<li class=""><a href="#service-2" data-toggle="tab" aria-expanded="false"><i class="fa fa-smile-o"></i> Account</a></li>
+						<li class=""><a href="#service-3" data-toggle="tab" aria-expanded="false"><i class="fa fa-microphone"></i> Bedijf</a></li>
+						<li class=""><a href="#service-4" data-toggle="tab" aria-expanded="false"><i class="fa fa-windows"></i> Service 4</a></li>
+						<li class=""><a href="#service-5" data-toggle="tab" aria-expanded="false"><i class="fa fa-flask"></i> Service 5</a></li>
+					</ul>
+
+					<!-- tabs content -->
+					<div class="tab-content">
+						<div class="tab-pane active" id="service-1">
+							<!--<i class="featured-icon pull-left fa fa-heart-o"></i>
+							<p>Praesent est laborum dolo rumes fugats untras. Etha rums ser quidem rerum facilis dolores nemis onis fugats vitaes nemo minima rerums unsers sadips amets. Ut enim ad minim veniam, quis nostrud Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci amets uns. Etharums ser quidem rerum. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Asunt in anim uis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla dolores ipsums fugiats. Etha rums ser quidem rerum facilis dolores nemis onis fugats vitaes nemo minima rerums unsers sadips amets. Ut enim ad minim veniam, quis nostrud neque porro quisquam est. Asunt in anim uis aute irure dolor in reprehenderit in voluptate velit.</p>
+							<p>Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor.</p>-->
+							<p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque neque eget diam posuere porta. Quisque ut nulla at nunc vehicula lacinia. Proin adipiscing porta tellus, ut feugiat nibh adipiscing sit amet.</p>
+						</div>
+
+						<div class="tab-pane" id="service-2">
+							<i class="featured-icon pull-left fa fa-smile-o"><!-- service icon --></i>
+							<p>Praesent est laborum dolo rumes fugats untras. Etha rums ser quidem rerum facilis dolores nemis onis fugats vitaes nemo minima rerums unsers sadips amets. Ut enim ad minim veniam, quis nostrud Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci amets uns. Etharums ser quidem rerum. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Asunt in anim uis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla dolores ipsums fugiats. Etha rums ser quidem rerum facilis dolores nemis onis fugats vitaes nemo minima rerums unsers sadips amets. Ut enim ad minim veniam, quis nostrud neque porro quisquam est. Asunt in anim uis aute irure dolor in reprehenderit in voluptate velit.</p>
+							<p>Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor.</p>
+							<p>Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa.</p>
+						</div>
+
+						<div class="tab-pane" id="service-3">
+							<i class="featured-icon pull-left fa fa-microphone"><!-- service icon --></i>
+							<p>Praesent est laborum dolo rumes fugats untras. Etha rums ser quidem rerum facilis dolores nemis onis fugats vitaes nemo minima rerums unsers sadips amets. Ut enim ad minim veniam, quis nostrud Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci amets uns. Etharums ser quidem rerum. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Asunt in anim uis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla dolores ipsums fugiats. Etha rums ser quidem rerum facilis dolores nemis onis fugats vitaes nemo minima rerums unsers sadips amets. Ut enim ad minim veniam, quis nostrud neque porro quisquam est. Asunt in anim uis aute irure dolor in reprehenderit in voluptate velit.</p>
+							<p>Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa.</p>
+						</div>
+
+						<div class="tab-pane" id="service-4">
+							<i class="featured-icon pull-left fa fa-windows"><!-- service icon --></i>
+							<p>Praesent est laborum dolo rumes fugats untras. Etha rums ser quidem rerum facilis dolores nemis onis fugats vitaes nemo minima rerums unsers sadips amets. Ut enim ad minim veniam, quis nostrud Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci amets uns. Etharums ser quidem rerum. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Asunt in anim uis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla dolores ipsums fugiats. Etha rums ser quidem rerum facilis dolores nemis onis fugats vitaes nemo minima rerums unsers sadips amets. Ut enim ad minim veniam, quis nostrud neque porro quisquam est. Asunt in anim uis aute irure dolor in reprehenderit in voluptate velit.</p>
+							<p>Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor.</p>
+						</div>
+
+						<div class="tab-pane" id="service-5">
+							<i class="featured-icon pull-left fa fa-flask"><!-- service icon --></i>
+							<p>Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor.</p>
+							<p>Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa.</p>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="modal-footer">
+				<button class="btn btn-default" data-dismiss="modal" style="border: #ddd 2px solid">Volgende</button>
+				<button class="btn btn-default" data-dismiss="modal" style="border: #ddd 2px solid">Sluiten</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+@endif
 <div id="wrapper">
 
 	<section class="container">
