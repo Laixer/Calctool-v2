@@ -47,7 +47,6 @@ class OfferController extends BaseController {
 			if (Input::get('terms'))
 				$offer->invoice_quantity = Input::get('terms');
 			$offer->project_id = Route::Input('project_id');
-			$offer->resource_id = 1;
 
 			$options = [];
 			if (Input::get('toggle-note'))
@@ -60,6 +59,24 @@ class OfferController extends BaseController {
 			$offer->option_query = http_build_query($options);
 
 			$offer->save();
+
+			$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.OfferController::getOfferCode(Route::Input('project_id')).'-offer.pdf';
+			$pdf = PDF::loadView('calc.offer_pdf');
+			$pdf->save('user-content/'.$newname);
+
+			$resource = new Resource;
+			$resource->resource_name = $newname;
+			$resource->file_location = 'user-content/' . $newname;
+			$resource->file_size = File::size('user-content/' . $newname);
+			$resource->user_id = Auth::user()->id;
+			$resource->description = 'Offerteversie';
+
+			$resource->save();
+
+			$offer->resource_id = $resource->id;
+
+			$offer->save();
+
 			Auth::user()->offer_counter++;
 			Auth::user()->save();
 

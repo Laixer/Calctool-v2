@@ -89,7 +89,7 @@ if (Input::get('nstep') == 'intro')
 
 			<div class="modal-footer">
 				<!--<button class="btn btn-default" data-dismiss="modal" style="border: #ddd 2px solid">Volgende</button>-->
-				<button class="btn btn-default" data-action="hide" style="border: #ddd 2px solid">Niet meer weergeven</button>
+				<button class="btn btn-default" data-dismiss="modal" data-action="hide" style="border: #ddd 2px solid">Niet meer weergeven</button>
 				<button class="btn btn-default" data-dismiss="modal" style="border: #ddd 2px solid">Sluiten</button>
 			</div>
 
