@@ -121,8 +121,7 @@ $(document).ready( function() {
 
 							<h4 class="company">Bedrijfsgegevens</h4>
 							<input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
-							<div class="row company">
-
+							<div class="row">
 								<div class="col-md-5">
 									<div class="form-group">
 										<label for="company_name">Bedrijfsnaam*</label>
@@ -148,6 +147,8 @@ $(document).ready( function() {
 									</div>
 								</div>
 
+							</div>
+							<div class="row">
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="kvk">K.v.K nummer</label>
@@ -169,18 +170,16 @@ $(document).ready( function() {
 									</div>
 								</div>
 
-								<div class="col-md-3">
+								<div class="col-md-4">
 									<div class="form-group">
 										<label for="email_comp">Email*</label>
 										<input name="email_comp" id="email_comp" type="email" value="{{ Input::old('email_comp') ? Input::old('email_comp') : ($relation ? $relation->email : '') }}" class="form-control"/>
 									</div>
 								</div>
-
 							</div>
 
 							<h4>Adresgegevens</h4>
 							<div class="row">
-
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="street">Straat*</label>
@@ -219,7 +218,9 @@ $(document).ready( function() {
 										</select>
 									</div>
 								</div>
+							</div>
 
+							<div class="row">
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="country">Land*</label>
@@ -230,7 +231,6 @@ $(document).ready( function() {
 										</select>
 									</div>
 								</div>
-
 							</div>
 
 							<h4>Opmerkingen</h4>
