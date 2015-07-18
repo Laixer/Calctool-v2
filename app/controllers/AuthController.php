@@ -47,7 +47,7 @@ class AuthController extends \BaseController {
 			Redis::del('auth:'.$username.':fail', 'auth:'.$username.':block');
 
 			// Redirect to dashboard
-			return Redirect::to('/');
+			return Redirect::to('/')->withCookie(Cookie::make('nstep', 'intro', 60*24*3));
 		}else{
 
 			// Login failed
@@ -208,6 +208,17 @@ class AuthController extends \BaseController {
 			return Redirect::to('login')->with('success', 1);
 		}
 
+	}
+
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function doHideNextStep()
+	{
+		return Response::make(json_encode(['success' => 1]))->withCookie(Cookie::forget('nstep'));
 	}
 
 }

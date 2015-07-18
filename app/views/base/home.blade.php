@@ -12,6 +12,9 @@ if (Input::get('nstep') == 'intro')
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#tutModal').modal('toggle');
+		$('button[data-action="hide"]').click(function(){
+			$.get("/hidenextstep").fail(function(e) { console.log(e); });
+		});
 	});
 </script>
 <div class="modal fade" id="tutModal" tabindex="-1" role="dialog" aria-labelledby="tutModalLabel" aria-hidden="true">
@@ -23,8 +26,15 @@ if (Input::get('nstep') == 'intro')
 			</div>
 
 			<div class="modal-body">
-				<h2>Volg de stappen om je account op te zetten</h2>
+				<h2>Welkom Beta-gebruiker</h2>
+				<p>Bedankt dat jij mij wilt helpen met het testen van de CalcTool.nl.
+				Omdat de CalcTool.nl zich nog in een test-fase bevindt kunnen er af en toe wat foutjes optreden of bepaalde zaken niet helemaal lekker lopen of duidelijk zijn.
+				Hiervoor verwijs ik je graag naar de korte video handleiding die je hebt ontvangen in de email met de uitnodiging.
+				Mocht je tegen dingen aanlopen die ik daar niet in heb genoemd, dan hoor ik dat graag van je.</p>
+				<p>Met vriendelijke groet,</p>
+				<p class="lead">Cal</p>
 
+				@if (0)
 				<div class="tabs">
 
 					<!-- tabs -->
@@ -73,11 +83,13 @@ if (Input::get('nstep') == 'intro')
 					</div>
 
 				</div>
+				@endif
 
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-default" data-dismiss="modal" style="border: #ddd 2px solid">Volgende</button>
+				<!--<button class="btn btn-default" data-dismiss="modal" style="border: #ddd 2px solid">Volgende</button>-->
+				<button class="btn btn-default" data-action="hide" style="border: #ddd 2px solid">Niet meer weergeven</button>
 				<button class="btn btn-default" data-dismiss="modal" style="border: #ddd 2px solid">Sluiten</button>
 			</div>
 

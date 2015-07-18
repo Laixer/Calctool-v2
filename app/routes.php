@@ -28,6 +28,7 @@ Route::get('privacy-policy', function() { return View::make('generic.privacy'); 
 Route::get('countdown', function() { return View::make('generic.countdown'); });
 
 Route::post('payment/webhook/', array('as' => 'payment.order', 'uses' => 'UserController@doPaymentUpdate'));
+Route::get('hidenextstep', array('uses' => 'AuthController@doHideNextStep'));
 
 Route::group(array('before' => 'auth'), function()
 {
