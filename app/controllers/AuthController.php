@@ -47,7 +47,7 @@ class AuthController extends \BaseController {
 			Redis::del('auth:'.$username.':fail', 'auth:'.$username.':block');
 
 			// Redirect to dashboard
-			return Redirect::to('/')->withCookie(Cookie::make('nstep', 'intro', 60*24*3));
+			return Redirect::to('/');
 		}else{
 
 			// Login failed
