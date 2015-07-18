@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<title>Calctool - Account activatie</title>
+		<title><strong>CalcTool.nl</strong> - Account activatie</title>
 	</head>
 
 	<body style="margin:0; margin-top:30px; margin-bottom:30px; padding:0; width:100%; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; background-color: #F4F5F7;">
@@ -43,7 +43,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
-														Goedendag <strong>{{ ucfirst($username) }}</strong>,
+														Goededag <strong>{{ ucfirst($username) }}</strong>,
 													</td>
 												</tr>
 												<tr>
@@ -51,9 +51,9 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Je hebt je zojuist succesvol geregistreerd voor een gebruikersaccount van de <strong>CalcuTool.nl</strong>.
+														Je bent zojuist succesvol geregistreerd voor een gebruikersaccount van de <strong>CalcTool.nl</strong>.
 
-														Klik hieronder op bevestigingsknop om uw gratis account te activeren.
+														Klik hieronder op <i>Activeer account</i> om uw gratis account te activeren.
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->
@@ -73,13 +73,15 @@
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
 														<br>
-															Je wordt na de bevestiging direct doorgestuurd naar de <strong>CalcTool.nl</strong> en kunt 30 dagen lang gebruikmaken van alles wat de <strong>CalcTool.nl</strong> te bieden heeft. Zonder restricties, afgeschermde delen of verborgen kosten.
+															Je wordt na de bevestiging direct doorgestuurd naar de <strong>CalcTool</strong> en kunt 30 dagen lang gebruikmaken van alles wat de <strong>CalcTool</strong> te bieden heeft. Zonder restricties, afgeschermde delen of verborgen kosten.
+
+															Wij geloven in simpel, eerlijk en transparant. De <strong>CalcTool.nl</strong> is niet voor niets van de zzp'er voor de zzp'er.
 														<br>
 														<br>
 															Met vriendelijke groet,
 														<br>
 														<br>
-															<strong>Cal</strong>, van de <a href="https://calctool.nl"><strong>CalculatieTool</strong></a>
+															<strong>Cal</strong>, van <a href="https://calctool.nl"><strong>CalcTool.nl</strong></a>
 														<br>
 														<br>
 													</td>
