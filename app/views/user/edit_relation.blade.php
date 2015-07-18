@@ -112,14 +112,14 @@ $(document).ready(function() {
 
 								<div class="col-md-5">
 									<div class="form-group">
-										<label for="company_name">Bedrijfsnaam</label>
+										<label for="company_name">Bedrijfsnaam*</label>
 										<input name="company_name" id="company_name" type="text" value="{{ Input::old('company_name') ? Input::old('company_name') : $relation->company_name }}" class="form-control" />
 									</div>
 								</div>
 
 								<div class="col-md-3">
 									<div class="form-group">
-										<label for="company_type">Bedrijfstype</label>
+										<label for="company_type">Bedrijfstype*</label>
 										<select name="company_type" id="company_type" class="form-control pointer">
 										@foreach (RelationType::all() as $type)
 											<option {{ $relation->type_id==$type->id ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
@@ -158,7 +158,7 @@ $(document).ready(function() {
 
 								<div class="col-md-3">
 									<div class="form-group">
-										<label for="email_comp">Email</label>
+										<label for="email_comp">Email*</label>
 										<input name="email_comp" id="email_comp" type="email" value="{{ Input::old('email_comp') ? Input::old('email_comp') : $relation->email }}" class="form-control"/>
 									</div>
 								</div>
@@ -170,35 +170,35 @@ $(document).ready(function() {
 
 								<div class="col-md-4">
 									<div class="form-group">
-										<label for="street">Straat</label>
+										<label for="street">Straat*</label>
 										<input name="street" id="street" type="text" value="{{ Input::old('street') ? Input::old('street') : $relation->address_street }}" class="form-control"/>
 									</div>
 								</div>
 
 								<div class="col-md-1">
 									<div class="form-group">
-										<label for="address_number">Huis nr.</label>
+										<label for="address_number">Huis nr.*</label>
 										<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') ? Input::old('address_number') : $relation->address_number }}" class="form-control"/>
 									</div>
 								</div>
 
 								<div class="col-md-2">
 									<div class="form-group">
-										<label for="zipcode">Postcode</label>
+										<label for="zipcode">Postcode*</label>
 										<input name="zipcode" id="zipcode" maxlength="6" type="text" value="{{ Input::old('zipcode') ? Input::old('zipcode') : $relation->address_postal }}" class="form-control"/>
 									</div>
 								</div>
 
 								<div class="col-md-3">
 									<div class="form-group">
-										<label for="city">Plaats</label>
+										<label for="city">Plaats*</label>
 										<input name="city" id="city" type="text" value="{{ Input::old('city') ? Input::old('city') : $relation->address_city }}" class="form-control"/>
 									</div>
 								</div>
 
 								<div class="col-md-2">
 									<div class="form-group">
-										<label for="province">Provincie</label>
+										<label for="province">Provincie*</label>
 										<select name="province" id="province" class="form-control pointer">
 											@foreach (Province::all() as $province)
 												<option {{ $relation->province_id==$province->id ? 'selected' : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
@@ -209,7 +209,7 @@ $(document).ready(function() {
 
 								<div class="col-md-4">
 									<div class="form-group">
-										<label for="country">Land</label>
+										<label for="country">Land*</label>
 										<select name="country" id="country" class="form-control pointer">
 											@foreach (Country::all() as $country)
 												<option {{ $relation->country_id==$country->id ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>

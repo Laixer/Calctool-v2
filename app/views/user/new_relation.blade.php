@@ -63,7 +63,7 @@ $(document).ready(function() {
 
 					<div class="col-md-2">
 						<div class="form-group">
-							<label for="relationkind">Relatiesoort</label>
+							<label for="relationkind">Relatiesoort*</label>
 							<select name="relationkind" id="relationkind" class="form-control pointer">
 							@foreach (RelationKind::all() as $kind)
 								<option value="{{ $kind->id }}">{{ ucwords($kind->kind_name) }}</option>
@@ -74,7 +74,7 @@ $(document).ready(function() {
 
 					<div class="col-md-2">
 						<div class="form-group">
-							<label for="debtor">Debiteurennummer</label>
+							<label for="debtor">Debiteurennummer*</label>
 							<input name="debtor" id="debtor" type="text" value="{{ Input::old('debtor') ? Input::old('debtor') : getNewDebtorCode() }}" class="form-control"/>
 						</div>
 					</div>
@@ -86,14 +86,14 @@ $(document).ready(function() {
 
 					<div class="col-md-5">
 						<div class="form-group">
-							<label for="company_name">Bedrijfsnaam</label>
+							<label for="company_name">Bedrijfsnaam*</label>
 							<input name="company_name" id="company_name" type="text" value="{{ Input::old('company_name') }}" class="form-control" />
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="company_type">Bedrijfstype</label>
+							<label for="company_type">Bedrijfstype*</label>
 							<select name="company_type" id="company_type" class="form-control pointer">
 							@foreach (RelationType::all() as $type)
 								<option value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
@@ -132,7 +132,7 @@ $(document).ready(function() {
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="email_comp">Email</label>
+							<label for="email_comp">Email*</label>
 							<input name="email_comp" id="email_comp" type="email" value="{{ Input::old('email_comp') }}" class="form-control"/>
 						</div>
 					</div>
@@ -144,35 +144,35 @@ $(document).ready(function() {
 
 					<div class="col-md-4">
 						<div class="form-group">
-							<label for="street">Straat</label>
+							<label for="street">Straat*</label>
 							<input name="street" id="street" type="text" value="{{ Input::old('street') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-1">
 						<div class="form-group">
-							<label for="address_number">Huis nr.</label>
+							<label for="address_number">Huis nr.*</label>
 							<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-2">
 						<div class="form-group">
-							<label for="zipcode">Postcode</label>
+							<label for="zipcode">Postcode*</label>
 							<input name="zipcode" id="zipcode" maxlength="6" type="text" value="{{ Input::old('zipcode') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="city">Plaats</label>
+							<label for="city">Plaats*</label>
 							<input name="city" id="city" type="text" value="{{ Input::old('city') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-2">
 						<div class="form-group">
-							<label for="province">Provincie</label>
+							<label for="province">Provincie*</label>
 							<select name="province" id="province" class="form-control pointer">
 								@foreach (Province::all() as $province)
 									<option value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
@@ -183,7 +183,7 @@ $(document).ready(function() {
 
 					<div class="col-md-4">
 						<div class="form-group">
-							<label for="country">Land</label>
+							<label for="country">Land*</label>
 							<select name="country" id="country" class="form-control pointer">
 								@foreach (Country::all() as $country)
 									<option {{ $country->country_name=='nederland' ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
@@ -198,14 +198,14 @@ $(document).ready(function() {
 
 					<div class="col-md-2">
 						<div class="form-group">
-							<label for="contact_firstname">Voornaam</label>
+							<label for="contact_firstname">Voornaam*</label>
 							<input name="contact_firstname" id="contact_firstname" type="text" value="{{ Input::old('contact_firstname') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="contact_name">Achternaam</label>
+							<label for="contact_name">Achternaam*</label>
 							<input name="contact_name" id="contact_name" type="text" value="{{ Input::old('contact_name') }}" class="form-control"/>
 						</div>
 					</div>
@@ -226,14 +226,14 @@ $(document).ready(function() {
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="email">Email</label>
+							<label for="email">Email*</label>
 							<input name="email" id="email" type="email" value="{{ Input::old('email') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-4 company">
 						<div class="form-group">
-							<label for="contactfunction">Functie</label>
+							<label for="contactfunction">Functie*</label>
 							<select name="contactfunction" id="contactfunction" class="form-control pointer">
 							@foreach (ContactFunction::all() as $function)
 								<option {{ $function->function_name=='directeur' ? 'selected' : '' }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
