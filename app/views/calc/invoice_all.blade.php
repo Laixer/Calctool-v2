@@ -229,8 +229,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						      <span class="caret"></span>
 						    </button>
 						    <ul class="dropdown-menu">
-						      <li><a target="blank" href="/invoice/pdf/project-{{ $project->id }}/invoice-{{ $invoice->id }}">Bekijk PDF</a></li>
-						      <li><a href="/invoice/pdf/project-{{ $project->id }}/invoice-{{ $invoice->id }}/download?file={{ InvoiceController::getInvoiceCode($project->id).'-invoice.pdf' }}">Download PDF</a></li>
+						      <li><a target="blank" href="/invoice/pdf/project-{{ $project->id }}/invoice-{{ $invoice_end->id }}">Bekijk PDF</a></li>
+						      <li><a href="/invoice/pdf/project-{{ $project->id }}/invoice-{{ $invoice_end->id }}/download?file={{ InvoiceController::getInvoiceCode($project->id).'-invoice.pdf' }}">Download PDF</a></li>
 						    </ul>
 						  </div>
 						<?php } else if ($close && !$project->project_close) {

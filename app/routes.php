@@ -65,6 +65,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('invoice/project-{project_id}/term-invoice-{invoice_id}', array('as' => 'invoice', 'uses' => 'CalcController@getTermInvoice'))->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
 	Route::post('invoice/close', array('as' => 'invoice', 'uses' => 'InvoiceController@doInvoiceClose'));
 	Route::post('invoice/pay', array('as' => 'invoice', 'uses' => 'InvoiceController@doInvoicePay'));
+	Route::post('invoice/invclose', array('as' => 'invoice', 'uses' => 'InvoiceController@doInvoiceCloseAjax'));
 	Route::post('invoice/term/add', array('as' => 'invoice', 'uses' => 'InvoiceController@doInvoiceNewTerm'));
 	Route::post('invoice/term/delete', array('as' => 'invoice', 'uses' => 'InvoiceController@doInvoiceDeleteTerm'));
 
@@ -198,6 +199,7 @@ Route::group(array('before' => 'admin'), function()
 		return View::make('admin.edit_user');
 	});
 	Route::get('admin/user-{user_id}/switch', array('as' => 'user', 'uses' => 'AdminController@getSwitchSession'));
+	Route::get('admin/user-{user_id}/demo', array('as' => 'user', 'uses' => 'AdminController@getDemoProject'));
 	Route::post('admin/user-{user_id}/edit', array('as' => 'user', 'uses' => 'AdminController@doUpdateUser'));
 	Route::get('admin/alert', array('as' => 'user', 'uses' => 'AdminController@getAlert'));
 	Route::post('admin/alert/new', array('as' => 'user', 'uses' => 'AdminController@doNewAlert'));

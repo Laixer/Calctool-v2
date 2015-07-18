@@ -33,6 +33,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				.find("td:eq(2)").text(json.type).end()
 				.find("td:eq(3)").text(json.activity).end()
 				.find("td:eq(4)").text($note).end()
+				.find("td:eq(7)").html('<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>').end()
 				.prependTo($curTable);
 				$curThis.closest("tr").find("input").val("");
 				$curThis.closest("tr").find("select").val("");
@@ -90,8 +91,16 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			$curinv = $(this).attr('data-invoice');
 			$.post("/invoice/pay", {project: {{ $project->id }}, id: $curinv, projectid: $curproj}, function(data){
 				$rs = jQuery.parseJSON(data);
-				console.log($rs);
 				$curThis.replaceWith('Betaald op ' +$rs.payment);
+			}).fail(function(e) { console.log(e); });
+		});
+		$('.doinvclose').click(function(e){
+			$curThis = $(this);
+			$curproj = $(this).attr('data-project');
+			$curinv = $(this).attr('data-invoice');
+			$.post("/invoice/invclose", {project: {{ $project->id }}, id: $curinv, projectid: $curproj}, function(data){
+				$rs = jQuery.parseJSON(data);
+				$curThis.replaceWith($rs.billing);
 			}).fail(function(e) { console.log(e); });
 		});
 		$('#projclose').editable({
@@ -259,31 +268,62 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<div class="row">
 								<div class="col-md-3"><strong>Financieel</strong></div>
 								<div class="col-md-2"><strong>Gefactureerd</strong></div>
-								<div class="col-md-3"><strong>Acties</strong></div>
+								<div class="col-md-3"></div>
 								<div class="col-md-3"></div>
 							</div>
 							<?php
 							if ($offer_last) {
 							$i=0;
+							$close = true;
+							$invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first();
 							?>
-							@foreach (Invoice::where('offer_id','=', $offer_last->id)->orderBy('priority')->get() as $invoice)
+							@foreach (Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority')->get() as $invoice)
 							<div class="row">
-								<div class="col-md-3">{{ ($invoice->isclose ? 'Eindfactuur' : ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1))) }}</div>
-								<div class="col-md-2">{{ $invoice->bill_date }}</div>
+								<div class="col-md-3">{{ ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1)) }}</div>
+								<div class="col-md-2">
+								<?php
+								if (!$invoice->bill_date && $close) {
+									echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs doinvclose">Factureren</a>';
+									$close=false;
+								} else if (!$invoice->bill_date) {
+									echo '<a href="/invoice/project-'.$project->id.'/term-invoice-'.$invoice->id.'" class="btn btn-primary btn-xxs">Bekijken</a>';
+								} else
+									echo date('d-m-Y', strtotime($invoice->bill_date));
+								?>
+								</div>
 								<div class="col-md-3"><?php
 								if ($invoice->invoice_close && !$invoice->payment_date)
 									echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs dopay">Betaald</a>';
 								elseif ($invoice->invoice_close && $invoice->payment_date)
-									echo 'Betaald op '.$invoice->payment_date;
-								elseif ($invoice->isclose)
-									echo '<a href="/invoice/project-'.$project->id.'/invoice-'.$invoice->id.'" class="btn btn-primary btn-xxs">Bekijken</a>';
-								else
-									echo '<a href="/invoice/project-'.$project->id.'/term-invoice-'.$invoice->id.'" class="btn btn-primary btn-xxs">Bekijken</a>';
+									echo 'Betaald op '.date('d-m-Y', strtotime($invoice->payment_date));
 								?></div>
-								<div class="col-md-3"></div>
+								<div class="col-md-3"><?php if ($invoice->bill_date){ echo '<a target="blank" href="/invoice/pdf/project-'.$project->id.'/term-invoice-'.$invoice->id.'" class="btn btn-primary btn-xxs">Bekijk PDF</a>'; }?></div>
 							</div>
 							<?php $i++; ?>
 							@endforeach
+							@if ($invoice_end)
+							<div class="row">
+								<div class="col-md-3">Eindfactuur</div>
+								<div class="col-md-2">
+								<?php
+								if (!$invoice_end->bill_date && $close) {
+									echo '<a href="javascript:void(0);" data-invoice="'.$invoice_end->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs doinvclose">Factureren</a>';
+									$close=false;
+								} else if (!$invoice_end->bill_date) {
+									echo '<a href="/invoice/project-'.$project->id.'/invoice-'.$invoice_end->id.'" class="btn btn-primary btn-xxs">Bekijken</a>';
+								} else
+									echo date('d-m-Y', strtotime($invoice_end->bill_date));
+								?>
+								</div>
+								<div class="col-md-3"><?php
+								if ($invoice_end->invoice_close && !$invoice_end->payment_date)
+									echo '<a href="javascript:void(0);" data-invoice="'.$invoice_end->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs dopay">Betaald</a>';
+								elseif ($invoice_end->invoice_close && $invoice_end->payment_date)
+									echo 'Betaald op '.date('d-m-Y', strtotime($invoice_end->payment_date));
+								?></div>
+								<div class="col-md-3"><?php if ($invoice_end->bill_date){ echo '<a target="blank" href="/invoice/pdf/project-'.$project->id.'/invoice-'.$invoice_end->id.'" class="btn btn-primary btn-xxs">Bekijk PDF</a>'; }?></div>
+							</div>
+							@endif
 							<?php }else{ ?>
 							<div class="row">
 								<div class="col-md-12">Geen geregistreerde uren</div>
@@ -471,74 +511,66 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						</div>
 
 						<div id="hour" class="tab-pane">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th class="col-md-1">Datum</th>
+										<th class="col-md-1">Uren</th>
+										<th class="col-md-3">Soort</th>
+										<th class="col-md-1">Werkzaamheid</th>
+										<th class="col-md-3">Omschrijving</th>
+										<th class="col-md-1">&nbsp;</th>
+										<th class="col-md-1">&nbsp;</th>
+										<th class="col-md-1">&nbsp;</th>
+										<th class="col-md-1">&nbsp;</th>
+									</tr>
+								</thead>
 
-							<!--<div class="toggle">
-								<label>Deze week</label>
-								<div class="toggle-content">-->
-									<table class="table table-striped">
-										<?# -- table head -- ?>
-										<thead>
-											<tr>
-												<th class="col-md-1">Datum</th>
-												<th class="col-md-1">Uren</th>
-												<th class="col-md-3">Soort</th>
-												<th class="col-md-1">Werkzaamheid</th>
-												<th class="col-md-3">Omschrijving</th>
-												<th class="col-md-1">&nbsp;</th>
-												<th class="col-md-1">&nbsp;</th>
-												<th class="col-md-1">&nbsp;</th>
-												<th class="col-md-1">&nbsp;</th>
-											</tr>
-										</thead>
-
-										<!--3table items -->
-										<tbody>
+								<tbody>
+									@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+									@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
+									@foreach (Timesheet::where('activity_id','=', $activity->id)->get() as $timesheet)
+									<tr data-id="{{ $timesheet->id }}">
+										<td class="col-md-1">{{ date('d-m-Y', strtotime($timesheet->register_date)) }}</td>
+										<td class="col-md-1">{{ number_format($timesheet->register_hour, 2,",",".") }}</td>
+										<td class="col-md-3">{{ ucwords(TimesheetKind::find($timesheet->timesheet_kind_id)->kind_name) }}</td>
+										<td class="col-md-3">{{ $activity->activity_name }}</td>
+										<td class="col-md-1">{{ $timesheet->note }}</td>
+										<td class="col-md-1">&nbsp;</td>
+										<td class="col-md-1">&nbsp;</td>
+										<td class="col-md-1">@if (!$project->project_close)<button class="btn btn-danger btn-xs fa fa-times deleterow"></button>@endif</td>
+									</tr>
+									@endforeach
+									@endforeach
+									@endforeach
+									@if (!$project->project_close)
+									<tr>
+										<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text"/></td>
+										<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
+										<td class="col-md-2">
+											<select name="typename" id="typename" class="form-control-sm-text">
+											@foreach (TimesheetKind::all() as $typename)
+												<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
+											@endforeach
+											</select>
+										</td>
+										<td class="col-md-4">
+											<select name="activity" id="activity" class="form-control-sm-text">
 											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
-											@foreach (Timesheet::where('activity_id','=', $activity->id)->get() as $timesheet)
-											<tr data-id="{{ $timesheet->id }}"><!-- item -->
-												<td class="col-md-1">{{ date('d-m-Y', strtotime($timesheet->register_date)) }}</td>
-												<td class="col-md-1">{{ number_format($timesheet->register_hour, 2,",",".") }}</td>
-												<td class="col-md-3">{{ ucwords(TimesheetKind::find($timesheet->timesheet_kind_id)->kind_name) }}</td>
-												<td class="col-md-3">{{ $activity->activity_name }}</td>
-												<td class="col-md-1">{{ $timesheet->note }}</td>
-												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1">@if (!$project->project_close)<button class="btn btn-danger btn-xs fa fa-times deleterow"></button>@endif</td>
-											</tr>
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+												<option value="{{ $activity->id }}">{{ $activity->activity_name }}</option>
 											@endforeach
 											@endforeach
-											@endforeach
-											@if (!$project->project_close)
-											<tr><!-- item -->
-												<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text"/></td>
-												<td class="col-md-1"><input type="number" min="0" name="hour" id="hour" class="form-control-sm-text"/></td>
-												<td class="col-md-2">
-													<select name="typename" id="typename" class="form-control-sm-text">
-													@foreach (TimesheetKind::all() as $typename)
-														<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
-													@endforeach
-													</select>
-												</td>
-												<td class="col-md-4">
-													<select name="activity" id="activity" class="form-control-sm-text">
-													@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-													@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
-														<option value="{{ $activity->id }}">{{ $activity->activity_name }}</option>
-													@endforeach
-													@endforeach
-													</select>
-												</td>
-												<td class="col-md-1"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
-												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1"><button id="addnew" class="btn btn-primary btn-xs"> Toevoegen</button></td>
-											</tr>
-											@endif
-										</tbody>
-									</table>
-								<!--</div>
-							</div>-->
+											</select>
+										</td>
+										<td class="col-md-1"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
+										<td class="col-md-1">&nbsp;</td>
+										<td class="col-md-1">&nbsp;</td>
+										<td class="col-md-1"><button id="addnew" class="btn btn-primary btn-xs"> Toevoegen</button></td>
+									</tr>
+									@endif
+								</tbody>
+							</table>
 						</div>
 
 						<div id="hour_overview" class="tab-pane">

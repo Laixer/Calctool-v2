@@ -26,7 +26,6 @@ class DemoProjectTemplate {
 		$relation->btw 				= 'NL1234567890B1';
 		$relation->note 			= 'Dit is een demo relatie';
 		$relation->email 			= 'demo@relatie.nl';
-		$relation->mobile 			= '0611111111';
 		$relation->phone 			= '0101111111';
 		$relation->website 			= 'http://www.demobedrijf.nl';
 		$relation->user_id 			= $userid;
