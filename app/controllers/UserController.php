@@ -402,36 +402,57 @@ class UserController extends \BaseController {
 		else
 			$user->pref_mailings_optin = false;
 
-		$user->pref_hourrate_calc = Input::get('pref_hourrate_calc');
-		$user->pref_hourrate_more = Input::get('pref_hourrate_more');
-		$user->pref_profit_calc_contr_mat = Input::get('pref_profit_calc_contr_mat');
-		$user->pref_profit_calc_contr_equip = Input::get('pref_profit_calc_contr_equip');
-		$user->pref_profit_calc_subcontr_mat = Input::get('pref_profit_calc_subcontr_mat');
-		$user->pref_profit_calc_subcontr_equip = Input::get('pref_profit_calc_subcontr_equip');
-		$user->pref_profit_more_contr_mat = Input::get('pref_profit_more_contr_mat');
-		$user->pref_profit_more_contr_equip = Input::get('pref_profit_more_contr_equip');
-		$user->pref_profit_more_subcontr_mat = Input::get('pref_profit_more_subcontr_mat');
-		$user->pref_profit_more_subcontr_equip = Input::get('pref_profit_more_subcontr_equip');
+		if (Input::get('pref_hourrate_calc'))
+			$user->pref_hourrate_calc = str_replace(',', '.', str_replace('.', '' , Input::get('pref_hourrate_calc')));
+		if (Input::get('pref_hourrate_more'))
+			$user->pref_hourrate_more = str_replace(',', '.', str_replace('.', '' , Input::get('pref_hourrate_more')));
+		if (Input::get('pref_profit_calc_contr_mat'))
+			$user->pref_profit_calc_contr_mat = str_replace(',', '.', str_replace('.', '' , Input::get('pref_profit_calc_contr_mat')));
+		if (Input::get('pref_profit_calc_contr_equip'))
+			$user->pref_profit_calc_contr_equip = str_replace(',', '.', str_replace('.', '' , Input::get('pref_profit_calc_contr_equip')));
+		if (Input::get('pref_profit_calc_subcontr_mat'))
+			$user->pref_profit_calc_subcontr_mat = str_replace(',', '.', str_replace('.', '' , Input::get('pref_profit_calc_subcontr_mat')));
+		if (Input::get('pref_profit_calc_subcontr_equip'))
+			$user->pref_profit_calc_subcontr_equip = str_replace(',', '.', str_replace('.', '' , Input::get('pref_profit_calc_subcontr_equip')));
+		if (Input::get('pref_profit_more_contr_mat'))
+			$user->pref_profit_more_contr_mat = str_replace(',', '.', str_replace('.', '' , Input::get('pref_profit_more_contr_mat')));
+		if (Input::get('pref_profit_more_contr_equip'))
+			$user->pref_profit_more_contr_equip = str_replace(',', '.', str_replace('.', '' , Input::get('pref_profit_more_contr_equip')));
+		if (Input::get('pref_profit_more_subcontr_mat'))
+			$user->pref_profit_more_subcontr_mat = str_replace(',', '.', str_replace('.', '' , Input::get('pref_profit_more_subcontr_mat')));
+		if (Input::get('pref_profit_more_subcontr_equip'))
+			$user->pref_profit_more_subcontr_equip = str_replace(',', '.', str_replace('.', '' , Input::get('pref_profit_more_subcontr_equip')));
 
-		$user->pref_email_offer = Input::get('pref_email_offer');
-		$user->pref_offer_description = Input::get('pref_offer_description');
-		$user->pref_closure_offer = Input::get('pref_closure_offer');
-		$user->pref_email_invoice = Input::get('pref_email_invoice');
-		$user->pref_invoice_description = Input::get('pref_invoice_description');
-		$user->pref_invoice_closure = Input::get('pref_invoice_closure');
-		$user->pref_email_invoice_first_reminder = Input::get('pref_email_invoice_first_reminder');
-		$user->pref_email_invoice_last_reminder = Input::get('pref_email_invoice_last_reminder');
-		$user->pref_email_invoice_first_demand = Input::get('pref_email_invoice_first_demand');
-		$user->pref_email_invoice_last_demand = Input::get('pref_email_invoice_last_demand');
+		if (Input::get('pref_email_offer'))
+			$user->pref_email_offer = Input::get('pref_email_offer');
+		if (Input::get('pref_offer_description'))
+			$user->pref_offer_description = Input::get('pref_offer_description');
+		if (Input::get('pref_closure_offer'))
+			$user->pref_closure_offer = Input::get('pref_closure_offer');
+		if (Input::get('pref_email_invoice'))
+			$user->pref_email_invoice = Input::get('pref_email_invoice');
+		if (Input::get('pref_invoice_description'))
+			$user->pref_invoice_description = Input::get('pref_invoice_description');
+		if (Input::get('pref_invoice_closure'))
+			$user->pref_invoice_closure = Input::get('pref_invoice_closure');
+		if (Input::get('pref_email_invoice_first_reminder'))
+			$user->pref_email_invoice_first_reminder = Input::get('pref_email_invoice_first_reminder');
+		if (Input::get('pref_email_invoice_last_reminder'))
+			$user->pref_email_invoice_last_reminder = Input::get('pref_email_invoice_last_reminder');
+		if (Input::get('pref_email_invoice_first_demand'))
+			$user->pref_email_invoice_first_demand = Input::get('pref_email_invoice_first_demand');
+		if (Input::get('pref_email_invoice_last_demand'))
+			$user->pref_email_invoice_last_demand = Input::get('pref_email_invoice_last_demand');
 
-		$user->offernumber_prefix = Input::get('offernumber_prefix');
-		$user->offer_counter = Input::get('offer_counter');
-		$user->invoicenumber_prefix = Input::get('invoicenumber_prefix');
-		$user->invoice_counter = Input::get('invoice_counter');
-		$user->administration_cost = Input::get('administration_cost');
+		if (Input::get('offernumber_prefix'))
+			$user->offernumber_prefix = Input::get('offernumber_prefix');
+		if (Input::get('invoicenumber_prefix'))
+			$user->invoicenumber_prefix = Input::get('invoicenumber_prefix');
+		if (Input::get('administration_cost'))
+			$user->administration_cost = str_replace(',', '.', str_replace('.', '' , Input::get('administration_cost')));
 
 		$user->save();
 
-		return Redirect::back()->with('success', 1);
+		return Redirect::back()->with('success', 'Voorkeuren opgeslagen');
 	}
 }

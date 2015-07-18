@@ -311,240 +311,253 @@ $(document).ready(function() {
 							{{ Form::open(array('url' => 'myaccount/preferences/update')) }}
 
 							<h4 class="company">Voorkeuren</h4>
-							<div class="row">
-								<div class="col-md-4">
-									<div class="form-group">
-										<label for="pref_mailings_optin" style="display:block;">pref_mailings_optin</label>
-										<input name="pref_mailings_optin" type="checkbox" {{ $user->pref_mailings_optin ? 'checked' : '' }}>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="pref_hourrate_calc">Standaard uurtarief eigen werk</label>
-										<input name="pref_hourrate_calc" id="pref_hourrate_calc" type="text" class="form-control" value="{{ $user->pref_hourrate_calc }}" />
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="pref_hourrate_more">Standaard uurtarief onderaanneming</label>
-										<input name="pref_hourrate_more" id="pref_hourrate_more" type="text" class="form-control" value="{{ $user->pref_hourrate_more }}" />
-									</div>
-								</div>
-							</div>
 
-							<div class="row">
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="pref_profit_calc_contr_mat">Standaard winstpercentage materiaal</label>
-										<input name="pref_profit_calc_contr_mat" id="pref_profit_calc_contr_mat" type="text" class="form-control" value="{{ $user->pref_profit_calc_contr_mat }}" />
+							<div class="panel-group" id="accordion">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="#accordion" href="#acordion1">
+												<i class="fa fa-check"></i>
+												Uurtarief en Winspercentages
+											</a>
+										</h4>
 									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="pref_profit_calc_contr_equip">Standaard winstpercentage materieel</label>
-										<input name="pref_profit_calc_contr_equip" id="pref_profit_calc_contr_equip" type="text" class="form-control" value="{{ $user->pref_profit_calc_contr_equip }}" />
-									</div>
-								</div>
-							</div>
+									<div id="acordion1" class="collapse in">
+										<div class="panel-body">
 
-							<div class="row">
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="pref_profit_calc_subcontr_mat">Standaard winstpercentage materiaal onderaanneming</label>
-										<input name="pref_profit_calc_subcontr_mat" id="pref_profit_calc_subcontr_mat" type="text" class="form-control" value="{{ $user->pref_profit_calc_subcontr_mat }}" />
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="pref_profit_calc_subcontr_equip">Standaard winstpercentage materiaal onderaanneming</label>
-										<input name="pref_profit_calc_subcontr_equip" id="pref_profit_calc_subcontr_equip" type="text" class="form-control" value="{{ $user->pref_profit_calc_subcontr_equip }}" />
-									</div>
-								</div>
-							</div>
+											<div class="row">
+												<div class="col-md-3"><h5><strong>Eigen uurtarief*</strong></h5></div>
+												<div class="col-md-1"></div>
+												<div class="col-md-2"><h5><strong>Calculatie</strong></h5></div>
+												<div class="col-md-2"><h5><strong>Meerwerk</strong></h5></div>
+											</div>
+											<div class="row">
+												<div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
+												<div class="col-md-1"><div class="pull-right">&euro;</div></div>
+												<div class="col-md-2">
+													<input name="pref_hourrate_calc" id="pref_hourrate_calc" type="text" class="form-control" value="{{ str_replace('.', ',', $user->pref_hourrate_calc) }}" />
+												</div>
+												<div class="col-md-2">
+													<input name="pref_hourrate_more" id="pref_hourrate_more" type="text" class="form-control" value="{{ str_replace('.', ',', $user->pref_hourrate_more) }}" />
+												</div>
+											</div>
 
-							<div class="row">
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="pref_profit_more_contr_mat">Standaard winstpercentage materiaal bij meerwerk</label>
-										<input name="pref_profit_more_contr_mat" id="pref_profit_more_contr_mat" type="text" class="form-control" value="{{ $user->pref_profit_more_contr_mat }}" />
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="pref_profit_more_contr_equip">Standaard winstpercentage materieel bij meerwerk</label>
-										<input name="pref_profit_more_contr_equip" id="pref_profit_more_contr_equip" type="text" class="form-control" value="{{ $user->pref_profit_more_contr_equip }}" />
-									</div>
-								</div>
-							</div>
+											<h5><strong>Aanneming</strong></h5>
+											<div class="row">
+												<div class="col-md-3"><label for="profit_material_1">Winstpercentage materiaal</label></div>
+												<div class="col-md-1"><div class="pull-right">%</div></div>
+												<div class="col-md-2">
+														<input name="pref_profit_calc_contr_mat" id="pref_profit_calc_contr_mat" type="text" class="form-control" value="{{ $user->pref_profit_calc_contr_mat }}" />
+												</div>
+												<div class="col-md-2">
+														<input name="pref_profit_more_contr_mat" id="pref_profit_more_contr_mat" type="text" class="form-control" value="{{ $user->pref_profit_more_contr_mat }}" />
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage materieel</label></div>
+												<div class="col-md-1"><div class="pull-right">%</div></div>
+												<div class="col-md-2">
+														<input name="pref_profit_calc_contr_equip" id="pref_profit_calc_contr_equip" type="text" class="form-control" value="{{ $user->pref_profit_calc_contr_equip }}" />
+												</div>
+												<div class="col-md-2">
+														<input name="pref_profit_more_contr_equip" id="pref_profit_more_contr_equip" type="text" class="form-control" value="{{ $user->pref_profit_more_contr_equip }}" />
+												</div>
+											</div>
 
-							<div class="row">
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="pref_profit_more_subcontr_mat">Standaard winstpercentage materiaal onderaanneming bij meerwerk</label>
-										<input name="pref_profit_more_subcontr_mat" id="pref_profit_more_subcontr_mat" type="text" class="form-control" value="{{ $user->pref_profit_more_subcontr_mat }}" />
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="pref_profit_more_subcontr_equip">Standaard winstpercentage materieel onderaanneming bij meerwerk</label>
-										<input name="pref_profit_more_subcontr_equip" id="pref_profit_more_subcontr_equip" type="text" class="form-control" value="{{ $user->pref_profit_more_subcontr_equip }}" />
-									</div>
-								</div>
-							</div>
+											<h5><strong>Onderaanneming</strong></h5>
+											<div class="row">
+												<div class="col-md-3"><label for="profit_material_2">Winstpercentage materiaal</label></div>
+												<div class="col-md-1"><div class="pull-right">%</div></div>
+												<div class="col-md-2">
+														<input name="pref_profit_calc_subcontr_mat" id="pref_profit_calc_subcontr_mat" type="text" class="form-control" value="{{ $user->pref_profit_calc_subcontr_mat }}" />
+												</div>
+												<div class="col-md-2">
+														<input name="pref_profit_more_subcontr_mat" id="pref_profit_more_subcontr_mat" type="text" class="form-control" value="{{ $user->pref_profit_more_subcontr_mat }}" />
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage materieel</label></div>
+												<div class="col-md-1"><div class="pull-right">%</div></div>
+												<div class="col-md-2">
+														<input name="pref_profit_calc_subcontr_equip" id="pref_profit_calc_subcontr_equip" type="text" class="form-control" value="{{ $user->pref_profit_calc_subcontr_equip }}" />
+												</div>
+												<div class="col-md-2">
+														<input name="pref_profit_more_subcontr_equip" id="pref_profit_more_subcontr_equip" type="text" class="form-control" value="{{ $user->pref_profit_more_subcontr_equip }}" />
+												</div>
+											</div>
 
-							<h5>pref_email_offer</h5>
+										</div>
+									</div>
+								</div>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="#accordion" href="#acordion2">
+												<i class="fa fa-check"></i>
+												Omschrijvingen voor op offerte en factuur
+											</a>
+										</h4>
+									</div>
+									<div id="acordion2" class="collapse">
+										<div class="panel-body">
+
+											<h5>Omschrijving voor op de offerte</h5>
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<textarea name="pref_offer_description" id="pref_offer_description" rows="5" class="form-control">{{ $user->pref_offer_description }}</textarea>
+													</div>
+												</div>
+											</div>
+											<h5>Sluitingstekst voor op de offerte</h5>
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<textarea name="pref_closure_offer" id="pref_closure_offer" rows="5" class="form-control">{{ $user->pref_closure_offer }}</textarea>
+													</div>
+												</div>
+											</div>
+											<h5>Omschrijving voor op de factuur</h5>
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<textarea name="pref_invoice_description" id="pref_invoice_description" rows="5" class="form-control">{{ $user->pref_invoice_description }}</textarea>
+													</div>
+												</div>
+											</div>
+											<h5>Sluitingstekst voor op de factuur</h5>
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<textarea name="pref_invoice_closure" id="pref_invoice_closure" rows="5" class="form-control">{{ $user->pref_invoice_closure }}</textarea>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="#accordion" href="#acordion3">
+												<i class="fa fa-check"></i>
+												Omschrijvingen voor in de emails
+											</a>
+										</h4>
+									</div>
+									<div id="acordion3" class="collapse">
+										<div class="panel-body">
+
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="pref_mailings_optin" style="display:block;">Email reminders sturen?</label>
+														<input name="pref_mailings_optin" type="checkbox" {{ $user->pref_mailings_optin ? 'checked' : '' }}>
+													</div>
+												</div>
+											</div>
+											<h5>Beschrijving voor in de email bij verzending van de offerte</h5>
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<textarea name="pref_email_offer" id="pref_email_offer" rows="5" class="form-control">{{ $user->pref_email_offer }}</textarea>
+													</div>
+												</div>
+											</div>
+											<h5>Beschrijving voor in de email bij verzending van de factuur</h5>
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<textarea name="pref_email_invoice" id="pref_email_invoice" rows="5" class="form-control">{{ $user->pref_email_invoice }}</textarea>
+													</div>
+												</div>
+											</div>
+											<h5>1e betalingsherinnering van de factuur</h5>
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<textarea name="pref_email_invoice_first_reminder" id="pref_email_invoice_first_reminder" rows="5" class="form-control">{{ $user->pref_email_invoice_first_reminder }}</textarea>
+													</div>
+												</div>
+											</div>
+											<h5>Laatste betalingsherinnering van de factuur</h5>
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<textarea name="pref_email_invoice_last_reminder" id="pref_email_invoice_last_reminder" rows="5" class="form-control">{{ $user->pref_email_invoice_last_reminder }}</textarea>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-3">
+													<div class="form-group">
+														<label for="administration_cost">administration_cost</label>
+														<input name="administration_cost" id="administration_cost" type="text" class="form-control" value="{{ str_replace('.', ',', $user->administration_cost) }}" />
+													</div>
+												</div>
+											</div>
+											<h5>1e vordering van de factuur</h5>
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<textarea name="pref_email_invoice_first_demand" id="pref_email_invoice_first_demand" rows="5" class="form-control">{{ $user->pref_email_invoice_first_demand }}</textarea>
+													</div>
+												</div>
+											</div>
+											<h5>Laatste vorderingswaaeschuwing van de factuur</h5>
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<textarea name="pref_email_invoice_last_demand" id="pref_email_invoice_last_demand" rows="5" class="form-control">{{ $user->pref_email_invoice_last_demand }}</textarea>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="#accordion" href="#acordion4">
+												<i class="fa fa-check"></i>
+												Offerte en factuurnummering
+											</a>
+										</h4>
+									</div>
+									<div id="acordion4" class="collapse">
+										<div class="panel-body">
+
+											<div class="row">
+												<div class="col-md-3">
+													<div class="form-group">
+														<label for="offernumber_prefix">offernumber_prefix</label>
+														<input name="offernumber_prefix" id="offernumber_prefix" type="text" class="form-control" value="{{ $user->offernumber_prefix }}" />
+													</div>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-md-3">
+													<div class="form-group">
+														<label for="invoicenumber_prefix">invoicenumber_prefix</label>
+														<input name="invoicenumber_prefix" id="invoicenumber_prefix" type="text" class="form-control" value="{{ $user->invoicenumber_prefix }}" />
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
 							<div class="row">
-								<div class="form-group">
 									<div class="col-md-12">
-										<textarea name="pref_email_offer" id="pref_email_offer" rows="5" class="form-control">{{ $user->pref_email_offer }}</textarea>
+										<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 									</div>
 								</div>
-							</div>
-
-							<h5>pref_offer_description</h5>
-							<div class="row">
-								<div class="form-group">
-									<div class="col-md-12">
-										<textarea name="pref_offer_description" id="pref_offer_description" rows="5" class="form-control">{{ $user->pref_offer_description }}</textarea>
-									</div>
-								</div>
-							</div>
-
-							<h5>pref_closure_offer</h5>
-							<div class="row">
-								<div class="form-group">
-									<div class="col-md-12">
-										<textarea name="pref_closure_offer" id="pref_closure_offer" rows="5" class="form-control">{{ $user->pref_closure_offer }}</textarea>
-									</div>
-								</div>
-							</div>
-
-							<h5>pref_email_invoice</h5>
-							<div class="row">
-								<div class="form-group">
-									<div class="col-md-12">
-										<textarea name="pref_email_invoice" id="pref_email_invoice" rows="5" class="form-control">{{ $user->pref_email_invoice }}</textarea>
-									</div>
-								</div>
-							</div>
-
-							<h5>pref_invoice_description</h5>
-							<div class="row">
-								<div class="form-group">
-									<div class="col-md-12">
-										<textarea name="pref_invoice_description" id="pref_invoice_description" rows="5" class="form-control">{{ $user->pref_invoice_description }}</textarea>
-									</div>
-								</div>
-							</div>
-
-							<h5>pref_invoice_closure</h5>
-							<div class="row">
-								<div class="form-group">
-									<div class="col-md-12">
-										<textarea name="pref_invoice_closure" id="pref_invoice_closure" rows="5" class="form-control">{{ $user->pref_invoice_closure }}</textarea>
-									</div>
-								</div>
-							</div>
-
-							<h5>pref_email_invoice_first_reminder</h5>
-							<div class="row">
-								<div class="form-group">
-									<div class="col-md-12">
-										<textarea name="pref_email_invoice_first_reminder" id="pref_email_invoice_first_reminder" rows="5" class="form-control">{{ $user->pref_email_invoice_first_reminder }}</textarea>
-									</div>
-								</div>
-							</div>
-
-							<h5>pref_email_invoice_last_reminder</h5>
-							<div class="row">
-								<div class="form-group">
-									<div class="col-md-12">
-										<textarea name="pref_email_invoice_last_reminder" id="pref_email_invoice_last_reminder" rows="5" class="form-control">{{ $user->pref_email_invoice_last_reminder }}</textarea>
-									</div>
-								</div>
-							</div>
-
-							<h5>pref_email_invoice_first_demand</h5>
-							<div class="row">
-								<div class="form-group">
-									<div class="col-md-12">
-										<textarea name="pref_email_invoice_first_demand" id="pref_email_invoice_first_demand" rows="5" class="form-control">{{ $user->pref_email_invoice_first_demand }}</textarea>
-									</div>
-								</div>
-							</div>
-
-							<h5>pref_email_invoice_last_demand</h5>
-							<div class="row">
-								<div class="form-group">
-									<div class="col-md-12">
-										<textarea name="pref_email_invoice_last_demand" id="pref_email_invoice_last_demand" rows="5" class="form-control">{{ $user->pref_email_invoice_last_demand }}</textarea>
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="offernumber_prefix">offernumber_prefix</label>
-										<input name="offernumber_prefix" id="offernumber_prefix" type="text" class="form-control" value="{{ $user->offernumber_prefix }}" />
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="offer_counter">offer_counter</label>
-										<input name="offer_counter" id="offer_counter" type="text" class="form-control" value="{{ $user->offer_counter }}" />
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="invoicenumber_prefix">invoicenumber_prefix</label>
-										<input name="invoicenumber_prefix" id="invoicenumber_prefix" type="text" class="form-control" value="{{ $user->invoicenumber_prefix }}" />
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="invoice_counter">invoice_counter</label>
-										<input name="invoice_counter" id="invoice_counter" type="text" class="form-control" value="{{ $user->invoice_counter }}" />
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="administration_cost">administration_cost</label>
-										<input name="administration_cost" id="administration_cost" type="text" class="form-control" value="{{ $user->administration_cost }}" />
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-12">
-									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
-								</div>
-							</div>
-						{{ Form::close() }}
-
 						</div>
+						{{ Form::close() }}
 					</div>
 				</div>
 

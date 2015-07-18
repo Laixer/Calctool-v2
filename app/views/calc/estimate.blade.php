@@ -20,28 +20,7 @@ var n = this,
 };
 
 	$(document).ready(function() {
-		$(".popdesc").popover({
-	        html: true,
-	        trigger: 'manual',
-	        container: $(this).attr('id'),
-	        placement: 'bottom',
-	        content: function () {
-	            $return = '<div class="hover-hovercard"></div>';
-	        }
-	    }).on("mouseenter", function () {
-	        var _this = this;
-	        $(this).popover("show");
-	        $(this).siblings(".popover").on("mouseleave", function () {
-	            $(_this).popover('hide');
-	        });
-	    }).on("mouseleave", function () {
-	        var _this = this;
-	        setTimeout(function () {
-	            if (!$(".popover:hover").length) {
-	                $(_this).popover("hide")
-	            }
-	        }, 100);
-	    });
+		var $newinputtr;
 		$('.toggle').click(function(e){
 			$id = $(this).attr('id');
 			if ($(this).hasClass('active')) {
@@ -105,6 +84,9 @@ var n = this,
 					$curTable.find("tr:eq(1)").clone().removeAttr("data-id").find("input").each(function(){
 						$(this).val("").removeClass("error-input").attr("id", function(_, id){ return id + i });
 					}).end().find(".total-ex-tax, .total-incl-tax").text("").end().appendTo($curTable);
+					$("button[data-target='#myModal']").on("click", function() {
+						$newinputtr = $(this).closest("tr");
+					});
 					i++;
 				}
 			}
@@ -662,8 +644,7 @@ var n = this,
 				});
 			}
 		});
-		var $newinputtr;
-		$("button[data-toggle='modal']").click(function(e) {
+		$("button[data-target='#myModal']").click(function(e) {
 			$newinputtr = $(this).closest("tr");
 		});
 		function onmaterialclick(e) {
@@ -673,7 +654,9 @@ var n = this,
 			$newinputtr.find(".newrow").change();
 			$('#myModal').modal('toggle');
 		}
+		var $notecurr;
 		$('.notemod').click(function(e) {
+			$notecurr = $(this);
 			$curval = $(this).attr('data-note');
 			$curid = $(this).attr('data-id');
 			$('#note').val($curval);
@@ -681,7 +664,7 @@ var n = this,
 		});
 		$('#descModal').on('hidden.bs.modal', function() {
 			$.post("/calculation/noteactivity", {project: {{ $project->id }}, activity: $('#noteact').val(), note: $('#note').val()}, function(){
-				$('#toggle-activity-'+$curThis.attr("data-id")).hide('slow');
+				$notecurr.attr('data-note', $('#note').val());
 			}).fail(function(e) { console.log(e); });
 		});
 	});
@@ -1179,7 +1162,7 @@ var n = this,
 							<thead>
 								<tr>
 									<th class="col-md-4">&nbsp;</th>
-									<th class="col-md-1">Manuren</th>
+									<th class="col-md-1">Uren</th>
 									<th class="col-md-2">Bedrag (excl. BTW)</th>
 									<th class="col-md-1">&nbsp;</th>
 									<th class="col-md-1">BTW</th>
@@ -1192,7 +1175,7 @@ var n = this,
 							<tbody>
 								<tr><!-- item -->
 									<td class="col-md-4">Arbeidskosten</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ number_format(EstimateEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">21%</td>
@@ -1201,7 +1184,7 @@ var n = this,
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax2($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ number_format(EstimateEndresult::conCalcLaborActivityTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">6%</td>
@@ -1210,7 +1193,7 @@ var n = this,
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax3($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ number_format(EstimateEndresult::conCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">0%</td>
@@ -1292,7 +1275,7 @@ var n = this,
 							<thead>
 								<tr>
 									<th class="col-md-4">&nbsp;</th>
-									<th class="col-md-1">Manuren</th>
+									<th class="col-md-1">Uren</th>
 									<th class="col-md-2">Bedrag (excl. BTW)</th>
 									<th class="col-md-1">&nbsp;</th>
 									<th class="col-md-1">BTW</th>
@@ -1305,7 +1288,7 @@ var n = this,
 							<tbody>
 								<tr><!-- item -->
 									<td class="col-md-4">Arbeidskosten</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ number_format(EstimateEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">21%</td>
@@ -1314,7 +1297,7 @@ var n = this,
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax2($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ number_format(EstimateEndresult::subconCalcLaborActivityTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">6%</td>
@@ -1323,7 +1306,7 @@ var n = this,
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ number_format(EstimateEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">0%</td>

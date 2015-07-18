@@ -30,7 +30,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       <h3 class="name">{{ $relation_self->company_name }}</h3>
       <div>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</div>
       <div>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</div>
-      <div>Email:<a href="mailto:{{ $relation_self->email }}">{{ $relation_self->email }}</a></div>
+      <div>Email:{{ $relation_self->email }}</div>
       <div>KVK:{{ $relation_self->kvk }}</li>
   </header>
   <!--PAGE HEADER MASTER END-->
@@ -45,8 +45,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         <div>{{ $relation->address_postal . ', ' . $relation->address_city }}</div>
       </div>
       <div id="invoice">
-        <h3 class="name">{{ InvoiceController::getInvoiceCode($project->id) }}</h3>
-        <div class="date">{{ $project->project_name }}</div>
+        <h3 class="name">TERMIJNFACTUUR</h3>
+        <div class="date">Projectnaam: {{ $project->project_name }}</div>
         <div class="date">Factuurnummer: {{ $invoice->invoice_code }}</div>
         <div class="date">Uw referentie: {{ $invoice->reference }}</div>
         <div class="date">Boekhoudkundignummer: {{ $invoice->book_code }}</div>

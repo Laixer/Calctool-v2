@@ -357,4 +357,10 @@ class AdminController extends BaseController {
 		return Redirect::back()->with('success', 1);
 	}
 
+	public function getDemoProject()
+	{
+		DemoProjectTemplate::setup(Route::input('user_id'));
+
+		return Redirect::back()->with('success', 1);
+	}
 }

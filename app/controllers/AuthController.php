@@ -210,4 +210,15 @@ class AuthController extends \BaseController {
 
 	}
 
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function doHideNextStep()
+	{
+		return Response::make(json_encode(['success' => 1]))->withCookie(Cookie::forget('nstep'));
+	}
+
 }

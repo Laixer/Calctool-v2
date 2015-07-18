@@ -33,6 +33,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				.find("td:eq(2)").text(json.type).end()
 				.find("td:eq(3)").text(json.activity).end()
 				.find("td:eq(4)").text($note).end()
+				.find("td:eq(7)").html('<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>').end()
 				.prependTo($curTable);
 				$curThis.closest("tr").find("input").val("");
 				$curThis.closest("tr").find("select").val("");
@@ -59,9 +60,10 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
 				.find("td:eq(0)").text($date).end()
 				.find("td:eq(1)").text(json.relation).end()
-				.find("td:eq(2)").text(json.amount).end()
+				.find("td:eq(2)").html(json.amount).end()
 				.find("td:eq(3)").text(json.type).end()
 				.find("td:eq(4)").text($note).end()
+				.find("td:eq(7)").html('<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>').end()
 				.prependTo($curTable);
 				$curThis.closest("tr").find("input").val("");
 				$curThis.closest("tr").find("select").val("");
@@ -89,8 +91,16 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			$curinv = $(this).attr('data-invoice');
 			$.post("/invoice/pay", {project: {{ $project->id }}, id: $curinv, projectid: $curproj}, function(data){
 				$rs = jQuery.parseJSON(data);
-				console.log($rs);
-				$curThis.replaceWith('Gefactureerd op ' +$rs.payment);
+				$curThis.replaceWith('Betaald op ' +$rs.payment);
+			}).fail(function(e) { console.log(e); });
+		});
+		$('.doinvclose').click(function(e){
+			$curThis = $(this);
+			$curproj = $(this).attr('data-project');
+			$curinv = $(this).attr('data-invoice');
+			$.post("/invoice/invclose", {project: {{ $project->id }}, id: $curinv, projectid: $curproj}, function(data){
+				$rs = jQuery.parseJSON(data);
+				$curThis.replaceWith($rs.billing);
 			}).fail(function(e) { console.log(e); });
 		});
 		$('#projclose').editable({
@@ -172,17 +182,15 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			</div>
 			@endif
 
-			{{ Form::open(array('url' => 'project/update')) }}
-
 				<div class="tabs nomargin-top">
 
 					<?# -- tabs -- ?>
 					<ul class="nav nav-tabs">
 						<li class="active">
-							<a href="#project" data-toggle="tab">Projectgegevens</a>
+							<a href="#status" data-toggle="tab">Projectstatus</a>
 						</li>
 						<li>
-							<a href="#status" data-toggle="tab">Projectstatus</a>
+							<a href="#project" data-toggle="tab">Projectgegevens</a>
 						</li>
 						<li>
 							<a href="#calc" data-toggle="tab">Uurtarief & Winstpercentages</a>
@@ -201,101 +209,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					<?# -- tabs content -- ?>
 					<div class="tab-content">
 
-						<div id="project" class="tab-pane active">
-							<h5><strong>Gegevens</strong></h5>
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group">
-											<label for="name">Projectnaam</label>
-											<input name="name" id="name" type="text" {{ $project->project_close ? 'disabled' : '' }} value="{{ Input::old('name') ? Input::old('name') : $project->project_name }}" class="form-control" />
-											<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
-										</div>
-									</div>
-									<div class="col-md-4">
-										<div class="form-group">
-											<label for="contractor">Opdrachtgever</label>
-											<select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : '' }} class="form-control pointer">
-											@foreach (Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
-												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
-											@endforeach
-											</select>
-										</div>
-									</div>
-									<div class="col-md-2">
-										<div class="form-group">
-											<label for="type">Type</label>
-											<select name="type" id="type" {{ $project->project_close ? 'disabled' : '' }} class="form-control pointer">
-												@foreach (ProjectType::all() as $type)
-													<option {{ $project->type_id==$type->id ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
-												@endforeach
-											</select>
-										</div>
-									</div>
-								</div>
-							<h5><strong>Adresgegevens</strong></h5>
-									<div class="row">
-
-									<div class="col-md-4">
-										<div class="form-group">
-											<label for="street">Straat</label>
-											<input name="street" id="street" {{ $project->project_close ? 'disabled' : '' }} type="text" value="{{ Input::old('street') ? Input::old('street') : $project->address_street}}" class="form-control"/>
-										</div>
-									</div>
-									<div class="col-md-1">
-										<div class="form-group">
-											<label for="address_number">Huis nr.</label>
-											<input name="address_number" {{ $project->project_close ? 'disabled' : '' }} id="address_number" type="text" value="{{ Input::old('address_number') ? Input::old('address_number') : $project->address_number }}" class="form-control"/>
-										</div>
-									</div>
-
-									<div class="col-md-2">
-										<div class="form-group">
-											<label for="zipcode">Postcode</label>
-											<input name="zipcode" {{ $project->project_close ? 'disabled' : '' }} id="zipcode" type="text" maxlength="6" value="{{ Input::old('zipcode') ? Input::old('zipcode') : $project->address_postal }}" class="form-control"/>
-										</div>
-									</div>
-
-									<div class="col-md-3">
-										<div class="form-group">
-											<label for="city">Plaats</label>
-											<input name="city" {{ $project->project_close ? 'disabled' : '' }} id="city" type="text" value="{{ Input::old('city') ? Input::old('city'): $project->address_city }}" class="form-control"/>
-										</div>
-									</div>
-
-									<div class="col-md-2">
-										<div class="form-group">
-											<label for="province">Provincie</label>
-											<select name="province" {{ $project->project_close ? 'disabled' : '' }} id="province" class="form-control pointer">
-												@foreach (Province::all() as $province)
-													<option {{ $project->province_id==$province->id ? 'selected' : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
-												@endforeach
-											</select>
-										</div>
-									</div>
-
-									<div class="col-md-4">
-										<div class="form-group">
-											<label for="country">Land</label>
-											<select name="country" {{ $project->project_close ? 'disabled' : '' }} id="country" class="form-control pointer">
-												@foreach (Country::all() as $country)
-													<option {{ $project->country_id==$country->id ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
-												@endforeach
-											</select>
-										</div>
-									</div>
-
-								</div>
-							<h5><strong>Opmerkingen</strong></h5>
-								<div class="row">
-									<div class="form-group">
-										<div class="col-md-12">
-											<textarea name="note" id="note" rows="5" class="form-control">{{ Input::old('note') ? Input::old('note') : $project->note }}</textarea>
-										</div>
-									</div>
-								</div>
-							</div>
-
-						<div id="status" class="tab-pane">
+						<div id="status" class="tab-pane active">
 							<div class="row">
 								<div class="col-md-3"><strong>Offerte stadium</strong></div>
 								<div class="col-md-2"><strong></strong></div>
@@ -354,31 +268,62 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<div class="row">
 								<div class="col-md-3"><strong>Financieel</strong></div>
 								<div class="col-md-2"><strong>Gefactureerd</strong></div>
-								<div class="col-md-3"><strong>Acties</strong></div>
-								<div class="col-md-3"></div>
+								<div class="col-md-3"><strong>Betaalstatus</strong></div>
+								<div class="col-md-3"><strong>Bekijk factuur</strong></div>
 							</div>
 							<?php
 							if ($offer_last) {
 							$i=0;
+							$close = true;
+							$invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first();
 							?>
-							@foreach (Invoice::where('offer_id','=', $offer_last->id)->orderBy('priority')->get() as $invoice)
+							@foreach (Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority')->get() as $invoice)
 							<div class="row">
-								<div class="col-md-3">{{ ($invoice->isclose ? 'Eindfactuur' : ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1))) }}</div>
-								<div class="col-md-2">{{ $invoice->bill_date }}</div>
+								<div class="col-md-3">{{ ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1)) }}</div>
+								<div class="col-md-2">
+								<?php
+								if (!$invoice->bill_date && $close) {
+									echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs doinvclose">Factureren</a>';
+									$close=false;
+								} else if (!$invoice->bill_date) {
+									echo '<a href="/invoice/project-'.$project->id.'/term-invoice-'.$invoice->id.'" class="btn btn-primary btn-xxs">Bekijken</a>';
+								} else
+									echo date('d-m-Y', strtotime($invoice->bill_date));
+								?>
+								</div>
 								<div class="col-md-3"><?php
 								if ($invoice->invoice_close && !$invoice->payment_date)
-									echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs dopay">Betalen</a>';
+									echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs dopay">Betaald</a>';
 								elseif ($invoice->invoice_close && $invoice->payment_date)
-									echo 'Gefactureerd op '.$invoice->payment_date;
-								elseif ($invoice->isclose)
-									echo '<a href="/invoice/project-'.$project->id.'/invoice-'.$invoice->id.'" class="btn btn-primary btn-xxs">Bekijken</a>';
-								else
-									echo '<a href="/invoice/project-'.$project->id.'/term-invoice-'.$invoice->id.'" class="btn btn-primary btn-xxs">Bekijken</a>';
+									echo 'Betaald op '.date('d-m-Y', strtotime($invoice->payment_date));
 								?></div>
-								<div class="col-md-3"></div>
+								<div class="col-md-3"><?php if ($invoice->bill_date){ echo '<a target="blank" href="/invoice/pdf/project-'.$project->id.'/term-invoice-'.$invoice->id.'" class="btn btn-primary btn-xxs">Bekijk PDF</a>'; }?></div>
 							</div>
 							<?php $i++; ?>
 							@endforeach
+							@if ($invoice_end)
+							<div class="row">
+								<div class="col-md-3">Eindfactuur</div>
+								<div class="col-md-2">
+								<?php
+								if (!$invoice_end->bill_date && $close) {
+									echo '<a href="javascript:void(0);" data-invoice="'.$invoice_end->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs doinvclose">Factureren</a>';
+									$close=false;
+								} else if (!$invoice_end->bill_date) {
+									echo '<a href="/invoice/project-'.$project->id.'/invoice-'.$invoice_end->id.'" class="btn btn-primary btn-xxs">Bekijken</a>';
+								} else
+									echo date('d-m-Y', strtotime($invoice_end->bill_date));
+								?>
+								</div>
+								<div class="col-md-3"><?php
+								if ($invoice_end->invoice_close && !$invoice_end->payment_date)
+									echo '<a href="javascript:void(0);" data-invoice="'.$invoice_end->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs dopay">Betaald</a>';
+								elseif ($invoice_end->invoice_close && $invoice_end->payment_date)
+									echo 'Betaald op '.date('d-m-Y', strtotime($invoice_end->payment_date));
+								?></div>
+								<div class="col-md-3"><?php if ($invoice_end->bill_date){ echo '<a target="blank" href="/invoice/pdf/project-'.$project->id.'/invoice-'.$invoice_end->id.'" class="btn btn-primary btn-xxs">Bekijk PDF</a>'; }?></div>
+							</div>
+							@endif
 							<?php }else{ ?>
 							<div class="row">
 								<div class="col-md-12">Geen geregistreerde uren</div>
@@ -392,9 +337,113 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							</div>
 						</div>
 
+						<div id="project" class="tab-pane">
+						<form method="post" action="/project/update">
+							<h5><strong>Gegevens</strong></h5>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="name">Projectnaam*</label>
+											<input name="name" id="name" type="text" {{ $project->project_close ? 'disabled' : '' }} value="{{ Input::old('name') ? Input::old('name') : $project->project_name }}" class="form-control" />
+											<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="contractor">Opdrachtgever*</label>
+											<select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : '' }} class="form-control pointer">
+											@foreach (Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
+												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
+											@endforeach
+											</select>
+										</div>
+									</div>
+									<div class="col-md-2">
+										<div class="form-group">
+											<label for="type">Type</label>
+											<select name="type" id="type" {{ $project->project_close ? 'disabled' : '' }} class="form-control pointer">
+												@foreach (ProjectType::all() as $type)
+													<option {{ $project->type_id==$type->id ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
+												@endforeach
+											</select>
+										</div>
+									</div>
+								</div>
+							<h5><strong>Adresgegevens</strong></h5>
+									<div class="row">
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="street">Straat*</label>
+											<input name="street" id="street" {{ $project->project_close ? 'disabled' : '' }} type="text" value="{{ Input::old('street') ? Input::old('street') : $project->address_street}}" class="form-control"/>
+										</div>
+									</div>
+									<div class="col-md-1">
+										<div class="form-group">
+											<label for="address_number">Huis nr.*</label>
+											<input name="address_number" {{ $project->project_close ? 'disabled' : '' }} id="address_number" type="text" value="{{ Input::old('address_number') ? Input::old('address_number') : $project->address_number }}" class="form-control"/>
+										</div>
+									</div>
+
+									<div class="col-md-2">
+										<div class="form-group">
+											<label for="zipcode">Postcode*</label>
+											<input name="zipcode" {{ $project->project_close ? 'disabled' : '' }} id="zipcode" type="text" maxlength="6" value="{{ Input::old('zipcode') ? Input::old('zipcode') : $project->address_postal }}" class="form-control"/>
+										</div>
+									</div>
+
+									<div class="col-md-3">
+										<div class="form-group">
+											<label for="city">Plaats*</label>
+											<input name="city" {{ $project->project_close ? 'disabled' : '' }} id="city" type="text" value="{{ Input::old('city') ? Input::old('city'): $project->address_city }}" class="form-control"/>
+										</div>
+									</div>
+
+									<div class="col-md-2">
+										<div class="form-group">
+											<label for="province">Provincie*</label>
+											<select name="province" {{ $project->project_close ? 'disabled' : '' }} id="province" class="form-control pointer">
+												@foreach (Province::all() as $province)
+													<option {{ $project->province_id==$province->id ? 'selected' : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
+												@endforeach
+											</select>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="country">Land*</label>
+											<select name="country" {{ $project->project_close ? 'disabled' : '' }} id="country" class="form-control pointer">
+												@foreach (Country::all() as $country)
+													<option {{ $project->country_id==$country->id ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
+												@endforeach
+											</select>
+										</div>
+									</div>
+
+								</div>
+							<h5><strong>Opmerkingen</strong></h5>
+								<div class="row">
+									<div class="form-group">
+										<div class="col-md-12">
+											<textarea name="note" id="note" rows="5" class="form-control">{{ Input::old('note') ? Input::old('note') : $project->note }}</textarea>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+								<div class="col-md-12">
+									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+								</div>
+								</div>
+
+								</form>
+							</div>
+
 						<div id="calc" class="tab-pane">
+						<form method="post" action="/project/updatecalc">
+						<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
 							<div class="row">
-								<div class="col-md-3"><h5><strong>Eigen uurtarief</strong></h5></div>
+								<div class="col-md-3"><h5><strong>Eigen uurtarief*</strong></h5></div>
 								<div class="col-md-1"></div>
 								<div class="col-md-2"><h5><strong>Calculatie</strong></h5></div>
 								<div class="col-md-2"><h5><strong>Meerwerk</strong></h5></div>
@@ -452,79 +501,76 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="col-md-2">
 									<input name="more_profit_equipment_2" {{ $project->project_close ? 'disabled' : '' }} id="more_profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_2') ? Input::old('more_profit_equipment_2') : $project->profit_more_subcontr_equip }}" class="form-control form-control-sm-number"/>
 								</div>
-							</div>
-
+							</div><br />
+								<div class="row">
+								<div class="col-md-12">
+									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+								</div>
+								</div>
+						</form>
 						</div>
 
 						<div id="hour" class="tab-pane">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th class="col-md-1">Datum</th>
+										<th class="col-md-1">Uren</th>
+										<th class="col-md-3">Soort</th>
+										<th class="col-md-1">Werkzaamheid</th>
+										<th class="col-md-3">Omschrijving</th>
+										<th class="col-md-1">&nbsp;</th>
+										<th class="col-md-1">&nbsp;</th>
+										<th class="col-md-1">&nbsp;</th>
+										<th class="col-md-1">&nbsp;</th>
+									</tr>
+								</thead>
 
-							<!--<div class="toggle">
-								<label>Deze week</label>
-								<div class="toggle-content">-->
-									<table class="table table-striped">
-										<?# -- table head -- ?>
-										<thead>
-											<tr>
-												<th class="col-md-1">Datum</th>
-												<th class="col-md-1">Uren</th>
-												<th class="col-md-3">Soort</th>
-												<th class="col-md-1">Werkzaamheid</th>
-												<th class="col-md-3">Omschrijving</th>
-												<th class="col-md-1">&nbsp;</th>
-												<th class="col-md-1">&nbsp;</th>
-												<th class="col-md-1">&nbsp;</th>
-												<th class="col-md-1">&nbsp;</th>
-											</tr>
-										</thead>
-
-										<!--3table items -->
-										<tbody>
+								<tbody>
+									@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+									@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
+									@foreach (Timesheet::where('activity_id','=', $activity->id)->get() as $timesheet)
+									<tr data-id="{{ $timesheet->id }}">
+										<td class="col-md-1">{{ date('d-m-Y', strtotime($timesheet->register_date)) }}</td>
+										<td class="col-md-1">{{ number_format($timesheet->register_hour, 2,",",".") }}</td>
+										<td class="col-md-3">{{ ucwords(TimesheetKind::find($timesheet->timesheet_kind_id)->kind_name) }}</td>
+										<td class="col-md-3">{{ $activity->activity_name }}</td>
+										<td class="col-md-1">{{ $timesheet->note }}</td>
+										<td class="col-md-1">&nbsp;</td>
+										<td class="col-md-1">&nbsp;</td>
+										<td class="col-md-1">@if (!$project->project_close)<button class="btn btn-danger btn-xs fa fa-times deleterow"></button>@endif</td>
+									</tr>
+									@endforeach
+									@endforeach
+									@endforeach
+									@if (!$project->project_close)
+									<tr>
+										<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text"/></td>
+										<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
+										<td class="col-md-2">
+											<select name="typename" id="typename" class="form-control-sm-text">
+											@foreach (TimesheetKind::all() as $typename)
+												<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
+											@endforeach
+											</select>
+										</td>
+										<td class="col-md-4">
+											<select name="activity" id="activity" class="form-control-sm-text">
 											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
-											@foreach (Timesheet::where('activity_id','=', $activity->id)->get() as $timesheet)
-											<tr data-id="{{ $timesheet->id }}"><!-- item -->
-												<td class="col-md-1">{{ date('d-m-Y', strtotime($timesheet->register_date)) }}</td>
-												<td class="col-md-1">{{ number_format($timesheet->register_hour, 2,",",".") }}</td>
-												<td class="col-md-3">{{ ucwords(TimesheetKind::find($timesheet->timesheet_kind_id)->kind_name) }}</td>
-												<td class="col-md-3">{{ $activity->activity_name }}</td>
-												<td class="col-md-1">{{ $timesheet->note }}</td>
-												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1">@if (!$project->project_close)<button class="btn btn-danger btn-xs fa fa-times deleterow"></button>@endif</td>
-											</tr>
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+												<option value="{{ $activity->id }}">{{ $activity->activity_name }}</option>
 											@endforeach
 											@endforeach
-											@endforeach
-											@if (!$project->project_close)
-											<tr><!-- item -->
-												<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text"/></td>
-												<td class="col-md-1"><input type="number" min="0" name="hour" id="hour" class="form-control-sm-text"/></td>
-												<td class="col-md-2">
-													<select name="typename" id="typename" class="form-control-sm-text">
-													@foreach (TimesheetKind::all() as $typename)
-														<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
-													@endforeach
-													</select>
-												</td>
-												<td class="col-md-4">
-													<select name="activity" id="activity" class="form-control-sm-text">
-													@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-													@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
-														<option value="{{ $activity->id }}">{{ $activity->activity_name }}</option>
-													@endforeach
-													@endforeach
-													</select>
-												</td>
-												<td class="col-md-1"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
-												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1"><button id="addnew" class="btn btn-primary btn-xs"> Toevoegen</button></td>
-											</tr>
-											@endif
-										</tbody>
-									</table>
-								<!--</div>
-							</div>-->
+											</select>
+										</td>
+										<td class="col-md-1"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
+										<td class="col-md-1">&nbsp;</td>
+										<td class="col-md-1">&nbsp;</td>
+										<td class="col-md-1"><button id="addnew" class="btn btn-primary btn-xs"> Toevoegen</button></td>
+									</tr>
+									@endif
+								</tbody>
+							</table>
 						</div>
 
 						<div id="hour_overview" class="tab-pane">
@@ -674,7 +720,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 													@endforeach
 													</select>
 												</td>
-												<td class="col-md-2"><input type="number" min="0" name="hour" id="hour" class="form-control-sm-text"/></td>
+												<td class="col-md-2"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
 												<td class="col-md-1">
 													<select name="typename" id="typename" class="form-control-sm-text">
 													@foreach (PurchaseKind::all() as $typename)
@@ -695,13 +741,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						</div>
 					</div>
 				</div>
-
-			<div class="row">
-					<div class="col-md-12">
-						<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
-					</div>
-				</div>
-			{{ Form::close() }}
 
 		</div>
 

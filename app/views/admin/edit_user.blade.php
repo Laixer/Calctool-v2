@@ -80,6 +80,7 @@ $(document).ready(function() {
 				</button>
 				<ul class="dropdown-menu">
 				  <li><a href="/admin/user-{{ $user->id }}/switch">Gebruker overnemen</a></li>
+				  <li><a href="/admin/user-{{ $user->id }}/demo">Demo project laden</a></li>
 				</ul>
 				</div>
 			</div>

@@ -10,7 +10,7 @@
 		var currentDate = new Date();
 		var futureDate  = new Date(2015, 6, 20);
 		var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
-		clock = $('.clock').FlipClock(diff, {
+		clock = $('.clock-1').FlipClock(diff, {
 			clockFace: 'DailyCounter',
 			countdown: true,
 			language: 'nl'
@@ -18,25 +18,47 @@
 	});
 </script>
 <div id="wrapper">
-
 	<section class="container">
-
 		<div class="row">
-
 			<div class="col-md-9">
 				<h2>
-					<strong>Countdown</strong> tot de deadline
+					<strong>Countdown</strong> tot de deadline einde Beta-ontwikkeling
 				</h2>
-
-				<div class="clock" style="margin:2em;"></div>
+				<div class="clock-1" style="margin:2em;"></div>
 				<div class="message"></div>
 			</div>
-
 		</div>
-
 	</section>
-
 </div>
+</script>
+
+<script type="text/javascript">
+	var clock;
+	$(document).ready(function() {
+		var currentDate = new Date();
+		var futureDate  = new Date(2015, 6, 25);
+		var diff = futureDate.getTime() / 1000 - currentDate.getTime() / 1000;
+		clock = $('.clock-2').FlipClock(diff, {
+			clockFace: 'DailyCounter',
+			countdown: true,
+			language: 'nl'
+		});
+	});
+</script>
+<div id="wrapper">
+	<section class="container">
+		<div class="row">
+			<div class="col-md-9">
+				<h2>
+					<strong>Countdown</strong> tot de Beta-release
+				</h2>
+				<div class="clock-2" style="margin:2em;"></div>
+				<div class="message"></div>
+			</div>
+		</div>
+	</section>
+</div>
+</script>
 <?# -- /WRAPPER -- ?>
 @stop
 

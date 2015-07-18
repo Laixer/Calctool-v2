@@ -12,7 +12,7 @@ if ($offer_last && $offer_last->offer_finish)
 	<a href="/calculation/project-{{ $project->id }}" {{ $page=='calculation' ? 'class="current"' : '' }} >Calculatie</a>
 	<a href="/offer/project-{{ $project->id }}" {{ $page=='offer' ? 'class="current"' : '' }}>Offerte</a>
 	@if($show_all)
-	<a href="/estimate/project-{{ $project->id }}" {{ $page=='estimate' ? 'class="current"' : '' }} >Stelpst stelle</a>
+	<a href="/estimate/project-{{ $project->id }}" {{ $page=='estimate' ? 'class="current"' : '' }} >Stelposten stellen</a>
 	<a href="/less/project-{{ $project->id }}" {{ $page=='less' ? 'class="current"' : '' }} >Minderwerk</a>
 	<a href="/more/project-{{ $project->id }}" {{ $page=='more' ? 'class="current"' : '' }} >Meerwerk</a>
 	<a href="/invoice/project-{{ $project->id }}" {{ $page=='invoice' ? 'class="current"' : '' }} >Factuur</a>

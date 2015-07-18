@@ -225,6 +225,33 @@ class InvoiceController extends BaseController {
 		}
 	}
 
+	public function doInvoiceCloseAjax()
+	{
+		$rules = array(
+			'id' => array('required','integer'),
+			'projectid' => array('required','integer'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+			$invoice = Invoice::find(Input::get('id'));
+			$invoice->invoice_close = true;
+			$invoice->invoice_code = InvoiceController::getInvoiceCode(Input::get('projectid'));
+			$invoice->bill_date = date('Y-m-d H:i:s');
+
+			$invoice->save();
+			Auth::user()->invoice_counter++;
+			Auth::user()->save();
+
+			return json_encode(['success' => 1, 'billing' => date('d-m-Y')]);
+		}
+	}
+
 	/* id = $project->id */
 	public static function getInvoiceCode($id)
 	{

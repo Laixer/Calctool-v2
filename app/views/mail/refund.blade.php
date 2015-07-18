@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<title>CalcTool.nl - Terugstorting</title>
+		<title><strong>CalcTool.nl</strong> - Terugstorting</title>
 	</head>
 
 	<body style="margin:0; margin-top:30px; margin-bottom:30px; padding:0; width:100%; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; background-color: #F4F5F7;">
@@ -43,7 +43,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; line-height: 24px; color:#8E8E8E;">
-														Goedendag <strong>{{ ucfirst($username) }}</strong>,
+														Goededag <strong>{{ ucfirst($username) }}</strong>,
 													</td>
 												</tr>
 												<tr>
@@ -51,8 +51,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Het volledige bedrag van {{ $amount }} is teruggestort.
-														Het abonnement is hierop aangepast.
+														Het volledige bedrag van <strong>{{ $amount }}</strong> is teruggestort, je abonnement is hierop aangepast.
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->
@@ -65,7 +64,7 @@
 															Met vriendelijke groet,
 														<br>
 														<br>
-															<strong>Cal</strong>, van de <a href="https://calctool.nl"><strong>CalcTool.nl</strong></a>
+															<strong>Cal</strong>, van <a href="https://calctool.nl"><strong>CalcTool.nl</strong></a>
 														<br>
 														<br>
 													</td>

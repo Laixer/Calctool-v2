@@ -53,7 +53,7 @@ class CreateFinancial extends Migration {
 			$table->foreign('from_contact_id')->references('id')->on('contact')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('project_id')->unsigned();
 			$table->foreign('project_id')->references('id')->on('project')->onUpdate('cascade')->onDelete('cascade');
-			$table->integer('resource_id')->unsigned();
+			$table->integer('resource_id')->unsigned()->nullable();
 			$table->foreign('resource_id')->references('id')->on('resource')->onUpdate('cascade')->onDelete('cascade');
 		});
 

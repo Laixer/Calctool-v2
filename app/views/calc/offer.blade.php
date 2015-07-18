@@ -271,7 +271,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<tbody>
 								@foreach (Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->get() as $offer)
 								<tr>
-									<td><a href="#">{{ $offer->id }}</a></td>
+									<td><a href="/{{ Resource::find($offer->resource_id)->file_location }}">Offerteversienummer {{ $offer->id }}</a></td>
 									<td>{{ date('d-m-Y', strtotime(DB::table('offer')->select('created_at')->where('id','=',$offer->id)->get()[0]->created_at)) }}</td>
 								</tr>
 								@endforeach
@@ -310,7 +310,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 										<input value="{{ ($offer_last ? $offer_last->invoice_quantity : '1') }}" name="terms" id="terms" min="1" max="50" type="number" class="form-control" />
 									</div>
 								</div>
-								<div class="form-horizontal noterms" style="display:none;">
+								<div class="form-horizontal noterms" {{ ($offer_last && $offer_last->invoice_quantity >1 ? '' : 'style="display:none;"') }} >
 									<div class="col-md-6">
 									  <div class="form-group">
 									  <label>Aanbetaling</label>
@@ -325,7 +325,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									</div>
 								</div>
 							</div>
-							<div class="table-responsive noterms" style="display:none;">
+							<div class="table-responsive noterms" {{ ($offer_last && $offer_last->invoice_quantity >1 ? '' : 'style="display:none;"') }}>
 								<table id="tbl-term" class="table table-hover">
 									<thead>
 										<tr>
@@ -508,7 +508,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					@if ($offer_last && $offer_last->offer_finish)
 					{{ $offer_last->description }}
 					@else
-					<textarea name="description" id="description" rows="5" class="form-control">{{ ($offer_last ? $offer_last->description : '') }}</textarea>
+					<textarea name="description" id="description" rows="5" class="form-control">{{ ($offer_last ? $offer_last->description : Auth::user()->pref_offer_description) }}</textarea>
 					@endif
 					<br>
 					<div class="show-all" style="display:none;">
@@ -981,7 +981,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					@if ($offer_last && $offer_last->offer_finish)
 					{{ $offer_last->closure }}
 					@else
-					<textarea name="closure" id="closure" rows="5" class="form-control">{{ ($offer_last ? $offer_last->closure : '') }}</textarea>
+					<textarea name="closure" id="closure" rows="5" class="form-control">{{ ($offer_last ? $offer_last->closure : Auth::user()->pref_closure_offer) }}</textarea>
 					@endif
 					<br>
 					<p id="termtext">Indien opdracht gegund wordt, ontvangt u één eindfactuur.</p>

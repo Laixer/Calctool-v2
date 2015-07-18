@@ -29,6 +29,7 @@
 				.find("td:eq(2)").html(json.amount).end()
 				.find("td:eq(4)").text(json.type).end()
 				.find("td:eq(5)").text($note).end()
+				.find("td:eq(8)").html('<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>').end()
 				.prependTo($curTable);
 				$curThis.closest("tr").find("input").val("");
 				$curThis.closest("tr").find("select").val("");
@@ -59,11 +60,9 @@
 							<th class="col-md-1">Datum</th>
 							<th class="col-md-2">Relatie</th>
 							<th class="col-md-1">Factuurbedrag</th>
-							<th class="col-md-2">Project</th>
+							<th class="col-md-3">Project</th>
 							<th class="col-md-1">Soort</th>
-							<th class="col-md-2">Omschrijving</th>
-							<th class="col-md-1">&nbsp;</th>
-							<th class="col-md-1">&nbsp;</th>
+							<th class="col-md-3">Omschrijving</th>
 							<th class="col-md-1">&nbsp;</th>
 						</tr>
 					</thead>
@@ -75,11 +74,9 @@
 							<td class="col-md-1">{{ date('d-m-Y', strtotime($purchase->register_date)) }}</td>
 							<td class="col-md-2">{{ Relation::find($purchase->relation_id)->company_name }}</td>
 							<td class="col-md-1">{{ '&euro; '.number_format($purchase->amount, 2,",",".") }}</td>
-							<td class="col-md-2">{{ $project->project_name }}</td>
+							<td class="col-md-3">{{ $project->project_name }}</td>
 							<td class="col-md-1">{{ ucwords(PurchaseKind::find($purchase->kind_id)->kind_name) }}</td>
-							<td class="col-md-2">{{ $purchase->note }}</td>
-							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
+							<td class="col-md-3">{{ $purchase->note }}</td>
 							<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times deleterow"></button></td>
 						</tr>
 						@endforeach
@@ -96,7 +93,7 @@
 								</select>
 							</td>
 							<td class="col-md-1"><input type="text" min="0" name="hour" id="hour" class="form-control-sm-text"/></td>
-							<td class="col-md-2">
+							<td class="col-md-3">
 								<select name="projname" id="projname" class="form-control-sm-text">
 								@foreach (Project::where('user_id','=',Auth::user()->id)->get() as $projectname)
 									<option value="{{ $projectname->id }}">{{ ucwords($projectname->project_name) }}</option>
@@ -110,9 +107,7 @@
 								@endforeach
 								</select>
 							</td>
-							<td class="col-md-2"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
-							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
+							<td class="col-md-3"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
 							<td class="col-md-1"><button id="addnewpurchase" class="btn btn-primary btn-xs"> Toevoegen</button></td>
 						</tr>
 					</tbody>

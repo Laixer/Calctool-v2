@@ -57,14 +57,14 @@ $relation = Relation::find(Route::Input('relation_id'));
 
 					<div class="col-md-2">
 						<div class="form-group">
-							<label for="contact_firstname">Voornaam</label>
+							<label for="contact_firstname">Voornaam*</label>
 							<input name="contact_firstname" id="contact_firstname" type="text" value="{{ Input::old('contact_firstname') ? Input::old('contact_firstname') : $contact->firstname }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="contact_name">Achternaam</label>
+							<label for="contact_name">Achternaam*</label>
 							<input name="contact_name" id="contact_name" type="text" value="{{ Input::old('contact_name') ? Input::old('contact_name') : $contact->lastname }}" class="form-control"/>
 							<input type="hidden" name="id" id="id" value="{{ $contact->id }}"/>
 						</div>
@@ -86,14 +86,14 @@ $relation = Relation::find(Route::Input('relation_id'));
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="email">Email</label>
+							<label for="email">Email*</label>
 							<input name="email" id="email" type="email" value="{{ Input::old('email') ? Input::old('email') : $contact->email }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-4 company">
 						<div class="form-group">
-							<label for="contactfunction">Functie</label>
+							<label for="contactfunction">Functie*</label>
 							<select name="contactfunction" id="contactfunction" class="form-control pointer">
 							@foreach (ContactFunction::all() as $function)
 								<option {{ $contact->function_id==$function->id ? 'selected' : '' }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>

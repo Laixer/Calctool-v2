@@ -384,7 +384,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 
 				</div>
 
-					<textarea name="description" id="description" rows="10" class="form-control">{{ ($invoice ? $invoice->description : '') }}</textarea>
+					<textarea name="description" id="description" rows="10" class="form-control">{{ ($invoice ? ($invoice->description ? $invoice->description : Auth::user()->pref_invoice_description) : Auth::user()->pref_invoice_description) }}</textarea>
 
 					<div class="show-all" style="display:none;">
 						<h4 class="only-total">Factuuroverzicht Aanneming</h4>
@@ -969,7 +969,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 					</table>
 					<?php } ?>
 
-					<textarea name="closure" id="closure" rows="10" class="form-control">{{ ($invoice ? $invoice->closure : '') }}</textarea>
+					<textarea name="closure" id="closure" rows="10" class="form-control">{{ ($invoice ? ($invoice->closure ? $invoice->closure : Auth::user()->pref_invoice_closure) : Auth::user()->pref_invoice_closure) }}</textarea>
 
 					<p id="termtext">Indien opdracht wordt verstrekt, wordt gefactureerd middels 1 eindfactuur</p>
 					<p id="paymenttext"></p>

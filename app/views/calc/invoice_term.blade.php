@@ -321,7 +321,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 
 				</div>
 
-					<textarea name="description" id="description" rows="10" class="form-control">{{ ($invoice ? $invoice->description : '') }}</textarea>
+					<textarea name="description" id="description" rows="10" class="form-control">{{ ($invoice ? ($invoice->description ? $invoice->description : Auth::user()->pref_invoice_description) : Auth::user()->pref_invoice_description) }}</textarea>
 					<div class="show-totals">
 						<h4>Specificatie termijnfactuur</h4>
 						<table class="table table-striped hide-btw2">
@@ -387,7 +387,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 						</table>
 					</div>
 
-					<textarea name="closure" id="closure" rows="10" class="form-control">{{ ($invoice ? $invoice->closure : '') }}</textarea>
+					<textarea name="closure" id="closure" rows="10" class="form-control">{{ ($invoice ? ($invoice->closure ? $invoice->closure : Auth::user()->pref_invoice_closure) : Auth::user()->pref_invoice_closure) }}</textarea>
 
 					<h5>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</h5>
 

@@ -28,6 +28,7 @@
 				.find("td:eq(3)").text(json.project).end()
 				.find("td:eq(4)").text(json.activity).end()
 				.find("td:eq(5)").text($note).end()
+				.find("td:eq(8)").html('<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>').end()
 				.prependTo($curTable);
 				$curThis.closest("tr").find("input").val("");
 				$curThis.closest("tr").find("select").val("");
@@ -77,12 +78,9 @@
 									<th class="col-md-1">Datum</th>
 									<th class="col-md-1">Uren</th>
 									<th class="col-md-1">Soort</th>
-									<th class="col-md-1">Project</th>
-									<th class="col-md-1">Werkzaamheid</th>
+									<th class="col-md-3">Project</th>
+									<th class="col-md-2">Werkzaamheid</th>
 									<th class="col-md-3">Omschrijving</th>
-									<th class="col-md-1">&nbsp;</th>
-									<th class="col-md-1">&nbsp;</th>
-									<th class="col-md-1">&nbsp;</th>
 									<th class="col-md-1">&nbsp;</th>
 								</tr>
 							</thead>
@@ -97,11 +95,9 @@
 									<td class="col-md-1">{{ date('d-m-Y', strtotime($timesheet->register_date)) }}</td>
 									<td class="col-md-1">{{ number_format($timesheet->register_hour, 2,",",".") }}</td>
 									<td class="col-md-1">{{ ucwords(TimesheetKind::find($timesheet->timesheet_kind_id)->kind_name) }}</td>
-									<td class="col-md-1">{{ $project->project_name }}</td>
-									<td class="col-md-1">{{ $activity->activity_name }}</td>
+									<td class="col-md-3">{{ $project->project_name }}</td>
+									<td class="col-md-2">{{ $activity->activity_name }}</td>
 									<td class="col-md-3">{{ $timesheet->note }}</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times deleterow"></button></td>
 								</tr>
 								@endforeach
@@ -118,14 +114,14 @@
 										@endforeach
 										</select>
 									</td>
-									<td class="col-md-1">
+									<td class="col-md-3">
 										<select name="typename" id="typename" class="form-control-sm-text">
 										@foreach (Project::where('user_id','=',Auth::user()->id)->get() as $projectname)
 											<option value="{{ $projectname->id }}">{{ ucwords($projectname->project_name) }}</option>
 										@endforeach
 										</select>
 									</td>
-									<td class="col-md-3">
+									<td class="col-md-2">
 										<select name="activity" id="activity" class="form-control-sm-text">
 										@foreach (Project::where('user_id','=',Auth::user()->id)->get() as $project)
 										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
@@ -136,9 +132,7 @@
 										@endforeach
 										</select>
 									</td>
-									<td class="col-md-1"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-3"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
 									<td class="col-md-1"><button id="addnew" class="btn btn-primary btn-xs"> Toevoegen</button></td>
 								</tr>
 							</tbody>
@@ -155,12 +149,12 @@
 										<?# -- table head -- ?>
 										<thead>
 											<tr>
-												<th class="col-md-2">&nbsp;</th>
-												<th class="col-md-2">&nbsp;</th>
-												<th class="col-md-2">&nbsp;</th>
+												<th class="col-md-2">Project</th>
+												<th class="col-md-2">Hoofdstuk</th>
+												<th class="col-md-3">Werkzaamheid</th>
 												<th class="col-md-2">Gecalculeerde uren</th>
 												<th class="col-md-2">Geregistreerde uren</th>
-												<th class="col-md-2">Verschil</th>
+												<th class="col-md-1">Verschil</th>
 											</tr>
 										</thead>
 
@@ -171,10 +165,10 @@
 											<tr>
 												<td class="col-md-2"><strong>{{ $project->project_name }}</strong></td>
 												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-2">{{ $activity->activity_name }}</td>
+												<td class="col-md-3">{{ $activity->activity_name }}</td>
 												<td class="col-md-2">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id), 2,",","."); }}</td>
 												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-2">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-1">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
 											</tr>
 											@endforeach
 											@endforeach
@@ -186,10 +180,10 @@
 											<tr>
 												<td class="col-md-2"><strong>{{ $project->project_name }}</strong></td>
 												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-2">{{ $activity->activity_name }}</td>
+												<td class="col-md-3">{{ $activity->activity_name }}</td>
 												<td class="col-md-2">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id), 2,",","."); }}</td>
 												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-2">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-1">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
 											</tr>
 											@endforeach
 											@endforeach
@@ -201,10 +195,10 @@
 											<tr>
 												<td class="col-md-2"><strong>{{ $project->project_name }}</strong></td>
 												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-2">{{ $activity->activity_name }}</td>
+												<td class="col-md-3">{{ $activity->activity_name }}</td>
 												<td class="col-md-2">&nbsp;</td>
 												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-2">&nbsp;</td>
+												<td class="col-md-1">&nbsp;</td>
 											</tr>
 											@endforeach
 											@endforeach
@@ -224,10 +218,10 @@
 											<tr>
 												<th class="col-md-2">&nbsp;</th>
 												<th class="col-md-2">&nbsp;</th>
-												<th class="col-md-2">&nbsp;</th>
+												<th class="col-md-3">&nbsp;</th>
 												<th class="col-md-2">Gecalculeerde uren</th>
 												<th class="col-md-2">Geregistreerde uren</th>
-												<th class="col-md-2">Verschil</th>
+												<th class="col-md-1">Verschil</th>
 											</tr>
 										</thead>
 
@@ -238,10 +232,10 @@
 											<tr>
 												<td class="col-md-2"><strong>{{ $project->project_name }}</strong></td>
 												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-2">{{ $activity->activity_name }}</td>
+												<td class="col-md-3">{{ $activity->activity_name }}</td>
 												<td class="col-md-2">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id), 2,",","."); }}</td>
 												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-2">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-1">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
 											</tr>
 											@endforeach
 											@endforeach
@@ -253,10 +247,10 @@
 											<tr>
 												<td class="col-md-2"><strong>{{ $project->project_name }}</strong></td>
 												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-2">{{ $activity->activity_name }}</td>
+												<td class="col-md-3">{{ $activity->activity_name }}</td>
 												<td class="col-md-2">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id), 2,",","."); }}</td>
 												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-2">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-1">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
 											</tr>
 											@endforeach
 											@endforeach
@@ -268,10 +262,10 @@
 											<tr>
 												<td class="col-md-2"><strong>{{ $project->project_name }}</strong></td>
 												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-2">{{ $activity->activity_name }}</td>
+												<td class="col-md-3">{{ $activity->activity_name }}</td>
 												<td class="col-md-2">&nbsp;</td>
 												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-2">&nbsp;</td>
+												<td class="col-md-1">&nbsp;</td>
 											</tr>
 											@endforeach
 											@endforeach
