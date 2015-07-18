@@ -1162,7 +1162,7 @@ var n = this,
 							<thead>
 								<tr>
 									<th class="col-md-4">&nbsp;</th>
-									<th class="col-md-1">Manuren</th>
+									<th class="col-md-1">Uren</th>
 									<th class="col-md-2">Bedrag (excl. BTW)</th>
 									<th class="col-md-1">&nbsp;</th>
 									<th class="col-md-1">BTW</th>
@@ -1175,7 +1175,7 @@ var n = this,
 							<tbody>
 								<tr><!-- item -->
 									<td class="col-md-4">Arbeidskosten</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ number_format(EstimateEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">21%</td>
@@ -1184,7 +1184,7 @@ var n = this,
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax2($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ number_format(EstimateEndresult::conCalcLaborActivityTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">6%</td>
@@ -1193,7 +1193,7 @@ var n = this,
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax3($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ number_format(EstimateEndresult::conCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">0%</td>
@@ -1275,7 +1275,7 @@ var n = this,
 							<thead>
 								<tr>
 									<th class="col-md-4">&nbsp;</th>
-									<th class="col-md-1">Manuren</th>
+									<th class="col-md-1">Uren</th>
 									<th class="col-md-2">Bedrag (excl. BTW)</th>
 									<th class="col-md-1">&nbsp;</th>
 									<th class="col-md-1">BTW</th>
@@ -1288,7 +1288,7 @@ var n = this,
 							<tbody>
 								<tr><!-- item -->
 									<td class="col-md-4">Arbeidskosten</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ number_format(EstimateEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">21%</td>
@@ -1297,7 +1297,7 @@ var n = this,
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax2($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ number_format(EstimateEndresult::subconCalcLaborActivityTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">6%</td>
@@ -1306,7 +1306,7 @@ var n = this,
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ number_format(EstimateEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">0%</td>

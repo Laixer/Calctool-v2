@@ -488,7 +488,7 @@ $project = Project::find(Route::Input('project_id'));
 							<thead>
 								<tr>
 									<th class="col-md-4">&nbsp;</th>
-									<th class="col-md-1">Manuren</th>
+									<th class="col-md-1">Uren</th>
 									<th class="col-md-2">Bedrag (excl. BTW)</th>
 									<th class="col-md-1">&nbsp;</th>
 									<th class="col-md-1">BTW</th>
@@ -501,7 +501,7 @@ $project = Project::find(Route::Input('project_id'));
 							<tbody>
 								<tr><!-- item -->
 									<td class="col-md-4">Arbeidskosten</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ number_format(EstimateEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">21%</td>
@@ -510,7 +510,7 @@ $project = Project::find(Route::Input('project_id'));
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax2($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ number_format(EstimateEndresult::conCalcLaborActivityTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">6%</td>
@@ -519,7 +519,7 @@ $project = Project::find(Route::Input('project_id'));
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax3($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ number_format(EstimateEndresult::conCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">0%</td>
@@ -601,7 +601,7 @@ $project = Project::find(Route::Input('project_id'));
 							<thead>
 								<tr>
 									<th class="col-md-4">&nbsp;</th>
-									<th class="col-md-1">Manuren</th>
+									<th class="col-md-1">Uren</th>
 									<th class="col-md-2">Bedrag (excl. BTW)</th>
 									<th class="col-md-1">&nbsp;</th>
 									<th class="col-md-1">BTW</th>
@@ -614,7 +614,7 @@ $project = Project::find(Route::Input('project_id'));
 							<tbody>
 								<tr><!-- item -->
 									<td class="col-md-4">Arbeidskosten</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ number_format(EstimateEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">21%</td>
@@ -623,7 +623,7 @@ $project = Project::find(Route::Input('project_id'));
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax2($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ number_format(EstimateEndresult::subconCalcLaborActivityTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">6%</td>
@@ -632,7 +632,7 @@ $project = Project::find(Route::Input('project_id'));
 								</tr>
 								<tr><!-- item -->
 									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
+									<td class="col-md-1">{{ number_format(EstimateEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">0%</td>
