@@ -20,28 +20,7 @@ var n = this,
 };
 
 	$(document).ready(function() {
-		$(".popdesc").popover({
-	        html: true,
-	        trigger: 'manual',
-	        container: $(this).attr('id'),
-	        placement: 'bottom',
-	        content: function () {
-	            $return = '<div class="hover-hovercard"></div>';
-	        }
-	    }).on("mouseenter", function () {
-	        var _this = this;
-	        $(this).popover("show");
-	        $(this).siblings(".popover").on("mouseleave", function () {
-	            $(_this).popover('hide');
-	        });
-	    }).on("mouseleave", function () {
-	        var _this = this;
-	        setTimeout(function () {
-	            if (!$(".popover:hover").length) {
-	                $(_this).popover("hide")
-	            }
-	        }, 100);
-	    });
+		var $newinputtr;
 		$('.toggle').click(function(e){
 			$id = $(this).attr('id');
 			if ($(this).hasClass('active')) {
@@ -105,6 +84,9 @@ var n = this,
 					$curTable.find("tr:eq(1)").clone().removeAttr("data-id").find("input").each(function(){
 						$(this).val("").removeClass("error-input").attr("id", function(_, id){ return id + i });
 					}).end().find(".total-ex-tax, .total-incl-tax").text("").end().appendTo($curTable);
+					$("button[data-target='#myModal']").on("click", function() {
+						$newinputtr = $(this).closest("tr");
+					});
 					i++;
 				}
 			}
@@ -662,8 +644,7 @@ var n = this,
 				});
 			}
 		});
-		var $newinputtr;
-		$("button[data-toggle='modal']").click(function(e) {
+		$("button[data-target='#myModal']").click(function(e) {
 			$newinputtr = $(this).closest("tr");
 		});
 		function onmaterialclick(e) {

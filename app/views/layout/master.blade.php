@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>CalcTool.nl</title>
+		<title>Calctool - Online calculeren & offereren</title>
 		<meta name="keywords" content="Calculeren" />
 		<meta name="description" content="" />
 		<meta name="Author" content="CalcTool.nl" />

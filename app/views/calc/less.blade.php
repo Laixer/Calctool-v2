@@ -19,28 +19,6 @@ var n = this,
    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 };
 	$(document).ready(function() {
-		$(".popdesc").popover({
-	        html: true,
-	        trigger: 'manual',
-	        container: $(this).attr('id'),
-	        placement: 'bottom',
-	        content: function () {
-	            $return = '<div class="hover-hovercard"></div>';
-	        }
-	    }).on("mouseenter", function () {
-	        var _this = this;
-	        $(this).popover("show");
-	        $(this).siblings(".popover").on("mouseleave", function () {
-	            $(_this).popover('hide');
-	        });
-	    }).on("mouseleave", function () {
-	        var _this = this;
-	        setTimeout(function () {
-	            if (!$(".popover:hover").length) {
-	                $(_this).popover("hide")
-	            }
-	        }, 100);
-	    });
 		$('.toggle').click(function(e){
 			$id = $(this).attr('id');
 			if ($(this).hasClass('active')) {
@@ -809,7 +787,6 @@ var n = this,
 															?>
 															</th>
 															<td class="col-md-1 text-right" data-profit="{{$profit}}">
-																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-warning btn-xs sresetrow fa fa-undo"></button>
 															</td>
 														</tr>
@@ -887,30 +864,7 @@ var n = this,
 															?>
 															</th>
 															<td class="col-md-1 text-right" data-profit="{{$profit}}">
-																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-warning btn-xs eresetrow fa fa-undo"></button>
-
-																<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-																	<div class="modal-dialog">
-																		<div class="modal-content">
-																			<div class="modal-header"><!-- modal header -->
-																				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-																				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
-																			</div><!-- /modal header -->
-
-																			<!-- modal body -->
-																			<div class="modal-body">
-																				Modal Body
-																			</div>
-																			<!-- /modal body -->
-
-																			<div class="modal-footer"><!-- modal footer -->
-																				<button class="btn btn-default" data-dismiss="modal">Close</button> <button class="btn btn-primary">Save changes</button>
-																			</div><!-- /modal footer -->
-
-																		</div>
-																	</div>
-																</div>
 															</td>
 														</tr>
 														@endforeach

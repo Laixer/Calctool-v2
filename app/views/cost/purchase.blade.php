@@ -29,6 +29,7 @@
 				.find("td:eq(2)").html(json.amount).end()
 				.find("td:eq(4)").text(json.type).end()
 				.find("td:eq(5)").text($note).end()
+				.find("td:eq(8)").html('<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>').end()
 				.prependTo($curTable);
 				$curThis.closest("tr").find("input").val("");
 				$curThis.closest("tr").find("select").val("");

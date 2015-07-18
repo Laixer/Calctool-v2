@@ -19,6 +19,7 @@ var n = this,
    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 };
 	$(document).ready(function() {
+		var $newinputtr;
 		$('.toggle').click(function(e){
 			$id = $(this).attr('id');
 			if ($(this).hasClass('active')) {
@@ -97,6 +98,9 @@ var n = this,
 					$curTable.find("tr:eq(1)").clone().removeAttr("data-id").find("input").each(function(){
 						$(this).val("").removeClass("error-input").attr("id", function(_, id){ return id + i });
 					}).end().find(".total-ex-tax, .total-incl-tax").text("").end().appendTo($curTable);
+					$("button[data-target='#myModal']").on("click", function() {
+						$newinputtr = $(this).closest("tr");
+					});
 					i++;
 				}
 			}
@@ -649,8 +653,7 @@ var n = this,
 				});
 			}
 		});
-		var $newinputtr;
-		$("button[data-toggle='modal']").click(function(e) {
+		$("button[data-target='#myModal']").click(function(e) {
 			$newinputtr = $(this).closest("tr");
 		});
 		function onmaterialclick(e) {
