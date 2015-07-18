@@ -68,23 +68,22 @@ header {
 }
 
 
-
-
 /*DZA aproved*/
 h1.name {
-  font-size: 18px;
-  font-weight: normal;
+  font-size: 16px;
+  font-weight: bold;
   margin: 5px;
-  background: #e8e8e8;
   padding-left: 10px;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
 }
 
 h2.name {
   font-size: 16px;
   font-weight: normal;
   margin: 5px;
-  border:1px solid black;
   padding-left: 20px;
+  background: #e8e8e8;
 }
 
 h3.name {
