@@ -268,8 +268,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<div class="row">
 								<div class="col-md-3"><strong>Financieel</strong></div>
 								<div class="col-md-2"><strong>Gefactureerd</strong></div>
-								<div class="col-md-3"></div>
-								<div class="col-md-3"></div>
+								<div class="col-md-3"><strong>Betaalstatus</strong></div>
+								<div class="col-md-3"><strong>Bekijk factuur</strong></div>
 							</div>
 							<?php
 							if ($offer_last) {
