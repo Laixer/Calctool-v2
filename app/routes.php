@@ -21,7 +21,6 @@ Route::get('password/{api}/{token}', function(){ return View::make('auth.passwor
 Route::post('password/{api}/{token}', array('before' => 'guest|csrf', 'as' => 'register', 'uses' => 'AuthController@doNewPassword'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
 
 Route::get('about', function() { return View::make('generic.about'); });
-Route::get('support', function() { return View::make('generic.contact'); });
 Route::get('faq', function() { return View::make('generic.faq'); });
 Route::get('terms-and-conditions', function() { return View::make('generic.terms'); });
 Route::get('privacy-policy', function() { return View::make('generic.privacy'); });
