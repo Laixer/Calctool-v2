@@ -87,10 +87,11 @@ h2.name {
 }
 
 h3.name {
-  font-size: 22px;
-  font-weight: normal;
-  margin: 0;
-  padding-left: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: underline;
+  margin: 5px;
+  padding-left: 0px;
 }
 
 h4.name {
@@ -147,7 +148,7 @@ table {
 }
 
 table td {
-  padding: 1px;
+ padding: 0 0 0 5px;
   background: #EEEEEE;
   text-align: left;
   border-bottom: 1px solid #FFFFFF;
@@ -156,7 +157,7 @@ table td {
 table th {
  white-space: nowrap;
  font-weight: bold;
- padding: 1px;
+ padding: 0 0 0 1px;
  background: #EEEEEE;
  text-align: left;
  border-bottom: 2px solid #FFFFFF;
