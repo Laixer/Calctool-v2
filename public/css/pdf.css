@@ -87,18 +87,18 @@ h2.name {
 }
 
 h3.name {
+  font-size: 22px;
+  font-weight: normal;
+  margin: 0;
+  padding-left: 10px;
+}
+
+h4.name {
   font-size: 14px;
   font-weight: bold;
   text-decoration: underline;
   margin: 5px;
   padding-left: 0px;
-}
-
-h4.name {
-  font-size: 18px;
-  font-weight: normal;
-  margin: 0px;
-  padding-left: 10px;
 }
 
 #client {

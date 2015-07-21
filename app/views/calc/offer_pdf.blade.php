@@ -195,7 +195,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
      <table border="0" cellspacing="0" cellpadding="0">
         <thead>
           <tr style="page-break-after: always;">
-            <th class="qty"><h3 class="name">Aanneming</h3></th>
+            <th class="qty"><h4 class="name">Aanneming</h4></th>
             <th class="qty">Uren</th>
             <th class="qty">Bedrag (excl. BTW)</th>
             <th class="qty">BTW %</th>
@@ -279,7 +279,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
      <table border="0" cellspacing="0" cellpadding="0">
         <thead>
           <tr style="page-break-after: always;">
-            <th class="qty"><h3 class="name">Onderaanneming</h3></th>
+            <th class="qty"><h4 class="name">Onderaanneming</h4></th>
             <th class="qty">Uren</th>
             <th class="qty">Bedrag (excl. BTW)</th>
             <th class="qty">BTW %</th>
@@ -685,13 +685,13 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <div class="date">{{ date("j M Y") }}</div>
         </div>
     </header>
-    <h1 class="name">description werkzaamheden</h1>
+    <h1 class="name">Omschrijving werkzaamheden</h1>
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
           <th class="no">Hoofdstuk</th>
           <th class="desc">Werkzaamheid</th>
-          <th class="no">description</th>
+          <th class="no">Omschrijving</th>
         </tr>
       </thead>
       <tbody>
@@ -718,14 +718,14 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         <div class="date">{{ date("j M Y") }}</div>
       </div>
     </header>
-    <h1 class="name">description werkzaamheden</h1>
+    <h1 class="name">Omschrijving werkzaamheden</h1>
     <h2 class="name">Aanneming</h2>
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
           <th class="no">Hoofdstuk</th>
           <th class="desc">Werkzaamheid</th>
-          <th class="no">description</th>
+          <th class="no">Omschrijving</th>
         </tr>
       </thead>
       <tbody>
@@ -746,7 +746,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         <tr style="page-break-after: always;">
           <th class="no">Hoofdstuk</th>
           <th class="desc">Werkzaamheid</th>
-          <th class="no">description</th>
+          <th class="no">Omschrijving</th>
         </tr>
       </thead>
       <tbody>
