@@ -18,7 +18,7 @@ if ($offer_last && $offer_last->offer_finish)
 	<a href="/invoice/project-{{ $project->id }}" {{ $page=='invoice' ? 'class="current"' : '' }} >Factuur</a>
 	<a href="/result/project-{{ $project->id }}" {{ $page=='result' ? 'class="current"' : '' }} >Resultaat</a>
 	@else
-	<span>Stelpst stelle</span>
+	<span>Stelosten stellen</span>
 	<span>Minderwerk</span>
 	<span>Meerwerk</span>
 	<span>Factuur</span>
