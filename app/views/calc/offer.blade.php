@@ -500,17 +500,35 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<li><strong>Offertedatum:</strong> {{ date("j M Y") }}</li>
 							<li><strong>Offertenummer:</strong> {{ OfferController::getOfferCode($project->id) }}</li>
 						</ul>
-
 					</div>
-
 				</div>
 
+				<div class="row">
+					<div class="col-sm-6">
+					Geachte
+					@if ($offer_last && $offer_last->offer_finish)
+					{{ Contact::find($offer_last->to_contact_id)->firstname . ' ' . Contact::find($offer_last->to_contact_id)->lastname }}
+					@else
+					<select name="to_contact" id="to_contact">
+						@foreach (Contact::where('relation_id','=',$relation->id)->get() as $contact)
+						<option {{ $offer_last ? ($offer_last->to_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
+						@endforeach
+					</select>
+					@endif
+					,
+				</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-sm-12">
 					@if ($offer_last && $offer_last->offer_finish)
 					{{ $offer_last->description }}
 					@else
-					<textarea name="description" id="description" rows="5" class="form-control">{{ ($offer_last ? $offer_last->description : Auth::user()->pref_offer_description) }}</textarea>
+					<textarea name="description" id="description" rows="5" maxlength="500" class="form-control">{{ ($offer_last ? $offer_last->description : Auth::user()->pref_offer_description) }}</textarea>
 					@endif
-					<br>
+					</div>
+				</div>
+
 					<div class="show-all" style="display:none;">
 						<h4 class="only-total">Aanneming</h4>
 						<table class="table table-striped hide-btw1">
@@ -1012,7 +1030,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						@endif
 					</p>
 
-					<p>Cheers,
+					<p>Met vriendelijke groet,
 						@if ($offer_last && $offer_last->offer_finish)
 						{{ Contact::find($offer_last->from_contact_id)->firstname . ' ' . Contact::find($offer_last->from_contact_id)->lastname }}
 						@else
@@ -1064,7 +1082,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 											<th class="col-md-1"><span class="pull-right">Materiaal</th>
 											<th class="col-md-1"><span class="pull-right">Materieel</th>
 											<th class="col-md-1"><span class="pull-right">Totaal</th>
-											<th class="col-md-1"><span class="text-center">Stelpost</th>
+											<th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
 										</tr>
 									</thead>
 
@@ -1110,7 +1128,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 											<th class="col-md-1"><span class="pull-right">Materiaal</th>
 											<th class="col-md-1"><span class="pull-right">Materieel</th>
 											<th class="col-md-1"><span class="pull-right">Totaal</th>
-											<th class="col-md-1"><span class="text-center">Stelpost</th>
+											<th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
 										</tr>
 									</thead>
 
@@ -1191,7 +1209,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 											<th class="col-md-1"><span class="pull-right">Materiaal</th>
 											<th class="col-md-1"><span class="pull-right">Materieel</th>
 											<th class="col-md-1"><span class="pull-right">Totaal</th>
-											<th class="col-md-1"><span class="text-center">Stelpost</th>
+											<th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
 										</tr>
 									</thead>
 
