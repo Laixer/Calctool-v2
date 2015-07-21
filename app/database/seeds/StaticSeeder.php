@@ -497,6 +497,8 @@ class StaticSeeder extends Seeder {
 		ContactFunction::create(array('function_name' => 'tekenaar'));
 		ContactFunction::create(array('function_name' => 'bestekschrijver'));
 		ContactFunction::create(array('function_name' => 'calculator'));
+		ContactFunction::create(array('function_name' => 'opdrachtgever'));
+		ContactFunction::create(array('function_name' => 'particulier'));
 		$this->command->info('ContactFunction created');
 
 		RelationType::create(array('type_name' => 'aannemer'));
@@ -558,6 +560,8 @@ class StaticSeeder extends Seeder {
 		DeliverTime::create(array('delivertime_name' => '2 weken'));
 		DeliverTime::create(array('delivertime_name' => '3 weken'));
 		DeliverTime::create(array('delivertime_name' => '1 maand'));
+		DeliverTime::create(array('delivertime_name' => '2 maand'));
+		DeliverTime::create(array('delivertime_name' => '3 maand'));
 		$this->command->info('DeliverTime created');
 
 		Tax::create(array('tax_rate' => 0));
