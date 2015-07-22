@@ -425,7 +425,7 @@ $(document).ready(function() {
 								</div>
 
 								<div class="toggle active">
-									<label>Onderaanneming</label>
+									<label>Stelposten</label>
 									<div class="toggle-content">
 									<table class="table table-striped">
 										<?# -- table head -- ?>
