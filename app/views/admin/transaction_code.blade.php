@@ -105,6 +105,9 @@ $payment = $mollie->payments->get(Route::Input('transcode'));
 
 			<div class="white-row">
 				<h4>Terugstortingen ({{ $mollie->payments_refunds->with($payment)->all()->totalCount }})</h4>
+				@if ($payment->method == 'bitcoin' || $payment->method == 'paysafecard')
+				<span>Terugstorten niet mogelijk voor deze betaaloptie</span>
+				@else
 				@if ($mollie->payments_refunds->with($payment)->all()->totalCount > 0)
 				<div class="row">
 					<div class="col-md-2"><strong>Terugstortcode</strong></div>
@@ -128,6 +131,7 @@ $payment = $mollie->payments->get(Route::Input('transcode'));
 				      </span>
 					</div>
 				</form>
+				@endif
 			</div>
 
 		</div>
