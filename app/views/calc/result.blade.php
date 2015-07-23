@@ -50,7 +50,7 @@ $(document).ready(function() {
 					</li>
 					<li id="tab-hour_overview">
 						<a href="#hour_overview" data-toggle="tab">
-							<i class="fa fa-sort-amount-desc"></i> Uittrekstaat urenregistratie
+							<i class="fa fa-sort-amount-desc"></i> Resultaat urenregistratie
 						</a>
 					</li>
 					<li id="tab-budget">
