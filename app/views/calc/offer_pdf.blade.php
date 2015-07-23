@@ -191,6 +191,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         <li>Deze offerte is geldig tot {{ Valid::find($offer_last->valid_id)->valid_name }} na dagtekening.</li>
       </div>
       <div class="signing">Met vriendelijke groet,</div>
+      <br>
       <div class="signing">{{ Contact::find($offer_last->from_contact_id)->firstname ." ". Contact::find($offer_last->from_contact_id)->lastname }}</div>
     </main>
 
@@ -201,8 +202,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 @else
      <table border="0" cellspacing="0" cellpadding="0">
         <thead>
+          <h4 class="name">AANNEMING</h4>
           <tr style="page-break-after: always;">
-            <th style="width: 147px" align="left" class="qty"><h4 class="name">Aanneming</h4></th>
+            <th style="width: 147px" align="left" class="qty">&nbsp;</th>
             <th style="width: 60px" align="left" class="qty">Uren</th>
             <th style="width: 119px" align="left" class="qty">Bedrag (excl. BTW)</th>
             <th style="width: 70px" align="left" class="qty">BTW %</th>
@@ -294,12 +296,14 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty">&nbsp;</td>
           </tr>
      </table>
+     <br>
      <table border="0" cellspacing="0" cellpadding="0">
         <thead>
+          <h4 class="name">ONDERAANNEMING</h4>
           <tr style="page-break-after: always;">
-            <th style="width: 147px" align="left" class="qty"><h4 class="name">Onderaanneming</h4></th>
+            <th style="width: 147px" align="left" class="qty">&nbsp;</th>
             <th style="width: 60px" align="left" class="qty">Uren</th>
-            <th style="width: 119px" align="left" class="qty">Bedrag (excl. BTW)</th>
+            <th style="width: 120px" align="left" class="qty">Bedrag (excl. BTW)</th>
             <th style="width: 70px" align="left" class="qty">BTW %</th>
             <th style="width: 80px" align="left" class="qty">BTW bedrag</th>
             <th style="width: 119px" align="left" class="qty">&nbsp;</th>
@@ -390,6 +394,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           </tr>
         </tbody>
       </table>
+
       <h1 class="name">Cumulatieven offerte</h1>
       <table border="0" cellspacing="0" cellpadding="0">
         <thead>
@@ -453,18 +458,19 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         </tbody>
       </table>
 
-        <div style="page-break-after:always;"></div>
-        <header class="clearfix">
+      <!--PAGE HEADER SECOND START-->
+      <div style="page-break-after:always;"></div>
+      <header class="clearfix">
         <div id="logo">
-      <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+        <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
         </div>
-             <div id="invoice">
-              <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
-              <div class="date">{{ $project->project_name }}</div>
-              <div class="date">{{ date("j M Y") }}</div>
-            </div>
-        </header>
-
+          <div id="invoice">
+          <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
+          <div class="date">{{ $project->project_name }}</div>
+          <div class="date">{{ date("j M Y") }}</div>
+        </div>
+      </header>
+      <!--PAGE HEADER SECOND END-->
 
       <div class="closingtext">{{ ($offer_last ? $offer_last->closure : '') }}</div>
 
@@ -475,6 +481,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         <li>Deze offerte is geldig tot {{ Valid::find($offer_last->valid_id)->valid_name }} na dagtekening.</li>
       </div>
       <div class="signing">Met vriendelijke groet,</div>
+      <br>
       <div class="signing">{{ Contact::find($offer_last->from_contact_id)->firstname ." ". Contact::find($offer_last->from_contact_id)->lastname }}</div>
     </main>
 
@@ -485,30 +492,33 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
     @if ($specification)
     @if ($total)
-    <div style="page-break-after:always;"></div>
-    <header class="clearfix">
-      <div id="logo">
-      <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
-      </div>
-         <div id="invoice">
+
+      <!--PAGE HEADER SECOND START-->
+      <div style="page-break-after:always;"></div>
+      <header class="clearfix">
+        <div id="logo">
+        <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+        </div>
+          <div id="invoice">
           <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
           <div class="date">{{ $project->project_name }}</div>
           <div class="date">{{ date("j M Y") }}</div>
         </div>
-    </header>
+      </header>
+      <!--PAGE HEADER SECOND END-->
 
      <h1 class="name">Totaalkosten per werkzaamheid</h1>
      <table border="0" cellspacing="0" cellpadding="0">
         <thead>
           <tr style="page-break-after: always;">
-            <th class="qty">Hoofdstuk</th>
-            <th class="qty">Werkzaamheid</th>
-            <th class="qty">Arbeidsuren</th>
-            <th class="qty">Arbeid</th>
-            <th class="qty">Materiaal</th>
-            <th class="qty">Materieel</th>
-            <th class="qty">Totaal</th>
-            <th class="qty">Stelpost</th>
+            <th style="width: 130px" class="qty">Hoofdstuk</th>
+            <th style="width: 170px" class="qty">Werkzaamheid</th>
+            <th style="width: 40px" class="qty">Uren</th>
+            <th style="width: 51px" class="qty">Arbeid</th>
+            <th style="width: 51px" class="qty">Materiaal</th>
+            <th style="width: 51px" class="qty">Materieel</th>
+            <th style="width: 51px" class="qty">Totaal</th>
+            <th style="width: 51px" class="qty">Stelpost</th>
           </tr>
         </thead>
         <tbody>
@@ -517,12 +527,18 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <tr><!-- item -->
             <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
             <td class="qty">{{ $activity->activity_name }}</td>
-            <td class="qty"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
-            <td class="qty"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
-            <td class="qty"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
-            <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
-            <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-            <td class="qty text-center ($activity)"></td>
+            <td class="qty"><span>{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
+            <td class="qty"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
+            <td class="qty"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
+            <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
+            <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
+            <td class="qty text-center">
+            <?php
+              if (PartType::find($activity->part_type_id)->type_name=='estimate') {
+                echo "<strong>Ja</strong>";
+              }
+            ?>
+            </td>
           </tr>
           @endforeach
           @endforeach
@@ -531,11 +547,11 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <tr><!-- item -->
             <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
             <td class="qty">{{ $activity->activity_name }}</td>
-            <td class="qty"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
-            <td class="qty"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
-            <td class="qty"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
-            <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
-            <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
+            <td class="qty"><span>{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
+            <td class="qty"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
+            <td class="qty"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
+            <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
+            <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
             <td class="qty text-center">
             <?php
               if (PartType::find($activity->part_type_id)->type_name=='estimate') {
@@ -549,159 +565,165 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         </tbody>
      </table>
 
-
      <h1 class="name">Totalen per project</h1>
      <table border="0" cellspacing="0" cellpadding="0">
         <thead>
           <tr style="page-break-after: always;">
-            <th class="qty">&nbsp;</th>
-            <th class="qty">&nbsp;</th>
-            <th class="qty">Arbeidsuren</th>
-            <th class="qty">Arbeid</th>
-            <th class="qty">Materiaal</th>
-            <th class="qty">Materieel</th>
-            <th class="qty">Totaal</th>
+            <th style="width: 300px" class="qty">&nbsp;</th>
+            <th style="width: 40px" class="qty">Uren</th>
+            <th style="width: 51px" class="qty">Arbeid</th>
+            <th style="width: 51px" class="qty">Materiaal</th>
+            <th style="width: 51px" class="qty">Materieel</th>
+            <th style="width: 51px" class="qty">Totaal</th>
+            <th style="width: 51px" class="qty">&nbsp;</th>
           </tr>
         </thead>
         <tbody>
           <td class="qty">&nbsp;</td>
+          <td class="qty"><span>{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>
+          <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
+          <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
+          <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
+          <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
           <td class="qty">&nbsp;</td>
-          <td class="qty"><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>
-          <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
-          <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
-          <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
-          <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
         </tbody>
       </table>
       @else
+
+      <!--PAGE HEADER SECOND START-->
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
         <div id="logo">
-      <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+        <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
         </div>
-         <div id="invoice">
+          <div id="invoice">
           <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
           <div class="date">{{ $project->project_name }}</div>
           <div class="date">{{ date("j M Y") }}</div>
         </div>
-     </header>
+      </header>
+      <!--PAGE HEADER SECOND END-->
+
+    <h1 class="name">Totalen per project</h1>
+    <h4 class="name">AANNEMING</h4>
+    <table border="0" cellspacing="0" cellpadding="0">
+      <thead>
+        <tr style="page-break-after: always;">
+          <th style="width: 130px" class="qty">Hoofdstuk</th>
+          <th style="width: 170px" class="qty">Werkzaamheid</th>
+          <th style="width: 40px" class="qty">@if (!$onlyactivity) Uren @endif</th>
+          <th style="width: 51px" class="qty">@if (!$onlyactivity) Arbeid @endif</th>
+          <th style="width: 51px" class="qty">@if (!$onlyactivity) Materiaal @endif</th>
+          <th style="width: 51px" class="qty">@if (!$onlyactivity) Materieel @endif</th>
+          <th style="width: 51px" class="qty">Totaal</th>
+          <th style="width: 51px" class="qty">Stelpost</th>
+         </tr>
+      </thead>
+      <tbody>
+      @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+      @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+        <tr style="page-break-after: always;">
+          <td class="qty">{{ $chapter->chapter_name }}</td>
+          <td class="qty">{{ $activity->activity_name }}</td>
+          <td class="qty">@if (!$onlyactivity)<span>{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}@endif</td>
+          <td class="qty">@if (!$onlyactivity)<span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span>@endif</td>
+          <td class="qty">@if (!$onlyactivity)<span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span>@endif</td>
+          <td class="qty">@if (!$onlyactivity)<span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span>@endif</td>
+          <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }}</td>
+          <td class="qty text-center">
+          <?php
+            if (PartType::find($activity->part_type_id)->type_name=='estimate') {
+             echo "<strong>Ja</strong>";
+           }
+          ?>
+          </td>
+        </tr>
+        @endforeach
+        @endforeach
+        <tr style="page-break-after: always;">
+          <td class="qty"><strong>Totaal</strong></td>
+          <td class="qty">&nbsp;</td>
+          <td class="qty">@if (!$onlyactivity)<strong><span>{{ CalculationOverview::contrLaborTotalAmount($project) }}</span></strong>@endif</td>
+          <td class="qty">@if (!$onlyactivity)<strong><span>{{ '&euro; '.number_format(CalculationOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong>@endif</td>
+          <td class="qty">@if (!$onlyactivity)<strong><span>{{ '&euro; '.number_format(CalculationOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong>@endif</td>
+          <td class="qty">@if (!$onlyactivity)<strong><span>{{ '&euro; '.number_format(CalculationOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong>@endif</td>
+          <td class="qty"><strong><span>{{ '&euro; '.number_format(CalculationOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
+          <td class="qty">&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4 class="name">ONDERAANNEMING</h4>
+    <table border="0" cellspacing="0" cellpadding="0">
+      <thead>
+        <tr style="page-break-after: always;">
+          <th style="width: 130px" class="qty">Hoofdstuk</th>
+          <th style="width: 170px" class="qty">Werkzaamheid</th>
+          <th style="width: 40px" class="qty">@if (!$onlyactivity) Uren @endif</th>
+          <th style="width: 51px" class="qty">@if (!$onlyactivity) Arbeid @endif</th>
+          <th style="width: 51px" class="qty">@if (!$onlyactivity) Materiaal @endif</th>
+          <th style="width: 51px" class="qty">@if (!$onlyactivity) Materieel @endif</th>
+          <th style="width: 51px" class="qty">Totaal</th>
+          <th style="width: 51px" class="qty">Stelpost</th>
+         </tr>
+      </thead>
+      <tbody>
+        @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+        @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+        <tr style="page-break-after: always;">
+          <td class="qty">{{ $chapter->chapter_name }}</td>
+          <td class="qty">{{ $activity->activity_name }}</td>
+          <td class="qty"><span>{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
+          <td class="qty"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
+          <td class="qty"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
+          <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
+          <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
+          <td class="qty text-center">
+          <?php
+            if (PartType::find($activity->part_type_id)->type_name=='estimate') {
+              echo "<strong>Ja</strong>";
+            }
+          ?>
+          </td>
+        </tr>
+        @endforeach
+        @endforeach
+        <tr style="page-break-after: always;">
+          <td class="qty"><strong>Totaal</strong></td>
+          <td class="qty">&nbsp;</td>
+          <td class="qty">@if (!$onlyactivity)<strong><span>{{ CalculationOverview::subcontrLaborTotalAmount($project) }}</span></strong>@endif</td>
+          <td class="qty">@if (!$onlyactivity)<strong><span>{{ '&euro; '.number_format(CalculationOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong>@endif</td>
+          <td class="qty">@if (!$onlyactivity)<strong><span>{{ '&euro; '.number_format(CalculationOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong>@endif</td>
+          <td class="qty">@if (!$onlyactivity)<strong><span>{{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong>@endif</td>
+          <td class="qty"><strong><span>{{ '&euro; '.number_format(CalculationOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
+          <td class="qty">&nbsp;</td>
+        </tr>
+      </tbody>
+    </table>
 
      <h1 class="name">Totalen per project</h1>
-     <h2 class="name">Aanneming</h2>
-     <table border="0" cellspacing="0" cellpadding="0">
+     <table border="0" cellspacing="0" cellnpadding="0">
         <thead>
           <tr style="page-break-after: always;">
-            <th class="qty">Hoofdstuk</th>
-            <th class="qty">Werkzaamheid</th>
-            <th class="qty">@if (!$onlyactivity) Arbeidsuren @endif</th>
-            <th class="qty">@if (!$onlyactivity) Arbeid @endif</th>
-            <th class="qty">@if (!$onlyactivity) Materiaal @endif</th>
-            <th class="qty">@if (!$onlyactivity) Materieel @endif</th>
-            <th class="qty">Totaal</th>
-            <th class="qty">Stelpost</th>
-          </tr>
-        </thead>
-        <tbody>
-            @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-            @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
-            <tr style="page-break-after: always;">
-              <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
-              <td class="qty">{{ $activity->activity_name }}</td>
-              <td class="qty">@if (!$onlyactivity)<span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}@endif</td>
-              <td class="qty">@if (!$onlyactivity)<span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span>@endif</td>
-              <td class="qty">@if (!$onlyactivity)<span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span>@endif</td>
-              <td class="qty">@if (!$onlyactivity)<span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span>@endif</td>
-              <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-              <td class="qty text-center">
-            <?php
-              if (PartType::find($activity->part_type_id)->type_name=='estimate') {
-                echo "<strong>Ja</strong>";
-              }
-            ?>
-              </td>
-            </tr>
-            @endforeach
-            @endforeach
-          <tr style="page-break-after: always;">
-                <td class="qty"><strong>Totaal aanneming</strong></td>
-                <td class="qty">&nbsp;</td>
-                <td class="qty">@if (!$onlyactivity)<strong><span class="pull-right">{{ CalculationOverview::contrLaborTotalAmount($project) }}</span></strong>@endif</td>
-                <td class="qty">@if (!$onlyactivity)<strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong>@endif</td>
-                <td class="qty">@if (!$onlyactivity)<strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong>@endif</td>
-                <td class="qty">@if (!$onlyactivity)<strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong>@endif</td>
-                <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
-                <td class="qty">&nbsp;</td>
-              </tr>
-     </table>
-     <h2 class="name">Onderaanneming</h2>
-     <table border="0" cellspacing="0" cellpadding="0">
-        <thead>
-          <tr style="page-break-after: always;">
-            <th class="qty">Hoofdstuk</th>
-            <th class="qty">Werkzaamheid</th>
-            <th class="qty">Arbeidsuren</th>
-            <th class="qty">Arbeid</th>
-            <th class="qty">Materiaal</th>
-            <th class="qty">Materieel</th>
-            <th class="qty">Totaal</th>
-            <th class="qty">Stelpost</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-          @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
-          <tr style="page-break-after: always;">
-            <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
-            <td class="qty">{{ $activity->activity_name }}</td>
-            <td class="qty"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
-            <td class="qty"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
-            <td class="qty"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
-            <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
-            <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
-            <td class="qty text-center">
-            <?php
-              if (PartType::find($activity->part_type_id)->type_name=='estimate') {
-                echo "<strong>Ja</strong>";
-              }
-            ?>
-            </td>
-          </tr>
-          @endforeach
-          @endforeach
-          <tr style="page-break-after: always;">
-            <td class="qty"><strong>Totaal onderaanneming</strong></td>
-            <td class="qty">&nbsp;</td>
-            <td class="qty"><strong><span class="pull-right">{{ CalculationOverview::subcontrLaborTotalAmount($project) }}</span></strong></td>
-            <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
-            <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
-            <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
-            <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
-            <td class="qty">&nbsp;</td>
-          </tr>
-     </table>
-     <h1 class="name">Totalen per project</h1>
-     <table border="0" cellspacing="0" cellpadding="0">
-        <thead>
-          <tr style="page-break-after: always;">
-            <th class="qty">&nbsp;</th>
-            <th class="qty">&nbsp;</th>
-            <th class="qty">Arbeidsuren</th>
-            <th class="qty">Arbeid</th>
-            <th class="qty">Materiaal</th>
-            <th class="qty">Materieel</th>
-            <th class="qty">Totaal</th>
-            <th class="qty">&nbsp;</th>
+            <th style="width: 130px" class="qty"class="qty">&nbsp;</th>
+            <th style="width: 170px" class="qty"class="qty">&nbsp;</th>
+            <th style="width: 40px" class="qty"class="qty">Uren</th>
+            <th style="width: 51px" class="qty"class="qty">Arbeid</th>
+            <th style="width: 51px" class="qty"class="qty">Materiaal</th>
+            <th style="width: 51px" class="qty"class="qty">Materieel</th>
+            <th style="width: 51px" class="qty"class="qty">Totaal</th>
+            <th style="width: 51px" class="qty"class="qty">&nbsp;</th>
           </tr>
         </thead>
         <tbody>
           <tr style="page-break-after: always;">
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
-            <td class="qty"><strong><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></strong></td>
-            <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></strong></td>
-            <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></strong></td>
-            <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></strong></td>
-            <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></strong></td>
+            <td class="qty"><span>{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>
+            <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
+            <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
+            <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
+            <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
             <td class="qty">&nbsp;</td>
           </tr>
       </table>
@@ -710,88 +732,96 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
     @if ($description)
     @if ($total)
+
+      <!--PAGE HEADER SECOND START-->
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
         <div id="logo">
-      <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+        <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
         </div>
-         <div id="invoice">
+          <div id="invoice">
           <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
           <div class="date">{{ $project->project_name }}</div>
           <div class="date">{{ date("j M Y") }}</div>
         </div>
-    </header>
+      </header>
+      <!--PAGE HEADER SECOND END-->
+
     <h1 class="name">Omschrijving werkzaamheden</h1>
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
-        <tr style="page-break-after: always;">
-          <th class="no">Hoofdstuk</th>
-          <th class="desc">Werkzaamheid</th>
-          <th class="no">Omschrijving</th>
+        <tr>
+          <th style="width: 130px" class="qty">Hoofdstuk</th>
+          <th style="width: 170px" class="qty">Werkzaamheid</th>
+          <th class="qty">Omschrijving</th>
         </tr>
       </thead>
       <tbody>
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
         @foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
         <tr><!-- item -->
-          <td class="no"><strong>{{ $chapter->chapter_name }}</strong></td>
-          <td class="desc">{{ $activity->activity_name }}</td>
-          <td class="no"><span>{{ $activity->note }}</td>
+          <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
+          <td class="qty">{{ $activity->activity_name }}</td>
+          <td class="qty"><br><span>{{ $activity->note }}</td>
         </tr>
         @endforeach
         @endforeach
       </tbody>
     </table>
     @else
-    <div style="page-break-after:always;"></div>
-    <header class="clearfix">
+
+      <!--PAGE HEADER SECOND START-->
+      <div style="page-break-after:always;"></div>
+      <header class="clearfix">
         <div id="logo">
-      <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
-       </div>
-       <div id="invoice">
-        <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
-        <div class="date">{{ $project->project_name }}</div>
-        <div class="date">{{ date("j M Y") }}</div>
-      </div>
-    </header>
+        <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+        </div>
+          <div id="invoice">
+          <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
+          <div class="date">{{ $project->project_name }}</div>
+          <div class="date">{{ date("j M Y") }}</div>
+        </div>
+      </header>
+      <!--PAGE HEADER SECOND END-->
+
     <h1 class="name">Omschrijving werkzaamheden</h1>
-    <h2 class="name">Aanneming</h2>
+    <h4 class="name">AANNEMING</h4>
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
-        <tr style="page-break-after: always;">
-          <th class="no">Hoofdstuk</th>
-          <th class="desc">Werkzaamheid</th>
-          <th class="no">Omschrijving</th>
+        <tr>
+          <th style="width: 130px"class="qty">Hoofdstuk</th>
+          <th style="width: 170px"class="qty">Werkzaamheid</th>
+          <th class="qty">Omschrijving</th>
         </tr>
       </thead>
       <tbody>
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
         @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
-        <tr><!-- item -->
-          <td class="no"><strong>{{ $chapter->chapter_name }}</strong></td>
-          <td class="desc">{{ $activity->activity_name }}</td>
-          <td class="no"><span>{{ $activity->note }}</td>
+        <tr>
+          <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
+          <td class="qty">{{ $activity->activity_name }}</td>
+          <td class="qty"><br><span>{{ $activity->note }}</td>
         </tr>
         @endforeach
         @endforeach
       </tbody>
     </table>
-     <h2 class="name">Onderaanneming</h2>
+     <h4 class="name">ONDERAANNEMING</h4>
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
-        <tr style="page-break-after: always;">
-          <th class="no">Hoofdstuk</th>
-          <th class="desc">Werkzaamheid</th>
-          <th class="no">Omschrijving</th>
+        <tr>
+          <th style="width: 130px" class="qty">Hoofdstuk</th>
+          <th style="width: 170px" class="qty">Werkzaamheid</th>
+          <th class="qty">Omschrijving</th>
         </tr>
       </thead>
       <tbody>
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
         @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
         <tr><!-- item -->
-          <td class="no"><strong>{{ $chapter->chapter_name }}</strong></td>
-          <td class="desc">{{ $activity->activity_name }}</td>
-          <td class="no"><span>{{ $activity->note }}</td>
+          <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
+          <td class="qty">{{ $activity->activity_name }}</td>
+          <td class="qty"><br><span>{{ $activity->note }}</td>
         </tr>
         @endforeach
         @endforeach
