@@ -380,7 +380,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-endresult" type="checkbox"> Alleen het totale offertebedrag weergeven
+								          <input name="toggle-endresult" type="checkbox"> Alleen het totale offertebedrag weergeven <br>
+								          (nog niet beschikbaar in PDF)
 								        </label>
 								      </div>
 								    </div>
@@ -407,7 +408,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-summary" type="checkbox"> Kosten werkzaamheden specificeren
+								          <input name="toggle-summary" type="checkbox" checked> Kosten werkzaamheden specificeren<br>
+								          (nog niet beschikbaar in PDF)
 								        </label>
 								      </div>
 								    </div>
