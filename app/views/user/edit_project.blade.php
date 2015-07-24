@@ -222,7 +222,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="col-md-3"><i><?php if ($offer_last) { echo 'Laatste wijziging: '.date('d-m-Y', strtotime(DB::table('offer')->select('updated_at')->where('id','=',$offer_last->id)->get()[0]->updated_at)); } ?></i></div>
 							</div>
 							<div class="row">
-								<div class="col-md-3">Opdracht ontvangen</div>
+								<div class="col-md-3">Opdracht ontvangen <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je opdracht hebt gekregen op je offerte. De calculatie slaat dan definitief dicht." href="#"><i class="fa fa-info-circle"></i></a></div>
 								<div class="col-md-2">
 									<?php
 										if (!CalculationEndresult::totalProject($project)) {
@@ -242,7 +242,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="col-md-3"><strong>Opdracht stadium</strong></div>
 							</div>
 							<div class="row">
-								<div class="col-md-3">Start uitvoering</div>
+								<div class="col-md-3">Start uitvoering <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in dat je met uitvoering bent begonnen" href="#"><i class="fa fa-info-circle"></i></a></div>
 								<div class="col-md-2"><a href="#" id="wordexec" data-format="dd-mm-yyyy">{{ $project->work_execution ? date('d-m-Y', strtotime($project->work_execution)) : '' }}</a></div>
 								<div class="col-md-3"></div>
 							</div>
@@ -328,7 +328,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<?php } ?>
 								<br>
 							<div class="row">
-								<div class="col-md-3"><strong>Project gesloten</strong></div>
+								<div class="col-md-3"><strong>Project gesloten</strong> <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je project kan worden gesloten. Zijn alle facturen betaald?" href="#"><i class="fa fa-info-circle"></i></a></div>
 								<div class="col-md-2">{{ $project->project_close ? date('d-m-Y', strtotime($project->project_close)) : '<a href="#" id="projclose" data-format="dd-mm-yyyy">' }}</a></div>
 								<div class="col-md-3"></div>
 							</div>
@@ -513,7 +513,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<tr>
 										<th class="col-md-1">Datum</th>
 										<th class="col-md-1">Uren</th>
-										<th class="col-md-3">Soort</th>
+										<th class="col-md-3">Soort <a data-toggle="tooltip" data-placement="bottom" data-original-title="Het is niet mogelijk een urenregistratie bij te houden van onderaanneming." href="#"><i class="fa fa-info-circle"></i></a></th>
 										<th class="col-md-1">Werkzaamheid</th>
 										<th class="col-md-3">Omschrijving</th>
 										<th class="col-md-1">&nbsp;</th>
