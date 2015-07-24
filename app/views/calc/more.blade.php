@@ -1296,7 +1296,7 @@ var n = this,
 							<!-- table items -->
 							<tbody>
 								<tr><!-- item -->
-									<td class="col-md-6">Calculatief te factureren (excl. BTW)</td>
+									<td class="col-md-6">Calculatief te factureren meerwerk (excl. BTW)</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::totalProject($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
