@@ -442,7 +442,7 @@ $(document).ready(function() {
 
 										<tbody>
 											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->get() as $activity)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
 											<tr>
 												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-2">{{ $activity->activity_name }}</td>
@@ -456,6 +456,47 @@ $(document).ready(function() {
 											<tr>
 												<th class="col-md-3"><strong>Totaal Stelposten</strong></th>
 												<th class="col-md-2">&nbsp;</th>
+												<td class="col-md-2"><strong><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalCalculation($project), 2, ",",".") }}</span></strong></td>
+												<td class="col-md-2"><strong><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalCalculation($project)-TimesheetOverview::estimTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
+												<td class="col-md-2"><strong><span class="pull-right">{{ '&euro; '.number_format((TimesheetOverview::estimTotalCalculation($project)-TimesheetOverview::estimTotalTimesheet($project))*$project->hour_rate, 2, ",",".") }}</span></strong></td>
+											</tr>
+										</tbody>
+									</table>
+									</div>
+								</div>
+								<div class="toggle active">
+									<label>Meerwerk</label>
+									<div class="toggle-content">
+									<table class="table table-striped">
+										<?# -- table head -- ?>
+										<thead>
+											<tr>
+												<th class="col-md-3">&nbsp;</th>
+												<th class="col-md-2">&nbsp;</th>
+												<th class="col-md-2"><span class="pull-right">Gecalculeerde uren</span></th>
+												<th class="col-md-2"><span class="pull-right">Geregistreerde uren</span></th>
+												<th class="col-md-1"><span class="pull-right">Verschil</span></th>
+												<th class="col-md-2"><span class="pull-right">Uren totaal</span></th>
+											</tr>
+										</thead>
+
+										<tbody>
+											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
+											<tr>
+												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
+												<td class="col-md-2">{{ $activity->activity_name }}</td>
+												<td class="col-md-2"><span class="pull-right">&nbsp;</span></td>
+												<td class="col-md-2"><span class="pull-right">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'), 2,",","."); }}</span></td>
+												<td class="col-md-1"><span class="pull-right">&nbsp;</span></td>
+												<td class="col-md-2"><span class="pull-right">&nbsp;</span></td>
+											</tr>
+											@endforeach
+											@endforeach
+											<tr>
+												<td class="col-md-3"><strong>Totaal Meerwerk</strong></td>
+												<td class="col-md-2">&nbsp;</td>
 												<td class="col-md-2"><strong><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalCalculation($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-2"><strong><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalCalculation($project)-TimesheetOverview::estimTotalTimesheet($project), 2, ",",".") }}</span></strong></td>

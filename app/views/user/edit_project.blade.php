@@ -199,9 +199,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<a href="#hour" data-toggle="tab">Urenregistratie</a>
 						</li>
 						<li>
-							<a href="#hour_overview" data-toggle="tab">Resultaat urenregistratie</a>
-						</li>
-						<li>
 							<a href="#purchase" data-toggle="tab">Inkoopfacturen</a>
 						</li>
 					</ul>
@@ -571,106 +568,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									@endif
 								</tbody>
 							</table>
-						</div>
-
-						<div id="hour_overview" class="tab-pane">
-							<div class="toogle">
-								<div class="toggle active">
-									<label>Aanneming</label>
-									<div class="toggle-content">
-									<table class="table table-striped">
-										<thead>
-											<tr>
-												<th class="col-md-2">&nbsp;</th>
-												<th class="col-md-4">&nbsp;</th>
-												<th class="col-md-2">Gecalculeerde uren</th>
-												<th class="col-md-2">Geregistreerde uren</th>
-												<th class="col-md-2">Verschil</th>
-											</tr>
-										</thead>
-
-										<tbody>
-											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->whereNull('detail_id')->get() as $activity)
-											<tr>
-												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-4">{{ $activity->activity_name }}</td>
-												<td class="col-md-2">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id), 2,",","."); }}</td>
-												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-2">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-											</tr>
-											@endforeach
-											@endforeach
-										</tbody>
-									</table>
-									</div>
-								</div>
-
-								<div class="toggle active">
-									<label>Stelpost</label>
-									<div class="toggle-content">
-									<table class="table table-striped">
-										<?# -- table head -- ?>
-										<thead>
-											<tr>
-												<th class="col-md-2">&nbsp;</th>
-												<th class="col-md-4">&nbsp;</th>
-												<th class="col-md-2">Gecalculeerde uren</th>
-												<th class="col-md-2">Geregistreerde uren</th>
-												<th class="col-md-2">Verschil</th>
-											</tr>
-										</thead>
-
-										<tbody>
-											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
-											<tr>
-												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-4">{{ $activity->activity_name }}</td>
-												<td class="col-md-2">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id), 2,",","."); }}</td>
-												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-2">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-											</tr>
-											@endforeach
-											@endforeach
-										</tbody>
-									</table>
-									</div>
-								</div>
-
-								<div class="toggle active">
-									<label>Meerwerk</label>
-									<div class="toggle-content">
-									<table class="table table-striped">
-										<?# -- table head -- ?>
-										<thead>
-											<tr>
-												<th class="col-md-2">&nbsp;</th>
-												<th class="col-md-4">&nbsp;</th>
-												<th class="col-md-2">Gecalculeerde uren</th>
-												<th class="col-md-2">Geregistreerde uren</th>
-												<th class="col-md-2">Verschil</th>
-											</tr>
-										</thead>
-
-										<tbody>
-											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
-											<tr>
-												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-4">{{ $activity->activity_name }}</td>
-												<td class="col-md-2">&nbsp;</td>
-												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-2">&nbsp;</td>
-											</tr>
-											@endforeach
-											@endforeach
-										</tbody>
-									</table>
-									</div>
-								</div>
-
-							</div>
 						</div>
 
 						<div id="purchase" class="tab-pane">
