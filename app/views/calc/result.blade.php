@@ -437,7 +437,7 @@ $(document).ready(function() {
 												<th class="col-md-3">&nbsp;</th>
 												<th class="col-md-4">&nbsp;</th>
 												<th class="col-md-1"><span class="pull-right">Gecalculeerd</span></th>
-												<th class="col-md-1"><span class="pull-right">Gesteld</span></th>
+												<th class="col-md-1"><span class="pull-right">Gesteld&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de gestelde uren van de calculatie, zoals die op de factuur vermeld gaan worden." href="#"><i class="fa fa-info-circle"></i></a></span></th>
 												<th class="col-md-1"><span class="pull-right">Geboekt</span></th>
 												<th class="col-md-1"><span class="pull-right">Winst/verlies</span></th>
 												<th class="col-md-1"><span class="pull-right">Kosten</span></th>
@@ -480,7 +480,7 @@ $(document).ready(function() {
 											<tr>
 												<th class="col-md-3">&nbsp;</th>
 												<th class="col-md-4">&nbsp;</th>
-												<th class="col-md-1"><span class="pull-right">Opgegeven<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de opgegeven uren die als prijsopgaaf kunnen dienen naar de klant. Wordt de urenregistratie bijgehouden dan is die bindend." href="#"><i class="fa fa-info-circle"></i></a></span></th>
+												<th class="col-md-1"><span class="pull-right">Opgegeven&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de opgegeven uren die als prijsopgaaf kunnen dienen naar de klant. Wordt de urenregistratie bijgehouden dan is die bindend." href="#"><i class="fa fa-info-circle"></i></a></span></th>
 												<th class="col-md-1"><span class="pull-right">&nbsp;</span></th>
 												<th class="col-md-1"><span class="pull-right">Geboekt</span></th>
 												<th class="col-md-1"><span class="pull-right">&nbsp;</span></th>
