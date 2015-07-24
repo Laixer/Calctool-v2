@@ -466,7 +466,7 @@ $(document).ready(function() {
 									</div>
 								</div>
 								<div class="toggle active">
-									<label>Meerwerk</label>
+									<label>Meerwerk aanneming</label>
 									<div class="toggle-content">
 									<table class="table table-striped">
 										<?# -- table head -- ?>
