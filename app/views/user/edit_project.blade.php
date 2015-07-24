@@ -579,7 +579,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<label>Aanneming</label>
 									<div class="toggle-content">
 									<table class="table table-striped">
-										<?# -- table head -- ?>
 										<thead>
 											<tr>
 												<th class="col-md-2">&nbsp;</th>
@@ -592,7 +591,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 										<tbody>
 											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->whereNull('detail_id')->get() as $activity)
 											<tr>
 												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-4">{{ $activity->activity_name }}</td>
