@@ -4,6 +4,8 @@ $relation = Relation::find($project->client_id);
 $relation_self = Relation::find(Auth::user()->self_id);
 $contact_self = Contact::where('relation_id','=',$relation_self->id);
 $invoice = Invoice::find(Route::Input('invoice_id'));
+$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+$invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 ?>
 
 @extends('layout.master')
@@ -318,78 +320,106 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 
 	<h2><strong>Eindfactuur</strong></h2>
 	<form method="POST" id="frm-invoice" action="/invoice/close">
-		<input name="id" value="{{ $invoice->id }}" type="hidden"/>
-		<input name="projectid" value="{{ $project->id }}" type="hidden"/>
-			<div class="white-row">
+	<input name="id" value="{{ $invoice->id }}" type="hidden"/>
+	<input name="projectid" value="{{ $project->id }}" type="hidden"/>
 
-				<div class="row">
 
-					<div class="col-sm-6">
-						{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
-					</div>
 
-					<div class="col-sm-6 text-right">
-						<p>
-							#{{ sprintf("%06d", $project->id) }} &bull; <strong>{{ date("j M Y") }}</strong>
-							<br />
-							{{ $project->project_name }}
-						</p>
-					</div>
 
+
+
+
+
+	<div class="white-row">
+		<!--PAGE HEADER MASTER START-->
+		<header>
+			<div class="row">
+				<div class="col-sm-6">
+					{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
 				</div>
-
-				<hr class="margin-top10 margin-bottom10" /><!-- separator -->
-
-				<!-- DETAILS -->
-				<div class="row">
-
-					<div class="col-sm-6">
-
+				<div class="col-sm-6 text-right">
+					<p>
+						<h4><strong>{{ $relation_self->company_name }}</strong></h4>
+		    				<ul class="list-unstyled">
+	 						<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
+	  						<li>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
+	 						<li>Email:{{ $relation_self->email }}</li>
+	 						<li>KVK:{{ $relation_self->kvk }}</li>
 						<ul class="list-unstyled">
-							<li><br></li>
-							<li><br></li>
-							<li><br></li>
-							<li><br></li>
-							<li>{{ $relation->company_name }}</li>
-							<li>t.a.v. -hier moet een selectlist komen van de contacten van dit bedrijf-</li>
-							<li>{{ $relation->address_street . ' ' . $relation->address_number }}<br /> {{ $relation->address_postal . ', ' . $relation->address_city }}</li>
-						</ul>
-
-					</div>
-
-					<div class="col-sm-2"></div>
-
-					<div class="col-sm-4">
-
-						<h4><strong>Opdrachtnemer</strong></h4>
-						<ul class="list-unstyled">
-							<li><strong>Bedrijfsnaam:</strong> {{ $relation_self->company_name }}</li>
-							<li><strong>Adres:</strong> {{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
-							<li style="margin-left: 48px;">{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
-							<li><strong>Telefoon:</strong> {{ $relation_self->phone }}</li>
-							<li><strong>Email:</strong> {{ $relation_self->email }}</li>
-							<li><strong>KVK:</strong>{{ $relation_self->kvk }}</li>
-						</ul>
-
-						<h4><strong>Factuur gegevens</strong></h4>
-						<ul class="list-unstyled">
-							<li><strong>Factuurdatum:</strong> {{ date("j M Y") }}</li>
-							<li><strong>Factuurnummer:</strong> {{ $invoice->invoice_code }}</li>
-							<li><strong>Administratiefnummer:</strong> {{ $invoice->book_code }}</li>
-							<li><strong>Uw referentie:</strong> {{ $invoice->reference }}</li>
-
-						</ul>
-
-					</div>
-
+					</p>
 				</div>
+			</div>
+		</header>
+		<!--PAGE HEADER MASTER END-->
 
-					<textarea name="description" id="description" rows="10" class="form-control">{{ ($invoice ? ($invoice->description ? $invoice->description : Auth::user()->pref_invoice_description) : Auth::user()->pref_invoice_description) }}</textarea>
+ 		<hr class="margin-top10 margin-bottom10">
 
+ 		<!--ADRESSING START-->
+ 		<main>
+		<div class="row">
+			<div class="col-sm-6">
+				<ul class="list-unstyled">
+					<li>{{ $relation->company_name }}</li>
+					<li>t.a.v.
+					@if ($invoice_last && $invoice_last->invoice_close)
+					{{ Contact::find($invoice_last->to_contact_id)->firstname . ' ' . Contact::find($invoice_last->to_contact_id)->lastname }}
+					@else
+					<select name="to_contact" id="to_contact">
+						@foreach (Contact::where('relation_id','=',$relation->id)->get() as $contact)
+						<option {{ $invoice_last ? ($invoice_last->to_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
+						@endforeach
+					</select>
+					@endif
+					</li>
+					<li>{{ $relation->address_street . ' ' . $relation->address_number }}<br /> {{ $relation->address_postal . ', ' . $relation->address_city }}</li>
+				</ul>
+			</div>
+			<div class="col-sm-2"></div>
+			<div class="col-sm-4 text-right">
+				<h4><strong>FACTUUR</strong></h4>
+				<ul class="list-unstyled">
+					<li><strong>Projectnaam:</strong>{{ $project->project_name }}</li>
+					<li><strong>Factuurdatum:</strong> {{ date("j M Y") }}</li>
+					<li><strong>Factuurnummer:</strong> {{ $invoice->invoice_code }}</li>
+					<li><strong>Administratiefnummer:</strong> {{ $invoice->book_code }}</li>
+					<li><strong>Uw referentie:</strong> {{ $invoice->reference }}</li>
+			</div>
+		</div>
+		<!--ADRESSING END-->
+
+		<!--DECRIPTION-->
+		<div class="row">
+			<div class="col-sm-6">
+			Geachte
+			@if ($invoice_last && $invoice_last->invoice_close)
+			{{ Contact::find($invoice_last->to_contact_id)->firstname . ' ' . Contact::find($invoice_last->to_contact_id)->lastname }}
+			@else
+			<select name="to_contact" id="to_contact">
+				@foreach (Contact::where('relation_id','=',$relation->id)->get() as $contact)
+				<option {{ $offer_last ? ($offer_last->to_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
+				@endforeach
+			</select>
+			@endif
+			,
+		</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-sm-12">
+			@if ($invoice_last && $invoice_last->invoice_close)
+			{{ $invoice_last->description }}
+			@else
+				<textarea name="description" id="description" rows="5" maxlength="500" class="form-control">{{ ($invoice ? ($invoice->description ? $invoice->description : Auth::user()->pref_invoice_description) : Auth::user()->pref_invoice_description) }}</textarea>
+			@endif
+			</div>
+		</div>
+		<br>
+		<!--DECRIPTION END-->
+
+		<!--CONTENT, CON & SUBCON START-->
 					<div class="show-all" style="display:none;">
 						<h4 class="only-total">Factuuroverzicht Aanneming</h4>
 						<table class="table table-striped hide-btw1">
-							<?# -- table head -- ?>
 							<thead>
 								<tr>
 									<th class="col-md-4">&nbsp;</th>
@@ -401,10 +431,8 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<th class="col-md-2">BTW bedrag</th>
 								</tr>
 							</thead>
-
-							<!-- table items -->
 							<tbody>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -413,7 +441,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">21%</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax1AmountTax($project), 2, ",",".") }}</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -422,7 +450,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">6%</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -431,8 +459,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">0%</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -441,7 +468,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">21%</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax1AmountTax($project), 2, ",",".") }}</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -450,7 +477,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">6%</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -459,8 +486,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">0%</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -469,7 +495,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">21%</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax1AmountTax($project), 2, ",",".") }}</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -478,7 +504,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">6%</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -487,8 +513,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">0%</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
-
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
 									<td class="col-md-1"><strong>{{ '&euro; '.number_format(EstimateEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-2"><strong>{{ '&euro; '.number_format(MoreEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
@@ -502,7 +527,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 
 						<h4 class="only-total">Factuuroverzicht onderaanneming</h4>
 						<table class="table table-striped hide-btw1">
-							<?# -- table head -- ?>
 							<thead>
 								<tr>
 									<th class="col-md-4">&nbsp;</th>
@@ -514,10 +538,8 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<th class="col-md-2">BTW bedrag</th>
 								</tr>
 							</thead>
-
-							<!-- table items -->
 							<tbody>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -526,7 +548,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">21%</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::subconLaborBalanceTax1AmountTax($project), 2, ",",".") }}</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -535,7 +557,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">6%</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::subconLaborBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -544,8 +566,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">0%</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -554,7 +575,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">21%</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::subconMaterialBalanceTax1AmountTax($project), 2, ",",".") }}</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -563,7 +584,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">6%</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::subconMaterialBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -573,7 +594,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -582,7 +603,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">21%</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::subconEquipmentBalanceTax1AmountTax($project), 2, ",",".") }}</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -591,7 +612,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">6%</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::subconEquipmentBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -600,8 +621,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">0%</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
-
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4"><strong>Totaal Onderaanneming </strong></td>
 									<td class="col-md-1"><strong>{{ '&euro; '.number_format(EstimateEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-2"><strong>{{ '&euro; '.number_format(MoreEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
@@ -615,7 +635,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 
 						<h4>Cumulatieven factuur</h4>
 						<table class="table table-striped hide-btw2">
-							<?# -- table head -- ?>
 							<thead>
 								<tr>
 									<th class="col-md-6">&nbsp;</th>
@@ -624,61 +643,58 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<th class="col-md-2">&nbsp;</th>
 								</tr>
 							</thead>
-
-							<!-- table items -->
 							<tbody>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-6">Calculatief te factureren (excl. BTW)</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalProject($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-6">BTW bedrag aanneming belast met 21%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-6">BTW bedrag aanneming belast met 6%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-6">BTW bedrag onderaanneming belast met 21%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-6">BTW bedrag onderaanneming belast met 6%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-6">Te offereren BTW bedrag</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalProjectTax($project), 2, ",",".") }}</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-6"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2"><strong>{{ '&euro; '.number_format(ResultEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
 								</tr>
-
 							</tbody>
-
 						</table>
 					</div>
+					<!--CONTENT, CON & SUBCON END-->
 
+					<!--CONTENT, TOTAL START-->
 					<div class="show-totals">
 						<h4 class="only-total">Totaal overzicht factuur</h4>
 						<table class="table table-striped hide-btw1">
-							<?# -- table head -- ?>
 							<thead>
 								<tr>
 									<th class="col-md-4">&nbsp;</th>
@@ -690,10 +706,8 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<th class="col-md-2">BTW bedrag</th>
 								</tr>
 							</thead>
-
-							<!-- table items -->
 							<tbody>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax1Amount($project)+EstimateEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax1Amount($project)+MoreEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -702,7 +716,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">21%</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax1AmountTax($project)+ResultEndresult::subconLaborBalanceTax1AmountTax($project), 2, ",",".") }}</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax2Amount($project)+EstimateEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax2Amount($project)+MoreEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -711,7 +725,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">6%</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax2AmountTax($project)+ResultEndresult::subconLaborBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax3Amount($project)+EstimateEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax3Amount($project)+MoreEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -720,8 +734,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">0%</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax1Amount($project)+EstimateEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax1Amount($project)+MoreEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -730,7 +743,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">21%</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax1AmountTax($project)+ResultEndresult::subconMaterialBalanceTax1AmountTax($project), 2, ",",".") }}</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax2Amount($project)+EstimateEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax2Amount($project)+MoreEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -739,7 +752,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">6%</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax2AmountTax($project)+ResultEndresult::subconMaterialBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax3Amount($project)+EstimateEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax3Amount($project)+MoreEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -748,8 +761,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">0%</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax1Amount($project)+EstimateEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax1Amount($project)+MoreEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -758,7 +770,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">21%</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax1AmountTax($project)+ResultEndresult::subconEquipmentBalanceTax1AmountTax($project), 2, ",",".") }}</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax2Amount($project)+EstimateEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax2Amount($project)+MoreEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -767,7 +779,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">6%</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax2AmountTax($project)+ResultEndresult::subconEquipmentBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax3Amount($project)+EstimateEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax3Amount($project)+MoreEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -776,8 +788,7 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 									<td class="col-md-1">0%</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
-
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
 									<td class="col-md-1"><strong>{{ '&euro; '.number_format(EstimateEndresult::totalContracting($project)+EstimateEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-2"><strong>{{ '&euro; '.number_format(MoreEndresult::totalContracting($project)+MoreEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
@@ -791,51 +802,47 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 
 						<h4>Cumulatieven factuur</h4>
 						<table class="table table-striped hide-btw2">
-							<?# -- table head -- ?>
 							<thead>
 								<tr>
 									<th class="col-md-6">&nbsp;</th>
 									<th class="col-md-2">Bedrag (excl. BTW)</th>
 									<th class="col-md-2">BTW bedrag</th>
-									<th class="col-md-2">&nbsp;</th>
+									<th class="col-md-2">Bedrag (incl. BTW);</th>
 								</tr>
 							</thead>
 
-							<!-- table items -->
 							<tbody>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-6">Calculatief te offereren (excl. BTW)</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalProject($project), 2, ",",".") }}</td>
+									<td class="col-md-2"><strong>{{ '&euro; '.number_format(ResultEndresult::totalProject($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-6">BTW bedrag calculatie belast met 21%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax1($project)+ResultEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-6">BTW bedrag calculatie belast met 6%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax2($project)+ResultEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-6">Te offereren BTW bedrag</td>
 									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-2"><strong>{{ '&euro; '.number_format(ResultEndresult::totalProjectTax($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalProjectTax($project), 2, ",",".") }}</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-6"><strong>Calculatief te offereren (Incl. BTW)</strong></td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2"><strong>{{ '&euro; '.number_format(ResultEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
 								</tr>
-
 							</tbody>
-
 						</table>
 					</div>
 					<?php
@@ -844,7 +851,6 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 					?>
 					<h4>Reeds betaald</h4>
 					<table class="table table-striped hide-btw2">
-						<?# -- table head -- ?>
 						<thead>
 							<tr>
 								<th class="col-md-6">&nbsp;</th>
@@ -853,61 +859,60 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 								<th class="col-md-2">Bedrag (incl. BTW);</th>
 							</tr>
 						</thead>
-
-						<!-- table items -->
 						<tbody>
-							<tr><!-- item -->
-								<td class="col-md-6">1e termijnbedrag van in totaal 3 betalingstermijnen (excl. BTW)</td>
-								<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('amount'), 2, ",",".") }}</td>
+							<tr>
+								<td class="col-md-6">Voorgaande termijn(en) (excl. BTW)</td>
+								<td class="col-md-2"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('amount'), 2, ",",".") }}</strong></td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
-
-							<tr><!-- item -->
+							<tr>
 								<td class="col-md-6">Factuurbedrag in 21% BTW cattegorie</td>
 								<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21'), 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
-							<tr><!-- item -->
+							<tr>
 								<td class="col-md-6">Factuurbedrag in 6% BTW cattegorie</td>
 								<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6'), 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
-							<tr><!-- item -->
+							<tr>
 								<td class="col-md-6">Factuurbedrag in 0% BTW cattegorie</td>
 								<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_0'), 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
-
-							<tr><!-- item -->
+							<tr>
 								<td class="col-md-6">BTW bedrag belast met 21%</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21')/100)*21, 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
-							<tr><!-- item -->
+							<tr>
 								<td class="col-md-6">BTW bedrag belast met 6%</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6, 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
-							<tr><!-- item -->
+							<tr>
+								<td class="col-md-6">Te offereren BTW bedrag</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2"><strong>volgt</strong></td>
+								<td class="col-md-2">&nbsp;</td>
+							</tr>
+							<tr>
 								<td class="col-md-6"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('amount')+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21')/100)*21)+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6), 2, ",",".") }}</strong></td>
 							</tr>
-
 						</tbody>
-
 					</table>
 
 					<h4>Resterend te betalen</h4>
 					<table class="table table-striped hide-btw2">
-						<?# -- table head -- ?>
 						<thead>
 							<tr>
 								<th class="col-md-6">&nbsp;</th>
@@ -916,57 +921,75 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 								<th class="col-md-2">Bedrag (incl. BTW);</th>
 							</tr>
 						</thead>
-
-						<!-- table items -->
 						<tbody>
-							<tr><!-- item -->
-								<td class="col-md-6">1e termijnbedrag van in totaal 3 betalingstermijnen (excl. BTW)</td>
+							<tr>
+								<td class="col-md-6">Calculatief te offereren (excl. BTW)</td>
 								<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->amount, 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
-
-							<tr><!-- item -->
+							<tr>
 								<td class="col-md-6">Factuurbedrag in 21% BTW cattegorie</td>
 								<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21, 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
-							<tr><!-- item -->
+							<tr>
 								<td class="col-md-6">Factuurbedrag in 6% BTW cattegorie</td>
 								<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6, 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
-							<tr><!-- item -->
+							<tr>
 								<td class="col-md-6">Factuurbedrag in 0% BTW cattegorie</td>
 								<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_0, 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
-
-							<tr><!-- item -->
+							<tr>
 								<td class="col-md-6">BTW bedrag belast met 21%</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21/100)*21, 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
-							<tr><!-- item -->
+							<tr>
 								<td class="col-md-6">BTW bedrag belast met 6%</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6, 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
-							<tr><!-- item -->
+							<tr>
+								<td class="col-md-6">Te offereren BTW bedrag</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2"><strong>volgt</strong></td>
+								<td class="col-md-2">&nbsp;</td>
+							</tr>
+							<tr>
 								<td class="col-md-6"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->amount+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21/100)*21)+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6), 2, ",",".") }}</strong></td>
 							</tr>
-
 						</tbody>
-
 					</table>
+					<!--CONTENT, TOTAL END-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 					<?php } ?>
 
 					<textarea name="closure" id="closure" rows="10" class="form-control">{{ ($invoice ? ($invoice->closure ? $invoice->closure : Auth::user()->pref_invoice_closure) : Auth::user()->pref_invoice_closure) }}</textarea>
