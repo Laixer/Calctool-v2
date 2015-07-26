@@ -191,8 +191,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			$('#frm-offer').submit();
 		});
 	});
-</script>
-<div id="wrapper">
+	</script>
+	<div id="wrapper">
 
 	<section class="container printable fix-footer-bottom">
 
@@ -435,9 +435,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					</div>
 				</div>
 			</div>
-
-
-
 
 	<div class="white-row">
 		<!--PAGE HEADER MASTER START-->
@@ -1025,375 +1022,320 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				</p>
 				</div>
 			</div>
-			</div class="white-row">
+		</div class="white-row">
 			<!--CLOSER END-->
 
-
-
-
-	<div class="white-row show-activity">
-	<!--PAGE HEADER START-->
-	<div class="row">
-		<div class="col-sm-6">
-			{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
-		</div>
-		<div class="col-sm-6 text-right">
-			<p>
-				<h4><strong>{{ $project->project_name }}</strong></h4>
-				<ul class="list-unstyled">
-					<li><strong>Offertedatum:</strong> {{ date("j M Y") }}</li>
-					<li><strong>Offertenummer:</strong> {{ OfferController::getOfferCode($project->id) }}</li>
-				</ul>
-			</p>
-			</div>
-	</div>
-	<hr class="margin-top10 margin-bottom10">
-	<!--PAGE HEADER END-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-				<!-- /DETAILS -->
-
-							<div class="show-all" style="display:none;">
-
-								<h4>Aanneming</h4>
-
-								<table class="table table-striped only-end-total">
-									<?# -- table head -- ?>
-									<thead>
-										<tr>
-											<th class="col-md-2">Hoofdstuk</th>
-											<th class="col-md-3">Werkzaamheid</th>
-											<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
-											<th class="col-md-1"><span class="pull-right">Arbeid</th>
-											<th class="col-md-1"><span class="pull-right">Materiaal</th>
-											<th class="col-md-1"><span class="pull-right">Materieel</th>
-											<th class="col-md-1"><span class="pull-right">Totaal</th>
-											<th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
-										</tr>
-									</thead>
-
-									<!-- table items -->
-									<tbody>
-										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
-										<tr><!-- item -->
-											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-											<td class="col-md-3">{{ $activity->activity_name }}</td>
-											<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
-											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
-											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
-											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
-											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-											<td class="col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
-										</tr>
-										@endforeach
-										@endforeach
-										<tr><!-- item -->
-											<td class="col-md-2"><strong>Totaal aanneming</strong></td>
-											<td class="col-md-3">&nbsp;</td>
-											<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::contrLaborTotalAmount($project) }}</span></strong></td>
-											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
-											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
-											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
-											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
-											<td class="col-md-1">&nbsp;</td>
-										</tr>
-									</tbody>
-								</table>
-
-								<h4>Onderaanneming</h4>
-
-								<table class="table table-striped only-end-total">
-									<?# -- table head -- ?>
-									<thead>
-										<tr>
-											<th class="col-md-2">&nbsp;</th>
-											<th class="col-md-3">&nbsp;</th>
-											<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
-											<th class="col-md-1"><span class="pull-right">Arbeid</th>
-											<th class="col-md-1"><span class="pull-right">Materiaal</th>
-											<th class="col-md-1"><span class="pull-right">Materieel</th>
-											<th class="col-md-1"><span class="pull-right">Totaal</th>
-											<th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
-										</tr>
-									</thead>
-
-									<!-- table items -->
-									<tbody>
-										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
-										<tr><!-- item -->
-											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-											<td class="col-md-3">{{ $activity->activity_name }}</td>
-											<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
-											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
-											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
-											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
-											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
-											<td class="col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
-										</tr>
-										@endforeach
-										@endforeach
-										<tr><!-- item -->
-											<td class="col-md-2"><strong>Totaal onderaanneming</strong></td>
-											<td class="col-md-3">&nbsp;</td>
-											<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::subcontrLaborTotalAmount($project) }}</span></strong></td>
-											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
-											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
-											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
-											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
-											<td class="col-md-1">&nbsp;</td>
-										</tr>
-									</tbody>
-								</table>
-
-								<h4>Totalen project</h4>
-
-								<table class="table table-striped only-end-total">
-									<?# -- table head -- ?>
-									<thead>
-										<tr>
-											<th class="col-md-2">&nbsp;</th>
-											<th class="col-md-3">&nbsp;</th>
-											<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
-											<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
-											<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
-											<th class="col-md-1"><span class="pull-right">Materieel</span></th>
-											<th class="col-md-1"><span class="pull-right">Totaal</span></th>
-											<th class="col-md-1">&nbsp;</th>
-										</tr>
-									</thead>
-
-									<!-- table items -->
-									<tbody>
-										<tr><!-- item -->
-											<td class="col-md-2">&nbsp;</td>
-											<td class="col-md-3">&nbsp;</td>
-											<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></strong></td>
-											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></strong></td>
-											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></strong></td>
-											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></strong></td>
-											<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></strong></td>
-											<td class="col-md-1">&nbsp;</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-
-							<div class="show-totals">
-
-								<h4>Totaalkosten per werkzaamheden</h4>
-
-								<table class="table table-striped only-end-total">
-									<?# -- table head -- ?>
-									<thead>
-										<tr>
-											<th class="col-md-2">&nbsp;</th>
-											<th class="col-md-3">&nbsp;</th>
-											<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
-											<th class="col-md-1"><span class="pull-right">Arbeid</th>
-											<th class="col-md-1"><span class="pull-right">Materiaal</th>
-											<th class="col-md-1"><span class="pull-right">Materieel</th>
-											<th class="col-md-1"><span class="pull-right">Totaal</th>
-											<th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
-										</tr>
-									</thead>
-
-									<!-- table items -->
-									<tbody>
-										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
-										<tr><!-- item -->
-											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-											<td class="col-md-3">{{ $activity->activity_name }}</td>
-											<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
-											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
-											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
-											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
-											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-											<td class="col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
-										</tr>
-										@endforeach
-										@endforeach
-										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
-										<tr><!-- item -->
-											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-											<td class="col-md-3">{{ $activity->activity_name }}</td>
-											<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
-											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
-											<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
-											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
-											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
-											<td class="col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
-										</tr>
-										@endforeach
-										@endforeach
-									</tbody>
-								</table>
-
-								<h4>Totaalkosten project</h4>
-
-								<table class="table table-striped only-end-total">
-									<?# -- table head -- ?>
-									<thead>
-										<tr>
-											<th class="col-md-2">&nbsp;</th>
-											<th class="col-md-3">&nbsp;</th>
-											<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
-											<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
-											<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
-											<th class="col-md-1"><span class="pull-right">Materieel</span></th>
-											<th class="col-md-1"><span class="pull-right">Totaal</span></th>
-											<th class="col-md-1">&nbsp;</th>
-										</tr>
-									</thead>
-
-									<!-- table items -->
-									<tbody>
-										<tr><!-- item -->
-											<td class="col-md-2">&nbsp;</td>
-											<td class="col-md-3">&nbsp;</td>
-											<td class="col-md-1"><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>
-											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
-											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
-											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
-											<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
-											<td class="col-md-1">&nbsp;</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						<h5><strong>Weergegeven bedragen zijn exclusief BTW</strong></h5>
-
-				</div>
-
-			<div class="white-row show-note">
-
-				<div class="row">
-
-					<div class="col-sm-6">
-						{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
-					</div>
-
-					<div class="col-sm-6 text-right">
-						<p>
-							#{{ sprintf("%06d", $project->id) }} &bull; <strong>{{ date("j M Y") }}</strong>
-							<br />
-							{{ $project->project_name }}
-						</p>
-					</div>
-
-				</div>
-
-				<hr class="margin-top10 margin-bottom10" /><!-- separator -->
-
-
-				<!-- /DETAILS -->
-
-							<div class="show-all" style="display:none;">
-
-								<h4>Aanneming</h4>
-
-								<table class="table table-striped">
-									<?# -- table head -- ?>
-									<thead>
-										<tr>
-											<th class="col-md-2">&nbsp;</th>
-											<th class="col-md-3">&nbsp;</th>
-											<th class="col-md-7"><span>Omschrijving</th>
-										</tr>
-									</thead>
-
-									<!-- table items -->
-									<tbody>
-										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
-										<tr><!-- item -->
-											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-											<td class="col-md-3">{{ $activity->activity_name }}</td>
-											<td class="col-md-7"><span>{{ $activity->note }}</td>
-										</tr>
-										@endforeach
-										@endforeach
-									</tbody>
-								</table>
-
-								<h4>Onderaanneming</h4>
-
-								<table class="table table-striped">
-									<?# -- table head -- ?>
-									<thead>
-										<tr>
-											<th class="col-md-2">&nbsp;</th>
-											<th class="col-md-3">&nbsp;</th>
-											<th class="col-md-7"><span>Omschrijving</th>
-										</tr>
-									</thead>
-
-									<!-- table items -->
-									<tbody>
-										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
-										<tr><!-- item -->
-											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-											<td class="col-md-3">{{ $activity->activity_name }}</td>
-											<td class="col-md-7"><span>{{ $activity->note }}</td>
-										</tr>
-										@endforeach
-										@endforeach
-									</tbody>
-								</table>
-							</div>
-
-							<div class="show-totals">
-								<h4>Omschrijving werkzaamheden</h4>
-
-								<table class="table table-striped">
-									<?# -- table head -- ?>
-									<thead>
-										<tr>
-											<th class="col-md-2">&nbsp;</th>
-											<th class="col-md-3">&nbsp;</th>
-											<th class="col-md-7"><span>Omschrijving</th>
-										</tr>
-									</thead>
-
-									<!-- table items -->
-									<tbody>
-										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
-										<tr><!-- item -->
-											<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-											<td class="col-md-3">{{ $activity->activity_name }}</td>
-											<td class="col-md-7"><span>{{ $activity->note }}</td>
-										</tr>
-										@endforeach
-										@endforeach
-									</tbody>
-								</table>
-
-							</div>
-
-				</div>
-			</form>
-
-			<!-- INVOICE FOOTER -->
+		<div class="white-row show-activity">
+			<!--PAGE HEADER START-->
 			<div class="row">
+				<div class="col-sm-6">
+					{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+				</div>
+				<div class="col-sm-6 text-right">
+					<p>
+						<h4><strong>{{ $project->project_name }}</strong></h4>
+						<ul class="list-unstyled">
+							<li><strong>Offertedatum:</strong> {{ date("j M Y") }}</li>
+							<li><strong>Offertenummer:</strong> {{ OfferController::getOfferCode($project->id) }}</li>
+						</ul>
+					</p>
+					</div>
+			</div>
+			<hr class="margin-top10 margin-bottom10">
+			<!--PAGE HEADER END-->
 
+			<!-- SPECIFICATION CON&SUBCON START-->
+			<div class="show-all" style="display:none;">
+				<h4>Aanneming</h4>
+				<table class="table table-striped only-end-total">
+					<thead>
+						<tr>
+							<th class="col-md-2">Hoofdstuk</th>
+							<th class="col-md-3">Werkzaamheid</th>
+							<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
+							<th class="col-md-1"><span class="pull-right">Arbeid</th>
+							<th class="col-md-1"><span class="pull-right">Materiaal</th>
+							<th class="col-md-1"><span class="pull-right">Materieel</th>
+							<th class="col-md-1"><span class="pull-right">Totaal</th>
+							<th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+						<tr>
+							<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+							<td class="col-md-3">{{ $activity->activity_name }}</td>
+							<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
+							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
+							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
+							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
+							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
+							<td class="col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
+						</tr>
+						@endforeach
+						@endforeach
+						<tr>
+							<td class="col-md-2"><strong>Totaal aanneming</strong></td>
+							<td class="col-md-3">&nbsp;</td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::contrLaborTotalAmount($project) }}</span></strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
+							<td class="col-md-1">&nbsp;</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<h4>Onderaanneming</h4>
+				<table class="table table-striped only-end-total">
+					<thead>
+						<tr>
+							<th class="col-md-2">&nbsp;</th>
+							<th class="col-md-3">&nbsp;</th>
+							<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
+							<th class="col-md-1"><span class="pull-right">Arbeid</th>
+							<th class="col-md-1"><span class="pull-right">Materiaal</th>
+							<th class="col-md-1"><span class="pull-right">Materieel</th>
+							<th class="col-md-1"><span class="pull-right">Totaal</th>
+							<th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+						<tr>
+							<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+							<td class="col-md-3">{{ $activity->activity_name }}</td>
+							<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
+							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
+							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
+							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
+							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
+							<td class="col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
+						</tr>
+						@endforeach
+						@endforeach
+						<tr>
+							<td class="col-md-2"><strong>Totaal onderaanneming</strong></td>
+							<td class="col-md-3">&nbsp;</td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::subcontrLaborTotalAmount($project) }}</span></strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
+							<td class="col-md-1">&nbsp;</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<h4>Totalen project</h4>
+				<table class="table table-striped only-end-total">
+					<thead>
+						<tr>
+							<th class="col-md-2">&nbsp;</th>
+							<th class="col-md-3">&nbsp;</th>
+							<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
+							<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
+							<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
+							<th class="col-md-1"><span class="pull-right">Materieel</span></th>
+							<th class="col-md-1"><span class="pull-right">Totaal</span></th>
+							<th class="col-md-1">&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="col-md-2">&nbsp;</td>
+							<td class="col-md-3">&nbsp;</td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></strong></td>
+							<td class="col-md-1">&nbsp;</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- SPECIFICATION CON&SUBCON END-->
+
+			<!-- SPECIFICATION TOTAL START-->
+			<div class="show-totals">
+				<h4>Totaalkosten per werkzaamheden</h4>
+				<table class="table table-striped only-end-total">
+					<thead>
+						<tr>
+							<th class="col-md-2">&nbsp;</th>
+							<th class="col-md-3">&nbsp;</th>
+							<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
+							<th class="col-md-1"><span class="pull-right">Arbeid</th>
+							<th class="col-md-1"><span class="pull-right">Materiaal</th>
+							<th class="col-md-1"><span class="pull-right">Materieel</th>
+							<th class="col-md-1"><span class="pull-right">Totaal</th>
+							<th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+						<tr><!-- item -->
+							<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+							<td class="col-md-3">{{ $activity->activity_name }}</td>
+							<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
+							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
+							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
+							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
+							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
+							<td class="col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
+						</tr>
+						@endforeach
+						@endforeach
+						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+						<tr><!-- item -->
+							<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+							<td class="col-md-3">{{ $activity->activity_name }}</td>
+							<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
+							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
+							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
+							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
+							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
+							<td class="col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
+						</tr>
+						@endforeach
+						@endforeach
+					</tbody>
+				</table>
+
+				<h4>Totaalkosten project</h4>
+				<table class="table table-striped only-end-total">
+					<thead>
+						<tr>
+							<th class="col-md-2">&nbsp;</th>
+							<th class="col-md-3">&nbsp;</th>
+							<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
+							<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
+							<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
+							<th class="col-md-1"><span class="pull-right">Materieel</span></th>
+							<th class="col-md-1"><span class="pull-right">Totaal</span></th>
+							<th class="col-md-1">&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="col-md-2">&nbsp;</td>
+							<td class="col-md-3">&nbsp;</td>
+							<td class="col-md-1"><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>
+							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
+							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
+							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
+							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
+							<td class="col-md-1">&nbsp;</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<h5><strong>Weergegeven bedragen zijn exclusief BTW</strong></h5>
+		</div>
+			<!-- SPECIFICATION TOTAL END-->
+
+		<div class="white-row show-note">
+			<!--PAGE HEADER START-->
+			<div class="row">
+				<div class="col-sm-6">
+					{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+				</div>
+				<div class="col-sm-6 text-right">
+					<p>
+						<h4><strong>{{ $project->project_name }}</strong></h4>
+						<ul class="list-unstyled">
+							<li><strong>Offertedatum:</strong> {{ date("j M Y") }}</li>
+							<li><strong>Offertenummer:</strong> {{ OfferController::getOfferCode($project->id) }}</li>
+						</ul>
+					</p>
+					</div>
+			</div>
+			<hr class="margin-top10 margin-bottom10">
+			<!--PAGE HEADER END-->
+
+			<!-- DECRIPTION CON&SUBCON START -->
+			<div class="show-all" style="display:none;">
+				<h4>Aanneming</h4>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th class="col-md-2">&nbsp;</th>
+							<th class="col-md-3">&nbsp;</th>
+							<th class="col-md-7"><span>Omschrijving</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+						<tr>
+							<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+							<td class="col-md-3">{{ $activity->activity_name }}</td>
+							<td class="col-md-7"><span>{{ $activity->note }}</td>
+						</tr>
+						@endforeach
+						@endforeach
+					</tbody>
+				</table>
+
+				<h4>Onderaanneming</h4>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th class="col-md-2">&nbsp;</th>
+							<th class="col-md-3">&nbsp;</th>
+							<th class="col-md-7"><span>Omschrijving</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+						<tr>
+							<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+							<td class="col-md-3">{{ $activity->activity_name }}</td>
+							<td class="col-md-7"><span>{{ $activity->note }}</td>
+						</tr>
+						@endforeach
+						@endforeach
+					</tbody>
+				</table>
+			</div>
+			<!-- DECRIPTION CON&SUBCON END -->
+
+			<!-- DECRIPTION TOTAL START -->
+			<div class="show-totals">
+				<h4>Omschrijving werkzaamheden</h4>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th class="col-md-2">&nbsp;</th>
+							<th class="col-md-3">&nbsp;</th>
+							<th class="col-md-7"><span>Omschrijving</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
+						<tr>
+							<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+							<td class="col-md-3">{{ $activity->activity_name }}</td>
+							<td class="col-md-7"><span>{{ $activity->note }}</td>
+						</tr>
+						@endforeach
+						@endforeach
+					</tbody>
+				</table>
+			</div>
+			<!-- DECRIPTION TOTAL END -->
+
+			<!-- INVOICE FOOTER START -->
+			<div class="row">
 				<div class="col-sm-6"></div>
-
 				<div class="col-sm-6">
 					<div class="padding20 pull-right">
 						<?php if ($offer_last) { ?>
@@ -1421,13 +1363,12 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						<?php } ?>
 					</div>
 				</div>
-
 			</div>
+			<!-- INVOICE FOOTER END -->
 		</div>
 		@endif
 
 	</section>
-
 </div>
 <!-- /WRAPPER -->
 @stop
