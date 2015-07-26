@@ -406,6 +406,7 @@ $(document).ready(function() {
 												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-4">{{ $activity->activity_name }}</td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id), 2,",","."); }}</span></td>
+<!-- TODO Totaal moet gequeryd worden -->
 												<td class="col-md-1"><span class="pull-right">volgt</span></td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</span></td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</span></td>
@@ -417,6 +418,7 @@ $(document).ready(function() {
 												<th class="col-md-3"><strong>Totaal Aanneming</strong></th>
 												<th class="col-md-4">&nbsp;</th>
 												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(TimesheetOverview::calcTotalCalculation($project), 2, ",",".") }}</span></strong></td>
+<!-- TODO Totaal moet gequeryd worden -->
 												<td class="col-md-1"><strong><span class="pull-right">volgt</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(TimesheetOverview::calcTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(TimesheetOverview::calcTotalCalculation($project)-TimesheetOverview::calcTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
@@ -451,6 +453,7 @@ $(document).ready(function() {
 												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-4">{{ $activity->activity_name }}</td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id), 2,",","."); }}</span></td>
+<!-- TODO Totaal moet gequeyd worden -->
 												<td class="col-md-1"><span class="pull-right">Volgt</span></td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</span></td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</span></td>
@@ -462,6 +465,7 @@ $(document).ready(function() {
 												<th class="col-md-3"><strong>Totaal Stelposten</strong></th>
 												<th class="col-md-4">&nbsp;</th>
 												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalCalculation($project), 2, ",",".") }}</span></strong></td>
+<!-- TODO Totaal moet gequeryd worden -->
 												<td class="col-md-1"><strong><span class="pull-right">Volgt</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalCalculation($project)-TimesheetOverview::estimTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
@@ -494,6 +498,7 @@ $(document).ready(function() {
 											<tr>
 												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-4">{{ $activity->activity_name }}</td>
+<!-- TODO Totaal moet gequaryd worden -->
 												<td class="col-md-1"><span class="pull-right">volgt</span></td>
 												<td class="col-md-1"><span class="pull-right">&nbsp;</span></td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'), 2,",","."); }}</span></td>
@@ -505,6 +510,7 @@ $(document).ready(function() {
 											<tr>
 												<td class="col-md-3"><strong>Totaal Meerwerk</strong></td>
 												<td class="col-md-4">&nbsp;</td>
+<!-- TODO Totaal moet gequaryd worden -->
 												<td class="col-md-1"><strong><span class="pull-right">volgt</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">&nbsp;</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
