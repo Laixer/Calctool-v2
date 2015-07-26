@@ -975,47 +975,61 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			<textarea name="closure" id="closure" rows="5" class="form-control">{{ ($offer_last ? $offer_last->closure : Auth::user()->pref_closure_offer) }}</textarea>
 			@endif
 			<br>
-			<p>Indien opdracht gegund wordt, ontvangt u één eindfactuur.</p>
+			<br>
+			<div class="row">
+				<div class="col-sm-12">
+				<h4>Bepalingen</h4>
+				<ul>
+					<li>
+						Indien opdracht gegund wordt, ontvangt u één eindfactuur.
+					</li>
+					<li>
+						Wij kunnen de werkzaamheden starten binnen
+						@if ($offer_last && $offer_last->offer_finish)
+						{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
+						@else
+						<select name="deliver" id="deliver">
+							@foreach (DeliverTime::all() as $deliver)
+							<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
+							@endforeach
+						</select>
+						@endif
+						na uw opdrachtbevestiging.
+					</li>
+					<li>
+						Deze offerte is geldig tot
+						@if ($offer_last && $offer_last->offer_finish)
+						{{ Valid::find($offer_last->valid_id)->valid_name }}
+						na dagtekening.
+						@else
+						<select name="valid" id="valid">
+							@foreach (Valid::all() as $valid)
+							<option {{ ($offer_last ? ($offer_last->valid_id == $valid->id ? 'selected' : '') : '') }} value="{{ $valid->id }}">{{ $valid->valid_name }}</option>
+							@endforeach
+						</select> na dagtekening.
+						@endif
+					</li>
+				</ul>
+				<br>
+				<p>Met vriendelijke groet,
+					<br>
+					@if ($offer_last && $offer_last->offer_finish)
+					{{ Contact::find($offer_last->from_contact_id)->firstname . ' ' . Contact::find($offer_last->from_contact_id)->lastname }}
+					@else
+					<select name="from_contact" id="from_contact">
+						@foreach (Contact::where('relation_id','=',$relation_self->id)->get() as $contact)
+						<option {{ $offer_last ? ($offer_last->from_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
+						@endforeach
+					</select>
+					@endif
+				</p>
+				</div>
+			</div>
+			</div class="white-row">
+			<!--CLOSER END-->
 
-			<p>Wij kunnen de werkzaamheden starten binnen
-				@if ($offer_last && $offer_last->offer_finish)
-				{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
-				@else
-				<select name="deliver" id="deliver">
-					@foreach (DeliverTime::all() as $deliver)
-					<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
-					@endforeach
-				</select>
-				@endif
-				na uw opdrachtbevestiging.
-			</p>
 
-			<p>Deze offerte is geldig tot
-				@if ($offer_last && $offer_last->offer_finish)
-				{{ Valid::find($offer_last->valid_id)->valid_name }}
-				@else
-				<select name="valid" id="valid">
-					@foreach (Valid::all() as $valid)
-					<option {{ ($offer_last ? ($offer_last->valid_id == $valid->id ? 'selected' : '') : '') }} value="{{ $valid->id }}">{{ $valid->valid_name }}</option>
-					@endforeach
-				</select> na dagtekening.
-				@endif
-			</p>
 
-			<p>Met vriendelijke groet,
-				@if ($offer_last && $offer_last->offer_finish)
-				{{ Contact::find($offer_last->from_contact_id)->firstname . ' ' . Contact::find($offer_last->from_contact_id)->lastname }}
-				@else
-				<select name="from_contact" id="from_contact">
-					@foreach (Contact::where('relation_id','=',$relation_self->id)->get() as $contact)
-					<option {{ $offer_last ? ($offer_last->from_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
-					@endforeach
-				</select>
-				@endif
-			</p>
-
-	</div class="white-row">
-	<!--CLOSER END-->
 
 	<div class="white-row show-activity">
 	<!--PAGE HEADER START-->
@@ -1026,26 +1040,15 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 		<div class="col-sm-6 text-right">
 			<p>
 				<h4><strong>{{ $project->project_name }}</strong></h4>
-				<p>
-					#{{ sprintf("%06d", $project->id) }} &bull; <strong>{{ date("j M Y") }}</strong>
-					<br />
-					{{ $project->project_name }}
-				</p>
+				<ul class="list-unstyled">
+					<li><strong>Offertedatum:</strong> {{ date("j M Y") }}</li>
+					<li><strong>Offertenummer:</strong> {{ OfferController::getOfferCode($project->id) }}</li>
+				</ul>
 			</p>
-		</div>
+			</div>
 	</div>
 	<hr class="margin-top10 margin-bottom10">
 	<!--PAGE HEADER END-->
-
-
-
-
-
-
-
-
-
-
 
 
 

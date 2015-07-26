@@ -291,15 +291,7 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 					<ul class="list-unstyled">
 						<li>{{ $relation->company_name }}</li>
 						<li>t.a.v.
-						@if ($invoice_last && $invoice_last->invoice_close)
-						{{ Contact::find($invoice_last->to_contact_id)->firstname . ' ' . Contact::find($invoice_last->to_contact_id)->lastname }}
-						@else
-						<select name="to_contact" id="to_contact">
-							@foreach (Contact::where('relation_id','=',$relation->id)->get() as $contact)
-							<option {{ $invoice_last ? ($invoice_last->to_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
-							@endforeach
-						</select>
-						@endif
+							{{ Contact::find($offer_last->to_contact_id)->firstname . ' ' . Contact::find($offer_last->to_contact_id)->lastname }}
 						</li>
 						<li>{{ $relation->address_street . ' ' . $relation->address_number }}<br /> {{ $relation->address_postal . ', ' . $relation->address_city }}</li>
 					</ul>
@@ -321,15 +313,7 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 			<div class="row">
 				<div class="col-sm-6">
 				Geachte
-				@if ($invoice_last && $invoice_last->invoice_close)
-				{{ Contact::find($invoice_last->to_contact_id)->firstname . ' ' . Contact::find($invoice_last->to_contact_id)->lastname }}
-				@else
-				<select name="to_contact" id="to_contact">
-					@foreach (Contact::where('relation_id','=',$relation->id)->get() as $contact)
-					<option {{ $invoice_last ? ($invoice_last->to_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
-					@endforeach
-				</select>
-				@endif
+					{{ Contact::find($invoice_last->to_contact_id)->firstname . ' ' . Contact::find($invoice_last->to_contact_id)->lastname }}
 				,
 			</div>
 			</div>
@@ -408,62 +392,31 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 
 				<!--CLOSER START-->
 				<textarea name="closure" id="closure" rows="5" class="form-control">{{ ($invoice ? ($invoice->closure ? $invoice->closure : Auth::user()->pref_invoice_closure) : Auth::user()->pref_invoice_closure) }}</textarea>
-				<p>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</p>
-				<p>Met vriendelijke groet,
-					@if ($offer_last && $offer_last->offer_finish)
-					{{ Contact::find($offer_last->from_contact_id)->firstname . ' ' . Contact::find($offer_last->from_contact_id)->lastname }}
-					@else
-					<select name="from_contact" id="from_contact">
-						@foreach (Contact::where('relation_id','=',$relation_self->id)->get() as $contact)
-						<option {{ $offer_last ? ($offer_last->from_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
-						@endforeach
-					</select>
-					@endif
-				</p>
+				<br>
+				<div class="row">
+					<div class="col-sm-12">
+					<h4>Bepalingen</h4>
+					<ul>
+						<li>
+<!-- TODO : De onderstaande regel moet voor de op te halen waarden een selectbox krijgen, ea vergelijkbaar met de onderdtaande select START -->
+							Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.
+							<select name="deliver" id="deliver">
+								@foreach (DeliverTime::all() as $deliver)
+								<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
+								@endforeach
+							</select>
+<!-- TODO : De bovenstaande regels moet voor de op te halen waarden een selectbox krijgen, ea vergelijkbaar met de onderdtaande select END -->
+						</li>
+					</ul>
+					<br>
+					<span>Met vriendelijke groet,
+					<br>
+						{{ Contact::find($offer_last->from_contact_id)->firstname . ' ' . Contact::find($offer_last->from_contact_id)->lastname }}
+					</span>
+					</div>
+				</div>
+				</div class="white-row">
 				<!--CLOSER END-->
-			</div class="white-row">
-
-			<div class="white-row show-activity">
-			<!--PAGE HEADER START-->
-			<div class="row">
-				<div class="col-sm-6">
-					{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
-				</div>
-				<div class="col-sm-6 text-right">
-					<p>
-						<h4><strong>{{ $project->project_name }}</strong></h4>
-						<ul class="list-unstyled">
-							<li><strong>Factuurdatum:</strong> {{ date("j M Y") }}</li>
-							<li><strong>Factuurnummer:</strong> {{ $invoice->invoice_code }}</li>
-							<li><strong>Administratiefnummer:</strong> {{ $invoice->book_code }}</li>
-							<li><strong>Uw referentie:</strong> {{ $invoice->reference }}</li>
-						</ul>
-					</p>
-				</div>
-			</div>
-			<hr class="margin-top10 margin-bottom10">
-			<!--PAGE HEADER END-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
