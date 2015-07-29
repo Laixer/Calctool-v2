@@ -78,7 +78,7 @@ $(document).ready(function() {
 							<a href="#payment" data-toggle="tab">Mijn abonnement</a>
 						</li>
 						<li>
-							<a href="#contact" data-toggle="tab">Wacthwoord</a>
+							<a href="#contact" data-toggle="tab">Wachtwoord</a>
 						</li>
 						<li>
 							<a href="#prefs" data-toggle="tab">Voorkeuren</a>
