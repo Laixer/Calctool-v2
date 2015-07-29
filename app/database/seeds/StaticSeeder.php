@@ -497,6 +497,8 @@ class StaticSeeder extends Seeder {
 		ContactFunction::create(array('function_name' => 'tekenaar'));
 		ContactFunction::create(array('function_name' => 'bestekschrijver'));
 		ContactFunction::create(array('function_name' => 'calculator'));
+		ContactFunction::create(array('function_name' => 'opdrachtgever'));
+		ContactFunction::create(array('function_name' => 'particulier'));
 		$this->command->info('ContactFunction created');
 
 		RelationType::create(array('type_name' => 'aannemer'));
@@ -554,10 +556,13 @@ class StaticSeeder extends Seeder {
 		Valid::create(array('valid_name' => '3 maanden'));
 		$this->command->info('Valid created');
 
+		DeliverTime::create(array('delivertime_name' => 'per direct'));
 		DeliverTime::create(array('delivertime_name' => '1 week'));
 		DeliverTime::create(array('delivertime_name' => '2 weken'));
 		DeliverTime::create(array('delivertime_name' => '3 weken'));
 		DeliverTime::create(array('delivertime_name' => '1 maand'));
+		DeliverTime::create(array('delivertime_name' => '2 maanden'));
+		DeliverTime::create(array('delivertime_name' => '3 maanden'));
 		$this->command->info('DeliverTime created');
 
 		Tax::create(array('tax_rate' => 0));
@@ -567,7 +572,7 @@ class StaticSeeder extends Seeder {
 
 		TimesheetKind::create(array('kind_name' => 'aanneming'));
 		TimesheetKind::create(array('kind_name' => 'stelpost'));
-		TimesheetKind::create(array('kind_name' => 'meerwerk'));
+		TimesheetKind::create(array('kind_name' => 'meerwerk aanneming'));
 		$this->command->info('TimesheetKind created');
 
 		PurchaseKind::create(array('kind_name' => 'aanneming'));

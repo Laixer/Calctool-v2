@@ -79,6 +79,7 @@ var n = this,
 		$("body").on("change", ".newrow", function(){
 			var i = 1;
 			if($(this).val()){
+
 				if(!$(this).closest("tr").next().length){
 					var $curTable = $(this).closest("table");
 					$curTable.find("tr:eq(1)").clone().removeAttr("data-id").find("input").each(function(){
@@ -741,7 +742,10 @@ var n = this,
 
 		@include('calc.wizard', array('page' => 'estimate'))
 
-			<h2><strong>Stelpost</strong> stellen</h2>
+<!-- TODO tooltip verkleinen -->
+
+			<h2><strong>Stelposten</strong> stellen <strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Maak hier uw stelpost definitief voor op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h2></strong>
+
 
 			<div class="tabs nomargin">
 
@@ -754,12 +758,12 @@ var n = this,
 					</li>
 					<li id="tab-summary">
 						<a href="#summary" data-toggle="tab">
-							<i class="fa fa-sort-amount-asc"></i> Uittrekstaat
+							<i class="fa fa-sort-amount-asc"></i> Uittrekstaat Stelposten
 						</a>
 					</li>
 					<li id="tab-endresult">
 						<a href="#endresult" data-toggle="tab">
-							<i class="fa fa-check-circle-o"></i> Eindresultaat
+							<i class="fa fa-check-circle-o"></i> Eindresultaat Stelposten
 						</a>
 					</li>
 				</ul>
@@ -817,12 +821,9 @@ var n = this,
 															<th class="col-md-1">Datum</th>
 															<th class="col-md-1">Uren</th>
 															<th class="col-md-1">Prijs</th>
-															<th class="col-md-5">Omschrijving</th>
+															<th class="col-md-8">Omschrijving</th>
 															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
+
 														</tr>
 													</thead>
 													<?php }else { ?>
@@ -833,7 +834,6 @@ var n = this,
 															<th class="col-md-1">Uurtarief</th>
 															<th class="col-md-1">Aantal</th>
 															<th class="col-md-1">Prijs</th>
-															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
@@ -850,10 +850,7 @@ var n = this,
 															<td class="col-md-1">{{ Timesheet::find($labor->hour_id)->register_date }}</td>
 															<td class="col-md-1">{{ number_format($labor->set_amount, 2,",",".") }}</td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(EstimateRegister::estimLaborTotal($labor->original ? ($labor->isset ? $labor->set_rate : $labor->rate) : $labor->set_rate, $labor->original ? ($labor->isset ? $labor->set_amount : $labor->amount) : $labor->set_amount), 2, ",",".") }}</span></td>
-															<td class="col-md-5">{{ Timesheet::find($labor->hour_id)->note }}</td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-8">{{ Timesheet::find($labor->hour_id)->note }}</td>
 															<td class="col-md-1 text-right"><button class="btn btn-xs fa btn-danger fa-times xdeleterow"></button></td>
 														</tr>
 														@endforeach
@@ -861,10 +858,7 @@ var n = this,
 															<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text lsave"/></td>
 															<td class="col-md-1"><input type="number" min="0" name="hour" id="hour" class="form-control-sm-text lsave"/></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
-															<td class="col-md-5"><input type="text" name="note" id="note" class="form-control-sm-text lsave"/></td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-8"><input type="text" name="note" id="note" class="form-control-sm-text lsave"/></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 														<?php }else{ ?>
@@ -877,7 +871,6 @@ var n = this,
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format($labor['original'] ? ($labor['isset'] ? $labor['set_amount'] : $labor['amount']) : $labor['set_amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsavee" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(EstimateRegister::estimLaborTotal($project->hour_rate, $labor['original'] ? ($labor['isset'] ? $labor['set_amount'] : $labor['amount']) : $labor['set_amount']), 2, ",",".") }}</span></td>
-															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1 text-right"><button class="btn {{ ($labor['original'] ? 'btn-warning fa-undo lresetrow' : 'btn-danger ldeleterow fa-times' ) }} btn-xs fa"></button></td>
 														</tr>
@@ -1403,25 +1396,25 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag aanneming belast met 21%</td>
+									<td class="col-md-6">BTW bedrag aanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::totalContractingTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag aanneming belast met 6%</td>
+									<td class="col-md-6">BTW bedrag aanneming 6%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::totalContractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag onderaanneming belast met 21%</td>
+									<td class="col-md-6">BTW bedrag onderaanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag onderaanneming belast met 6%</td>
+									<td class="col-md-6">BTW bedrag onderaanneming 6%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>

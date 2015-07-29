@@ -85,12 +85,12 @@ $project = Project::find(Route::Input('project_id'));
 					</li>
 					<li id="tab-summary">
 						<a href="#summary" data-toggle="tab">
-							<i class="fa fa-align-justify"></i> Uittrekstaat
+							<i class="fa fa-align-justify"></i> Uittrekstaat Minderwerk
 						</a>
 					</li>
 					<li id="tab-endresult">
 						<a href="#endresult" data-toggle="tab">
-							<i class="fa fa-check-circle-o"></i> Eindresultaat
+							<i class="fa fa-check-circle-o"></i> Eindresultaat Minderwerk
 						</a>
 					</li>
 				</ul>
@@ -142,7 +142,6 @@ $project = Project::find(Route::Input('project_id'));
 															<th class="col-md-1">Uurtarief</th>
 															<th class="col-md-1">Aantal</th>
 															<th class="col-md-1">Prijs</th>
-															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">Minderwerk</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
@@ -156,8 +155,7 @@ $project = Project::find(Route::Input('project_id'));
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1">{{ number_format($labor->isless ? $labor->less_amount : $labor->amount, 2, ",",".") }}</td>
-															<td class="col-md-1">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($labor->rate, $labor->isless ? $labor->less_amount : $labor->amount, 2, ",",".")) }}</td>
-															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($labor->rate, $labor->isless ? $labor->less_amount : $labor->amount), 2, ",",".") }}</td>
 															<th class="col-md-1">{{ '&euro; '.number_format(LessRegister::lessLaborDeltaTotal($labor), 2, ",",".") }}</th>
 															<td class="col-md-1 text-right"></button></td>
 														</tr>
@@ -201,7 +199,7 @@ $project = Project::find(Route::Input('project_id'));
 																	$less_total = ($material->less_rate * $material->less_amount) * ((100+$profit_mat)/100);
 																	echo '&euro; '.number_format($less_total-$total, 2,",",".");
 																} else {
-																	echo '&euro; 0';
+																	echo '&euro; 0,00';
 																}
 															?>
 															</th>
@@ -216,7 +214,7 @@ $project = Project::find(Route::Input('project_id'));
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1"><strong>{{ '&euro; '.number_format(LessRegister::lessMaterialTotalProfit($activity->id, $profit_mat), 2, ",","."); }}</td>
-															<th class="col-md-1">{{ number_format(LessRegister::lessMaterialDeltaTotal($activity->id, $profit_mat), 2, ",",".") }}</th>
+															<th class="col-md-1">{{ '&euro; '.number_format(LessRegister::lessMaterialDeltaTotal($activity->id, $profit_mat), 2, ",",".") }}</th>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -259,7 +257,7 @@ $project = Project::find(Route::Input('project_id'));
 																	$less_total = ($equipment->less_rate * $equipment->less_amount) * ((100+$profit_equip)/100);
 																	echo '&euro; '.number_format($less_total-$total, 2,",",".");
 																} else {
-																	echo '&euro; 0';
+																	echo '&euro; 0,00';
 																}
 															?>
 															</th>
@@ -274,7 +272,7 @@ $project = Project::find(Route::Input('project_id'));
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1"><strong>{{ '&euro; '.number_format(LessRegister::lessEquipmentTotalProfit($activity->id, $profit_equip), 2, ",",".") }}</td>
-															<th class="col-md-1">{{ number_format(LessRegister::lessEquipmentDeltaTotal($activity->id, $profit_equip), 2, ",",".") }}</th>
+															<th class="col-md-1">{{ '&euro; '.number_format(LessRegister::lessEquipmentDeltaTotal($activity->id, $profit_equip), 2, ",",".") }}</th>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -677,25 +675,25 @@ $project = Project::find(Route::Input('project_id'));
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag aanneming belast met 21%</td>
+									<td class="col-md-6">BTW bedrag aanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::totalContractingTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag aanneming belast met 6%</td>
+									<td class="col-md-6">BTW bedrag aanneming 6%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::totalContractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag onderaanneming belast met 21%</td>
+									<td class="col-md-6">BTW bedrag onderaanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag onderaanneming belast met 6%</td>
+									<td class="col-md-6">BTW bedrag onderaanneming 6%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>

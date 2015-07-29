@@ -558,7 +558,8 @@ var n = this,
 
 		@include('calc.wizard', array('page' => 'more'))
 
-			<h2><strong>Meerwerk</strong></h2>
+			<h2><strong>Meerwerk</strong> <strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u meerwerk op basis van regie toevoegen bestemd voor op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h2>
+
 
 			<div class="tabs nomargin">
 
@@ -566,17 +567,17 @@ var n = this,
 				<ul class="nav nav-tabs">
 					<li id="tab-calculate">
 						<a href="#calculate" data-toggle="tab">
-							<i class="fa fa-list"></i> Calculeren
+							<i class="fa fa-list"></i> Calculeren Meerwerk
 						</a>
 					</li>
 					<li id="tab-summary">
 						<a href="#summary" data-toggle="tab">
-							<i class="fa fa-align-justify"></i> Uittrekstaat
+							<i class="fa fa-align-justify"></i> Uittrekstaat Meerwerk
 						</a>
 					</li>
 					<li id="tab-endresult">
 						<a href="#endresult" data-toggle="tab">
-							<i class="fa fa-check-circle-o"></i> Eindresultaat
+							<i class="fa fa-check-circle-o"></i> Eindresultaat Meerwerk
 						</a>
 					</li>
 				</ul>
@@ -605,7 +606,7 @@ var n = this,
 													<div class="col-md-2 text-right"><button data-id="{{ $activity->id }}" class="btn btn-danger btn-xs deleteact">Verwijderen</button></div>
 												</div>
 												<div class="row">
-													<div class="col-md-2"><h4>Arbeid</h4></div>
+													<div class="col-md-2"><h4>Arbeid<strong> <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u meerwerk op basis van regie toevoegen bestemd voor op de factuur. Voor arbeid geldt: uren die bij de urenregistratie geboekt worden overschrijven de opgegeven hoeveel arbeid voor deze werkzaamheid." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
 													<div class="col-md-2">
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-labor" id="type" class="form-control-sm-text pointer select-tax">
@@ -644,7 +645,6 @@ var n = this,
 															<th class="col-md-1">Prijs</th>
 															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
 													<?php } ?>
@@ -657,11 +657,8 @@ var n = this,
 														<tr data-id="{{ $labor->id }}">
 															<td class="col-md-1">{{ Timesheet::find($labor->hour_id)->register_date }}</td>
 															<td class="col-md-1">{{ number_format($labor->amount, 2,",",".") }}</td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(MoreRegister::laborTotal($labor->rate, $labor->amount, 2, ",",".")) }}</span></td>
-															<td class="col-md-5">{{ Timesheet::find($labor->hour_id)->note }}</td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(MoreRegister::laborTotal($labor->rate, $labor->amount), 2, ",",".") }}</span></td>
+															<td class="col-md-8">{{ Timesheet::find($labor->hour_id)->note }}</td>
 															<td class="col-md-1 text-right"><button class="btn btn-xs fa btn-danger fa-times xdeleterow"></button></td>
 														</tr>
 														@endforeach
@@ -669,10 +666,7 @@ var n = this,
 															<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text tsave"/></td>
 															<td class="col-md-1"><input type="number" min="0" name="hour" id="hour" class="form-control-sm-text tsave"/></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
-															<td class="col-md-5"><input type="text" name="note" id="note" class="form-control-sm-text tsave"/></td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-8"><input type="text" name="note" id="note" class="form-control-sm-text tsave"/></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 														<?php
@@ -685,7 +679,6 @@ var n = this,
 															<td class="col-md-1">{{ number_format($project->hour_rate_more, 2,",",".") }}</td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ $labor ? number_format($labor->amount, 2, ",",".") : '' }}" class="form-control-sm-number labor-amount lsave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ $labor ? ('&euro; '.number_format(MoreRegister::laborTotal($labor->rate, $labor->amount, 2, ",","."))) : '' }}</span></td>
-															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1 text-right"><button class="btn btn-danger ldeleterow btn-xs fa fa-times"></button></td>
 														</tr>
@@ -1296,31 +1289,31 @@ var n = this,
 							<!-- table items -->
 							<tbody>
 								<tr><!-- item -->
-									<td class="col-md-6">Calculatief te factureren (excl. BTW)</td>
+									<td class="col-md-6">Calculatief te factureren meerwerk (excl. BTW)</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::totalProject($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag aanneming belast met 21%</td>
+									<td class="col-md-6">BTW bedrag aanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::totalContractingTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag aanneming belast met 6%</td>
+									<td class="col-md-6">BTW bedrag aanneming 6%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::totalContractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag onderaanneming belast met 21%</td>
+									<td class="col-md-6">BTW bedrag onderaanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag onderaanneming belast met 6%</td>
+									<td class="col-md-6">BTW bedrag onderaanneming 6%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>

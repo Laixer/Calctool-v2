@@ -199,9 +199,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<a href="#hour" data-toggle="tab">Urenregistratie</a>
 						</li>
 						<li>
-							<a href="#hour_overview" data-toggle="tab">Uittrekstaat urenregistratie</a>
-						</li>
-						<li>
 							<a href="#purchase" data-toggle="tab">Inkoopfacturen</a>
 						</li>
 					</ul>
@@ -225,7 +222,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="col-md-3"><i><?php if ($offer_last) { echo 'Laatste wijziging: '.date('d-m-Y', strtotime(DB::table('offer')->select('updated_at')->where('id','=',$offer_last->id)->get()[0]->updated_at)); } ?></i></div>
 							</div>
 							<div class="row">
-								<div class="col-md-3">Opdracht ontvangen</div>
+								<div class="col-md-3">Opdracht ontvangen <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je opdracht hebt gekregen op je offerte. De calculatie slaat dan definitief dicht." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></div>
 								<div class="col-md-2">
 									<?php
 										if (!CalculationEndresult::totalProject($project)) {
@@ -245,7 +242,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="col-md-3"><strong>Opdracht stadium</strong></div>
 							</div>
 							<div class="row">
-								<div class="col-md-3">Start uitvoering</div>
+								<div class="col-md-3">Start uitvoering <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in dat je met uitvoering bent begonnen" href="#"><i class="fa fa-info-circle"></i></a></div>
 								<div class="col-md-2"><a href="#" id="wordexec" data-format="dd-mm-yyyy">{{ $project->work_execution ? date('d-m-Y', strtotime($project->work_execution)) : '' }}</a></div>
 								<div class="col-md-3"></div>
 							</div>
@@ -331,7 +328,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<?php } ?>
 								<br>
 							<div class="row">
-								<div class="col-md-3"><strong>Project gesloten</strong></div>
+								<div class="col-md-3"><strong>Project gesloten</strong> <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je project kan worden gesloten. Zijn alle facturen betaald?" href="#"><i class="fa fa-info-circle"></i></a></div>
 								<div class="col-md-2">{{ $project->project_close ? date('d-m-Y', strtotime($project->project_close)) : '<a href="#" id="projclose" data-format="dd-mm-yyyy">' }}</a></div>
 								<div class="col-md-3"></div>
 							</div>
@@ -443,23 +440,23 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						<form method="post" action="/project/updatecalc">
 						<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
 							<div class="row">
-								<div class="col-md-3"><h5><strong>Eigen uurtarief*</strong></h5></div>
+								<div class="col-md-3"><h5><strong>Eigen uurtarief <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier uw uurtarief op wat door heel de calculatie gebruikt wordt voor dit project. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></div>
 								<div class="col-md-1"></div>
-								<div class="col-md-2"><h5><strong>Calculatie</strong></h5></div>
+								<div class="col-md-2"><h5><strong>Calculatie *</strong></h5></div>
 								<div class="col-md-2"><h5><strong>Meerwerk</strong></h5></div>
 							</div>
 							<div class="row">
 								<div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
 								<div class="col-md-1"><div class="pull-right">&euro;</div></div>
 								<div class="col-md-2">
-									<input name="hour_rate" {{ $project->project_close ? 'disabled' : '' }} id="hour_rate" type="text" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : number_format($project->hour_rate, 2,",",".") }}" class="form-control form-control-sm-number"/>
+									<input name="hour_rate" {{ $project->project_close ? 'disabled' : '' }} type="text" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : number_format($project->hour_rate, 2,",",".") }}" class="form-control form-control-sm-number"/>
 								</div>
 								<div class="col-md-2">
 									<input name="more_hour_rate" {{ $project->project_close ? 'disabled' : '' }} id="more_hour_rate" type="text" value="{{ Input::old('more_hour_rate') ? Input::old('more_hour_rate') : number_format($project->hour_rate_more, 2,",",".") }}" class="form-control form-control-sm-number"/>
 								</div>
 							</div>
 
-							<h5><strong>Aanneming</strong></h5>
+							<h5><strong>Aanneming <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier uw winstpercentage op wat u over uw materiaal en materieel wilt gaan rekenen. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></strong></h5>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_material_1">Winstpercentage materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
@@ -481,7 +478,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								</div>
 							</div>
 
-							<h5><strong>Onderaanneming</strong></h5>
+							<h5><strong>Onderaanneming <a data-toggle="tooltip" data-placement="bottom" data-original-title="Onderaanneming: Geef hier uw winstpercentage op wat u over het materiaal en materieel van uw onderaanneming wilt gaan rekenen. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></strong></h5>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_material_2">Winstpercentage materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
@@ -516,7 +513,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<tr>
 										<th class="col-md-1">Datum</th>
 										<th class="col-md-1">Uren</th>
-										<th class="col-md-3">Soort</th>
+										<th class="col-md-3">Soort <a data-toggle="tooltip" data-placement="bottom" data-original-title="Het is niet mogelijk een urenregistratie bij te houden van onderaanneming." href="#"><i class="fa fa-info-circle"></i></a></th>
 										<th class="col-md-1">Werkzaamheid</th>
 										<th class="col-md-3">Omschrijving</th>
 										<th class="col-md-1">&nbsp;</th>
@@ -573,107 +570,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							</table>
 						</div>
 
-						<div id="hour_overview" class="tab-pane">
-							<div class="toogle">
-								<div class="toggle active">
-									<label>Aanneming</label>
-									<div class="toggle-content">
-									<table class="table table-striped">
-										<?# -- table head -- ?>
-										<thead>
-											<tr>
-												<th class="col-md-2">&nbsp;</th>
-												<th class="col-md-4">&nbsp;</th>
-												<th class="col-md-2">Gecalculeerde uren</th>
-												<th class="col-md-2">Geregistreerde uren</th>
-												<th class="col-md-2">Verschil</th>
-											</tr>
-										</thead>
-
-										<tbody>
-											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->get() as $activity)
-											<tr>
-												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-4">{{ $activity->activity_name }}</td>
-												<td class="col-md-2">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id), 2,",","."); }}</td>
-												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-2">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-											</tr>
-											@endforeach
-											@endforeach
-										</tbody>
-									</table>
-									</div>
-								</div>
-
-								<div class="toggle active">
-									<label>Stelpost</label>
-									<div class="toggle-content">
-									<table class="table table-striped">
-										<?# -- table head -- ?>
-										<thead>
-											<tr>
-												<th class="col-md-2">&nbsp;</th>
-												<th class="col-md-4">&nbsp;</th>
-												<th class="col-md-2">Gecalculeerde uren</th>
-												<th class="col-md-2">Geregistreerde uren</th>
-												<th class="col-md-2">Verschil</th>
-											</tr>
-										</thead>
-
-										<tbody>
-											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->get() as $activity)
-											<tr>
-												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-4">{{ $activity->activity_name }}</td>
-												<td class="col-md-2">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id), 2,",","."); }}</td>
-												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-2">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-											</tr>
-											@endforeach
-											@endforeach
-										</tbody>
-									</table>
-									</div>
-								</div>
-
-								<div class="toggle active">
-									<label>Meerwerk</label>
-									<div class="toggle-content">
-									<table class="table table-striped">
-										<?# -- table head -- ?>
-										<thead>
-											<tr>
-												<th class="col-md-2">&nbsp;</th>
-												<th class="col-md-4">&nbsp;</th>
-												<th class="col-md-2">&nbsp;</th>
-												<th class="col-md-2">Geregistreerde uren</th>
-												<th class="col-md-2">&nbsp;</th>
-											</tr>
-										</thead>
-
-										<tbody>
-											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
-											<tr>
-												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-4">{{ $activity->activity_name }}</td>
-												<td class="col-md-2">&nbsp;</td>
-												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-2">&nbsp;</td>
-											</tr>
-											@endforeach
-											@endforeach
-										</tbody>
-									</table>
-									</div>
-								</div>
-
-							</div>
-						</div>
-
 						<div id="purchase" class="tab-pane">
 
 							<!--<div class="toggle">
@@ -684,13 +580,11 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 										<thead>
 											<tr>
 												<th class="col-md-1">Datum</th>
-												<th class="col-md-1">Relatie</th>
-												<th class="col-md-3">Factuurbedrag</th>
-												<th class="col-md-1">Soort</th>
-												<th class="col-md-2">Omschrijving</th>
-												<th class="col-md-1">&nbsp;</th>
-												<th class="col-md-1">&nbsp;</th>
-												<th class="col-md-1">&nbsp;</th>
+												<th class="col-md-2">Relatie <a data-toggle="tooltip" data-placement="bottom" data-original-title="Kies hier uw relatie waar de inkoopfactuur betrekking op heeft. Staat uw relatie er nog niet bij, maak dan eerst een nieuwe relatie aan." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+												<th class="col-md-2">Bedrag (Excl. BTW) <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier plaatst u alle facturen van uw project (facturen materiaal, materieel en onderaannemers). Deze worden gebruikt voor uw winst en verlies berekening." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+
+												<th class="col-md-2">Soort <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier aan waar de inkoopfactuur betrekking op heeft." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+												<th class="col-md-4">Omschrijving</th>
 												<th class="col-md-1">&nbsp;</th>
 											</tr>
 										</thead>
@@ -699,12 +593,10 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 											@foreach (Purchase::where('project_id','=', $project->id)->get() as $purchase)
 											<tr data-id="{{ $purchase->id }}">
 												<td class="col-md-1">{{ date('d-m-Y', strtotime($purchase->register_date)) }}</td>
-												<td class="col-md-1">{{ Relation::find($purchase->relation_id)->company_name }}</td>
-												<td class="col-md-3">{{ '&euro; '.number_format($purchase->amount, 2,",",".") }}</td>
-												<td class="col-md-1">{{ ucwords(PurchaseKind::find($purchase->kind_id)->kind_name) }}</td>
-												<td class="col-md-3">{{ $purchase->note }}</td>
-												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-2">{{ Relation::find($purchase->relation_id)->company_name }}</td>
+												<td class="col-md-1">{{ '&euro; '.number_format($purchase->amount, 2,",",".") }}</td>
+												<td class="col-md-2">{{ ucwords(PurchaseKind::find($purchase->kind_id)->kind_name) }}</td>
+												<td class="col-md-4">{{ $purchase->note }}</td>
 												<td class="col-md-1">@if (!$project->project_close)<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>@endif</td>
 											</tr>
 											@endforeach
@@ -713,7 +605,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 												<td class="col-md-1">
 													<input type="date" name="date" id="date" class="form-control-sm-text"/>
 												</td>
-												<td class="col-md-4">
+												<td class="col-md-2">
 													<select name="relation" id="relation" class="form-control-sm-text">
 													@foreach (Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
 														<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
@@ -721,16 +613,14 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 													</select>
 												</td>
 												<td class="col-md-2"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
-												<td class="col-md-1">
+												<td class="col-md-2">
 													<select name="typename" id="typename" class="form-control-sm-text">
 													@foreach (PurchaseKind::all() as $typename)
 														<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
 													@endforeach
 													</select>
 												</td>
-												<td class="col-md-1"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
-												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-4"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
 												<td class="col-md-1"><button id="addnewpurchase" class="btn btn-primary btn-xs"> Toevoegen</button></td>
 											</tr>
 											@endif

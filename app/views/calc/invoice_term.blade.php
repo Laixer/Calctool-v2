@@ -4,6 +4,8 @@ $relation = Relation::find($project->client_id);
 $relation_self = Relation::find(Auth::user()->self_id);
 $contact_self = Contact::where('relation_id','=',$relation_self->id);
 $invoice = Invoice::find(Route::Input('invoice_id'));
+$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+$invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 ?>
 
 @extends('layout.master')
@@ -258,144 +260,170 @@ $invoice = Invoice::find(Route::Input('invoice_id'));
 	<form method="POST" id="frm-invoice" action="/invoice/close">
 		<input name="id" value="{{ $invoice->id }}" type="hidden"/>
 		<input name="projectid" value="{{ $project->id }}" type="hidden"/>
-			<div class="white-row">
 
+		<div class="white-row">
+			<!--PAGE HEADER MASTER START-->
+			<header>
 				<div class="row">
-
 					<div class="col-sm-6">
 						{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
 					</div>
-
 					<div class="col-sm-6 text-right">
 						<p>
-							#{{ sprintf("%06d", $project->id) }} &bull; <strong>{{ date("j M Y") }}</strong>
-							<br />
-							{{ $project->project_name }}
+							<h4><strong>{{ $relation_self->company_name }}</strong></h4>
+			    				<ul class="list-unstyled">
+		 						<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
+		  						<li>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
+	 							<li><i class="fa fa-phone"></i>&nbsp;{{ $relation_self->phone }}</li>
+	 							<li><i class="fa fa-envelope-o"></i>&nbsp;{{ $relation_self->email }}</li>
+		 						<li>KVK:{{ $relation_self->kvk }}</li>
+							<ul class="list-unstyled">
 						</p>
 					</div>
-
 				</div>
+			</header>
+			<hr class="margin-top10 margin-bottom10">
+			<!--PAGE HEADER MASTER END-->
 
-				<hr class="margin-top10 margin-bottom10" /><!-- separator -->
+	 		<!--ADRESSING START-->
+	 		<main>
+			<div class="row">
+				<div class="col-sm-6">
+					<ul class="list-unstyled">
+						<li>{{ $relation->company_name }}</li>
+						<li>T.a.v.
+							{{ Contact::find($offer_last->to_contact_id)->firstname . ' ' . Contact::find($offer_last->to_contact_id)->lastname }}
+						</li>
+						<li>{{ $relation->address_street . ' ' . $relation->address_number }}<br /> {{ $relation->address_postal . ', ' . $relation->address_city }}</li>
+					</ul>
+				</div>
+				<div class="col-sm-2"></div>
+				<div class="col-sm-4 text-right">
+					<h4><strong>TERMIJNFACTUUR</strong></h4>
+					<ul class="list-unstyled">
+						<li><strong>Projectnaam:</strong>{{ $project->project_name }}</li>
+						<li><strong>Factuurdatum:</strong> {{ date("j M Y") }}</li>
+						<li><strong>Factuurnummer:</strong> {{ $invoice->invoice_code }}</li>
+						<li><strong>Administratiefnummer:</strong> {{ $invoice->book_code }}</li>
+						<li><strong>Uw referentie:</strong> {{ $invoice->reference }}</li>
+				</div>
+			</div>
+			<!--ADRESSING END-->
 
-				<!-- DETAILS -->
+			<!--DECRIPTION-->
+			<div class="row">
+				<div class="col-sm-6">
+				Geachte
+					{{ Contact::find($invoice_last->to_contact_id)->firstname . ' ' . Contact::find($invoice_last->to_contact_id)->lastname }}
+				,
+			</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-sm-12">
+				@if ($invoice_last && $invoice_last->invoice_close)
+				{{ $invoice_last->description }}
+				@else
+					<textarea name="description" id="description" rows="5" maxlength="500" class="form-control">{{ ($invoice ? ($invoice->description ? $invoice->description : Auth::user()->pref_invoice_description) : Auth::user()->pref_invoice_description) }}</textarea>
+				@endif
+				</div>
+			</div>
+			<br>
+			<!--DECRIPTION END-->
+
+			<!--CONTENT START-->
+				<div class="show-totals">
+					<h4>Specificatie termijnfactuur</h4>
+					<table class="table table-striped hide-btw2">
+						<thead>
+							<tr>
+								<th class="col-md-6">&nbsp;</th>
+								<th class="col-md-2">Bedrag (excl. BTW)</th>
+								<th class="col-md-2">BTW bedrag</th>
+								<th class="col-md-2">Bedrag (incl. BTW);</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="col-md-6">{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()+1}}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen.</td>
+								<td class="col-md-2">{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2">&nbsp;</td>
+							</tr>
+							<tr>
+								<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
+								<td class="col-md-2">{{ '&euro; '.number_format($invoice->rest_21, 2, ",",".") }}</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2">&nbsp;</td>
+							</tr>
+							<tr>
+								<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 6% BTW categorie</i></td>
+								<td class="col-md-2">{{ '&euro; '.number_format($invoice->rest_6, 2, ",",".") }}</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2">&nbsp;</td>
+							</tr>
+							<tr>
+								<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 0% BTW categorie</i></td>
+								<td class="col-md-2">{{ '&euro; '.number_format($invoice->rest_0, 2, ",",".") }}</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2">&nbsp;</td>
+							</tr>
+							<tr>
+								<td class="col-md-6">BTW bedrag 21%</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2">{{ '&euro; '.number_format(($invoice->rest_21/100)*21, 2, ",",".") }}</td>
+								<td class="col-md-2">&nbsp;</td>
+							</tr>
+							<tr>
+								<td class="col-md-6">BTW bedrag 6%</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2">{{ '&euro; '.number_format(($invoice->rest_6/100)*6, 2, ",",".") }}</td>
+								<td class="col-md-2">&nbsp;</td>
+							</tr>
+							<tr>
+								<td class="col-md-6"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-2"><strong>{{ '&euro; '.number_format($invoice->amount+(($invoice->rest_21/100)*21)+(($invoice->rest_6/100)*6), 2, ",",".") }}</strong></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!--CONTENT, TOTAL END-->
+
+				<!--CLOSER START-->
+				<textarea name="closure" id="closure" rows="5" class="form-control">{{ ($invoice ? ($invoice->closure ? $invoice->closure : Auth::user()->pref_invoice_closure) : Auth::user()->pref_invoice_closure) }}</textarea>
+				<br>
 				<div class="row">
-
-					<div class="col-sm-6">
-
-						<ul class="list-unstyled">
-							<li><br></li>
-							<li><br></li>
-							<li><br></li>
-							<li><br></li>
-							<li><{{ $relation->company_name }}</li>
-							<li>t.a.v. -hier moet een selectlist komen van de contacten van dit bedrijf-</li>
-							<li>{{ $relation->address_street . ' ' . $relation->address_number }}<br /> {{ $relation->address_postal . ', ' . $relation->address_city }}</li>
-						</ul>
-
+					<div class="col-sm-12">
+					<h4>Bepalingen</h4>
+					<ul>
+						<li>
+<!-- TODO : De onderstaande regel moet voor de op te halen waarden een selectbox krijgen, ea vergelijkbaar met de onderdtaande select START -->
+							Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.
+							<select name="deliver" id="deliver">
+								@foreach (DeliverTime::all() as $deliver)
+								<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
+								@endforeach
+							</select>
+<!-- TODO : De bovenstaande regels moet voor de op te halen waarden een selectbox krijgen, ea vergelijkbaar met de onderdtaande select END -->
+						</li>
+					</ul>
+					<br>
+					<span>Met vriendelijke groet,
+					<br>
+						{{ Contact::find($offer_last->from_contact_id)->firstname . ' ' . Contact::find($offer_last->from_contact_id)->lastname }}
+					</span>
 					</div>
-
-					<div class="col-sm-2"></div>
-
-					<div class="col-sm-4">
-
-						<h4><strong>Opdrachtnemer</strong></h4>
-						<ul class="list-unstyled">
-							<li><strong>Bedrijfsnaam:</strong> {{ $relation_self->company_name }}</li>
-							<li><strong>Adres:</strong> {{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
-							<li style="margin-left: 48px;">{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
-							<li><strong>Telefoon:</strong> {{ $relation_self->phone }}</li>
-							<li><strong>Email:</strong> {{ $relation_self->email }}</li>
-							<li><strong>KVK:</strong>{{ $relation_self->kvk }}</li>
-						</ul>
-
-						<h4><strong>Factuur gegevens</strong></h4>
-						<ul class="list-unstyled">
-							<li><strong>Factuurdatum:</strong> {{ date("j M Y") }}</li>
-							<li><strong>Factuurnummer:</strong> {{ $invoice->invoice_code }}</li>
-							<li><strong>Administratiefnummer:</strong> {{ $invoice->book_code }}</li>
-							<li><strong>Uw referentie:</strong> {{ $invoice->reference }}</li>
-						</ul>
-
-					</div>
-
 				</div>
+				</div class="white-row">
+				<!--CLOSER END-->
 
-					<textarea name="description" id="description" rows="10" class="form-control">{{ ($invoice ? ($invoice->description ? $invoice->description : Auth::user()->pref_invoice_description) : Auth::user()->pref_invoice_description) }}</textarea>
-					<div class="show-totals">
-						<h4>Specificatie termijnfactuur</h4>
-						<table class="table table-striped hide-btw2">
-							<?# -- table head -- ?>
-							<thead>
-								<tr>
-									<th class="col-md-6">&nbsp;</th>
-									<th class="col-md-2">Bedrag (excl. BTW)</th>
-									<th class="col-md-2">BTW bedrag</th>
-									<th class="col-md-2">Bedrag (incl. BTW);</th>
-								</tr>
-							</thead>
 
-							<!-- table items -->
-							<tbody>
-								<tr><!-- item -->
-									<td class="col-md-6">{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()+1}} factuur van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen.</td>
-									<td class="col-md-2">{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
-								</tr>
 
-								<tr><!-- item -->
-									<td class="col-md-6">Factuurbedrag in 21% BTW cattegorie</td>
-									<td class="col-md-2">{{ '&euro; '.number_format($invoice->rest_21, 2, ",",".") }}</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
-								</tr>
-								<tr><!-- item -->
-									<td class="col-md-6">Factuurbedrag in 6% BTW cattegorie</td>
-									<td class="col-md-2">{{ '&euro; '.number_format($invoice->rest_6, 2, ",",".") }}</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
-								</tr>
-								<tr><!-- item -->
-									<td class="col-md-6">Factuurbedrag in 0% BTW cattegorie</td>
-									<td class="col-md-2">{{ '&euro; '.number_format($invoice->rest_0, 2, ",",".") }}</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
-								</tr>
 
-								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag belast met 21%</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(($invoice->rest_21/100)*21, 2, ",",".") }}</td>
-									<td class="col-md-2">&nbsp;</td>
-								</tr>
-								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag belast met 6%</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(($invoice->rest_6/100)*6, 2, ",",".") }}</td>
-									<td class="col-md-2">&nbsp;</td>
-								</tr>
-								<tr><!-- item -->
-									<td class="col-md-6"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2"><strong>{{ '&euro; '.number_format($invoice->amount+(($invoice->rest_21/100)*21)+(($invoice->rest_6/100)*6), 2, ",",".") }}</strong></td>
-								</tr>
 
-							</tbody>
 
-						</table>
-					</div>
-
-					<textarea name="closure" id="closure" rows="10" class="form-control">{{ ($invoice ? ($invoice->closure ? $invoice->closure : Auth::user()->pref_invoice_closure) : Auth::user()->pref_invoice_closure) }}</textarea>
-
-					<h5>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</h5>
-
-				</div>
-
-			</form>
-
-			<!--<hr class="half-margins invisible" />--><!-- separator -->
 
 			<!-- INVOICE FOOTER -->
 			<div class="row">

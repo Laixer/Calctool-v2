@@ -127,6 +127,7 @@ class ProjectController extends \BaseController {
 			$project->province_id = Input::get('province');
 			$project->country_id = Input::get('country');
 			$project->type_id = Input::get('type');
+			$project->client_id = Input::get('contractor');
 
 			$project->save();
 

@@ -30,7 +30,7 @@
 						<td class="col-md-3">{{ HTML::link('/project-'.$project->id.'/edit', $project->project_name) }}</td>
 						<td class="col-md-2">{{ $project->contactor->company_name }}</td>
 						<td class="col-md-1">{{ $project->type->type_name }}</td>
-						<td class="col-md-3">{{ $project->address_street }}</td>
+						<td class="col-md-3">{{ $project->address_street }} {{ $project->address_number }}</td>
 						<td class="col-md-2">{{ $project->address_city }}</td>
 						<td class="col-md-1">{{ $project->project_close ? 'Gesloten' : 'Open' }}</td>
 					</tr>

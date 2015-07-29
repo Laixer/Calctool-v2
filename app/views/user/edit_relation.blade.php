@@ -95,7 +95,7 @@ $(document).ready(function() {
 						<div id="company" class="tab-pane active">
 
 							{{ Form::open(array('url' => 'relation/update')) }}
-							<h4>{{ ucfirst( RelationKind::find($relation->kind_id)->kind_name) }}relatie</h4>
+							<h4>{{ ucfirst( RelationKind::find($relation->kind_id)->kind_name) }} relatie</h4>
 							<div class="row">
 								<div class="col-md-2">
 									<div class="form-group">

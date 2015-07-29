@@ -652,7 +652,9 @@ var n = this,
 
 		@include('calc.wizard', array('page' => 'less'))
 
-			<h2><strong>Minderwerk</strong></h2>
+<!-- TODO tooltip verkleinen -->
+
+			<h2><strong>Minderwerk</strong> <strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u hoeveelheden in mindering brengen op de bestaande calculatie bedoeld als minderwerk op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h2>
 
 			<div class="tabs nomargin">
 
@@ -660,17 +662,17 @@ var n = this,
 				<ul class="nav nav-tabs">
 					<li id="tab-calculate">
 						<a href="#calculate" data-toggle="tab">
-							<i class="fa fa-list"></i> Calculeren
+							<i class="fa fa-list"></i> Calculeren minderwerk
 						</a>
 					</li>
 					<li id="tab-summary">
 						<a href="#summary" data-toggle="tab">
-							<i class="fa fa-align-justify"></i> Uittrekstaat
+							<i class="fa fa-align-justify"></i> Uittrekstaat Minderwerk
 						</a>
 					</li>
 					<li id="tab-endresult">
 						<a href="#endresult" data-toggle="tab">
-							<i class="fa fa-check-circle-o"></i> Eindresultaat
+							<i class="fa fa-check-circle-o"></i> Eindresultaat Minderwerk
 						</a>
 					</li>
 				</ul>
@@ -711,10 +713,9 @@ var n = this,
 															<th class="col-md-5">Omschrijving</th>
 															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">Uurtarief</th>
-															<th class="col-md-1">Aantal</th>
+															<th class="col-md-1">Aantal <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier het nieuwe aantal op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 															<th class="col-md-1">Prijs</th>
-															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">Minderwerk</th>
+															<th class="col-md-1">Minderw. <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het bedrag dat in mindering wordt gebracht op de bestaande calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -727,8 +728,7 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format($labor->isless ? $labor->less_amount : $labor->amount, 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($labor->rate, $labor->isless ? $labor->less_amount : $labor->amount, 2, ",",".")) }}</span></td>
-															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($labor->rate, $labor->isless ? $labor->less_amount : $labor->amount), 2, ",",".") }}</span></td>
 															<th class="col-md-1">{{ '&euro; '.number_format(LessRegister::lessLaborDeltaTotal($labor), 2, ",",".") }}</th>
 															<td class="col-md-1 text-right"><button class="btn btn-warning lresetrow btn-xs fa fa-undo"></button></td>
 														</tr>
@@ -749,10 +749,10 @@ var n = this,
 														<tr>
 															<th class="col-md-5">Omschrijving</th>
 															<th class="col-md-1">Eenheid</th>
-															<th class="col-md-1">&euro; / Eenh.</th>
-															<th class="col-md-1">Aantal</th>
-															<th class="col-md-1">+ Winst %</th>
-															<th class="col-md-1">Minderwerk</th>
+															<th class="col-md-1">&euro; / Eenh. <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier de nieuwe prijs per eenheid op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+															<th class="col-md-1">Aantal <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier het nieuwe aantal op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+															<th class="col-md-1">+ Winst % <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het totaalbedrag van de &euro;/Eenh.vermenigvuldigd met het Aantal, incl. het winstpercentage" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+															<th class="col-md-1">Minderw. <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het bedrag dat in mindering wordt gebracht op de bestaande calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -772,7 +772,7 @@ var n = this,
 																} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 																	$profit = $project->profit_calc_subcontr_mat;
 																}
-																echo '&euro; '.number_format(($material->isless ? $material->less_rate * $material->less_amount : $material->rate * $material->amount) *((100+$profit)/100), 2,",",".")
+																echo '&euro; '.number_format(($material->isless ? $material->less_rate * $material->less_amount : $material->rate * $material->amount) *((100+$profit)/100), 2, ",",".");
 															?></span>
 															</td>
 															<th class="col-md-1">
@@ -780,9 +780,9 @@ var n = this,
 																if ($material->isless) {
 																	$total = ($material->rate * $material->amount) * ((100+$profit)/100);
 																	$less_total = ($material->less_rate * $material->less_amount) * ((100+$profit)/100);
-																	echo '&euro; '.number_format($less_total-$total, 2,",",".");
+																	echo '&euro; '.number_format($less_total-$total, 2, ",",".");
 																} else {
-																	echo '&euro; 0';
+																	echo '&euro; 0,00';
 																}
 															?>
 															</th>
@@ -808,7 +808,7 @@ var n = this,
 															}
 															echo '&euro; '.number_format(LessRegister::lessMaterialTotalProfit($activity->id, $profit), 2, ",",".");
 															?></span></td>
-															<th class="col-md-1">{{ number_format(LessRegister::lessMaterialDeltaTotal($activity->id, $profit), 2, ",",".") }}</th>
+															<th class="col-md-1">{{'&euro; ' .number_format(LessRegister::lessMaterialDeltaTotal($activity->id, $profit), 2, ",",".") }}</th>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -827,10 +827,10 @@ var n = this,
 														<tr>
 															<th class="col-md-5">Omschrijving</th>
 															<th class="col-md-1">Eenheid</th>
-															<th class="col-md-1">&euro; / Eenh.</th>
-															<th class="col-md-1">Aantal</th>
-															<th class="col-md-1">+ Winst %</th>
-															<th class="col-md-1">Minderwerk</th>
+															<th class="col-md-1">&euro; / Eenh. <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier de nieuwe prijs per eenheid op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+															<th class="col-md-1">Aantal <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier het nieuwe aantal op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+															<th class="col-md-1">+ Winst % <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het totaalbedrag van de &euro;/Eenh.vermenigvuldigd met het Aantal, incl. het winstpercentage" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+															<th class="col-md-1">Minderw. <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het bedrag dat in mindering wordt gebracht op de bestaande calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -850,7 +850,7 @@ var n = this,
 																} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 																	$profit = $project->profit_calc_subcontr_equip;
 																}
-																echo '&euro; '.number_format(($equipment->isless ? $equipment->less_rate * $equipment->less_amount : $equipment->rate * $equipment->amount) *((100+$profit)/100), 2,",",".")
+																echo '&euro; '.number_format(($equipment->isless ? $equipment->less_rate * $equipment->less_amount : $equipment->rate * $equipment->amount) *((100+$profit)/100), 2, ",",".");
 															?></span></td>
 															<th class="col-md-1">
 															<?php
@@ -859,7 +859,7 @@ var n = this,
 																	$less_total = ($equipment->less_rate * $equipment->less_amount) * ((100+$profit)/100);
 																	echo '&euro; '.number_format($less_total-$total, 2,",",".");
 																} else {
-																	echo '&euro; 0';
+																	echo '&euro; 0,00';
 																}
 															?>
 															</th>
@@ -884,7 +884,7 @@ var n = this,
 															}
 															echo '&euro; '.number_format(LessRegister::lessEquipmentTotalProfit($activity->id, $profit), 2, ",",".");
 															?></span></td>
-															<th class="col-md-1">{{ number_format(LessRegister::lessEquipmentDeltaTotal($activity->id, $profit), 2, ",",".") }}</th>
+															<th class="col-md-1">{{'&euro; ' .number_format(LessRegister::lessEquipmentDeltaTotal($activity->id, $profit), 2, ",",".") }}</th>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -918,7 +918,7 @@ var n = this,
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</th>
 												<th class="col-md-1"><span class="pull-right">Materieel</th>
-												<th class="col-md-1"><span class="pull-right">Totaal</th>
+												<th class="col-md-1"><span class="pull-right">Totaal <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het bedrag dat in mindering wordt gebracht op de bestaande calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 											</tr>
 										</thead>
 
@@ -966,7 +966,7 @@ var n = this,
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</th>
 												<th class="col-md-1"><span class="pull-right">Materieel</th>
-												<th class="col-md-1"><span class="pull-right">Totaal</th>
+												<th class="col-md-1"><span class="pull-right">Totaal <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het bedrag dat in mindering wordt gebracht op de bestaande calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 											</tr>
 										</thead>
 
@@ -1014,7 +1014,7 @@ var n = this,
 												<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
 												<th class="col-md-1"><span class="pull-right">Materieel</span></th>
-												<th class="col-md-1"><span class="pull-right">Totaal</span></th>
+												<th class="col-md-1"><span class="pull-right">Totaal <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het bedrag dat in mindering wordt gebracht op de bestaande calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></span></th>
 											</tr>
 										</thead>
 
@@ -1287,25 +1287,25 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag aanneming belast met 21%</td>
+									<td class="col-md-6">BTW bedrag aanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::totalContractingTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag aanneming belast met 6%</td>
+									<td class="col-md-6">BTW bedrag aanneming 6%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::totalContractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag onderaanneming belast met 21%</td>
+									<td class="col-md-6">BTW bedrag onderaanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-6">BTW bedrag onderaanneming belast met 6%</td>
+									<td class="col-md-6">BTW bedrag onderaanneming 6%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>

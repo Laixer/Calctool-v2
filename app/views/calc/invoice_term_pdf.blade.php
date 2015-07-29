@@ -40,7 +40,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
     <div id="details" class="clearfix">
       <div id="client">
         <div>{{ $relation->company_name }}</div>
-        <div>t.a.v. XXXXX</div>
+        <div>T.a.v.
+             {{ Contact::find($offer_last->to_contact_id)->firstname . ' ' . Contact::find($offer_last->to_contact_id)->lastname }}
+        </div>
         <div>{{ $relation->address_street . ' ' . $relation->address_number }}</div>
         <div>{{ $relation->address_postal . ', ' . $relation->address_city }}</div>
       </div>
@@ -58,7 +60,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
     <div class="openingtext">Geachte</div>
     <div class="openingtext">{{ ($invoice ? $invoice->description : '') }}</div>
 
-    <h1 class="name">Cumulatieven termijnfactuur</h1>
+    <h1 class="name">Specificatie termijnfactuur</h1>
     <table class="table table-striped hide-btw2">
       <thead>
         <tr>
@@ -70,37 +72,37 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       </thead>
       <tbody>
         <tr>
-          <td class="qty">{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()+1}} factuur van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen.</td>
+          <td class="qty">{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()+1}}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen.</td>
           <td class="qty">{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
         <tr>
-          <td class="qty">Factuurbedrag in 21% BTW cattegorie</td>
+          <td class="qty">&nbsp;<i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
           <td class="qty">{{ '&euro; '.number_format($invoice->rest_21, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
         <tr>
-          <td class="qty">Factuurbedrag in 6% BTW cattegorie</td>
+          <td class="qty">&nbsp;<i>Aandeel termijnfactuur in 6% BTW categorie</i></td>
           <td class="qty">{{ '&euro; '.number_format($invoice->rest_6, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
         <tr>
-          <td class="qty">Factuurbedrag in 0% BTW cattegorie</td>
+          <td class="qty">&nbsp;<i>Aandeel termijnfactuur in 0% BTW categorie</i></td>
           <td class="qty">{{ '&euro; '.number_format($invoice->rest_0, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
         <tr>
-          <td class="qty">BTW bedrag belast met 21%</td>
+          <td class="qty">BTW bedrag 21%</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">{{ '&euro; '.number_format(($invoice->rest_21/100)*21, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
         </tr>
         <tr>
-          <td class="qty">BTW bedrag belast met 6%</td>
+          <td class="qty">BTW bedrag 6%</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">{{ '&euro; '.number_format(($invoice->rest_6/100)*6, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>

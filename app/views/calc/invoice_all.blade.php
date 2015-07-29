@@ -159,12 +159,12 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				<thead>
 					<tr>
 						<th class="col-md-2">Onderdeel</th>
-						<th class="col-md-2">&euro; Factuurbedrag</th>
-						<th class="col-md-2">Factuurnummer</th>
-						<th class="col-md-2">Administratie</th>
-						<th class="col-md-2">Omschrijving</th>
-						<th class="col-md-1">Betalingscondities</th>
-						<th class="col-md-1">Status</th>
+						<th class="col-md-2">Factuurbedrag (&euro;) <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier een termijnbedrag of eindbedrag op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+						<th class="col-md-2">Factuurnummer <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier uw factuurnummer op dat behoort bij uw boekhouding." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+						<th class="col-md-1">Administratie <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier een referentie en/of een debiteurennummer op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+						<th class="col-md-2">Omschrijving <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u een aanhef en een afsluiting opgeven voor op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+						<th class="col-md-2">Betalingscondities <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u opgeven wat de betalingstermijn van de factuur is." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+						<th class="col-md-1">Status <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier staat de status van uw factuur. Hij is open, te factureren of gefactureerd. Tevens is de PDF te raadplegen en te downloaden. Op de tab 'projectstatus' kunt u aangeven of de factuur betaald is. " href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 						<th class="col-md-1"></th>
 					</tr>
 				</thead>
@@ -182,9 +182,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						<td class="col-md-2"><?php if (!$invoice->invoice_close && !$project->project_close) { echo '<a href="/invoice/project-' . $project->id . '/term-invoice-' . $invoice->id . '">'; } ?>{{ ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1)) }}<?php if ($invoice->invoice_close) { echo '</a>'; }?></td>
 						<td class="col-md-2"><?php if ($invoice->invoice_close || $project->project_close){ echo "<span class='sdata'>".number_format($invoice->amount, 2, ",",".")."</span>"; } else  { ?><input data-id="{{ $invoice->id }}" class="form-control-sm-text adata" name="amount" type="text" value="{{ $invoice->amount }}" /><?php } ?></td>
 						<td class="col-md-2">{{ $invoice->invoice_code }}</td>
-						<td class="col-md-2"><?php if (!$invoice->invoice_close && !$project->project_close) { ?><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice->reference }}" data-bookcode="{{ $invoice->book_code }}" data-id="{{ $invoice->id }}" data-target="#codeModal">bewerk</a><?php } ?></td>
-						<td class="col-md-2"><?php if (!$invoice->invoice_close && !$project->project_close) { ?><a href="#" data-toggle="modal" class="changedesc" data-desc="{{ $invoice->description }}" data-closure="{{ $invoice->closure }}" data-id="{{ $invoice->id }}" data-target="#textModal">bewerk</a><?php } ?></td>
-						<td class="col-md-1"><input {{ $project->project_close || $invoice->invoice_close ? 'disabled' : '' }} type="number" name="condition" data-id="{{ $invoice->id }}" value="{{ $invoice->payment_condition }}" class="condition form-control form-control-sm-number" /></td>
+						<td class="col-md-1"><?php if (!$invoice->invoice_close && !$project->project_close) { ?><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice->reference }}" data-bookcode="{{ $invoice->book_code }}" data-id="{{ $invoice->id }}" data-target="#codeModal">bewerk</a><?php } ?></td>
+						<td class="col-md-1"><?php if (!$invoice->invoice_close && !$project->project_close) { ?><a href="#" data-toggle="modal" class="changedesc" data-desc="{{ $invoice->description }}" data-closure="{{ $invoice->closure }}" data-id="{{ $invoice->id }}" data-target="#textModal">bewerk</a><?php } ?></td>
+						<td class="col-md-2"><input {{ $project->project_close || $invoice->invoice_close ? 'disabled' : '' }} type="number" name="condition" data-id="{{ $invoice->id }}" value="{{ $invoice->payment_condition }}" class="condition form-control form-control-sm-number" /></td>
 						<td class="col-md-1">
 						<?php
 						if ($invoice->invoice_close) {

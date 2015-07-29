@@ -65,7 +65,7 @@ $(document).ready(function() {
 			</div>
 			@endif
 
-			<h2><strong>Mijn</strong> account</h2>
+			<h2><strong>Mijn Calculatie Tool</strong> -account</h2>
 
 				<div class="tabs nomargin-top">
 
@@ -78,7 +78,7 @@ $(document).ready(function() {
 							<a href="#payment" data-toggle="tab">Mijn abonnement</a>
 						</li>
 						<li>
-							<a href="#contact" data-toggle="tab">Wacthwoord</a>
+							<a href="#contact" data-toggle="tab">Wachtwoord</a>
 						</li>
 						<li>
 							<a href="#prefs" data-toggle="tab">Voorkeuren</a>
@@ -492,7 +492,7 @@ $(document).ready(function() {
 											<div class="row">
 												<div class="col-md-3">
 													<div class="form-group">
-														<label for="administration_cost">administration_cost</label>
+														<label for="administration_cost">Administratiekosten</label>
 														<input name="administration_cost" id="administration_cost" type="text" class="form-control" value="{{ str_replace('.', ',', $user->administration_cost) }}" />
 													</div>
 												</div>

@@ -171,7 +171,7 @@ div.toggle-activity > label:hover {
 
 /* Wizzard */
 .wizard a {
-	padding: 10px 20px 10px 37px;
+	padding: 10px 16px 10px 37px;
 	margin-right: 5px;
 	background: #E8E8E8;
 	position: relative;
@@ -179,7 +179,7 @@ div.toggle-activity > label:hover {
 	text-decoration: none;
 }
 .wizard span {
-	padding: 10px 20px 10px 37px;
+	padding: 10px 19px 10px 37px;
 	margin-right: 5px;
 	background: #E8E8E8;
 	position: relative;
@@ -305,6 +305,17 @@ label.nobold {
 h5 {
 	margin: 15px 0px 5px 0px;
 }
+
+/* deze bestaat niet maar geeft wel de gewenst ekop aan voor aannenemiing e odneraanneming op offer en invoice
+h6 {
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: underline;
+  margin: 0px;
+  padding-left: 0px;
+  padding-top: 10px;
+}
+*/
 
 .btn-file {
   position: relative;
