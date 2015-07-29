@@ -159,7 +159,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				<thead>
 					<tr>
 						<th class="col-md-2">Onderdeel</th>
-						<th class="col-md-2">&euro; Factuurbedrag</th>
+						<th class="col-md-2">Factuurbedrag (&euro;)</th>
 						<th class="col-md-2">Factuurnummer</th>
 						<th class="col-md-2">Administratie</th>
 						<th class="col-md-2">Omschrijving</th>

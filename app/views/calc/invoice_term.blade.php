@@ -274,7 +274,8 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 			    				<ul class="list-unstyled">
 		 						<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
 		  						<li>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
-		 						<li>Email:{{ $relation_self->email }}</li>
+	 							<li><i class="fa fa-phone"></i>&nbsp;{{ $relation_self->phone }}</li>
+	 							<li><i class="fa fa-envelope-o"></i>&nbsp;{{ $relation_self->email }}</li>
 		 						<li>KVK:{{ $relation_self->kvk }}</li>
 							<ul class="list-unstyled">
 						</p>
