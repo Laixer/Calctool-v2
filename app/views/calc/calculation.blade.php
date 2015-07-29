@@ -1671,7 +1671,7 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-5">BTW bedrag aanneming belast met 21%</td>
+									<td class="col-md-5">BTW bedrag aanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1679,7 +1679,7 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-5">BTW bedrag aanneming belast met 6%</td>
+									<td class="col-md-5">BTW bedrag aanneming 6%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1687,7 +1687,7 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-5">BTW bedrag onderaanneming belast met 21%</td>
+									<td class="col-md-5">BTW bedrag onderaanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1695,7 +1695,7 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-5">BTW bedrag onderaanneming belast met 6%</td>
+									<td class="col-md-5">BTW bedrag onderaanneming 6%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
