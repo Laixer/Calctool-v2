@@ -107,7 +107,7 @@ $project = Project::find(Route::Input('project_id'));
 
 		@include('calc.wizard', array('page' => 'estimate'))
 
-			<h2><strong>Stelpost</strong> stellen</h2>
+			<h2><strong>Stelposten</strong> stellen</h2>
 
 			<div class="tabs nomargin">
 
