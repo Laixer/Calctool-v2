@@ -831,7 +831,7 @@ $project = Project::find(Route::Input('project_id'));
 							<!-- table items -->
 							<tbody>
 								<tr><!-- item -->
-									<td class="col-md-5">Calculatief te offereren (excl. BTW)</td>
+									<td class="col-md-5">Calculatief te offreren (excl. BTW)</td>
 									<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -871,7 +871,7 @@ $project = Project::find(Route::Input('project_id'));
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-5">Te offereren BTW bedrag</td>
+									<td class="col-md-5">Te offreren BTW bedrag</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -879,7 +879,7 @@ $project = Project::find(Route::Input('project_id'));
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr><!-- item -->
-									<td class="col-md-5"><strong>Calculatief te offereren (Incl. BTW)</strong></td>
+									<td class="col-md-5"><strong>Calculatief te offreren (Incl. BTW)</strong></td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
