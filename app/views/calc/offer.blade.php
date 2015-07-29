@@ -814,7 +814,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					<tbody>
 						<tr>
 							<td class="col-md-4">Arbeidskosten</td>
-							<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax1($project)+CalculationEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
+							<td class="col-md-1">{{ ''.number_format(CalculationEndresult::conCalcLaborActivityTax1($project)+CalculationEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax1Amount($project)+CalculationEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">21%</td>
@@ -823,7 +823,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						</tr>
 						<tr>
 							<td class="col-md-4">&nbsp;</td>
-							<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax2($project)+CalculationEndresult::subconCalcLaborActivityTax2($project), 2, ",",".") }}</td>
+							<td class="col-md-1">{{ ''.number_format(CalculationEndresult::conCalcLaborActivityTax2($project)+CalculationEndresult::subconCalcLaborActivityTax2($project), 2, ",",".") }}</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax2Amount($project)+CalculationEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">6%</td>
@@ -832,7 +832,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						</tr>
 						<tr>
 							<td class="col-md-4">&nbsp;</td>
-							<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax3($project)+CalculationEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
+							<td class="col-md-1">{{ ''.number_format(CalculationEndresult::conCalcLaborActivityTax3($project)+CalculationEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax3Amount($project)+CalculationEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">0%</td>
