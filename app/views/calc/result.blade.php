@@ -37,7 +37,7 @@ $(document).ready(function() {
 
 		@include('calc.wizard', array('page' => 'result'))
 
-			<h2><strong>Resultaat</strong></h2>
+			<h2><strong>Resultaat Project</strong> {{$project->project_name}}</h2>
 
 			<div class="tabs nomargin">
 
