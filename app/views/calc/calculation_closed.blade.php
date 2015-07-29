@@ -90,12 +90,12 @@ $project = Project::find(Route::Input('project_id'));
 					</li>
 					<li id="tab-summary">
 						<a href="#summary" data-toggle="tab">
-							<i class="fa fa-sort-amount-asc"></i> Uittrekstaat
+							<i class="fa fa-sort-amount-asc"></i> Uittrekstaat Calculeren
 						</a>
 					</li>
 					<li id="tab-endresult">
 						<a href="#endresult" data-toggle="tab">
-							<i class="fa fa-check-circle-o"></i> Eindresultaat
+							<i class="fa fa-check-circle-o"></i> Eindresultaat Calculeren
 						</a>
 					</li>
 				</ul>

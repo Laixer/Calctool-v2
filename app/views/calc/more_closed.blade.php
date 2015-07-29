@@ -82,12 +82,12 @@ $project = Project::find(Route::Input('project_id'));
 					</li>
 					<li id="tab-summary">
 						<a href="#summary" data-toggle="tab">
-							<i class="fa fa-align-justify"></i> Uittrekstaat
+							<i class="fa fa-align-justify"></i> Uittrekstaat Meerwerk
 						</a>
 					</li>
 					<li id="tab-endresult">
 						<a href="#endresult" data-toggle="tab">
-							<i class="fa fa-check-circle-o"></i> Eindresultaat
+							<i class="fa fa-check-circle-o"></i> Eindresultaat Meerwerk
 						</a>
 					</li>
 				</ul>

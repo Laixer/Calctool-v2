@@ -754,12 +754,12 @@ var n = this,
 					</li>
 					<li id="tab-summary">
 						<a href="#summary" data-toggle="tab">
-							<i class="fa fa-sort-amount-asc"></i> Uittrekstaat
+							<i class="fa fa-sort-amount-asc"></i> Uittrekstaat Stelposten
 						</a>
 					</li>
 					<li id="tab-endresult">
 						<a href="#endresult" data-toggle="tab">
-							<i class="fa fa-check-circle-o"></i> Eindresultaat
+							<i class="fa fa-check-circle-o"></i> Eindresultaat Stelposten
 						</a>
 					</li>
 				</ul>
