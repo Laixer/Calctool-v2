@@ -348,7 +348,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<div class="col-md-4">
 										<div class="form-group">
 											<label for="contractor">Opdrachtgever*</label>
-											<select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : '' }} class="form-control pointer">
+											<select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : '' }} class="form-control pointer" {{ $offer_last->offer_finish ? 'disabled' : '' }} class="form-control pointer">
 											@foreach (Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
 												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
 											@endforeach
@@ -358,7 +358,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<div class="col-md-2">
 										<div class="form-group">
 											<label for="type">Type</label>
-											<select name="type" id="type" {{ $project->project_close ? 'disabled' : '' }} class="form-control pointer">
+											<select name="type" id="type" {{ $project->project_close ? 'disabled' : '' }} class="form-control pointer" {{ $offer_last->offer_finish ? 'disabled' : '' }} class="form-control pointer">
 												@foreach (ProjectType::all() as $type)
 													<option {{ $project->type_id==$type->id ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
 												@endforeach
