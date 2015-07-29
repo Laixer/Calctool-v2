@@ -140,11 +140,7 @@ $project = Project::find(Route::Input('project_id'));
 															<th class="col-md-1">Datum</th>
 															<th class="col-md-1">Uren</th>
 															<th class="col-md-1">Prijs</th>
-															<th class="col-md-5">Omschrijving</th>
-															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
+															<th class="col-md-8">Omschrijving</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -156,7 +152,6 @@ $project = Project::find(Route::Input('project_id'));
 															<th class="col-md-1">Uurtarief</th>
 															<th class="col-md-1">Aantal</th>
 															<th class="col-md-1">Prijs</th>
-															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
@@ -172,10 +167,7 @@ $project = Project::find(Route::Input('project_id'));
 															<td class="col-md-1">{{ Timesheet::find($labor->hour_id)->register_date }}</td>
 															<td class="col-md-1">{{ number_format($labor->amount, 2,",",".") }}</td>
 															<td class="col-md-1">{{ '&euro; '.number_format(MoreRegister::laborTotal($labor->rate, $labor->amount), 2, ",",".") }}</td>
-															<td class="col-md-5">{{ Timesheet::find($labor->hour_id)->note }}</td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-8">{{ Timesheet::find($labor->hour_id)->note }}</td>
 															<td class="col-md-1"></td>
 														</tr>
 														@endforeach
@@ -189,7 +181,6 @@ $project = Project::find(Route::Input('project_id'));
 															<td class="col-md-1">{{ $labor ? number_format($project->hour_rate_more, 2,",",".") : '' }}</td>
 															<td class="col-md-1">{{ $labor ? number_format($labor->amount, 2, ",",".") : '' }}</td>
 															<td class="col-md-1">{{ $labor ? ('&euro; '.number_format(MoreRegister::laborTotal($labor->rate, $labor->amount), 2, ",",".")) : '' }}</td>
-															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1"></td>
 														</tr>

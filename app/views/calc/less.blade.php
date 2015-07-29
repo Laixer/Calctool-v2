@@ -715,7 +715,6 @@ var n = this,
 															<th class="col-md-1">Prijs</th>
 															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">Minderwerk</th>
-															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
 
@@ -728,7 +727,6 @@ var n = this,
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format($labor->isless ? $labor->less_amount : $labor->amount, 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($labor->rate, $labor->isless ? $labor->less_amount : $labor->amount), 2, ",",".") }}</span></td>
-															<td class="col-md-1">&nbsp;</td>
 															<th class="col-md-1">{{ '&euro; '.number_format(LessRegister::lessLaborDeltaTotal($labor), 2, ",",".") }}</th>
 															<td class="col-md-1 text-right"><button class="btn btn-warning lresetrow btn-xs fa fa-undo"></button></td>
 														</tr>

@@ -644,7 +644,6 @@ var n = this,
 															<th class="col-md-1">Prijs</th>
 															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
 													<?php } ?>
@@ -658,10 +657,7 @@ var n = this,
 															<td class="col-md-1">{{ Timesheet::find($labor->hour_id)->register_date }}</td>
 															<td class="col-md-1">{{ number_format($labor->amount, 2,",",".") }}</td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(MoreRegister::laborTotal($labor->rate, $labor->amount), 2, ",",".") }}</span></td>
-															<td class="col-md-5">{{ Timesheet::find($labor->hour_id)->note }}</td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-8">{{ Timesheet::find($labor->hour_id)->note }}</td>
 															<td class="col-md-1 text-right"><button class="btn btn-xs fa btn-danger fa-times xdeleterow"></button></td>
 														</tr>
 														@endforeach
@@ -669,10 +665,7 @@ var n = this,
 															<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text tsave"/></td>
 															<td class="col-md-1"><input type="number" min="0" name="hour" id="hour" class="form-control-sm-text tsave"/></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
-															<td class="col-md-5"><input type="text" name="note" id="note" class="form-control-sm-text tsave"/></td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-8"><input type="text" name="note" id="note" class="form-control-sm-text tsave"/></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 														<?php
@@ -685,7 +678,6 @@ var n = this,
 															<td class="col-md-1">{{ number_format($project->hour_rate_more, 2,",",".") }}</td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ $labor ? number_format($labor->amount, 2, ",",".") : '' }}" class="form-control-sm-number labor-amount lsave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ $labor ? ('&euro; '.number_format(MoreRegister::laborTotal($labor->rate, $labor->amount, 2, ",","."))) : '' }}</span></td>
-															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1 text-right"><button class="btn btn-danger ldeleterow btn-xs fa fa-times"></button></td>
 														</tr>

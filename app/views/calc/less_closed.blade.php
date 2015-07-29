@@ -142,7 +142,6 @@ $project = Project::find(Route::Input('project_id'));
 															<th class="col-md-1">Uurtarief</th>
 															<th class="col-md-1">Aantal</th>
 															<th class="col-md-1">Prijs</th>
-															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">Minderwerk</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
@@ -157,7 +156,6 @@ $project = Project::find(Route::Input('project_id'));
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1">{{ number_format($labor->isless ? $labor->less_amount : $labor->amount, 2, ",",".") }}</td>
 															<td class="col-md-1">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($labor->rate, $labor->isless ? $labor->less_amount : $labor->amount), 2, ",",".") }}</td>
-															<td class="col-md-1">&nbsp;</td>
 															<th class="col-md-1">{{ '&euro; '.number_format(LessRegister::lessLaborDeltaTotal($labor), 2, ",",".") }}</th>
 															<td class="col-md-1 text-right"></button></td>
 														</tr>

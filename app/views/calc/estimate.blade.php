@@ -817,12 +817,9 @@ var n = this,
 															<th class="col-md-1">Datum</th>
 															<th class="col-md-1">Uren</th>
 															<th class="col-md-1">Prijs</th>
-															<th class="col-md-5">Omschrijving</th>
+															<th class="col-md-8">Omschrijving</th>
 															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
+
 														</tr>
 													</thead>
 													<?php }else { ?>
@@ -833,7 +830,6 @@ var n = this,
 															<th class="col-md-1">Uurtarief</th>
 															<th class="col-md-1">Aantal</th>
 															<th class="col-md-1">Prijs</th>
-															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
@@ -850,10 +846,7 @@ var n = this,
 															<td class="col-md-1">{{ Timesheet::find($labor->hour_id)->register_date }}</td>
 															<td class="col-md-1">{{ number_format($labor->set_amount, 2,",",".") }}</td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(EstimateRegister::estimLaborTotal($labor->original ? ($labor->isset ? $labor->set_rate : $labor->rate) : $labor->set_rate, $labor->original ? ($labor->isset ? $labor->set_amount : $labor->amount) : $labor->set_amount), 2, ",",".") }}</span></td>
-															<td class="col-md-5">{{ Timesheet::find($labor->hour_id)->note }}</td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-8">{{ Timesheet::find($labor->hour_id)->note }}</td>
 															<td class="col-md-1 text-right"><button class="btn btn-xs fa btn-danger fa-times xdeleterow"></button></td>
 														</tr>
 														@endforeach
@@ -861,10 +854,7 @@ var n = this,
 															<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text lsave"/></td>
 															<td class="col-md-1"><input type="number" min="0" name="hour" id="hour" class="form-control-sm-text lsave"/></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
-															<td class="col-md-5"><input type="text" name="note" id="note" class="form-control-sm-text lsave"/></td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-8"><input type="text" name="note" id="note" class="form-control-sm-text lsave"/></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 														<?php }else{ ?>
@@ -877,7 +867,6 @@ var n = this,
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format($labor['original'] ? ($labor['isset'] ? $labor['set_amount'] : $labor['amount']) : $labor['set_amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsavee" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(EstimateRegister::estimLaborTotal($project->hour_rate, $labor['original'] ? ($labor['isset'] ? $labor['set_amount'] : $labor['amount']) : $labor['set_amount']), 2, ",",".") }}</span></td>
-															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1 text-right"><button class="btn {{ ($labor['original'] ? 'btn-warning fa-undo lresetrow' : 'btn-danger ldeleterow fa-times' ) }} btn-xs fa"></button></td>
 														</tr>
