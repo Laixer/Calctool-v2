@@ -497,8 +497,16 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 		<div class="row">
 			<div class="col-sm-6">
 			Geachte
-				{{ Contact::find($offer_last->to_contact_id)->firstname . '. ' . Contact::find($offer_last->to_contact_id)->lastname }}
-			,
+		@if ($offer_last && $offer_last->offer_finish)
+		{{ Contact::find($offer_last->to_contact_id)->firstname . ' ' . Contact::find($offer_last->to_contact_id)->lastname }}
+		@else
+		<select name="to_contact" id="to_contact">				@foreach (Contact::where('relation_id','=',$relation->id)->get() as $contact)
+			<option {{ $offer_last ? ($offer_last->to_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
+				@endforeach
+			</select>
+		@endif
+		,
+
 		</div>
 		</div>
 		<br>
