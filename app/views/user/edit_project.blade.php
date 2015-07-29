@@ -580,13 +580,10 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 										<thead>
 											<tr>
 												<th class="col-md-1">Datum</th>
-												<th class="col-md-1">Relatie</th>
-												<th class="col-md-3">Factuurbedrag</th>
-												<th class="col-md-1">Soort</th>
-												<th class="col-md-2">Omschrijving</th>
-												<th class="col-md-1">&nbsp;</th>
-												<th class="col-md-1">&nbsp;</th>
-												<th class="col-md-1">&nbsp;</th>
+												<th class="col-md-2">Relatie</th>
+												<th class="col-md-2">Factuurbedrag</th>
+												<th class="col-md-2">Soort</th>
+												<th class="col-md-4">Omschrijving</th>
 												<th class="col-md-1">&nbsp;</th>
 											</tr>
 										</thead>
@@ -595,12 +592,10 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 											@foreach (Purchase::where('project_id','=', $project->id)->get() as $purchase)
 											<tr data-id="{{ $purchase->id }}">
 												<td class="col-md-1">{{ date('d-m-Y', strtotime($purchase->register_date)) }}</td>
-												<td class="col-md-1">{{ Relation::find($purchase->relation_id)->company_name }}</td>
-												<td class="col-md-3">{{ '&euro; '.number_format($purchase->amount, 2,",",".") }}</td>
-												<td class="col-md-1">{{ ucwords(PurchaseKind::find($purchase->kind_id)->kind_name) }}</td>
-												<td class="col-md-3">{{ $purchase->note }}</td>
-												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-2">{{ Relation::find($purchase->relation_id)->company_name }}</td>
+												<td class="col-md-1">{{ '&euro; '.number_format($purchase->amount, 2,",",".") }}</td>
+												<td class="col-md-2">{{ ucwords(PurchaseKind::find($purchase->kind_id)->kind_name) }}</td>
+												<td class="col-md-4">{{ $purchase->note }}</td>
 												<td class="col-md-1">@if (!$project->project_close)<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>@endif</td>
 											</tr>
 											@endforeach
@@ -609,7 +604,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 												<td class="col-md-1">
 													<input type="date" name="date" id="date" class="form-control-sm-text"/>
 												</td>
-												<td class="col-md-4">
+												<td class="col-md-2">
 													<select name="relation" id="relation" class="form-control-sm-text">
 													@foreach (Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
 														<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
@@ -617,16 +612,14 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 													</select>
 												</td>
 												<td class="col-md-2"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
-												<td class="col-md-1">
+												<td class="col-md-2">
 													<select name="typename" id="typename" class="form-control-sm-text">
 													@foreach (PurchaseKind::all() as $typename)
 														<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
 													@endforeach
 													</select>
 												</td>
-												<td class="col-md-1"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
-												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-4"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
 												<td class="col-md-1"><button id="addnewpurchase" class="btn btn-primary btn-xs"> Toevoegen</button></td>
 											</tr>
 											@endif
