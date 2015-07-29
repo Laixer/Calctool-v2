@@ -348,7 +348,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<div class="col-md-4">
 										<div class="form-group">
 											<label for="contractor">Opdrachtgever*</label>
-											<select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : '' }} class="form-control pointer" {{ $offer_last->offer_finish ? 'disabled' : '' }} class="form-control pointer">
+											<select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : '' }} class="form-control pointer">
 											@foreach (Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
 												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
 											@endforeach
@@ -358,7 +358,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									<div class="col-md-2">
 										<div class="form-group">
 											<label for="type">Type</label>
-											<select name="type" id="type" {{ $project->project_close ? 'disabled' : '' }} class="form-control pointer" {{ $offer_last->offer_finish ? 'disabled' : '' }} class="form-control pointer">
+											<select name="type" id="type" {{ $project->project_close ? 'disabled' : '' }} class="form-control pointer">
 												@foreach (ProjectType::all() as $type)
 													<option {{ $project->type_id==$type->id ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
 												@endforeach
@@ -449,7 +449,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
 								<div class="col-md-1"><div class="pull-right">&euro;</div></div>
 								<div class="col-md-2">
-									<input name="hour_rate" {{ $project->project_close ? 'disabled' : '' }} {{ $offer_last->offer_finish ? 'disabled' : '' }} type="text" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : number_format($project->hour_rate, 2,",",".") }}" class="form-control form-control-sm-number"/>
+									<input name="hour_rate" {{ $project->project_close ? 'disabled' : '' }} type="text" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : number_format($project->hour_rate, 2,",",".") }}" class="form-control form-control-sm-number"/>
 								</div>
 								<div class="col-md-2">
 									<input name="more_hour_rate" {{ $project->project_close ? 'disabled' : '' }} id="more_hour_rate" type="text" value="{{ Input::old('more_hour_rate') ? Input::old('more_hour_rate') : number_format($project->hour_rate_more, 2,",",".") }}" class="form-control form-control-sm-number"/>
