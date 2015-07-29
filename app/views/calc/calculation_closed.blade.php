@@ -158,7 +158,7 @@ $project = Project::find(Route::Input('project_id'));
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1">{{ number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}</td>
-															<td class="col-md-1">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($project->hour_rate, CalculationLabor::where('activity_id','=', $activity->id)->first()['amount']), 2, ",",".") }}</td>
+															<td class="col-md-1">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($project->hour_rate, CalculationLabor::where('activity_id','=', $activity->id)->first()['amount']),2, ",",".") }}</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1"></td>
@@ -331,7 +331,7 @@ $project = Project::find(Route::Input('project_id'));
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1">{{ number_format(EstimateLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}</td>
-															<td class="col-md-1">{{ '&euro; '.number_format(CalculationRegister::estimLaborTotal(EstimateLabor::where('activity_id','=', $activity->id)->first()['rate'], EstimateLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".")) }}</td>
+															<td class="col-md-1">{{ '&euro; '.number_format(CalculationRegister::estimLaborTotal(EstimateLabor::where('activity_id','=', $activity->id)->first()['rate'], EstimateLabor::where('activity_id','=', $activity->id)->first()['amount']), 2, ",",".") }}</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1"></td>
