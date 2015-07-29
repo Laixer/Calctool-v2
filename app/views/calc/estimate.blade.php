@@ -79,6 +79,7 @@ var n = this,
 		$("body").on("change", ".newrow", function(){
 			var i = 1;
 			if($(this).val()){
+
 				if(!$(this).closest("tr").next().length){
 					var $curTable = $(this).closest("table");
 					$curTable.find("tr:eq(1)").clone().removeAttr("data-id").find("input").each(function(){
@@ -741,7 +742,10 @@ var n = this,
 
 		@include('calc.wizard', array('page' => 'estimate'))
 
-			<h2><strong>Stelpost</strong> stellen</h2>
+<!-- TODO tooltip verkleinen -->
+
+			<h2><strong>Stelposten</strong> stellen <strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Maak hier uw stelpost definitief voor op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h2></strong>
+
 
 			<div class="tabs nomargin">
 

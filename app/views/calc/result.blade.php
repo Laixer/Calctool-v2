@@ -37,7 +37,8 @@ $(document).ready(function() {
 
 		@include('calc.wizard', array('page' => 'result'))
 
-			<h2><strong>Resultaat Project</strong> {{$project->project_name}}</h2>
+<!-- TODO tooltip verkleinen -->
+			<h2><strong>Resultaat Project</strong> {{$project->project_name}} <strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier staan alle ingevoerde getallen samengevat in een projectresultaat en een urenresultaat waaruit een winst en verlies berekening voortkomt." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h2>
 
 			<div class="tabs nomargin">
 
@@ -390,12 +391,12 @@ $(document).ready(function() {
 										<thead>
 											<tr>
 												<th class="col-md-3">&nbsp;</th>
-												<th class="col-md-4">&nbsp;</th>
-												<th class="col-md-1"><span class="pull-right">Gecalculeerd</span></th>
-												<th class="col-md-1"><span class="pull-right">Minderwerk</span></th>
-												<th class="col-md-1"><span class="pull-right">Geboekt</span></th>
-												<th class="col-md-1"><span class="pull-right">Winst/verlies</span></th>
-												<th class="col-md-1"><span class="pull-right">Kosten</span></th>
+												<th class="col-md-3">&nbsp;</th>
+												<th class="col-md-2"><span class="pull-right">Gecalculeerd <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de gecalculeerde uren uit de offerte." href="javascript:void(0);"><i class="fa fa-info-circle"></i> </a></span></th>
+												<th class="col-md-1"><span class="pull-right">Minderw.</span></th>
+												<th class="col-md-1"><span class="pull-right">Geboekt <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de geboekte uren uit de urenregistratie" href="#"><i class="fa fa-info-circle"></i></a></span></th>
+												<th class="col-md-1"><span class="pull-right">Verschil <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het verschil tussen de gecalculeerde uren (minus de minderwerkuren) en de geboekte uren" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></span></th>
+												<th class="col-md-1"><span class="pull-right">Win./Ver. <a data-toggle="tooltip" data-placement="left" data-original-title="Dit is het verschil vertaald naar kosten op basis van het standaard uurtarief" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></span></th>
 											</tr>
 										</thead>
 
@@ -404,8 +405,8 @@ $(document).ready(function() {
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->whereNull('detail_id')->get() as $activity)
 											<tr>
 												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-4">{{ $activity->activity_name }}</td>
-												<td class="col-md-1"><span class="pull-right">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id), 2,",","."); }}</span></td>
+												<td class="col-md-3">{{ $activity->activity_name }}</td>
+												<td class="col-md-2"><span class="pull-right">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id), 2,",","."); }}</span></td>
 <!-- TODO Totaal moet gequeryd worden -->
 												<td class="col-md-1"><span class="pull-right">volgt</span></td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</span></td>
@@ -416,8 +417,8 @@ $(document).ready(function() {
 											@endforeach
 											<tr>
 												<th class="col-md-3"><strong>Totaal Aanneming</strong></th>
-												<th class="col-md-4">&nbsp;</th>
-												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(TimesheetOverview::calcTotalCalculation($project), 2, ",",".") }}</span></strong></td>
+												<th class="col-md-3">&nbsp;</th>
+												<td class="col-md-2"><strong><span class="pull-right">{{ number_format(TimesheetOverview::calcTotalCalculation($project), 2, ",",".") }}</span></strong></td>
 <!-- TODO Totaal moet gequeryd worden -->
 												<td class="col-md-1"><strong><span class="pull-right">volgt</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(TimesheetOverview::calcTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
@@ -437,12 +438,12 @@ $(document).ready(function() {
 										<thead>
 											<tr>
 												<th class="col-md-3">&nbsp;</th>
-												<th class="col-md-4">&nbsp;</th>
-												<th class="col-md-1"><span class="pull-right">Gecalculeerd</span></th>
-												<th class="col-md-1"><span class="pull-right">Gesteld&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de gestelde uren van de calculatie, zoals die op de factuur vermeld gaan worden." href="#"><i class="fa fa-info-circle"></i></a></span></th>
-												<th class="col-md-1"><span class="pull-right">Geboekt</span></th>
-												<th class="col-md-1"><span class="pull-right">Winst/verlies</span></th>
-												<th class="col-md-1"><span class="pull-right">Kosten</span></th>
+												<th class="col-md-3">&nbsp;</th>
+												<th class="col-md-2"><span class="pull-right">Gecalculeerd <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de gecalculeerde uren uit de offerte." href="javascript:void(0);"><i class="fa fa-info-circle"></i> </a></span></th>
+												<th class="col-md-1"><span class="pull-right">Gesteld <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de gestelde uren van de calculatie, zoals die op de factuur vermeld gaan worden." href="#"><i class="fa fa-info-circle"></i></a></span></th>
+												<th class="col-md-1"><span class="pull-right">Geboekt <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de geboekte uren uit de urenregistratie" href="#"><i class="fa fa-info-circle"></i></a></span></th>
+												<th class="col-md-1"><span class="pull-right">Verschil <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het verschil tussen de gestelde uren en de geboekte uren" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></span></th>
+												<th class="col-md-1"><span class="pull-right">Win./Ver. <a data-toggle="tooltip" data-placement="left" data-original-title="Dit is het verschil vertaald naar kosten op basis van het standaard uurtarief" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></span></th>
 											</tr>
 										</thead>
 
@@ -451,8 +452,8 @@ $(document).ready(function() {
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
 											<tr>
 												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-4">{{ $activity->activity_name }}</td>
-												<td class="col-md-1"><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id), 2,",","."); }}</span></td>
+												<td class="col-md-3">{{ $activity->activity_name }}</td>
+												<td class="col-md-2"><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id), 2,",","."); }}</span></td>
 <!-- TODO Totaal moet gequeyd worden -->
 												<td class="col-md-1"><span class="pull-right">Volgt</span></td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</span></td>
@@ -463,8 +464,8 @@ $(document).ready(function() {
 											@endforeach
 											<tr>
 												<th class="col-md-3"><strong>Totaal Stelposten</strong></th>
-												<th class="col-md-4">&nbsp;</th>
-												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalCalculation($project), 2, ",",".") }}</span></strong></td>
+												<th class="col-md-3">&nbsp;</th>
+												<td class="col-md-2"><strong><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalCalculation($project), 2, ",",".") }}</span></strong></td>
 <!-- TODO Totaal moet gequeryd worden -->
 												<td class="col-md-1"><strong><span class="pull-right">Volgt</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
@@ -483,10 +484,10 @@ $(document).ready(function() {
 										<thead>
 											<tr>
 												<th class="col-md-3">&nbsp;</th>
-												<th class="col-md-4">&nbsp;</th>
-												<th class="col-md-1"><span class="pull-right">Opgegeven&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de (mondeling) opgegeven uren die als prijsopgaaf kunnen dienen naar de klant. Wordt de urenregistratie bijgehouden dan is die bindend." href="#"><i class="fa fa-info-circle"></i></a></span></th>
+												<th class="col-md-3">&nbsp;</th>
+												<th class="col-md-2"><span class="pull-right">Opgegeven&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de (mondeling) opgegeven uren bij de tab 'Calculeren Meerwerk' die als prijsopgaaf kunnen dienen naar de klant. Wordt de urenregistratie bijgehouden dan is die bindend." href="#"><i class="fa fa-info-circle"></i></a></span></th>
 												<th class="col-md-1"><span class="pull-right">&nbsp;</span></th>
-												<th class="col-md-1"><span class="pull-right">Geboekt</span></th>
+												<th class="col-md-1"><span class="pull-right">Geboekt <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de geboekte uren uit de urenregistratie of zoals opgegeven" href="#"><i class="fa fa-info-circle"></i></a></span></th>
 												<th class="col-md-1"><span class="pull-right">&nbsp;</span></th>
 												<th class="col-md-1"><span class="pull-right">&nbsp;</span></th>
 											</tr>
@@ -497,9 +498,9 @@ $(document).ready(function() {
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
 											<tr>
 												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-4">{{ $activity->activity_name }}</td>
+												<td class="col-md-3">{{ $activity->activity_name }}</td>
 <!-- TODO Totaal moet gequaryd worden -->
-												<td class="col-md-1"><span class="pull-right">volgt</span></td>
+												<td class="col-md-2"><span class="pull-right">volgt</span></td>
 												<td class="col-md-1"><span class="pull-right">&nbsp;</span></td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'), 2,",","."); }}</span></td>
 												<td class="col-md-1"><span class="pull-right">&nbsp;</span></td>
@@ -509,9 +510,9 @@ $(document).ready(function() {
 											@endforeach
 											<tr>
 												<td class="col-md-3"><strong>Totaal Meerwerk</strong></td>
-												<td class="col-md-4">&nbsp;</td>
+												<td class="col-md-3">&nbsp;</td>
 <!-- TODO Totaal moet gequaryd worden -->
-												<td class="col-md-1"><strong><span class="pull-right">volgt</span></strong></td>
+												<td class="col-md-2"><strong><span class="pull-right">volgt</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">&nbsp;</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(TimesheetOverview::estimTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">&nbsp;</span></strong></td>
@@ -532,10 +533,10 @@ $(document).ready(function() {
 								<thead>
 									<tr>
 										<th class="col-md-2">&nbsp;</th>
-										<th class="col-md-2">Balans project</th>
-										<th class="col-md-3">Totaalkosten urenregistratie</th>
-										<th class="col-md-3">Totaalkosten inkoopfacturen</th>
-										<th class="col-md-2">Winst / Verlies project</th>
+										<th class="col-md-2">Balans project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het uiteindelijke factuurbedrag van het project, hierin zit ook het stellen van de stelposten en het meer- en minderwerk verrekend." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+										<th class="col-md-3">Totaalkosten urenregistratie <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de totaalkosten van het project die voortvloeien uit de geboekte uren uit de urenregistratie vermenigvuldigd met het geldende uurtarief. Let op: dit geldt alleen voor aanneming. Van de onderaanneming is dit niet bekent omdat we daar geen urenregistratie van bij kunnen houden." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+										<th class="col-md-3">Totaalkosten inkoopfacturen <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de totaalkosten van alle inkoopfacturen zoals die ingeboekt zijn bij de inkoop. Hier wordt aanneming en onderaanneming wel gescheiden." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+										<th class="col-md-2">Winst / Verlies project <a data-toggle="tooltip" data-placement="left" data-original-title="Hier staat uiteindelijk of je winst of verlies gemaakt heb op je project. Om een reëel beeld te krijgen is het belangrijk dat je alle uren en inkoopfacturen hebt ingeboekt en het eventuele meer- en minderwerk hebt verwerkt." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 									</tr>
 								</thead>
 

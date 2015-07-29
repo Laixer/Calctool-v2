@@ -222,7 +222,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="col-md-3"><i><?php if ($offer_last) { echo 'Laatste wijziging: '.date('d-m-Y', strtotime(DB::table('offer')->select('updated_at')->where('id','=',$offer_last->id)->get()[0]->updated_at)); } ?></i></div>
 							</div>
 							<div class="row">
-								<div class="col-md-3">Opdracht ontvangen <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je opdracht hebt gekregen op je offerte. De calculatie slaat dan definitief dicht." href="#"><i class="fa fa-info-circle"></i></a></div>
+								<div class="col-md-3">Opdracht ontvangen <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je opdracht hebt gekregen op je offerte. De calculatie slaat dan definitief dicht." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></div>
 								<div class="col-md-2">
 									<?php
 										if (!CalculationEndresult::totalProject($project)) {
@@ -440,9 +440,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						<form method="post" action="/project/updatecalc">
 						<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
 							<div class="row">
-								<div class="col-md-3"><h5><strong>Eigen uurtarief*</strong></h5></div>
+								<div class="col-md-3"><h5><strong>Eigen uurtarief <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier uw uurtarief op wat door heel de calculatie gebruikt wordt voor dit project. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></div>
 								<div class="col-md-1"></div>
-								<div class="col-md-2"><h5><strong>Calculatie</strong></h5></div>
+								<div class="col-md-2"><h5><strong>Calculatie *</strong></h5></div>
 								<div class="col-md-2"><h5><strong>Meerwerk</strong></h5></div>
 							</div>
 							<div class="row">
@@ -456,7 +456,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								</div>
 							</div>
 
-							<h5><strong>Aanneming</strong></h5>
+							<h5><strong>Aanneming <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier uw winstpercentage op wat u over uw materiaal en materieel wilt gaan rekenen. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></strong></h5>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_material_1">Winstpercentage materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
@@ -478,7 +478,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								</div>
 							</div>
 
-							<h5><strong>Onderaanneming</strong></h5>
+							<h5><strong>Onderaanneming <a data-toggle="tooltip" data-placement="bottom" data-original-title="Onderaanneming: Geef hier uw winstpercentage op wat u over het materiaal en materieel van uw onderaanneming wilt gaan rekenen. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></strong></h5>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_material_2">Winstpercentage materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
@@ -580,9 +580,10 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 										<thead>
 											<tr>
 												<th class="col-md-1">Datum</th>
-												<th class="col-md-2">Relatie</th>
-												<th class="col-md-2">Factuurbedrag</th>
-												<th class="col-md-2">Soort</th>
+												<th class="col-md-2">Relatie <a data-toggle="tooltip" data-placement="bottom" data-original-title="Kies hier uw relatie waar de inkoopfactuur betrekking op heeft. Staat uw relatie er nog niet bij, maak dan eerst een nieuwe relatie aan." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+												<th class="col-md-2">Bedrag (Excl. BTW) <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier plaatst u alle facturen van uw project (facturen materiaal, materieel en onderaannemers). Deze worden gebruikt voor uw winst en verlies berekening." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+
+												<th class="col-md-2">Soort <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier aan waar de inkoopfactuur betrekking op heeft." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 												<th class="col-md-4">Omschrijving</th>
 												<th class="col-md-1">&nbsp;</th>
 											</tr>

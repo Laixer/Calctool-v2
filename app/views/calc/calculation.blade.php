@@ -758,7 +758,7 @@ var n = this,
 				<ul class="nav nav-tabs">
 					<li id="tab-calculate">
 						<a href="#calculate" data-toggle="tab">
-							<i class="fa fa-list"></i> Calculeren
+							<i class="fa fa-list"></i> Calculatie
 						</a>
 					</li>
 					<li id="tab-estimate">
@@ -782,7 +782,6 @@ var n = this,
 				<div class="tab-content">
 					<div id="calculate" class="tab-pane">
 						<div class="toogle">
-
 							@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 							<div id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
 								<label>{{ $chapter->chapter_name }}</label>

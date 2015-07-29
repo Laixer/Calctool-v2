@@ -652,7 +652,9 @@ var n = this,
 
 		@include('calc.wizard', array('page' => 'less'))
 
-			<h2><strong>Minderwerk</strong></h2>
+<!-- TODO tooltip verkleinen -->
+
+			<h2><strong>Minderwerk</strong> <strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u hoeveelheden in mindering brengen op de bestaande calculatie bedoeld als minderwerk op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h2>
 
 			<div class="tabs nomargin">
 
@@ -660,7 +662,7 @@ var n = this,
 				<ul class="nav nav-tabs">
 					<li id="tab-calculate">
 						<a href="#calculate" data-toggle="tab">
-							<i class="fa fa-list"></i> Calculeren
+							<i class="fa fa-list"></i> Calculeren minderwerk
 						</a>
 					</li>
 					<li id="tab-summary">
@@ -711,10 +713,10 @@ var n = this,
 															<th class="col-md-5">Omschrijving</th>
 															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">Uurtarief</th>
-															<th class="col-md-1">Aantal</th>
+															<th class="col-md-1">Aantal <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier het nieuwe aantal op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 															<th class="col-md-1">Prijs</th>
+															<th class="col-md-1">Minderw. <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het bedrag dat in mindering wordt gebracht op de bestaande calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">Minderwerk</th>
 														</tr>
 													</thead>
 
@@ -747,10 +749,10 @@ var n = this,
 														<tr>
 															<th class="col-md-5">Omschrijving</th>
 															<th class="col-md-1">Eenheid</th>
-															<th class="col-md-1">&euro; / Eenh.</th>
-															<th class="col-md-1">Aantal</th>
-															<th class="col-md-1">+ Winst %</th>
-															<th class="col-md-1">Minderwerk</th>
+															<th class="col-md-1">&euro; / Eenh. <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier de nieuwe prijs per eenheid op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+															<th class="col-md-1">Aantal <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier het nieuwe aantal op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+															<th class="col-md-1">+ Winst % <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het totaalbedrag van de &euro;/Eenh.vermenigvuldigd met het Aantal, incl. het winstpercentage" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+															<th class="col-md-1">Minderw. <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het bedrag dat in mindering wordt gebracht op de bestaande calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -825,10 +827,10 @@ var n = this,
 														<tr>
 															<th class="col-md-5">Omschrijving</th>
 															<th class="col-md-1">Eenheid</th>
-															<th class="col-md-1">&euro; / Eenh.</th>
-															<th class="col-md-1">Aantal</th>
-															<th class="col-md-1">+ Winst %</th>
-															<th class="col-md-1">Minderwerk</th>
+															<th class="col-md-1">&euro; / Eenh. <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier de nieuwe prijs per eenheid op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+															<th class="col-md-1">Aantal <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier het nieuwe aantal op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+															<th class="col-md-1">+ Winst % <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het totaalbedrag van de &euro;/Eenh.vermenigvuldigd met het Aantal, incl. het winstpercentage" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+															<th class="col-md-1">Minderw. <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het bedrag dat in mindering wordt gebracht op de bestaande calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -916,7 +918,7 @@ var n = this,
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</th>
 												<th class="col-md-1"><span class="pull-right">Materieel</th>
-												<th class="col-md-1"><span class="pull-right">Totaal</th>
+												<th class="col-md-1"><span class="pull-right">Totaal <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het bedrag dat in mindering wordt gebracht op de bestaande calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 											</tr>
 										</thead>
 
@@ -964,7 +966,7 @@ var n = this,
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</th>
 												<th class="col-md-1"><span class="pull-right">Materieel</th>
-												<th class="col-md-1"><span class="pull-right">Totaal</th>
+												<th class="col-md-1"><span class="pull-right">Totaal <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het bedrag dat in mindering wordt gebracht op de bestaande calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 											</tr>
 										</thead>
 
@@ -1012,7 +1014,7 @@ var n = this,
 												<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
 												<th class="col-md-1"><span class="pull-right">Materieel</span></th>
-												<th class="col-md-1"><span class="pull-right">Totaal</span></th>
+												<th class="col-md-1"><span class="pull-right">Totaal <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het bedrag dat in mindering wordt gebracht op de bestaande calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></span></th>
 											</tr>
 										</thead>
 

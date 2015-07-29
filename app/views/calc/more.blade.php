@@ -558,7 +558,8 @@ var n = this,
 
 		@include('calc.wizard', array('page' => 'more'))
 
-			<h2><strong>Meerwerk</strong></h2>
+			<h2><strong>Meerwerk</strong> <strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u meerwerk op basis van regie toevoegen bestemd voor op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h2>
+
 
 			<div class="tabs nomargin">
 
@@ -566,7 +567,7 @@ var n = this,
 				<ul class="nav nav-tabs">
 					<li id="tab-calculate">
 						<a href="#calculate" data-toggle="tab">
-							<i class="fa fa-list"></i> Calculeren
+							<i class="fa fa-list"></i> Calculeren Meerwerk
 						</a>
 					</li>
 					<li id="tab-summary">
@@ -605,7 +606,7 @@ var n = this,
 													<div class="col-md-2 text-right"><button data-id="{{ $activity->id }}" class="btn btn-danger btn-xs deleteact">Verwijderen</button></div>
 												</div>
 												<div class="row">
-													<div class="col-md-2"><h4>Arbeid</h4></div>
+													<div class="col-md-2"><h4>Arbeid<strong> <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u meerwerk op basis van regie toevoegen bestemd voor op de factuur. Voor arbeid geldt: uren die bij de urenregistratie geboekt worden overschrijven de opgegeven hoeveel arbeid voor deze werkzaamheid." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
 													<div class="col-md-2">
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-labor" id="type" class="form-control-sm-text pointer select-tax">
