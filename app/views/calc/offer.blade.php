@@ -497,15 +497,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 		<div class="row">
 			<div class="col-sm-6">
 			Geachte
-			@if ($offer_last && $offer_last->offer_finish)
-			{{ Contact::find($offer_last->to_contact_id)->firstname . ' ' . Contact::find($offer_last->to_contact_id)->lastname }}
-			@else
-			<select name="to_contact" id="to_contact">
-				@foreach (Contact::where('relation_id','=',$relation->id)->get() as $contact)
-				<option {{ $offer_last ? ($offer_last->to_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
-				@endforeach
-			</select>
-			@endif
+				{{ Contact::find($offer_last->to_contact_id)->firstname . '. ' . Contact::find($offer_last->to_contact_id)->lastname }}
 			,
 		</div>
 		</div>
@@ -524,7 +516,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 		<!--CONTENT, CON & SUBCON START-->
 			<div class="show-all" style="display:none;">
-				<h4 class="only-total">Aanneming</h4>
+				<h4 class="only-total">Specificatie offerte</h4>
+				<h5 class="only-total">AANNEMING</h5>
 				<table class="table table-striped hide-btw1">
 					<thead>
 						<tr>
@@ -632,7 +625,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					</tbody>
 				</table>
 
-				<h4 class="only-total">Onderaanneming</h4>
+				<h5 class="only-total">ONDERAANNEMING</h5>
 				<table class="table table-striped hide-btw1">
 					<thead>
 						<tr>
@@ -741,56 +734,57 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 				<h4>Cumulatieven Offerte</h4>
 				<table class="table table-striped hide-btw2">
+					<?# -- table head -- ?>
 					<thead>
 						<tr>
-							<th class="col-md-6">&nbsp;</th>
+							<th class="col-md-5">&nbsp;</th>
 							<th class="col-md-2">Bedrag (excl. BTW)</th>
-							<th class="col-md-2">BTW bedrag</th>
+							<th class="col-md-1">&nbsp;</th>
+							<th class="col-md-1">&nbsp;</th>
+							<th class="col-md-1">BTW bedrag</th>
 							<th class="col-md-2"><span class="pull-right">Bedrag (incl. BTW)</span></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td class="col-md-6">Calculatief te offereren (excl. BTW)</td>
+							<td class="col-md-5">Calculatief te offereren (excl. BTW)</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</td>
-							<td class="col-md-2">&nbsp;</td>
-							<td class="col-md-2">&nbsp;</td>
-						</tr>
-						<tr>
-							<td class="col-md-6">BTW bedrag aanneming belast met 21%</td>
-							<td class="col-md-2">&nbsp;</td>
-							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax1($project), 2, ",",".") }}</td>
+							<th class="col-md-1">&nbsp;</th>
+							<th class="col-md-1">&nbsp;</th>
+							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
 						<tr>
-							<td class="col-md-6">BTW bedrag aanneming belast met 6%</td>
+							<td class="col-md-5">Bedrag 21%</td>
 							<td class="col-md-2">&nbsp;</td>
-							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax2($project), 2, ",",".") }}</td>
-							<td class="col-md-2">&nbsp;</td>
-						</tr>
-						<tr>
-							<td class="col-md-6">BTW bedrag onderaanneming belast met 21%</td>
-							<td class="col-md-2">&nbsp;</td>
-							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
+							<td class="col-md-1">&nbsp;</td>
+							<td class="col-md-1">&nbsp;</td>
+							<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax1($project)+CalculationEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
 						<tr>
-							<td class="col-md-6">BTW bedrag onderaanneming belast met 6%</td>
+							<td class="col-md-5">Bedrag 6%</td>
 							<td class="col-md-2">&nbsp;</td>
-							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
+							<td class="col-md-1">&nbsp;</td>
+							<td class="col-md-1">&nbsp;</td>
+							<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax2($project)+CalculationEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
 						<tr>
-							<td class="col-md-6">Te offereren BTW bedrag</td>
+							<td class="col-md-5">Te offereren BTW bedrag</td>
 							<td class="col-md-2">&nbsp;</td>
+							<td class="col-md-1">&nbsp;</td>
+							<td class="col-md-1">&nbsp;</td>
+							<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProjectTax($project), 2, ",",".") }}</strong></td>
 							<td class="col-md-2">&nbsp;</td>
-							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::totalProjectTax($project), 2, ",",".") }}</td>
 						</tr>
 						<tr>
-							<td class="col-md-6"><strong>Calculatief te offereren (Incl. BTW)</strong></td>
+							<td class="col-md-5"><strong>Calculatief te offereren (Incl. BTW)</strong></td>
 							<td class="col-md-2">&nbsp;</td>
-							<td class="col-md-2">&nbsp;</td>
-							<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
+							<td class="col-md-1">&nbsp;</td>
+							<td class="col-md-1">&nbsp;</td>
+							<td class="col-md-1">&nbsp;</td>
+							<td class="col-md-2"><strong class="pull-right">{{ '&euro; '.number_format(CalculationEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
 						</tr>
 					</tbody>
 				</table>
@@ -799,7 +793,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 			<!--CONTENT TOTAL START-->
 			<div class="show-totals">
-			<h4 class="only-total">Totaalkosten project</h4>
+			<h4 class="only-total">Specificatie offerte</h4>
 				<table class="table table-striped hide-btw1">
 					<thead>
 						<tr>
@@ -909,7 +903,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 				<h4>Cumulatieven Offerte</h4>
 				<table class="table table-striped hide-btw2">
-					<?# -- table head -- ?>
 					<thead>
 						<tr>
 							<th class="col-md-5">&nbsp;</th>
@@ -930,7 +923,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
 						<tr>
-							<td class="col-md-5">BTW bedrag calculatie belast met 21%</td>
+							<td class="col-md-5">BTW Bedrag 21%</td>
 							<td class="col-md-2">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -938,7 +931,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
 						<tr>
-							<td class="col-md-5">BTW bedrag calculatie belast met 6%</td>
+							<td class="col-md-5">BTW Bedrag 6%</td>
 							<td class="col-md-2">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -1237,7 +1230,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					</tbody>
 				</table>
 			</div>
-			<h5><strong>Weergegeven bedragen zijn exclusief BTW</strong></h5>
+			<h6><strong>Weergegeven bedragen zijn exclusief BTW</strong></h5>
 		</div>
 			<!-- SPECIFICATION TOTAL END-->
 

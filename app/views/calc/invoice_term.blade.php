@@ -345,37 +345,37 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 						</thead>
 						<tbody>
 							<tr>
-								<td class="col-md-6">{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()+1}} factuur van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen.</td>
+								<td class="col-md-6">{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()+1}}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen.</td>
 								<td class="col-md-2">{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
 							<tr>
-								<td class="col-md-6">Factuurbedrag in 21% BTW cattegorie</td>
+								<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
 								<td class="col-md-2">{{ '&euro; '.number_format($invoice->rest_21, 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
 							<tr>
-								<td class="col-md-6">Factuurbedrag in 6% BTW cattegorie</td>
+								<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 6% BTW categorie</i></td>
 								<td class="col-md-2">{{ '&euro; '.number_format($invoice->rest_6, 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
 							<tr>
-								<td class="col-md-6">Factuurbedrag in 0% BTW cattegorie</td>
+								<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 0% BTW categorie</i></td>
 								<td class="col-md-2">{{ '&euro; '.number_format($invoice->rest_0, 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
 							<tr>
-								<td class="col-md-6">BTW bedrag belast met 21%</td>
+								<td class="col-md-6">BTW bedrag 21%</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">{{ '&euro; '.number_format(($invoice->rest_21/100)*21, 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
 							<tr>
-								<td class="col-md-6">BTW bedrag belast met 6%</td>
+								<td class="col-md-6">BTW bedrag 6%</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">{{ '&euro; '.number_format(($invoice->rest_6/100)*6, 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>

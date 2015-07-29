@@ -62,7 +62,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
     @if ($total)
     <!--TOTAL START-->
 
-    <h1 class="name">Totaalkosten project</h1>
+    <h1 class="name">Specificatie factuur</h1>
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
@@ -245,19 +245,19 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty">&nbsp;</td>
           </tr>
           <tr>
-            <td class="qty">Factuurbedrag in 21% BTW cattegorie</td>
+            <td class="qty">Factuurbedrag in 21% BTW tarief</td>
             <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21'), 2, ",",".") }}</td>
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
           </tr>
           <tr>
-            <td class="qty">Factuurbedrag in 6% BTW cattegorie</td>
+            <td class="qty">Factuurbedrag belast met 6% BTW</td>
             <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6'), 2, ",",".") }}</td>
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
           </tr>
           <tr>
-            <td class="qty">Factuurbedrag in 0% BTW cattegorie</td>
+            <td class="qty">Factuurbedrag belast met 0% BTW</td>
             <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_0'), 2, ",",".") }}</td>
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
@@ -315,19 +315,19 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty">&nbsp;</td>
           </tr>
           <tr>
-            <td class="qty">Factuurbedrag in 21% BTW cattegorie</td>
+            <td class="qty">Factuurbedrag belast met 21% BTW</td>
             <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21, 2, ",",".") }}</td>
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
           </tr>
           <tr>
-            <td class="qty">Factuurbedrag in 6% BTW cattegorie</td>
+            <td class="qty">Factuurbedrag belast met 6% BTW</td>
             <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6, 2, ",",".") }}</td>
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
           </tr>
           <tr>
-            <td class="qty">Factuurbedrag in 0% BTW cattegorie</td>
+            <td class="qty">Factuurbedrag belast met 0% BTW</td>
             <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_0, 2, ",",".") }}</td>
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
@@ -683,19 +683,19 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">&nbsp;</td>
         </tr>
         <tr>
-          <td class="qty">Factuurbedrag in 21% BTW cattegorie</td>
+          <td class="qty">Factuurbedrag belast met 21% BTW</td>
           <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21'), 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
         <tr>
-          <td class="qty">Factuurbedrag in 6% BTW cattegorie</td>
+          <td class="qty">Factuurbedrag belast met 6% BTW</td>
           <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6'), 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
         <tr>
-          <td class="qty">Factuurbedrag in 0% BTW cattegorie</td>
+          <td class="qty">Factuurbedrag belast met 0% BTW</td>
           <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_0'), 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
@@ -739,19 +739,19 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">&nbsp;</td>
         </tr>
         <tr>
-          <td class="qty">Factuurbedrag in 21% BTW cattegorie</td>
+          <td class="qty">Factuurbedrag belast met 21% BTW</td>
           <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
         <tr>
-          <td class="qty">Factuurbedrag in 6% BTW cattegorie</td>
+          <td class="qty">Factuurbedrag belast met 6% BTW</td>
           <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
         <tr>
-          <td class="qty">Factuurbedrag in 0% BTW cattegorie</td>
+          <td class="qty">Factuurbedrag belast met 0% BTW</td>
           <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_0, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
