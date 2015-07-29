@@ -30,8 +30,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         <h3 class="name">{{ $relation_self->company_name }}</h3>
         <div>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</div>
         <div>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</div>
-        <div>Email:{{ $relation_self->email }}</div>
-        <div>KVK:{{ $relation_self->kvk }}</li>
+        <div>Telefoon: </i>:{{ $relation_self->phone }}</div>
+        <div>E-mail: {{ $relation_self->email }}</div>
+        <div>KVK: {{ $relation_self->kvk }}</li>
     </header>
     <main>
       <div id="details" class="clearfix">
