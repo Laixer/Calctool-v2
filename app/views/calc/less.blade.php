@@ -727,7 +727,7 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format($labor->isless ? $labor->less_amount : $labor->amount, 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($labor->rate, $labor->isless ? $labor->less_amount : $labor->amount, 2, ",",".")) }}</span></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($labor->rate, $labor->isless ? $labor->less_amount : $labor->amount), 2, ",",".") }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 															<th class="col-md-1">{{ '&euro; '.number_format(LessRegister::lessLaborDeltaTotal($labor), 2, ",",".") }}</th>
 															<td class="col-md-1 text-right"><button class="btn btn-warning lresetrow btn-xs fa fa-undo"></button></td>
@@ -772,7 +772,7 @@ var n = this,
 																} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 																	$profit = $project->profit_calc_subcontr_mat;
 																}
-																echo '&euro; '.number_format(($material->isless ? $material->less_rate * $material->less_amount : $material->rate * $material->amount) *((100+$profit)/100), 2,",",".")
+																echo '&euro; '.number_format(($material->isless ? $material->less_rate * $material->less_amount : $material->rate * $material->amount) *((100+$profit)/100), 2, ",",".");
 															?></span>
 															</td>
 															<th class="col-md-1">
@@ -780,9 +780,9 @@ var n = this,
 																if ($material->isless) {
 																	$total = ($material->rate * $material->amount) * ((100+$profit)/100);
 																	$less_total = ($material->less_rate * $material->less_amount) * ((100+$profit)/100);
-																	echo '&euro; '.number_format($less_total-$total, 2,",",".");
+																	echo '&euro; '.number_format($less_total-$total, 2, ",",".");
 																} else {
-																	echo '&euro; 0';
+																	echo '&euro; 0,00';
 																}
 															?>
 															</th>
@@ -808,7 +808,7 @@ var n = this,
 															}
 															echo '&euro; '.number_format(LessRegister::lessMaterialTotalProfit($activity->id, $profit), 2, ",",".");
 															?></span></td>
-															<th class="col-md-1">{{ number_format(LessRegister::lessMaterialDeltaTotal($activity->id, $profit), 2, ",",".") }}</th>
+															<th class="col-md-1">{{'&euro; ' .number_format(LessRegister::lessMaterialDeltaTotal($activity->id, $profit), 2, ",",".") }}</th>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -850,7 +850,7 @@ var n = this,
 																} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 																	$profit = $project->profit_calc_subcontr_equip;
 																}
-																echo '&euro; '.number_format(($equipment->isless ? $equipment->less_rate * $equipment->less_amount : $equipment->rate * $equipment->amount) *((100+$profit)/100), 2,",",".")
+																echo '&euro; '.number_format(($equipment->isless ? $equipment->less_rate * $equipment->less_amount : $equipment->rate * $equipment->amount) *((100+$profit)/100), 2, ",",".");
 															?></span></td>
 															<th class="col-md-1">
 															<?php
@@ -859,7 +859,7 @@ var n = this,
 																	$less_total = ($equipment->less_rate * $equipment->less_amount) * ((100+$profit)/100);
 																	echo '&euro; '.number_format($less_total-$total, 2,",",".");
 																} else {
-																	echo '&euro; 0';
+																	echo '&euro; 0,00';
 																}
 															?>
 															</th>
@@ -884,7 +884,7 @@ var n = this,
 															}
 															echo '&euro; '.number_format(LessRegister::lessEquipmentTotalProfit($activity->id, $profit), 2, ",",".");
 															?></span></td>
-															<th class="col-md-1">{{ number_format(LessRegister::lessEquipmentDeltaTotal($activity->id, $profit), 2, ",",".") }}</th>
+															<th class="col-md-1">{{'&euro; ' .number_format(LessRegister::lessEquipmentDeltaTotal($activity->id, $profit), 2, ",",".") }}</th>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
