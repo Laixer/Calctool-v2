@@ -1092,8 +1092,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				<table class="table table-striped only-end-total">
 					<thead>
 						<tr>
-							<th class="col-md-2">&nbsp;</th>
-							<th class="col-md-3">&nbsp;</th>
+							<th class="col-md-2">Hoofdstuk</th>
+							<th class="col-md-3">Werkzaamheid</th>
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</th>
 							<th class="col-md-1"><span class="pull-right">Materiaal</th>
@@ -1166,8 +1166,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				<table class="table table-striped only-end-total">
 					<thead>
 						<tr>
-							<th class="col-md-2">&nbsp;</th>
-							<th class="col-md-3">&nbsp;</th>
+							<th class="col-md-2">Hoofdstuk</th>
+							<th class="col-md-3">Werkzaamheid</th>
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</th>
 							<th class="col-md-1"><span class="pull-right">Materiaal</th>
