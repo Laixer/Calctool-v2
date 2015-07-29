@@ -40,7 +40,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
     <div id="details" class="clearfix">
       <div id="client">
         <div>{{ $relation->company_name }}</div>
-        <div>t.a.v. XXXXX</div>
+        <div>T.a.v.
+            {{ Contact::find($offer_last->to_contact_id)->firstname . ' ' . Contact::find($offer_last->to_contact_id)->lastname }}
+        </div>
         <div>{{ $relation->address_street . ' ' . $relation->address_number }}</div>
         <div>{{ $relation->address_postal . ', ' . $relation->address_city }}</div>
       </div>
@@ -629,7 +631,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">&nbsp;</td>
         </tr>
         <tr style="page-break-after: always;">
-          <td class="qty">Te offereren BTW bedrag</td>
+          <td class="qty">Te factureren BTW bedrag</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalProjectTax($project), 2, ",",".") }}</td>

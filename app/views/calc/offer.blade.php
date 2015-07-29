@@ -465,10 +465,10 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			<div class="col-sm-6">
 				<ul class="list-unstyled">
 					<li>{{ $relation->company_name }}</li>
-					<li>t.a.v.
-					@if ($offer_last && $offer_last->offer_finish)
-					{{ Contact::find($offer_last->to_contact_id)->firstname . ' ' . Contact::find($offer_last->to_contact_id)->lastname }}
-					@else
+					<li>T.a.v.
+						@if ($offer_last && $offer_last->offer_finish)
+						{{ Contact::find($offer_last->to_contact_id)->firstname . ' ' . Contact::find($offer_last->to_contact_id)->lastname }}
+						@else
 					<select name="to_contact" id="to_contact">
 						@foreach (Contact::where('relation_id','=',$relation->id)->get() as $contact)
 						<option {{ $offer_last ? ($offer_last->to_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
@@ -483,7 +483,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			<div class="col-sm-4 text-right">
 				<h4><strong>OFFERTE</strong></h4>
 				<ul class="list-unstyled">
-					<li><strong>Projectnaam:</strong>{{ $project->project_name }}</li>
+					<li><strong>Projectnaam:</strong> {{ $project->project_name }}</li>
 					<li><strong>Offertedatum:</strong> {{ date("j M Y") }}</li>
 					<li><strong>Offertenummer:</strong> {{ OfferController::getOfferCode($project->id) }}</li>
 					<li>&nbsp;</li>
@@ -755,7 +755,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					</thead>
 					<tbody>
 						<tr>
-							<td class="col-md-5">Calculatief te offereren (excl. BTW)</td>
+							<td class="col-md-5">Calculatief te offreren (excl. BTW)</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</td>
 							<th class="col-md-1">&nbsp;</th>
 							<th class="col-md-1">&nbsp;</th>
@@ -763,7 +763,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
 						<tr>
-							<td class="col-md-5">Bedrag 21%</td>
+							<td class="col-md-5">BTW bedrag 21%</td>
 							<td class="col-md-2">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -771,7 +771,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
 						<tr>
-							<td class="col-md-5">Bedrag 6%</td>
+							<td class="col-md-5">BTW bedrag 6%</td>
 							<td class="col-md-2">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -779,7 +779,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
 						<tr>
-							<td class="col-md-5">Te offereren BTW bedrag</td>
+							<td class="col-md-5">Te offreren BTW bedrag</td>
 							<td class="col-md-2">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -787,7 +787,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
 						<tr>
-							<td class="col-md-5"><strong>Calculatief te offereren (Incl. BTW)</strong></td>
+							<td class="col-md-5"><strong>Calculatief te offreren (Incl. BTW)</strong></td>
 							<td class="col-md-2">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -923,7 +923,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					</thead>
 					<tbody>
 						<tr>
-							<td class="col-md-5">Calculatief te offereren (excl. BTW)</td>
+							<td class="col-md-5">Calculatief te offreren (excl. BTW)</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</td>
 							<th class="col-md-1">&nbsp;</th>
 							<th class="col-md-1">&nbsp;</th>
@@ -931,7 +931,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
 						<tr>
-							<td class="col-md-5">BTW Bedrag 21%</td>
+							<td class="col-md-5">BTW bedrag 21%</td>
 							<td class="col-md-2">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -939,7 +939,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
 						<tr>
-							<td class="col-md-5">BTW Bedrag 6%</td>
+							<td class="col-md-5">BTW bedrag 6%</td>
 							<td class="col-md-2">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -947,7 +947,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
 						<tr>
-							<td class="col-md-5">Te offereren BTW bedrag</td>
+							<td class="col-md-5">Te offreren BTW bedrag</td>
 							<td class="col-md-2">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -955,7 +955,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
 						<tr>
-							<td class="col-md-5"><strong>Calculatief te offereren (Incl. BTW)</strong></td>
+							<td class="col-md-5"><strong>Calculatief te offreren (Incl. BTW)</strong></td>
 							<td class="col-md-2">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>

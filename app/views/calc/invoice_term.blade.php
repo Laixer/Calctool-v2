@@ -291,7 +291,7 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 				<div class="col-sm-6">
 					<ul class="list-unstyled">
 						<li>{{ $relation->company_name }}</li>
-						<li>t.a.v.
+						<li>T.a.v.
 							{{ Contact::find($offer_last->to_contact_id)->firstname . ' ' . Contact::find($offer_last->to_contact_id)->lastname }}
 						</li>
 						<li>{{ $relation->address_street . ' ' . $relation->address_number }}<br /> {{ $relation->address_postal . ', ' . $relation->address_city }}</li>

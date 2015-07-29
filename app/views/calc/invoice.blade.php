@@ -323,13 +323,6 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 	<input name="id" value="{{ $invoice->id }}" type="hidden"/>
 	<input name="projectid" value="{{ $project->id }}" type="hidden"/>
 
-
-
-
-
-
-
-
 	<div class="white-row">
 		<!--PAGE HEADER MASTER START-->
 		<header>
@@ -360,7 +353,7 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 			<div class="col-sm-6">
 				<ul class="list-unstyled">
 					<li>{{ $relation->company_name }}</li>
-					<li>t.a.v.
+					<li>T.a.v.
 						{{ Contact::find($offer_last->to_contact_id)->firstname . ' ' . Contact::find($offer_last->to_contact_id)->lastname }}
 					</li>
 					<li>{{ $relation->address_street . ' ' . $relation->address_number }}<br /> {{ $relation->address_postal . ', ' . $relation->address_city }}</li>
@@ -660,7 +653,7 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 						<td class="col-md-2">&nbsp;</td>
 					</tr>
 					<tr>
-						<td class="col-md-6">Te offereren BTW bedrag</td>
+						<td class="col-md-6">Te factureren BTW bedrag</td>
 						<td class="col-md-2">&nbsp;</td>
 						<td class="col-md-2">&nbsp;</td>
 						<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalProjectTax($project), 2, ",",".") }}</td>
@@ -797,7 +790,7 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 
 				<tbody>
 					<tr>
-						<td class="col-md-6">Calculatief te offereren (excl. BTW)</td>
+						<td class="col-md-6">Calculatief te factureren (excl. BTW)</td>
 						<td class="col-md-2"><strong>{{ '&euro; '.number_format(ResultEndresult::totalProject($project), 2, ",",".") }}</strong></td>
 						<td class="col-md-2">&nbsp;</td>
 						<td class="col-md-2">&nbsp;</td>
@@ -815,13 +808,13 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 						<td class="col-md-2">&nbsp;</td>
 					</tr>
 					<tr>
-						<td class="col-md-6">Te offereren BTW bedrag</td>
+						<td class="col-md-6">Te factureren BTW bedrag</td>
 						<td class="col-md-2">&nbsp;</td>
 						<td class="col-md-2"><strong>{{ '&euro; '.number_format(ResultEndresult::totalProjectTax($project), 2, ",",".") }}</strong></td>
 						<td class="col-md-2">&nbsp;</td>
 					</tr>
 					<tr>
-						<td class="col-md-6"><strong>Calculatief te offereren (Incl. BTW)</strong></td>
+						<td class="col-md-6"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
 						<td class="col-md-2">&nbsp;</td>
 						<td class="col-md-2">&nbsp;</td>
 						<td class="col-md-2"><strong>{{ '&euro; '.number_format(ResultEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
@@ -830,7 +823,7 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 			</table>
 		</div>
 		<?php
-		$cnt = Invoice::where('invoice_id','=', $invoice->invoice_id)->count();
+		$cnt = Invoice::where('offer_id','=', $invoice->offer_id)->count();
 		if ($cnt>1) {
 		?>
 		<h4>Reeds betaald</h4>
@@ -881,7 +874,7 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 					<td class="col-md-2">&nbsp;</td>
 				</tr>
 				<tr>
-					<td class="col-md-6">Te offereren BTW bedrag</td>
+					<td class="col-md-6">Te factureren BTW bedrag</td>
 					<td class="col-md-2">&nbsp;</td>
 <!-- TODO Moet nog gequeryd worden -->
 					<td class="col-md-2"><strong>volgt</strong></td>
@@ -908,7 +901,7 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 			</thead>
 			<tbody>
 				<tr>
-					<td class="col-md-6">Calculatief te offereren (excl. BTW)</td>
+					<td class="col-md-6">Calculatief te factureren (excl. BTW)</td>
 					<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->amount, 2, ",",".") }}</td>
 					<td class="col-md-2">&nbsp;</td>
 					<td class="col-md-2">&nbsp;</td>
@@ -944,7 +937,7 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 					<td class="col-md-2">&nbsp;</td>
 				</tr>
 				<tr>
-					<td class="col-md-6">Te offereren BTW bedrag</td>
+					<td class="col-md-6">Te factureren BTW bedrag</td>
 					<td class="col-md-2">&nbsp;</td>
 <!-- Moet nog gequeryd worden -->
 					<td class="col-md-2"><strong>volgt</strong></td>
