@@ -9,7 +9,7 @@ if ($offer_last && $offer_last->offer_finish)
 <div class="wizard">
 	<a href="/"> Home</a>
 	<a href="/project-{{ $project->id }}/edit" {{ $page=='project' ? 'class="current"' : '' }} >Project</a>
-	<a href="/calculation/project-{{ $project->id }}" {{ $page=='calculation' ? 'class="current"' : '' }} >Calculatie</a>
+	<a href="/calculation/project-{{ $project->id }}" {{ $page=='calculation' ? 'class="current"' : '' }} >Calculeren</a>
 	<a href="/offer/project-{{ $project->id }}" {{ $page=='offer' ? 'class="current"' : '' }}>Offerte</a>
 	@if($show_all)
 	<a href="/estimate/project-{{ $project->id }}" {{ $page=='estimate' ? 'class="current"' : '' }} >Stelposten stellen</a>
@@ -18,7 +18,7 @@ if ($offer_last && $offer_last->offer_finish)
 	<a href="/invoice/project-{{ $project->id }}" {{ $page=='invoice' ? 'class="current"' : '' }} >Factuur</a>
 	<a href="/result/project-{{ $project->id }}" {{ $page=='result' ? 'class="current"' : '' }} >Resultaat</a>
 	@else
-	<span>Stelosten stellen</span>
+	<span>Stelposten stellen</span>
 	<span>Minderwerk</span>
 	<span>Meerwerk</span>
 	<span>Factuur</span>
