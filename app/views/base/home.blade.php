@@ -41,7 +41,7 @@ if (Input::get('nstep') == 'intro')
 					<ul class="nav nav-tabs">
 						<li class="active"><a href="#service-1" data-toggle="tab" aria-expanded="true"><i class="fa fa-heart-o"></i> Intro</a></li>
 						<li class=""><a href="#service-2" data-toggle="tab" aria-expanded="false"><i class="fa fa-smile-o"></i> Account</a></li>
-						<li class=""><a href="#service-3" data-toggle="tab" aria-expanded="false"><i class="fa fa-microphone"></i> Bedijf</a></li>
+						<li class=""><a href="#service-3" data-toggle="tab" aria-expanded="false"><i class="fa fa-microphone"></i> Mijn Bedijf</a></li>
 						<li class=""><a href="#service-4" data-toggle="tab" aria-expanded="false"><i class="fa fa-windows"></i> Service 4</a></li>
 						<li class=""><a href="#service-5" data-toggle="tab" aria-expanded="false"><i class="fa fa-flask"></i> Service 5</a></li>
 					</ul>
@@ -176,7 +176,7 @@ if (Input::get('nstep') == 'intro')
 						<div class="box-content">
 							<a href="/mycompany">
 								<i class="fa fa-files-o"></i>
-								<h5>Bedrijf</h5>
+								<h5>Mijn Bedrijf</h5>
 							</a>
 						</div>
 					</div>
