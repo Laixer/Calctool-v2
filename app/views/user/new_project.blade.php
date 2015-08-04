@@ -8,6 +8,15 @@
 
 		<div class="col-md-12">
 
+			<div>
+				<ol class="breadcrumb">
+				  <li><a href="/">Home</a></li>
+				  <li><a href="/project">Projecten</a></li>
+				  <li>Nieuw Project</li>
+				</ol>
+			<div>
+			<br>
+
 			@if(Session::get('success'))
 			<div class="alert alert-success">
 				<i class="fa fa-check-circle"></i>
@@ -52,6 +61,7 @@
 								<option value="{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
 							@endforeach
 							</select>
+							<a href="/relation/new">+ Nieuwe relatie toevoegen</a>
 						</div>
 					</div>
 					<div class="col-md-2">
@@ -64,7 +74,6 @@
 							</select>
 						</div>
 					</div>
-
 				</div>
 
 				<h4>Adres project</h4>
