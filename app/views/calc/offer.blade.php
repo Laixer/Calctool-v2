@@ -298,7 +298,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 						<div class="modal-header"><!-- modal header -->
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h4 class="modal-title" id="myModalLabel2">Termijnfacturen</h4>
+							<h4 class="modal-title" id="myModalLabel2">Betalingstermijnen</h4>
 						</div><!-- /modal header -->
 
 						<!-- modal body -->
@@ -306,7 +306,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<div class="form-horizontal">
 								<div class="form-group">
 									<div class="col-md-6">
-										<label>Termijnen</label>
+										<label>Betalingstermijnen</label>
 										<input value="{{ ($offer_last ? $offer_last->invoice_quantity : '1') }}" name="terms" id="terms" min="1" max="50" type="number" class="form-control" />
 									</div>
 								</div>
@@ -380,7 +380,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-endresult" type="checkbox"> Alleen het totale offertebedrag weergeven <br>
+								          <input name="toggle-endresult" type="checkbox"> Alleen het totale offertebedrag weergeven<br>
 								          (nog niet beschikbaar in PDF)
 								        </label>
 								      </div>
@@ -395,6 +395,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								      </div>
 								    </div>
 								  </div>
+								  <br>
+								  <strong>De volgende opties worden als bijlage bijgesloten bij de offerte</strong>
 								  <div class="form-group">
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
@@ -408,7 +410,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-summary" type="checkbox" checked> Kosten werkzaamheden specificeren<br>
+								          <input name="toggle-summary" type="checkbox" checked> Kosten werkzaamheden weergeven<br>
 								          (nog niet beschikbaar in PDF)
 								        </label>
 								      </div>
@@ -418,7 +420,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden in bijlage weergeven
+								          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden weergeven
 								        </label>
 								      </div>
 								    </div>

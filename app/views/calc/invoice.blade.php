@@ -264,7 +264,8 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-endresult" type="checkbox"> Alleen het totale factuurbedrag weergeven
+						          <input name="toggle-endresult" type="checkbox"> Alleen het totale offertebedrag weergeven<br>
+								  (nog niet beschikbaar in PDF)
 						        </label>
 						      </div>
 						    </div>
@@ -278,6 +279,8 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 						      </div>
 						    </div>
 						  </div>
+						  <br>
+						  <strong>De volgende opties worden als bijlage bijgesloten bij de faxctuur</strong>
 						  <div class="form-group">
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
@@ -291,7 +294,8 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-summary" type="checkbox"> Kosten werkzaamheden specificeren
+						          <input name="toggle-summary" type="checkbox"> Kosten werkzaamheden weergeven<br>
+								   (nog niet beschikbaar in PDF)
 						        </label>
 						      </div>
 						    </div>
@@ -300,7 +304,7 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden in bijlage weergeven
+						          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden weergeven
 						        </label>
 						      </div>
 						    </div>
