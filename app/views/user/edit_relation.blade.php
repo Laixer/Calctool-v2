@@ -80,7 +80,7 @@ $(document).ready(function() {
 					<?# -- tabs -- ?>
 					<ul class="nav nav-tabs">
 						<li class="active">
-							<a href="#company" data-toggle="tab">Bedrijfsgegevens</a>
+							<a href="#company" data-toggle="tab">{{ ucfirst( RelationKind::find($relation->kind_id)->kind_name) }}egegevens</a>
 						</li>
 						<li>
 							<a href="#payment" data-toggle="tab">Betalingsgegevens</a>
