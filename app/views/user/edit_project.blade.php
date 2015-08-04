@@ -173,7 +173,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			</div>
 			@endif
 
-			<h2><strong>Project</strong> {{$project->project_name}}</h2>
+			<h2><strong>Dashboard Project</strong> {{$project->project_name}}</h2>
 
 			@if(!Relation::where('user_id','=', Auth::user()->id)->count())
 			<div class="alert alert-info">
