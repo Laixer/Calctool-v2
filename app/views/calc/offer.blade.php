@@ -306,27 +306,33 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<div class="form-horizontal">
 								<div class="form-group">
 									<div class="col-md-6">
-										<label>Betalingstermijnen</label>
+										<label>Aantal betalingstermijnen</label>
+									</div>
+									<div class="col-md-6">
 										<input value="{{ ($offer_last ? $offer_last->invoice_quantity : '1') }}" name="terms" id="terms" min="1" max="50" type="number" class="form-control" />
 									</div>
 								</div>
+							</div>
+
+
+
+							<div class="form-horizontal">
 								<div class="form-horizontal noterms" {{ ($offer_last && $offer_last->invoice_quantity >1 ? '' : 'style="display:none;"') }} >
 									<div class="col-md-6">
 									  <div class="form-group">
-									  <label>Aanbetaling</label>
-									    <div class="col-sm-offset-0 col-sm-12">
+									  	<label>Aanbetaling toepassen</label>
+									  </div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
 									      <div class="checkbox">
 									        <label>
 									          <input {{ ($offer_last ? ($offer_last->downpayment ? 'checked' : '') : '') }} name="toggle-payment" type="checkbox">
 									        </label>
-									      </div>
-									    </div>
-									  </div>
+										  </div>
+										</div>
 									</div>
-								</div>
-							</div>
-							<div class="table-responsive noterms" {{ ($offer_last && $offer_last->invoice_quantity >1 ? '' : 'style="display:none;"') }}>
-								<table id="tbl-term" class="table table-hover">
+									<table id="tbl-term" class="table table-hover">
 									<thead>
 										<tr>
 											<th>Termijnnummer</th>
@@ -335,12 +341,18 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									</thead>
 									<tbody>
 										<tr>
-											<td>Aanbetaling</td>
+											<td>Aanbetalingsbedrag</td>
 											<td><input {{ ($offer_last ? ($offer_last->downpayment ? '' : 'disabled') : 'disabled') }} type="text" value="{{ ($offer_last ? $offer_last->downpayment_amount : '') }}" id="amount" name="amount" class="form-control-sm-text" /></td>
 										</tr>
 									</tbody>
-								</table>
+									</table>
+									Indien aanbetaling wordt ingesteld wordt dit verrekend als het 1e betalingstermijn. Eventuele navolgende betalingstermijnen worden gespecficieerd op de factuurpagina.
+								</div>
 							</div>
+
+
+
+
 
 						</div>
 						<!-- /modal body -->
