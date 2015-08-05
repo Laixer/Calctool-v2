@@ -128,6 +128,19 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				if($.trim(value) == '')
 					return 'Vul een datum in';
 				}
+				});
+		$('#wordcompl').editable({
+			type:  'date',
+			pk:    {{ $project->id }},
+			name:  'ordcompl',
+			url:   '/project/updateworkcompletion',
+			send:  'always',
+			emptytext: 'Bewerk',
+			title: 'Selecteer uitvoerdatum',
+			validate: function(value) {
+				if($.trim(value) == '')
+					return 'Vul een datum in';
+				}
 		});
 		<?php if ($offer_last) { ?>
 		$('#dob').editable({
@@ -247,7 +260,12 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="col-md-3"></div>
 							</div>
 							<div class="row">
-								<div class="col-md-3">Stelposten stellen</div>
+								<div class="col-md-3">Geplande opleverdatum <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in dat je het moet/wilt/verwacht opleveren" href="#"><i class="fa fa-info-circle"></i></a></div>
+								<div class="col-md-2"><a href="#" id="wordcompl" data-format="dd-mm-yyyy">{{ $project->work_completion ? date('d-m-Y', strtotime($project->work_completion)) : '' }}</a></div>
+								<div class="col-md-3"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Stelposten gesteld</div>
 								<div class="col-md-2"><i>{{ $project->start_estimate ? date('d-m-Y', strtotime($project->start_estimate)) : '' }}</i></div>
 								<div class="col-md-3"><i>{{ $project->update_estimate ? 'Laatste wijziging: '.date('d-m-Y', strtotime($project->update_estimate)) : '' }}</i></div>
 							</div>

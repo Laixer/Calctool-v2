@@ -216,6 +216,32 @@ class ProjectController extends \BaseController {
 
 	}
 
+	public function doUpdateWorkCompletion()
+	{
+		$rules = array(
+			'pk' => array('required','integer'),
+			'value' => array('required'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			// redirect our user back to the form with the errors from the validator
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+			$project = Project::find(Input::get('pk'));
+			$project->work_completion = date('Y-m-d', strtotime(Input::get('value')));
+
+			$project->save();
+
+			return json_encode(['success' => 1]);
+		}
+
+	}
+
 	public function doUpdateProjectClose()
 	{
 		$rules = array(
