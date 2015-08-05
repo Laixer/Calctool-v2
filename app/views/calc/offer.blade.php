@@ -1022,7 +1022,15 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						</select> na dagtekening.
 						@endif
 					</li>
+					<li>
+						@if ($offer_last && $offer_last->offer_finish)
+						{{ $offer_last->extracondition }}
+						@else
+							<textarea name="extracondition" id="extracondition" rows="2" class="form-control">{{ ($offer_last ? $offer_last->extracondition : Auth::user()->pref_closure_invoice) }}</textarea>
+						@endif
+					</li>
 				</ul>
+
 				<br>
 				<p>Met vriendelijke groet,
 					<br>
@@ -1275,7 +1283,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			<hr class="margin-top10 margin-bottom10">
 			<!--PAGE HEADER END-->
 
-			<!-- DECRIPTION CON&SUBCON START -->
+			<!-- DESCRIPTION CON&SUBCON START -->
 			<div class="show-all" style="display:none;">
 				<h4>Aanneming</h4>
 				<table class="table table-striped">
@@ -1321,9 +1329,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					</tbody>
 				</table>
 			</div>
-			<!-- DECRIPTION CON&SUBCON END -->
+			<!-- DESCRIPTION CON&SUBCON END -->
 
-			<!-- DECRIPTION TOTAL START -->
+			<!-- DESCRIPTION TOTAL START -->
 			<div class="show-totals">
 				<h4>Omschrijving werkzaamheden</h4>
 				<table class="table table-striped">
@@ -1347,7 +1355,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					</tbody>
 				</table>
 			</div>
-			<!-- DECRIPTION TOTAL END -->
+			<!-- DESCRIPTION TOTAL END -->
 
 			<!-- INVOICE FOOTER START -->
 			<div class="row">
