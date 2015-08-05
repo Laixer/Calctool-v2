@@ -72,7 +72,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       </thead>
       <tbody>
         <tr>
-          <td class="qty">{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()+1}}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen.</td>
+          <td class="qty">{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()}}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen.</td>
           <td class="qty">{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
