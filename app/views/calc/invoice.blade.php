@@ -615,7 +615,7 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 				</tbody>
 			</table>
 
-			<h4>Cumulatieven factuur</h4>
+			<h4>Totalen Factuur</h4>
 			<table class="table table-striped hide-btw2">
 				<thead>
 					<tr>
@@ -781,7 +781,7 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 					</tr>
 				</tbody>
 			</table>
-			<h4>Cumulatieven factuur</h4>
+			<h4>Totalen Factuur</h4>
 			<table class="table table-striped hide-btw2">
 				<thead>
 					<tr>

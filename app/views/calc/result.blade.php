@@ -313,7 +313,7 @@ $(document).ready(function() {
 							</tbody>
 						</table>
 
-						<h4>Cumulatieven</h4>
+						<h4>Totalen</h4>
 						<table class="table table-striped">
 							<?# -- table head -- ?>
 							<thead>

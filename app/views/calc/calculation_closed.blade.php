@@ -814,7 +814,7 @@ $project = Project::find(Route::Input('project_id'));
 							</tbody>
 						</table>
 
-						<h4>Cumulatieven Offerte</h4>
+						<h4>Totalen Offerte</h4>
 						<table class="table table-striped">
 							<?# -- table head -- ?>
 							<thead>

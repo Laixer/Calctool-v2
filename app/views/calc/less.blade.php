@@ -1266,7 +1266,7 @@ var n = this,
 							</tbody>
 						</table>
 
-						<h4>Cumulatieven Offerte</h4>
+						<h4>Totalen Minderwerk</h4>
 						<table class="table table-striped">
 							<?# -- table head -- ?>
 							<thead>

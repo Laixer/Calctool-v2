@@ -708,7 +708,7 @@ $project = Project::find(Route::Input('project_id'));
 							</tbody>
 						</table>
 
-						<h4>Cumulatieven Stelpost</h4>
+						<h4>Totalen Stelpost</h4>
 						<table class="table table-striped">
 							<?# -- table head -- ?>
 							<thead>
