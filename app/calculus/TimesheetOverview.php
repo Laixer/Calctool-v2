@@ -217,4 +217,52 @@ class TimesheetOverview {
 		return $total;
 	}
 
+	public static function timesheetTotalAmount($project) {
+		$total = 0;
+
+		$chapters = Chapter::where('project_id','=', $project->id)->get();
+		foreach ($chapters as $chapter)
+		{
+			$activities = Activity::where('chapter_id','=', $chapter->id)->get();
+			foreach ($activities as $activity)
+			{
+				$total += Timesheet::where('activity_id','=', $activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour');
+			}
+		}
+
+		return $total;
+	}
+
+	public static function timesheetTotalTimesheet($project) {
+		$total = 0;
+
+		$chapters = Chapter::where('project_id','=', $project->id)->get();
+		foreach ($chapters as $chapter)
+		{
+			$activities = Activity::where('chapter_id','=', $chapter->id)->get();
+			foreach ($activities as $activity)
+			{
+				$total += Timesheet::where('activity_id','=', $activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour');
+			}
+		}
+
+		return $total;
+	}
+
+	public static function moreTotalTimesheet($project) {
+		$total = 0;
+
+		$chapters = Chapter::where('project_id','=', $project->id)->get();
+		foreach ($chapters as $chapter)
+		{
+			$activities = Activity::where('chapter_id','=', $chapter->id)->get();
+			foreach ($activities as $activity)
+			{
+				$total += MoreLabor::where('activity_id','=', $activity->id)->whereNull('hour_id')->sum('amount');
+			}
+		}
+
+		return $total;
+	}
+
 }
