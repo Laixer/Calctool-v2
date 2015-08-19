@@ -343,8 +343,6 @@ var n = this,
 		$("body").on("blur", ".tsave", function(){
 			var flag = true;
 			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				return false;
 			$curThis.closest("tr").find("input").each(function(){
 				if(!$(this).val())
 					flag = false;

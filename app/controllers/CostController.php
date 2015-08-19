@@ -45,7 +45,7 @@ class CostController extends BaseController {
 				'register_date' => Input::get('date'),
 				'register_hour' => str_replace(',', '.', str_replace('.', '' , Input::get('hour'))),
 				'activity_id' => Input::get('activity'),
-				//'note' => Input::get('note'), //verwijderenden na release
+				'note' => Input::get('note'),
 				'timesheet_kind_id' => Input::get('type')
 			));
 
