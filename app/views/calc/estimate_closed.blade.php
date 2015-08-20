@@ -137,7 +137,7 @@ $project = Project::find(Route::Input('project_id'));
 
 							@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 							<?php
-							$acts = Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->count();
+							$acts = Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->count();
 							if (!$acts)
 								continue;
 							?>
@@ -148,7 +148,7 @@ $project = Project::find(Route::Input('project_id'));
 									<div class="toogle">
 
 										<?php
-										foreach(Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->get() as $activity) {
+										foreach(Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->get() as $activity) {
 											if (Part::find($activity->part_id)->part_name=='contracting') {
 												$profit_mat = $project->profit_calc_contr_mat;
 												$profit_equip = $project->profit_calc_contr_equip;
@@ -369,7 +369,7 @@ $project = Project::find(Route::Input('project_id'));
 										<!-- table items -->
 										<tbody>
 											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->get() as $activity)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->get() as $activity)
 											<tr><!-- item -->
 												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
@@ -417,7 +417,7 @@ $project = Project::find(Route::Input('project_id'));
 										<!-- table items -->
 										<tbody>
 											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->get() as $activity)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->get() as $activity)
 											<tr><!-- item -->
 												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
