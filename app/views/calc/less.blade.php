@@ -729,7 +729,14 @@ var n = this,
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format($labor->isless ? $labor->less_amount : $labor->amount, 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($labor->rate, $labor->isless ? $labor->less_amount : $labor->amount), 2, ",",".") }}</span></td>
-															<th class="col-md-1">{{ '&euro; '.number_format(LessRegister::lessLaborDeltaTotal($labor), 2, ",",".") }}</th>
+															<th class="col-md-1"><?php
+																$minderw=LessRegister::lessLaborDeltaTotal($labor);
+																if($minderw <0)
+																	echo "<font color=red>&euro; ".number_format($minderw, 2, ",",".")."</font>";
+																else
+																	echo '&euro; '.number_format($minderw, 2, ",",".");
+																?>
+															</th>
 															<td class="col-md-1 text-right"><button class="btn btn-warning lresetrow btn-xs fa fa-undo"></button></td>
 														</tr>
 														@endforeach
@@ -780,7 +787,10 @@ var n = this,
 																if ($material->isless) {
 																	$total = ($material->rate * $material->amount) * ((100+$profit)/100);
 																	$less_total = ($material->less_rate * $material->less_amount) * ((100+$profit)/100);
-																	echo '&euro; '.number_format($less_total-$total, 2, ",",".");
+																	if($less_total-$total <0)
+																		echo "<font color=red>&euro; ".number_format($less_total-$total, 2, ",",".")."</font>";
+																	else
+																		echo '&euro; '.number_format($less_total-$total, 2, ",",".");
 																} else {
 																	echo '&euro; 0,00';
 																}
@@ -857,7 +867,10 @@ var n = this,
 																if ($equipment->isless) {
 																	$total = ($equipment->rate * $equipment->amount) * ((100+$profit)/100);
 																	$less_total = ($equipment->less_rate * $equipment->less_amount) * ((100+$profit)/100);
-																	echo '&euro; '.number_format($less_total-$total, 2,",",".");
+																	if($less_total-$total <0)
+																		echo "<font color=red>&euro; ".number_format($less_total-$total, 2, ",",".")."</font>";
+																	else
+																		echo '&euro; '.number_format($less_total-$total, 2, ",",".");
 																} else {
 																	echo '&euro; 0,00';
 																}
