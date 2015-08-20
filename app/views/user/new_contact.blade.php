@@ -1,13 +1,30 @@
 <?php
+$common_access_error = false;
 $relation = Relation::find(Route::Input('relation_id'));
-$contact = Contact::where('relation_id','=',$relation->id)->first();
+if (!$relation || !$relation->isOwner()) {
+	$common_access_error = true;
+} else {
+	$contact = Contact::where('relation_id','=',$relation->id)->first();
+}
 ?>
 
 @extends('layout.master')
 
+<?php if($common_access_error){ ?>
 @section('content')
-<?# -- WRAPPER -- ?>
+<div id="wrapper">
+	<section class="container">
+		<div class="alert alert-danger">
+			<i class="fa fa-frown-o"></i>
+			<strong>Fout</strong>
+			Deze relatie bestaat niet
+		</div>
+	</section>
+</div>
+@stop
+<?php }else{ ?>
 
+@section('content')
 <div id="wrapper">
 
 	<section class="container">
@@ -109,3 +126,5 @@ $contact = Contact::where('relation_id','=',$relation->id)->first();
 <?#-- /WRAPPER --?>
 
 @stop
+
+<?php } ?>

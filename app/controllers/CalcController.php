@@ -27,7 +27,7 @@ class CalcController extends BaseController {
 	public function getEstimate()
 	{
 		$project = Project::find(Route::Input('project_id'));
-		if ($project->project_close)
+		if ($project && $project->project_close)
 			return View::make('calc.estimate_closed');
 		return View::make('calc.estimate');
 	}
@@ -35,7 +35,7 @@ class CalcController extends BaseController {
 	public function getLess()
 	{
 		$project = Project::find(Route::Input('project_id'));
-		if ($project->project_close)
+		if ($project && $project->project_close)
 			return View::make('calc.less_closed');
 		return View::make('calc.less');
 	}
@@ -43,7 +43,7 @@ class CalcController extends BaseController {
 	public function getMore()
 	{
 		$project = Project::find(Route::Input('project_id'));
-		if ($project->project_close)
+		if ($project && $project->project_close)
 			return View::make('calc.more_closed');
 		return View::make('calc.more');
 	}

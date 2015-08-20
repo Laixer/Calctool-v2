@@ -4,6 +4,9 @@ $specification=Input::get("specification");
 $description=Input::get("description");
 $term=Input::get("term");
 $project = Project::find(Route::Input('project_id'));
+if (!$project || !$project->isOwner()) {
+  exit();
+}
 $relation = Relation::find($project->client_id);
 $relation_self = Relation::find(Auth::user()->self_id);
   if ($relation_self)
