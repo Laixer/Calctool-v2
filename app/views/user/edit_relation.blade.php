@@ -38,6 +38,30 @@ $(document).ready(function() {
 			$(this).parent().removeClass('has-error');
 		}
 	});
+
+	$('#btw').blur(function() {
+		var btwcheck = $(this).val().trim();
+		if (btwcheck.length != 14) {
+			$(this).addClass("error-input");
+		}else {
+			$(this).removeClass("error-input");
+		}
+	});
+
+
+	$('#street').blur(function() {
+		var streetcheck = $(this).val();
+		var regx = /^[A-Za-z]+$/;
+		if( streetcheck != "" && regx.test(streetcheck)) {
+			$(this).removeClass("error-input");
+		}else {
+			$(this).addClass("error-input");
+		}
+	});
+
+
+
+
 });
 </script>
 
