@@ -1,6 +1,6 @@
 <?php
 
-class CostController extends BaseController {
+class CostController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------

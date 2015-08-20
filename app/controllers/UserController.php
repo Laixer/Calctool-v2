@@ -2,7 +2,7 @@
 
 use Illuminate\Support\MessageBag;
 
-class UserController extends \BaseController {
+class UserController extends Controller {
 
 	/**
 	 * Display a listing of the resource.

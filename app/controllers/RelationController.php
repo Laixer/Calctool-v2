@@ -1,6 +1,6 @@
 <?php
 
-class RelationController extends \BaseController {
+class RelationController extends Controller {
 
 	/**
 	 * Display a listing of the resource.

@@ -1,6 +1,6 @@
 <?php
 
-class LessController extends BaseController {
+class LessController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------

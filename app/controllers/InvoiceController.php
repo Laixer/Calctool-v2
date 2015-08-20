@@ -1,6 +1,6 @@
 <?php
 
-class InvoiceController extends BaseController {
+class InvoiceController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------

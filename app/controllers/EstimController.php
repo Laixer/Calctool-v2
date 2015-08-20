@@ -1,6 +1,6 @@
 <?php
 
-class EstimController extends BaseController {
+class EstimController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------

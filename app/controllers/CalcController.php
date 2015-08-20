@@ -1,6 +1,6 @@
 <?php
 
-class CalcController extends BaseController {
+class CalcController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -18,9 +18,11 @@ class CalcController extends BaseController {
 	public function getCalculation()
 	{
 		$project = Project::find(Route::Input('project_id'));
-		$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
-		if ($offer_last && $offer_last->offer_finish)
-			return View::make('calc.calculation_closed');
+		if ($project) {
+			$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+			if ($offer_last && $offer_last->offer_finish)
+				return View::make('calc.calculation_closed');
+		}
 		return View::make('calc.calculation');
 	}
 
@@ -117,10 +119,15 @@ class CalcController extends BaseController {
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 
+			$project = Project::find(Route::Input('project_id'));
+			if (!$project || !$project->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
+
 			$chapter = new Chapter;
 			$chapter->chapter_name = Input::get('chapter');
 			$chapter->priority = 0;
-			$chapter->project_id = Route::Input('project_id');
+			$chapter->project_id = $project->id;
 
 			$chapter->save();
 
@@ -142,6 +149,11 @@ class CalcController extends BaseController {
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 
+			$chapter = Chapter::find(Route::Input('chapter_id'));
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
+
 			$part = Part::where('part_name','=','contracting')->first();
 			$part_type = PartType::where('type_name','=','calculation')->first();
 			$tax = Tax::where('tax_rate','=',21)->first();
@@ -149,7 +161,7 @@ class CalcController extends BaseController {
 			$activity = new Activity;
 			$activity->activity_name = Input::get('activity');
 			$activity->priority = 0;
-			$activity->chapter_id = Route::Input('chapter_id');
+			$activity->chapter_id = $chapter->id;
 			$activity->part_id = $part->id;
 			$activity->part_type_id = $part_type->id;
 			$activity->tax_calc_labor_id = $tax->id;
@@ -182,6 +194,11 @@ class CalcController extends BaseController {
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 
+			$chapter = Chapter::find(Route::Input('chapter_id'));
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
+
 			$part = Part::where('part_name','=','contracting')->first();
 			$part_type = PartType::where('type_name','=','estimate')->first();
 			$tax = Tax::where('tax_rate','=',21)->first();
@@ -189,7 +206,7 @@ class CalcController extends BaseController {
 			$activity = new Activity;
 			$activity->activity_name = Input::get('activity');
 			$activity->priority = 0;
-			$activity->chapter_id = Route::Input('chapter_id');
+			$activity->chapter_id = $chapter->id;
 			$activity->part_id = $part->id;
 			$activity->part_type_id = $part_type->id;
 			$activity->tax_calc_labor_id = $tax->id;
@@ -224,8 +241,16 @@ class CalcController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
-			$type = Input::get('type');
+
 			$activity = Activity::find(Input::get('activity'));
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
+			$type = Input::get('type');
 			if ($type == 'calc-labor')
 				$activity->tax_calc_labor_id = Input::get('value');
 			if ($type == 'calc-material')

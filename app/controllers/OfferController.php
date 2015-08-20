@@ -1,6 +1,6 @@
 <?php
 
-class OfferController extends BaseController {
+class OfferController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------
