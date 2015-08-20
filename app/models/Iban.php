@@ -11,4 +11,7 @@ class Iban extends Eloquent {
 		return $this->hasOne('User');
 	}
 
+	public function isOwner() {
+		return Auth::id() == $this->user_id;
+	}
 }

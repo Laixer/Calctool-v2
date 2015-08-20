@@ -13,4 +13,7 @@ class Resource extends Eloquent {
 		return $this->hasOne('Project');
 	}
 
+	public function isOwner() {
+		return Auth::id() == $this->user_id;
+	}
 }

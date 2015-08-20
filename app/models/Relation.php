@@ -29,4 +29,7 @@ class Relation extends Eloquent {
 		return $this->hasOne('RelationKind', 'id');
 	}
 
+	public function isOwner() {
+		return Auth::id() == $this->user_id;
+	}
 }
