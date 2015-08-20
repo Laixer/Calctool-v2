@@ -91,11 +91,7 @@ App::error(function(Illuminate\Session\TokenMismatchException $exception, $code)
     |    Or just:
     */
 
-    $errors = [
-        '_token' => [
-            'Token mismatch, please try again'
-        ]
-    ];
+    $errors = ['_token' => ['Token komt niet overeen, probeer opnieuw']];
 
     /**
      * Generate a new token for more security
