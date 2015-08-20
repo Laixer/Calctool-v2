@@ -152,4 +152,33 @@ class CostController extends BaseController {
 		}
 	}
 
+	public function getActivityByType()
+	{
+		switch (Route::input('type')) {
+			case 1:
+				$rs = [];
+				foreach (Chapter::where('project_id','=', Route::input('project_id'))->get() as $chapter)
+				foreach (Activity::select(['id','activity_name'])->whereNull('detail_id')->where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->get() as $activity)
+					array_push($rs, $activity);
+				return $rs;
+				break;
+			case 2:
+				$rs = [];
+				foreach (Chapter::where('project_id','=', Route::input('project_id'))->get() as $chapter)
+				foreach (Activity::select(['id','activity_name'])->whereNull('detail_id')->where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->get() as $activity)
+					array_push($rs, $activity);
+				return $rs;
+				break;
+			case 3:
+				$rs = [];
+				foreach (Chapter::where('project_id','=', Route::input('project_id'))->get() as $chapter)
+				foreach (Activity::select(['id','activity_name'])->where('chapter_id','=', $chapter->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
+					array_push($rs, $activity);
+				return $rs;
+				break;
+		}
+
+		return json_encode(['success' => 1]);
+	}
+
 }

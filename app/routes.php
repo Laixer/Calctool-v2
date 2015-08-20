@@ -180,6 +180,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('timesheet', array('as' => 'timesheet', 'uses' => 'CostController@getTimesheet'));
 	Route::post('timesheet/new', array('as' => 'timesheet', 'uses' => 'CostController@doNewTimesheet'));
 	Route::post('timesheet/delete', array('as' => 'timesheet', 'uses' => 'CostController@doDeleteTimesheet'));
+	Route::get('timesheet/activity/{project_id}/{type}', array('uses' => 'CostController@getActivityByType'))->where('project_id', '[0-9]+')->where('type', '[0-9]+');
 	Route::get('purchase', array('as' => 'purchase', 'uses' => 'CostController@getPurchase'));
 	Route::post('purchase/new', array('as' => 'purchase', 'uses' => 'CostController@doNewPurchase'));
 	Route::post('purchase/delete', array('as' => 'timesheet', 'uses' => 'CostController@doDeletePurchase'));
