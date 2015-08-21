@@ -26,21 +26,21 @@ if (!$project || !$project->isOwner())
 $(document).ready(function() {
 
 	$('#tab-result').click(function(e){
-		sessionStorage.toggleTabRes{{Auth::user()->id}} = 'result';
+		sessionStorage.toggleTabRes{{Auth::user()->id}} = 'result'
 	});
 	$('#tab-budget').click(function(e){
-		sessionStorage.toggleTabRes{{Auth::user()->id}} = 'budget';
+		sessionStorage.toggleTabRes{{Auth::user()->id}} = 'budget'
 	});
 	$('#tab-hour_overview').click(function(e){
-		sessionStorage.toggleTabRes{{Auth::user()->id}} = 'hour_overview';
+		sessionStorage.toggleTabRes{{Auth::user()->id}} = 'hour_overview'
 	});
 
 	if (sessionStorage.toggleTabRes{{Auth::user()->id}}){
-		$toggleOpenTab = sessionStorage.toggleTabRes{{Auth::user()->id}};
+		$toggleOpenTab = sessionStorage.toggleTabRes{{Auth::user()->id}}
 		$('#tab-'+$toggleOpenTab).addClass('active');
 		$('#'+$toggleOpenTab).addClass('active');
 	} else {
-		sessionStorage.toggleTabRes{{Auth::user()->id}} = 'result';
+		sessionStorage.toggleTabRes{{Auth::user()->id}} = 'result'
 		$('#tab-result').addClass('active');
 		$('#result').addClass('active');
 	}
@@ -413,7 +413,6 @@ $(document).ready(function() {
 									<label>Aanneming</label>
 									<div class="toggle-content">
 									<table class="table table-striped">
-										<?# -- table head -- ?>
 										<thead>
 											<tr>
 												<th class="col-md-3">&nbsp;</th>
@@ -433,8 +432,7 @@ $(document).ready(function() {
 											<tr>
 												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
-												<td class="col-md-2"><span class="pull-right"><?php $X = TimesheetOverview::calcOrigTotalAmount($activity->id); $rs_1 += $X; echo $X ? number_format($X, 2,",",".") : '-'; ?></span></td>
-<!-- TODO Totaal moet gequeryd worden -->
+												<td class="col-md-2"><span class="pull-right">{{ TimesheetOverview::calcOrigTotalAmount($activity->id); }}<?php //$X = TimesheetOverview::calcOrigTotalAmount($activity->id); $rs_1 += $X; echo $X ? number_format($X, 2,",",".") : '-'; ?></span></td>
 												<td class="col-md-1"><span class="pull-right"><?php $X = (TimesheetOverview::calcLessTotalAmount($activity->id)-TimesheetOverview::calcOrigTotalAmount($activity->id)); $rs_2 += $X; echo $X ? number_format($X, 2,",",".") : '-'; ?></span></td>
 												<td class="col-md-1"><span class="pull-right"><?php $X = Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'); $rs_3 += $X; echo $X ? number_format($X, 2,",",".") : '-'; ?></span></td>
 												<td class="col-md-1"><span class="pull-right"><?php $Y = (TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour')); if ($Y && $X){ $rs_4 += $Y; echo number_format($Y, 2,",","."); }else{ echo '-'; } ?></span></td>
@@ -444,7 +442,7 @@ $(document).ready(function() {
 											@endforeach
 											<tr>
 												<th class="col-md-3"><strong>Totaal Aanneming</strong></th>
-												<th class="col-md-3">&nbsp;</th>;
+												<th class="col-md-3">&nbsp;</th>
 												<td class="col-md-2"><strong><span class="pull-right">{{ number_format($rs_1, 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ number_format($rs_2, 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ number_format($rs_3, 2, ",",".") }}</span></strong></td>
