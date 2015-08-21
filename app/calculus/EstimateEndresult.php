@@ -15,24 +15,11 @@ class EstimateEndresult {
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
+					$cnt = EstimateLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->count('id');
 
-					/*$amount_set_hour = EstimateLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->where('isset','=','true')->sum('set_amount');
-					$amount_set = EstimateLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->where('isset','=','true')->sum('set_amount');
-					$amount = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','false')->sum('amount');
-					if (!$activity->hour_id)
-						$total += $amount_set + $amount;
-					else
-						$total += $amount_set_hour;*/
-
-					//$total += $amount_set;// + $amount;
-					//$total += $amount;
-				//} else {
-				//	$total += CalculationLabor::where('activity_id','=',$activity->id)->sum('amount');
-					if ($activity->hour_id) {
-						// ja
+					if ($cnt) {
 						$total += EstimateLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->sum('set_amount');
 					} else {
-						// nee
 						$amount_set = EstimateLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->where('isset','=','true')->sum('set_amount');
 						$amount = EstimateLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->where('isset','=','false')->sum('amount');
 						$total += $amount_set + $amount;
@@ -55,12 +42,16 @@ class EstimateEndresult {
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
-					$amount_set = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','true')->sum('set_amount');
-					$amount = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','false')->sum('amount');
+					$cnt = EstimateLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->count('id');
 
-					$total += $amount_set + $amount;
-				} else {
-					$total += CalculationLabor::where('activity_id','=',$activity->id)->sum('amount');
+					if ($cnt) {
+						$total += EstimateLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->sum('set_amount');
+					} else {
+						$amount_set = EstimateLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->where('isset','=','true')->sum('set_amount');
+						$amount = EstimateLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->where('isset','=','false')->sum('amount');
+						$total += $amount_set + $amount;
+					}
+
 				}
 			}
 		}
@@ -78,12 +69,16 @@ class EstimateEndresult {
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
-					$amount_set = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','true')->sum('set_amount');
-					$amount = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','false')->sum('amount');
+					$cnt = EstimateLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->count('id');
 
-					$total += $amount_set + $amount;
-				} else {
-					$total += CalculationLabor::where('activity_id','=',$activity->id)->sum('amount');
+					if ($cnt) {
+						$total += EstimateLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->sum('set_amount');
+					} else {
+						$amount_set = EstimateLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->where('isset','=','true')->sum('set_amount');
+						$amount = EstimateLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->where('isset','=','false')->sum('amount');
+						$total += $amount_set + $amount;
+					}
+
 				}
 			}
 		}
@@ -396,19 +391,16 @@ class EstimateEndresult {
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
-					$rows = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
-					$set_rows = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
-				} else {
-					$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
-					$set_rows = [];
-				}
-				foreach ($rows as $row)
-				{
-					$total += $row->amount;
-				}
-				foreach ($set_rows as $row)
-				{
-					$total += $row->set_amount;
+					$cnt = EstimateLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->count('id');
+
+					if ($cnt) {
+						$total += EstimateLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->sum('set_amount');
+					} else {
+						$amount_set = EstimateLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->where('isset','=','true')->sum('set_amount');
+						$amount = EstimateLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->where('isset','=','false')->sum('amount');
+						$total += $amount_set + $amount;
+					}
+
 				}
 			}
 		}
@@ -426,19 +418,16 @@ class EstimateEndresult {
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
-					$rows = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
-					$set_rows = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
-				} else {
-					$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
-					$set_rows = [];
-				}
-				foreach ($rows as $row)
-				{
-					$total += $row->amount;
-				}
-				foreach ($set_rows as $row)
-				{
-					$total += $row->set_amount;
+					$cnt = EstimateLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->count('id');
+
+					if ($cnt) {
+						$total += EstimateLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->sum('set_amount');
+					} else {
+						$amount_set = EstimateLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->where('isset','=','true')->sum('set_amount');
+						$amount = EstimateLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->where('isset','=','false')->sum('amount');
+						$total += $amount_set + $amount;
+					}
+
 				}
 			}
 		}
@@ -456,19 +445,16 @@ class EstimateEndresult {
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
-					$rows = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
-					$set_rows = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
-				} else {
-					$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
-					$set_rows = [];
-				}
-				foreach ($rows as $row)
-				{
-					$total += $row->amount;
-				}
-				foreach ($set_rows as $row)
-				{
-					$total += $row->set_amount;
+					$cnt = EstimateLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->count('id');
+
+					if ($cnt) {
+						$total += EstimateLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->sum('set_amount');
+					} else {
+						$amount_set = EstimateLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->where('isset','=','true')->sum('set_amount');
+						$amount = EstimateLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->where('isset','=','false')->sum('amount');
+						$total += $amount_set + $amount;
+					}
+
 				}
 			}
 		}
@@ -486,20 +472,17 @@ class EstimateEndresult {
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
-					$rows = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
-					$set_rows = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
+					$cnt = EstimateLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->count('id');
+
+					if ($cnt) {
+						$total += EstimateLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->sum('set_amount');
 					} else {
-						$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
-						$set_rows = [];
+						$amount_set = EstimateLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->where('isset','=','true')->sum('set_amount');
+						$amount = EstimateLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->where('isset','=','false')->sum('amount');
+						$total += $amount_set + $amount;
 					}
-					foreach ($rows as $row)
-					{
-						$total += $row->rate * $row->amount;
-					}
-					foreach ($set_rows as $row)
-					{
-						$total += $row->rate * $row->set_amount;
-					}
+//ELKE REGEL MOET KEER EEN EIGEN RATE
+				}
 				}
 			}
 

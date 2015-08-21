@@ -863,7 +863,7 @@ var n = this,
 														if ($count) {
 														?>
 														@foreach (EstimateLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->get() as $labor)
-														<tr data-id="{{ $labor->id }}">
+														<tr data-id="{{ $labor->hour_id }}">
 															<td class="col-md-1">{{ Timesheet::find($labor->hour_id)->register_date }}</td>
 															<td class="col-md-1">{{ number_format($labor->set_amount, 2,",",".") }}</td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(EstimateRegister::estimLaborTotal($labor->original ? ($labor->isset ? $labor->set_rate : $labor->rate) : $labor->set_rate, $labor->original ? ($labor->isset ? $labor->set_amount : $labor->amount) : $labor->set_amount), 2, ",",".") }}</span></td>
