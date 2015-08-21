@@ -226,3 +226,17 @@ Route::group(array('before' => 'admin'), function()
 	});
 	Route::get('admin/log/truncate', array('as' => 'user', 'uses' => 'AdminController@doTruncateLog'));
 });
+
+Route::any('telegram', function(){
+	$API_KEY = '115805531:AAG-2phcA_6ITwev3WbdBBcCVz4OaFLmZJI';
+	$BOT_NAME = 'calctool_bot';
+
+	try {
+	    // create Telegram API object
+	    $telegram = new Longman\TelegramBot\Telegram($API_KEY, $BOT_NAME);
+
+	    echo $telegram->handle();
+	} catch (Longman\TelegramBot\Exception\TelegramException $e) {
+	    echo $e->getMessage();
+	}
+});

@@ -10,7 +10,8 @@
 		"barryvdh/laravel-snappy": "0.1.x",
 		"mollie/mollie-api-php": "1.2.x",
 		"bogardo/mailgun": "3.1.*",
-		"lucadegasperi/oauth2-server-laravel": "3.*"
+		"lucadegasperi/oauth2-server-laravel": "3.*",
+		"longman/telegram-bot": "*"
 	},
 	"autoload": {
 		"classmap": [
