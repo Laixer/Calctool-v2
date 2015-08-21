@@ -104,7 +104,7 @@ class UserController extends Controller {
 			$order->increment = $increment_months;
 			$order->description = $description;
 			$order->method = '';
-			$order->user_id = Auth::user()->id;
+			$order->user_id = Auth::id();
 
 			$order->save();
 
@@ -352,6 +352,9 @@ class UserController extends Controller {
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 			$iban = Iban::find(Input::get('id'));
+			if (!$iban || !$iban->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
 			$iban->iban = Input::get('iban');
 			$iban->iban_name = Input::get('iban_name');
 
@@ -384,7 +387,7 @@ class UserController extends Controller {
 			$iban = new Iban;
 			$iban->iban = Input::get('iban');
 			$iban->iban_name = Input::get('iban_name');
-			$iban->user_id = Auth::user()->id;
+			$iban->user_id = Auth::id();
 
 			$iban->save();
 
@@ -394,8 +397,6 @@ class UserController extends Controller {
 
 	public function doUpdatePreferences()
 	{
-		print_r(Input::all());
-
 		$user = Auth::user();
 		if (Input::get('pref_mailings_optin'))
 			$user->pref_mailings_optin = true;

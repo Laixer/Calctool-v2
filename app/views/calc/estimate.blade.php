@@ -591,7 +591,7 @@ var n = this,
 		$("body").on("click", ".edeleterow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
-				$.post("/calculation/calc/deleteequipment", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(){
+				$.post("/estimate/deleteequipment", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(){
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});

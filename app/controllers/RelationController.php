@@ -67,6 +67,9 @@ class RelationController extends Controller {
 
 			/* General */
 			$relation = Relation::find(Input::get('id'));
+			if (!$relation || !$relation->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
 			$relation->note = Input::get('note');
 
 			/* Company */
@@ -129,6 +132,9 @@ class RelationController extends Controller {
 
 			/* General */
 			$relation = Relation::find(Input::get('id'));
+			if (!$relation || !$relation->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
 			$relation->note = Input::get('note');
 			$relation->debtor_code = Input::get('debtor');
 
@@ -179,7 +185,15 @@ class RelationController extends Controller {
 			// redirect our user back to the form with the errors from the validator
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
+
 			$contact = Contact::find(Input::get('id'));
+			if (!$contact)
+				return Redirect::back()->withInput(Input::all());
+			$relation = Relation::find($contact->relation_id);
+			if (!$relation || !$relation->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
+
 			$contact->firstname = Input::get('contact_firstname');
 			$contact->lastname = Input::get('contact_name');
 			$contact->mobile = Input::get('mobile');
@@ -210,7 +224,15 @@ class RelationController extends Controller {
 			// redirect our user back to the form with the errors from the validator
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
+
 			$iban = Iban::find(Input::get('id'));
+			if (!$iban)
+				return Redirect::back()->withInput(Input::all());
+			$relation = Relation::find($iban->relation_id);
+			if (!$relation || !$relation->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
+
 			$iban->iban = Input::get('iban');
 			$iban->iban_name = Input::get('iban_name');
 
@@ -236,10 +258,16 @@ class RelationController extends Controller {
 			// redirect our user back to the form with the errors from the validator
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
+
+			$relation = Relation::find(Input::get('id'));
+			if (!$relation || !$relation->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
+
 			$iban = new Iban;
 			$iban->iban = Input::get('iban');
 			$iban->iban_name = Input::get('iban_name');
-			$iban->relation_id = Input::get('id');
+			$iban->relation_id = $relation->id;
 
 			$iban->save();
 
@@ -278,7 +306,7 @@ class RelationController extends Controller {
 
 			/* General */
 			$relation = new Relation;
-			$relation->user_id = Auth::user()->id;
+			$relation->user_id = Auth::id();
 			$relation->note = Input::get('note');
 			$relation->debtor_code = mt_rand(1000000, 9999999);
 
@@ -354,7 +382,7 @@ class RelationController extends Controller {
 
 			/* General */
 			$relation = new Relation;
-			$relation->user_id = Auth::user()->id;
+			$relation->user_id = Auth::id();
 			$relation->note = Input::get('note');
 			$relation->kind_id = Input::get('relationkind');
 			$relation->debtor_code = Input::get('debtor');
@@ -427,6 +455,12 @@ class RelationController extends Controller {
 			// redirect our user back to the form with the errors from the validator
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
+
+			$relation = Relation::find(Input::get('id'));
+			if (!$relation || !$relation->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
+
 			$contact = new Contact;
 			$contact->firstname = Input::get('contact_firstname');
 			$contact->lastname = Input::get('contact_name');
@@ -434,7 +468,7 @@ class RelationController extends Controller {
 			$contact->phone = Input::get('telephone');
 			$contact->email = Input::get('email');
 			$contact->note = Input::get('note');
-			$contact->relation_id = Input::get('id');
+			$contact->relation_id = $relation->id;
 			$contact->function_id = Input::get('contactfunction');
 
 			$contact->save();
@@ -464,6 +498,12 @@ class RelationController extends Controller {
 			// redirect our user back to the form with the errors from the validator
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
+
+			$relation = Relation::find(Input::get('id'));
+			if (!$relation || !$relation->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
+
 			$contact = new Contact;
 			$contact->firstname = Input::get('contact_firstname');
 			$contact->lastname = Input::get('contact_name');
@@ -471,7 +511,7 @@ class RelationController extends Controller {
 			$contact->phone = Input::get('telephone');
 			$contact->email = Input::get('email');
 			$contact->note = Input::get('note');
-			$contact->relation_id = Input::get('id');
+			$contact->relation_id = $relation->id;
 			$contact->function_id = Input::get('contactfunction');
 
 			$contact->save();
@@ -494,7 +534,16 @@ class RelationController extends Controller {
 			// redirect our user back to the form with the errors from the validator
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
-			Contact::destroy(Input::get('id'));
+
+			$rec = Contact::find(Input::get('id'));
+			if (!$rec)
+				return Redirect::back()->withInput(Input::all());
+			$relation = Relation::find($rec->relation_id);
+			if (!$relation || !$relation->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
+
+			$rec->delete();
 
 			return Redirect::back()->with('success', 1);
 		}
@@ -532,12 +581,15 @@ class RelationController extends Controller {
 				$resource->resource_name = $newname;
 				$resource->file_location = 'user-content/' . $newname;
 				$resource->file_size = $image->filesize();
-				$resource->user_id = Auth::user()->id;
+				$resource->user_id = Auth::id();
 				$resource->description = 'Relatielogo';
 
 				$resource->save();
 
 				$relation = Relation::find(Input::get('id'));
+				if (!$relation || !$relation->isOwner()) {
+					return Redirect::back()->withInput(Input::all());
+				}
 				$relation->logo_id = $resource->id;
 
 				$relation->save();

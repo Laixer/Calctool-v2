@@ -32,6 +32,12 @@ class OfferController extends Controller {
 
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
+
+			$project = Project::find(Route::Input('project_id'));
+			if (!$project || !$project->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
+
 			$offer = new Offer;
 			$offer->to_contact_id = Input::get('to_contact');
 			$offer->from_contact_id = Input::get('from_contact');
@@ -46,7 +52,7 @@ class OfferController extends Controller {
 			$offer->valid_id = Input::get('valid');
 			if (Input::get('terms'))
 				$offer->invoice_quantity = Input::get('terms');
-			$offer->project_id = Route::Input('project_id');
+			$offer->project_id = $project->id;;
 
 			$options = [];
 			if (Input::get('toggle-note'))
@@ -68,7 +74,7 @@ class OfferController extends Controller {
 			$resource->resource_name = $newname;
 			$resource->file_location = 'user-content/' . $newname;
 			$resource->file_size = File::size('user-content/' . $newname);
-			$resource->user_id = Auth::user()->id;
+			$resource->user_id = Auth::id();
 			$resource->description = 'Offerteversie';
 
 			$resource->save();
@@ -103,6 +109,13 @@ class OfferController extends Controller {
 		} else {
 
 			$offer = Offer::find(Input::get('pk'));
+			if (!$offer)
+				return Redirect::back()->withInput(Input::all());
+			$project = Project::find($offer->project_id);
+			if (!$project || !$project->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
+
 			$offer->offer_finish = date('Y-m-d', strtotime(Input::get('value')));
 			$offer->save();
 
