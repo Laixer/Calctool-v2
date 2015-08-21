@@ -172,15 +172,28 @@
 											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
 											<?php
-												$estim = $activity->part_type_id == PartType::where('type_name','=','calculation')->first()->id;
+												$estim = $activity->part_type_id == PartType::where('type_name','=','estimate')->first()->id;
+												$more = $activity->detail_id == Detail::where('detail_name','=','more')->first()->id;
+												$row1 = 0;
+												if ($more){
+													$row1 = MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->sum('amount');
+												}
+												else {
+													if ($estim){
+														$row1 = TimesheetOverview::estimTotalAmount($activity->id);
+													}
+													else {
+														$row1 = TimesheetOverview::calcTotalAmount($activity->id);
+													}
+												}
 											?>
 											<tr>
 												<td class="col-md-2"><strong>{{ $project->project_name }}</strong></td>
 												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
-												<td class="col-md-2">{{ number_format($estim ? TimesheetOverview::estimTotalAmount($activity->id) : TimesheetOverview::calcTotalAmount($activity->id), 2,",","."); }}</td>
+												<td class="col-md-2">{{ number_format($row1, 2,",","."); }}</td>
 												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-1">{{ number_format(($estim ? TimesheetOverview::estimTotalAmount($activity->id) : TimesheetOverview::calcTotalAmount($activity->id))-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour') , 2,",","."); }}</td>
+												<td class="col-md-1">{{ number_format($row1 - Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
 											</tr>
 											@endforeach
 											@endforeach
