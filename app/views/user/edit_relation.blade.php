@@ -1,14 +1,31 @@
 <?php
+$common_access_error = false;
 $relation = Relation::find(Route::Input('relation_id'));
-$iban = Iban::where('relation_id','=',$relation->id)->first();
-$contact = Contact::where('relation_id','=',$relation->id)->first();
+if (!$relation || !$relation->isOwner()) {
+	$common_access_error = true;
+} else {
+	$iban = Iban::where('relation_id','=',$relation->id)->first();
+	$contact = Contact::where('relation_id','=',$relation->id)->first();
+}
 ?>
 
 @extends('layout.master')
 
+<?php if($common_access_error){ ?>
 @section('content')
-<?# -- WRAPPER -- ?>
+<div id="wrapper">
+	<section class="container">
+		<div class="alert alert-danger">
+			<i class="fa fa-frown-o"></i>
+			<strong>Fout</strong>
+			Deze relatie bestaat niet
+		</div>
+	</section>
+</div>
+@stop
+<?php }else{ ?>
 
+@section('content')
 <script type="text/javascript" src="/js/iban.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -38,6 +55,30 @@ $(document).ready(function() {
 			$(this).parent().removeClass('has-error');
 		}
 	});
+
+	$('#btw').blur(function() {
+		var btwcheck = $(this).val().trim();
+		if (btwcheck.length != 14) {
+			$(this).addClass("error-input");
+		}else {
+			$(this).removeClass("error-input");
+		}
+	});
+
+
+	$('#street').blur(function() {
+		var streetcheck = $(this).val();
+		var regx = /^[A-Za-z]+$/;
+		if( streetcheck != "" && regx.test(streetcheck)) {
+			$(this).removeClass("error-input");
+		}else {
+			$(this).addClass("error-input");
+		}
+	});
+
+
+
+
 });
 </script>
 
@@ -80,7 +121,7 @@ $(document).ready(function() {
 					<?# -- tabs -- ?>
 					<ul class="nav nav-tabs">
 						<li class="active">
-							<a href="#company" data-toggle="tab">Bedrijfsgegevens</a>
+							<a href="#company" data-toggle="tab">{{ ucfirst( RelationKind::find($relation->kind_id)->kind_name) }}egegevens</a>
 						</li>
 						<li>
 							<a href="#payment" data-toggle="tab">Betalingsgegevens</a>
@@ -322,3 +363,5 @@ $(document).ready(function() {
 });
 </script>
 @stop
+
+<?php } ?>

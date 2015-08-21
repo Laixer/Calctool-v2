@@ -1,8 +1,25 @@
 <?php
+$common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
+if (!$project || !$project->isOwner())
+	$common_access_error = true;
 ?>
 
 @extends('layout.master')
+
+<?php if($common_access_error){ ?>
+@section('content')
+<div id="wrapper">
+	<section class="container">
+		<div class="alert alert-danger">
+			<i class="fa fa-frown-o"></i>
+			<strong>Fout</strong>
+			Dit project bestaat niet
+		</div>
+	</section>
+</div>
+@stop
+<?php }else{ ?>
 
 @section('content')
 <?# -- WRAPPER -- ?>
@@ -343,8 +360,6 @@ var n = this,
 		$("body").on("blur", ".tsave", function(){
 			var flag = true;
 			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				return false;
 			$curThis.closest("tr").find("input").each(function(){
 				if(!$(this).val())
 					flag = false;
@@ -654,7 +669,7 @@ var n = this,
 														if ($count) {
 														?>
 														@foreach (MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->get() as $labor)
-														<tr data-id="{{ $labor->id }}">
+														<tr data-id="{{ Timesheet::find($labor->hour_id)->id }}">
 															<td class="col-md-1">{{ Timesheet::find($labor->hour_id)->register_date }}</td>
 															<td class="col-md-1">{{ number_format($labor->amount, 2,",",".") }}</td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(MoreRegister::laborTotal($labor->rate, $labor->amount), 2, ",",".") }}</span></td>
@@ -1274,7 +1289,7 @@ var n = this,
 							</tbody>
 						</table>
 
-						<h4>Cumulatieven voor op factureren</h4>
+						<h4>Totalen Meerwerk</h4>
 						<table class="table table-striped">
 							<?# -- table head -- ?>
 							<thead>
@@ -1348,3 +1363,5 @@ var n = this,
 </div>
 <!-- /WRAPPER -->
 @stop
+
+<?php } ?>

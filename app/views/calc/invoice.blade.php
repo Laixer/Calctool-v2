@@ -1,14 +1,33 @@
 <?php
+$common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
-$relation = Relation::find($project->client_id);
-$relation_self = Relation::find(Auth::user()->self_id);
-$contact_self = Contact::where('relation_id','=',$relation_self->id);
-$invoice = Invoice::find(Route::Input('invoice_id'));
-$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
-$invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+if (!$project || !$project->isOwner()) {
+	$common_access_error = true;
+} else {
+	$relation = Relation::find($project->client_id);
+	$relation_self = Relation::find(Auth::user()->self_id);
+	$contact_self = Contact::where('relation_id','=',$relation_self->id);
+	$invoice = Invoice::find(Route::Input('invoice_id'));
+	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+	$invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+}
 ?>
 
 @extends('layout.master')
+
+<?php if($common_access_error){ ?>
+@section('content')
+<div id="wrapper">
+	<section class="container">
+		<div class="alert alert-danger">
+			<i class="fa fa-frown-o"></i>
+			<strong>Fout</strong>
+			Dit project bestaat niet
+		</div>
+	</section>
+</div>
+@stop
+<?php }else{ ?>
 
 @section('content')
 <?# -- WRAPPER -- ?>
@@ -264,7 +283,8 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-endresult" type="checkbox"> Alleen het totale factuurbedrag weergeven
+						          <input name="toggle-endresult" type="checkbox"> Alleen het totale offertebedrag weergeven<br>
+								  (nog niet beschikbaar in PDF)
 						        </label>
 						      </div>
 						    </div>
@@ -278,6 +298,8 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 						      </div>
 						    </div>
 						  </div>
+						  <br>
+						  <strong>De volgende opties worden als bijlage bijgesloten bij de faxctuur</strong>
 						  <div class="form-group">
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
@@ -291,7 +313,8 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-summary" type="checkbox"> Kosten werkzaamheden specificeren
+						          <input name="toggle-summary" type="checkbox"> Kosten werkzaamheden weergeven<br>
+								   (nog niet beschikbaar in PDF)
 						        </label>
 						      </div>
 						    </div>
@@ -300,7 +323,7 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden in bijlage weergeven
+						          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -611,7 +634,7 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 				</tbody>
 			</table>
 
-			<h4>Cumulatieven factuur</h4>
+			<h4>Totalen Factuur</h4>
 			<table class="table table-striped hide-btw2">
 				<thead>
 					<tr>
@@ -777,7 +800,7 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 					</tr>
 				</tbody>
 			</table>
-			<h4>Cumulatieven factuur</h4>
+			<h4>Totalen Factuur</h4>
 			<table class="table table-striped hide-btw2">
 				<thead>
 					<tr>
@@ -1961,3 +1984,5 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 </div>
 <!-- /WRAPPER -->
 @stop
+
+<?php } ?>

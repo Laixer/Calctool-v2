@@ -1,8 +1,25 @@
 <?php
+$common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
+if (!$project || !$project->isOwner())
+	$common_access_error = true;
 ?>
 
 @extends('layout.master')
+
+<?php if($common_access_error){ ?>
+@section('content')
+<div id="wrapper">
+	<section class="container">
+		<div class="alert alert-danger">
+			<i class="fa fa-frown-o"></i>
+			<strong>Fout</strong>
+			Dit project bestaat niet
+		</div>
+	</section>
+</div>
+@stop
+<?php }else{ ?>
 
 @section('content')
 <?# -- WRAPPER -- ?>
@@ -689,7 +706,7 @@ var n = this,
 
 									<div class="toogle">
 
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->get() as $activity)
+										@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->get() as $activity)
 										<div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
 											<label>{{ $activity->activity_name }}</label>
 											<div class="toggle-content">
@@ -729,7 +746,14 @@ var n = this,
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format($labor->isless ? $labor->less_amount : $labor->amount, 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($labor->rate, $labor->isless ? $labor->less_amount : $labor->amount), 2, ",",".") }}</span></td>
-															<th class="col-md-1">{{ '&euro; '.number_format(LessRegister::lessLaborDeltaTotal($labor), 2, ",",".") }}</th>
+															<th class="col-md-1"><?php
+																$minderw=LessRegister::lessLaborDeltaTotal($labor);
+																if($minderw <0)
+																	echo "<font color=red>&euro; ".number_format($minderw, 2, ",",".")."</font>";
+																else
+																	echo '&euro; '.number_format($minderw, 2, ",",".");
+																?>
+															</th>
 															<td class="col-md-1 text-right"><button class="btn btn-warning lresetrow btn-xs fa fa-undo"></button></td>
 														</tr>
 														@endforeach
@@ -780,7 +804,10 @@ var n = this,
 																if ($material->isless) {
 																	$total = ($material->rate * $material->amount) * ((100+$profit)/100);
 																	$less_total = ($material->less_rate * $material->less_amount) * ((100+$profit)/100);
-																	echo '&euro; '.number_format($less_total-$total, 2, ",",".");
+																	if($less_total-$total <0)
+																		echo "<font color=red>&euro; ".number_format($less_total-$total, 2, ",",".")."</font>";
+																	else
+																		echo '&euro; '.number_format($less_total-$total, 2, ",",".");
 																} else {
 																	echo '&euro; 0,00';
 																}
@@ -857,7 +884,10 @@ var n = this,
 																if ($equipment->isless) {
 																	$total = ($equipment->rate * $equipment->amount) * ((100+$profit)/100);
 																	$less_total = ($equipment->less_rate * $equipment->less_amount) * ((100+$profit)/100);
-																	echo '&euro; '.number_format($less_total-$total, 2,",",".");
+																	if($less_total-$total <0)
+																		echo "<font color=red>&euro; ".number_format($less_total-$total, 2, ",",".")."</font>";
+																	else
+																		echo '&euro; '.number_format($less_total-$total, 2, ",",".");
 																} else {
 																	echo '&euro; 0,00';
 																}
@@ -925,7 +955,7 @@ var n = this,
 										<!-- table items -->
 										<tbody>
 											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
 											<tr><!-- item -->
 												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-4">{{ $activity->activity_name }}</td>
@@ -973,7 +1003,7 @@ var n = this,
 										<!-- table items -->
 										<tbody>
 											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
 											<tr><!-- item -->
 												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-4">{{ $activity->activity_name }}</td>
@@ -1266,7 +1296,7 @@ var n = this,
 							</tbody>
 						</table>
 
-						<h4>Cumulatieven Offerte</h4>
+						<h4>Totalen Minderwerk</h4>
 						<table class="table table-striped">
 							<?# -- table head -- ?>
 							<thead>
@@ -1337,3 +1367,5 @@ var n = this,
 </div>
 <!-- /WRAPPER -->
 @stop
+
+<?php } ?>

@@ -1,8 +1,25 @@
 <?php
+$common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
+if (!$project || !$project->isOwner())
+	$common_access_error = true;
 ?>
 
 @extends('layout.master')
+
+<?php if($common_access_error){ ?>
+@section('content')
+<div id="wrapper">
+	<section class="container">
+		<div class="alert alert-danger">
+			<i class="fa fa-frown-o"></i>
+			<strong>Fout</strong>
+			Dit project bestaat niet
+		</div>
+	</section>
+</div>
+@stop
+<?php }else{ ?>
 
 @section('content')
 <?# -- WRAPPER -- ?>
@@ -658,7 +675,7 @@ $project = Project::find(Route::Input('project_id'));
 							</tbody>
 						</table>
 
-						<h4>Cumulatieven voor op factureren</h4>
+						<h4>Totalen Meerwerk</h4>
 						<table class="table table-striped">
 							<?# -- table head -- ?>
 							<thead>
@@ -732,3 +749,5 @@ $project = Project::find(Route::Input('project_id'));
 </div>
 <!-- /WRAPPER -->
 @stop
+
+<?php } ?>

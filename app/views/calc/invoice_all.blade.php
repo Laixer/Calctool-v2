@@ -1,9 +1,28 @@
 <?php
+$common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
-$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+if (!$project || !$project->isOwner()) {
+	$common_access_error = true;
+} else {
+	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+}
 ?>
 
 @extends('layout.master')
+
+<?php if($common_access_error){ ?>
+@section('content')
+<div id="wrapper">
+	<section class="container">
+		<div class="alert alert-danger">
+			<i class="fa fa-frown-o"></i>
+			<strong>Fout</strong>
+			Dit project bestaat niet
+		</div>
+	</section>
+</div>
+@stop
+<?php }else{ ?>
 
 @section('content')
 <?# -- WRAPPER -- ?>
@@ -261,3 +280,5 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 </div>
 <!-- /WRAPPER -->
 @stop
+
+<?php } ?>

@@ -20,6 +20,14 @@ class TimesheetOverview {
 		return $total;
 	}
 
+	public static function calcLessTotalAmount($activity) {
+		return CalculationLabor::where('activity_id','=',$activity)->sum('less_amount');
+	}
+
+	public static function calcOrigTotalAmount($activity) {
+		return CalculationLabor::where('activity_id','=',$activity)->sum('amount');
+	}
+
 	public static function estimTotalAmount($activity) {
 		$total = 0;
 
@@ -40,6 +48,18 @@ class TimesheetOverview {
 		}
 
 		return $total;
+	}
+
+	public static function estimSetTotalAmount($activity) {
+		return EstimateLabor::where('activity_id', '=', $activity)->whereNull('hour_id')->sum('set_amount');
+	}
+
+	public static function estimOrigTotalAmount($activity) {
+		return EstimateLabor::where('activity_id', '=', $activity)->sum('amount');
+	}
+
+	public static function estimTimesheetTotalAmount($activity) {
+		return Timesheet::where('activity_id', '=', $activity)->sum('register_hour');
 	}
 
 	public static function calcTotalHour($rate, $activity) {
@@ -211,6 +231,40 @@ class TimesheetOverview {
 							$total += $project->hour_rate * $row->amount;
 					}
 				}
+			}
+		}
+
+		return $total;
+	}
+
+
+
+	public static function timesheetTotalTimesheet($project) {
+		$total = 0;
+
+		$chapters = Chapter::where('project_id','=', $project->id)->get();
+		foreach ($chapters as $chapter)
+		{
+			$activities = Activity::where('chapter_id','=', $chapter->id)->get();
+			foreach ($activities as $activity)
+			{
+				$total += Timesheet::where('activity_id','=', $activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour');
+			}
+		}
+
+		return $total;
+	}
+
+	public static function moreTotalTimesheet($project) {
+		$total = 0;
+
+		$chapters = Chapter::where('project_id','=', $project->id)->get();
+		foreach ($chapters as $chapter)
+		{
+			$activities = Activity::where('chapter_id','=', $chapter->id)->get();
+			foreach ($activities as $activity)
+			{
+				$total += MoreLabor::where('activity_id','=', $activity->id)->whereNull('hour_id')->sum('amount');
 			}
 		}
 

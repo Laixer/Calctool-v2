@@ -173,12 +173,14 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('project', array('as' => 'project', 'uses' => 'ProjectController@getAll'));
 	Route::get('project-{project_id}/edit', array('as' => 'project.edit', 'uses' => 'ProjectController@getEdit'))->where('project_id', '[0-9]+');
 	Route::post('project/updateworkexecution', array('as' => 'project.edit', 'uses' => 'ProjectController@doUpdateWorkExecution'));
+	Route::post('project/updateworkcompletion', array('as' => 'project.edit', 'uses' => 'ProjectController@doUpdateWorkCompletion'));
 	Route::post('project/updateprojectclose', array('as' => 'project.edit', 'uses' => 'ProjectController@doUpdateProjectClose'));
 
 	/* Cost pages */
 	Route::get('timesheet', array('as' => 'timesheet', 'uses' => 'CostController@getTimesheet'));
 	Route::post('timesheet/new', array('as' => 'timesheet', 'uses' => 'CostController@doNewTimesheet'));
 	Route::post('timesheet/delete', array('as' => 'timesheet', 'uses' => 'CostController@doDeleteTimesheet'));
+	Route::get('timesheet/activity/{project_id}/{type}', array('uses' => 'CostController@getActivityByType'))->where('project_id', '[0-9]+')->where('type', '[0-9]+');
 	Route::get('purchase', array('as' => 'purchase', 'uses' => 'CostController@getPurchase'));
 	Route::post('purchase/new', array('as' => 'purchase', 'uses' => 'CostController@doNewPurchase'));
 	Route::post('purchase/delete', array('as' => 'timesheet', 'uses' => 'CostController@doDeletePurchase'));
@@ -223,4 +225,18 @@ Route::group(array('before' => 'admin'), function()
 		return View::make('admin.log');
 	});
 	Route::get('admin/log/truncate', array('as' => 'user', 'uses' => 'AdminController@doTruncateLog'));
+});
+
+Route::any('telegram', function(){
+	$API_KEY = '115805531:AAG-2phcA_6ITwev3WbdBBcCVz4OaFLmZJI';
+	$BOT_NAME = 'calctool_bot';
+
+	try {
+	    // create Telegram API object
+	    $telegram = new Longman\TelegramBot\Telegram($API_KEY, $BOT_NAME);
+
+	    echo $telegram->handle();
+	} catch (Longman\TelegramBot\Exception\TelegramException $e) {
+	    echo $e->getMessage();
+	}
 });

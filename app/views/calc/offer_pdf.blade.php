@@ -6,12 +6,15 @@ $onlyactivity=Input::get("onlyactivity");
 $c=false;
 
 $project = Project::find(Route::Input('project_id'));
+if (!$project || !$project->isOwner()) {
+  exit();
+}
 $relation = Relation::find($project->client_id);
 $relation_self = Relation::find(Auth::user()->self_id);
 if ($relation_self)
-
-$contact_self = Contact::where('relation_id','=',$relation_self->id);
+   $contact_self = Contact::where('relation_id','=',$relation_self->id);
 $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+
 ?>
 
 <!DOCTYPE html>
@@ -134,7 +137,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         </tbody>
       </table>
 
-      <h1 class="name">Cumulatieven offerte</h1>
+      <h1 class="name">Totalen offerte</h1>
       <table border="0" cellspacing="0" cellpadding="0">
         <thead>
           <tr style="page-break-after: always;">
@@ -397,7 +400,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         </tbody>
       </table>
 
-      <h1 class="name">Cumulatieven offerte</h1>
+      <h1 class="name">Totalen offerte</h1>
       <table border="0" cellspacing="0" cellpadding="0">
         <thead>
           <tr style="page-break-after: always;">

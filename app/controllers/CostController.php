@@ -1,6 +1,6 @@
 <?php
 
-class CostController extends BaseController {
+class CostController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -41,10 +41,19 @@ class CostController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
+
+			$activity = Activity::find(Input::get('activity'));
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
 			$timesheet = Timesheet::create(array(
 				'register_date' => Input::get('date'),
 				'register_hour' => str_replace(',', '.', str_replace('.', '' , Input::get('hour'))),
-				'activity_id' => Input::get('activity'),
+				'activity_id' => $activity->id,
 				'note' => Input::get('note'),
 				'timesheet_kind_id' => Input::get('type')
 			));
@@ -60,7 +69,7 @@ class CostController extends BaseController {
 				$labor = MoreLabor::create(array(
 					"rate" => $_project->hour_rate_more,
 					"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('hour'))),
-					"activity_id" => Input::get('activity'),
+					"activity_id" => $activity->id,
 					"hour_id" => $timesheet->id
 				));
 			}
@@ -71,7 +80,7 @@ class CostController extends BaseController {
 				$labor = EstimateLabor::create(array(
 					"set_rate" => $_project->hour_rate,
 					"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('hour'))),
-					"activity_id" => Input::get('activity'),
+					"activity_id" => $activity->id,
 					"original" => false,
 					"isset" => true,
 					"hour_id" => $timesheet->id
@@ -96,7 +105,18 @@ class CostController extends BaseController {
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
 
-			Timesheet::destroy(Input::get('id'));
+			$timesheet = Timesheet::find(Input::get('id'));
+			if (!$timesheet)
+				return json_encode(['success' => 0]);
+			$activity = Activity::find($timesheet->activity_id);
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
+			$timesheet->delete();
 
 			return json_encode(['success' => 1]);
 		}
@@ -119,13 +139,19 @@ class CostController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
+
+			$project = Project::find(Input::get('project'));
+			if (!$project || !$project->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
 			$purchase = Purchase::create(array(
 				'register_date' => Input::get('date'),
 				'amount' => str_replace(',', '.', str_replace('.', '' , Input::get('hour'))),
 				'relation_id' => Input::get('relation'),
-				'note' => Input::get('note'),
+				//'note' => Input::get('note'), //verwijderenden na release
 				'kind_id' => Input::get('type'),
-				'project_id' => Input::get('project')
+				'project_id' => $project->id
 			));
 
 			return json_encode(['success' => 1,'relation' => Relation::find(Input::get('relation'))->company_name, 'type' => ucfirst(PurchaseKind::find(Input::get('type'))->kind_name), 'date' => date('d-m-Y', strtotime(Input::get('date'))), 'amount' => '&euro; '.number_format($purchase->amount, 2,",","."), 'id' => $purchase->id]);
@@ -146,10 +172,50 @@ class CostController extends BaseController {
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
 
-			Purchase::destroy(Input::get('id'));
+			$purchase = Purchase::find(Input::get('id'));
+			if (!$purchase || !Project::find($purchase->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
+			$purchase->delete();
 
 			return json_encode(['success' => 1]);
 		}
+	}
+
+	public function getActivityByType()
+	{
+
+		$project = Project::find(Route::input('project_id'));
+		if (!$project || !$project->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
+
+		switch (Route::input('type')) {
+			case 1:
+				$rs = [];
+				foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+				foreach (Activity::select(['id','activity_name'])->whereNull('detail_id')->where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->get() as $activity)
+					array_push($rs, $activity);
+				return $rs;
+				break;
+			case 2:
+				$rs = [];
+				foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+				foreach (Activity::select(['id','activity_name'])->whereNull('detail_id')->where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->get() as $activity)
+					array_push($rs, $activity);
+				return $rs;
+				break;
+			case 3:
+				$rs = [];
+				foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+				foreach (Activity::select(['id','activity_name'])->where('chapter_id','=', $chapter->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
+					array_push($rs, $activity);
+				return $rs;
+				break;
+		}
+
+		return json_encode(['success' => 1]);
 	}
 
 }

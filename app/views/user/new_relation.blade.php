@@ -39,6 +39,15 @@ $(document).ready(function() {
 
 		<div class="col-md-12">
 
+			<div>
+				<ol class="breadcrumb">
+				  <li><a href="/">Home</a></li>
+				  <li><a href="/relation">Relaties</a></li>
+				  <li>Nieuw Contact</li>
+				</ol>
+			<div>
+			<br>
+
 			@if(Session::get('success'))
 			<div class="alert alert-success">
 				<i class="fa fa-check-circle"></i>

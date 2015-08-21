@@ -125,6 +125,8 @@ return array(
 		'Intervention\Image\ImageServiceProvider',
 		'Barryvdh\Snappy\ServiceProvider',
 		'Bogardo\Mailgun\MailgunServiceProvider',
+		'LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider',
+		'LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider',
 
 	),
 
@@ -195,6 +197,7 @@ return array(
 		'Parser'          => 'Nathanmac\Utilities\Parser\Facades\Parser',
 		'Image'           => 'Intervention\Image\Facades\Image',
 		'PDF'             => 'Barryvdh\Snappy\Facades\SnappyPdf',
+		'Authorizer'	=> 'LucaDegasperi\OAuth2Server\Facades\AuthorizerFacade',
 
 	),
 

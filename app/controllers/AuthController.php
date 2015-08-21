@@ -2,7 +2,7 @@
 
 use Illuminate\Support\MessageBag;
 
-class AuthController extends \BaseController {
+class AuthController extends Controller {
 
 	/**
 	 * Show the form for creating a new resource.

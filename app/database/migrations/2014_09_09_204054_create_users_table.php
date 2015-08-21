@@ -133,6 +133,7 @@ class CreateUsersTable extends Migration {
 			$table->tinyInteger('profit_more_subcontr_equip')->unsigned()->default(0);
 			$table->nullableTimestamps();
 			$table->date('work_execution')->nullable();
+			$table->date('work_completion')->nullable();
 			$table->date('start_more')->nullable();
 			$table->date('update_more')->nullable();
 			$table->date('start_less')->nullable();

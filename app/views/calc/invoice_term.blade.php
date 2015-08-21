@@ -1,14 +1,33 @@
 <?php
+$common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
-$relation = Relation::find($project->client_id);
-$relation_self = Relation::find(Auth::user()->self_id);
-$contact_self = Contact::where('relation_id','=',$relation_self->id);
-$invoice = Invoice::find(Route::Input('invoice_id'));
-$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
-$invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+if (!$project || !$project->isOwner()) {
+	$common_access_error = true;
+} else {
+	$relation = Relation::find($project->client_id);
+	$relation_self = Relation::find(Auth::user()->self_id);
+	$contact_self = Contact::where('relation_id','=',$relation_self->id);
+	$invoice = Invoice::find(Route::Input('invoice_id'));
+	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+	$invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+}
 ?>
 
 @extends('layout.master')
+
+<?php if($common_access_error){ ?>
+@section('content')
+<div id="wrapper">
+	<section class="container">
+		<div class="alert alert-danger">
+			<i class="fa fa-frown-o"></i>
+			<strong>Fout</strong>
+			Dit project bestaat niet
+		</div>
+	</section>
+</div>
+@stop
+<?php }else{ ?>
 
 @section('content')
 <?# -- WRAPPER -- ?>
@@ -211,7 +230,18 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 						    <div class="col-sm-offset-0 col-sm-10">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-tax" type="checkbox" checked> BTW bedragen gespecificeerd weergeven
+						          <input name="toggle-tax" type="checkbox" checked> BTW bedragen weergeven
+						        </label>
+						      </div>
+						    </div>
+						  </div>
+						  <br>
+						  <strong>De volgende opties worden als bijlage bijgesloten bij de factuur</strong>
+						  <div class="form-group">
+						    <div class="col-sm-offset-0 col-sm-10">
+						      <div class="checkbox">
+						        <label>
+						          <input name="toggle-activity" type="checkbox" checked> Hoofdstukken en werkzaamheden weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -220,7 +250,8 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 						    <div class="col-sm-offset-0 col-sm-10">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-activity" type="checkbox" checked> Overzicht werkzaamheden weergeven
+						          <input name="toggle-summary" type="checkbox"> Kosten werkzaamheden weergeven<br>
+								   (nog niet beschikbaar in PDF)
 						        </label>
 						      </div>
 						    </div>
@@ -229,16 +260,8 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 						    <div class="col-sm-offset-0 col-sm-10">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-summary" type="checkbox"> Specificatie overzicht werkzaamheden weergeven
-						        </label>
-						      </div>
-						    </div>
-						  </div>
-						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
-						      <div class="checkbox">
-						        <label>
-						          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden opnemen
+						          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden weergeven
+
 						        </label>
 						      </div>
 						    </div>
@@ -345,7 +368,7 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 						</thead>
 						<tbody>
 							<tr>
-								<td class="col-md-6">{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()+1}}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen.</td>
+								<td class="col-md-6">{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()}}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen.</td>
 								<td class="col-md-2">{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
@@ -473,3 +496,5 @@ $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at
 </div>
 <!-- /WRAPPER -->
 @stop
+
+<?php } ?>

@@ -1,6 +1,6 @@
 <?php
 
-class ResultController extends BaseController {
+class ResultController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------

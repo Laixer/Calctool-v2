@@ -42,6 +42,19 @@
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});
+		$('.getact').change(function(e){
+			if ($('#projname').val() == -1 || $('#typename').val() == -1)
+				return;
+			$.get('/timesheet/activity/' + $('#projname').val() + '/' + $('#typename').val(), function(data){
+				$('#activity').prop('disabled', false).find('option').remove();
+				$.each(data, function (i, item) {
+				    $('#activity').append($('<option>', {
+				        value: item.id,
+				        text : item.activity_name
+				    }));
+				});
+			});
+		});
 	});
 </script>
 <div id="wrapper">
@@ -108,29 +121,23 @@
 									<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text"/></td>
 									<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
 									<td class="col-md-1">
-										<select name="typename" id="typename" class="form-control-sm-text">
-										@foreach (TimesheetKind::all() as $typename)
+										<select name="typename" id="typename" class="getact form-control-sm-text">
+											<option selected="selected" value="-1" >Selecteer</option>
+											@foreach (TimesheetKind::all() as $typename)
 											<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
-										@endforeach
+											@endforeach
 										</select>
 									</td>
 									<td class="col-md-3">
-										<select name="typename" id="typename" class="form-control-sm-text">
-										@foreach (Project::where('user_id','=',Auth::user()->id)->get() as $projectname)
+										<select name="projname" id="projname" class="getact form-control-sm-text">
+											<option selected="selected" value="-1" >Selecteer</option>
+											@foreach (Project::where('user_id','=',Auth::user()->id)->get() as $projectname)
 											<option value="{{ $projectname->id }}">{{ ucwords($projectname->project_name) }}</option>
-										@endforeach
+											@endforeach
 										</select>
 									</td>
 									<td class="col-md-2">
-										<select name="activity" id="activity" class="form-control-sm-text">
-										@foreach (Project::where('user_id','=',Auth::user()->id)->get() as $project)
-										@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
-											<option value="{{ $activity->id }}">{{ $activity->activity_name }}</option>
-										@endforeach
-										@endforeach
-										@endforeach
-										</select>
+										<select disabled="disabled" name="activity" id="activity" class="form-control-sm-text"></select>
 									</td>
 									<td class="col-md-3"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
 									<td class="col-md-1"><button id="addnew" class="btn btn-primary btn-xs"> Toevoegen</button></td>

@@ -17,8 +17,6 @@ class StaticSeeder extends Seeder {
 		DB::table('relation_kind')->delete();
 		DB::table('relation_type')->delete();
 		DB::table('contact_function')->delete();
-		DB::table('part_part_detail')->delete();
-		DB::table('part_part_type')->delete();
 		DB::table('part_type')->delete();
 		DB::table('part')->delete();
 		DB::table('project_type')->delete();
@@ -454,20 +452,9 @@ class StaticSeeder extends Seeder {
 		$PartType2 = PartType::create(array('type_name' => 'estimate'));
 		$this->command->info('PartType created');
 
-		$Part1->partType()->attach($PartType1->id);
-		$Part1->partType()->attach($PartType2->id);
-
-		$Part2->partType()->attach($PartType1->id);
-		$Part2->partType()->attach($PartType2->id);
-		$this->command->info('Part / PartType attached');
-
 		$Detail1 = Detail::create(array('detail_name' => 'more'));
 		$Detail2 = Detail::create(array('detail_name' => 'less'));
 		$this->command->info('Detail created');
-
-		$PartType1->detail()->attach($Detail1->id);
-		$PartType1->detail()->attach($Detail2->id);
-		$this->command->info('PartType / Detail attached');
 
 		ContactFunction::create(array('function_name' => 'adjunct-directeur'));
 		ContactFunction::create(array('function_name' => 'afdelingshoofd'));
@@ -572,7 +559,7 @@ class StaticSeeder extends Seeder {
 
 		TimesheetKind::create(array('kind_name' => 'aanneming'));
 		TimesheetKind::create(array('kind_name' => 'stelpost'));
-		TimesheetKind::create(array('kind_name' => 'meerwerk aanneming'));
+		TimesheetKind::create(array('kind_name' => 'meerwerk'));
 		$this->command->info('TimesheetKind created');
 
 		PurchaseKind::create(array('kind_name' => 'aanneming'));

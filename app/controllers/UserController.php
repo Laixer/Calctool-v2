@@ -2,7 +2,7 @@
 
 use Illuminate\Support\MessageBag;
 
-class UserController extends \BaseController {
+class UserController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
@@ -104,7 +104,7 @@ class UserController extends \BaseController {
 			$order->increment = $increment_months;
 			$order->description = $description;
 			$order->method = '';
-			$order->user_id = Auth::user()->id;
+			$order->user_id = Auth::id();
 
 			$order->save();
 
@@ -352,6 +352,9 @@ class UserController extends \BaseController {
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 			$iban = Iban::find(Input::get('id'));
+			if (!$iban || !$iban->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
 			$iban->iban = Input::get('iban');
 			$iban->iban_name = Input::get('iban_name');
 
@@ -384,7 +387,7 @@ class UserController extends \BaseController {
 			$iban = new Iban;
 			$iban->iban = Input::get('iban');
 			$iban->iban_name = Input::get('iban_name');
-			$iban->user_id = Auth::user()->id;
+			$iban->user_id = Auth::id();
 
 			$iban->save();
 
@@ -394,8 +397,6 @@ class UserController extends \BaseController {
 
 	public function doUpdatePreferences()
 	{
-		print_r(Input::all());
-
 		$user = Auth::user();
 		if (Input::get('pref_mailings_optin'))
 			$user->pref_mailings_optin = true;

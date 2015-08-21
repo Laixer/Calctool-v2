@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<title><strong>CalcTool.nl</strong> - Wachtwoord vergeten</title>
+		<title><strong>Calculatie Tool</strong> - Wachtwoord vergeten</title>
 	</head>
 
 	<body style="margin:0; margin-top:30px; margin-bottom:30px; padding:0; width:100%; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; background-color: #F4F5F7;">
@@ -51,7 +51,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Er is zojuist een verzoek ingediend voor het resetten van je wachtwoord van je gebruikersaccount van de <strong>CalcTool.nl</strong>.
+														Er is zojuist een verzoek ingediend voor het resetten van je wachtwoord van je gebruikersaccount van de <strong>Calculatie Tool</strong>.
 
 														Klik hieronder op <i>wachtwoord resetten</i> om je wachtwoord te herstellen.
 													</td>
@@ -78,7 +78,7 @@
 															Met vriendelijke groet,
 														<br>
 														<br>
-															<strong>Cal</strong>, van <a href="https://calctool.nl"><strong>CalcTool.nl</strong></a>
+															<strong>Cal</strong>, van <a href="https://calctool.nl"><strong>Calculatie Tool</strong></a>
 														<br>
 														<br>
 													</td>

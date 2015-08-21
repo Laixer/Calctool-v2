@@ -4,6 +4,9 @@ $specification=Input::get("specification");
 $description=Input::get("description");
 $term=Input::get("term");
 $project = Project::find(Route::Input('project_id'));
+if (!$project || !$project->isOwner()) {
+  exit();
+}
 $relation = Relation::find($project->client_id);
 $relation_self = Relation::find(Auth::user()->self_id);
   if ($relation_self)
@@ -72,7 +75,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       </thead>
       <tbody>
         <tr>
-          <td class="qty">{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()+1}}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen.</td>
+          <td class="qty">{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()}}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen.</td>
           <td class="qty">{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>

@@ -1,6 +1,6 @@
 <?php
 
-class LessController extends BaseController {
+class LessController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -18,6 +18,8 @@ class LessController extends BaseController {
 	public function updateLessStatus($id)
 	{
 		$proj = Project::find($id);
+		if (!$project || !$project->isOwner())
+			return;
 		if (!$proj->start_less)
 			$proj->start_less = date('Y-m-d');
 		$proj->update_less = date('Y-m-d');
@@ -40,9 +42,21 @@ class LessController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
+
+			$material = CalculationMaterial::find(Input::get('id'));
+			if (!$material)
+				return json_encode(['success' => 0]);
+			$activity = Activity::find($material->activity_id);
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
 			$rate = str_replace(',', '.', str_replace('.', '' , Input::get('rate')));
 			$amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
-			$material = CalculationMaterial::find(Input::get('id'));
+
 			if ($rate > $material->rate)
 				return json_encode(['success' => 0, 'message' => 'rate too large', 'rate' => $material->rate, 'amount' => $material->amount]);
 
@@ -77,9 +91,21 @@ class LessController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
+
+			$equipment = CalculationEquipment::find(Input::get('id'));
+			if (!$equipment)
+				return json_encode(['success' => 0]);
+			$activity = Activity::find($equipment->activity_id);
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
 			$rate = str_replace(',', '.', str_replace('.', '' , Input::get('rate')));
 			$amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
-			$equipment = CalculationEquipment::find(Input::get('id'));
+
 			if ($rate > $equipment->rate)
 				return json_encode(['success' => 0, 'message' => 'rate too large', 'rate' => $equipment->rate, 'amount' => $equipment->amount]);
 
@@ -113,8 +139,19 @@ class LessController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
-			$amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
+
 			$labor = CalculationLabor::find(Input::get('id'));
+			if (!$labor)
+				return json_encode(['success' => 0]);
+			$activity = Activity::find($labor->activity_id);
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
+			$amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
 			if ($amount > $labor->amount)
 				return json_encode(['success' => 0, 'message' => 'amount too large', 'amount' => $labor->amount]);
 
@@ -143,7 +180,18 @@ class LessController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
+
 			$material = CalculationMaterial::find(Input::get('id'));
+			if (!$material)
+				return json_encode(['success' => 0]);
+			$activity = Activity::find($material->activity_id);
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
 			$material->less_rate = NULL;
 			$material->less_amount = NULL;
 			$material->isless = False;
@@ -172,6 +220,16 @@ class LessController extends BaseController {
 		} else {
 
 			$equipment = CalculationEquipment::find(Input::get('id'));
+			if (!$equipment)
+				return json_encode(['success' => 0]);
+			$activity = Activity::find($equipment->activity_id);
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
 			$equipment->less_rate = NULL;
 			$equipment->less_amount = NULL;
 			$equipment->isless = False;
@@ -200,6 +258,16 @@ class LessController extends BaseController {
 		} else {
 
 			$labor = CalculationLabor::find(Input::get('id'));
+			if (!$labor)
+				return json_encode(['success' => 0]);
+			$activity = Activity::find($labor->activity_id);
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
 			$labor->less_amount = NULL;
 			$labor->isless = False;
 

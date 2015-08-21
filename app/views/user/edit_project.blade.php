@@ -1,9 +1,27 @@
 <?php
+$common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
-$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+if (!$project || !$project->isOwner())
+	$common_access_error = true;
+else
+	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 ?>
 
 @extends('layout.master')
+
+<?php if($common_access_error){ ?>
+@section('content')
+<div id="wrapper">
+	<section class="container">
+		<div class="alert alert-danger">
+			<i class="fa fa-frown-o"></i>
+			<strong>Fout</strong>
+			Dit project bestaat niet
+		</div>
+	</section>
+</div>
+@stop
+<?php }else{ ?>
 
 @section('content')
 
@@ -103,6 +121,17 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 				$curThis.replaceWith($rs.billing);
 			}).fail(function(e) { console.log(e); });
 		});
+		$('#typename').change(function(e){
+			$.get('/timesheet/activity/{{ $project->id }}/' + $(this).val(), function(data){
+				$('#activity').prop('disabled', false).find('option').remove();
+				$.each(data, function (i, item) {
+				    $('#activity').append($('<option>', {
+				        value: item.id,
+				        text : item.activity_name
+				    }));
+				});
+			});
+		});
 		$('#projclose').editable({
 			type:  'date',
 			pk:    {{ $project->id }},
@@ -121,6 +150,19 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			pk:    {{ $project->id }},
 			name:  'wordexec',
 			url:   '/project/updateworkexecution',
+			send:  'always',
+			emptytext: 'Bewerk',
+			title: 'Selecteer uitvoerdatum',
+			validate: function(value) {
+				if($.trim(value) == '')
+					return 'Vul een datum in';
+				}
+				});
+		$('#wordcompl').editable({
+			type:  'date',
+			pk:    {{ $project->id }},
+			name:  'ordcompl',
+			url:   '/project/updateworkcompletion',
 			send:  'always',
 			emptytext: 'Bewerk',
 			title: 'Selecteer uitvoerdatum',
@@ -173,7 +215,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			</div>
 			@endif
 
-			<h2><strong>Project</strong> {{$project->project_name}}</h2>
+			<h2><strong>Dashboard Project</strong> {{$project->project_name}}</h2>
 
 			@if(!Relation::where('user_id','=', Auth::user()->id)->count())
 			<div class="alert alert-info">
@@ -247,7 +289,12 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								<div class="col-md-3"></div>
 							</div>
 							<div class="row">
-								<div class="col-md-3">Stelposten stellen</div>
+								<div class="col-md-3">Geplande opleverdatum <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in dat je het moet/wilt/verwacht opleveren" href="#"><i class="fa fa-info-circle"></i></a></div>
+								<div class="col-md-2"><a href="#" id="wordcompl" data-format="dd-mm-yyyy">{{ $project->work_completion ? date('d-m-Y', strtotime($project->work_completion)) : '' }}</a></div>
+								<div class="col-md-3"></div>
+							</div>
+							<div class="row">
+								<div class="col-md-3">Stelposten gesteld</div>
 								<div class="col-md-2"><i>{{ $project->start_estimate ? date('d-m-Y', strtotime($project->start_estimate)) : '' }}</i></div>
 								<div class="col-md-3"><i>{{ $project->update_estimate ? 'Laatste wijziging: '.date('d-m-Y', strtotime($project->update_estimate)) : '' }}</i></div>
 							</div>
@@ -546,19 +593,14 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 										<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
 										<td class="col-md-2">
 											<select name="typename" id="typename" class="form-control-sm-text">
-											@foreach (TimesheetKind::all() as $typename)
+												<option selected="selected" >Selecteer</option>
+												@foreach (TimesheetKind::all() as $typename)
 												<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
-											@endforeach
+												@endforeach
 											</select>
 										</td>
 										<td class="col-md-4">
-											<select name="activity" id="activity" class="form-control-sm-text">
-											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
-												<option value="{{ $activity->id }}">{{ $activity->activity_name }}</option>
-											@endforeach
-											@endforeach
-											</select>
+											<select disabled="disabled" name="activity" id="activity" class="form-control-sm-text"></select>
 										</td>
 										<td class="col-md-1"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
 										<td class="col-md-1">&nbsp;</td>
@@ -639,3 +681,5 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 </div>
 <!-- /WRAPPER -->
 @stop
+
+<?php } ?>

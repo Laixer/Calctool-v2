@@ -25,4 +25,7 @@ class Project extends Eloquent {
 		return $this->hasOne('ProjectType', 'id', 'type_id');
 	}
 
+	public function isOwner() {
+		return Auth::id() == $this->user_id;
+	}
 }

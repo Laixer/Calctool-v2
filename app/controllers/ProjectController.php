@@ -1,6 +1,6 @@
 <?php
 
-class ProjectController extends \BaseController {
+class ProjectController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
@@ -76,7 +76,7 @@ class ProjectController extends \BaseController {
 			$project->profit_more_contr_equip = Input::get('more_profit_equipment_1');
 			$project->profit_more_subcontr_mat = Input::get('more_profit_material_2');
 			$project->profit_more_subcontr_equip = Input::get('more_profit_equipment_2');
-			$project->user_id = Auth::user()->id;
+			$project->user_id = Auth::id();
 			$project->province_id = Input::get('province');
 			$project->country_id = Input::get('country');
 			$project->type_id = Input::get('type');
@@ -118,6 +118,9 @@ class ProjectController extends \BaseController {
 		} else {
 
 			$project = Project::find(Input::get('id'));
+			if (!$project || !$project->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
 			$project->project_name = Input::get('name');
 			$project->address_street = Input::get('street');
 			$project->address_number = Input::get('address_number');
@@ -161,6 +164,11 @@ class ProjectController extends \BaseController {
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 
+			$project = Project::find(Input::get('id'));
+			if (!$project || !$project->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
+
 			$hour_rate = str_replace(',', '.', str_replace('.', '', Input::get('hour_rate')));
 			if ($hour_rate<0 || $hour_rate>999) {
 				return Redirect::back()->withErrors($validator)->withInput(Input::all());
@@ -171,7 +179,6 @@ class ProjectController extends \BaseController {
 				return Redirect::back()->withErrors($validator)->withInput(Input::all());
 			}
 
-			$project = Project::find(Input::get('id'));
 			$project->hour_rate = $hour_rate;
 			$project->hour_rate_more = $hour_rate_more;
 			$project->profit_calc_contr_mat = Input::get('profit_material_1');
@@ -207,7 +214,39 @@ class ProjectController extends \BaseController {
 		} else {
 
 			$project = Project::find(Input::get('pk'));
+			if (!$project || !$project->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
 			$project->work_execution = date('Y-m-d', strtotime(Input::get('value')));
+
+			$project->save();
+
+			return json_encode(['success' => 1]);
+		}
+
+	}
+
+	public function doUpdateWorkCompletion()
+	{
+		$rules = array(
+			'pk' => array('required','integer'),
+			'value' => array('required'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			// redirect our user back to the form with the errors from the validator
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+			$project = Project::find(Input::get('pk'));
+			if (!$project || !$project->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
+			$project->work_completion = date('Y-m-d', strtotime(Input::get('value')));
 
 			$project->save();
 
@@ -233,6 +272,9 @@ class ProjectController extends \BaseController {
 		} else {
 
 			$project = Project::find(Input::get('pk'));
+			if (!$project || !$project->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
 			$project->project_close = date('Y-m-d', strtotime(Input::get('value')));
 
 			$project->save();

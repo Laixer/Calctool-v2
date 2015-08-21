@@ -28,8 +28,10 @@ if (Input::get('nstep') == 'intro')
 			<div class="modal-body">
 				<h2>Welkom Beta-gebruiker</h2>
 				<p>Bedankt dat jij mij wilt helpen met het testen van de CalcTool.nl.
+				<br>
 				Omdat de CalcTool.nl zich nog in een test-fase bevindt kunnen er af en toe wat foutjes optreden of bepaalde zaken niet helemaal lekker lopen of duidelijk zijn.
 				Hiervoor verwijs ik je graag naar de korte video handleiding die je hebt ontvangen in de email met de uitnodiging.
+				<br>
 				Mocht je tegen dingen aanlopen die ik daar niet in heb genoemd, dan hoor ik dat graag van je.</p>
 				<p>Met vriendelijke groet,</p>
 				<p class="lead">Cal</p>
@@ -41,7 +43,7 @@ if (Input::get('nstep') == 'intro')
 					<ul class="nav nav-tabs">
 						<li class="active"><a href="#service-1" data-toggle="tab" aria-expanded="true"><i class="fa fa-heart-o"></i> Intro</a></li>
 						<li class=""><a href="#service-2" data-toggle="tab" aria-expanded="false"><i class="fa fa-smile-o"></i> Account</a></li>
-						<li class=""><a href="#service-3" data-toggle="tab" aria-expanded="false"><i class="fa fa-microphone"></i> Bedijf</a></li>
+						<li class=""><a href="#service-3" data-toggle="tab" aria-expanded="false"><i class="fa fa-microphone"></i> Mijn Bedijf</a></li>
 						<li class=""><a href="#service-4" data-toggle="tab" aria-expanded="false"><i class="fa fa-windows"></i> Service 4</a></li>
 						<li class=""><a href="#service-5" data-toggle="tab" aria-expanded="false"><i class="fa fa-flask"></i> Service 5</a></li>
 					</ul>
@@ -176,7 +178,7 @@ if (Input::get('nstep') == 'intro')
 						<div class="box-content">
 							<a href="/mycompany">
 								<i class="fa fa-files-o"></i>
-								<h5>Bedrijf</h5>
+								<h5>Mijn Bedrijf</h5>
 							</a>
 						</div>
 					</div>

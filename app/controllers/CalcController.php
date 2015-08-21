@@ -1,6 +1,6 @@
 <?php
 
-class CalcController extends BaseController {
+class CalcController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -18,16 +18,18 @@ class CalcController extends BaseController {
 	public function getCalculation()
 	{
 		$project = Project::find(Route::Input('project_id'));
-		$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
-		if ($offer_last && $offer_last->offer_finish)
-			return View::make('calc.calculation_closed');
+		if ($project) {
+			$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+			if ($offer_last && $offer_last->offer_finish)
+				return View::make('calc.calculation_closed');
+		}
 		return View::make('calc.calculation');
 	}
 
 	public function getEstimate()
 	{
 		$project = Project::find(Route::Input('project_id'));
-		if ($project->project_close)
+		if ($project && $project->project_close)
 			return View::make('calc.estimate_closed');
 		return View::make('calc.estimate');
 	}
@@ -35,7 +37,7 @@ class CalcController extends BaseController {
 	public function getLess()
 	{
 		$project = Project::find(Route::Input('project_id'));
-		if ($project->project_close)
+		if ($project && $project->project_close)
 			return View::make('calc.less_closed');
 		return View::make('calc.less');
 	}
@@ -43,7 +45,7 @@ class CalcController extends BaseController {
 	public function getMore()
 	{
 		$project = Project::find(Route::Input('project_id'));
-		if ($project->project_close)
+		if ($project && $project->project_close)
 			return View::make('calc.more_closed');
 		return View::make('calc.more');
 	}
@@ -117,10 +119,15 @@ class CalcController extends BaseController {
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 
+			$project = Project::find(Route::Input('project_id'));
+			if (!$project || !$project->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
+
 			$chapter = new Chapter;
 			$chapter->chapter_name = Input::get('chapter');
 			$chapter->priority = 0;
-			$chapter->project_id = Route::Input('project_id');
+			$chapter->project_id = $project->id;
 
 			$chapter->save();
 
@@ -142,6 +149,11 @@ class CalcController extends BaseController {
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 
+			$chapter = Chapter::find(Route::Input('chapter_id'));
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
+
 			$part = Part::where('part_name','=','contracting')->first();
 			$part_type = PartType::where('type_name','=','calculation')->first();
 			$tax = Tax::where('tax_rate','=',21)->first();
@@ -149,7 +161,7 @@ class CalcController extends BaseController {
 			$activity = new Activity;
 			$activity->activity_name = Input::get('activity');
 			$activity->priority = 0;
-			$activity->chapter_id = Route::Input('chapter_id');
+			$activity->chapter_id = $chapter->id;
 			$activity->part_id = $part->id;
 			$activity->part_type_id = $part_type->id;
 			$activity->tax_calc_labor_id = $tax->id;
@@ -182,6 +194,11 @@ class CalcController extends BaseController {
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 
+			$chapter = Chapter::find(Route::Input('chapter_id'));
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
+
 			$part = Part::where('part_name','=','contracting')->first();
 			$part_type = PartType::where('type_name','=','estimate')->first();
 			$tax = Tax::where('tax_rate','=',21)->first();
@@ -189,7 +206,7 @@ class CalcController extends BaseController {
 			$activity = new Activity;
 			$activity->activity_name = Input::get('activity');
 			$activity->priority = 0;
-			$activity->chapter_id = Route::Input('chapter_id');
+			$activity->chapter_id = $chapter->id;
 			$activity->part_id = $part->id;
 			$activity->part_type_id = $part_type->id;
 			$activity->tax_calc_labor_id = $tax->id;
@@ -224,14 +241,23 @@ class CalcController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
-			$type = Input::get('type');
+
 			$activity = Activity::find(Input::get('activity'));
-			if ($type == 'calc-labor')
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
+			$type = Input::get('type');
+			if ($type == 'calc-labor') {
 				$activity->tax_calc_labor_id = Input::get('value');
-			if ($type == 'calc-material')
+			} else if ($type == 'calc-material') {
 				$activity->tax_calc_material_id = Input::get('value');
-			if ($type == 'calc-equipment')
+			} else if ($type == 'calc-equipment') {
 				$activity->tax_calc_equipment_id = Input::get('value');
+			}
 			$activity->save();
 
 			return json_encode(['success' => 1]);
@@ -253,8 +279,16 @@ class CalcController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
-			$type = Input::get('type');
+
 			$activity = Activity::find(Input::get('activity'));
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
+			$type = Input::get('type');
 			if ($type == 'calc-labor')
 				$activity->tax_estimate_labor_id = Input::get('value');
 			if ($type == 'calc-material')
@@ -283,6 +317,13 @@ class CalcController extends BaseController {
 		} else {
 
 			$activity = Activity::find(Input::get('activity'));
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
 			$activity->part_id = Input::get('value');
 			$activity->save();
 
@@ -305,7 +346,15 @@ class CalcController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
+
 			$activity = Activity::find(Input::get('activity'));
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
 			$activity->note = Input::get('note');
 
 			$activity->save();
@@ -328,7 +377,15 @@ class CalcController extends BaseController {
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
 
-			Activity::destroy(Input::get('activity'));
+			$activity = Activity::find(Input::get('activity'));
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
+			$activity->delete();
 
 			return json_encode(['success' => 1]);
 		}
@@ -348,7 +405,12 @@ class CalcController extends BaseController {
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
 
-			Chapter::destroy(Input::get('chapter'));
+			$chapter = Chapter::find(Input::get('chapter'));
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
+			$chapter->delete();
 
 			return json_encode(['success' => 1]);
 		}
@@ -371,12 +433,21 @@ class CalcController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
+
+			$activity = Activity::find(Input::get('activity'));
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
 			$material = CalculationMaterial::create(array(
 				"material_name" => Input::get('name'),
 				"unit" => Input::get('unit'),
 				"rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
 				"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
-				"activity_id" => Input::get('activity'),
+				"activity_id" => $activity->id,
 			));
 
 			return json_encode(['success' => 1, 'id' => $material->id]);
@@ -400,12 +471,21 @@ class CalcController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
+
+			$activity = Activity::find(Input::get('activity'));
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
 			$equipment = CalculationEquipment::create(array(
 				"equipment_name" => Input::get('name'),
 				"unit" => Input::get('unit'),
 				"rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
 				"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
-				"activity_id" => Input::get('activity'),
+				"activity_id" => $activity->id,
 			));
 
 			return json_encode(['success' => 1, 'id' => $equipment->id]);
@@ -427,6 +507,15 @@ class CalcController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
+
+			$activity = Activity::find(Input::get('activity'));
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
 			$rate = Input::get('rate');
 			if (empty($rate)) {
 				$_activity = Activity::find(Input::get('activity'));
@@ -439,7 +528,7 @@ class CalcController extends BaseController {
 			$labor = CalculationLabor::create(array(
 				"rate" => $rate,
 				"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
-				"activity_id" => Input::get('activity'),
+				"activity_id" => $activity->id,
 			));
 
 			return json_encode(['success' => 1, 'id' => $labor->id]);
@@ -459,7 +548,19 @@ class CalcController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
-			CalculationMaterial::destroy(Input::get('id'));
+
+			$rec = CalculationMaterial::find(Input::get('id'));
+			if (!$rec)
+				return json_encode(['success' => 0]);
+			$activity = Activity::find($rec->activity_id);
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
+			$rec->delete();
 
 			return json_encode(['success' => 1]);
 		}
@@ -478,7 +579,19 @@ class CalcController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
-			CalculationEquipment::destroy(Input::get('id'));
+
+			$rec = CalculationEquipment::find(Input::get('id'));
+			if (!$rec)
+				return json_encode(['success' => 0]);
+			$activity = Activity::find($rec->activity_id);
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
+			$rec->delete();
 
 			return json_encode(['success' => 1]);
 		}
@@ -503,6 +616,16 @@ class CalcController extends BaseController {
 		} else {
 
 			$material = CalculationMaterial::find(Input::get('id'));
+			if (!$material)
+				return json_encode(['success' => 0]);
+			$activity = Activity::find($material->activity_id);
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
 			$material->material_name = Input::get('name');
 			$material->unit = Input::get('unit');
 			$material->rate = str_replace(',', '.', str_replace('.', '' , Input::get('rate')));
@@ -533,6 +656,16 @@ class CalcController extends BaseController {
 		} else {
 
 			$equipment = CalculationEquipment::find(Input::get('id'));
+			if (!$equipment)
+				return json_encode(['success' => 0]);
+			$activity = Activity::find($equipment->activity_id);
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
 			$equipment->equipment_name = Input::get('name');
 			$equipment->unit = Input::get('unit');
 			$equipment->rate = str_replace(',', '.', str_replace('.', '' , Input::get('rate')));
@@ -559,6 +692,18 @@ class CalcController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
+
+			$labor = CalculationLabor::find(Input::get('id'));
+			if (!$labor)
+				return json_encode(['success' => 0]);
+			$activity = Activity::find($labor->activity_id);
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
 			$rate = Input::get('rate');
 			if (empty($rate)) {
 				$_labor = CalculationLabor::find(Input::get('id'));
@@ -569,7 +714,7 @@ class CalcController extends BaseController {
 			} else {
 				$rate = str_replace(',', '.', str_replace('.', '' , $rate));
 			}
-			$labor = CalculationLabor::find(Input::get('id'));
+
 			$labor->rate = $rate;
 			$labor->amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
 
@@ -596,12 +741,21 @@ class CalcController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
+
+			$activity = Activity::find(Input::get('activity'));
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
 			$material = EstimateMaterial::create(array(
 				"material_name" => Input::get('name'),
 				"unit" => Input::get('unit'),
 				"rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
 				"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
-				"activity_id" => Input::get('activity'),
+				"activity_id" => $activity->id,
 				"original" => true,
 				"isset" => false
 			));
@@ -627,12 +781,21 @@ class CalcController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
+
+			$activity = Activity::find(Input::get('activity'));
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
 			$equipment = EstimateEquipment::create(array(
 				"equipment_name" => Input::get('name'),
 				"unit" => Input::get('unit'),
 				"rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
 				"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
-				"activity_id" => Input::get('activity'),
+				"activity_id" => $activity->id,
 				"original" => true,
 				"isset" => false
 			));
@@ -656,6 +819,15 @@ class CalcController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
+
+			$activity = Activity::find(Input::get('activity'));
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
 			$rate = Input::get('rate');
 			if (empty($rate)) {
 				$_activity = Activity::find(Input::get('activity'));
@@ -668,7 +840,7 @@ class CalcController extends BaseController {
 			$labor = EstimateLabor::create(array(
 				"rate" => $rate,
 				"amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
-				"activity_id" => Input::get('activity'),
+				"activity_id" => $activity->id,
 				"original" => true,
 				"isset" => false
 			));
@@ -690,7 +862,19 @@ class CalcController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
-			EstimateMaterial::destroy(Input::get('id'));
+
+			$rec = EstimateMaterial::find(Input::get('id'));
+			if (!$rec)
+				return json_encode(['success' => 0]);
+			$activity = Activity::find($rec->activity_id);
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
+			$rec->delete();
 
 			return json_encode(['success' => 1]);
 		}
@@ -709,7 +893,19 @@ class CalcController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
-			EstimateEquipment::destroy(Input::get('id'));
+
+			$rec = EstimateEquipment::find(Input::get('id'));
+			if (!$rec)
+				return json_encode(['success' => 0]);
+			$activity = Activity::find($rec->activity_id);
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
+			$rec->delete();
 
 			return json_encode(['success' => 1]);
 		}
@@ -734,6 +930,16 @@ class CalcController extends BaseController {
 		} else {
 
 			$material = EstimateMaterial::find(Input::get('id'));
+			if (!$material)
+				return json_encode(['success' => 0]);
+			$activity = Activity::find($material->activity_id);
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
 			$material->material_name = Input::get('name');
 			$material->unit = Input::get('unit');
 			$material->rate = str_replace(',', '.', str_replace('.', '' , Input::get('rate')));
@@ -764,6 +970,16 @@ class CalcController extends BaseController {
 		} else {
 
 			$equipment = EstimateEquipment::find(Input::get('id'));
+			if (!$equipment)
+				return json_encode(['success' => 0]);
+			$activity = Activity::find($equipment->activity_id);
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
 			$equipment->equipment_name = Input::get('name');
 			$equipment->unit = Input::get('unit');
 			$equipment->rate = str_replace(',', '.', str_replace('.', '' , Input::get('rate')));
@@ -790,6 +1006,18 @@ class CalcController extends BaseController {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
+
+			$labor = EstimateLabor::find(Input::get('id'));
+			if (!$labor)
+				return json_encode(['success' => 0]);
+			$activity = Activity::find($labor->activity_id);
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
 			$rate = Input::get('rate');
 			if (empty($rate)) {
 				$_labor = EstimateLabor::find(Input::get('id'));
@@ -800,7 +1028,7 @@ class CalcController extends BaseController {
 			} else {
 				$rate = str_replace(',', '.', str_replace('.', '' , $rate));
 			}
-			$labor = EstimateLabor::find(Input::get('id'));
+
 			$labor->rate = $rate;
 			$labor->amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
 

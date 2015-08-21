@@ -1,6 +1,6 @@
 <?php
 
-class MaterialController extends BaseController {
+class MaterialController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------

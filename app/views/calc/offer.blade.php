@@ -1,13 +1,32 @@
 <?php
+$common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
-$relation = Relation::find($project->client_id);
-$relation_self = Relation::find(Auth::user()->self_id);
-if ($relation_self)
-	$contact_self = Contact::where('relation_id','=',$relation_self->id);
-$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+if (!$project || !$project->isOwner()) {
+	$common_access_error = true;
+} else {
+	$relation = Relation::find($project->client_id);
+	$relation_self = Relation::find(Auth::user()->self_id);
+	if ($relation_self)
+		$contact_self = Contact::where('relation_id','=',$relation_self->id);
+	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+}
 ?>
 
 @extends('layout.master')
+
+<?php if($common_access_error){ ?>
+@section('content')
+<div id="wrapper">
+	<section class="container">
+		<div class="alert alert-danger">
+			<i class="fa fa-frown-o"></i>
+			<strong>Fout</strong>
+			Dit project bestaat niet
+		</div>
+	</section>
+</div>
+@stop
+<?php }else{ ?>
 
 @section('content')
 <?# -- WRAPPER -- ?>
@@ -298,7 +317,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 						<div class="modal-header"><!-- modal header -->
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h4 class="modal-title" id="myModalLabel2">Termijnfacturen</h4>
+							<h4 class="modal-title" id="myModalLabel2">Betalingstermijnen</h4>
 						</div><!-- /modal header -->
 
 						<!-- modal body -->
@@ -306,27 +325,33 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 							<div class="form-horizontal">
 								<div class="form-group">
 									<div class="col-md-6">
-										<label>Termijnen</label>
+										<label>Aantal betalingstermijnen</label>
+									</div>
+									<div class="col-md-6">
 										<input value="{{ ($offer_last ? $offer_last->invoice_quantity : '1') }}" name="terms" id="terms" min="1" max="50" type="number" class="form-control" />
 									</div>
 								</div>
+							</div>
+
+
+
+							<div class="form-horizontal">
 								<div class="form-horizontal noterms" {{ ($offer_last && $offer_last->invoice_quantity >1 ? '' : 'style="display:none;"') }} >
 									<div class="col-md-6">
 									  <div class="form-group">
-									  <label>Aanbetaling</label>
-									    <div class="col-sm-offset-0 col-sm-12">
+									  	<label>Aanbetaling toepassen</label>
+									  </div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
 									      <div class="checkbox">
 									        <label>
 									          <input {{ ($offer_last ? ($offer_last->downpayment ? 'checked' : '') : '') }} name="toggle-payment" type="checkbox">
 									        </label>
-									      </div>
-									    </div>
-									  </div>
+										  </div>
+										</div>
 									</div>
-								</div>
-							</div>
-							<div class="table-responsive noterms" {{ ($offer_last && $offer_last->invoice_quantity >1 ? '' : 'style="display:none;"') }}>
-								<table id="tbl-term" class="table table-hover">
+									<table id="tbl-term" class="table table-hover">
 									<thead>
 										<tr>
 											<th>Termijnnummer</th>
@@ -335,12 +360,18 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 									</thead>
 									<tbody>
 										<tr>
-											<td>Aanbetaling</td>
+											<td>Aanbetalingsbedrag</td>
 											<td><input {{ ($offer_last ? ($offer_last->downpayment ? '' : 'disabled') : 'disabled') }} type="text" value="{{ ($offer_last ? $offer_last->downpayment_amount : '') }}" id="amount" name="amount" class="form-control-sm-text" /></td>
 										</tr>
 									</tbody>
-								</table>
+									</table>
+									Indien aanbetaling wordt ingesteld wordt dit verrekend als het 1e betalingstermijn. Eventuele navolgende betalingstermijnen worden gespecficieerd op de factuurpagina.
+								</div>
 							</div>
+
+
+
+
 
 						</div>
 						<!-- /modal body -->
@@ -380,7 +411,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-endresult" type="checkbox"> Alleen het totale offertebedrag weergeven <br>
+								          <input name="toggle-endresult" type="checkbox"> Alleen het totale offertebedrag weergeven<br>
 								          (nog niet beschikbaar in PDF)
 								        </label>
 								      </div>
@@ -395,6 +426,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								      </div>
 								    </div>
 								  </div>
+								  <br>
+								  <strong>De volgende opties worden als bijlage bijgesloten bij de offerte</strong>
 								  <div class="form-group">
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
@@ -408,7 +441,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-summary" type="checkbox" checked> Kosten werkzaamheden specificeren<br>
+								          <input name="toggle-summary" type="checkbox" checked> Kosten werkzaamheden weergeven<br>
 								          (nog niet beschikbaar in PDF)
 								        </label>
 								      </div>
@@ -418,7 +451,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden in bijlage weergeven
+								          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden weergeven
 								        </label>
 								      </div>
 								    </div>
@@ -740,7 +773,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					</tbody>
 				</table>
 
-				<h4>Cumulatieven Offerte</h4>
+				<h4>Totalen Offerte</h4>
 				<table class="table table-striped hide-btw2">
 					<?# -- table head -- ?>
 					<thead>
@@ -909,7 +942,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					</tbody>
 				</table>
 
-				<h4>Cumulatieven Offerte</h4>
+				<h4>Totalen Offerte</h4>
 				<table class="table table-striped hide-btw2">
 					<thead>
 						<tr>
@@ -1008,7 +1041,15 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						</select> na dagtekening.
 						@endif
 					</li>
+					<li>
+						@if ($offer_last && $offer_last->offer_finish)
+						{{ $offer_last->extracondition }}
+						@else
+							<textarea name="extracondition" id="extracondition" rows="2" class="form-control">{{ ($offer_last ? $offer_last->extracondition : Auth::user()->pref_closure_invoice) }}</textarea>
+						@endif
+					</li>
 				</ul>
+
 				<br>
 				<p>Met vriendelijke groet,
 					<br>
@@ -1261,7 +1302,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 			<hr class="margin-top10 margin-bottom10">
 			<!--PAGE HEADER END-->
 
-			<!-- DECRIPTION CON&SUBCON START -->
+			<!-- DESCRIPTION CON&SUBCON START -->
 			<div class="show-all" style="display:none;">
 				<h4>Aanneming</h4>
 				<table class="table table-striped">
@@ -1307,9 +1348,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					</tbody>
 				</table>
 			</div>
-			<!-- DECRIPTION CON&SUBCON END -->
+			<!-- DESCRIPTION CON&SUBCON END -->
 
-			<!-- DECRIPTION TOTAL START -->
+			<!-- DESCRIPTION TOTAL START -->
 			<div class="show-totals">
 				<h4>Omschrijving werkzaamheden</h4>
 				<table class="table table-striped">
@@ -1333,7 +1374,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 					</tbody>
 				</table>
 			</div>
-			<!-- DECRIPTION TOTAL END -->
+			<!-- DESCRIPTION TOTAL END -->
 
 			<!-- INVOICE FOOTER START -->
 			<div class="row">
@@ -1361,7 +1402,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 						<?php }else{ ?>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
-						<button class="btn btn-primary osave">Offerte  maken</button>
+						<button class="btn btn-primary osave">Offerte maken</button>
 						<?php } ?>
 					</div>
 				</div>
@@ -1374,3 +1415,5 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 </div>
 <!-- /WRAPPER -->
 @stop
+
+<?php } ?>

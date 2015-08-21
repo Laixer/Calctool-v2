@@ -4,6 +4,9 @@ $specification=Input::get("specification");
 $description=Input::get("description");
 $term=Input::get("term");
 $project = Project::find(Route::Input('project_id'));
+if (!$project || !$project->isOwner()) {
+  exit();
+}
 $relation = Relation::find($project->client_id);
 $relation_self = Relation::find(Auth::user()->self_id);
   if ($relation_self)
@@ -171,7 +174,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       </tbody>
     </table>
 
-    <h1 class="name">Cumulatieven factuur</h1>
+    <h1 class="name">Totalen Factuur</h1>
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
@@ -589,7 +592,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         </tr>
       </tbody>
     </table>
-    <h1 class="name">Cumulatieven factuur</h1>
+    <h1 class="name">Totalen Factuur</h1>
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
