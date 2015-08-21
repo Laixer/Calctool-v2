@@ -21,17 +21,19 @@
 			}, function(data){
 				var $curTable = $curThis.closest("table");
 				var json = $.parseJSON(data);
-				$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
-				.find("td:eq(0)").text(json.date).end()
-				.find("td:eq(1)").html(json.hour).end()
-				.find("td:eq(2)").text(json.type).end()
-				.find("td:eq(3)").text(json.project).end()
-				.find("td:eq(4)").text(json.activity).end()
-				.find("td:eq(5)").text($note).end()
-				.find("td:eq(8)").html('<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>').end()
-				.prependTo($curTable);
-				$curThis.closest("tr").find("input").val("");
-				$curThis.closest("tr").find("select").val("");
+				if (json.success) {
+					$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
+					.find("td:eq(0)").text(json.date).end()
+					.find("td:eq(1)").html(json.hour).end()
+					.find("td:eq(2)").text(json.type).end()
+					.find("td:eq(3)").text(json.project).end()
+					.find("td:eq(4)").text(json.activity).end()
+					.find("td:eq(5)").text($note).end()
+					.find("td:eq(8)").html('<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>').end()
+					.prependTo($curTable);
+					$curThis.closest("tr").find("input").val("");
+					$curThis.closest("tr").find("select").val("");
+				}
 			});
 		});
 		$("body").on("click", ".deleterow", function(e){

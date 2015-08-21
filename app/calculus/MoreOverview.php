@@ -8,12 +8,23 @@ class MoreOverview {
 /*--More Overview - total per activitys--*/
 /*labor activity total*/
 	public static function laborActivity($activity) {
-		$row = MoreLabor::where('activity_id', '=', $activity->id)->first();
+		$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
+		if ($count) {
+			$amount = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->sum('amount');
+			$rate = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->first()['rate'];
+		} else {
+			$row = MoreLabor::where('activity_id', '=', $activity->id)->first();
+			$amount = $row['amount'];
+			$rate = $row['rate'];
+		}
 
-		return $row['rate'] * $row['amount'];
+		return $rate * $amount;
 	}
 
 	public static function laborTotal($activity) {
+		$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
+		if ($count)
+			return MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->sum('amount');
 		return MoreLabor::where('activity_id', '=', $activity->id)->first()['amount'];
 	}
 
