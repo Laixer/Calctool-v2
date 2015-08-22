@@ -15,8 +15,10 @@ class DatabaseSeeder extends Seeder {
 		$this->command->info('StaticSeeder finished.');
 		//$this->call('MaterialStorageSeeder');
 		//$this->command->info('MaterialStorageSeeder finished.');
-		$this->call('TestProjectSeeder');
-		$this->command->info('TestProjectSeeder finished.');
+		//$this->call('TestProjectSeeder');
+		//$this->command->info('TestProjectSeeder finished.');
+		$this->call('SystemSeeder');
+		$this->command->info('SystemSeeder finished.');
 
 	}
 

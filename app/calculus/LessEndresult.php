@@ -12,7 +12,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -34,7 +34,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -56,7 +56,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -78,7 +78,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -100,7 +100,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -122,7 +122,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -152,7 +152,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -173,7 +173,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -194,7 +194,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -223,7 +223,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -244,7 +244,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -265,7 +265,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -294,7 +294,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -316,7 +316,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -338,7 +338,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -360,7 +360,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -382,7 +382,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -404,7 +404,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -434,7 +434,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -455,7 +455,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -476,7 +476,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -505,7 +505,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -526,7 +526,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -547,7 +547,7 @@ class LessEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)

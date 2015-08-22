@@ -164,15 +164,9 @@ class CalcController extends Controller {
 			$activity->chapter_id = $chapter->id;
 			$activity->part_id = $part->id;
 			$activity->part_type_id = $part_type->id;
-			$activity->tax_calc_labor_id = $tax->id;
-			$activity->tax_calc_material_id = $tax->id;
-			$activity->tax_calc_equipment_id = $tax->id;
-			$activity->tax_more_labor_id = $tax->id;
-			$activity->tax_more_material_id = $tax->id;
-			$activity->tax_more_equipment_id = $tax->id;
-			$activity->tax_estimate_labor_id = $tax->id;
-			$activity->tax_estimate_material_id = $tax->id;
-			$activity->tax_estimate_equipment_id = $tax->id;
+			$activity->tax_labor_id = $tax->id;
+			$activity->tax_material_id = $tax->id;
+			$activity->tax_equipment_id = $tax->id;
 
 			$activity->save();
 
@@ -209,15 +203,9 @@ class CalcController extends Controller {
 			$activity->chapter_id = $chapter->id;
 			$activity->part_id = $part->id;
 			$activity->part_type_id = $part_type->id;
-			$activity->tax_calc_labor_id = $tax->id;
-			$activity->tax_calc_material_id = $tax->id;
-			$activity->tax_calc_equipment_id = $tax->id;
-			$activity->tax_more_labor_id = $tax->id;
-			$activity->tax_more_material_id = $tax->id;
-			$activity->tax_more_equipment_id = $tax->id;
-			$activity->tax_estimate_labor_id = $tax->id;
-			$activity->tax_estimate_material_id = $tax->id;
-			$activity->tax_estimate_equipment_id = $tax->id;
+			$activity->tax_labor_id = $tax->id;
+			$activity->tax_material_id = $tax->id;
+			$activity->tax_equipment_id = $tax->id;
 
 			$activity->save();
 
@@ -252,11 +240,11 @@ class CalcController extends Controller {
 
 			$type = Input::get('type');
 			if ($type == 'calc-labor') {
-				$activity->tax_calc_labor_id = Input::get('value');
+				$activity->tax_labor_id = Input::get('value');
 			} else if ($type == 'calc-material') {
-				$activity->tax_calc_material_id = Input::get('value');
+				$activity->tax_material_id = Input::get('value');
 			} else if ($type == 'calc-equipment') {
-				$activity->tax_calc_equipment_id = Input::get('value');
+				$activity->tax_equipment_id = Input::get('value');
 			}
 			$activity->save();
 

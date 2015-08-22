@@ -12,7 +12,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$total += MoreLabor::where('activity_id','=',$activity->id)->sum('amount');
 			}
@@ -28,7 +28,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$total += MoreLabor::where('activity_id','=',$activity->id)->sum('amount');
 			}
@@ -44,7 +44,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$total += MoreLabor::where('activity_id','=',$activity->id)->sum('amount');
 			}
@@ -60,7 +60,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = MoreLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -80,7 +80,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = MoreLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -100,7 +100,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = MoreLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -128,7 +128,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_material_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = MoreMaterial::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -148,7 +148,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_material_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = MoreMaterial::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -168,7 +168,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_material_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = MoreMaterial::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -196,7 +196,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_equipment_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = MoreEquipment::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -216,7 +216,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_equipment_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = MoreEquipment::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -236,7 +236,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_equipment_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = MoreEquipment::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -264,7 +264,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$total += MoreLabor::where('activity_id','=',$activity->id)->sum('amount');
 			}
@@ -280,7 +280,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$total += MoreLabor::where('activity_id','=',$activity->id)->sum('amount');
 			}
@@ -296,7 +296,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$total += MoreLabor::where('activity_id','=',$activity->id)->sum('amount');
 			}
@@ -312,7 +312,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = MoreLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -332,7 +332,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = MoreLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -352,7 +352,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = MoreLabor::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -380,7 +380,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_material_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = MoreMaterial::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -400,7 +400,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_material_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = MoreMaterial::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -420,7 +420,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_material_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = MoreMaterial::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -448,7 +448,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_equipment_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = MoreEquipment::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -468,7 +468,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_equipment_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = MoreEquipment::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)
@@ -488,7 +488,7 @@ class MoreEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_more_equipment_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
 				$rows = MoreEquipment::where('activity_id','=',$activity->id)->get();
 				foreach ($rows as $row)

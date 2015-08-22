@@ -21,17 +21,19 @@
 			}, function(data){
 				var $curTable = $curThis.closest("table");
 				var json = $.parseJSON(data);
-				$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
-				.find("td:eq(0)").text(json.date).end()
-				.find("td:eq(1)").html(json.hour).end()
-				.find("td:eq(2)").text(json.type).end()
-				.find("td:eq(3)").text(json.project).end()
-				.find("td:eq(4)").text(json.activity).end()
-				.find("td:eq(5)").text($note).end()
-				.find("td:eq(8)").html('<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>').end()
-				.prependTo($curTable);
-				$curThis.closest("tr").find("input").val("");
-				$curThis.closest("tr").find("select").val("");
+				if (json.success) {
+					$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
+					.find("td:eq(0)").text(json.date).end()
+					.find("td:eq(1)").html(json.hour).end()
+					.find("td:eq(2)").text(json.type).end()
+					.find("td:eq(3)").text(json.project).end()
+					.find("td:eq(4)").text(json.activity).end()
+					.find("td:eq(5)").text($note).end()
+					.find("td:eq(8)").html('<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>').end()
+					.prependTo($curTable);
+					$curThis.closest("tr").find("input").val("");
+					$curThis.closest("tr").find("select").val("");
+				}
 			});
 		});
 		$("body").on("click", ".deleterow", function(e){
@@ -168,48 +170,35 @@
 										<tbody>
 											@foreach (Project::where('user_id','=',Auth::user()->id)->where('project_close','=',null)->get() as $project)
 											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->get() as $activity)
-											<tr>
-												<td class="col-md-2"><strong>{{ $project->project_name }}</strong></td>
-												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-3">{{ $activity->activity_name }}</td>
-												<td class="col-md-2">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id), 2,",","."); }}</td>
-												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-1">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-											</tr>
-											@endforeach
-											@endforeach
-											@endforeach
-
-											@foreach (Project::where('user_id','=',Auth::user()->id)->where('project_close','=',null)->get() as $project)
-											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->get() as $activity)
-											<tr>
-												<td class="col-md-2"><strong>{{ $project->project_name }}</strong></td>
-												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-												<td class="col-md-3">{{ $activity->activity_name }}</td>
-												<td class="col-md-2">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id), 2,",","."); }}</td>
-												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-1">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-											</tr>
-											@endforeach
-											@endforeach
-											@endforeach
-
-											@foreach (Project::where('user_id','=',Auth::user()->id)->where('project_close','=',null)->get() as $project)
-											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
+											<?php
+												$estim = $activity->part_type_id == PartType::where('type_name','=','estimate')->first()->id;
+												$more = $activity->detail_id == Detail::where('detail_name','=','more')->first()->id;
+												$row1 = 0;
+												if ($more){
+													$row1 = MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->sum('amount');
+												}
+												else {
+													if ($estim){
+														$row1 = TimesheetOverview::estimTotalAmount($activity->id);
+													}
+													else {
+														$row1 = TimesheetOverview::calcTotalAmount($activity->id);
+													}
+												}
+											?>
 											<tr>
 												<td class="col-md-2"><strong>{{ $project->project_name }}</strong></td>
 												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
-												<td class="col-md-2">&nbsp;</td>
-												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-2">{{ number_format($row1, 2,",","."); }}</td>
+												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-1">{{ number_format($row1 - Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
 											</tr>
 											@endforeach
 											@endforeach
 											@endforeach
+
 										</tbody>
 									</table>
 									</div>

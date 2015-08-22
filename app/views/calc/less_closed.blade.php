@@ -147,7 +147,7 @@ if (!$project || !$project->isOwner())
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2">{{ Tax::find($activity->tax_calc_labor_id)->tax_rate }}%</div>
+													<div class="col-md-2">{{ Tax::find($activity->tax_labor_id)->tax_rate }}%</div>
 													<div class="col-md-6"></div>
 												</div>
 												<table class="table table-striped" data-id="{{ $activity->id }}">
@@ -173,7 +173,14 @@ if (!$project || !$project->isOwner())
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1">{{ number_format($labor->isless ? $labor->less_amount : $labor->amount, 2, ",",".") }}</td>
 															<td class="col-md-1">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($labor->rate, $labor->isless ? $labor->less_amount : $labor->amount), 2, ",",".") }}</td>
-															<th class="col-md-1">{{ '&euro; '.number_format(LessRegister::lessLaborDeltaTotal($labor), 2, ",",".") }}</th>
+															<td class="col-md-1"><?php
+																$minderw=LessRegister::lessLaborDeltaTotal($labor);
+																if($minderw <0)
+																	echo "<font color=red>&euro; ".number_format($minderw, 2, ",",".")."</font>";
+																else
+																	echo '&euro; '.number_format($minderw, 2, ",",".");
+																?>
+															</td>
 															<td class="col-md-1 text-right"></button></td>
 														</tr>
 														@endforeach
@@ -183,7 +190,7 @@ if (!$project || !$project->isOwner())
 												<div class="row">
 													<div class="col-md-2"><h4>Materiaal</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2">{{ Tax::find($activity->tax_calc_material_id)->tax_rate }}%</div>
+													<div class="col-md-2">{{ Tax::find($activity->tax_material_id)->tax_rate }}%</div>
 													<div class="col-md-2"></div>
 												</div>
 
@@ -208,18 +215,30 @@ if (!$project || !$project->isOwner())
 															<td class="col-md-1">{{ $material->unit }}</td>
 															<td class="col-md-1">{{ number_format($material->isless ? $material->less_rate : $material->rate, 2,",",".") }}</td>
 															<td class="col-md-1">{{ number_format($material->isless ? $material->less_amount : $material->amount, 2,",",".") }}</td>
-															<td class="col-md-1">{{ '&euro; '.number_format(($material->isless ? $material->less_rate * $material->less_amount : $material->rate * $material->amount) *((100+$profit_mat)/100), 2,",",".") }}</td>
-															<th class="col-md-1">
+															<td class="col-md-1"><span class="total-incl-tax">
+															<?php
+																if (Part::find($activity->part_id)->part_name=='contracting') {
+																	$profit = $project->profit_calc_contr_mat;
+																} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+																	$profit = $project->profit_calc_subcontr_mat;
+																}
+																echo '&euro; '.number_format(($material->isless ? $material->less_rate * $material->less_amount : $material->rate * $material->amount) *((100+$profit)/100), 2, ",",".");
+															?></span>
+															</td>
+															<td class="col-md-1">
 															<?php
 																if ($material->isless) {
-																	$total = ($material->rate * $material->amount) * ((100+$profit_mat)/100);
-																	$less_total = ($material->less_rate * $material->less_amount) * ((100+$profit_mat)/100);
-																	echo '&euro; '.number_format($less_total-$total, 2,",",".");
+																	$total = ($material->rate * $material->amount) * ((100+$profit)/100);
+																	$less_total = ($material->less_rate * $material->less_amount) * ((100+$profit)/100);
+																	if($less_total-$total <0)
+																		echo "<font color=red>&euro; ".number_format($less_total-$total, 2, ",",".")."</font>";
+																	else
+																		echo '&euro; '.number_format($less_total-$total, 2, ",",".");
 																} else {
 																	echo '&euro; 0,00';
 																}
 															?>
-															</th>
+															</td>
 															<td class="col-md-1"></td>
 														</tr>
 														@endforeach
@@ -240,7 +259,7 @@ if (!$project || !$project->isOwner())
 												<div class="row">
 													<div class="col-md-2"><h4>Materieel</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2">{{ Tax::find($activity->tax_calc_equipment_id)->tax_rate }}%</div>
+													<div class="col-md-2">{{ Tax::find($activity->tax_equipment_id)->tax_rate }}%</div>
 													<div class="col-md-8"></div>
 												</div>
 
@@ -266,18 +285,29 @@ if (!$project || !$project->isOwner())
 															<td class="col-md-1">{{ $equipment->unit }}</td>
 															<td class="col-md-1">{{ number_format($equipment->isless ? $equipment->less_rate : $equipment->rate, 2,",",".") }}</td>
 															<td class="col-md-1">{{ number_format($equipment->isless ? $equipment->less_amount : $equipment->amount, 2,",",".") }}</td>
-															<td class="col-md-1">{{ '&euro; '.number_format(($equipment->isless ? $equipment->less_rate * $equipment->less_amount : $equipment->rate * $equipment->amount) *((100+$profit_equip)/100), 2,",",".") }}</td>
-															<th class="col-md-1">
+															<td class="col-md-1"><span class="total-incl-tax">
+															<?php
+																if (Part::find($activity->part_id)->part_name=='contracting') {
+																	$profit = $project->profit_calc_contr_equip;
+																} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+																	$profit = $project->profit_calc_subcontr_equip;
+																}
+																echo '&euro; '.number_format(($equipment->isless ? $equipment->less_rate * $equipment->less_amount : $equipment->rate * $equipment->amount) *((100+$profit)/100), 2, ",",".");
+															?></span></td>
+															<td class="col-md-1">
 															<?php
 																if ($equipment->isless) {
-																	$total = ($equipment->rate * $equipment->amount) * ((100+$profit_equip)/100);
-																	$less_total = ($equipment->less_rate * $equipment->less_amount) * ((100+$profit_equip)/100);
-																	echo '&euro; '.number_format($less_total-$total, 2,",",".");
+																	$total = ($equipment->rate * $equipment->amount) * ((100+$profit)/100);
+																	$less_total = ($equipment->less_rate * $equipment->less_amount) * ((100+$profit)/100);
+																	if($less_total-$total <0)
+																		echo "<font color=red>&euro; ".number_format($less_total-$total, 2, ",",".")."</font>";
+																	else
+																		echo '&euro; '.number_format($less_total-$total, 2, ",",".");
 																} else {
 																	echo '&euro; 0,00';
 																}
 															?>
-															</th>
+															</td>
 															<td class="col-md-1"></td>
 														</tr>
 														@endforeach
