@@ -177,7 +177,7 @@ else
 		$('#dobx').datepicker().on('changeDate', function(e){
 			$('#dobx').datepicker('hide');
 			$.post("/offer/close", {
-				date: e.date,
+				date: e.date.toLocaleString(),
 				offer: {{ $offer_last->id }},
 				project: {{ $project->id }}
 			}, function(data){
@@ -267,9 +267,10 @@ else
 										} else {
 											if ($offer_last && $offer_last->offer_finish) {
 												echo date('d-m-Y', strtotime($offer_last->offer_finish));
-											} else {
+											} else if ($offer_last) {
 												echo '<a href="#" id="dobx">Bewerk</a>';
-												//echo
+											} else {
+												echo "Geen offerte bedrag";
 											}
 										}
 									?>

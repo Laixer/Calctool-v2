@@ -44,6 +44,7 @@ class DemoProjectTemplate {
 		$project->address_city 		= 'Demodorp';
 		$project->note 				= 'Dit is een demo project';
 		$project->hour_rate 		= 35;
+		$project->hour_rate_more 	= 45;
 		$project->user_id 			= $userid;
 		$project->province_id 		= $province->id;
 		$project->country_id 		= $country->id;
