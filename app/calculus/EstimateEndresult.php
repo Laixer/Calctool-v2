@@ -481,7 +481,7 @@ class EstimateEndresult {
 						$amount = EstimateLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->where('isset','=','false')->sum('amount');
 						$total += $amount_set + $amount;
 					}
-//ELKE REGEL MOET KEER EEN EIGEN RATE
+//TODO ELKE REGEL MOET KEER EEN EIGEN RATE, issue #148
 				}
 				}
 			}
