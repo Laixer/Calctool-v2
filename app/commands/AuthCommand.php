@@ -7,18 +7,21 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
+ *
+ * Written by Marco Boretto <marco.bore@gmail.com>
 */
+
 namespace Longman\TelegramBot\Commands;
 
 use Longman\TelegramBot\Request;
 use Longman\TelegramBot\Command;
 use Longman\TelegramBot\Entities\Update;
 
-class AboutCommand extends Command
+class AuthCommand extends Command
 {
-	protected $name = 'about';
-	protected $description = 'Over de CalculatieTool';
-	protected $usage = '/about';
+	protected $name = 'auth';
+	protected $description = 'Verbindt met CalculatieTool profiel';
+	protected $usage = '/auth <apikey>';
 	protected $version = '1.0.0';
 	protected $enabled = true;
 	protected $public = true;
@@ -32,13 +35,21 @@ class AboutCommand extends Command
 		$message_id = $message->getMessageId();
 		$text = $message->getText(true);
 
-		$msg = 'Calctool v. ' . $_ENV['CT_VERSION'] . "\n\n";
-		$msg .= 'COPYRIGHT © ' . date('Y') . ' CALCTOOL';
+		if (empty($text)) {
+			$text = 'Geeft de api key op, deze is te vinden in Mijn Account';
+		} else {
+			/*$weather = $this->getWeatherString($text);
+			if (empty($weather)) {
+				$text = 'Can not find weather for location: ' . $text;
+			} else {
+				$text = $weather;
+			}*/
+		}
 
 		$data = array();
 		$data['chat_id'] = $chat_id;
 		$data['reply_to_message_id'] = $message_id;
-		$data['text'] = $msg;
+		$data['text'] = $text;
 
 		$result = Request::sendMessage($data);
 		return $result;

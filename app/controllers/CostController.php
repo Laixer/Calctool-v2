@@ -149,7 +149,7 @@ class CostController extends Controller {
 				'register_date' => Input::get('date'),
 				'amount' => str_replace(',', '.', str_replace('.', '' , Input::get('hour'))),
 				'relation_id' => Input::get('relation'),
-				//'note' => Input::get('note'), //verwijderenden na release
+				'note' => Input::get('note'),
 				'kind_id' => Input::get('type'),
 				'project_id' => $project->id
 			));
