@@ -12,7 +12,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$total += EstimateLabor::where('activity_id','=',$activity->id)->sum('amount');
@@ -32,7 +32,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$total += EstimateLabor::where('activity_id','=',$activity->id)->sum('amount');
@@ -52,7 +52,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$total += EstimateLabor::where('activity_id','=',$activity->id)->sum('amount');
@@ -72,7 +72,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateLabor::where('activity_id','=',$activity->id)->get();
@@ -96,7 +96,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateLabor::where('activity_id','=',$activity->id)->get();
@@ -120,7 +120,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateLabor::where('activity_id','=',$activity->id)->get();
@@ -152,7 +152,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->get();
@@ -176,7 +176,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->get();
@@ -200,7 +200,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->get();
@@ -232,7 +232,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->get();
@@ -256,7 +256,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->get();
@@ -280,7 +280,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->get();
@@ -312,7 +312,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$total += EstimateLabor::where('activity_id','=',$activity->id)->sum('amount');
@@ -332,7 +332,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$total += EstimateLabor::where('activity_id','=',$activity->id)->sum('amount');
@@ -352,7 +352,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$total += EstimateLabor::where('activity_id','=',$activity->id)->sum('amount');
@@ -372,7 +372,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateLabor::where('activity_id','=',$activity->id)->get();
@@ -396,7 +396,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateLabor::where('activity_id','=',$activity->id)->get();
@@ -420,7 +420,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_labor_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateLabor::where('activity_id','=',$activity->id)->get();
@@ -452,7 +452,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->get();
@@ -476,7 +476,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->get();
@@ -500,7 +500,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_material_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->get();
@@ -532,7 +532,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->get();
@@ -556,7 +556,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->get();
@@ -580,7 +580,7 @@ class CalculationEndresult {
 
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_calc_equipment_id','=',$tax_id)->get() as $activity)
+			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->get();

@@ -235,8 +235,8 @@ Route::any('telegram', function(){
 	    // create Telegram API object
 	    $telegram = new Longman\TelegramBot\Telegram($API_KEY, $BOT_NAME);
 
-	    echo $telegram->handle();
+		$telegram->handle();
 	} catch (Longman\TelegramBot\Exception\TelegramException $e) {
-	    echo $e->getMessage();
+		Log::error($e->getMessage());
 	}
 });

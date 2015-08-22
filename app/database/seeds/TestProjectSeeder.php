@@ -3,6 +3,14 @@
 /*
  * Static Models Only
  * Test are performed on other seeds
+ *
+ * ///////////////////////////////////////
+ * // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * // THIS SEEDER CONTAINS INVALID DATA
+ * // DO NOT USE ON PRODUCTION ENVS
+ * //
+ * ///////////////////////////////////////
+ *
  */
 class TestProjectSeeder extends Seeder {
 
