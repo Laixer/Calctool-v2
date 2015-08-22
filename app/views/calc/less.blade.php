@@ -746,14 +746,14 @@ var n = this,
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format($labor->isless ? $labor->less_amount : $labor->amount, 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($labor->rate, $labor->isless ? $labor->less_amount : $labor->amount), 2, ",",".") }}</span></td>
-															<th class="col-md-1"><?php
+															<td class="col-md-1"><?php
 																$minderw=LessRegister::lessLaborDeltaTotal($labor);
 																if($minderw <0)
 																	echo "<font color=red>&euro; ".number_format($minderw, 2, ",",".")."</font>";
 																else
 																	echo '&euro; '.number_format($minderw, 2, ",",".");
 																?>
-															</th>
+															</td>
 															<td class="col-md-1 text-right"><button class="btn btn-warning lresetrow btn-xs fa fa-undo"></button></td>
 														</tr>
 														@endforeach
@@ -799,7 +799,7 @@ var n = this,
 																echo '&euro; '.number_format(($material->isless ? $material->less_rate * $material->less_amount : $material->rate * $material->amount) *((100+$profit)/100), 2, ",",".");
 															?></span>
 															</td>
-															<th class="col-md-1">
+															<td class="col-md-1">
 															<?php
 																if ($material->isless) {
 																	$total = ($material->rate * $material->amount) * ((100+$profit)/100);
@@ -812,7 +812,7 @@ var n = this,
 																	echo '&euro; 0,00';
 																}
 															?>
-															</th>
+															</td>
 															<td class="col-md-1 text-right" data-profit="{{$profit}}">
 																<button class="btn btn-warning btn-xs sresetrow fa fa-undo"></button>
 															</td>
@@ -835,7 +835,7 @@ var n = this,
 															}
 															echo '&euro; '.number_format(LessRegister::lessMaterialTotalProfit($activity->id, $profit), 2, ",",".");
 															?></span></td>
-															<th class="col-md-1">{{'&euro; ' .number_format(LessRegister::lessMaterialDeltaTotal($activity->id, $profit), 2, ",",".") }}</th>
+															<td class="col-md-1"><strong>{{'&euro; ' .number_format(LessRegister::lessMaterialDeltaTotal($activity->id, $profit), 2, ",",".") }}</strong></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -879,7 +879,7 @@ var n = this,
 																}
 																echo '&euro; '.number_format(($equipment->isless ? $equipment->less_rate * $equipment->less_amount : $equipment->rate * $equipment->amount) *((100+$profit)/100), 2, ",",".");
 															?></span></td>
-															<th class="col-md-1">
+															<td class="col-md-1">
 															<?php
 																if ($equipment->isless) {
 																	$total = ($equipment->rate * $equipment->amount) * ((100+$profit)/100);
@@ -892,7 +892,7 @@ var n = this,
 																	echo '&euro; 0,00';
 																}
 															?>
-															</th>
+															</td>
 															<td class="col-md-1 text-right" data-profit="{{$profit}}">
 																<button class="btn btn-warning btn-xs eresetrow fa fa-undo"></button>
 															</td>
@@ -914,7 +914,7 @@ var n = this,
 															}
 															echo '&euro; '.number_format(LessRegister::lessEquipmentTotalProfit($activity->id, $profit), 2, ",",".");
 															?></span></td>
-															<th class="col-md-1">{{'&euro; ' .number_format(LessRegister::lessEquipmentDeltaTotal($activity->id, $profit), 2, ",",".") }}</th>
+															<td class="col-md-1"><strong>{{'&euro; ' .number_format(LessRegister::lessEquipmentDeltaTotal($activity->id, $profit), 2, ",",".") }}</strong></th>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
