@@ -94,10 +94,9 @@ class OfferController extends Controller {
 	public function doOfferClose()
 	{
 		$rules = array(
-			'name' => array('required'),
-			'value' => array('required'),
-			'pk' => array('required','integer'),
-			'project_id' => array('required','integer'),
+			'date' => array('required'),
+			'offer' => array('required','integer'),
+			'project' => array('required','integer'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -105,10 +104,10 @@ class OfferController extends Controller {
 		if ($validator->fails()) {
 			$messages = $validator->messages();
 
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
 
-			$offer = Offer::find(Input::get('pk'));
+			$offer = Offer::find(Input::get('offer'));
 			if (!$offer)
 				return Redirect::back()->withInput(Input::all());
 			$project = Project::find($offer->project_id);
@@ -116,7 +115,7 @@ class OfferController extends Controller {
 				return Redirect::back()->withInput(Input::all());
 			}
 
-			$offer->offer_finish = date('Y-m-d', strtotime(Input::get('value')));
+			$offer->offer_finish = date('Y-m-d', strtotime(Input::get('date')));
 			$offer->save();
 
 			$first_id = 0;

@@ -174,24 +174,17 @@ else
 				}
 		});
 		<?php if ($offer_last) { ?>
-		$('#dob').editable({
-			type:  'date',
-			pk:    {{ $offer_last->id }},
-			name:  'dob',
-			url:   '/offer/close',
-			send:  'always',
-			emptytext: 'Bewerk',
-			title: 'Selecteer offertedatum',
-			validate: function(value) {
-				if($.trim(value) == '')
-					return 'Vul een datum in';
-			},
-			params: function (params) {
-				params.project_id = {{ $project->id }};
-				return params;
-			}
-		});
-		<?php } ?>
+		$('#dobx').datepicker().on('changeDate', function(e){
+			$('#dobx').datepicker('hide');
+			$.post("/offer/close", {
+				date: e.date.toLocaleString(),
+				offer: {{ $offer_last->id }},
+				project: {{ $project->id }}
+			}, function(data){
+				location.reload();
+			});
+    	});
+    	<?php } ?>
 	});
 </script>
 <div id="wrapper">
@@ -274,8 +267,10 @@ else
 										} else {
 											if ($offer_last && $offer_last->offer_finish) {
 												echo date('d-m-Y', strtotime($offer_last->offer_finish));
+											} else if ($offer_last) {
+												echo '<a href="#" id="dobx">Bewerk</a>';
 											} else {
-												echo '<a href="#" id="dob" data-format="dd-mm-yyyy"></a>';
+												echo "Geen offerte bedrag";
 											}
 										}
 									?>

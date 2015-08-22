@@ -215,7 +215,7 @@ if (!$project || !$project->isOwner()) {
 						    </button>
 						    <ul class="dropdown-menu">
 						      <li><a target="blank" href="/invoice/pdf/project-{{ $project->id }}/term-invoice-{{ $invoice->id }}">Bekijk PDF</a></li>
-						      <li><a href="/invoice/pdf/project-{{ $project->id }}/term-invoice-{{ $invoice->id }}/download?file={{ InvoiceController::getInvoiceCode($project->id).'-invoice.pdf' }}">Download PDF</a></li>
+						      <li><a href="/invoice/pdf/project-{{ $project->id }}/term-invoice-{{ $invoice->id }}/download?file={{ InvoiceController::getInvoiceCode($project->id).'-factuur.pdf' }}">Download PDF</a></li>
 						    </ul>
 						  </div>
 						<?php
@@ -249,7 +249,7 @@ if (!$project || !$project->isOwner()) {
 						    </button>
 						    <ul class="dropdown-menu">
 						      <li><a target="blank" href="/invoice/pdf/project-{{ $project->id }}/invoice-{{ $invoice_end->id }}">Bekijk PDF</a></li>
-						      <li><a href="/invoice/pdf/project-{{ $project->id }}/invoice-{{ $invoice_end->id }}/download?file={{ InvoiceController::getInvoiceCode($project->id).'-invoice.pdf' }}">Download PDF</a></li>
+						      <li><a href="/invoice/pdf/project-{{ $project->id }}/invoice-{{ $invoice_end->id }}/download?file={{ InvoiceController::getInvoiceCode($project->id).'-factuur.pdf' }}">Download PDF</a></li>
 						    </ul>
 						  </div>
 						<?php } else if ($close && !$project->project_close) {
