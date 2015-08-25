@@ -825,7 +825,7 @@ var n = this,
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2"><strong>{{ Tax::find($activity->tax_estimate_labor_id)->tax_rate }}%</strong></div>
+													<div class="col-md-2"><strong>{{ Tax::find($activity->tax_labor_id)->tax_rate }}%</strong></div>
 													<div class="col-md-6"></div>
 												</div>
 												<table class="table table-striped" data-id="{{ $activity->id }}">
@@ -898,7 +898,7 @@ var n = this,
 												<div class="row">
 													<div class="col-md-2"><h4>Materiaal</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2"><strong>{{ Tax::find($activity->tax_estimate_material_id)->tax_rate }}%</strong></div>
+													<div class="col-md-2"><strong>{{ Tax::find($activity->tax_material_id)->tax_rate }}%</strong></div>
 													<div class="col-md-2"></div>
 												</div>
 
@@ -961,7 +961,7 @@ var n = this,
 												<div class="row">
 													<div class="col-md-2"><h4>Materieel</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2"><strong>{{ Tax::find($activity->tax_estimate_equipment_id)->tax_rate }}%</strong></div>
+													<div class="col-md-2"><strong>{{ Tax::find($activity->tax_equipment_id)->tax_rate }}%</strong></div>
 													<div class="col-md-8"></div>
 												</div>
 
