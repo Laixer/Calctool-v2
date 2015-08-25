@@ -33,7 +33,7 @@ class CreateCostRegistration extends Migration {
 		{
 			$table->increments('id');
 			$table->date('register_date');
-			$table->decimal('register_hour', 5, 2)->unsigned();
+			$table->decimal('register_hour', 6, 3)->unsigned();
 			$table->text('note')->nullable();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
@@ -44,7 +44,7 @@ class CreateCostRegistration extends Migration {
 		Schema::create('purchase', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->decimal('amount', 9, 2);
+			$table->decimal('amount', 9, 3);
 			$table->text('note')->nullable();
 			$table->date('register_date');
 			$table->integer('project_id')->unsigned();
