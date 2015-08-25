@@ -868,6 +868,37 @@ class CalcController extends Controller {
 		}
 	}
 
+	public function doDeleteEstimateLabor()
+	{
+		$rules = array(
+			'id' => array('required','integer','min:0'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+			$rec = EstimateLabor::find(Input::get('id'));
+			if (!$rec)
+				return json_encode(['success' => 0]);
+			$activity = Activity::find($rec->activity_id);
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
+			$rec->delete();
+
+			return json_encode(['success' => 1]);
+		}
+	}
+
 	public function doDeleteEstimateMaterial()
 	{
 		$rules = array(

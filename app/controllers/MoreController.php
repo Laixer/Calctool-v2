@@ -279,7 +279,7 @@ class MoreController extends Controller {
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
 
-			$rec = MoreEquipment::find(Input::get('id'));
+			$rec = MoreLabor::find(Input::get('id'));
 			if (!$rec)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($rec->activity_id);

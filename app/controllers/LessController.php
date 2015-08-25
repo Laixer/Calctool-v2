@@ -18,7 +18,7 @@ class LessController extends Controller {
 	public function updateLessStatus($id)
 	{
 		$proj = Project::find($id);
-		if (!$project || !$project->isOwner())
+		if (!$proj || !$proj->isOwner())
 			return;
 		if (!$proj->start_less)
 			$proj->start_less = date('Y-m-d');

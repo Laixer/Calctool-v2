@@ -637,6 +637,15 @@ var n = this,
 			if($curThis.closest("tr").attr("data-id"))
 				$.post("/calculation/calc/deletelabor", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(){
 					$curThis.closest("tr").find("input").val("0,00");
+					$curThis.closest("tr").find(".total-ex-tax").text('€ 0,00');
+				}).fail(function(e) { console.log(e); });
+		});
+		$("body").on("click", ".ldeleterowe", function(){
+			var $curThis = $(this);
+			if($curThis.closest("tr").attr("data-id"))
+				$.post("/calculation/estim/deletelabor", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(){
+					$curThis.closest("tr").find("input").val("0,00");
+					$curThis.closest("tr").find(".total-ex-tax").text('€ 0,00');
 				}).fail(function(e) { console.log(e); });
 		});
 		$("body").on("click", ".deleteact", function(e){
@@ -846,7 +855,6 @@ var n = this,
 													<div class="col-md-6"></div>
 												</div>
 												<table class="table table-striped" data-id="{{ $activity->id }}">
-													<?# -- table head -- ?>
 													<thead>
 														<tr>
 															<th class="col-md-5">Omschrijving</th>
@@ -1115,7 +1123,7 @@ var n = this,
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(EstimateLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsavee" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::estimLaborTotal(EstimateLabor::where('activity_id','=', $activity->id)->first()['rate'], EstimateLabor::where('activity_id','=', $activity->id)->first()['amount']),2, ",",".") }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1 text-right"><button class="btn btn-danger btn-xs fa fa-times"></button></td>
+															<td class="col-md-1 text-right"><button class="btn btn-danger ldeleterowe btn-xs fa fa-times"></button></td>
 														</tr>
 													</tbody>
 												</table>

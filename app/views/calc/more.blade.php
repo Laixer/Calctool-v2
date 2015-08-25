@@ -436,6 +436,7 @@ var n = this,
 			if($curThis.closest("tr").attr("data-id"))
 				$.post("/more/deletelabor", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(){
 					$curThis.closest("tr").find("input").val("0,00");
+					$curThis.closest("tr").find(".total-ex-tax").text('€ 0,00');
 				}).fail(function(e) { console.log(e); });
 		});
 		$("body").on("click", ".deleteact", function(e){
