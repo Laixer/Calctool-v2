@@ -1043,14 +1043,14 @@ if (!$project || !$project->isOwner()) {
 						</select> na dagtekening.
 						@endif
 					</li>
-					<li>
-						@if ($offer_last && $offer_last->offer_finish)
-						{{ $offer_last->extracondition }}
-						@else
-							<textarea name="extracondition" id="extracondition" rows="2" class="form-control">{{ ($offer_last ? $offer_last->extracondition : Auth::user()->pref_closure_invoice) }}</textarea>
-						@endif
-					</li>
 				</ul>
+				@if ($offer_last && $offer_last->offer_finish)
+					{{ $offer_last->extracondition }}
+				@else
+					<textarea name="extracondition" id="extracondition" rows="3" class="form-control">{{ ($offer_last ? $offer_last->extracondition : Auth::user()->pref_closure_invoice) }}</textarea>
+				@endif
+
+
 
 				<br>
 				<p>Met vriendelijke groet,
