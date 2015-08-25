@@ -499,21 +499,21 @@ class EstimateEndresult {
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
-					$set_rows = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','true')>get();
-					} else {
-						$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
-						$set_rows = [];
-					}
-					foreach ($rows as $row)
-					{
-						$total += $row->rate * $row->amount;
-					}
-					foreach ($set_rows as $row)
-					{
-						$total += $row->rate * $row->set_amount;
-					}
+					$set_rows = EstimateLabor::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
+				} else {
+					$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
+					$set_rows = [];
+				}
+				foreach ($rows as $row)
+				{
+					$total += $row->rate * $row->amount;
+				}
+				foreach ($set_rows as $row)
+				{
+					$total += $row->rate * $row->set_amount;
 				}
 			}
+		}
 
 		return $total;
 	}
