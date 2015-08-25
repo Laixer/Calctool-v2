@@ -17,11 +17,11 @@ use Longman\TelegramBot\Request;
 use Longman\TelegramBot\Command;
 use Longman\TelegramBot\Entities\Update;
 
-class AuthCommand extends Command
+class ProjectCommand extends Command
 {
-	protected $name = 'auth';
-	protected $description = 'Verbindt met CalculatieTool profiel';
-	protected $usage = '/auth <API-key>';
+	protected $name = 'project';
+	protected $description = '';
+	protected $usage = '/project';
 	protected $version = '1.0.0';
 	protected $enabled = true;
 	protected $public = true;
@@ -48,21 +48,26 @@ class AuthCommand extends Command
 		$message_id = $message->getMessageId();
 		$text = $message->getText(true);
 
-		if ($this->getAuthStatus($message->getFrom()->getId())) {
-			$text = 'Telegram is gekoppeld aan gebruiker \'' . $this->user->username . '\'. Gebruik /deauth om Telegram te ontkoppelen';
+		if (!$this->getAuthStatus($message->getFrom()->getId())) {
+			$text = 'Telegram is niet gekoppeld aan een account. Gebruik /auth';
 		} else {
 
-			if (empty($text)) {
-				$text = 'Geeft de API key op, deze is te vinden in Mijn Account';
-			} else {
-				$user = \User::where('api','=',$text)->first();
-				if ($user) {
-					\Redis::set('auth:'.$user->username.':telegram', true);
-					\Redis::set('auth:telegram:'.$message->getFrom()->getId(), $user->id);
-					$text = 'Beste, ' . $user->firstname . "\n";
-					$text .= 'Telegram is verbonden met uw account';
+			if (!empty($text)) {
+				$project = \Project::find($text);
+				if ($project) {
+					$text  = 'ID: ' . $project->id . "\n";
+					$text .= 'Naam: ' . $project->project_name . "\n";
+					$text .= 'Adres: ' . $project->address_street . ' ' . $project->address_number . ', ' . $project->address_postal . ', ' . $project->address_city . "\n";
+					$text .= 'Uurtarief: ' . $project->hour_rate . ' ' . "\n";
+					$text .= 'Uurtarief meerwerk: ' . $project->hour_rate_more . ' ' . "\n";
 				} else {
-					$text = 'Ongeldige API key';
+					$text = 'Project niet gevonden';
+				}
+			} else {
+				$projects = \Project::where('user_id','=',$this->user->id)->where('project_close','=',null)->get();
+				$text = 'Actieve projecten:' . "\n\n";
+				foreach($projects as $project) {
+					$text .= $project->id . ' | ' .$project->project_name . ' | ' . $project->note . "\n";
 				}
 			}
 

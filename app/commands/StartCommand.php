@@ -14,11 +14,11 @@ use Longman\TelegramBot\Request;
 use Longman\TelegramBot\Command;
 use Longman\TelegramBot\Entities\Update;
 
-class AboutCommand extends Command
+class StartCommand extends Command
 {
-	protected $name = 'about';
+	protected $name = 'start';
 	protected $description = 'Over de CalculatieTool';
-	protected $usage = '/about';
+	protected $usage = '/start';
 	protected $version = '1.0.0';
 	protected $enabled = true;
 	protected $public = true;
@@ -32,9 +32,9 @@ class AboutCommand extends Command
 		$message_id = $message->getMessageId();
 		$text = $message->getText(true);
 
-		$msg = '-= Calctool v' . $_ENV['CT_VERSION'] . ' =-' . "\n\n";
-		$msg .= 'Services: Online' . "\n";
-		$msg .= 'COPYRIGHT © ' . date('Y') . ' CalculatieTool';
+		$msg = 'CalculatieTool botz' . "\n\n";
+		$msg .= 'Deze bot biedt enkele eenvoudige opdrachten om uw CalculatieTool account te beheren' . "\n";
+		$msg .= 'Voor een lijst van opdrachten vraag de /help op';
 
 		$data = array();
 		$data['chat_id'] = $chat_id;
