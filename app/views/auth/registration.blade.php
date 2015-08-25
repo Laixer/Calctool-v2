@@ -1,7 +1,17 @@
 @extends('layout.master')
 
 @section('content')
-<?# -- WRAPPER -- ?>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#tos').click(function(e){
+		if ($(this).prop('checked')) {
+			$('#btn-submit').removeClass('disabled');
+		} else {
+			$('#btn-submit').addClass('disabled');
+		}
+	});
+});
+</script>
 <div id="wrapper">
 
 	<div id="shop">
@@ -10,7 +20,6 @@
 
 			<div class="row">
 
-				<!-- REGISTER -->
 				<div class="col-md-6">
 
 					<h2>Maak <strong>Account</strong> aan</h2>
@@ -66,7 +75,13 @@
 						</div>
 						<div class="row">
 							<div class="col-md-12">
-								<input type="submit" value="Aanmelden" class="btn btn-primary pull-right push-bottom" data-loading-text="Loading...">
+								<span class="remember-box checkbox">
+									<label for="tos">Ik ga akkoord met de <a href="javascript:void(0);">algemene voorwaarden</a></label>
+									<input name="tos" type="checkbox" value="1" id="tos">
+								</span>
+							</div>
+							<div class="col-md-12">
+								<input type="submit" id="btn-submit" value="Aanmelden" class="btn btn-primary pull-right push-bottom disabled" data-loading-text="Loading...">
 							</div>
 						</div>
 
