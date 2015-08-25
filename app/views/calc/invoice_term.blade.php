@@ -421,16 +421,7 @@ if (!$project || !$project->isOwner()) {
 					<div class="col-sm-12">
 					<h4>Bepalingen</h4>
 					<ul>
-						<li>
-<!-- TODO : De onderstaande regel moet voor de op te halen waarden een selectbox krijgen, ea vergelijkbaar met de onderdtaande select START -->
-							Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.
-							<select name="deliver" id="deliver">
-								@foreach (DeliverTime::all() as $deliver)
-								<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
-								@endforeach
-							</select>
-<!-- TODO : De bovenstaande regels moet voor de op te halen waarden een selectbox krijgen, ea vergelijkbaar met de onderdtaande select END -->
-						</li>
+						<li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
 					</ul>
 					<br>
 					<span>Met vriendelijke groet,

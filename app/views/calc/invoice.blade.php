@@ -899,8 +899,7 @@ if (!$project || !$project->isOwner()) {
 				<tr>
 					<td class="col-md-6">Te factureren BTW bedrag</td>
 					<td class="col-md-2">&nbsp;</td>
-<!-- TODO Moet nog gequeryd worden -->
-					<td class="col-md-2"><strong>volgt</strong></td>
+					<td class="col-md-2"><strong>{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21')/100)*21+(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6, 2, ",",".") }}</strong></td>
 					<td class="col-md-2">&nbsp;</td>
 				</tr>
 				<tr>
@@ -962,8 +961,7 @@ if (!$project || !$project->isOwner()) {
 				<tr>
 					<td class="col-md-6">Te factureren BTW bedrag</td>
 					<td class="col-md-2">&nbsp;</td>
-<!-- Moet nog gequeryd worden -->
-					<td class="col-md-2"><strong>volgt</strong></td>
+					<td class="col-md-2"><strong>{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21/100)*21+(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6, 2, ",",".") }}</strong></td>
 					<td class="col-md-2">&nbsp;</td>
 				</tr>
 				<tr>
@@ -984,16 +982,7 @@ if (!$project || !$project->isOwner()) {
 			<div class="col-sm-12">
 			<h4>Bepalingen</h4>
 			<ul>
-				<li>
-<!-- TODO : De onderstaande regel moet voor de op te halen waarden een selectbox krijgen, ea vergelijkbaar met de onderdtaande select START -->
-					Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.
-					<select name="deliver" id="deliver">
-						@foreach (DeliverTime::all() as $deliver)
-						<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
-						@endforeach
-					</select>
-<!-- TODO : De bovenstaande regels moet voor de op te halen waarden een selectbox krijgen, ea vergelijkbaar met de onderdtaande select END -->
-				</li>
+				<li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
 			</ul>
 			<br>
 			<span>Met vriendelijke groet,
