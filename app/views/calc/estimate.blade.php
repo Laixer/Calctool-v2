@@ -22,8 +22,6 @@ if (!$project || !$project->isOwner())
 <?php }else{ ?>
 
 @section('content')
-<?# -- WRAPPER -- ?>
-
 <script type="text/javascript">
 Number.prototype.formatMoney = function(c, d, t){
 var n = this,
@@ -354,7 +352,7 @@ var n = this,
 						$curThis.closest("tr").attr("data-id", json.id);
 						var rate = $curThis.closest("tr").find("input[name='rate']").val()
 						if (rate) {
-							rate.toString().split('.').join('').replace(',', '.');
+							rate = rate.toString().split('.').join('').replace(',', '.');
 						} else {
 							rate = {{$project->hour_rate}};
 						}
@@ -399,7 +397,7 @@ var n = this,
 						$curThis.closest("tr").attr("data-id", json.id);
 						var rate = $curThis.closest("tr").find("input[name='rate']").val()
 						if (rate) {
-							rate.toString().split('.').join('').replace(',', '.');
+							rate = rate.toString().split('.').join('').replace(',', '.');
 						} else {
 							rate = {{$project->hour_rate}};
 						}
@@ -881,11 +879,12 @@ var n = this,
 														<?php }else{ ?>
 														<?php
 														$labor = EstimateLabor::where('activity_id','=', $activity->id)->first();
+														$rate = $labor['original'] ? ($labor['isset'] ? $labor['set_rate'] : $labor['rate']) : $labor['set_rate'];
 														?>
-														<tr data-id="{{ $labor['id'] }}"><?# -- item -- ?>
+														<tr data-id="{{ $labor['id'] }}">
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
+															<td class="col-md-1">{{ Part::find($activity->part_id)->part_name=='subcontracting' ? '<input name="rate" type="text" value="'.number_format($rate, 2,",",".").'" class="form-control-sm-number labor-amount lsavee">' : number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format($labor['original'] ? ($labor['isset'] ? $labor['set_amount'] : $labor['amount']) : $labor['set_amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsavee" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(EstimateRegister::estimLaborTotal($project->hour_rate, $labor['original'] ? ($labor['isset'] ? $labor['set_amount'] : $labor['amount']) : $labor['set_amount']), 2, ",",".") }}</span></td>
 															<td class="col-md-1">&nbsp;</td>

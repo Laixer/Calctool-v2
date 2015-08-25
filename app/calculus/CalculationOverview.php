@@ -14,7 +14,9 @@ class CalculationOverview {
 		} else {
 			$row = CalculationLabor::where('activity_id', '=', $activity->id)->first();
 		}
-
+		if (Part::find($activity->part_id)->part_name=='subcontracting') {
+			$rate = $row['rate'];
+		}
 		return $rate * $row['amount'];
 	}
 
