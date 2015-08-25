@@ -127,7 +127,7 @@ class CostController extends Controller {
 		$rules = array(
 			'date' => array('required','regex:/^20[0-9][0-9]-[0-9]{2}-[0-9]{2}$/'),
 			'type' => array('required','integer'),
-			'hour' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'project' => array('required','integer'),
 			'relation' => array('required','integer')
 		);
@@ -147,7 +147,7 @@ class CostController extends Controller {
 
 			$purchase = Purchase::create(array(
 				'register_date' => Input::get('date'),
-				'amount' => str_replace(',', '.', str_replace('.', '' , Input::get('hour'))),
+				'amount' => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
 				'relation_id' => Input::get('relation'),
 				'note' => Input::get('note'),
 				'kind_id' => Input::get('type'),
