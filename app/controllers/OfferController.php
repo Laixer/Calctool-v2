@@ -47,7 +47,7 @@ class OfferController extends Controller {
 			if (Input::get('toggle-payment'))
 				$offer->downpayment = Input::get('toggle-payment');
 			if (Input::get('amount'))
-				$offer->downpayment_amount = Input::get('amount');
+				$offer->downpayment_amount = str_replace(',', '.', str_replace('.', ',' , Input::get('amount')));
 			$offer->auto_email_reminder = false;
 			$offer->deliver_id = Input::get('deliver');
 			$offer->valid_id = Input::get('valid');

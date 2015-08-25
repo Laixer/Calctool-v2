@@ -31,7 +31,7 @@ if (!$project || !$project->isOwner()) {
 @section('content')
 <script type="text/javascript">
 	$(document).ready(function() {
-        $('.only-end-total tr').each(function() {
+	    $('.only-end-total tr').each(function() {
             $(this).find("td").eq(2).hide();
             $(this).find("th").eq(2).hide();
             $(this).find("td").eq(3).hide();
@@ -366,7 +366,7 @@ if (!$project || !$project->isOwner()) {
 									<tbody>
 										<tr>
 											<td>Aanbetalingsbedrag</td>
-											<td><input {{ ($offer_last ? ($offer_last->downpayment ? '' : 'disabled') : 'disabled') }} type="text" value="{{ ($offer_last ? $offer_last->downpayment_amount : '') }}" id="amount" name="amount" class="form-control-sm-text" /></td>
+											<td><input {{ ($offer_last ? ($offer_last->downpayment ? '' : 'disabled') : 'disabled') }} type="text" value="{{ ($offer_last ? number_format($offer_last->downpayment_amount, 2, ",",".") : '') }}" id="amount" name="amount" class="form-control-sm-number" /></td>
 										</tr>
 									</tbody>
 									</table>
