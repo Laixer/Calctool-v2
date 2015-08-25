@@ -855,7 +855,6 @@ var n = this,
 													</thead>
 													<?php } ?>
 
-													<?# -- table items -- ?>
 													<tbody>
 														<?php
 														if ($count) {
@@ -1142,8 +1141,6 @@ var n = this,
 												<th class="col-md-1"><span class="pull-right">Totaal</span></th>
 											</tr>
 										</thead>
-
-										<!-- table items -->
 										<tbody>
 											<tr><!-- item -->
 												<th class="col-md-3">&nbsp;</th>
@@ -1181,7 +1178,7 @@ var n = this,
 
 							<!-- table items -->
 							<tbody>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ number_format(EstimateEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
