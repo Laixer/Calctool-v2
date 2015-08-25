@@ -134,19 +134,15 @@ else
 				});
 			});
 		});
-		$('#projclose').editable({
-			type:  'date',
-			pk:    {{ $project->id }},
-			name:  'wordexec',
-			url:   '/project/updateprojectclose',
-			send:  'always',
-			emptytext: 'Bewerk',
-			title: 'Selecteer einddatum',
-			validate: function(value) {
-				if($.trim(value) == '')
-					return 'Vul een datum in';
-			}
-		});
+		$('#projclose').datepicker().on('changeDate', function(e){
+			$('#projclose').datepicker('hide');
+			$.post("/project/updateprojectclose", {
+				date: e.date.toLocaleString(),
+				project: {{ $project->id }}
+			}, function(data){
+				location.reload();
+			});
+    	});
 		$('#wordexec').editable({
 			type:  'date',
 			pk:    {{ $project->id }},
@@ -373,7 +369,7 @@ else
 								<br>
 							<div class="row">
 								<div class="col-md-3"><strong>Project gesloten</strong> <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je project kan worden gesloten. Zijn alle facturen betaald?" href="#"><i class="fa fa-info-circle"></i></a></div>
-								<div class="col-md-2">{{ $project->project_close ? date('d-m-Y', strtotime($project->project_close)) : '<a href="#" id="projclose" data-format="dd-mm-yyyy">' }}</a></div>
+								<div class="col-md-2">{{ $project->project_close ? date('d-m-Y', strtotime($project->project_close)) : '<a href="#" id="projclose">Bewerk</a>' }}</a></div>
 								<div class="col-md-3"></div>
 							</div>
 						</div>
@@ -392,7 +388,7 @@ else
 									<div class="col-md-4">
 										<div class="form-group">
 											<label for="contractor">Opdrachtgever*</label>
-											<select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : '' }} class="form-control pointer">
+											<select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} class="form-control pointer">
 											@foreach (Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
 												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
 											@endforeach
@@ -402,9 +398,9 @@ else
 									<div class="col-md-2">
 										<div class="form-group">
 											<label for="type">Type</label>
-											<select name="type" id="type" {{ $project->project_close ? 'disabled' : '' }} class="form-control pointer">
+											<select name="type" id="type" disabled class="form-control pointer">
 												@foreach (ProjectType::all() as $type)
-													<option {{ $project->type_id==$type->id ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
+													<option {{ $project->type_id==$type->id ? 'selected' : '' }}>{{ ucwords($type->type_name) }}</option>
 												@endforeach
 											</select>
 										</div>
@@ -416,34 +412,34 @@ else
 									<div class="col-md-4">
 										<div class="form-group">
 											<label for="street">Straat*</label>
-											<input name="street" id="street" {{ $project->project_close ? 'disabled' : '' }} type="text" value="{{ Input::old('street') ? Input::old('street') : $project->address_street}}" class="form-control"/>
+											<input name="street" id="street" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} type="text" value="{{ Input::old('street') ? Input::old('street') : $project->address_street}}" class="form-control"/>
 										</div>
 									</div>
 									<div class="col-md-1">
 										<div class="form-group">
 											<label for="address_number">Huis nr.*</label>
-											<input name="address_number" {{ $project->project_close ? 'disabled' : '' }} id="address_number" type="text" value="{{ Input::old('address_number') ? Input::old('address_number') : $project->address_number }}" class="form-control"/>
+											<input name="address_number" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="address_number" type="text" value="{{ Input::old('address_number') ? Input::old('address_number') : $project->address_number }}" class="form-control"/>
 										</div>
 									</div>
 
 									<div class="col-md-2">
 										<div class="form-group">
 											<label for="zipcode">Postcode*</label>
-											<input name="zipcode" {{ $project->project_close ? 'disabled' : '' }} id="zipcode" type="text" maxlength="6" value="{{ Input::old('zipcode') ? Input::old('zipcode') : $project->address_postal }}" class="form-control"/>
+											<input name="zipcode" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="zipcode" type="text" maxlength="6" value="{{ Input::old('zipcode') ? Input::old('zipcode') : $project->address_postal }}" class="form-control"/>
 										</div>
 									</div>
 
 									<div class="col-md-3">
 										<div class="form-group">
 											<label for="city">Plaats*</label>
-											<input name="city" {{ $project->project_close ? 'disabled' : '' }} id="city" type="text" value="{{ Input::old('city') ? Input::old('city'): $project->address_city }}" class="form-control"/>
+											<input name="city" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="city" type="text" value="{{ Input::old('city') ? Input::old('city'): $project->address_city }}" class="form-control"/>
 										</div>
 									</div>
 
 									<div class="col-md-2">
 										<div class="form-group">
 											<label for="province">Provincie*</label>
-											<select name="province" {{ $project->project_close ? 'disabled' : '' }} id="province" class="form-control pointer">
+											<select name="province" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="province" class="form-control pointer">
 												@foreach (Province::all() as $province)
 													<option {{ $project->province_id==$province->id ? 'selected' : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
 												@endforeach
@@ -454,7 +450,7 @@ else
 									<div class="col-md-4">
 										<div class="form-group">
 											<label for="country">Land*</label>
-											<select name="country" {{ $project->project_close ? 'disabled' : '' }} id="country" class="form-control pointer">
+											<select name="country" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="country" class="form-control pointer">
 												@foreach (Country::all() as $country)
 													<option {{ $project->country_id==$country->id ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
 												@endforeach
@@ -493,7 +489,7 @@ else
 								<div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
 								<div class="col-md-1"><div class="pull-right">&euro;</div></div>
 								<div class="col-md-2">
-									<input name="hour_rate" {{ $project->project_close ? 'disabled' : '' }} type="text" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : number_format($project->hour_rate, 2,",",".") }}" class="form-control form-control-sm-number"/>
+									<input name="hour_rate" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} type="text" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : number_format($project->hour_rate, 2,",",".") }}" class="form-control form-control-sm-number"/>
 								</div>
 								<div class="col-md-2">
 									<input name="more_hour_rate" {{ $project->project_close ? 'disabled' : '' }} id="more_hour_rate" type="text" value="{{ Input::old('more_hour_rate') ? Input::old('more_hour_rate') : number_format($project->hour_rate_more, 2,",",".") }}" class="form-control form-control-sm-number"/>
@@ -505,7 +501,7 @@ else
 								<div class="col-md-3"><label for="profit_material_1">Winstpercentage materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_material_1" {{ $project->project_close ? 'disabled' : '' }} id="profit_material_1" type="number" min="0" max="200" value="{{ Input::old('profit_material_1') ? Input::old('profit_material_1') : $project->profit_calc_contr_mat }}" class="form-control form-control-sm-number"/>
+									<input name="profit_material_1" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="profit_material_1" type="number" min="0" max="200" value="{{ Input::old('profit_material_1') ? Input::old('profit_material_1') : $project->profit_calc_contr_mat }}" class="form-control form-control-sm-number"/>
 								</div>
 								<div class="col-md-2">
 									<input name="more_profit_material_1" {{ $project->project_close ? 'disabled' : '' }} id="more_profit_material_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_1') ? Input::old('more_profit_material_1') : $project->profit_more_contr_mat }}" class="form-control form-control-sm-number"/>
@@ -515,7 +511,7 @@ else
 								<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage materieel</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_equipment_1" {{ $project->project_close ? 'disabled' : '' }} id="profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_1') ? Input::old('profit_equipment_1') : $project->profit_calc_contr_equip }}" class="form-control form-control-sm-number"/>
+									<input name="profit_equipment_1" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_1') ? Input::old('profit_equipment_1') : $project->profit_calc_contr_equip }}" class="form-control form-control-sm-number"/>
 								</div>
 								<div class="col-md-2">
 									<input name="more_profit_equipment_1" {{ $project->project_close ? 'disabled' : '' }} id="more_profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_1') ? Input::old('more_profit_equipment_1') : $project->profit_more_contr_equip }}" class="form-control form-control-sm-number"/>
@@ -527,7 +523,7 @@ else
 								<div class="col-md-3"><label for="profit_material_2">Winstpercentage materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_material_2" {{ $project->project_close ? 'disabled' : '' }} id="profit_material_2" type="number" min="0" max="200" value="{{ Input::old('profit_material_2') ? Input::old('profit_material_2') : $project->profit_calc_subcontr_mat }}" class="form-control form-control-sm-number"/>
+									<input name="profit_material_2" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="profit_material_2" type="number" min="0" max="200" value="{{ Input::old('profit_material_2') ? Input::old('profit_material_2') : $project->profit_calc_subcontr_mat }}" class="form-control form-control-sm-number"/>
 								</div>
 								<div class="col-md-2">
 									<input name="more_profit_material_2" {{ $project->project_close ? 'disabled' : '' }} id="more_profit_material_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_2') ? Input::old('more_profit_material_2') : $project->profit_more_subcontr_mat }}" class="form-control form-control-sm-number"/>
@@ -537,7 +533,7 @@ else
 								<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage materieel</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_equipment_2" {{ $project->project_close ? 'disabled' : '' }} id="profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_2') ? Input::old('profit_equipment_2') : $project->profit_calc_subcontr_equip }}" class="form-control form-control-sm-number"/>
+									<input name="profit_equipment_2" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_2') ? Input::old('profit_equipment_2') : $project->profit_calc_subcontr_equip }}" class="form-control form-control-sm-number"/>
 								</div>
 								<div class="col-md-2">
 									<input name="more_profit_equipment_2" {{ $project->project_close ? 'disabled' : '' }} id="more_profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_2') ? Input::old('more_profit_equipment_2') : $project->profit_more_subcontr_equip }}" class="form-control form-control-sm-number"/>

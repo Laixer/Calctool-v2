@@ -216,8 +216,7 @@ class InvoiceController extends Controller {
 			if (!$project || !$project->isOwner()) {
 				return json_encode(['success' => 0]);
 			}
-
-			$project = Project::find(Input::get('projectid'));
+			$project = Project::find(Input::get('project'));
 			if (!$project || !$project->isOwner()) {
 				return json_encode(['success' => 0]);
 			}

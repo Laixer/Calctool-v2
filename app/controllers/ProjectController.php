@@ -98,7 +98,6 @@ class ProjectController extends Controller {
 	{
 		$rules = array(
 			'id' => array('required','integer'),
-			'type' => array('required','integer'),
 			'name' => array('required','max:50'),
 			'street' => array('required','alpha','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
@@ -129,7 +128,6 @@ class ProjectController extends Controller {
 			$project->note = Input::get('note');
 			$project->province_id = Input::get('province');
 			$project->country_id = Input::get('country');
-			$project->type_id = Input::get('type');
 			$project->client_id = Input::get('contractor');
 
 			$project->save();
@@ -258,8 +256,8 @@ class ProjectController extends Controller {
 	public function doUpdateProjectClose()
 	{
 		$rules = array(
-			'pk' => array('required','integer'),
-			'value' => array('required'),
+			'project' => array('required','integer'),
+			'date' => array('required'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -271,11 +269,11 @@ class ProjectController extends Controller {
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
 
-			$project = Project::find(Input::get('pk'));
+			$project = Project::find(Input::get('project'));
 			if (!$project || !$project->isOwner()) {
 				return Redirect::back()->withInput(Input::all());
 			}
-			$project->project_close = date('Y-m-d', strtotime(Input::get('value')));
+			$project->project_close = date('Y-m-d', strtotime(Input::get('date')));
 
 			$project->save();
 
