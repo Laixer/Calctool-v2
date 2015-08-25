@@ -95,7 +95,7 @@
 							<td class="col-md-1"><input type="text" min="0" name="hour" id="hour" class="form-control-sm-text"/></td>
 							<td class="col-md-3">
 								<select name="projname" id="projname" class="form-control-sm-text">
-								@foreach (Project::where('user_id','=',Auth::user()->id)->get() as $projectname)
+								@foreach (Project::where('user_id','=',Auth::id())->whereNull('project_close')->get() as $projectname)
 									<option value="{{ $projectname->id }}">{{ ucwords($projectname->project_name) }}</option>
 								@endforeach
 								</select>

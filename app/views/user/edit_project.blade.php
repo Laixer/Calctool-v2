@@ -141,39 +141,33 @@ else {
 		});
 		$('#projclose').datepicker().on('changeDate', function(e){
 			$('#projclose').datepicker('hide');
-			$.post("/project/updateprojectclose", {
+			if(confirm('Project sluiten?')){
+				$.post("/project/updateprojectclose", {
+					date: e.date.toLocaleString(),
+					project: {{ $project->id }}
+				}, function(data){
+					location.reload();
+				});
+			}
+    	});
+		$('#wordexec').datepicker().on('changeDate', function(e){
+			$('#wordexec').datepicker('hide');
+			$.post("/project/updateworkexecution", {
 				date: e.date.toLocaleString(),
 				project: {{ $project->id }}
 			}, function(data){
 				location.reload();
 			});
     	});
-		$('#wordexec').editable({
-			type:  'date',
-			pk:    {{ $project->id }},
-			name:  'wordexec',
-			url:   '/project/updateworkexecution',
-			send:  'always',
-			emptytext: 'Bewerk',
-			title: 'Selecteer uitvoerdatum',
-			validate: function(value) {
-				if($.trim(value) == '')
-					return 'Vul een datum in';
-				}
-				});
-		$('#wordcompl').editable({
-			type:  'date',
-			pk:    {{ $project->id }},
-			name:  'ordcompl',
-			url:   '/project/updateworkcompletion',
-			send:  'always',
-			emptytext: 'Bewerk',
-			title: 'Selecteer uitvoerdatum',
-			validate: function(value) {
-				if($.trim(value) == '')
-					return 'Vul een datum in';
-				}
-		});
+		$('#wordcompl').datepicker().on('changeDate', function(e){
+			$('#wordcompl').datepicker('hide');
+			$.post("/project/updateworkcompletion", {
+				date: e.date.toLocaleString(),
+				project: {{ $project->id }}
+			}, function(data){
+				location.reload();
+			});
+    	});
 		<?php if ($offer_last) { ?>
 		$('#dobx').datepicker().on('changeDate', function(e){
 			$('#dobx').datepicker('hide');
@@ -283,12 +277,12 @@ else {
 							</div>
 							<div class="row">
 								<div class="col-md-3">Start uitvoering <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in dat je met uitvoering bent begonnen" href="#"><i class="fa fa-info-circle"></i></a></div>
-								<div class="col-md-2"><a href="#" id="wordexec" data-format="dd-mm-yyyy">{{ $project->work_execution ? date('d-m-Y', strtotime($project->work_execution)) : '' }}</a></div>
+								<div class="col-md-2"><?php if ($project->project_close) { echo $project->work_execution ? date('d-m-Y', strtotime($project->work_execution)) : ''; }else{ if ($project->work_execution){ echo date('d-m-Y', strtotime($project->work_execution)); }else{ ?><a href="#" id="wordexec">Bewerk</a><?php } } ?></div>
 								<div class="col-md-3"></div>
 							</div>
 							<div class="row">
 								<div class="col-md-3">Geplande opleverdatum <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in dat je het moet/wilt/verwacht opleveren" href="#"><i class="fa fa-info-circle"></i></a></div>
-								<div class="col-md-2"><a href="#" id="wordcompl" data-format="dd-mm-yyyy">{{ $project->work_completion ? date('d-m-Y', strtotime($project->work_completion)) : '' }}</a></div>
+								<div class="col-md-2"><?php if ($project->project_close) { echo $project->work_completion ? date('d-m-Y', strtotime($project->work_completion)) : ''; }else{ if ($project->work_completion){ echo date('d-m-Y', strtotime($project->work_completion)); }else{ ?><a href="#" id="wordcompl">Bewerk</a><?php } } ?></div>
 								<div class="col-md-3"></div>
 							</div>
 							<div class="row">
@@ -324,7 +318,7 @@ else {
 								<div class="col-md-3">{{ ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1)) }}</div>
 								<div class="col-md-2">
 								<?php
-								if (!$invoice->bill_date && $close) {
+								if (!$invoice->bill_date && $close && !$project->project_close) {
 									echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs doinvclose">Factureren</a>';
 									$close=false;
 								} else if (!$invoice->bill_date) {
@@ -334,7 +328,7 @@ else {
 								?>
 								</div>
 								<div class="col-md-3"><?php
-								if ($invoice->invoice_close && !$invoice->payment_date)
+								if ($invoice->invoice_close && !$invoice->payment_date && !$project->project_close)
 									echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs dopay">Betaald</a>';
 								elseif ($invoice->invoice_close && $invoice->payment_date)
 									echo 'Betaald op '.date('d-m-Y', strtotime($invoice->payment_date));
@@ -348,7 +342,7 @@ else {
 								<div class="col-md-3">Eindfactuur</div>
 								<div class="col-md-2">
 								<?php
-								if (!$invoice_end->bill_date && $close) {
+								if (!$invoice_end->bill_date && $close && !$project->project_close) {
 									echo '<a href="javascript:void(0);" data-invoice="'.$invoice_end->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs doinvclose">Factureren</a>';
 									$close=false;
 								} else if (!$invoice_end->bill_date) {
@@ -358,7 +352,7 @@ else {
 								?>
 								</div>
 								<div class="col-md-3"><?php
-								if ($invoice_end->invoice_close && !$invoice_end->payment_date)
+								if ($invoice_end->invoice_close && !$invoice_end->payment_date && !$project->project_close)
 									echo '<a href="javascript:void(0);" data-invoice="'.$invoice_end->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs dopay">Betaald</a>';
 								elseif ($invoice_end->invoice_close && $invoice_end->payment_date)
 									echo 'Betaald op '.date('d-m-Y', strtotime($invoice_end->payment_date));

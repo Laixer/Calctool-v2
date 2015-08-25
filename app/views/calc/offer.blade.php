@@ -29,7 +29,6 @@ if (!$project || !$project->isOwner()) {
 <?php }else{ ?>
 
 @section('content')
-<?# -- WRAPPER -- ?>
 <script type="text/javascript">
 	$(document).ready(function() {
         $('.only-end-total tr').each(function() {
@@ -242,6 +241,7 @@ if (!$project || !$project->isOwner()) {
 		@endif
 
 	<div class="pull-right">
+		<?php if (!$project->project_close) { ?>
 		<?php if ($offer_last) { ?>
 		<?php if (!$offer_last->offer_finish) { ?>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
@@ -264,6 +264,7 @@ if (!$project || !$project->isOwner()) {
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
 		<button class="btn btn-primary osave">Offerte  maken</button>
+		<?php } ?>
 		<?php } ?>
 	</div>
 
@@ -1381,6 +1382,7 @@ if (!$project || !$project->isOwner()) {
 				<div class="col-sm-6"></div>
 				<div class="col-sm-6">
 					<div class="padding20 pull-right">
+						<?php if (!$project->project_close) { ?>
 						<?php if ($offer_last) { ?>
 						<?php if (!$offer_last->offer_finish) { ?>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
@@ -1403,6 +1405,7 @@ if (!$project || !$project->isOwner()) {
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
 						<button class="btn btn-primary osave">Offerte maken</button>
+						<?php } ?>
 						<?php } ?>
 					</div>
 				</div>

@@ -203,8 +203,8 @@ class ProjectController extends Controller {
 	public function doUpdateWorkExecution()
 	{
 		$rules = array(
-			'pk' => array('required','integer'),
-			'value' => array('required'),
+			'project' => array('required','integer'),
+			'date' => array('required'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -216,11 +216,11 @@ class ProjectController extends Controller {
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
 
-			$project = Project::find(Input::get('pk'));
+			$project = Project::find(Input::get('project'));
 			if (!$project || !$project->isOwner()) {
 				return Redirect::back()->withInput(Input::all());
 			}
-			$project->work_execution = date('Y-m-d', strtotime(Input::get('value')));
+			$project->work_execution = date('Y-m-d', strtotime(Input::get('date')));
 
 			$project->save();
 
@@ -232,8 +232,8 @@ class ProjectController extends Controller {
 	public function doUpdateWorkCompletion()
 	{
 		$rules = array(
-			'pk' => array('required','integer'),
-			'value' => array('required'),
+			'project' => array('required','integer'),
+			'date' => array('required'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -245,11 +245,11 @@ class ProjectController extends Controller {
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
 
-			$project = Project::find(Input::get('pk'));
+			$project = Project::find(Input::get('project'));
 			if (!$project || !$project->isOwner()) {
 				return Redirect::back()->withInput(Input::all());
 			}
-			$project->work_completion = date('Y-m-d', strtotime(Input::get('value')));
+			$project->work_completion = date('Y-m-d', strtotime(Input::get('date')));
 
 			$project->save();
 
