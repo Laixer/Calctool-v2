@@ -85,12 +85,14 @@ class CalcController extends Controller {
 	public function getOfferPDF()
 	{
 		$pdf = PDF::loadView('calc.offer_pdf');
+		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
 		return $pdf->stream();
 	}
 
 	public function getOfferDownloadPDF()
 	{
 		$pdf = PDF::loadView('calc.offer_pdf');
+		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
 		return $pdf->download(Input::get('file'));
 	}
 
@@ -102,12 +104,14 @@ class CalcController extends Controller {
 	public function getInvoicePDF()
 	{
 		$pdf = PDF::loadView('calc.invoice_pdf');
+		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
 		return $pdf->stream();
 	}
 
 	public function getInvoiceDownloadPDF()
 	{
 		$pdf = PDF::loadView('calc.invoice_pdf');
+		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
 		return $pdf->download(Input::get('file'));
 	}
 

@@ -20,10 +20,10 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <title>Example 2</title>
+     <meta charset="utf-8">
+    <title>Offerte</title>
     <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" media="all" />
-  </head>
+   </head>
   <body>
     <header class="clearfix">
       <div id="logo">
@@ -200,7 +200,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       <div class="signing">{{ Contact::find($offer_last->from_contact_id)->firstname ." ". Contact::find($offer_last->from_contact_id)->lastname }}</div>
     </main>
 
-    <footer>
+    <footer >
       Deze offerte is op de computer gegenereerd en is geldig zonder handtekening.
     </footer>
 

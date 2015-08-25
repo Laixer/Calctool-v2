@@ -10,7 +10,6 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-
 Route::get('login', function(){ return View::make('auth.login'); });
 Route::post('login', array('before' => 'guest|csrf', 'uses' => 'AuthController@doLogin'));
 Route::get('register', function(){ return View::make('auth.registration'); });
@@ -28,6 +27,8 @@ Route::get('countdown', function() { return View::make('generic.countdown'); });
 
 Route::post('payment/webhook/', array('as' => 'payment.order', 'uses' => 'UserController@doPaymentUpdate'));
 Route::get('hidenextstep', array('uses' => 'AuthController@doHideNextStep'));
+
+Route::get('c4586v34674v4&vwasrt/footer_pdf', function() { return View::make('calc.footer_pdf'); });
 
 Route::group(array('before' => 'auth'), function()
 {
