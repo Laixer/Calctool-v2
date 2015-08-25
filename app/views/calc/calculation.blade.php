@@ -36,6 +36,11 @@ var n = this,
    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 };
 	$(document).ready(function() {
+
+        $("body").on("change", ".form-control-sm-number", function(){
+            $(this).val(parseFloat($(this).val().split('.').join('').replace(',', '.')).formatMoney(2, ',', '.'));
+        });
+
 		var $newinputtr;
 		$('.toggle').click(function(e){
 			$id = $(this).attr('id');
