@@ -278,11 +278,11 @@ class CalcController extends Controller {
 
 			$type = Input::get('type');
 			if ($type == 'calc-labor')
-				$activity->tax_estimate_labor_id = Input::get('value');
+				$activity->tax_labor_id = Input::get('value');
 			if ($type == 'calc-material')
-				$activity->tax_estimate_material_id = Input::get('value');
+				$activity->tax_material_id = Input::get('value');
 			if ($type == 'calc-equipment')
-				$activity->tax_estimate_equipment_id = Input::get('value');
+				$activity->tax_equipment_id = Input::get('value');
 			$activity->save();
 
 			return json_encode(['success' => 1]);
@@ -520,6 +520,37 @@ class CalcController extends Controller {
 			));
 
 			return json_encode(['success' => 1, 'id' => $labor->id]);
+		}
+	}
+
+	public function doDeleteCalculationLabor()
+	{
+		$rules = array(
+			'id' => array('required','integer','min:0'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+			$rec = CalculationLabor::find(Input::get('id'));
+			if (!$rec)
+				return json_encode(['success' => 0]);
+			$activity = Activity::find($rec->activity_id);
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
+			$rec->delete();
+
+			return json_encode(['success' => 1]);
 		}
 	}
 
