@@ -62,8 +62,8 @@ class CreateUsersTable extends Migration {
 			$table->integer('phone')->nullable()->unsigned();
 			$table->string('email', 80)->unique();
 			$table->boolean('pref_mailings_optin')->default('N');
-			$table->decimal('pref_hourrate_calc', 5, 2)->nullable();
-			$table->decimal('pref_hourrate_more', 5, 2)->nullable();
+			$table->decimal('pref_hourrate_calc', 6, 3)->nullable();
+			$table->decimal('pref_hourrate_more', 6, 3)->nullable();
 			$table->tinyInteger('pref_profit_calc_contr_mat')->default(0)->unsigned();
 			$table->tinyInteger('pref_profit_calc_contr_equip')->default(0)->unsigned();
 			$table->tinyInteger('pref_profit_calc_subcontr_mat')->default(0)->unsigned();
@@ -86,7 +86,7 @@ class CreateUsersTable extends Migration {
 			$table->smallinteger('offer_counter')->default(1)->unsigned();
 			$table->string('invoicenumber_prefix', 10)->default('FA');
 			$table->smallinteger('invoice_counter')->default(1)->unsigned();
-			$table->decimal('administration_cost', 5, 2)->nullable();
+			$table->decimal('administration_cost', 6, 3)->nullable();
 			$table->rememberToken();
 			$table->nullableTimestamps();
 			$table->integer('province_id')->unsigned()->nullable();
@@ -121,8 +121,8 @@ class CreateUsersTable extends Migration {
 			$table->string('address_postal', 6);
 			$table->string('address_city', 35);
 			$table->text('note')->nullable();
-			$table->decimal('hour_rate', 5, 2)->unsigned()->default(0);;
-			$table->decimal('hour_rate_more', 5, 2)->nullable()->unsigned();
+			$table->decimal('hour_rate', 6, 3)->unsigned()->default(0);;
+			$table->decimal('hour_rate_more', 6, 3)->nullable()->unsigned();
 			$table->tinyInteger('profit_calc_contr_mat')->unsigned()->default(0);
 			$table->tinyInteger('profit_calc_contr_equip')->unsigned()->default(0);
 			$table->tinyInteger('profit_calc_subcontr_mat')->unsigned()->default(0);
@@ -172,7 +172,7 @@ class CreateUsersTable extends Migration {
 			$table->string('transaction', 16);
 			$table->char('token', 40)->unique();
 			$table->string('status', 16);
-			$table->decimal('amount', 9, 2);
+			$table->decimal('amount', 9, 3);
 			$table->string('description', 100);
 			$table->string('method', 25);
 			$table->integer('increment');

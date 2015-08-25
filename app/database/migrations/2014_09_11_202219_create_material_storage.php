@@ -37,11 +37,11 @@ class CreateMaterialStorage extends Migration {
 			$table->increments('id');
 			$table->string('unit', 30)->nullable();
 			$table->integer('article_code')->unsigned();
-			$table->decimal('price', 9, 2)->index()->unsigned();
-			$table->decimal('package_height', 9, 2)->unsigned();
-			$table->decimal('package_length', 9, 2)->unsigned();
-			$table->decimal('package_width', 9, 2)->unsigned();
-			$table->decimal('minimum_quantity', 9, 2)->unsigned();
+			$table->decimal('price', 9, 3)->index()->unsigned();
+			$table->decimal('package_height', 9, 3)->unsigned();
+			$table->decimal('package_length', 9, 3)->unsigned();
+			$table->decimal('package_width', 9, 3)->unsigned();
+			$table->decimal('minimum_quantity', 9, 3)->unsigned();
 			$table->string('description');
 			$table->integer('group_id')->unsigned();
 			$table->foreign('group_id')->references('id')->on('sub_group')->onUpdate('cascade')->onDelete('cascade');
