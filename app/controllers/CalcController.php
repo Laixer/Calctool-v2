@@ -19,6 +19,8 @@ class CalcController extends Controller {
 	{
 		$project = Project::find(Route::Input('project_id'));
 		if ($project) {
+			if ($project->project_close)
+				return View::make('calc.calculation_closed');
 			$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 			if ($offer_last && $offer_last->offer_finish)
 				return View::make('calc.calculation_closed');
@@ -29,24 +31,39 @@ class CalcController extends Controller {
 	public function getEstimate()
 	{
 		$project = Project::find(Route::Input('project_id'));
-		if ($project && $project->project_close)
-			return View::make('calc.estimate_closed');
+		if ($project) {
+			if ($project->project_close)
+				return View::make('calc.estimate_closed');
+			$invoice_end = Invoice::where('offer_id','=', Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first()->id)->where('isclose','=',true)->first();
+			if ($invoice_end->invoice_close)
+				return View::make('calc.estimate_closed');
+		}
 		return View::make('calc.estimate');
 	}
 
 	public function getLess()
 	{
 		$project = Project::find(Route::Input('project_id'));
-		if ($project && $project->project_close)
-			return View::make('calc.less_closed');
+		if ($project) {
+			if ($project->project_close)
+				return View::make('calc.less_closed');
+			$invoice_end = Invoice::where('offer_id','=', Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first()->id)->where('isclose','=',true)->first();
+			if ($invoice_end->invoice_close)
+				return View::make('calc.less_closed');
+		}
 		return View::make('calc.less');
 	}
 
 	public function getMore()
 	{
 		$project = Project::find(Route::Input('project_id'));
-		if ($project && $project->project_close)
-			return View::make('calc.more_closed');
+		if ($project) {
+			if ($project->project_close)
+				return View::make('calc.more_closed');
+			$invoice_end = Invoice::where('offer_id','=', Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first()->id)->where('isclose','=',true)->first();
+			if ($invoice_end->invoice_close)
+				return View::make('calc.more_closed');
+		}
 		return View::make('calc.more');
 	}
 

@@ -141,12 +141,12 @@ class ProjectController extends Controller {
 	{
 		$rules = array(
 			'id' => array('required','integer'),
-			'hour_rate' => array('required','regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
+			'hour_rate' => array('regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
 			'more_hour_rate' => array('required','regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
-			'profit_material_1' => array('required','numeric','between:0,200'),
-			'profit_equipment_1' => array('required','numeric','between:0,200'),
-			'profit_material_2' => array('required','numeric','between:0,200'),
-			'profit_equipment_2' => array('required','numeric','between:0,200'),
+			'profit_material_1' => array('numeric','between:0,200'),
+			'profit_equipment_1' => array('numeric','between:0,200'),
+			'profit_material_2' => array('numeric','between:0,200'),
+			'profit_equipment_2' => array('numeric','between:0,200'),
 			'more_profit_material_1' => array('required','numeric','between:0,200'),
 			'more_profit_equipment_1' => array('required','numeric','between:0,200'),
 			'more_profit_material_2' => array('required','numeric','between:0,200'),
@@ -177,12 +177,17 @@ class ProjectController extends Controller {
 				return Redirect::back()->withErrors($validator)->withInput(Input::all());
 			}
 
-			$project->hour_rate = $hour_rate;
+			if ($hour_rate)
+				$project->hour_rate = $hour_rate;
 			$project->hour_rate_more = $hour_rate_more;
-			$project->profit_calc_contr_mat = Input::get('profit_material_1');
-			$project->profit_calc_contr_equip = Input::get('profit_equipment_1');
-			$project->profit_calc_subcontr_mat = Input::get('profit_material_2');
-			$project->profit_calc_subcontr_equip = Input::get('profit_equipment_2');
+			if (Input::get('profit_material_1'))
+				$project->profit_calc_contr_mat = Input::get('profit_material_1');
+			if (Input::get('profit_equipment_1'))
+				$project->profit_calc_contr_equip = Input::get('profit_equipment_1');
+			if (Input::get('profit_material_2'))
+				$project->profit_calc_subcontr_mat = Input::get('profit_material_2');
+			if (Input::get('profit_equipment_2'))
+				$project->profit_calc_subcontr_equip = Input::get('profit_equipment_2');
 			$project->profit_more_contr_mat = Input::get('more_profit_material_1');
 			$project->profit_more_contr_equip = Input::get('more_profit_equipment_1');
 			$project->profit_more_subcontr_mat = Input::get('more_profit_material_2');
