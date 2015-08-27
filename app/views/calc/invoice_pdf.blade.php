@@ -33,8 +33,10 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       <h3 class="name">{{ $relation_self->company_name }}</h3>
       <div>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</div>
       <div>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</div>
-      <div>Email:{{ $relation_self->email }}</div>
-      <div>KVK:{{ $relation_self->kvk }}</li>
+      <div>{{ $relation_self->phone }}&nbsp;|&nbsp{{ $relation_self->email }}</div>
+      <div>KVK:{{ $relation_self->kvk }}&nbsp;|&nbsp;BTW: {{ $relation_self->btw }}</div>
+      <div>Rekeningnummer: {{ Iban::where('relation_id','=',$relation_self->id)->first()['iban'] }}&nbsp;|&nbsp;tnv.: {{ Iban::where('relation_id','=',$relation_self->id)->first()['iban_name'] }}</div>
+
   </header>
   <!--PAGE HEADER MASTER END-->
 

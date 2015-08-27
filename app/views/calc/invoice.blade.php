@@ -359,9 +359,9 @@ if (!$project || !$project->isOwner()) {
 		    			<ul class="list-unstyled">
 	 						<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
 	  						<li>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
-	 						<li><i class="fa fa-phone"></i>&nbsp;{{ $relation_self->phone }}</li>
-	 						<li><i class="fa fa-envelope-o"></i>&nbsp;{{ $relation_self->email }}</li>
-	 						<li>KVK:{{ $relation_self->kvk }}</li>
+	 						<li><i class="fa fa-phone"></i>&nbsp;{{ $relation_self->phone }}&nbsp;|&nbsp;<i class="fa fa-envelope-o"></i>&nbsp;{{ $relation_self->email }}</li>
+	 						<li>KVK:{{ $relation_self->kvk }}&nbsp;|&nbsp;BTW: {{ $relation_self->btw }}</li>
+							<li>Rekeningnummer: {{ Iban::where('relation_id','=',$relation_self->id)->first()['iban'] }}&nbsp;|&nbsp;tnv.: {{ Iban::where('relation_id','=',$relation_self->id)->first()['iban_name'] }}</li>
 						<ul class="list-unstyled">
 					</p>
 				</div>
