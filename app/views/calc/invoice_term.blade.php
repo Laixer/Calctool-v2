@@ -1,4 +1,5 @@
 <?php
+$displaytax=Input::get("displaytax");
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner()) {
@@ -225,7 +226,6 @@ if (!$project || !$project->isOwner()) {
 				<!-- modal body -->
 				<div class="modal-body">
 					<div class="form-horizontal">
-
 						 <div class="form-group">
 						    <div class="col-sm-offset-0 col-sm-10">
 						      <div class="checkbox">
@@ -235,38 +235,7 @@ if (!$project || !$project->isOwner()) {
 						      </div>
 						    </div>
 						  </div>
-						  <br>
-						  <strong>De volgende opties worden als bijlage bijgesloten bij de factuur</strong>
-						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
-						      <div class="checkbox">
-						        <label>
-						          <input name="toggle-activity" type="checkbox" checked> Hoofdstukken en werkzaamheden weergeven
-						        </label>
-						      </div>
-						    </div>
-						  </div>
-						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
-						      <div class="checkbox">
-						        <label>
-						          <input name="toggle-summary" type="checkbox"> Kosten werkzaamheden weergeven<br>
-								   (nog niet beschikbaar in PDF)
-						        </label>
-						      </div>
-						    </div>
-						  </div>
-						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
-						      <div class="checkbox">
-						        <label>
-						          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden weergeven
-
-						        </label>
-						      </div>
-						    </div>
-						  </div>
-
+						<br>
 					</div>
 				</div>
 				<!-- /modal body -->

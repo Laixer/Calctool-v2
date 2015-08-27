@@ -3,6 +3,7 @@ $total=Input::get("total");
 $specification=Input::get("specification");
 $description=Input::get("description");
 $term=Input::get("term");
+$displaytax=Input::get("displaytax");
 $project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner()) {
   exit();

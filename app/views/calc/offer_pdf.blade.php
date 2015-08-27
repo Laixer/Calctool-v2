@@ -3,6 +3,8 @@ $total=Input::get("total");
 $specification=Input::get("specification");
 $description=Input::get("description");
 $onlyactivity=Input::get("onlyactivity");
+$displaytax=Input::get("displaytax");
+$endresult=Input::get("endresult");
 $c=false;
 
 $project = Project::find(Route::Input('project_id'));
