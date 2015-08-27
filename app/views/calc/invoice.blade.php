@@ -97,7 +97,7 @@ if (!$project || !$project->isOwner()) {
 		  	$('.show-activity').show();
 		  	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
 		  } else {
-		  	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
+		 	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
 			$('.show-activity').hide();
 		  }
 		});
@@ -119,7 +119,6 @@ if (!$project || !$project->isOwner()) {
 		});
 		$("[name='toggle-endresult']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
-		  	$("[name='toggle-subcontr']").bootstrapSwitch('toggleDisabled');
 		  	$('.only-total').hide();
 		  	$('.hide-btw1').hide();
 	        $('.hide-btw2 tr').each(function() {
@@ -137,7 +136,6 @@ if (!$project || !$project->isOwner()) {
 	        	$(this).find("tr").eq(7).hide();
 	        });
 		  } else {
-		  	$("[name='toggle-subcontr']").bootstrapSwitch('toggleDisabled');
 		  	$('.only-total').show();
 			$('.hide-btw1').show();
 	        $('.hide-btw2 tr').each(function() {
@@ -284,7 +282,6 @@ if (!$project || !$project->isOwner()) {
 						      <div class="checkbox">
 						        <label>
 						          <input name="toggle-endresult" type="checkbox"> Alleen het totale offertebedrag weergeven<br>
-								  (nog niet beschikbaar in PDF)
 						        </label>
 						      </div>
 						    </div>
@@ -314,7 +311,6 @@ if (!$project || !$project->isOwner()) {
 						      <div class="checkbox">
 						        <label>
 						          <input name="toggle-summary" type="checkbox"> Kosten werkzaamheden weergeven<br>
-								   (nog niet beschikbaar in PDF)
 						        </label>
 						      </div>
 						    </div>
