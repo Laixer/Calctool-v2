@@ -254,7 +254,11 @@ if (!$project || !$project->isOwner()) {
 		@endif
 	</div>
 
-	<!-- modal dialog -->
+	<h2><strong>Eindfactuur</strong></h2>
+	<form method="POST" id="frm-invoice" action="/invoice/close">
+	<input name="id" value="{{ $invoice->id }}" type="hidden"/>
+	<input name="projectid" value="{{ $project->id }}" type="hidden"/>
+
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -336,11 +340,6 @@ if (!$project || !$project->isOwner()) {
 			</div>
 		</div>
 	</div>
-
-	<h2><strong>Eindfactuur</strong></h2>
-	<form method="POST" id="frm-invoice" action="/invoice/close">
-	<input name="id" value="{{ $invoice->id }}" type="hidden"/>
-	<input name="projectid" value="{{ $project->id }}" type="hidden"/>
 
 	<div class="white-row">
 		<!--PAGE HEADER MASTER START-->
