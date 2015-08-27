@@ -33,7 +33,7 @@
 
 				<!-- table items -->
 				<tbody>
-				@foreach (Project::where('user_id','=', Auth::user()->id)->orderBy('updated_at', 'desc')->get() as $project)
+				@foreach (Project::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $project)
 					<tr>
 						<td class="col-md-3">{{ HTML::link('/project-'.$project->id.'/edit', $project->project_name) }}</td>
 						<td class="col-md-2">{{ $project->contactor->company_name }}</td>
