@@ -35,7 +35,7 @@ $(document).ready(function() {
 
 <div id="wrapper">
 
-	<section class="container">
+	<section class="container fix-footer-bottom">
 
 		<div class="col-md-12">
 

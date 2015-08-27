@@ -76,7 +76,7 @@ $(document).ready(function() {
 						<div class="row">
 							<div class="col-md-12">
 								<span class="remember-box checkbox">
-									<label for="tos">Ik ga akkoord met de <a href="javascript:void(0);">algemene voorwaarden</a></label>
+									<label for="tos">Ik ga akkoord met de <a target="blank" href="/terms-and-conditions">algemene voorwaarden</a></label>
 									<input name="tos" type="checkbox" value="1" id="tos">
 								</span>
 							</div>
@@ -88,9 +88,7 @@ $(document).ready(function() {
 					{{ Form::close() }}
 
 				</div>
-				<!-- /REGISTER -->
 
-				<!-- WHY? -->
 				<div class="col-md-6">
 
 					<h2>Waarom <strong> Registreren</strong>?</h2>
@@ -116,7 +114,6 @@ $(document).ready(function() {
 					</div>
 
 					</div>
-				<!-- /WHY? -->
 
 			</div>
 
@@ -131,5 +128,4 @@ $(document).ready(function() {
 
 	</div>
 </div>
-<?# -- /WRAPPER -- ?>
 @stop

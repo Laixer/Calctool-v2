@@ -1,7 +1,23 @@
 @extends('layout.master')
 
 @section('content')
-<?# -- WRAPPER -- ?>
+<script type="text/javascript" src="/plugins/summernote/summernote.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+  $('.summernote').summernote({
+            height: jQuery(this).attr("data-height") || 200,
+            toolbar: [
+                ["fontsize", ["fontsize"]],
+                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+                ["para", ["ul", "ol", "paragraph"]],
+                ["table", ["table"]],
+                ["media", ["link", "picture", "video"]],
+                ["misc", ["codeview"]]
+            ]
+        });
+});
+
+</script>
 <div id="wrapper">
 
 	<section class="container fix-footer-bottom">
