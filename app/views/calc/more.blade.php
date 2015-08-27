@@ -22,7 +22,6 @@ if (!$project || !$project->isOwner())
 <?php }else{ ?>
 
 @section('content')
-<?# -- WRAPPER -- ?>
 
 <script type="text/javascript">
 Number.prototype.formatMoney = function(c, d, t){
@@ -96,6 +95,11 @@ var n = this,
 			$(this).val(parseFloat($(this).val().split('.').join('').replace(',', '.')).formatMoney(2, ',', '.'));
 		});
 		$(".radio-activity").change(function(){
+			if ($(this).val()==2) {
+				$(this).closest('.toggle-content').find(".rate").html('<input name="rate" type="text" value="{{ number_format($project->hour_rate_more, 2,",",".") }}" class="form-control-sm-number labor-amount lsave">');
+			} else {
+				$(this).closest('.toggle-content').find(".rate").text('{{ number_format($project->hour_rate_more, 2,",",".") }}');
+			}
 			$.post("/calculation/updatepart", {project: {{ $project->id }}, value: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
 		});
 		$(".select-tax").change(function(){
@@ -205,7 +209,7 @@ var n = this,
 						$curThis.closest("tr").attr("data-id", json.id);
 						var rate = $curThis.closest("tr").find("input[name='rate']").val()
 						if (rate) {
-							rate.toString().split('.').join('').replace(',', '.');
+							rate = rate.toString().split('.').join('').replace(',', '.');
 						} else {
 							rate = {{$project->hour_rate_more}};
 						}
@@ -696,13 +700,14 @@ var n = this,
 														<?php
 														}else {
 															$labor = MoreLabor::where('activity_id','=', $activity->id)->first();
+															$rate = $labor['rate'] ? $labor['rate'] : $project->hour_rate_more;
 														?>
 														<tr {{ $labor ? ('data-id="'.$labor->id.'"') : '' }} >
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">{{ number_format($project->hour_rate_more, 2,",",".") }}</td>
+															<td class="col-md-1"><span class="rate">{{ Part::find($activity->part_id)->part_name=='subcontracting' ? '<input name="rate" type="text" value="'.number_format($rate, 2,",",".").'" class="form-control-sm-number labor-amount lsave">' : number_format($project->hour_rate_more, 2,",",".") }}</span></td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ $labor ? number_format($labor->amount, 2, ",",".") : '' }}" class="form-control-sm-number labor-amount lsave" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ $labor ? ('&euro; '.number_format(MoreRegister::laborTotal($labor->rate, $labor->amount, 2, ",","."))) : '' }}</span></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ $labor ? ('&euro; '.number_format(MoreRegister::laborTotal($labor->rate, $labor->amount), 2, ",",".")) : '' }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1 text-right"><button class="btn btn-danger ldeleterow btn-xs fa fa-times"></button></td>
 														</tr>

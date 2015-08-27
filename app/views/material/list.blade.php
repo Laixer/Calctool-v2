@@ -29,9 +29,8 @@
 
 		<div class="col-md-12">
 
-			<h2><strong>Materialenlijst</strong></h2>
+			<h2><strong>Materialenlijst</strong> (Beta)</h2>
 
-			<!--<div class="form-group input-group-lg">-->
 			<div class="form-group input-group input-group-lg">
 				<input type="text" id="search" value="" class="form-control" placeholder="Zoek materiaal">
 			      <span class="input-group-btn">
