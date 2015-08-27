@@ -136,6 +136,18 @@ class InvoiceController extends Controller {
 				return json_encode(['success' => 0]);
 			}
 
+			$options = [];
+			if (Input::get('toggle-note'))
+				$options['description'] = 1;
+			if (Input::get('toggle-subcontr'))
+				$options['total'] = 1;
+			if (Input::get('toggle-activity'))
+				$options['specification'] = 1;
+			if (Input::get('toggle-summary'))
+				$options['onlyactivity'] = 1;
+			if (Input::get('toggle-tax'))
+				$options['displaytax'] = 1;
+
 			$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 			$cnt = Invoice::where('offer_id','=', $offer_last->id)->count();
 			if ($cnt>1) {
@@ -146,13 +158,15 @@ class InvoiceController extends Controller {
 				$ninvoice->invoice_code = $invoice->invoice_code;
 				$ninvoice->priority = $invoice->priority+1;
 				$ninvoice->offer_id = $invoice->offer_id;
+				$ninvoice->option_query = http_build_query($options);
 				$ninvoice->save();
 			} else {
 				$ninvoice = new Invoice;
 				$ninvoice->payment_condition = 1;
-				$ninvoice->invoice_code = 'XYZ';
+				$ninvoice->invoice_code = 'Concept';
 				$ninvoice->priority = 1;
 				$ninvoice->offer_id = $offer_last->id;
+				$ninvoice->option_query = http_build_query($options);
 				$ninvoice->save();
 			}
 

@@ -1842,7 +1842,7 @@ if (!$project || !$project->isOwner()) {
 
 
 
-	<div class="white-row show-notey">
+	<div class="white-row show-note">
 		<!--PAGE HEADER START-->
 		<div class="row">
 			<div class="col-sm-6">

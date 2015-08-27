@@ -62,6 +62,10 @@ class OfferController extends Controller {
 				$options['total'] = 1;
 			if (Input::get('toggle-activity'))
 				$options['specification'] = 1;
+			if (Input::get('toggle-summary'))
+				$options['onlyactivity'] = 1;
+			if (Input::get('toggle-tax'))
+				$options['displaytax'] = 1;
 
 			$offer->option_query = http_build_query($options);
 
