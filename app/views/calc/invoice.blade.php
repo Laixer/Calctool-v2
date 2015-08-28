@@ -428,6 +428,7 @@ if (!$project || !$project->isOwner()) {
 					</tr>
 				</thead>
 				<tbody>
+					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 					<tr>
 						<td class="col-md-5">Arbeidskosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -446,8 +447,9 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-1">6%</td>
 						<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 					</tr>
+					@else
 					<tr>
-						<td class="col-md-5">&nbsp;</td>
+						<td class="col-md-5">Arbeidskosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -455,6 +457,9 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-1">0%</td>
 						<td class="col-md-2">&nbsp;</td>
 					</tr>
+					@endif
+
+					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 					<tr>
 						<td class="col-md-5">Materiaalkosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -474,7 +479,7 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 					</tr>
 					<tr>
-						<td class="col-md-5">&nbsp;</td>
+						<td class="col-md-5">Materiaalkosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -482,6 +487,9 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-1">0%</td>
 						<td class="col-md-2">&nbsp;</td>
 					</tr>
+					@endif
+
+					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 					<tr>
 						<td class="col-md-5">Materieelkosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -500,8 +508,9 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-1">6%</td>
 						<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 					</tr>
+					@else
 					<tr>
-						<td class="col-md-5">&nbsp;</td>
+						<td class="col-md-5">Materieelkosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -509,6 +518,8 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-1">0%</td>
 						<td class="col-md-2">&nbsp;</td>
 					</tr>
+					@endif
+
 					<tr>
 						<td class="col-md-5"><strong>Totaal Aanneming </strong></td>
 						<td class="col-md-1"><strong>{{ '&euro; '.number_format(EstimateEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
@@ -535,6 +546,7 @@ if (!$project || !$project->isOwner()) {
 					</tr>
 				</thead>
 				<tbody>
+					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 					<tr>
 						<td class="col-md-5">Arbeidskosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -553,8 +565,9 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-1">6%</td>
 						<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::subconLaborBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 					</tr>
+					@else
 					<tr>
-						<td class="col-md-5">&nbsp;</td>
+						<td class="col-md-5">Arbeidskosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -562,6 +575,9 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-1">0%</td>
 						<td class="col-md-2">&nbsp;</td>
 					</tr>
+					@endif
+
+					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 					<tr>
 						<td class="col-md-5">Materiaalkosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -580,8 +596,9 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-1">6%</td>
 						<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::subconMaterialBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 					</tr>
+					@else
 					<tr>
-						<td class="col-md-5">&nbsp;</td>
+						<td class="col-md-5">ateriaalkosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -589,7 +606,9 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-1">0%</td>
 						<td class="col-md-2">&nbsp;</td>
 					</tr>
+					@endif
 
+					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 					<tr>
 						<td class="col-md-5">Materieelkosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -608,8 +627,9 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-1">6%</td>
 						<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::subconEquipmentBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 					</tr>
+					@else
 					<tr>
-						<td class="col-md-5">&nbsp;</td>
+						<td class="col-md-5">Materieelkosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -617,6 +637,8 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-1">0%</td>
 						<td class="col-md-2">&nbsp;</td>
 					</tr>
+					@endif
+
 					<tr>
 						<td class="col-md-5"><strong>Totaal Onderaanneming </strong></td>
 						<td class="col-md-1"><strong>{{ '&euro; '.number_format(EstimateEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
@@ -646,6 +668,7 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-2">&nbsp;</td>
 						<td class="col-md-2">&nbsp;</td>
 					</tr>
+					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 					<tr>
 						<td class="col-md-6">BTW bedrag aanneming belast met 21%</td>
 						<td class="col-md-2">&nbsp;</td>
@@ -670,6 +693,7 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 						<td class="col-md-2">&nbsp;</td>
 					</tr>
+					@endif
 					<tr>
 						<td class="col-md-6">Te factureren BTW bedrag</td>
 						<td class="col-md-2">&nbsp;</td>
@@ -703,6 +727,7 @@ if (!$project || !$project->isOwner()) {
 					</tr>
 				</thead>
 				<tbody>
+					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 					<tr>
 						<td class="col-md-5">Arbeidskosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax1Amount($project)+EstimateEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -721,8 +746,9 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-1">6%</td>
 						<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax2AmountTax($project)+ResultEndresult::subconLaborBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 					</tr>
+					@else
 					<tr>
-						<td class="col-md-5">&nbsp;</td>
+						<td class="col-md-5">Arbeidskosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax3Amount($project)+EstimateEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax3Amount($project)+MoreEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax3Amount($project)+LessEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -730,6 +756,9 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-1">0%</td>
 						<td class="col-md-2">&nbsp;</td>
 					</tr>
+					@endif
+
+					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 					<tr>
 						<td class="col-md-5">Materiaalkosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax1Amount($project)+EstimateEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -748,8 +777,9 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-1">6%</td>
 						<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax2AmountTax($project)+ResultEndresult::subconMaterialBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 					</tr>
+					@else
 					<tr>
-						<td class="col-md-5">&nbsp;</td>
+						<td class="col-md-5">Materiaalkosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax3Amount($project)+EstimateEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax3Amount($project)+MoreEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax3Amount($project)+LessEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -757,6 +787,9 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-1">0%</td>
 						<td class="col-md-2">&nbsp;</td>
 					</tr>
+					@endif
+
+					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 					<tr>
 						<td class="col-md-5">Materieelkosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax1Amount($project)+EstimateEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -775,8 +808,9 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-1">6%</td>
 						<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax2AmountTax($project)+ResultEndresult::subconEquipmentBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 					</tr>
+					@else
 					<tr>
-						<td class="col-md-5">&nbsp;</td>
+						<td class="col-md-5">Materieelkosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax3Amount($project)+EstimateEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax3Amount($project)+MoreEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax3Amount($project)+LessEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -784,6 +818,8 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-1">0%</td>
 						<td class="col-md-2">&nbsp;</td>
 					</tr>
+					@endif
+
 					<tr>
 						<td class="col-md-5"><strong>Totaal Aanneming </strong></td>
 						<td class="col-md-1"><strong>{{ '&euro; '.number_format(EstimateEndresult::totalContracting($project)+EstimateEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
@@ -813,6 +849,7 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-2">&nbsp;</td>
 						<td class="col-md-2">&nbsp;</td>
 					</tr>
+					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 					<tr>
 						<td class="col-md-6">BTW bedrag 21%</td>
 						<td class="col-md-2">&nbsp;</td>
@@ -825,6 +862,7 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax2($project)+ResultEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 						<td class="col-md-2">&nbsp;</td>
 					</tr>
+					@endif
 					<tr>
 						<td class="col-md-6">Te factureren BTW bedrag</td>
 						<td class="col-md-2">&nbsp;</td>
@@ -861,6 +899,7 @@ if (!$project || !$project->isOwner()) {
 					<td class="col-md-2">&nbsp;</td>
 					<td class="col-md-2">&nbsp;</td>
 				</tr>
+				@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 				<tr>
 					<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
 					<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21'), 2, ",",".") }}</td>
@@ -873,12 +912,16 @@ if (!$project || !$project->isOwner()) {
 					<td class="col-md-2">&nbsp;</td>
 					<td class="col-md-2">&nbsp;</td>
 				</tr>
+				@else
 				<tr>
 					<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 0% BTW categorie</i></td>
 					<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_0'), 2, ",",".") }}</td>
 					<td class="col-md-2">&nbsp;</td>
 					<td class="col-md-2">&nbsp;</td>
 				</tr>
+				@endif
+
+				@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 				<tr>
 					<td class="col-md-6">BTW bedrag 21%</td>
 					<td class="col-md-2">&nbsp;</td>
@@ -891,6 +934,8 @@ if (!$project || !$project->isOwner()) {
 					<td class="col-md-2">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6, 2, ",",".") }}</td>
 					<td class="col-md-2">&nbsp;</td>
 				</tr>
+				@endif
+
 				<tr>
 					<td class="col-md-6">Te factureren BTW bedrag</td>
 					<td class="col-md-2">&nbsp;</td>
@@ -923,6 +968,7 @@ if (!$project || !$project->isOwner()) {
 					<td class="col-md-2">&nbsp;</td>
 					<td class="col-md-2">&nbsp;</td>
 				</tr>
+				@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 				<tr>
 					<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
 					<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21, 2, ",",".") }}</td>
@@ -935,12 +981,16 @@ if (!$project || !$project->isOwner()) {
 					<td class="col-md-2">&nbsp;</td>
 					<td class="col-md-2">&nbsp;</td>
 				</tr>
+				@else
 				<tr>
 					<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 0% BTW categorie</i></td>
 					<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_0, 2, ",",".") }}</td>
 					<td class="col-md-2">&nbsp;</td>
 					<td class="col-md-2">&nbsp;</td>
 				</tr>
+				@endif
+
+				@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 				<tr>
 					<td class="col-md-6">BTW bedrag 21%</td>
 					<td class="col-md-2">&nbsp;</td>
@@ -953,6 +1003,8 @@ if (!$project || !$project->isOwner()) {
 					<td class="col-md-2">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6, 2, ",",".") }}</td>
 					<td class="col-md-2">&nbsp;</td>
 				</tr>
+				@endif
+
 				<tr>
 					<td class="col-md-6">Te factureren BTW bedrag</td>
 					<td class="col-md-2">&nbsp;</td>

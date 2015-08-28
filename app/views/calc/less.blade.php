@@ -1087,7 +1087,8 @@ var n = this,
 
 							<!-- table items -->
 							<tbody>
-								<tr><!-- item -->
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -1105,8 +1106,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@else
 								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1114,7 +1116,9 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr><!-- item -->
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1133,8 +1137,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@else
 								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1142,7 +1147,9 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr><!-- item -->
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1161,8 +1168,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@else
 								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1170,6 +1178,7 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
 								<tr><!-- item -->
 									<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
@@ -1200,6 +1209,7 @@ var n = this,
 
 							<!-- table items -->
 							<tbody>
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr><!-- item -->
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -1218,8 +1228,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@else
 								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1227,7 +1238,9 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr><!-- item -->
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1246,8 +1259,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@else
 								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1255,7 +1269,9 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr><!-- item -->
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1274,8 +1290,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@else
 								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1283,6 +1300,7 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
 								<tr><!-- item -->
 									<td class="col-md-4"><strong>Totaal Onderaanneming </strong></td>
@@ -1316,6 +1334,7 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr><!-- item -->
 									<td class="col-md-6">BTW bedrag aanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>
@@ -1340,6 +1359,7 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
+								@endif
 								<tr><!-- item -->
 									<td class="col-md-6">In mindering te brengen BTW bedrag</td>
 									<td class="col-md-2">&nbsp;</td>

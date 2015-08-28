@@ -177,7 +177,11 @@ class CalcController extends Controller {
 
 			$part = Part::where('part_name','=','contracting')->first();
 			$part_type = PartType::where('type_name','=','calculation')->first();
-			$tax = Tax::where('tax_rate','=',21)->first();
+			$project = Project::find($chapter->project_id);
+			if (ProjectType::find($project->type_id)->type_name == 'BTW verlegd')
+				$tax = Tax::where('tax_rate','=',0)->first();
+			else
+				$tax = Tax::where('tax_rate','=',21)->first();
 
 			$activity = new Activity;
 			$activity->activity_name = Input::get('activity');
@@ -216,7 +220,11 @@ class CalcController extends Controller {
 
 			$part = Part::where('part_name','=','contracting')->first();
 			$part_type = PartType::where('type_name','=','estimate')->first();
-			$tax = Tax::where('tax_rate','=',21)->first();
+			$project = Project::find($chapter->project_id);
+			if (ProjectType::find($project->type_id)->type_name == 'BTW verlegd')
+				$tax = Tax::where('tax_rate','=',0)->first();
+			else
+				$tax = Tax::where('tax_rate','=',21)->first();
 
 			$activity = new Activity;
 			$activity->activity_name = Input::get('activity');

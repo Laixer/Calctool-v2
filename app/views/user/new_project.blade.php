@@ -74,7 +74,7 @@
 							<label for="contractor">Opdrachtgever*</label>
 							<select name="contractor" id="contractor" class="form-control pointer">
 							@foreach (Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
-								<option value="{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
+								<option value="{{ $relation->id }}">{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); }}</option>
 							@endforeach
 							</select>
 							<a href="/relation/new">+ Nieuwe relatie toevoegen</a>
@@ -85,7 +85,11 @@
 							<label for="type">Type</label>
 							<select name="type" id="type" class="form-control pointer">
 								@foreach (ProjectType::all() as $type)
-									<option {{ $type->type_name=='calculatie' ? 'selected' : 'disabled' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
+								<?php
+								if ($type->type_name != 'calculatie' && $type->type_name != 'BTW verlegd')
+									continue;
+								?>
+									<option {{ $type->type_name=='calculatie' ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
 								@endforeach
 							</select>
 						</div>

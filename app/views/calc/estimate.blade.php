@@ -1173,6 +1173,7 @@ var n = this,
 
 
 							<tbody>
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ number_format(EstimateEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -1191,8 +1192,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@else
 								<tr>
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ number_format(EstimateEndresult::conCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1200,7 +1202,9 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr>
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1219,8 +1223,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@else
 								<tr>
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1228,7 +1233,9 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr>
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1247,8 +1254,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@else
 								<tr>
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1256,6 +1264,7 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
 								<tr>
 									<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
@@ -1286,6 +1295,7 @@ var n = this,
 
 
 							<tbody>
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ number_format(EstimateEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -1304,8 +1314,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@else
 								<tr>
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ number_format(EstimateEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1313,7 +1324,9 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr>
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1332,8 +1345,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@else
 								<tr>
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1341,7 +1355,9 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr>
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1360,8 +1376,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@else
 								<tr>
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1369,6 +1386,7 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
 								<tr>
 									<td class="col-md-4"><strong>Totaal Onderaanneming </strong></td>
@@ -1402,6 +1420,7 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr>
 									<td class="col-md-6">BTW bedrag aanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>
@@ -1426,6 +1445,7 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
+								@endif
 								<tr>
 									<td class="col-md-6">Te factureren BTW bedrag</td>
 									<td class="col-md-2">&nbsp;</td>

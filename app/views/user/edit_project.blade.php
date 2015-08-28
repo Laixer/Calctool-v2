@@ -205,7 +205,7 @@ else {
 			</div>
 			@endif
 
-			<h2><strong>Dashboard Project</strong> {{$project->project_name}}</h2>
+			<h2><strong>Project</strong> {{$project->project_name}}</h2>
 
 			@if(!Relation::where('user_id','=', Auth::user()->id)->count())
 			<div class="alert alert-info">
@@ -216,7 +216,6 @@ else {
 
 				<div class="tabs nomargin-top">
 
-					<?# -- tabs -- ?>
 					<ul class="nav nav-tabs">
 						<li class="active">
 							<a href="#status" data-toggle="tab">Projectstatus</a>
@@ -235,10 +234,10 @@ else {
 						</li>
 					</ul>
 
-					<?# -- tabs content -- ?>
 					<div class="tab-content">
 
 						<div id="status" class="tab-pane active">
+							<h4>Project op basis van {{ ProjectType::find($project->type_id)->type_name }}</h4>
 							<div class="row">
 								<div class="col-md-3"><strong>Offerte stadium</strong></div>
 								<div class="col-md-2"><strong></strong></div>
@@ -389,21 +388,12 @@ else {
 											<label for="contractor">Opdrachtgever*</label>
 											<select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} class="form-control pointer">
 											@foreach (Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
-												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
+												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); }}</option>
 											@endforeach
 											</select>
 										</div>
 									</div>
-									<div class="col-md-2">
-										<div class="form-group">
-											<label for="type">Type</label>
-											<select name="type" id="type" disabled class="form-control pointer">
-												@foreach (ProjectType::all() as $type)
-													<option {{ $project->type_id==$type->id ? 'selected' : '' }}>{{ ucwords($type->type_name) }}</option>
-												@endforeach
-											</select>
-										</div>
-									</div>
+
 								</div>
 							<h5><strong>Adresgegevens</strong></h5>
 									<div class="row">

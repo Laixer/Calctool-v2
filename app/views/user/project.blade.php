@@ -36,9 +36,10 @@
 					<!-- table items -->
 					<tbody>
 					@foreach (Project::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $project)
+					<?php $relation = Relation::find($project->client_id); ?>
 						<tr>
 							<td class="col-md-3">{{ HTML::link('/project-'.$project->id.'/edit', $project->project_name) }}</td>
-							<td class="col-md-2">{{ $project->contactor->company_name }}</td>
+							<td class="col-md-2">{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); }}</td>
 							<td class="col-md-1">{{ $project->type->type_name }}</td>
 							<td class="col-md-3">{{ $project->address_street }} {{ $project->address_number }}</td>
 							<td class="col-md-2">{{ $project->address_city }}</td>

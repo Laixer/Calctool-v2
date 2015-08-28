@@ -87,6 +87,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         </tr>
       </thead>
       <tbody>
+        @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
         <tr style="page-break-after: always;">
           <td class="qty">Arbeidskosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax1Amount($project)+EstimateEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -105,8 +106,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">6%</td>
           <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax2AmountTax($project)+ResultEndresult::subconLaborBalanceTax2AmountTax($project), 2, ",",".") }}</td>
         </tr>
+        @else
         <tr style="page-break-after: always;">
-          <td class="qty">&nbsp;</td>
+          <td class="qty">Arbeidskosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax3Amount($project)+EstimateEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax3Amount($project)+MoreEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax3Amount($project)+LessEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -114,6 +116,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">0%</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @endif
+
+        @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
         <tr style="page-break-after: always;">
           <td class="qty">Materiaalkosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax1Amount($project)+EstimateEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -132,8 +137,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">6%</td>
           <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax2AmountTax($project)+ResultEndresult::subconMaterialBalanceTax2AmountTax($project), 2, ",",".") }}</td>
         </tr>
+        @else
         <tr style="page-break-after: always;">
-          <td class="qty">&nbsp;</td>
+          <td class="qty">Materiaalkosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax3Amount($project)+EstimateEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax3Amount($project)+MoreEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax3Amount($project)+LessEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -141,6 +147,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">0%</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @endif
+
+        @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
         <tr style="page-break-after: always;">
           <td class="qty">Materieelkosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax1Amount($project)+EstimateEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -159,8 +168,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">6%</td>
           <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax2AmountTax($project)+ResultEndresult::subconEquipmentBalanceTax2AmountTax($project), 2, ",",".") }}</td>
         </tr>
+        @else
         <tr style="page-break-after: always;">
-          <td class="qty">&nbsp;</td>
+          <td class="qty">Materieelkosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax3Amount($project)+EstimateEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax3Amount($project)+MoreEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax3Amount($project)+LessEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -168,6 +178,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">0%</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @endif
         <tr style="page-break-after: always;">
           <td class="qty"><strong>Totaal Aanneming </strong></td>
           <td class="qty"><strong>{{ '&euro; '.number_format(EstimateEndresult::totalContracting($project)+EstimateEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
@@ -197,6 +208,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
         <tr style="page-break-after: always;">
           <td class="qty">BTW bedrag calculatie belast met 21%</td>
           <td class="qty">&nbsp;</td>
@@ -215,6 +227,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax2($project)+ResultEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @endif
         <tr style="page-break-after: always;">
           <td class="qty">Te factureren BTW bedrag</td>
           <td class="qty">&nbsp;</td>
@@ -255,6 +268,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
           </tr>
+          @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
           <tr>
             <td class="qty">Factuurbedrag in 21% BTW tarief</td>
             <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21'), 2, ",",".") }}</td>
@@ -267,12 +281,15 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
           </tr>
+          @else
           <tr>
             <td class="qty">Factuurbedrag belast met 0% BTW</td>
             <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_0'), 2, ",",".") }}</td>
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
           </tr>
+          @endif
+          @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
           <tr>
             <td class="qty">BTW bedrag belast met 21%</td>
             <td class="qty">&nbsp;</td>
@@ -285,6 +302,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6, 2, ",",".") }}</td>
             <td class="qty">&nbsp;</td>
           </tr>
+          @endif
           <tr>
             <td class="qty"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
             <td class="qty">&nbsp;</td>
@@ -325,6 +343,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
           </tr>
+          @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
           <tr>
             <td class="qty">Factuurbedrag belast met 21% BTW</td>
             <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21, 2, ",",".") }}</td>
@@ -337,12 +356,15 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
           </tr>
+          @else
           <tr>
             <td class="qty">Factuurbedrag belast met 0% BTW</td>
             <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_0, 2, ",",".") }}</td>
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
           </tr>
+          @endif
+          @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
           <tr>
             <td class="qty">BTW bedrag belast met 21%</td>
             <td class="qty">&nbsp;</td>
@@ -355,6 +377,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6, 2, ",",".") }}</td>
             <td class="qty">&nbsp;</td>
           </tr>
+          @endif
           <tr>
             <td class="qty"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
             <td class="qty">&nbsp;</td>
@@ -400,6 +423,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         </tr>
       </thead>
       <tbody>
+       @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
         <tr style="page-break-after: always;">
           <td class="qty">Arbeidskosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -418,8 +442,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">6%</td>
           <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax2AmountTax($project), 2, ",",".") }}</td>
         </tr>
+        @else
         <tr style="page-break-after: always;">
-          <td class="qty">&nbsp;</td>
+          <td class="qty">Arbeidskosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -427,6 +452,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">0%</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @endif
+
+        @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
         <tr style="page-break-after: always;">
           <td class="qty">Materiaalkosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -445,8 +473,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">6%</td>
           <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax2AmountTax($project), 2, ",",".") }}</td>
         </tr>
+        @else
         <tr style="page-break-after: always;">
-          <td class="qty">&nbsp;</td>
+          <td class="qty">Materiaalkosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -454,6 +483,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">0%</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @endif
+
+        @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
         <tr style="page-break-after: always;">
           <td class="qty">Materieelkosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -472,8 +504,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">6%</td>
           <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax2AmountTax($project), 2, ",",".") }}</td>
         </tr>
+        @else
         <tr style="page-break-after: always;">
-          <td class="qty">&nbsp;</td>
+          <td class="qty">Materieelkosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -481,7 +514,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">0%</td>
           <td class="qty">&nbsp;</td>
         </tr>
-          <tr style="page-break-after: always;">
+        @endif
+        <tr style="page-break-after: always;">
           <td class="qty"><strong>Totaal Aanneming </strong></td>
           <td class="qty"><strong>{{ '&euro; '.number_format(EstimateEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
           <td class="qty"><strong>{{ '&euro; '.number_format(MoreEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
@@ -506,6 +540,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         </tr>
       </thead>
       <tbody>
+       @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
         <tr style="page-break-after: always;">
           <td class="qty">Arbeidskosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -524,8 +559,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">6%</td>
           <td class="qty">{{ '&euro; '.number_format(ResultEndresult::subconLaborBalanceTax2AmountTax($project), 2, ",",".") }}</td>
         </tr>
+        @else
         <tr style="page-break-after: always;">
-          <td class="qty">&nbsp;</td>
+          <td class="qty">Arbeidskosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(MoreEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -533,13 +569,16 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">0%</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @endif
+
+        @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
         <tr style="page-break-after: always;">
-          <td class="qty">&nbsp;</td>
+          <td class="qty">Materiaalkosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(MoreEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(ResultEndresult::subconLaborBalanceTax3($project), 2, ",",".") }}</td>
-          <td class="qty">0%</td>
+          <td class="qty">21%</td>
           <td class="qty">&nbsp;</td>
         </tr>
         <tr style="page-break-after: always;">
@@ -551,8 +590,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">6%</td>
           <td class="qty">{{ '&euro; '.number_format(ResultEndresult::subconMaterialBalanceTax2AmountTax($project), 2, ",",".") }}</td>
         </tr>
+        @else
         <tr style="page-break-after: always;">
-          <td class="qty">&nbsp;</td>
+          <td class="qty">Materiaalkosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(MoreEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(LessEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -560,6 +600,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">0%</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @endif
+
+        @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
         <tr style="page-break-after: always;">
           <td class="qty">Materieelkosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -578,8 +621,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">6%</td>
           <td class="qty">{{ '&euro; '.number_format(ResultEndresult::subconEquipmentBalanceTax2AmountTax($project), 2, ",",".") }}</td>
         </tr>
+        @else
         <tr style="page-break-after: always;">
-          <td class="qty">&nbsp;</td>
+          <td class="qty">Materieelkosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -587,6 +631,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">0%</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @endif
         <tr style="page-break-after: always;">
           <td class="qty"><strong>Totaal Onderaanneming </strong></td>
           <td class="qty"><strong>{{ '&euro; '.number_format(EstimateEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
@@ -615,6 +660,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
         <tr style="page-break-after: always;">
           <td class="qty">BTW bedrag aanneming belast met 21%</td>
           <td class="qty">&nbsp;</td>
@@ -639,6 +685,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @endif
         <tr style="page-break-after: always;">
           <td class="qty">Te factureren BTW bedrag</td>
           <td class="qty">&nbsp;</td>
@@ -693,6 +740,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
         <tr>
           <td class="qty">Factuurbedrag belast met 21% BTW</td>
           <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21'), 2, ",",".") }}</td>
@@ -705,12 +753,16 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @else
         <tr>
           <td class="qty">Factuurbedrag belast met 0% BTW</td>
           <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_0'), 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @endif
+
+        @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
         <tr>
           <td class="qty">BTW bedrag belast met 21%</td>
           <td class="qty">&nbsp;</td>
@@ -723,6 +775,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @endif
+
         <tr>
           <td class="qty"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
           <td class="qty">&nbsp;</td>
@@ -749,6 +803,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
         <tr>
           <td class="qty">Factuurbedrag belast met 21% BTW</td>
           <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21, 2, ",",".") }}</td>
@@ -761,12 +816,16 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @else
         <tr>
           <td class="qty">Factuurbedrag belast met 0% BTW</td>
           <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_0, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @endif
+
+        @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
         <tr>
           <td class="qty">BTW bedrag belast met 21%</td>
           <td class="qty">&nbsp;</td>
@@ -779,6 +838,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @endif
         <tr>
           <td class="qty"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
           <td class="qty">&nbsp;</td>

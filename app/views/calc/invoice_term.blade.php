@@ -342,6 +342,7 @@ if (!$project || !$project->isOwner()) {
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
+							@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 							<tr>
 								<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
 								<td class="col-md-2">{{ '&euro; '.number_format($invoice->rest_21, 2, ",",".") }}</td>
@@ -354,12 +355,16 @@ if (!$project || !$project->isOwner()) {
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
+							@else
 							<tr>
 								<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 0% BTW categorie</i></td>
 								<td class="col-md-2">{{ '&euro; '.number_format($invoice->rest_0, 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
+							@endif
+
+							@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 							<tr>
 								<td class="col-md-6">BTW bedrag 21%</td>
 								<td class="col-md-2">&nbsp;</td>
@@ -372,6 +377,8 @@ if (!$project || !$project->isOwner()) {
 								<td class="col-md-2">{{ '&euro; '.number_format(($invoice->rest_6/100)*6, 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
+							@endif
+
 							<tr>
 								<td class="col-md-6"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
 								<td class="col-md-2">&nbsp;</td>
