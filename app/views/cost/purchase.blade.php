@@ -55,6 +55,7 @@
 
 			<h2><strong>Inkoopfacturen</strong></h2>
 
+			<div class="white-row">
 				<table class="table table-striped">
 					<?# -- table head -- ?>
 					<thead>
@@ -114,6 +115,7 @@
 						</tr>
 					</tbody>
 				</table>
+			</div>
 			</div>
 
 		</div>

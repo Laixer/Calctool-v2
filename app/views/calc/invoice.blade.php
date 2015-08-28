@@ -263,12 +263,11 @@ if (!$project || !$project->isOwner()) {
 		<div class="modal-dialog">
 			<div class="modal-content">
 
-				<div class="modal-header"><!-- modal header -->
+				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					<h4 class="modal-title" id="myModalLabel">Factuur opties</h4>
-				</div><!-- /modal header -->
+				</div>
 
-				<!-- modal body -->
 				<div class="modal-body">
 					<div class="form-horizontal">
 
@@ -478,6 +477,7 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-1">6%</td>
 						<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 					</tr>
+					@else
 					<tr>
 						<td class="col-md-5">Materiaalkosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -598,7 +598,7 @@ if (!$project || !$project->isOwner()) {
 					</tr>
 					@else
 					<tr>
-						<td class="col-md-5">ateriaalkosten</td>
+						<td class="col-md-5">Materiaalkosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>

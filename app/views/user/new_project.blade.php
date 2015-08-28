@@ -59,6 +59,8 @@
 			</div>
 			@endif
 
+			<div class="white-row">
+
 			{{ Form::open(array('url' => 'project/new')) }}
 				<h4>Projectgegevens</h4>
 				<div class="row">
@@ -161,16 +163,7 @@
 				<h4>Financieel</h4>
 				<div class="tabs nomargin-top">
 
-					<?# -- tabs -- ?>
-					<ul class="nav nav-tabs">
-						<li class="active">
-							<a href="#calc" data-toggle="tab">Uurtarief & Winstpercentages</a>
-						</li>
-					</ul>
 
-					<?# -- tabs content -- ?>
-					<div class="tab-content">
-						<div id="calc" class="tab-pane active">
 							<div class="row">
 								<div class="col-md-3"><h5><strong>Eigen uurtarief*</strong></h5></div>
 								<div class="col-md-1"></div>
@@ -229,8 +222,7 @@
 									<input name="more_profit_equipment_2" id="more_profit_equipment_2" type="text" min="0" max="200" maxlength="3" value="{{ Input::old('more_profit_equipment_2') ? Input::old('more_profit_equipment_2') : Auth::user()->pref_profit_more_subcontr_equip }}" class="form-control-sm-number"/>
 								</div>
 							</div>
-						</div>
-					</div>
+
 				</div>
 
 				<div class="row">
@@ -240,6 +232,7 @@
 				</div>
 
 			{{ Form::close() }}
+			</div>
 
 		</div>
 

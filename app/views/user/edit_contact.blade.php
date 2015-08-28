@@ -66,8 +66,10 @@ if (!$relation || !$relation->isOwner()) {
 			<div>
 			<br>
 
+
 			<h2><strong>Contact</strong> {{ $contact->lastname }}</h2>
 
+			<div class="white-row">
 				{{ Form::open(array('url' => 'relation/contact/update')) }}
 				<h4>Contactgegevens</h4>
 				<div class="row">
@@ -126,6 +128,7 @@ if (!$relation || !$relation->isOwner()) {
 				</div>
 
 			{{ Form::close() }}
+			</div>
 
 		</div>
 
