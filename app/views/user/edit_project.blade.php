@@ -321,7 +321,7 @@ else {
 									echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs doinvclose">Factureren</a>';
 									$close=false;
 								} else if (!$invoice->bill_date) {
-									echo '<a href="/invoice/project-'.$project->id.'/term-invoice-'.$invoice->id.'" class="btn btn-primary btn-xxs">Bekijken</a>';
+									echo '<a href="/invoice/project-'.$project->id.'/term-invoice-'.$invoice->id . '" class="btn btn-primary btn-xxs">Bekijken</a>';
 								} else
 									echo date('d-m-Y', strtotime($invoice->bill_date));
 								?>
@@ -332,7 +332,7 @@ else {
 								elseif ($invoice->invoice_close && $invoice->payment_date)
 									echo 'Betaald op '.date('d-m-Y', strtotime($invoice->payment_date));
 								?></div>
-								<div class="col-md-3"><?php if ($invoice->bill_date){ echo '<a target="blank" href="/invoice/pdf/project-'.$project->id.'/term-invoice-'.$invoice->id.'" class="btn btn-primary btn-xxs">Bekijk PDF</a>'; }?></div>
+								<div class="col-md-3"><?php if ($invoice->bill_date){ echo '<a target="blank" href="/invoice/pdf/project-'.$project->id.'/term-invoice-'.$invoice->id . ($invoice->option_query ? '?'.$invoice->option_query : '') . '" class="btn btn-primary btn-xxs">Bekijk PDF</a>'; }?></div>
 							</div>
 							<?php $i++; ?>
 							@endforeach
@@ -356,7 +356,7 @@ else {
 								elseif ($invoice_end->invoice_close && $invoice_end->payment_date)
 									echo 'Betaald op '.date('d-m-Y', strtotime($invoice_end->payment_date));
 								?></div>
-								<div class="col-md-3"><?php if ($invoice_end->bill_date){ echo '<a target="blank" href="/invoice/pdf/project-'.$project->id.'/invoice-'.$invoice_end->id.'" class="btn btn-primary btn-xxs">Bekijk PDF</a>'; }?></div>
+								<div class="col-md-3"><?php if ($invoice_end->bill_date){ echo '<a target="blank" href="/invoice/pdf/project-'.$project->id.'/invoice-'.$invoice_end->id . ($invoice_end->option_query ? '?'.$invoice_end->option_query : '') . '" class="btn btn-primary btn-xxs">Bekijk PDF</a>'; }?></div>
 							</div>
 							@endif
 							<?php }else{ ?>

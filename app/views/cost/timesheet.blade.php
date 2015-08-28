@@ -83,11 +83,9 @@
 					</li>
 				</ul>
 
-				<!-- tabs content -->
 				<div class="tab-content">
 					<div id="hour" class="tab-pane active">
 						<table class="table table-striped">
-							<?# -- table head -- ?>
 							<thead>
 								<tr>
 									<th class="col-md-1">Datum</th>
@@ -100,7 +98,6 @@
 								</tr>
 							</thead>
 
-							<!-- table items -->
 							<tbody>
 								@foreach (Project::where('user_id','=',Auth::user()->id)->get() as $project)
 								@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)

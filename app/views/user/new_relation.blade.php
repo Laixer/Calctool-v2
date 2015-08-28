@@ -67,6 +67,7 @@ $(document).ready(function() {
 
 			<h2><strong>Nieuwe</strong> relatie</h2>
 
+			<div class="white-row">
 				{{ Form::open(array('url' => 'relation/new')) }}
 				<div class="row">
 
@@ -286,6 +287,7 @@ $(document).ready(function() {
 					</div>
 				</div>
 			{{ Form::close() }}
+			</div>
 
 		</div>
 

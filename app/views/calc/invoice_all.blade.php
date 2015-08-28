@@ -172,6 +172,7 @@ if (!$project || !$project->isOwner()) {
 				</div>
 			</div>
 
+			<div class="white-row">
 			<h2><strong>Factuurbeheer</strong></h2>
 			<table class="table table-striped">
 				<?# -- table head -- ?>
@@ -273,6 +274,7 @@ if (!$project || !$project->isOwner()) {
 				</div>
 			</div>
 			@endif
+		</div>
 		</div>
 
 	</section>
