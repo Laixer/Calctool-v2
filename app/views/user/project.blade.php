@@ -35,6 +35,11 @@
 
 					<!-- table items -->
 					<tbody>
+					@if (!Project::where('user_id','=', Auth::user()->id)->count('id'))
+					<tr>
+						<td colspan="6" style="text-align: center;">Er zijn nog geen projecten</td>
+					</tr>
+					@endif
 					@foreach (Project::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $project)
 					<?php $relation = Relation::find($project->client_id); ?>
 						<tr>
