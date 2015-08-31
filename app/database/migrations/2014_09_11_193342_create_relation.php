@@ -43,7 +43,7 @@ class CreateRelation extends Migration {
 			$table->string('address_number', 5);
 			$table->string('address_postal', 6);
 			$table->string('address_city', 35);
-			$table->char('kvk', 12)->nullable();
+			$table->char('kvk', 8)->nullable();
 			$table->char('btw', 14)->nullable();
 			$table->string('debtor_code', 10)->index();
 			$table->string('phone', 12)->nullable();

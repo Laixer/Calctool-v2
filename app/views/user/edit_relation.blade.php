@@ -65,6 +65,14 @@ $(document).ready(function() {
 		}
 	});
 
+	$('#kvk').blur(function() {
+		var kvkcheck = $(this).val();
+		if (kvkcheck.length != 8) {
+			$(this).parent().addClass('has-error');
+		} else {
+			$(this).parent().removeClass('has-error');
+		}
+	});
 
 	$('#street').blur(function() {
 		var streetcheck = $(this).val();
@@ -179,14 +187,14 @@ $(document).ready(function() {
 
 								<div class="col-md-3">
 									<div class="form-group">
-										<label for="kvk">K.v.K nummer</label>
-										<input name="kvk" id="kvk" type="text" maxlength="12" value="{{ Input::old('kvk') ? Input::old('kvk') : trim($relation->kvk) }}" class="form-control"/>
+										<label for="kvk">K.v.K nummer</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Je KVK-nummer dient te bestaan uit 8 cijfers" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
+										<input name="kvk" id="kvk" type="text" maxlength="8" minlength="8" value="{{ Input::old('kvk') ? Input::old('kvk') : trim($relation->kvk) }}" class="form-control"/>
 									</div>
 								</div>
 
 								<div class="col-md-3">
 									<div class="form-group">
-										<label for="btw">BTW nummer</label>
+										<label for="btw">BTW nummer</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Je BTW-nummer bestaat uit een combinatie van 12 cijfers en/of letters. Veelal beginnen nederlandse BTW-nummers met 'NL' en eindigen op 'B01'." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
 										<input name="btw" id="btw" type="text" maxlength="14" value="{{ Input::old('btw') ? Input::old('btw') : $relation->btw }}" class="form-control"/>
 									</div>
 								</div>

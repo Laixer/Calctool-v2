@@ -42,7 +42,7 @@ class RelationController extends Controller {
 			/* Company */
 			'company_type' => array('required_if:relationkind,zakelijk','numeric'),
 			'company_name' => array('required_if:relationkind,zakelijk','max:50'),
-			'kvk' => array('numeric','min:12'),
+			'kvk' => array('numeric','min:8'),
 			'btw' => array('alpha_num','min:14'),
 			'telephone_comp' => array('alpha_num','max:12'),
 			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
@@ -107,7 +107,7 @@ class RelationController extends Controller {
 			/* Company */
 			'company_type' => array('required_if:relationkind,zakelijk','numeric'),
 			'company_name' => array('required_if:relationkind,zakelijk','max:50'),
-			//'kvk' => array('numeric','min:12'),
+			//'kvk' => array('numeric','min:8'),
 			//'btw' => array('alpha_num','min:14'),
 			//'telephone_comp' => array('alpha_num','max:12'),
 			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
@@ -281,7 +281,7 @@ class RelationController extends Controller {
 			/* Company */
 			'company_type' => array('required_if:relationkind,zakelijk','numeric'),
 			'company_name' => array('required_if:relationkind,zakelijk','max:50'),
-			'kvk' => array('numeric','min:12'),
+			'kvk' => array('numeric','min:8'),
 			'btw' => array('alpha_num','min:14'),
 			'telephone_comp' => array('alpha_num','max:12'),
 			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
@@ -347,7 +347,7 @@ class RelationController extends Controller {
 			/* Company */
 			'company_type' => array('required_if:relationkind,zakelijk','numeric'),
 			'company_name' => array('required_if:relationkind,zakelijk','max:50'),
-			//'kvk' => array('numeric','min:12'),
+			//'kvk' => array('numeric','min:8'),
 			//'btw' => array('alpha_num','min:14'),
 			//'telephone_comp' => array('alpha_num','max:12'),
 			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),

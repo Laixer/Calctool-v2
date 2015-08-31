@@ -30,6 +30,35 @@ $(document).ready(function() {
 	$('#website').blur(function(e){
 		prefixURL($(this));
 	});
+
+	$('#kvk').blur(function() {
+		var kvkcheck = $(this).val();
+		if (kvkcheck.length != 8) {
+			$(this).parent().addClass('has-error');
+		} else {
+			$(this).parent().removeClass('has-error');
+		}
+	});
+
+    $('#btw').blur(function() {
+        var btwcheck = $(this).val();
+        if (btwcheck.length != 14) {
+            $(this).addClass("error-input");
+        }else {
+            $(this).removeClass("error-input");
+        }
+    });
+
+
+    $('#telephone_com').blur(function() {
+        var telcompcheck = $(this).val();
+        if (telcompcheck.length != 12) {
+            $(this).addClass("error-input");
+        }else {
+            $(this).removeClass("error-input");
+        }
+    });
+
 });
 </script>
 
@@ -121,14 +150,14 @@ $(document).ready(function() {
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="kvk">K.v.K nummer</label>
-							<input name="kvk" id="kvk" type="text" maxlength="12" value="{{ Input::old('kvk') }}" class="form-control"/>
+							<label for="kvk">K.v.K nummer</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Je KVK-nummer dient te bestaan uit 8 cijfers" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
+							<input name="kvk" id="kvk" type="text" maxlength="8" minlength="8" value="{{ Input::old('kvk') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="btw">BTW nummer</label>
+							<label for="btw">BTW nummer</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Je BTW-nummer bestaat uit een combinatie van 12 cijfers en/of letters. Veelal beginnen nederlandse BTW-nummers met 'NL' en eindigen op 'B01'." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
 							<input name="btw" id="btw" type="text" maxlength="14" value="{{ Input::old('btw') }}" class="form-control"/>
 						</div>
 					</div>
@@ -136,7 +165,7 @@ $(document).ready(function() {
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="telephone_comp">Telefoonnummer</label>
-							<input name="telephone_comp" id="telephone_comp" type="text" maxlength="12" value="{{ Input::old('telephone_comp') }}" class="form-control"/>
+							<input name="telephone_comp" id="telephone_comp" type="text" minlength="12" maxlength="12" value="{{ Input::old('telephone_comp') }}" class="form-control"/>
 						</div>
 					</div>
 
