@@ -39,6 +39,9 @@
 						$userid = Auth::user()->self_id;
 					else
 						$userid = -1;
+					if (!Relation::where('user_id','=', Auth::user()->id)->where('id','!=',$userid)->count('id')) {
+						echo '<tr><td colspan="6" style="text-align: center;">Er zijn nog geen relaties</td></tr>';
+					}
 					foreach (Relation::where('user_id','=', Auth::user()->id)->where('id','!=',$userid)->orderBy('created_at', 'desc')->get() as $relation) {
 						$contact = Contact::where('relation_id','=',$relation->id)->first();
 					?>
