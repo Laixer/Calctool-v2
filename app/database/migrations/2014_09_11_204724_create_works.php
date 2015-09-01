@@ -67,17 +67,17 @@ class CreateWorks extends Migration {
 	{
 		Schema::table('activity', function(Blueprint $table)
 		{
-			Schema::drop('activity');
+			Schema::dropIfExists('activity');
 		});
 
 		Schema::table('chapter', function(Blueprint $table)
 		{
-			Schema::drop('chapter');
+			Schema::dropIfExists('chapter');
 		});
 
 		Schema::table('tax', function(Blueprint $table)
 		{
-			Schema::drop('tax');
+			Schema::dropIfExists('tax');
 		});
 	}
 

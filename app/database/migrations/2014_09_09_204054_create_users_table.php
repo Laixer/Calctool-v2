@@ -60,7 +60,6 @@ class CreateUsersTable extends Migration {
 			$table->text('note')->nullable();
 			$table->integer('mobile')->nullable()->unsigned();
 			$table->integer('phone')->nullable()->unsigned();
-			$table->integer('teluid')->nullable()->unsigned();
 			$table->string('email', 80)->unique();
 			$table->boolean('pref_mailings_optin')->default('N');
 			$table->decimal('pref_hourrate_calc', 6, 3)->nullable();
@@ -182,6 +181,26 @@ class CreateUsersTable extends Migration {
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
 		});
 
+		Schema::create('telegram', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->boolean('alert')->default('N');
+			$table->integer('uid');
+			$table->timestamps();
+			$table->integer('user_id')->unsigned();
+			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
+		});
+
+		Schema::create('audit', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('ip', 45);
+			$table->string('event', 120);
+			$table->timestamps();
+			$table->integer('user_id')->unsigned();
+			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
+		});
+
 		$seq_user_account = "ALTER SEQUENCE user_account_id_seq RESTART WITH 1000";
 		$seq_project = "ALTER SEQUENCE project_id_seq RESTART WITH 10000";
 		$seq_order = "ALTER SEQUENCE project_id_seq RESTART WITH 1000";
@@ -199,49 +218,49 @@ class CreateUsersTable extends Migration {
 	public function down()
 	{
 
+		Schema::table('audit', function(Blueprint $table)
+		{
+			Schema::dropIfExists('audit');
+		});
+		Schema::table('telegram', function(Blueprint $table)
+		{
+			Schema::dropIfExists('telegram');
+		});
 		Schema::table('payment', function(Blueprint $table)
 		{
-			Schema::drop('payment');
+			Schema::dropIfExists('payment');
 		});
-
 		Schema::table('resource', function(Blueprint $table)
 		{
-			Schema::drop('resource');
+			Schema::dropIfExists('resource');
 		});
-
 		Schema::table('project', function(Blueprint $table)
 		{
-			Schema::drop('project');
+			Schema::dropIfExists('project');
 		});
-
 		Schema::table('project_type', function(Blueprint $table)
 		{
-			Schema::drop('project_type');
+			Schema::dropIfExists('project_type');
 		});
-
 		Schema::table('iban', function(Blueprint $table)
 		{
-			Schema::drop('iban');
+			Schema::dropIfExists('iban');
 		});
-
 		Schema::table('user_account', function(Blueprint $table)
 		{
-			Schema::drop('user_account');
+			Schema::dropIfExists('user_account');
 		});
-
 		Schema::table('user_type', function(Blueprint $table)
 		{
-			Schema::drop('user_type');
+			Schema::dropIfExists('user_type');
 		});
-
 		Schema::table('country', function(Blueprint $table)
 		{
-			Schema::drop('country');
+			Schema::dropIfExists('country');
 		});
-
 		Schema::table('province', function(Blueprint $table)
 		{
-			Schema::drop('province');
+			Schema::dropIfExists('province');
 		});
 	}
 

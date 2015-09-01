@@ -70,17 +70,17 @@ class CreatePart extends Migration {
 
 		Schema::table('detail', function(Blueprint $table)
 		{
-			Schema::drop('detail');
+			Schema::dropIfExists('detail');
 		});
 
 		Schema::table('part_type', function(Blueprint $table)
 		{
-			Schema::drop('part_type');
+			Schema::dropIfExists('part_type');
 		});
 
 		Schema::table('part', function(Blueprint $table)
 		{
-			Schema::drop('part');
+			Schema::dropIfExists('part');
 		});
 	}
 

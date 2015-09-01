@@ -93,22 +93,22 @@ class CreateFinancial extends Migration {
 	{
 		Schema::table('invoice', function(Blueprint $table)
 		{
-			Schema::drop('invoice');
+			Schema::dropIfExists('invoice');
 		});
 
 		Schema::table('offer', function(Blueprint $table)
 		{
-			Schema::drop('offer');
+			Schema::dropIfExists('offer');
 		});
 
 		Schema::table('valid', function(Blueprint $table)
 		{
-			Schema::drop('valid');
+			Schema::dropIfExists('valid');
 		});
 
 		Schema::table('deliver_time', function(Blueprint $table)
 		{
-			Schema::drop('deliver_time');
+			Schema::dropIfExists('deliver_time');
 		});
 	}
 

@@ -65,20 +65,20 @@ class CreateCostRegistration extends Migration {
 	{
 		Schema::table('purchase', function(Blueprint $table)
 		{
-			Schema::drop('purchase');
+			Schema::dropIfExists('purchase');
 		});
 
 		Schema::table('timesheet', function(Blueprint $table)
 		{
-			Schema::drop('timesheet');
+			Schema::dropIfExists('timesheet');
 		});
 		Schema::table('timesheet_kind', function(Blueprint $table)
 		{
-			Schema::drop('timesheet_kind');
+			Schema::dropIfExists('timesheet_kind');
 		});
 		Schema::table('purchase_kind', function(Blueprint $table)
 		{
-			Schema::drop('purchase_kind');
+			Schema::dropIfExists('purchase_kind');
 		});
 	}
 
