@@ -54,9 +54,6 @@ class CreateUsersTable extends Migration {
 			$table->date('expiration_date');
 			$table->char('referral_key', 32)->unique();
 			$table->boolean('gender')->nullable();
-			$table->string('address_postox_number', 5)->nullable();
-			$table->string('address_postbox_postal', 6)->nullable();
-			$table->string('address_postbox_city', 35)->nullable();
 			$table->string('address_street', 60)->nullable();
 			$table->string('address_number', 5)->nullable();
 			$table->string('address_postal', 6)->nullable();

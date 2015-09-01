@@ -39,9 +39,6 @@ class CreateRelation extends Migration {
 		{
 			$table->increments('id');
 			$table->string('company_name', 50)->nullable();
-			$table->string('address_postox_number', 5)->nullable();
-			$table->string('address_postbox_postal', 6)->nullable();
-			$table->string('address_postbox_city', 35)->nullable();
 			$table->string('address_street', 50);
 			$table->string('address_number', 5);
 			$table->string('address_postal', 6);
