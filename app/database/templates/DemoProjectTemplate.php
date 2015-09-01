@@ -22,7 +22,7 @@ class DemoProjectTemplate {
 		$relation->address_postal	= '1234DE';
 		$relation->address_city		= 'Demostad';
 		$relation->debtor_code 		= 'DEMO123';
-		$relation->kvk		 		= '1234567890';
+		$relation->kvk		 		= '12345678';
 		$relation->btw 				= 'NL1234567890B1';
 		$relation->note 			= 'Dit is een demo relatie';
 		$relation->email 			= 'demo@relatie.nl';

@@ -63,7 +63,7 @@
 															Met vriendelijke groet,
 														<br>
 														<br>
-															<strong>Cal</strong>, van <a href="https://calctool.nl"><strong>Calculatie Tool</strong></a>
+															<strong>Cal</strong>, van <a href="{{ URL::to('/') }}"><strong>CalculatieTool</strong></a>
 														<br>
 														<br>
 													</td>
