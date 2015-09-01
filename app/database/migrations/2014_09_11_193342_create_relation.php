@@ -39,6 +39,9 @@ class CreateRelation extends Migration {
 		{
 			$table->increments('id');
 			$table->string('company_name', 50)->nullable();
+			$table->string('address_postox_number', 5)->nullable();
+			$table->string('address_postbox_postal', 6)->nullable();
+			$table->string('address_postbox_city', 35)->nullable();
 			$table->string('address_street', 50);
 			$table->string('address_number', 5);
 			$table->string('address_postal', 6);
@@ -74,6 +77,7 @@ class CreateRelation extends Migration {
 			$table->string('mobile', 12)->nullable();
 			$table->string('phone', 12)->nullable();
 			$table->text('note')->nullable();
+			$table->boolean('gender')->nullable();
 			$table->integer('relation_id')->unsigned();
 			$table->foreign('relation_id')->references('id')->on('relation')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('function_id')->unsigned();
