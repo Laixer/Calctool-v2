@@ -40,6 +40,7 @@ class CreateUsersTable extends Migration {
 			$table->increments('id');
 			$table->string('username', 50)->unique();
 			$table->string('secret', 64);
+			$table->boolean('gender')->nullable();;
 			$table->string('firstname', 30);
 			$table->string('lastname', 50)->nullable();
 			$table->char('api', 32)->unique();
@@ -56,6 +57,9 @@ class CreateUsersTable extends Migration {
 			$table->string('address_number', 5)->nullable();
 			$table->string('address_postal', 6)->nullable();
 			$table->string('address_city', 35)->nullable();
+			$table->string('address_postox_number', 5)->nullable();;
+			$table->string('address_postbox_postal', 6)->nullable();;
+			$table->string('address_postbox_city', 35)->nullable();;
 			$table->string('website', 180)->nullable();
 			$table->text('note')->nullable();
 			$table->integer('mobile')->nullable()->unsigned();

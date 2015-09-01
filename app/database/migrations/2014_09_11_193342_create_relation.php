@@ -43,6 +43,9 @@ class CreateRelation extends Migration {
 			$table->string('address_number', 5);
 			$table->string('address_postal', 6);
 			$table->string('address_city', 35);
+			$table->string('address_postox_number', 5)->nullable();;
+			$table->string('address_postbox_postal', 6)->nullable();;
+			$table->string('address_postbox_city', 35)->nullable();;
 			$table->char('kvk', 8)->nullable();
 			$table->char('btw', 14)->nullable();
 			$table->string('debtor_code', 10)->index();
@@ -68,6 +71,7 @@ class CreateRelation extends Migration {
 		Schema::create('contact', function(Blueprint $table)
 		{
 			$table->increments('id');
+			$table->boolean('gender')->nullable();;
 			$table->string('firstname', 30)->nullable();
 			$table->string('lastname', 50);
 			$table->string('email', 80);
