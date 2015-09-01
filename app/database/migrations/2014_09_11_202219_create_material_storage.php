@@ -68,22 +68,22 @@ class CreateMaterialStorage extends Migration {
 	{
 		Schema::table('product_favorite', function(Blueprint $table)
 		{
-			Schema::drop('product_favorite');
+			Schema::dropIfExists('product_favorite');
 		});
 
 		Schema::table('product', function(Blueprint $table)
 		{
-			Schema::drop('product');
+			Schema::dropIfExists('product');
 		});
 
 		Schema::table('supplier', function(Blueprint $table)
 		{
-			Schema::drop('supplier');
+			Schema::dropIfExists('supplier');
 		});
 
 		Schema::table('sub_group', function(Blueprint $table)
 		{
-			Schema::drop('sub_group');
+			Schema::dropIfExists('sub_group');
 		});
 	}
 

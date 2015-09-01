@@ -39,6 +39,9 @@ class CreateRelation extends Migration {
 		{
 			$table->increments('id');
 			$table->string('company_name', 50)->nullable();
+			$table->string('address_postox_number', 5)->nullable();
+			$table->string('address_postbox_postal', 6)->nullable();
+			$table->string('address_postbox_city', 35)->nullable();
 			$table->string('address_street', 50);
 			$table->string('address_number', 5);
 			$table->string('address_postal', 6);
@@ -73,11 +76,12 @@ class CreateRelation extends Migration {
 			$table->increments('id');
 			$table->boolean('gender')->nullable();;
 			$table->string('firstname', 30)->nullable();
-			$table->string('lastname', 50);
-			$table->string('email', 80);
+			$table->string('lastname', 50)->nullable();
+			$table->string('email', 80)->nullable();
 			$table->string('mobile', 12)->nullable();
 			$table->string('phone', 12)->nullable();
 			$table->text('note')->nullable();
+			$table->boolean('gender')->nullable();
 			$table->integer('relation_id')->unsigned();
 			$table->foreign('relation_id')->references('id')->on('relation')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('function_id')->unsigned();
@@ -133,27 +137,27 @@ class CreateRelation extends Migration {
 
 		Schema::table('contact', function(Blueprint $table)
 		{
-			Schema::drop('contact');
+			Schema::dropIfExists('contact');
 		});
 
 		Schema::table('relation', function(Blueprint $table)
 		{
-			Schema::drop('relation');
+			Schema::dropIfExists('relation');
 		});
 
 		Schema::table('relation_kind', function(Blueprint $table)
 		{
-			Schema::drop('relation_kind');
+			Schema::dropIfExists('relation_kind');
 		});
 
 		Schema::table('relation_type', function(Blueprint $table)
 		{
-			Schema::drop('relation_type');
+			Schema::dropIfExists('relation_type');
 		});
 
 		Schema::table('contact_function', function(Blueprint $table)
 		{
-			Schema::drop('contact_function');
+			Schema::dropIfExists('contact_function');
 		});
 	}
 

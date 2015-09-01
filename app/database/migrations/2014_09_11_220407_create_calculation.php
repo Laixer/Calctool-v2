@@ -149,63 +149,46 @@ class CreateCalculation extends Migration {
 	{
 		Schema::table('estimate_equipment', function(Blueprint $table)
 		{
-			Schema::drop('estimate_equipment');
+			Schema::dropIfExists('estimate_equipment');
 		});
 
 		Schema::table('estimate_material', function(Blueprint $table)
 		{
-			Schema::drop('estimate_material');
+			Schema::dropIfExists('estimate_material');
 		});
 
 		Schema::table('estimate_labor', function(Blueprint $table)
 		{
-			Schema::drop('estimate_labor');
+			Schema::dropIfExists('estimate_labor');
 		});
 
 		Schema::table('more_equipment', function(Blueprint $table)
 		{
-			Schema::drop('more_equipment');
+			Schema::dropIfExists('more_equipment');
 		});
 
 		Schema::table('more_material', function(Blueprint $table)
 		{
-			Schema::drop('more_material');
+			Schema::dropIfExists('more_material');
 		});
 
 		Schema::table('more_labor', function(Blueprint $table)
 		{
-			Schema::drop('more_labor');
+			Schema::dropIfExists('more_labor');
 		});
-
-		/*
-		Schema::table('less_equipment', function(Blueprint $table)
-		{
-			Schema::drop('less_equipment');
-		});
-
-		Schema::table('less_material', function(Blueprint $table)
-		{
-			Schema::drop('less_material');
-		});
-
-		Schema::table('less_labor', function(Blueprint $table)
-		{
-			Schema::drop('less_labor');
-		});
-		*/
 		Schema::table('calculation_equipment', function(Blueprint $table)
 		{
-			Schema::drop('calculation_equipment');
+			Schema::dropIfExists('calculation_equipment');
 		});
 
 		Schema::table('calculation_material', function(Blueprint $table)
 		{
-			Schema::drop('calculation_material');
+			Schema::dropIfExists('calculation_material');
 		});
 
 		Schema::table('calculation_labor', function(Blueprint $table)
 		{
-			Schema::drop('calculation_labor');
+			Schema::dropIfExists('calculation_labor');
 		});
 	}
 

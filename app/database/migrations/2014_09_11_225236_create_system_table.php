@@ -36,7 +36,7 @@ class CreateSystemTable extends Migration {
 	{
 		Schema::table('system_message', function(Blueprint $table)
 		{
-			Schema::drop('system_message');
+			Schema::dropIfExists('system_message');
 		});
 	}
 
