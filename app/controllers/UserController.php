@@ -90,9 +90,9 @@ class UserController extends Controller {
 				"webhookUrl" => url('payment/webhook/'),
 				"redirectUrl" => url('payment/order/'.$token),
 				"metadata"    => array(
-					"token" => $token,
-					"uid" => Auth::id(),
-					"incr" => $increment_months
+				"token" => $token,
+				"uid" => Auth::id(),
+				"incr" => $increment_months
 				),
 			));
 
@@ -219,16 +219,18 @@ class UserController extends Controller {
 		$rules = array(
 			'lastname' => array('required','max:50'),
 			'firstname' => array('required','max:30'),
+			'gender' => array('required'),
 			'mobile' => array('alpha_num','max:14'),
 			'telephone' => array('alpha_num','max:14'),
 			'email' => array('required','email','max:80'),
 			'website' => array('url','max:180'),
-			'address_street' => array('required','alpha','max:60'),
-			'address_number' => array('required','alpha_num','max:5'),
-			'address_zipcode' => array('required','size:6'),
-			'address_city' => array('required','alpha_num','max:35'),
-			'province' => array('required','numeric'),
-			'country' => array('required','numeric'),
+			//Geconstateerd werd of een adres voor de gebruikers account wel nodig was, dit saat immers ook bij mijn bedrijf
+			//'address_street' => array('required','alpha','max:60'),
+			//'address_number' => array('required','alpha_num','max:5'),
+			//'address_zipcode' => array('required','size:6'),
+			//'address_city' => array('required','alpha_num','max:35'),
+			//'province' => array('required','numeric'),
+			//'country' => array('required','numeric'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -244,20 +246,22 @@ class UserController extends Controller {
 			$user = Auth::user();
 
 			/* Contact */
-			$user->firstname = Input::get('firstname');
+			$user->firstname = Input::get('firstname');$user->firstname = Input::get('firstname');
 			$user->lastname = Input::get('lastname');
+			$user->gender = Input::get('gender');
 			$user->email = Input::get('email');
 			$user->mobile = Input::get('mobile');
 			$user->phone = Input::get('phone');
 			$user->website = Input::get('website');
 
 			/* Adress */
-			$user->address_street = Input::get('address_street');
-			$user->address_number = Input::get('address_number');
-			$user->address_postal = Input::get('address_zipcode');
-			$user->address_city = Input::get('address_city');
-			$user->province_id = Input::get('province');
-			$user->country_id = Input::get('country');
+			//Geconstateerd werd of een adres voor de gebruikers account wel nodig was, dit saat immers ook bij mijn bedrijf
+			//$user->address_street = Input::get('address_street');
+			//$user->address_number = Input::get('address_number');
+			//$user->address_postal = Input::get('address_zipcode');
+			//$user->address_city = Input::get('address_city');
+			//$user->province_id = Input::get('province');
+			//$user->country_id = Input::get('country');
 
 			$user->save();
 
@@ -275,18 +279,19 @@ class UserController extends Controller {
 			/* Contact */
 			'lastname' => array('required','max:50'),
 			'firstname' => array('required','max:30'),
+			'gender' => array('required'),
 			'mobile' => array('alpha_num','max:14'),
 			'telephone' => array('alpha_num','max:14'),
 			'email' => array('required','email','max:80'),
 			'website' => array('url','max:180'),
 
 			/* Adress */
-			'address_street' => array('required','alpha','max:60'),
-			'address_number' => array('required','alpha_num','max:5'),
-			'address_zipcode' => array('required','size:6'),
-			'address_city' => array('required','alpha_num','max:35'),
-			'province' => array('required','numeric'),
-			'country' => array('required','numeric'),
+			//'address_street' => array('required','alpha','max:60'),
+			//'address_number' => array('required','alpha_num','max:5'),
+			//'address_zipcode' => array('required','size:6'),
+			//'address_city' => array('required','alpha_num','max:35'),
+			//'province' => array('required','numeric'),
+			//'country' => array('required','numeric'),
 
 		);
 
@@ -308,18 +313,19 @@ class UserController extends Controller {
 			/* Contact */
 			$user->firstname = Input::get('firstname');
 			$user->lastname = Input::get('lastname');
+			$user->gender = Input::get('gender');
 			$user->email = Input::get('email');
 			$user->mobile = Input::get('mobiler');
 			$user->phone = Input::get('telephone');
 			$user->website = Input::get('website');
 
 			/* Adress */
-			$user->address_street = Input::get('address_street');
-			$user->address_number = Input::get('address_number');
-			$user->address_postal = Input::get('address_zipcode');
-			$user->address_city = Input::get('address_city');
-			$user->province_id = Input::get('province');
-			$user->country_id = Input::get('country');
+			//$user->address_street = Input::get('address_street');
+			//$user->address_number = Input::get('address_number');
+			//$user->address_postal = Input::get('address_zipcode');
+			//$user->address_city = Input::get('address_city');
+			//$user->province_id = Input::get('province');
+			//$user->country_id = Input::get('country');
 
 			/* Overig */
 			$user->note = Input::get('note');
@@ -444,7 +450,6 @@ class UserController extends Controller {
 			$user->pref_email_invoice_first_demand = Input::get('pref_email_invoice_first_demand');
 		if (Input::get('pref_email_invoice_last_demand'))
 			$user->pref_email_invoice_last_demand = Input::get('pref_email_invoice_last_demand');
-
 		if (Input::get('offernumber_prefix'))
 			$user->offernumber_prefix = Input::get('offernumber_prefix');
 		if (Input::get('invoicenumber_prefix'))

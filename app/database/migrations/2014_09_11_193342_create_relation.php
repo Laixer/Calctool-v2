@@ -78,7 +78,6 @@ class CreateRelation extends Migration {
 			$table->string('mobile', 12)->nullable();
 			$table->string('phone', 12)->nullable();
 			$table->text('note')->nullable();
-			$table->boolean('gender')->nullable();
 			$table->integer('relation_id')->unsigned();
 			$table->foreign('relation_id')->references('id')->on('relation')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('function_id')->unsigned();

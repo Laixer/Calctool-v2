@@ -40,7 +40,7 @@ class CreateUsersTable extends Migration {
 			$table->increments('id');
 			$table->string('username', 50)->unique();
 			$table->string('secret', 64);
-			$table->boolean('gender')->nullable();;
+			$table->boolean('gender')->nullable();
 			$table->string('firstname', 30);
 			$table->string('lastname', 50)->nullable();
 			$table->char('api', 32)->unique();
@@ -53,14 +53,11 @@ class CreateUsersTable extends Migration {
 			$table->date('registration_date')->default(DB::raw('now()::timestamp(0)'));
 			$table->date('expiration_date');
 			$table->char('referral_key', 32)->unique();
-			$table->boolean('gender')->nullable();
-			$table->string('address_street', 60)->nullable();
-			$table->string('address_number', 5)->nullable();
-			$table->string('address_postal', 6)->nullable();
-			$table->string('address_city', 35)->nullable();
-			$table->string('address_postox_number', 5)->nullable();;
-			$table->string('address_postbox_postal', 6)->nullable();;
-			$table->string('address_postbox_city', 35)->nullable();;
+			//Geconstateerd werd of een adres voor de gebruikers account wel nodig was, dit saat immers ook bij mijn bedrijf
+			//$table->string('address_street', 60)->nullable();
+			//$table->string('address_number', 5)->nullable();
+			//$table->string('address_postal', 6)->nullable();
+			//$table->string('address_city', 35)->nullable();
 			$table->string('website', 180)->nullable();
 			$table->text('note')->nullable();
 			$table->integer('mobile')->nullable()->unsigned();
