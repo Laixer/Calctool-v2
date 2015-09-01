@@ -31,9 +31,11 @@
 						{{ HTML::link('myaccount', 'Mijn account') }}
 					</li>
 					@endif
+					@if (0)
 					<li>
 						{{ HTML::link('about', 'Over ons') }}
 					</li>
+					@endif
 					@if (Auth::check() && Auth::user()->isAdmin())
 					<li>
 						{{ HTML::link('admin', 'Admin CP') }}

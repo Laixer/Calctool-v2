@@ -90,7 +90,6 @@ if (Input::get('nstep') == 'intro')
 			</div>
 
 			<div class="modal-footer">
-				<!--<button class="btn btn-default" data-dismiss="modal" style="border: #ddd 2px solid">Volgende</button>-->
 				<button class="btn btn-default" data-dismiss="modal" data-action="hide" style="border: #ddd 2px solid">Niet meer weergeven</button>
 				<button class="btn btn-default" data-dismiss="modal" style="border: #ddd 2px solid">Sluiten</button>
 			</div>
@@ -104,10 +103,17 @@ if (Input::get('nstep') == 'intro')
 	<section class="container">
 
 		@if (SystemMessage::where('active','=',true)->count()>0)
+		@if (SystemMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->level==1)
 		<div class="alert alert-warning">
-			<i class="fa fa-warning"></i>
-			<strong>{{ SystemMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->title }}</strong> {{ SystemMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->content }}
+			<i class="fa fa-fa fa-info-circle"></i>
+			{{ SystemMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->content }}
 		</div>
+		@else
+		<div class="alert alert-danger">
+			<i class="fa fa-warning"></i>
+			<strong>{{ SystemMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->content }}</strong>
+		</div>
+		@endif
 		@endif
 
 		@if (!Auth::user()->hasPayed())

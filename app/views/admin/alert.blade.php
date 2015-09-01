@@ -47,7 +47,7 @@
 				<tbody>
 				@foreach (SystemMessage::take(3)->orderBy('created_at', 'desc')->get() as $message)
 					<tr>
-						<td class="col-md-2">{{ $message->title }}</td>
+						<td class="col-md-2">{{ $message->level==1 ? 'Warning' : 'Error' }}</td>
 						<td class="col-md-6">{{ $message->content }}</td>
 						<td class="col-md-1">{{ $message->active ? 'Ja' : 'Nee' }}</td>
 						<td class="col-md-2">{{ DB::table('system_message')->select(DB::raw('created_at'))->first()->created_at; }}</td>
@@ -61,10 +61,14 @@
 			<h4>Nieuwe melding</h4>
 			<div class="row">
 
-				<div class="col-md-6">
+				<div class="col-md-2">
 					<div class="form-group">
-						<label for="title">Titel</label>
-						<input name="title" id="title" type="text" value="{{ Input::old('title') }}" class="form-control" />
+						<label for="title">Type</label>
+						<select name="level" id="level" class="form-control">
+							<option selected="selected" value="1">Warning</option>
+							<option value="2">Error</option>
+						</select>
+
 					</div>
 				</div>
 
