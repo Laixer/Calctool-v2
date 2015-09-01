@@ -567,7 +567,7 @@ class StaticSeeder extends Seeder {
 		PurchaseKind::create(array('kind_name' => 'onderaanneming'));
 		$this->command->info('PurchaseKind created');
 
-		SystemMessage::create(array('title' => 'Let Op!', 'content' => 'Dit is een voorbeeld melding', 'active' => true));
+		SystemMessage::create(array('level' => 1, 'content' => 'Dit is een voorbeeld melding', 'active' => true));
 		$this->command->info('SystemMessage created');
 	}
  }

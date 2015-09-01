@@ -107,8 +107,18 @@ $(document).ready(function() {
 										<input name="lastname" id="lastname" type="text" value="{{ Input::old('lastname') ? Input::old('lastname') : $user->lastname }}" class="form-control"/>
 									</div>
 								</div>
-
+								<div class="col-md-2">
+									<div class="form-group">
+										<label for="gender" style="display:block;">Geslacht</label>
+										<select name="gender" id="gender" class="form-control pointer">
+											<option value="-1">Selecteer</option>
+											<option {{ $user->gender=='M' ? 'selected' : ''; }} value="M">Man</option>
+											<option {{ $user->gender=='V' ? 'selected' : ''; }} value="V">Vrouw</option>
+										</select>
+									</div>
+								</div>
 							</div>
+
 							<div class="row company">
 
 								<div class="col-md-2">
@@ -141,6 +151,7 @@ $(document).ready(function() {
 
 							</div>
 
+							<!--
 							<h4>Adresgegevens</h4>
 							<div class="row">
 
@@ -193,8 +204,8 @@ $(document).ready(function() {
 										</select>
 									</div>
 								</div>
-
 							</div>
+							-->
 
 							<div class="row">
 								<div class="col-md-12">
@@ -266,37 +277,31 @@ $(document).ready(function() {
 
 							</div>
 
-							<div class="row">
+							<h4>Codes</h4>
 
+							<div class="row">
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="api">API key</label>
 										<input name="api" id="api" type="text" readonly="readonly" value="{{ $user->api }}" class="form-control"/>
 									</div>
 								</div>
-
+								<div class="col-md-2">
+									<div class="form-group">
+										<label for="toggle-api" style="display:block;">API toegang</label>
+										<input name="toggle-api" type="checkbox" {{ $user->api_access ? 'checked' : '' }}>
+									</div>
+								</div>
 							</div>
 							<div class="row">
-
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="api">Referral key</label>
 										<input name="api" id="api" type="text" readonly="readonly" value="{{ $user->referral_key }}" class="form-control"/>
 									</div>
 								</div>
-
 							</div>
 
-							<div class="row">
-
-								<div class="col-md-4">
-									<div class="form-group">
-										<label for="toggle-api" style="display:block;">API toegang</label>
-										<input name="toggle-api" type="checkbox" {{ $user->api_access ? 'checked' : '' }}>
-									</div>
-								</div>
-
-							</div>
 
 							<div class="row">
 								<div class="col-md-12">

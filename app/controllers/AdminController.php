@@ -33,7 +33,7 @@ class AdminController extends Controller {
 	public function doNewAlert()
 	{
 		$rules = array(
-			'title' => array('required'),
+			'level' => array('required'),
 			'message' => array('required'),
 		);
 
@@ -45,7 +45,7 @@ class AdminController extends Controller {
 		} else {
 
 			$alert = new SystemMessage;
-			$alert->title = Input::get('title');
+			$alert->level = Input::get('level');
 			$alert->content = Input::get('message');
 			$alert->active = true;
 
