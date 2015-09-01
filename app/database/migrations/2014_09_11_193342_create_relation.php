@@ -71,7 +71,7 @@ class CreateRelation extends Migration {
 		Schema::create('contact', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->boolean('gender')->nullable();;
+			$table->char('gender', 1)->nullable();;
 			$table->string('firstname', 30)->nullable();
 			$table->string('lastname', 50)->nullable();
 			$table->string('email', 80)->nullable();
