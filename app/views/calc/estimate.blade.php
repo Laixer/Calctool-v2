@@ -22,8 +22,6 @@ if (!$project || !$project->isOwner())
 <?php }else{ ?>
 
 @section('content')
-<?# -- WRAPPER -- ?>
-
 <script type="text/javascript">
 Number.prototype.formatMoney = function(c, d, t){
 var n = this,
@@ -354,7 +352,7 @@ var n = this,
 						$curThis.closest("tr").attr("data-id", json.id);
 						var rate = $curThis.closest("tr").find("input[name='rate']").val()
 						if (rate) {
-							rate.toString().split('.').join('').replace(',', '.');
+							rate = rate.toString().split('.').join('').replace(',', '.');
 						} else {
 							rate = {{$project->hour_rate}};
 						}
@@ -399,7 +397,7 @@ var n = this,
 						$curThis.closest("tr").attr("data-id", json.id);
 						var rate = $curThis.closest("tr").find("input[name='rate']").val()
 						if (rate) {
-							rate.toString().split('.').join('').replace(',', '.');
+							rate = rate.toString().split('.').join('').replace(',', '.');
 						} else {
 							rate = {{$project->hour_rate}};
 						}
@@ -690,7 +688,7 @@ var n = this,
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
-			<div class="modal-header"><!-- modal header -->
+			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				<h4 class="modal-title" id="myModalLabel">Materialen</h4>
 			</div>
@@ -732,7 +730,7 @@ var n = this,
 <div class="modal fade" id="descModal" tabindex="-1" role="dialog" aria-labelledby="descModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
-			<div class="modal-header"><!-- modal header -->
+			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				<h4 class="modal-title" id="myModalLabel">Omschrijving werkzaamheid</h4>
 			</div>
@@ -759,14 +757,10 @@ var n = this,
 
 		@include('calc.wizard', array('page' => 'estimate'))
 
-<!-- TODO tooltip verkleinen -->
-
 			<h2><strong>Stelposten</strong> stellen <strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Maak hier uw stelpost definitief voor op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h2></strong>
-
 
 			<div class="tabs nomargin">
 
-				<!-- taDebiteurennummer nieuwe relatiebs -->
 				<ul class="nav nav-tabs">
 					<li id="tab-estimate">
 						<a href="#estimate" data-toggle="tab">
@@ -784,13 +778,13 @@ var n = this,
 						</a>
 					</li>
 				</ul>
-				<!-- tabs content -->
+
 				<div class="tab-content">
 
 					<div id="estimate" class="tab-pane">
 						<div class="toogle">
 
-							@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+							@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
 							<?php
 							$acts = Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->count();
 							if (!$acts)
@@ -803,7 +797,7 @@ var n = this,
 									<div class="toogle">
 
 										<?php
-										foreach(Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->get() as $activity) {
+										foreach(Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->orderBy('created_at', 'desc')->get() as $activity) {
 											if (Part::find($activity->part_id)->part_name=='contracting') {
 												$profit_mat = $project->profit_calc_contr_mat;
 												$profit_equip = $project->profit_calc_contr_equip;
@@ -825,7 +819,7 @@ var n = this,
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2"><strong>{{ Tax::find($activity->tax_estimate_labor_id)->tax_rate }}%</strong></div>
+													<div class="col-md-2"><strong>{{ Tax::find($activity->tax_labor_id)->tax_rate }}%</strong></div>
 													<div class="col-md-6"></div>
 												</div>
 												<table class="table table-striped" data-id="{{ $activity->id }}">
@@ -857,7 +851,6 @@ var n = this,
 													</thead>
 													<?php } ?>
 
-													<?# -- table items -- ?>
 													<tbody>
 														<?php
 														if ($count) {
@@ -881,13 +874,14 @@ var n = this,
 														<?php }else{ ?>
 														<?php
 														$labor = EstimateLabor::where('activity_id','=', $activity->id)->first();
+														$rate = $labor['original'] ? ($labor['isset'] ? $labor['set_rate'] : $labor['rate']) : $labor['set_rate'];
 														?>
-														<tr data-id="{{ $labor['id'] }}"><?# -- item -- ?>
+														<tr data-id="{{ $labor['id'] }}">
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
+															<td class="col-md-1">{{ Part::find($activity->part_id)->part_name=='subcontracting' ? '<input name="rate" type="text" value="'.number_format($rate, 2,",",".").'" class="form-control-sm-number labor-amount lsavee">' : number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format($labor['original'] ? ($labor['isset'] ? $labor['set_amount'] : $labor['amount']) : $labor['set_amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsavee" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(EstimateRegister::estimLaborTotal($project->hour_rate, $labor['original'] ? ($labor['isset'] ? $labor['set_amount'] : $labor['amount']) : $labor['set_amount']), 2, ",",".") }}</span></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(EstimateRegister::estimLaborTotal(Part::find($activity->part_id)->part_name=='subcontracting' ? $rate : $project->hour_rate, $labor['original'] ? ($labor['isset'] ? $labor['set_amount'] : $labor['amount']) : $labor['set_amount']), 2, ",",".") }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1 text-right"><button class="btn {{ ($labor['original'] ? 'btn-warning fa-undo lresetrow' : 'btn-danger ldeleterow fa-times' ) }} btn-xs fa"></button></td>
 														</tr>
@@ -898,12 +892,12 @@ var n = this,
 												<div class="row">
 													<div class="col-md-2"><h4>Materiaal</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2"><strong>{{ Tax::find($activity->tax_estimate_material_id)->tax_rate }}%</strong></div>
+													<div class="col-md-2"><strong>{{ Tax::find($activity->tax_material_id)->tax_rate }}%</strong></div>
 													<div class="col-md-2"></div>
 												</div>
 
 												<table class="table table-striped" data-id="{{ $activity->id }}">
-													<?# -- tadble head -- ?>
+
 													<thead>
 														<tr>
 															<th class="col-md-5">Omschrijving</th>
@@ -916,7 +910,6 @@ var n = this,
 														</tr>
 													</thead>
 
-													<?# -- table items -- ?>
 													<tbody>
 														@foreach (EstimateMaterial::where('activity_id','=', $activity->id)->get() as $material)
 														<tr data-id="{{ $material->id }}">
@@ -961,12 +954,12 @@ var n = this,
 												<div class="row">
 													<div class="col-md-2"><h4>Materieel</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2"><strong>{{ Tax::find($activity->tax_estimate_equipment_id)->tax_rate }}%</strong></div>
+													<div class="col-md-2"><strong>{{ Tax::find($activity->tax_equipment_id)->tax_rate }}%</strong></div>
 													<div class="col-md-8"></div>
 												</div>
 
 												<table class="table table-striped" data-id="{{ $activity->id }}">
-													<?# -- table head -- ?>
+
 													<thead>
 														<tr>
 															<th class="col-md-5">Omschrijving</th>
@@ -979,7 +972,7 @@ var n = this,
 														</tr>
 													</thead>
 
-													<?# -- table items -- ?>
+
 													<tbody>
 														@foreach (EstimateEquipment::where('activity_id','=', $activity->id)->get() as $equipment)
 														<tr data-id="{{ $equipment->id }}">
@@ -1037,7 +1030,7 @@ var n = this,
 								<div class="toggle-content">
 
 									<table class="table table-striped">
-										<?# -- table head -- ?>
+
 										<thead>
 											<tr>
 												<th class="col-md-3">&nbsp;</th>
@@ -1050,10 +1043,10 @@ var n = this,
 											</tr>
 										</thead>
 
-										<!-- table items -->
+
 										<tbody>
-											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->get() as $activity)
+											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
 											<tr>
 												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
@@ -1097,11 +1090,11 @@ var n = this,
 											</tr>
 										</thead>
 
-										<!-- table items -->
+
 										<tbody>
-											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->get() as $activity)
-											<tr><!-- item -->
+											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
+											<tr>
 												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }}</td>
@@ -1112,7 +1105,7 @@ var n = this,
 											</tr>
 											@endforeach
 											@endforeach
-											<tr><!-- item -->
+											<tr>
 												<th class="col-md-3"><strong>Totaal Onderaanneming</strong></th>
 												<th class="col-md-3">&nbsp;</th>
 												<td class="col-md-1"><strong><span class="pull-right">{{ EstimateOverview::subcontrLaborTotalAmount($project) }}</span></strong></td>
@@ -1131,7 +1124,7 @@ var n = this,
 								<label>Totalen project</label>
 								<div class="toggle-content">
 									<table class="table table-striped">
-										<?# -- table head -- ?>
+
 										<thead>
 											<tr>
 												<th class="col-md-3">&nbsp;</th>
@@ -1143,10 +1136,8 @@ var n = this,
 												<th class="col-md-1"><span class="pull-right">Totaal</span></th>
 											</tr>
 										</thead>
-
-										<!-- table items -->
 										<tbody>
-											<tr><!-- item -->
+											<tr>
 												<th class="col-md-3">&nbsp;</th>
 												<th class="col-md-3">&nbsp;</th>
 												<td class="col-md-1"><strong><span class="pull-right">{{ EstimateOverview::laborSuperTotalAmount($project) }}</span></strong></td>
@@ -1167,7 +1158,7 @@ var n = this,
 
 						<h4>Aanneming</h4>
 						<table class="table table-striped">
-							<?# -- table head -- ?>
+
 							<thead>
 								<tr>
 									<th class="col-md-4">&nbsp;</th>
@@ -1180,9 +1171,10 @@ var n = this,
 								</tr>
 							</thead>
 
-							<!-- table items -->
+
 							<tbody>
-								<tr><!-- item -->
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ number_format(EstimateEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -1191,7 +1183,7 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax1AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">{{ number_format(EstimateEndresult::conCalcLaborActivityTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -1200,8 +1192,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+								@else
+								<tr>
+									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ number_format(EstimateEndresult::conCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1209,8 +1202,10 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
-								<tr><!-- item -->
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								<tr>
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -1219,7 +1214,7 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax1AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -1228,8 +1223,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+								@else
+								<tr>
+									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1237,8 +1233,10 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
-								<tr><!-- item -->
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								<tr>
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -1247,7 +1245,7 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax1AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -1256,8 +1254,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+								@else
+								<tr>
+									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1265,8 +1264,9 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
@@ -1280,7 +1280,7 @@ var n = this,
 
 						<h4>Onderaanneming</h4>
 						<table class="table table-striped">
-							<?# -- table head -- ?>
+
 							<thead>
 								<tr>
 									<th class="col-md-4">&nbsp;</th>
@@ -1293,9 +1293,10 @@ var n = this,
 								</tr>
 							</thead>
 
-							<!-- table items -->
+
 							<tbody>
-								<tr><!-- item -->
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ number_format(EstimateEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -1304,7 +1305,7 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax1AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">{{ number_format(EstimateEndresult::subconCalcLaborActivityTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -1313,8 +1314,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+								@else
+								<tr>
+									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ number_format(EstimateEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1322,8 +1324,10 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
-								<tr><!-- item -->
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								<tr>
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -1332,7 +1336,7 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcMaterialActivityTax1AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -1341,8 +1345,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+								@else
+								<tr>
+									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1350,8 +1355,10 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
-								<tr><!-- item -->
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								<tr>
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -1360,7 +1367,7 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcEquipmentActivityTax1AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -1369,8 +1376,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+								@else
+								<tr>
+									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1378,8 +1386,9 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4"><strong>Totaal Onderaanneming </strong></td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
@@ -1393,7 +1402,7 @@ var n = this,
 
 						<h4>Totalen Stelpost</h4>
 						<table class="table table-striped">
-							<?# -- table head -- ?>
+
 							<thead>
 								<tr>
 									<th class="col-md-6">&nbsp;</th>
@@ -1403,45 +1412,47 @@ var n = this,
 								</tr>
 							</thead>
 
-							<!-- table items -->
+
 							<tbody>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-6">Calculatief te factureren (excl. BTW)</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::totalProject($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								<tr>
 									<td class="col-md-6">BTW bedrag aanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::totalContractingTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-6">BTW bedrag aanneming 6%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::totalContractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-6">BTW bedrag onderaanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-6">BTW bedrag onderaanneming 6%</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								@endif
+								<tr>
 									<td class="col-md-6">Te factureren BTW bedrag</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::totalProjectTax($project), 2, ",",".") }}</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-6"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
@@ -1464,7 +1475,7 @@ var n = this,
 	</section>
 
 </div>
-<!-- /WRAPPER -->
+
 @stop
 
 <?php } ?>

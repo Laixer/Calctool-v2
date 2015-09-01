@@ -18,7 +18,7 @@ class HelpCommand extends Command
 {
     protected $name = 'help';
     protected $description = 'Geef beschikbare opdrachten';
-    protected $usage = '/help of /help <opdracht>';
+    protected $usage = '/help';
     protected $version = '1.0.0';
     protected $enabled = true;
     protected $public = true;
@@ -34,41 +34,16 @@ class HelpCommand extends Command
 
         $commands = $this->telegram->getCommandsList();
 
-        if (empty($text)) {
-            $msg .= 'Opdrachten:' . "\n";
-            foreach ($commands as $command) {
-                if (is_object($command)) {
-                    if (!$command->isEnabled()) {
-                        continue;
-                    }
-                    if (!$command->isPublic()) {
-                        continue;
-                    }
-
-                    $msg .= '/' . $command->getName() . ' - ' . $command->getDescription() . "\n";
-                }
-            }
-
-            $msg .= "\n" . 'Voor specifieke informatie: /help <opdracht>';
-        } else {
-            $text = str_replace('/', '', $text);
-            if (isset($commands[$text])) {
-                $command = $commands[$text];
-                if (!$command->isEnabled() || !$command->isPublic()) {
-                    $msg = 'Opdracht ' . $text . ' niet gevonden';
-                } else {
-                    $msg = 'Opdracht: ' . $command->getName() . "\n";
-                    $msg .= 'Omschrijving: ' . $command->getDescription() . "\n";
-                    $msg .= 'Gebruik: ' . $command->getUsage();
-                }
-            } else {
-                $msg = 'Opdracht ' . $text . ' niet gevonden';
-            }
-        }
+        $msg = 'Opdrachten:' . "\n";
+    $msg .= '/auth <api> - Koppel Telegram aan uw CalculatieTool profiel' . "\n";
+    $msg .= '/deauth - Ontkoppel Telegram' . "\n";
+    $msg .= '/project [<id>] - Bekijk projectgegevens' . "\n";
+    $msg .= '/account - Geef eigen profiel weer' . "\n";
+    $msg .= '/settings - Verander account instellingen' . "\n";
+    $msg .= '/about - Over de CalculatieTool' . "\n";
 
         $data = array();
         $data['chat_id'] = $chat_id;
-        $data['reply_to_message_id'] = $message_id;
         $data['text'] = $msg;
 
         $result = Request::sendMessage($data);

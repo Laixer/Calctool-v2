@@ -109,6 +109,7 @@ $(document).ready(function() {
 
 							<!-- table items -->
 							<tbody>
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr><!-- item -->
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -129,8 +130,9 @@ $(document).ready(function() {
 									<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
+								@else
 								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -139,7 +141,9 @@ $(document).ready(function() {
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
+								@endif
 
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr><!-- item -->
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -160,8 +164,9 @@ $(document).ready(function() {
 									<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
+								@else
 								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -170,7 +175,9 @@ $(document).ready(function() {
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
+								@endif
 
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr><!-- item -->
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -191,8 +198,9 @@ $(document).ready(function() {
 									<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
+								@else
 								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -201,6 +209,7 @@ $(document).ready(function() {
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
+								@endif
 
 								<tr><!-- item -->
 									<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
@@ -233,6 +242,7 @@ $(document).ready(function() {
 
 							<!-- table items -->
 							<tbody>
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr><!-- item -->
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -253,8 +263,9 @@ $(document).ready(function() {
 									<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::subconLaborBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
+								@else
 								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -263,7 +274,9 @@ $(document).ready(function() {
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
+								@endif
 
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr><!-- item -->
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -284,8 +297,9 @@ $(document).ready(function() {
 									<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::subconMaterialBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
+								@else
 								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -294,7 +308,9 @@ $(document).ready(function() {
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
+								@endif
 
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr><!-- item -->
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -315,8 +331,9 @@ $(document).ready(function() {
 									<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::subconEquipmentBalanceTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
+								@else
 								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -325,6 +342,7 @@ $(document).ready(function() {
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
+								@endif
 
 								<tr><!-- item -->
 									<td class="col-md-4"><strong>Totaal Onderaanneming </strong></td>
@@ -361,6 +379,7 @@ $(document).ready(function() {
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr><!-- item -->
 									<td class="col-md-4">BTW bedrag aanneming belast met 21%</td>
 									<th class="col-md-3">&nbsp;</th>
@@ -389,6 +408,7 @@ $(document).ready(function() {
 									<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
+								@endif
 								<tr><!-- item -->
 									<td class="col-md-4">Cumulatief BTW bedrag</td>
 									<th class="col-md-3">&nbsp;</th>
@@ -479,7 +499,6 @@ $(document).ready(function() {
 												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
 												<td class="col-md-2"><span class="pull-right"><?php $rs_set = TimesheetOverview::estimOrigTotalAmount($activity->id); $rs_1 += $rs_set; echo $rs_set ? number_format($rs_set, 2,",",".") : '-'; ?></span></td></span></td>
-<!-- TODO Totaal moet gequeyd worden -->
 												<td class="col-md-1"><span class="pull-right"><?php $rs_set = TimesheetOverview::estimSetTotalAmount($activity->id); $rs_2 += $rs_set; echo $rs_set ? number_format($rs_set, 2,",",".") : '-'; ?></span></td></span></td>
 												<td class="col-md-1"><span class="pull-right"><?php $rs_set = TimesheetOverview::estimTimesheetTotalAmount($activity->id); $rs_3 += $rs_set; echo $rs_set ? number_format($rs_set, 2,",",".") : '-'; ?></span></td></span></td>
 												<td class="col-md-1"><span class="pull-right"><?php $X = TimesheetOverview::estimOrigTotalAmount($activity->id); $Y = TimesheetOverview::estimSetTotalAmount($activity->id); $Z = Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'); $rs_4 += (($Y ? $Y : $X)-$Z); echo $Z ? number_format(($Y ? $Y : $X)-$Z, 2,",",".") : '-'; ?></span></td>
@@ -523,7 +542,6 @@ $(document).ready(function() {
 											<tr>
 												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
-<!-- TODO Totaal moet gequaryd worden -->
 												<td class="col-md-2"><span class="pull-right">{{ number_format(MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->sum('amount'), 2,",","."); }}</span></td>
 												<td class="col-md-1"><span class="pull-right"></span></td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'), 2,",","."); }}</span></td>
@@ -535,7 +553,6 @@ $(document).ready(function() {
 											<tr>
 												<td class="col-md-3"><strong>Totaal Meerwerk</strong></td>
 												<td class="col-md-3">&nbsp;</td>
-<!-- TODO Totaal moet gequaryd worden -->
 												<td class="col-md-2"><strong><span class="pull-right">{{ number_format(TimesheetOverview::moreTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">&nbsp;</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(TimesheetOverview::timesheetTotalTimesheet($project), 2, ",",".") }}</span></strong></td>

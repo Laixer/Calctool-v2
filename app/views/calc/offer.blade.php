@@ -29,10 +29,9 @@ if (!$project || !$project->isOwner()) {
 <?php }else{ ?>
 
 @section('content')
-<?# -- WRAPPER -- ?>
 <script type="text/javascript">
 	$(document).ready(function() {
-        $('.only-end-total tr').each(function() {
+	    $('.only-end-total tr').each(function() {
             $(this).find("td").eq(2).hide();
             $(this).find("th").eq(2).hide();
             $(this).find("td").eq(3).hide();
@@ -209,6 +208,10 @@ if (!$project || !$project->isOwner()) {
 			e.preventDefault();
 			$('#frm-offer').submit();
 		});
+		$('#adressing').text($('#to_contact option:selected').text());
+		$('#to_contact').change(function(e){
+			$('#adressing').text($('#to_contact option:selected').text());
+		});
 	});
 	</script>
 	<div id="wrapper">
@@ -242,6 +245,7 @@ if (!$project || !$project->isOwner()) {
 		@endif
 
 	<div class="pull-right">
+		<?php if (!$project->project_close) { ?>
 		<?php if ($offer_last) { ?>
 		<?php if (!$offer_last->offer_finish) { ?>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
@@ -265,19 +269,18 @@ if (!$project || !$project->isOwner()) {
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
 		<button class="btn btn-primary osave">Offerte  maken</button>
 		<?php } ?>
+		<?php } ?>
 	</div>
 
-	<!-- modal dialog -->
 	<div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 
-				<div class="modal-header"><!-- modal header -->
+				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					<h4 class="modal-title" id="myModalLabel2">Offerte versies</h4>
-				</div><!-- /modal header -->
+				</div>
 
-				<!-- modal body -->
 				<div class="modal-body">
 					<div class="table-responsive">
 						<table class="table table-hover">
@@ -299,7 +302,6 @@ if (!$project || !$project->isOwner()) {
 					</div>
 
 				</div>
-				<!-- /modal body -->
 
 				<div class="modal-footer"><!-- modal footer -->
 					<button class="btn btn-default" data-dismiss="modal">Close</button>
@@ -361,7 +363,7 @@ if (!$project || !$project->isOwner()) {
 									<tbody>
 										<tr>
 											<td>Aanbetalingsbedrag</td>
-											<td><input {{ ($offer_last ? ($offer_last->downpayment ? '' : 'disabled') : 'disabled') }} type="text" value="{{ ($offer_last ? $offer_last->downpayment_amount : '') }}" id="amount" name="amount" class="form-control-sm-text" /></td>
+											<td><input {{ ($offer_last ? ($offer_last->downpayment ? '' : 'disabled') : 'disabled') }} type="text" value="{{ ($offer_last ? number_format($offer_last->downpayment_amount, 2, ",",".") : '') }}" id="amount" name="amount" class="form-control-sm-number" /></td>
 										</tr>
 									</tbody>
 									</table>
@@ -533,10 +535,7 @@ if (!$project || !$project->isOwner()) {
 		@if ($offer_last && $offer_last->offer_finish)
 		{{ Contact::find($offer_last->to_contact_id)->firstname . ' ' . Contact::find($offer_last->to_contact_id)->lastname }}
 		@else
-		<select name="to_contact" id="to_contact">				@foreach (Contact::where('relation_id','=',$relation->id)->get() as $contact)
-			<option {{ $offer_last ? ($offer_last->to_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
-				@endforeach
-			</select>
+		<span id="adressing"></span>
 		@endif
 		,
 
@@ -572,6 +571,7 @@ if (!$project || !$project->isOwner()) {
 						</tr>
 					</thead>
 					<tbody>
+						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 						<tr>
 							<td class="col-md-4">Arbeidskosten</td>
 							<td class="col-md-1">{{ ''.number_format(CalculationEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -590,8 +590,9 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
 						</tr>
+						@else
 						<tr>
-							<td class="col-md-4">&nbsp;</td>
+							<td class="col-md-4">Arbeidskosten</td>
 							<td class="col-md-1">{{ ''.number_format(CalculationEndresult::conCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -599,7 +600,9 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-2">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 						</tr>
+						@endif
 
+						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 						<tr>
 							<td class="col-md-4">Materiaalkosten</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -618,8 +621,9 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
 						</tr>
+						@else
 						<tr>
-							<td class="col-md-4">&nbsp;</td>
+							<td class="col-md-4">Materiaalkosten</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -627,6 +631,9 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-2">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 						</tr>
+						@endif
+
+						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 						<tr>
 							<td class="col-md-4">Materieelkosten</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -645,8 +652,9 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
 						</tr>
+						@else
 						<tr>
-							<td class="col-md-4">&nbsp;</td>
+							<td class="col-md-4">Materieelkosten</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -654,6 +662,8 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-2">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 						</tr>
+						@endif
+
 						<tr>
 							<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
 							<td class="col-md-1">&nbsp;</td>
@@ -680,6 +690,7 @@ if (!$project || !$project->isOwner()) {
 						</tr>
 					</thead>
 					<tbody>
+						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 						<tr>
 							<td class="col-md-4">Arbeidskosten</td>
 							<td class="col-md-1">{{ ' '.number_format(CalculationEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -698,8 +709,9 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::subconCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
 						</tr>
+						@else
 						<tr>
-							<td class="col-md-4">&nbsp;</td>
+							<td class="col-md-4">Arbeidskosten</td>
 							<td class="col-md-1">{{ ''.number_format(CalculationEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -707,6 +719,9 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-2">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 						</tr>
+						@endif
+
+						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 						<tr>
 							<td class="col-md-4">Materiaalkosten</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -725,8 +740,9 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::subconCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
 						</tr>
+						@else
 						<tr>
-							<td class="col-md-4">&nbsp;</td>
+							<td class="col-md-4">Materiaalkosten</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -734,6 +750,9 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-2">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 						</tr>
+						@endif
+
+						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 						<tr>
 							<td class="col-md-4">Materieelkosten</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -752,8 +771,9 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
 						</tr>
+						@else
 						<tr>
-							<td class="col-md-4">&nbsp;</td>
+							<td class="col-md-4">Materieelkosten</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -761,6 +781,8 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-2">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 						</tr>
+						@endif
+
 						<tr>
 							<td class="col-md-4"><strong>Totaal Onderaanneming </strong></td>
 							<td class="col-md-1">&nbsp;</td>
@@ -795,6 +817,7 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
+						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 						<tr>
 							<td class="col-md-5">BTW bedrag 21%</td>
 							<td class="col-md-2">&nbsp;</td>
@@ -811,6 +834,7 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax2($project)+CalculationEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
+						@endif
 						<tr>
 							<td class="col-md-5">Te offreren BTW bedrag</td>
 							<td class="col-md-2">&nbsp;</td>
@@ -848,6 +872,7 @@ if (!$project || !$project->isOwner()) {
 						</tr>
 					</thead>
 					<tbody>
+						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 						<tr>
 							<td class="col-md-4">Arbeidskosten</td>
 							<td class="col-md-1">{{ ''.number_format(CalculationEndresult::conCalcLaborActivityTax1($project)+CalculationEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -866,8 +891,9 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax2AmountTax($project)+CalculationEndresult::subconCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
+						@else
 						<tr>
-							<td class="col-md-4">&nbsp;</td>
+							<td class="col-md-4">Arbeidskosten</td>
 							<td class="col-md-1">{{ ''.number_format(CalculationEndresult::conCalcLaborActivityTax3($project)+CalculationEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax3Amount($project)+CalculationEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -875,6 +901,9 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
+						@endif
+
+						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 						<tr>
 							<td class="col-md-4">Materiaalkosten</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -893,8 +922,9 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax2AmountTax($project)+CalculationEndresult::subconCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
+						@else
 						<tr>
-							<td class="col-md-4">&nbsp;</td>
+							<td class="col-md-4">Materiaalkosten</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax3Amount($project)+CalculationEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -902,7 +932,9 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
+						@endif
 
+						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 						<tr>
 							<td class="col-md-4">Materieelkosten</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -921,8 +953,9 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax2AmountTax($project)+CalculationEndresult::subconCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
+						@else
 						<tr>
-							<td class="col-md-4">&nbsp;</td>
+							<td class="col-md-4">Materieelkosten</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax3Amount($project)+CalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -930,6 +963,8 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
+						@endif
+
 						<tr>
 							<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
 							<td class="col-md-1">&nbsp;</td>
@@ -963,6 +998,7 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
+						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 						<tr>
 							<td class="col-md-5">BTW bedrag 21%</td>
 							<td class="col-md-2">&nbsp;</td>
@@ -979,6 +1015,7 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax2($project)+CalculationEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
+						@endif
 						<tr>
 							<td class="col-md-5">Te offreren BTW bedrag</td>
 							<td class="col-md-2">&nbsp;</td>
@@ -1041,14 +1078,14 @@ if (!$project || !$project->isOwner()) {
 						</select> na dagtekening.
 						@endif
 					</li>
-					<li>
-						@if ($offer_last && $offer_last->offer_finish)
-						{{ $offer_last->extracondition }}
-						@else
-							<textarea name="extracondition" id="extracondition" rows="2" class="form-control">{{ ($offer_last ? $offer_last->extracondition : Auth::user()->pref_closure_invoice) }}</textarea>
-						@endif
-					</li>
 				</ul>
+				@if ($offer_last && $offer_last->offer_finish)
+					{{ $offer_last->extracondition }}
+				@else
+					<textarea name="extracondition" id="extracondition" rows="3" class="form-control">{{ ($offer_last ? $offer_last->extracondition : Auth::user()->pref_closure_invoice) }}</textarea>
+				@endif
+
+
 
 				<br>
 				<p>Met vriendelijke groet,
@@ -1381,6 +1418,7 @@ if (!$project || !$project->isOwner()) {
 				<div class="col-sm-6"></div>
 				<div class="col-sm-6">
 					<div class="padding20 pull-right">
+						<?php if (!$project->project_close) { ?>
 						<?php if ($offer_last) { ?>
 						<?php if (!$offer_last->offer_finish) { ?>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
@@ -1403,6 +1441,7 @@ if (!$project || !$project->isOwner()) {
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
 						<button class="btn btn-primary osave">Offerte maken</button>
+						<?php } ?>
 						<?php } ?>
 					</div>
 				</div>

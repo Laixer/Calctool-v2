@@ -1,4 +1,5 @@
 <?php
+$displaytax=Input::get("displaytax");
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner()) {
@@ -225,7 +226,6 @@ if (!$project || !$project->isOwner()) {
 				<!-- modal body -->
 				<div class="modal-body">
 					<div class="form-horizontal">
-
 						 <div class="form-group">
 						    <div class="col-sm-offset-0 col-sm-10">
 						      <div class="checkbox">
@@ -235,38 +235,7 @@ if (!$project || !$project->isOwner()) {
 						      </div>
 						    </div>
 						  </div>
-						  <br>
-						  <strong>De volgende opties worden als bijlage bijgesloten bij de factuur</strong>
-						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
-						      <div class="checkbox">
-						        <label>
-						          <input name="toggle-activity" type="checkbox" checked> Hoofdstukken en werkzaamheden weergeven
-						        </label>
-						      </div>
-						    </div>
-						  </div>
-						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
-						      <div class="checkbox">
-						        <label>
-						          <input name="toggle-summary" type="checkbox"> Kosten werkzaamheden weergeven<br>
-								   (nog niet beschikbaar in PDF)
-						        </label>
-						      </div>
-						    </div>
-						  </div>
-						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
-						      <div class="checkbox">
-						        <label>
-						          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden weergeven
-
-						        </label>
-						      </div>
-						    </div>
-						  </div>
-
+						<br>
 					</div>
 				</div>
 				<!-- /modal body -->
@@ -294,13 +263,13 @@ if (!$project || !$project->isOwner()) {
 					<div class="col-sm-6 text-right">
 						<p>
 							<h4><strong>{{ $relation_self->company_name }}</strong></h4>
-			    				<ul class="list-unstyled">
-		 						<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
-		  						<li>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
-	 							<li><i class="fa fa-phone"></i>&nbsp;{{ $relation_self->phone }}</li>
-	 							<li><i class="fa fa-envelope-o"></i>&nbsp;{{ $relation_self->email }}</li>
-		 						<li>KVK:{{ $relation_self->kvk }}</li>
-							<ul class="list-unstyled">
+				    			<ul class="list-unstyled">
+			 						<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
+			  						<li>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
+			 						<li><i class="fa fa-phone"></i>&nbsp;{{ $relation_self->phone }}&nbsp;|&nbsp;<i class="fa fa-envelope-o"></i>&nbsp;{{ $relation_self->email }}</li>
+			 						<li>KVK:{{ $relation_self->kvk }}&nbsp;|&nbsp;BTW: {{ $relation_self->btw }}</li>
+									<li>Rekeningnummer: {{ Iban::where('relation_id','=',$relation_self->id)->first()['iban'] }}&nbsp;|&nbsp;tnv.: {{ Iban::where('relation_id','=',$relation_self->id)->first()['iban_name'] }}</li>
+								<ul class="list-unstyled">
 						</p>
 					</div>
 				</div>
@@ -373,6 +342,7 @@ if (!$project || !$project->isOwner()) {
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
+							@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 							<tr>
 								<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
 								<td class="col-md-2">{{ '&euro; '.number_format($invoice->rest_21, 2, ",",".") }}</td>
@@ -385,12 +355,16 @@ if (!$project || !$project->isOwner()) {
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
+							@else
 							<tr>
 								<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 0% BTW categorie</i></td>
 								<td class="col-md-2">{{ '&euro; '.number_format($invoice->rest_0, 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
+							@endif
+
+							@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 							<tr>
 								<td class="col-md-6">BTW bedrag 21%</td>
 								<td class="col-md-2">&nbsp;</td>
@@ -403,6 +377,8 @@ if (!$project || !$project->isOwner()) {
 								<td class="col-md-2">{{ '&euro; '.number_format(($invoice->rest_6/100)*6, 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
+							@endif
+
 							<tr>
 								<td class="col-md-6"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
 								<td class="col-md-2">&nbsp;</td>
@@ -421,16 +397,7 @@ if (!$project || !$project->isOwner()) {
 					<div class="col-sm-12">
 					<h4>Bepalingen</h4>
 					<ul>
-						<li>
-<!-- TODO : De onderstaande regel moet voor de op te halen waarden een selectbox krijgen, ea vergelijkbaar met de onderdtaande select START -->
-							Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.
-							<select name="deliver" id="deliver">
-								@foreach (DeliverTime::all() as $deliver)
-								<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
-								@endforeach
-							</select>
-<!-- TODO : De bovenstaande regels moet voor de op te halen waarden een selectbox krijgen, ea vergelijkbaar met de onderdtaande select END -->
-						</li>
+						<li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
 					</ul>
 					<br>
 					<span>Met vriendelijke groet,

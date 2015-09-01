@@ -98,7 +98,6 @@ class ProjectController extends Controller {
 	{
 		$rules = array(
 			'id' => array('required','integer'),
-			'type' => array('required','integer'),
 			'name' => array('required','max:50'),
 			'street' => array('required','alpha','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
@@ -129,7 +128,6 @@ class ProjectController extends Controller {
 			$project->note = Input::get('note');
 			$project->province_id = Input::get('province');
 			$project->country_id = Input::get('country');
-			$project->type_id = Input::get('type');
 			$project->client_id = Input::get('contractor');
 
 			$project->save();
@@ -143,12 +141,12 @@ class ProjectController extends Controller {
 	{
 		$rules = array(
 			'id' => array('required','integer'),
-			'hour_rate' => array('required','regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
+			'hour_rate' => array('regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
 			'more_hour_rate' => array('required','regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
-			'profit_material_1' => array('required','numeric','between:0,200'),
-			'profit_equipment_1' => array('required','numeric','between:0,200'),
-			'profit_material_2' => array('required','numeric','between:0,200'),
-			'profit_equipment_2' => array('required','numeric','between:0,200'),
+			'profit_material_1' => array('numeric','between:0,200'),
+			'profit_equipment_1' => array('numeric','between:0,200'),
+			'profit_material_2' => array('numeric','between:0,200'),
+			'profit_equipment_2' => array('numeric','between:0,200'),
 			'more_profit_material_1' => array('required','numeric','between:0,200'),
 			'more_profit_equipment_1' => array('required','numeric','between:0,200'),
 			'more_profit_material_2' => array('required','numeric','between:0,200'),
@@ -179,12 +177,17 @@ class ProjectController extends Controller {
 				return Redirect::back()->withErrors($validator)->withInput(Input::all());
 			}
 
-			$project->hour_rate = $hour_rate;
+			if ($hour_rate)
+				$project->hour_rate = $hour_rate;
 			$project->hour_rate_more = $hour_rate_more;
-			$project->profit_calc_contr_mat = Input::get('profit_material_1');
-			$project->profit_calc_contr_equip = Input::get('profit_equipment_1');
-			$project->profit_calc_subcontr_mat = Input::get('profit_material_2');
-			$project->profit_calc_subcontr_equip = Input::get('profit_equipment_2');
+			if (Input::get('profit_material_1'))
+				$project->profit_calc_contr_mat = Input::get('profit_material_1');
+			if (Input::get('profit_equipment_1'))
+				$project->profit_calc_contr_equip = Input::get('profit_equipment_1');
+			if (Input::get('profit_material_2'))
+				$project->profit_calc_subcontr_mat = Input::get('profit_material_2');
+			if (Input::get('profit_equipment_2'))
+				$project->profit_calc_subcontr_equip = Input::get('profit_equipment_2');
 			$project->profit_more_contr_mat = Input::get('more_profit_material_1');
 			$project->profit_more_contr_equip = Input::get('more_profit_equipment_1');
 			$project->profit_more_subcontr_mat = Input::get('more_profit_material_2');
@@ -200,8 +203,8 @@ class ProjectController extends Controller {
 	public function doUpdateWorkExecution()
 	{
 		$rules = array(
-			'pk' => array('required','integer'),
-			'value' => array('required'),
+			'project' => array('required','integer'),
+			'date' => array('required'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -213,11 +216,11 @@ class ProjectController extends Controller {
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
 
-			$project = Project::find(Input::get('pk'));
+			$project = Project::find(Input::get('project'));
 			if (!$project || !$project->isOwner()) {
 				return Redirect::back()->withInput(Input::all());
 			}
-			$project->work_execution = date('Y-m-d', strtotime(Input::get('value')));
+			$project->work_execution = date('Y-m-d', strtotime(Input::get('date')));
 
 			$project->save();
 
@@ -229,8 +232,8 @@ class ProjectController extends Controller {
 	public function doUpdateWorkCompletion()
 	{
 		$rules = array(
-			'pk' => array('required','integer'),
-			'value' => array('required'),
+			'project' => array('required','integer'),
+			'date' => array('required'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -242,11 +245,11 @@ class ProjectController extends Controller {
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
 
-			$project = Project::find(Input::get('pk'));
+			$project = Project::find(Input::get('project'));
 			if (!$project || !$project->isOwner()) {
 				return Redirect::back()->withInput(Input::all());
 			}
-			$project->work_completion = date('Y-m-d', strtotime(Input::get('value')));
+			$project->work_completion = date('Y-m-d', strtotime(Input::get('date')));
 
 			$project->save();
 
@@ -258,8 +261,8 @@ class ProjectController extends Controller {
 	public function doUpdateProjectClose()
 	{
 		$rules = array(
-			'pk' => array('required','integer'),
-			'value' => array('required'),
+			'project' => array('required','integer'),
+			'date' => array('required'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -271,11 +274,11 @@ class ProjectController extends Controller {
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
 
-			$project = Project::find(Input::get('pk'));
+			$project = Project::find(Input::get('project'));
 			if (!$project || !$project->isOwner()) {
 				return Redirect::back()->withInput(Input::all());
 			}
-			$project->project_close = date('Y-m-d', strtotime(Input::get('value')));
+			$project->project_close = date('Y-m-d', strtotime(Input::get('date')));
 
 			$project->save();
 

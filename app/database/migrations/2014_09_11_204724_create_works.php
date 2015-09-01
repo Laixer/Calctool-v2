@@ -29,6 +29,7 @@ class CreateWorks extends Migration {
 			$table->string('chapter_name', 50);
 			$table->smallInteger('priority')->index();
 			$table->text('note')->nullable();
+			$table->nullableTimestamps();
 			$table->integer('project_id')->unsigned();
 			$table->foreign('project_id')->references('id')->on('project')->onUpdate('cascade')->onDelete('cascade');
 		});
@@ -39,6 +40,7 @@ class CreateWorks extends Migration {
 			$table->string('activity_name', 50);
 			$table->smallInteger('priority')->index();
 			$table->text('note')->nullable();
+			$table->nullableTimestamps();
 			$table->integer('chapter_id')->unsigned();
 			$table->foreign('chapter_id')->references('id')->on('chapter')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('tax_labor_id')->unsigned();
@@ -65,17 +67,17 @@ class CreateWorks extends Migration {
 	{
 		Schema::table('activity', function(Blueprint $table)
 		{
-			Schema::drop('activity');
+			Schema::dropIfExists('activity');
 		});
 
 		Schema::table('chapter', function(Blueprint $table)
 		{
-			Schema::drop('chapter');
+			Schema::dropIfExists('chapter');
 		});
 
 		Schema::table('tax', function(Blueprint $table)
 		{
-			Schema::drop('tax');
+			Schema::dropIfExists('tax');
 		});
 	}
 

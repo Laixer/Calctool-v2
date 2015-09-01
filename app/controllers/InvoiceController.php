@@ -150,7 +150,7 @@ class InvoiceController extends Controller {
 			} else {
 				$ninvoice = new Invoice;
 				$ninvoice->payment_condition = 1;
-				$ninvoice->invoice_code = 'XYZ';
+				$ninvoice->invoice_code = 'Concept';
 				$ninvoice->priority = 1;
 				$ninvoice->offer_id = $offer_last->id;
 				$ninvoice->save();
@@ -216,8 +216,7 @@ class InvoiceController extends Controller {
 			if (!$project || !$project->isOwner()) {
 				return json_encode(['success' => 0]);
 			}
-
-			$project = Project::find(Input::get('projectid'));
+			$project = Project::find(Input::get('project'));
 			if (!$project || !$project->isOwner()) {
 				return json_encode(['success' => 0]);
 			}
@@ -273,7 +272,20 @@ class InvoiceController extends Controller {
 				return json_encode(['success' => 0]);
 			}
 
+			$options = [];
+			if (Input::get('toggle-note'))
+				$options['description'] = 1;
+			if (Input::get('toggle-subcontr'))
+				$options['total'] = 1;
+			if (Input::get('toggle-activity'))
+				$options['specification'] = 1;
+			if (Input::get('toggle-summary'))
+				$options['onlyactivity'] = 1;
+			if (Input::get('toggle-tax'))
+				$options['displaytax'] = 1;
+
 			$invoice->invoice_close = true;
+			$invoice->option_query = http_build_query($options);
 			$invoice->invoice_code = InvoiceController::getInvoiceCode($project->id);
 			$invoice->bill_date = date('Y-m-d H:i:s');
 
@@ -281,7 +293,7 @@ class InvoiceController extends Controller {
 			Auth::user()->invoice_counter++;
 			Auth::user()->save();
 
-			return Redirect::to('/invoice/project-'.Input::get('projectid'));
+			return Redirect::to('/invoice/project-'.$project->id);
 		}
 	}
 

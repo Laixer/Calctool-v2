@@ -37,11 +37,11 @@ class CreateMaterialStorage extends Migration {
 			$table->increments('id');
 			$table->string('unit', 30)->nullable();
 			$table->integer('article_code')->unsigned();
-			$table->decimal('price', 9, 2)->index()->unsigned();
-			$table->decimal('package_height', 9, 2)->unsigned();
-			$table->decimal('package_length', 9, 2)->unsigned();
-			$table->decimal('package_width', 9, 2)->unsigned();
-			$table->decimal('minimum_quantity', 9, 2)->unsigned();
+			$table->decimal('price', 9, 3)->index()->unsigned();
+			$table->decimal('package_height', 9, 3)->unsigned();
+			$table->decimal('package_length', 9, 3)->unsigned();
+			$table->decimal('package_width', 9, 3)->unsigned();
+			$table->decimal('minimum_quantity', 9, 3)->unsigned();
 			$table->string('description');
 			$table->integer('group_id')->unsigned();
 			$table->foreign('group_id')->references('id')->on('sub_group')->onUpdate('cascade')->onDelete('cascade');
@@ -68,22 +68,22 @@ class CreateMaterialStorage extends Migration {
 	{
 		Schema::table('product_favorite', function(Blueprint $table)
 		{
-			Schema::drop('product_favorite');
+			Schema::dropIfExists('product_favorite');
 		});
 
 		Schema::table('product', function(Blueprint $table)
 		{
-			Schema::drop('product');
+			Schema::dropIfExists('product');
 		});
 
 		Schema::table('supplier', function(Blueprint $table)
 		{
-			Schema::drop('supplier');
+			Schema::dropIfExists('supplier');
 		});
 
 		Schema::table('sub_group', function(Blueprint $table)
 		{
-			Schema::drop('sub_group');
+			Schema::dropIfExists('sub_group');
 		});
 	}
 

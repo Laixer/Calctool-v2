@@ -20,9 +20,9 @@ class CreateCalculation extends Migration {
 		Schema::create('calculation_labor', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->decimal('rate', 5, 2)->unsigned()->nullable();
-			$table->decimal('amount', 9, 2)->unsigned()->index();
-			$table->decimal('less_amount', 9, 2)->unsigned()->index()->nullable();
+			$table->decimal('rate', 6, 3)->unsigned()->nullable();
+			$table->decimal('amount', 9, 3)->unsigned()->index();
+			$table->decimal('less_amount', 9, 3)->unsigned()->index()->nullable();
 			$table->boolean('isless')->default('false');
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
@@ -33,10 +33,10 @@ class CreateCalculation extends Migration {
 			$table->increments('id');
 			$table->string('material_name', 50);
 			$table->string('unit', 10);
-			$table->decimal('rate', 9, 2)->unsigned()->index();
-			$table->decimal('amount', 9, 2)->unsigned()->index();
-			$table->decimal('less_rate', 9, 2)->unsigned()->index()->nullable();
-			$table->decimal('less_amount', 9, 2)->unsigned()->index()->nullable();
+			$table->decimal('rate', 9, 3)->unsigned()->index();
+			$table->decimal('amount', 9, 3)->unsigned()->index();
+			$table->decimal('less_rate', 9, 3)->unsigned()->index()->nullable();
+			$table->decimal('less_amount', 9, 3)->unsigned()->index()->nullable();
 			$table->boolean('isless')->default('false');
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
@@ -47,10 +47,10 @@ class CreateCalculation extends Migration {
 			$table->increments('id');
 			$table->string('equipment_name', 50);
 			$table->string('unit', 10);
-			$table->decimal('rate', 9, 2)->unsigned()->index();
-			$table->decimal('amount', 9, 2)->unsigned()->index();
-			$table->decimal('less_rate', 9, 2)->unsigned()->index()->nullable();
-			$table->decimal('less_amount', 9, 2)->unsigned()->index()->nullable();
+			$table->decimal('rate', 9, 3)->unsigned()->index();
+			$table->decimal('amount', 9, 3)->unsigned()->index();
+			$table->decimal('less_rate', 9, 3)->unsigned()->index()->nullable();
+			$table->decimal('less_amount', 9, 3)->unsigned()->index()->nullable();
 			$table->boolean('isless')->default('false');
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
@@ -59,8 +59,8 @@ class CreateCalculation extends Migration {
 		Schema::create('more_labor', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->decimal('rate', 5, 2)->unsigned()->index();
-			$table->decimal('amount', 9, 2)->unsigned()->index();
+			$table->decimal('rate', 6, 3)->unsigned()->index();
+			$table->decimal('amount', 9, 3)->unsigned()->index();
 			$table->text('note')->nullable();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
@@ -73,8 +73,8 @@ class CreateCalculation extends Migration {
 			$table->increments('id');
 			$table->string('material_name', 50);
 			$table->string('unit', 10);
-			$table->decimal('rate', 9, 2)->unsigned()->index();
-			$table->decimal('amount', 9, 2)->unsigned()->index();
+			$table->decimal('rate', 9, 3)->unsigned()->index();
+			$table->decimal('amount', 9, 3)->unsigned()->index();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
 		});
@@ -84,8 +84,8 @@ class CreateCalculation extends Migration {
 			$table->increments('id');
 			$table->string('equipment_name', 50);
 			$table->string('unit', 10);
-			$table->decimal('rate', 9, 2)->unsigned()->index();
-			$table->decimal('amount', 9, 2)->unsigned()->index();
+			$table->decimal('rate', 9, 3)->unsigned()->index();
+			$table->decimal('amount', 9, 3)->unsigned()->index();
 			$table->integer('activity_id')->unsigned();
 			$table->foreign('activity_id')->references('id')->on('activity')->onUpdate('cascade')->onDelete('cascade');
 		});
@@ -93,10 +93,10 @@ class CreateCalculation extends Migration {
 		Schema::create('estimate_labor', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->decimal('rate', 5, 2)->unsigned()->nullable()->index();
-			$table->decimal('amount', 9, 2)->unsigned()->nullable()->index();
-			$table->decimal('set_rate', 5, 2)->unsigned()->nullable()->index();
-			$table->decimal('set_amount', 9, 2)->unsigned()->nullable()->index();
+			$table->decimal('rate', 6, 3)->unsigned()->nullable()->index();
+			$table->decimal('amount', 9, 3)->unsigned()->nullable()->index();
+			$table->decimal('set_rate', 5, 3)->unsigned()->nullable()->index();
+			$table->decimal('set_amount', 9, 3)->unsigned()->nullable()->index();
 			$table->boolean('original');
 			$table->boolean('isset');
 			$table->integer('activity_id')->unsigned();
@@ -110,12 +110,12 @@ class CreateCalculation extends Migration {
 			$table->increments('id');
 			$table->string('material_name', 50)->nullable();
 			$table->string('unit', 10)->nullable();
-			$table->decimal('rate', 9, 2)->unsigned()->nullable()->index();
-			$table->decimal('amount', 9, 2)->unsigned()->nullable()->index();
+			$table->decimal('rate', 9, 3)->unsigned()->nullable()->index();
+			$table->decimal('amount', 9, 3)->unsigned()->nullable()->index();
 			$table->string('set_material_name', 50)->nullable();
 			$table->string('set_unit', 10)->nullable();
-			$table->decimal('set_rate', 9, 2)->unsigned()->nullable()->index();
-			$table->decimal('set_amount', 9, 2)->unsigned()->nullable()->index();
+			$table->decimal('set_rate', 9, 3)->unsigned()->nullable()->index();
+			$table->decimal('set_amount', 9, 3)->unsigned()->nullable()->index();
 			$table->boolean('original');
 			$table->boolean('isset');
 			$table->integer('activity_id')->unsigned();
@@ -127,12 +127,12 @@ class CreateCalculation extends Migration {
 			$table->increments('id');
 			$table->string('equipment_name', 50)->nullable();
 			$table->string('unit', 10)->nullable();
-			$table->decimal('rate', 9, 2)->unsigned()->nullable()->index();
-			$table->decimal('amount', 9, 2)->unsigned()->nullable()->index();
+			$table->decimal('rate', 9, 3)->unsigned()->nullable()->index();
+			$table->decimal('amount', 9, 3)->unsigned()->nullable()->index();
 			$table->string('set_equipment_name', 50)->nullable();
 			$table->string('set_unit', 10)->nullable();
-			$table->decimal('set_rate', 9, 2)->unsigned()->nullable()->index();
-			$table->decimal('set_amount', 9, 2)->unsigned()->nullable()->index();
+			$table->decimal('set_rate', 9, 3)->unsigned()->nullable()->index();
+			$table->decimal('set_amount', 9, 3)->unsigned()->nullable()->index();
 			$table->boolean('original');
 			$table->boolean('isset');
 			$table->integer('activity_id')->unsigned();
@@ -149,63 +149,46 @@ class CreateCalculation extends Migration {
 	{
 		Schema::table('estimate_equipment', function(Blueprint $table)
 		{
-			Schema::drop('estimate_equipment');
+			Schema::dropIfExists('estimate_equipment');
 		});
 
 		Schema::table('estimate_material', function(Blueprint $table)
 		{
-			Schema::drop('estimate_material');
+			Schema::dropIfExists('estimate_material');
 		});
 
 		Schema::table('estimate_labor', function(Blueprint $table)
 		{
-			Schema::drop('estimate_labor');
+			Schema::dropIfExists('estimate_labor');
 		});
 
 		Schema::table('more_equipment', function(Blueprint $table)
 		{
-			Schema::drop('more_equipment');
+			Schema::dropIfExists('more_equipment');
 		});
 
 		Schema::table('more_material', function(Blueprint $table)
 		{
-			Schema::drop('more_material');
+			Schema::dropIfExists('more_material');
 		});
 
 		Schema::table('more_labor', function(Blueprint $table)
 		{
-			Schema::drop('more_labor');
+			Schema::dropIfExists('more_labor');
 		});
-
-		/*
-		Schema::table('less_equipment', function(Blueprint $table)
-		{
-			Schema::drop('less_equipment');
-		});
-
-		Schema::table('less_material', function(Blueprint $table)
-		{
-			Schema::drop('less_material');
-		});
-
-		Schema::table('less_labor', function(Blueprint $table)
-		{
-			Schema::drop('less_labor');
-		});
-		*/
 		Schema::table('calculation_equipment', function(Blueprint $table)
 		{
-			Schema::drop('calculation_equipment');
+			Schema::dropIfExists('calculation_equipment');
 		});
 
 		Schema::table('calculation_material', function(Blueprint $table)
 		{
-			Schema::drop('calculation_material');
+			Schema::dropIfExists('calculation_material');
 		});
 
 		Schema::table('calculation_labor', function(Blueprint $table)
 		{
-			Schema::drop('calculation_labor');
+			Schema::dropIfExists('calculation_labor');
 		});
 	}
 

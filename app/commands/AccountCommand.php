@@ -17,11 +17,11 @@ use Longman\TelegramBot\Request;
 use Longman\TelegramBot\Command;
 use Longman\TelegramBot\Entities\Update;
 
-class AuthCommand extends Command
+class AccountCommand extends Command
 {
-	protected $name = 'auth';
-	protected $description = 'Verbindt met CalculatieTool profiel';
-	protected $usage = '/auth <API-key>';
+	protected $name = 'account';
+	protected $description = '';
+	protected $usage = '/account';
 	protected $version = '1.0.0';
 	protected $enabled = true;
 	protected $public = true;
@@ -48,24 +48,13 @@ class AuthCommand extends Command
 		$message_id = $message->getMessageId();
 		$text = $message->getText(true);
 
-		if ($this->getAuthStatus($message->getFrom()->getId())) {
-			$text = 'Telegram is gekoppeld aan gebruiker \'' . $this->user->username . '\'. Gebruik /deauth om Telegram te ontkoppelen';
+		if (!$this->getAuthStatus($message->getFrom()->getId())) {
+			$text = 'Telegram is niet gekoppeld aan een account. Gebruik /auth';
 		} else {
-
-			if (empty($text)) {
-				$text = 'Geeft de API key op, deze is te vinden in Mijn Account';
-			} else {
-				$user = \User::where('api','=',$text)->first();
-				if ($user) {
-					\Redis::set('auth:'.$user->username.':telegram', true);
-					\Redis::set('auth:telegram:'.$message->getFrom()->getId(), $user->id);
-					$text = 'Beste, ' . $user->firstname . "\n";
-					$text .= 'Telegram is verbonden met uw account';
-				} else {
-					$text = 'Ongeldige API key';
-				}
-			}
-
+			$text = 'Naam: ' . $this->user->firstname . ' ' . $this->user->lastname . "\n";
+			$text .= 'Email: ' . $this->user->email . "\n";
+			$text .= 'Abonnement actief tot: ' . date('j F Y', strtotime($this->user->expiration_date)) . "\n";
+			$text .= 'Ontvang Telegram alerts: Nee' . "\n";
 		}
 
 		$data = array();

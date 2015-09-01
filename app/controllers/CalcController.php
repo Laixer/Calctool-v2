@@ -19,6 +19,8 @@ class CalcController extends Controller {
 	{
 		$project = Project::find(Route::Input('project_id'));
 		if ($project) {
+			if ($project->project_close)
+				return View::make('calc.calculation_closed');
 			$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 			if ($offer_last && $offer_last->offer_finish)
 				return View::make('calc.calculation_closed');
@@ -29,24 +31,39 @@ class CalcController extends Controller {
 	public function getEstimate()
 	{
 		$project = Project::find(Route::Input('project_id'));
-		if ($project && $project->project_close)
-			return View::make('calc.estimate_closed');
+		if ($project) {
+			if ($project->project_close)
+				return View::make('calc.estimate_closed');
+			$invoice_end = Invoice::where('offer_id','=', Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first()->id)->where('isclose','=',true)->first();
+			if ($invoice_end->invoice_close)
+				return View::make('calc.estimate_closed');
+		}
 		return View::make('calc.estimate');
 	}
 
 	public function getLess()
 	{
 		$project = Project::find(Route::Input('project_id'));
-		if ($project && $project->project_close)
-			return View::make('calc.less_closed');
+		if ($project) {
+			if ($project->project_close)
+				return View::make('calc.less_closed');
+			$invoice_end = Invoice::where('offer_id','=', Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first()->id)->where('isclose','=',true)->first();
+			if ($invoice_end->invoice_close)
+				return View::make('calc.less_closed');
+		}
 		return View::make('calc.less');
 	}
 
 	public function getMore()
 	{
 		$project = Project::find(Route::Input('project_id'));
-		if ($project && $project->project_close)
-			return View::make('calc.more_closed');
+		if ($project) {
+			if ($project->project_close)
+				return View::make('calc.more_closed');
+			$invoice_end = Invoice::where('offer_id','=', Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first()->id)->where('isclose','=',true)->first();
+			if ($invoice_end->invoice_close)
+				return View::make('calc.more_closed');
+		}
 		return View::make('calc.more');
 	}
 
@@ -68,12 +85,14 @@ class CalcController extends Controller {
 	public function getOfferPDF()
 	{
 		$pdf = PDF::loadView('calc.offer_pdf');
+		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
 		return $pdf->stream();
 	}
 
 	public function getOfferDownloadPDF()
 	{
 		$pdf = PDF::loadView('calc.offer_pdf');
+		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
 		return $pdf->download(Input::get('file'));
 	}
 
@@ -85,12 +104,14 @@ class CalcController extends Controller {
 	public function getInvoicePDF()
 	{
 		$pdf = PDF::loadView('calc.invoice_pdf');
+		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
 		return $pdf->stream();
 	}
 
 	public function getInvoiceDownloadPDF()
 	{
 		$pdf = PDF::loadView('calc.invoice_pdf');
+		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
 		return $pdf->download(Input::get('file'));
 	}
 
@@ -156,7 +177,11 @@ class CalcController extends Controller {
 
 			$part = Part::where('part_name','=','contracting')->first();
 			$part_type = PartType::where('type_name','=','calculation')->first();
-			$tax = Tax::where('tax_rate','=',21)->first();
+			$project = Project::find($chapter->project_id);
+			if (ProjectType::find($project->type_id)->type_name == 'BTW verlegd')
+				$tax = Tax::where('tax_rate','=',0)->first();
+			else
+				$tax = Tax::where('tax_rate','=',21)->first();
 
 			$activity = new Activity;
 			$activity->activity_name = Input::get('activity');
@@ -195,7 +220,11 @@ class CalcController extends Controller {
 
 			$part = Part::where('part_name','=','contracting')->first();
 			$part_type = PartType::where('type_name','=','estimate')->first();
-			$tax = Tax::where('tax_rate','=',21)->first();
+			$project = Project::find($chapter->project_id);
+			if (ProjectType::find($project->type_id)->type_name == 'BTW verlegd')
+				$tax = Tax::where('tax_rate','=',0)->first();
+			else
+				$tax = Tax::where('tax_rate','=',21)->first();
 
 			$activity = new Activity;
 			$activity->activity_name = Input::get('activity');
@@ -278,11 +307,11 @@ class CalcController extends Controller {
 
 			$type = Input::get('type');
 			if ($type == 'calc-labor')
-				$activity->tax_estimate_labor_id = Input::get('value');
+				$activity->tax_labor_id = Input::get('value');
 			if ($type == 'calc-material')
-				$activity->tax_estimate_material_id = Input::get('value');
+				$activity->tax_material_id = Input::get('value');
 			if ($type == 'calc-equipment')
-				$activity->tax_estimate_equipment_id = Input::get('value');
+				$activity->tax_equipment_id = Input::get('value');
 			$activity->save();
 
 			return json_encode(['success' => 1]);
@@ -520,6 +549,37 @@ class CalcController extends Controller {
 			));
 
 			return json_encode(['success' => 1, 'id' => $labor->id]);
+		}
+	}
+
+	public function doDeleteCalculationLabor()
+	{
+		$rules = array(
+			'id' => array('required','integer','min:0'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+			$rec = CalculationLabor::find(Input::get('id'));
+			if (!$rec)
+				return json_encode(['success' => 0]);
+			$activity = Activity::find($rec->activity_id);
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
+			$rec->delete();
+
+			return json_encode(['success' => 1]);
 		}
 	}
 
@@ -834,6 +894,37 @@ class CalcController extends Controller {
 			));
 
 			return json_encode(['success' => 1, 'id' => $labor->id]);
+		}
+	}
+
+	public function doDeleteEstimateLabor()
+	{
+		$rules = array(
+			'id' => array('required','integer','min:0'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+			$rec = EstimateLabor::find(Input::get('id'));
+			if (!$rec)
+				return json_encode(['success' => 0]);
+			$activity = Activity::find($rec->activity_id);
+			if (!$activity)
+				return json_encode(['success' => 0]);
+			$chapter = Chapter::find($activity->chapter_id);
+			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+				return json_encode(['success' => 0]);
+			}
+
+			$rec->delete();
+
+			return json_encode(['success' => 1]);
 		}
 	}
 

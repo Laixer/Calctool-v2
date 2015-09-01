@@ -83,11 +83,9 @@
 					</li>
 				</ul>
 
-				<!-- tabs content -->
 				<div class="tab-content">
 					<div id="hour" class="tab-pane active">
 						<table class="table table-striped">
-							<?# -- table head -- ?>
 							<thead>
 								<tr>
 									<th class="col-md-1">Datum</th>
@@ -100,7 +98,6 @@
 								</tr>
 							</thead>
 
-							<!-- table items -->
 							<tbody>
 								@foreach (Project::where('user_id','=',Auth::user()->id)->get() as $project)
 								@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
@@ -133,7 +130,7 @@
 									<td class="col-md-3">
 										<select name="projname" id="projname" class="getact form-control-sm-text">
 											<option selected="selected" value="-1" >Selecteer</option>
-											@foreach (Project::where('user_id','=',Auth::user()->id)->get() as $projectname)
+											@foreach (Project::where('user_id','=',Auth::id())->whereNull('project_close')->get() as $projectname)
 											<option value="{{ $projectname->id }}">{{ ucwords($projectname->project_name) }}</option>
 											@endforeach
 										</select>

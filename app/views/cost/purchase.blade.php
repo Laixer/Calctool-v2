@@ -8,14 +8,14 @@
 			$curThis = $(this);
 			e.preventDefault();
 			$date = $curThis.closest("tr").find("input[name='date']").val();
-			$hour = $curThis.closest("tr").find("input[name='hour']").val();
+			$amount = $curThis.closest("tr").find("input[name='amount']").val();
 			$type = $curThis.closest("tr").find("select[name='typename']").val();
 			$relation = $curThis.closest("tr").find("select[name='relation']").val();
 			$note = $curThis.closest("tr").find("input[name='note']").val();
 			$project = $curThis.closest("tr").find("select[name='projname']").val();
 			$.post("/purchase/new", {
 				date: $date,
-				hour: $hour,
+				amount: $amount,
 				type: $type,
 				relation: $relation,
 				note: $note,
@@ -23,16 +23,18 @@
 			}, function(data){
 				var $curTable = $curThis.closest("table");
 				var json = $.parseJSON(data);
-				$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
-				.find("td:eq(0)").text(json.date).end()
-				.find("td:eq(1)").text(json.relation).end()
-				.find("td:eq(2)").html(json.amount).end()
-				.find("td:eq(4)").text(json.type).end()
-				.find("td:eq(5)").text($note).end()
-				.find("td:eq(8)").html('<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>').end()
-				.prependTo($curTable);
-				$curThis.closest("tr").find("input").val("");
-				$curThis.closest("tr").find("select").val("");
+				if (json.success) {
+					$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
+					.find("td:eq(0)").text(json.date).end()
+					.find("td:eq(1)").text(json.relation).end()
+					.find("td:eq(2)").html(json.amount).end()
+					.find("td:eq(4)").text(json.type).end()
+					.find("td:eq(5)").text($note).end()
+					.find("td:eq(8)").html('<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>').end()
+					.prependTo($curTable);
+					$curThis.closest("tr").find("input").val("");
+					$curThis.closest("tr").find("select").val("");
+				}
 			});
 		});
 		$("body").on("click", ".deleterow", function(e){
@@ -53,6 +55,7 @@
 
 			<h2><strong>Inkoopfacturen</strong></h2>
 
+			<div class="white-row">
 				<table class="table table-striped">
 					<?# -- table head -- ?>
 					<thead>
@@ -92,10 +95,10 @@
 								@endforeach
 								</select>
 							</td>
-							<td class="col-md-1"><input type="text" min="0" name="hour" id="hour" class="form-control-sm-text"/></td>
+							<td class="col-md-1"><input type="text" min="0" name="amount" id="amount" class="form-control-sm-text"/></td>
 							<td class="col-md-3">
 								<select name="projname" id="projname" class="form-control-sm-text">
-								@foreach (Project::where('user_id','=',Auth::user()->id)->get() as $projectname)
+								@foreach (Project::where('user_id','=',Auth::id())->whereNull('project_close')->get() as $projectname)
 									<option value="{{ $projectname->id }}">{{ ucwords($projectname->project_name) }}</option>
 								@endforeach
 								</select>
@@ -112,6 +115,7 @@
 						</tr>
 					</tbody>
 				</table>
+			</div>
 			</div>
 
 		</div>

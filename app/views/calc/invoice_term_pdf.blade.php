@@ -33,8 +33,10 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       <h3 class="name">{{ $relation_self->company_name }}</h3>
       <div>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</div>
       <div>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</div>
-      <div>Email:{{ $relation_self->email }}</div>
-      <div>KVK:{{ $relation_self->kvk }}</li>
+      <div>{{ $relation_self->phone }}&nbsp;|&nbsp{{ $relation_self->email }}</div>
+      <div>KVK:{{ $relation_self->kvk }}&nbsp;|&nbsp;BTW: {{ $relation_self->btw }}</div>
+      <div>Rekeningnummer: {{ Iban::where('relation_id','=',$relation_self->id)->first()['iban'] }}&nbsp;|&nbsp;tnv.: {{ Iban::where('relation_id','=',$relation_self->id)->first()['iban_name'] }}</div>
+
   </header>
   <!--PAGE HEADER MASTER END-->
 
@@ -80,6 +82,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
         <tr>
           <td class="qty">&nbsp;<i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
           <td class="qty">{{ '&euro; '.number_format($invoice->rest_21, 2, ",",".") }}</td>
@@ -92,12 +95,16 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @else
         <tr>
           <td class="qty">&nbsp;<i>Aandeel termijnfactuur in 0% BTW categorie</i></td>
           <td class="qty">{{ '&euro; '.number_format($invoice->rest_0, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @endif
+
+        @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
         <tr>
           <td class="qty">BTW bedrag 21%</td>
           <td class="qty">&nbsp;</td>
@@ -110,6 +117,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">{{ '&euro; '.number_format(($invoice->rest_6/100)*6, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @endif
+
         <tr>
           <td class="qty"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
           <td class="qty">&nbsp;</td>

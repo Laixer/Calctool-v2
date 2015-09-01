@@ -62,8 +62,8 @@ class CreateUsersTable extends Migration {
 			$table->integer('phone')->nullable()->unsigned();
 			$table->string('email', 80)->unique();
 			$table->boolean('pref_mailings_optin')->default('N');
-			$table->decimal('pref_hourrate_calc', 5, 2)->nullable();
-			$table->decimal('pref_hourrate_more', 5, 2)->nullable();
+			$table->decimal('pref_hourrate_calc', 6, 3)->nullable();
+			$table->decimal('pref_hourrate_more', 6, 3)->nullable();
 			$table->tinyInteger('pref_profit_calc_contr_mat')->default(0)->unsigned();
 			$table->tinyInteger('pref_profit_calc_contr_equip')->default(0)->unsigned();
 			$table->tinyInteger('pref_profit_calc_subcontr_mat')->default(0)->unsigned();
@@ -72,21 +72,21 @@ class CreateUsersTable extends Migration {
 			$table->tinyInteger('pref_profit_more_contr_equip')->default(0)->unsigned();
 			$table->tinyInteger('pref_profit_more_subcontr_mat')->default(0)->unsigned();
 			$table->tinyInteger('pref_profit_more_subcontr_equip')->default(0)->unsigned();
-			$table->text('pref_email_offer')->nullable();
-			$table->text('pref_offer_description')->nullable();
-			$table->text('pref_closure_offer')->nullable();
-			$table->text('pref_email_invoice')->nullable();
-			$table->text('pref_invoice_description')->nullable();
-			$table->text('pref_invoice_closure')->nullable();
-			$table->text('pref_email_invoice_first_reminder')->nullable();
-			$table->text('pref_email_invoice_last_reminder')->nullable();
-			$table->text('pref_email_invoice_first_demand')->nullable();
-			$table->text('pref_email_invoice_last_demand')->nullable();
+			$table->text('pref_email_offer')->nullable()->default('Nog niet beschikbaar.');
+			$table->text('pref_offer_description')->nullable()->default('Bij deze doe ik u toekomen mijn prijsopgaaf betreffende het uit te voeren werk. Onderstaand zal ik het werk en de uit te voeren werkzaamheden specificeren zoals afgesproken.');
+			$table->text('pref_closure_offer')->nullable()->default('Hopende u hiermee een passende aanbieding gedaan te hebben, zie ik uw reactie met genoegen tegemoet. ');
+			$table->text('pref_email_invoice')->nullable()->default('Nog niet beschikbaar.');
+			$table->text('pref_invoice_description')->nullable()->default('Bij deze doe ik u toekomen mijn factuur betreffende het uitgevoerde werk behorende bij offerte [projectnaam]. Hierin zit tevens het eventule meer- en minderwerk verwerkt zoals besproken.');
+			$table->text('pref_invoice_closure')->nullable()->default('Met dank voor uw opdracht en vertrouwen.');
+			$table->text('pref_email_invoice_first_reminder')->nullable()->default('Nog niet beschikbaar.');
+			$table->text('pref_email_invoice_last_reminder')->nullable()->default('Nog niet beschikbaar.');
+			$table->text('pref_email_invoice_first_demand')->nullable()->default('Nog niet beschikbaar.');
+			$table->text('pref_email_invoice_last_demand')->nullable()->default('Nog niet beschikbaar.');
 			$table->string('offernumber_prefix', 10)->default('OF');
 			$table->smallinteger('offer_counter')->default(1)->unsigned();
 			$table->string('invoicenumber_prefix', 10)->default('FA');
 			$table->smallinteger('invoice_counter')->default(1)->unsigned();
-			$table->decimal('administration_cost', 5, 2)->nullable();
+			$table->decimal('administration_cost', 6, 2)->nullable()->default(12.50);
 			$table->rememberToken();
 			$table->nullableTimestamps();
 			$table->integer('province_id')->unsigned()->nullable();
@@ -121,8 +121,8 @@ class CreateUsersTable extends Migration {
 			$table->string('address_postal', 6);
 			$table->string('address_city', 35);
 			$table->text('note')->nullable();
-			$table->decimal('hour_rate', 5, 2)->unsigned()->default(0);;
-			$table->decimal('hour_rate_more', 5, 2)->nullable()->unsigned();
+			$table->decimal('hour_rate', 6, 3)->unsigned()->default(0);;
+			$table->decimal('hour_rate_more', 6, 3)->nullable()->unsigned();
 			$table->tinyInteger('profit_calc_contr_mat')->unsigned()->default(0);
 			$table->tinyInteger('profit_calc_contr_equip')->unsigned()->default(0);
 			$table->tinyInteger('profit_calc_subcontr_mat')->unsigned()->default(0);
@@ -172,10 +172,30 @@ class CreateUsersTable extends Migration {
 			$table->string('transaction', 16);
 			$table->char('token', 40)->unique();
 			$table->string('status', 16);
-			$table->decimal('amount', 9, 2);
+			$table->decimal('amount', 9, 3);
 			$table->string('description', 100);
 			$table->string('method', 25);
 			$table->integer('increment');
+			$table->timestamps();
+			$table->integer('user_id')->unsigned();
+			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
+		});
+
+		Schema::create('telegram', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->boolean('alert')->default('N');
+			$table->integer('uid');
+			$table->timestamps();
+			$table->integer('user_id')->unsigned();
+			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
+		});
+
+		Schema::create('audit', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('ip', 45);
+			$table->string('event', 120);
 			$table->timestamps();
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
@@ -198,49 +218,49 @@ class CreateUsersTable extends Migration {
 	public function down()
 	{
 
+		Schema::table('audit', function(Blueprint $table)
+		{
+			Schema::dropIfExists('audit');
+		});
+		Schema::table('telegram', function(Blueprint $table)
+		{
+			Schema::dropIfExists('telegram');
+		});
 		Schema::table('payment', function(Blueprint $table)
 		{
-			Schema::drop('payment');
+			Schema::dropIfExists('payment');
 		});
-
 		Schema::table('resource', function(Blueprint $table)
 		{
-			Schema::drop('resource');
+			Schema::dropIfExists('resource');
 		});
-
 		Schema::table('project', function(Blueprint $table)
 		{
-			Schema::drop('project');
+			Schema::dropIfExists('project');
 		});
-
 		Schema::table('project_type', function(Blueprint $table)
 		{
-			Schema::drop('project_type');
+			Schema::dropIfExists('project_type');
 		});
-
 		Schema::table('iban', function(Blueprint $table)
 		{
-			Schema::drop('iban');
+			Schema::dropIfExists('iban');
 		});
-
 		Schema::table('user_account', function(Blueprint $table)
 		{
-			Schema::drop('user_account');
+			Schema::dropIfExists('user_account');
 		});
-
 		Schema::table('user_type', function(Blueprint $table)
 		{
-			Schema::drop('user_type');
+			Schema::dropIfExists('user_type');
 		});
-
 		Schema::table('country', function(Blueprint $table)
 		{
-			Schema::drop('country');
+			Schema::dropIfExists('country');
 		});
-
 		Schema::table('province', function(Blueprint $table)
 		{
-			Schema::drop('province');
+			Schema::dropIfExists('province');
 		});
 	}
 

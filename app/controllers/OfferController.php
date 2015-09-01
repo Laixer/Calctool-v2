@@ -42,11 +42,12 @@ class OfferController extends Controller {
 			$offer->to_contact_id = Input::get('to_contact');
 			$offer->from_contact_id = Input::get('from_contact');
 			$offer->description = Input::get('description');
+			$offer->extracondition = Input::get('extracondition');
 			$offer->closure = Input::get('closure');
 			if (Input::get('toggle-payment'))
 				$offer->downpayment = Input::get('toggle-payment');
 			if (Input::get('amount'))
-				$offer->downpayment_amount = Input::get('amount');
+				$offer->downpayment_amount = str_replace(',', '.', str_replace('.', ',' , Input::get('amount')));
 			$offer->auto_email_reminder = false;
 			$offer->deliver_id = Input::get('deliver');
 			$offer->valid_id = Input::get('valid');
@@ -61,6 +62,10 @@ class OfferController extends Controller {
 				$options['total'] = 1;
 			if (Input::get('toggle-activity'))
 				$options['specification'] = 1;
+			if (Input::get('toggle-summary'))
+				$options['onlyactivity'] = 1;
+			if (Input::get('toggle-tax'))
+				$options['displaytax'] = 1;
 
 			$offer->option_query = http_build_query($options);
 
@@ -109,10 +114,15 @@ class OfferController extends Controller {
 
 			$offer = Offer::find(Input::get('offer'));
 			if (!$offer)
-				return Redirect::back()->withInput(Input::all());
+				return json_encode(['success' => 0]);
 			$project = Project::find($offer->project_id);
 			if (!$project || !$project->isOwner()) {
-				return Redirect::back()->withInput(Input::all());
+				return json_encode(['success' => 0]);
+			}
+
+			$project = Project::find(Input::get('project'));
+			if (!$project || !$project->isOwner()) {
+				return json_encode(['success' => 0]);
 			}
 
 			$offer->offer_finish = date('Y-m-d', strtotime(Input::get('date')));
@@ -123,7 +133,7 @@ class OfferController extends Controller {
 			for ($i=0; $i < $offer->invoice_quantity; $i++) {
 				$invoice = new Invoice;
 				$invoice->priority = $i;
-				$invoice->invoice_code = InvoiceController::getInvoiceCodeConcept(Input::get('project_id'));
+				$invoice->invoice_code = InvoiceController::getInvoiceCodeConcept($project->id);
 				$invoice->payment_condition = 30;
 				$invoice->offer_id = $offer->id;
 				if (($i+1) == $offer->invoice_quantity)
@@ -137,11 +147,11 @@ class OfferController extends Controller {
 
 			if ($offer->invoice_quantity>1) {
 				$invamount = 0;
-				$invtotal = ResultEndresult::totalProject(Project::find(Input::get('project_id')));
+				$invtotal = ResultEndresult::totalProject(Project::find($project->id));
 				if ($offer->downpayment)
 					$invamount = $offer->downpayment_amount;
 				$invtotal-=$invamount;
-				$input = array('id' => $first_id, 'project' => Input::get('project_id'), 'amount' => $invamount, 'totaal' => $invtotal);
+				$input = array('id' => $first_id, 'project' => $project->id, 'amount' => $invamount, 'totaal' => $invtotal);
 				return App::make('InvoiceController')->doUpdateAmount(Input::merge($input));
 			}
 

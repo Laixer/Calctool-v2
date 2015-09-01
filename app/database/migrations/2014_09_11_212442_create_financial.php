@@ -38,7 +38,7 @@ class CreateFinancial extends Migration {
 			$table->text('closure')->nullable();
 			$table->text('extracondition')->nullable();
 			$table->boolean('downpayment')->default('N');
-			$table->integer('downpayment_amount')->unsigned()->nullable();
+			$table->decimal('downpayment_amount', 6, 3)->unsigned()->nullable();
 			$table->boolean('auto_email_reminder')->default('Y');
 			$table->nullableTimestamps();
 			$table->string('option_query', 150)->nullable();
@@ -68,16 +68,16 @@ class CreateFinancial extends Migration {
 			$table->string('reference', 30)->index()->nullable();
 			$table->string('invoice_code', 50)->index();
 			$table->string('book_code', 30)->index()->nullable();
-			$table->decimal('amount', 9, 2)->nullable();
+			$table->decimal('amount', 9, 3)->nullable();
 			$table->integer('payment_condition')->unsigned();
 			$table->string('option_query', 150)->nullable();
 			$table->nullableTimestamps();
 			$table->date('bill_date')->nullable();
 			$table->date('payment_date')->nullable();
 			$table->text('closure')->nullable();
-			$table->decimal('rest_21', 9, 2)->nullable();
-			$table->decimal('rest_6', 9, 2)->nullable();
-			$table->decimal('rest_0', 9, 2)->nullable();
+			$table->decimal('rest_21', 9, 3)->nullable();
+			$table->decimal('rest_6', 9, 3)->nullable();
+			$table->decimal('rest_0', 9, 3)->nullable();
 			$table->boolean('auto_email_reminder')->default('Y');
 			$table->integer('offer_id')->unsigned();
 			$table->foreign('offer_id')->references('id')->on('offer')->onUpdate('cascade')->onDelete('cascade');
@@ -93,22 +93,22 @@ class CreateFinancial extends Migration {
 	{
 		Schema::table('invoice', function(Blueprint $table)
 		{
-			Schema::drop('invoice');
+			Schema::dropIfExists('invoice');
 		});
 
 		Schema::table('offer', function(Blueprint $table)
 		{
-			Schema::drop('offer');
+			Schema::dropIfExists('offer');
 		});
 
 		Schema::table('valid', function(Blueprint $table)
 		{
-			Schema::drop('valid');
+			Schema::dropIfExists('valid');
 		});
 
 		Schema::table('deliver_time', function(Blueprint $table)
 		{
-			Schema::drop('deliver_time');
+			Schema::dropIfExists('deliver_time');
 		});
 	}
 

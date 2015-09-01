@@ -65,7 +65,7 @@ $(document).ready(function() {
 			</div>
 			@endif
 
-			<h2><strong>Mijn Calculatie Tool</strong> -account</h2>
+			<h2><strong>Mijn</strong> account</h2>
 
 				<div class="tabs nomargin-top">
 

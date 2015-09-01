@@ -1,7 +1,23 @@
 @extends('layout.master')
 
 @section('content')
-<?# -- WRAPPER -- ?>
+<script type="text/javascript" src="/plugins/summernote/summernote.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+  $('.summernote').summernote({
+            height: jQuery(this).attr("data-height") || 200,
+            toolbar: [
+                ["fontsize", ["fontsize"]],
+                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+                ["para", ["ul", "ol", "paragraph"]],
+                ["table", ["table"]],
+                ["media", ["link", "picture", "video"]],
+                ["misc", ["codeview"]]
+            ]
+        });
+});
+
+</script>
 <div id="wrapper">
 
 	<section class="container fix-footer-bottom">
@@ -43,6 +59,8 @@
 			</div>
 			@endif
 
+			<div class="white-row">
+
 			{{ Form::open(array('url' => 'project/new')) }}
 				<h4>Projectgegevens</h4>
 				<div class="row">
@@ -58,7 +76,7 @@
 							<label for="contractor">Opdrachtgever*</label>
 							<select name="contractor" id="contractor" class="form-control pointer">
 							@foreach (Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
-								<option value="{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
+								<option value="{{ $relation->id }}">{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); }}</option>
 							@endforeach
 							</select>
 							<a href="/relation/new">+ Nieuwe relatie toevoegen</a>
@@ -69,7 +87,11 @@
 							<label for="type">Type</label>
 							<select name="type" id="type" class="form-control pointer">
 								@foreach (ProjectType::all() as $type)
-									<option {{ $type->type_name=='calculatie' ? 'selected' : 'disabled' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
+								<?php
+								if ($type->type_name != 'calculatie' && $type->type_name != 'BTW verlegd')
+									continue;
+								?>
+									<option {{ $type->type_name=='calculatie' ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
 								@endforeach
 							</select>
 						</div>
@@ -141,16 +163,7 @@
 				<h4>Financieel</h4>
 				<div class="tabs nomargin-top">
 
-					<?# -- tabs -- ?>
-					<ul class="nav nav-tabs">
-						<li class="active">
-							<a href="#calc" data-toggle="tab">Uurtarief & Winstpercentages</a>
-						</li>
-					</ul>
 
-					<?# -- tabs content -- ?>
-					<div class="tab-content">
-						<div id="calc" class="tab-pane active">
 							<div class="row">
 								<div class="col-md-3"><h5><strong>Eigen uurtarief*</strong></h5></div>
 								<div class="col-md-1"></div>
@@ -161,10 +174,10 @@
 								<div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
 								<div class="col-md-1"><div class="pull-right">&euro;</div></div>
 								<div class="col-md-2">
-									<input name="hour_rate" id="hour_rate" type="text" min="0" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : str_replace('.', ',', Auth::user()->pref_hourrate_calc) }}" class="form-control-sm-number"/>
+									<input name="hour_rate" id="hour_rate" type="text" min="0" max="999" maxlength="3" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : str_replace('.', ',', Auth::user()->pref_hourrate_calc) }}" class="form-control-sm-number"/>
 								</div>
 								<div class="col-md-2">
-									<input name="more_hour_rate" id="more_hour_rate" type="text" min="0" max="1000" value="{{ Input::old('more_hour_rate') ? Input::old('more_hour_rate') : str_replace('.', ',', Auth::user()->pref_hourrate_more) }}" class="form-control-sm-number"/>
+									<input name="more_hour_rate" id="more_hour_rate" type="text" min="0" max="999" maxlength="3" value="{{ Input::old('more_hour_rate') ? Input::old('more_hour_rate') : str_replace('.', ',', Auth::user()->pref_hourrate_more) }}" class="form-control-sm-number"/>
 								</div>
 							</div>
 							<h5><strong>Aanneming</strong></h5>
@@ -172,20 +185,20 @@
 								<div class="col-md-3"><label for="profit_material_1">Winstpercentage materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_material_1" id="profit_material_1" type="number" min="0" max="200" value="{{ Input::old('profit_material_1') ? Input::old('profit_material_1') : Auth::user()->pref_profit_calc_contr_mat }}" class="form-control-sm-number"/>
+									<input name="profit_material_1" id="profit_material_1" type="text" min="0" max="200" maxlength="3" value="{{ Input::old('profit_material_1') ? Input::old('profit_material_1') : Auth::user()->pref_profit_calc_contr_mat }}" class="form-control-sm-number"/>
 								</div>
 								<div class="col-md-2">
-									<input name="more_profit_material_1" id="more_profit_material_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_1') ? Input::old('more_profit_material_1') : Auth::user()->pref_profit_more_contr_mat }}" class="form-control-sm-number"/>
+									<input name="more_profit_material_1" id="more_profit_material_1" type="text" min="0" max="200" maxlength="3" value="{{ Input::old('more_profit_material_1') ? Input::old('more_profit_material_1') : Auth::user()->pref_profit_more_contr_mat }}" class="form-control-sm-number"/>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage materieel</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_equipment_1" id="profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_1') ? Input::old('profit_equipment_1') : Auth::user()->pref_profit_calc_contr_equip }}" class="form-control-sm-number"/>
+									<input name="profit_equipment_1" id="profit_equipment_1" type="text" min="0" max="200" maxlength="3" value="{{ Input::old('profit_equipment_1') ? Input::old('profit_equipment_1') : Auth::user()->pref_profit_calc_contr_equip }}" class="form-control-sm-number"/>
 								</div>
 							<div class="col-md-2">
-									<input name="more_profit_equipment_1" id="more_profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_1') ? Input::old('more_profit_equipment_1') : Auth::user()->pref_profit_more_contr_equip }}" class="form-control-sm-number"/>
+									<input name="more_profit_equipment_1" id="more_profit_equipment_1" type="text" min="0" max="200" maxlength="3" value="{{ Input::old('more_profit_equipment_1') ? Input::old('more_profit_equipment_1') : Auth::user()->pref_profit_more_contr_equip }}" class="form-control-sm-number"/>
 								</div>
 							</div>
 							<h5><strong>Onderaanneming</strong></h5>
@@ -193,24 +206,23 @@
 								<div class="col-md-3"><label for="profit_material_2">Winstpercentage materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_material_2" id="profit_material_2" type="number" min="0" max="200" value="{{ Input::old('profit_material_2') ? Input::old('profit_material_2') : Auth::user()->pref_profit_calc_subcontr_mat }}" class="form-control-sm-number"/>
+									<input name="profit_material_2" id="profit_material_2" type="text" min="0" max="200" maxlength="3" value="{{ Input::old('profit_material_2') ? Input::old('profit_material_2') : Auth::user()->pref_profit_calc_subcontr_mat }}" class="form-control-sm-number"/>
 								</div>
 							<div class="col-md-2">
-									<input name="more_profit_material_2" id="more_profit_material_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_2') ? Input::old('more_profit_material_2') : Auth::user()->pref_profit_more_subcontr_mat }}" class="form-control-sm-number"/>
+									<input name="more_profit_material_2" id="more_profit_material_2" type="text" min="0" max="200" maxlength="3" value="{{ Input::old('more_profit_material_2') ? Input::old('more_profit_material_2') : Auth::user()->pref_profit_more_subcontr_mat }}" class="form-control-sm-number"/>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage materieel</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2">
-									<input name="profit_equipment_2" id="profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_2') ? Input::old('profit_equipment_2') : Auth::user()->pref_profit_calc_subcontr_equip }}" class="form-control-sm-number"/>
+									<input name="profit_equipment_2" id="profit_equipment_2" type="text" min="0" max="200" maxlength="3" value="{{ Input::old('profit_equipment_2') ? Input::old('profit_equipment_2') : Auth::user()->pref_profit_calc_subcontr_equip }}" class="form-control-sm-number"/>
 								</div>
 							<div class="col-md-2">
-									<input name="more_profit_equipment_2" id="more_profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_2') ? Input::old('more_profit_equipment_2') : Auth::user()->pref_profit_more_subcontr_equip }}" class="form-control-sm-number"/>
+									<input name="more_profit_equipment_2" id="more_profit_equipment_2" type="text" min="0" max="200" maxlength="3" value="{{ Input::old('more_profit_equipment_2') ? Input::old('more_profit_equipment_2') : Auth::user()->pref_profit_more_subcontr_equip }}" class="form-control-sm-number"/>
 								</div>
 							</div>
-						</div>
-					</div>
+
 				</div>
 
 				<div class="row">
@@ -220,6 +232,7 @@
 				</div>
 
 			{{ Form::close() }}
+			</div>
 
 		</div>
 

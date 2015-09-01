@@ -172,6 +172,7 @@ if (!$project || !$project->isOwner()) {
 				</div>
 			</div>
 
+			<div class="white-row">
 			<h2><strong>Factuurbeheer</strong></h2>
 			<table class="table table-striped">
 				<?# -- table head -- ?>
@@ -214,8 +215,8 @@ if (!$project || !$project->isOwner()) {
 						      <span class="caret"></span>
 						    </button>
 						    <ul class="dropdown-menu">
-						      <li><a target="blank" href="/invoice/pdf/project-{{ $project->id }}/term-invoice-{{ $invoice->id }}">Bekijk PDF</a></li>
-						      <li><a href="/invoice/pdf/project-{{ $project->id }}/term-invoice-{{ $invoice->id }}/download?file={{ InvoiceController::getInvoiceCode($project->id).'-factuur.pdf' }}">Download PDF</a></li>
+						      <li><a target="blank" href="/invoice/pdf/project-{{ $project->id }}/term-invoice-{{ $invoice->id }}{{ $invoice->option_query ? '?'.$invoice->option_query : '' }}">Bekijk PDF</a></li>
+						      <li><a href="/invoice/pdf/project-{{ $project->id }}/term-invoice-{{ $invoice->id }}/download?file={{ InvoiceController::getInvoiceCode($project->id).'-factuur.pdf' }}{{ $invoice->option_query ? '&'.$invoice->option_query : '' }}">Download PDF</a></li>
 						    </ul>
 						  </div>
 						<?php
@@ -248,8 +249,8 @@ if (!$project || !$project->isOwner()) {
 						      <span class="caret"></span>
 						    </button>
 						    <ul class="dropdown-menu">
-						      <li><a target="blank" href="/invoice/pdf/project-{{ $project->id }}/invoice-{{ $invoice_end->id }}">Bekijk PDF</a></li>
-						      <li><a href="/invoice/pdf/project-{{ $project->id }}/invoice-{{ $invoice_end->id }}/download?file={{ InvoiceController::getInvoiceCode($project->id).'-factuur.pdf' }}">Download PDF</a></li>
+						      <li><a target="blank" href="/invoice/pdf/project-{{ $project->id }}/invoice-{{ $invoice_end->id }}{{ $invoice_end->option_query ? '?'.$invoice_end->option_query : '' }}">Bekijk PDF</a></li>
+						      <li><a href="/invoice/pdf/project-{{ $project->id }}/invoice-{{ $invoice_end->id }}/download?file={{ InvoiceController::getInvoiceCode($project->id).'-factuur.pdf' }}{{ $invoice_end->option_query ? '&'.$invoice_end->option_query : '' }}">Download PDF</a></li>
 						    </ul>
 						  </div>
 						<?php } else if ($close && !$project->project_close) {
@@ -273,6 +274,7 @@ if (!$project || !$project->isOwner()) {
 				</div>
 			</div>
 			@endif
+		</div>
 		</div>
 
 	</section>

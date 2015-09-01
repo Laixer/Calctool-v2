@@ -22,7 +22,6 @@ if (!$project || !$project->isOwner())
 <?php }else{ ?>
 
 @section('content')
-<?# -- WRAPPER -- ?>
 
 <script type="text/javascript">
 Number.prototype.formatMoney = function(c, d, t){
@@ -96,6 +95,11 @@ var n = this,
 			$(this).val(parseFloat($(this).val().split('.').join('').replace(',', '.')).formatMoney(2, ',', '.'));
 		});
 		$(".radio-activity").change(function(){
+			if ($(this).val()==2) {
+				$(this).closest('.toggle-content').find(".rate").html('<input name="rate" type="text" value="{{ number_format($project->hour_rate_more, 2,",",".") }}" class="form-control-sm-number labor-amount lsave">');
+			} else {
+				$(this).closest('.toggle-content').find(".rate").text('{{ number_format($project->hour_rate_more, 2,",",".") }}');
+			}
 			$.post("/calculation/updatepart", {project: {{ $project->id }}, value: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
 		});
 		$(".select-tax").change(function(){
@@ -205,7 +209,7 @@ var n = this,
 						$curThis.closest("tr").attr("data-id", json.id);
 						var rate = $curThis.closest("tr").find("input[name='rate']").val()
 						if (rate) {
-							rate.toString().split('.').join('').replace(',', '.');
+							rate = rate.toString().split('.').join('').replace(',', '.');
 						} else {
 							rate = {{$project->hour_rate_more}};
 						}
@@ -436,6 +440,7 @@ var n = this,
 			if($curThis.closest("tr").attr("data-id"))
 				$.post("/more/deletelabor", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(){
 					$curThis.closest("tr").find("input").val("0,00");
+					$curThis.closest("tr").find(".total-ex-tax").text('€ 0,00');
 				}).fail(function(e) { console.log(e); });
 		});
 		$("body").on("click", ".deleteact", function(e){
@@ -602,21 +607,30 @@ var n = this,
 					<div id="calculate" class="tab-pane">
 						<div class="toogle">
 
-							@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+							@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
 							<div id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
 								<label>{{ $chapter->chapter_name }}</label>
 								<div class="toggle-content">
 
 									<div class="toogle">
 
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
+										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
+										<?php
+										$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
+										?>
 										<div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
 											<label>{{ $activity->activity_name }}</label>
 											<div class="toggle-content">
 												<div class="row">
 													<div class="col-md-4"></div>
+													<?php
+													if ($count) {
+													?>
+													<div class="col-md-4"><strong>Aanneming</strong></div>
+													<?php } else { ?>
 													<div class="col-md-2"><label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','contracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='contracting' ? 'checked' : '') }}/>Aanneming</label></div>
 	    											<div class="col-md-2"><label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming</label></div>
+	    											<?php } ?>
 													<div class="col-md-2 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving toevoegen</button></div>
 													<div class="col-md-2 text-right"><button data-id="{{ $activity->id }}" class="btn btn-danger btn-xs deleteact">Verwijderen</button></div>
 												</div>
@@ -624,17 +638,24 @@ var n = this,
 													<div class="col-md-2"><h4>Arbeid<strong> <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u meerwerk op basis van regie toevoegen bestemd voor op de factuur. Voor arbeid geldt: uren die bij de urenregistratie geboekt worden overschrijven de opgegeven hoeveel arbeid voor deze werkzaamheid." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
 													<div class="col-md-2">
+													@if (ProjectType::find($project->type_id)->type_name == 'BTW verlegd')
+														<span>0%</span>
+													@else
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-labor" id="type" class="form-control-sm-text pointer select-tax">
 														@foreach (Tax::all() as $tax)
+															<?php
+															if ($tax->id == 1)
+																continue;
+															?>
 															<option value="{{ $tax->id }}" {{ ($activity->tax_labor_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
 														@endforeach
 														</select>
+													@endif
 													</div>
 													<div class="col-md-6"></div>
 												</div>
 												<table class="table table-striped" data-id="{{ $activity->id }}">
 													<?php
-													$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
 													if ($count) {
 													?>
 													<thead>
@@ -687,13 +708,14 @@ var n = this,
 														<?php
 														}else {
 															$labor = MoreLabor::where('activity_id','=', $activity->id)->first();
+															$rate = $labor['rate'] ? $labor['rate'] : $project->hour_rate_more;
 														?>
 														<tr {{ $labor ? ('data-id="'.$labor->id.'"') : '' }} >
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">{{ number_format($project->hour_rate_more, 2,",",".") }}</td>
+															<td class="col-md-1"><span class="rate">{{ Part::find($activity->part_id)->part_name=='subcontracting' ? '<input name="rate" type="text" value="'.number_format($rate, 2,",",".").'" class="form-control-sm-number labor-amount lsave">' : number_format($project->hour_rate_more, 2,",",".") }}</span></td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ $labor ? number_format($labor->amount, 2, ",",".") : '' }}" class="form-control-sm-number labor-amount lsave" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ $labor ? ('&euro; '.number_format(MoreRegister::laborTotal($labor->rate, $labor->amount, 2, ",","."))) : '' }}</span></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ $labor ? ('&euro; '.number_format(MoreRegister::laborTotal($labor->rate, $labor->amount), 2, ",",".")) : '' }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1 text-right"><button class="btn btn-danger ldeleterow btn-xs fa fa-times"></button></td>
 														</tr>
@@ -705,11 +727,19 @@ var n = this,
 													<div class="col-md-2"><h4>Materiaal</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
 													<div class="col-md-2">
+													@if (ProjectType::find($project->type_id)->type_name == 'BTW verlegd')
+														<span>0%</span>
+													@else
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-material" id="type" class="form-control-sm-text pointer select-tax">
-														@foreach (Tax::all() as $tax)
+														@foreach (Tax::all() as $tax)'
+															<?php
+															if ($tax->id == 1)
+																continue;
+															?>
 															<option value="{{ $tax->id }}" {{ ($activity->tax_material_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
 														@endforeach
 														</select>
+													@endif
 													</div>
 													<div class="col-md-2"></div>
 												</div>
@@ -798,11 +828,19 @@ var n = this,
 													<div class="col-md-2"><h4>Materieel</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
 													<div class="col-md-2">
+													@if (ProjectType::find($project->type_id)->type_name == 'BTW verlegd')
+														<span>0%</span>
+													@else
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-equipment" id="type" class="form-control-sm-text pointer select-tax">
 														@foreach (Tax::all() as $tax)
+															<?php
+															if ($tax->id == 1)
+																continue;
+															?>
 															<option value="{{ $tax->id }}" {{ ($activity->tax_equipment_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
 														@endforeach
 														</select>
+													@endif
 													</div>
 													<div class="col-md-8"></div>
 												</div>
@@ -948,8 +986,8 @@ var n = this,
 
 										<!-- table items -->
 										<tbody>
-											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
+											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
 											<tr><!-- item -->
 												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-4">{{ $activity->activity_name }}</td>
@@ -996,8 +1034,8 @@ var n = this,
 
 										<!-- table items -->
 										<tbody>
-											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
+											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
 											<tr><!-- item -->
 												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-4">{{ $activity->activity_name }}</td>
@@ -1080,6 +1118,7 @@ var n = this,
 
 							<!-- table items -->
 							<tbody>
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr><!-- item -->
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ number_format(MoreEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -1098,8 +1137,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@else
 								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ number_format(MoreEndresult::conCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1107,7 +1147,9 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr><!-- item -->
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1126,8 +1168,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@else
 								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1135,7 +1178,9 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr><!-- item -->
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1154,8 +1199,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@else
 								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1163,6 +1209,7 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
 								<tr><!-- item -->
 									<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
@@ -1193,6 +1240,7 @@ var n = this,
 
 							<!-- table items -->
 							<tbody>
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr><!-- item -->
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ number_format(MoreEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -1211,8 +1259,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::subconCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@else
 								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ number_format(MoreEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1220,7 +1269,9 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr><!-- item -->
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1239,8 +1290,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::subconCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@else
 								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1248,7 +1300,9 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr><!-- item -->
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1267,8 +1321,9 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@else
 								<tr><!-- item -->
-									<td class="col-md-4">&nbsp;</td>
+									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1276,6 +1331,7 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
+								@endif
 
 								<tr><!-- item -->
 									<td class="col-md-4"><strong>Totaal Onderaanneming </strong></td>
@@ -1309,6 +1365,7 @@ var n = this,
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
+								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr><!-- item -->
 									<td class="col-md-6">BTW bedrag aanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>
@@ -1333,6 +1390,7 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
+								@endif
 								<tr><!-- item -->
 									<td class="col-md-6">Te factureren BTW bedrag</td>
 									<td class="col-md-2">&nbsp;</td>
