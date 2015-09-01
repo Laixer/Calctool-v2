@@ -109,8 +109,12 @@ $(document).ready(function() {
 								</div>
 								<div class="col-md-2">
 									<div class="form-group">
-										<label for="toggle-gender" style="display:block;">Geslacht</label>
-										<input name="toggle-gender" type="checkbox" {{ $user->gender ? 'checked' : '' }}>
+										<label for="gender" style="display:block;">Geslacht</label>
+										<select name="gender" id="gender" class="form-control pointer">
+											<option value="-1">Selecteer</option>
+											<option {{ $user->gender=='M' ? 'selected' : ''; }} value="M">Man</option>
+											<option {{ $user->gender=='V' ? 'selected' : ''; }} value="V">Vrouw</option>
+										</select>
 									</div>
 								</div>
 							</div>

@@ -217,9 +217,9 @@ class UserController extends Controller {
 	public function doMyAccountUser()
 	{
 		$rules = array(
-			'lastname' => array('required','max:50'),
 			'firstname' => array('required','max:30'),
-			'gender' => array('required'),
+			//'lastname' => array('required','max:50'),
+			//'gender' => array('required'),
 			'mobile' => array('alpha_num','max:14'),
 			'telephone' => array('alpha_num','max:14'),
 			'email' => array('required','email','max:80'),
@@ -247,12 +247,21 @@ class UserController extends Controller {
 
 			/* Contact */
 			$user->firstname = Input::get('firstname');$user->firstname = Input::get('firstname');
-			$user->lastname = Input::get('lastname');
-			$user->gender = Input::get('gender');
+			if (Input::get('lastname'))
+				$user->lastname = Input::get('lastname');
+			if (Input::get('gender')) {
+				if (Input::get('gender') == '-1')
+					$user->gender = NULL;
+				else
+					$user->gender = Input::get('gender');
+			}
 			$user->email = Input::get('email');
-			$user->mobile = Input::get('mobile');
-			$user->phone = Input::get('phone');
-			$user->website = Input::get('website');
+			if (Input::get('mobile'))
+				$user->mobile = Input::get('mobile');
+			if (Input::get('phone'))
+				$user->phone = Input::get('phone');
+			if (Input::get('website'))
+				$user->website = Input::get('website');
 
 			/* Adress */
 			//Geconstateerd werd of een adres voor de gebruikers account wel nodig was, dit saat immers ook bij mijn bedrijf
@@ -265,7 +274,7 @@ class UserController extends Controller {
 
 			$user->save();
 
-			return Redirect::back()->with('success', 1);
+			return Redirect::back()->with('success', 'Gegevens opgeslagen');
 		}
 	}
 

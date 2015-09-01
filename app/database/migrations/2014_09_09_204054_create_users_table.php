@@ -40,7 +40,7 @@ class CreateUsersTable extends Migration {
 			$table->increments('id');
 			$table->string('username', 50)->unique();
 			$table->string('secret', 64);
-			$table->boolean('gender')->nullable();
+			$table->char('gender', 1)->nullable();
 			$table->string('firstname', 30);
 			$table->string('lastname', 50)->nullable();
 			$table->char('api', 32)->unique();
