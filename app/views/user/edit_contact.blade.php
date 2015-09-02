@@ -113,6 +113,7 @@ if (!$contact) {
 						</div>
 					</div>
 
+					@if (RelationKind::find($relation->kind_id)->kind_name=='zakelijk')
 					<div class="col-md-4 company">
 						<div class="form-group">
 							<label for="contactfunction">Functie*</label>
@@ -123,6 +124,7 @@ if (!$contact) {
 							</select>
 						</div>
 					</div>
+					@endif
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="gender" style="display:block;">Geslacht</label>
