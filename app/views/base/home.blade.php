@@ -4,6 +4,15 @@
 $next_step = Cookie::get('nstep');
 if (Input::get('nstep') == 'intro')
 	$next_step = 'intro';
+
+$relation = Relation::find(Auth::user()->self_id);
+if ($relation)
+	$iban = Iban::where('relation_id','=',$relation->id)->first();
+else
+	$iban = null;
+
+//$contact = Contact::where('relation_id','=',$relation->id)->first();
+
 ?>
 
 @section('content')
@@ -26,72 +35,140 @@ if (Input::get('nstep') == 'intro')
 			</div>
 
 			<div class="modal-body">
-				<h2>Welkom Beta-gebruiker</h2>
-				<p>Bedankt dat jij mij wilt helpen met het testen van de CalcTool.nl.
-				<br>
-				Omdat de CalcTool.nl zich nog in een test-fase bevindt kunnen er af en toe wat foutjes optreden of bepaalde zaken niet helemaal lekker lopen of duidelijk zijn.
-				Hiervoor verwijs ik je graag naar de korte video handleiding die je hebt ontvangen in de email met de uitnodiging.
-				<br>
-				Mocht je tegen dingen aanlopen die ik daar niet in heb genoemd, dan hoor ik dat graag van je.</p>
-				<p>Met vriendelijke groet,</p>
-				<p class="lead">Cal</p>
+				<p>Na het invullen van deze QuickStart kan je direct starten met de CalculatieTool.
 
-				@if (0)
-				<div class="tabs">
+				{{ Form::open(array('url' => '/mycompany/quickstart')) }}
 
-					<!-- tabs -->
-					<ul class="nav nav-tabs">
-						<li class="active"><a href="#service-1" data-toggle="tab" aria-expanded="true"><i class="fa fa-heart-o"></i> Intro</a></li>
-						<li class=""><a href="#service-2" data-toggle="tab" aria-expanded="false"><i class="fa fa-smile-o"></i> Account</a></li>
-						<li class=""><a href="#service-3" data-toggle="tab" aria-expanded="false"><i class="fa fa-microphone"></i> Mijn Bedijf</a></li>
-						<li class=""><a href="#service-4" data-toggle="tab" aria-expanded="false"><i class="fa fa-windows"></i> Service 4</a></li>
-						<li class=""><a href="#service-5" data-toggle="tab" aria-expanded="false"><i class="fa fa-flask"></i> Service 5</a></li>
-					</ul>
-
-					<!-- tabs content -->
-					<div class="tab-content">
-						<div class="tab-pane active" id="service-1">
-							<!--<i class="featured-icon pull-left fa fa-heart-o"></i>
-							<p>Praesent est laborum dolo rumes fugats untras. Etha rums ser quidem rerum facilis dolores nemis onis fugats vitaes nemo minima rerums unsers sadips amets. Ut enim ad minim veniam, quis nostrud Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci amets uns. Etharums ser quidem rerum. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Asunt in anim uis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla dolores ipsums fugiats. Etha rums ser quidem rerum facilis dolores nemis onis fugats vitaes nemo minima rerums unsers sadips amets. Ut enim ad minim veniam, quis nostrud neque porro quisquam est. Asunt in anim uis aute irure dolor in reprehenderit in voluptate velit.</p>
-							<p>Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor.</p>-->
-							<p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque neque eget diam posuere porta. Quisque ut nulla at nunc vehicula lacinia. Proin adipiscing porta tellus, ut feugiat nibh adipiscing sit amet.</p>
+				<h4 class="company">Jouw Bedrijfsgegevens</h4>
+				<input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
+				<div class="row">
+					<div class="col-md-7">
+						<div class="form-group">
+							<label for="company_name">Bedrijfsnaam*</label>
+							<input name="company_name" id="company_name" type="text" value="{{ Input::old('company_name') ? Input::old('company_name') : ($relation ? $relation->company_name : '') }}" class="form-control" />
 						</div>
-
-						<div class="tab-pane" id="service-2">
-							<i class="featured-icon pull-left fa fa-smile-o"><!-- service icon --></i>
-							<p>Praesent est laborum dolo rumes fugats untras. Etha rums ser quidem rerum facilis dolores nemis onis fugats vitaes nemo minima rerums unsers sadips amets. Ut enim ad minim veniam, quis nostrud Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci amets uns. Etharums ser quidem rerum. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Asunt in anim uis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla dolores ipsums fugiats. Etha rums ser quidem rerum facilis dolores nemis onis fugats vitaes nemo minima rerums unsers sadips amets. Ut enim ad minim veniam, quis nostrud neque porro quisquam est. Asunt in anim uis aute irure dolor in reprehenderit in voluptate velit.</p>
-							<p>Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor.</p>
-							<p>Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa.</p>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="company_type">Bedrijfstype*</label>
+							<select name="company_type" id="company_type" class="form-control pointer">
+							@foreach (RelationType::all() as $type)
+								<option {{ $relation ? ($relation->type_id==$type->id ? 'selected' : '') : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
+							@endforeach
+							</select>
 						</div>
-
-						<div class="tab-pane" id="service-3">
-							<i class="featured-icon pull-left fa fa-microphone"><!-- service icon --></i>
-							<p>Praesent est laborum dolo rumes fugats untras. Etha rums ser quidem rerum facilis dolores nemis onis fugats vitaes nemo minima rerums unsers sadips amets. Ut enim ad minim veniam, quis nostrud Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci amets uns. Etharums ser quidem rerum. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Asunt in anim uis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla dolores ipsums fugiats. Etha rums ser quidem rerum facilis dolores nemis onis fugats vitaes nemo minima rerums unsers sadips amets. Ut enim ad minim veniam, quis nostrud neque porro quisquam est. Asunt in anim uis aute irure dolor in reprehenderit in voluptate velit.</p>
-							<p>Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa.</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="kvk">K.v.K nummer</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Je KVK-nummer dient te bestaan uit 8 cijfers" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
+							<input name="kvk" id="kvk" type="text" maxlength="8" minlength="8" value="{{ Input::old('kvk') ? Input::old('kvk') : ($relation ? $relation->kvk : '') }}" class="form-control"/>
 						</div>
-
-						<div class="tab-pane" id="service-4">
-							<i class="featured-icon pull-left fa fa-windows"><!-- service icon --></i>
-							<p>Praesent est laborum dolo rumes fugats untras. Etha rums ser quidem rerum facilis dolores nemis onis fugats vitaes nemo minima rerums unsers sadips amets. Ut enim ad minim veniam, quis nostrud Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci amets uns. Etharums ser quidem rerum. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Asunt in anim uis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla dolores ipsums fugiats. Etha rums ser quidem rerum facilis dolores nemis onis fugats vitaes nemo minima rerums unsers sadips amets. Ut enim ad minim veniam, quis nostrud neque porro quisquam est. Asunt in anim uis aute irure dolor in reprehenderit in voluptate velit.</p>
-							<p>Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor.</p>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="btw">BTW nummer</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Je BTW-nummer bestaat uit een combinatie van 12 cijfers en/of letters. Veelal beginnen nederlandse BTW-nummers met 'NL' en eindigen op 'B01'." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
+							<input name="btw" id="btw" type="text" maxlength="14" minlength="14" value="{{ Input::old('btw') ? Input::old('btw') : ($relation ? $relation->btw : '') }}" class="form-control"/>
 						</div>
-
-						<div class="tab-pane" id="service-5">
-							<i class="featured-icon pull-left fa fa-flask"><!-- service icon --></i>
-							<p>Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor.</p>
-							<p>Donec tellus massa, tristique sit amet condim vel, facilisis quis sapien. Praesent id enim sit amet odio vulputate eleifend in in tortor. Donec tellus massa.</p>
-						</div>
-
 					</div>
 
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="email_comp">Email*</label>
+							<input name="email_comp" id="email_comp" type="email" value="{{ Input::old('email_comp') ? Input::old('email_comp') : ($relation ? $relation->email : '') }}" class="form-control"/>
+						</div>
+					</div>
 				</div>
-				@endif
+				<div class="row">
+					<div class="col-md-5">
+						<div class="form-group">
+							<label for="street">Straat*</label>
+							<input name="street" id="street" type="text" value="{{ Input::old('street') ? Input::old('street') : ($relation ? $relation->address_street : '') }}" class="form-control"/>
+						</div>
+					</div>
 
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="address_number">Huis nr.*</label>
+							<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') ? Input::old('address_number') : ($relation ? $relation->address_number : '') }}" class="form-control"/>
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="zipcode">Postcode*</label>
+							<input name="zipcode" id="zipcode" maxlength="6" type="text" value="{{ Input::old('zipcode') ? Input::old('zipcode') : ($relation ? $relation->address_postal : '') }}" class="form-control"/>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="city">Plaats*</label>
+							<input name="city" id="city" type="text" value="{{ Input::old('city') ? Input::old('city') : ($relation ? $relation->address_city : '') }}" class="form-control"/>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="province">Provincie*</label>
+							<select name="province" id="province" class="form-control pointer">
+								@foreach (Province::all() as $province)
+									<option {{ $relation ? ($relation->province_id==$province->id ? 'selected' : '') : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="country">Land*</label>
+							<select name="country" id="country" class="form-control pointer">
+								@foreach (Country::all() as $country)
+									<option {{ $relation ? ($relation->country_id==$country->id ? 'selected' : '') : ($country->country_name=='nederland' ? 'selected' : '')}} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<h4>Jouw Contactgegevens</h4>
+				<div class="row">
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="contact_firstname">Voornaam*</label>
+							<input name="contact_firstname" id="contact_firstname" type="text" value="{{ Input::old('contact_firstname') }}" class="form-control"/>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="contact_name">Achternaam*</label>
+							<input name="contact_name" id="contact_name" type="text" value="{{ Input::old('contact_name') }}" class="form-control"/>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="email">Email*</label>
+							<input name="email" id="email" type="email" value="{{ Input::old('email') }}" class="form-control"/>
+						</div>
+					</div>
+					<div class="col-md-3 company">
+						<div class="form-group">
+							<label for="contactfunction">Functie</label>
+							<select name="contactfunction" id="contactfunction" class="form-control pointer">
+							@foreach (ContactFunction::all() as $function)
+								<option {{ $function->function_name=='directeur' ? 'selected' : '' }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
+							@endforeach
+							</select>
+						</div>
+					</div>
+				</div>
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-default" data-dismiss="modal" data-action="hide" style="border: #ddd 2px solid">Niet meer weergeven</button>
-				<button class="btn btn-default" data-dismiss="modal" style="border: #ddd 2px solid">Sluiten</button>
+					<div class="col-md-12">
+						<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+					</div>
 			</div>
 
 		</div>
