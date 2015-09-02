@@ -201,6 +201,10 @@ class RelationController extends Controller {
 			$contact->email = Input::get('email');
 			$contact->note = Input::get('note');
 			$contact->function_id = Input::get('contactfunction');
+			if (Input::get('gender') == '-1')
+				$contact->gender = NULL;
+			else
+				$contact->gender = Input::get('gender');
 
 			$contact->save();
 
@@ -419,6 +423,10 @@ class RelationController extends Controller {
 			$contact->note = Input::get('note');
 			$contact->relation_id = $relation->id;
 			$contact->function_id = Input::get('contactfunction');
+			if (Input::get('gender') == '-1')
+				$contact->gender = NULL;
+			else
+				$contact->gender = Input::get('gender');
 
 			$contact->save();
 
@@ -470,6 +478,10 @@ class RelationController extends Controller {
 			$contact->note = Input::get('note');
 			$contact->relation_id = $relation->id;
 			$contact->function_id = Input::get('contactfunction');
+			if (Input::get('gender') == '-1')
+				$contact->gender = NULL;
+			else
+				$contact->gender = Input::get('gender');
 
 			$contact->save();
 

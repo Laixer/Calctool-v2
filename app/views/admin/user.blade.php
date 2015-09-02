@@ -24,11 +24,9 @@ function userActive($user) {
 	return date('d-m-Y H:i:s', $time_updated);
 }
 ?>
-<?# -- WRAPPER -- ?>
 <div id="wrapper">
 
 	<section class="container">
-
 		<div class="col-md-12">
 
 			<div>
@@ -42,8 +40,8 @@ function userActive($user) {
 
 			<h2><strong>Gebruikers</strong></h2>
 
+			<div class="white-row">
 			<table class="table table-striped">
-				<?# -- table head -- ?>
 				<thead>
 					<tr>
 						<th class="col-md-3">Gebruikersnaam</th>
@@ -55,7 +53,6 @@ function userActive($user) {
 					</tr>
 				</thead>
 
-				<!-- table items -->
 				<tbody>
 				@foreach (User::orderBy('created_at')->get() as $users)
 					<tr>
@@ -74,10 +71,10 @@ function userActive($user) {
 					<a href="/admin/user/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuwe gebruiker</a>
 				</div>
 			</div>
+			</div>
 		</div>
 
 	</section>
 
 </div>
-<!-- /WRAPPER -->
 @stop

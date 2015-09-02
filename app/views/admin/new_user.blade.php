@@ -69,7 +69,7 @@ $(document).ready(function() {
 			@endif
 
 			<h2><strong>Nieuwe</strong> gebruiker</h2>
-
+			<div class="white-row" >
 				{{ Form::open(array('url' => '/admin/user/new')) }}
 
 				<h4 class="company">Gebruikersgegevens</h4>
@@ -145,6 +145,16 @@ $(document).ready(function() {
 						<div class="form-group">
 							<label for="website">Website</label>
 							<input name="website" id="website" type="url" value="{{ Input::old('website') }}" class="form-control"/>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="gender" style="display:block;">Geslacht</label>
+							<select name="gender" id="gender" class="form-control pointer">
+								<option value="-1">Selecteer</option>
+								<option value="M">Man</option>
+								<option value="V">Vrouw</option>
+							</select>
 						</div>
 					</div>
 
@@ -262,6 +272,7 @@ $(document).ready(function() {
 				</div>
 
 			{{ Form::close() }}
+			</div>
 
 		</div>
 

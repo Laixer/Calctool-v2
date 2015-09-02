@@ -280,6 +280,16 @@ $(document).ready(function() {
 							</select>
 						</div>
 					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="gender" style="display:block;">Geslacht</label>
+							<select name="gender" id="gender" class="form-control pointer">
+								<option value="-1">Selecteer</option>
+								<option value="M">Man</option>
+								<option value="V">Vrouw</option>
+							</select>
+						</div>
+					</div>
 
 				</div>
 

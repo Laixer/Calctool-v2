@@ -219,6 +219,10 @@ class AdminController extends Controller {
 				$user->api_access = true;
 			else
 				$user->api_access = false;
+			if (!Input::get('gender') || Input::get('gender') == '-1')
+				$user->gender = NULL;
+			else
+				$user->gender = Input::get('gender');
 
 			$user->save();
 
@@ -299,6 +303,10 @@ class AdminController extends Controller {
 				$user->api_access = true;
 			else
 				$user->api_access = false;
+			if (!Input::get('gender') || Input::get('gender') == '-1')
+				$user->gender = NULL;
+			else
+				$user->gender = Input::get('gender');
 
 			$user->save();
 
