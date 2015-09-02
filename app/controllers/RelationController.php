@@ -174,7 +174,7 @@ class RelationController extends Controller {
 			//'mobile' => array('alpha_num','max:14'),
 			//'telephone' => array('alpha_num','max:14'),
 			'email' => array('required','email','max:80'),
-			'contactfunction' => array('required','numeric'),
+			//'contactfunction' => array('required','numeric'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -194,13 +194,19 @@ class RelationController extends Controller {
 				return Redirect::back()->withInput(Input::all());
 			}
 
-			$contact->firstname = Input::get('contact_firstname');
+			if (Input::get('contact_firstname'))
+				$contact->firstname = Input::get('contact_firstname');//;
 			$contact->lastname = Input::get('contact_name');
 			$contact->mobile = Input::get('mobile');
 			$contact->phone = Input::get('telephone');
 			$contact->email = Input::get('email');
 			$contact->note = Input::get('note');
-			$contact->function_id = Input::get('contactfunction');
+			if (Input::get('contactfunction'))
+				$contact->function_id = Input::get('contactfunction');
+			if (Input::get('gender') == '-1')
+				$contact->gender = NULL;
+			else
+				$contact->gender = Input::get('gender');
 
 			$contact->save();
 
@@ -419,6 +425,10 @@ class RelationController extends Controller {
 			$contact->note = Input::get('note');
 			$contact->relation_id = $relation->id;
 			$contact->function_id = Input::get('contactfunction');
+			if (Input::get('gender') == '-1')
+				$contact->gender = NULL;
+			else
+				$contact->gender = Input::get('gender');
 
 			$contact->save();
 
@@ -470,6 +480,10 @@ class RelationController extends Controller {
 			$contact->note = Input::get('note');
 			$contact->relation_id = $relation->id;
 			$contact->function_id = Input::get('contactfunction');
+			if (Input::get('gender') == '-1')
+				$contact->gender = NULL;
+			else
+				$contact->gender = Input::get('gender');
 
 			$contact->save();
 

@@ -163,6 +163,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('mycompany/contact/new', function(){
 		return View::make('user.mycompany_contact');
 	});
+	Route::post('mycompany/quickstart', array('uses' => 'QuickstartController@doNewMyCompanyQuickstart'));
 
 	Route::post('relation/updatemycompany', array('as' => 'relation.update', 'uses' => 'RelationController@doUpdateMyCompany'));
 	Route::post('relation/newmycompany', array('as' => 'relation.new', 'uses' => 'RelationController@doNewMyCompany'));

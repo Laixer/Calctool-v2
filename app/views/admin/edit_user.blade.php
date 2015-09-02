@@ -79,14 +79,14 @@ $(document).ready(function() {
 				  <span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-				  <li><a href="/admin/user-{{ $user->id }}/switch">Gebruker overnemen</a></li>
+				  <li><a href="/admin/user-{{ $user->id }}/switch">Gebruiker overnemen</a></li>
 				  <li><a href="/admin/user-{{ $user->id }}/demo">Demo project laden</a></li>
 				</ul>
 				</div>
 			</div>
 
 			<h2><strong>Gebruiker</strong> {{ $user->username }}</h2>
-
+			<div class="white-row">
 				<form method="post" action="">
 
 				<h4 class="company">Gebruikersgegevens</h4>
@@ -162,6 +162,16 @@ $(document).ready(function() {
 						<div class="form-group">
 							<label for="website">Website</label>
 							<input name="website" id="website" type="url" value="{{ Input::old('website') ? Input::old('website') : $user->website }}" class="form-control"/>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="gender" style="display:block;">Geslacht</label>
+							<select name="gender" id="gender" class="form-control pointer">
+								<option value="-1">Selecteer</option>
+								<option {{ $user->gender=='M' ? 'selected' : '' }} value="M">Man</option>
+								<option {{ $user->gender=='V' ? 'selected' : '' }} value="V">Vrouw</option>
+							</select>
 						</div>
 					</div>
 
@@ -293,6 +303,7 @@ $(document).ready(function() {
 				</div>
 
 			</form>
+			</div>
 
 		</div>
 

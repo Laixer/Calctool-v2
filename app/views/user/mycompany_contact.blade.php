@@ -41,7 +41,7 @@ $contact = Contact::where('relation_id','=',$relation->id)->first();
 			<br>
 
 			<h2><strong>Nieuw</strong> contact</h2>
-
+			<div class="white-row">
 				{{ Form::open(array('url' => '/mycompany/contact/new')) }}
 				<h4>Contactgegevens</h4>
 				<div class="row">
@@ -99,6 +99,7 @@ $contact = Contact::where('relation_id','=',$relation->id)->first();
 				</div>
 
 			{{ Form::close() }}
+			</div>
 
 		</div>
 

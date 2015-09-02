@@ -162,8 +162,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         </thead>
         <tbody>
           <tr style="page-break-after: always;">
-            <td class="qty"><strong>Calculatief te offreren (excl. BTW)</strong></td>
-            <td class="qty"><strong class="pull-right">{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</strong></td>
+            <td class="qty">Calculatief te offreren (excl. BTW)</td>
+            <td class="qty"><class="pull-right">{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</td>
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
@@ -184,6 +184,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty">&nbsp;</td>
           </tr>
           @endif
+          <!--
           <tr style="page-break-after: always;">
             <td class="qty"><strong>Te offreren BTW bedrag</strong></td>
             <td class="qty">&nbsp;</td>
@@ -191,6 +192,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProjectTax($project), 2, ",",".") }}</strong></td>
             <td class="qty">&nbsp;</td>
           </tr>
+          -->
           <tr style="page-break-after: always;">
             <td class="qty"><strong>Calculatief te offreren (Incl. BTW)</strong></td>
             <td class="qty">&nbsp;</td>
@@ -208,6 +210,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         <li>Indien opdracht gegund wordt, ontvangt u één eindfactuur.</li>
         <li>Wij kunnen de werkzaamheden starten binnen {{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }} na uw opdrachtbevestiging.</li>
         <li>Deze offerte is geldig tot {{ Valid::find($offer_last->valid_id)->valid_name }} na dagtekening.</li>
+        @if($offer_last->extracondition)
+        <li>{{ $offer_last->extracondition }}</li>
+        @endif
       </div>
       <div class="signing">Met vriendelijke groet,</div>
       <br>
@@ -315,6 +320,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty">&nbsp;</td>
           </tr>
           @endif
+          <tr>
+            <td class="qty">&nbsp;</td>
+          </tr>
           <tr style="page-break-after: always;">
             <td class="qty"><strong>Totaal Aanneming </strong></td>
             <td class="qty">&nbsp;</td>
@@ -421,12 +429,18 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty">&nbsp;</td>
           </tr>
           @endif
+          <tr>
+            <td class="qty">&nbsp;</td>
+          </tr>
           <tr style="page-break-after: always;">
             <td class="qty"><strong>Totaal Onderaanneming </strong></td>
             <td class="qty">&nbsp;</td>
             <td class="qty"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
             <td class="qty">&nbsp;</td>
             <td class="qty"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontractingTax($project), 2, ",",".") }}</strong></td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          <tr>
             <td class="qty">&nbsp;</td>
           </tr>
         </tbody>
@@ -445,8 +459,8 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         </thead>
         <tbody>
           <tr style="page-break-after: always;">
-            <td class="qty"><strong>Calculatief te offreren (excl. BTW)</strong></td>
-            <td class="qty"><strong class="pull-right">{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</strong></td>
+            <td class="qty">Calculatief te offreren (excl. BTW)</td>
+            <td class="qty"><class="pull-right">{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</td>
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
@@ -467,6 +481,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty">&nbsp;</td>
           </tr>
           @endif
+         <!--
           <tr style="page-break-after: always;">
             <td class="qty"><strong>Te offreren BTW bedrag</strong></td>
             <td class="qty">&nbsp;</td>
@@ -474,6 +489,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProjectTax($project), 2, ",",".") }}</strong></td>
             <td class="qty">&nbsp;</td>
           </tr>
+          -->
           <tr style="page-break-after: always;">
             <td class="qty"><strong>Calculatief te offreren (Incl. BTW)</strong></td>
             <td class="qty">&nbsp;</td>
@@ -505,6 +521,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         <li>Indien opdracht gegund wordt, ontvangt u één eindfactuur.</li>
         <li>Wij kunnen de werkzaamheden starten binnen {{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }} na uw opdrachtbevestiging.</li>
         <li>Deze offerte is geldig tot {{ Valid::find($offer_last->valid_id)->valid_name }} na dagtekening.</li>
+        @if($offer_last->extracondition)
+        <li>{{ $offer_last->extracondition }}</li>
+        @endif
       </div>
       <div class="signing">Met vriendelijke groet,</div>
       <br>

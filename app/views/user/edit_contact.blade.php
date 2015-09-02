@@ -1,10 +1,13 @@
 <?php
 $common_access_error = false;
-$relation = Relation::find(Route::Input('relation_id'));
-if (!$relation || !$relation->isOwner()) {
+$contact = Contact::find(Route::Input('contact_id'));
+if (!$contact) {
 	$common_access_error = true;
 } else {
-	$contact = Contact::where('relation_id','=',$relation->id)->first();
+	$relation = Relation::find($contact->relation_id);
+	if (!$relation || !$relation->isOwner()) {
+		$common_access_error = true;
+	}
 }
 ?>
 @extends('layout.master')
@@ -110,6 +113,7 @@ if (!$relation || !$relation->isOwner()) {
 						</div>
 					</div>
 
+					@if (RelationKind::find($relation->kind_id)->kind_name=='zakelijk')
 					<div class="col-md-4 company">
 						<div class="form-group">
 							<label for="contactfunction">Functie*</label>
@@ -120,9 +124,19 @@ if (!$relation || !$relation->isOwner()) {
 							</select>
 						</div>
 					</div>
+					@endif
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="gender" style="display:block;">Geslacht</label>
+							<select name="gender" id="gender" class="form-control pointer">
+								<option value="-1">Selecteer</option>
+								<option {{ $contact->gender=='M' ? 'selected' : '' }} value="M">Man</option>
+								<option {{ $contact->gender=='V' ? 'selected' : '' }} value="V">Vrouw</option>
+							</select>
+						</div>
+					</div>
 					<div class="col-md-12">
 						<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
-						<!--<button class="btn btn-danger" id="rmuser"><i class="fa fa-trash"></i> Verwijderen</button>-->
 					</div>
 
 				</div>
@@ -135,8 +149,6 @@ if (!$relation || !$relation->isOwner()) {
 	</section>
 
 </div>
-<?#-- /WRAPPER --?>
-
 @stop
 
 <?php } ?>

@@ -107,7 +107,7 @@ $(document).ready(function() {
 										<input name="lastname" id="lastname" type="text" value="{{ Input::old('lastname') ? Input::old('lastname') : $user->lastname }}" class="form-control"/>
 									</div>
 								</div>
-								<div class="col-md-2">
+								<div class="col-md-3">
 									<div class="form-group">
 										<label for="gender" style="display:block;">Geslacht</label>
 										<select name="gender" id="gender" class="form-control pointer">
