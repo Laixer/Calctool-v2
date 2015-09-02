@@ -835,6 +835,7 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
 						@endif
+						<!--
 						<tr>
 							<td class="col-md-5">Te offreren BTW bedrag</td>
 							<td class="col-md-2">&nbsp;</td>
@@ -843,6 +844,7 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProjectTax($project), 2, ",",".") }}</strong></td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
+						-->
 						<tr>
 							<td class="col-md-5"><strong>Calculatief te offreren (Incl. BTW)</strong></td>
 							<td class="col-md-2">&nbsp;</td>
@@ -1016,6 +1018,7 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
 						@endif
+						<!--
 						<tr>
 							<td class="col-md-5">Te offreren BTW bedrag</td>
 							<td class="col-md-2">&nbsp;</td>
@@ -1024,6 +1027,7 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProjectTax($project), 2, ",",".") }}</strong></td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
+						-->
 						<tr>
 							<td class="col-md-5"><strong>Calculatief te offreren (Incl. BTW)</strong></td>
 							<td class="col-md-2">&nbsp;</td>
@@ -1126,7 +1130,8 @@ if (!$project || !$project->isOwner()) {
 
 			<!-- SPECIFICATION CON&SUBCON START-->
 			<div class="show-all" style="display:none;">
-				<h4>Aanneming</h4>
+				<h4>Specificatie werkzaamheden</h4>
+				<h5>Aanneming</h5>
 				<table class="table table-striped only-end-total">
 					<thead>
 						<tr>
@@ -1168,7 +1173,7 @@ if (!$project || !$project->isOwner()) {
 					</tbody>
 				</table>
 
-				<h4>Onderaanneming</h4>
+				<h5>Onderaanneming</h5>
 				<table class="table table-striped only-end-total">
 					<thead>
 						<tr>
@@ -1242,7 +1247,7 @@ if (!$project || !$project->isOwner()) {
 
 			<!-- SPECIFICATION TOTAL START-->
 			<div class="show-totals">
-				<h4>Totaalkosten per werkzaamheden</h4>
+				<h4>Totaalkosten per werkzaamheid</h4>
 				<table class="table table-striped only-end-total">
 					<thead>
 						<tr>
@@ -1341,12 +1346,13 @@ if (!$project || !$project->isOwner()) {
 
 			<!-- DESCRIPTION CON&SUBCON START -->
 			<div class="show-all" style="display:none;">
-				<h4>Aanneming</h4>
+				<h4>Omschrijving werkzaamheden</h4>
+				<h5>Aanneming</h5>
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th class="col-md-2">&nbsp;</th>
-							<th class="col-md-3">&nbsp;</th>
+							<th class="col-md-2">Hoofdstuk</th>
+							<th class="col-md-3">Werkzaamheid</th>
 							<th class="col-md-7"><span>Omschrijving</th>
 						</tr>
 					</thead>
@@ -1363,7 +1369,7 @@ if (!$project || !$project->isOwner()) {
 					</tbody>
 				</table>
 
-				<h4>Onderaanneming</h4>
+				<h5>Onderaanneming</h5>
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -1393,8 +1399,8 @@ if (!$project || !$project->isOwner()) {
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th class="col-md-2">&nbsp;</th>
-							<th class="col-md-3">&nbsp;</th>
+							<th class="col-md-2">Hoofdstuk</th>
+							<th class="col-md-3">Werkzaamheid</th>
 							<th class="col-md-7"><span>Omschrijving</th>
 						</tr>
 					</thead>

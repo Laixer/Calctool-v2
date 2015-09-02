@@ -1,6 +1,6 @@
 @font-face {
   font-family: SourceSansPro;
-  src: url(/fonts/SourceSansPro-Regular.ttf);
+  src: url(/fonts/fontawesome-webfont.woff2);
 }
 
 .clearfix:after {
@@ -183,6 +183,12 @@ table .unit {
 
 table .qty {
   background: #ffffff;
+}
+
+table .qty-und {
+  background: #ffffff;
+  border-top: 1px solid #AAAAAA;
+
 }
 
 table .total {
