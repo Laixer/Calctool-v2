@@ -545,6 +545,7 @@ class StaticSeeder extends Seeder {
 		$this->command->info('Valid created');
 
 		DeliverTime::create(array('delivertime_name' => 'per direct'));
+		DeliverTime::create(array('delivertime_name' => 'in overleg'));
 		DeliverTime::create(array('delivertime_name' => '1 week'));
 		DeliverTime::create(array('delivertime_name' => '2 weken'));
 		DeliverTime::create(array('delivertime_name' => '3 weken'));
