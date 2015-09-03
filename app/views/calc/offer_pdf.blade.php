@@ -610,7 +610,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         </tbody>
      </table>
 
-     <h1 class="name">Totalen per project</h1>
+     <h1 class="name">Totalen project</h1>
      <table border="0" cellspacing="0" cellpadding="0">
         <thead>
           <tr style="page-break-after: always;">
@@ -649,7 +649,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       </header>
       <!--PAGE HEADER SECOND END-->
 
-    <h1 class="name">Totalen per project</h1>
+    <h1 class="name">Totalen project</h1>
     <h4 class="name">AANNEMING</h4>
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
@@ -746,7 +746,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       </tbody>
     </table>
 
-     <h1 class="name">Totalen per project</h1>
+     <h1 class="name">Totalen project</h1>
      <table border="0" cellspacing="0" cellnpadding="0">
         <thead>
           <tr style="page-break-after: always;">
