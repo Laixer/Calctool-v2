@@ -190,19 +190,23 @@ if (!$project || !$project->isOwner()) {
 		});
 		$('#terms').change(function(e){
 			var q = $('#terms').val();
-			if($.isNumeric(q)&&(q>1))
+			if($.isNumeric(q)&&(q>1)) {
 				$('.noterms').show('slow');
-			else
+			} else {
 				$('.noterms').hide('slow');
+			}
 
 		});
 		$('#termModal').on('hidden.bs.modal', function() {
 			var q = $('#terms').val();
 			if($.isNumeric(q)&&(q>1)&&(q<=50)) {
-				$('#termtext').text('Indien opdracht wordt verstrekt, wordt gefactureerd in '+q+' termijnen');
+				$('#condition-text').text('Indien opdracht wordt verstrekt, wordt gefactureerd in '+q+' termijnen');
 				if ($tpayment)
 					$('#paymenttext').html('Het eerste termijn geldt hierbij als een aanbetaling van &euro; '+$('.adata').first().val());
+			} else {
+				$('#condition-text').text('Indien opdracht gegund wordt, ontvangt u één eindfactuur.');
 			}
+
 		});
 		$('.osave').click(function(e){
 			e.preventDefault();
@@ -303,9 +307,9 @@ if (!$project || !$project->isOwner()) {
 
 				</div>
 
-				<div class="modal-footer"><!-- modal footer -->
+				<div class="modal-footer">
 					<button class="btn btn-default" data-dismiss="modal">Close</button>
-				</div><!-- /modal footer -->
+				</div>
 
 			</div>
 		</div>
@@ -317,12 +321,11 @@ if (!$project || !$project->isOwner()) {
 				<div class="modal-dialog">
 					<div class="modal-content">
 
-						<div class="modal-header"><!-- modal header -->
+						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 							<h4 class="modal-title" id="myModalLabel2">Betalingstermijnen</h4>
-						</div><!-- /modal header -->
+						</div>
 
-						<!-- modal body -->
 						<div class="modal-body">
 							<div class="form-horizontal">
 								<div class="form-group">
@@ -334,9 +337,6 @@ if (!$project || !$project->isOwner()) {
 									</div>
 								</div>
 							</div>
-
-
-
 							<div class="form-horizontal">
 								<div class="form-horizontal noterms" {{ ($offer_last && $offer_last->invoice_quantity >1 ? '' : 'style="display:none;"') }} >
 									<div class="col-md-6">
@@ -370,23 +370,14 @@ if (!$project || !$project->isOwner()) {
 									Indien aanbetaling wordt ingesteld wordt dit verrekend als het 1e betalingstermijn. Eventuele navolgende betalingstermijnen worden gespecficieerd op de factuurpagina.
 								</div>
 							</div>
-
-
-
-
-
 						</div>
-						<!-- /modal body -->
-
-						<div class="modal-footer"><!-- modal footer -->
+						<div class="modal-footer">
 							<button class="btn btn-default" data-dismiss="modal">Close</button>
-						</div><!-- /modal footer -->
-
+						</div>
 					</div>
 				</div>
 			</div>
 
-			<!-- modal dialog -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -1054,7 +1045,7 @@ if (!$project || !$project->isOwner()) {
 				<h4>Bepalingen</h4>
 				<ul>
 					<li>
-						Indien opdracht gegund wordt, ontvangt u één eindfactuur.
+						<spanm id="condition-text">Indien opdracht gegund wordt, ontvangt u één eindfactuur.</span>
 					</li>
 					<li>
 						Wij kunnen de werkzaamheden starten binnen
