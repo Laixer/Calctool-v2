@@ -28,7 +28,7 @@ if (!$project || !$project->isOwner()) {
 @stop
 <?php }else{ ?>
 
-@section('content')
+@section('contentoption_query')
 <script type="text/javascript">
 	$(document).ready(function() {
 	    $('.only-end-total tr').each(function() {
@@ -56,6 +56,8 @@ if (!$project || !$project->isOwner()) {
 	                $(this).find("th").eq(2).show();
 	                $(this).find("td").eq(3).show();
 	                $(this).find("th").eq(3).show();
+	                $(this).find("th").eq(4).show();
+	                $(this).find("th").eq(5).show();
 		        });
 		        $('.hide-btw2').each(function() {
 		        	$(this).find("tr").eq(2).show();
@@ -79,6 +81,8 @@ if (!$project || !$project->isOwner()) {
 	                $(this).find("th").eq(2).hide();
 	                $(this).find("td").eq(3).hide();
 	                $(this).find("th").eq(3).hide();
+	                $(this).find("th").eq(4).hide();
+	                $(this).find("th").eq(5).hide();
 		        });
 		        $('.hide-btw2').each(function() {
 		        	$(this).find("tr").eq(2).hide();
@@ -414,7 +418,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-subcontr" type="checkbox"> Kosten onderaanneming apart weergeven
+								          <input name="toggle-subcontr" type="checkbox"> Onderaanneming apart weergeven
 								        </label>
 								      </div>
 								    </div>
@@ -1045,7 +1049,7 @@ if (!$project || !$project->isOwner()) {
 				<h4>Bepalingen</h4>
 				<ul>
 					<li>
-						<spanm id="condition-text">Indien opdracht gegund wordt, ontvangt u één eindfactuur.</span>
+						<span id="condition-text">Indien opdracht gegund wordt, ontvangt u één eindfactuur.</span>
 					</li>
 					<li>
 						Wij kunnen de werkzaamheden starten binnen
