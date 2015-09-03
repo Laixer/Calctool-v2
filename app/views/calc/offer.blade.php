@@ -28,7 +28,7 @@ if (!$project || !$project->isOwner()) {
 @stop
 <?php }else{ ?>
 
-@section('contentoption_query')
+@section('content')
 <script type="text/javascript">
 	$(document).ready(function() {
 	    $('.only-end-total tr').each(function() {
