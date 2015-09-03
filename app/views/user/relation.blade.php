@@ -1,7 +1,6 @@
 @extends('layout.master')
 
 @section('content')
-<?# -- WRAPPER -- ?>
 <div id="wrapper">
 
 	<section class="container">
@@ -21,7 +20,6 @@
 			<div class="white-row">
 
 				<table class="table table-striped">
-					<?# -- table head -- ?>
 					<thead>
 						<tr>
 							<th class="col-md-4">(Bedrijfs)naam</th>
@@ -66,5 +64,4 @@
 	</section>
 
 </div>
-<!-- /WRAPPER -->
 @stop

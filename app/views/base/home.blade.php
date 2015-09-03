@@ -301,10 +301,6 @@ else
 								</tbody>
 							</table>
 						</div>
-
-
-
-
 					</div>
 				</div>
 
@@ -322,7 +318,15 @@ else
 									</tr>
 								</thead>
 								<tbody>
-									@foreach (Relation::where('user_id','=', Auth::id())->where('id','!=',Auth::user()->self_id)->orderBy('created_at', 'desc')->limit(5)->get() as $relation)
+									<?php
+									$userid = Auth::user()->self_id;
+									if(Auth::user()->self_id)
+										$userid = Auth::user()->self_id;
+									else
+										$userid = -1;
+									?>
+									@foreach (Relation::where('user_id','=', Auth::id())->where('id','!=',$userid)->orderBy('created_at', 'desc')->limit(5)->get() as $relation)
+									<?php $contact = Contact::where('relation_id','=',$relation->id)->first(); ?>
 									<tr>
 										<td>{{ HTML::link('relation-'.$relation->id.'/edit', $relation->company_name ? $relation->company_name : $contact->firstname .' '. $contact->lastname) }}</td>
 										<td>{{ $relation->email }}</td>
@@ -332,9 +336,6 @@ else
 								</tbody>
 							</table>
 						</div>
-
-
-
 					</div>
 				</div>
 
