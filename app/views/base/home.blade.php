@@ -279,7 +279,9 @@ else
 
 				<div class="col-md-6">
 					<div class="white-row">
-						<div class="pull-right"><a href="/project" class="btn btn-primary btn-xs">Alle Projecten</a></div>
+						<div class="pull-right">
+							<a href="project/new" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Nieuw project</a>
+							<a href="/project" class="btn btn-primary btn-xs"><i class="fa fa-list"></i>Alle Projecten</a></div>
 						<h2><strong>Actieve</strong> Projecten</h2>
 						<div class="table-responsive">
 							<table class="table table-hover">
@@ -306,7 +308,10 @@ else
 
 				<div class="col-md-6">
 					<div class="white-row">
-						<div class="pull-right"><a href="/relation" class="btn btn-primary btn-xs">Alle Relaties</a></div>
+						<div class="pull-right">
+							<a href="/relation/new" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i>Nieuw Relatie</a>
+							<a href="/relation" class="btn btn-primary btn-xs"><i class="fa fa-list"></i>Alle Relaties</a>
+						</div>
 						<h2><strong>Laatste</strong> Relaties</h2>
 						<div class="table-responsive">
 							<table class="table table-hover">
