@@ -214,9 +214,6 @@ else
 							<a href="/mycompany" class="btn btn-primary add_to_cart"><i class="fa fa-building"></i> Mijn Bedrijf</a>
 
 						</figure>
-						<div class="item-box-desc">
-							<a href="/mycompany"><h4>Mijn Bedrijf</h4></a>
-						</div>
 					</div>
 				</div>
 
@@ -232,9 +229,6 @@ else
 							</a>
 							<a href="/material" class="btn btn-primary add_to_cart"><i class="fa fa-wrench"></i> Materialen</a>
 						</figure>
-						<div class="item-box-desc">
-							<a href="/material" ><h4>Materialen</h4></a>
-						</div>
 					</div>
 				</div>
 
@@ -250,9 +244,6 @@ else
 							</a>
 							<a href="/timesheet" class="btn btn-primary add_to_cart"><i class="fa fa-clock-o"></i> Urenregistratie</a>
 						</figure>
-						<div class="item-box-desc">
-							<a href="/timesheet"><h4>Urenregistratie</h4></a>
-						</div>
 					</div>
 				</div>
 
@@ -268,9 +259,6 @@ else
 							</a>
 							<a href="/purchase" class="btn btn-primary add_to_cart"><i class="fa fa-shopping-cart"></i> Inkoopfacturen</a>
 						</figure>
-						<div class="item-box-desc">
-							<a href="/purchase"><h4>Inkoopfacturen</h4></a>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -278,10 +266,22 @@ else
 			<div class="row">
 
 				<div class="col-md-6">
-					<div class="white-row">
+					<div class="white-row" style="min-height: 280px;">
 						<div class="pull-right">
-							<a href="project/new" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Nieuw project</a>
-							<a href="/project" class="btn btn-primary btn-xs"><i class="fa fa-list"></i>Alle Projecten</a></div>
+
+
+<div class="btn-group">
+		  <a href="/project/new" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Nieuw project</a>
+		  <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    <span class="caret"></span>
+		    <span class="sr-only">Toggle Dropdown</span>
+		  </button>
+		  <ul class="dropdown-menu">
+		    <li><a href="/project">Alle Projecten</a></li>
+		  </ul>
+		</div>
+
+						</div>
 						<h2><strong>Actieve</strong> Projecten</h2>
 						<div class="table-responsive">
 							<table class="table table-hover">
@@ -307,10 +307,20 @@ else
 				</div>
 
 				<div class="col-md-6">
-					<div class="white-row">
+					<div class="white-row" style="min-height: 280px;">
 						<div class="pull-right">
-							<a href="/relation/new" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i>Nieuw Relatie</a>
-							<a href="/relation" class="btn btn-primary btn-xs"><i class="fa fa-list"></i>Alle Relaties</a>
+
+<div class="btn-group">
+		  <a href="relation/new" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Nieuwe Relatie</a>
+		  <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    <span class="caret"></span>
+		    <span class="sr-only">Toggle Dropdown</span>
+		  </button>
+		  <ul class="dropdown-menu">
+		    <li><a href="/relation">Alle Relaties</a></li>
+		  </ul>
+		</div>
+
 						</div>
 						<h2><strong>Laatste</strong> Relaties</h2>
 						<div class="table-responsive">
