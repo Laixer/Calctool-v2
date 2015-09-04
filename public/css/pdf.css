@@ -1,6 +1,6 @@
 @font-face {
   font-family: SourceSansPro-Regular;
-  src: url(/fonts/fontawesome-webfont.woff2);
+  src: url(/fonts/SourceSansPro-Regular.ttf);
 }
 
 .clearfix:after {
@@ -22,7 +22,6 @@ body {
   color: #4E4E4E;
   background: #FFFFFF;
   font-size: 14px;
-  font-family: SourceSansPro-Regular;
 }
 
 header {
