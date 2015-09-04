@@ -1,5 +1,5 @@
 @font-face {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Arial';
     src: url(/fonts/SourceSansPro-Regular.ttf);
 }
 
@@ -22,14 +22,14 @@ body {
   color: #4E4E4E;
   background: #FFFFFF;
   font-size: 14px;
-  font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Arial';
 }
 
 header {
   padding: 10px 0;
   margin-bottom: 20px;
   border-bottom: 1px solid #AAAAAA;
-  font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Arial';
 }
 
 #logo {
