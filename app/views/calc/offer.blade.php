@@ -262,6 +262,7 @@ if (!$project || !$project->isOwner()) {
 		<?php } ?>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Versies</a>
 
+
 		<div class="btn-group">
 		  <a target="blank" href="/offer/pdf/project-{{ $project->id }}{{ $offer_last->option_query ? '?'.$offer_last->option_query : '' }}" class="btn btn-primary">PDF</a>
 		  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -275,7 +276,9 @@ if (!$project || !$project->isOwner()) {
 		<?php }else{ ?>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
+		@if (CalculationEndresult::totalProject($project))
 		<button class="btn btn-primary osave">Offerte  maken</button>
+		@endif
 		<?php } ?>
 		<?php } ?>
 	</div>
@@ -1441,7 +1444,9 @@ if (!$project || !$project->isOwner()) {
 						<?php }else{ ?>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
-						<button class="btn btn-primary osave">Offerte maken</button>
+						@if (CalculationEndresult::totalProject($project))
+						<button class="btn btn-primary osave">Offerte  maken</button>
+						@endif
 						<?php } ?>
 						<?php } ?>
 					</div>

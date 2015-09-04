@@ -22,7 +22,6 @@ if (!$project || !$project->isOwner())
 <?php }else{ ?>
 
 @section('content')
-
 <script type="text/javascript">
 Number.prototype.formatMoney = function(c, d, t){
 var n = this,
