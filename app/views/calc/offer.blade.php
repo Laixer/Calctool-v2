@@ -1050,24 +1050,42 @@ if (!$project || !$project->isOwner()) {
 			<div class="row">
 				<div class="col-sm-12">
 				<h4>Bepalingen</h4>
-				<ul>
+				<ul >
 					<li>
 						<span id="condition-text">Indien opdracht gegund wordt, ontvangt u één eindfactuur.</span>
 					</li>
-					<li>
-						Wij kunnen de werkzaamheden starten binnen
-						@if ($offer_last && $offer_last->offer_finish)
-						{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
+					<li style="line-height:27px">
+					@if ($offer_last && $offer_last->offer_finish)
+						@if (DeliverTime::find($offer_last->deliver_id)->delivertime_name == "per direct" || DeliverTime::find($offer_last->deliver_id)->delivertime_name == "in overleg")
+							Wij kunnen de werkzaamheden
+							{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
+							starten na uw opdrachtbevestiging.
 						@else
-						<select name="deliver" id="deliver">
-							@foreach (DeliverTime::all() as $deliver)
-							<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
-							@endforeach
-						</select>
+							Wij kunnen de werkzaamheden starten binnen
+							{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
+							na uw opdrachtbevestiging.
 						@endif
-						na uw opdrachtbevestiging.
+					@else
+						@if (DeliverTime::find($offer_last->deliver_id)->delivertime_name == "per direct" || DeliverTime::find($offer_last->deliver_id)->delivertime_name == "in overleg")
+							Wij kunnen de werkzaamheden
+								<select class="pull-right" name="deliver" id="deliver">
+								@foreach (DeliverTime::all() as $deliver)
+								<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
+								@endforeach
+								</select>
+							{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }} starten na uw opdrachtbevestiging.
+						@else
+							Wij kunnen de werkzaamheden starten binnen
+								<select class="pull-right" name="deliver" id="deliver">
+								@foreach (DeliverTime::all() as $deliver)
+								<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
+								@endforeach
+								</select>
+							{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }} na uw opdrachtbevestiging.
+						@endif
+					@endif
 					</li>
-					<li>
+					<li style="line-height:27px">
 						Deze offerte is geldig tot
 						@if ($offer_last && $offer_last->offer_finish)
 						{{ Valid::find($offer_last->valid_id)->valid_name }}
@@ -1077,7 +1095,8 @@ if (!$project || !$project->isOwner()) {
 							@foreach (Valid::all() as $valid)
 							<option {{ ($offer_last ? ($offer_last->valid_id == $valid->id ? 'selected' : '') : '') }} value="{{ $valid->id }}">{{ $valid->valid_name }}</option>
 							@endforeach
-						</select> na dagtekening.
+						</select>
+						na dagtekening.
 						@endif
 					</li>
 				</ul>
