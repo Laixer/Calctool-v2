@@ -10,6 +10,12 @@ $(document).ready(function() {
 			$('#btn-submit').addClass('disabled');
 		}
 	});
+	$(window).keydown(function(event){
+		if(event.keyCode == 13 && !$('#tos').prop('checked')) {
+			event.preventDefault();
+			return false;
+		}
+	});
 });
 </script>
 <div id="wrapper">
