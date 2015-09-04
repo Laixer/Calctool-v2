@@ -1,6 +1,6 @@
 @font-face {
-  font-family: SourceSansPro-Regular;
-  src: url(/fonts/SourceSansPro-Regular.ttf);
+    font-family: 'Source Sans Pro', sans-serif;
+    src: url(/fonts/SourceSansPro-Regular.ttf);
 }
 
 .clearfix:after {
@@ -22,12 +22,14 @@ body {
   color: #4E4E4E;
   background: #FFFFFF;
   font-size: 14px;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 header {
   padding: 10px 0;
   margin-bottom: 20px;
   border-bottom: 1px solid #AAAAAA;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 #logo {
