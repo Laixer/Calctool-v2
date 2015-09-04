@@ -294,6 +294,7 @@ else
 								</thead>
 								<tbody>
 									@foreach (Project::where('user_id','=', Auth::id())->whereNull('project_close')->orderBy('created_at', 'desc')->limit(5)->get() as $project)
+									<?php $relation = Relation::find($project->client_id); ?>
 									<tr>
 										<td>{{ HTML::link('/project-'.$project->id.'/edit', $project->project_name) }}</td>
 										<td>{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); }}</td>
