@@ -38,9 +38,9 @@ class CreateMaterialStorage extends Migration {
 			$table->string('unit', 30)->nullable();
 			$table->integer('article_code')->unsigned();
 			$table->decimal('price', 9, 3)->index()->unsigned();
-			$table->decimal('package_height', 9, 3)->unsigned();
-			$table->decimal('package_length', 9, 3)->unsigned();
-			$table->decimal('package_width', 9, 3)->unsigned();
+			$table->decimal('package_height', 11, 3)->unsigned();
+			$table->decimal('package_length', 11, 3)->unsigned();
+			$table->decimal('package_width', 11, 3)->unsigned();
 			$table->decimal('minimum_quantity', 9, 3)->unsigned();
 			$table->string('description');
 			$table->integer('group_id')->unsigned();
