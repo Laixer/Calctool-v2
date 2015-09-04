@@ -49,19 +49,16 @@
 					@endif
 					</li>
 
-					<?# -- GLOBAL SEARCH -- ?>
+					@if (0)
 					<li class="search">
-						<?# -- search form -- ?>
 						<form method="get" action="#" class="input-group pull-right">
 							<input type="text" class="form-control" name="k" id="k" value="" placeholder="Zoeken">
 							<span class="input-group-btn">
 								<button class="btn btn-primary notransition"><i class="fa fa-search"></i></button>
 							</span>
 						</form>
-						<?# -- /search form -- ?>
 					</li>
-					<?# -- /GLOBAL SEARCH -- ?>
-
+					@endif
 				</ul>
 			</nav>
 		</div>
