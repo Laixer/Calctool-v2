@@ -1,5 +1,5 @@
 <?php
-$total=Input::get("total");
+$total=!Input::get("total");
 $specification=Input::get("specification");
 $description=Input::get("description");
 $onlyactivity=Input::get("onlyactivity");
@@ -251,7 +251,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty">{{ ''.number_format(CalculationEndresult::conCalcLaborActivityTax2($project), 2, ",",".") }}</td>
             <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
             <td class="qty">6 %</td>
-            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax1AmountTax($project), 2, ",",".") }}</td>
+            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
             <td class="qty">&nbsp;</td>
           </tr>
           @else
