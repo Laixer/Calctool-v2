@@ -1,20 +1,14 @@
-<?# -- TOP NAV -- ?>
 <header id="topNav" class="topHead">
 	<div class="container">
 
-		<?# -- Mobile Menu Button -- ?>
 		<button class="btn btn-mobile" data-toggle="collapse" data-target=".nav-main-collapse">
 			<i class="fa fa-bars"></i>
 		</button>
 
-		<?# -- Logo text or image -- ?>
 		<a class="logo" href="/">
 			<img src="/images/logo2.png" width="200px" alt="Calctool" />
 		</a>
 
-		<?php if (Auth::check()) Auth::user()->touch();	?>
-
-		<?#-- Top Nav -- ?>
 		<div class="navbar-collapse nav-main-collapse collapse pull-right">
 			<nav class="nav-main mega-menu">
 				<ul class="nav nav-pills nav-main scroll-menu" id="topMain">
@@ -42,13 +36,20 @@
 					</li>
 					@endif
 					<li class="active">
-					@if (Auth::check())
-						{{ HTML::link('/logout', 'Uitloggen') }}
-					@else
-						{{ HTML::link('/login', 'Login') }}
-					@endif
+					<?php
+						if (Auth::check()) {
+							$swap_session = Cookie::get('swpsess');
+							if ($swap_session) {
+								echo '<a href="/admin/switch/back">Terugkeren</a>';
+							} else {
+								Auth::user()->touch();
+								echo '<a href="/logout">Uitloggen</a>';
+							}
+						} else {
+							echo '<a href="/login">Login</a>';
+						}
+					?>
 					</li>
-
 					@if (0)
 					<li class="search">
 						<form method="get" action="#" class="input-group pull-right">
@@ -62,9 +63,6 @@
 				</ul>
 			</nav>
 		</div>
-		<?# -- /Top Nav -- ?>
 
 	</div>
 </header>
-
-<?# -- /TOP NAV -- ?>

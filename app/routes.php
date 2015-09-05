@@ -34,6 +34,7 @@ Route::group(array('before' => 'auth'), function()
 {
 	/* Generic pages */
 	Route::get('/', function(){ return View::make('base.home'); });
+	Route::get('admin/switch/back', array('uses' => 'AdminController@getSwitchSessionBack'));
 	Route::get('logout', array('as' => 'logout', 'uses' => 'AuthController@doLogout'));
 	Route::get('result/project-{project_id}', array('as' => 'result', 'uses' => 'ResultController@getResult'))->where('project_id', '[0-9]+');
 	Route::get('myaccount', array('as' => 'account', 'uses' => 'UserController@getMyAccount'));

@@ -319,10 +319,27 @@ class AdminController extends Controller {
 		if (!Auth::user()->isAdmin())
 			return Redirect::back();
 
-		Auth::logout();
+		$cook = Cookie::make('swpsess', Auth::id(), 180);
+
 		Auth::loginUsingId(Route::input('user_id'));
 
-		return Redirect::to('/');
+		return Redirect::to('/')->withCookie($cook);
+
+	}
+
+	public function getSwitchSessionBack()
+	{
+		$swap_session = Cookie::get('swpsess');
+		if (!$swap_session)
+			return Redirect::back();
+
+		$user = User::find($swap_session);
+		if (!$user->isAdmin())
+			return Redirect::back();
+
+		Auth::loginUsingId($user->id);
+
+		return Redirect::to('/')->withCookie(Cookie::forget('swpsess'));
 
 	}
 
