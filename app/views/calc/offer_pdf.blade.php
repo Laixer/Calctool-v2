@@ -1,10 +1,13 @@
 <?php
-$total=!Input::get("total");
+$displaytax=Input::get("displaytax"); // BTW bedragen weergeven
+$endresult=Input::get("endresult"); //Alleen het totale offertebedrag weergeven
+$total=!Input::get("total"); //Onderaanneming apart weergeven
+
+
+
 $specification=Input::get("specification");
 $description=Input::get("description");
 $onlyactivity=Input::get("onlyactivity");
-$displaytax=Input::get("displaytax");
-$endresult=Input::get("endresult");
 $c=false;
 
 $project = Project::find(Route::Input('project_id'));
