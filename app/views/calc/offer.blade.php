@@ -1053,33 +1053,42 @@ if (!$project || !$project->isOwner()) {
 						<span id="condition-text">Indien opdracht gegund wordt, ontvangt u één eindfactuur.</span>
 					</li>
 					<li style="line-height:27px">
-					@if ($offer_last && $offer_last->offer_finish)
-						@if (DeliverTime::find($offer_last->deliver_id)->delivertime_name == "per direct" || DeliverTime::find($offer_last->deliver_id)->delivertime_name == "in overleg")
-							Wij kunnen de werkzaamheden
-							{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
-							starten na uw opdrachtbevestiging.
+					@if($offer_last)
+						@if ($offer_last && $offer_last->offer_finish)
+							@if (DeliverTime::find($offer_last->deliver_id)->delivertime_name == "per direct" || DeliverTime::find($offer_last->deliver_id)->delivertime_name == "in overleg")
+								Wij kunnen de werkzaamheden
+								{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
+								starten na uw opdrachtbevestiging.
+							@else
+								Wij kunnen de werkzaamheden starten binnen
+								{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
+								na uw opdrachtbevestiging.
+							@endif
 						@else
-							Wij kunnen de werkzaamheden starten binnen
-							{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
-							na uw opdrachtbevestiging.
+							@if (DeliverTime::find($offer_last->deliver_id)->delivertime_name == "per direct" || DeliverTime::find($offer_last->deliver_id)->delivertime_name == "in overleg")
+									<select class="pull-right" name="deliver" id="deliver">
+									@foreach (DeliverTime::all() as $deliver)
+									<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
+									@endforeach
+									</select>
+								{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }} starten na uw opdrachtbevestiging.
+							@else
+								Wij kunnen de werkzaamheden starten binnen
+									<select class="pull-right" name="deliver" id="deliver">
+									@foreach (DeliverTime::all() as $deliver)
+									<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
+									@endforeach
+									</select>
+								{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }} na uw opdrachtbevestiging.
+							@endif
 						@endif
 					@else
-						@if (DeliverTime::find($offer_last->deliver_id)->delivertime_name == "per direct" || DeliverTime::find($offer_last->deliver_id)->delivertime_name == "in overleg")
-								<select class="pull-right" name="deliver" id="deliver">
-								@foreach (DeliverTime::all() as $deliver)
-								<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
-								@endforeach
-								</select>
-							{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }} starten na uw opdrachtbevestiging.
-						@else
-							Wij kunnen de werkzaamheden starten binnen
-								<select class="pull-right" name="deliver" id="deliver">
-								@foreach (DeliverTime::all() as $deliver)
-								<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
-								@endforeach
-								</select>
-							{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }} na uw opdrachtbevestiging.
-						@endif
+						Geef de leveringsvoorwaarden voor de levertijd:
+						<select name="deliver" id="deliver">
+						@foreach (DeliverTime::all() as $deliver)
+						<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
+						@endforeach
+						</select>
 					@endif
 					</li>
 					<li style="line-height:27px">
