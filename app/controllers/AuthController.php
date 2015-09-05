@@ -62,7 +62,7 @@ class AuthController extends Controller {
 				Redis::incr('auth:'.$username.':fail');
 			}
 
-			return Redirect::to('login')->withErrors($errors)->withInput(Input::except('secret'));
+			return Redirect::to('login')->withErrors($errors)->withInput(Input::except('secret'))->withCookie(Cookie::forget('swpsess'));
 		}
 	}
 
