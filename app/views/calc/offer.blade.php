@@ -1067,7 +1067,6 @@ if (!$project || !$project->isOwner()) {
 						@endif
 					@else
 						@if (DeliverTime::find($offer_last->deliver_id)->delivertime_name == "per direct" || DeliverTime::find($offer_last->deliver_id)->delivertime_name == "in overleg")
-							Wij kunnen de werkzaamheden
 								<select class="pull-right" name="deliver" id="deliver">
 								@foreach (DeliverTime::all() as $deliver)
 								<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
@@ -1436,7 +1435,10 @@ if (!$project || !$project->isOwner()) {
 			</div>
 			<!-- DESCRIPTION TOTAL END -->
 
-			<!-- INVOICE FOOTER START -->
+		</div>
+		@endif
+
+		<!-- INVOICE FOOTER START -->
 			<div class="row">
 				<div class="col-sm-6"></div>
 				<div class="col-sm-6">
@@ -1472,8 +1474,6 @@ if (!$project || !$project->isOwner()) {
 				</div>
 			</div>
 			<!-- INVOICE FOOTER END -->
-		</div>
-		@endif
 
 	</section>
 </div>
