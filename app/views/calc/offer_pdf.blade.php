@@ -2,12 +2,11 @@
 $displaytax=Input::get("displaytax"); // BTW bedragen weergeven
 $endresult=Input::get("endresult"); //Alleen het totale offertebedrag weergeven
 $total=!Input::get("total"); //Onderaanneming apart weergeven
+$specification=Input::get("specification"); ///Hoofdstukken en werkzaamheden weergeven
+$onlyactivity=Input::get("onlyactivity"); //Kosten werkzaamheden weergeven
+$description=Input::get("description");  //Omschrijving werkzaamheden weergeven
 
 
-
-$specification=Input::get("specification");
-$description=Input::get("description");
-$onlyactivity=Input::get("onlyactivity");
 $c=false;
 
 $project = Project::find(Route::Input('project_id'));
@@ -607,7 +606,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
           @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
           <tr><!-- item -->
-            <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
+            <td class="qty">{{ $chapter->chapter_name }}</td>
             <td class="qty">{{ $activity->activity_name }}</td>
             <td class="qty">@if (!$onlyactivity) <span>{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
             <td class="qty">@if (!$onlyactivity) <span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span>@endif</td>
@@ -627,7 +626,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
           @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
           <tr><!-- item -->
-            <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
+            <td class="qty">{{ $chapter->chapter_name }}</td>
             <td class="qty">{{ $activity->activity_name }}</td>
             <td class="qty">@if (!$onlyactivity) <span>{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
             <td class="qty">@if (!$onlyactivity) <span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span>@endif</td>
@@ -842,7 +841,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
         @foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
         <tr><!-- item -->
-          <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
+          <td class="qty">{{ $chapter->chapter_name }}</td>
           <td class="qty">{{ $activity->activity_name }}</td>
           <td class="qty"><br><span>{{ $activity->note }}</td>
         </tr>
@@ -880,7 +879,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
         @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
         <tr>
-          <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
+          <td class="qty">{{ $chapter->chapter_name }}</td>
           <td class="qty">{{ $activity->activity_name }}</td>
           <td class="qty"><br><span>{{ $activity->note }}</td>
         </tr>
@@ -901,7 +900,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
         @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
         <tr><!-- item -->
-          <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
+          <td class="qty">{{ $chapter->chapter_name }}</td>
           <td class="qty">{{ $activity->activity_name }}</td>
           <td class="qty"><br><span>{{ $activity->note }}</td>
         </tr>

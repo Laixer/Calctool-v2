@@ -1149,21 +1149,21 @@ if (!$project || !$project->isOwner()) {
 				<table class="table table-striped only-end-total">
 					<thead>
 						<tr>
-							<th class="col-md-2">Hoofdstuk</th>
+							<th class="col-md-3">Hoofdstuk</th>
 							<th class="col-md-3">Werkzaamheid</th>
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</th>
 							<th class="col-md-1"><span class="pull-right">Materiaal</th>
 							<th class="col-md-1"><span class="pull-right">Materieel</th>
 							<th class="col-md-1"><span class="pull-right">Totaal</th>
-							<th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
+							<th class="col-md-1"><span>&nbsp;&nbsp;&nbsp;Stelpost</th>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
 						<tr>
-							<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+							<td class="col-md-3">{{ $chapter->chapter_name }}</td>
 							<td class="col-md-3">{{ $activity->activity_name }}</td>
 							<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
 							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
@@ -1175,7 +1175,7 @@ if (!$project || !$project->isOwner()) {
 						@endforeach
 						@endforeach
 						<tr>
-							<td class="col-md-2"><strong>Totaal aanneming</strong></td>
+							<td class="col-md-3"><strong>Totaal aanneming</strong></td>
 							<td class="col-md-3">&nbsp;</td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::contrLaborTotalAmount($project) }}</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1191,21 +1191,21 @@ if (!$project || !$project->isOwner()) {
 				<table class="table table-striped only-end-total">
 					<thead>
 						<tr>
-							<th class="col-md-2">Hoofdstuk</th>
+							<th class="col-md-3">Hoofdstuk</th>
 							<th class="col-md-3">Werkzaamheid</th>
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</th>
 							<th class="col-md-1"><span class="pull-right">Materiaal</th>
 							<th class="col-md-1"><span class="pull-right">Materieel</th>
 							<th class="col-md-1"><span class="pull-right">Totaal</th>
-							<th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
+							<th class="col-md-1"><span>&nbsp;&nbsp;&nbsp;Stelpost</th>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
 						<tr>
-							<td class="col-md-2">{{ $chapter->chapter_name }}</td>
+							<td class="col-md-3">{{ $chapter->chapter_name }}</td>
 							<td class="col-md-3">{{ $activity->activity_name }}</td>
 							<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
 							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
@@ -1217,7 +1217,7 @@ if (!$project || !$project->isOwner()) {
 						@endforeach
 						@endforeach
 						<tr>
-							<td class="col-md-2"><strong>Totaal onderaanneming</strong></td>
+							<td class="col-md-3"><strong>Totaal onderaanneming</strong></td>
 							<td class="col-md-3">&nbsp;</td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::subcontrLaborTotalAmount($project) }}</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1233,7 +1233,7 @@ if (!$project || !$project->isOwner()) {
 				<table class="table table-striped only-end-total">
 					<thead>
 						<tr>
-							<th class="col-md-2">&nbsp;</th>
+							<th class="col-md-3">&nbsp;</th>
 							<th class="col-md-3">&nbsp;</th>
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
@@ -1245,7 +1245,7 @@ if (!$project || !$project->isOwner()) {
 					</thead>
 					<tbody>
 						<tr>
-							<td class="col-md-2">&nbsp;</td>
+							<td class="col-md-3">&nbsp;</td>
 							<td class="col-md-3">&nbsp;</td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1265,21 +1265,21 @@ if (!$project || !$project->isOwner()) {
 				<table class="table table-striped only-end-total">
 					<thead>
 						<tr>
-							<th class="col-md-2">Hoofdstuk</th>
+							<th class="col-md-3">Hoofdstuk</th>
 							<th class="col-md-3">Werkzaamheid</th>
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</th>
 							<th class="col-md-1"><span class="pull-right">Materiaal</th>
 							<th class="col-md-1"><span class="pull-right">Materieel</th>
 							<th class="col-md-1"><span class="pull-right">Totaal</th>
-							<th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
+							<th class="col-md-1"><span>&nbsp;&nbsp;&nbsp;Stelpost</th>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
 						<tr><!-- item -->
-							<td class="col-md-2">{{ $chapter->chapter_name }}</td>
+							<td class="col-md-3">{{ $chapter->chapter_name }}</td>
 							<td class="col-md-3">{{ $activity->activity_name }}</td>
 							<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
 							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
@@ -1293,7 +1293,7 @@ if (!$project || !$project->isOwner()) {
 						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
 						<tr><!-- item -->
-							<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+							<td class="col-md-3">{{ $chapter->chapter_name }}</td>
 							<td class="col-md-3">{{ $activity->activity_name }}</td>
 							<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
 							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
@@ -1311,7 +1311,7 @@ if (!$project || !$project->isOwner()) {
 				<table class="table table-striped only-end-total">
 					<thead>
 						<tr>
-							<th class="col-md-2">&nbsp;</th>
+							<th class="col-md-3">&nbsp;</th>
 							<th class="col-md-3">&nbsp;</th>
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
@@ -1323,7 +1323,7 @@ if (!$project || !$project->isOwner()) {
 					</thead>
 					<tbody>
 						<tr>
-							<td class="col-md-2">&nbsp;</td>
+							<td class="col-md-3">&nbsp;</td>
 							<td class="col-md-3">&nbsp;</td>
 							<td class="col-md-1"><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>
 							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
@@ -1396,7 +1396,7 @@ if (!$project || !$project->isOwner()) {
 						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
 						<tr>
-							<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+							<td class="col-md-2">{{ $chapter->chapter_name }}</td>
 							<td class="col-md-3">{{ $activity->activity_name }}</td>
 							<td class="col-md-7"><span>{{ $activity->note }}</td>
 						</tr>
