@@ -96,9 +96,8 @@ if (!$project || !$project->isOwner()) {
 		});
 		$("[name='toggle-activity']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
+		  	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
 		  	$('.show-activity').show();
-		  //	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
-
 		  } else {
 		 	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
 			$('.show-activity').hide();
