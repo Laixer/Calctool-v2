@@ -97,12 +97,23 @@ if (!$project || !$project->isOwner()) {
 		$("[name='toggle-activity']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-activity').show();
-		  	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
+		 // 	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
 		  } else {
-		  	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
+		  //	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
 			$('.show-activity').hide();
 		  }
 		});
+
+		$("[name='toggle-endresult']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		  if (state) {
+		  	$('.show-activity').show();
+		  	$("[name='toggle-subcontr']").bootstrapSwitch('toggleDisabled');
+		  } else {
+		  	$("[name='toggle-subcontr']").bootstrapSwitch('toggleDisabled');
+			$('.show-activity').hide();
+		  }
+		});
+
 		$("[name='toggle-subcontr']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-all').show();
@@ -431,7 +442,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-activity" type="checkbox" checked> Hoofdstukken en werkzaamheden weergeven
+								          <input name="toggle-activity" type="checkbox"> Hoofdstukken en werkzaamheden weergeven
 								        </label>
 								      </div>
 								    </div>
@@ -440,7 +451,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-summary" type="checkbox" checked> Kosten werkzaamheden weergeven<br>
+								          <input name="toggle-summary" type="checkbox"> Kosten werkzaamheden weergeven<br>
 								        </label>
 								      </div>
 								    </div>
@@ -449,7 +460,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden weergeven
+								          <input name="toggle-note" type="checkbox"> Omschrijving werkzaamheden weergeven
 								        </label>
 								      </div>
 								    </div>
@@ -553,7 +564,7 @@ if (!$project || !$project->isOwner()) {
 		<!--CONTENT, CON & SUBCON START-->
 			<div class="show-all" style="display:none;">
 				<h4 class="only-total">Specificatie offerte</h4>
-				<h5 class="only-total">AANNEMING</h5>
+				<div class="only-total"><strong><u>AANNEMING</u></strong></div>
 				<table class="table table-striped hide-btw1">
 					<thead>
 						<tr>
@@ -661,7 +672,7 @@ if (!$project || !$project->isOwner()) {
 						@endif
 
 						<tr>
-							<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
+							<td class="col-md-4"><strong>Totaal aanneming</strong></td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
 							<td class="col-md-2">&nbsp;</td>
@@ -672,7 +683,7 @@ if (!$project || !$project->isOwner()) {
 					</tbody>
 				</table>
 
-				<h5 class="only-total">ONDERAANNEMING</h5>
+				<div class="only-total"><strong><u>ONDERAANNEMING</u></strong></div>
 				<table class="table table-striped hide-btw1">
 					<thead>
 						<tr>
@@ -780,7 +791,7 @@ if (!$project || !$project->isOwner()) {
 						@endif
 
 						<tr>
-							<td class="col-md-4"><strong>Totaal Onderaanneming </strong></td>
+							<td class="col-md-4"><strong>Totaal onderaanneming</strong></td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
 							<td class="col-md-2">&nbsp;</td>
@@ -1383,7 +1394,7 @@ if (!$project || !$project->isOwner()) {
 						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
 						<tr>
-							<td class="col-md-2">{ $chapter->chapter_name }}</td>
+							<td class="col-md-2">{{ $chapter->chapter_name }}</td>
 							<td class="col-md-3">{{ $activity->activity_name }}</td>
 							<td class="col-md-7"><span>{{ $activity->note }}</td>
 						</tr>
