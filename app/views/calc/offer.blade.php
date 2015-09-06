@@ -98,6 +98,7 @@ if (!$project || !$project->isOwner()) {
 		  if (state) {
 		  	$('.show-activity').show();
 		  //	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
+
 		  } else {
 		 	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
 			$('.show-activity').hide();
@@ -1077,12 +1078,14 @@ if (!$project || !$project->isOwner()) {
 							@endif
 						@else
 							@if (DeliverTime::find($offer_last->deliver_id)->delivertime_name == "per direct" || DeliverTime::find($offer_last->deliver_id)->delivertime_name == "in overleg")
-									<select class="pull-right" name="deliver" id="deliver">
-									@foreach (DeliverTime::all() as $deliver)
-									<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
-									@endforeach
-									</select>
-								{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }} starten na uw opdrachtbevestiging.
+								<select class="pull-right" name="deliver" id="deliver">
+								@foreach (DeliverTime::all() as $deliver)
+								<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
+								@endforeach
+								</select>
+								Wij kunnen de werkzaamheden
+								{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
+								starten na uw opdrachtbevestiging.
 							@else
 								Wij kunnen de werkzaamheden starten binnen
 									<select class="pull-right" name="deliver" id="deliver">
@@ -1090,6 +1093,8 @@ if (!$project || !$project->isOwner()) {
 									<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
 									@endforeach
 									</select>
+									<span class="pull-right">Selecteer de levertijd: </span>
+
 								{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }} na uw opdrachtbevestiging.
 							@endif
 						@endif
