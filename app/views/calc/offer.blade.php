@@ -1143,7 +1143,7 @@ if (!$project || !$project->isOwner()) {
 		</div class="white-row">
 			<!--CLOSER END-->
 
-		<div class="white-row show-activity">
+		<div class="white-row show-activity" style="display:none;">
 			<!--PAGE HEADER START-->
 			<div class="row">
 				<div class="col-sm-6">
@@ -1165,7 +1165,7 @@ if (!$project || !$project->isOwner()) {
 			<!-- SPECIFICATION CON&SUBCON START-->
 			<div class="show-all" style="display:none;">
 				<h4>Specificatie werkzaamheden</h4>
-				<h5>Aanneming</h5>
+				<div><strong><u>AANNEMING</u></strong></div>
 				<table class="table table-striped only-end-total">
 					<thead>
 						<tr>
@@ -1207,7 +1207,7 @@ if (!$project || !$project->isOwner()) {
 					</tbody>
 				</table>
 
-				<h5>Onderaanneming</h5>
+				<div><strong><u>ONDERAANNEMING</u></strong></div>
 				<table class="table table-striped only-end-total">
 					<thead>
 						<tr>
@@ -1359,7 +1359,7 @@ if (!$project || !$project->isOwner()) {
 		</div>
 			<!-- SPECIFICATION TOTAL END-->
 
-		<div class="white-row show-note">
+		<div class="white-row show-note" style="display:none;">
 			<!--PAGE HEADER START-->
 			<div class="row">
 				<div class="col-sm-6">
@@ -1381,7 +1381,7 @@ if (!$project || !$project->isOwner()) {
 			<!-- DESCRIPTION CON&SUBCON START -->
 			<div class="show-all" style="display:none;">
 				<h4>Omschrijving werkzaamheden</h4>
-				<h5>Aanneming</h5>
+				<div><strong><u>AANNEMING</u></strong></div>
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -1403,12 +1403,12 @@ if (!$project || !$project->isOwner()) {
 					</tbody>
 				</table>
 
-				<h5>Onderaanneming</h5>
+				<div><strong><u>ONDERAANNEMING</u></strong></div>
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th class="col-md-2">&nbsp;</th>
-							<th class="col-md-3">&nbsp;</th>
+							<th class="col-md-2">Hoofdstuk</th>
+							<th class="col-md-3">Werkzaamheid</th>
 							<th class="col-md-7"><span>Omschrijving</th>
 						</tr>
 					</thead>
