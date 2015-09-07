@@ -31,6 +31,7 @@ if (!$project || !$project->isOwner()) {
 @section('content')
 <script type="text/javascript">
 	$(document).ready(function() {
+		$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
 	    $('.only-end-total tr').each(function() {
             $(this).find("td").eq(2).hide();
             $(this).find("th").eq(2).hide();
