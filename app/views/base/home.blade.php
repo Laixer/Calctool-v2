@@ -10,9 +10,6 @@ if ($relation)
 	$iban = Iban::where('relation_id','=',$relation->id)->first();
 else
 	$iban = null;
-
-//$contact = Contact::where('relation_id','=',$relation->id)->first();
-
 ?>
 
 @section('content')
@@ -177,441 +174,191 @@ else
 @endif
 <div id="wrapper">
 
-	<section class="container">
+	<div id="shop">
+		<section class="container">
 
-		@if (SystemMessage::where('active','=',true)->count()>0)
-		@if (SystemMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->level==1)
-		<div class="alert alert-warning">
-			<i class="fa fa-fa fa-info-circle"></i>
-			{{ SystemMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->content }}
-		</div>
-		@else
-		<div class="alert alert-danger">
-			<i class="fa fa-warning"></i>
-			<strong>{{ SystemMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->content }}</strong>
-		</div>
-		@endif
-		@endif
-
-		@if (!Auth::user()->hasPayed())
-		<div class="alert alert-danger">
-			<i class="fa fa-danger"></i>
-			Account is gedeactiveerd, abonnement is verlopen.
-		</div>
-		@endif
-
-		<h2><strong>Navigatie</strong> koppelingen</h2>
-		<article class="row">
-			<div class="col-md-6">
-				<!--<h4>Navigatie</h4>-->
-				<div class="col-md-3">
-					<div class="featured-box nobg">
-						<div class="box-content">
-							<a href="/project">
-								<i class="fa fa-folder-open"></i>
-								<h5>Projecten</h5>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="featured-box nobg">
-						<div class="box-content">
-							<a href="/project/new">
-								<i class="fa fa-pencil"></i>
-								<h5>Nieuw project</h5>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="featured-box nobg">
-						<div class="box-content">
-							<a href="/relation">
-								<i class="fa fa-users"></i>
-								<h5>Relaties</h5>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="featured-box nobg">
-						<div class="box-content">
-							<a href="/relation/new">
-								<i class="fa fa-user"></i>
-								<h5>Nieuwe relatie</h5>
-							</a>
-						</div>
-					</div>
-				</div>
+			@if (SystemMessage::where('active','=',true)->count()>0)
+			@if (SystemMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->level==1)
+			<div class="alert alert-warning">
+				<i class="fa fa-fa fa-info-circle"></i>
+				{{ SystemMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->content }}
 			</div>
-			<div class="col-md-6">
-				<div class="col-md-3">
-					<div class="featured-box nobg">
-						<div class="box-content">
-							<a href="/material">
-								<i class="fa fa-sort-alpha-desc"></i>
-								<h5>Materialen</h5>
+			@else
+			<div class="alert alert-danger">
+				<i class="fa fa-warning"></i>
+				<strong>{{ SystemMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->content }}</strong>
+			</div>
+			@endif
+			@endif
+
+			@if (!Auth::user()->hasPayed())
+			<div class="alert alert-danger">
+				<i class="fa fa-danger"></i>
+				Account is gedeactiveerd, abonnement is verlopen.
+			</div>
+			@endif
+
+			<h2><strong>Navigatie</strong> koppelingen</h2>
+			<div class="row">
+
+				<div class="col-sm-6 col-md-3">
+					<div class="item-box item-box-show fixed-box">
+						<figure>
+							<a class="item-hover" href="/mycompany">
+								<span class="overlay color2"></span>
+								<span class="inner">
+									<span class="block fa fa-building fsize60"></span>
+									<strong>Mijn Bedrijf</strong>
+								</span>
 							</a>
-						</div>
+							<a href="/mycompany" class="btn btn-primary add_to_cart"><i class="fa fa-building"></i> Mijn Bedrijf</a>
+
+						</figure>
 					</div>
 				</div>
-				<div class="col-md-3">
-					<div class="featured-box nobg">
-						<div class="box-content">
-							<a href="/mycompany">
-								<i class="fa fa-files-o"></i>
-								<h5>Mijn Bedrijf</h5>
+
+				<div class="col-sm-6 col-md-3">
+					<div class="item-box item-box-show fixed-box">
+						<figure>
+							<a class="item-hover" href="/material">
+								<span class="overlay color2"></span>
+								<span class="inner">
+									<span class="block fa fa-wrench fsize60"></span>
+									<strong>Materialen</strong>
+								</span>
 							</a>
-						</div>
+							<a href="/material" class="btn btn-primary add_to_cart"><i class="fa fa-wrench"></i> Materialen</a>
+						</figure>
 					</div>
 				</div>
-				<div class="col-md-3">
-					<div class="featured-box nobg">
-						<div class="box-content">
-							<a href="/timesheet">
-								<i class="fa fa-calendar"></i>
-								<h5>Uren</h5>
+
+				<div class="col-sm-6 col-md-3">
+					<div class="item-box item-box-show fixed-box">
+						<figure>
+							<a class="item-hover" href="/timesheet">
+								<span class="overlay color2"></span>
+								<span class="inner">
+									<span class="block fa fa-clock-o fsize60"></span>
+									<strong>Urenregistratie</strong>
+								</span>
 							</a>
-						</div>
+							<a href="/timesheet" class="btn btn-primary add_to_cart"><i class="fa fa-clock-o"></i> Urenregistratie</a>
+						</figure>
 					</div>
 				</div>
-				<div class="col-md-3">
-					<div class="featured-box nobg">
-						<div class="box-content">
-							<a href="/purchase">
-								<i class="fa fa-shopping-cart"></i>
-								<h5>Inkoop</h5>
+
+				<div class="col-sm-6 col-md-3">
+					<div class="item-box item-box-show fixed-box">
+						<figure>
+							<a class="item-hover" href="/purchase">
+								<span class="overlay color2"></span>
+								<span class="inner">
+									<span class="block fa fa-shopping-cart fsize60"></span>
+									<strong>Inkoopfacturen</strong>
+								</span>
 							</a>
-						</div>
+							<a href="/purchase" class="btn btn-primary add_to_cart"><i class="fa fa-shopping-cart"></i> Inkoopfacturen</a>
+						</figure>
 					</div>
 				</div>
 			</div>
 
+			<div class="row">
 
-<?php
-// https://ashobiz.asia/boot-extended14/ui/ui-117.html#
-// https://wrapbootstrap.com/preview/WB0DS0351
-?>
+				<div class="col-md-6">
+					<div class="white-row" style="min-height: 280px;">
+						<div class="pull-right">
 
-						@if (0)
-						<article class="row">
-							<div class="col-md-12">
-								<section id="portfolio">
 
-									<h2><strong>Project</strong> overzicht</h2>
-									<ul class="nav nav-pills isotope-filter isotope-filter" data-sort-id="isotope-list" data-option-key="filter">
-										<li data-option-value="*" class="active"><a href="#">Openstaande calculaties</a></li>
-										<li data-option-value=".development"><a href="#">Uitstaande offertes</a></li>
-										<li data-option-value=".photography"><a href="#">Onderhanden projecten</a></li>
-										<li data-option-value=".photography"><a href="#">Openstaande facturen</a></li>
-										<li data-option-value=".design"><a href="#">Gesloten projecten</a></li>
-									</ul>
-
-									<div class="row">
-
-										<ul class="sort-destination isotope fadeIn" data-sort-id="isotope-list" style="position: relative; overflow: hidden; height: 833px;">
-
-											<li class="isotope-item col-sm-6 col-md-3 development" style="position: absolute; left: 0px; top: 0px; transform: translate3d(0px, 0px, 0px);"><!-- item -->
-												<div class="item-box">
-													<figure>
-														<a class="item-hover" href="portfolio-single.html">
-															<span class="overlay color2"></span>
-															<span class="inner">
-																<span class="block fa fa-plus fsize20"></span>
-																<strong>PROJECT</strong> DETAIL
-															</span>
-														</a>
-														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
-													</figure>
-													<div class="item-box-desc">
-														<h4>Atropos Project</h4>
-														<small class="styleColor">29 June, 2014</small>
-													</div>
-												</div>
-											</li>
-
-											<li class="isotope-item col-sm-6 col-md-3 photography" style="position: absolute; left: 0px; top: 0px; transform: translate3d(293px, 0px, 0px);"><!-- item 2 -->
-												<div class="item-box">
-													<figure>
-														<a class="item-hover lightbox" href="https://www.youtube.com/watch?v=W7Las-MJnJo" data-plugin-options="{&quot;type&quot;:&quot;iframe&quot;}">
-															<span class="overlay color2"></span>
-															<span class="inner">
-																<span class="block fa fa-plus fsize20"></span>
-																<strong>VIEW</strong> VIDEO
-															</span>
-														</a>
-														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
-													</figure>
-													<div class="item-box-desc">
-														<h4>Atropos Project</h4>
-														<small class="styleColor">29 June, 2014</small>
-													</div>
-												</div>
-											</li>
-
-											<li class="isotope-item col-sm-6 col-md-3 design" style="position: absolute; left: 0px; top: 0px; transform: translate3d(586px, 0px, 0px);"><!-- item 3 -->
-												<div class="item-box">
-													<figure>
-														<a class="item-hover" href="portfolio-single.html">
-															<span class="overlay color2"></span>
-															<span class="inner">
-																<span class="block fa fa-plus fsize20"></span>
-																<strong>PROJECT</strong> DETAIL
-															</span>
-														</a>
-														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
-													</figure>
-													<div class="item-box-desc">
-														<h4>Atropos Project</h4>
-														<small class="styleColor">29 June, 2014</small>
-													</div>
-												</div>
-											</li>
-
-											<li class="isotope-item col-sm-6 col-md-3 photography" style="position: absolute; left: 0px; top: 0px; transform: translate3d(879px, 0px, 0px);"><!-- item 4 -->
-												<div class="item-box">
-													<figure>
-														<a class="item-hover" href="portfolio-single.html">
-															<span class="overlay color2"></span>
-															<span class="inner">
-																<span class="block fa fa-plus fsize20"></span>
-																<strong>PROJECT</strong> DETAIL
-															</span>
-														</a>
-														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
-													</figure>
-													<div class="item-box-desc">
-														<h4>Atropos Project</h4>
-														<small class="styleColor">29 June, 2014</small>
-													</div>
-												</div>
-											</li>
-
-											<li class="isotope-item col-sm-6 col-md-3 development" style="position: absolute; left: 0px; top: 0px; transform: translate3d(0px, 277px, 0px);"><!-- item 5 -->
-												<div class="item-box">
-													<figure>
-														<a class="item-hover lightbox" href="https://www.youtube.com/watch?v=W7Las-MJnJo" data-plugin-options="{&quot;type&quot;:&quot;iframe&quot;}">
-															<span class="overlay color2"></span>
-															<span class="inner">
-																<span class="block fa fa-plus fsize20"></span>
-																<strong>VIEW</strong> VIDEO
-															</span>
-														</a>
-														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
-													</figure>
-													<div class="item-box-desc">
-														<h4>Atropos Project</h4>
-														<small class="styleColor">29 June, 2014</small>
-													</div>
-												</div>
-											</li>
-
-											<li class="isotope-item col-sm-6 col-md-3 design" style="position: absolute; left: 0px; top: 0px; transform: translate3d(293px, 277px, 0px);"><!-- item 6 -->
-												<div class="item-box">
-													<figure>
-														<a class="item-hover" href="portfolio-single.html">
-															<span class="overlay color2"></span>
-															<span class="inner">
-																<span class="block fa fa-plus fsize20"></span>
-																<strong>PROJECT</strong> DETAIL
-															</span>
-														</a>
-														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
-													</figure>
-													<div class="item-box-desc">
-														<h4>Atropos Project</h4>
-														<small class="styleColor">29 June, 2014</small>
-													</div>
-												</div>
-											</li>
-
-											<li class="isotope-item col-sm-6 col-md-3 photography design" style="position: absolute; left: 0px; top: 0px; transform: translate3d(586px, 278px, 0px);"><!-- item 7 -->
-												<div class="item-box">
-													<figure>
-														<a class="item-hover" href="portfolio-single.html">
-															<span class="overlay color2"></span>
-															<span class="inner">
-																<span class="block fa fa-plus fsize20"></span>
-																<strong>PROJECT</strong> DETAIL
-															</span>
-														</a>
-														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
-													</figure>
-													<div class="item-box-desc">
-														<h4>Atropos Project</h4>
-														<small class="styleColor">29 June, 2014</small>
-													</div>
-												</div>
-											</li>
-
-											<li class="isotope-item col-sm-6 col-md-3 development" style="position: absolute; left: 0px; top: 0px; transform: translate3d(879px, 278px, 0px);"><!-- item 8 -->
-												<div class="item-box">
-													<figure>
-														<a class="item-hover" href="portfolio-single.html">
-															<span class="overlay color2"></span>
-															<span class="inner">
-																<span class="block fa fa-plus fsize20"></span>
-																<strong>PROJECT</strong> DETAIL
-															</span>
-														</a>
-														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
-													</figure>
-													<div class="item-box-desc">
-														<h4>Atropos Project</h4>
-														<small class="styleColor">29 June, 2014</small>
-													</div>
-												</div>
-											</li>
-
-											<li class="isotope-item col-sm-6 col-md-3 development" style="position: absolute; left: 0px; top: 0px; transform: translate3d(0px, 555px, 0px);"><!-- item -->
-												<div class="item-box">
-													<figure>
-														<a class="item-hover lightbox" href="https://www.youtube.com/watch?v=W7Las-MJnJo" data-plugin-options="{&quot;type&quot;:&quot;iframe&quot;}">
-															<span class="overlay color2"></span>
-															<span class="inner">
-																<span class="block fa fa-plus fsize20"></span>
-																<strong>VIEW</strong> VIDEO
-															</span>
-														</a>
-														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
-													</figure>
-													<div class="item-box-desc">
-														<h4>Atropos Project</h4>
-														<small class="styleColor">29 June, 2014</small>
-													</div>
-												</div>
-											</li>
-
-											<li class="isotope-item col-sm-6 col-md-3 photography" style="position: absolute; left: 0px; top: 0px; transform: translate3d(293px, 555px, 0px);"><!-- item 2 -->
-												<div class="item-box">
-													<figure>
-														<a class="item-hover" href="portfolio-single.html">
-															<span class="overlay color2"></span>
-															<span class="inner">
-																<span class="block fa fa-plus fsize20"></span>
-																<strong>PROJECT</strong> DETAIL
-															</span>
-														</a>
-														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
-													</figure>
-													<div class="item-box-desc">
-														<h4>Atropos Project</h4>
-														<small class="styleColor">29 June, 2014</small>
-													</div>
-												</div>
-											</li>
-
-											<li class="isotope-item col-sm-6 col-md-3 design" style="position: absolute; left: 0px; top: 0px; transform: translate3d(586px, 555px, 0px);"><!-- item 3 -->
-												<div class="item-box">
-													<figure>
-														<a class="item-hover" href="portfolio-single.html">
-															<span class="overlay color2"></span>
-															<span class="inner">
-																<span class="block fa fa-plus fsize20"></span>
-																<strong>PROJECT</strong> DETAIL
-															</span>
-														</a>
-														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
-													</figure>
-													<div class="item-box-desc">
-														<h4>Atropos Project</h4>
-														<small class="styleColor">29 June, 2014</small>
-													</div>
-												</div>
-											</li>
-
-											<li class="isotope-item col-sm-6 col-md-3 photography" style="position: absolute; left: 0px; top: 0px; transform: translate3d(879px, 556px, 0px);"><!-- item 4 -->
-												<div class="item-box">
-													<figure>
-														<a class="item-hover" href="portfolio-single.html">
-															<span class="overlay color2"></span>
-															<span class="inner">
-																<span class="block fa fa-plus fsize20"></span>
-																<strong>PROJECT</strong> DETAIL
-															</span>
-														</a>
-														<img class="img-responsive" src="<<plaatje>>" width="260" height="260" alt="">
-													</figure>
-													<div class="item-box-desc">
-														<h4>Atropos Project</h4>
-														<small class="styleColor">29 June, 2014</small>
-													</div>
-												</div>
-											</li>
-										</ul>
-									</div><!-- /.masonry-container -->
-									<!-- CALLOUT -->
-									<div class="bs-callout text-center nomargin-bottom">
-										<h3>Ben je tevreden met de CalcTool?? <a href="about" target="_blank" class="btn btn-primary btn-lg">Ja? We horen het graag!</a></h3>
-									</div>
-									<!-- /CALLOUT -->
-								</section>
-							</div>
-						</article>
-
-					@endif
-
-<!--
-					<div id="tab2" class="tab-pane">
-					<article class="row">
-						<div class="col-md-12">
-							<div class="col-md-3">
-							<h5><strong>Openstaande</strong> calculaties</h5>
-								@foreach (Project::where('user_id','=', Auth::user()->id)->get() as $project)
-									<div class="row">{{ HTML::link('project-'.$project->id.'/edit', $project->project_name) }}</div>
-								@endforeach
-							</div>
-							<div class="col-md-3">
-							<h5><strong>Uitstaande</strong> offertes</h5>
-								@foreach (Project::where('user_id','=', Auth::user()->id)->get() as $project)
-									<div class="row">{{ HTML::link('project-'.$project->id.'/edit', $project->project_name) }}</div>
-								@endforeach
-							</div>
-							<div class="col-md-3">
-							<h5><strong>Onderhanden</strong> projecten</h5>
-								@foreach (Project::where('user_id','=', Auth::user()->id)->get() as $project)
-									<div class="row">{{ HTML::link('project-'.$project->id.'/edit', $project->project_name) }}</div>
-								@endforeach
-							</div>
-						</div>
-						<div class="col-md-12">
-							<div class="col-md-3">
-							<h5><strong>Openstaande</strong> facturen</h5>
-								@foreach (Project::where('user_id','=', Auth::user()->id)->get() as $project)
-									<div class="row">{{ HTML::link('project-'.$project->id.'/edit', $project->project_name) }}</div>
-								@endforeach
-							</div>
-							<div class="col-md-3">
-							<h5><strong>Afgesloten</strong> projecten</h5>
-								@foreach (Project::where('user_id','=', Auth::user()->id)->get() as $project)
-									<div class="row">{{ HTML::link('project-'.$project->id.'/edit', $project->project_name) }}</div>
-								@endforeach
-							</div>
-						</div>
-
-					</article>
--->
-
-				</div>
-			</div>
-
+<div class="btn-group">
+		  <a href="/project/new" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Nieuw project</a>
+		  <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    <span class="caret"></span>
+		    <span class="sr-only">Toggle Dropdown</span>
+		  </button>
+		  <ul class="dropdown-menu">
+		    <li><a href="/project">Alle Projecten</a></li>
+		  </ul>
 		</div>
 
+						</div>
+						<h2><strong>Actieve</strong> Projecten</h2>
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>Project</th>
+										<th>Opdrachtgever</th>
+										<th>Type</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach (Project::where('user_id','=', Auth::id())->whereNull('project_close')->orderBy('created_at', 'desc')->limit(5)->get() as $project)
+									<?php $relation = Relation::find($project->client_id); ?>
+									<tr>
+										<td>{{ HTML::link('/project-'.$project->id.'/edit', $project->project_name) }}</td>
+										<td>{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); }}</td>
+										<td>{{ $project->type->type_name }}</td>
+									</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
 
+				<div class="col-md-6">
+					<div class="white-row" style="min-height: 280px;">
+						<div class="pull-right">
 
+<div class="btn-group">
+		  <a href="relation/new" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Nieuwe Relatie</a>
+		  <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    <span class="caret"></span>
+		    <span class="sr-only">Toggle Dropdown</span>
+		  </button>
+		  <ul class="dropdown-menu">
+		    <li><a href="/relation">Alle Relaties</a></li>
+		  </ul>
+		</div>
 
+						</div>
+						<h2><strong>Laatste</strong> Relaties</h2>
+						<div class="table-responsive">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>Naam</th>
+										<th>Email</th>
+										<th>Type</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php
+									$userid = Auth::user()->self_id;
+									if(Auth::user()->self_id)
+										$userid = Auth::user()->self_id;
+									else
+										$userid = -1;
+									?>
+									@foreach (Relation::where('user_id','=', Auth::id())->where('id','!=',$userid)->orderBy('created_at', 'desc')->limit(5)->get() as $relation)
+									<?php $contact = Contact::where('relation_id','=',$relation->id)->first(); ?>
+									<tr>
+										<td>{{ HTML::link('relation-'.$relation->id.'/edit', $relation->company_name ? $relation->company_name : $contact->firstname .' '. $contact->lastname) }}</td>
+										<td>{{ $relation->email }}</td>
+										<td>{{ RelationKind::find($relation->kind_id)->kind_name }}</td>
+									</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
 
+			</div>
 
-
-
-
-
-
-
-
-
-	</section>
+		</section>
+	</div>
 </div>
 
 <?# -- /WRAPPER -- ?>

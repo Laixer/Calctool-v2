@@ -1,7 +1,6 @@
 @extends('layout.master')
 
 @section('content')
-<?# -- WRAPPER -- ?>
 <div id="wrapper">
 
 	<section class="container">
@@ -13,6 +12,7 @@
 					<strong>Oops</strong>, Deze pagina is niet beschikbaar!
 					<span class="subtitle">Ons excuus, de pagina {{ $url }} kon niet worden gevonden.</span>
 				</h2>
+
 
 				<div class="e404">404</div>
 			</div>
@@ -33,9 +33,9 @@
 
 				<h4>NAVIGATIE</h4>
 				<ul class="nav nav-list">
-					<li><a href="#"><i class="fa fa-circle-o"></i> Home</a></li>
-					<li><a href="#"><i class="fa fa-circle-o"></i> Over Ons</a></li>
-					<li><a href="#"><i class="fa fa-circle-o"></i> Contact</a></li>
+					<li><a href="/"><i class="fa fa-circle-o"></i> Home</a></li>
+					<li><a href="/about"><i class="fa fa-circle-o"></i> Over Ons</a></li>
+					<li><a href="/about"><i class="fa fa-circle-o"></i> Contact</a></li>
 				</ul>
 
 			</aside>
@@ -45,5 +45,4 @@
 	</section>
 
 </div>
-<?# -- /WRAPPER -- ?>
 @stop

@@ -31,6 +31,7 @@ if (!$project || !$project->isOwner()) {
 @section('content')
 <script type="text/javascript">
 	$(document).ready(function() {
+		$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
 	    $('.only-end-total tr').each(function() {
             $(this).find("td").eq(2).hide();
             $(this).find("th").eq(2).hide();
@@ -56,6 +57,8 @@ if (!$project || !$project->isOwner()) {
 	                $(this).find("th").eq(2).show();
 	                $(this).find("td").eq(3).show();
 	                $(this).find("th").eq(3).show();
+	                $(this).find("th").eq(4).show();
+	                $(this).find("th").eq(5).show();
 		        });
 		        $('.hide-btw2').each(function() {
 		        	$(this).find("tr").eq(2).show();
@@ -79,6 +82,8 @@ if (!$project || !$project->isOwner()) {
 	                $(this).find("th").eq(2).hide();
 	                $(this).find("td").eq(3).hide();
 	                $(this).find("th").eq(3).hide();
+	                $(this).find("th").eq(4).hide();
+	                $(this).find("th").eq(5).hide();
 		        });
 		        $('.hide-btw2').each(function() {
 		        	$(this).find("tr").eq(2).hide();
@@ -92,13 +97,24 @@ if (!$project || !$project->isOwner()) {
 		});
 		$("[name='toggle-activity']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
+		  	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
 		  	$('.show-activity').show();
-		  	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
 		  } else {
-		  	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
+		 	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
 			$('.show-activity').hide();
 		  }
 		});
+
+		$("[name='toggle-endresult']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		  if (state) {
+		  	$('.show-activity').show();
+		  	$("[name='toggle-subcontr']").bootstrapSwitch('toggleDisabled');
+		  } else {
+		  	$("[name='toggle-subcontr']").bootstrapSwitch('toggleDisabled');
+			$('.show-activity').hide();
+		  }
+		});
+
 		$("[name='toggle-subcontr']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-all').show();
@@ -190,19 +206,23 @@ if (!$project || !$project->isOwner()) {
 		});
 		$('#terms').change(function(e){
 			var q = $('#terms').val();
-			if($.isNumeric(q)&&(q>1))
+			if($.isNumeric(q)&&(q>1)) {
 				$('.noterms').show('slow');
-			else
+			} else {
 				$('.noterms').hide('slow');
+			}
 
 		});
 		$('#termModal').on('hidden.bs.modal', function() {
 			var q = $('#terms').val();
 			if($.isNumeric(q)&&(q>1)&&(q<=50)) {
-				$('#termtext').text('Indien opdracht wordt verstrekt, wordt gefactureerd in '+q+' termijnen');
+				$('#condition-text').text('Indien opdracht wordt verstrekt, wordt gefactureerd in '+q+' termijnen');
 				if ($tpayment)
 					$('#paymenttext').html('Het eerste termijn geldt hierbij als een aanbetaling van &euro; '+$('.adata').first().val());
+			} else {
+				$('#condition-text').text('Indien opdracht gegund wordt, ontvangt u één eindfactuur.');
 			}
+
 		});
 		$('.osave').click(function(e){
 			e.preventDefault();
@@ -254,6 +274,7 @@ if (!$project || !$project->isOwner()) {
 		<?php } ?>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Versies</a>
 
+
 		<div class="btn-group">
 		  <a target="blank" href="/offer/pdf/project-{{ $project->id }}{{ $offer_last->option_query ? '?'.$offer_last->option_query : '' }}" class="btn btn-primary">PDF</a>
 		  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -267,7 +288,9 @@ if (!$project || !$project->isOwner()) {
 		<?php }else{ ?>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
+		@if (CalculationEndresult::totalProject($project))
 		<button class="btn btn-primary osave">Offerte  maken</button>
+		@endif
 		<?php } ?>
 		<?php } ?>
 	</div>
@@ -303,9 +326,9 @@ if (!$project || !$project->isOwner()) {
 
 				</div>
 
-				<div class="modal-footer"><!-- modal footer -->
+				<div class="modal-footer">
 					<button class="btn btn-default" data-dismiss="modal">Close</button>
-				</div><!-- /modal footer -->
+				</div>
 
 			</div>
 		</div>
@@ -317,12 +340,11 @@ if (!$project || !$project->isOwner()) {
 				<div class="modal-dialog">
 					<div class="modal-content">
 
-						<div class="modal-header"><!-- modal header -->
+						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 							<h4 class="modal-title" id="myModalLabel2">Betalingstermijnen</h4>
-						</div><!-- /modal header -->
+						</div>
 
-						<!-- modal body -->
 						<div class="modal-body">
 							<div class="form-horizontal">
 								<div class="form-group">
@@ -334,9 +356,6 @@ if (!$project || !$project->isOwner()) {
 									</div>
 								</div>
 							</div>
-
-
-
 							<div class="form-horizontal">
 								<div class="form-horizontal noterms" {{ ($offer_last && $offer_last->invoice_quantity >1 ? '' : 'style="display:none;"') }} >
 									<div class="col-md-6">
@@ -370,23 +389,14 @@ if (!$project || !$project->isOwner()) {
 									Indien aanbetaling wordt ingesteld wordt dit verrekend als het 1e betalingstermijn. Eventuele navolgende betalingstermijnen worden gespecficieerd op de factuurpagina.
 								</div>
 							</div>
-
-
-
-
-
 						</div>
-						<!-- /modal body -->
-
-						<div class="modal-footer"><!-- modal footer -->
+						<div class="modal-footer">
 							<button class="btn btn-default" data-dismiss="modal">Close</button>
-						</div><!-- /modal footer -->
-
+						</div>
 					</div>
 				</div>
 			</div>
 
-			<!-- modal dialog -->
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -414,7 +424,6 @@ if (!$project || !$project->isOwner()) {
 								      <div class="checkbox">
 								        <label>
 								          <input name="toggle-endresult" type="checkbox"> Alleen het totale offertebedrag weergeven<br>
-								          (nog niet beschikbaar in PDF)
 								        </label>
 								      </div>
 								    </div>
@@ -423,7 +432,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-subcontr" type="checkbox"> Kosten onderaanneming apart weergeven
+								          <input name="toggle-subcontr" type="checkbox"> Onderaanneming apart weergeven
 								        </label>
 								      </div>
 								    </div>
@@ -434,7 +443,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-activity" type="checkbox" checked> Hoofdstukken en werkzaamheden weergeven
+								          <input name="toggle-activity" type="checkbox"> Hoofdstukken en werkzaamheden weergeven
 								        </label>
 								      </div>
 								    </div>
@@ -443,8 +452,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-summary" type="checkbox" checked> Kosten werkzaamheden weergeven<br>
-								          (nog niet beschikbaar in PDF)
+								          <input name="toggle-summary" type="checkbox"> Kosten werkzaamheden weergeven<br>
 								        </label>
 								      </div>
 								    </div>
@@ -453,7 +461,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden weergeven
+								          <input name="toggle-note" type="checkbox"> Omschrijving werkzaamheden weergeven
 								        </label>
 								      </div>
 								    </div>
@@ -557,7 +565,7 @@ if (!$project || !$project->isOwner()) {
 		<!--CONTENT, CON & SUBCON START-->
 			<div class="show-all" style="display:none;">
 				<h4 class="only-total">Specificatie offerte</h4>
-				<h5 class="only-total">AANNEMING</h5>
+				<div class="only-total"><strong><u>AANNEMING</u></strong></div>
 				<table class="table table-striped hide-btw1">
 					<thead>
 						<tr>
@@ -665,7 +673,7 @@ if (!$project || !$project->isOwner()) {
 						@endif
 
 						<tr>
-							<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
+							<td class="col-md-4"><strong>Totaal aanneming</strong></td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
 							<td class="col-md-2">&nbsp;</td>
@@ -676,7 +684,7 @@ if (!$project || !$project->isOwner()) {
 					</tbody>
 				</table>
 
-				<h5 class="only-total">ONDERAANNEMING</h5>
+				<div class="only-total"><strong><u>ONDERAANNEMING</u></strong></div>
 				<table class="table table-striped hide-btw1">
 					<thead>
 						<tr>
@@ -784,7 +792,7 @@ if (!$project || !$project->isOwner()) {
 						@endif
 
 						<tr>
-							<td class="col-md-4"><strong>Totaal Onderaanneming </strong></td>
+							<td class="col-md-4"><strong>Totaal onderaanneming</strong></td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
 							<td class="col-md-2">&nbsp;</td>
@@ -1052,24 +1060,54 @@ if (!$project || !$project->isOwner()) {
 			<div class="row">
 				<div class="col-sm-12">
 				<h4>Bepalingen</h4>
-				<ul>
+				<ul >
 					<li>
-						Indien opdracht gegund wordt, ontvangt u één eindfactuur.
+						<span id="condition-text">Indien opdracht gegund wordt, ontvangt u één eindfactuur.</span>
 					</li>
-					<li>
-						Wij kunnen de werkzaamheden starten binnen
+					<li style="line-height:27px">
+					@if($offer_last)
 						@if ($offer_last && $offer_last->offer_finish)
-						{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
+							@if (DeliverTime::find($offer_last->deliver_id)->delivertime_name == "per direct" || DeliverTime::find($offer_last->deliver_id)->delivertime_name == "in overleg")
+								Wij kunnen de werkzaamheden
+								{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
+								starten na uw opdrachtbevestiging.
+							@else
+								Wij kunnen de werkzaamheden starten binnen
+								{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
+								na uw opdrachtbevestiging.
+							@endif
 						@else
-						<select name="deliver" id="deliver">
-							@foreach (DeliverTime::all() as $deliver)
-							<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
-							@endforeach
-						</select>
+							@if (DeliverTime::find($offer_last->deliver_id)->delivertime_name == "per direct" || DeliverTime::find($offer_last->deliver_id)->delivertime_name == "in overleg")
+								<select class="pull-right" name="deliver" id="deliver">
+								@foreach (DeliverTime::all() as $deliver)
+								<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
+								@endforeach
+								</select>
+								Wij kunnen de werkzaamheden
+								{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
+								starten na uw opdrachtbevestiging.
+							@else
+								Wij kunnen de werkzaamheden starten binnen
+									<select class="pull-right" name="deliver" id="deliver">
+									@foreach (DeliverTime::all() as $deliver)
+									<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
+									@endforeach
+									</select>
+									<span class="pull-right">Selecteer de levertijd: </span>
+
+								{{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }} na uw opdrachtbevestiging.
+							@endif
 						@endif
-						na uw opdrachtbevestiging.
+					@else
+						Geef de leveringsvoorwaarden voor de levertijd:
+						<select name="deliver" id="deliver">
+						@foreach (DeliverTime::all() as $deliver)
+						<option {{ ($offer_last ? ($offer_last->deliver_id == $deliver->id ? 'selected' : '') : '') }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
+						@endforeach
+						</select>
+					@endif
 					</li>
-					<li>
+					<li style="line-height:27px">
 						Deze offerte is geldig tot
 						@if ($offer_last && $offer_last->offer_finish)
 						{{ Valid::find($offer_last->valid_id)->valid_name }}
@@ -1079,7 +1117,8 @@ if (!$project || !$project->isOwner()) {
 							@foreach (Valid::all() as $valid)
 							<option {{ ($offer_last ? ($offer_last->valid_id == $valid->id ? 'selected' : '') : '') }} value="{{ $valid->id }}">{{ $valid->valid_name }}</option>
 							@endforeach
-						</select> na dagtekening.
+						</select>
+						na dagtekening.
 						@endif
 					</li>
 				</ul>
@@ -1109,7 +1148,7 @@ if (!$project || !$project->isOwner()) {
 		</div class="white-row">
 			<!--CLOSER END-->
 
-		<div class="white-row show-activity">
+		<div class="white-row show-activity" style="display:none;">
 			<!--PAGE HEADER START-->
 			<div class="row">
 				<div class="col-sm-6">
@@ -1131,25 +1170,25 @@ if (!$project || !$project->isOwner()) {
 			<!-- SPECIFICATION CON&SUBCON START-->
 			<div class="show-all" style="display:none;">
 				<h4>Specificatie werkzaamheden</h4>
-				<h5>Aanneming</h5>
+				<div><strong><u>AANNEMING</u></strong></div>
 				<table class="table table-striped only-end-total">
 					<thead>
 						<tr>
-							<th class="col-md-2">Hoofdstuk</th>
+							<th class="col-md-3">Hoofdstuk</th>
 							<th class="col-md-3">Werkzaamheid</th>
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</th>
 							<th class="col-md-1"><span class="pull-right">Materiaal</th>
 							<th class="col-md-1"><span class="pull-right">Materieel</th>
 							<th class="col-md-1"><span class="pull-right">Totaal</th>
-							<th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
+							<th class="col-md-1"><span>&nbsp;&nbsp;&nbsp;Stelpost</th>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
 						<tr>
-							<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+							<td class="col-md-3">{{ $chapter->chapter_name }}</td>
 							<td class="col-md-3">{{ $activity->activity_name }}</td>
 							<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
 							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
@@ -1161,7 +1200,7 @@ if (!$project || !$project->isOwner()) {
 						@endforeach
 						@endforeach
 						<tr>
-							<td class="col-md-2"><strong>Totaal aanneming</strong></td>
+							<td class="col-md-3"><strong>Totaal aanneming</strong></td>
 							<td class="col-md-3">&nbsp;</td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::contrLaborTotalAmount($project) }}</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1173,25 +1212,25 @@ if (!$project || !$project->isOwner()) {
 					</tbody>
 				</table>
 
-				<h5>Onderaanneming</h5>
+				<div><strong><u>ONDERAANNEMING</u></strong></div>
 				<table class="table table-striped only-end-total">
 					<thead>
 						<tr>
-							<th class="col-md-2">Hoofdstuk</th>
+							<th class="col-md-3">Hoofdstuk</th>
 							<th class="col-md-3">Werkzaamheid</th>
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</th>
 							<th class="col-md-1"><span class="pull-right">Materiaal</th>
 							<th class="col-md-1"><span class="pull-right">Materieel</th>
 							<th class="col-md-1"><span class="pull-right">Totaal</th>
-							<th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
+							<th class="col-md-1"><span>&nbsp;&nbsp;&nbsp;Stelpost</th>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
 						<tr>
-							<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+							<td class="col-md-3">{{ $chapter->chapter_name }}</td>
 							<td class="col-md-3">{{ $activity->activity_name }}</td>
 							<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
 							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
@@ -1203,7 +1242,7 @@ if (!$project || !$project->isOwner()) {
 						@endforeach
 						@endforeach
 						<tr>
-							<td class="col-md-2"><strong>Totaal onderaanneming</strong></td>
+							<td class="col-md-3"><strong>Totaal onderaanneming</strong></td>
 							<td class="col-md-3">&nbsp;</td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::subcontrLaborTotalAmount($project) }}</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1219,7 +1258,7 @@ if (!$project || !$project->isOwner()) {
 				<table class="table table-striped only-end-total">
 					<thead>
 						<tr>
-							<th class="col-md-2">&nbsp;</th>
+							<th class="col-md-3">&nbsp;</th>
 							<th class="col-md-3">&nbsp;</th>
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
@@ -1231,7 +1270,7 @@ if (!$project || !$project->isOwner()) {
 					</thead>
 					<tbody>
 						<tr>
-							<td class="col-md-2">&nbsp;</td>
+							<td class="col-md-3">&nbsp;</td>
 							<td class="col-md-3">&nbsp;</td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1251,21 +1290,21 @@ if (!$project || !$project->isOwner()) {
 				<table class="table table-striped only-end-total">
 					<thead>
 						<tr>
-							<th class="col-md-2">Hoofdstuk</th>
+							<th class="col-md-3">Hoofdstuk</th>
 							<th class="col-md-3">Werkzaamheid</th>
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</th>
 							<th class="col-md-1"><span class="pull-right">Materiaal</th>
 							<th class="col-md-1"><span class="pull-right">Materieel</th>
 							<th class="col-md-1"><span class="pull-right">Totaal</th>
-							<th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
+							<th class="col-md-1"><span>&nbsp;&nbsp;&nbsp;Stelpost</th>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
 						<tr><!-- item -->
-							<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+							<td class="col-md-3">{{ $chapter->chapter_name }}</td>
 							<td class="col-md-3">{{ $activity->activity_name }}</td>
 							<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
 							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
@@ -1279,7 +1318,7 @@ if (!$project || !$project->isOwner()) {
 						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
 						<tr><!-- item -->
-							<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+							<td class="col-md-3">{{ $chapter->chapter_name }}</td>
 							<td class="col-md-3">{{ $activity->activity_name }}</td>
 							<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
 							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
@@ -1297,7 +1336,7 @@ if (!$project || !$project->isOwner()) {
 				<table class="table table-striped only-end-total">
 					<thead>
 						<tr>
-							<th class="col-md-2">&nbsp;</th>
+							<th class="col-md-3">&nbsp;</th>
 							<th class="col-md-3">&nbsp;</th>
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
@@ -1309,7 +1348,7 @@ if (!$project || !$project->isOwner()) {
 					</thead>
 					<tbody>
 						<tr>
-							<td class="col-md-2">&nbsp;</td>
+							<td class="col-md-3">&nbsp;</td>
 							<td class="col-md-3">&nbsp;</td>
 							<td class="col-md-1"><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>
 							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
@@ -1325,7 +1364,7 @@ if (!$project || !$project->isOwner()) {
 		</div>
 			<!-- SPECIFICATION TOTAL END-->
 
-		<div class="white-row show-note">
+		<div class="white-row show-note" style="display:none;">
 			<!--PAGE HEADER START-->
 			<div class="row">
 				<div class="col-sm-6">
@@ -1347,7 +1386,7 @@ if (!$project || !$project->isOwner()) {
 			<!-- DESCRIPTION CON&SUBCON START -->
 			<div class="show-all" style="display:none;">
 				<h4>Omschrijving werkzaamheden</h4>
-				<h5>Aanneming</h5>
+				<div><strong><u>AANNEMING</u></strong></div>
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -1360,7 +1399,7 @@ if (!$project || !$project->isOwner()) {
 						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
 						<tr>
-							<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+							<td class="col-md-2">{{ $chapter->chapter_name }}</td>
 							<td class="col-md-3">{{ $activity->activity_name }}</td>
 							<td class="col-md-7"><span>{{ $activity->note }}</td>
 						</tr>
@@ -1369,12 +1408,12 @@ if (!$project || !$project->isOwner()) {
 					</tbody>
 				</table>
 
-				<h5>Onderaanneming</h5>
+				<div><strong><u>ONDERAANNEMING</u></strong></div>
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th class="col-md-2">&nbsp;</th>
-							<th class="col-md-3">&nbsp;</th>
+							<th class="col-md-2">Hoofdstuk</th>
+							<th class="col-md-3">Werkzaamheid</th>
 							<th class="col-md-7"><span>Omschrijving</th>
 						</tr>
 					</thead>
@@ -1382,7 +1421,7 @@ if (!$project || !$project->isOwner()) {
 						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
 						<tr>
-							<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+							<td class="col-md-2">{{ $chapter->chapter_name }}</td>
 							<td class="col-md-3">{{ $activity->activity_name }}</td>
 							<td class="col-md-7"><span>{{ $activity->note }}</td>
 						</tr>
@@ -1408,7 +1447,7 @@ if (!$project || !$project->isOwner()) {
 						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 						@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
 						<tr>
-							<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
+							<td class="col-md-2">{{ $chapter->chapter_name }}</td>
 							<td class="col-md-3">{{ $activity->activity_name }}</td>
 							<td class="col-md-7"><span>{{ $activity->note }}</td>
 						</tr>
@@ -1419,7 +1458,10 @@ if (!$project || !$project->isOwner()) {
 			</div>
 			<!-- DESCRIPTION TOTAL END -->
 
-			<!-- INVOICE FOOTER START -->
+		</div>
+		@endif
+
+		<!-- INVOICE FOOTER START -->
 			<div class="row">
 				<div class="col-sm-6"></div>
 				<div class="col-sm-6">
@@ -1446,15 +1488,15 @@ if (!$project || !$project->isOwner()) {
 						<?php }else{ ?>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
-						<button class="btn btn-primary osave">Offerte maken</button>
+						@if (CalculationEndresult::totalProject($project))
+						<button class="btn btn-primary osave">Offerte  maken</button>
+						@endif
 						<?php } ?>
 						<?php } ?>
 					</div>
 				</div>
 			</div>
 			<!-- INVOICE FOOTER END -->
-		</div>
-		@endif
 
 	</section>
 </div>

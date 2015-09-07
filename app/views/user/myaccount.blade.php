@@ -93,7 +93,11 @@ $(document).ready(function() {
 
 							<h4 class="company">Contactgegevens</h4>
 							<div class="row company">
-
+								<div class="col-md-3">
+									<label>Username: {{ $user->username }}</label>
+								</div>
+							</div>
+							<div class="row company">
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="firstname">Voornaam</label>
