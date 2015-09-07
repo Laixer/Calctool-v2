@@ -1366,8 +1366,8 @@ var n = this,
 
 										<thead>
 											<tr>
-												<th class="col-md-3">&nbsp;</th>
-												<th class="col-md-3">&nbsp;</th>
+												<th class="col-md-3">Hoofdstuk</th>
+												<th class="col-md-3">Werkzaamheid</th>
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</th>
@@ -1416,8 +1416,8 @@ var n = this,
 
 										<thead>
 											<tr>
-												<th class="col-md-3">&nbsp;</th>
-												<th class="col-md-3">&nbsp;</th>
+												<th class="col-md-3">Hoofdstuk</th>
+												<th class="col-md-3">Werkzaamheid</th>
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</th>
