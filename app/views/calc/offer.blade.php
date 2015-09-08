@@ -491,9 +491,9 @@ if (!$project || !$project->isOwner()) {
 		    				<ul class="list-unstyled">
 	 						<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
 	  						<li>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
-	 						<li><i class="fa fa-phone"></i>&nbsp;{{ $relation_self->phone }}</li>
-	 						<li><i class="fa fa-envelope-o"></i>&nbsp;{{ $relation_self->email }}</li>
-	 						<li>KVK:{{ $relation_self->kvk }}</li>
+	 						<li>&nbsp;{{ $relation_self->phone }} <i class="fa fa-phone"></i></li>
+	 						<li>&nbsp;{{ $relation_self->email }} <i class="fa fa-envelope-o"></i></li>
+	 						<li>KVK: {{ $relation_self->kvk }}</li>
 						<ul class="list-unstyled">
 					</p>
 				</div>
