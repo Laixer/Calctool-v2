@@ -401,12 +401,11 @@ if (!$project || !$project->isOwner()) {
 				<div class="modal-dialog">
 					<div class="modal-content">
 
-						<div class="modal-header"><!-- modal header -->
+						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 							<h4 class="modal-title" id="myModalLabel">Offerte opties</h4>
-						</div><!-- /modal header -->
+						</div>
 
-						<!-- modal body -->
 						<div class="modal-body">
 							<div class="form-horizontal">
 
@@ -492,9 +491,9 @@ if (!$project || !$project->isOwner()) {
 		    				<ul class="list-unstyled">
 	 						<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
 	  						<li>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
-	 						<li><i class="fa fa-phone"></i>&nbsp;{{ $relation_self->phone }}</li>
-	 						<li><i class="fa fa-envelope-o"></i>&nbsp;{{ $relation_self->email }}</li>
-	 						<li>KVK:{{ $relation_self->kvk }}</li>
+	 						<li>&nbsp;{{ $relation_self->phone }} <i class="fa fa-phone"></i></li>
+	 						<li>&nbsp;{{ $relation_self->email }} <i class="fa fa-envelope-o"></i></li>
+	 						<li>KVK: {{ $relation_self->kvk }}</li>
 						<ul class="list-unstyled">
 					</p>
 				</div>
