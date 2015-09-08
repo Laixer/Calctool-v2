@@ -401,12 +401,11 @@ if (!$project || !$project->isOwner()) {
 				<div class="modal-dialog">
 					<div class="modal-content">
 
-						<div class="modal-header"><!-- modal header -->
+						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 							<h4 class="modal-title" id="myModalLabel">Offerte opties</h4>
-						</div><!-- /modal header -->
+						</div>
 
-						<!-- modal body -->
 						<div class="modal-body">
 							<div class="form-horizontal">
 
