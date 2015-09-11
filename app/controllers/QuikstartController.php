@@ -27,7 +27,6 @@ class QuickstartController extends Controller {
 			'company_name' => array('required_if:relationkind,zakelijk','max:50'),
 			'kvk' => array('numeric','min:8'),
 			'btw' => array('alpha_num','min:14'),
-			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
 			'street' => array('required','alpha','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),

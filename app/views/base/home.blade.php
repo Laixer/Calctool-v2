@@ -45,7 +45,7 @@ else
 							<input name="company_name" id="company_name" type="text" value="{{ Input::old('company_name') ? Input::old('company_name') : ($relation ? $relation->company_name : '') }}" class="form-control" />
 						</div>
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-5">
 						<div class="form-group">
 							<label for="company_type">Bedrijfstype*</label>
 							<select name="company_type" id="company_type" class="form-control pointer">
@@ -57,28 +57,7 @@ else
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-3">
-						<div class="form-group">
-							<label for="kvk">K.v.K nummer</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Je KVK-nummer dient te bestaan uit 8 cijfers" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
-							<input name="kvk" id="kvk" type="text" maxlength="8" minlength="8" value="{{ Input::old('kvk') ? Input::old('kvk') : ($relation ? $relation->kvk : '') }}" class="form-control"/>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="form-group">
-							<label for="btw">BTW nummer</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Je BTW-nummer bestaat uit een combinatie van 12 cijfers en/of letters. Veelal beginnen nederlandse BTW-nummers met 'NL' en eindigen op 'B01'." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
-							<input name="btw" id="btw" type="text" maxlength="14" minlength="14" value="{{ Input::old('btw') ? Input::old('btw') : ($relation ? $relation->btw : '') }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-3">
-						<div class="form-group">
-							<label for="email_comp">Email*</label>
-							<input name="email_comp" id="email_comp" type="email" value="{{ Input::old('email_comp') ? Input::old('email_comp') : ($relation ? $relation->email : '') }}" class="form-control"/>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-5">
+					<div class="col-md-7">
 						<div class="form-group">
 							<label for="street">Straat*</label>
 							<input name="street" id="street" type="text" value="{{ Input::old('street') ? Input::old('street') : ($relation ? $relation->address_street : '') }}" class="form-control"/>
@@ -92,22 +71,21 @@ else
 						</div>
 					</div>
 
-					<div class="col-md-2">
+					<div class="col-md-3">
 						<div class="form-group">
 							<label for="zipcode">Postcode*</label>
 							<input name="zipcode" id="zipcode" maxlength="6" type="text" value="{{ Input::old('zipcode') ? Input::old('zipcode') : ($relation ? $relation->address_postal : '') }}" class="form-control"/>
 						</div>
 					</div>
-
-					<div class="col-md-3">
+				</div>
+				<div class="row">
+					<div class="col-md-4">
 						<div class="form-group">
 							<label for="city">Plaats*</label>
 							<input name="city" id="city" type="text" value="{{ Input::old('city') ? Input::old('city') : ($relation ? $relation->address_city : '') }}" class="form-control"/>
 						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-2">
+					<div class="col-md-4">
 						<div class="form-group">
 							<label for="province">Provincie*</label>
 							<select name="province" id="province" class="form-control pointer">
