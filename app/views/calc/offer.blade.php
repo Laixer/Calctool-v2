@@ -217,7 +217,7 @@ if (!$project || !$project->isOwner()) {
 			var q = $('#terms').val();
 			if($.isNumeric(q)&&(q>1)&&(q<=50)) {
 				if($('input[name="toggle-payment"]').prop('checked'))
-					$('#condition-text').html('Indien opdracht wordt verstrekt, wordt gefactureerd in '+q+' termijnen a &euro; ' +$('#amount').val());
+					$('#condition-text').html('Indien opdracht wordt verstrekt, wordt gefactureerd in '+q+' termijnen, waarvan het eerste termijn een aanbetaling betreft a &euro; ' +$('#amount').val()+'.');
 				else
 					$('#condition-text').html('Indien opdracht wordt verstrekt, wordt gefactureerd in '+q+' termijnen.');
 			} else {
