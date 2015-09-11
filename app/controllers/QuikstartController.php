@@ -86,7 +86,8 @@ class QuickstartController extends Controller {
 			$user->self_id = $relation->id;
 			$user->save();
 
-			return Redirect::to('/')->with('success', 1);
+			return Redirect::to('/')->with('success', 1)->withCookie(Cookie::forget('nstep'));
+
 		}
 	}
 
