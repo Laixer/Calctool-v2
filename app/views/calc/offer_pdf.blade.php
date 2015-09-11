@@ -644,6 +644,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           @endforeach
           @endforeach
         </tbody>
+
      </table>
 
      <h1 class="name">Totalen project</h1>
@@ -669,6 +670,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
           <td class="qty">&nbsp;</td>
         </tbody>
       </table>
+      <strong>Weergegeven bedragen zijn exclusief BTW</strong>
       @else
 
       <!--PAGE HEADER SECOND START-->
@@ -808,6 +810,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <td class="qty">&nbsp;</td>
           </tr>
       </table>
+     <strong>Weergegeven bedragen zijn exclusief BTW</strong>
       @endif
       @endif
 

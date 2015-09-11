@@ -171,7 +171,7 @@ class AuthController extends Controller {
 		DemoProjectTemplate::setup($user->id);
 
 		Auth::login($user);
-		return Redirect::to('/')->withCookie(Cookie::make('nstep', 'intro', 60*24*3));
+		return Redirect::to('/')->withCookie(Cookie::make('nstep', 'intro_'.$user->id, 60*24*3));
 	}
 
 	/**
