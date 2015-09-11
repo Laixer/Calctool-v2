@@ -29,7 +29,7 @@
 						<th class="col-md-1">Bedrag</th>
 						<th class="col-md-1">Status</th>
 						<th class="col-md-2">Betalingswijze</th>
-						<th class="col-md-2">Verlening</th>
+						<th class="col-md-2">Verlenging</th>
 						<th class="col-md-2">Datum</th>
 					</tr>
 				</thead>
