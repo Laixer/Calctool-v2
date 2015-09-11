@@ -216,9 +216,10 @@ if (!$project || !$project->isOwner()) {
 		$('#termModal').on('hidden.bs.modal', function() {
 			var q = $('#terms').val();
 			if($.isNumeric(q)&&(q>1)&&(q<=50)) {
-				$('#condition-text').text('Indien opdracht wordt verstrekt, wordt gefactureerd in '+q+' termijnen');
-				if ($tpayment)
-					$('#paymenttext').html('Het eerste termijn geldt hierbij als een aanbetaling van &euro; '+$('.adata').first().val());
+				if($('input[name="toggle-payment"]').prop('checked'))
+					$('#condition-text').html('Indien opdracht wordt verstrekt, wordt gefactureerd in '+q+' termijnen a &euro; ' +$('#amount').val());
+				else
+					$('#condition-text').html('Indien opdracht wordt verstrekt, wordt gefactureerd in '+q+' termijnen.');
 			} else {
 				$('#condition-text').text('Indien opdracht gegund wordt, ontvangt u één eindfactuur.');
 			}
@@ -1186,9 +1187,11 @@ if (!$project || !$project->isOwner()) {
 					</thead>
 					<tbody>
 						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+						<?php $i = 0; ?>
 						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+						<?php $i++; ?>
 						<tr>
-							<td class="col-md-3">{{ $chapter->chapter_name }}</td>
+							<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 							<td class="col-md-3">{{ $activity->activity_name }}</td>
 							<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
 							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
@@ -1228,9 +1231,11 @@ if (!$project || !$project->isOwner()) {
 					</thead>
 					<tbody>
 						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+						<?php $i = 0; ?>
 						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+						<?php $i++; ?>
 						<tr>
-							<td class="col-md-3">{{ $chapter->chapter_name }}</td>
+							<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 							<td class="col-md-3">{{ $activity->activity_name }}</td>
 							<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
 							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
@@ -1302,29 +1307,28 @@ if (!$project || !$project->isOwner()) {
 					</thead>
 					<tbody>
 						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
-						<tr><!-- item -->
-							<td class="col-md-3">{{ $chapter->chapter_name }}</td>
+						<?php $i = 0; ?>
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
+						<?php
+							$i++;
+							$mat_profit = 0;
+							$equip_profit = 0;
+							if ($activity->part_id == Part::where('part_name','=','contracting')->first()->id) {
+								$mat_profit = $project->profit_calc_contr_mat;
+								$equip_profit = $project->profit_calc_contr_equip;
+							} else {
+								$mat_profit = $project->profit_calc_subcontr_mat;
+								$equip_profit = $project->profit_calc_subcontr_equip;
+							}
+						?>
+						<tr>
+							<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 							<td class="col-md-3">{{ $activity->activity_name }}</td>
 							<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
 							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
-							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
-							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
-							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-							<td class="col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
-						</tr>
-						@endforeach
-						@endforeach
-						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
-						<tr><!-- item -->
-							<td class="col-md-3">{{ $chapter->chapter_name }}</td>
-							<td class="col-md-3">{{ $activity->activity_name }}</td>
-							<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
-							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
-							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
-							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
-							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
+							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $mat_profit), 2, ",",".") }}</span></td>
+							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $equip_profit), 2, ",",".") }}</span></td>
+							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $mat_profit, $equip_profit), 2, ",",".") }} </td>
 							<td class="col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
 						</tr>
 						@endforeach
@@ -1397,9 +1401,11 @@ if (!$project || !$project->isOwner()) {
 					</thead>
 					<tbody>
 						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+						<?php $i = 0; ?>
 						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+						<?php $i++ ?>
 						<tr>
-							<td class="col-md-2">{{ $chapter->chapter_name }}</td>
+							<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 							<td class="col-md-3">{{ $activity->activity_name }}</td>
 							<td class="col-md-7"><span>{{ $activity->note }}</td>
 						</tr>
@@ -1419,9 +1425,11 @@ if (!$project || !$project->isOwner()) {
 					</thead>
 					<tbody>
 						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+						<?php $i = 0; ?>
 						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+						<?php $i++; ?>
 						<tr>
-							<td class="col-md-2">{{ $chapter->chapter_name }}</td>
+							<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 							<td class="col-md-3">{{ $activity->activity_name }}</td>
 							<td class="col-md-7"><span>{{ $activity->note }}</td>
 						</tr>
@@ -1445,9 +1453,11 @@ if (!$project || !$project->isOwner()) {
 					</thead>
 					<tbody>
 						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+						<?php $i = 0; ?>
 						@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
+						<?php $i++; ?>
 						<tr>
-							<td class="col-md-2">{{ $chapter->chapter_name }}</td>
+							<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 							<td class="col-md-3">{{ $activity->activity_name }}</td>
 							<td class="col-md-7"><span>{{ $activity->note }}</td>
 						</tr>
