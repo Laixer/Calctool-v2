@@ -383,9 +383,11 @@ if (!$project || !$project->isOwner())
 
 										<tbody>
 											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+											<?php $i = 0; ?>
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
+											<?php $i++; ?>
 											<tr>
-												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
+												<td class="col-md-3"><strong>{{ $i==1 ? $chapter->chapter_name : '' }}</strong></td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }}</td>
 												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::laborActivity($activity), 2, ",",".") }}</span></td>
@@ -431,9 +433,11 @@ if (!$project || !$project->isOwner())
 
 										<tbody>
 											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+											<?php $i = 0; ?>
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
+											<?php $i++; ?>
 											<tr>
-												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
+												<td class="col-md-3"><strong>{{ $i==1 ? $chapter->chapter_name : '' }}</strong></td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }}</td>
 												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::laborActivity($activity), 2, ",",".") }}</span></td>

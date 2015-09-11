@@ -694,7 +694,6 @@ var n = this,
 					</li>
 				</ul>
 
-				<!-- tabs content -->
 				<div class="tab-content">
 					<div id="calculate" class="tab-pane">
 						<div class="toogle">
@@ -955,9 +954,11 @@ var n = this,
 										<!-- table items -->
 										<tbody>
 											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+											<?php $i = 0; ?>
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
-											<tr><!-- item -->
-												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
+											<?php $i++; ?>
+											<tr>
+												<td class="col-md-3"><strong>{{ $i==1 ? $chapter->chapter_name : '' }}</strong></td>
 												<td class="col-md-4">{{ $activity->activity_name }}</td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }}</td>
 												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::laborActivity($activity), 2, ",",".") }}</span></td>
@@ -967,7 +968,7 @@ var n = this,
 											</tr>
 											@endforeach
 											@endforeach
-											<tr><!-- item -->
+											<tr>
 												<th class="col-md-3"><strong>Totaal Aanneming</strong></th>
 												<th class="col-md-2">&nbsp;</th>
 												<td class="col-md-1"><strong><span class="pull-right">{{ LessOverview::contrLaborTotalAmount($project) }}</span></strong></td>
@@ -987,7 +988,6 @@ var n = this,
 								<div class="toggle-content">
 
 									<table class="table table-striped">
-										<?# -- table head -- ?>
 										<thead>
 											<tr>
 												<th class="col-md-3">&nbsp;</th>
@@ -1000,12 +1000,13 @@ var n = this,
 											</tr>
 										</thead>
 
-										<!-- table items -->
 										<tbody>
 											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+											<?php $i = 0; ?>
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
-											<tr><!-- item -->
-												<td class="col-md-3"><strong>{{ $chapter->chapter_name }}</strong></td>
+											<?php $i++ ?>
+											<tr>
+												<td class="col-md-3"><strong>{{ $i==1 ? $chapter->chapter_name : '' }}</strong></td>
 												<td class="col-md-4">{{ $activity->activity_name }}</td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }}</td>
 												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::laborActivity($activity), 2, ",",".") }}</span></td>
@@ -1016,7 +1017,7 @@ var n = this,
 											</tr>
 											@endforeach
 											@endforeach
-											<tr><!-- item -->
+											<tr>
 												<th class="col-md-3"><strong>Totaal Onderaanneming</strong></th>
 												<th class="col-md-4">&nbsp;</th>
 												<td class="col-md-1"><strong><span class="pull-right">{{ LessOverview::subcontrLaborTotalAmount($project) }}</span></strong></td>
@@ -1035,7 +1036,6 @@ var n = this,
 								<label>Totalen project</label>
 								<div class="toggle-content">
 									<table class="table table-striped">
-										<?# -- table head -- ?>
 										<thead>
 											<tr>
 												<th class="col-md-4">&nbsp;</th>
@@ -1048,9 +1048,8 @@ var n = this,
 											</tr>
 										</thead>
 
-										<!-- table items -->
 										<tbody>
-											<tr><!-- item -->
+											<tr>
 												<th class="col-md-4">&nbsp;</th>
 												<th class="col-md-3">&nbsp;</th>
 												<td class="col-md-1"><span class="pull-right"><strong>{{ LessOverview::laborSuperTotalAmount($project) }}</strong></span></td>
