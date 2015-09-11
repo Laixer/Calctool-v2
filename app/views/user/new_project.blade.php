@@ -174,16 +174,10 @@
 								<div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
 								<div class="col-md-1"><div class="pull-right">&euro;</div></div>
 								<div class="col-md-2">
-
-
-
-{{ '&euro; '.number_format(), 2, ",",".") }}
-
-
-									<input name="hour_rate" id="hour_rate" type="text" maxlength="3" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : number_format(Auth::user()->pref_hourrate_calc, 2, ",",".") }}" class="form-control-sm-number"/>
+									<input name="hour_rate" id="hour_rate" type="text" maxlength="6" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : number_format(Auth::user()->pref_hourrate_calc, 2,",",".") }}" class="form-control-sm-number"/>
 								</div>
 								<div class="col-md-2">
-									<input name="more_hour_rate" id="more_hour_rate" type="text" maxlength="3" value="{{ Input::old('more_hour_rate') ? Input::old('more_hour_rate') : number_format(Auth::user()->pref_hourrate_more, 2, ",",".") }}" class="form-control-sm-number"/>
+									<input name="more_hour_rate" id="more_hour_rate" type="text" maxlength="6" value="{{ Input::old('more_hour_rate') ? Input::old('more_hour_rate') : number_format(Auth::user()->pref_hourrate_more, 2,",",".") }}" class="form-control-sm-number"/>
 								</div>
 							</div>
 							<h5><strong>Aanneming</strong></h5>
