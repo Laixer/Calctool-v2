@@ -3,7 +3,7 @@
 <?php
 $next_step = Cookie::get('nstep');
 if (Input::get('nstep') == 'intro')
-	$next_step = 'intro';
+	$next_step = 'intro_'.Auth::id();
 
 $relation = Relation::find(Auth::user()->self_id);
 if ($relation)
@@ -14,7 +14,7 @@ else
 
 @section('content')
 
-@if ($next_step && $next_step=='intro')
+@if ($next_step && $next_step=='intro_'.Auth::id())
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#tutModal').modal('toggle');
@@ -141,9 +141,9 @@ else
 			</div>
 
 			<div class="modal-footer">
-					<div class="col-md-12">
-						<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
-					</div>
+				<div class="col-md-12">
+					<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+				</div>
 			</div>
 
 		</div>
@@ -289,7 +289,7 @@ else
 					<div class="white-row" style="min-height: 280px;">
 						<div class="pull-right">
 
-<div class="btn-group">
+		<div class="btn-group">
 		  <a href="relation/new" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Nieuwe Relatie</a>
 		  <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		    <span class="caret"></span>
