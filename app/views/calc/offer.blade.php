@@ -438,11 +438,13 @@ if (!$project || !$project->isOwner()) {
 								  </div>
 								  <br>
 								  <strong>De volgende opties worden als bijlage bijgesloten bij de offerte</strong>
+								  <br>
+								  <br>
 								  <div class="form-group">
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-activity" type="checkbox"> Hoofdstukken en werkzaamheden weergeven
+								          <input name="toggle-activity" type="checkbox"> Kostenoverizicht per werkzaamheid specificeren
 								        </label>
 								      </div>
 								    </div>
@@ -451,7 +453,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-summary" type="checkbox"> Kosten werkzaamheden weergeven<br>
+								          <input name="toggle-summary" type="checkbox"> Aanvullend specificeren op arbeid, materiaal en materieel
 								        </label>
 								      </div>
 								    </div>
@@ -491,9 +493,8 @@ if (!$project || !$project->isOwner()) {
 		    				<ul class="list-unstyled">
 	 						<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
 	  						<li>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
-	 						<li>&nbsp;{{ $relation_self->phone }} <i class="fa fa-phone"></i></li>
-	 						<li>&nbsp;{{ $relation_self->email }} <i class="fa fa-envelope-o"></i></li>
-	 						<li>KVK: {{ $relation_self->kvk }}</li>
+							<li><i class="fa fa-phone"></i>&nbsp;{{ $relation_self->phone }}&nbsp;|&nbsp;<i class="fa fa-envelope-o"></i>&nbsp;{{ $relation_self->email }}</li>
+	 						<li>KVK:{{ $relation_self->kvk }}&nbsp;|&nbsp;BTW: {{ $relation_self->btw }}</li>
 						<ul class="list-unstyled">
 					</p>
 				</div>
