@@ -214,8 +214,8 @@ class UserController extends Controller {
 			'firstname' => array('required','max:30'),
 			//'lastname' => array('required','max:50'),
 			//'gender' => array('required'),
-			'mobile' => array('alpha_num','max:14'),
-			'telephone' => array('alpha_num','max:14'),
+			'mobile' => array('numeric','max:14'),
+			'phone' => array('numeric','max:14'),
 			'email' => array('required','email','max:80'),
 			'website' => array('url','max:180'),
 			//Geconstateerd werd of een adres voor de gebruikers account wel nodig was, dit saat immers ook bij mijn bedrijf
@@ -230,8 +230,6 @@ class UserController extends Controller {
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			$messages = $validator->messages();
-
 			// redirect our user back to the form with the errors from the validator
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
