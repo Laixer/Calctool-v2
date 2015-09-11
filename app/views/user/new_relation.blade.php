@@ -64,7 +64,7 @@ $(document).ready(function() {
 
 <div id="wrapper">
 
-	<section class="container fix-footer-bottom">
+	<section class="container">
 
 		<div class="col-md-12">
 

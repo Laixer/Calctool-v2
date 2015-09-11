@@ -184,7 +184,7 @@ else {
 </script>
 <div id="wrapper">
 
-	<section class="container fix-footer-bottom">
+	<section class="container">
 
 			@include('calc.wizard', array('page' => 'project'))
 
