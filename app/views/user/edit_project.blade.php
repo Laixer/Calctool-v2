@@ -373,13 +373,13 @@ else {
 						</div>
 
 						<div id="project" class="tab-pane">
-						<form method="post" action="/project/update">
+						<form method="post" {{ $offer_last && $offer_last->offer_finish ? 'action="/project/update/note"' : 'action="/project/update"' }}>
 							<h5><strong>Gegevens</strong></h5>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="name">Projectnaam*</label>
-											<input name="name" id="name" type="text" {{ $project->project_close ? 'disabled' : '' }} value="{{ Input::old('name') ? Input::old('name') : $project->project_name }}" class="form-control" />
+											<input name="name" id="name" type="text" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} value="{{ Input::old('name') ? Input::old('name') : $project->project_name }}" class="form-control" />
 											<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
 										</div>
 									</div>
