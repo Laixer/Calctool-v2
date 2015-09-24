@@ -99,7 +99,8 @@ var n = this,
 					var $curTable = $(this).closest("table");
 					$curTable.find("tr:eq(1)").clone().removeAttr("data-id").find("input").each(function(){
 						$(this).val("").removeClass("error-input").attr("id", function(_, id){ return id + i });
-					}).end().find(".total-ex-tax, .total-incl-tax").text("").end().appendTo($curTable);
+					}).end().find(".total-ex-tax, .total-incl-tax").text("").end()
+					.find(".btn-warning").removeClass('btn-warning fa-undo').addClass('btn-danger fa-times').end().appendTo($curTable);
 					$("button[data-target='#myModal']").on("click", function() {
 						$newinputtr = $(this).closest("tr");
 					});
