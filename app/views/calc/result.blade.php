@@ -47,7 +47,7 @@ $(document).ready(function() {
 
 });
 </script>
-<!-- TODO issue 134 style van tooltip -->
+<?php //TODO issue 134 style van tooltip ?>
 <style type="text/css">
 .tooltip {
   top: 0;
@@ -87,13 +87,11 @@ $(document).ready(function() {
 					</li>
 				</ul>
 
-				<!-- tabs content -->
 				<div class="tab-content">
 					<div id="result" class="tab-pane">
 
 						<h4>Aanneming</h4>
 						<table class="table table-striped">
-							<?# -- table head -- ?>
 							<thead>
 								<tr>
 									<th class="col-md-4">&nbsp;</th>
@@ -107,10 +105,9 @@ $(document).ready(function() {
 								</tr>
 							</thead>
 
-							<!-- table items -->
 							<tbody>
 								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -226,7 +223,6 @@ $(document).ready(function() {
 
 						<h4>Onderaanneming</h4>
 						<table class="table table-striped">
-							<?# -- table head -- ?>
 							<thead>
 								<tr>
 									<th class="col-md-4">&nbsp;</th>
@@ -240,7 +236,6 @@ $(document).ready(function() {
 								</tr>
 							</thead>
 
-							<!-- table items -->
 							<tbody>
 								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr><!-- item -->
@@ -311,7 +306,7 @@ $(document).ready(function() {
 								@endif
 
 								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -359,7 +354,6 @@ $(document).ready(function() {
 
 						<h4>Totalen</h4>
 						<table class="table table-striped">
-							<?# -- table head -- ?>
 							<thead>
 								<tr>
 									<th class="col-md-4">&nbsp;</th>
@@ -370,9 +364,8 @@ $(document).ready(function() {
 								</tr>
 							</thead>
 
-							<!-- table items -->
 							<tbody>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Cumulatief project (excl. BTW)</td>
 									<td class="col-md-3">&nbsp;</td>
 									<td class="col-md-2"><strong>{{ '&euro; '.number_format(ResultEndresult::totalProject($project), 2, ",",".") }}</strong></td>
@@ -380,7 +373,7 @@ $(document).ready(function() {
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">BTW bedrag aanneming belast met 21%</td>
 									<th class="col-md-3">&nbsp;</th>
 									<td class="col-md-2">&nbsp;</td>
@@ -455,7 +448,7 @@ $(document).ready(function() {
 												<td class="col-md-3"><strong>{{ $i==1 ? $chapter->chapter_name : '' }}</strong></td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
 												<td class="col-md-2"><span class="pull-right">{{ TimesheetOverview::calcOrigTotalAmount($activity->id); }}<?php //$X = TimesheetOverview::calcOrigTotalAmount($activity->id); $rs_1 += $X; echo $X ? number_format($X, 2,",",".") : '-'; ?></span></td>
-												<td class="col-md-1"><span class="pull-right"><?php $X = (TimesheetOverview::calcLessTotalAmount($activity->id)-TimesheetOverview::calcOrigTotalAmount($activity->id)); $rs_2 += $X; echo $X ? number_format($X, 2,",",".") : '-'; ?></span></td>
+												<td class="col-md-1"><span class="pull-right"><?php $X = TimesheetOverview::calcLessTotalAmount($activity->id) ? (TimesheetOverview::calcLessTotalAmount($activity->id)-TimesheetOverview::calcOrigTotalAmount($activity->id)) : 0; $rs_2 += $X; echo $X ? number_format($X, 2,",",".") : '-'; ?></span></td>
 												<td class="col-md-1"><span class="pull-right"><?php $X = Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'); $rs_3 += $X; echo $X ? number_format($X, 2,",",".") : '-'; ?></span></td>
 												<td class="col-md-1"><span class="pull-right"><?php $Y = (TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour')); if ($Y && $X){ $rs_4 += $Y; echo number_format($Y, 2,",","."); }else{ echo '-'; } ?></span></td>
 												<td class="col-md-1"><span class="pull-right"><?php $Y = (TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour')*$project->hour_rate); if($Y && $X){ $rs_5 += $Y; echo number_format($Y, 2,",","."); }else{ echo '-'; } ?></span></td>
