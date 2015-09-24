@@ -1215,7 +1215,7 @@ if (!$project || !$project->isOwner()) {
 					}
 					?>
 					<tr>
-						<td class="col-md-2"><strong>{{ $i==1 ? $chapter->chapter_name : '' }}</strong></td>
+						<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 						<td class="col-md-3">{{ $activity->activity_name }}</td>
 						<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
