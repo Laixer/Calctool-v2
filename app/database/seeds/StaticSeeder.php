@@ -496,6 +496,7 @@ class StaticSeeder extends Seeder {
 		RelationType::create(array('type_name' => 'betonboorder'));
 		RelationType::create(array('type_name' => 'betonstaalvlechter'));
 		RelationType::create(array('type_name' => 'betontimmerman'));
+		RelationType::create(array('type_name' => 'bouwgroothandel'));
 		RelationType::create(array('type_name' => 'containerverhuur'));
 		RelationType::create(array('type_name' => 'cv-installateur'));
 		RelationType::create(array('type_name' => 'dakdekker'));
@@ -525,6 +526,7 @@ class StaticSeeder extends Seeder {
 		RelationType::create(array('type_name' => 'tuinman'));
 		RelationType::create(array('type_name' => 'tussenpersoon'));
 		RelationType::create(array('type_name' => 'vereniging van eigenaren'));
+		RelationType::create(array('type_name' => 'verfgroothandel'));
 		RelationType::create(array('type_name' => 'verhuurbedrijf'));
 		RelationType::create(array('type_name' => 'verwarmingsmonteur'));
 		RelationType::create(array('type_name' => 'vloerenlegger'));
