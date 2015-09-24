@@ -30,7 +30,6 @@ if (!$project || !$project->isOwner()) {
 <?php }else{ ?>
 
 @section('content')
-<?# -- WRAPPER -- ?>
 <script type="text/javascript">
 	$(document).ready(function() {
         $('.only-end-total tr').each(function() {
@@ -202,6 +201,14 @@ if (!$project || !$project->isOwner()) {
 			e.preventDefault();
 			$('#frm-invoice').submit();
 		});
+		$('#invdate').datepicker().on('changeDate', function(e){
+			$('#invdate').datepicker('hide');
+			$('#invdateval').val(e.date.toLocaleString());
+			$('#invdate').text(e.date.getDate() + "-" + (e.date.getMonth() + 1)  + "-" + e.date.getFullYear());
+		});
+		@if ($invoice_last && $invoice_last->invoice_make)
+		$('#invdate').text("{{ date('d-m-Y', strtotime($offer_last->invoice_make)) }}");
+		@endif
 	});
 </script>
 <div id="wrapper">
@@ -381,10 +388,11 @@ if (!$project || !$project->isOwner()) {
 				<h4><strong>FACTUUR</strong></h4>
 				<ul class="list-unstyled">
 					<li><strong>Projectnaam:</strong>{{ $project->project_name }}</li>
-					<li><strong>Factuurdatum:</strong> {{ date("j M Y") }}</li>
+					<li><strong>Factuurdatum:</strong> <a href="#" id="invdate">Bewerk</a> {{-- date("j M Y") --}}</li>
 					<li><strong>Factuurnummer:</strong> {{ $invoice->invoice_code }}</li>
 					<li><strong>Administratiefnummer:</strong> {{ $invoice->book_code }}</li>
 					<li><strong>Uw referentie:</strong> {{ $invoice->reference }}</li>
+					<input type="hidden" id="invdateval" name="invdateval" />
 				</ul>
 			</div>
 		</div>
@@ -964,7 +972,7 @@ if (!$project || !$project->isOwner()) {
 			</thead>
 			<tbody>
 				<tr>
-					<td class="col-md-6">Calculatief te factureren (excl. BTW)</td>
+					<td class="col-md-6">Laatste van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} termijnen</td>
 					<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->amount, 2, ",",".") }}</td>
 					<td class="col-md-2">&nbsp;</td>
 					<td class="col-md-2">&nbsp;</td>

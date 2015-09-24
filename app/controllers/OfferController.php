@@ -44,6 +44,8 @@ class OfferController extends Controller {
 			$offer->description = Input::get('description');
 			$offer->extracondition = Input::get('extracondition');
 			$offer->closure = Input::get('closure');
+			if (Input::get('offdateval'))
+				$offer->offer_make =  date('Y-m-d', strtotime(Input::get('offdateval')));
 			if (Input::get('toggle-payment'))
 				$offer->downpayment = Input::get('toggle-payment');
 			if (Input::get('amount'))

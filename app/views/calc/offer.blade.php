@@ -233,6 +233,14 @@ if (!$project || !$project->isOwner()) {
 		$('#to_contact').change(function(e){
 			$('#adressing').text($('#to_contact option:selected').text());
 		});
+		$('#offdate').datepicker().on('changeDate', function(e){
+			$('#offdate').datepicker('hide');
+			$('#offdateval').val(e.date.toLocaleString());
+			$('#offdate').text(e.date.getDate() + "-" + (e.date.getMonth() + 1)  + "-" + e.date.getFullYear());
+		});
+		@if ($offer_last && $offer_last->offer_make)
+		$('#offdate').text("{{ date('d-m-Y', strtotime($offer_last->offer_make)) }}");
+		@endif
 	});
 	</script>
 	<div id="wrapper">
@@ -528,10 +536,11 @@ if (!$project || !$project->isOwner()) {
 				<h4><strong>OFFERTE</strong></h4>
 				<ul class="list-unstyled">
 					<li><strong>Projectnaam:</strong> {{ $project->project_name }}</li>
-					<li><strong>Offertedatum:</strong> {{ date("j M Y") }}</li>
+					<li><strong>Offertedatum:</strong> <a href="#" id="offdate">Bewerk</a> {{-- date("j M Y") --}}</li>
 					<li><strong>Offertenummer:</strong> {{ OfferController::getOfferCode($project->id) }}</li>
 					<li>&nbsp;</li>
 					<li>&nbsp;</li>
+					<input type="hidden" id="offdateval" name="offdateval" />
 				</ul>
 			</div>
 		</div>

@@ -6,7 +6,6 @@ $displaytax=Input::get("displaytax");
 $endresult=Input::get("endresult");
 $onlyactivity=Input::get("onlyactivity");
 
-$term=Input::get("term");
 $project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner()) {
   exit();
@@ -17,6 +16,12 @@ $relation_self = Relation::find(Auth::user()->self_id);
 $contact_self = Contact::where('relation_id','=',$relation_self->id);
 $invoice = Invoice::find(Route::Input('invoice_id'));
 $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+
+$term=0;
+$cnt = Invoice::where('offer_id','=', $invoice->offer_id)->count();
+if ($cnt>1)
+  $term=1;
+
 ?>
 
 <!DOCTYPE html>
@@ -243,7 +248,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       </tbody>
     </table>
 
-    @if ($term)
     <!--INCLUDE TERM START-->
 
       <?php
@@ -263,7 +267,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         </thead>
         <tbody>
           <tr>
-            <td class="qty">1e termijnbedrag van in totaal 3 betalingstermijnen (excl. BTW)</td>
+            <td class="qty">Laatste van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} termijnen</td>
             <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('amount'), 2, ",",".") }}</td>
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
@@ -338,7 +342,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         </thead>
         <tbody>
           <tr>
-            <td class="qty">1e termijnbedrag van in totaal 3 betalingstermijnen (excl. BTW)</td>
+            <td class="qty">Laatste van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} termijnen</td>
             <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->amount, 2, ",",".") }}</td>
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
@@ -388,7 +392,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       </table>
       <?php } ?>
 
-      @endif
+
       <!--INCLUDE TERM START-->
 
       <div class="closingtext">{{ ($offer_last ? $offer_last->closure : '') }}</div>
@@ -735,7 +739,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       </thead>
       <tbody>
         <tr>
-          <td class="qty">1e termijnbedrag van in totaal 3 betalingstermijnen (excl. BTW)</td>
+          <td class="qty">Laatste van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} termijnen</td>
           <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('amount'), 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
@@ -798,7 +802,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       </thead>
       <tbody>
         <tr>
-          <td class="qty">1e termijnbedrag van in totaal 3 betalingstermijnen (excl. BTW)</td>
+          <td class="qty">Laatste van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} termijnen</td>
           <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->amount, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
