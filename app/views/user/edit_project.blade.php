@@ -74,7 +74,7 @@ else {
 			$note = $curThis.closest("tr").find("input[name='note']").val();
 			$.post("/purchase/new", {
 				date: $date,
-				hour: $hour,
+				amount: $hour,
 				type: $type,
 				relation: $relation,
 				note: $note,
