@@ -29,7 +29,7 @@
 				<div class="col-md-2">&euro; 0,00</div>
 			</div>
 			<div class="row">
-				<div class="col-md-1"><input type="radio" name="payoption" value="4" /></div>
+				<div class="col-md-1"><input type="radio" name="payoption" value="3" /></div>
 				<div class="col-md-2">Kwartaal</div>
 				<div class="col-md-2">&euro; 89,85</div>
 				<div class="col-md-2">10%</div>
