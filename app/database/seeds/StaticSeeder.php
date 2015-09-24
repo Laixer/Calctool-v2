@@ -355,6 +355,15 @@ class StaticSeeder extends Seeder {
 		SubGroup::create(array('reference_code'=>'14-55-12','group_type'=>'Zagen'));
 		SubGroup::create(array('reference_code'=>'10-1-2','group_type'=>'Zand+Grind'));
 		SubGroup::create(array('reference_code'=>'16-63-4','group_type'=>'Zwaluw Lijmen En Kitten'));
+		SubGroup::create(array('reference_code'=>'11-13-5','group_type'=>'PVC Schroten'));
+		SubGroup::create(array('reference_code'=>'12-21-19','group_type'=>'Knelkoppelingen'));
+		SubGroup::create(array('reference_code'=>'12-21-63','group_type'=>'Bonfix pers'));
+		SubGroup::create(array('reference_code'=>'12-21-62','group_type'=>'Quick and Easy'));
+		SubGroup::create(array('reference_code'=>'12-21-99','group_type'=>'Sanitair divers'));
+		SubGroup::create(array('reference_code'=>'12-22-5','group_type'=>'Zink'));
+		SubGroup::create(array('reference_code'=>'12-27-1','group_type'=>'Airco'));
+		SubGroup::create(array('reference_code'=>'13-36-1','group_type'=>'Onbekend'));
+
 		$this->command->info('SubGroup created');
 
 		Supplier::create(array('supplier_name' => 'Bouwmaat'));
