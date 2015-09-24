@@ -656,7 +656,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
             <th style="width: 51px" class="qty">@if (!$onlyactivity) Arbeid @endif</th>
             <th style="width: 51px" class="qty">@if (!$onlyactivity) Materiaal @endif</th>
             <th style="width: 51px" class="qty">@if (!$onlyactivity) Materieel @endif</th>
-            <th style="width: 51px" class="qty">Totaal</th>
+            <th style="width: 51px" class="qty">@if (!$onlyactivity)Totaal @endif</th>
             <th style="width: 51px" class="qty">&nbsp;</th>
           </tr>
         </thead>

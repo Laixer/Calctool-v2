@@ -370,8 +370,8 @@ if (!$project || !$project->isOwner())
 
 										<thead>
 											<tr>
-												<th class="col-md-3">&nbsp;</th>
-												<th class="col-md-3">&nbsp;</th>
+												<th class="col-md-3">Hoofdstuk</th>
+												<th class="col-md-3">Werkzaamheden</th>
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</th>
@@ -398,7 +398,7 @@ if (!$project || !$project->isOwner())
 											@endforeach
 											@endforeach
 											<tr>
-												<th class="col-md-3"><strong>Totaal Aanneming</strong></th>
+												<th class="col-md-3">Totaal Aanneming</th>
 												<th class="col-md-3">&nbsp;</th>
 												<td class="col-md-1"><strong><span class="pull-right">{{ EstimateOverview::contrLaborTotalAmount($project) }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
@@ -420,8 +420,8 @@ if (!$project || !$project->isOwner())
 
 										<thead>
 											<tr>
-												<th class="col-md-3">&nbsp;</th>
-												<th class="col-md-3">&nbsp;</th>
+												<th class="col-md-3">Hoofdstuk</th>
+												<th class="col-md-3">Werkzaamheden</th>
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</th>
@@ -437,7 +437,7 @@ if (!$project || !$project->isOwner())
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
 											<?php $i++; ?>
 											<tr>
-												<td class="col-md-3"><strong>{{ $i==1 ? $chapter->chapter_name : '' }}</strong></td>
+												<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }}</td>
 												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::laborActivity($activity), 2, ",",".") }}</span></td>
