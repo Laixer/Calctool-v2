@@ -174,6 +174,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('project/new', array('as' => 'project.new', 'uses' => 'ProjectController@getNew'));
 	Route::post('project/new', array('as' => 'project.new', 'uses' => 'ProjectController@doNew'));
 	Route::post('project/update', array('as' => 'project.update', 'uses' => 'ProjectController@doUpdate'));
+	Route::post('project/update/note', array('as' => 'project.update', 'uses' => 'ProjectController@doUpdateNote'));
 	Route::post('project/updatecalc', array('as' => 'project.update', 'uses' => 'ProjectController@doUpdateProfit'));
 	Route::get('project', array('as' => 'project', 'uses' => 'ProjectController@getAll'));
 	Route::get('project-{project_id}/edit', array('as' => 'project.edit', 'uses' => 'ProjectController@getEdit'))->where('project_id', '[0-9]+');

@@ -137,6 +137,33 @@ class ProjectController extends Controller {
 
 	}
 
+	public function doUpdateNote()
+	{
+		$rules = array(
+			'id' => array('required','integer'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			// redirect our user back to the form with the errors from the validator
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+
+			$project = Project::find(Input::get('id'));
+			if (!$project || !$project->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
+			$project->note = Input::get('note');
+
+			$project->save();
+
+			return Redirect::back()->with('success', 'Aangepast');
+		}
+	}
+
 	public function doUpdateProfit()
 	{
 		$rules = array(
