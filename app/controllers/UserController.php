@@ -57,10 +57,10 @@ class UserController extends Controller {
 					$description = 'Verleng met een maand';
 					$increment_months = 1;
 					break;
-				case 4:
+				case 3:
 					$amount = 97.84;
 					$description = 'Verleng met 4 maanden';
-					$increment_months = 4;
+					$increment_months = 3;
 					break;
 				case 6:
 					$amount = 184.83;
