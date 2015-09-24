@@ -43,6 +43,7 @@ class CreateFinancial extends Migration {
 			$table->nullableTimestamps();
 			$table->string('option_query', 150)->nullable();
 			$table->date('offer_finish')->nullable();
+			$table->date('offer_make')->default(DB::raw('now()::timestamp(0)'));
 			$table->integer('deliver_id')->unsigned();
 			$table->foreign('deliver_id')->references('id')->on('deliver_time')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('valid_id')->unsigned();
@@ -74,6 +75,7 @@ class CreateFinancial extends Migration {
 			$table->nullableTimestamps();
 			$table->date('bill_date')->nullable();
 			$table->date('payment_date')->nullable();
+			$table->date('invoice_make')->default(DB::raw('now()::timestamp(0)'));
 			$table->text('closure')->nullable();
 			$table->decimal('rest_21', 9, 3)->nullable();
 			$table->decimal('rest_6', 9, 3)->nullable();
