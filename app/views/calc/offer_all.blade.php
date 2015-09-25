@@ -51,20 +51,20 @@ if (!$project || !$project->isOwner()) {
 				</thead>
 				<tbody>
 					<tr>
-						<td class="col-md-2">OF-2014-08422</td>
+						<td class="col-md-2"><a href="/offer/project-{{ $project->id }}">{{ $project->id }}</a></td>
 						<td class="col-md-1">23-09-2015</td>
 						<td class="col-md-2">Actief</td>
 						<td class="col-md-2">Zandbergen Advies BV</td>
 						<td class="col-md-2">6.785,97</td>
 						<td class="col-md-3">
 							<ul class="list-inline">
-								<li><a href="/project/new" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> NIeuwe offerte</a>
 								<li><a href="/project/new" class="btn btn-primary btn-xs"><i class="fa fa-cloud-download fa-fw"></i> Downloaden</a>
 							</ul>
 						</td>
 					</tr>
 				</tbody>
 			</table>
+			<a href="/offer/project-{{ $project->id }}" class="btn btn-primary btn"><i class="fa fa-pencil"></i> Nieuwe offerte</a>
 		</div>
 	</div>
 
