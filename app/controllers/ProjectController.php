@@ -18,6 +18,15 @@ class ProjectController extends Controller {
 		return View::make('user.edit_project');
 	}
 
+	public function downloadResource()
+	{
+		$res = Resource::find(Route::Input('resource_id'));
+		if ($res) {
+			return Response::download($res->file_location);
+		}
+		return;
+	}
+
 	public function doNew()
 	{
 		$rules = array(

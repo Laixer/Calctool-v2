@@ -69,7 +69,12 @@ class OfferController extends Controller {
 			if (Input::get('toggle-tax'))
 				$options['displaytax'] = 1;
 
-			$offer->option_query = http_build_query($options);
+			//$offer->option_query = http_build_query($options);
+			$total = 0;
+			foreach (Chapter::where('project_id','=',$project->id)->get() as $chapter) {
+				$total += Activity::where('chapter_id','=', $chapter->id)->count('id');
+			}
+			$offer->created_at_activities = $total;
 
 			$offer->save();
 

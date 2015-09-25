@@ -41,7 +41,8 @@ class CreateFinancial extends Migration {
 			$table->decimal('downpayment_amount', 9, 3)->unsigned()->nullable();
 			$table->boolean('auto_email_reminder')->default('Y');
 			$table->nullableTimestamps();
-			$table->string('option_query', 150)->nullable();
+			//$table->string('option_query', 150)->nullable();
+			$table->integer('created_at_activities');
 			$table->date('offer_finish')->nullable();
 			$table->date('offer_make')->default(DB::raw('now()::timestamp(0)'));
 			$table->integer('deliver_id')->unsigned();

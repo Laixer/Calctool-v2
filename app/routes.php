@@ -37,6 +37,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('admin/switch/back', array('uses' => 'AdminController@getSwitchSessionBack'));
 	Route::get('logout', array('as' => 'logout', 'uses' => 'AuthController@doLogout'));
 	Route::get('result/project-{project_id}', array('as' => 'result', 'uses' => 'ResultController@getResult'))->where('project_id', '[0-9]+');
+	Route::get('res-{resource_id}/download', array('uses' => 'ProjectController@downloadResource'))->where('resource_id', '[0-9]+');
 	Route::get('myaccount', array('as' => 'account', 'uses' => 'UserController@getMyAccount'));
 	Route::post('myaccount/updateuser', array('as' => 'account', 'uses' => 'UserController@doMyAccountUser'));
 	Route::post('myaccount/iban/new', array('as' => 'iban.update', 'uses' => 'UserController@doNewIban'));
@@ -74,6 +75,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('offerversions/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOfferAll'))->where('project_id', '[0-9]+');
 	Route::get('offer/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOffer'))->where('project_id', '[0-9]+');
 	Route::post('offer/project-{project_id}', array('as' => 'invoice', 'uses' => 'OfferController@doNewOffer'));
+	Route::get('offer/project-{project_id}/offer-{offer_id}', function(){ return View::make('calc.offer_show_pdf'); })->where('project_id', '[0-9]+')->where('offer_id', '[0-9]+');
 	Route::post('offer/close', array('as' => 'invoice', 'uses' => 'OfferController@doOfferClose'));
 
 	Route::get('offer/pdf/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOfferPDF'))->where('project_id', '[0-9]+');
