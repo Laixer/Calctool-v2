@@ -77,6 +77,11 @@ class CalcController extends Controller {
 		return View::make('calc.invoice_term');
 	}
 
+	public function getOfferAll()
+	{
+		return View::make('calc.offer_all');
+	}
+
 	public function getOffer()
 	{
 		return View::make('calc.offer');
