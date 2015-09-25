@@ -1,7 +1,6 @@
 @extends('layout.master')
 
 @section('content')
-<?# -- WRAPPER -- ?>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$req = false;
@@ -14,7 +13,7 @@
 					if (data) {
 						$('table tbody tr').remove();
 						$.each(data, function(i, item) {
-							$('table tbody').append('<tr><td>'+item.description+'</td><td>'+item.package+'</td><td>'+item.minimum_quantity+'</td><td>'+item.unit+'</td><td>'+item.price+'</td></tr>');
+							$('table tbody').append('<tr><td>'+item.description+'</td><td>'+item.unit+'</td><td>'+item.price+'</td></tr>');
 						});
 						$req = false;
 					}
@@ -29,8 +28,10 @@
 
 		<div class="col-md-12">
 
+
 			<h2><strong>Materialenlijst</strong> (Beta)</h2>
 
+			<div class="white-row">
 			<div class="form-group input-group input-group-lg">
 				<input type="text" id="search" value="" class="form-control" placeholder="Zoek materiaal">
 			      <span class="input-group-btn">
@@ -48,8 +49,6 @@
 					<thead>
 						<tr>
 							<th>Omschrijving</th>
-							<th>Afmeting</th>
-							<th>Minimum hoeveelheid</th>
 							<th>Eenheid</th>
 							<th>Totaalprijs</th>
 						</tr>
@@ -58,11 +57,11 @@
 					</tbody>
 				</table>
 			</div>
+			</div>
 
 		</div>
 
 	</section>
 
 </div>
-<!-- /WRAPPER -->
 @stop
