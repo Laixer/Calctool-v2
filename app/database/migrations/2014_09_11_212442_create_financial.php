@@ -45,6 +45,7 @@ class CreateFinancial extends Migration {
 			$table->integer('created_at_activities');
 			$table->date('offer_finish')->nullable();
 			$table->date('offer_make')->default(DB::raw('now()::timestamp(0)'));
+			$table->string('offer_code', 50);
 			$table->integer('deliver_id')->unsigned();
 			$table->foreign('deliver_id')->references('id')->on('deliver_time')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('valid_id')->unsigned();
@@ -68,7 +69,7 @@ class CreateFinancial extends Migration {
 			$table->smallInteger('priority');
 			$table->text('description')->nullable();
 			$table->string('reference', 30)->index()->nullable();
-			$table->string('invoice_code', 50)->index();
+			$table->string('invoice_code', 50);
 			$table->string('book_code', 30)->index()->nullable();
 			$table->decimal('amount', 9, 3)->nullable();
 			$table->integer('payment_condition')->unsigned();

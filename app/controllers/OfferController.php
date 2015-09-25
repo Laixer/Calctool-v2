@@ -42,6 +42,7 @@ class OfferController extends Controller {
 			$offer->to_contact_id = Input::get('to_contact');
 			$offer->from_contact_id = Input::get('from_contact');
 			$offer->description = Input::get('description');
+			$offer->offer_code = OfferController::getOfferCode($project->id);
 			$offer->extracondition = Input::get('extracondition');
 			$offer->closure = Input::get('closure');
 			if (Input::get('offdateval'))
