@@ -64,7 +64,7 @@ PDFJS.getDocument(url).then(function getPdf(pdf) {
 
 		<div class="pull-right">
 			<?php if (!$project->project_close) { ?>
-			<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Bewerk</a>
+			<a href="/offer/project-{{ $project->id }}" class="btn btn-primary">Bewerk</a>
 			<a href="/res-{{ $res->id }}/download" class="btn btn-primary">Download PDF</a>
 			<?php } ?>
 		</div>
@@ -78,7 +78,7 @@ PDFJS.getDocument(url).then(function getPdf(pdf) {
 			<div class="col-sm-6">
 				<div class="padding20 pull-right">
 					<?php if (!$project->project_close) { ?>
-					<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Bewerk</a>
+					<a href="/offer/project-{{ $project->id }}" class="btn btn-primary">Bewerk</a>
 					<a href="/res-{{ $res->id }}/download" class="btn btn-primary">Download PDF</a>
 					<?php } ?>
 				</div>

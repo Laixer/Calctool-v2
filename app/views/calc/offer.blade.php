@@ -281,17 +281,6 @@ if (!$project || !$project->isOwner()) {
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
 		<button class="btn btn-primary osave">Opslaan</button>
 		<?php } ?>
-		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Versies</a>
-		<div class="btn-group">
-		  <a target="blank" href="/offer/pdf/project-{{ $project->id }}{{ $offer_last->option_query ? '?'.$offer_last->option_query : '' }}" class="btn btn-primary">PDF</a>
-		  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		    <span class="caret"></span>
-		    <span class="sr-only">Toggle Dropdown</span>
-		  </button>
-		  <ul class="dropdown-menu">
-		    <li><a href="/offer/pdf/project-{{ $project->id }}/download?file={{ OfferController::getOfferCode($project->id).'-offerte.pdf' }}{{ $offer_last->option_query ? '&'.$offer_last->option_query : '' }}">Download</a></li>
-		  </ul>
-		</div>
 		<?php }else{ ?>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
@@ -1490,18 +1479,6 @@ if (!$project || !$project->isOwner()) {
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
 						<button class="btn btn-primary osave">Offerte  maken</button>
 						<?php } ?>
-						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Versies</a>
-
-						<div class="btn-group">
-						  <a target="blank" href="/offer/pdf/project-{{ $project->id }}" class="btn btn-primary">PDF</a>
-						  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						    <span class="caret"></span>
-						    <span class="sr-only">Toggle Dropdown</span>
-						  </button>
-						  <ul class="dropdown-menu">
-						    <li><a href="/offer/pdf/project-{{ $project->id }}/download?file={{ OfferController::getOfferCode($project->id).'-offerte.pdf' }}">Download</a></li>
-						  </ul>
-						</div>
 						<?php }else{ ?>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>

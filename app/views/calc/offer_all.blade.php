@@ -56,12 +56,12 @@ if (!$project || !$project->isOwner()) {
 				<tbody>
 					@foreach(Offer::where('project_id', '=', $project->id)->get() as $offer)
 					<tr>
-						<td class="col-md-2"><a href="/res-{{ ($offer_last->resource_id) }}/downloads">{{ $offer->id }}</a></td>
+						<td class="col-md-2"><a href="/offer/project-{{ $project->id }}/offer-{{ $offer->id }}">{{ $offer->offer_code }}</a></td>
 						<td class="col-md-1">{{ $offer->created_at }}</td>
 						<td class="col-md-2">Actief</td>
 						<td class="col-md-2">Zandbergen Advies BV</td>
 						<td class="col-md-2">6.785,97</td>
-						<td class="col-md-3"><a href="/project/new" class="btn btn-primary btn-xs"><i class="fa fa-cloud-download fa-fw"></i> Downloaden</a></td>
+						<td class="col-md-3"><a href="/res-{{ ($offer_last->resource_id) }}/download" class="btn btn-primary btn-xs"><i class="fa fa-cloud-download fa-fw"></i> Downloaden</a></td>
 					</tr>
 					@endforeach
 				</tbody>

@@ -84,10 +84,6 @@ class CalcController extends Controller {
 
 	public function getOffer()
 	{
-		$offer_last = Offer::where('project_id','=',Route::Input('project_id'))->orderBy('created_at', 'desc')->first();
-		if ($offer_last) {
-			return View::make('calc.offer_show_pdf');
-		}
 		return View::make('calc.offer');
 	}
 
