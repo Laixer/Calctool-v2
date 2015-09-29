@@ -50,7 +50,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
         <div id="invoice">
           <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
           <div class="date">{{ $project->project_name }}</div>
-          <div class="date">{{ date("j M Y") }}</div>
+          <div class="date">{{ date("j M Y", strtotime($offer_last->offer_make)) }}</div>
         </div>
       </div>
 
@@ -528,7 +528,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
           <div id="invoice">
           <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
           <div class="date">{{ $project->project_name }}</div>
-          <div class="date">{{ date("j M Y") }}</div>
+          <div class="date">{{ date("j M Y", strtotime($offer_last->offer_make)) }}</div>
         </div>
       </header>
       <!--PAGE HEADER SECOND END-->
@@ -568,7 +568,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
     </footer>
  @endif
 
-    @if ($display_specification)
+    @if ($display_worktotals)
     @if ($seperate_subcon)
 
       <!--PAGE HEADER SECOND START-->
@@ -580,7 +580,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
           <div id="invoice">
           <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
           <div class="date">{{ $project->project_name }}</div>
-          <div class="date">{{ date("j M Y") }}</div>
+          <div class="date">{{ date("j M Y", strtotime($offer_last->offer_make)) }}</div>
         </div>
       </header>
       <!--PAGE HEADER SECOND END-->
@@ -591,10 +591,10 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
           <tr style="page-break-after: always;">
             <th style="width: 130px" class="qty">Hoofdstuk</th>
             <th style="width: 170px" class="qty">Werkzaamheid</th>
-            <th style="width: 40px" class="qty">@if (!$display_worktotals) Uren @endif</th>
-            <th style="width: 51px" class="qty">@if (!$display_worktotals) Arbeid @endif</th>
-            <th style="width: 51px" class="qty">@if (!$display_worktotals) Materiaal @endif</th>
-            <th style="width: 51px" class="qty">@if (!$display_worktotals) Materieel @endif</th>
+            <th style="width: 40px" class="qty">@if ($display_specification) Uren @endif</th>
+            <th style="width: 51px" class="qty">@if ($display_specification) Arbeid @endif</th>
+            <th style="width: 51px" class="qty">@if ($display_specification) Materiaal @endif</th>
+            <th style="width: 51px" class="qty">@if ($display_specification) Materieel @endif</th>
             <th style="width: 51px" class="qty">Totaal</th>
             <th style="width: 51px" class="qty">Stelpost</th>
           </tr>
@@ -605,10 +605,10 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
           <tr><!-- item -->
             <td class="qty">{{ $chapter->chapter_name }}</td>
             <td class="qty">{{ $activity->activity_name }}</td>
-            <td class="qty">@if (!$display_worktotals) <span>{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
-            <td class="qty">@if (!$display_worktotals) <span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span>@endif</td>
-            <td class="qty">@if (!$display_worktotals) <span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span>@endif</td>
-            <td class="qty">@if (!$display_worktotals) <span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span>@endif</td>
+            <td class="qty">@if ($display_specification) <span>{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
+            <td class="qty">@if ($display_specification) <span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span>@endif</td>
+            <td class="qty">@if ($display_specification) <span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span>@endif</td>
+            <td class="qty">@if ($display_specification) <span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span>@endif</td>
             <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
             <td class="qty text-center">
             <?php
@@ -625,10 +625,10 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
           <tr><!-- item -->
             <td class="qty">{{ $chapter->chapter_name }}</td>
             <td class="qty">{{ $activity->activity_name }}</td>
-            <td class="qty">@if (!$display_worktotals) <span>{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
-            <td class="qty">@if (!$display_worktotals) <span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span>@endif</td>
-            <td class="qty">@if (!$display_worktotals) <span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span>@endif</td>
-            <td class="qty">@if (!$display_worktotals) <span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span>@endif</td>
+            <td class="qty">@if ($display_specification) <span>{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
+            <td class="qty">@if ($display_specification) <span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span>@endif</td>
+            <td class="qty">@if ($display_specification) <span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span>@endif</td>
+            <td class="qty">@if ($display_specification) <span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span>@endif</td>
             <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
             <td class="qty text-center">
             <?php
@@ -649,20 +649,20 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
         <thead>
           <tr style="page-break-after: always;">
             <th style="width: 300px" class="qty">&nbsp;</th>
-            <th style="width: 40px" class="qty">@if (!$display_worktotals) Uren @endif</th>
-            <th style="width: 51px" class="qty">@if (!$display_worktotals) Arbeid @endif</th>
-            <th style="width: 51px" class="qty">@if (!$display_worktotals) Materiaal @endif</th>
-            <th style="width: 51px" class="qty">@if (!$display_worktotals) Materieel @endif</th>
-            <th style="width: 51px" class="qty">@if (!$display_worktotals)Totaal @endif</th>
+            <th style="width: 40px" class="qty">@if ($display_specification) Uren @endif</th>
+            <th style="width: 51px" class="qty">@if ($display_specification) Arbeid @endif</th>
+            <th style="width: 51px" class="qty">@if ($display_specification) Materiaal @endif</th>
+            <th style="width: 51px" class="qty">@if ($display_specification) Materieel @endif</th>
+            <th style="width: 51px" class="qty">@if ($display_specification)Totaal @endif</th>
             <th style="width: 51px" class="qty">&nbsp;</th>
           </tr>
         </thead>
         <tbody>
           <td class="qty">&nbsp;</td>
-          <td class="qty">@if (!$display_worktotals) <span>{{ CalculationOverview::laborSuperTotalAmount($project) }}</span>@endif</td>
-          <td class="qty">@if (!$display_worktotals) <span>{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span>@endif</td>
-          <td class="qty">@if (!$display_worktotals) <span>{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span>@endif</td>
-          <td class="qty">@if (!$display_worktotals) <span>{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span>@endif</td>
+          <td class="qty">@if ($display_specification) <span>{{ CalculationOverview::laborSuperTotalAmount($project) }}</span>@endif</td>
+          <td class="qty">@if ($display_specification) <span>{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span>@endif</td>
+          <td class="qty">@if ($display_specification) <span>{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span>@endif</td>
+          <td class="qty">@if ($display_specification) <span>{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span>@endif</td>
           <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
           <td class="qty">&nbsp;</td>
         </tbody>
@@ -679,7 +679,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
           <div id="invoice">
           <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
           <div class="date">{{ $project->project_name }}</div>
-          <div class="date">{{ date("j M Y") }}</div>
+          <div class="date">{{ date("j M Y", strtotime($offer_last->offer_make)) }}</div>
         </div>
       </header>
       <!--PAGE HEADER SECOND END-->
@@ -691,10 +691,10 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
         <tr style="page-break-after: always;">
           <th style="width: 130px" class="qty">Hoofdstuk</th>
           <th style="width: 170px" class="qty">Werkzaamheid</th>
-          <th style="width: 40px" class="qty">@if (!$display_worktotals) Uren @endif</th>
-          <th style="width: 51px" class="qty">@if (!$display_worktotals) Arbeid @endif</th>
-          <th style="width: 51px" class="qty">@if (!$display_worktotals) Materiaal @endif</th>
-          <th style="width: 51px" class="qty">@if (!$display_worktotals) Materieel @endif</th>
+          <th style="width: 40px" class="qty">@if ($display_specification) Uren @endif</th>
+          <th style="width: 51px" class="qty">@if ($display_specification) Arbeid @endif</th>
+          <th style="width: 51px" class="qty">@if ($display_specification) Materiaal @endif</th>
+          <th style="width: 51px" class="qty">@if ($display_specification) Materieel @endif</th>
           <th style="width: 51px" class="qty">Totaal</th>
           <th style="width: 51px" class="qty">Stelpost</th>
          </tr>
@@ -705,10 +705,10 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
         <tr style="page-break-after: always;">
           <td class="qty">{{ $chapter->chapter_name }}</td>
           <td class="qty">{{ $activity->activity_name }}</td>
-          <td class="qty">@if (!$display_worktotals)<span>{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}@endif</td>
-          <td class="qty">@if (!$display_worktotals)<span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span>@endif</td>
-          <td class="qty">@if (!$display_worktotals)<span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span>@endif</td>
-          <td class="qty">@if (!$display_worktotals)<span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span>@endif</td>
+          <td class="qty">@if ($display_specification)<span>{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}@endif</td>
+          <td class="qty">@if ($display_specification)<span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span>@endif</td>
+          <td class="qty">@if ($display_specification)<span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span>@endif</td>
+          <td class="qty">@if ($display_specification)<span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span>@endif</td>
           <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }}</td>
           <td class="qty text-center">
           <?php
@@ -723,10 +723,10 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
         <tr style="page-break-after: always;">
           <td class="qty"><strong>Totaal</strong></td>
           <td class="qty">&nbsp;</td>
-          <td class="qty">@if (!$display_worktotals)<strong><span>{{ CalculationOverview::contrLaborTotalAmount($project) }}</span></strong>@endif</td>
-          <td class="qty">@if (!$display_worktotals)<strong><span>{{ '&euro; '.number_format(CalculationOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong>@endif</td>
-          <td class="qty">@if (!$display_worktotals)<strong><span>{{ '&euro; '.number_format(CalculationOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong>@endif</td>
-          <td class="qty">@if (!$display_worktotals)<strong><span>{{ '&euro; '.number_format(CalculationOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong>@endif</td>
+          <td class="qty">@if ($display_specification)<strong><span>{{ CalculationOverview::contrLaborTotalAmount($project) }}</span></strong>@endif</td>
+          <td class="qty">@if ($display_specification)<strong><span>{{ '&euro; '.number_format(CalculationOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong>@endif</td>
+          <td class="qty">@if ($display_specification)<strong><span>{{ '&euro; '.number_format(CalculationOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong>@endif</td>
+          <td class="qty">@if ($display_specification)<strong><span>{{ '&euro; '.number_format(CalculationOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong>@endif</td>
           <td class="qty"><strong><span>{{ '&euro; '.number_format(CalculationOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
           <td class="qty">&nbsp;</td>
         </tr>
@@ -739,10 +739,10 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
         <tr style="page-break-after: always;">
           <th style="width: 130px" class="qty">Hoofdstuk</th>
           <th style="width: 170px" class="qty">Werkzaamheid</th>
-          <th style="width: 40px" class="qty">@if (!$display_worktotals) Uren @endif</th>
-          <th style="width: 51px" class="qty">@if (!$display_worktotals) Arbeid @endif</th>
-          <th style="width: 51px" class="qty">@if (!$display_worktotals) Materiaal @endif</th>
-          <th style="width: 51px" class="qty">@if (!$display_worktotals) Materieel @endif</th>
+          <th style="width: 40px" class="qty">@if ($display_specification) Uren @endif</th>
+          <th style="width: 51px" class="qty">@if ($display_specification) Arbeid @endif</th>
+          <th style="width: 51px" class="qty">@if ($display_specification) Materiaal @endif</th>
+          <th style="width: 51px" class="qty">@if ($display_specification) Materieel @endif</th>
           <th style="width: 51px" class="qty">Totaal</th>
           <th style="width: 51px" class="qty">Stelpost</th>
          </tr>
@@ -753,10 +753,10 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
         <tr style="page-break-after: always;">
           <td class="qty">{{ $chapter->chapter_name }}</td>
           <td class="qty">{{ $activity->activity_name }}</td>
-          <td class="qty">@if (!$display_worktotals)<span>{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}@endif</td>
-          <td class="qty">@if (!$display_worktotals)<span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span>@endif</td>
-          <td class="qty">@if (!$display_worktotals)<span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span>@endif</td>
-          <td class="qty">@if (!$display_worktotals)<span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span>@endif</td>
+          <td class="qty">@if ($display_specification)<span>{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}@endif</td>
+          <td class="qty">@if ($display_specification)<span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span>@endif</td>
+          <td class="qty">@if ($display_specification)<span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span>@endif</td>
+          <td class="qty">@if ($display_specification)<span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span>@endif</td>
           <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
           <td class="qty text-center">
           <?php
@@ -771,10 +771,10 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
         <tr style="page-break-after: always;">
           <td class="qty"><strong>Totaal</strong></td>
           <td class="qty">&nbsp;</td>
-          <td class="qty">@if (!$display_worktotals)<strong><span>{{ CalculationOverview::subcontrLaborTotalAmount($project) }}</span></strong>@endif</td>
-          <td class="qty">@if (!$display_worktotals)<strong><span>{{ '&euro; '.number_format(CalculationOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong>@endif</td>
-          <td class="qty">@if (!$display_worktotals)<strong><span>{{ '&euro; '.number_format(CalculationOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong>@endif</td>
-          <td class="qty">@if (!$display_worktotals)<strong><span>{{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong>@endif</td>
+          <td class="qty">@if ($display_specification)<strong><span>{{ CalculationOverview::subcontrLaborTotalAmount($project) }}</span></strong>@endif</td>
+          <td class="qty">@if ($display_specification)<strong><span>{{ '&euro; '.number_format(CalculationOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong>@endif</td>
+          <td class="qty">@if ($display_specification)<strong><span>{{ '&euro; '.number_format(CalculationOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong>@endif</td>
+          <td class="qty">@if ($display_specification)<strong><span>{{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong>@endif</td>
           <td class="qty"><strong><span>{{ '&euro; '.number_format(CalculationOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
           <td class="qty">&nbsp;</td>
         </tr>
@@ -787,10 +787,10 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
           <tr style="page-break-after: always;">
             <th style="width: 130px" class="qty"class="qty">&nbsp;</th>
             <th style="width: 170px" class="qty"class="qty">&nbsp;</th>
-            <th style="width: 40px" class="qty"class="qty">@if (!$display_worktotals) Uren @endif</th>
-            <th style="width: 51px" class="qty"class="qty">@if (!$display_worktotals) Arbeid @endif</th>
-            <th style="width: 51px" class="qty"class="qty">@if (!$display_worktotals) Materiaal @endif</th>
-            <th style="width: 51px" class="qty"class="qty">@if (!$display_worktotals) Materieel @endif</th>
+            <th style="width: 40px" class="qty"class="qty">@if ($display_specification) Uren @endif</th>
+            <th style="width: 51px" class="qty"class="qty">@if ($display_specification) Arbeid @endif</th>
+            <th style="width: 51px" class="qty"class="qty">@if ($display_specification) Materiaal @endif</th>
+            <th style="width: 51px" class="qty"class="qty">@if ($display_specification) Materieel @endif</th>
             <th style="width: 51px" class="qty"class="qty">Totaal</th>
             <th style="width: 51px" class="qty"class="qty">&nbsp;</th>
           </tr>
@@ -799,10 +799,10 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
           <tr style="page-break-after: always;">
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
-            <td class="qty">@if (!$display_worktotals)<span>{{ CalculationOverview::laborSuperTotalAmount($project) }}</span>@endif</td>
-            <td class="qty">@if (!$display_worktotals)<span>{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span>@endif</td>
-            <td class="qty">@if (!$display_worktotals)<span>{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span>@endif</td>
-            <td class="qty">@if (!$display_worktotals)<span>{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span>@endif</td>
+            <td class="qty">@if ($display_specification)<span>{{ CalculationOverview::laborSuperTotalAmount($project) }}</span>@endif</td>
+            <td class="qty">@if ($display_specification)<span>{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span>@endif</td>
+            <td class="qty">@if ($display_specification)<span>{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span>@endif</td>
+            <td class="qty">@if ($display_specification)<span>{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span>@endif</td>
             <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
             <td class="qty">&nbsp;</td>
           </tr>
@@ -823,7 +823,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
           <div id="invoice">
           <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
           <div class="date">{{ $project->project_name }}</div>
-          <div class="date">{{ date("j M Y") }}</div>
+          <div class="date">{{ date("j M Y", strtotime($offer_last->offer_make)) }}</div>
         </div>
       </header>
       <!--PAGE HEADER SECOND END-->
@@ -860,7 +860,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
           <div id="invoice">
           <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
           <div class="date">{{ $project->project_name }}</div>
-          <div class="date">{{ date("j M Y") }}</div>
+          <div class="date">{{ date("j M Y", strtotime($offer_last->offer_make)) }}</div>
         </div>
       </header>
       <!--PAGE HEADER SECOND END-->
