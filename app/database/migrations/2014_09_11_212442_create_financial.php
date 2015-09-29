@@ -59,7 +59,6 @@ class CreateFinancial extends Migration {
 			$table->foreign('project_id')->references('id')->on('project')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('resource_id')->unsigned()->nullable();
 			$table->foreign('resource_id')->references('id')->on('resource')->onUpdate('cascade')->onDelete('cascade');
-
 			$table->boolean('include_tax')->default('Y');
 			$table->boolean('only_totals')->default('Y');
 			$table->boolean('seperate_subcon')->default('N');
@@ -93,6 +92,12 @@ class CreateFinancial extends Migration {
 			$table->boolean('auto_email_reminder')->default('Y');
 			$table->integer('offer_id')->unsigned();
 			$table->foreign('offer_id')->references('id')->on('offer')->onUpdate('cascade')->onDelete('cascade');
+			$table->boolean('include_tax')->default('Y');
+			$table->boolean('only_totals')->default('Y');
+			$table->boolean('seperate_subcon')->default('N');
+			$table->boolean('display_worktotals')->default('N');
+			$table->boolean('display_specification')->default('N');
+			$table->boolean('display_description')->default('N');
 		});
 	}
 
