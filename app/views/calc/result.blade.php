@@ -598,7 +598,7 @@ $(document).ready(function() {
 									</tr>
 								</tbody>
 							</table>
-
+								<strong>Weergegeven bedragen zijn exclusief BTW</strong>
 						</div>
 
 				</div>
