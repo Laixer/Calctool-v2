@@ -541,7 +541,7 @@ $(document).ready(function() {
 											<div class="row">
 												<div class="col-md-3">
 													<div class="form-group">
-														<label for="offernumber_prefix">offernumber_prefix</label>
+														<label for="offernumber_prefix">Tekst voor offertenummer</label>
 														<input name="offernumber_prefix" id="offernumber_prefix" type="text" class="form-control" value="{{ $user->offernumber_prefix }}" />
 													</div>
 												</div>
@@ -550,7 +550,7 @@ $(document).ready(function() {
 											<div class="row">
 												<div class="col-md-3">
 													<div class="form-group">
-														<label for="invoicenumber_prefix">invoicenumber_prefix</label>
+														<label for="invoicenumber_prefix">Tekst voor factuurnummer</label>
 														<input name="invoicenumber_prefix" id="invoicenumber_prefix" type="text" class="form-control" value="{{ $user->invoicenumber_prefix }}" />
 													</div>
 												</div>
