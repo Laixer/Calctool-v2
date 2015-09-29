@@ -9,6 +9,7 @@ if (!$offer) {
 		$common_access_error = true;
 	} else {
 		$res = Resource::find($offer->resource_id);
+		$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 	}
 }
 ?>
@@ -64,7 +65,9 @@ PDFJS.getDocument(url).then(function getPdf(pdf) {
 
 		<div class="pull-right">
 			<?php if (!$project->project_close) { ?>
+			@if ($offer_last->id == $offer->id)
 			<a href="/offer/project-{{ $project->id }}" class="btn btn-primary">Bewerk</a>
+			@endif
 			<a href="/res-{{ $res->id }}/download" class="btn btn-primary">Download PDF</a>
 			<?php } ?>
 		</div>
