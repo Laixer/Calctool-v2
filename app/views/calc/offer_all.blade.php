@@ -36,9 +36,12 @@ $relation = Relation::find($project->client_id);
 
 	<section class="container">
 
-
-
 		@include('calc.wizard', array('page' => 'offer'))
+
+		<div class="alert alert-warning">
+			<i class="fa fa-fa fa-info-circle"></i>
+			{{ SystemMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->content }}
+		</div>
 
 			<h2><strong>Offertebeheer</strong></h2>
 
