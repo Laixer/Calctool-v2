@@ -31,7 +31,7 @@ if (!$project || !$project->isOwner()) {
 @section('content')
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
+		$("[name='display-description']").bootstrapSwitch('toggleDisabled');
 	    $('.only-end-total tr').each(function() {
             $(this).find("td").eq(2).hide();
             $(this).find("th").eq(2).hide();
@@ -42,7 +42,7 @@ if (!$project || !$project->isOwner()) {
             $(this).find("td").eq(5).hide();
             $(this).find("th").eq(5).hide();
         });
-		$("[name='toggle-tax']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='include-tax']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		        $('.hide-btw1 tr').each(function() {
 	                $(this).find("td").eq(4).show();
@@ -95,27 +95,27 @@ if (!$project || !$project->isOwner()) {
 		        });
 		  }
 		});
-		$("[name='toggle-activity']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='display-worktotals']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
-		  	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
+		  	$("[name='display-specification']").bootstrapSwitch('toggleDisabled');
 		  	$('.show-activity').show();
 		  } else {
-		 	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
+		 	$("[name='display-specification']").bootstrapSwitch('toggleDisabled');
 			$('.show-activity').hide();
 		  }
 		});
 
-		$("[name='toggle-endresult']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='only-totals']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-activity').show();
-		  	$("[name='toggle-subcontr']").bootstrapSwitch('toggleDisabled');
+		  	$("[name='seperate-subcon']").bootstrapSwitch('toggleDisabled');
 		  } else {
-		  	$("[name='toggle-subcontr']").bootstrapSwitch('toggleDisabled');
+		  	$("[name='seperate-subcon']").bootstrapSwitch('toggleDisabled');
 			$('.show-activity').hide();
 		  }
 		});
 
-		$("[name='toggle-subcontr']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='seperate-subcon']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-all').show();
 		  	$('.show-totals').hide();
@@ -124,14 +124,14 @@ if (!$project || !$project->isOwner()) {
 		  	$('.show-totals').show();
 		  }
 		});
-		$("[name='toggle-note']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='display-description']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-note').show();
 		  } else {
 			$('.show-note').hide();
 		  }
 		});
-		$("[name='toggle-endresult']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='only-totals']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.only-total').hide();
 		  	$('.hide-btw1').hide();
@@ -168,7 +168,7 @@ if (!$project || !$project->isOwner()) {
 	        });
 		  }
 		});
-		$("[name='toggle-summary']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='display-specification']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 	        $('.only-end-total tr').each(function() {
                 $(this).find("td").eq(2).show();
@@ -240,6 +240,31 @@ if (!$project || !$project->isOwner()) {
 		});
 		@if ($offer_last && $offer_last->offer_make)
 		$('#offdate').text("{{ date('d-m-Y', strtotime($offer_last->offer_make)) }}");
+
+		@if (!$offer_last->include_tax)
+			$("[name='include-tax']").bootstrapSwitch('toggleState');
+		@endif
+
+		@if (!$offer_last->only_totals)
+			$("[name='only-totals']").bootstrapSwitch('toggleState');
+		@endif
+
+		@if ($offer_last->seperate_subcon)
+			$("[name='seperate-subcon']").bootstrapSwitch('toggleState');
+		@endif
+
+		@if ($offer_last->display_worktotals)
+			$("[name='display-worktotals']").bootstrapSwitch('toggleState');
+		@endif
+
+		@if ($offer_last->display_specification)
+			$("[name='display-specification']").bootstrapSwitch('toggleState');
+		@endif
+
+		@if ($offer_last->display_description)
+			$("[name='display-description']").bootstrapSwitch('toggleState');
+		@endif
+
 		@endif
 	});
 	</script>
@@ -409,7 +434,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-tax" type="checkbox" checked> BTW bedragen weergeven
+								          <input name="include-tax" type="checkbox" checked> BTW bedragen weergeven
 								        </label>
 								      </div>
 								    </div>
@@ -418,7 +443,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-endresult" type="checkbox"> Alleen het totale offertebedrag weergeven<br>
+								          <input name="only-totals" type="checkbox" checked> Alleen het totale offertebedrag weergeven<br>
 								        </label>
 								      </div>
 								    </div>
@@ -427,7 +452,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-subcontr" type="checkbox"> Onderaanneming apart weergeven
+								          <input name="seperate-subcon" type="checkbox"> Onderaanneming apart weergeven
 								        </label>
 								      </div>
 								    </div>
@@ -440,7 +465,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-activity" type="checkbox"> Kostenoverizicht per werkzaamheid specificeren
+								          <input name="display-worktotals" type="checkbox"> Kostenoverizicht per werkzaamheid specificeren
 								        </label>
 								      </div>
 								    </div>
@@ -449,7 +474,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-summary" type="checkbox"> Aanvullend specificeren op arbeid, materiaal en materieel
+								          <input name="display-specification" type="checkbox"> Aanvullend specificeren op arbeid, materiaal en materieel
 								        </label>
 								      </div>
 								    </div>
@@ -458,7 +483,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-note" type="checkbox"> Omschrijving werkzaamheden weergeven
+								          <input name="display-description" type="checkbox"}> Omschrijving werkzaamheden weergeven
 								        </label>
 								      </div>
 								    </div>

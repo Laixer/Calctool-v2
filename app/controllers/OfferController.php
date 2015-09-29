@@ -58,19 +58,31 @@ class OfferController extends Controller {
 				$offer->invoice_quantity = Input::get('terms');
 			$offer->project_id = $project->id;;
 
-			$options = [];
-			if (Input::get('toggle-note'))
-				$options['description'] = 1;
-			if (Input::get('toggle-subcontr'))
-				$options['total'] = 1;
-			if (Input::get('toggle-activity'))
-				$options['specification'] = 1;
-			if (Input::get('toggle-summary'))
-				$options['onlyactivity'] = 1;
-			if (Input::get('toggle-tax'))
-				$options['displaytax'] = 1;
+			if (Input::get('include-tax'))
+				$offer->include_tax = true;
+			else
+				$offer->include_tax = false;
+			if (Input::get('only-totals'))
+				$offer->only_totals = true;
+			else
+				$offer->only_totals = false;
+			if (Input::get('seperate-subcon'))
+				$offer->seperate_subcon = true;
+			else
+				$offer->seperate_subcon = false;
+			if (Input::get('display-worktotals'))
+				$offer->display_worktotals = true;
+			else
+				$offer->display_worktotals = false;
+			if (Input::get('display-specification'))
+				$offer->display_specification = true;
+			else
+				$offer->display_specification = false;
+			if (Input::get('display-description'))
+				$offer->display_description = true;
+			else
+				$offer->display_description = false;
 
-			//$offer->option_query = http_build_query($options);
 			$total = 0;
 			foreach (Chapter::where('project_id','=',$project->id)->get() as $chapter) {
 				$total += Activity::where('chapter_id','=', $chapter->id)->count('id');
