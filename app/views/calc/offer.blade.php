@@ -232,13 +232,13 @@ if (!$project || !$project->isOwner()) {
 		$('#to_contact').change(function(e){
 			$('#adressing').text($('#to_contact option:selected').text());
 		});
-		$('#offdate').datepicker().on('changeDate', function(e){
-			$('#offdate').datepicker('hide');
+		$('.offdate').datepicker().on('changeDate', function(e){
+			$('.offdate').datepicker('hide');
 			$('#offdateval').val(e.date.toLocaleString());
-			$('#offdate').text(e.date.getDate() + "-" + (e.date.getMonth() + 1)  + "-" + e.date.getFullYear());
+			$('.offdate').text(e.date.getDate() + "-" + (e.date.getMonth() + 1)  + "-" + e.date.getFullYear());
 		});
 		@if ($offer_last && $offer_last->offer_make)
-		$('#offdate').text("{{ date('d-m-Y', strtotime($offer_last->offer_make)) }}");
+		$('.offdate').text("{{ date('d-m-Y', strtotime($offer_last->offer_make)) }}");
 
 		@if (!$offer_last->include_tax)
 			$("[name='include-tax']").bootstrapSwitch('toggleState');
@@ -547,7 +547,7 @@ if (!$project || !$project->isOwner()) {
 				<h4><strong>OFFERTE</strong></h4>
 				<ul class="list-unstyled">
 					<li><strong>Projectnaam:</strong> {{ $project->project_name }}</li>
-					<li><strong>Offertedatum:</strong> <a href="#" id="offdate">Bewerk</a> {{-- date("j M Y") --}}</li>
+					<li><strong>Offertedatum:</strong> <a href="#" class="offdate">Bewerk</a></li>
 					<li><strong>Offertenummer:</strong> {{ OfferController::getOfferCode($project->id) }}</li>
 					<li>&nbsp;</li>
 					<li>&nbsp;</li>
@@ -864,16 +864,6 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
 						@endif
-						<!--
-						<tr>
-							<td class="col-md-5">Te offreren BTW bedrag</td>
-							<td class="col-md-2">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProjectTax($project), 2, ",",".") }}</strong></td>
-							<td class="col-md-2">&nbsp;</td>
-						</tr>
-						-->
 						<tr>
 							<td class="col-md-5"><strong>Calculatief te offreren (Incl. BTW)</strong></td>
 							<td class="col-md-2">&nbsp;</td>
@@ -1047,16 +1037,6 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
 						@endif
-						<!--
-						<tr>
-							<td class="col-md-5">Te offreren BTW bedrag</td>
-							<td class="col-md-2">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProjectTax($project), 2, ",",".") }}</strong></td>
-							<td class="col-md-2">&nbsp;</td>
-						</tr>
-						-->
 						<tr>
 							<td class="col-md-5"><strong>Calculatief te offreren (Incl. BTW)</strong></td>
 							<td class="col-md-2">&nbsp;</td>
@@ -1179,7 +1159,7 @@ if (!$project || !$project->isOwner()) {
 					<p>
 						<h4><strong>{{ $project->project_name }}</strong></h4>
 						<ul class="list-unstyled">
-							<li><strong>Offertedatum:</strong> {{ date("j M Y") }}</li>
+							<li><strong>Offertedatum:</strong> <a href="#" class="offdate">Bewerk</a></li>
 							<li><strong>Offertenummer:</strong> {{ OfferController::getOfferCode($project->id) }}</li>
 						</ul>
 					</p>
@@ -1398,7 +1378,7 @@ if (!$project || !$project->isOwner()) {
 					<p>
 						<h4><strong>{{ $project->project_name }}</strong></h4>
 						<ul class="list-unstyled">
-							<li><strong>Offertedatum:</strong> {{ date("j M Y") }}</li>
+							<li><strong>Offertedatum:</strong> <a href="#" class="offdate">Bewerk</a></li>
 							<li><strong>Offertenummer:</strong> {{ OfferController::getOfferCode($project->id) }}</li>
 						</ul>
 					</p>
@@ -1501,13 +1481,13 @@ if (!$project || !$project->isOwner()) {
 						<?php if (!$offer_last->offer_finish) { ?>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
-						<button class="btn btn-primary osave">Offerte  maken</button>
+						<button class="btn btn-primary osave">Opslaan</button>
 						<?php } ?>
 						<?php }else{ ?>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
 						@if (CalculationEndresult::totalProject($project))
-						<button class="btn btn-primary osave">Offerte  maken</button>
+						<button class="btn btn-primary osave">Opslaan</button>
 						@endif
 						<?php } ?>
 						<?php } ?>
