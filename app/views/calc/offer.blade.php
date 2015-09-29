@@ -551,7 +551,7 @@ if (!$project || !$project->isOwner()) {
 					<li><strong>Offertenummer:</strong> {{ OfferController::getOfferCode($project->id) }}</li>
 					<li>&nbsp;</li>
 					<li>&nbsp;</li>
-					<input type="hidden" id="offdateval" name="offdateval" />
+					<input type="hidden" id="offdateval" name="offdateval" value="{{ $offer_last ? $offer_last->offer_make : '' }}" />
 				</ul>
 			</div>
 		</div>
@@ -928,7 +928,7 @@ if (!$project || !$project->isOwner()) {
 						<tr>
 							<td class="col-md-4">Materiaalkosten</td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1Amount($project)+CalculationEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
+							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1Amount($project)+CalculationEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">21%</td>
 							<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1AmountTax($project)+CalculationEndresult::subconCalcMaterialActivityTax1AmountTax($project), 2, ",",".") }}</td>
