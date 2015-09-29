@@ -7,6 +7,7 @@ if (!$project || !$project->isOwner()) {
 	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 }
 
+$relation = Relation::find($project->client_id);
 
 ?>
 
@@ -57,16 +58,24 @@ if (!$project || !$project->isOwner()) {
 					@foreach(Offer::where('project_id', '=', $project->id)->get() as $offer)
 					<tr>
 						<td class="col-md-2"><a href="/offer/project-{{ $project->id }}/offer-{{ $offer->id }}">{{ $offer->offer_code }}</a></td>
-						<td class="col-md-1">{{ $offer->created_at }}</td>
+						<td class="col-md-1"><?php echo date('d-m-Y', strtotime($offer->offer_make)); ?></td>
 						<td class="col-md-2">Actief</td>
-						<td class="col-md-2">Zandbergen Advies BV</td>
-						<td class="col-md-2">6.785,97</td>
+						<td class="col-md-2">{{ $relation->company_name }}</td>
+						<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</td>
 						<td class="col-md-3"><a href="/res-{{ ($offer_last->resource_id) }}/download" class="btn btn-primary btn-xs"><i class="fa fa-cloud-download fa-fw"></i> Downloaden</a></td>
 					</tr>
 					@endforeach
 				</tbody>
 			</table>
-			<a href="/offer/project-{{ $project->id }}" class="btn btn-primary btn"><i class="fa fa-pencil"></i> Nieuwe offerte</a>
+			<a href="/offer/project-{{ $project->id }}" class="btn btn-primary btn"><i class="fa fa-pencil"></i>
+				<?php
+						if(Offer::where('project_id', '=', $project->id)->count('id')>0) {
+							echo "Laatste versie bewerken";
+						} else {
+							echo "Nieuwe offerte maken";
+						}
+				?>
+			</a>
 		</div>
 	</div>
 
