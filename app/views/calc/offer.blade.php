@@ -31,7 +31,6 @@ if (!$project || !$project->isOwner()) {
 @section('content')
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("[name='display-description']").bootstrapSwitch('toggleDisabled');
 	    $('.only-end-total tr').each(function() {
             $(this).find("td").eq(2).hide();
             $(this).find("th").eq(2).hide();
@@ -452,7 +451,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="seperate-subcon" type="checkbox"> Onderaanneming apart weergeven
+								          <input name="seperate-subcon" type="checkbox" disabled> Onderaanneming apart weergeven
 								        </label>
 								      </div>
 								    </div>
@@ -474,7 +473,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="display-specification" type="checkbox"> Aanvullend specificeren op arbeid, materiaal en materieel
+								          <input name="display-specification" type="checkbox" disabled> Aanvullend specificeren op arbeid, materiaal en materieel
 								        </label>
 								      </div>
 								    </div>
@@ -483,7 +482,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="display-description" type="checkbox"}> Omschrijving werkzaamheden weergeven
+								          <input name="display-description" type="checkbox"> Omschrijving werkzaamheden weergeven
 								        </label>
 								      </div>
 								    </div>
