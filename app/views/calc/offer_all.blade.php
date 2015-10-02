@@ -38,10 +38,12 @@ $relation = Relation::find($project->client_id);
 
 		@include('calc.wizard', array('page' => 'offer'))
 
+		@if (0)
 		<div class="alert alert-warning">
 			<i class="fa fa-fa fa-info-circle"></i>
-			{{ SystemMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->content }}
+			Gegevens zijn gewijzigd ten op zichte van de laastte offerte
 		</div>
+		@endif
 
 			<h2><strong>Offertebeheer</strong></h2>
 
