@@ -97,13 +97,25 @@ class DemoProjectTemplate {
 
 		$chapterx->save();
 
-       /* $test_chapter1 = Chapter::create(array(
+		$test_chapter1 = new Chapter;
+		$test_chapter1->chapter_name = 'Woonkamer';
+
+
+       	$test_chapter1 = Chapter::create(array(
 			'chapter_name' => 'Woonkamer',
 			'priority' => 2,
-			'project_id' => $project->id
-		 ));*/
+			'project_id' => $project->new id;
+		));
 
         //AANNEMING
+       	$test_activity1 = new Activity;
+       	$test_activity1->activity_name = 'Plaatsen van laminaat';
+       	$test_activity1->priority = 1;
+       	$test_activity1->note = 'In de woonkamer wordt kliklaminaat gelegd. De oude vloer wordt door de bewoners verwijdert.';
+       	$test_activity1->chapter_id = $chapterx->id;
+       	$test_activity1->tax_estimate_equipment_id = $tax1->id;
+       	$test_activity1->save();
+
 		 $test_activity1 = Activity::create(array(
 			'activity_name' => 'Plaatsen van laminaat',
 			'priority' => '1',
