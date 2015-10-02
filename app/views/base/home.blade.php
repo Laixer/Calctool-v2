@@ -323,7 +323,7 @@ else
 									<?php $contact = Contact::where('relation_id','=',$relation->id)->first(); ?>
 									<tr>
 										<td>{{ HTML::link('relation-'.$relation->id.'/edit', $relation->company_name ? $relation->company_name : $contact->firstname .' '. $contact->lastname) }}</td>
-										<td>{{ $relation->email }}</td>
+										<td>{{ $relation->company_name ? $relation->email : $contact->email }}</td>
 										<td>{{ RelationKind::find($relation->kind_id)->kind_name }}</td>
 									</tr>
 									@endforeach
