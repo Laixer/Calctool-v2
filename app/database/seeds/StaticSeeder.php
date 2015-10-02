@@ -366,7 +366,19 @@ class StaticSeeder extends Seeder {
 
 		$this->command->info('SubGroup created');
 
-		Supplier::create(array('supplier_name' => 'Bouwmaat'));
+		Supplier::create(array('supplier_name' => 'bouwmaat'));
+		Supplier::create(array('supplier_name' => 'stiho'));
+		Supplier::create(array('supplier_name' => 'bo-rent'));
+		Supplier::create(array('supplier_name' => 'boels'));
+		Supplier::create(array('supplier_name' => 'megamat'));
+		Supplier::create(array('supplier_name' => 'jongeneel'));
+		Supplier::create(array('supplier_name' => 'hornbach'));
+		Supplier::create(array('supplier_name' => 'technische unie'));
+		Supplier::create(array('supplier_name' => 'simonis'));
+		Supplier::create(array('supplier_name' => 'spr coatings'));
+		Supplier::create(array('supplier_name' => 'destil'));
+		Supplier::create(array('supplier_name' => 'sigma coatings'));
+		Supplier::create(array('supplier_name' => 'molenaar'));
 		$this->command->info('Supplier created');
 
 		UserType::create(array('user_type' => 'system'));

@@ -97,4 +97,105 @@ class MaterialController extends Controller {
 		}
 	}
 
+	public function doNew()
+	{
+		$rules = array(
+			'name' => array('required','max:50'),
+			'unit' => array('required','max:10'),
+			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'group' => array('required', 'integer')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+			$mysupplier = Supplier::where('user_id','=',Auth::id())->first();
+			if (!$mysupplier) {
+				$mysupplier = Supplier::create(array(
+					'supplier_name' => Auth::user()->username,
+					'user_id' => Auth::id()
+				));
+			}
+
+			$material = Product::create(array(
+				'unit' => Input::get('unit'),
+				'price' => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
+				'description' => strtolower(Input::get('name')),
+				'group_id' => Input::get('group'),
+				'supplier_id' => $mysupplier->id
+			));
+
+			return json_encode(['success' => 1, 'id' => $material->id]);
+		}
+	}
+
+	public function doUpdate()
+	{
+		$rules = array(
+			'id' => array('integer','min:0'),
+			'name' => array('required','max:50'),
+			'unit' => array('required','max:10'),
+			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'group' => array('required', 'integer')
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+			$product = Product::find(Input::get('id'));
+			if (!$product)
+				return json_encode(['success' => 0]);
+			$supplier = Supplier::find($product->supplier_id);
+			if (!$supplier || !$supplier->isOwner()) {
+				return json_encode(['success' => 3]);
+			}
+
+			$product->description = Input::get('name');
+			$product->unit = Input::get('unit');
+			$product->price = str_replace(',', '.', str_replace('.', '' , Input::get('rate')));
+			$product->group_id = Input::get('group');
+
+			$product->save();
+
+			return json_encode(['success' => 1]);
+		}
+	}
+
+	public function doDelete()
+	{
+		$rules = array(
+			'id' => array('required','integer','min:0'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+			$product = Product::find(Input::get('id'));
+			if (!$product)
+				return json_encode(['success' => 0]);
+			$supplier = Supplier::find($product->supplier_id);
+			if (!$supplier || !$supplier->isOwner()) {
+				return json_encode(['success' => 3]);
+			}
+
+			$product->delete();
+
+			return json_encode(['success' => 1]);
+		}
+	}
 }

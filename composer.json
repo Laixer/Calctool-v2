@@ -11,7 +11,8 @@
 		"mollie/mollie-api-php": "1.2.x",
 		"bogardo/mailgun": "3.1.*",
 		"lucadegasperi/oauth2-server-laravel": "3.*",
-		"longman/telegram-bot": "*"
+		"longman/telegram-bot": "*",
+		"jeroendesloovere/vcard": "1.2.*"
 	},
 	"autoload": {
 		"classmap": [

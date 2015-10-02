@@ -69,7 +69,6 @@ $(document).ready(function() {
 
 				<div class="tabs nomargin-top">
 
-					<?# -- tabs -- ?>
 					<ul class="nav nav-tabs">
 						<li class="active">
 							<a href="#company" data-toggle="tab">Mijn gegevens</a>
@@ -85,7 +84,6 @@ $(document).ready(function() {
 						</li>
 					</ul>
 
-					<?# -- tabs content -- ?>
 					<div class="tab-content">
 						<div id="company" class="tab-pane active">
 

@@ -197,6 +197,9 @@ Route::group(array('before' => 'auth'), function()
 	/* Material database */
 	Route::get('material', array('as' => 'material', 'uses' => 'MaterialController@getList'));
 	Route::post('material/search', array('as' => 'material', 'uses' => 'MaterialController@doSearch'));
+	Route::post('material/newmaterial', array('uses' => 'MaterialController@doNew'));
+	Route::post('material/updatematerial', array('uses' => 'MaterialController@doUpdate'));
+	Route::post('material/deletematerial', array('uses' => 'MaterialController@doDelete'));
 });
 
 Route::group(array('before' => 'admin'), function()
