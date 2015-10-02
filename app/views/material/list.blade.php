@@ -13,7 +13,7 @@
 					if (data) {
 						$('table tbody tr').remove();
 						$.each(data, function(i, item) {
-							$('table tbody').append('<tr><td>'+item.description+'</td><td>'+item.unit+'</td><td>'+item.price+'</td></tr>');
+							$('table tbody').append('<tr><td>'+item.description+'</td><td>'+item.unit+'</td><td>'+item.price+'</td><td>'+item.tprice+'</td></tr>');
 						});
 						$req = false;
 					}
@@ -50,6 +50,7 @@
 						<tr>
 							<th>Omschrijving</th>
 							<th>Eenheid</th>
+							<th>Prijs per eenheid</th>
 							<th>Totaalprijs</th>
 						</tr>
 					</thead>

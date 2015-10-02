@@ -473,7 +473,7 @@ var n = this,
 					if (data) {
 						$('#tbl-material tbody tr').remove();
 						$.each(data, function(i, item) {
-							$('#tbl-material tbody').append('<tr><td><a data-name="'+data[i].description+'" data-unit="'+data[i].unit+'" data-price="'+data[i].pricenum+'" href="javascript:void(0);">'+data[i].description+'</a></td><td>'+data[i].package+'</td><td>'+data[i].price+'</td></tr>');
+							$('#tbl-material tbody').append('<tr><td><a data-name="'+item.description+'" data-unit="'+item.punit+'" data-price="'+item.pricenum+'" href="javascript:void(0);">'+item.description+'</a></td><td>'+item.unit+'</td><td>'+item.price+'</td><td>'+item.tprice+'</td></tr>');
 						});
 						$('#tbl-material tbody a').on("click", onmaterialclick);
 						$req = false;
@@ -531,7 +531,8 @@ var n = this,
 							<thead>
 								<tr>
 									<th>Omschrijving</th>
-									<th>Afmeting</th>
+									<th>Eenheid</th>
+									<th>Prijs per eenheid</th>
 									<th>Totaalprijs</th>
 								</tr>
 							</thead>

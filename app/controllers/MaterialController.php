@@ -27,6 +27,23 @@ class MaterialController extends Controller {
 				return 'Stuk';
 			case 'MTR':
 				return 'Meter';
+			case 'MTK':
+				return 'M<sup>2</sup>';
+
+			default:
+				return $unit;
+		}
+	}
+
+	private function convertUnitPlain($unit)
+	{
+		switch ($unit) {
+			case 'PCE':
+				return 'Stuk';
+			case 'MTR':
+				return 'Meter';
+			case 'MTK':
+				return 'M2';
 
 			default:
 				return $unit;
@@ -65,12 +82,14 @@ class MaterialController extends Controller {
 				array_push($rtn_products, array(
 					'id' => $product['id'],
 					'unit' => $this->convertUnit($product['unit']),
+					'punit' => $this->convertUnitPlain($product['unit']),
 					'unit_price' => $product['unit_price'],
 					'price' => '&euro; '.number_format($product['price'], 2, ",","."),
+					'tprice' => '&euro; '.number_format($product['total_price'], 2, ",","."),
 					'pricenum' => number_format($product['price'], 2, ",","."),
 					'package' => $this->convertPackage($product['package_length'], $product['package_height'], $product['package_width']),
 					'minimum_quantity' => number_format($product['minimum_quantity'], 2, ",","."),
-					'description' => $product['description'],
+					'description' => ucfirst($product['description']),
 				));
 			}
 

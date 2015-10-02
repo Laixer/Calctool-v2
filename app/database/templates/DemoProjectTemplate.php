@@ -8,6 +8,7 @@ class DemoProjectTemplate {
 
 	public static function setup($userid)
 	{
+		return;
 		$province = Province::where('province_name','=','zuid-holland')->first();
 		$country = Country::where('country_name','=','nederland')->first();
 		$projecttype = ProjectType::where('type_name','=','calculatie')->first();
@@ -88,19 +89,27 @@ class DemoProjectTemplate {
 		$tax1 = Tax::where('tax_rate','=','21')->first();
 		$tax2 = Tax::where('tax_rate','=','6')->first();
 		$tax3 = Tax::where('tax_rate','=','0')->first();
-        
-        $test_chapter1 = Chapter::create(array( 
-			'chapter_name' => 'Woonkamer',
-			'priority' => '1',
-			'project_id' => $test_project->id
-		 ));
 
-		 $test_activity1 = Activity::create(array( AANNEMING
+		$chapterx = new Chapter;
+		$chapterx->chapter_name = 'Woonkamer';
+		$chapterx->priority = 1;
+		$chapterx->project_id = $project->id;
+
+		$chapterx->save();
+
+       /* $test_chapter1 = Chapter::create(array(
+			'chapter_name' => 'Woonkamer',
+			'priority' => 2,
+			'project_id' => $project->id
+		 ));*/
+
+        //AANNEMING
+		 $test_activity1 = Activity::create(array(
 			'activity_name' => 'Plaatsen van laminaat',
 			'priority' => '1',
 			'note' => 'In de woonkamer wordt kliklaminaat gelegd. De oude vloer wordt door de bewoners verwijdert.',
-			'chapter_id' => $test_chapter1->id,
-			'tax_estimate_equipment_id' => $test_tax1->id
+			'chapter_id' => $chapterx->id,
+			'tax_estimate_equipment_id' => $tax1->id
 		 ));
 
 		 $calculation_labor_activity1 = CalculationLabor::create(array(
@@ -137,7 +146,8 @@ class DemoProjectTemplate {
 			'activity_id' => $test_activity1->id
 		 ));
 
-		 $test_activity2 = Activity::create(array( AANNEMING
+		 //AANNEMING
+		 $test_activity2 = Activity::create(array(
 			'activity_name' => 'Verlagen van het plafond',
 			'priority' => '1',
 			'note' => 'Het bestaande plafond wordt verlaagd met een regelwerk en gipsplaten. Het plafond wordt 10 cm verlaagd. In het nieuwe plafond komen 10 lichtspots. ',
@@ -193,11 +203,11 @@ class DemoProjectTemplate {
 
 
 
-
-		$test_chapter2 = Chapter::create(array( ONDERAANNEMING
+		//ONDERAANNEMING
+		$test_chapter2 = Chapter::create(array(
 			'chapter_name' => 'Badkamer',
 			'priority' => '1',
-			'project_id' => $test_project->id
+			'project_id' => $project->id
 		 ));
 
 		$test_activity3 = Activity::create(array(
@@ -260,7 +270,8 @@ class DemoProjectTemplate {
 			'activity_id' => $test_activity1->id
 		 ));
 
-		$test_activity4 = Activity::create(array( ONDERAANNEMING
+		//ONDERAANNEMING
+		$test_activity4 = Activity::create(array(
 			'activity_name' => 'Tegelen van de vloeren',
 			'priority' => '1',
 			'note' => 'De oude vloer wordt door de bewoners gesloopt en hierop komt een nieuwe tegelvloer te liggen.',
@@ -307,13 +318,14 @@ class DemoProjectTemplate {
 
 
 
-		$test_chapter3 = Chapter::create(array( 
+		$test_chapter3 = Chapter::create(array(
 			'chapter_name' => 'Slaapkamer',
 			'priority' => '1',
-			'project_id' => $test_project->id
+			'project_id' => $project->id
 		 ));
 
-		$test_activity5 = Activity::create(array( ONDERAANNEMING
+		//ONDERAANNEMING
+		$test_activity5 = Activity::create(array(
 			'activity_name' => 'Sauzen van de wanden',
 			'priority' => '1',
 			'note' => 'De wanden worden opnieuw gesausd in de kleur 9010.',
@@ -350,13 +362,14 @@ class DemoProjectTemplate {
 
 
 
-		$test_chapter4 = Chapter::create(array( 
+		$test_chapter4 = Chapter::create(array(
 			'chapter_name' => 'Zolder',
 			'priority' => '1',
-			'project_id' => $test_project->id
+			'project_id' => $project->id
 		 ));
 
-		$test_activity6 = Activity::create(array( AANNEMING
+		//AANNEMING
+		$test_activity6 = Activity::create(array(
 			'activity_name' => 'Isoleren van het dakbeschot',
 			'priority' => '1',
 			'note' => 'Het dakbeschot op zolder wordt geisoleerd met speciale polystyreen isolatieplaten. Hier onder wordt eerst een laag dampdoorlatende folie aangebracht',
@@ -398,7 +411,8 @@ class DemoProjectTemplate {
 			 'activity_id' => $test_activity1->id
 		 ));
 
-		$test_activity7 = Activity::create(array( AANNEMING
+		//AANNEMING
+		$test_activity7 = Activity::create(array(
 			'activity_name' => 'Plaatsen van een tussenwand',
 			'priority' => '1',
 			'note' => 'De zolder wordt verdeeld in twee aparte kamers, hiervoor is het nodig om een tussenwand te plaatsen met een deur.',
@@ -479,13 +493,14 @@ class DemoProjectTemplate {
 
 
 
-		$test_chapter5 = Chapter::create(array( 
+		$test_chapter5 = Chapter::create(array(
 			 'chapter_name' => 'Garage',
 			 'priority' => '1',
-			 'project_id' => $test_project->id
+			 'project_id' => $project->id
 		 ));
 
-		$test_activity8 = Activity::create(array( ONDERAANNEMING
+		//ONDERAANNEMING
+		$test_activity8 = Activity::create(array(
 			 'activity_name' => 'Egaliseren van de garagevloer',
 			 'priority' => '1',
 			 'note' => 'De garagevloer is niet egaal en dient geegaliseerd te worden met egaline.',
@@ -517,8 +532,8 @@ class DemoProjectTemplate {
 			'isless' => false,
 			'activity_id' => $test_activity1->id
 		));
-        
+
      }
   }
-  
+
   ?>

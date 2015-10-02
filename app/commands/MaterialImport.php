@@ -46,7 +46,6 @@ class MaterialImport extends Command {
 			$groupcode = explode(" ", $value['AdditionalDescriptions']['SupplierProductGroupDescription']);
 			$subgroup = SubGroup::where('reference_code','=',$groupcode[0])->first();
 			if (!$subgroup) {
-				//echo "Geen group";
 				print_r($value['AdditionalDescriptions']['SupplierProductGroupDescription']."\n");
 				continue;
 			}
@@ -57,6 +56,7 @@ class MaterialImport extends Command {
 				'article_code' => $value['TradeItemId']['TradeItemNumber'],
 				'unit' => $value['PriceInformation']['NetUnitPrice']['MeasureUnitQualifier'],
 				'price' => $price_total,
+				'total_price' => $price,
 				'description' => strtolower($value['ArticleData']['SuppliersDescription']['Description']),
 				'group_id' => $subgroup->id,
 				'supplier_id' => 1
