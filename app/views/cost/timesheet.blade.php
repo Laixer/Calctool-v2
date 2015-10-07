@@ -49,11 +49,31 @@
 				return;
 			$.get('/timesheet/activity/' + $('#projname').val() + '/' + $('#typename').val(), function(data){
 				$('#activity').prop('disabled', false).find('option').remove();
-				$.each(data, function (i, item) {
-				    $('#activity').append($('<option>', {
-				        value: item.id,
-				        text : item.activity_name
+				$('#activity').prop('disabled', false).find('optgroup').remove();
+				var groups = new Array();
+				$.each(data, function(idx, item) {
+					var index = -1;
+					for(var i = 0, len = groups.length; i < len; i++) {
+					    if (groups[i].group === item.chapter) {
+					        groups[i].data.push({value: item.id, text: item.activity_name});
+					        index = i;
+					        break;
+					    }
+					}
+					if (index == -1) {
+						groups.push({group: item.chapter, data: [{value: item.id, text: item.activity_name}]});
+					}
+				});
+				$.each(groups, function(idx, item){
+				    $('#activity').append($('<optgroup>', {
+				        label: item.group
 				    }));
+				    $.each(item.data, function(idx2, item2){
+					    $('#activity').append($('<option>', {
+					        value: item2.value,
+					        text : item2.text
+					    }));
+				    });
 				});
 			});
 		});
