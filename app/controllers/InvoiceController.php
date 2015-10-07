@@ -284,6 +284,10 @@ class InvoiceController extends Controller {
 			if (Input::get('toggle-tax'))
 				$options['displaytax'] = 1;
 
+			if (Input::get('invdateval'))
+				$invoice->invoice_make =  date('Y-m-d', strtotime(Input::get('invdateval')));
+			else
+				$invoice->invoice_make = date('Y-m-d');
 			$invoice->invoice_close = true;
 			$invoice->option_query = http_build_query($options);
 			$invoice->invoice_code = InvoiceController::getInvoiceCode($project->id);

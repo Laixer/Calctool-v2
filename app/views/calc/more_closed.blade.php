@@ -321,8 +321,8 @@ if (!$project || !$project->isOwner())
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th class="col-md-3">&nbsp;</th>
-												<th class="col-md-4">&nbsp;</th>
+												<th class="col-md-3">Hoofdstuk</th>
+												<th class="col-md-4">Werkzaamheden</th>
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</th>
@@ -337,7 +337,7 @@ if (!$project || !$project->isOwner())
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
 											<?php $i++; ?>
 											<tr>
-												<td class="col-md-3"><strong>{{ $i==1 ? $chapter->chapter_name : '' }}</strong></td>
+												<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 												<td class="col-md-4">{{ $activity->activity_name }}</td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(MoreOverview::laborTotal($activity), 2, ",",".") }}</td>
 												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(MoreOverview::laborActivity($activity), 2, ",",".") }}</span></td>
@@ -369,8 +369,8 @@ if (!$project || !$project->isOwner())
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th class="col-md-3">&nbsp;</th>
-												<th class="col-md-4">&nbsp;</th>
+												<th class="col-md-3">Hoofdstuk</th>
+												<th class="col-md-4">Werkzaamheden</th>
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</th>
@@ -385,7 +385,7 @@ if (!$project || !$project->isOwner())
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
 											<?php $i++; ?>
 											<tr>
-												<td class="col-md-3"><strong>{{ $==1 ? $chapter->chapter_name : '' }}</strong></td>
+												<td class="col-md-3">{{ $==1 ? $chapter->chapter_name : '' }}</td>
 												<td class="col-md-4">{{ $activity->activity_name }}</td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(MoreOverview::laborTotal($activity), 2, ",",".") }}</td>
 												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(MoreOverview::laborActivity($activity), 2, ",",".") }}</span></td>

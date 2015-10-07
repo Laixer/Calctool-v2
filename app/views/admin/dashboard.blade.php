@@ -31,7 +31,7 @@
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/user" ><h4>Gebruikers</h4></a>
-									<small class="styleColor">{{ User::count() }} actieve gebruikers</small>
+									<small class="styleColor">{{ User::where('active','=','true')->count() }} actieve gebruikers</small>
 								</div>
 							</div>
 						</div>

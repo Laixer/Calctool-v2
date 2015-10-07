@@ -45,14 +45,18 @@ class MaterialImport extends Command {
 		foreach ($articles as $key => $value) {
 			$groupcode = explode(" ", $value['AdditionalDescriptions']['SupplierProductGroupDescription']);
 			$subgroup = SubGroup::where('reference_code','=',$groupcode[0])->first();
+			if (!$subgroup) {
+				print_r($value['AdditionalDescriptions']['SupplierProductGroupDescription']."\n");
+				continue;
+			}
+			$price = $value['PriceInformation']['NetUnitPrice']['Price'];
+			$quant = $value['ArticleData']['SmallestUnitQuantity']['Quantity'];
+			$price_total = ($price/$quant);
 			Product::create(array(
 				'article_code' => $value['TradeItemId']['TradeItemNumber'],
-				'minimum_quantity' => $value['ArticleData']['SmallestUnitQuantity']['Quantity'],
-				'unit' => $value['ArticleData']['SmallestUnitQuantity']['MeasureUnitQualifier'],
-				'price' => $value['PriceInformation']['NetUnitPrice']['Price'],
-				'package_height' => $value['Packaging']['Height']['Quantity'],
-				'package_length' => $value['Packaging']['Length']['Quantity'],
-				'package_width' => $value['Packaging']['Width']['Quantity'],
+				'unit' => $value['PriceInformation']['NetUnitPrice']['MeasureUnitQualifier'],
+				'price' => $price_total,
+				'total_price' => $price,
 				'description' => strtolower($value['ArticleData']['SuppliersDescription']['Description']),
 				'group_id' => $subgroup->id,
 				'supplier_id' => 1

@@ -18,6 +18,15 @@ class ProjectController extends Controller {
 		return View::make('user.edit_project');
 	}
 
+	public function downloadResource()
+	{
+		$res = Resource::find(Route::Input('resource_id'));
+		if ($res) {
+			return Response::download($res->file_location);
+		}
+		return;
+	}
+
 	public function doNew()
 	{
 		$rules = array(
@@ -28,6 +37,7 @@ class ProjectController extends Controller {
 			'city' => array('required','alpha_num','max:35'),
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric'),
+			'contractor' => array('required','numeric'),
 			'hour_rate' => array('required','regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
 			'more_hour_rate' => array('required','regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
 			'profit_material_1' => array('required','numeric','between:0,200'),
@@ -135,6 +145,33 @@ class ProjectController extends Controller {
 			return Redirect::back()->with('success', 'Aangepast');
 		}
 
+	}
+
+	public function doUpdateNote()
+	{
+		$rules = array(
+			'id' => array('required','integer'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			// redirect our user back to the form with the errors from the validator
+			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+		} else {
+
+			$project = Project::find(Input::get('id'));
+			if (!$project || !$project->isOwner()) {
+				return Redirect::back()->withInput(Input::all());
+			}
+			$project->note = Input::get('note');
+
+			$project->save();
+
+			return Redirect::back()->with('success', 'Aangepast');
+		}
 	}
 
 	public function doUpdateProfit()

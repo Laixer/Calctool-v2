@@ -355,9 +355,30 @@ class StaticSeeder extends Seeder {
 		SubGroup::create(array('reference_code'=>'14-55-12','group_type'=>'Zagen'));
 		SubGroup::create(array('reference_code'=>'10-1-2','group_type'=>'Zand+Grind'));
 		SubGroup::create(array('reference_code'=>'16-63-4','group_type'=>'Zwaluw Lijmen En Kitten'));
+		SubGroup::create(array('reference_code'=>'11-13-5','group_type'=>'PVC Schroten'));
+		SubGroup::create(array('reference_code'=>'12-21-19','group_type'=>'Knelkoppelingen'));
+		SubGroup::create(array('reference_code'=>'12-21-63','group_type'=>'Bonfix pers'));
+		SubGroup::create(array('reference_code'=>'12-21-62','group_type'=>'Quick and Easy'));
+		SubGroup::create(array('reference_code'=>'12-21-99','group_type'=>'Sanitair divers'));
+		SubGroup::create(array('reference_code'=>'12-22-5','group_type'=>'Zink'));
+		SubGroup::create(array('reference_code'=>'12-27-1','group_type'=>'Airco'));
+		SubGroup::create(array('reference_code'=>'13-36-1','group_type'=>'Onbekend'));
+
 		$this->command->info('SubGroup created');
 
-		Supplier::create(array('supplier_name' => 'Bouwmaat'));
+		Supplier::create(array('supplier_name' => 'bouwmaat'));
+		Supplier::create(array('supplier_name' => 'stiho'));
+		Supplier::create(array('supplier_name' => 'bo-rent'));
+		Supplier::create(array('supplier_name' => 'boels'));
+		Supplier::create(array('supplier_name' => 'megamat'));
+		Supplier::create(array('supplier_name' => 'jongeneel'));
+		Supplier::create(array('supplier_name' => 'hornbach'));
+		Supplier::create(array('supplier_name' => 'technische unie'));
+		Supplier::create(array('supplier_name' => 'simonis'));
+		Supplier::create(array('supplier_name' => 'spr coatings'));
+		Supplier::create(array('supplier_name' => 'destil'));
+		Supplier::create(array('supplier_name' => 'sigma coatings'));
+		Supplier::create(array('supplier_name' => 'molenaar'));
 		$this->command->info('Supplier created');
 
 		UserType::create(array('user_type' => 'system'));
@@ -496,6 +517,7 @@ class StaticSeeder extends Seeder {
 		RelationType::create(array('type_name' => 'betonboorder'));
 		RelationType::create(array('type_name' => 'betonstaalvlechter'));
 		RelationType::create(array('type_name' => 'betontimmerman'));
+		RelationType::create(array('type_name' => 'bouwgroothandel'));
 		RelationType::create(array('type_name' => 'containerverhuur'));
 		RelationType::create(array('type_name' => 'cv-installateur'));
 		RelationType::create(array('type_name' => 'dakdekker'));
@@ -525,6 +547,7 @@ class StaticSeeder extends Seeder {
 		RelationType::create(array('type_name' => 'tuinman'));
 		RelationType::create(array('type_name' => 'tussenpersoon'));
 		RelationType::create(array('type_name' => 'vereniging van eigenaren'));
+		RelationType::create(array('type_name' => 'verfgroothandel'));
 		RelationType::create(array('type_name' => 'verhuurbedrijf'));
 		RelationType::create(array('type_name' => 'verwarmingsmonteur'));
 		RelationType::create(array('type_name' => 'vloerenlegger'));

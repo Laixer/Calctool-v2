@@ -10,7 +10,7 @@ if ($offer_last && $offer_last->offer_finish)
 	<a href="/"> Home</a>
 	<a href="/project-{{ $project->id }}/edit" {{ $page=='project' ? 'class="current"' : '' }} >Project</a>
 	<a href="/calculation/project-{{ $project->id }}" {{ $page=='calculation' ? 'class="current"' : '' }} >Calculeren</a>
-	<a href="/offer/project-{{ $project->id }}" {{ $page=='offer' ? 'class="current"' : '' }}>Offerte</a>
+	<a href="/offerversions/project-{{ $project->id }}" {{ $page=='offer' ? 'class="current"' : '' }}>Offerte</a>
 	@if($show_all)
 	<a href="/estimate/project-{{ $project->id }}" {{ $page=='estimate' ? 'class="current"' : '' }} >Stelposten stellen</a>
 	<a href="/less/project-{{ $project->id }}" {{ $page=='less' ? 'class="current"' : '' }} >Minderwerk</a>

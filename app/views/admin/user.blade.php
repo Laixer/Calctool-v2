@@ -38,7 +38,7 @@ function userActive($user) {
 			<div>
 			<br />
 
-			<h2><strong>Gebruikers</strong></h2>
+			<h2><strong>Actieve gebruikers</strong></h2>
 
 			<div class="white-row">
 			<table class="table table-striped">
@@ -54,7 +54,7 @@ function userActive($user) {
 				</thead>
 
 				<tbody>
-				@foreach (User::orderBy('created_at')->get() as $users)
+				@foreach (User::where('active','=','true')->orderBy('created_at')->get() as $users)
 					<tr>
 						<td class="col-md-3">{{ (UserType::find($users->user_type)->user_type=='system') ? $users->username : HTML::link('/admin/user-'.$users->id.'/edit', $users->username) . ' (' . $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '') . ')' }}</td>
 						<td class="col-md-2">{{ $users->ip }}</td>

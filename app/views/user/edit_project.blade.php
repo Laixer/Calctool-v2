@@ -74,7 +74,7 @@ else {
 			$note = $curThis.closest("tr").find("input[name='note']").val();
 			$.post("/purchase/new", {
 				date: $date,
-				hour: $hour,
+				amount: $hour,
 				type: $type,
 				relation: $relation,
 				note: $note,
@@ -131,11 +131,31 @@ else {
 		$('#typename').change(function(e){
 			$.get('/timesheet/activity/{{ $project->id }}/' + $(this).val(), function(data){
 				$('#activity').prop('disabled', false).find('option').remove();
-				$.each(data, function (i, item) {
-				    $('#activity').append($('<option>', {
-				        value: item.id,
-				        text : item.activity_name
+				$('#activity').prop('disabled', false).find('optgroup').remove();
+				var groups = new Array();
+				$.each(data, function(idx, item) {
+					var index = -1;
+					for(var i = 0, len = groups.length; i < len; i++) {
+					    if (groups[i].group === item.chapter) {
+					        groups[i].data.push({value: item.id, text: item.activity_name});
+					        index = i;
+					        break;
+					    }
+					}
+					if (index == -1) {
+						groups.push({group: item.chapter, data: [{value: item.id, text: item.activity_name}]});
+					}
+				});
+				$.each(groups, function(idx, item){
+				    $('#activity').append($('<optgroup>', {
+				        label: item.group
 				    }));
+				    $.each(item.data, function(idx2, item2){
+					    $('#activity').append($('<option>', {
+					        value: item2.value,
+					        text : item2.text
+					    }));
+				    });
 				});
 			});
 		});
@@ -203,6 +223,15 @@ else {
 					{{ $error }}
 				@endforeach
 			</div>
+			@endif
+
+			@if ($offer_last)
+				@if (CalculationEndresult::totalProject($project) != $offer_last->offer_total)
+				<div class="alert alert-warning">
+					<i class="fa fa-fa fa-info-circle"></i>
+					Gegevens zijn gewijzigd ten op zichte van de laastte offerte
+				</div>
+				@endif
 			@endif
 
 			<h2><strong>Project</strong> {{$project->project_name}}</h2>
@@ -373,13 +402,13 @@ else {
 						</div>
 
 						<div id="project" class="tab-pane">
-						<form method="post" action="/project/update">
+						<form method="post" {{ $offer_last && $offer_last->offer_finish ? 'action="/project/update/note"' : 'action="/project/update"' }}>
 							<h5><strong>Gegevens</strong></h5>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="name">Projectnaam*</label>
-											<input name="name" id="name" type="text" {{ $project->project_close ? 'disabled' : '' }} value="{{ Input::old('name') ? Input::old('name') : $project->project_name }}" class="form-control" />
+											<input name="name" id="name" type="text" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} value="{{ Input::old('name') ? Input::old('name') : $project->project_name }}" class="form-control" />
 											<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
 										</div>
 									</div>

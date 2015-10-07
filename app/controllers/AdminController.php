@@ -132,7 +132,7 @@ class AdminController extends Controller {
 	{
 		$rules = array(
 			/* General */
-			'username' => array('required'),
+			'username' => array('required','unique:user_account'),
 			'secret' => array('required'),
 			'type' => array('required'),
 
@@ -141,7 +141,7 @@ class AdminController extends Controller {
 			'firstname' => array('max:30'),
 			'mobile' => array('numeric'),
 			'telephone' => array('numeric'),
-			'email' => array('required','email','max:80'),
+			'email' => array('required','email','max:80','unique:user_account'),
 			'website' => array('url','max:180'),
 
 			/* Adress */

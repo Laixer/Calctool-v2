@@ -276,7 +276,7 @@ else
 									<tr>
 										<td>{{ HTML::link('/project-'.$project->id.'/edit', $project->project_name) }}</td>
 										<td>{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); }}</td>
-										<td>{{ $project->type->type_name }}</td>
+										<td>{{ ucfirst($project->type->type_name) }}</td>
 									</tr>
 									@endforeach
 								</tbody>
@@ -323,8 +323,8 @@ else
 									<?php $contact = Contact::where('relation_id','=',$relation->id)->first(); ?>
 									<tr>
 										<td>{{ HTML::link('relation-'.$relation->id.'/edit', $relation->company_name ? $relation->company_name : $contact->firstname .' '. $contact->lastname) }}</td>
-										<td>{{ $relation->email }}</td>
-										<td>{{ RelationKind::find($relation->kind_id)->kind_name }}</td>
+										<td>{{ $relation->company_name ? $relation->email : $contact->email }}</td>
+										<td>{{ ucfirst(RelationKind::find($relation->kind_id)->kind_name) }}</td>
 									</tr>
 									@endforeach
 								</tbody>

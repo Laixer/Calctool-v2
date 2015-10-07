@@ -53,24 +53,25 @@ class UserController extends Controller {
 			$increment_months = 0;
 			switch (Input::get('payoption')) {
 				case 1:
-					$amount = 29.95;
+					$amount = 36.24;
 					$description = 'Verleng met een maand';
 					$increment_months = 1;
 					break;
-				case 4:
-					$amount = 80.85;
+				case 3:
+					$amount = 97.84;
 					$description = 'Verleng met 4 maanden';
-					$increment_months = 4;
+					$increment_months = 3;
 					break;
 				case 6:
-					$amount = 152.75;
+					$amount = 184.83;
 					$description = 'Verleng met 6 maanden';
 					$increment_months = 6;
 					break;
 				case 12:
-					$amount = 287.52;
+					$amount = 347.90;
 					$description = 'Verleng met 12 maanden';
 					$increment_months = 12;
+					break;
 				default:
 					$errors = new MessageBag(['status' => ['Geen geldige optie']]);
 					return Redirect::to('myaccount')->withErrors($errors);

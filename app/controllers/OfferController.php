@@ -42,8 +42,11 @@ class OfferController extends Controller {
 			$offer->to_contact_id = Input::get('to_contact');
 			$offer->from_contact_id = Input::get('from_contact');
 			$offer->description = Input::get('description');
+			$offer->offer_code = OfferController::getOfferCode($project->id);
 			$offer->extracondition = Input::get('extracondition');
 			$offer->closure = Input::get('closure');
+			if (Input::get('offdateval'))
+				$offer->offer_make =  date('Y-m-d', strtotime(Input::get('offdateval')));
 			if (Input::get('toggle-payment'))
 				$offer->downpayment = Input::get('toggle-payment');
 			if (Input::get('amount'))
@@ -55,19 +58,32 @@ class OfferController extends Controller {
 				$offer->invoice_quantity = Input::get('terms');
 			$offer->project_id = $project->id;;
 
-			$options = [];
-			if (Input::get('toggle-note'))
-				$options['description'] = 1;
-			if (Input::get('toggle-subcontr'))
-				$options['total'] = 1;
-			if (Input::get('toggle-activity'))
-				$options['specification'] = 1;
-			if (Input::get('toggle-summary'))
-				$options['onlyactivity'] = 1;
-			if (Input::get('toggle-tax'))
-				$options['displaytax'] = 1;
+			if (Input::get('include-tax'))
+				$offer->include_tax = true;
+			else
+				$offer->include_tax = false;
+			if (Input::get('only-totals'))
+				$offer->only_totals = true;
+			else
+				$offer->only_totals = false;
+			if (Input::get('seperate-subcon'))
+				$offer->seperate_subcon = true;
+			else
+				$offer->seperate_subcon = false;
+			if (Input::get('display-worktotals'))
+				$offer->display_worktotals = true;
+			else
+				$offer->display_worktotals = false;
+			if (Input::get('display-specification'))
+				$offer->display_specification = true;
+			else
+				$offer->display_specification = false;
+			if (Input::get('display-description'))
+				$offer->display_description = true;
+			else
+				$offer->display_description = false;
 
-			$offer->option_query = http_build_query($options);
+			$offer->offer_total = CalculationEndresult::totalProject($project);
 
 			$offer->save();
 
@@ -91,7 +107,9 @@ class OfferController extends Controller {
 			Auth::user()->offer_counter++;
 			Auth::user()->save();
 
-			return Redirect::back()->with('success', 'Opgeslagen');
+			//return Redirect::back()->with('success', 'Opgeslagen');
+			return Redirect::to('/offer/project-'.$project->id.'/offer-'.$offer->id);
+
 		}
 
 	}

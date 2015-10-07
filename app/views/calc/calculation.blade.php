@@ -308,6 +308,7 @@ var n = this,
 						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
 						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
 						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
+						console.log(profit);
 						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
 						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
 					} else {
@@ -686,7 +687,7 @@ var n = this,
 					if (data) {
 						$('#tbl-material tbody tr').remove();
 						$.each(data, function(i, item) {
-							$('#tbl-material tbody').append('<tr><td><a data-name="'+data[i].description+'" data-unit="'+data[i].unit+'" data-price="'+data[i].pricenum+'" href="javascript:void(0);">'+data[i].description+'</a></td><td>'+data[i].package+'</td><td>'+data[i].price+'</td></tr>');
+							$('#tbl-material tbody').append('<tr><td><a data-name="'+item.description+'" data-unit="'+item.punit+'" data-price="'+item.pricenum+'" href="javascript:void(0);">'+item.description+'</a></td><td>'+item.unit+'</td><td>'+item.price+'</td><td>'+item.tprice+'</td></tr>');
 						});
 						$('#tbl-material tbody a').on("click", onmaterialclick);
 						$req = false;
@@ -744,7 +745,8 @@ var n = this,
 							<thead>
 								<tr>
 									<th>Omschrijving</th>
-									<th>Afmeting</th>
+									<th>Eenheid</th>
+									<th>Prijs per eenheid</th>
 									<th>Totaalprijs</th>
 								</tr>
 							</thead>
@@ -936,7 +938,7 @@ var n = this,
 															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</span></td>
 															<td class="col-md-1"><span class="total-incl-tax">{{ '&euro; '.number_format($material->rate*$material->amount*((100+$profit_mat)/100), 2,",",".") }}</span></td>
-															<td class="col-md-1 text-right">
+															<td class="col-md-1 text-right" data-profit="{{ $profit_mat }}">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
 															</td>
@@ -949,7 +951,7 @@ var n = this,
 															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-1"><span class="total-incl-tax"></span></td>
-															<td class="col-md-1 text-right">
+															<td class="col-md-1 text-right" data-profit="{{ $profit_mat }}">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
 															</td>
@@ -1367,7 +1369,7 @@ var n = this,
 										<thead>
 											<tr>
 												<th class="col-md-3">Hoofdstuk</th>
-												<th class="col-md-3">Werkzaamheid</th>
+												<th class="col-md-3">Werkzaamheden</th>
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</th>
@@ -1383,7 +1385,7 @@ var n = this,
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
 											<?php $i++; ?>
 											<tr>
-												<td class="col-md-3"><strong>{{ $i == 1 ? $chapter->chapter_name : ''  }}</strong></td>
+												<td class="col-md-3">{{ $i == 1 ? $chapter->chapter_name : ''  }}</td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
 												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
@@ -1419,7 +1421,7 @@ var n = this,
 										<thead>
 											<tr>
 												<th class="col-md-3">Hoofdstuk</th>
-												<th class="col-md-3">Werkzaamheid</th>
+												<th class="col-md-3">Werkzaamheden</th>
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</th>
@@ -1435,7 +1437,7 @@ var n = this,
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
 											<?php $i++; ?>
 											<tr>
-												<td class="col-md-3"><strong>{{ $i == 1 ? $chapter->chapter_name : '' }}</strong></td>
+												<td class="col-md-3">{{ $i == 1 ? $chapter->chapter_name : '' }}</td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
 												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>

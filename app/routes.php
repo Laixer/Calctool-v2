@@ -37,6 +37,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('admin/switch/back', array('uses' => 'AdminController@getSwitchSessionBack'));
 	Route::get('logout', array('as' => 'logout', 'uses' => 'AuthController@doLogout'));
 	Route::get('result/project-{project_id}', array('as' => 'result', 'uses' => 'ResultController@getResult'))->where('project_id', '[0-9]+');
+	Route::get('res-{resource_id}/download', array('uses' => 'ProjectController@downloadResource'))->where('resource_id', '[0-9]+');
 	Route::get('myaccount', array('as' => 'account', 'uses' => 'UserController@getMyAccount'));
 	Route::post('myaccount/updateuser', array('as' => 'account', 'uses' => 'UserController@doMyAccountUser'));
 	Route::post('myaccount/iban/new', array('as' => 'iban.update', 'uses' => 'UserController@doNewIban'));
@@ -71,8 +72,10 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('invoice/term/add', array('as' => 'invoice', 'uses' => 'InvoiceController@doInvoiceNewTerm'));
 	Route::post('invoice/term/delete', array('as' => 'invoice', 'uses' => 'InvoiceController@doInvoiceDeleteTerm'));
 
+	Route::get('offerversions/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOfferAll'))->where('project_id', '[0-9]+');
 	Route::get('offer/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOffer'))->where('project_id', '[0-9]+');
 	Route::post('offer/project-{project_id}', array('as' => 'invoice', 'uses' => 'OfferController@doNewOffer'));
+	Route::get('offer/project-{project_id}/offer-{offer_id}', function(){ return View::make('calc.offer_show_pdf'); })->where('project_id', '[0-9]+')->where('offer_id', '[0-9]+');
 	Route::post('offer/close', array('as' => 'invoice', 'uses' => 'OfferController@doOfferClose'));
 
 	Route::get('offer/pdf/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOfferPDF'))->where('project_id', '[0-9]+');
@@ -165,6 +168,7 @@ Route::group(array('before' => 'auth'), function()
 		return View::make('user.mycompany_contact');
 	});
 	Route::post('mycompany/quickstart', array('uses' => 'QuickstartController@doNewMyCompanyQuickstart'));
+	Route::get('relation-{relation_id}/contact-{contact_id}/vcard', array('uses' => 'RelationController@downloadVCard'))->where('relation_id', '[0-9]+')->where('contact_id', '[0-9]+');
 
 	Route::post('relation/updatemycompany', array('as' => 'relation.update', 'uses' => 'RelationController@doUpdateMyCompany'));
 	Route::post('relation/newmycompany', array('as' => 'relation.new', 'uses' => 'RelationController@doNewMyCompany'));
@@ -174,6 +178,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('project/new', array('as' => 'project.new', 'uses' => 'ProjectController@getNew'));
 	Route::post('project/new', array('as' => 'project.new', 'uses' => 'ProjectController@doNew'));
 	Route::post('project/update', array('as' => 'project.update', 'uses' => 'ProjectController@doUpdate'));
+	Route::post('project/update/note', array('as' => 'project.update', 'uses' => 'ProjectController@doUpdateNote'));
 	Route::post('project/updatecalc', array('as' => 'project.update', 'uses' => 'ProjectController@doUpdateProfit'));
 	Route::get('project', array('as' => 'project', 'uses' => 'ProjectController@getAll'));
 	Route::get('project-{project_id}/edit', array('as' => 'project.edit', 'uses' => 'ProjectController@getEdit'))->where('project_id', '[0-9]+');
@@ -193,6 +198,9 @@ Route::group(array('before' => 'auth'), function()
 	/* Material database */
 	Route::get('material', array('as' => 'material', 'uses' => 'MaterialController@getList'));
 	Route::post('material/search', array('as' => 'material', 'uses' => 'MaterialController@doSearch'));
+	Route::post('material/newmaterial', array('uses' => 'MaterialController@doNew'));
+	Route::post('material/updatematerial', array('uses' => 'MaterialController@doUpdate'));
+	Route::post('material/deletematerial', array('uses' => 'MaterialController@doDelete'));
 });
 
 Route::group(array('before' => 'admin'), function()

@@ -41,8 +41,11 @@ class CreateFinancial extends Migration {
 			$table->decimal('downpayment_amount', 9, 3)->unsigned()->nullable();
 			$table->boolean('auto_email_reminder')->default('Y');
 			$table->nullableTimestamps();
-			$table->string('option_query', 150)->nullable();
+			//$table->string('option_query', 150)->nullable();
+			$table->decimal('offer_total', 9, 3)->unsigned();
 			$table->date('offer_finish')->nullable();
+			$table->date('offer_make')->default(DB::raw('now()::timestamp(0)'));
+			$table->string('offer_code', 50);
 			$table->integer('deliver_id')->unsigned();
 			$table->foreign('deliver_id')->references('id')->on('deliver_time')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('valid_id')->unsigned();
@@ -56,6 +59,13 @@ class CreateFinancial extends Migration {
 			$table->foreign('project_id')->references('id')->on('project')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('resource_id')->unsigned()->nullable();
 			$table->foreign('resource_id')->references('id')->on('resource')->onUpdate('cascade')->onDelete('cascade');
+			$table->boolean('include_tax')->default('Y');
+			$table->boolean('only_totals')->default('Y');
+			$table->boolean('seperate_subcon')->default('N');
+			$table->boolean('display_worktotals')->default('N');
+			$table->boolean('display_specification')->default('N');
+			$table->boolean('display_description')->default('N');
+
 		});
 
 		Schema::create('invoice', function(Blueprint $table)
@@ -66,7 +76,7 @@ class CreateFinancial extends Migration {
 			$table->smallInteger('priority');
 			$table->text('description')->nullable();
 			$table->string('reference', 30)->index()->nullable();
-			$table->string('invoice_code', 50)->index();
+			$table->string('invoice_code', 50);
 			$table->string('book_code', 30)->index()->nullable();
 			$table->decimal('amount', 9, 3)->nullable();
 			$table->integer('payment_condition')->unsigned();
@@ -74,6 +84,7 @@ class CreateFinancial extends Migration {
 			$table->nullableTimestamps();
 			$table->date('bill_date')->nullable();
 			$table->date('payment_date')->nullable();
+			$table->date('invoice_make')->default(DB::raw('now()::timestamp(0)'));
 			$table->text('closure')->nullable();
 			$table->decimal('rest_21', 9, 3)->nullable();
 			$table->decimal('rest_6', 9, 3)->nullable();
@@ -81,6 +92,12 @@ class CreateFinancial extends Migration {
 			$table->boolean('auto_email_reminder')->default('Y');
 			$table->integer('offer_id')->unsigned();
 			$table->foreign('offer_id')->references('id')->on('offer')->onUpdate('cascade')->onDelete('cascade');
+			$table->boolean('include_tax')->default('Y');
+			$table->boolean('only_totals')->default('Y');
+			$table->boolean('seperate_subcon')->default('N');
+			$table->boolean('display_worktotals')->default('N');
+			$table->boolean('display_specification')->default('N');
+			$table->boolean('display_description')->default('N');
 		});
 	}
 

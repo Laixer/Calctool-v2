@@ -31,7 +31,6 @@ if (!$project || !$project->isOwner()) {
 @section('content')
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
 	    $('.only-end-total tr').each(function() {
             $(this).find("td").eq(2).hide();
             $(this).find("th").eq(2).hide();
@@ -42,7 +41,7 @@ if (!$project || !$project->isOwner()) {
             $(this).find("td").eq(5).hide();
             $(this).find("th").eq(5).hide();
         });
-		$("[name='toggle-tax']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='include-tax']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		        $('.hide-btw1 tr').each(function() {
 	                $(this).find("td").eq(4).show();
@@ -95,27 +94,27 @@ if (!$project || !$project->isOwner()) {
 		        });
 		  }
 		});
-		$("[name='toggle-activity']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='display-worktotals']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
-		  	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
+		  	$("[name='display-specification']").bootstrapSwitch('toggleDisabled');
 		  	$('.show-activity').show();
 		  } else {
-		 	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
+		 	$("[name='display-specification']").bootstrapSwitch('toggleDisabled');
 			$('.show-activity').hide();
 		  }
 		});
 
-		$("[name='toggle-endresult']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='only-totals']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-activity').show();
-		  	$("[name='toggle-subcontr']").bootstrapSwitch('toggleDisabled');
+		  	$("[name='seperate-subcon']").bootstrapSwitch('toggleDisabled');
 		  } else {
-		  	$("[name='toggle-subcontr']").bootstrapSwitch('toggleDisabled');
+		  	$("[name='seperate-subcon']").bootstrapSwitch('toggleDisabled');
 			$('.show-activity').hide();
 		  }
 		});
 
-		$("[name='toggle-subcontr']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='seperate-subcon']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-all').show();
 		  	$('.show-totals').hide();
@@ -124,14 +123,14 @@ if (!$project || !$project->isOwner()) {
 		  	$('.show-totals').show();
 		  }
 		});
-		$("[name='toggle-note']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='display-description']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-note').show();
 		  } else {
 			$('.show-note').hide();
 		  }
 		});
-		$("[name='toggle-endresult']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='only-totals']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.only-total').hide();
 		  	$('.hide-btw1').hide();
@@ -168,7 +167,7 @@ if (!$project || !$project->isOwner()) {
 	        });
 		  }
 		});
-		$("[name='toggle-summary']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='display-specification']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 	        $('.only-end-total tr').each(function() {
                 $(this).find("td").eq(2).show();
@@ -233,6 +232,39 @@ if (!$project || !$project->isOwner()) {
 		$('#to_contact').change(function(e){
 			$('#adressing').text($('#to_contact option:selected').text());
 		});
+		$('.offdate').datepicker().on('changeDate', function(e){
+			$('.offdate').datepicker('hide');
+			$('#offdateval').val(e.date.toLocaleString());
+			$('.offdate').text(e.date.getDate() + "-" + (e.date.getMonth() + 1)  + "-" + e.date.getFullYear());
+		});
+		@if ($offer_last && $offer_last->offer_make)
+		$('.offdate').text("{{ date('d-m-Y', strtotime($offer_last->offer_make)) }}");
+
+		@if (!$offer_last->include_tax)
+			$("[name='include-tax']").bootstrapSwitch('toggleState');
+		@endif
+
+		@if (!$offer_last->only_totals)
+			$("[name='only-totals']").bootstrapSwitch('toggleState');
+		@endif
+
+		@if ($offer_last->seperate_subcon)
+			$("[name='seperate-subcon']").bootstrapSwitch('toggleState');
+		@endif
+
+		@if ($offer_last->display_worktotals)
+			$("[name='display-worktotals']").bootstrapSwitch('toggleState');
+		@endif
+
+		@if ($offer_last->display_specification)
+			$("[name='display-specification']").bootstrapSwitch('toggleState');
+		@endif
+
+		@if ($offer_last->display_description)
+			$("[name='display-description']").bootstrapSwitch('toggleState');
+		@endif
+
+		@endif
 	});
 	</script>
 	<div id="wrapper">
@@ -271,26 +303,13 @@ if (!$project || !$project->isOwner()) {
 		<?php if (!$offer_last->offer_finish) { ?>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
-		<button class="btn btn-primary osave">Offerte  maken</button>
+		<button class="btn btn-primary osave">Opslaan</button>
 		<?php } ?>
-		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Versies</a>
-
-
-		<div class="btn-group">
-		  <a target="blank" href="/offer/pdf/project-{{ $project->id }}{{ $offer_last->option_query ? '?'.$offer_last->option_query : '' }}" class="btn btn-primary">PDF</a>
-		  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		    <span class="caret"></span>
-		    <span class="sr-only">Toggle Dropdown</span>
-		  </button>
-		  <ul class="dropdown-menu">
-		    <li><a href="/offer/pdf/project-{{ $project->id }}/download?file={{ OfferController::getOfferCode($project->id).'-offerte.pdf' }}{{ $offer_last->option_query ? '&'.$offer_last->option_query : '' }}">Download</a></li>
-		  </ul>
-		</div>
 		<?php }else{ ?>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
 		@if (CalculationEndresult::totalProject($project))
-		<button class="btn btn-primary osave">Offerte  maken</button>
+		<button class="btn btn-primary osave">Opslaan</button>
 		@endif
 		<?php } ?>
 		<?php } ?>
@@ -414,7 +433,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-tax" type="checkbox" checked> BTW bedragen weergeven
+								          <input name="include-tax" type="checkbox" checked> BTW bedragen weergeven
 								        </label>
 								      </div>
 								    </div>
@@ -423,7 +442,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-endresult" type="checkbox"> Alleen het totale offertebedrag weergeven<br>
+								          <input name="only-totals" type="checkbox" checked> Alleen het totale offertebedrag weergeven<br>
 								        </label>
 								      </div>
 								    </div>
@@ -432,7 +451,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-subcontr" type="checkbox"> Onderaanneming apart weergeven
+								          <input name="seperate-subcon" type="checkbox" disabled> Onderaanneming apart weergeven
 								        </label>
 								      </div>
 								    </div>
@@ -445,7 +464,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-activity" type="checkbox"> Kostenoverizicht per werkzaamheid specificeren
+								          <input name="display-worktotals" type="checkbox"> Kostenoverizicht per werkzaamheid specificeren
 								        </label>
 								      </div>
 								    </div>
@@ -454,7 +473,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-summary" type="checkbox"> Aanvullend specificeren op arbeid, materiaal en materieel
+								          <input name="display-specification" type="checkbox" disabled> Aanvullend specificeren op arbeid, materiaal en materieel
 								        </label>
 								      </div>
 								    </div>
@@ -463,7 +482,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="toggle-note" type="checkbox"> Omschrijving werkzaamheden weergeven
+								          <input name="display-description" type="checkbox"> Omschrijving werkzaamheden weergeven
 								        </label>
 								      </div>
 								    </div>
@@ -528,10 +547,11 @@ if (!$project || !$project->isOwner()) {
 				<h4><strong>OFFERTE</strong></h4>
 				<ul class="list-unstyled">
 					<li><strong>Projectnaam:</strong> {{ $project->project_name }}</li>
-					<li><strong>Offertedatum:</strong> {{ date("j M Y") }}</li>
+					<li><strong>Offertedatum:</strong> <a href="#" class="offdate">Bewerk</a></li>
 					<li><strong>Offertenummer:</strong> {{ OfferController::getOfferCode($project->id) }}</li>
 					<li>&nbsp;</li>
 					<li>&nbsp;</li>
+					<input type="hidden" id="offdateval" name="offdateval" value="{{ $offer_last ? $offer_last->offer_make : '' }}" />
 				</ul>
 			</div>
 		</div>
@@ -844,16 +864,6 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
 						@endif
-						<!--
-						<tr>
-							<td class="col-md-5">Te offreren BTW bedrag</td>
-							<td class="col-md-2">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProjectTax($project), 2, ",",".") }}</strong></td>
-							<td class="col-md-2">&nbsp;</td>
-						</tr>
-						-->
 						<tr>
 							<td class="col-md-5"><strong>Calculatief te offreren (Incl. BTW)</strong></td>
 							<td class="col-md-2">&nbsp;</td>
@@ -906,7 +916,7 @@ if (!$project || !$project->isOwner()) {
 						<tr>
 							<td class="col-md-4">Arbeidskosten</td>
 							<td class="col-md-1">{{ ''.number_format(CalculationEndresult::conCalcLaborActivityTax3($project)+CalculationEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
-							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax3Amount($project)+CalculationEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
+							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax3Amount($project)+CalculationEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">0%</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -918,7 +928,7 @@ if (!$project || !$project->isOwner()) {
 						<tr>
 							<td class="col-md-4">Materiaalkosten</td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1Amount($project)+CalculationEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
+							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1Amount($project)+CalculationEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">21%</td>
 							<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1AmountTax($project)+CalculationEndresult::subconCalcMaterialActivityTax1AmountTax($project), 2, ",",".") }}</td>
@@ -1027,16 +1037,6 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
 						@endif
-						<!--
-						<tr>
-							<td class="col-md-5">Te offreren BTW bedrag</td>
-							<td class="col-md-2">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProjectTax($project), 2, ",",".") }}</strong></td>
-							<td class="col-md-2">&nbsp;</td>
-						</tr>
-						-->
 						<tr>
 							<td class="col-md-5"><strong>Calculatief te offreren (Incl. BTW)</strong></td>
 							<td class="col-md-2">&nbsp;</td>
@@ -1159,7 +1159,7 @@ if (!$project || !$project->isOwner()) {
 					<p>
 						<h4><strong>{{ $project->project_name }}</strong></h4>
 						<ul class="list-unstyled">
-							<li><strong>Offertedatum:</strong> {{ date("j M Y") }}</li>
+							<li><strong>Offertedatum:</strong> <a href="#" class="offdate">Bewerk</a></li>
 							<li><strong>Offertenummer:</strong> {{ OfferController::getOfferCode($project->id) }}</li>
 						</ul>
 					</p>
@@ -1378,7 +1378,7 @@ if (!$project || !$project->isOwner()) {
 					<p>
 						<h4><strong>{{ $project->project_name }}</strong></h4>
 						<ul class="list-unstyled">
-							<li><strong>Offertedatum:</strong> {{ date("j M Y") }}</li>
+							<li><strong>Offertedatum:</strong> <a href="#" class="offdate">Bewerk</a></li>
 							<li><strong>Offertenummer:</strong> {{ OfferController::getOfferCode($project->id) }}</li>
 						</ul>
 					</p>
@@ -1481,25 +1481,13 @@ if (!$project || !$project->isOwner()) {
 						<?php if (!$offer_last->offer_finish) { ?>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
-						<button class="btn btn-primary osave">Offerte  maken</button>
+						<button class="btn btn-primary osave">Opslaan</button>
 						<?php } ?>
-						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#historyModal">Versies</a>
-
-						<div class="btn-group">
-						  <a target="blank" href="/offer/pdf/project-{{ $project->id }}" class="btn btn-primary">PDF</a>
-						  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						    <span class="caret"></span>
-						    <span class="sr-only">Toggle Dropdown</span>
-						  </button>
-						  <ul class="dropdown-menu">
-						    <li><a href="/offer/pdf/project-{{ $project->id }}/download?file={{ OfferController::getOfferCode($project->id).'-offerte.pdf' }}">Download</a></li>
-						  </ul>
-						</div>
 						<?php }else{ ?>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
 						@if (CalculationEndresult::totalProject($project))
-						<button class="btn btn-primary osave">Offerte  maken</button>
+						<button class="btn btn-primary osave">Opslaan</button>
 						@endif
 						<?php } ?>
 						<?php } ?>
