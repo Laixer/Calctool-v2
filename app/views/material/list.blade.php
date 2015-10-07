@@ -134,12 +134,14 @@ $(document).ready(function() {
 					<li>
 						<a href="#material" data-toggle="tab"><i class="fa fa-wrench"></i> Mijn materiaal</a>
 					</li>
+					@if (0)
 					<li>
 						<a href="#element" data-toggle="tab"><i class="fa fa-th-list"></i> Elementen</a>
 					</li>
 					<li>
 						<a href="#favorite" data-toggle="tab"><i class="fa fa-star-o"></i> Favorieten</a>
 					</li>
+					@endif
 				</ul>
 
 				<div class="tab-content">
