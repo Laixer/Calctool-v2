@@ -66,7 +66,7 @@ $relation = Relation::find($project->client_id);
 						<td class="col-md-3"><a href="/offer/project-{{ $project->id }}/offer-{{ $offer->id }}">{{ $offer->offer_code }}</a></td>
 						<td class="col-md-2"><?php echo date('d-m-Y', strtotime($offer->offer_make)); ?></td>
 						<td class="col-md-3">{{ $relation->company_name }}</td>
-						<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</td>
+						<td class="col-md-2">{{ '&euro; '.number_format($offer->offer_total, 2, ",",".") }}</td>
 						<td class="col-md-3"><a href="/res-{{ ($offer_last->resource_id) }}/download" class="btn btn-primary btn-xs"><i class="fa fa-cloud-download fa-fw"></i> Downloaden</a></td>
 					</tr>
 					@endforeach
