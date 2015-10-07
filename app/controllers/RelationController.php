@@ -648,10 +648,12 @@ class RelationController extends Controller {
 
 		// add work data
 		$vcard->addCompany($relation->company_name);
-		$vcard->addJobtitle('Web Developer');
+		$vcard->addJobtitle(RelationKind::find($relation->kind_id)->kind_name);
 		$vcard->addEmail($relation->email);
-		$vcard->addPhoneNumber($relation->phone, 'PREF;WORK');
-		$vcard->addPhoneNumber($relation->mobile, 'WORK');
+		if ($relation->phone)
+			$vcard->addPhoneNumber($relation->phone, 'WORK');
+		if ($relation->mobile)
+			$vcard->addPhoneNumber($relation->mobile, 'WORK');
 		//$vcard->addAddress(null, null, 'street', 'worktown', null, 'workpostcode', 'Belgium');
 		//$vcard->addURL('http://www.jeroendesloovere.be');
 
