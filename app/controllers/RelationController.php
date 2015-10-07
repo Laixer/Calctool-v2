@@ -648,7 +648,7 @@ class RelationController extends Controller {
 
 		// add work data
 		$vcard->addCompany($relation->company_name);
-		$vcard->addJobtitle(RelationKind::find($relation->kind_id)->kind_name);
+		$vcard->addJobtitle(ucwords(ContactFunction::find($contact->function_id)->function_name));
 		$vcard->addEmail($relation->email);
 		if ($relation->phone)
 			$vcard->addPhoneNumber($relation->phone, 'WORK');
