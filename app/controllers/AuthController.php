@@ -168,7 +168,7 @@ class AuthController extends Controller {
 		$user->confirmed_mail = date('Y-m-d H:i:s');
 		$user->save();
 
-		DemoProjectTemplate::setup($user->id);
+		//DemoProjectTemplate::setup($user->id);
 
 		Auth::login($user);
 		return Redirect::to('/')->withCookie(Cookie::make('nstep', 'intro_'.$user->id, 60*24*3));
