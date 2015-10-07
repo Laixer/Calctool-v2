@@ -69,6 +69,9 @@ if (!$contact) {
 			<div>
 			<br>
 
+			<div class="pull-right">
+				<a href="/relation-{{ $relation->id }}/contact-{{ $contact->id }}/vcard" class="btn btn-primary">Download vCard</a>
+			</div>
 
 			<h2><strong>Contact</strong> {{ $contact->lastname }}</h2>
 
