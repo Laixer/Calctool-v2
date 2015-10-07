@@ -38,11 +38,13 @@ $relation = Relation::find($project->client_id);
 
 		@include('calc.wizard', array('page' => 'offer'))
 
-		@if (0)
-		<div class="alert alert-warning">
-			<i class="fa fa-fa fa-info-circle"></i>
-			Gegevens zijn gewijzigd ten op zichte van de laastte offerte
-		</div>
+		@if ($offer_last)
+			@if (CalculationEndresult::totalProject($project) != $offer_last->offer_total)
+			<div class="alert alert-warning">
+				<i class="fa fa-fa fa-info-circle"></i>
+				Gegevens zijn gewijzigd ten op zichte van de laastte offerte
+			</div>
+			@endif
 		@endif
 
 			<h2><strong>Offertebeheer</strong></h2>

@@ -205,6 +205,15 @@ else {
 			</div>
 			@endif
 
+			@if ($offer_last)
+				@if (CalculationEndresult::totalProject($project) != $offer_last->offer_total)
+				<div class="alert alert-warning">
+					<i class="fa fa-fa fa-info-circle"></i>
+					Gegevens zijn gewijzigd ten op zichte van de laastte offerte
+				</div>
+				@endif
+			@endif
+
 			<h2><strong>Project</strong> {{$project->project_name}}</h2>
 
 			@if(!Relation::where('user_id','=', Auth::user()->id)->count())
