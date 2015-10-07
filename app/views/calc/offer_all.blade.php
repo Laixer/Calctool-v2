@@ -72,15 +72,17 @@ $relation = Relation::find($project->client_id);
 					@endforeach
 				</tbody>
 			</table>
+			@if (!($offer_last && $offer_last->offer_finish))
 			<a href="/offer/project-{{ $project->id }}" class="btn btn-primary btn"><i class="fa fa-pencil"></i>
 				<?php
-						if(Offer::where('project_id', '=', $project->id)->count('id')>0) {
-							echo "Laatste versie bewerken";
-						} else {
-							echo "Nieuwe offerte maken";
-						}
+					if(Offer::where('project_id', '=', $project->id)->count('id')>0) {
+						echo "Laatste versie bewerken";
+					} else {
+						echo "Nieuwe offerte maken";
+					}
 				?>
 			</a>
+			@endif
 		</div>
 	</div>
 
