@@ -8,7 +8,6 @@ class DemoProjectTemplate {
 
 	public static function setup($userid)
 	{
-		return;
 		$province = Province::where('province_name','=','zuid-holland')->first();
 		$country = Country::where('country_name','=','nederland')->first();
 		$projecttype = ProjectType::where('type_name','=','calculatie')->first();
