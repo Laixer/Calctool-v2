@@ -1,5 +1,7 @@
 <?php
 
+use JeroenDesloovere\VCard\VCard;
+
 class RelationController extends Controller {
 
 	/**
@@ -620,4 +622,40 @@ class RelationController extends Controller {
 		}
 	}
 
+	public function downloadVCard()
+	{
+
+		$contact = Contact::find(Route::Input('contact_id'));
+		if (!$contact) {
+			return;
+		} else {
+			$relation = Relation::find($contact->relation_id);
+			if (!$relation || !$relation->isOwner()) {
+				return;
+			}
+		}
+
+		// define vcard
+		$vcard = new VCard();
+
+		// define variables
+		$additional = '';
+		$prefix = '';
+		$suffix = '';
+
+		// add personal data
+		$vcard->addName($contact->lastname, $contact->firstname, $additional, $prefix, $suffix);
+
+		// add work data
+		$vcard->addCompany($relation->company_name);
+		$vcard->addJobtitle('Web Developer');
+		$vcard->addEmail($relation->email);
+		$vcard->addPhoneNumber($relation->phone, 'PREF;WORK');
+		$vcard->addPhoneNumber($relation->mobile, 'WORK');
+		//$vcard->addAddress(null, null, 'street', 'worktown', null, 'workpostcode', 'Belgium');
+		//$vcard->addURL('http://www.jeroendesloovere.be');
+
+		// return vcard as a download
+		return $vcard->download();
+	}
 }
