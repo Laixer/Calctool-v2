@@ -34,6 +34,7 @@ if (!$offer) {
 <script id="script">
 var url = '/{{ $res->file_location }}';
 var numPages = 0;
+PDFJS.workerSrc = '/plugins/pdf/build/pdf.worker.js';
 PDFJS.getDocument(url).then(function getPdf(pdf) {
 
 	for (var i = 0; i < pdf.numPages; i++) {
