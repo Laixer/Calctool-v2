@@ -83,11 +83,7 @@ class OfferController extends Controller {
 			else
 				$offer->display_description = false;
 
-			$total = 0;
-			foreach (Chapter::where('project_id','=',$project->id)->get() as $chapter) {
-				$total += Activity::where('chapter_id','=', $chapter->id)->count('id');
-			}
-			$offer->created_at_activities = $total;
+			$offer->offer_total = CalculationEndresult::totalProject($project);
 
 			$offer->save();
 
