@@ -42,7 +42,7 @@ class CreateFinancial extends Migration {
 			$table->boolean('auto_email_reminder')->default('Y');
 			$table->nullableTimestamps();
 			//$table->string('option_query', 150)->nullable();
-			$table->integer('created_at_activities');
+			$table->decimal('offer_total', 9, 3)->unsigned();
 			$table->date('offer_finish')->nullable();
 			$table->date('offer_make')->default(DB::raw('now()::timestamp(0)'));
 			$table->string('offer_code', 50);
