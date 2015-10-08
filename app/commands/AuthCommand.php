@@ -27,16 +27,17 @@ class AuthCommand extends Command
 	protected $public = true;
 
 	private $user;
+	private $tgram;
 
 	private function getAuthStatus($telid)
 	{
-		$userid = \Redis::get('auth:telegram:'.$telid);
-		if ($userid) {
-			$this->user = \User::find($userid);
-			return true;
-		} else {
-			return false;
-		}
+			$this->tgram = \Telegram::where('uid','=',$telid)->first();
+			if ($this->tgram) {
+					$this->user = \User::find($this->tgram->user_id);
+					return true;
+			} else {
+					return false;
+			}
 	}
 
 	public function execute()
@@ -57,10 +58,17 @@ class AuthCommand extends Command
 			} else {
 				$user = \User::where('api','=',$text)->first();
 				if ($user) {
-					\Redis::set('auth:'.$user->username.':telegram', true);
-					\Redis::set('auth:telegram:'.$message->getFrom()->getId(), $user->id);
-					$text = 'Beste, ' . $user->firstname . "\n";
-					$text .= 'Telegram is verbonden met uw account';
+					if (!$user->api_access) {
+						$text = 'API toegang is uitgeschakeld';
+					} else {
+						$utelegram = new \Telegram;
+						$utelegram->uid = $message->getFrom()->getId();
+						$utelegram->user_id = $user->id;
+						$utelegram->save();
+
+						$text = 'Beste, ' . $user->firstname . "\n";
+						$text .= 'Telegram is verbonden met uw account';
+					}
 				} else {
 					$text = 'Ongeldige API key';
 				}

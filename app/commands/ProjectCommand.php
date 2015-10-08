@@ -27,12 +27,13 @@ class ProjectCommand extends Command
 	protected $public = true;
 
 	private $user;
+	private $tgram;
 
 	private function getAuthStatus($telid)
 	{
-		$userid = \Redis::get('auth:telegram:'.$telid);
-		if ($userid) {
-			$this->user = \User::find($userid);
+		$this->tgram = \Telegram::where('uid','=',$telid)->first();
+		if ($this->tgram) {
+			$this->user = \User::find($this->tgram->user_id);
 			return true;
 		} else {
 			return false;

@@ -17,22 +17,23 @@ use Longman\TelegramBot\Request;
 use Longman\TelegramBot\Command;
 use Longman\TelegramBot\Entities\Update;
 
-class SettingsCommand extends Command
+class SettingsxyzCommand extends Command
 {
-	protected $name = 'settings';
+	protected $name = 'settingsxyz';
 	protected $description = '';
-	protected $usage = '/settings';
+	protected $usage = '/settingsxyz';
 	protected $version = '1.0.0';
 	protected $enabled = true;
 	protected $public = true;
 
 	private $user;
+	private $tgram;
 
 	private function getAuthStatus($telid)
 	{
-		$userid = \Redis::get('auth:telegram:'.$telid);
-		if ($userid) {
-			$this->user = \User::find($userid);
+		$this->tgram = \Telegram::where('uid','=',$telid)->first();
+		if ($this->tgram) {
+			$this->user = \User::find($this->tgram->user_id);
 			return true;
 		} else {
 			return false;
@@ -52,17 +53,9 @@ class SettingsCommand extends Command
 			$text = 'Telegram is niet gekoppeld aan een account. Gebruik /auth';
 		} else {
 
-			if (!empty($text)) {
-				$project = \Project::find($text);
-				if ($project) {
-					$text  = 'ID: ' . $project->id . "\n";
-					$text .= 'Naam: ' . $project->project_name . "\n";
-					$text .= 'Adres: ' . $project->address_street . ' ' . $project->address_number . ', ' . $project->address_postal . ', ' . $project->address_city . "\n";
-					$text .= 'Uurtarief: ' . $project->hour_rate . ' ' . "\n";
-					$text .= 'Uurtarief meerwerk: ' . $project->hour_rate_more . ' ' . "\n";
-				} else {
-					$text = 'Project niet gevonden';
-				}
+			if (empty($text)) {
+				$text  = 'Gekoppeld aan gebruiker ' . $this->user->username . "\n";
+				$text .= 'Alerts: ' . ($this->tgram->alert ? 'Ja' : 'Nee') . "\n";
 			} else {
 				$projects = \Project::where('user_id','=',$this->user->id)->where('project_close','=',null)->get();
 				$text = 'Actieve projecten:' . "\n\n";
