@@ -39,6 +39,9 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('result/project-{project_id}', array('as' => 'result', 'uses' => 'ResultController@getResult'))->where('project_id', '[0-9]+');
 	Route::get('res-{resource_id}/download', array('uses' => 'ProjectController@downloadResource'))->where('resource_id', '[0-9]+');
 	Route::get('myaccount', array('as' => 'account', 'uses' => 'UserController@getMyAccount'));
+	Route::get('myaccount/telegram', array('uses' => 'UserController@getMyAccountTelegram'));
+	Route::post('myaccount/telegram/update', array('as' => 'account', 'uses' => 'UserController@doMyAccountTelegramUpdate'));
+	Route::get('myaccount/telegram/unchain', array('as' => 'account', 'uses' => 'UserController@getMyAccountTelegramUnchain'));
 	Route::post('myaccount/updateuser', array('as' => 'account', 'uses' => 'UserController@doMyAccountUser'));
 	Route::post('myaccount/iban/new', array('as' => 'iban.update', 'uses' => 'UserController@doNewIban'));
 	Route::post('myaccount/security/update', array('as' => 'security.update', 'uses' => 'UserController@doUpdateSecurity'));

@@ -26,9 +26,38 @@ class UserController extends Controller {
 		return View::make('user.myaccount');
 	}
 
+	public function getMyAccountTelegram()
+	{
+		return View::make('user.myaccount_telegram');
+	}
+
 	public function getPayment()
 	{
 		return View::make('user.payment');
+	}
+
+	public function getMyAccountTelegramUnchain()
+	{
+		$tgram = Telegram::where('user_id','=',Auth::id())->first();
+		if ($tgram)
+			$tgram->delete();
+		return Redirect::to('/myaccount/telegram');
+	}
+
+	public function doMyAccountTelegramUpdate()
+	{
+
+		$tgram = Telegram::where('user_id','=',Auth::id())->first();
+		if ($tgram) {
+			if (Input::get('toggle-alert'))
+				$tgram->alert = true;
+			else
+				$tgram->alert = false;
+
+			$tgram->save();
+		}
+
+		return Redirect::back()->with('success', 'Instellingen opgeslagen');
 	}
 
 	public function doPayment()
