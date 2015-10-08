@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\MessageBag;
+use Longman\TelegramBot\Request;
 
 class AuthController extends Controller {
 
@@ -149,6 +150,30 @@ class AuthController extends Controller {
 
 	}
 
+	private function informAdmin(User $newuser)
+	{
+		if ($_ENV['TELEGRAM_ENABLED']) {
+			$telegram = new Longman\TelegramBot\Telegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
+			Request::initialize($telegram);
+
+			foreach (User::where('user_type','=',UserType::where('user_type','=','admin')->first()->id)->get() as $admin) {
+				$tgram = Telegram::where('user_id','=',$admin->id)->first();
+				if ($tgram && $tgram->alert) {
+
+					$text  = "Nieuwe gebruiker aangemeld\n";
+					$text .= "Gebruikersnaam: " . $newuser->username . "\n";
+					$text .= "Email: " . $newuser->email . "\n";
+
+					$data = array();
+					$data['chat_id'] = $tgram->uid;
+					$data['text'] = $text;
+
+					$result = Request::sendMessage($data);
+				}
+			}
+		}
+	}
+
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -169,6 +194,8 @@ class AuthController extends Controller {
 		$user->save();
 
 		//DemoProjectTemplate::setup($user->id);
+
+		$this->informAdmin($user);
 
 		Auth::login($user);
 		return Redirect::to('/')->withCookie(Cookie::make('nstep', 'intro_'.$user->id, 60*24*3));

@@ -241,15 +241,14 @@ Route::group(array('before' => 'admin'), function()
 });
 
 Route::any('telegram', function(){
-	$API_KEY = '115805531:AAG-2phcA_6ITwev3WbdBBcCVz4OaFLmZJI';
-	$BOT_NAME = 'calctool_bot';
+	if ($_ENV['TELEGRAM_ENABLED']) {
+		try {
+			// create Telegram API object
+			$telegram = new Longman\TelegramBot\Telegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
 
-	try {
-	    // create Telegram API object
-	    $telegram = new Longman\TelegramBot\Telegram($API_KEY, $BOT_NAME);
-
-		$telegram->handle();
-	} catch (Longman\TelegramBot\Exception\TelegramException $e) {
-		Log::error($e->getMessage());
+			$telegram->handle();
+		} catch (Longman\TelegramBot\Exception\TelegramException $e) {
+			Log::error($e->getMessage());
+		}
 	}
 });

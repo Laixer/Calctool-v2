@@ -47,4 +47,8 @@ return array(
 	'WKHTML_PDF_BIN'	=> '',
 	'WKHTML_IMG_BIN'	=> '',
 
+	/* Telegram */
+	'TELEGRAM_API'		=> '',
+	'TELEGRAM_NAME'		=> '',
+	'TELEGRAM_ENABLED'	=> '',
 );

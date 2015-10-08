@@ -34,6 +34,7 @@ class StartCommand extends Command
 
 		$msg = 'CalculatieTool botz' . "\n\n";
 		$msg .= 'Deze bot biedt enkele eenvoudige opdrachten om uw CalculatieTool account te beheren' . "\n";
+		$msg .= 'Daarvoor moet u eerst uw CalculatieTool account koppelen met Telegram' . "\n";
 		$msg .= 'Voor een lijst van opdrachten vraag de /help op';
 
 		$data = array();

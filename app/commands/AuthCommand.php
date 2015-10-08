@@ -31,13 +31,13 @@ class AuthCommand extends Command
 
 	private function getAuthStatus($telid)
 	{
-			$this->tgram = \Telegram::where('uid','=',$telid)->first();
-			if ($this->tgram) {
-					$this->user = \User::find($this->tgram->user_id);
-					return true;
-			} else {
-					return false;
-			}
+		$this->tgram = \Telegram::where('uid','=',$telid)->first();
+		if ($this->tgram) {
+				$this->user = \User::find($this->tgram->user_id);
+				return true;
+		} else {
+				return false;
+		}
 	}
 
 	public function execute()
@@ -59,7 +59,7 @@ class AuthCommand extends Command
 				$user = \User::where('api','=',$text)->first();
 				if ($user) {
 					if (!$user->api_access) {
-						$text = 'API toegang is uitgeschakeld';
+						$text = 'API toegang is uitgeschakeld, zet API toegagin aan in Mijn Account';
 					} else {
 						$utelegram = new \Telegram;
 						$utelegram->uid = $message->getFrom()->getId();
