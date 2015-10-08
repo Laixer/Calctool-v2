@@ -6,7 +6,6 @@ $iban = Iban::where('user_id','=',$user->id)->where('relation_id','=',null)->fir
 @extends('layout.master')
 
 @section('content')
-<?# -- WRAPPER -- ?>
 
 <script type="text/javascript" src="/js/iban.js"></script>
 <script type="text/javascript">

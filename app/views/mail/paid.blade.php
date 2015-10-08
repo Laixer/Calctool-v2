@@ -51,7 +51,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														De betaling van <strong>{{ $amount }}</strong> is in goede orde ontvangen en je accountis verlengt tot <strong>{{ $expdate }}</strong>.
+														De betaling van <strong>{{ $amount }}</strong> is in goede orde ontvangen en je account is verlengt tot <strong>{{ $expdate }}</strong>.
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->

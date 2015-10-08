@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\MessageBag;
+use Longman\TelegramBot\Request;
 
 class UserController extends Controller {
 
@@ -25,9 +26,38 @@ class UserController extends Controller {
 		return View::make('user.myaccount');
 	}
 
+	public function getMyAccountTelegram()
+	{
+		return View::make('user.myaccount_telegram');
+	}
+
 	public function getPayment()
 	{
 		return View::make('user.payment');
+	}
+
+	public function getMyAccountTelegramUnchain()
+	{
+		$tgram = Telegram::where('user_id','=',Auth::id())->first();
+		if ($tgram)
+			$tgram->delete();
+		return Redirect::to('/myaccount/telegram');
+	}
+
+	public function doMyAccountTelegramUpdate()
+	{
+
+		$tgram = Telegram::where('user_id','=',Auth::id())->first();
+		if ($tgram) {
+			if (Input::get('toggle-alert'))
+				$tgram->alert = true;
+			else
+				$tgram->alert = false;
+
+			$tgram->save();
+		}
+
+		return Redirect::back()->with('success', 'Instellingen opgeslagen');
 	}
 
 	public function doPayment()
@@ -133,12 +163,28 @@ class UserController extends Controller {
 			$expdate = $user->expiration_date;
 			$user->expiration_date = date('Y-m-d', strtotime("+".$order->increment." month", strtotime($expdate)));
 
+			$user->save();
+
 			$data = array('email' => $user->email, 'amount' => number_format($order->amount, 2,",","."), 'expdate' => date('j F Y', strtotime($user->expiration_date)), 'username' => $user->username);
 			Mailgun::send('mail.paid', $data, function($message) use ($data) {
 				$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Abonement verlengt');
 			});
 
-			$user->save();
+			if ($_ENV['TELEGRAM_ENABLED']) {
+				$tgram = Telegram::where('user_id','=',$user->id)->first();
+				if ($tgram && $tgram->alert) {
+
+					// create Telegram API object
+					$telegram = new Longman\TelegramBot\Telegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
+					Request::initialize($telegram);
+
+					$data = array();
+					$data['chat_id'] = $tgram->uid;
+					$data['text'] = "De betaling van " . number_format($order->amount, 2,",",".") . " is in goede orde ontvangen en je account is verlengt tot " . date('j F Y', strtotime($user->expiration_date));
+
+					$result = Request::sendMessage($data);
+				}
+			}
 		}
 		return json_encode(['success' => 1]);
 	}
@@ -200,12 +246,30 @@ class UserController extends Controller {
 
 			$user->save();
 
-			$data = array('email' => Auth::user()->email, 'username' => Auth::user()->username);
-			Mailgun::send('mail.password_update', $data, function($message) use ($data) {
-				$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Wachtwoord aangepast');
-			});
+			if (Input::get('secret')) {
+				$data = array('email' => Auth::user()->email, 'username' => Auth::user()->username);
+				Mailgun::send('mail.password_update', $data, function($message) use ($data) {
+					$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Wachtwoord aangepast');
+				});
 
-			return Redirect::back()->with('success', 1);
+				if ($_ENV['TELEGRAM_ENABLED']) {
+					$tgram = Telegram::where('user_id','=',$user->id)->first();
+					if ($tgram && $tgram->alert) {
+
+						// create Telegram API object
+						$telegram = new Longman\TelegramBot\Telegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
+						Request::initialize($telegram);
+
+						$data = array();
+						$data['chat_id'] = $tgram->uid;
+						$data['text'] = "Het wachtwoord van je account voor de Calculatie Tool is aangepast";
+
+						$result = Request::sendMessage($data);
+					}
+				}
+			}
+
+			return Redirect::back()->with('success', 'Instellingen opgeslagen');
 		}
 	}
 
@@ -213,19 +277,10 @@ class UserController extends Controller {
 	{
 		$rules = array(
 			'firstname' => array('required','max:30'),
-			//'lastname' => array('required','max:50'),
-			//'gender' => array('required'),
 			'mobile' => array('numeric','max:14'),
 			'phone' => array('numeric','max:14'),
 			'email' => array('required','email','max:80'),
 			'website' => array('url','max:180'),
-			//Geconstateerd werd of een adres voor de gebruikers account wel nodig was, dit saat immers ook bij mijn bedrijf
-			//'address_street' => array('required','alpha','max:60'),
-			//'address_number' => array('required','alpha_num','max:5'),
-			//'address_zipcode' => array('required','size:6'),
-			//'address_city' => array('required','alpha_num','max:35'),
-			//'province' => array('required','numeric'),
-			//'country' => array('required','numeric'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -372,6 +427,22 @@ class UserController extends Controller {
 			Mailgun::send('mail.iban_update', $data, function($message) use ($data) {
 				$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Betaalgegevens aangepast');
 			});
+
+			if ($_ENV['TELEGRAM_ENABLED']) {
+				$tgram = Telegram::where('user_id','=',$user->id)->first();
+				if ($tgram && $tgram->alert) {
+
+					// create Telegram API object
+					$telegram = new Longman\TelegramBot\Telegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
+					Request::initialize($telegram);
+
+					$data = array();
+					$data['chat_id'] = $tgram->uid;
+					$data['text'] = "Het IBAN rekeningnummer en/of de tenaamstelling is aangepast op Calculatie Tool";
+
+					$result = Request::sendMessage($data);
+				}
+			}
 
 			return Redirect::back()->with('success', 1);
 		}

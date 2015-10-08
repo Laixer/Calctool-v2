@@ -39,6 +39,9 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('result/project-{project_id}', array('as' => 'result', 'uses' => 'ResultController@getResult'))->where('project_id', '[0-9]+');
 	Route::get('res-{resource_id}/download', array('uses' => 'ProjectController@downloadResource'))->where('resource_id', '[0-9]+');
 	Route::get('myaccount', array('as' => 'account', 'uses' => 'UserController@getMyAccount'));
+	Route::get('myaccount/telegram', array('uses' => 'UserController@getMyAccountTelegram'));
+	Route::post('myaccount/telegram/update', array('as' => 'account', 'uses' => 'UserController@doMyAccountTelegramUpdate'));
+	Route::get('myaccount/telegram/unchain', array('as' => 'account', 'uses' => 'UserController@getMyAccountTelegramUnchain'));
 	Route::post('myaccount/updateuser', array('as' => 'account', 'uses' => 'UserController@doMyAccountUser'));
 	Route::post('myaccount/iban/new', array('as' => 'iban.update', 'uses' => 'UserController@doNewIban'));
 	Route::post('myaccount/security/update', array('as' => 'security.update', 'uses' => 'UserController@doUpdateSecurity'));
@@ -241,15 +244,14 @@ Route::group(array('before' => 'admin'), function()
 });
 
 Route::any('telegram', function(){
-	$API_KEY = '115805531:AAG-2phcA_6ITwev3WbdBBcCVz4OaFLmZJI';
-	$BOT_NAME = 'calctool_bot';
+	if ($_ENV['TELEGRAM_ENABLED']) {
+		try {
+			// create Telegram API object
+			$telegram = new Longman\TelegramBot\Telegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
 
-	try {
-	    // create Telegram API object
-	    $telegram = new Longman\TelegramBot\Telegram($API_KEY, $BOT_NAME);
-
-		$telegram->handle();
-	} catch (Longman\TelegramBot\Exception\TelegramException $e) {
-		Log::error($e->getMessage());
+			$telegram->handle();
+		} catch (Longman\TelegramBot\Exception\TelegramException $e) {
+			Log::error($e->getMessage());
+		}
 	}
 });

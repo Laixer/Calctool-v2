@@ -17,14 +17,14 @@ use Longman\TelegramBot\Request;
 use Longman\TelegramBot\Command;
 use Longman\TelegramBot\Entities\Update;
 
-class AccountCommand extends Command
+class AdminCommand extends Command
 {
-	protected $name = 'account';
+	protected $name = 'admin';
 	protected $description = '';
-	protected $usage = '/account';
+	protected $usage = '/admin';
 	protected $version = '1.0.0';
 	protected $enabled = true;
-	protected $public = true;
+	protected $public = false;
 
 	private $user;
 	private $tgram;
@@ -50,29 +50,28 @@ class AccountCommand extends Command
 		$text = $message->getText(true);
 
 		if (!$this->getAuthStatus($message->getFrom()->getId())) {
-			$text = 'Telegram is niet gekoppeld aan een account. Gebruik /auth';
+			$text = 'Command: admin not found.. :(';
 		} else {
-			if (!empty($text)) {
-				switch ($text) {
-					case "alerts aan":
-						$this->tgram->alert = true;
-						$this->tgram->save();
-						$text = "Telegram alerts ingeschakeld";
-						break;
-					case "alerts uit":
-						$this->tgram->alert = false;
-						$this->tgram->save();
-						$text = "Telegram alerts uitgeschakeld";
-						break;
-					default:
-						$text = "Ongeldige optie\n";
+			if ($this->user->isAdmin()) {
+				if (!empty($text)) {
+					switch ($text) {
+						case "gebruikers":
+							$text = \User::where('active','=','true')->count('id')." actieve gebruikers:\n";
+							foreach(\User::where('active','=','true')->get() as $luser) {
+								$text .= $luser->id . ' | ' . $luser->username . ' | ' . $luser->email . "\n";
+							}
+							break;
+						default:
+							$text = "Ongeldige optie";
+					}
+				} else {
+					$text  = "Opties:\n";
+					$text .= "/admin gebruikers - Lijst van actieve gebruikers\n";
 				}
 			} else {
-				$text = 'Naam: ' . $this->user->firstname . ' ' . $this->user->lastname . "\n";
-				$text .= 'Email: ' . $this->user->email . "\n";
-				$text .= 'Abonnement actief tot: ' . date('j F Y', strtotime($this->user->expiration_date)) . "\n";
-				$text .= 'Ontvang Telegram alerts: ' . ($this->tgram->alert ? 'Ja' : 'Nee') . "\n";
+				$text = 'Command: admin not found.. :(';
 			}
+
 		}
 
 		$data = array();
