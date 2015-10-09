@@ -45,7 +45,7 @@
 					?>
 						<tr>
 							<td class="col-md-4">{{ HTML::link('relation-'.$relation->id.'/edit', $relation->company_name ? $relation->company_name : $contact->firstname .' '. $contact->lastname) }}</td>
-							<td class="col-md-2">hhhhhh{{ RelationKind::find($relation->kind_id)->kind_name }}</td>
+							<td class="col-md-2">{{ RelationKind::find($relation->kind_id)->kind_name }}</td>
 							<td class="col-md-2">{{ $relation->company_name ? $relation->phone : $contact->phone }}</td>
 							<td class="col-md-2">{{ $relation->company_name ? $relation->email : $contact->email }}</td>
 							<td class="col-md-2">{{ $relation->address_city }}</td>
