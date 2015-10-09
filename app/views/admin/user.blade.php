@@ -38,6 +38,10 @@ function userActive($user) {
 			<div>
 			<br />
 
+			<div class="pull-right">
+				<a class="btn btn-primary" href="?all=1">Alle gebruikers</a>
+			</div>
+
 			<h2><strong>Actieve gebruikers</strong></h2>
 
 			<div class="white-row">
@@ -54,7 +58,14 @@ function userActive($user) {
 				</thead>
 
 				<tbody>
-				@foreach (User::where('active','=','true')->orderBy('created_at')->get() as $users)
+				<?php
+				if (Input::get('all') == 1) {
+					$selection = User::orderBy('created_at')->get();
+				} else {
+					$selection = User::where('active','=','true')->orderBy('created_at')->get();
+				}
+				?>
+				@foreach ($selection as $users)
 					<tr>
 						<td class="col-md-3">{{ (UserType::find($users->user_type)->user_type=='system') ? $users->username : HTML::link('/admin/user-'.$users->id.'/edit', $users->username) . ' (' . $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '') . ')' }}</td>
 						<td class="col-md-2">{{ $users->ip }}</td>
