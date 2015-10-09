@@ -1,7 +1,13 @@
 @extends('layout.master')
 
 @section('content')
-<?# -- WRAPPER -- ?>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$("[name='rememberme']").bootstrapSwitch();
+});
+</script>
+
 <div id="wrapper">
 
 	<div id="shop">
@@ -45,10 +51,10 @@
 						</div>
 						<div class="row">
 							<div class="col-md-6">
-								<span class="remember-box checkbox">
-									{{ Form::label('rememberme', 'Onthoud gegevens') }}
-									{{ Form::checkbox('rememberme') }}
-								</span>
+								<div class="form-group">
+									<input name="rememberme" class="left-label" type="checkbox">
+									<label for="rememberme" style="margin-left:10px;">Onthoud gegevens</label>
+								</div>
 							</div>
 							<div class="col-md-6">
 								{{ Form::submit('Login', array('class' => 'btn btn-primary pull-right', 'data-loading-text' => 'Laden...')) }}

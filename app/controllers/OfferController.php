@@ -107,9 +107,7 @@ class OfferController extends Controller {
 			Auth::user()->offer_counter++;
 			Auth::user()->save();
 
-			//return Redirect::back()->with('success', 'Opgeslagen');
 			return Redirect::to('/offer/project-'.$project->id.'/offer-'.$offer->id);
-
 		}
 
 	}

@@ -129,7 +129,7 @@ $(document).ready(function() {
 					<?# -- tabs -- ?>
 					<ul class="nav nav-tabs">
 						<li class="active">
-							<a href="#company" data-toggle="tab">{{ ucfirst( RelationKind::find($relation->kind_id)->kind_name) }}egegevens</a>
+							<a href="#company" data-toggle="tab">{{ ucfirst( RelationKind::find($relation->kind_id)->kind_name) }}e gegevens</a>
 						</li>
 						<li>
 							<a href="#payment" data-toggle="tab">Betalingsgegevens</a>
@@ -336,7 +336,7 @@ $(document).ready(function() {
 									<tr><!-- item -->
 										<td class="col-md-2"><a href="/relation-{{ $relation->id }}/contact-{{ $contact->id }}/edit">{{ $contact->firstname }}</a></td>
 										<td class="col-md-2">{{ $contact->lastname }}</td>
-										<td class="col-md-2">{{ ContactFunction::find($contact->function_id)->function_name }}</td>
+										<td class="col-md-2">{{ ucfirst(ContactFunction::find($contact->function_id)->function_name) }}</td>
 										<td class="col-md-2">{{ $contact->phone }}</td>
 										<td class="col-md-2">{{ $contact->mobile }}</td>
 										<td class="col-md-2">{{ $contact->email }}</td>
