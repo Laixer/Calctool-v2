@@ -709,14 +709,17 @@ var n = this,
 														<?php
 														}else {
 															$labor = MoreLabor::where('activity_id','=', $activity->id)->first();
-															$rate = $labor['rate'] ? $labor['rate'] : $project->hour_rate_more;
+															if (Part::find($activity->part_id)->part_name=='subcontracting')
+																$rate = $labor['rate'];
+															else
+																$rate = $project->hour_rate_more;
 														?>
 														<tr {{ $labor ? ('data-id="'.$labor->id.'"') : '' }} >
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><span class="rate">{{ Part::find($activity->part_id)->part_name=='subcontracting' ? '<input name="rate" type="text" value="'.number_format($rate, 2,",",".").'" class="form-control-sm-number labor-amount lsave">' : number_format($project->hour_rate_more, 2,",",".") }}</span></td>
+															<td class="col-md-1"><span class="rate">{{ Part::find($activity->part_id)->part_name=='subcontracting' ? '<input name="rate" type="text" value="'.number_format($labor->rate, 2,",",".").'" class="form-control-sm-number labor-amount lsave">' : number_format($project->hour_rate_more, 2,",",".") }}</span></td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ $labor ? number_format($labor->amount, 2, ",",".") : '' }}" class="form-control-sm-number labor-amount lsave" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ $labor ? ('&euro; '.number_format(MoreRegister::laborTotal($labor->rate, $labor->amount), 2, ",",".")) : '' }}</span></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ $labor ? ('&euro; '.number_format(MoreRegister::laborTotal($rate, $labor->amount), 2, ",",".")) : '' }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1 text-right"><button class="btn btn-danger ldeleterow btn-xs fa fa-times"></button></td>
 														</tr>

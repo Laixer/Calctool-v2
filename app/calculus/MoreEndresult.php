@@ -14,7 +14,11 @@ class MoreEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$total += MoreLabor::where('activity_id','=',$activity->id)->sum('amount');
+				$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
+				if (!$count)
+					$total += MoreLabor::where('activity_id','=',$activity->id)->sum('amount');
+				else
+					$total += MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->sum('amount');
 			}
 		}
 
@@ -30,7 +34,11 @@ class MoreEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$total += MoreLabor::where('activity_id','=',$activity->id)->sum('amount');
+				$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
+				if (!$count)
+					$total += MoreLabor::where('activity_id','=',$activity->id)->sum('amount');
+				else
+					$total += MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->sum('amount');
 			}
 		}
 
@@ -46,7 +54,11 @@ class MoreEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$total += MoreLabor::where('activity_id','=',$activity->id)->sum('amount');
+				$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
+				if (!$count)
+					$total += MoreLabor::where('activity_id','=',$activity->id)->sum('amount');
+				else
+					$total += MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->sum('amount');
 			}
 		}
 
@@ -62,7 +74,11 @@ class MoreEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$rows = MoreLabor::where('activity_id','=',$activity->id)->get();
+				$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
+				if (!$count)
+					 $rows = MoreLabor::where('activity_id','=',$activity->id)->get();
+				 else
+				  $rows = MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->get();
 				foreach ($rows as $row)
 				{
 					$total += $row->rate * $row->amount;
@@ -82,7 +98,11 @@ class MoreEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$rows = MoreLabor::where('activity_id','=',$activity->id)->get();
+				$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
+				if (!$count)
+					 $rows = MoreLabor::where('activity_id','=',$activity->id)->get();
+				 else
+				  $rows = MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->get();
 				foreach ($rows as $row)
 				{
 					$total += $row->rate * $row->amount;
@@ -102,7 +122,11 @@ class MoreEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$rows = MoreLabor::where('activity_id','=',$activity->id)->get();
+				$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
+				if (!$count)
+					 $rows = MoreLabor::where('activity_id','=',$activity->id)->get();
+				 else
+				  $rows = MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->get();
 				foreach ($rows as $row)
 				{
 					$total += $row->rate * $row->amount;
