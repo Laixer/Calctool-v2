@@ -223,5 +223,4 @@ class CostController extends Controller {
 
 		return json_encode(['success' => 1]);
 	}
-
 }

@@ -59,8 +59,8 @@ class ProjectCommand extends Command
 					$text  = 'ID: ' . $project->id . "\n";
 					$text .= 'Naam: ' . $project->project_name . "\n";
 					$text .= 'Adres: ' . $project->address_street . ' ' . $project->address_number . ', ' . $project->address_postal . ', ' . $project->address_city . "\n";
-					$text .= 'Uurtarief: ' . $project->hour_rate . ' ' . "\n";
-					$text .= 'Uurtarief meerwerk: ' . $project->hour_rate_more . ' ' . "\n";
+					$text .= 'Uurtarief: ' . number_format($project->hour_rate, 2, ",",".") . ' ' . "\n";
+					$text .= 'Uurtarief meerwerk: ' . number_format($project->hour_rate_more, 2, ",",".") . ' ' . "\n";
 				} else {
 					$text = 'Project niet gevonden';
 				}

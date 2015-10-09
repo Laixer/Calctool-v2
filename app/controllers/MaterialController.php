@@ -207,4 +207,25 @@ class MaterialController extends Controller {
 			return json_encode(['success' => 1]);
 		}
 	}
+
+	public function doFavorite()
+	{
+		$rules = array(
+			'matid' => array('required','integer'),
+		);
+
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails()) {
+			$messages = $validator->messages();
+
+			return json_encode(['success' => 0, 'message' => $messages]);
+		} else {
+
+			$product = Product::find(Input::get('matid'));
+			Auth::user()->productFavorite()->attach($product);
+
+			return json_encode(['success' => 1]);
+		}
+	}
 }

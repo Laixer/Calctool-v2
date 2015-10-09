@@ -53,10 +53,10 @@ $(document).ready(function() {
 							<div class="col-md-6">
 								<div class="form-group">
 									<input name="rememberme" class="left-label" type="checkbox">
-									<label for="rememberme">Onthoud gegevens</label>
+									<label for="rememberme" style="margin-left:10px;">Onthoud gegevens</label>
 								</div>
 							</div>
-							<div class="col-md-6"><br />
+							<div class="col-md-6">
 								{{ Form::submit('Login', array('class' => 'btn btn-primary pull-right', 'data-loading-text' => 'Laden...')) }}
 							</div>
 						</div>

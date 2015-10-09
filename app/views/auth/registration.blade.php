@@ -83,7 +83,7 @@ $(document).ready(function() {
 							<div class="col-md-12">
 								<span class="form-group">
 									<input name="tos" type="checkbox" value="1" id="tos">
-									<label for="tos">Ik ga akkoord met de <a target="blank" href="/terms-and-conditions">algemene voorwaarden</a></label>
+									<label for="tos" style="margin-left:10px;">Ik ga akkoord met de <a target="blank" href="/terms-and-conditions">algemene voorwaarden</a></label>
 								</span>
 							</div>
 							<div class="col-md-12">

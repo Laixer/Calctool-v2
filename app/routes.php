@@ -204,6 +204,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('material/newmaterial', array('uses' => 'MaterialController@doNew'));
 	Route::post('material/updatematerial', array('uses' => 'MaterialController@doUpdate'));
 	Route::post('material/deletematerial', array('uses' => 'MaterialController@doDelete'));
+	Route::post('material/favorite', array('uses' => 'MaterialController@doFavorite'));
 });
 
 Route::group(array('before' => 'admin'), function()
