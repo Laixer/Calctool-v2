@@ -461,7 +461,7 @@ class RelationController extends Controller {
 			//'mobile' => array('alpha_num','max:14'),
 			//'telephone' => array('alpha_num','max:14'),
 			'email' => array('required','email','max:80'),
-			'contactfunction' => array('required','numeric'),
+			//'contactfunction' => array('required','numeric'),
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -486,7 +486,11 @@ class RelationController extends Controller {
 			$contact->email = Input::get('email');
 			$contact->note = Input::get('note');
 			$contact->relation_id = $relation->id;
-			$contact->function_id = Input::get('contactfunction');
+			if (RelationKind::find($relation->kind_id)->kind_name=='zakelijk') {
+				$contact->function_id = Input::get('contactfunction');
+			} else {
+				$contact->function_id = ContactFunction::where('function_name','=','opdrachtgever')->first()->id;
+			}
 			if (Input::get('gender') == '-1')
 				$contact->gender = NULL;
 			else
