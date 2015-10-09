@@ -353,12 +353,12 @@ class RelationController extends Controller {
 			'relationkind' => array('required','numeric'),
 			'debtor' => array('required','alpha_num','max:10'),
 			/* Company */
-			'company_type' => array('required_if:relationkind,zakelijk','numeric'),
-			'company_name' => array('required_if:relationkind,zakelijk','max:50'),
+			'company_type' => array('required_if:relationkind,1','numeric'),
+			'company_name' => array('required_if:relationkind,1','max:50'),
 			//'kvk' => array('numeric','min:8'),
 			//'btw' => array('alpha_num','min:14'),
 			//'telephone_comp' => array('alpha_num','max:12'),
-			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
+			'email_comp' => array('required_if:relationkind,1','email','max:80'),
 			//'website' => array('url','max:180'),
 			/* Contact */
 			'contact_name' => array('required','max:50'),
@@ -426,11 +426,16 @@ class RelationController extends Controller {
 			$contact->email = Input::get('email');
 			$contact->note = Input::get('note');
 			$contact->relation_id = $relation->id;
-			$contact->function_id = Input::get('contactfunction');
-			if (Input::get('gender') == '-1')
+			if ($relation_kind->kind_name == "zakelijk") {
+				$contact->function_id = Input::get('contactfunction');
+			} else {
+				$contact->function_id = ContactFunction::where('function_name','=','opdrachtgever')->first()->id;
+			}
+			if (Input::get('gender') == '-1') {
 				$contact->gender = NULL;
-			else
+			} else {
 				$contact->gender = Input::get('gender');
+			}
 
 			$contact->save();
 
