@@ -32,8 +32,8 @@
 
 			<h2><strong>Bestandsbeheer</strong></h2>
 
+			<div class="white-row">
 			<table class="table table-striped">
-				<?# -- table head -- ?>
 				<thead>
 					<tr>
 						<th class="col-md-3">Omschrijving</th>
@@ -45,7 +45,6 @@
 					</tr>
 				</thead>
 
-				<!-- table items -->
 				<tbody>
 				@foreach (Resource::where('unlinked','=',false)->orderBy('created_at')->get() as $resource)
 					<tr data-id="{{ $resource->id}}">
@@ -64,10 +63,10 @@
 					<a href="/admin/user/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuwe gebruiker</a>
 				</div>
 			</div>
+			</div>
 		</div>
 
 	</section>
 
 </div>
-<!-- /WRAPPER -->
 @stop
