@@ -122,8 +122,8 @@
 								@foreach (Project::where('user_id','=',Auth::user()->id)->get() as $project)
 								@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 								@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
-								@foreach (Timesheet::where('activity_id','=', $activity->id)->get() as $timesheet)
-								<tr data-id="{{ $timesheet->id }}"><!-- item -->
+								@foreach (Timesheet::where('activity_id','=', $activity->id)->orderBy('register_date','desc')->get() as $timesheet)
+								<tr data-id="{{ $timesheet->id }}">
 									<td class="col-md-1">{{ date('d-m-Y', strtotime($timesheet->register_date)) }}</td>
 									<td class="col-md-1">{{ number_format($timesheet->register_hour, 2,",",".") }}</td>
 									<td class="col-md-1">{{ ucwords(TimesheetKind::find($timesheet->timesheet_kind_id)->kind_name) }}</td>
