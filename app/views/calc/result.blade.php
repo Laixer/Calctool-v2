@@ -527,13 +527,14 @@ $(document).ready(function() {
 												<th class="col-md-3">Werkzaamheden</th>
 												<th class="col-md-2"><span class="pull-right">Opgegeven&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de (mondeling) opgegeven uren bij de tab 'Calculeren Meerwerk' die als prijsopgaaf kunnen dienen naar de klant. Wordt de urenregistratie bijgehouden dan is die bindend." href="#"><i class="fa fa-info-circle"></i></a></span></th>
 												<th class="col-md-1"><span class="pull-right">&nbsp;</span></th>
-												<th class="col-md-1"><span class="pull-right">Geboekt <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de geboekte uren uit de urenregistratie of zoals opgegeven" href="#"><i class="fa fa-info-circle"></i></a></span></th>
+												<th class="col-md-1"><span class="pull-right"><!--Geboekt <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de geboekte uren uit de urenregistratie of zoals opgegeven" href="#"><i class="fa fa-info-circle"></i></a>--></span></th>
 												<th class="col-md-1"><span class="pull-right">&nbsp;</span></th>
 												<th class="col-md-1"><span class="pull-right">&nbsp;</span></th>
 											</tr>
 										</thead>
 
 										<tbody>
+											<?php $rs_1 = 0; ?>
 											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 											<?php $i = 0; ?>
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
@@ -541,9 +542,9 @@ $(document).ready(function() {
 											<tr>
 												<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
-												<td class="col-md-2"><span class="pull-right">{{ number_format(MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->sum('amount'), 2,",","."); }}</span></td>
+												<td class="col-md-2"><span class="pull-right">{{ $rs_set = Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'); $rs_1 += ($rs_set ? $rs_set : MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->sum('amount')); number_format($rs_set ? $rs_set : MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->sum('amount'), 2,",","."); }}</span></td>
 												<td class="col-md-1"><span class="pull-right"></span></td>
-												<td class="col-md-1"><span class="pull-right">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'), 2,",","."); }}</span></td>
+												<td class="col-md-1"><span class="pull-right">{{-- number_format(0, 2,",","."); --}}</span></td>
 												<td class="col-md-1"><span class="pull-right">&nbsp;</span></td>
 												<td class="col-md-1"><span class="pull-right">&nbsp;</span></td>
 											</tr>
@@ -552,9 +553,9 @@ $(document).ready(function() {
 											<tr>
 												<td class="col-md-3"><strong>Totaal Meerwerk</strong></td>
 												<td class="col-md-3">&nbsp;</td>
-												<td class="col-md-2"><strong><span class="pull-right">{{ number_format(TimesheetOverview::moreTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
+												<td class="col-md-2"><strong><span class="pull-right">{{ number_format($rs_1, 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">&nbsp;</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(TimesheetOverview::timesheetTotalTimesheet($project), 2, ",",".") }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{-- number_format(TimesheetOverview::timesheetTotalTimesheet($project), 2, ",",".") --}}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">&nbsp;</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">&nbsp;</span></strong></td>
 											</tr>
@@ -569,7 +570,6 @@ $(document).ready(function() {
 						<div id="budget" class="tab-pane">
 
 							<table class="table table-striped">
-								<?# -- table head -- ?>
 								<thead>
 									<tr>
 										<th class="col-md-2">&nbsp;</th>
@@ -580,7 +580,6 @@ $(document).ready(function() {
 									</tr>
 								</thead>
 
-								<!-- table items -->
 								<tbody>
 									<tr><!-- item -->
 										<td class="col-md-2"><strong>Aanneming</strong></td>
