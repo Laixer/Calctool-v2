@@ -13,12 +13,27 @@ $(document).ready(function() {
 				if (data) {
 					$('#alllist tbody tr').remove();
 					$.each(data, function(i, item) {
-						$('#alllist tbody').append('<tr><td>'+item.description+'</td><td>'+item.unit+'</td><td>'+item.price+'</td><td>'+item.tprice+'</td></tr>');
+						$('#alllist tbody').append('<tr data-id="'+item.id+'"><td>'+item.description+'</td><td>'+item.unit+'</td><td>'+item.price+'</td><td>'+item.tprice+'</td><td><a href="javascript:void(0);" class="toggle-fav"><i style="color:'+(item.favorite ? '#FFD600' : '#000')+';" class="fa '+(item.favorite ? 'fa-star' : 'fa-star-o')+'"></i></a></td></tr>');
 					});
 					$req = false;
 				}
 			});
 		}
+	});
+	$("body").on("click", ".toggle-fav", function(){
+		$curr = $(this);
+		$matid = $curr.closest('tr').attr('data-id');
+		$.post("/material/favorite", {matid:$matid}, function(data) {
+			var json = $.parseJSON(data);
+			if (json.success) {
+				$curr.find('i').toggleClass('fa-star-o fa-star');
+				if ($curr.find('i').css('color') == 'rgb(0, 0, 0)') {
+					$curr.find('i').css('color','#FFD600');
+				} else {
+					$curr.find('i').css('color','#000');
+				}
+			}
+		});
 	});
 	$("body").on("change", ".newrow", function(){
 		var i = 1;
@@ -114,6 +129,13 @@ $(document).ready(function() {
 				$curThis.closest("tr").hide("slow");
 			}).fail(function(e) { console.log(e); });
 	});
+	$("body").on("click", ".fdeleterow", function(){
+		var $curThis = $(this);
+		if($curThis.closest("tr").attr("data-id"))
+			$.post("/material/favorite", {matid: $curThis.closest("tr").attr("data-id")}, function(){
+				$curThis.closest("tr").hide("slow");
+			}).fail(function(e) { console.log(e); });
+	});
 });
 </script>
 <div id="wrapper">
@@ -138,10 +160,10 @@ $(document).ready(function() {
 					<li>
 						<a href="#element" data-toggle="tab"><i class="fa fa-th-list"></i> Elementen</a>
 					</li>
-					<li>
-						<a href="#favorite" data-toggle="tab"><i class="fa fa-star-o"></i> Favorieten</a>
-					</li>
 					@endif
+					<li>
+						<a href="#favorite" data-toggle="tab"><i class="fa fa-star"></i> Favorieten</a>
+					</li>
 				</ul>
 
 				<div class="tab-content">
@@ -167,6 +189,7 @@ $(document).ready(function() {
 										<th>Eenheid</th>
 										<th>&euro; / Eenheid</th>
 										<th>Totaalprijs</th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -245,6 +268,46 @@ $(document).ready(function() {
 
 					<div id="element" class="tab-pane">
 					</div>
+
+					<div id="favorite" class="tab-pane">
+						<div class="row">
+							<div class="col-md-2"><h4>Favorieten</h4></div>
+						</div>
+
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th class="col-md-5">Omschrijving</th>
+									<th class="col-md-1">Eenheid</th>
+									<th class="col-md-2">&euro; / Eenheid</th>
+									<th class="col-md-3">Categorie</th>
+									<th class="col-md-1">&nbsp;</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								@foreach (Auth::user()->productFavorite()->get() as $product)
+								<tr data-id="{{ $product->id }}">
+									<td class="col-md-5">{{ $product->description }}</td>
+									<td class="col-md-1">{{ $product->unit }}</td>
+									<td class="col-md-1">{{ number_format($product->price, 2,",",".") }}</td>
+									<td class="col-md-1">{{ SubGroup::find($product->group_id)->group_type }}</td>
+									<td class="col-md-1"><span class="total-ex-tax"></span></td>
+									<td class="col-md-1"><span class="total-incl-tax"></span></td>
+									<td class="col-md-2 text-right">
+										<button class="btn btn-danger btn-xs fdeleterow fa fa-times"></button>
+									</td>
+								</tr>
+								@endforeach
+							</tbody>
+							<tbody>
+								<tr></tr>
+							</tbody>
+						</table>
+
+
+					</div>
+
 				</div>
 
 			</div>

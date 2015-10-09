@@ -83,11 +83,13 @@ class MaterialController extends Controller {
 				array_push($suppliers, $supplier->id);
 			}
 
-			if (Input::get('group')!='0')
+			if (Input::get('group') != '0') {
 				$products = Product::where('description', 'LIKE', '%'.$query.'%')->whereIn('supplier_id', $suppliers)->where('group_id','=',Input::get('group'))->take(400)->get();
-			else
+			} else {
 				$products = Product::where('description', 'LIKE', '%'.$query.'%')->whereIn('supplier_id', $suppliers)->take(400)->get();
+			}
 			foreach ($products as $product) {
+				$isFav = $product->user()->where('user_id','=',Auth::id())->count('id');
 				array_push($rtn_products, array(
 					'id' => $product['id'],
 					'unit' => $this->convertUnit($product['unit']),
@@ -99,6 +101,7 @@ class MaterialController extends Controller {
 					'package' => $this->convertPackage($product['package_length'], $product['package_height'], $product['package_width']),
 					'minimum_quantity' => number_format($product['minimum_quantity'], 2, ",","."),
 					'description' => ucfirst($product['description']),
+					'favorite' => $isFav,
 				));
 			}
 
@@ -221,6 +224,12 @@ class MaterialController extends Controller {
 
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
+
+			$exist_product = Auth::user()->productFavorite()->where('product_id','=',Input::get('matid'))->first();
+			if ($exist_product) {
+				Auth::user()->productFavorite()->detach($exist_product);
+				return json_encode(['success' => 1]);
+			}
 
 			$product = Product::find(Input::get('matid'));
 			Auth::user()->productFavorite()->attach($product);
