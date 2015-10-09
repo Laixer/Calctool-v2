@@ -152,62 +152,6 @@ $(document).ready(function() {
 
 							</div>
 
-							<!--
-							<h4>Adresgegevens</h4>
-							<div class="row">
-
-								<div class="col-md-4">
-									<div class="form-group">
-										<label for="address_street">Straat</label>
-										<input name="address_street" id="address_street" type="text" value="{{ Input::old('street') ? Input::old('street') : $user->address_street }}" class="form-control"/>
-									</div>
-								</div>
-
-								<div class="col-md-1">
-									<div class="form-group">
-										<label for="address_number">Huis nr.</label>
-										<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') ? Input::old('address_number') : $user->address_number }}" class="form-control"/>
-									</div>
-								</div>
-
-								<div class="col-md-2">
-									<div class="form-group">
-										<label for="address_zipcode">Postcode</label>
-										<input name="address_zipcode" id="address_zipcode" maxlength="6" type="text" value="{{ Input::old('zipcode') ? Input::old('zipcode') : $user->address_postal }}" class="form-control"/>
-									</div>
-								</div>
-
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="address_city">Plaats</label>
-										<input name="address_city" id="address_city" type="text" value="{{ Input::old('city') ? Input::old('city') : $user->address_city }}" class="form-control"/>
-									</div>
-								</div>
-
-								<div class="col-md-2">
-									<div class="form-group">
-										<label for="province">Provincie</label>
-										<select name="province" id="province" class="form-control pointer">
-											@foreach (Province::all() as $province)
-												<option {{ $user->province_id==$province->id ? 'selected' : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
-											@endforeach
-										</select>
-									</div>
-								</div>
-
-								<div class="col-md-4">
-									<div class="form-group">
-										<label for="country">Land</label>
-										<select name="country" id="country" class="form-control pointer">
-											@foreach (Country::all() as $country)
-												<option {{ $user->country_id==$country->id ? 'selected' : ($country->country_name=='nederland' ? 'selected' : '') }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
-											@endforeach
-										</select>
-									</div>
-								</div>
-							</div>
-							-->
-
 							<div class="row">
 								<div class="col-md-12">
 									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>

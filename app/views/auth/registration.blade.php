@@ -3,17 +3,17 @@
 @section('content')
 <script type="text/javascript">
 $(document).ready(function() {
-	$('#tos').click(function(e){
-		if ($(this).prop('checked')) {
-			$('#btn-submit').removeClass('disabled');
-		} else {
-			$('#btn-submit').addClass('disabled');
-		}
-	});
 	$(window).keydown(function(event){
 		if(event.keyCode == 13 && !$('#tos').prop('checked')) {
 			event.preventDefault();
 			return false;
+		}
+	});
+	$("[name='tos']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		if (state) {
+			$('#btn-submit').removeClass('disabled');
+		} else {
+			$('#btn-submit').addClass('disabled');
 		}
 	});
 });
@@ -81,9 +81,9 @@ $(document).ready(function() {
 						</div>
 						<div class="row">
 							<div class="col-md-12">
-								<span class="remember-box checkbox">
-									<label for="tos">Ik ga akkoord met de <a target="blank" href="/terms-and-conditions">algemene voorwaarden</a></label>
+								<span class="form-group">
 									<input name="tos" type="checkbox" value="1" id="tos">
+									<label for="tos">Ik ga akkoord met de <a target="blank" href="/terms-and-conditions">algemene voorwaarden</a></label>
 								</span>
 							</div>
 							<div class="col-md-12">

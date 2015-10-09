@@ -54,7 +54,7 @@ class ProjectCommand extends Command
 		} else {
 
 			if (!empty($text)) {
-				$project = \Project::find($text);
+				$project = \Project::find($text)->where('user_id','=',$this->user->id);
 				if ($project) {
 					$text  = 'ID: ' . $project->id . "\n";
 					$text .= 'Naam: ' . $project->project_name . "\n";
