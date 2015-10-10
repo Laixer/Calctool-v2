@@ -44,6 +44,43 @@ class UserController extends Controller {
 		return Redirect::to('/myaccount/telegram');
 	}
 
+	public function getMyAccountDeactivate()
+	{
+		$user = Auth::user();
+		$user->active = false;
+		$user->save();
+
+		Auth::logout();
+
+		$data = array('email' => $user->email, 'username' => $user->username);
+		Mailgun::send('mail.deactivate', $data, function($message) use ($data) {
+			$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Account gedeactiveerd');
+		});
+
+		if ($_ENV['TELEGRAM_ENABLED']) {
+			$tgram = Telegram::where('user_id','=',$user->id)->first();
+			if ($tgram && $tgram->alert) {
+
+				$telegram = new Longman\TelegramBot\Telegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
+				Request::initialize($telegram);
+
+				$data = array();
+				$data['chat_id'] = $tgram->uid;
+				$data['text'] = "Je CalculatieTool account was zojuist gedeactiveerd. Mocht dit niet bedoeling zijn geweest neem dan contact met ons op.";
+
+				$result = Request::sendMessage($data);
+			}
+		}
+
+		$log = new Audit;
+		$log->ip = $_SERVER['REMOTE_ADDR'];
+		$log->event = '[DEACTIVATE] [SUCCESS]';
+		$log->user_id = $user->id;
+		$log->save();
+
+		return Redirect::to('/login');
+	}
+
 	public function doMyAccountTelegramUpdate()
 	{
 
@@ -133,6 +170,12 @@ class UserController extends Controller {
 
 			$order->save();
 
+			$log = new Audit;
+			$log->ip = $_SERVER['REMOTE_ADDR'];
+			$log->event = '[PAYMENT] [REQUESTED]';
+			$log->user_id = Auth::id();
+			$log->save();
+
 			return Redirect::to($payment->links->paymentUrl);
 		}
 	}
@@ -185,6 +228,13 @@ class UserController extends Controller {
 					$result = Request::sendMessage($data);
 				}
 			}
+
+			$log = new Audit;
+			$log->ip = $_SERVER['REMOTE_ADDR'];
+			$log->event = '[PAYMENT] [SUCCESS]';
+			$log->user_id = $user->id();
+			$log->save();
+
 		}
 		return json_encode(['success' => 1]);
 	}
@@ -232,7 +282,6 @@ class UserController extends Controller {
 		if ($validator->fails()) {
 			$messages = $validator->messages();
 
-			// redirect our user back to the form with the errors from the validator
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 
@@ -269,8 +318,25 @@ class UserController extends Controller {
 				}
 			}
 
+			$log = new Audit;
+			$log->ip = $_SERVER['REMOTE_ADDR'];
+			$log->event = '[SECURITY_UPDATE] [SUCCESS]';
+			$log->user_id = Auth::id();
+			$log->save();
+
 			return Redirect::back()->with('success', 'Instellingen opgeslagen');
 		}
+	}
+
+	public function doUpdateNotepad()
+	{
+		$user = Auth::user();
+		if (Input::get('notepad')) {
+			$user->notepad = Input::get('notepad');
+			$user->save();
+		}
+
+		return Redirect::back()->with('success', 'Opgeslagen');
 	}
 
 	public function doMyAccountUser()
@@ -286,7 +352,6 @@ class UserController extends Controller {
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			// redirect our user back to the form with the errors from the validator
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 
@@ -311,15 +376,6 @@ class UserController extends Controller {
 			if (Input::get('website'))
 				$user->website = Input::get('website');
 
-			/* Adress */
-			//Geconstateerd werd of een adres voor de gebruikers account wel nodig was, dit saat immers ook bij mijn bedrijf
-			//$user->address_street = Input::get('address_street');
-			//$user->address_number = Input::get('address_number');
-			//$user->address_postal = Input::get('address_zipcode');
-			//$user->address_city = Input::get('address_city');
-			//$user->province_id = Input::get('province');
-			//$user->country_id = Input::get('country');
-
 			$user->save();
 
 			return Redirect::back()->with('success', 'Gegevens opgeslagen');
@@ -341,15 +397,6 @@ class UserController extends Controller {
 			'telephone' => array('alpha_num','max:14'),
 			'email' => array('required','email','max:80'),
 			'website' => array('url','max:180'),
-
-			/* Adress */
-			//'address_street' => array('required','alpha','max:60'),
-			//'address_number' => array('required','alpha_num','max:5'),
-			//'address_zipcode' => array('required','size:6'),
-			//'address_city' => array('required','alpha_num','max:35'),
-			//'province' => array('required','numeric'),
-			//'country' => array('required','numeric'),
-
 		);
 
 		$validator = Validator::make(Input::all(), $rules);
@@ -375,14 +422,6 @@ class UserController extends Controller {
 			$user->mobile = Input::get('mobiler');
 			$user->phone = Input::get('telephone');
 			$user->website = Input::get('website');
-
-			/* Adress */
-			//$user->address_street = Input::get('address_street');
-			//$user->address_number = Input::get('address_number');
-			//$user->address_postal = Input::get('address_zipcode');
-			//$user->address_city = Input::get('address_city');
-			//$user->province_id = Input::get('province');
-			//$user->country_id = Input::get('country');
 
 			/* Overig */
 			$user->note = Input::get('note');
@@ -443,6 +482,12 @@ class UserController extends Controller {
 					$result = Request::sendMessage($data);
 				}
 			}
+
+			$log = new Audit;
+			$log->ip = $_SERVER['REMOTE_ADDR'];
+			$log->event = '[IBAN_UPDATE] [SUCCESS]';
+			$log->user_id = Auth::id();
+			$log->save();
 
 			return Redirect::back()->with('success', 1);
 		}
@@ -531,6 +576,12 @@ class UserController extends Controller {
 			$user->administration_cost = str_replace(',', '.', str_replace('.', '' , Input::get('administration_cost')));
 
 		$user->save();
+
+		$log = new Audit;
+		$log->ip = $_SERVER['REMOTE_ADDR'];
+		$log->event = '[PREFSUPDATE] [SUCCESS]';
+		$log->user_id = $user->id;
+		$log->save();
 
 		return Redirect::back()->with('success', 'Voorkeuren opgeslagen');
 	}

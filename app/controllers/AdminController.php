@@ -207,6 +207,8 @@ class AdminController extends Controller {
 			$user->expiration_date = Input::get('expdate');
 			if (Input::get('note'))
 				$user->note = Input::get('note');
+			if (Input::get('notepad'))
+				$user->notepad = Input::get('notepad');
 			if (Input::get('confirmdate'))
 				$user->confirmed_mail = Input::get('confirmdate');
 			if (Input::get('bandate'))
@@ -289,6 +291,8 @@ class AdminController extends Controller {
 				$user->expiration_date = Input::get('expdate');
 			if (Input::get('note'))
 				$user->note = Input::get('note');
+			if (Input::get('notepad'))
+				$user->notepad = Input::get('notepad');
 			if (Input::get('confirmdate'))
 				$user->confirmed_mail = Input::get('confirmdate');
 			if (Input::get('bandate'))

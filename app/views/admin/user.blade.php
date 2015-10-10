@@ -23,6 +23,11 @@ function userActive($user) {
 		return floor((time()-$time_updated)/3600) .' uur geleden';
 	return date('d-m-Y H:i:s', $time_updated);
 }
+$all = false;
+if (Input::get('all') == 1) {
+	$all = true;
+}
+
 ?>
 <div id="wrapper">
 
@@ -39,10 +44,14 @@ function userActive($user) {
 			<br />
 
 			<div class="pull-right">
-				<a class="btn btn-primary" href="?all=1">Alle gebruikers</a>
+				@if ($all)
+					<a class="btn btn-primary" href="/admin/user">Actieve gebruikers</a>
+				@else
+					<a class="btn btn-primary" href="?all=1">Alle gebruikers</a>
+				@endif
 			</div>
 
-			<h2><strong>Actieve gebruikers</strong></h2>
+			<h2><strong>{{ ($all ? 'Alle' : 'Actieve') }} gebruikers</strong></h2>
 
 			<div class="white-row">
 			<table class="table table-striped">
@@ -59,7 +68,7 @@ function userActive($user) {
 
 				<tbody>
 				<?php
-				if (Input::get('all') == 1) {
+				if ($all) {
 					$selection = User::orderBy('created_at')->get();
 				} else {
 					$selection = User::where('active','=','true')->orderBy('created_at')->get();

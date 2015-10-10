@@ -10,8 +10,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	use UserTrait, RemindableTrait;
 
 	protected $table = 'user_account';
-	protected $hidden = array('secret', 'remember_token', 'api', 'promotion_code');
-	protected $guarded = array('id', 'ip', 'secret', 'remember_token', 'api', 'promotion_code');
+	protected $hidden = array('secret', 'remember_token', 'api', 'promotion_code', 'note');
+	protected $guarded = array('id', 'ip', 'secret', 'remember_token', 'api', 'promotion_code', 'note');
 
     public function getAuthPassword(){
 		return $this->secret;

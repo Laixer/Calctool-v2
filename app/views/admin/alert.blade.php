@@ -33,6 +33,8 @@
 
 			<h2><strong>Meldingen</strong></h2>
 
+			<div class="white-row">
+			<h4>Meldingen</h4>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -90,6 +92,7 @@
 			</div>
 
 			{{ Form::close() }}
+			</div>
 
 		</div>
 

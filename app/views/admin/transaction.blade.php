@@ -20,6 +20,7 @@
 
 			<h2><strong>Transacties</strong></h2>
 
+			<div class="white-row">
 			<table class="table table-striped">
 				<?# -- table head -- ?>
 				<thead>
@@ -49,6 +50,7 @@
 				@endforeach
 				</tbody>
 			</table>
+			</div>
 		</div>
 
 	</section>

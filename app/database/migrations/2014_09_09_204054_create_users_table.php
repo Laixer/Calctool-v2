@@ -53,13 +53,9 @@ class CreateUsersTable extends Migration {
 			$table->date('registration_date')->default(DB::raw('now()::timestamp(0)'));
 			$table->date('expiration_date');
 			$table->char('referral_key', 32)->unique();
-			//Geconstateerd werd of een adres voor de gebruikers account wel nodig was, dit saat immers ook bij mijn bedrijf
-			//$table->string('address_street', 60)->nullable();
-			//$table->string('address_number', 5)->nullable();
-			//$table->string('address_postal', 6)->nullable();
-			//$table->string('address_city', 35)->nullable();
 			$table->string('website', 180)->nullable();
 			$table->text('note')->nullable();
+			$table->text('notepad')->nullable();
 			$table->integer('mobile')->nullable()->unsigned();
 			$table->integer('phone')->nullable()->unsigned();
 			$table->string('email', 80)->unique();
@@ -197,7 +193,7 @@ class CreateUsersTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('ip', 45);
-			$table->string('event', 120);
+			$table->string('event', 1024);
 			$table->timestamps();
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');

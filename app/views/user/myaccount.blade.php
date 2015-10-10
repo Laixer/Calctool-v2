@@ -38,6 +38,12 @@ $(document).ready(function() {
 
 	$("[name='toggle-api']").bootstrapSwitch();
 	$("[name='pref_mailings_optin']").bootstrapSwitch();
+	$('#acc-deactive').click(function(e){
+		e.preventDefault();
+		if(confirm('Weet je zeker dat je je account wilt deactiveren?')){
+			location.href = '/myaccount/deactivate'
+		}
+	});
 });
 </script>
 
@@ -80,6 +86,9 @@ $(document).ready(function() {
 						</li>
 						<li>
 							<a href="#prefs" data-toggle="tab">Voorkeuren</a>
+						</li>
+						<li>
+							<a href="#notepad" data-toggle="tab">Kladblok</a>
 						</li>
 					</ul>
 
@@ -163,6 +172,7 @@ $(document).ready(function() {
 						<div id="payment" class="tab-pane">
 
 							<div class="pull-right">
+								<a href="javascript:void(0);" id="acc-deactive" class="btn btn-danger">Account deactiveren</a>
 								<a href="/payment" class="btn btn-primary">Abonnement verlengen</a>
 							</div>
 
@@ -175,7 +185,6 @@ $(document).ready(function() {
 							<br />
 							<h4>Betalingsgeschiedenis</h4>
 							<table class="table table-striped">
-								<?# -- table head -- ?>
 								<thead>
 									<tr>
 										<th class="col-md-2">Datum</th>
@@ -506,8 +515,28 @@ $(document).ready(function() {
 										<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 									</div>
 								</div>
-						</div>
 						{{ Form::close() }}
+						</div>
+						<div id="notepad" class="tab-pane">
+
+							{{ Form::open(array('url' => 'myaccount/notepad/save')) }}
+
+							<h4>Kladblok</h4>
+							<div class="row">
+								<div class="form-group">
+									<div class="col-md-12">
+										<textarea name="notepad" id="notepad" rows="15" class="form-control">{{ $user->notepad }}</textarea>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+									<div class="col-md-12">
+										<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+									</div>
+								</div>
+						{{ Form::close() }}
+
+						</div>
 					</div>
 				</div>
 
