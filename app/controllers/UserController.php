@@ -540,6 +540,12 @@ class UserController extends Controller {
 
 		$user->save();
 
+		$log = new Audit;
+		$log->ip = $_SERVER['REMOTE_ADDR'];
+		$log->event = '[PREFSUPDATE] [SUCCESS] ' . $_SERVER['HTTP_USER_AGENT'];
+		$log->user_id = $user->id;
+		$log->save();
+
 		return Redirect::back()->with('success', 'Voorkeuren opgeslagen');
 	}
 }

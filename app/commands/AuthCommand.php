@@ -68,6 +68,12 @@ class AuthCommand extends Command
 
 						$text = 'Beste, ' . $user->firstname . "\n";
 						$text .= 'Telegram is verbonden met uw account';
+
+						$log = new \Audit;
+						$log->ip = $_SERVER['REMOTE_ADDR'];
+						$log->event = '[API_CONNECT] [SUCCESS] ' . $message->getFrom()->getId();
+						$log->user_id = $user->id;
+						$log->save();
 					}
 				} else {
 					$text = 'Ongeldige API key';
