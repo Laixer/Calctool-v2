@@ -338,7 +338,7 @@ $(document).ready(function() {
 						</thead>
 
 						<tbody>
-						@foreach (Audit::where('user_id', Auth::id())->orderBy('created_at','desc')->get() as $rec)
+						@foreach (Audit::where('user_id', $user->id)->orderBy('created_at','desc')->get() as $rec)
 							<tr>
 								<td class="col-md-2">{{ date('d-m-Y H:i:s', strtotime(DB::table('audit')->select('created_at')->where('id',$rec->id)->get()[0]->created_at)); }}</td>
 								<td class="col-md-2">{{ $rec->ip }}</td>

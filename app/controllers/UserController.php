@@ -44,6 +44,43 @@ class UserController extends Controller {
 		return Redirect::to('/myaccount/telegram');
 	}
 
+	public function getMyAccountDeactivate()
+	{
+		$user = Auth::user();
+		$user->active = false;
+		$user->save();
+
+		Auth::logout();
+
+		$data = array('email' => $user->email, 'username' => $user->username);
+		Mailgun::send('mail.deactivate', $data, function($message) use ($data) {
+			$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Account gedeactiveerd');
+		});
+
+		if ($_ENV['TELEGRAM_ENABLED']) {
+			$tgram = Telegram::where('user_id','=',$user->id)->first();
+			if ($tgram && $tgram->alert) {
+
+				$telegram = new Longman\TelegramBot\Telegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
+				Request::initialize($telegram);
+
+				$data = array();
+				$data['chat_id'] = $tgram->uid;
+				$data['text'] = "Je CalculatieTool account was zojuist gedeactiveerd. Mocht dit niet bedoeling zijn geweest neem dan contact met ons op.";
+
+				$result = Request::sendMessage($data);
+			}
+		}
+
+		$log = new Audit;
+		$log->ip = $_SERVER['REMOTE_ADDR'];
+		$log->event = '[DEACTIVATE] [SUCCESS]';
+		$log->user_id = $user->id;
+		$log->save();
+
+		return Redirect::to('/login');
+	}
+
 	public function doMyAccountTelegramUpdate()
 	{
 
