@@ -94,6 +94,12 @@ class ProjectController extends Controller {
 
 			$project->save();
 
+			$log = new Audit;
+			$log->ip = $_SERVER['REMOTE_ADDR'];
+			$log->event = '[NEWPROJECT] [SUCCESS] ' . Input::get('name');
+			$log->user_id = Auth::id();
+			$log->save();
+
 			return Redirect::to('project-'.$project->id.'/edit')->with('success', 'Opgeslagen');
 		}
 

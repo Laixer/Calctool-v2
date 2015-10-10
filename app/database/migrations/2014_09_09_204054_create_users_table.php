@@ -193,7 +193,7 @@ class CreateUsersTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('ip', 45);
-			$table->string('event', 120);
+			$table->string('event', 1024);
 			$table->timestamps();
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');

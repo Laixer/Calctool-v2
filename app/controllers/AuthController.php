@@ -47,7 +47,13 @@ class AuthController extends Controller {
 
 			Redis::del('auth:'.$username.':fail', 'auth:'.$username.':block');
 
-			// Redirect to dashboard
+			$log = new Audit;
+			$log->ip = $_SERVER['REMOTE_ADDR'];
+			$log->event = '[LOGIN] [SUCCESS] ' . $_SERVER['HTTP_USER_AGENT'];
+			$log->user_id = Auth::id();
+			$log->save();
+
+			/* Redirect to dashboard*/
 			return Redirect::to('/');
 		}else{
 
@@ -61,6 +67,15 @@ class AuthController extends Controller {
 				Redis::expire('auth:'.$username.':block', 900);
 			} else {
 				Redis::incr('auth:'.$username.':fail');
+			}
+
+			$failuser = User::where('username', $username)->first();
+			if ($failuser) {
+				$log = new Audit;
+				$log->ip = $_SERVER['REMOTE_ADDR'];
+				$log->event = '[LOGIN] [FAILED] '.$failcount;
+				$log->user_id = $failuser->id;
+				$log->save();
 			}
 
 			return Redirect::to('login')->withErrors($errors)->withInput(Input::except('secret'))->withCookie(Cookie::forget('swpsess'));
@@ -144,6 +159,12 @@ class AuthController extends Controller {
 			$user->token = sha1($user->secret);
 			$user->save();
 
+			$log = new Audit;
+			$log->ip = $_SERVER['REMOTE_ADDR'];
+			$log->event = '[NEWPASS] [SUCCESS]';
+			$log->user_id = $user->id;
+			$log->save();
+
 			Auth::login($user);
 			return Redirect::to('/');
 		}
@@ -197,6 +218,12 @@ class AuthController extends Controller {
 
 		$this->informAdmin($user);
 
+		$log = new Audit;
+		$log->ip = $_SERVER['REMOTE_ADDR'];
+		$log->event = '[ACTIVATE] [SUCCESS]';
+		$log->user_id = $user->id;
+		$log->save();
+
 		Auth::login($user);
 		return Redirect::to('/')->withCookie(Cookie::make('nstep', 'intro_'.$user->id, 60*24*3));
 	}
@@ -231,6 +258,12 @@ class AuthController extends Controller {
 			});
 
 			$user->save();
+
+			$log = new Audit;
+			$log->ip = $_SERVER['REMOTE_ADDR'];
+			$log->event = '[BLOCKPASS] [SUCCESS]';
+			$log->user_id = $user->id;
+			$log->save();
 
 			return Redirect::to('login')->with('success', 1);
 		}
