@@ -579,7 +579,7 @@ class UserController extends Controller {
 
 		$log = new Audit;
 		$log->ip = $_SERVER['REMOTE_ADDR'];
-		$log->event = '[PREFSUPDATE] [SUCCESS] ' . $_SERVER['HTTP_USER_AGENT'];
+		$log->event = '[PREFSUPDATE] [SUCCESS]';
 		$log->user_id = $user->id;
 		$log->save();
 

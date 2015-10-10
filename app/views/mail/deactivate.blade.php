@@ -51,7 +51,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Je CalculatieTool account was zojuist <strong>gedeactiveerd</strong>. Mocht dit niet bedoeling zijn geweest neem dan contact met ons op..
+														Je CalculatieTool account was zojuist <strong>gedeactiveerd</strong>. Mocht dit niet bedoeling zijn geweest neem dan contact met ons op.
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->
