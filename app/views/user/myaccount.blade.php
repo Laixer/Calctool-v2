@@ -81,6 +81,9 @@ $(document).ready(function() {
 						<li>
 							<a href="#prefs" data-toggle="tab">Voorkeuren</a>
 						</li>
+						<li>
+							<a href="#notepad" data-toggle="tab">Kladblok</a>
+						</li>
 					</ul>
 
 					<div class="tab-content">
@@ -506,8 +509,28 @@ $(document).ready(function() {
 										<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 									</div>
 								</div>
-						</div>
 						{{ Form::close() }}
+						</div>
+						<div id="notepad" class="tab-pane">
+
+							{{ Form::open(array('url' => 'myaccount/notepad/save')) }}
+
+							<h4>Kladblok</h4>
+							<div class="row">
+								<div class="form-group">
+									<div class="col-md-12">
+										<textarea name="notepad" id="notepad" rows="15" class="form-control">{{ $user->notepad }}</textarea>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+									<div class="col-md-12">
+										<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+									</div>
+								</div>
+						{{ Form::close() }}
+
+						</div>
 					</div>
 				</div>
 

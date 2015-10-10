@@ -46,6 +46,7 @@ Route::group(array('before' => 'auth'), function()
 	Route::post('myaccount/iban/new', array('as' => 'iban.update', 'uses' => 'UserController@doNewIban'));
 	Route::post('myaccount/security/update', array('as' => 'security.update', 'uses' => 'UserController@doUpdateSecurity'));
 	Route::post('myaccount/preferences/update', array('as' => 'preferences.update', 'uses' => 'UserController@doUpdatePreferences'));
+	Route::post('myaccount/notepad/save', array('uses' => 'UserController@doUpdateNotepad'));
 
 	Route::get('payment', array('as' => 'security.update', 'uses' => 'UserController@getPayment'));
 	Route::post('payment', array('as' => 'security.update', 'uses' => 'UserController@doPayment'));

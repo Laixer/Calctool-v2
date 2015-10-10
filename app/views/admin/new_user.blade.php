@@ -265,6 +265,14 @@ $(document).ready(function() {
 						</div>
 					</div>
 				</div>
+				<h4>Kladblok</h4>
+				<div class="row">
+					<div class="form-group">
+						<div class="col-md-12">
+							<textarea name="notepad" id="notepad" rows="10" class="form-control">{{ Input::old('notepad') }}</textarea>
+						</div>
+					</div>
+				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>

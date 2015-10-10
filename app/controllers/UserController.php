@@ -232,7 +232,6 @@ class UserController extends Controller {
 		if ($validator->fails()) {
 			$messages = $validator->messages();
 
-			// redirect our user back to the form with the errors from the validator
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 
@@ -273,6 +272,17 @@ class UserController extends Controller {
 		}
 	}
 
+	public function doUpdateNotepad()
+	{
+		$user = Auth::user();
+		if (Input::get('notepad')) {
+			$user->notepad = Input::get('notepad');
+			$user->save();
+		}
+
+		return Redirect::back()->with('success', 'Opgeslagen');
+	}
+
 	public function doMyAccountUser()
 	{
 		$rules = array(
@@ -286,7 +296,6 @@ class UserController extends Controller {
 		$validator = Validator::make(Input::all(), $rules);
 
 		if ($validator->fails()) {
-			// redirect our user back to the form with the errors from the validator
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 
@@ -310,15 +319,6 @@ class UserController extends Controller {
 				$user->phone = Input::get('phone');
 			if (Input::get('website'))
 				$user->website = Input::get('website');
-
-			/* Adress */
-			//Geconstateerd werd of een adres voor de gebruikers account wel nodig was, dit saat immers ook bij mijn bedrijf
-			//$user->address_street = Input::get('address_street');
-			//$user->address_number = Input::get('address_number');
-			//$user->address_postal = Input::get('address_zipcode');
-			//$user->address_city = Input::get('address_city');
-			//$user->province_id = Input::get('province');
-			//$user->country_id = Input::get('country');
 
 			$user->save();
 
