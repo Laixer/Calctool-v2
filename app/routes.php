@@ -19,6 +19,8 @@ Route::post('password/reset', array('before' => 'guest|csrf', 'as' => 'reset', '
 Route::get('password/{api}/{token}', function(){ return View::make('auth.password'); })->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
 Route::post('password/{api}/{token}', array('before' => 'guest|csrf', 'as' => 'register', 'uses' => 'AuthController@doNewPassword'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
 
+Route::get('api/v1', array('uses' => 'ApiController@getApiRoot'));
+
 Route::get('about', function() { return View::make('generic.about'); });
 Route::get('faq', function() { return View::make('generic.faq'); });
 Route::get('terms-and-conditions', function() { return View::make('generic.terms'); });
