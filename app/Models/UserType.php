@@ -1,6 +1,10 @@
 <?php
 
-class UserType extends Eloquent {
+namespace Calctool\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class UserType extends Model {
 
 	protected $table = 'user_type';
 	protected $guarded = array('id');

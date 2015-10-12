@@ -1,6 +1,10 @@
 <?php
 
-class Resource extends Eloquent {
+namespace Calctool\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Resource extends Model {
 
 	protected $table = 'resource';
 	protected $guarded = array('id');

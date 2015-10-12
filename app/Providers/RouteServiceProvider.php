@@ -40,23 +40,6 @@ $router->filter('admin', function()
 	}
 
 });
-/*
-$router->filter('auth', function()
-{
-	if (Auth::guest())
-	{
-		return \Redirect::guest('login');
-	}
-});
-
-$router->filter('guest', function()
-{
-	if (Auth::check())
-	{
-		 return \Redirect::to('/');
-	}
-});
-*/
         parent::boot($router);
     }
 

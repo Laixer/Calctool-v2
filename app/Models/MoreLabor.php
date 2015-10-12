@@ -1,6 +1,10 @@
 <?php
 
-class MoreLabor extends Eloquent {
+namespace Calctool\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class MoreLabor extends Model {
 
 	protected $table = 'more_labor';
 	protected $guarded = array('id');

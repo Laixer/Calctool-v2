@@ -1,6 +1,10 @@
 <?php
 
-class Relation extends Eloquent {
+namespace Calctool\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Relation extends Model {
 
 	protected $table = 'relation';
 	protected $guarded = array('id', 'debtor_code');

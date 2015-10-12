@@ -6,6 +6,7 @@ use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
 use Longman\TelegramBot\Request as TRequest;
 
+use Auth;
 use Redis;
 
 class AuthController extends Controller {
@@ -38,29 +39,29 @@ class AuthController extends Controller {
 
 		if (Redis::exists('auth:'.$username.':block')) {
 			$errors = new MessageBag(['auth' => ['Account geblokkeerd voor 15 minuten']]);
-			return Redirect::to('login')->withErrors($errors)->withInput(Input::except('secret'));
+			return \Redirect::to('login')->withErrors($errors)->withInput($request->except('secret'));
 		}
 
 		if(Auth::attempt($userdata, $remember) || Auth::attempt($userdata2, $remember)){
 
-			// Email must be confirmed
+			/* Email must be confirmed */
 			if (Auth::user()->confirmed_mail == NULL) {
 				Auth::logout();
 				$errors = new MessageBag(['mail' => ['Email nog niet bevestigd']]);
-				return Redirect::to('login')->withErrors($errors)->withInput(Input::except('secret'));
+				return \Redirect::to('login')->withErrors($errors)->withInput($request->except('secret'));
 			}
 
 			Redis::del('auth:'.$username.':fail', 'auth:'.$username.':block');
 
-			$log = new Audit;
+			$log = new \Calctool\Models\Audit;
 			$log->ip = $_SERVER['REMOTE_ADDR'];
 			$log->event = '[LOGIN] [SUCCESS] ' . $_SERVER['HTTP_USER_AGENT'];
 			$log->user_id = Auth::id();
 			$log->save();
 
 			/* Redirect to dashboard*/
-			return Redirect::to('/');
-		}else{
+			return redirect('/');
+		} else {
 
 			// Login failed
 			$errors = new MessageBag(['password' => ['Gebruikersnaam of wachtwoord verkeerd']]);
@@ -74,23 +75,23 @@ class AuthController extends Controller {
 				Redis::incr('auth:'.$username.':fail');
 			}
 
-			$failuser = User::where('username', $username)->first();
+			$failuser = \Calctool\Models\User::where('username', $username)->first();
 			if ($failuser) {
-				$log = new Audit;
+				$log = new \Calctool\Models\Audit;
 				$log->ip = $_SERVER['REMOTE_ADDR'];
 				$log->event = '[LOGIN] [FAILED] '.$failcount;
 				$log->user_id = $failuser->id;
 				$log->save();
 			}
 
-			return Redirect::to('login')->withErrors($errors)->withInput(Input::except('secret'))->withCookie(Cookie::forget('swpsess'));
+			return \Redirect::to('login')->withErrors($errors)->withInput(Input::except('secret'))->withCookie(Cookie::forget('swpsess'));
 		}
 	}
 
 	public function doLogout()
 	{
 		Auth::logout(); // log the user out of our application
-		return Redirect::to('login'); // redirect the user to the login screen
+		return \Redirect::to('login'); // redirect the user to the login screen
 	}
 
 	/**
@@ -111,7 +112,7 @@ class AuthController extends Controller {
 
 		if ($validator->fails()) {
 
-			return Redirect::to('register')->withErrors($validator)->withInput(Input::all());
+			return \Redirect::to('register')->withErrors($validator)->withInput(Input::all());
 		} else {
 			$user = new User;
 			$user->username = strtolower(trim(Input::get('username')));
@@ -131,7 +132,7 @@ class AuthController extends Controller {
 
 			$user->save();
 
-			return Redirect::to('register')->with('success', 'Account aangemaakt, er is een bevestingsmail verstuurd');
+			return \Redirect::to('register')->with('success', 'Account aangemaakt, er is een bevestingsmail verstuurd');
 		}
 
 	}
@@ -152,12 +153,12 @@ class AuthController extends Controller {
 
 		if ($validator->fails()) {
 
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+			return \Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 			$user = User::where('token','=',Route::Input('token'))->where('api','=',Route::Input('api'))->first();
 			if (!$user) {
 				$errors = new MessageBag(['activate' => ['Activatielink is niet geldig']]);
-				return Redirect::to('login')->withErrors($errors);
+				return \Redirect::to('login')->withErrors($errors);
 			}
 			$user->secret = Hash::make(Input::get('secret'));
 			$user->active = true;
@@ -171,7 +172,7 @@ class AuthController extends Controller {
 			$log->save();
 
 			Auth::login($user);
-			return Redirect::to('/');
+			return \Redirect::to('/');
 		}
 
 	}
@@ -210,11 +211,11 @@ class AuthController extends Controller {
 		$user = User::where('token','=',Route::Input('token'))->where('api','=',Route::Input('api'))->first();
 		if (!$user) {
 			$errors = new MessageBag(['activate' => ['Activatielink is niet geldig']]);
-			return Redirect::to('login')->withErrors($errors);
+			return \Redirect::to('login')->withErrors($errors);
 		}
 		if ($user->confirmed_mail) {
 			$errors = new MessageBag(['activate' => ['Account is al geactiveerd']]);
-			return Redirect::to('login')->withErrors($errors);
+			return \Redirect::to('login')->withErrors($errors);
 		}
 		$user->confirmed_mail = date('Y-m-d H:i:s');
 		$user->save();
@@ -230,7 +231,7 @@ class AuthController extends Controller {
 		$log->save();
 
 		Auth::login($user);
-		return Redirect::to('/')->withCookie(Cookie::make('nstep', 'intro_'.$user->id, 60*24*3));
+		return \Redirect::to('/')->withCookie(Cookie::make('nstep', 'intro_'.$user->id, 60*24*3));
 	}
 
 	/**
@@ -248,11 +249,11 @@ class AuthController extends Controller {
 
 		if ($validator->fails()) {
 
-			return Redirect::to('login')->with('success', 1);
+			return \Redirect::to('login')->with('success', 1);
 		} else {
 			$user = User::where('email','=',Input::get('email'))->first();
 			if (!$user)
-				return Redirect::to('login')->with('success', 1);
+				return \Redirect::to('login')->with('success', 1);
 			$user->secret = Hash::make(mt_rand());
 			$user->active = false;
 			$user->api = md5(mt_rand());
@@ -270,7 +271,7 @@ class AuthController extends Controller {
 			$log->user_id = $user->id;
 			$log->save();
 
-			return Redirect::to('login')->with('success', 1);
+			return \Redirect::to('login')->with('success', 1);
 		}
 
 	}

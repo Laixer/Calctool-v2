@@ -4,11 +4,9 @@ namespace Calctool\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Province extends Model {
+class SysMessage extends Model {
 
-	protected $table = 'province';
+	protected $table = 'system_message';
 	protected $guarded = array('id');
-
-	public $timestamps = false;
 
 }

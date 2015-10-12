@@ -1,6 +1,10 @@
 <?php
 
-class PartType extends Eloquent {
+namespace Calctool\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class PartType extends Model {
 
 	protected $table = 'part_type';
 	protected $guarded = array('id');

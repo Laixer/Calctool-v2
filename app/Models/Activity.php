@@ -1,6 +1,10 @@
 <?php
 
-class Activity extends Eloquent {
+namespace Calctool\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Activity extends Model {
 
 	protected $table = 'activity';
 	protected $guarded = array('id', 'priority');

@@ -1,6 +1,10 @@
 <?php
 
-class Detail extends Eloquent {
+namespace Calctool\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Detail extends Model {
 
 	protected $table = 'detail';
 	protected $guarded = array('id');

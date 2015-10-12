@@ -5,7 +5,7 @@ $next_step = Cookie::get('nstep');
 if (Input::get('nstep') == 'intro')
 	$next_step = 'intro_'.Auth::id();
 
-$relation = Relation::find(Auth::user()->self_id);
+$relation = Calctool\Models\Relation::find(Auth::user()->self_id);
 if ($relation)
 	$iban = Iban::where('relation_id','=',$relation->id)->first();
 else
@@ -34,7 +34,7 @@ else
 			<div class="modal-body">
 				<p>Na het invullen van deze QuickStart kan je direct starten met de CalculatieTool.
 
-				{{ Form::open(array('url' => '/mycompany/quickstart')) }}
+				{!! Form::open(array('url' => '/mycompany/quickstart')) !!}
 
 				<h4 class="company">Jouw Bedrijfsgegevens</h4>
 				<input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
@@ -155,16 +155,16 @@ else
 	<div id="shop">
 		<section class="container">
 
-			@if (SystemMessage::where('active','=',true)->count()>0)
-			@if (SystemMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->level==1)
+			@if (Calctool\Models\SysMessage::where('active','=',true)->count()>0)
+			@if (Calctool\Models\SysMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->level==1)
 			<div class="alert alert-warning">
 				<i class="fa fa-fa fa-info-circle"></i>
-				{{ SystemMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->content }}
+				{{ Calctool\Models\SysMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->content }}
 			</div>
 			@else
 			<div class="alert alert-danger">
 				<i class="fa fa-warning"></i>
-				<strong>{{ SystemMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->content }}</strong>
+				<strong>{{ Calctool\Models\SysMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->content }}</strong>
 			</div>
 			@endif
 			@endif
@@ -271,12 +271,12 @@ else
 									</tr>
 								</thead>
 								<tbody>
-									@foreach (Project::where('user_id','=', Auth::id())->whereNull('project_close')->orderBy('created_at', 'desc')->limit(5)->get() as $project)
+									@foreach (Calctool\Models\Project::where('user_id','=', Auth::id())->whereNull('project_close')->orderBy('created_at', 'desc')->limit(5)->get() as $project)
 									<?php $relation = Relation::find($project->client_id); ?>
 									<tr>
-										<td>{{ HTML::link('/project-'.$project->id.'/edit', $project->project_name) }}</td>
-										<td>{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); }}</td>
-										<td>{{ ucfirst($project->type->type_name) }}</td>
+										<td><a href="{{ '/project-'.$project->id.'/edit' }}">{{ $project->project_name }}</td>
+										<td>{!! \Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); !!}</td>
+										<td>{!! ucfirst($project->type->type_name) !!}</td>
 									</tr>
 									@endforeach
 								</tbody>
@@ -319,10 +319,10 @@ else
 									else
 										$userid = -1;
 									?>
-									@foreach (Relation::where('user_id','=', Auth::id())->where('id','!=',$userid)->orderBy('created_at', 'desc')->limit(5)->get() as $relation)
-									<?php $contact = Contact::where('relation_id','=',$relation->id)->first(); ?>
+									@foreach (Calctool\Models\Relation::where('user_id','=', Auth::id())->where('id','!=',$userid)->orderBy('created_at', 'desc')->limit(5)->get() as $relation)
+									<?php $contact = Calctool\Models\Contact::where('relation_id','=',$relation->id)->first(); ?>
 									<tr>
-										<td>{{ HTML::link('relation-'.$relation->id.'/edit', $relation->company_name ? $relation->company_name : $contact->firstname .' '. $contact->lastname) }}</td>
+										<td><a href="{{ 'relation-'.$relation->id.'/edit' }}">{{ $relation->company_name ? $relation->company_name : $contact->firstname .' '. $contact->lastname }}</a></td>
 										<td>{{ $relation->company_name ? $relation->email : $contact->email }}</td>
 										<td>{{ ucfirst(RelationKind::find($relation->kind_id)->kind_name) }}</td>
 									</tr>

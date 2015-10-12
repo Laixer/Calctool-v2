@@ -25,7 +25,7 @@ class UserController extends Controller {
 
 	public function getMyAccount()
 	{
-		return View::make('user.myaccount');
+		return response()->view('user.myaccount');
 	}
 
 	public function getMyAccountTelegram()

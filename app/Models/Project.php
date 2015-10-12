@@ -1,6 +1,10 @@
 <?php
 
-class Project extends Eloquent {
+namespace Calctool\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Project extends Model {
 
 	protected $table = 'project';
 	protected $guarded = array('id', 'project_code');

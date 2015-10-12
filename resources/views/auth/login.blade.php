@@ -22,7 +22,7 @@ $(document).ready(function() {
 					<h2><strong>Login</strong></h2>
 
 					<form method="POST" action="/login" accept-charset="UTF-8" class="white-row">
-					<input name="_token" type="hidden" value="{{ csrf_token() }}">
+					{!! csrf_field() !!}
 
 						<?# -- alert failed -- ?>
 						@if($errors->any())

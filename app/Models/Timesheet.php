@@ -1,6 +1,10 @@
 <?php
 
-class Timesheet extends Eloquent {
+namespace Calctool\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Timesheet extends Model {
 
 	protected $table = 'timesheet';
 	protected $guarded = array('id');

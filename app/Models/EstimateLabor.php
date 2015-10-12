@@ -1,6 +1,10 @@
 <?php
 
-class EstimateLabor extends Eloquent {
+namespace Calctool\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class EstimateLabor extends Model {
 
 	protected $table = 'estimate_labor';
 	protected $guarded = array('id');

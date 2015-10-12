@@ -1,6 +1,10 @@
 <?php
 
-class MoreMaterial extends Eloquent {
+namespace Calctool\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class MoreMaterial extends Model {
 
 	protected $table = 'more_material';
 	protected $guarded = array('id');

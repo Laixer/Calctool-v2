@@ -1,6 +1,10 @@
 <?php
 
-class CalculationEquipment extends Eloquent {
+namespace Calctool\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class CalculationEquipment extends Model {
 
 	protected $table = 'calculation_equipment';
 	protected $guarded = array('id');

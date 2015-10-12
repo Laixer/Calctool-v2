@@ -1,6 +1,10 @@
 <?php
 
-class Chapter extends Eloquent {
+namespace Calctool\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Chapter extends Model {
 
 	protected $table = 'chapter';
 	protected $guarded = array('id', 'priority');

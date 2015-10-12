@@ -16,7 +16,7 @@ class SystemSeeder extends Seeder {
 
 		$test_user_type = UserType::where('user_type','=','system')->first();
 
-		$test_user = \Calctool\User::create(array(
+		$test_user = \Calctool\Models\User::create(array(
 			'username' => 'system',
 			'secret' => Hash::make('ABC@123'),
 			'firstname' => 'SYSTEM',

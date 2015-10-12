@@ -23,7 +23,7 @@
 					@endif
 					@if (Auth::check())
 					<li>
-						{{ HTML::link('myaccount', 'Mijn account') }}
+						<a href="/myaccount">Mijn account</a>
 					</li>
 					@endif
 					@if (0)
@@ -33,7 +33,7 @@
 					@endif
 					@if (Auth::check() && Auth::user()->isAdmin())
 					<li>
-						{{ HTML::link('admin', 'Admin CP') }}
+						<a href="/admin">Admin CP</a>
 					</li>
 					@endif
 					<li class="active">

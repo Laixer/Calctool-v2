@@ -1,6 +1,6 @@
 <?php
 $user = Auth::user();
-$iban = Iban::where('user_id','=',$user->id)->where('relation_id','=',null)->first();
+$iban = Calctool\Models\Iban::where('user_id','=',$user->id)->where('relation_id','=',null)->first();
 ?>
 
 @extends('layout.master')
@@ -95,7 +95,8 @@ $(document).ready(function() {
 					<div class="tab-content">
 						<div id="company" class="tab-pane active">
 
-							{{ Form::open(array('url' => 'myaccount/updateuser')) }}
+							<form method="POST" action="/myaccount/updateuser" accept-charset="UTF-8">
+							{!! csrf_field() !!}
 
 							<h4 class="company">Contactgegevens</h4>
 							<div class="row company">
@@ -122,8 +123,8 @@ $(document).ready(function() {
 										<label for="gender" style="display:block;">Geslacht</label>
 										<select name="gender" id="gender" class="form-control pointer">
 											<option value="-1">Selecteer</option>
-											<option {{ $user->gender=='M' ? 'selected' : ''; }} value="M">Man</option>
-											<option {{ $user->gender=='V' ? 'selected' : ''; }} value="V">Vrouw</option>
+											<option {{ $user->gender=='M' ? 'selected' : '' }} value="M">Man</option>
+											<option {{ $user->gender=='V' ? 'selected' : '' }} value="V">Vrouw</option>
 										</select>
 									</div>
 								</div>
@@ -166,7 +167,7 @@ $(document).ready(function() {
 									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 								</div>
 							</div>
-						{{ Form::close() }}
+						</form>
 
 						</div>
 						<div id="payment" class="tab-pane">
@@ -196,7 +197,7 @@ $(document).ready(function() {
 								</thead>
 
 								<tbody>
-									@foreach (Payment::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $order)
+									@foreach (Calctool\Models\Payment::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $order)
 									<tr>
 										<td class="col-md-2"><strong>{{ date('d-m-Y H:i:s', strtotime(DB::table('payment')->select('created_at')->where('id','=',$order->id)->get()[0]->created_at)) }}</strong></td>
 										<td class="col-md-2">{{ '&euro; '.number_format($order->amount, 2,",",".") }}</td>
@@ -210,7 +211,8 @@ $(document).ready(function() {
 						</div>
 						<div id="contact" class="tab-pane">
 
-							{{ Form::open(array('url' => 'myaccount/security/update')) }}
+							<form method="POST" action="myaccount/security/update" accept-charset="UTF-8">
+                                                        {!! csrf_field() !!}
 
 							<h4 class="company">Wachtwoord wijzigen</h4>
 							<div class="row company">
@@ -262,12 +264,13 @@ $(document).ready(function() {
 									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 								</div>
 							</div>
-						{{ Form::close() }}
+						</form>
 
 						</div>
 						<div id="prefs" class="tab-pane">
 
-							{{ Form::open(array('url' => 'myaccount/preferences/update')) }}
+							<form method="POST" action="myaccount/preferences/update" accept-charset="UTF-8">
+                                                        {!! csrf_field() !!}
 
 							<h4 class="company">Voorkeuren</h4>
 
@@ -515,11 +518,12 @@ $(document).ready(function() {
 										<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 									</div>
 								</div>
-						{{ Form::close() }}
+							</form>
 						</div>
 						<div id="notepad" class="tab-pane">
 
-							{{ Form::open(array('url' => 'myaccount/notepad/save')) }}
+							<form method="POST" action="myaccount/notepad/save" accept-charset="UTF-8">
+                                                        {!! csrf_field() !!}
 
 							<h4>Kladblok</h4>
 							<div class="row">
@@ -534,7 +538,7 @@ $(document).ready(function() {
 										<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 									</div>
 								</div>
-						{{ Form::close() }}
+							</form>
 
 						</div>
 					</div>

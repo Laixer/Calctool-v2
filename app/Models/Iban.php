@@ -1,6 +1,10 @@
 <?php
 
-class Iban extends Eloquent {
+namespace Calctool\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Iban extends Model {
 
 	protected $table = 'iban';
 	protected $guarded = array('id');
