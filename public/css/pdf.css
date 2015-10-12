@@ -1,0 +1,258 @@
+@font-face {
+    font-family: 'Arial';
+    src: url(/fonts/SourceSansPro-Regular.ttf);
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+a {
+  color: #blue;
+  text-decoration: none;
+}
+
+body {
+  position: relative;
+  width: 21cm;
+  height: 29.7cm;
+  margin: 0 auto;
+  color: #4E4E4E;
+  background: #FFFFFF;
+  font-size: 14px;
+    font-family: 'Arial';
+}
+
+header {
+  padding: 10px 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #AAAAAA;
+    font-family: 'Arial';
+}
+
+#logo {
+  float: left;
+  margin-top: 8px;
+}
+
+#logo img {
+  height: 70px;
+}
+
+#company {
+  float: right;
+  text-align: right;
+}
+
+
+#details {
+  margin-bottom: 50px;
+}
+
+#invoice {
+  float: right;
+  text-align: right;
+}
+
+#invoice h1 {
+  font-size: 1.6em;
+  line-height: 1em;
+  font-weight: normal;
+  margin: 0  0 10px 0;
+}
+
+#invoice .date {
+  font-size: 1.1em;
+}
+
+
+/*DZA aproved*/
+h1.name {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 5px;
+  padding-left: 5px;
+  background: #e8e8e8;
+
+}
+
+h2.name {
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: underline;
+  margin: 5px;
+  padding-left: 5px;
+}
+
+h3.name {
+  font-size: 22px;
+  font-weight: normal;
+  margin: 0;
+  padding-left: 10px;
+}
+
+h4.name {
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: underline;
+  margin: 5px;
+  padding-left: 5px;
+  padding-top: 10px;
+}
+
+#client {
+  padding-left: 10px;
+  font-size: 14px;
+  float: left;
+}
+
+.openingtext {
+  font-size: 14px;
+  margin: 20px  0 20px 0;
+  padding-left: 10px;
+}
+
+.closingtext {
+  font-size: 14px;
+  margin: 20px  0 20px 0;
+  padding-left: 10px;
+}
+
+.statements {
+  font-size: 14px;
+  margin: 0  0 10px 0;
+  padding-left:10px;
+}
+
+.name {
+  font-size: 14px;
+}
+
+.signing {
+  font-size: 14px;
+  margin: 20px  0 20px 0;
+  padding-left: 10px;
+}
+/*DZA aproved*/
+
+
+
+
+
+table {
+  width: 100%;
+  border-spacing: 0;
+  margin-bottom: 5px;
+  padding: 0 0 0 10px;
+}
+
+table td {
+ padding: 0 0 0 5px;
+  background: #EEEEEE;
+  text-align: left;
+  border-bottom: 1px solid #FFFFFF;
+}
+
+table th {
+ white-space: nowrap;
+ font-weight: bold;
+ padding: 0 0 0 1px;
+ background: #EEEEEE;
+ text-align: left;
+ border-bottom: 2px solid #FFFFFF;
+}
+
+table td {
+ /*text-align: right;*/
+}
+
+table .no {
+  background: #ffffff;
+}
+
+table .desc {
+  text-align: left;
+  background: #ffffff;
+}
+
+table .unit {
+  background: #ffffff;
+}
+
+table .qty {
+  background: #ffffff;
+}
+
+table .qty-und {
+  background: #ffffff;
+  border-top: 1px solid #AAAAAA;
+
+}
+
+table .total {
+  background: #ffffff;
+}
+
+table td.no,
+table td.desc,
+table td.unit,
+table td.qty,
+table td.total {
+  font-size: 1.0em;
+}
+
+table tbody tr:last-child td {
+  border: none;
+}
+
+table tfoot td {
+  padding: 5px 5px;
+  background: #FFFFFF;
+  border-bottom: none;
+  font-size: 1.2em;
+  white-space: nowrap;
+  border-top: 1px solid #AAAAAA;
+}
+
+table tfoot tr:first-child td {
+  border-top: none;
+}
+
+table tfoot tr:last-child td {
+ /* color: #57B223;*/
+  font-size: 1.4em;
+  border-top: 1px solid #57B223;
+
+}
+
+table tfoot tr td:first-child {
+  border: none;
+}
+
+#thanks{
+  font-size: 2em;
+  margin-bottom: 50px;
+}
+
+#notices{
+  padding-left: 6px;
+  border-left: 6px solid #e8e8e8;
+}
+
+#notices .notice {
+  font-size: 1.2em;
+}
+
+footer {
+  color: #777777;
+  width: 100%;
+  height: 10px;
+
+  bottom: 0;
+  border-top: 1px solid #AAAAAA;
+  padding: 8px 0;
+  text-align: center;
+}
+

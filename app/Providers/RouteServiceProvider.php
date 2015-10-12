@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace Calctool\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -14,7 +14,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'App\Http\Controllers';
+    protected $namespace = 'Calctool\Http\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -25,7 +25,38 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(Router $router)
     {
         //
+$router->filter('admin', function()
+{
+	if (Auth::guest())
+	{
+		return \Redirect::guest('login');
+	}
 
+	//if(!in_array(UserType::find(Auth::user()->user_type)->user_type, array('admin', 'system'))) {
+	if (!Auth::user()->isAdmin())
+	{
+		//return Redirect::to('/');
+		return \Response::view('generic.404', array('url' => Request::path()), 404);
+	}
+
+});
+/*
+$router->filter('auth', function()
+{
+	if (Auth::guest())
+	{
+		return \Redirect::guest('login');
+	}
+});
+
+$router->filter('guest', function()
+{
+	if (Auth::check())
+	{
+		 return \Redirect::to('/');
+	}
+});
+*/
         parent::boot($router);
     }
 

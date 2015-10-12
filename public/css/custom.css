@@ -1,0 +1,341 @@
+/*
+	This is the custom css file overriding bootstrap
+	and layout defaults.
+*/
+
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+	padding: 2px;
+	line-height: 1.42857143;
+	vertical-align: middle;
+	border-top: 0px solid #ddd;
+}
+/* ALGEMEEN */
+/* Accordion tabs kleiner */
+.panel-default > .panel-heading {
+	padding: 6px 10px;
+}
+
+div.toggle > label {
+	padding: 6px 10px;
+}
+
+/* HOMEBLADE ============================================================================ */
+/* kleur icoon, background*/
+div.featured-box i.fa {
+	color: #4E4E4E;
+	background: #E8E8E8;
+	border-radius: 0%;
+}
+
+div.featured-box.nobg i.fa {
+	font-size: 50px;
+	margin-top: 0;
+	width: 100px;
+	height: 100px;
+	line-height: 100px;
+}
+
+div.featured-box {
+	padding: 14px;
+}
+
+/* kleur icoon, background inverted on hoover*/
+div.featured-box i.fa:hover {
+	color: #4E4E4E;
+	background: #79BB00;
+}
+
+/* panel accordion box*/
+.panel-default > .panel-heading {
+	background: #E8E8E8;
+}
+
+.panel-default > .panel-heading:hover {
+	background: #79BB00;
+}
+
+/* kleur tabbladen*/
+div.tabs ul.nav-tabs a {
+	background: #E8E8E8;
+}
+
+/* ============================================================================ */
+/* invulvelden formulieren; text leesbaar maken en regels dunner voor meer overzicht */
+/* gebruikt op Calculatiepagina*/
+.form-control {
+	height: 40px;
+	padding: 4px;
+}
+
+/* Nieuw invulveld voor formulieren met getallen; regels dunner voor meer overzicht*/
+/* gebruikt op Calculatiepagina, nieuw project*/
+.form-control-sm-number {
+	border: #e6e6e6 2px solid;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	display: block;
+	width: 100%;
+	height: 27px;
+	padding: 1px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+}
+
+/* Nieuw invulveld voor formulieren met text; regels dunner voor meer overzicht */
+/* gebruikt op Calculatiepagina*/
+.form-control-sm-text {
+	border: #e6e6e6 2px solid;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	display: block;
+	width: 100%;
+	height: 27px;
+	padding: 1px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+}
+
+/* Error rode border rondom inputvelden */
+/* gebruikt op Calculatiepagina*/
+.error-input {
+	border: #d43f3a 2px solid;
+}
+
+/* Actieve hoofdstukken, niet actief and border */
+/* gebruikt op Calculatiepagina*/
+div.toggle-chapter > label {
+	background: #fff;
+	border: #8E8E8E 2px solid;
+}
+
+div.toggle-chapter.active > label {
+	color: #fff;
+	background: #79BB00;
+	border: #79BB00 2px solid;
+}
+
+div.toggle-chapter > label:hover {
+	color: #fff;
+	background: #79BB00;
+	border: #79BB00 2px solid;
+}
+
+.btn-primary-chapter, .btn-primary-chapter:hover {
+	background: #79BB00 !important;
+}
+
+/* Actieve werkzaamheden grijs, niet actief grijze border, incl knop */
+/* gebruikt op Calculatiepagina*/
+div.toggle-activity > label {
+	background: #E8E8E8;
+}
+
+div.toggle-activity.active > label {
+	background-color: #4E4E4E;
+}
+
+div.toggle-activity > label:hover {
+	color: #fff;
+	background: #4E4E4E;
+}
+
+.btn-primary-activity, .btn-primary-activity:hover {
+	background: #4E4E4E !important;
+}
+
+/* Knop materialen databse mdb*/
+/* gebruikt op Calculatiepagina*/
+.btn-primary-mdb:hover, .btn-primary-mdb:active, .btn-primary-mdb:focus {
+	border: rgba(25,25,25,0) 2px solid;
+	background-color: #4E4E4E !important;
+}
+
+/* Wizzard */
+.wizard a {
+	padding: 10px 16px 10px 37px;
+	margin-right: 5px;
+	background: #E8E8E8;
+	position: relative;
+	display: inline-block;
+	text-decoration: none;
+}
+.wizard span {
+	padding: 10px 19px 10px 37px;
+	margin-right: 5px;
+	background: #E8E8E8;
+	position: relative;
+	display: inline-block;
+	text-decoration: none;
+	color: #666;
+}
+
+.wizard span:before {
+	width: 0;
+	height: 0;
+	border-top: 22px inset transparent;
+	border-bottom: 21px inset transparent;
+	border-left: 20px solid rgba(244,245,247,1);
+	position: absolute;
+	content: "";
+	top: 0;
+	left: 0;
+}
+.wizard span:after {
+	width: 0;
+	height: 0;
+	border-top: 22px inset transparent;
+	border-bottom: 21px inset transparent;
+	border-left: 20px solid #E8E8E8;
+	position: absolute;
+	content: "";
+	top: 0;
+	right: -20px;
+	z-index: 2;
+}
+.wizard span:first-child:before,
+.wizard span:last-child:after {
+	border: none;
+}
+.wizard span:first-child {
+	-webkit-border-radius: 4px 0 0 4px;
+	-moz-border-radius: 4px 0 0 4px;
+	border-radius: 4px 0 0 4px;
+}
+.wizard span:last-child {
+	-webkit-border-radius: 0 4px 4px 0;
+	-moz-border-radius: 0 4px 4px 0;
+	border-radius: 0 4px 4px 0;
+}
+.wizard span:first-child .badge {
+	margin-left: 0;
+}
+
+.wizard a:before {
+	width: 0;
+	height: 0;
+	border-top: 22px inset transparent;
+	border-bottom: 21px inset transparent;
+	border-left: 20px solid rgba(244,245,247,1);
+	position: absolute;
+	content: "";
+	top: 0;
+	left: 0;
+}
+.wizard a:after {
+	width: 0;
+	height: 0;
+	border-top: 22px inset transparent;
+	border-bottom: 21px inset transparent;
+	border-left: 20px solid #E8E8E8;
+	position: absolute;
+	content: "";
+	top: 0;
+	right: -20px;
+	z-index: 2;
+}
+.wizard a:first-child:before,
+.wizard a:last-child:after {
+	border: none;
+}
+.wizard a:first-child {
+	-webkit-border-radius: 4px 0 0 4px;
+	-moz-border-radius: 4px 0 0 4px;
+	border-radius: 4px 0 0 4px;
+}
+.wizard a:last-child {
+	-webkit-border-radius: 0 4px 4px 0;
+	-moz-border-radius: 0 4px 4px 0;
+	border-radius: 0 4px 4px 0;
+}
+.wizard a:first-child .badge {
+	margin-left: 0;
+}
+.wizard .current {
+	background: #79BB00;
+	color: #fff;
+}
+.wizard .current:after {
+	border-left-color: #79BB00;
+}
+/*a;s de knop niet beschikbaar is moet deze grijs (niet selecteerbaar) zijn.*/
+
+.fix-footer-bottom {
+	margin-bottom: 40px;
+}
+/*Selectboxxes op offerte*/
+select {
+	border: 2px solid #719E00 ;
+	border-radius: 4px;
+	height: 26px;
+	padding: 0px;
+	background: #719E00 ;
+}
+
+select, textarea {
+	color: white;
+}
+
+.btn-xxs, .btn-xxs:hover {
+	padding: 0px 13px;
+}
+
+label.nobold {
+	font-weight: 300;
+}
+
+h5 {
+	margin: 15px 0px 5px 0px;
+}
+
+/* deze bestaat niet maar geeft wel de gewenst ekop aan voor aannenemiing e odneraanneming op offer en invoice
+h6 {
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: underline;
+  margin: 0px;
+  padding-left: 0px;
+  padding-top: 10px;
+}
+*/
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  background: red;
+  cursor: inherit;
+  display: block;
+}
+input[readonly] {
+  background-color: white !important;
+  cursor: text !important;
+}

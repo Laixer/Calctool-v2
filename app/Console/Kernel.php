@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console;
+namespace Calctool\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -13,7 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \App\Console\Commands\Inspire::class,
+        \Calctool\Console\Commands\Inspire::class,
+        \Calctool\Console\Commands\DropHard::class,
+        \Calctool\Console\Commands\MaterialImport::class,
     ];
 
     /**
