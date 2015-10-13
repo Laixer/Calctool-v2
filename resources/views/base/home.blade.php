@@ -49,7 +49,7 @@ else
 						<div class="form-group">
 							<label for="company_type">Bedrijfstype*</label>
 							<select name="company_type" id="company_type" class="form-control pointer">
-							@foreach (RelationType::all() as $type)
+							@foreach (\Calctool\Models\RelationType::all() as $type)
 								<option {{ $relation ? ($relation->type_id==$type->id ? 'selected' : '') : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
 							@endforeach
 							</select>
@@ -272,10 +272,10 @@ else
 								</thead>
 								<tbody>
 									@foreach (Calctool\Models\Project::where('user_id','=', Auth::id())->whereNull('project_close')->orderBy('created_at', 'desc')->limit(5)->get() as $project)
-									<?php $relation = Relation::find($project->client_id); ?>
+									<?php $relation = \Calctool\Models\Relation::find($project->client_id); ?>
 									<tr>
 										<td><a href="{{ '/project-'.$project->id.'/edit' }}">{{ $project->project_name }}</td>
-										<td>{!! \Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); !!}</td>
+										<td>{!! \Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (\Calctool\Models\Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.\Calctool\Models\Contact::where('relation_id','=',$relation->id)->first()['lastname']); !!}</td>
 										<td>{!! ucfirst($project->type->type_name) !!}</td>
 									</tr>
 									@endforeach
@@ -324,7 +324,7 @@ else
 									<tr>
 										<td><a href="{{ 'relation-'.$relation->id.'/edit' }}">{{ $relation->company_name ? $relation->company_name : $contact->firstname .' '. $contact->lastname }}</a></td>
 										<td>{{ $relation->company_name ? $relation->email : $contact->email }}</td>
-										<td>{{ ucfirst(RelationKind::find($relation->kind_id)->kind_name) }}</td>
+										<td>{{ ucfirst(\Calctool\Models\RelationKind::find($relation->kind_id)->kind_name) }}</td>
 									</tr>
 									@endforeach
 								</tbody>
@@ -338,7 +338,4 @@ else
 		</section>
 	</div>
 </div>
-
-<?# -- /WRAPPER -- ?>
-
 @stop

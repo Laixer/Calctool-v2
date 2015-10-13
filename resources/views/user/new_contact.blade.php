@@ -1,10 +1,10 @@
 <?php
 $common_access_error = false;
-$relation = Relation::find(Route::Input('relation_id'));
+$relation = \Calctool\Models\Relation::find(Route::Input('relation_id'));
 if (!$relation || !$relation->isOwner()) {
 	$common_access_error = true;
 } else {
-	$contact = Contact::where('relation_id','=',$relation->id)->first();
+	$contact = \Calctool\Models\Contact::where('relation_id','=',$relation->id)->first();
 }
 ?>
 
@@ -61,7 +61,8 @@ if (!$relation || !$relation->isOwner()) {
 			<h2><strong>Nieuw</strong> contact</h2>
 
 			<div class="white-row">
-				{{ Form::open(array('url' => 'relation/contact/new')) }}
+				<form method="POST" action="/relation/contact/new" accept-charset="UTF-8">
+	                        {!! csrf_field() !!}
 				<h4>Contactgegevens</h4>
 				<div class="row">
 
@@ -101,12 +102,12 @@ if (!$relation || !$relation->isOwner()) {
 						</div>
 					</div>
 
-					@if (RelationKind::find($relation->kind_id)->kind_name=='zakelijk')
+					@if (\Calctool\Models\RelationKind::find($relation->kind_id)->kind_name=='zakelijk')
 					<div class="col-md-4 company">
 						<div class="form-group">
 							<label for="contactfunction">Functie*</label>
 							<select name="contactfunction" id="contactfunction" class="form-control pointer">
-							@foreach (ContactFunction::all() as $function)
+							@foreach (\Calctool\Models\ContactFunction::all() as $function)
 								<option {{ $function->function_name=='directeur' ? 'selected' : '' }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
 							@endforeach
 							</select>
@@ -128,8 +129,7 @@ if (!$relation || !$relation->isOwner()) {
 					</div>
 
 				</div>
-
-			{{ Form::close() }}
+			</form>
 			</div>
 
 		</div>
@@ -137,8 +137,5 @@ if (!$relation || !$relation->isOwner()) {
 	</section>
 
 </div>
-<?#-- /WRAPPER --?>
-
 @stop
-
 <?php } ?>

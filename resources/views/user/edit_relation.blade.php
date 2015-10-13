@@ -1,11 +1,11 @@
 <?php
 $common_access_error = false;
-$relation = Relation::find(Route::Input('relation_id'));
+$relation = \Calctool\Models\Relation::find(Route::Input('relation_id'));
 if (!$relation || !$relation->isOwner()) {
 	$common_access_error = true;
 } else {
-	$iban = Iban::where('relation_id','=',$relation->id)->first();
-	$contact = Contact::where('relation_id','=',$relation->id)->first();
+	$iban = \Calctool\Models\Iban::where('relation_id','=',$relation->id)->first();
+	$contact = \Calctool\Models\Contact::where('relation_id','=',$relation->id)->first();
 }
 ?>
 
@@ -129,7 +129,7 @@ $(document).ready(function() {
 					<?# -- tabs -- ?>
 					<ul class="nav nav-tabs">
 						<li class="active">
-							<a href="#company" data-toggle="tab">{{ ucfirst( RelationKind::find($relation->kind_id)->kind_name) }}e gegevens</a>
+							<a href="#company" data-toggle="tab">{{ ucfirst( \Calctool\Models\RelationKind::find($relation->kind_id)->kind_name) }}e gegevens</a>
 						</li>
 						<li>
 							<a href="#payment" data-toggle="tab">Betalingsgegevens</a>
@@ -143,8 +143,9 @@ $(document).ready(function() {
 					<div class="tab-content">
 						<div id="company" class="tab-pane active">
 
-							{{ Form::open(array('url' => 'relation/update')) }}
-							<h4>{{ ucfirst( RelationKind::find($relation->kind_id)->kind_name) }}e relatie</h4>
+							<form method="POST" action="/relation/update" accept-charset="UTF-8">
+			                                {!! csrf_field() !!}
+							<h4>{{ ucfirst(\Calctool\Models\RelationKind::find($relation->kind_id)->kind_name) }}e relatie</h4>
 							<div class="row">
 								<div class="col-md-2">
 									<div class="form-group">
@@ -156,7 +157,7 @@ $(document).ready(function() {
 
 							</div>
 
-							@if (RelationKind::find($relation->kind_id)->kind_name == 'zakelijk')
+							@if (\Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk')
 							<h4 class="company">Bedrijfsgegevens</h4>
 							<div class="row company">
 
@@ -171,7 +172,7 @@ $(document).ready(function() {
 									<div class="form-group">
 										<label for="company_type">Bedrijfstype*</label>
 										<select name="company_type" id="company_type" class="form-control pointer">
-										@foreach (RelationType::all() as $type)
+										@foreach (\Calctool\Models\RelationType::all() as $type)
 											<option {{ $relation->type_id==$type->id ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
 										@endforeach
 										</select>
@@ -251,7 +252,7 @@ $(document).ready(function() {
 									<div class="form-group">
 										<label for="province">Provincie*</label>
 										<select name="province" id="province" class="form-control pointer">
-											@foreach (Province::all() as $province)
+											@foreach (\Calctool\Models\Province::all() as $province)
 												<option {{ $relation->province_id==$province->id ? 'selected' : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
 											@endforeach
 										</select>
@@ -262,7 +263,7 @@ $(document).ready(function() {
 									<div class="form-group">
 										<label for="country">Land*</label>
 										<select name="country" id="country" class="form-control pointer">
-											@foreach (Country::all() as $country)
+											@foreach (\Calctool\Models\Country::all() as $country)
 												<option {{ $relation->country_id==$country->id ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
 											@endforeach
 										</select>
@@ -284,12 +285,13 @@ $(document).ready(function() {
 									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 								</div>
 							</div>
-						{{ Form::close() }}
+						</form>
 
 						</div>
 						<div id="payment" class="tab-pane">
 							<h4>Betalingsgegevens</h4>
-							{{ Form::open(array('url' => 'relation/iban/update')) }}
+							<form method="POST" action="/relation/iban/update" accept-charset="UTF-8">
+                                                        {!! csrf_field() !!}
 							<div class="row">
 
 								<div class="col-md-3">
@@ -313,7 +315,7 @@ $(document).ready(function() {
 									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 								</div>
 							</div>
-							{{ Form::close() }}
+							</form>
 						</div>
 						<div id="contact" class="tab-pane">
 							<h4>Contactpersonen</h4>
@@ -332,11 +334,11 @@ $(document).ready(function() {
 
 								<!-- table items -->
 								<tbody>
-									@foreach (Contact::where('relation_id','=', $relation->id)->get() as $contact)
+									@foreach (\Calctool\Models\Contact::where('relation_id','=', $relation->id)->get() as $contact)
 									<tr><!-- item -->
 										<td class="col-md-2"><a href="/relation-{{ $relation->id }}/contact-{{ $contact->id }}/edit">{{ $contact->firstname }}</a></td>
 										<td class="col-md-2">{{ $contact->lastname }}</td>
-										<td class="col-md-2">{{ ucfirst(ContactFunction::find($contact->function_id)->function_name) }}</td>
+										<td class="col-md-2">{{ ucfirst(\Calctool\Models\ContactFunction::find($contact->function_id)->function_name) }}</td>
 										<td class="col-md-2">{{ $contact->phone }}</td>
 										<td class="col-md-2">{{ $contact->mobile }}</td>
 										<td class="col-md-2">{{ $contact->email }}</td>
@@ -361,7 +363,7 @@ $(document).ready(function() {
 <?#-- /WRAPPER --?>
 <script type="text/javascript">
 $(document).ready(function() {
-	<?php $response = RelationKind::where('id','=',Input::old('relationkind'))->first(); ?>
+	<?php $response = \Calctool\Models\RelationKind::where('id','=',Input::old('relationkind'))->first(); ?>
 	if('{{ ($response ? $response->kind_name : 'zakelijk') }}'=='particulier'){
 		$('.company').hide();
 		$('#relationkind option[value="{{ Input::old('relationkind') }}"]').attr("selected",true);

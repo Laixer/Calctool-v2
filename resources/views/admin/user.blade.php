@@ -69,18 +69,18 @@ if (Input::get('all') == 1) {
 				<tbody>
 				<?php
 				if ($all) {
-					$selection = User::orderBy('created_at')->get();
+					$selection = \Calctool\Models\User::orderBy('created_at')->get();
 				} else {
-					$selection = User::where('active','=','true')->orderBy('created_at')->get();
+					$selection = \Calctool\Models\User::where('active','=','true')->orderBy('created_at')->get();
 				}
 				?>
 				@foreach ($selection as $users)
 					<tr>
-						<td class="col-md-3">{{ (UserType::find($users->user_type)->user_type=='system') ? $users->username : HTML::link('/admin/user-'.$users->id.'/edit', $users->username) . ' (' . $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '') . ')' }}</td>
+						<td class="col-md-3"><a href="{{ '/admin/user-'.$users->id.'/edit' }}">{{ $users->username . ' (' . $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '') . ')' }}</a></td>
 						<td class="col-md-2">{{ $users->ip }}</td>
 						<td class="col-md-2">{{ $users->email }}</td>
 						<td class="col-md-2">{{ userStatus($users) }}</td>
-						<td class="col-md-1">{{ ucfirst(UserType::find($users->user_type)->user_type) }}</td>
+						<td class="col-md-1">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>
 						<td class="col-md-2">{{ userActive($users) }}</td>
 					</tr>
 				@endforeach

@@ -3,7 +3,7 @@
 @section('content')
 
 <?php
-$user = User::find(Route::input('user_id'));
+$user = \Calctool\Models\User::find(Route::input('user_id'));
 ?>
 
 <script type="text/javascript">
@@ -101,7 +101,8 @@ $(document).ready(function() {
 					<div class="tab-content">
 						<div id="userdata" class="tab-pane active">
 
-					<form method="post" action="">
+					<form method="POST" action="" accept-charset="UTF-8">
+                                        {!! csrf_field() !!}
 
 					<h4 class="company">Gebruikersgegevens</h4>
 					<div class="row company">
@@ -118,7 +119,7 @@ $(document).ready(function() {
 							<div class="form-group">
 								<label for="user_type">Gebruikers type</label>
 								<select name="type" id="type" class="form-control pointer">
-									@foreach (UserType::all() as $type)
+									@foreach (\Calctool\Models\UserType::all() as $type)
 										<option {{ $user->user_type==$type->id ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->user_type) }}</option>
 									@endforeach
 								</select>
@@ -226,7 +227,7 @@ $(document).ready(function() {
 							<div class="form-group">
 								<label for="province">Provincie</label>
 								<select name="province" id="province" class="form-control pointer">
-									@foreach (Province::all() as $province)
+									@foreach (\Calctool\Models\Province::all() as $province)
 										<option {{ $user->province_id==$province->id ? 'selected' : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
 									@endforeach
 								</select>
@@ -237,7 +238,7 @@ $(document).ready(function() {
 							<div class="form-group">
 								<label for="country">Land</label>
 								<select name="country" id="country" class="form-control pointer">
-									@foreach (Country::all() as $country)
+									@foreach (\Calctool\Models\Country::all() as $country)
 										<option {{ $user->country_id==$country->id ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
 									@endforeach
 								</select>
@@ -338,9 +339,9 @@ $(document).ready(function() {
 						</thead>
 
 						<tbody>
-						@foreach (Audit::where('user_id', $user->id)->orderBy('created_at','desc')->get() as $rec)
+						@foreach (\Calctool\Models\Audit::where('user_id', $user->id)->orderBy('created_at','desc')->get() as $rec)
 							<tr>
-								<td class="col-md-2">{{ date('d-m-Y H:i:s', strtotime(DB::table('audit')->select('created_at')->where('id',$rec->id)->get()[0]->created_at)); }}</td>
+								<td class="col-md-2">{{ date('d-m-Y H:i:s', strtotime(DB::table('audit')->select('created_at')->where('id',$rec->id)->get()[0]->created_at)) }}</td>
 								<td class="col-md-2">{{ $rec->ip }}</td>
 								<td class="col-md-8">{{ (strlen($rec->event)>80) ? substr($rec->event, 0, 80).'...' : $rec->event }}</td>
 							</tr>

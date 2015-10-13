@@ -70,7 +70,8 @@ $(document).ready(function() {
 
 			<h2><strong>Nieuwe</strong> gebruiker</h2>
 			<div class="white-row" >
-				{{ Form::open(array('url' => '/admin/user/new')) }}
+				<form method="POST" action="/admin/user/new" accept-charset="UTF-8">
+                                {!! csrf_field() !!}
 
 				<h4 class="company">Gebruikersgegevens</h4>
 				<div class="row company">

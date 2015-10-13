@@ -1,7 +1,6 @@
 @extends('layout.master')
 
 @section('content')
-<?# -- WRAPPER -- ?>
 		<div id="wrapper">
 
 			<section class="container text-center">
@@ -31,12 +30,12 @@
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/user" ><h4>Gebruikers</h4></a>
-									<small class="styleColor">{{ User::where('active','=','true')->count() }} actieve gebruikers</small>
+									<small class="styleColor">{{ \Calctool\Models\User::where('active','=','true')->count() }} actieve gebruikers</small>
 								</div>
 							</div>
 						</div>
 
-						<div class="col-sm-6 col-md-3"><!-- item -->
+						<div class="col-sm-6 col-md-3">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/alert">
@@ -51,7 +50,7 @@
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/alert" ><h4>Alerts</h4></a>
-									<small class="styleColor">{{ SystemMessage::count() }} alerts</small>
+									<small class="styleColor">{{ \Calctool\Models\SysMessage::count() }} alerts</small>
 								</div>
 							</div>
 						</div>
@@ -70,7 +69,7 @@
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/payment"><h4>Betalingen</h4></a>
-									<small class="styleColor">{{ Payment::count() }} transacties</small>
+									<small class="styleColor">{{ \Calctool\Models\Payment::count() }} transacties</small>
 								</div>
 							</div>
 						</div>
@@ -89,7 +88,7 @@
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/resource"><h4>Bestanden</h4></a>
-									<small class="styleColor">{{ Resource::count() }} bestanden</small>
+									<small class="styleColor">{{ \Calctool\Models\Resource::count() }} bestanden</small>
 								</div>
 							</div>
 						</div>
@@ -162,8 +161,8 @@
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/support" ><h4>Support & Ondersteuning</h4></a>
-									<small class="styleColor">{{ Resource::count() }} nieuwe tickets</small>
-									<small class="styleColor">{{ Resource::count() }} open tickets</small>
+									<small class="styleColor">{{ \Calctool\Models\Resource::count() }} nieuwe tickets</small>
+									<small class="styleColor">{{ \Calctool\Models\Resource::count() }} open tickets</small>
 								</div>
 							</div>
 						</div>

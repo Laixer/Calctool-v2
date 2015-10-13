@@ -4,6 +4,8 @@ namespace Calctool\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Auth;
+
 class Project extends Model {
 
 	protected $table = 'project';
@@ -26,7 +28,7 @@ class Project extends Model {
 	}
 
 	public function type() {
-		return $this->hasOne('ProjectType', 'id', 'type_id');
+		return $this->hasOne('\Calctool\Models\ProjectType', 'id', 'type_id');
 	}
 
 	public function isOwner() {

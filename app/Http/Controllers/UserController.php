@@ -15,27 +15,27 @@ class UserController extends Controller {
 	 */
 	public function getAll()
 	{
-		return View::make('admin.user');
+		return view('admin.user');
 	}
 
 	public function getNew()
 	{
-		return View::make('admin.new_user');
+		return view('admin.new_user');
 	}
 
 	public function getMyAccount()
 	{
-		return response()->view('user.myaccount');
+		return view('user.myaccount');
 	}
 
 	public function getMyAccountTelegram()
 	{
-		return View::make('user.myaccount_telegram');
+		return response()->view('user.myaccount_telegram');
 	}
 
 	public function getPayment()
 	{
-		return View::make('user.payment');
+		return response()->view('user.payment');
 	}
 
 	public function getMyAccountTelegramUnchain()

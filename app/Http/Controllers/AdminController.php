@@ -2,6 +2,8 @@
 
 namespace Calctool\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 class AdminController extends Controller {
 
 	/*
@@ -19,17 +21,17 @@ class AdminController extends Controller {
 
 	public function getDashboard()
 	{
-		return View::make('admin.dashboard');
+		return view('admin.dashboard');
 	}
 
 	public function getAlert()
 	{
-		return View::make('admin.alert');
+		return view('admin.alert');
 	}
 
 	public function getPHPInfo()
 	{
-		return View::make('admin.phpinfo');
+		return view('admin.phpinfo');
 	}
 
 	public function doNewAlert()
@@ -47,8 +49,8 @@ class AdminController extends Controller {
 		} else {
 
 			$alert = new SystemMessage;
-			$alert->level = Input::get('level');
-			$alert->content = Input::get('message');
+			$alert->level = $request->input('level');
+			$alert->content = $request->input('message');
 			$alert->active = true;
 
 			$alert->save();
@@ -72,7 +74,7 @@ class AdminController extends Controller {
 			return json_encode(['success' => 0, 'message' => $messages]);
 		} else {
 
-			$alert = SystemMessage::find(Input::get('id'));
+			$alert = SystemMessage::find($request->input('id'));
 			$alert->active = false;
 
 			$alert->save();
@@ -95,7 +97,7 @@ class AdminController extends Controller {
 			return Redirect::back()->withErrors($validator)->withInput(Input::all());
 		} else {
 
-			$subtract = Input::get('amount');
+			$subtract = $request->input('amount');
 
 			$mollie = new Mollie_API_Client;
 			$mollie->setApiKey($_ENV['MOLLIE_API']);
@@ -168,9 +170,9 @@ class AdminController extends Controller {
 
 			/* General */
 			$user = new User;
-			$user->username = strtolower(trim(Input::get('username')));
-			$user->secret = Hash::make(Input::get('secret'));
-			$user->user_type = Input::get('type');
+			$user->username = strtolower(trim($request->input('username')));
+			$user->secret = Hash::make($request->input('secret'));
+			$user->user_type = $request->input('type');
 
 			/* Server */
 			$user->api = md5(mt_rand());
@@ -179,145 +181,134 @@ class AdminController extends Controller {
 			$user->ip = $_SERVER['REMOTE_ADDR'];
 
 			/* Contact */
-			if (Input::get('firstname'))
-				$user->firstname = Input::get('firstname');
+			if ($request->input('firstname'))
+				$user->firstname = $request->input('firstname');
 			else
 				$user->firstname = $user->username;
-			if (Input::get('lastname'))
-				$user->lastname = Input::get('lastname');
-			$user->email = Input::get('email');
-			if (Input::get('mobile'))
-				$user->mobile = Input::get('mobile');
-			if (Input::get('telephone'))
-				$user->phone = Input::get('telephone');
-			if (Input::get('website'))
-				$user->website = Input::get('website');
+			if ($request->input('lastname'))
+				$user->lastname = $request->input('lastname');
+			$user->email = $request->input('email');
+			if ($request->input('mobile'))
+				$user->mobile = $request->input('mobile');
+			if ($request->input('telephone'))
+				$user->phone = $request->input('telephone');
+			if ($request->input('website'))
+				$user->website = $request->input('website');
 
 			/* Adress */
-			if (Input::get('address_street'))
-				$user->address_street = Input::get('address_street');
-			if (Input::get('address_number'))
-				$user->address_number = Input::get('address_number');
-			if (Input::get('address_zipcode'))
-				$user->address_postal = Input::get('address_zipcode');
-			if (Input::get('address_city'))
-				$user->address_city = Input::get('address_city');
-			$user->province_id = Input::get('province');
-			$user->country_id = Input::get('country');
+			if ($request->input('address_street'))
+				$user->address_street = $request->input('address_street');
+			if ($request->input('address_number'))
+				$user->address_number = $request->input('address_number');
+			if ($request->input('address_zipcode'))
+				$user->address_postal = $request->input('address_zipcode');
+			if ($request->input('address_city'))
+				$user->address_city = $request->input('address_city');
+			$user->province_id = $request->input('province');
+			$user->country_id = $request->input('country');
 
 			/* Overig */
-			$user->expiration_date = Input::get('expdate');
-			if (Input::get('note'))
-				$user->note = Input::get('note');
-			if (Input::get('notepad'))
-				$user->notepad = Input::get('notepad');
-			if (Input::get('confirmdate'))
-				$user->confirmed_mail = Input::get('confirmdate');
-			if (Input::get('bandate'))
-				$user->banned = Input::get('bandate');
-			if (Input::get('toggle-active'))
+			$user->expiration_date = $request->input('expdate');
+			if ($request->input('note'))
+				$user->note = $request->input('note');
+			if ($request->input('notepad'))
+				$user->notepad = $request->input('notepad');
+			if ($request->input('confirmdate'))
+				$user->confirmed_mail = $request->input('confirmdate');
+			if ($request->input('bandate'))
+				$user->banned = $request->input('bandate');
+			if ($request->input('toggle-active'))
 				$user->active = true;
 			else
 				$user->active = false;
-			if (Input::get('toggle-api'))
+			if ($request->input('toggle-api'))
 				$user->api_access = true;
 			else
 				$user->api_access = false;
-			if (!Input::get('gender') || Input::get('gender') == '-1')
+			if (!$request->input('gender') || $request->input('gender') == '-1')
 				$user->gender = NULL;
 			else
-				$user->gender = Input::get('gender');
+				$user->gender = $request->input('gender');
 
 			$user->save();
 
-			return Redirect::back()->with('success', 1);
+			return back()->with('success', 1);
 		}
 	}
 
-	public function doUpdateUser()
+	public function doUpdateUser(Request $request, $user_id)
 	{
-		$rules = array(
-			/* General */
+		$this->validate($request, [
 			'username' => array('required'),
 			'email' => array('required','email','max:80'),
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			// redirect our user back to the form with the errors from the validator
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
-		} else {
+		]);
 
 			/* General */
-			$user = User::find(Route::input('user_id'));
-			if (Input::get('username'))
-				$user->username = strtolower(trim(Input::get('username')));
-			if (Input::get('secret'))
-				$user->secret = Hash::make(Input::get('secret'));
-			if (Input::get('type'))
-				$user->user_type = Input::get('type');
+			$user = \Calctool\Models\User::find($user_id);
+			if ($request->input('username'))
+				$user->username = strtolower(trim($request->input('username')));
+			if ($request->input('secret'))
+				$user->secret = Hash::make($request->input('secret'));
+			if ($request->input('type'))
+				$user->user_type = $request->input('type');
 
 			/* Contact */
-			if (Input::get('firstname'))
-				$user->firstname = Input::get('firstname');
+			if ($request->input('firstname'))
+				$user->firstname = $request->input('firstname');
 			else
 				$user->firstname = $user->username;
-			if (Input::get('lastname'))
-				$user->lastname = Input::get('lastname');
-			if (Input::get('email'))
-				$user->email = Input::get('email');
-			if (Input::get('mobile'))
-				$user->mobile = Input::get('mobile');
-			if (Input::get('telephone'))
-				$user->phone = Input::get('telephone');
-			if (Input::get('website'))
-				$user->website = Input::get('website');
+			if ($request->input('lastname'))
+				$user->lastname = $request->input('lastname');
+			if ($request->input('email'))
+				$user->email = $request->input('email');
+			if ($request->input('mobile'))
+				$user->mobile = $request->input('mobile');
+			if ($request->input('telephone'))
+				$user->phone = $request->input('telephone');
+			if ($request->input('website'))
+				$user->website = $request->input('website');
 
 			/* Adress */
-			if (Input::get('address_street'))
-				$user->address_street = Input::get('address_street');
-			if (Input::get('address_number'))
-				$user->address_number = Input::get('address_number');
-			if (Input::get('address_zipcode'))
-				$user->address_postal = Input::get('address_zipcode');
-			if (Input::get('address_city'))
-				$user->address_city = Input::get('address_city');
-			$user->province_id = Input::get('province');
-			$user->country_id = Input::get('country');
+			if ($request->input('address_street'))
+				$user->address_street = $request->input('address_street');
+			if ($request->input('address_number'))
+				$user->address_number = $request->input('address_number');
+			if ($request->input('address_zipcode'))
+				$user->address_postal = $request->input('address_zipcode');
+			if ($request->input('address_city'))
+				$user->address_city = $request->input('address_city');
+			$user->province_id = $request->input('province');
+			$user->country_id = $request->input('country');
 
 			/* Overig */
-			if (Input::get('expdate'))
-				$user->expiration_date = Input::get('expdate');
-			if (Input::get('note'))
-				$user->note = Input::get('note');
-			if (Input::get('notepad'))
-				$user->notepad = Input::get('notepad');
-			if (Input::get('confirmdate'))
-				$user->confirmed_mail = Input::get('confirmdate');
-			if (Input::get('bandate'))
-				$user->banned = Input::get('bandate');
+			if ($request->input('expdate'))
+				$user->expiration_date = $request->input('expdate');
+			if ($request->input('note'))
+				$user->note = $request->input('note');
+			if ($request->input('notepad'))
+				$user->notepad = $request->input('notepad');
+			if ($request->input('confirmdate'))
+				$user->confirmed_mail = $request->input('confirmdate');
+			if ($request->input('bandate'))
+				$user->banned = $request->input('bandate');
 			else
 				$user->banned = null;
-			if (Input::get('toggle-active'))
+			if ($request->input('toggle-active'))
 				$user->active = true;
 			else
 				$user->active = false;
-			if (Input::get('toggle-api'))
+			if ($request->input('toggle-api'))
 				$user->api_access = true;
 			else
 				$user->api_access = false;
-			if (!Input::get('gender') || Input::get('gender') == '-1')
+			if (!$request->input('gender') || $request->input('gender') == '-1')
 				$user->gender = NULL;
 			else
-				$user->gender = Input::get('gender');
+				$user->gender = $request->input('gender');
 
 			$user->save();
 
-			return Redirect::back()->with('success', 1);
-		}
+			return back()->with('success', 1);
 	}
 
 	public function getSwitchSession()
@@ -366,7 +357,7 @@ class AdminController extends Controller {
 		} else {
 
 			/* General */
-			$resource = Resource::find(Input::get('id'));
+			$resource = Resource::find($request->input('id'));
 			$resource->unlinked = true;
 
 			File::delete($resource->file_location);

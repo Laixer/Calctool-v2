@@ -1,6 +1,6 @@
 <?php
 $show_all = false;
-$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+$offer_last = \Calctool\Models\Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 if ($offer_last && $offer_last->offer_finish)
 	$show_all = true;
 

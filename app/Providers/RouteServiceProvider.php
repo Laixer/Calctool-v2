@@ -5,6 +5,8 @@ namespace Calctool\Providers;
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
+use Auth;
+
 class RouteServiceProvider extends ServiceProvider
 {
     /**
@@ -24,22 +26,19 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        //
-$router->filter('admin', function()
-{
-	if (Auth::guest())
+	$router->filter('admin', function()
 	{
-		return \Redirect::guest('login');
-	}
+		if (Auth::guest())
+		{
+			return guest('login');
+		}
 
-	//if(!in_array(UserType::find(Auth::user()->user_type)->user_type, array('admin', 'system'))) {
-	if (!Auth::user()->isAdmin())
-	{
-		//return Redirect::to('/');
-		return \Response::view('generic.404', array('url' => Request::path()), 404);
-	}
+		if (!Auth::user()->isAdmin())
+		{
+			return view('generic.404', array('url' => Request::path()), 404);
+		}
+	});
 
-});
         parent::boot($router);
     }
 

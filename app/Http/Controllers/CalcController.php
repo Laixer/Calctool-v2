@@ -22,12 +22,12 @@ class CalcController extends Controller {
 		$project = Project::find(Route::Input('project_id'));
 		if ($project) {
 			if ($project->project_close)
-				return View::make('calc.calculation_closed');
+				return response()->view('calc.calculation_closed');
 			$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 			if ($offer_last && $offer_last->offer_finish)
-				return View::make('calc.calculation_closed');
+				return response()->view('calc.calculation_closed');
 		}
-		return View::make('calc.calculation');
+		return response()->view('calc.calculation');
 	}
 
 	public function getEstimate()
@@ -35,12 +35,12 @@ class CalcController extends Controller {
 		$project = Project::find(Route::Input('project_id'));
 		if ($project) {
 			if ($project->project_close)
-				return View::make('calc.estimate_closed');
+				return response()->view('calc.estimate_closed');
 			$invoice_end = Invoice::where('offer_id','=', Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first()->id)->where('isclose','=',true)->first();
 			if ($invoice_end->invoice_close)
-				return View::make('calc.estimate_closed');
+				return response()->view('calc.estimate_closed');
 		}
-		return View::make('calc.estimate');
+		return response()->view('calc.estimate');
 	}
 
 	public function getLess()
@@ -48,12 +48,12 @@ class CalcController extends Controller {
 		$project = Project::find(Route::Input('project_id'));
 		if ($project) {
 			if ($project->project_close)
-				return View::make('calc.less_closed');
+				return response()->view('calc.less_closed');
 			$invoice_end = Invoice::where('offer_id','=', Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first()->id)->where('isclose','=',true)->first();
 			if ($invoice_end->invoice_close)
-				return View::make('calc.less_closed');
+				return response()->view('calc.less_closed');
 		}
-		return View::make('calc.less');
+		return response()->view('calc.less');
 	}
 
 	public function getMore()
@@ -61,32 +61,32 @@ class CalcController extends Controller {
 		$project = Project::find(Route::Input('project_id'));
 		if ($project) {
 			if ($project->project_close)
-				return View::make('calc.more_closed');
+				return response()->view('calc.more_closed');
 			$invoice_end = Invoice::where('offer_id','=', Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first()->id)->where('isclose','=',true)->first();
 			if ($invoice_end->invoice_close)
-				return View::make('calc.more_closed');
+				return response()->view('calc.more_closed');
 		}
-		return View::make('calc.more');
+		return response()->view('calc.more');
 	}
 
 	public function getInvoice()
 	{
-		return View::make('calc.invoice');
+		return response()->view('calc.invoice');
 	}
 
 	public function getTermInvoice()
 	{
-		return View::make('calc.invoice_term');
+		return response()->view('calc.invoice_term');
 	}
 
 	public function getOfferAll()
 	{
-		return View::make('calc.offer_all');
+		return response()->view('calc.offer_all');
 	}
 
 	public function getOffer()
 	{
-		return View::make('calc.offer');
+		return response()->view('calc.offer');
 	}
 
 	public function getOfferPDF()
@@ -105,7 +105,7 @@ class CalcController extends Controller {
 
 	public function getInvoiceAll()
 	{
-		return View::make('calc.invoice_all');
+		return response()->view('calc.invoice_all');
 	}
 
 	public function getInvoicePDF()

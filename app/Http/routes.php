@@ -10,7 +10,7 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-Route::get('login', function(){ return View::make('auth.login'); });
+Route::get('login', function(){ return view('auth.login'); });
 Route::post('login', array('middleware' => 'guest', 'uses' => 'AuthController@doLogin'));
 Route::get('register', function(){ return View::make('auth.registration'); });
 Route::post('register', array('middleware' => 'guest|csrf', 'as' => 'register', 'uses' => 'AuthController@doRegister'));

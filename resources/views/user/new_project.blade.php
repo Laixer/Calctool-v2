@@ -52,16 +52,17 @@
 
 			<h2><strong>Nieuw</strong> project</h2>
 
-			@if(!Relation::where('user_id','=', Auth::user()->id)->count())
+			@if(!Calctool\Models\Relation::where('user_id','=', Auth::user()->id)->count())
 			<div class="alert alert-info">
 				<i class="fa fa-info-circle"></i>
-				<strong>Let Op!</strong> Maak eerst een opdrachtgever aan onder {{ HTML::link('/relation/new', 'nieuwe relatie') }}.
+				<strong>Let Op!</strong> Maak eerst een opdrachtgever aan onder <a href="/relation/new">nieuwe relatie</a>.
 			</div>
 			@endif
 
 			<div class="white-row">
 
-			{{ Form::open(array('url' => 'project/new')) }}
+			<form method="POST" action="/project/new" accept-charset="UTF-8">
+			{!! csrf_field() !!}
 				<h4>Projectgegevens</h4>
 				<div class="row">
 
@@ -75,8 +76,8 @@
 						<div class="form-group">
 							<label for="contractor">Opdrachtgever*</label>
 							<select name="contractor" id="contractor" class="form-control pointer">
-							@foreach (Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
-								<option value="{{ $relation->id }}">{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); }}</option>
+							@foreach (Calctool\Models\Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
+								<option value="{{ $relation->id }}">{!! Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); !!}</option>
 							@endforeach
 							</select>
 							<a href="/relation/new">+ Nieuwe relatie toevoegen</a>
@@ -86,7 +87,7 @@
 						<div class="form-group">
 							<label for="type">Type</label>
 							<select name="type" id="type" class="form-control pointer">
-								@foreach (ProjectType::all() as $type)
+								@foreach (Calctool\Models\ProjectType::all() as $type)
 								<?php
 								if ($type->type_name != 'calculatie' && $type->type_name != 'BTW verlegd')
 									continue;
@@ -132,7 +133,7 @@
 						<div class="form-group">
 							<label for="province">Provincie*</label>
 							<select name="province" id="province" class="form-control pointer">
-								@foreach (Province::all() as $province)
+								@foreach (Calctool\Models\Province::all() as $province)
 									<option value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
 								@endforeach
 							</select>
@@ -143,7 +144,7 @@
 						<div class="form-group">
 							<label for="country">Land*</label>
 							<select name="country" id="country" class="form-control pointer">
-								@foreach (Country::all() as $country)
+								@foreach (Calctool\Models\Country::all() as $country)
 									<option {{ $country->country_name=='nederland' ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
 								@endforeach
 							</select>
@@ -231,7 +232,7 @@
 					</div>
 				</div>
 
-			{{ Form::close() }}
+				</form>
 			</div>
 
 		</div>

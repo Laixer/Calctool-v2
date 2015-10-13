@@ -4,6 +4,8 @@ namespace Calctool\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Auth;
+
 class Relation extends Model {
 
 	protected $table = 'relation';
