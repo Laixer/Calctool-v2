@@ -110,7 +110,7 @@ if (!$project || !$project->isOwner()) {
 
 						<div class="modal-header"><!-- modal header -->
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h4 class="modal-title" id="myModalLabel2">Factuurnummers</h4>
+							<h4 class="modal-title" id="myModalLabel2">Administratienummers</h4>
 						</div><!-- /modal header -->
 
 						<!-- modal body -->
@@ -118,11 +118,11 @@ if (!$project || !$project->isOwner()) {
 							<div class="form-horizontal">
 								<div class="form-group">
 									<div class="col-md-6">
-										<label>Referentie</label>
+										<label>Referentie van opdrachtgever</label> <a data-toggle="tooltip" data-placement="bottom" data-original-title="Als je van de opdrachtgever een referentie(nummer) hebt gekregen kan je deze hier invullen." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
 										<input {{ $project->project_close ? 'disabled' : '' }} value="" name="reference" id="reference" min="2" max="50" type="text" value="" class="form-control" />
 									</div>
 									<div class="col-md-6">
-										<label>Boekhoudkundignummer</label>
+										<label>Eigen factuurnummer gebruiken</label> <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is een uniek en opvolgend factuurnummer. Eigen factuurnummering is ook mogelijk. Let op: Factuurnummers moeten opvolgend zijn, gebruik dus het een of het ander." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
 										<input {{ $project->project_close ? 'disabled' : '' }} value="" name="bookcode" id="bookcode" min="2" max="50" type="text" value="" class="form-control" />
 									</div>
 								</div>
