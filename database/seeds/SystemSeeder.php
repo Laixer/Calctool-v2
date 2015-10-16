@@ -3,6 +3,9 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
+use \Calctool\Models\UserType;
+use \Calctool\Models\User;
+
 /*
  * Static Models Only
  * Test are performed on other seeds
@@ -16,7 +19,7 @@ class SystemSeeder extends Seeder {
 
 		$test_user_type = UserType::where('user_type','=','system')->first();
 
-		$test_user = \Calctool\Models\User::create(array(
+		$test_user = User::create(array(
 			'username' => 'system',
 			'secret' => Hash::make('ABC@123'),
 			'firstname' => 'SYSTEM',

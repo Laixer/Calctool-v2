@@ -3,6 +3,25 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
+use \Calctool\Models\SubGroup;
+use \Calctool\Models\Supplier;
+use \Calctool\Models\UserType;
+use \Calctool\Models\Province;
+use \Calctool\Models\Country;
+use \Calctool\Models\ProjectType;
+use \Calctool\Models\Part;
+use \Calctool\Models\PartType;
+use \Calctool\Models\Detail;
+use \Calctool\Models\ContactFunction;
+use \Calctool\Models\RelationType;
+use \Calctool\Models\RelationKind;
+use \Calctool\Models\Valid;
+use \Calctool\Models\DeliverTime;
+use \Calctool\Models\Tax;
+use \Calctool\Models\TimesheetKind;
+use \Calctool\Models\PurchaseKind;
+use \Calctool\Models\SysMessage;
+
 /*
  * Static Models Only
  * Test are performed on other seeds
@@ -594,7 +613,7 @@ class StaticSeeder extends Seeder {
 		PurchaseKind::create(array('kind_name' => 'onderaanneming'));
 		$this->command->info('PurchaseKind created');
 
-		SystemMessage::create(array('level' => 1, 'content' => 'Dit is een voorbeeld melding', 'active' => true));
+		SysMessage::create(array('level' => 1, 'content' => 'Dit is een voorbeeld melding', 'active' => true));
 		$this->command->info('SystemMessage created');
 	}
  }

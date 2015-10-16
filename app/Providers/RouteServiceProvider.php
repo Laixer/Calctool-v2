@@ -15,7 +15,7 @@ class RouteServiceProvider extends ServiceProvider
      * In addition, it is set as the URL generator's root namespace.
      *
      * @var string
-     */
+     */ 
     protected $namespace = 'Calctool\Http\Controllers';
 
     /**
@@ -26,18 +26,18 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-	$router->filter('admin', function()
-	{
-		if (Auth::guest())
-		{
-			return guest('login');
-		}
+    	$router->filter('admin', function()
+    	{
+    		if (Auth::guest())
+    		{
+    			return guest('login');
+    		}
 
-		if (!Auth::user()->isAdmin())
-		{
-			return view('generic.404', array('url' => Request::path()), 404);
-		}
-	});
+    		if (!Auth::user()->isAdmin())
+    		{
+    			return view('generic.404', array('url' => Request::path()), 404);
+    		}
+    	});
 
         parent::boot($router);
     }
