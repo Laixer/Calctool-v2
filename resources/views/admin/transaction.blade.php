@@ -1,3 +1,7 @@
+<?php
+use \Calctool\Models\Payment;
+?>
+
 @extends('layout.master')
 
 @section('content')

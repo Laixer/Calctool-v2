@@ -4,6 +4,14 @@ namespace Calctool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use \Calctool\Models\SysMessage;
+use \Calctool\Models\Payment;
+use \Calctool\Models\User;
+use \Calctool\Models\Resource;
+
+use Storage;
+use Auth;
+
 class AdminController extends Controller {
 
 	/*
@@ -34,68 +42,43 @@ class AdminController extends Controller {
 		return view('admin.phpinfo');
 	}
 
-	public function doNewAlert()
+	public function doNewAlert(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'level' => array('required'),
 			'message' => array('required'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
-		} else {
-
-			$alert = new SystemMessage;
+			$alert = new SysMessage;
 			$alert->level = $request->input('level');
 			$alert->content = $request->input('message');
 			$alert->active = true;
 
 			$alert->save();
 
-			return Redirect::back()->with('success', 1);
-		}
+			return back()->with('success', 1);
 
 	}
 
-	public function doDeleteAlert()
+	public function doDeleteAlert(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('required'),
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-
-			$alert = SystemMessage::find($request->input('id'));
+		]);
+			$alert = SysMessage::find($request->input('id'));
 			$alert->active = false;
 
 			$alert->save();
 
 			return json_encode(['success' => 1]);
-		}
 
 	}
 
-	public function doRefund()
+	public function doRefund(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'amount' => array('required'),
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
-		} else {
+		]);
 
 			$subtract = $request->input('amount');
 
@@ -105,7 +88,7 @@ class AdminController extends Controller {
 			$payment = $mollie->payments->get(Route::Input('transcode'));
 
 			if ($subtract > ($payment->amount-$payment->amountRefunded))
-				return Redirect::back()->withErrors($validator)->withInput(Input::all());
+				return back()->withErrors($validator)->withInput(Input::all());
 
 			$mollie->payments->refund($payment, $subtract);
 
@@ -127,14 +110,12 @@ class AdminController extends Controller {
 				$user->save();
 			}
 
-			return Redirect::back()->with('success', 1);
-		}
-
+			return back()->with('success', 1);
 	}
 
-	public function doNewUser()
+	public function doNewUser(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			/* General */
 			'username' => array('required','unique:user_account'),
 			'secret' => array('required'),
@@ -157,16 +138,9 @@ class AdminController extends Controller {
 			'country' => array('numeric'),
 
 			'expdate' => array('required'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			// redirect our user back to the form with the errors from the validator
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
-		} else {
+		$validator = Validator::make($request->all(), $rules);
 
 			/* General */
 			$user = new User;
@@ -233,7 +207,6 @@ class AdminController extends Controller {
 			$user->save();
 
 			return back()->with('success', 1);
-		}
 	}
 
 	public function doUpdateUser(Request $request, $user_id)
@@ -244,7 +217,7 @@ class AdminController extends Controller {
 		]);
 
 			/* General */
-			$user = \Calctool\Models\User::find($user_id);
+			$user = User::find($user_id);
 			if ($request->input('username'))
 				$user->username = strtolower(trim($request->input('username')));
 			if ($request->input('secret'))
@@ -314,13 +287,13 @@ class AdminController extends Controller {
 	public function getSwitchSession()
 	{
 		if (!Auth::user()->isAdmin())
-			return Redirect::back();
+			return back();
 
 		$cook = Cookie::make('swpsess', Auth::id(), 180);
 
 		Auth::loginUsingId(Route::input('user_id'));
 
-		return Redirect::to('/')->withCookie($cook);
+		return redirect('/')->withCookie($cook);
 
 	}
 
@@ -328,61 +301,52 @@ class AdminController extends Controller {
 	{
 		$swap_session = Cookie::get('swpsess');
 		if (!$swap_session)
-			return Redirect::back();
+			return back();
 
 		$user = User::find($swap_session);
 		if (!$user->isAdmin())
-			return Redirect::back();
+			return back();
 
 		Auth::loginUsingId($user->id);
 
-		return Redirect::to('/')->withCookie(Cookie::forget('swpsess'));
+		return redirect('/')->withCookie(Cookie::forget('swpsess'));
 
 	}
 
-	public function doDeleteResource()
+	public function doDeleteResource(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			/* General */
 			'id' => array('required'),
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			// redirect our user back to the form with the errors from the validator
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			/* General */
 			$resource = Resource::find($request->input('id'));
 			$resource->unlinked = true;
 
-			File::delete($resource->file_location);
+			unlink($resource->file_location);
 
 			$resource->save();
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
 
 	public function doTruncateLog()
 	{
 		if (!Auth::user()->isAdmin())
-			return Redirect::back();
+			return back();
 
-		File::put('../app/storage/logs/laravel.log', '');
+		//File::put('../app/storage/logs/laravel.log', '');
+		file_put_contents("../app/storage/logs/laravel.log", "");
 
-		return Redirect::back()->with('success', 1);
+		return back()->with('success', 1);
 	}
 
 	public function getDemoProject()
 	{
 		DemoProjectTemplate::setup(Route::input('user_id'));
 
-		return Redirect::back()->with('success', 1);
+		return back()->with('success', 1);
 	}
 }

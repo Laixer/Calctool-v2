@@ -27,6 +27,7 @@
 		<meta name="msapplication-TileColor" content="#ffffff">
 		<meta name="msapplication-TileImage" content="/images/mstile-144x144.png">
 		<meta name="theme-color" content="#4e4e4e">
+		<meta name="csrf-token" content="{{ csrf_token() }}" />
 
 		<?# -- mobile settings -- ?>
 		<meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
@@ -60,6 +61,9 @@
 
 		<?# -- JQuery -- ?>
 		<script src="/plugins/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript">
+		$.ajaxSetup({headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+		</script>
 	</head>
 	<body>
 		<?# -- ONLY DEV -- ?>
