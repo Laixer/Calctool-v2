@@ -19,7 +19,7 @@ class MaterialController extends Controller {
 
 	public function getList()
 	{
-		return View::make('material.list');
+		return view('material.list');
 	}
 
 	private function convertUnit($unit)
@@ -60,7 +60,7 @@ class MaterialController extends Controller {
 		return $length.'x'.$height.'x'.$width;
 	}
 
-	public function doSearch()
+	public function doSearch(Request $request)
 	{
 		$rules = array(
 			'query' => array('required'),
@@ -70,7 +70,7 @@ class MaterialController extends Controller {
 
 		if ($validator->fails()) {
 
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
+			return back()->withErrors($validator)->withInput(Input::all());
 		} else {
 			$rtn_products = array();
 
@@ -107,7 +107,7 @@ class MaterialController extends Controller {
 				));
 			}
 
-			return Response::json($rtn_products);
+			return json_encode($rtn_products);
 		}
 	}
 

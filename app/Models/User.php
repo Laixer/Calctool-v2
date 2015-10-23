@@ -31,7 +31,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 	}
 
 	public function productFavorite() {
-		return $this->belongsToMany('Product', 'product_favorite', 'user_id', 'product_id');
+		return $this->belongsToMany('\Calctool\Models\Product', 'product_favorite', 'user_id', 'product_id');
 	}
 
 	public function isAdmin() {
