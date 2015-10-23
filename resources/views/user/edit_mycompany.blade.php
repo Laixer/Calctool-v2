@@ -1,4 +1,15 @@
 <?php
+
+use \Calctool\Models\Relation;
+use \Calctool\Models\RelationType;
+use \Calctool\Models\RelationKind;
+use \Calctool\Models\Contact;
+use \Calctool\Models\ContactFunction;
+use \Calctool\Models\Province;
+use \Calctool\Models\Country;
+use \Calctool\Models\Resource;
+use \Calctool\Models\Iban;
+
 $relation = Relation::find(Auth::user()->self_id);
 if ($relation)
 	$iban = Iban::where('relation_id','=',$relation->id)->first();
@@ -9,7 +20,6 @@ else
 @extends('layout.master')
 
 @section('content')
-<?# -- WRAPPER -- ?>
 
 <script type="text/javascript" src="/js/iban.js"></script>
 <script type="text/javascript">
@@ -131,7 +141,8 @@ $(document).ready( function() {
 					<div class="tab-content">
 						<div id="company" class="tab-pane active">
 
-							{{ $relation ? Form::open(array('url' => 'relation/updatemycompany')) : Form::open(array('url' => 'relation/newmycompany')) }}
+							{!! $relation ? '<form action="relation/updatemycompany" method="post">' : '<form action="relation/newmycompany" method="post">' !!}
+							{!! csrf_field() !!}
 
 							<h4 class="company">Bedrijfsgegevens</h4>
 							<input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
@@ -260,12 +271,13 @@ $(document).ready( function() {
 									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 								</div>
 							</div>
-						{{ Form::close() }}
+						</form>
 
 						</div>
 						<div id="payment" class="tab-pane">
 							<h4>Betalingsgegevens</h4>
-							{{ $iban ? Form::open(array('url' => 'mycompany/iban/update')) : Form::open(array('url' => 'relation/iban/new')) }}
+							{!! $iban ? '<form action="mycompany/iban/update" method="post">' : '<form action="relation/iban/new" method="post">' !!}
+							{!! csrf_field() !!}
 							<div class="row">
 
 								<div class="col-md-3">
@@ -288,12 +300,11 @@ $(document).ready( function() {
 									<button class="btn btn-primary {{ $relation ? '' : 'disabled' }}"><i class="fa fa-check"></i> Opslaan</button>
 								</div>
 							</div>
-							{{ Form::close() }}
+							</form>
 						</div>
 						<div id="contact" class="tab-pane">
 							<h4>Contactpersonen</h4>
 							<table class="table table-striped">
-								<?# -- table head -- ?>
 								<thead>
 									<tr>
 										<th class="col-md-2">Naam</th>
@@ -305,11 +316,10 @@ $(document).ready( function() {
 									</tr>
 								</thead>
 
-								<!-- table items -->
 								<tbody>
 									<?php if ($relation) { ?>
 									@foreach (Contact::where('relation_id','=', $relation->id)->get() as $contact)
-									<tr><!-- item -->
+									<tr>
 										<td class="col-md-2"><a href="/relation-{{ $relation->id }}/contact-{{ $contact->id }}/edit">{{ $contact->lastname }}</a></td>
 										<td class="col-md-2">{{ $contact->firstname }}</td>
 										<td class="col-md-2">{{ ContactFunction::find($contact->function_id)->function_name }}</td>
@@ -329,10 +339,11 @@ $(document).ready( function() {
 						</div>
 						<div id="logo" class="tab-pane">
 							<h4>Logo</h4>
-							{{ Form::open(array('url' => 'relation/logo/save', 'files'=> true)) }}
+							<form action="relation/logo/save" method="post" enctype="multipart/form-data">
+							{!! csrf_field() !!}
 							<input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
 
-							{{ ($relation && $relation->logo_id) ? "<div><h5>Huidige logo</h5><img src=\"/".Resource::find($relation->logo_id)->file_location."\"/></div>" : '' }}
+							{!! ($relation && $relation->logo_id) ? "<div><h5>Huidige logo</h5><img src=\"/".Resource::find($relation->logo_id)->file_location."\"/></div>" : '' !!}
 
 							<div class="form-group">
 								<label for="image">Afbeelding Uploaden</label>
@@ -352,7 +363,7 @@ $(document).ready( function() {
 								</div>
 							</div>
 
-							{{ Form::close() }}
+							</form>
 						</div>
 					</div>
 				</div>
@@ -362,7 +373,6 @@ $(document).ready( function() {
 	</section>
 
 </div>
-<?#-- /WRAPPER --?>
 <script type="text/javascript">
 $(document).ready(function() {
 	<?php $response = RelationKind::where('id','=',Input::old('relationkind'))->first(); ?>
