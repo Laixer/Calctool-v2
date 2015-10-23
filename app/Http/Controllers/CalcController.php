@@ -10,7 +10,12 @@ use \Calctool\Models\PartType;
 use \Calctool\Models\ProjectType;
 use \Calctool\Models\Tax;
 use \Calctool\Models\Activity;
+use \Calctool\Calculus\CalculationRegister;
+use \Calctool\Models\CalculationMaterial;
+use \Calctool\Models\CalculationEquipment;
 use \Calctool\Models\EstimateLabor;
+use \Calctool\Models\EstimateMaterial;
+use \Calctool\Models\EstimateEquipment;
 
 class CalcController extends Controller {
 
@@ -241,7 +246,7 @@ class CalcController extends Controller {
 			'activity' => array('required','integer')
 		]);
 
-			$activity = Activity::find(Input::get('activity'));
+			$activity = Activity::find($request->input('activity'));
 			if (!$activity)
 				return json_encode(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
@@ -249,13 +254,13 @@ class CalcController extends Controller {
 				return json_encode(['success' => 0]);
 			}
 
-			$type = Input::get('type');
+			$type = $request->input('type');
 			if ($type == 'calc-labor') {
-				$activity->tax_labor_id = Input::get('value');
+				$activity->tax_labor_id = $request->input('value');
 			} else if ($type == 'calc-material') {
-				$activity->tax_material_id = Input::get('value');
+				$activity->tax_material_id = $request->input('value');
 			} else if ($type == 'calc-equipment') {
-				$activity->tax_equipment_id = Input::get('value');
+				$activity->tax_equipment_id = $request->input('value');
 			}
 			$activity->save();
 
@@ -270,7 +275,7 @@ class CalcController extends Controller {
 			'activity' => array('required','integer')
 		]);
 
-			$activity = Activity::find(Input::get('activity'));
+			$activity = Activity::find($request->input('activity'));
 			if (!$activity)
 				return json_encode(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
@@ -297,7 +302,7 @@ class CalcController extends Controller {
 			'activity' => array('required','integer','min:0')
 		]);
 
-			$activity = Activity::find(Input::get('activity'));
+			$activity = Activity::find($request->input('activity'));
 			if (!$activity)
 				return json_encode(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
@@ -319,7 +324,7 @@ class CalcController extends Controller {
 			'activity' => array('required','integer')
 		]);
 
-			$activity = Activity::find(Input::get('activity'));
+			$activity = Activity::find($request->input('activity'));
 			if (!$activity)
 				return json_encode(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
@@ -340,7 +345,7 @@ class CalcController extends Controller {
 			'activity' => array('required','integer','min:0')
 		]);
 
-			$activity = Activity::find(Input::get('activity'));
+			$activity = Activity::find($request->input('activity'));
 			if (!$activity)
 				return json_encode(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
@@ -359,7 +364,7 @@ class CalcController extends Controller {
 			'chapter' => array('required','integer','min:0')
 		]);
 
-			$chapter = Chapter::find(Input::get('chapter'));
+			$chapter = Chapter::find($request->input('chapter'));
 			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
 				return json_encode(['success' => 0]);
 			}
@@ -379,7 +384,7 @@ class CalcController extends Controller {
 			'activity' => array('required','integer','min:0')
 		]);
 
-			$activity = Activity::find(Input::get('activity'));
+			$activity = Activity::find($request->input('activity'));
 			if (!$activity)
 				return json_encode(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
@@ -408,7 +413,7 @@ class CalcController extends Controller {
 			'activity' => array('required','integer','min:0')
 		]);
 
-			$activity = Activity::find(Input::get('activity'));
+			$activity = Activity::find($request->input('activity'));
 			if (!$activity)
 				return json_encode(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
@@ -435,7 +440,7 @@ class CalcController extends Controller {
 			'activity' => array('required','integer','min:0')
 		]);
 
-			$activity = Activity::find(Input::get('activity'));
+			$activity = Activity::find($request->input('activity'));
 			if (!$activity)
 				return json_encode(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
@@ -445,7 +450,7 @@ class CalcController extends Controller {
 
 			$rate = Input::get('rate');
 			if (empty($rate)) {
-				$_activity = Activity::find(Input::get('activity'));
+				$_activity = Activity::find($request->input('activity'));
 				$_chapter = Chapter::find($_activity->chapter_id);
 				$_project = Project::find($_chapter->project_id);
 				$rate = $_project->hour_rate;
@@ -467,7 +472,7 @@ class CalcController extends Controller {
 			'id' => array('required','integer','min:0'),
 		]);
 
-			$rec = CalculationLabor::find(Input::get('id'));
+			$rec = CalculationLabor::find($request->input('id'));
 			if (!$rec)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($rec->activity_id);
@@ -489,7 +494,7 @@ class CalcController extends Controller {
 			'id' => array('required','integer','min:0'),
 		]);
 
-			$rec = CalculationMaterial::find(Input::get('id'));
+			$rec = CalculationMaterial::find($request->input('id'));
 			if (!$rec)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($rec->activity_id);
@@ -511,7 +516,7 @@ class CalcController extends Controller {
 			'id' => array('required','integer','min:0'),
 		]);
 
-			$rec = CalculationEquipment::find(Input::get('id'));
+			$rec = CalculationEquipment::find($request->input('id'));
 			if (!$rec)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($rec->activity_id);
@@ -537,7 +542,7 @@ class CalcController extends Controller {
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
 		]);
 
-			$material = CalculationMaterial::find(Input::get('id'));
+			$material = CalculationMaterial::find($request->input('id'));
 			if (!$material)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($material->activity_id);
@@ -568,7 +573,7 @@ class CalcController extends Controller {
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
 		]);
 
-			$equipment = CalculationEquipment::find(Input::get('id'));
+			$equipment = CalculationEquipment::find($request->input('id'));
 			if (!$equipment)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($equipment->activity_id);
@@ -597,7 +602,7 @@ class CalcController extends Controller {
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
 		]);
 
-			$labor = CalculationLabor::find(Input::get('id'));
+			$labor = CalculationLabor::find($request->input('id'));
 			if (!$labor)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($labor->activity_id);
@@ -610,7 +615,7 @@ class CalcController extends Controller {
 
 			$rate = Input::get('rate');
 			if (empty($rate)) {
-				$_labor = CalculationLabor::find(Input::get('id'));
+				$_labor = CalculationLabor::find($request->input('id'));
 				$_activity = Activity::find($_labor->activity_id);
 				$_chapter = Chapter::find($_activity->chapter_id);
 				$_project = Project::find($_chapter->project_id);
@@ -637,7 +642,7 @@ class CalcController extends Controller {
 			'activity' => array('required','integer','min:0')
 		]);
 
-			$activity = Activity::find(Input::get('activity'));
+			$activity = Activity::find($request->input('activity'));
 			if (!$activity)
 				return json_encode(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
@@ -668,7 +673,7 @@ class CalcController extends Controller {
 			'activity' => array('required','integer','min:0')
 		]);
 
-			$activity = Activity::find(Input::get('activity'));
+			$activity = Activity::find($request->input('activity'));
 			if (!$activity)
 				return json_encode(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
@@ -697,7 +702,7 @@ class CalcController extends Controller {
 			'activity' => array('required','integer','min:0')
 		]);
 
-			$activity = Activity::find(Input::get('activity'));
+			$activity = Activity::find($request->input('activity'));
 			if (!$activity)
 				return json_encode(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
@@ -707,7 +712,7 @@ class CalcController extends Controller {
 
 			$rate = Input::get('rate');
 			if (empty($rate)) {
-				$_activity = Activity::find(Input::get('activity'));
+				$_activity = Activity::find($request->input('activity'));
 				$_chapter = Chapter::find($_activity->chapter_id);
 				$_project = Project::find($_chapter->project_id);
 				$rate = $_project->hour_rate;
@@ -731,7 +736,7 @@ class CalcController extends Controller {
 			'id' => array('required','integer','min:0'),
 		]);
 
-			$rec = EstimateLabor::find(Input::get('id'));
+			$rec = EstimateLabor::find($request->input('id'));
 			if (!$rec)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($rec->activity_id);
@@ -753,7 +758,7 @@ class CalcController extends Controller {
 			'id' => array('required','integer','min:0'),
 		]);
 
-			$rec = EstimateMaterial::find(Input::get('id'));
+			$rec = EstimateMaterial::find($request->input('id'));
 			if (!$rec)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($rec->activity_id);
@@ -775,7 +780,7 @@ class CalcController extends Controller {
 			'id' => array('required','integer','min:0'),
 		]);
 
-			$rec = EstimateEquipment::find(Input::get('id'));
+			$rec = EstimateEquipment::find($request->input('id'));
 			if (!$rec)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($rec->activity_id);
@@ -801,7 +806,7 @@ class CalcController extends Controller {
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
 		]);
 
-			$material = EstimateMaterial::find(Input::get('id'));
+			$material = EstimateMaterial::find($request->input('id'));
 			if (!$material)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($material->activity_id);
@@ -832,7 +837,7 @@ class CalcController extends Controller {
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
 		]);
 
-			$equipment = EstimateEquipment::find(Input::get('id'));
+			$equipment = EstimateEquipment::find($request->input('id'));
 			if (!$equipment)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($equipment->activity_id);
@@ -861,7 +866,7 @@ class CalcController extends Controller {
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
 		]);
 
-			$labor = EstimateLabor::find(Input::get('id'));
+			$labor = EstimateLabor::find($request->input('id'));
 			if (!$labor)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($labor->activity_id);
@@ -874,7 +879,7 @@ class CalcController extends Controller {
 
 			$rate = Input::get('rate');
 			if (empty($rate)) {
-				$_labor = EstimateLabor::find(Input::get('id'));
+				$_labor = EstimateLabor::find($request->input('id'));
 				$_activity = Activity::find($_labor->activity_id);
 				$_chapter = Chapter::find($_activity->chapter_id);
 				$_project = Project::find($_chapter->project_id);
