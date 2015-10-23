@@ -1,4 +1,20 @@
 <?php
+
+use \Calctool\Models\Project;
+use \Calctool\Models\SubGroup;
+use \Calctool\Models\Chapter;
+use \Calctool\Calculus\CalculationOverview;
+use \Calctool\Models\ProjectType;
+use \Calctool\Models\Activity as ProjectActivity;
+use \Calctool\Models\PartType;
+use \Calctool\Models\Part;
+use \Calctool\Calculus\CalculationEndresult;
+use \Calctool\Models\Tax;
+use \Calctool\Models\CalculationLabor;
+use \Calctool\Calculus\CalculationRegister;
+use \Calctool\Models\CalculationMaterial;
+use \Calctool\Models\CalculationEquipment;
+
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner())
@@ -830,7 +846,7 @@ var n = this,
 
 									<div class="toogle">
 										<?php
-										foreach(Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->orderBy('created_at', 'desc')->get() as $activity) {
+										foreach(ProjectActivity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->orderBy('created_at', 'desc')->get() as $activity) {
 											if (Part::find($activity->part_id)->part_name=='contracting') {
 												$profit_mat = $project->profit_calc_contr_mat;
 												$profit_equip = $project->profit_calc_contr_equip;
@@ -886,7 +902,7 @@ var n = this,
 														<tr data-id="{{ CalculationLabor::where('activity_id','=', $activity->id)->first()['id'] }}">
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><span class="rate">{{ Part::find($activity->part_id)->part_name=='subcontracting' ? '<input name="rate" type="text" value="'.number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['rate'], 2,",",".").'" class="form-control-sm-number labor-amount lsave">' : number_format($project->hour_rate, 2,",","."); }}</span></td>
+															<td class="col-md-1"><span class="rate">{{ Part::find($activity->part_id)->part_name=='subcontracting' ? '<input name="rate" type="text" value="'.number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['rate'], 2,",",".").'" class="form-control-sm-number labor-amount lsave">' : number_format($project->hour_rate, 2,",",".") }}</span></td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal(Part::find($activity->part_id)->part_name=='subcontracting' ? CalculationLabor::where('activity_id','=', $activity->id)->first()['rate'] : $project->hour_rate, CalculationLabor::where('activity_id','=', $activity->id)->first()['amount']), 2, ",",".") }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
@@ -963,8 +979,8 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::calcMaterialTotal($activity->id, $profit_mat), 2, ",","."); }}</span></td>
-															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::calcMaterialTotalProfit($activity->id, $profit_mat), 2, ",","."); }}</span></td>
+															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::calcMaterialTotal($activity->id, $profit_mat), 2, ",",".") }}</span></td>
+															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::calcMaterialTotalProfit($activity->id, $profit_mat), 2, ",",".") }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -1051,7 +1067,8 @@ var n = this,
 										<?php } ?>
 									</div>
 
-									{{ Form::open(array('url' => '/calculation/calc/newactivity/' . $chapter->id)) }}
+									<form method="POST" action="/calculation/calc/newactivity/{{ $chapter->id }}" accept-charset="UTF-8">
+                                		{!! csrf_field() !!}
 									<div class="row">
 										<div class="col-md-6">
 
@@ -1066,13 +1083,14 @@ var n = this,
 											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Hoofdstuk verwijderen</button>
 										</div>
 									</div>
-									{{ Form::close() }}
+									</form>
 								</div>
 							</div>
 							@endforeach
 						</div>
 
-						{{ Form::open(array('url' => '/calculation/newchapter/'.$project->id)) }}
+						<form method="POST" action="/calculation/newchapter/{{ $project->id }}" accept-charset="UTF-8">
+                            {!! csrf_field() !!}
 						<div class="row">
 							<div class="col-md-6">
 								<div class="input-group">
@@ -1083,7 +1101,7 @@ var n = this,
 								</div>
 							</div>
 						</div>
-						{{ Form::close() }}
+						</form>
 					</div>
 
 					<div id="estimate" class="tab-pane">
@@ -1097,7 +1115,7 @@ var n = this,
 									<div class="toogle">
 
 										<?php
-										foreach(Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->orderBy('created_at', 'desc')->get() as $activity) {
+										foreach(ProjectActivity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->orderBy('created_at', 'desc')->get() as $activity) {
 											$profit_mat = 0;
 											if (Part::find($activity->part_id)->part_name=='contracting') {
 												$profit_mat = $project->profit_calc_contr_mat;
@@ -1156,7 +1174,7 @@ var n = this,
 														<tr data-id="{{ EstimateLabor::where('activity_id','=', $activity->id)->first()['id'] }}"><?# -- item -- ?>
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><span class="rate">{{ Part::find($activity->part_id)->part_name=='subcontracting' ? '<input name="rate" type="text" value="'.number_format(EstimateLabor::where('activity_id','=', $activity->id)->first()['rate'], 2,",",".").'" class="form-control-sm-number labor-amount lsavee">' : number_format($project->hour_rate, 2,",","."); }}</span></td></td>
+															<td class="col-md-1"><span class="rate">{{ Part::find($activity->part_id)->part_name=='subcontracting' ? '<input name="rate" type="text" value="'.number_format(EstimateLabor::where('activity_id','=', $activity->id)->first()['rate'], 2,",",".").'" class="form-control-sm-number labor-amount lsavee">' : number_format($project->hour_rate, 2,",",".") }}</span></td></td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(EstimateLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsavee" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal(Part::find($activity->part_id)->part_name=='subcontracting' ? EstimateLabor::where('activity_id','=', $activity->id)->first()['rate'] : $project->hour_rate, EstimateLabor::where('activity_id','=', $activity->id)->first()['amount']), 2, ",",".") }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
@@ -1235,8 +1253,8 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::estimMaterialTotal($activity->id, $profit_mat), 2, ",","."); }}</span></td>
-															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::estimMaterialTotalProfit($activity->id, $profit_mat), 2, ",","."); }}</span></td>
+															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::estimMaterialTotal($activity->id, $profit_mat), 2, ",",".") }}</span></td>
+															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::estimMaterialTotalProfit($activity->id, $profit_mat), 2, ",",".") }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -1311,8 +1329,8 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::estimEquipmentTotal($activity->id, $profit_equip), 2, ",","."); }}</span></td>
-															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::estimEquipmentTotalProfit($activity->id, $profit_equip), 2, ",","."); }}</span></td>
+															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::estimEquipmentTotal($activity->id, $profit_equip), 2, ",",".") }}</span></td>
+															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::estimEquipmentTotalProfit($activity->id, $profit_equip), 2, ",",".") }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -1321,8 +1339,8 @@ var n = this,
 										</div>
 										<?php } ?>
 									</div>
-
-									{{ Form::open(array('url' => '/calculation/estim/newactivity/' . $chapter->id)) }}
+									<form method="POST" action="/calculation/estim/newactivity/{{ $chapter->id }}" accept-charset="UTF-8">
+			                           {!! csrf_field() !!}
 									<div class="row">
 										<div class="col-md-6">
 
@@ -1337,13 +1355,14 @@ var n = this,
 											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Hoofdstuk verwijderen</button>
 										</div>
 									</div>
-									{{ Form::close() }}
+									</form>
 								</div>
 							</div>
 							@endforeach
 						</div>
 
-						{{ Form::open(array('url' => '/calculation/newchapter/'.$project->id)) }}
+						<form method="POST" action="/calculation/newchapter/{{ $project->id }}" accept-charset="UTF-8">
+                           {!! csrf_field() !!}
 						<div class="row">
 							<div class="col-md-6">
 								<div class="input-group">
@@ -1354,7 +1373,7 @@ var n = this,
 								</div>
 							</div>
 						</div>
-						{{ Form::close() }}
+						</form>
 					</div>
 
 					<div id="summary" class="tab-pane">
@@ -1382,7 +1401,7 @@ var n = this,
 										<tbody>
 											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
 											<?php $i = 0; ?>
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
+											@foreach (ProjectActivity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
 											<?php $i++; ?>
 											<tr>
 												<td class="col-md-3">{{ $i == 1 ? $chapter->chapter_name : ''  }}</td>
@@ -1434,7 +1453,7 @@ var n = this,
 										<tbody>
 											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
 											<?php $i = 0; ?>
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
+											@foreach (ProjectActivity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
 											<?php $i++; ?>
 											<tr>
 												<td class="col-md-3">{{ $i == 1 ? $chapter->chapter_name : '' }}</td>

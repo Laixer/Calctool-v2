@@ -14,17 +14,17 @@ class ProjectController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function getNew()
+	public function getNew(Request $request)
 	{
 		return view('user.new_project');
 	}
 
-	public function getEdit()
+	public function getEdit(Request $request)
 	{
 		return view('user.edit_project');
 	}
 
-	public function downloadResource()
+	public function downloadResource(Request $request)
 	{
 		$res = Resource::find(Route::Input('resource_id'));
 		if ($res) {
@@ -100,14 +100,14 @@ class ProjectController extends Controller {
 			return redirect('project-'.$project->id.'/edit')->with('success', 'Opgeslagen');
 	}
 
-	public function getAll()
+	public function getAll(Request $request)
 	{
 		return view('user.project');
 	}
 
-	public function doUpdate()
+	public function doUpdate(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('required','integer'),
 			'name' => array('required','max:50'),
 			'street' => array('required','alpha','max:60'),
@@ -116,16 +116,7 @@ class ProjectController extends Controller {
 			'city' => array('required','alpha_num','max:35'),
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric'),
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			// redirect our user back to the form with the errors from the validator
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
-		} else {
+		]);
 
 			$project = Project::find($request->input('id'));
 			if (!$project || !$project->isOwner()) {
@@ -143,25 +134,14 @@ class ProjectController extends Controller {
 
 			$project->save();
 
-			return Redirect::back()->with('success', 'Aangepast');
-		}
-
+			return back()->with('success', 'Aangepast');
 	}
 
-	public function doUpdateNote()
+	public function doUpdateNote(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('required','integer'),
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			// redirect our user back to the form with the errors from the validator
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
-		} else {
+		]);
 
 			$project = Project::find($request->input('id'));
 			if (!$project || !$project->isOwner()) {
@@ -171,13 +151,12 @@ class ProjectController extends Controller {
 
 			$project->save();
 
-			return Redirect::back()->with('success', 'Aangepast');
-		}
+			return back()->with('success', 'Aangepast');
 	}
 
-	public function doUpdateProfit()
+	public function doUpdateProfit(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('required','integer'),
 			'hour_rate' => array('regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
 			'more_hour_rate' => array('required','regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
@@ -189,16 +168,7 @@ class ProjectController extends Controller {
 			'more_profit_equipment_1' => array('required','numeric','between:0,200'),
 			'more_profit_material_2' => array('required','numeric','between:0,200'),
 			'more_profit_equipment_2' => array('required','numeric','between:0,200')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			// redirect our user back to the form with the errors from the validator
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
-		} else {
+		]);
 
 			$project = Project::find($request->input('id'));
 			if (!$project || !$project->isOwner()) {
@@ -233,26 +203,15 @@ class ProjectController extends Controller {
 
 			$project->save();
 
-			return Redirect::back()->with('success', 'Aangepast');
-		}
-
+			return back()->with('success', 'Aangepast');
 	}
 
-	public function doUpdateWorkExecution()
+	public function doUpdateWorkExecution(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'project' => array('required','integer'),
 			'date' => array('required'),
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			// redirect our user back to the form with the errors from the validator
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$project = Project::find($request->input('project'));
 			if (!$project || !$project->isOwner()) {
@@ -263,25 +222,14 @@ class ProjectController extends Controller {
 			$project->save();
 
 			return json_encode(['success' => 1]);
-		}
-
 	}
 
-	public function doUpdateWorkCompletion()
+	public function doUpdateWorkCompletion(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'project' => array('required','integer'),
 			'date' => array('required'),
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			// redirect our user back to the form with the errors from the validator
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$project = Project::find($request->input('project'));
 			if (!$project || !$project->isOwner()) {
@@ -292,25 +240,14 @@ class ProjectController extends Controller {
 			$project->save();
 
 			return json_encode(['success' => 1]);
-		}
-
 	}
 
-	public function doUpdateProjectClose()
+	public function doUpdateProjectClose(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'project' => array('required','integer'),
 			'date' => array('required'),
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			// redirect our user back to the form with the errors from the validator
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$project = Project::find($request->input('project'));
 			if (!$project || !$project->isOwner()) {
@@ -321,7 +258,5 @@ class ProjectController extends Controller {
 			$project->save();
 
 			return json_encode(['success' => 1]);
-		}
-
 	}
 }

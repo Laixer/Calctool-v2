@@ -1,5 +1,10 @@
 <?php
 
+namespace Calctool\Calculus;
+
+use \Calctool\Models\CalculationMaterial;
+use \Calctool\Models\CalculationEquipment;
+
 class CalculationRegister {
 
 /*Calculation labor*/
