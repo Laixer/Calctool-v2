@@ -4,6 +4,8 @@ namespace Calctool\Calculus;
 
 use \Calctool\Models\CalculationMaterial;
 use \Calctool\Models\CalculationEquipment;
+use \Calctool\Models\EstimateMaterial;
+use \Calctool\Models\EstimateEquipment;
 
 class CalculationRegister {
 

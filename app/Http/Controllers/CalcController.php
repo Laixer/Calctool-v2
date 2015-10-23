@@ -10,6 +10,7 @@ use \Calctool\Models\PartType;
 use \Calctool\Models\ProjectType;
 use \Calctool\Models\Tax;
 use \Calctool\Models\Activity;
+use \Calctool\Models\EstimateLabor;
 
 class CalcController extends Controller {
 
@@ -172,7 +173,7 @@ class CalcController extends Controller {
 
 			$chapter = Chapter::find($chapter_id);
 			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return Redirect::back()->withInput(Input::all());
+				return back()->withInput(Input::all());
 			}
 
 			$part = Part::where('part_name','=','contracting')->first();
@@ -198,15 +199,15 @@ class CalcController extends Controller {
 			return back()->with('success', 1);
 	}
 
-	public function doNewEstimateActivity(Request $request)
+	public function doNewEstimateActivity(Request $request, $chapter_id)
 	{
 		$this->validate($request, [
 			'activity' => array('required','max:50'),
 		]);
 
-			$chapter = Chapter::find(Route::Input('chapter_id'));
+			$chapter = Chapter::find($chapter_id);
 			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return Redirect::back()->withInput(Input::all());
+				return back()->withInput(Input::all());
 			}
 
 			$part = Part::where('part_name','=','contracting')->first();
@@ -218,7 +219,7 @@ class CalcController extends Controller {
 				$tax = Tax::where('tax_rate','=',21)->first();
 
 			$activity = new Activity;
-			$activity->activity_name = Input::get('activity');
+			$activity->activity_name = $request->get('activity');
 			$activity->priority = 0;
 			$activity->chapter_id = $chapter->id;
 			$activity->part_id = $part->id;

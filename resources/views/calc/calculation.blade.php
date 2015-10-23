@@ -14,6 +14,9 @@ use \Calctool\Models\CalculationLabor;
 use \Calctool\Calculus\CalculationRegister;
 use \Calctool\Models\CalculationMaterial;
 use \Calctool\Models\CalculationEquipment;
+use \Calctool\Models\EstimateLabor;
+use \Calctool\Models\EstimateMaterial;
+use \Calctool\Models\EstimateEquipment;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
