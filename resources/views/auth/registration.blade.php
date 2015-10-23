@@ -30,7 +30,8 @@ $(document).ready(function() {
 
 					<h2>Maak <strong>Account</strong> aan</h2>
 
-					{{ Form::open(array('url' => 'register', 'class' => 'white-row')) }}
+					<form action="/register" method="post" class="white-row">
+					{!! csrf_field() !!}
 
 						@if(Session::get('success'))
 						<div class="alert alert-success">
@@ -52,30 +53,28 @@ $(document).ready(function() {
 						<div class="row">
 							<div class="form-group">
 								<div class="col-md-12">
-									<label></label>
-									{{ Form::label('username', 'Gebruikersnaam') }}
-									{{ Form::text('username', Input::old('username'), array('class' => 'form-control')) }}
+									<label for="username">Gebruikersnaam</label>
+									<input class="form-control" name="username" type="text" id="username">
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="form-group">
 								<div class="col-md-12">
-									<label></label>
-									{{ Form::label('email', 'E-mail adres') }}
-									{{ Form::text('email', Input::old('email'), array('class' => 'form-control')) }}
+									<label for="email">E-mail adres</label>
+									<input class="form-control" name="email" type="text" id="email">
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="form-group">
 								<div class="col-md-6">
-									{{ Form::label('secret', 'Wachtwoord') }}
-									{{ Form::password('secret', array('class' => 'form-control')) }}
+									<label for="secret">Wachtwoord</label>
+									<input class="form-control" name="secret" type="password" value="" id="secret">
 								</div>
 								<div class="col-md-6">
-									{{ Form::label('secret_confirmation', 'Herhaal wachtwoord') }}
-									{{ Form::password('secret_confirmation', array('class' => 'form-control')) }}
+									<label for="secret_confirmation">Herhaal wachtwoord</label>
+									<input class="form-control" name="secret_confirmation" type="password" value="" id="secret_confirmation">
 								</div>
 							</div>
 						</div>
@@ -91,7 +90,7 @@ $(document).ready(function() {
 							</div>
 						</div>
 
-					{{ Form::close() }}
+					</form>
 
 				</div>
 

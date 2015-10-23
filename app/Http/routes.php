@@ -13,7 +13,7 @@
 Route::get('login', function(){ return view('auth.login'); });
 Route::post('login', array('middleware' => 'guest', 'uses' => 'AuthController@doLogin'));
 Route::get('register', function(){ return View::make('auth.registration'); });
-Route::post('register', array('middleware' => 'guest|csrf', 'as' => 'register', 'uses' => 'AuthController@doRegister'));
+Route::post('register', array('middleware' => 'guest', 'as' => 'register', 'uses' => 'AuthController@doRegister'));
 Route::get('confirm/{api}/{token}', array('middleware' => 'guest', 'as' => 'register', 'uses' => 'AuthController@doActivate'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
 Route::post('password/reset', array('middleware' => 'guest|csrf', 'as' => 'reset', 'uses' => 'AuthController@doBlockPassword'));
 Route::get('password/{api}/{token}', function(){ return View::make('auth.password'); })->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');

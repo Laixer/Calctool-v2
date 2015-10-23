@@ -6,8 +6,14 @@ use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
 use Longman\TelegramBot\Request as TRequest;
 
+use \Calctool\Models\User;
+use \Calctool\Models\UserType;
+use \Calctool\Models\Audit;
+
 use Auth;
 use Redis;
+use Hash;
+use Mailgun;
 
 class AuthController extends Controller {
 
@@ -99,42 +105,35 @@ class AuthController extends Controller {
 	 *
 	 * @return Route
 	 */
-	public function doRegister()
+	public function doRegister(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'username' => array('required','unique:user_account'),
 			'email' => array('required','max:80','email','unique:user_account'),
 			'secret' => array('required','confirmed','min:5'),
 			'secret_confirmation' => array('required','min:5'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
+		$user = new User;
+		$user->username = strtolower(trim($request->get('username')));
+		$user->secret = Hash::make($request->get('secret'));
+		$user->firstname = $user->username;
+		$user->api = md5(mt_rand());
+		$user->token = sha1($user->secret);
+		$user->referral_key = md5(mt_rand());
+		$user->ip = $_SERVER['REMOTE_ADDR'];
+		$user->email = $request->get('email');
+		$user->expiration_date = date('Y-m-d', strtotime("+1 month", time()));
+		$user->user_type = UserType::where('user_type','=','user')->first()->id;
 
-		if ($validator->fails()) {
+		$data = array('email' => $user->email, 'api' => $user->api, 'token' => $user->token, 'username' => $user->username);
+		Mailgun::send('mail.confirm', $data, function($message) use ($data) {
+			$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Account activatie');
+		});
 
-			return back()->withErrors($validator)->withInput(Input::all());
-		} else {
-			$user = new User;
-			$user->username = strtolower(trim(Input::get('username')));
-			$user->secret = Hash::make(Input::get('secret'));
-			$user->firstname = $user->username;
-			$user->api = md5(mt_rand());
-			$user->token = sha1($user->secret);
-			$user->referral_key = md5(mt_rand());
-			$user->ip = $_SERVER['REMOTE_ADDR'];
-			$user->email = Input::get('email');
-			$user->expiration_date = date('Y-m-d', strtotime("+1 month", time()));
-			$user->user_type = UserType::where('user_type','=','user')->first()->id;
+		$user->save();
 
-			Mailgun::send('mail.confirm', array('api' => $user->api, 'token' => $user->token, 'username' => $user->username), function($message) {
-				$message->to(Input::get('email'), strtolower(trim(Input::get('username'))))->subject('Calctool - Account activatie');
-			});
-
-			$user->save();
-
-			return back()->with('success', 'Account aangemaakt, er is een bevestingsmail verstuurd');
-		}
-
+		return back()->with('success', 'Account aangemaakt, er is een bevestingsmail verstuurd');
 	}
 
 	/**
@@ -142,44 +141,36 @@ class AuthController extends Controller {
 	 *
 	 * @return Route
 	 */
-	public function doNewPassword()
+	public function doNewPassword(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, 
 			'secret' => array('required','confirmed','min:5'),
 			'secret_confirmation' => array('required','min:5'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-
-			return back()->withErrors($validator)->withInput(Input::all());
-		} else {
-			$user = Calctool\Models\User::where('token','=',Route::Input('token'))->where('api','=',Route::Input('api'))->first();
-			if (!$user) {
-				$errors = new MessageBag(['activate' => ['Activatielink is niet geldig']]);
-				return redirect('login')->withErrors($errors);
-			}
-			$user->secret = Hash::make(Input::get('secret'));
-			$user->active = true;
-			$user->token = sha1($user->secret);
-			$user->save();
-
-			$log = new Calctool\Models\Audit;
-			$log->ip = $_SERVER['REMOTE_ADDR'];
-			$log->event = '[NEWPASS] [SUCCESS]';
-			$log->user_id = $user->id;
-			$log->save();
-
-			Auth::login($user);
-			return redirect('/');
+		$user = User::where('token','=',Route::Input('token'))->where('api','=',Route::Input('api'))->first();
+		if (!$user) {
+			$errors = new MessageBag(['activate' => ['Activatielink is niet geldig']]);
+			return redirect('login')->withErrors($errors);
 		}
+		$user->secret = Hash::make(Input::get('secret'));
+		$user->active = true;
+		$user->token = sha1($user->secret);
+		$user->save();
 
+		$log = new Calctool\Models\Audit;
+		$log->ip = $_SERVER['REMOTE_ADDR'];
+		$log->event = '[NEWPASS] [SUCCESS]';
+		$log->user_id = $user->id;
+		$log->save();
+
+		Auth::login($user);
+		return redirect('/');
 	}
 
 	private function informAdmin(User $newuser)
 	{
-		if ($_ENV['TELEGRAM_ENABLED']) {
+		if (isset($_ENV['TELEGRAM_ENABLED'])) {
 			$telegram = new Longman\TelegramBot\Telegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
 			Request::initialize($telegram);
 
@@ -206,9 +197,9 @@ class AuthController extends Controller {
 	 *
 	 * @return Route
 	 */
-	public function doActivate()
+	public function doActivate(Request $request, $api, $token)
 	{
-		$user = Calctool\Models\User::where('token','=',Route::Input('token'))->where('api','=',Route::Input('api'))->first();
+		$user = User::where('token','=',$token)->where('api','=',$api)->first();
 		if (!$user) {
 			$errors = new MessageBag(['activate' => ['Activatielink is niet geldig']]);
 			return redirect('login')->withErrors($errors);
@@ -239,41 +230,33 @@ class AuthController extends Controller {
 	 *
 	 * @return Route
 	 */
-	public function doBlockPassword()
+	public function doBlockPassword(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'email' => array('required','max:80','email')
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-
+		$user = User::where('email','=',Input::get('email'))->first();
+		if (!$user)
 			return redirect('login')->with('success', 1);
-		} else {
-			$user = Calctool\Models\User::where('email','=',Input::get('email'))->first();
-			if (!$user)
-				return redirect('login')->with('success', 1);
-			$user->secret = Hash::make(mt_rand());
-			$user->active = false;
-			$user->api = md5(mt_rand());
+		$user->secret = Hash::make(mt_rand());
+		$user->active = false;
+		$user->api = md5(mt_rand());
 
-			$data = array('api' => $user->api, 'token' => $user->token, 'username' => $user->username);
-			Mailgun::send('mail.password', $data, function($message) use ($data) {
-				$message->to(Input::get('email'), strtolower(trim($data['username'])))->subject('Calctool - Wachtwoord herstellen');
-			});
+		$data = array('email' => $user->email, 'api' => $user->api, 'token' => $user->token, 'username' => $user->username);
+		Mailgun::send('mail.password', $data, function($message) use ($data) {
+			$message->to($data['data'], strtolower(trim($data['username'])))->subject('Calctool - Wachtwoord herstellen');
+		});
 
-			$user->save();
+		$user->save();
 
-			$log = new Calctool\Models\Audit;
-			$log->ip = $_SERVER['REMOTE_ADDR'];
-			$log->event = '[BLOCKPASS] [SUCCESS]';
-			$log->user_id = $user->id;
-			$log->save();
+		$log = new Audit;
+		$log->ip = $_SERVER['REMOTE_ADDR'];
+		$log->event = '[BLOCKPASS] [SUCCESS]';
+		$log->user_id = $user->id;
+		$log->save();
 
-			return redirect('login')->with('success', 1);
-		}
-
+		return redirect('login')->with('success', 1);
 	}
 
 

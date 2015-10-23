@@ -1,7 +1,12 @@
 <?php
 use \Calctool\Models\Project;
 use \Calctool\Models\Chapter;
+use \Calctool\Models\Activity;
+use \Calctool\Models\Timesheet;
+use \Calctool\Models\PartType;
+use \Calctool\Models\Detail;
 use \Calctool\Models\TimesheetKind;
+use \Calctool\Calculus\TimesheetOverview;
 ?>
 
 @extends('layout.master')

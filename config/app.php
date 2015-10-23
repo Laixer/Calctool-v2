@@ -145,10 +145,11 @@ return [
         Calctool\Providers\EventServiceProvider::class,
         Calctool\Providers\RouteServiceProvider::class,
 
-       /*
+        /*
         * 3rd-party providers
         */
-       Intervention\Image\ImageServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+        Bogardo\Mailgun\MailgunServiceProvider::class,
 
     ],
 
@@ -199,7 +200,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
-        'Image' => Intervention\Image\Facades\Image::class,
+        'Image'     => Intervention\Image\Facades\Image::class,
+        'Mailgun'   => Bogardo\Mailgun\Facades\Mailgun::class,
 
     ],
 
