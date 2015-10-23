@@ -10,7 +10,7 @@
 			<div class="col-md-9">
 				<h2>
 					<strong>Oops</strong>, Deze pagina is niet beschikbaar!
-					<span class="subtitle">Ons excuus, de pagina {{ $url }} kon niet worden gevonden.</span>
+					<span class="subtitle">Ons excuus, de pagina {{ Request::path() }} kon niet worden gevonden.</span>
 				</h2>
 
 

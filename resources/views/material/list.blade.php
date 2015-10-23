@@ -1,3 +1,9 @@
+<?php
+use \Calctool\Models\SubGroup;
+use \Calctool\Models\Supplier;
+use \Calctool\Models\Product;
+?>
+
 @extends('layout.master')
 
 @section('content')

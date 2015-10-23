@@ -2,6 +2,10 @@
 
 namespace Calctool\Http\Controllers;
 
+use Illuminate\Http\Request;
+
+use \Calctool\Models\Project;
+
 class CostController extends Controller {
 
 	/*
@@ -19,30 +23,22 @@ class CostController extends Controller {
 
 	public function getTimesheet()
 	{
-		return View::make('cost.timesheet');
+		return view('cost.timesheet');
 	}
 
 	public function getPurchase()
 	{
-		return View::make('cost.purchase');
+		return view('cost.purchase');
 	}
 
-	public function doNewTimesheet()
+	public function doNewTimesheet(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'date' => array('required','regex:/^20[0-9][0-9]-[0-9]{2}-[0-9]{2}$/'),
 			'type' => array('required','integer'),
 			'hour' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'activity' => array('required','integer')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$activity = Activity::find(Input::get('activity'));
 			if (!$activity)
@@ -90,7 +86,6 @@ class CostController extends Controller {
 			}
 
 			return json_encode(['success' => 1, 'type' => $type, 'activity' => Activity::find($timesheet->activity_id)->activity_name, 'hour' => number_format($timesheet->register_hour, 2,",","."), 'date' => date('d-m-Y', strtotime(Input::get('date'))), 'project' => $_project->project_name, 'id' => $timesheet->id]);
-		}
 	}
 
 	public function doDeleteTimesheet()

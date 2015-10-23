@@ -1,3 +1,9 @@
+<?php
+use \Calctool\Models\UserType;
+use \Calctool\Models\Province;
+use \Calctool\Models\Country;
+?>
+
 @extends('layout.master')
 
 @section('content')
@@ -71,7 +77,7 @@ $(document).ready(function() {
 			<h2><strong>Nieuwe</strong> gebruiker</h2>
 			<div class="white-row" >
 				<form method="POST" action="/admin/user/new" accept-charset="UTF-8">
-                                {!! csrf_field() !!}
+                {!! csrf_field() !!}
 
 				<h4 class="company">Gebruikersgegevens</h4>
 				<div class="row company">
@@ -280,7 +286,7 @@ $(document).ready(function() {
 					</div>
 				</div>
 
-			{{ Form::close() }}
+			</form>
 			</div>
 
 		</div>

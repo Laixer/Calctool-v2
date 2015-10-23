@@ -1,3 +1,9 @@
+<?php
+use \Calctool\Models\Project;
+use \Calctool\Models\Chapter;
+use \Calctool\Models\TimesheetKind;
+?>
+
 @extends('layout.master')
 
 @section('content')
@@ -208,9 +214,9 @@
 												<td class="col-md-2"><strong>{{ $project->project_name }}</strong></td>
 												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
-												<td class="col-md-2">{{ number_format($row1, 2,",","."); }}</td>
-												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-1">{{ number_format($row1 - Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-2">{{ number_format($row1, 2,",",".") }}</td>
+												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",",".") }}</td>
+												<td class="col-md-1">{{ number_format($row1 - Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",",".") }}</td>
 											</tr>
 											@endforeach
 											@endforeach
@@ -246,9 +252,9 @@
 												<td class="col-md-2"><strong>{{ $project->project_name }}</strong></td>
 												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
-												<td class="col-md-2">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id), 2,",","."); }}</td>
-												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-1">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-2">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id), 2,",",".") }}</td>
+												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",",".") }}</td>
+												<td class="col-md-1">{{ number_format(TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",",".") }}</td>
 											</tr>
 											@endforeach
 											@endforeach
@@ -261,9 +267,9 @@
 												<td class="col-md-2"><strong>{{ $project->project_name }}</strong></td>
 												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
-												<td class="col-md-2">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id), 2,",","."); }}</td>
-												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
-												<td class="col-md-1">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-2">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id), 2,",",".") }}</td>
+												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",",".") }}</td>
+												<td class="col-md-1">{{ number_format(TimesheetOverview::estimTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'), 2,",",".") }}</td>
 											</tr>
 											@endforeach
 											@endforeach
@@ -277,7 +283,7 @@
 												<td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
 												<td class="col-md-2">&nbsp;</td>
-												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'), 2,",","."); }}</td>
+												<td class="col-md-2">{{ number_format(Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'), 2,",",".") }}</td>
 												<td class="col-md-1">&nbsp;</td>
 											</tr>
 											@endforeach

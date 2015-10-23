@@ -11,6 +11,7 @@ use \Calctool\Models\Resource;
 
 use Storage;
 use Auth;
+use Hash;
 
 class AdminController extends Controller {
 
@@ -139,8 +140,6 @@ class AdminController extends Controller {
 
 			'expdate' => array('required'),
 		]);
-
-		$validator = Validator::make($request->all(), $rules);
 
 			/* General */
 			$user = new User;
