@@ -1,3 +1,8 @@
+<?php
+use \Calctool\Models\Resource;
+use \Calctool\Models\User;
+?>
+
 @extends('layout.master')
 
 @section('content')
@@ -58,11 +63,6 @@
 				@endforeach
 				</tbody>
 			</table>
-			<div class="row">
-				<div class="col-md-12">
-					<a href="/admin/user/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuwe gebruiker</a>
-				</div>
-			</div>
 			</div>
 		</div>
 
