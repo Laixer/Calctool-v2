@@ -5,6 +5,15 @@ namespace Calctool\Http\Controllers;
 use Illuminate\Http\Request;
 use JeroenDesloovere\VCard\VCard;
 
+use \Calctool\Models\Relation;
+use \Calctool\Models\RelationKind;
+use \Calctool\Models\Iban;
+use \Calctool\Models\Contact;
+use \Calctool\Models\Resource;
+
+use Auth;
+use Image;
+
 class RelationController extends Controller {
 
 	/**
@@ -39,9 +48,9 @@ class RelationController extends Controller {
 		return view('user.edit_mycompany');
 	}
 
-	public function doUpdateMyCompany()
+	public function doUpdateMyCompany(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			/* General */
 			'id' => array('required','integer'),
 			/* Company */
@@ -59,16 +68,7 @@ class RelationController extends Controller {
 			'city' => array('required','alpha_num','max:35'),
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric')
-		);
-
-		$validator = Validator::make($request->all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			// redirect our user back to the form with the errors from the validator
-			return Redirect::back()->withErrors($validator)->withInput($request->all());
-		} else {
+		]);
 
 			/* General */
 			$relation = Relation::find($request->input('id'));
@@ -99,8 +99,7 @@ class RelationController extends Controller {
 
 			$relation->save();
 
-			return Redirect::back()->with('success', 1);
-		}
+			return back()->with('success', 1);
 	}
 
 	public function doUpdate(Request $request)
@@ -228,23 +227,8 @@ class RelationController extends Controller {
 		return back()->with('success', 1);
 	}
 
-	public function doNewIban()
+	public function doNewIban(Request $request)
 	{
-		$rules = array(
-			//'id' => array('required','integer'),
-			//'iban' => array('alpha_num'),
-			//'iban_name' => array('required','max:50')
-		);
-
-		$validator = Validator::make($request->all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			// redirect our user back to the form with the errors from the validator
-			return Redirect::back()->withErrors($validator)->withInput($request->all());
-		} else {
-
 			$relation = Relation::find($request->input('id'));
 			if (!$relation || !$relation->isOwner()) {
 				return Redirect::back()->withInput($request->all());
@@ -257,13 +241,12 @@ class RelationController extends Controller {
 
 			$iban->save();
 
-			return Redirect::back()->with('success', 1);
-		}
+			return back()->with('success', 1);
 	}
 
-	public function doNewMyCompany()
+	public function doNewMyCompany(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			/* Company */
 			'company_type' => array('required_if:relationkind,zakelijk','numeric'),
 			'company_name' => array('required_if:relationkind,zakelijk','max:50'),
@@ -279,16 +262,7 @@ class RelationController extends Controller {
 			'city' => array('required','alpha_num','max:35'),
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric'),
-		);
-
-		$validator = Validator::make($request->all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			// redirect our user back to the form with the errors from the validator
-			return Redirect::back()->withErrors($validator)->withInput($request->all());
-		} else {
+		]);
 
 			/* General */
 			$relation = new Relation;
@@ -320,8 +294,7 @@ class RelationController extends Controller {
 			$user->self_id = $relation->id;
 			$user->save();
 
-			return Redirect::back()->with('success', 1);
-		}
+			return back()->with('success', 1);
 	}
 
 	public function doNew(Request $request)
@@ -468,9 +441,9 @@ class RelationController extends Controller {
 		return redirect('/relation-'.$request->input('id').'/edit')->with('success', 1);
 	}
 
-	public function doMyCompanyNewContact()
+	public function doMyCompanyNewContact(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			/* Contact */
 			'id' => array('required','integer'),
 			'contact_name' => array('required','max:50'),
@@ -479,16 +452,7 @@ class RelationController extends Controller {
 			//'telephone' => array('alpha_num','max:14'),
 			'email' => array('required','email','max:80'),
 			'contactfunction' => array('required','numeric'),
-		);
-
-		$validator = Validator::make($request->all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			// redirect our user back to the form with the errors from the validator
-			return Redirect::back()->withErrors($validator)->withInput($request->all());
-		} else {
+		]);
 
 			$relation = Relation::find($request->input('id'));
 			if (!$relation || !$relation->isOwner()) {
@@ -507,8 +471,7 @@ class RelationController extends Controller {
 
 			$contact->save();
 
-			return Redirect::to('/mycompany')->with('success', 1);
-		}
+			return redirect('/mycompany')->with('success', 1);
 	}
 
 	public function doDeleteContact()
@@ -545,24 +508,15 @@ class RelationController extends Controller {
 		return view('user.relation');
 	}
 
-	public function doNewLogo()
+	public function doNewLogo(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('required','integer'),
 			'image' => array('required', 'mimes:jpeg,bmp,png,gif'),
-		);
+		]);
 
-		$validator = Validator::make($request->all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			// redirect our user back to the form with the errors from the validator
-			return Redirect::back()->withErrors($validator)->withInput($request->all());
-		} else {
-
-			if (Input::hasFile('image')) {
-				$file = Input::file('image');
+			if ($request->hasFile('image')) {
+				$file = $request->file('image');
 				$newname = Auth::id().'-'.md5(mt_rand()).'.'.$file->getClientOriginalExtension();
 				$file->move('user-content', $newname);
 
@@ -579,22 +533,21 @@ class RelationController extends Controller {
 
 				$relation = Relation::find($request->input('id'));
 				if (!$relation || !$relation->isOwner()) {
-					return Redirect::back()->withInput($request->all());
+					return back()->withInput($request->all());
 				}
 				$relation->logo_id = $resource->id;
 
 				$relation->save();
 
-				return Redirect::back()->with('success', 1);
+				return back()->with('success', 1);
 			} else {
 
 				$messages->add('file', 'Geen afbeelding geupload');
 
 				// redirect our user back to the form with the errors from the validator
-				return Redirect::back()->withErrors($messages);
+				return back()->withErrors($messages);
 			}
 
-		}
 	}
 
 	public function downloadVCard(Request $request, $relation_id, $contact_id)

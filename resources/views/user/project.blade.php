@@ -1,3 +1,10 @@
+<?php
+use \Calctool\Models\Project;
+use \Calctool\Models\Relation;
+use \Calctool\Models\RelationKind;
+use \Calctool\Models\Contact;
+?>
+
 @extends('layout.master')
 
 @section('content')
@@ -21,7 +28,6 @@
 				<h2><strong>Projecten</strong></h2>
 
 				<table class="table table-striped">
-					<?# -- table head -- ?>
 					<thead>
 						<tr>
 							<th class="col-md-3">Projectnaam</th>
@@ -33,7 +39,6 @@
 						</tr>
 					</thead>
 
-					<!-- table items -->
 					<tbody>
 					@if (!Project::where('user_id','=', Auth::user()->id)->count('id'))
 					<tr>
@@ -43,8 +48,8 @@
 					@foreach (Project::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $project)
 					<?php $relation = Relation::find($project->client_id); ?>
 						<tr>
-							<td class="col-md-3">{{ HTML::link('/project-'.$project->id.'/edit', $project->project_name) }}</td>
-							<td class="col-md-2">{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); }}</td>
+							<td class="col-md-3"><a href="/project-{{ $project->id }}/edit">{{ $project->project_name }}</a></td>
+							<td class="col-md-2">{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</td>
 							<td class="col-md-1">{{ $project->type->type_name }}</td>
 							<td class="col-md-3">{{ $project->address_street }} {{ $project->address_number }}</td>
 							<td class="col-md-2">{{ $project->address_city }}</td>

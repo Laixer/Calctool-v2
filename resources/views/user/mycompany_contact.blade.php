@@ -1,4 +1,9 @@
 <?php
+
+use \Calctool\Models\Relation;
+use \Calctool\Models\Contact;
+use \Calctool\Models\ContactFunction;
+
 $relation = Relation::find(Auth::user()->self_id);
 $contact = Contact::where('relation_id','=',$relation->id)->first();
 ?>
@@ -6,7 +11,6 @@ $contact = Contact::where('relation_id','=',$relation->id)->first();
 @extends('layout.master')
 
 @section('content')
-<?# -- WRAPPER -- ?>
 
 <div id="wrapper">
 
@@ -42,7 +46,8 @@ $contact = Contact::where('relation_id','=',$relation->id)->first();
 
 			<h2><strong>Nieuw</strong> contact</h2>
 			<div class="white-row">
-				{{ Form::open(array('url' => '/mycompany/contact/new')) }}
+				<form action="/mycompany/contact/new" method="post">
+				{!! csrf_field() !!}
 				<h4>Contactgegevens</h4>
 				<div class="row">
 
@@ -98,7 +103,7 @@ $contact = Contact::where('relation_id','=',$relation->id)->first();
 
 				</div>
 
-			{{ Form::close() }}
+			</form>
 			</div>
 
 		</div>

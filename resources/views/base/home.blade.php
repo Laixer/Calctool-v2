@@ -1,3 +1,7 @@
+<?php
+use \Calctool\Models\Iban;
+?>
+
 @extends('layout.master')
 
 <?php
