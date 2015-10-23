@@ -176,7 +176,7 @@ else
 			</div>
 			@endif
 
-			<h2><strong>Navigatie</strong> koppelingen</h2>
+			<h2><strong>Dash</strong>board</h2>
 			<div class="row">
 
 				<div class="col-sm-6 col-md-3">
