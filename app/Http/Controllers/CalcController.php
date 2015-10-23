@@ -2,6 +2,15 @@
 
 namespace Calctool\Http\Controllers;
 
+use \Illuminate\Http\Request;
+use \Calctool\Models\Project;
+use \Calctool\Models\Chapter;
+use \Calctool\Models\Part;
+use \Calctool\Models\PartType;
+use \Calctool\Models\ProjectType;
+use \Calctool\Models\Tax;
+use \Calctool\Models\Activity;
+
 class CalcController extends Controller {
 
 	/*
@@ -17,9 +26,9 @@ class CalcController extends Controller {
 	|
 	*/
 
-	public function getCalculation()
+	public function getCalculation(Request $request)
 	{
-		$project = Project::find(Route::Input('project_id'));
+		$project = Project::find($request->input('project_id'));
 		if ($project) {
 			if ($project->project_close)
 				return response()->view('calc.calculation_closed');
@@ -30,7 +39,7 @@ class CalcController extends Controller {
 		return response()->view('calc.calculation');
 	}
 
-	public function getEstimate()
+	public function getEstimate(Request $request)
 	{
 		$project = Project::find(Route::Input('project_id'));
 		if ($project) {
@@ -43,7 +52,7 @@ class CalcController extends Controller {
 		return response()->view('calc.estimate');
 	}
 
-	public function getLess()
+	public function getLess(Request $request)
 	{
 		$project = Project::find(Route::Input('project_id'));
 		if ($project) {
@@ -56,7 +65,7 @@ class CalcController extends Controller {
 		return response()->view('calc.less');
 	}
 
-	public function getMore()
+	public function getMore(Request $request)
 	{
 		$project = Project::find(Route::Input('project_id'));
 		if ($project) {
@@ -69,115 +78,99 @@ class CalcController extends Controller {
 		return response()->view('calc.more');
 	}
 
-	public function getInvoice()
+	public function getInvoice(Request $request)
 	{
 		return response()->view('calc.invoice');
 	}
 
-	public function getTermInvoice()
+	public function getTermInvoice(Request $request)
 	{
 		return response()->view('calc.invoice_term');
 	}
 
-	public function getOfferAll()
+	public function getOfferAll(Request $request)
 	{
 		return response()->view('calc.offer_all');
 	}
 
-	public function getOffer()
+	public function getOffer(Request $request)
 	{
 		return response()->view('calc.offer');
 	}
 
-	public function getOfferPDF()
+	public function getOfferPDF(Request $request)
 	{
 		$pdf = PDF::loadView('calc.offer_pdf');
 		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
 		return $pdf->stream();
 	}
 
-	public function getOfferDownloadPDF()
+	public function getOfferDownloadPDF(Request $request)
 	{
 		$pdf = PDF::loadView('calc.offer_pdf');
 		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
 		return $pdf->download(Input::get('file'));
 	}
 
-	public function getInvoiceAll()
+	public function getInvoiceAll(Request $request)
 	{
 		return response()->view('calc.invoice_all');
 	}
 
-	public function getInvoicePDF()
+	public function getInvoicePDF(Request $request)
 	{
 		$pdf = PDF::loadView('calc.invoice_pdf');
 		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
 		return $pdf->stream();
 	}
 
-	public function getInvoiceDownloadPDF()
+	public function getInvoiceDownloadPDF(Request $request)
 	{
 		$pdf = PDF::loadView('calc.invoice_pdf');
 		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
 		return $pdf->download(Input::get('file'));
 	}
 
-	public function getTermInvoicePDF()
+	public function getTermInvoicePDF(Request $request)
 	{
 		$pdf = PDF::loadView('calc.invoice_term_pdf');
 		return $pdf->stream();
 	}
 
-	public function getTermInvoiceDownloadPDF()
+	public function getTermInvoiceDownloadPDF(Request $request)
 	{
 		$pdf = PDF::loadView('calc.invoice_term_pdf');
 		return $pdf->download(Input::get('file'));
 	}
 
-	public function doNewChapter()
+	public function doNewChapter(Request $request, $project_id)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'chapter' => array('required','max:50'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
-		} else {
-
-			$project = Project::find(Route::Input('project_id'));
+			$project = Project::find($project_id);
 			if (!$project || !$project->isOwner()) {
-				return Redirect::back()->withInput(Input::all());
+				return back()->withInput($request->all());
 			}
 
 			$chapter = new Chapter;
-			$chapter->chapter_name = Input::get('chapter');
+			$chapter->chapter_name = $request->get('chapter');
 			$chapter->priority = 0;
 			$chapter->project_id = $project->id;
 
 			$chapter->save();
 
-			return Redirect::back()->with('success', 1);
-		}
-
+			return back()->with('success', 1);
 	}
 
-	public function doNewCalculationActivity()
+	public function doNewCalculationActivity(Request $request, $chapter_id)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'activity' => array('required','max:50'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
-		} else {
-
-			$chapter = Chapter::find(Route::Input('chapter_id'));
+			$chapter = Chapter::find($chapter_id);
 			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
 				return Redirect::back()->withInput(Input::all());
 			}
@@ -191,7 +184,7 @@ class CalcController extends Controller {
 				$tax = Tax::where('tax_rate','=',21)->first();
 
 			$activity = new Activity;
-			$activity->activity_name = Input::get('activity');
+			$activity->activity_name = $request->get('activity');
 			$activity->priority = 0;
 			$activity->chapter_id = $chapter->id;
 			$activity->part_id = $part->id;
@@ -202,23 +195,14 @@ class CalcController extends Controller {
 
 			$activity->save();
 
-			return Redirect::back()->with('success', 1);
-
-		}
+			return back()->with('success', 1);
 	}
 
-	public function doNewEstimateActivity()
+	public function doNewEstimateActivity(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'activity' => array('required','max:50'),
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
-		} else {
+		]);
 
 			$chapter = Chapter::find(Route::Input('chapter_id'));
 			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
@@ -245,26 +229,16 @@ class CalcController extends Controller {
 
 			$activity->save();
 
-			return Redirect::back()->with('success', 1);
-
-		}
+			return back()->with('success', 1);
 	}
 
-	public function doUpdateTax()
+	public function doUpdateTax(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'value' => array('required','integer'),
 			'type' => array('required'),
 			'activity' => array('required','integer')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$activity = Activity::find(Input::get('activity'));
 			if (!$activity)
@@ -285,24 +259,15 @@ class CalcController extends Controller {
 			$activity->save();
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
-	public function doUpdateEstimateTax()
+	public function doUpdateEstimateTax(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'value' => array('required','integer'),
 			'type' => array('required'),
 			'activity' => array('required','integer')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$activity = Activity::find(Input::get('activity'));
 			if (!$activity)
@@ -322,23 +287,14 @@ class CalcController extends Controller {
 			$activity->save();
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
-	public function doUpdatePart()
+	public function doUpdatePart(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'value' => array('required','integer','min:0'),
 			'activity' => array('required','integer','min:0')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$activity = Activity::find(Input::get('activity'));
 			if (!$activity)
@@ -352,24 +308,15 @@ class CalcController extends Controller {
 			$activity->save();
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
 
-	public function doUpdateNote()
+	public function doUpdateNote(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'note' => array('required'),
 			'activity' => array('required','integer')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$activity = Activity::find(Input::get('activity'));
 			if (!$activity)
@@ -384,22 +331,13 @@ class CalcController extends Controller {
 			$activity->save();
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
-	public function doDeleteActivity()
+	public function doDeleteActivity(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'activity' => array('required','integer','min:0')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$activity = Activity::find(Input::get('activity'));
 			if (!$activity)
@@ -412,22 +350,13 @@ class CalcController extends Controller {
 			$activity->delete();
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
-	public function doDeleteChapter()
+	public function doDeleteChapter(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'chapter' => array('required','integer','min:0')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$chapter = Chapter::find(Input::get('chapter'));
 			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
@@ -437,26 +366,17 @@ class CalcController extends Controller {
 			$chapter->delete();
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
-	public function doNewCalculationMaterial()
+	public function doNewCalculationMaterial(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'name' => array('required','max:50'),
 			'unit' => array('required','max:10'),
 			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'activity' => array('required','integer','min:0')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$activity = Activity::find(Input::get('activity'));
 			if (!$activity)
@@ -475,26 +395,17 @@ class CalcController extends Controller {
 			));
 
 			return json_encode(['success' => 1, 'id' => $material->id]);
-		}
 	}
 
-	public function doNewCalculationEquipment()
+	public function doNewCalculationEquipment(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'name' => array('required','max:50'),
 			'unit' => array('required','max:10'),
 			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'activity' => array('required','integer','min:0')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$activity = Activity::find(Input::get('activity'));
 			if (!$activity)
@@ -513,24 +424,15 @@ class CalcController extends Controller {
 			));
 
 			return json_encode(['success' => 1, 'id' => $equipment->id]);
-		}
 	}
 
-	public function doNewCalculationLabor()
+	public function doNewCalculationLabor(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'activity' => array('required','integer','min:0')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$activity = Activity::find(Input::get('activity'));
 			if (!$activity)
@@ -556,22 +458,13 @@ class CalcController extends Controller {
 			));
 
 			return json_encode(['success' => 1, 'id' => $labor->id]);
-		}
 	}
 
-	public function doDeleteCalculationLabor()
+	public function doDeleteCalculationLabor(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('required','integer','min:0'),
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$rec = CalculationLabor::find(Input::get('id'));
 			if (!$rec)
@@ -587,22 +480,13 @@ class CalcController extends Controller {
 			$rec->delete();
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
-	public function doDeleteCalculationMaterial()
+	public function doDeleteCalculationMaterial(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('required','integer','min:0'),
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$rec = CalculationMaterial::find(Input::get('id'));
 			if (!$rec)
@@ -618,22 +502,13 @@ class CalcController extends Controller {
 			$rec->delete();
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
-	public function doDeleteCalculationEquipment()
+	public function doDeleteCalculationEquipment(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('required','integer','min:0'),
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$rec = CalculationEquipment::find(Input::get('id'));
 			if (!$rec)
@@ -649,26 +524,17 @@ class CalcController extends Controller {
 			$rec->delete();
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
-	public function doUpdateCalculationMaterial()
+	public function doUpdateCalculationMaterial(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('integer','min:0'),
 			'name' => array('max:50'),
 			'unit' => array('max:10'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$material = CalculationMaterial::find(Input::get('id'));
 			if (!$material)
@@ -689,26 +555,17 @@ class CalcController extends Controller {
 			$material->save();
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
-	public function doUpdateCalculationEquipment()
+	public function doUpdateCalculationEquipment(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('integer','min:0'),
 			'name' => array('max:50'),
 			'unit' => array('max:10'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$equipment = CalculationEquipment::find(Input::get('id'));
 			if (!$equipment)
@@ -729,24 +586,15 @@ class CalcController extends Controller {
 			$equipment->save();
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
-	public function doUpdateCalculationLabor()
+	public function doUpdateCalculationLabor(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('integer','min:0'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$labor = CalculationLabor::find(Input::get('id'));
 			if (!$labor)
@@ -776,26 +624,17 @@ class CalcController extends Controller {
 			$labor->save();
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
-	public function doNewEstimateMaterial()
+	public function doNewEstimateMaterial(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'name' => array('required','max:50'),
 			'unit' => array('required','max:10'),
 			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'activity' => array('required','integer','min:0')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$activity = Activity::find(Input::get('activity'));
 			if (!$activity)
@@ -816,26 +655,17 @@ class CalcController extends Controller {
 			));
 
 			return json_encode(['success' => 1, 'id' => $material->id]);
-		}
 	}
 
-	public function doNewEstimateEquipment()
+	public function doNewEstimateEquipment(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'name' => array('required','max:50'),
 			'unit' => array('required','max:10'),
 			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'activity' => array('required','integer','min:0')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$activity = Activity::find(Input::get('activity'));
 			if (!$activity)
@@ -856,24 +686,15 @@ class CalcController extends Controller {
 			));
 
 			return json_encode(['success' => 1, 'id' => $equipment->id]);
-		}
 	}
 
-	public function doNewEstimateLabor()
+	public function doNewEstimateLabor(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'activity' => array('required','integer','min:0')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$activity = Activity::find(Input::get('activity'));
 			if (!$activity)
@@ -901,22 +722,13 @@ class CalcController extends Controller {
 			));
 
 			return json_encode(['success' => 1, 'id' => $labor->id]);
-		}
 	}
 
-	public function doDeleteEstimateLabor()
+	public function doDeleteEstimateLabor(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('required','integer','min:0'),
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$rec = EstimateLabor::find(Input::get('id'));
 			if (!$rec)
@@ -932,22 +744,13 @@ class CalcController extends Controller {
 			$rec->delete();
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
-	public function doDeleteEstimateMaterial()
+	public function doDeleteEstimateMaterial(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('required','integer','min:0'),
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$rec = EstimateMaterial::find(Input::get('id'));
 			if (!$rec)
@@ -963,22 +766,13 @@ class CalcController extends Controller {
 			$rec->delete();
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
-	public function doDeleteEstimateEquipment()
+	public function doDeleteEstimateEquipment(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('required','integer','min:0'),
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$rec = EstimateEquipment::find(Input::get('id'));
 			if (!$rec)
@@ -994,26 +788,17 @@ class CalcController extends Controller {
 			$rec->delete();
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
-	public function doUpdateEstimateMaterial()
+	public function doUpdateEstimateMaterial(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('integer','min:0'),
 			'name' => array('max:50'),
 			'unit' => array('max:10'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$material = EstimateMaterial::find(Input::get('id'));
 			if (!$material)
@@ -1034,26 +819,17 @@ class CalcController extends Controller {
 			$material->save();
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
-	public function doUpdateEstimateEquipment()
+	public function doUpdateEstimateEquipment(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('integer','min:0'),
 			'name' => array('max:50'),
 			'unit' => array('max:10'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$equipment = EstimateEquipment::find(Input::get('id'));
 			if (!$equipment)
@@ -1074,24 +850,15 @@ class CalcController extends Controller {
 			$equipment->save();
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
-	public function doUpdateEstimateLabor()
+	public function doUpdateEstimateLabor(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('integer','min:0'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
+		]);
 
 			$labor = EstimateLabor::find(Input::get('id'));
 			if (!$labor)
@@ -1121,6 +888,5 @@ class CalcController extends Controller {
 			$labor->save();
 
 			return json_encode(['success' => 1]);
-		}
 	}
 }
