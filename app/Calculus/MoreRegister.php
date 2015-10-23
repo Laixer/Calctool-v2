@@ -1,5 +1,7 @@
 <?php
 
+namespace Calctool\Calculus;
+
 class MoreRegister {
 
 /*Calculation labor*/

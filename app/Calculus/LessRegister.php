@@ -1,5 +1,7 @@
 <?php
 
+namespace Calctool\Calculus;
+
 class LessRegister {
 
 	public static function lessLaborDeltaTotal($labor) {
