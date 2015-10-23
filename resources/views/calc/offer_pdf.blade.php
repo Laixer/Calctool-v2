@@ -57,7 +57,8 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
       <div class="openingtext">Geachte {{ Contact::find($offer_last->to_contact_id)->firstname ." ". Contact::find($offer_last->to_contact_id)->lastname }},</div>
       <div class="openingtext">{{ ($offer_last ? $offer_last->description : '') }}</div>
 
-      <h1 class="name">Specificatie offerte</h1>
+@if (!$only_totals)
+      <h1 class="name">Specificatie offerte deze</h1>
       @if ($seperate_subcon)
       <table border="0" cellspacing="0" cellpadding="0">
         <thead>
@@ -147,6 +148,8 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
           @endif
         </tbody>
       </table>
+
+@endif
 
       <h1 class="name">Totalen offerte</h1>
       <table border="0" cellspacing="0" cellpadding="0">
@@ -239,6 +242,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
     </footer>
 
     @else
+
 
      <table border="0" cellspacing="0" cellpadding="0">
         <thead>
@@ -518,6 +522,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
           @endif
         </tbody>
       </table>
+
 
       <!--PAGE HEADER SECOND START-->
       <div style="page-break-after:always;"></div>
