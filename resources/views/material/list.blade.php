@@ -18,7 +18,7 @@ $(document).ready(function() {
 			$.post("/material/search", {query:$val,group:$group}, function(data) {
 				if (data) {
 					$('#alllist tbody tr').remove();
-					$.each(data, function(i, item) {
+					$.each(JSON.parse(data), function(i, item) {
 						$('#alllist tbody').append('<tr data-id="'+item.id+'"><td>'+item.description+'</td><td>'+item.unit+'</td><td>'+item.price+'</td><td>'+item.tprice+'</td><td><a href="javascript:void(0);" class="toggle-fav"><i style="color:'+(item.favorite ? '#FFD600' : '#000')+';" class="fa '+(item.favorite ? 'fa-star' : 'fa-star-o')+'"></i></a></td></tr>');
 					});
 					$req = false;

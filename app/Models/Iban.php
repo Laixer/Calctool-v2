@@ -4,6 +4,8 @@ namespace Calctool\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Auth;
+
 class Iban extends Model {
 
 	protected $table = 'iban';

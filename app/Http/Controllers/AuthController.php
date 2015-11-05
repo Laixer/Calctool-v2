@@ -173,7 +173,7 @@ class AuthController extends Controller {
 	{
 		if (isset($_ENV['TELEGRAM_ENABLED'])) {
 			$telegram = new Longman\TelegramBot\Telegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
-			Request::initialize($telegram);
+			TRequest::initialize($telegram);
 
 			foreach (User::where('user_type','=',UserType::where('user_type','=','admin')->first()->id)->get() as $admin) {
 				$tgram = Telegram::where('user_id','=',$admin->id)->first();
@@ -187,7 +187,7 @@ class AuthController extends Controller {
 					$data['chat_id'] = $tgram->uid;
 					$data['text'] = $text;
 
-					$result = Request::sendMessage($data);
+					$result = TRequest::sendMessage($data);
 				}
 			}
 		}

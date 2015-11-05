@@ -5,6 +5,12 @@ namespace Calctool\Console\Commands;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Nathanmac\Utilities\Parser\Parser;
+
+use \Calctool\Models\SubGroup;
+use \Calctool\Models\Product;
+
+use DB;
 
 class MaterialImport extends Command {
 
@@ -39,10 +45,11 @@ class MaterialImport extends Command {
 	 */
 	public function handle()
 	{
+		$parser = new Parser();
 		$filename = $this->argument('file');
-		$contents = File::get($filename);
+		$contents = file_get_contents($filename);
 		$xml =  str_replace("http://www.gs1.nl Artikelbericht_bou003_31012010.xsd", "http://calctool", $contents);
-		$articles = Parser::xml($xml)['Bilateral']['PricatLine'];
+		$articles = $parser->xml($xml)['Bilateral']['PricatLine'];
 		DB::raw("TRUNCATE product CASCADE");
 		foreach ($articles as $key => $value) {
 			$groupcode = explode(" ", $value['AdditionalDescriptions']['SupplierProductGroupDescription']);

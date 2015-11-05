@@ -101,7 +101,10 @@ $(document).ready(function() {
 							<h4 class="company">Contactgegevens</h4>
 							<div class="row company">
 								<div class="col-md-3">
-									<label>Username: {{ $user->username }}</label>
+									<div class="form-group">
+										<label for="username">Gebruikersnaam</label>
+										<input tname="username" id="username" ype="text" disabled="" value="{{ $user->username }}" class="form-control"/>
+									</div>
 								</div>
 							</div>
 							<div class="row company">
@@ -212,7 +215,7 @@ $(document).ready(function() {
 						<div id="contact" class="tab-pane">
 
 							<form method="POST" action="myaccount/security/update" accept-charset="UTF-8">
-                                                        {!! csrf_field() !!}
+                            {!! csrf_field() !!}
 
 							<h4 class="company">Wachtwoord wijzigen</h4>
 							<div class="row company">

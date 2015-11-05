@@ -3,13 +3,18 @@
 namespace Calctool\Http\Controllers;
 
 use Illuminate\Support\MessageBag;
-use Longman\TelegramBot\Request;
+use Illuminate\Http\Request;
+use Longman\TelegramBot\Request as TRequest;
 
 use \Calctool\Models\Payment;
 use \Calctool\Models\User;
 use \Calctool\Models\Iban;
+use \Calctool\Models\Telegram;
+use \Calctool\Models\Audit;
 
 use \Auth;
+use \Hash;
+use \Mailgun;
 
 class UserController extends Controller {
 
@@ -70,13 +75,13 @@ class UserController extends Controller {
 			if ($tgram && $tgram->alert) {
 
 				$telegram = new Longman\TelegramBot\Telegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
-				Request::initialize($telegram);
+				TRequest::initialize($telegram);
 
 				$data = array();
 				$data['chat_id'] = $tgram->uid;
 				$data['text'] = "Je CalculatieTool account was zojuist gedeactiveerd. Mocht dit niet bedoeling zijn geweest neem dan contact met ons op.";
 
-				$result = Request::sendMessage($data);
+				$result = TRequest::sendMessage($data);
 			}
 		}
 
@@ -216,13 +221,13 @@ class UserController extends Controller {
 
 					// create Telegram API object
 					$telegram = new Longman\TelegramBot\Telegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
-					Request::initialize($telegram);
+					TRequest::initialize($telegram);
 
 					$data = array();
 					$data['chat_id'] = $tgram->uid;
 					$data['text'] = "De betaling van " . number_format($order->amount, 2,",",".") . " is in goede orde ontvangen en je account is verlengt tot " . date('j F Y', strtotime($user->expiration_date));
 
-					$result = Request::sendMessage($data);
+					$result = TRequest::sendMessage($data);
 				}
 			}
 
@@ -296,13 +301,13 @@ class UserController extends Controller {
 
 					// create Telegram API object
 					$telegram = new Longman\TelegramBot\Telegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
-					Request::initialize($telegram);
+					TRequest::initialize($telegram);
 
 					$data = array();
 					$data['chat_id'] = $tgram->uid;
 					$data['text'] = "Het wachtwoord van je account voor de Calculatie Tool is aangepast";
 
-					$result = Request::sendMessage($data);
+					$result = TRequest::sendMessage($data);
 				}
 			}
 		}
@@ -436,13 +441,13 @@ class UserController extends Controller {
 
 				// create Telegram API object
 				$telegram = new Longman\TelegramBot\Telegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
-				Request::initialize($telegram);
+				TRequest::initialize($telegram);
 
 				$data = array();
 				$data['chat_id'] = $tgram->uid;
 				$data['text'] = "Het IBAN rekeningnummer en/of de tenaamstelling is aangepast op Calculatie Tool";
 
-				$result = Request::sendMessage($data);
+				$result = TRequest::sendMessage($data);
 			}
 		}
 
