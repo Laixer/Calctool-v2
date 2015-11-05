@@ -1,4 +1,13 @@
 <?php
+
+use \Calctool\Models\Project;
+use \Calctool\Models\Relation;
+use \Calctool\Models\Contact;
+use \Calctool\Models\Invoice;
+use \Calctool\Models\Offer;
+use \Calctool\Models\Iban;
+use \Calctool\Models\ProjectType;
+
 $total=Input::get("total");
 $specification=Input::get("specification");
 $description=Input::get("description");

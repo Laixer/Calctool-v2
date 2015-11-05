@@ -4,6 +4,7 @@ use \Calctool\Calculus\CalculationEndresult;
 use \Calctool\Models\Relation;
 use \Calctool\Models\PurchaseKind;
 use \Calctool\Models\Contact;
+use \Calctool\Models\Project;
 
 $common_access_error = false;
 $project = \Calctool\Models\Project::find(Route::Input('project_id'));

@@ -1,4 +1,14 @@
 <?php
+
+use \Calctool\Models\Project;
+use \Calctool\Models\Relation;
+use \Calctool\Models\Contact;
+use \Calctool\Models\Invoice;
+use \Calctool\Models\Offer;
+use \Calctool\Models\Iban;
+use \Calctool\Models\ProjectType;
+
+
 $displaytax=Input::get("displaytax");
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
