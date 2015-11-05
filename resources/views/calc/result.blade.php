@@ -1,4 +1,22 @@
 <?php
+
+use \Calctool\Models\Project;
+use \Calctool\Models\Chapter;
+use \Calctool\Models\Activity;
+use \Calctool\Models\PartType;
+use \Calctool\Models\Part;
+use \Calctool\Models\Time;
+use \Calctool\Models\Detail;
+use \Calctool\Models\TimesheetKind;
+use \Calctool\Models\MoreLabor;
+use \Calctool\Models\ProjectType;
+use \Calctool\Calculus\CalculationEndresult;
+use \Calctool\Calculus\MoreEndresult;
+use \Calctool\Calculus\LessEndresult;
+use \Calctool\Calculus\ResultEndresult;
+use \Calctool\Calculus\TimesheetOverview;
+use \Calctool\Models\Timesheet;
+
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner())
@@ -447,7 +465,7 @@ $(document).ready(function() {
 											<tr>
 												<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
-												<td class="col-md-2"><span class="pull-right">{{ number_format(TimesheetOverview::calcOrigTotalAmount($activity->id), 2,",","."); }}<?php //$X = TimesheetOverview::calcOrigTotalAmount($activity->id); $rs_1 += $X; echo $X ? number_format($X, 2,",",".") : '-'; ?></span></td>
+												<td class="col-md-2"><span class="pull-right">{{ number_format(TimesheetOverview::calcOrigTotalAmount($activity->id), 2,",",".") }}<?php //$X = TimesheetOverview::calcOrigTotalAmount($activity->id); $rs_1 += $X; echo $X ? number_format($X, 2,",",".") : '-'; ?></span></td>
 												<td class="col-md-1"><span class="pull-right"><?php $X = TimesheetOverview::calcLessTotalAmount($activity->id) ? (TimesheetOverview::calcLessTotalAmount($activity->id)-TimesheetOverview::calcOrigTotalAmount($activity->id)) : 0; $rs_2 += $X; echo $X ? number_format($X, 2,",",".") : '-'; ?></span></td>
 												<td class="col-md-1"><span class="pull-right"><?php $X = Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'); $rs_3 += $X; echo $X ? number_format($X, 2,",",".") : '-'; ?></span></td>
 												<td class="col-md-1"><span class="pull-right"><?php $Y = (TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour')); if ($Y && $X){ $rs_4 += $Y; echo number_format($Y, 2,",","."); }else{ echo '-'; } ?></span></td>
@@ -542,9 +560,9 @@ $(document).ready(function() {
 											<tr>
 												<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
-												<td class="col-md-2"><span class="pull-right">{{ $rs_set = Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'); $rs_1 += ($rs_set ? $rs_set : MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->sum('amount')); number_format($rs_set ? $rs_set : MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->sum('amount'), 2,",","."); }}</span></td>
+												<td class="col-md-2"><span class="pull-right"><?php $rs_set = Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'); $rs_1 += ($rs_set ? $rs_set : MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->sum('amount')); echo number_format($rs_set ? $rs_set : MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->sum('amount'), 2,",",".") ?></span></td>
 												<td class="col-md-1"><span class="pull-right"></span></td>
-												<td class="col-md-1"><span class="pull-right">{{-- number_format(0, 2,",","."); --}}</span></td>
+												<td class="col-md-1"><span class="pull-right">{{-- number_format(0, 2,",",".") --}}</span></td>
 												<td class="col-md-1"><span class="pull-right">&nbsp;</span></td>
 												<td class="col-md-1"><span class="pull-right">&nbsp;</span></td>
 											</tr>

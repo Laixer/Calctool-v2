@@ -19,7 +19,7 @@ class ResultController extends Controller {
 
 	public function getResult()
 	{
-		return View::make('calc.result');
+		return view('calc.result');
 	}
 
 }

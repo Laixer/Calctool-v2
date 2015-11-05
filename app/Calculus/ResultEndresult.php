@@ -2,6 +2,13 @@
 
 namespace Calctool\Calculus;
 
+use \Calctool\Models\Chapter;
+use \Calctool\Models\Activity;
+use \Calctool\Models\Purchase;
+use \Calctool\Models\PurchaseKind;
+use \Calctool\Models\Timesheet;
+use \Calctool\Models\TimesheetKind;
+
 /*
  * Eindresultaat
  */

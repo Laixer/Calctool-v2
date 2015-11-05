@@ -1,4 +1,11 @@
 <?php
+
+use \Calctool\Models\Project;
+use \Calctool\Models\Offer;
+use \Calctool\Models\Invoice;
+use \Calctool\Calculus\ResultEndresult;
+use \Calctool\Http\Controllers\InvoiceController;
+
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner()) {
@@ -227,7 +234,7 @@ if (!$project || !$project->isOwner()) {
 						}
 						?>
 						</td></td>
-						<td class="col-md-1"><?php if (!$invoice->invoice_close && !$project->project_close) { ?><form method="POST" id="frm-delete" action="/invoice/term/delete"><input name="id" value="{{ $invoice->id }}" type="hidden"/><button class="btn btn-danger btn-xs fa fa-times deleterow"></button></form><?php } ?></td>
+						<td class="col-md-1"><?php if (!$invoice->invoice_close && !$project->project_close) { ?><form method="POST" id="frm-delete" action="/invoice/term/delete">{!! csrf_field() !!}<input name="id" value="{{ $invoice->id }}" type="hidden"/><button class="btn btn-danger btn-xs fa fa-times deleterow"></button></form><?php } ?></td>
 					</tr>
 				<?php $i++; ?>
 				@endforeach
@@ -268,6 +275,7 @@ if (!$project || !$project->isOwner()) {
 			<div class="row">
 				<div class="col-md-12">
 					<form method="POST" id="frm-add" action="/invoice/term/add">
+					{!! csrf_field() !!}
 						<input type="hidden" value="{{ $project->id }}" name="projectid" />
 						<a href="#" id="new-term" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw termijn toevoegen</a>
 					</form>

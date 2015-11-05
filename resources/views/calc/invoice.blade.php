@@ -1,4 +1,28 @@
 <?php
+
+use \Calctool\Models\Project;
+use \Calctool\Models\Chapter;
+use \Calctool\Models\Activity;
+use \Calctool\Models\Part;
+use \Calctool\Models\PartType;
+use \Calctool\Models\Relation;
+use \Calctool\Models\Contact;
+use \Calctool\Models\Offer;
+use \Calctool\Models\Invoice;
+use \Calctool\Models\Resource;
+use \Calctool\Models\Iban;
+use \Calctool\Models\ProjectType;
+use \Calctool\Models\Detail;
+use \Calctool\Calculus\EstimateEndresult;
+use \Calctool\Calculus\MoreEndresult;
+use \Calctool\Calculus\LessEndresult;
+use \Calctool\Calculus\ResultEndresult;
+use \Calctool\Calculus\CalculationOverview;
+use \Calctool\Calculus\EstimateOverview;
+use \Calctool\Calculus\MoreOverview;
+use \Calctool\Calculus\LessOverview;
+use \Calctool\Http\Controllers\OfferController;
+
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner()) {
@@ -263,6 +287,7 @@ if (!$project || !$project->isOwner()) {
 
 	<h2><strong>Eindfactuur</strong></h2>
 	<form method="POST" id="frm-invoice" action="/invoice/close">
+	{!! csrf_field() !!}
 	<input name="id" value="{{ $invoice->id }}" type="hidden"/>
 	<input name="projectid" value="{{ $project->id }}" type="hidden"/>
 
@@ -352,7 +377,7 @@ if (!$project || !$project->isOwner()) {
 		<header>
 			<div class="row">
 				<div class="col-sm-6">
-					{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+					{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
 				</div>
 				<div class="col-sm-6 text-right">
 					<p>
@@ -1054,7 +1079,7 @@ if (!$project || !$project->isOwner()) {
 		<!--PAGE HEADER START-->
 		<div class="row">
 			<div class="col-sm-6">
-				{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+				{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
 			</div>
 			<div class="col-sm-6 text-right">
 				<p>
@@ -1262,7 +1287,7 @@ if (!$project || !$project->isOwner()) {
 		<!--PAGE HEADER START-->
 		<div class="row">
 			<div class="col-sm-6">
-				{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+				{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
 			</div>
 			<div class="col-sm-6 text-right">
 				<p>
@@ -1480,7 +1505,7 @@ if (!$project || !$project->isOwner()) {
 		<!--PAGE HEADER START-->
 		<div class="row">
 			<div class="col-sm-6">
-				{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+				{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
 			</div>
 			<div class="col-sm-6 text-right">
 				<p>
@@ -1698,7 +1723,7 @@ if (!$project || !$project->isOwner()) {
 		<!--PAGE HEADER START-->
 		<div class="row">
 			<div class="col-sm-6">
-				{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+				{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
 			</div>
 			<div class="col-sm-6 text-right">
 				<p>
@@ -1904,7 +1929,7 @@ if (!$project || !$project->isOwner()) {
 		<!--PAGE HEADER START-->
 		<div class="row">
 			<div class="col-sm-6">
-				{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+				{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
 			</div>
 			<div class="col-sm-6 text-right">
 				<p>
