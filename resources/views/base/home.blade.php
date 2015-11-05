@@ -1,5 +1,10 @@
 <?php
 use \Calctool\Models\Iban;
+use \Calctool\Models\Relation;
+use \Calctool\Models\RelationType;
+use \Calctool\Models\Province;
+use \Calctool\Models\Country;
+use \Calctool\Models\ContactFunction;
 ?>
 
 @extends('layout.master')
@@ -9,7 +14,7 @@ $next_step = Cookie::get('nstep');
 if (Input::get('nstep') == 'intro')
 	$next_step = 'intro_'.Auth::id();
 
-$relation = Calctool\Models\Relation::find(Auth::user()->self_id);
+$relation = Relation::find(Auth::user()->self_id);
 if ($relation)
 	$iban = Iban::where('relation_id','=',$relation->id)->first();
 else
@@ -38,7 +43,8 @@ else
 			<div class="modal-body">
 				<p>Na het invullen van deze QuickStart kan je direct starten met de CalculatieTool.
 
-				{!! Form::open(array('url' => '/mycompany/quickstart')) !!}
+				<form action="/mycompany/quickstart" method="post">
+				{!! csrf_field() !!}
 
 				<h4 class="company">Jouw Bedrijfsgegevens</h4>
 				<input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
@@ -53,7 +59,7 @@ else
 						<div class="form-group">
 							<label for="company_type">Bedrijfstype*</label>
 							<select name="company_type" id="company_type" class="form-control pointer">
-							@foreach (\Calctool\Models\RelationType::all() as $type)
+							@foreach (RelationType::all() as $type)
 								<option {{ $relation ? ($relation->type_id==$type->id ? 'selected' : '') : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
 							@endforeach
 							</select>
@@ -149,6 +155,7 @@ else
 					<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 				</div>
 			</div>
+			</form>
 
 		</div>
 	</div>

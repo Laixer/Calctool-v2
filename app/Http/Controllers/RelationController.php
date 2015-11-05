@@ -400,7 +400,6 @@ class RelationController extends Controller {
 			$iban->save();
 
 			return redirect('/relation-'.$relation->id.'/edit')->with('success', 1);
-		//}
 	}
 
 	public function doNewContact(Request $request)

@@ -2,6 +2,22 @@
 
 namespace Calctool\Http\Controllers;
 
+use Illuminate\Http\Request;
+
+use \Calctool\Models\Project;
+use \Calctool\Models\Chapter;
+use \Calctool\Models\Activity;
+use \Calctool\Models\Detail;
+use \Calctool\Models\PartType;
+use \Calctool\Models\Part;
+use \Calctool\Models\ProjectType;
+use \Calctool\Models\Tax;
+use \Calctool\Models\MoreEquipment;
+use \Calctool\Models\MoreLabor;
+use \Calctool\Models\MoreMaterial;
+
+use \Auth;
+
 class MoreController extends Controller {
 
 	/*
@@ -35,7 +51,7 @@ class MoreController extends Controller {
 
 		$chapter = Chapter::find($request->input('chapter_id'));
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return Redirect::back()->withInput($request->all());
+			return back()->withInput($request->all());
 		}
 
 		$part = Part::where('part_name','=','contracting')->first();
@@ -62,7 +78,7 @@ class MoreController extends Controller {
 
 		$this->updateMoreStatus($request->get('project'));
 
-		return Redirect::back()->with('success', 1);
+		return back()->with('success', 1);
 	}
 
 	public function doNewMaterial(Request $request)

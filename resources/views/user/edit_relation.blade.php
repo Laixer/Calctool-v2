@@ -291,7 +291,7 @@ $(document).ready(function() {
 						<div id="payment" class="tab-pane">
 							<h4>Betalingsgegevens</h4>
 							<form method="POST" action="/relation/iban/update" accept-charset="UTF-8">
-                                                        {!! csrf_field() !!}
+                            {!! csrf_field() !!}
 							<div class="row">
 
 								<div class="col-md-3">

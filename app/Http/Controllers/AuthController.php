@@ -14,6 +14,7 @@ use \Auth;
 use \Redis;
 use \Hash;
 use \Mailgun;
+use \Cookie;
 
 class AuthController extends Controller {
 
