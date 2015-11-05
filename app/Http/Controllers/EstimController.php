@@ -2,6 +2,15 @@
 
 namespace Calctool\Http\Controllers;
 
+use \Illuminate\Http\Request;
+use \Calctool\Models\Activity;
+use \Calctool\Models\Chapter;
+use \Calctool\Models\Project;
+use \Calctool\Models\EstimateLabor;
+use \Calctool\Models\EstimateMaterial;
+use \Calctool\Models\EstimateEquipment;
+
+
 class EstimController extends Controller {
 
 	/*
@@ -26,26 +35,18 @@ class EstimController extends Controller {
 		$proj->save();
 	}
 
-	public function doNewEstimateMaterial()
+	public function doNewEstimateMaterial(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'name' => array('required','max:50'),
 			'unit' => array('required','max:10'),
 			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'activity' => array('required','integer','min:0'),
 			'project' => array('required','integer'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-
-			$activity = Activity::find(Input::get('activity'));
+			$activity = Activity::find($request->get('activity'));
 			if (!$activity)
 				return json_encode(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
@@ -54,41 +55,32 @@ class EstimController extends Controller {
 			}
 
 			$material = EstimateMaterial::create(array(
-				"set_material_name" => Input::get('name'),
-				"set_unit" => Input::get('unit'),
-				"set_rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
-				"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
+				"set_material_name" => $request->get('name'),
+				"set_unit" => $request->get('unit'),
+				"set_rate" => str_replace(',', '.', str_replace('.', '' , $request->get('rate'))),
+				"set_amount" => str_replace(',', '.', str_replace('.', '' , $request->get('amount'))),
 				"activity_id" => $activity->id,
 				"original" => false,
 				"isset" => true
 			));
 
-			$this->updateEstimateStatus(Input::get('project'));
+			$this->updateEstimateStatus($request->get('project'));
 
 			return json_encode(['success' => 1, 'id' => $material->id]);
-		}
 	}
 
-	public function doNewEstimateEquipment()
+	public function doNewEstimateEquipment(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'name' => array('required','max:50'),
 			'unit' => array('required','max:10'),
 			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'activity' => array('required','integer','min:0'),
 			'project' => array('required','integer'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-
-			$activity = Activity::find(Input::get('activity'));
+			$activity = Activity::find($request->get('activity'));
 			if (!$activity)
 				return json_encode(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
@@ -97,38 +89,29 @@ class EstimController extends Controller {
 			}
 
 			$equipment = EstimateEquipment::create(array(
-				"set_equipment_name" => Input::get('name'),
-				"set_unit" => Input::get('unit'),
-				"set_rate" => str_replace(',', '.', str_replace('.', '' , Input::get('rate'))),
-				"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
+				"set_equipment_name" => $request->get('name'),
+				"set_unit" => $request->get('unit'),
+				"set_rate" => str_replace(',', '.', str_replace('.', '' , $request->get('rate'))),
+				"set_amount" => str_replace(',', '.', str_replace('.', '' , $request->get('amount'))),
 				"activity_id" => $activity->id,
 				"original" => false,
 				"isset" => true
 			));
 
-			$this->updateEstimateStatus(Input::get('project'));
+			$this->updateEstimateStatus($request->get('project'));
 
 			return json_encode(['success' => 1, 'id' => $equipment->id]);
-		}
 	}
 
-	public function doNewEstimateLabor()
+	public function doNewEstimateLabor(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'activity' => array('required','integer','min:0'),
 			'project' => array('required','integer'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-
-			$activity = Activity::find(Input::get('activity'));
+			$activity = Activity::find($request->get('activity'));
 			if (!$activity)
 				return json_encode(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
@@ -136,44 +119,35 @@ class EstimController extends Controller {
 				return json_encode(['success' => 0]);
 			}
 
-			$_activity = Activity::find(Input::get('activity'));
+			$_activity = Activity::find($request->get('activity'));
 			$_chapter = Chapter::find($_activity->chapter_id);
 			$_project = Project::find($_chapter->project_id);
 
 			$labor = EstimateLabor::create(array(
 				"set_rate" => $_project->hour_rate,
-				"set_amount" => str_replace(',', '.', str_replace('.', '' , Input::get('amount'))),
+				"set_amount" => str_replace(',', '.', str_replace('.', '' , $request->get('amount'))),
 				"activity_id" => $activity->id,
 				"original" => false,
 				"isset" => true
 			));
 
-			$this->updateEstimateStatus(Input::get('project'));
+			$this->updateEstimateStatus($request->get('project'));
 
 			return json_encode(['success' => 1, 'id' => $labor->id]);
-		}
 	}
 
-	public function doUpdateEstimateMaterial()
+	public function doUpdateEstimateMaterial(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('integer','min:0'),
 			'name' => array('max:50'),
 			'unit' => array('max:10'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'project' => array('required','integer'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-
-			$material = EstimateMaterial::find(Input::get('id'));
+			$material = EstimateMaterial::find($request->get('id'));
 			if (!$material)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($material->activity_id);
@@ -184,40 +158,31 @@ class EstimController extends Controller {
 				return json_encode(['success' => 0]);
 			}
 
-			$material->set_material_name = Input::get('name');
-			$material->set_unit = Input::get('unit');
-			$material->set_rate = str_replace(',', '.', str_replace('.', '' , Input::get('rate')));
-			$material->set_amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
+			$material->set_material_name = $request->get('name');
+			$material->set_unit = $request->get('unit');
+			$material->set_rate = str_replace(',', '.', str_replace('.', '' , $request->get('rate')));
+			$material->set_amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
 			$material->isset = true;
 
 			$material->save();
 
-			$this->updateEstimateStatus(Input::get('project'));
+			$this->updateEstimateStatus($request->get('project'));
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
-	public function doUpdateEstimateEquipment()
+	public function doUpdateEstimateEquipment(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('integer','min:0'),
 			'name' => array('max:50'),
 			'unit' => array('max:10'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'project' => array('required','integer'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-
-			$equipment = EstimateEquipment::find(Input::get('id'));
+			$equipment = EstimateEquipment::find($request->get('id'));
 			if (!$equipment)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($equipment->activity_id);
@@ -228,38 +193,29 @@ class EstimController extends Controller {
 				return json_encode(['success' => 0]);
 			}
 
-			$equipment->set_equipment_name = Input::get('name');
-			$equipment->set_unit = Input::get('unit');
-			$equipment->set_rate = str_replace(',', '.', str_replace('.', '' , Input::get('rate')));
-			$equipment->set_amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
+			$equipment->set_equipment_name = $request->get('name');
+			$equipment->set_unit = $request->get('unit');
+			$equipment->set_rate = str_replace(',', '.', str_replace('.', '' , $request->get('rate')));
+			$equipment->set_amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
 			$equipment->isset = true;
 
 			$equipment->save();
 
-			$this->updateEstimateStatus(Input::get('project'));
+			$this->updateEstimateStatus($request->get('project'));
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
-	public function doUpdateEstimateLabor()
+	public function doUpdateEstimateLabor(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('integer','min:0'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'project' => array('required','integer'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-
-			$labor = EstimateLabor::find(Input::get('id'));
+			$labor = EstimateLabor::find($request->get('id'));
 			if (!$labor)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($labor->activity_id);
@@ -270,9 +226,9 @@ class EstimController extends Controller {
 				return json_encode(['success' => 0]);
 			}
 
-			$rate = Input::get('rate');
+			$rate = $request->get('rate');
 			if (empty($rate)) {
-				$_labor = EstimateLabor::find(Input::get('id'));
+				$_labor = EstimateLabor::find($request->get('id'));
 				$_activity = Activity::find($_labor->activity_id);
 				$_chapter = Chapter::find($_activity->chapter_id);
 				$_project = Project::find($_chapter->project_id);
@@ -282,33 +238,24 @@ class EstimController extends Controller {
 			}
 
 			$labor->set_rate = $rate;
-			$labor->set_amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
+			$labor->set_amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
 			$labor->isset = true;
 
 			$labor->save();
 
-			$this->updateEstimateStatus(Input::get('project'));
+			$this->updateEstimateStatus($request->get('project'));
 
-			return json_encode(['success' => 1]);
-		}
+			return back()->with('success', 1);
 	}
 
-	public function doResetEstimateMaterial()
+	public function doResetEstimateMaterial(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('integer','min:0'),
 			'project' => array('required','integer'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-
-			$material = EstimateMaterial::find(Input::get('id'));
+			$material = EstimateMaterial::find($request->get('id'));
 			if (!$material)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($material->activity_id);
@@ -327,28 +274,21 @@ class EstimController extends Controller {
 
 			$material->save();
 
-			$this->updateEstimateStatus(Input::get('project'));
+			$this->updateEstimateStatus($request->get('project'));
 
 			return json_encode(['success' => 1, 'name' => $material->material_name, 'unit' => $material->unit, 'rate' => number_format($material->rate, 2,",","."), 'amount' => number_format($material->amount, 2,",",".")]);
-		}
 	}
 
-	public function doResetEstimateEquipment()
+	public function doResetEstimateEquipment(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('integer','min:0'),
 			'project' => array('required','integer'),
-		);
+		]);
 
 		$validator = Validator::make(Input::all(), $rules);
 
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-
-			$equipment = EstimateEquipment::find(Input::get('id'));
+			$equipment = EstimateEquipment::find($request->get('id'));
 			if (!$equipment)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($equipment->activity_id);
@@ -367,28 +307,19 @@ class EstimController extends Controller {
 
 			$equipment->save();
 
-			$this->updateEstimateStatus(Input::get('project'));
+			$this->updateEstimateStatus($request->get('project'));
 
 			return json_encode(['success' => 1, 'name' => $equipment->equipment_name, 'unit' => $equipment->unit, 'rate' => number_format($equipment->rate, 2,",","."), 'amount' => number_format($equipment->amount, 2,",",".")]);
-		}
 	}
 
-	public function doResetEstimateLabor()
+	public function doResetEstimateLabor(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('integer','min:0'),
 			'project' => array('required','integer'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-
-			$labor = EstimateLabor::find(Input::get('id'));
+			$labor = EstimateLabor::find($request->get('id'));
 			if (!$labor)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($labor->activity_id);
@@ -405,29 +336,19 @@ class EstimController extends Controller {
 
 			$labor->save();
 
-			$this->updateEstimateStatus(Input::get('project'));
+			$this->updateEstimateStatus($request->get('project'));
 
 			return json_encode(['success' => 1, 'rate' => number_format($labor->rate, 2,",","."), 'amount' => number_format($labor->amount, 2,",",".")]);
-		}
-
 	}
 
-	public function doDeleteEstimateMaterial()
+	public function doDeleteEstimateMaterial(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('required','integer','min:0'),
 			'project' => array('required','integer'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-
-			$rec = EstimateMaterial::find(Input::get('id'));
+			$rec = EstimateMaterial::find($request->get('id'));
 			if (!$rec)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($rec->activity_id);
@@ -440,28 +361,19 @@ class EstimController extends Controller {
 
 			$rec->delete();
 
-			$this->updateEstimateStatus(Input::get('project'));
+			$this->updateEstimateStatus($request->get('project'));
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
-	public function doDeleteEstimateEquipment()
+	public function doDeleteEstimateEquipment(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('required','integer','min:0'),
 			'project' => array('required','integer'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-
-			$rec = EstimateEquipment::find(Input::get('id'));
+			$rec = EstimateEquipment::find($request->get('id'));
 			if (!$rec)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($rec->activity_id);
@@ -474,28 +386,19 @@ class EstimController extends Controller {
 
 			$rec->delete();
 
-			$this->updateEstimateStatus(Input::get('project'));
+			$this->updateEstimateStatus($request->get('project'));
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
-	public function doDeleteEstimateLabor()
+	public function doDeleteEstimateLabor(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'id' => array('required','integer','min:0'),
 			'project' => array('required','integer'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-
-			$rec = EstimateLabor::find(Input::get('id'));
+			$rec = EstimateLabor::find($request->get('id'));
 			if (!$rec)
 				return json_encode(['success' => 0]);
 			$activity = Activity::find($rec->activity_id);
@@ -508,10 +411,9 @@ class EstimController extends Controller {
 
 			$rec->delete();
 
-			$this->updateEstimateStatus(Input::get('project'));
+			$this->updateEstimateStatus($request->get('project'));
 
 			return json_encode(['success' => 1]);
-		}
 	}
 
 }

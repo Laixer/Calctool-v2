@@ -4,7 +4,7 @@ namespace Calctool\Calculus;
 
 use \Calctool\Models\EstimateMaterial;
 use \Calctool\Models\EstimateEquipment;
-use \Calctool\Models\EstimateEndresult;
+
 
 
 class EstimateRegister {
