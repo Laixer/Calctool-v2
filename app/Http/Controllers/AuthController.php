@@ -10,10 +10,10 @@ use \Calctool\Models\User;
 use \Calctool\Models\UserType;
 use \Calctool\Models\Audit;
 
-use Auth;
-use Redis;
-use Hash;
-use Mailgun;
+use \Auth;
+use \Redis;
+use \Hash;
+use \Mailgun;
 
 class AuthController extends Controller {
 
@@ -141,19 +141,19 @@ class AuthController extends Controller {
 	 *
 	 * @return Route
 	 */
-	public function doNewPassword(Request $request)
+	public function doNewPassword(Request $request, $api, $token)
 	{
 		$this->validate($request, [
 			'secret' => array('required','confirmed','min:5'),
 			'secret_confirmation' => array('required','min:5'),
 		]);
 
-		$user = User::where('token','=',Route::Input('token'))->where('api','=',Route::Input('api'))->first();
+		$user = User::where('token','=',$token)->where('api','=',$api)->first();
 		if (!$user) {
 			$errors = new MessageBag(['activate' => ['Activatielink is niet geldig']]);
 			return redirect('login')->withErrors($errors);
 		}
-		$user->secret = Hash::make(Input::get('secret'));
+		$user->secret = Hash::make($request->get('secret'));
 		$user->active = true;
 		$user->token = sha1($user->secret);
 		$user->save();
@@ -236,7 +236,7 @@ class AuthController extends Controller {
 			'email' => array('required','max:80','email')
 		]);
 
-		$user = User::where('email','=',Input::get('email'))->first();
+		$user = User::where('email','=',$request->get('email'))->first();
 		if (!$user)
 			return redirect('login')->with('success', 1);
 		$user->secret = Hash::make(mt_rand());

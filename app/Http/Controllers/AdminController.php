@@ -9,9 +9,9 @@ use \Calctool\Models\Payment;
 use \Calctool\Models\User;
 use \Calctool\Models\Resource;
 
-use Storage;
-use Auth;
-use Hash;
+use \Storage;
+use \Auth;
+use \Hash;
 
 class AdminController extends Controller {
 
@@ -50,14 +50,14 @@ class AdminController extends Controller {
 			'message' => array('required'),
 		]);
 
-			$alert = new SysMessage;
-			$alert->level = $request->input('level');
-			$alert->content = $request->input('message');
-			$alert->active = true;
+		$alert = new SysMessage;
+		$alert->level = $request->input('level');
+		$alert->content = $request->input('message');
+		$alert->active = true;
 
-			$alert->save();
+		$alert->save();
 
-			return back()->with('success', 1);
+		return back()->with('success', 1);
 
 	}
 

@@ -2,6 +2,14 @@
 
 namespace Calctool\Http\Controllers;
 
+use Illuminate\Http\Request;
+
+use \Calctool\Models\Relation;
+use \Calctool\Models\RelationKind;
+use \Calctool\Models\Contact;
+
+use \Auth;
+
 class QuickstartController extends Controller {
 
 	/**
@@ -13,17 +21,17 @@ class QuickstartController extends Controller {
 
 	public function getNewContact()
 	{
-		return View::make('user.new_contact');
+		return view('user.new_contact');
 	}
 
 	public function getMyCompany()
 	{
-		return View::make('user.edit_mycompany');
+		return view('user.edit_mycompany');
 	}
 
-	public function doNewMyCompanyQuickstart()
+	public function doNewMyCompanyQuickstart(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			/* Company */
 			'company_type' => array('required_if:relationkind,zakelijk','numeric'),
 			'company_name' => array('required_if:relationkind,zakelijk','max:50'),
@@ -40,57 +48,46 @@ class QuickstartController extends Controller {
 			'contact_firstname' => array('required','max:30'),
 			'email' => array('required','email','max:80'),
 			'contactfunction' => array('required','numeric'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
+		/* General */
+		$relation = new Relation;
+		$relation->user_id = Auth::id();
+		$relation->note = $request->get('note');
+		$relation->debtor_code = mt_rand(1000000, 9999999);
 
-		if ($validator->fails()) {
-			$messages = $validator->messages();
+		/* Company */
+		$relation->kind_id = RelationKind::where('kind_name','=','zakelijk')->first()->id;
+		$relation->company_name = $request->get('company_name');
+		$relation->type_id = $request->get('company_type');
+		$relation->kvk = $request->get('kvk');
+		$relation->btw = $request->get('btw');
+		$relation->email = $request->get('email_comp');
 
-			// redirect our user back to the form with the errors from the validator
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
-		} else {
+		/* Adress */
+		$relation->address_street = $request->get('street');
+		$relation->address_number = $request->get('address_number');
+		$relation->address_postal = $request->get('zipcode');
+		$relation->address_city = $request->get('city');
+		$relation->province_id = $request->get('province');
+		$relation->country_id = $request->get('country');
 
-			/* General */
-			$relation = new Relation;
-			$relation->user_id = Auth::id();
-			$relation->note = Input::get('note');
-			$relation->debtor_code = mt_rand(1000000, 9999999);
+		$relation->save();
 
-			/* Company */
-			$relation->kind_id = RelationKind::where('kind_name','=','zakelijk')->first()->id;
-			$relation->company_name = Input::get('company_name');
-			$relation->type_id = Input::get('company_type');
-			$relation->kvk = Input::get('kvk');
-			$relation->btw = Input::get('btw');
-			$relation->email = Input::get('email_comp');
+		$contact = new Contact;
+		$contact->firstname = $request->get('contact_firstname');
+		$contact->lastname = $request->get('contact_name');
+		$contact->mobile = $request->get('mobile');
+		$contact->relation_id = $relation->id;
+		$contact->function_id = $request->get('contactfunction');
 
-			/* Adress */
-			$relation->address_street = Input::get('street');
-			$relation->address_number = Input::get('address_number');
-			$relation->address_postal = Input::get('zipcode');
-			$relation->address_city = Input::get('city');
-			$relation->province_id = Input::get('province');
-			$relation->country_id = Input::get('country');
+		$contact->save();
 
-			$relation->save();
+		$user = Auth::user();
+		$user->self_id = $relation->id;
+		$user->save();
 
-			$contact = new Contact;
-			$contact->firstname = Input::get('contact_firstname');
-			$contact->lastname = Input::get('contact_name');
-			$contact->mobile = Input::get('mobile');
-			$contact->relation_id = $relation->id;
-			$contact->function_id = Input::get('contactfunction');
-
-			$contact->save();
-
-			$user = Auth::user();
-			$user->self_id = $relation->id;
-			$user->save();
-
-			return Redirect::to('/')->with('success', 1)->withCookie(Cookie::forget('nstep'));
-
-		}
+		return redirect('/')->with('success', 1)->withCookie(Cookie::forget('nstep'));
 	}
 
 }

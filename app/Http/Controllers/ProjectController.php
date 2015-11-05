@@ -4,7 +4,9 @@ namespace Calctool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Auth;
+use \Calctool\Models\Project;
+
+use \Auth;
 
 class ProjectController extends Controller {
 
@@ -56,48 +58,48 @@ class ProjectController extends Controller {
 			'more_profit_equipment_2' => array('required','numeric','between:0,200')
 		]);
 
-			$hour_rate = str_replace(',', '.', str_replace('.', '', $request->input('hour_rate')));
-			if ($hour_rate<0 || $hour_rate>999) {
-				return back()->withErrors($validator)->withInput(Input::all());
-			}
+		$hour_rate = str_replace(',', '.', str_replace('.', '', $request->input('hour_rate')));
+		if ($hour_rate<0 || $hour_rate>999) {
+			return back()->withErrors($validator)->withInput($request->all());
+		}
 
-			$hour_rate_more = str_replace(',', '.', str_replace('.', '', $request->input('more_hour_rate')));
-			if ($hour_rate_more<0 || $hour_rate_more>999) {
-				return back()->withErrors($validator)->withInput(Input::all());
-			}
+		$hour_rate_more = str_replace(',', '.', str_replace('.', '', $request->input('more_hour_rate')));
+		if ($hour_rate_more<0 || $hour_rate_more>999) {
+			return back()->withErrors($validator)->withInput($request->all());
+		}
 
-			$project = new \Calctool\Models\Project;
-			$project->project_name = $request->input('name');
-			$project->address_street = $request->input('street');
-			$project->address_number = $request->input('address_number');
-			$project->address_postal = $request->input('zipcode');
-			$project->address_city = $request->input('city');
-			$project->note = $request->input('note');
-			$project->hour_rate = $hour_rate;
-			$project->hour_rate_more = $hour_rate_more;
-			$project->profit_calc_contr_mat = $request->input('profit_material_1');
-			$project->profit_calc_contr_equip = $request->input('profit_equipment_1');
-			$project->profit_calc_subcontr_mat = $request->input('profit_material_2');
-			$project->profit_calc_subcontr_equip = $request->input('profit_equipment_2');
-			$project->profit_more_contr_mat = $request->input('more_profit_material_1');
-			$project->profit_more_contr_equip = $request->input('more_profit_equipment_1');
-			$project->profit_more_subcontr_mat = $request->input('more_profit_material_2');
-			$project->profit_more_subcontr_equip = $request->input('more_profit_equipment_2');
-			$project->user_id = Auth::id();
-			$project->province_id = $request->input('province');
-			$project->country_id = $request->input('country');
-			$project->type_id = $request->input('type');
-			$project->client_id = $request->input('contractor');
+		$project = new \Calctool\Models\Project;
+		$project->project_name = $request->input('name');
+		$project->address_street = $request->input('street');
+		$project->address_number = $request->input('address_number');
+		$project->address_postal = $request->input('zipcode');
+		$project->address_city = $request->input('city');
+		$project->note = $request->input('note');
+		$project->hour_rate = $hour_rate;
+		$project->hour_rate_more = $hour_rate_more;
+		$project->profit_calc_contr_mat = $request->input('profit_material_1');
+		$project->profit_calc_contr_equip = $request->input('profit_equipment_1');
+		$project->profit_calc_subcontr_mat = $request->input('profit_material_2');
+		$project->profit_calc_subcontr_equip = $request->input('profit_equipment_2');
+		$project->profit_more_contr_mat = $request->input('more_profit_material_1');
+		$project->profit_more_contr_equip = $request->input('more_profit_equipment_1');
+		$project->profit_more_subcontr_mat = $request->input('more_profit_material_2');
+		$project->profit_more_subcontr_equip = $request->input('more_profit_equipment_2');
+		$project->user_id = Auth::id();
+		$project->province_id = $request->input('province');
+		$project->country_id = $request->input('country');
+		$project->type_id = $request->input('type');
+		$project->client_id = $request->input('contractor');
 
-			$project->save();
+		$project->save();
 
-			$log = new \Calctool\Models\Audit;
-			$log->ip = $_SERVER['REMOTE_ADDR'];
-			$log->event = '[NEWPROJECT] [SUCCESS] ' . $request->input('name');
-			$log->user_id = Auth::id();
-			$log->save();
+		$log = new \Calctool\Models\Audit;
+		$log->ip = $_SERVER['REMOTE_ADDR'];
+		$log->event = '[NEWPROJECT] [SUCCESS] ' . $request->input('name');
+		$log->user_id = Auth::id();
+		$log->save();
 
-			return redirect('project-'.$project->id.'/edit')->with('success', 'Opgeslagen');
+		return redirect('project-'.$project->id.'/edit')->with('success', 'Opgeslagen');
 	}
 
 	public function getAll(Request $request)
@@ -118,23 +120,23 @@ class ProjectController extends Controller {
 			'country' => array('required','numeric'),
 		]);
 
-			$project = Project::find($request->input('id'));
-			if (!$project || !$project->isOwner()) {
-				return Redirect::back()->withInput(Input::all());
-			}
-			$project->project_name = $request->input('name');
-			$project->address_street = $request->input('street');
-			$project->address_number = $request->input('address_number');
-			$project->address_postal = $request->input('zipcode');
-			$project->address_city = $request->input('city');
-			$project->note = $request->input('note');
-			$project->province_id = $request->input('province');
-			$project->country_id = $request->input('country');
-			$project->client_id = $request->input('contractor');
+		$project = Project::find($request->input('id'));
+		if (!$project || !$project->isOwner()) {
+			return back()->withInput($request->all());
+		}
+		$project->project_name = $request->input('name');
+		$project->address_street = $request->input('street');
+		$project->address_number = $request->input('address_number');
+		$project->address_postal = $request->input('zipcode');
+		$project->address_city = $request->input('city');
+		$project->note = $request->input('note');
+		$project->province_id = $request->input('province');
+		$project->country_id = $request->input('country');
+		$project->client_id = $request->input('contractor');
 
-			$project->save();
+		$project->save();
 
-			return back()->with('success', 'Aangepast');
+		return back()->with('success', 'Aangepast');
 	}
 
 	public function doUpdateNote(Request $request)
@@ -143,15 +145,15 @@ class ProjectController extends Controller {
 			'id' => array('required','integer'),
 		]);
 
-			$project = Project::find($request->input('id'));
-			if (!$project || !$project->isOwner()) {
-				return Redirect::back()->withInput(Input::all());
-			}
-			$project->note = $request->input('note');
+		$project = Project::find($request->input('id'));
+		if (!$project || !$project->isOwner()) {
+			return back()->withInput($request->all());
+		}
+		$project->note = $request->input('note');
 
-			$project->save();
+		$project->save();
 
-			return back()->with('success', 'Aangepast');
+		return back()->with('success', 'Aangepast');
 	}
 
 	public function doUpdateProfit(Request $request)
@@ -170,40 +172,40 @@ class ProjectController extends Controller {
 			'more_profit_equipment_2' => array('required','numeric','between:0,200')
 		]);
 
-			$project = Project::find($request->input('id'));
-			if (!$project || !$project->isOwner()) {
-				return Redirect::back()->withInput(Input::all());
-			}
+		$project = Project::find($request->input('id'));
+		if (!$project || !$project->isOwner()) {
+			return back()->withInput($request->all());
+		}
 
-			$hour_rate = str_replace(',', '.', str_replace('.', '', $request->input('hour_rate')));
-			if ($hour_rate<0 || $hour_rate>999) {
-				return Redirect::back()->withErrors($validator)->withInput(Input::all());
-			}
+		$hour_rate = str_replace(',', '.', str_replace('.', '', $request->input('hour_rate')));
+		if ($hour_rate<0 || $hour_rate>999) {
+			return back()->withErrors($validator)->withInput($request->all());
+		}
 
-			$hour_rate_more = str_replace(',', '.', str_replace('.', '', $request->input('more_hour_rate')));
-			if ($hour_rate_more<0 || $hour_rate_more>999) {
-				return Redirect::back()->withErrors($validator)->withInput(Input::all());
-			}
+		$hour_rate_more = str_replace(',', '.', str_replace('.', '', $request->input('more_hour_rate')));
+		if ($hour_rate_more<0 || $hour_rate_more>999) {
+			return back()->withErrors($validator)->withInput($request->all());
+		}
 
-			if ($hour_rate)
-				$project->hour_rate = $hour_rate;
-			$project->hour_rate_more = $hour_rate_more;
-			if ($request->input('profit_material_1'))
-				$project->profit_calc_contr_mat = $request->input('profit_material_1');
-			if ($request->input('profit_equipment_1'))
-				$project->profit_calc_contr_equip = $request->input('profit_equipment_1');
-			if ($request->input('profit_material_2'))
-				$project->profit_calc_subcontr_mat = $request->input('profit_material_2');
-			if ($request->input('profit_equipment_2'))
-				$project->profit_calc_subcontr_equip = $request->input('profit_equipment_2');
-			$project->profit_more_contr_mat = $request->input('more_profit_material_1');
-			$project->profit_more_contr_equip = $request->input('more_profit_equipment_1');
-			$project->profit_more_subcontr_mat = $request->input('more_profit_material_2');
-			$project->profit_more_subcontr_equip = $request->input('more_profit_equipment_2');
+		if ($hour_rate)
+			$project->hour_rate = $hour_rate;
+		$project->hour_rate_more = $hour_rate_more;
+		if ($request->input('profit_material_1'))
+			$project->profit_calc_contr_mat = $request->input('profit_material_1');
+		if ($request->input('profit_equipment_1'))
+			$project->profit_calc_contr_equip = $request->input('profit_equipment_1');
+		if ($request->input('profit_material_2'))
+			$project->profit_calc_subcontr_mat = $request->input('profit_material_2');
+		if ($request->input('profit_equipment_2'))
+			$project->profit_calc_subcontr_equip = $request->input('profit_equipment_2');
+		$project->profit_more_contr_mat = $request->input('more_profit_material_1');
+		$project->profit_more_contr_equip = $request->input('more_profit_equipment_1');
+		$project->profit_more_subcontr_mat = $request->input('more_profit_material_2');
+		$project->profit_more_subcontr_equip = $request->input('more_profit_equipment_2');
 
-			$project->save();
+		$project->save();
 
-			return back()->with('success', 'Aangepast');
+		return back()->with('success', 'Aangepast');
 	}
 
 	public function doUpdateWorkExecution(Request $request)
@@ -213,15 +215,15 @@ class ProjectController extends Controller {
 			'date' => array('required'),
 		]);
 
-			$project = Project::find($request->input('project'));
-			if (!$project || !$project->isOwner()) {
-				return Redirect::back()->withInput(Input::all());
-			}
-			$project->work_execution = date('Y-m-d', strtotime($request->input('date')));
+		$project = Project::find($request->input('project'));
+		if (!$project || !$project->isOwner()) {
+			return back()->withInput($request->all());
+		}
+		$project->work_execution = date('Y-m-d', strtotime($request->input('date')));
 
-			$project->save();
+		$project->save();
 
-			return json_encode(['success' => 1]);
+		return json_encode(['success' => 1]);
 	}
 
 	public function doUpdateWorkCompletion(Request $request)
@@ -231,15 +233,15 @@ class ProjectController extends Controller {
 			'date' => array('required'),
 		]);
 
-			$project = Project::find($request->input('project'));
-			if (!$project || !$project->isOwner()) {
-				return Redirect::back()->withInput(Input::all());
-			}
-			$project->work_completion = date('Y-m-d', strtotime($request->input('date')));
+		$project = Project::find($request->input('project'));
+		if (!$project || !$project->isOwner()) {
+			return back()->withInput($request->all());
+		}
+		$project->work_completion = date('Y-m-d', strtotime($request->input('date')));
 
-			$project->save();
+		$project->save();
 
-			return json_encode(['success' => 1]);
+		return json_encode(['success' => 1]);
 	}
 
 	public function doUpdateProjectClose(Request $request)
@@ -249,14 +251,14 @@ class ProjectController extends Controller {
 			'date' => array('required'),
 		]);
 
-			$project = Project::find($request->input('project'));
-			if (!$project || !$project->isOwner()) {
-				return Redirect::back()->withInput(Input::all());
-			}
-			$project->project_close = date('Y-m-d', strtotime($request->input('date')));
+		$project = Project::find($request->input('project'));
+		if (!$project || !$project->isOwner()) {
+			return back()->withInput($request->all());
+		}
+		$project->project_close = date('Y-m-d', strtotime($request->input('date')));
 
-			$project->save();
+		$project->save();
 
-			return json_encode(['success' => 1]);
+		return json_encode(['success' => 1]);
 	}
 }

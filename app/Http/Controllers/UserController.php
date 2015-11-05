@@ -5,6 +5,12 @@ namespace Calctool\Http\Controllers;
 use Illuminate\Support\MessageBag;
 use Longman\TelegramBot\Request;
 
+use \Calctool\Models\Payment;
+use \Calctool\Models\User;
+use \Calctool\Models\Iban;
+
+use \Auth;
+
 class UserController extends Controller {
 
 	/**
@@ -30,12 +36,12 @@ class UserController extends Controller {
 
 	public function getMyAccountTelegram()
 	{
-		return response()->view('user.myaccount_telegram');
+		return view('user.myaccount_telegram');
 	}
 
 	public function getPayment()
 	{
-		return response()->view('user.payment');
+		return view('user.payment');
 	}
 
 	public function getMyAccountTelegramUnchain()
@@ -43,7 +49,7 @@ class UserController extends Controller {
 		$tgram = Telegram::where('user_id','=',Auth::id())->first();
 		if ($tgram)
 			$tgram->delete();
-		return Redirect::to('/myaccount/telegram');
+		return redirect('/myaccount/telegram');
 	}
 
 	public function getMyAccountDeactivate()
@@ -80,15 +86,14 @@ class UserController extends Controller {
 		$log->user_id = $user->id;
 		$log->save();
 
-		return Redirect::to('/login');
+		return redirect('/login');
 	}
 
-	public function doMyAccountTelegramUpdate()
+	public function doMyAccountTelegramUpdate(Request $request)
 	{
-
 		$tgram = Telegram::where('user_id','=',Auth::id())->first();
 		if ($tgram) {
-			if (Input::get('toggle-alert'))
+			if ($request->get('toggle-alert'))
 				$tgram->alert = true;
 			else
 				$tgram->alert = false;
@@ -96,95 +101,85 @@ class UserController extends Controller {
 			$tgram->save();
 		}
 
-		return Redirect::back()->with('success', 'Instellingen opgeslagen');
+		return back()->with('success', 'Instellingen opgeslagen');
 	}
 
-	public function doPayment()
+	public function doPayment(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'payoption' => array('required'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
+		$mollie = new Mollie_API_Client;
+		$mollie->setApiKey($_ENV['MOLLIE_API']);
 
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			// redirect our user back to the form with the errors from the validator
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
-		} else {
-
-			$mollie = new Mollie_API_Client;
-			$mollie->setApiKey($_ENV['MOLLIE_API']);
-
-			$amount = 0;
-			$description = 'None';
-			$increment_months = 0;
-			switch (Input::get('payoption')) {
-				case 1:
-					$amount = 36.24;
-					$description = 'Verleng met een maand';
-					$increment_months = 1;
-					break;
-				case 3:
-					$amount = 97.84;
-					$description = 'Verleng met 4 maanden';
-					$increment_months = 3;
-					break;
-				case 6:
-					$amount = 184.83;
-					$description = 'Verleng met 6 maanden';
-					$increment_months = 6;
-					break;
-				case 12:
-					$amount = 347.90;
-					$description = 'Verleng met 12 maanden';
-					$increment_months = 12;
-					break;
-				default:
-					$errors = new MessageBag(['status' => ['Geen geldige optie']]);
-					return Redirect::to('myaccount')->withErrors($errors);
-			}
-
-			$token = sha1(mt_rand().time());
-
-			$payment = $mollie->payments->create(array(
-				"amount"      => $amount,
-				"description" => $description,
-				"webhookUrl" => url('payment/webhook/'),
-				"redirectUrl" => url('payment/order/'.$token),
-				"metadata"    => array(
-				"token" => $token,
-				"uid" => Auth::id(),
-				"incr" => $increment_months
-				),
-			));
-
-			$order = new Payment;
-			$order->transaction = $payment->id;
-			$order->token = $token;
-			$order->amount = $amount;
-			$order->status = $payment->status;
-			$order->increment = $increment_months;
-			$order->description = $description;
-			$order->method = '';
-			$order->user_id = Auth::id();
-
-			$order->save();
-
-			$log = new Audit;
-			$log->ip = $_SERVER['REMOTE_ADDR'];
-			$log->event = '[PAYMENT] [REQUESTED]';
-			$log->user_id = Auth::id();
-			$log->save();
-
-			return Redirect::to($payment->links->paymentUrl);
+		$amount = 0;
+		$description = 'None';
+		$increment_months = 0;
+		switch ($request->get('payoption')) {
+			case 1:
+				$amount = 36.24;
+				$description = 'Verleng met een maand';
+				$increment_months = 1;
+				break;
+			case 3:
+				$amount = 97.84;
+				$description = 'Verleng met 4 maanden';
+				$increment_months = 3;
+				break;
+			case 6:
+				$amount = 184.83;
+				$description = 'Verleng met 6 maanden';
+				$increment_months = 6;
+				break;
+			case 12:
+				$amount = 347.90;
+				$description = 'Verleng met 12 maanden';
+				$increment_months = 12;
+				break;
+			default:
+				$errors = new MessageBag(['status' => ['Geen geldige optie']]);
+				return redirect('myaccount')->withErrors($errors);
 		}
+
+		$token = sha1(mt_rand().time());
+
+		$payment = $mollie->payments->create(array(
+			"amount"      => $amount,
+			"description" => $description,
+			"webhookUrl" => url('payment/webhook/'),
+			"redirectUrl" => url('payment/order/'.$token),
+			"metadata"    => array(
+			"token" => $token,
+			"uid" => Auth::id(),
+			"incr" => $increment_months
+			),
+		));
+
+		$order = new Payment;
+		$order->transaction = $payment->id;
+		$order->token = $token;
+		$order->amount = $amount;
+		$order->status = $payment->status;
+		$order->increment = $increment_months;
+		$order->description = $description;
+		$order->method = '';
+		$order->user_id = Auth::id();
+
+		$order->save();
+
+		$log = new Audit;
+		$log->ip = $_SERVER['REMOTE_ADDR'];
+		$log->event = '[PAYMENT] [REQUESTED]';
+		$log->user_id = Auth::id();
+		$log->save();
+
+		return redirect($payment->links->paymentUrl);
 	}
 
-	public function doPaymentUpdate()
+	public function doPaymentUpdate(Request $request)
 	{
-		$order = Payment::where('transaction','=',Input::get('id'))->where('status','=','open')->first();
+		$order = Payment::where('transaction','=',$request->get('id'))->where('status','=','open')->first();
 		if (!$order) {
 			return;
 		}
@@ -241,12 +236,12 @@ class UserController extends Controller {
 		return json_encode(['success' => 1]);
 	}
 
-	public function getPaymentFinish()
+	public function getPaymentFinish(Request $request, $token)
 	{
-		$order = Payment::where('token','=',Route::Input('token'))->first();
+		$order = Payment::where('token','=',$token)->first();
 		if (!$order) {
 			$errors = new MessageBag(['status' => ['Transactie niet geldig']]);
-			return Redirect::to('myaccount')->withErrors($errors);
+			return redirect('myaccount')->withErrors($errors);
 		}
 
 		$mollie = new Mollie_API_Client;
@@ -254,219 +249,45 @@ class UserController extends Controller {
 
 		$payment = $mollie->payments->get($order->transaction);
 		if ($payment->isPaid()) {
-			return Redirect::to('myaccount')->with('success','Bedankt voor uw betaling');
+			return redirect('myaccount')->with('success','Bedankt voor uw betaling');
 		} else if ($payment->isOpen() || $payment->isPending()) {
-			return Redirect::to('myaccount')->with('success','Betaling is nog niet bevestigd, dit kan enkele dagen duren');
+			return redirect('myaccount')->with('success','Betaling is nog niet bevestigd, dit kan enkele dagen duren');
 		} else if ($payment->isCancelled()) {
 			$order->status = $payment->status;
 			$order->save();
 			$errors = new MessageBag(['status' => ['Betaling is afgebroken']]);
-			return Redirect::to('myaccount')->withErrors($errors);
+			return redirect('myaccount')->withErrors($errors);
 		} else if ($payment->isExpired()) {
 			$order->status = $payment->status;
 			$order->save();
 			$errors = new MessageBag(['status' => ['Betaling is verlopen']]);
-			return Redirect::to('myaccount')->withErrors($errors);
+			return redirect('myaccount')->withErrors($errors);
 		}
 		$errors = new MessageBag(['status' => ['Transactie niet afgerond ('.$payment->status.')']]);
-		return Redirect::to('myaccount')->withErrors($errors);
+		return redirect('myaccount')->withErrors($errors);
 	}
 
-	public function doUpdateSecurity()
+	public function doUpdateSecurity(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'secret' => array('confirmed','min:5'),
 			'secret_confirmation' => array('min:5'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
-		} else {
-
-			$user = Auth::user();
-			if (Input::get('secret'))
-				$user->secret = Hash::make(Input::get('secret'));
-			if (Input::get('toggle-api'))
-				$user->api_access = true;
-			else
-				$user->api_access = false;
-
-			$user->save();
-
-			if (Input::get('secret')) {
-				$data = array('email' => Auth::user()->email, 'username' => Auth::user()->username);
-				Mailgun::send('mail.password_update', $data, function($message) use ($data) {
-					$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Wachtwoord aangepast');
-				});
-
-				if ($_ENV['TELEGRAM_ENABLED']) {
-					$tgram = Telegram::where('user_id','=',$user->id)->first();
-					if ($tgram && $tgram->alert) {
-
-						// create Telegram API object
-						$telegram = new Longman\TelegramBot\Telegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
-						Request::initialize($telegram);
-
-						$data = array();
-						$data['chat_id'] = $tgram->uid;
-						$data['text'] = "Het wachtwoord van je account voor de Calculatie Tool is aangepast";
-
-						$result = Request::sendMessage($data);
-					}
-				}
-			}
-
-			$log = new Audit;
-			$log->ip = $_SERVER['REMOTE_ADDR'];
-			$log->event = '[SECURITY_UPDATE] [SUCCESS]';
-			$log->user_id = Auth::id();
-			$log->save();
-
-			return Redirect::back()->with('success', 'Instellingen opgeslagen');
-		}
-	}
-
-	public function doUpdateNotepad()
-	{
 		$user = Auth::user();
-		if (Input::get('notepad')) {
-			$user->notepad = Input::get('notepad');
-			$user->save();
-		}
+		if ($request->get('secret'))
+			$user->secret = Hash::make($request->get('secret'));
+		if ($request->get('toggle-api'))
+			$user->api_access = true;
+		else
+			$user->api_access = false;
 
-		return Redirect::back()->with('success', 'Opgeslagen');
-	}
+		$user->save();
 
-	public function doMyAccountUser()
-	{
-		$rules = array(
-			'firstname' => array('required','max:30'),
-			'mobile' => array('numeric','max:14'),
-			'phone' => array('numeric','max:14'),
-			'email' => array('required','email','max:80'),
-			'website' => array('url','max:180'),
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
-		} else {
-
-			/* General */
-			$user = Auth::user();
-
-			/* Contact */
-			$user->firstname = Input::get('firstname');$user->firstname = Input::get('firstname');
-			if (Input::get('lastname'))
-				$user->lastname = Input::get('lastname');
-			if (Input::get('gender')) {
-				if (Input::get('gender') == '-1')
-					$user->gender = NULL;
-				else
-					$user->gender = Input::get('gender');
-			}
-			$user->email = Input::get('email');
-			if (Input::get('mobile'))
-				$user->mobile = Input::get('mobile');
-			if (Input::get('phone'))
-				$user->phone = Input::get('phone');
-			if (Input::get('website'))
-				$user->website = Input::get('website');
-
-			$user->save();
-
-			return Redirect::back()->with('success', 'Gegevens opgeslagen');
-		}
-	}
-
-	public function doNew()
-	{
-		$rules = array(
-			/* General */
-			'username' => array('required'),
-			'secret' => array('required'),
-
-			/* Contact */
-			'lastname' => array('required','max:50'),
-			'firstname' => array('required','max:30'),
-			'gender' => array('required'),
-			'mobile' => array('alpha_num','max:14'),
-			'telephone' => array('alpha_num','max:14'),
-			'email' => array('required','email','max:80'),
-			'website' => array('url','max:180'),
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			// redirect our user back to the form with the errors from the validator
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
-		} else {
-
-			/* General */
-			$user = new User;
-			$user->username = Input::get('username');
-			$user->secret = Hash::make(Input::get('secret'));
-			$user->user_type = 1;//Input::get('user_type');
-
-			/* Contact */
-			$user->firstname = Input::get('firstname');
-			$user->lastname = Input::get('lastname');
-			$user->gender = Input::get('gender');
-			$user->email = Input::get('email');
-			$user->mobile = Input::get('mobiler');
-			$user->phone = Input::get('telephone');
-			$user->website = Input::get('website');
-
-			/* Overig */
-			$user->note = Input::get('note');
-
-			/* System */
-			$user->api = md5(mt_rand());
-			$user->ip = $_SERVER['REMOTE_ADDR'];
-			$user->referral_key = md5(mt_rand());
-
-			$user->save();
-
-			return Redirect::back()->with('success', 1);
-		}
-	}
-
-	public function doUpdateIban()
-	{
-		$rules = array(
-			'id' => array('required','integer'),
-			'iban' => array('alpha_num'),
-			'iban_name' => array('required','max:50')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			// redirect our user back to the form with the errors from the validator
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
-		} else {
-			$iban = Iban::find(Input::get('id'));
-			if (!$iban || !$iban->isOwner()) {
-				return Redirect::back()->withInput(Input::all());
-			}
-			$iban->iban = Input::get('iban');
-			$iban->iban_name = Input::get('iban_name');
-
-			$iban->save();
-
+		if ($request->get('secret')) {
 			$data = array('email' => Auth::user()->email, 'username' => Auth::user()->username);
-			Mailgun::send('mail.iban_update', $data, function($message) use ($data) {
-				$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Betaalgegevens aangepast');
+			Mailgun::send('mail.password_update', $data, function($message) use ($data) {
+				$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Wachtwoord aangepast');
 			});
 
 			if ($_ENV['TELEGRAM_ENABLED']) {
@@ -479,103 +300,233 @@ class UserController extends Controller {
 
 					$data = array();
 					$data['chat_id'] = $tgram->uid;
-					$data['text'] = "Het IBAN rekeningnummer en/of de tenaamstelling is aangepast op Calculatie Tool";
+					$data['text'] = "Het wachtwoord van je account voor de Calculatie Tool is aangepast";
 
 					$result = Request::sendMessage($data);
 				}
 			}
-
-			$log = new Audit;
-			$log->ip = $_SERVER['REMOTE_ADDR'];
-			$log->event = '[IBAN_UPDATE] [SUCCESS]';
-			$log->user_id = Auth::id();
-			$log->save();
-
-			return Redirect::back()->with('success', 1);
 		}
+
+		$log = new Audit;
+		$log->ip = $_SERVER['REMOTE_ADDR'];
+		$log->event = '[SECURITY_UPDATE] [SUCCESS]';
+		$log->user_id = Auth::id();
+		$log->save();
+
+		return back()->with('success', 'Instellingen opgeslagen');
 	}
 
-	public function doNewIban()
-	{
-		$rules = array(
-			'iban' => array('alpha_num'),
-			'iban_name' => array('required','max:50')
-		);
-
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			// redirect our user back to the form with the errors from the validator
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
-		} else {
-			$iban = new Iban;
-			$iban->iban = Input::get('iban');
-			$iban->iban_name = Input::get('iban_name');
-			$iban->user_id = Auth::id();
-
-			$iban->save();
-
-			return Redirect::back()->with('success', 1);
-		}
-	}
-
-	public function doUpdatePreferences()
+	public function doUpdateNotepad(Request $request)
 	{
 		$user = Auth::user();
-		if (Input::get('pref_mailings_optin'))
+		if ($request->get('notepad')) {
+			$user->notepad = $request->get('notepad');
+			$user->save();
+		}
+
+		return back()->with('success', 'Opgeslagen');
+	}
+
+	public function doMyAccountUser(Request $request)
+	{
+		$this->validate($request, [
+			'firstname' => array('required','max:30'),
+			'mobile' => array('numeric','max:14'),
+			'phone' => array('numeric','max:14'),
+			'email' => array('required','email','max:80'),
+			'website' => array('url','max:180'),
+		]);
+
+		/* General */
+		$user = Auth::user();
+
+		/* Contact */
+		$user->firstname = $request->get('firstname');$user->firstname = $request->get('firstname');
+		if ($request->get('lastname'))
+			$user->lastname = $request->get('lastname');
+		if ($request->get('gender')) {
+			if ($request->get('gender') == '-1')
+				$user->gender = NULL;
+			else
+				$user->gender = $request->get('gender');
+		}
+		$user->email = $request->get('email');
+		if ($request->get('mobile'))
+			$user->mobile = $request->get('mobile');
+		if ($request->get('phone'))
+			$user->phone = $request->get('phone');
+		if ($request->get('website'))
+			$user->website = $request->get('website');
+
+		$user->save();
+
+		return back()->with('success', 'Gegevens opgeslagen');
+	}
+
+	public function doNew(Request $request)
+	{
+		$this->validate($request, [
+			/* General */
+			'username' => array('required'),
+			'secret' => array('required'),
+
+			/* Contact */
+			'lastname' => array('required','max:50'),
+			'firstname' => array('required','max:30'),
+			'gender' => array('required'),
+			'mobile' => array('alpha_num','max:14'),
+			'telephone' => array('alpha_num','max:14'),
+			'email' => array('required','email','max:80'),
+			'website' => array('url','max:180'),
+		]);
+
+		/* General */
+		$user = new User;
+		$user->username = $request->get('username');
+		$user->secret = Hash::make($request->get('secret'));
+		$user->user_type = 1;//$request->get('user_type');
+
+		/* Contact */
+		$user->firstname = $request->get('firstname');
+		$user->lastname = $request->get('lastname');
+		$user->gender = $request->get('gender');
+		$user->email = $request->get('email');
+		$user->mobile = $request->get('mobiler');
+		$user->phone = $request->get('telephone');
+		$user->website = $request->get('website');
+
+		/* Overig */
+		$user->note = $request->get('note');
+
+		/* System */
+		$user->api = md5(mt_rand());
+		$user->ip = $_SERVER['REMOTE_ADDR'];
+		$user->referral_key = md5(mt_rand());
+
+		$user->save();
+
+		return back()->with('success', 1);
+	}
+
+	public function doUpdateIban(Request $request)
+	{
+		$this->validate($request, [
+			'id' => array('required','integer'),
+			'iban' => array('alpha_num'),
+			'iban_name' => array('required','max:50')
+		]);
+
+		$iban = Iban::find($request->get('id'));
+		if (!$iban || !$iban->isOwner()) {
+			return back()->withInput($request->all());
+		}
+		$iban->iban = $request->get('iban');
+		$iban->iban_name = $request->get('iban_name');
+
+		$iban->save();
+
+		$data = array('email' => Auth::user()->email, 'username' => Auth::user()->username);
+		Mailgun::send('mail.iban_update', $data, function($message) use ($data) {
+			$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Betaalgegevens aangepast');
+		});
+
+		if ($_ENV['TELEGRAM_ENABLED']) {
+			$tgram = Telegram::where('user_id','=',$user->id)->first();
+			if ($tgram && $tgram->alert) {
+
+				// create Telegram API object
+				$telegram = new Longman\TelegramBot\Telegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
+				Request::initialize($telegram);
+
+				$data = array();
+				$data['chat_id'] = $tgram->uid;
+				$data['text'] = "Het IBAN rekeningnummer en/of de tenaamstelling is aangepast op Calculatie Tool";
+
+				$result = Request::sendMessage($data);
+			}
+		}
+
+		$log = new Audit;
+		$log->ip = $_SERVER['REMOTE_ADDR'];
+		$log->event = '[IBAN_UPDATE] [SUCCESS]';
+		$log->user_id = Auth::id();
+		$log->save();
+
+		return back()->with('success', 1);
+	}
+
+	public function doNewIban(Request $request)
+	{
+		$this->validate($request, [
+			'iban' => array('alpha_num'),
+			'iban_name' => array('required','max:50')
+		]);
+
+		$iban = new Iban;
+		$iban->iban = $request->get('iban');
+		$iban->iban_name = $request->get('iban_name');
+		$iban->user_id = Auth::id();
+
+		$iban->save();
+
+		return back()->with('success', 1);
+	}
+
+	public function doUpdatePreferences(Request $request)
+	{
+		$user = Auth::user();
+		if ($request->get('pref_mailings_optin'))
 			$user->pref_mailings_optin = true;
 		else
 			$user->pref_mailings_optin = false;
 
-		if (Input::get('pref_hourrate_calc'))
-			$user->pref_hourrate_calc = str_replace(',', '.', str_replace('.', '' , Input::get('pref_hourrate_calc')));
-		if (Input::get('pref_hourrate_more'))
-			$user->pref_hourrate_more = str_replace(',', '.', str_replace('.', '' , Input::get('pref_hourrate_more')));
-		if (Input::get('pref_profit_calc_contr_mat'))
-			$user->pref_profit_calc_contr_mat = str_replace(',', '.', str_replace('.', '' , Input::get('pref_profit_calc_contr_mat')));
-		if (Input::get('pref_profit_calc_contr_equip'))
-			$user->pref_profit_calc_contr_equip = str_replace(',', '.', str_replace('.', '' , Input::get('pref_profit_calc_contr_equip')));
-		if (Input::get('pref_profit_calc_subcontr_mat'))
-			$user->pref_profit_calc_subcontr_mat = str_replace(',', '.', str_replace('.', '' , Input::get('pref_profit_calc_subcontr_mat')));
-		if (Input::get('pref_profit_calc_subcontr_equip'))
-			$user->pref_profit_calc_subcontr_equip = str_replace(',', '.', str_replace('.', '' , Input::get('pref_profit_calc_subcontr_equip')));
-		if (Input::get('pref_profit_more_contr_mat'))
-			$user->pref_profit_more_contr_mat = str_replace(',', '.', str_replace('.', '' , Input::get('pref_profit_more_contr_mat')));
-		if (Input::get('pref_profit_more_contr_equip'))
-			$user->pref_profit_more_contr_equip = str_replace(',', '.', str_replace('.', '' , Input::get('pref_profit_more_contr_equip')));
-		if (Input::get('pref_profit_more_subcontr_mat'))
-			$user->pref_profit_more_subcontr_mat = str_replace(',', '.', str_replace('.', '' , Input::get('pref_profit_more_subcontr_mat')));
-		if (Input::get('pref_profit_more_subcontr_equip'))
-			$user->pref_profit_more_subcontr_equip = str_replace(',', '.', str_replace('.', '' , Input::get('pref_profit_more_subcontr_equip')));
+		if ($request->get('pref_hourrate_calc'))
+			$user->pref_hourrate_calc = str_replace(',', '.', str_replace('.', '' , $request->get('pref_hourrate_calc')));
+		if ($request->get('pref_hourrate_more'))
+			$user->pref_hourrate_more = str_replace(',', '.', str_replace('.', '' , $request->get('pref_hourrate_more')));
+		if ($request->get('pref_profit_calc_contr_mat'))
+			$user->pref_profit_calc_contr_mat = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_calc_contr_mat')));
+		if ($request->get('pref_profit_calc_contr_equip'))
+			$user->pref_profit_calc_contr_equip = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_calc_contr_equip')));
+		if ($request->get('pref_profit_calc_subcontr_mat'))
+			$user->pref_profit_calc_subcontr_mat = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_calc_subcontr_mat')));
+		if ($request->get('pref_profit_calc_subcontr_equip'))
+			$user->pref_profit_calc_subcontr_equip = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_calc_subcontr_equip')));
+		if ($request->get('pref_profit_more_contr_mat'))
+			$user->pref_profit_more_contr_mat = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_more_contr_mat')));
+		if ($request->get('pref_profit_more_contr_equip'))
+			$user->pref_profit_more_contr_equip = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_more_contr_equip')));
+		if ($request->get('pref_profit_more_subcontr_mat'))
+			$user->pref_profit_more_subcontr_mat = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_more_subcontr_mat')));
+		if ($request->get('pref_profit_more_subcontr_equip'))
+			$user->pref_profit_more_subcontr_equip = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_more_subcontr_equip')));
 
-		if (Input::get('pref_email_offer'))
-			$user->pref_email_offer = Input::get('pref_email_offer');
-		if (Input::get('pref_offer_description'))
-			$user->pref_offer_description = Input::get('pref_offer_description');
-		if (Input::get('pref_closure_offer'))
-			$user->pref_closure_offer = Input::get('pref_closure_offer');
-		if (Input::get('pref_email_invoice'))
-			$user->pref_email_invoice = Input::get('pref_email_invoice');
-		if (Input::get('pref_invoice_description'))
-			$user->pref_invoice_description = Input::get('pref_invoice_description');
-		if (Input::get('pref_invoice_closure'))
-			$user->pref_invoice_closure = Input::get('pref_invoice_closure');
-		if (Input::get('pref_email_invoice_first_reminder'))
-			$user->pref_email_invoice_first_reminder = Input::get('pref_email_invoice_first_reminder');
-		if (Input::get('pref_email_invoice_last_reminder'))
-			$user->pref_email_invoice_last_reminder = Input::get('pref_email_invoice_last_reminder');
-		if (Input::get('pref_email_invoice_first_demand'))
-			$user->pref_email_invoice_first_demand = Input::get('pref_email_invoice_first_demand');
-		if (Input::get('pref_email_invoice_last_demand'))
-			$user->pref_email_invoice_last_demand = Input::get('pref_email_invoice_last_demand');
-		if (Input::get('offernumber_prefix'))
-			$user->offernumber_prefix = Input::get('offernumber_prefix');
-		if (Input::get('invoicenumber_prefix'))
-			$user->invoicenumber_prefix = Input::get('invoicenumber_prefix');
-		if (Input::get('administration_cost'))
-			$user->administration_cost = str_replace(',', '.', str_replace('.', '' , Input::get('administration_cost')));
+		if ($request->get('pref_email_offer'))
+			$user->pref_email_offer = $request->get('pref_email_offer');
+		if ($request->get('pref_offer_description'))
+			$user->pref_offer_description = $request->get('pref_offer_description');
+		if ($request->get('pref_closure_offer'))
+			$user->pref_closure_offer = $request->get('pref_closure_offer');
+		if ($request->get('pref_email_invoice'))
+			$user->pref_email_invoice = $request->get('pref_email_invoice');
+		if ($request->get('pref_invoice_description'))
+			$user->pref_invoice_description = $request->get('pref_invoice_description');
+		if ($request->get('pref_invoice_closure'))
+			$user->pref_invoice_closure = $request->get('pref_invoice_closure');
+		if ($request->get('pref_email_invoice_first_reminder'))
+			$user->pref_email_invoice_first_reminder = $request->get('pref_email_invoice_first_reminder');
+		if ($request->get('pref_email_invoice_last_reminder'))
+			$user->pref_email_invoice_last_reminder = $request->get('pref_email_invoice_last_reminder');
+		if ($request->get('pref_email_invoice_first_demand'))
+			$user->pref_email_invoice_first_demand = $request->get('pref_email_invoice_first_demand');
+		if ($request->get('pref_email_invoice_last_demand'))
+			$user->pref_email_invoice_last_demand = $request->get('pref_email_invoice_last_demand');
+		if ($request->get('offernumber_prefix'))
+			$user->offernumber_prefix = $request->get('offernumber_prefix');
+		if ($request->get('invoicenumber_prefix'))
+			$user->invoicenumber_prefix = $request->get('invoicenumber_prefix');
+		if ($request->get('administration_cost'))
+			$user->administration_cost = str_replace(',', '.', str_replace('.', '' , $request->get('administration_cost')));
 
 		$user->save();
 
@@ -585,6 +536,6 @@ class UserController extends Controller {
 		$log->user_id = $user->id;
 		$log->save();
 
-		return Redirect::back()->with('success', 'Voorkeuren opgeslagen');
+		return back()->with('success', 'Voorkeuren opgeslagen');
 	}
 }

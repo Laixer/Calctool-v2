@@ -24,38 +24,28 @@ class ApiController extends Controller {
 
 	public function getAlert()
 	{
-		return View::make('admin.alert');
+		return view('admin.alert');
 	}
 
 	public function getPHPInfo()
 	{
-		return View::make('admin.phpinfo');
+		return view('admin.phpinfo');
 	}
 
-	public function doNewAlert()
+	public function doNewAlert(Request $request)
 	{
-		$rules = array(
+		$this->validate($request, [
 			'level' => array('required'),
 			'message' => array('required'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
+		$alert = new SysMessage;
+		$alert->level = Input::get('level');
+		$alert->content = Input::get('message');
+		$alert->active = true;
 
-		if ($validator->fails()) {
+		$alert->save();
 
-			$messages = $validator->messages();
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-
-			$alert = new SystemMessage;
-			$alert->level = Input::get('level');
-			$alert->content = Input::get('message');
-			$alert->active = true;
-
-			$alert->save();
-
-			return json_encode(['success' => 1]);
-		}
-
+		return json_encode(['success' => 1]);
 	}
 }
