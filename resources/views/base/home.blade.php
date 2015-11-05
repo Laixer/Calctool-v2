@@ -135,7 +135,7 @@ else
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="email">Email*</label>
-							<input name="email" id="email" type="email" value="{{ Input::old('email') }}" class="form-control"/>
+							<input name="email" id="email" type="email" value="{{ Auth::user()->email }}" class="form-control"/>
 						</div>
 					</div>
 					<div class="col-md-3 company">
