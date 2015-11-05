@@ -4,6 +4,7 @@ namespace Calctool\Http\Controllers;
 
 use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
+use Longman\TelegramBot\Telegram;
 use Longman\TelegramBot\Request as TRequest;
 
 use \Calctool\Models\User;
@@ -171,8 +172,8 @@ class AuthController extends Controller {
 
 	private function informAdmin(User $newuser)
 	{
-		if (isset($_ENV['TELEGRAM_ENABLED'])) {
-			$telegram = new Longman\TelegramBot\Telegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
+		if (isset($_ENV['TELEGRAM_ENABLED']) && $_ENV['TELEGRAM_ENABLED'] == "true") {
+			$telegram = new Telegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
 			TRequest::initialize($telegram);
 
 			foreach (User::where('user_type','=',UserType::where('user_type','=','admin')->first()->id)->get() as $admin) {

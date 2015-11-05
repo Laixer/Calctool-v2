@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use \Calctool\Models\Project;
 use \Calctool\Models\Invoice;
 use \Calctool\Models\Offer;
+use \Calctool\Calculus\InvoiceTerm;
 
 use \Auth;
 

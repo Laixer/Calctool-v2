@@ -9,7 +9,7 @@ use \Calctool\Calculus\CalculationEndresult;
 use \Calctool\Models\Resource;
 use \Calctool\Http\Controllers\InvoiceController;
 use \Calctool\Models\Invoice;
-
+use \Calctool\Calculus\ResultEndresult;
 
 use \Auth;
 use \PDF;
@@ -128,50 +128,52 @@ class OfferController extends Controller {
 			'project' => array('required','integer'),
 		]);
 
-			$offer = Offer::find($request->get('offer'));
-			if (!$offer)
-				return json_encode(['success' => 0]);
-			$project = Project::find($offer->project_id);
-			if (!$project || !$project->isOwner()) {
-				return json_encode(['success' => 0]);
-			}
+		$offer = Offer::find($request->get('offer'));
+		if (!$offer)
+			return json_encode(['success' => 0]);
+		$project = Project::find($offer->project_id);
+		if (!$project || !$project->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
 
-			$project = Project::find($request->get('project'));
-			if (!$project || !$project->isOwner()) {
-				return json_encode(['success' => 0]);
-			}
+		$project = Project::find($request->get('project'));
+		if (!$project || !$project->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
 
-			$offer->offer_finish = date('Y-m-d', strtotime($request->get('date')));
-			$offer->save();
+		$offer->offer_finish = date('Y-m-d', strtotime($request->get('date')));
+		$offer->save();
 
-			$first_id = 0;
+		$first_id = 0;
 
-			for ($i=0; $i < $offer->invoice_quantity; $i++) {
-				$invoice = new Invoice;
-				$invoice->priority = $i;
-				$invoice->invoice_code = InvoiceController::getInvoiceCodeConcept($project->id);
-				$invoice->payment_condition = 30;
-				$invoice->offer_id = $offer->id;
-				if (($i+1) == $offer->invoice_quantity)
-					$invoice->isclose = true;
-				if ($i == 0 && $offer->downpayment)
-					$invoice->amount = $offer->downpayment_amount;
-				$invoice->save();
-				if ($i == 0)
-					$first_id = $invoice->id;
-			}
+		for ($i=0; $i < $offer->invoice_quantity; $i++) {
+			$invoice = new Invoice;
+			$invoice->priority = $i;
+			$invoice->invoice_code = InvoiceController::getInvoiceCodeConcept($project->id);
+			$invoice->payment_condition = 30;
+			$invoice->offer_id = $offer->id;
+			if (($i+1) == $offer->invoice_quantity)
+				$invoice->isclose = true;
+			if ($i == 0 && $offer->downpayment)
+				$invoice->amount = $offer->downpayment_amount;
+			$invoice->save();
+			if ($i == 0)
+				$first_id = $invoice->id;
+		}
 
-			if ($offer->invoice_quantity>1) {
-				$invamount = 0;
-				$invtotal = ResultEndresult::totalProject(Project::find($project->id));
-				if ($offer->downpayment)
-					$invamount = $offer->downpayment_amount;
-				$invtotal-=$invamount;
-				$input = array('id' => $first_id, 'project' => $project->id, 'amount' => $invamount, 'totaal' => $invtotal);
-				return App::make('InvoiceController')->doUpdateAmount(Input::merge($input));
-			}
+		if ($offer->invoice_quantity>1) {
+			$invamount = 0;
+			$invtotal = ResultEndresult::totalProject(Project::find($project->id));
+			if ($offer->downpayment)
+				$invamount = $offer->downpayment_amount;
+			$invtotal-=$invamount;
+			$input = array('id' => $first_id, 'project' => $project->id, 'amount' => $invamount, 'totaal' => $invtotal);
+			$nrequest = Request::create($request);
+			$nrequest->merge($input);
+			return app('\Calctool\Http\Controllers\InvoiceController')->doUpdateAmount($nrequest);
+		}
 
-			return json_encode(['success' => 1]);
+		return json_encode(['success' => 1]);
 	}
 
 	/* id = $project->id */
