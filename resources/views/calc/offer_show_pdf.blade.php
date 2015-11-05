@@ -71,7 +71,7 @@ PDFJS.getDocument(url).then(function getPdf(pdf) {
 
 		<div class="pull-right">
 			<?php if (!$project->project_close) { ?>
-			@if ($offer_last->id == $offer->id)
+			@if ($offer_last->id == $offer->id && !$offer->offer_finish)
 			<a href="/offer/project-{{ $project->id }}" class="btn btn-primary">Bewerk</a>
 			@endif
 			<a href="/res-{{ $res->id }}/download" class="btn btn-primary">Download PDF</a>
@@ -87,7 +87,9 @@ PDFJS.getDocument(url).then(function getPdf(pdf) {
 			<div class="col-sm-6">
 				<div class="padding20 pull-right">
 					<?php if (!$project->project_close) { ?>
+					@if ($offer_last->id == $offer->id && !$offer->offer_finish)
 					<a href="/offer/project-{{ $project->id }}" class="btn btn-primary">Bewerk</a>
+					@endif
 					<a href="/res-{{ $res->id }}/download" class="btn btn-primary">Download PDF</a>
 					<?php } ?>
 				</div>

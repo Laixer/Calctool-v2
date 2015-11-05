@@ -2,6 +2,16 @@
 
 namespace Calctool\Calculus;
 
+use \Calctool\Models\EstimateLabor;
+use \Calctool\Models\PartType;
+use \Calctool\Models\EstimateMaterial;
+use \Calctool\Models\EstimateEquipment;
+use \Calctool\Models\Chapter;
+use \Calctool\Models\Activity;
+use \Calctool\Models\Part;
+use \Calctool\Models\EstimateEndresult;
+
+
 /*
  * Uittrekstaat
  */

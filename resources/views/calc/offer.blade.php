@@ -526,7 +526,7 @@ if (!$project || !$project->isOwner()) {
 		<header>
 			<div class="row">
 				<div class="col-sm-6">
-					{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+					{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
 				</div>
 				<div class="col-sm-6 text-right">
 					<p>
@@ -1174,7 +1174,7 @@ if (!$project || !$project->isOwner()) {
 			<!--PAGE HEADER START-->
 			<div class="row">
 				<div class="col-sm-6">
-					{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+					{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
 				</div>
 				<div class="col-sm-6 text-right">
 					<p>
@@ -1393,7 +1393,7 @@ if (!$project || !$project->isOwner()) {
 			<!--PAGE HEADER START-->
 			<div class="row">
 				<div class="col-sm-6">
-					{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+					{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
 				</div>
 				<div class="col-sm-6 text-right">
 					<p>

@@ -2,6 +2,17 @@
 
 namespace Calctool\Calculus;
 
+use \Calctool\Models\Part;
+use \Calctool\Models\Tax;
+use \Calctool\Models\Chapter;
+use \Calctool\Models\Activity;
+use \Calctool\Models\PartType;
+use \Calctool\Models\EstimateLabor;
+use \Calctool\Models\CalculationMaterial;
+use \Calctool\Models\EstimateMaterial;
+use \Calctool\Models\CalculationEquipment;
+use \Calctool\Models\EstimateEquipment;
+
 /*
  * Eindresultaat
  */

@@ -3,6 +3,7 @@
 use \Calctool\Calculus\CalculationEndresult;
 
 
+
 $common_access_error = false;
 $project = \Calctool\Models\Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner())

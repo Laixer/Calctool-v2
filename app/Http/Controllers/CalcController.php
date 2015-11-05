@@ -18,11 +18,14 @@ use \Calctool\Models\EstimateLabor;
 use \Calctool\Models\EstimateMaterial;
 use \Calctool\Models\EstimateEquipment;
 
+use \Calctool\Models\Invoice;
+use \Calctool\Models\Offer;
+
 class CalcController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------
-	| Default Home Controller
+	| Default Home Controlluse \Calctool\Models\Invoice;er
 	|--------------------------------------------------------------------------
 	|
 	| You may wish to use controllers instead of, or in addition to, Closure
@@ -53,7 +56,7 @@ class CalcController extends Controller {
 			if ($project->project_close)
 				return response()->view('calc.estimate_closed');
 			$invoice_end = Invoice::where('offer_id','=', Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first()->id)->where('isclose','=',true)->first();
-			if ($invoice_end->invoice_close)
+			if ($invoice_end && $invoice_end->invoice_close)
 				return response()->view('calc.estimate_closed');
 		}
 		return response()->view('calc.estimate');
