@@ -2,6 +2,14 @@
 
 namespace Calctool\Calculus;
 
+use \Calctool\Models\PartType;
+use \Calctool\Models\CalculationLabor;
+use \Calctool\Models\CalculationMaterial;
+use \Calctool\Models\CalculationEquipment;
+use \Calctool\Models\Chapter;
+use \Calctool\Models\Activity;
+use \Calctool\Models\Part;
+
 /*
  * Uittrekstaat
  */

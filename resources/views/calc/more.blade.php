@@ -1,4 +1,22 @@
 <?php
+
+use \Calctool\Models\Project;
+use \Calctool\Models\ProjectType;
+use \Calctool\Models\Chapter;
+use \Calctool\Models\Activity;
+use \Calctool\Models\TimesheetKind;
+use \Calctool\Models\SubGroup;
+use \Calctool\Models\PartType;
+use \Calctool\Models\MoreLabor;
+use \Calctool\Models\Tax;
+use \Calctool\Models\MoreMaterial;
+use \Calctool\Models\MoreEquipment;
+use \Calctool\Models\Detail;
+use \Calctool\Models\Part;
+use \Calctool\Calculus\MoreOverview;
+use \Calctool\Calculus\MoreEndresult;
+use \Calctool\Calculus\MoreRegister;
+
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner())
@@ -714,10 +732,10 @@ var n = this,
 															else
 																$rate = $project->hour_rate_more;
 														?>
-														<tr {{ $labor ? ('data-id="'.$labor->id.'"') : '' }} >
+														<tr {!! $labor ? ('data-id="'.$labor->id.'"') : '' !!} >
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><span class="rate">{{ Part::find($activity->part_id)->part_name=='subcontracting' ? '<input name="rate" type="text" value="'.($labor ? number_format($labor->rate, 2,",",".") : "").'" class="form-control-sm-number labor-amount lsave">' : number_format($project->hour_rate_more, 2,",",".") }}</span></td>
+															<td class="col-md-1"><span class="rate">{!! Part::find($activity->part_id)->part_name=='subcontracting' ? '<input name="rate" type="text" value="'.($labor ? number_format($labor->rate, 2,",",".") : "").'" class="form-control-sm-number labor-amount lsave">' : number_format($project->hour_rate_more, 2,",",".") !!}</span></td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ $labor ? number_format($labor->amount, 2, ",",".") : '' }}" class="form-control-sm-number labor-amount lsave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ $labor ? ('&euro; '.number_format(MoreRegister::laborTotal($rate, $labor->amount), 2, ",",".")) : '' }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
@@ -933,7 +951,8 @@ var n = this,
 										@endforeach
 									</div>
 
-									{{ Form::open(array('url' => '/more/newactivity/' . $chapter->id)) }}
+									<form action="/more/newactivity/{{ $chapter->id }}" method="post">
+									{!! csrf_field() !!}
 									<div class="row">
 										<div class="col-md-6">
 
@@ -946,13 +965,14 @@ var n = this,
 											</div>
 										</div>
 									</div>
-									{{ Form::close() }}
+									</form>
 								</div>
 							</div>
 							@endforeach
 						</div>
 
-						{{ Form::open(array('url' => '/calculation/newchapter/'.$project->id)) }}
+						<form action="/calculation/newchapter/{{ $project->id }}" method="post">
+						{!! csrf_field() !!}
 						<div class="row">
 							<div class="col-md-6">
 								<div class="input-group">
@@ -964,7 +984,7 @@ var n = this,
 								</div>
 							</div>
 						</div>
-						{{ Form::close() }}
+						</form>
 					</div>
 
 					<div id="summary" class="tab-pane">

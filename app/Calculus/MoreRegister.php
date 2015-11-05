@@ -2,6 +2,9 @@
 
 namespace Calctool\Calculus;
 
+use \Calctool\Models\MoreMaterial;
+use \Calctool\Models\MoreEquipment;
+
 class MoreRegister {
 
 /*Calculation labor*/

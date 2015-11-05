@@ -2,8 +2,11 @@
 
 namespace Calctool\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 use \Calctool\Models\Project;
 use \Calctool\Models\Chapter;
+use \Calctool\Models\Activity;
 use \Calctool\Models\CalculationEquipment;
 use \Calctool\Models\CalculationLabor;
 use \Calctool\Models\CalculationMaterial;
@@ -40,8 +43,6 @@ class LessController extends Controller {
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'project' => array('required','integer'),
 		]);
-
-		$validator = Validator::make($request->all(), $rules);
 
 		$material = CalculationMaterial::find($request->get('id'));
 		if (!$material)

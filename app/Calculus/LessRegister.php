@@ -2,6 +2,9 @@
 
 namespace Calctool\Calculus;
 
+use \Calctool\Models\CalculationMaterial;
+use \Calctool\Models\CalculationEquipment;
+
 class LessRegister {
 
 	public static function lessLaborDeltaTotal($labor) {

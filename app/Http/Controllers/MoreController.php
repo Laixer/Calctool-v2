@@ -42,14 +42,14 @@ class MoreController extends Controller {
 		$proj->save();
 	}
 
-	public function doNewMoreActivity(Request $request)
+	public function doNewMoreActivity(Request $request, $chapter_id)
 	{
 		$this->validate($request, [
 			'activity' => array('required','max:50'),
 			'project' => array('required','integer'),
 		]);
 
-		$chapter = Chapter::find($request->input('chapter_id'));
+		$chapter = Chapter::find($chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
 			return back()->withInput($request->all());
 		}
