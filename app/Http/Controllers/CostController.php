@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 use \Calctool\Models\Project;
 use \Calctool\Models\Chapter;
 use \Calctool\Models\Activity;
+use \Calctool\Models\Part;
+use \Calctool\Models\PartType;
+use \Calctool\Models\Purchase;
+use \Calctool\Models\PurchaseKind;
+use \Calctool\Models\Relation;
 use \Calctool\Models\Timesheet;
 use \Calctool\Models\TimesheetKind;
 use \Calctool\Models\EstimateLabor;
@@ -158,15 +163,15 @@ class CostController extends Controller {
 		return json_encode(['success' => 1]);
 	}
 
-	public function getActivityByType(Request $request)
+	public function getActivityByType(Request $request, $projectid, $typeid)
 	{
 
-		$project = Project::find(Route::input('project_id'));
+		$project = Project::find($projectid);
 		if (!$project || !$project->isOwner()) {
 			return json_encode(['success' => 0]);
 		}
 
-		switch ($request->input('type')) {
+		switch ($typeid) {
 			case 1:
 				$rs = [];
 				foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)

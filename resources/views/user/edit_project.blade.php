@@ -1,8 +1,8 @@
 <?php
 
 use \Calctool\Calculus\CalculationEndresult;
-
-
+use \Calctool\Models\Relation;
+use \Calctool\Models\PurchaseKind;
 
 $common_access_error = false;
 $project = \Calctool\Models\Project::find(Route::Input('project_id'));
