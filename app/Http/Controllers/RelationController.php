@@ -9,6 +9,7 @@ use \Calctool\Models\Relation;
 use \Calctool\Models\RelationKind;
 use \Calctool\Models\Iban;
 use \Calctool\Models\Contact;
+use \Calctool\Models\ContactFunction;
 use \Calctool\Models\Resource;
 
 use \Auth;

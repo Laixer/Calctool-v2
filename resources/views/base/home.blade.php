@@ -1,6 +1,7 @@
 <?php
 use \Calctool\Models\Iban;
 use \Calctool\Models\Relation;
+use \Calctool\Models\RelationKind;
 use \Calctool\Models\RelationType;
 use \Calctool\Models\Province;
 use \Calctool\Models\Country;
@@ -335,7 +336,7 @@ else
 									<tr>
 										<td><a href="{{ 'relation-'.$relation->id.'/edit' }}">{{ $relation->company_name ? $relation->company_name : $contact->firstname .' '. $contact->lastname }}</a></td>
 										<td>{{ $relation->company_name ? $relation->email : $contact->email }}</td>
-										<td>{{ ucfirst(\Calctool\Models\RelationKind::find($relation->kind_id)->kind_name) }}</td>
+										<td>{{ ucfirst(RelationKind::find($relation->kind_id)->kind_name) }}</td>
 									</tr>
 									@endforeach
 								</tbody>
