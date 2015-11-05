@@ -1,4 +1,23 @@
 <?php
+
+use \Calctool\Models\Project;
+use \Calctool\Models\Relation;
+use \Calctool\Models\Offer;
+use \Calctool\Calculus\CalculationEndresult;
+use \Calctool\Models\Contact;
+use \Calctool\Models\ProjectType;
+use \Calctool\Models\DeliverTime;
+use \Calctool\Models\Valid;
+use \Calctool\Models\Chapter;
+use \Calctool\Models\Activity;
+use \Calctool\Models\Part;
+use \Calctool\Calculus\CalculationOverview;
+
+
+use \Calctool\Http\Controllers\OfferController;
+
+
+
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner()) {

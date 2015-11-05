@@ -1,6 +1,7 @@
 <?php
 
 namespace Calctool\Http\Controllers;
+use \Auth;
 
 class OfferController extends Controller {
 
