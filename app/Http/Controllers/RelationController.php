@@ -11,8 +11,8 @@ use \Calctool\Models\Iban;
 use \Calctool\Models\Contact;
 use \Calctool\Models\Resource;
 
-use Auth;
-use Image;
+use \Auth;
+use \Image;
 
 class RelationController extends Controller {
 

@@ -3,6 +3,7 @@
 use \Calctool\Models\Project;
 use \Calctool\Models\Offer;
 use \Calctool\Models\Relation;
+use \Calctool\Calculus\CalculationEndresult;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));

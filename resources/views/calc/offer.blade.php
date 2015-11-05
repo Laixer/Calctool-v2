@@ -12,6 +12,7 @@ use \Calctool\Models\Chapter;
 use \Calctool\Models\Activity;
 use \Calctool\Models\Part;
 use \Calctool\Calculus\CalculationOverview;
+use \Calctool\Models\Resource;
 
 
 use \Calctool\Http\Controllers\OfferController;
@@ -375,6 +376,7 @@ if (!$project || !$project->isOwner()) {
 
 	<h2><strong>Offerte</strong></h2>
 	<form method="POST" id="frm-offer">
+		{!! csrf_field() !!}
 			<div class="modal fade" id="termModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">

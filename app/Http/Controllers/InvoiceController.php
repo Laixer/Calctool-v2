@@ -2,6 +2,8 @@
 
 namespace Calctool\Http\Controllers;
 
+use \Auth;
+
 class InvoiceController extends Controller {
 
 	/*

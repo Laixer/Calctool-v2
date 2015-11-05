@@ -1,4 +1,9 @@
 <?php
+
+use \Calctool\Models\Offer;
+use \Calctool\Models\Project;
+use \Calctool\Models\Resource;
+
 $common_access_error = false;
 $offer = Offer::find(Route::Input('offer_id'));
 if (!$offer) {

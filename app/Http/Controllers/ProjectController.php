@@ -5,6 +5,7 @@ namespace Calctool\Http\Controllers;
 use Illuminate\Http\Request;
 
 use \Calctool\Models\Project;
+use \Calctool\Models\Resource;
 
 use \Auth;
 
@@ -26,11 +27,11 @@ class ProjectController extends Controller {
 		return view('user.edit_project');
 	}
 
-	public function downloadResource(Request $request)
+	public function downloadResource(Request $request, $resourceid)
 	{
-		$res = Resource::find(Route::Input('resource_id'));
+		$res = Resource::find($resourceid);
 		if ($res) {
-			return download($res->file_location);
+			return response()->download($res->file_location);
 		}
 		return;
 	}

@@ -1,4 +1,21 @@
 <?php
+
+use \Calctool\Models\Project;
+use \Calctool\Models\Relation;
+use \Calctool\Models\Contact;
+use \Calctool\Models\Offer;
+use \Calctool\Models\Resource;
+use \Calctool\Models\ProjectType;
+use \Calctool\Calculus\CalculationEndresult;
+use \Calctool\Http\Controllers\OfferController;
+use \Calctool\Models\DeliverTime;
+use \Calctool\Models\Valid;
+use \Calctool\Models\Chapter;
+use \Calctool\Models\Activity;
+use \Calctool\Models\Part;
+use \Calctool\Calculus\CalculationOverview;
+
+
 $c=false;
 
 $project = Project::find(Route::Input('project_id'));

@@ -1,7 +1,19 @@
 <?php
 
 namespace Calctool\Http\Controllers;
+
+use Illuminate\Http\Request;
+use \Calctool\Models\Project;
+use \Calctool\Models\Offer;
+use \Calctool\Calculus\CalculationEndresult;
+use \Calctool\Models\Resource;
+use \Calctool\Http\Controllers\InvoiceController;
+use \Calctool\Models\Invoice;
+
+
 use \Auth;
+use \PDF;
+
 
 class OfferController extends Controller {
 
@@ -18,70 +30,63 @@ class OfferController extends Controller {
 	|
 	*/
 
-	public function doNewOffer()
+	public function doNewOffer(Request $request, $projectid)
 	{
-		$rules = array(
+		$this->validate($request, [
+		//$rules = array(
 			'deliver' => array('required','integer','min:0'),
 			'terms' => array('integer','min:0'),
 			'valid' => array('required','integer','min:0'),
 			'to_contact' => array('required'),
 			'from_contact' => array('required'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return Redirect::back()->withErrors($validator)->withInput(Input::all());
-		} else {
-
-			$project = Project::find(Route::Input('project_id'));
+			$project = Project::find($projectid);
 			if (!$project || !$project->isOwner()) {
-				return Redirect::back()->withInput(Input::all());
+				return back()->withInput($request->all());
 			}
 
 			$offer = new Offer;
-			$offer->to_contact_id = Input::get('to_contact');
-			$offer->from_contact_id = Input::get('from_contact');
-			$offer->description = Input::get('description');
+			$offer->to_contact_id = $request->get('to_contact');
+			$offer->from_contact_id = $request->get('from_contact');
+			$offer->description = $request->get('description');
 			$offer->offer_code = OfferController::getOfferCode($project->id);
-			$offer->extracondition = Input::get('extracondition');
-			$offer->closure = Input::get('closure');
-			if (Input::get('offdateval'))
-				$offer->offer_make =  date('Y-m-d', strtotime(Input::get('offdateval')));
-			if (Input::get('toggle-payment'))
-				$offer->downpayment = Input::get('toggle-payment');
-			if (Input::get('amount'))
-				$offer->downpayment_amount = str_replace(',', '.', str_replace('.', '' , Input::get('amount')));
+			$offer->extracondition = $request->get('extracondition');
+			$offer->closure = $request->get('closure');
+			if ($request->get('offdateval'))
+				$offer->offer_make =  date('Y-m-d', strtotime($request->get('offdateval')));
+			if ($request->get('toggle-payment'))
+				$offer->downpayment = $request->get('toggle-payment');
+			if ($request->get('amount'))
+				$offer->downpayment_amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
 			$offer->auto_email_reminder = false;
-			$offer->deliver_id = Input::get('deliver');
-			$offer->valid_id = Input::get('valid');
-			if (Input::get('terms'))
-				$offer->invoice_quantity = Input::get('terms');
+			$offer->deliver_id = $request->get('deliver');
+			$offer->valid_id = $request->get('valid');
+			if ($request->get('terms'))
+				$offer->invoice_quantity = $request->get('terms');
 			$offer->project_id = $project->id;;
 
-			if (Input::get('include-tax'))
+			if ($request->get('include-tax'))
 				$offer->include_tax = true;
 			else
 				$offer->include_tax = false;
-			if (Input::get('only-totals'))
+			if ($request->get('only-totals'))
 				$offer->only_totals = true;
 			else
 				$offer->only_totals = false;
-			if (Input::get('seperate-subcon'))
+			if ($request->get('seperate-subcon'))
 				$offer->seperate_subcon = true;
 			else
 				$offer->seperate_subcon = false;
-			if (Input::get('display-worktotals'))
+			if ($request->get('display-worktotals'))
 				$offer->display_worktotals = true;
 			else
 				$offer->display_worktotals = false;
-			if (Input::get('display-specification'))
+			if ($request->get('display-specification'))
 				$offer->display_specification = true;
 			else
 				$offer->display_specification = false;
-			if (Input::get('display-description'))
+			if ($request->get('display-description'))
 				$offer->display_description = true;
 			else
 				$offer->display_description = false;
@@ -90,14 +95,14 @@ class OfferController extends Controller {
 
 			$offer->save();
 
-			$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.OfferController::getOfferCode(Route::Input('project_id')).'-offer.pdf';
+			$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.OfferController::getOfferCode($request->input('project_id')).'-offer.pdf';
 			$pdf = PDF::loadView('calc.offer_pdf');
 			$pdf->save('user-content/'.$newname);
 
 			$resource = new Resource;
 			$resource->resource_name = $newname;
 			$resource->file_location = 'user-content/' . $newname;
-			$resource->file_size = File::size('user-content/' . $newname);
+			$resource->file_size = filesize('user-content/' . $newname);
 			$resource->user_id = Auth::id();
 			$resource->description = 'Offerteversie';
 
@@ -110,28 +115,20 @@ class OfferController extends Controller {
 			Auth::user()->offer_counter++;
 			Auth::user()->save();
 
-			return Redirect::to('/offer/project-'.$project->id.'/offer-'.$offer->id);
-		}
+			return redirect('/offer/project-'.$project->id.'/offer-'.$offer->id);
 
 	}
 
-	public function doOfferClose()
+	public function doOfferClose(Request $request)
 	{
-		$rules = array(
+		
+		$this->validate($request, [
 			'date' => array('required'),
 			'offer' => array('required','integer'),
 			'project' => array('required','integer'),
-		);
+		]);
 
-		$validator = Validator::make(Input::all(), $rules);
-
-		if ($validator->fails()) {
-			$messages = $validator->messages();
-
-			return json_encode(['success' => 0, 'message' => $messages]);
-		} else {
-
-			$offer = Offer::find(Input::get('offer'));
+			$offer = Offer::find($request->get('offer'));
 			if (!$offer)
 				return json_encode(['success' => 0]);
 			$project = Project::find($offer->project_id);
@@ -139,12 +136,12 @@ class OfferController extends Controller {
 				return json_encode(['success' => 0]);
 			}
 
-			$project = Project::find(Input::get('project'));
+			$project = Project::find($request->get('project'));
 			if (!$project || !$project->isOwner()) {
 				return json_encode(['success' => 0]);
 			}
 
-			$offer->offer_finish = date('Y-m-d', strtotime(Input::get('date')));
+			$offer->offer_finish = date('Y-m-d', strtotime($request->get('date')));
 			$offer->save();
 
 			$first_id = 0;
@@ -175,8 +172,6 @@ class OfferController extends Controller {
 			}
 
 			return json_encode(['success' => 1]);
-		}
-
 	}
 
 	/* id = $project->id */
