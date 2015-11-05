@@ -2,6 +2,8 @@
 
 namespace Calctool\Calculus;
 
+use \Calctool\Models\CalculationLabor;
+
 /*
  * Urenregistratie
  */

@@ -143,7 +143,7 @@ class AuthController extends Controller {
 	 */
 	public function doNewPassword(Request $request)
 	{
-		$this->validate($request, 
+		$this->validate($request, [
 			'secret' => array('required','confirmed','min:5'),
 			'secret_confirmation' => array('required','min:5'),
 		]);
