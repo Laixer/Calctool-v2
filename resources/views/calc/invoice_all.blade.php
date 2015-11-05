@@ -5,6 +5,7 @@ use \Calctool\Models\Offer;
 use \Calctool\Models\Invoice;
 use \Calctool\Calculus\ResultEndresult;
 use \Calctool\Http\Controllers\InvoiceController;
+use \Calctool\Models\InvoiceTerm;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));

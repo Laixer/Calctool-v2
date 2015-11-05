@@ -7,6 +7,7 @@ use \Calctool\Models\Invoice;
 use \Calctool\Models\Offer;
 use \Calctool\Models\Iban;
 use \Calctool\Models\ProjectType;
+use \Calctool\Models\InvoiceTerm;
 
 
 $displaytax=Input::get("displaytax");
