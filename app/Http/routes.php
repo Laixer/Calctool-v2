@@ -15,9 +15,9 @@ Route::post('login', array('middleware' => 'guest', 'uses' => 'AuthController@do
 Route::get('register', function(){ return View::make('auth.registration'); });
 Route::post('register', array('middleware' => 'guest', 'as' => 'register', 'uses' => 'AuthController@doRegister'));
 Route::get('confirm/{api}/{token}', array('middleware' => 'guest', 'as' => 'register', 'uses' => 'AuthController@doActivate'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
-Route::post('password/reset', array('middleware' => 'guest|csrf', 'as' => 'reset', 'uses' => 'AuthController@doBlockPassword'));
+Route::post('password/reset', array('middleware' => 'guest', 'as' => 'reset', 'uses' => 'AuthController@doBlockPassword'));
 Route::get('password/{api}/{token}', function(){ return View::make('auth.password'); })->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
-Route::post('password/{api}/{token}', array('middleware' => 'guest|csrf', 'as' => 'register', 'uses' => 'AuthController@doNewPassword'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
+Route::post('password/{api}/{token}', array('middleware' => 'guest', 'as' => 'register', 'uses' => 'AuthController@doNewPassword'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
 
 Route::get('api/v1', array('uses' => 'ApiController@getApiRoot'));
 
@@ -38,7 +38,7 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::get('/', function(){ return View::make('base.home'); });
 	Route::get('admin/switch/back', array('uses' => 'AdminController@getSwitchSessionBack'));
 	Route::get('logout', array('as' => 'logout', 'uses' => 'AuthController@doLogout'));
-	Route::get('result/project-{project_id}', array('as' => 'result', 'uses' => 'ResultController@getResult'))->where('project_id', '[0-9]+');
+	Route::get('result/project-{project_id}', function(){ return view('calc.result'); })->where('project_id', '[0-9]+');
 	Route::get('res-{resource_id}/download', array('uses' => 'ProjectController@downloadResource'))->where('resource_id', '[0-9]+');
 	Route::get('myaccount', array('as' => 'account', 'uses' => 'UserController@getMyAccount'));
 	Route::get('myaccount/telegram', array('uses' => 'UserController@getMyAccountTelegram'));

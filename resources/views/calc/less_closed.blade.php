@@ -1,4 +1,20 @@
 <?php
+
+use \Calctool\Models\Project;
+use \Calctool\Models\Chapter;
+use \Calctool\Models\Activity;
+use \Calctool\Models\PartType;
+use \Calctool\Models\Part;
+use \Calctool\Models\Tax;
+use \Calctool\Calculus\LessRegister;
+use \Calctool\Calculus\LessOverview;
+use \Calctool\Models\ProjectType;
+use \Calctool\Models\CalculationLabor;
+use \Calctool\Models\CalculationMaterial;
+use \Calctool\Models\CalculationEquipment;
+use \Calctool\Calculus\LessEndresult;
+use \Calctool\Calculus\CalculationRegister;
+
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner())
@@ -22,7 +38,6 @@ if (!$project || !$project->isOwner())
 <?php }else{ ?>
 
 @section('content')
-<?# -- WRAPPER -- ?>
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -167,7 +182,7 @@ if (!$project || !$project->isOwner())
 													<?# -- table items -- ?>
 													<tbody>
 														@foreach (CalculationLabor::where('activity_id','=', $activity->id)->get() as $labor)
-														<tr data-id="{{ $labor->id; }}">
+														<tr data-id="{{ $labor->id }}">
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
@@ -249,7 +264,7 @@ if (!$project || !$project->isOwner())
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>{{ '&euro; '.number_format(LessRegister::lessMaterialTotalProfit($activity->id, $profit_mat), 2, ",","."); }}</td>
+															<td class="col-md-1"><strong>{{ '&euro; '.number_format(LessRegister::lessMaterialTotalProfit($activity->id, $profit_mat), 2, ",",".") }}</td>
 															<th class="col-md-1">{{ '&euro; '.number_format(LessRegister::lessMaterialDeltaTotal($activity->id, $profit_mat), 2, ",",".") }}</th>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>

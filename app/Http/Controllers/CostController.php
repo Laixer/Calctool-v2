@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use \Calctool\Models\Project;
 use \Calctool\Models\Chapter;
 use \Calctool\Models\Activity;
+use \Calctool\Models\Detail;
 use \Calctool\Models\Part;
 use \Calctool\Models\PartType;
 use \Calctool\Models\Purchase;
