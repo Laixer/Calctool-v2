@@ -92,7 +92,7 @@ class AuthController extends Controller {
 				$log->save();
 			}
 
-			return back()->withErrors($errors)->withInput($request->except('secret'))->withCookie(\Cookie::forget('swpsess'));
+			return back()->withErrors($errors)->withInput($request->except('secret'))->withCookie(cookie()->forget('swpsess'));
 		}
 	}
 
@@ -224,7 +224,7 @@ class AuthController extends Controller {
 		$log->save();
 
 		Auth::login($user);
-		return redirect('/')->withCookie(Cookie::make('nstep', 'intro_'.$user->id, 60*24*3));
+		return redirect('/')->withCookie(cookie('nstep', 'intro_'.$user->id, 60*24*3))->withCookie(cookie('_xintr'.$user->id, '1', 60*24*7));
 	}
 
 	/**
@@ -269,7 +269,7 @@ class AuthController extends Controller {
 	 */
 	public function doHideNextStep()
 	{
-		return Response::make(json_encode(['success' => 1]))->withCookie(Cookie::forget('nstep'));
+		return Response::make(json_encode(['success' => 1]))->withCookie(cookie()->forget('nstep'));
 	}
 
 }

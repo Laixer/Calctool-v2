@@ -1,4 +1,7 @@
 <?php
+
+use \Calctool\Models\Telegram;
+
 $tgram = Telegram::where('user_id','=',Auth::id())->first();
 if ($tgram) {
 	$text = "Telegram messenger is momenteel gekoppeld aan dit account. Om Telegram toegang te weigeren kan de koppleling worden verbroken.";
@@ -48,8 +51,8 @@ $(document).ready(function() {
 						<img src="https://telegram.org/img/t_logo.png" heigh="150px" style="height: 150px;">
 					</div>
 
-
-					{{ Form::open(array('url' => 'myaccount/telegram/update')) }}
+					<form method="POST" action="/myaccount/telegram/update" accept-charset="UTF-8">
+					{!! csrf_field() !!}
 
 					<h4 class="company">Telegram koppeling</h4>
 					<div class="row">
@@ -84,7 +87,7 @@ $(document).ready(function() {
 							<button class="btn btn-primary {{ $tgram ? '' : 'disabled' }}"><i class="fa fa-check"></i> Opslaan</button>
 						</div>
 					</div>
-				{{ Form::close() }}
+				</form>
 
 				</div>
 
@@ -93,6 +96,5 @@ $(document).ready(function() {
 	</section>
 
 </div>
-<?#-- /WRAPPER --?>
 
 @stop

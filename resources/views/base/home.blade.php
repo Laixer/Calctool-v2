@@ -44,6 +44,16 @@ else
 			<div class="modal-body">
 				<p>Na het invullen van deze QuickStart kan je direct starten met de CalculatieTool.
 
+				@if($errors->has())
+				<div class="alert alert-danger">
+					<i class="fa fa-frown-o"></i>
+					<strong>Fout</strong>
+					@foreach ($errors->all() as $error)
+						{{ $error }}
+					@endforeach
+				</div>
+				@endif
+
 				<form action="/mycompany/quickstart" method="post">
 				{!! csrf_field() !!}
 
@@ -52,7 +62,7 @@ else
 				<div class="row">
 					<div class="col-md-7">
 						<div class="form-group">
-							<label for="company_name">Bedrijfsnaam*</label>
+							<label for="company_name">Bedrijfsnaam</label>
 							<input name="company_name" id="company_name" type="text" value="{{ Input::old('company_name') ? Input::old('company_name') : ($relation ? $relation->company_name : '') }}" class="form-control" />
 						</div>
 					</div>
