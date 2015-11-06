@@ -16,8 +16,6 @@ use \Calctool\Calculus\EstimateOverview;
 use \Calctool\Models\ProjectType;
 use \Calctool\Calculus\EstimateEndresult;
 
-
-
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner())
