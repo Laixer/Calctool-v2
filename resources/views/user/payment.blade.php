@@ -9,7 +9,8 @@
 		<div class="col-md-12">
 
 			<h2><strong>Abonnementskeuze</strong></h2>
-			{{ Form::open() }}
+			<form method="POST" action="" accept-charset="UTF-8">
+			{!! csrf_field() !!}
 
 			<div class="white-row">
 			<div class="row">
@@ -65,7 +66,7 @@
 				</div>
 			</div>
 			</div>
-			{{ Form::close() }}
+			</form>
 		</div>
 
 	</section>

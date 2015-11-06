@@ -12,7 +12,7 @@ $(document).ready(function() {
 	$req = false;
 	$("#search").keyup(function() {
 		$val = $(this).val();
-		if ($val.length > 3 && !$req) {
+		if ($val.length > 2 && !$req) {
 			$group = $('#group').val();
 			$req = true;
 			$.post("/material/search", {query:$val,group:$group}, function(data) {

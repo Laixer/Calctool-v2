@@ -115,7 +115,7 @@ class UserController extends Controller {
 			'payoption' => array('required'),
 		]);
 
-		$mollie = new Mollie_API_Client;
+		$mollie = new \Mollie_API_Client;
 		$mollie->setApiKey($_ENV['MOLLIE_API']);
 
 		$amount = 0;
@@ -189,7 +189,7 @@ class UserController extends Controller {
 			return;
 		}
 
-		$mollie = new Mollie_API_Client;
+		$mollie = new \Mollie_API_Client;
 		$mollie->setApiKey($_ENV['MOLLIE_API']);
 
 		$payment = $mollie->payments->get($order->transaction);
@@ -249,7 +249,7 @@ class UserController extends Controller {
 			return redirect('myaccount')->withErrors($errors);
 		}
 
-		$mollie = new Mollie_API_Client;
+		$mollie = new \Mollie_API_Client;
 		$mollie->setApiKey($_ENV['MOLLIE_API']);
 
 		$payment = $mollie->payments->get($order->transaction);
