@@ -36,9 +36,9 @@ class CalcController extends Controller {
 	|
 	*/
 
-	public function getCalculation(Request $request)
+	public function getCalculation(Request $request, $projectid)
 	{
-		$project = Project::find($request->input('project_id'));
+		$project = Project::find($projectid);
 		if ($project) {
 			if ($project->project_close)
 				return response()->view('calc.calculation_closed');

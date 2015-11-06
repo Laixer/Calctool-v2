@@ -1,4 +1,22 @@
 <?php
+
+use \Calctool\Models\Project;
+use \Calctool\Models\Chapter;
+use \Calctool\Models\Activity as ProjectActivity;
+use \Calctool\Models\PartType;
+use \Calctool\Models\Part;
+use \Calctool\Models\Tax;
+use \Calctool\Models\CalculationLabor;
+use \Calctool\Calculus\CalculationRegister;
+use \Calctool\Models\CalculationMaterial;
+use \Calctool\Models\CalculationEquipment;
+use \Calctool\Models\EstimateLabor;
+use \Calctool\Models\EstimateMaterial;
+use \Calctool\Models\EstimateEquipment;
+use \Calctool\Models\ProjectType;
+use \Calctool\Calculus\CalculationOverview;
+use \Calctool\Calculus\CalculationEndresult;
+
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner())
@@ -128,7 +146,7 @@ if (!$project || !$project->isOwner())
 									<div class="toogle">
 
 										<?php
-										foreach(Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->orderBy('created_at', 'desc')->get() as $activity) {
+										foreach(ProjectActivity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->orderBy('created_at', 'desc')->get() as $activity) {
 											if (Part::find($activity->part_id)->part_name=='contracting') {
 												$profit_mat = $project->profit_calc_contr_mat;
 												$profit_equip = $project->profit_calc_contr_equip;
@@ -220,8 +238,8 @@ if (!$project || !$project->isOwner())
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::calcMaterialTotal($activity->id, $profit_mat), 2, ",","."); }}</span></td>
-															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::calcMaterialTotalProfit($activity->id, $profit_mat), 2, ",","."); }}</span></td>
+															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::calcMaterialTotal($activity->id, $profit_mat), 2, ",",".") }}</span></td>
+															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::calcMaterialTotalProfit($activity->id, $profit_mat), 2, ",",".") }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -297,7 +315,7 @@ if (!$project || !$project->isOwner())
 									<div class="toogle">
 
 										<?php
-										foreach(Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->orderBy('created_at', 'desc')->get() as $activity) {
+										foreach(ProjectActivity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->orderBy('created_at', 'desc')->get() as $activity) {
 											$profit_mat = 0;
 											if (Part::find($activity->part_id)->part_name=='contracting') {
 												$profit_mat = $project->profit_calc_contr_mat;
@@ -391,8 +409,8 @@ if (!$project || !$project->isOwner())
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::estimMaterialTotal($activity->id, $profit_mat), 2, ",","."); }}</span></td>
-															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::estimMaterialTotalProfit($activity->id, $profit_mat), 2, ",","."); }}</span></td>
+															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::estimMaterialTotal($activity->id, $profit_mat), 2, ",",".") }}</span></td>
+															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::estimMaterialTotalProfit($activity->id, $profit_mat), 2, ",",".") }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -439,8 +457,8 @@ if (!$project || !$project->isOwner())
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::estimEquipmentTotal($activity->id, $profit_equip), 2, ",","."); }}</span></td>
-															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::estimEquipmentTotalProfit($activity->id, $profit_equip), 2, ",","."); }}</span></td>
+															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::estimEquipmentTotal($activity->id, $profit_equip), 2, ",",".") }}</span></td>
+															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::estimEquipmentTotalProfit($activity->id, $profit_equip), 2, ",",".") }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -483,7 +501,7 @@ if (!$project || !$project->isOwner())
 										<tbody>
 											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
 											<?php $i = 0; ?>
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
+											@foreach (ProjectActivity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
 											<?php $i++; ?>
 											<tr>
 												<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
@@ -536,7 +554,7 @@ if (!$project || !$project->isOwner())
 										<tbody>
 											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
 											<?php $i = 0; ?>
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
+											@foreach (ProjectActivity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
 											<?php $i++; ?>
 											<tr>
 												<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
