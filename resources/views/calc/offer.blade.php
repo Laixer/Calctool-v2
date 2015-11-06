@@ -242,7 +242,7 @@ if (!$project || !$project->isOwner()) {
 			var q = $('#terms').val();
 			if($.isNumeric(q)&&(q>1)&&(q<=50)) {
 				if($('input[name="toggle-payment"]').prop('checked'))
-					$('#condition-text').html('Indien opdracht wordt verstrekt, wordt gefactureerd in '+q+' termijnen, waarvan het eerste termijn een aanbetaling betreft a &euro; ' +$('#amount').val()+'.');
+					$('#condition-text').html('Indien opdracht wordt verstrekt, wordt gefactureerd in '+q+' termijnen, waarvan de eerste termijn een aanbetaling betreft a &euro; ' +$('#amount').val()+'.');
 				else
 					$('#condition-text').html('Indien opdracht wordt verstrekt, wordt gefactureerd in '+q+' termijnen.');
 			} else {
@@ -435,7 +435,7 @@ if (!$project || !$project->isOwner()) {
 											</tr>
 										</tbody>
 										</table>
-										<span>Indien aanbetaling wordt ingesteld wordt dit verrekend als het 1e betalingstermijn. Eventuele navolgende betalingstermijnen worden gespecficieerd op de factuurpagina.</span>
+										<span>Indien aanbetaling wordt ingesteld wordt dit verrekend als de 1e betalingstermijn. Eventuele navolgende betalingstermijnen worden gespecficieerd op de factuurpagina.</span>
 									</div>
 									
 								</div>
