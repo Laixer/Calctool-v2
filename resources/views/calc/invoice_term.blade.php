@@ -269,6 +269,7 @@ if (!$project || !$project->isOwner()) {
 
 	<h2><strong>Termijnfactuur</strong></h2>
 	<form method="POST" id="frm-invoice" action="/invoice/close">
+	{!! csrf_field() !!}
 		<input name="id" value="{{ $invoice->id }}" type="hidden"/>
 		<input name="projectid" value="{{ $project->id }}" type="hidden"/>
 
