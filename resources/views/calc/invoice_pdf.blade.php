@@ -2,11 +2,25 @@
 
 use \Calctool\Models\Project;
 use \Calctool\Models\Relation;
+use \Calctool\Models\Chapter;
+use \Calctool\Models\Activity;
+use \Calctool\Models\Part;
+use \Calctool\Models\PartType;
 use \Calctool\Models\Contact;
 use \Calctool\Models\Invoice;
 use \Calctool\Models\Offer;
+use \Calctool\Models\Detail;
 use \Calctool\Models\Iban;
 use \Calctool\Models\ProjectType;
+use \Calctool\Calculus\EstimateEndresult;
+use \Calctool\Calculus\MoreEndresult;
+use \Calctool\Calculus\LessEndresult;
+use \Calctool\Calculus\ResultEndresult;
+use \Calctool\Calculus\CalculationOverview;
+use \Calctool\Calculus\EstimateOverview;
+use \Calctool\Calculus\LessOverview;
+use \Calctool\Calculus\MoreOverview;
+use \Calctool\Http\Controllers\OfferController;
 
 $total=Input::get("total");
 $specification=Input::get("specification");

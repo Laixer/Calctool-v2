@@ -17,9 +17,11 @@ use \Calctool\Models\CalculationLabor;
 use \Calctool\Models\EstimateLabor;
 use \Calctool\Models\EstimateMaterial;
 use \Calctool\Models\EstimateEquipment;
-
 use \Calctool\Models\Invoice;
 use \Calctool\Models\Offer;
+
+use \Auth;
+use \PDF;
 
 class CalcController extends Controller {
 

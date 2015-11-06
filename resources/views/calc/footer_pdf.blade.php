@@ -1,6 +1,8 @@
-<?# -- FOOTER -- ?>
 <?php
 
+use \Calctool\Models\Relation;
+use \Calctool\Models\User;
+use \Calctool\Models\Iban;
 
 $relation_self = Relation::find(User::find(Input::get('uid'))->self_id);
 if ($relation_self) {
