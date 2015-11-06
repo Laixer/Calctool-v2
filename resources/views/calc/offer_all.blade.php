@@ -59,20 +59,20 @@ $relation = Relation::find($project->client_id);
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th class="col-md-3">Offertenummer</th>
+						<th class="col-md-2">Offertenummer</th>
 						<th class="col-md-2">Datum</th>
 						<th class="col-md-3">Opdrachtgever</th>
-						<th class="col-md-2">Offertebedrag</th>
+						<th class="col-md-3">Offertebedrag (excl. BTW)</th>
 						<th class="col-md-3">Acties</th>
 					</tr>
 				</thead>
 				<tbody>
 					@foreach(Offer::where('project_id', '=', $project->id)->get() as $offer)
 					<tr>
-						<td class="col-md-3"><a href="/offer/project-{{ $project->id }}/offer-{{ $offer->id }}">{{ $offer->offer_code }}</a></td>
+						<td class="col-md-2"><a href="/offer/project-{{ $project->id }}/offer-{{ $offer->id }}">{{ $offer->offer_code }}</a></td>
 						<td class="col-md-2"><?php echo date('d-m-Y', strtotime($offer->offer_make)); ?></td>
 						<td class="col-md-3">{{ $relation->company_name }}</td>
-						<td class="col-md-2">{{ '&euro; '.number_format($offer->offer_total, 2, ",",".") }}</td>
+						<td class="col-md-3">{{ '&euro; '.number_format($offer->offer_total, 2, ",",".") }}</td>
 						<td class="col-md-3"><a href="/res-{{ ($offer_last->resource_id) }}/download" class="btn btn-primary btn-xs"><i class="fa fa-cloud-download fa-fw"></i> Downloaden</a></td>
 					</tr>
 					@endforeach
