@@ -76,7 +76,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
       <div class="openingtext">{{ ($offer_last ? $offer_last->description : '') }}</div>
 
 @if (!$only_totals)
-      <h1 class="name">Specificatie offerte deze</h1>
+      <h1 class="name">Specificatie offerte</h1>
       @if ($seperate_subcon)
       <table border="0" cellspacing="0" cellpadding="0">
         <thead>
@@ -164,6 +164,231 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
             <td class="qty">&nbsp;</td>
           </tr>
           @endif
+        </tbody>
+      </table>
+
+      @else
+
+           <table border="0" cellspacing="0" cellpadding="0">
+        <thead>
+          <h4 class="name">AANNEMING</h4>
+          <tr style="page-break-after: always;">
+            <th style="width: 147px" align="left" class="qty">&nbsp;</th>
+            <th style="width: 60px" align="left" class="qty">Uren</th>
+            <th style="width: 119px" align="left" class="qty">Bedrag @if($include_tax) (excl. BTW) @endif</th>
+            <th style="width: 70px" align="left" class="qty">BTW %</th>
+            <th style="width: 80px" align="left" class="qty">@if($include_tax) BTW bedrag @endif</th>
+            <th style="width: 119px" align="left" class="qty">&nbsp;</th>
+          </tr>
+        </thead>
+
+        <tbody>
+        @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+          <tr style="page-break-after: always;">
+            <td class="qty"><strong>Arbeidskosten</strong></td>
+            <td class="qty">{{ ''.number_format(CalculationEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
+            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
+            <td class="qty">21%</td>
+            <td class="qty">@if($include_tax) {{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax1AmountTax($project), 2, ",",".") }} @endif</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          <tr style="page-break-after: always;">
+            <td class="qty">&nbsp;</td>
+            <td class="qty">{{ ''.number_format(CalculationEndresult::conCalcLaborActivityTax2($project), 2, ",",".") }}</td>
+            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
+            <td class="qty">6%</td>
+            <td class="qty">@if($include_tax) {{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax2AmountTax($project), 2, ",",".") }} @endif</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          @else
+          <tr style="page-break-after: always;">
+            <td class="qty"><strong>Arbeidskosten</strong></td>
+            <td class="qty">{{ ''.number_format(CalculationEndresult::conCalcLaborActivityTax3($project), 2, ",",".") }}</td>
+            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
+            <td class="qty">0%</td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          @endif
+
+          @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+          <tr style="page-break-after: always;">
+            <td class="qty"><strong>Materiaalkosten</strong></td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
+            <td class="qty">21%</td>
+            <td class="qty">@if($include_tax) {{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1AmountTax($project), 2, ",",".") }} @endif</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          <tr style="page-break-after: always;">
+            <td class="qty">&nbsp;</td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
+            <td class="qty">6%</td>
+            <td class="qty">@if($include_tax) {{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }} @endif</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          @else
+          <tr style="page-break-after: always;">
+            <td class="qty"><strong>Materiaalkosten</strong></td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
+            <td class="qty">0%</td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          @endif
+
+          @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+          <tr style="page-break-after: always;">
+            <td class="qty"><strong>Materieelkosten</strong></td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
+            <td class="qty">21%</td>
+            <td class="qty">@if($include_tax) {{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax1AmountTax($project), 2, ",",".") }} @endif</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          <tr style="page-break-after: always;">
+            <td class="qty">&nbsp;</td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
+            <td class="qty">6%</td>
+            <td class="qty">@if($include_tax) {{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }} @endif</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          @else
+          <tr style="page-break-after: always;">
+            <td class="qty"><strong>Materieelkosten</strong></td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
+            <td class="qty">0%</td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          @endif
+          <tr>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          <tr style="page-break-after: always;">
+            <td class="qty"><strong>Totaal Aanneming </strong></td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">@if($include_tax) <strong>{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax($project), 2, ",",".") }}</strong> @endif</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+     </table>
+     <br>
+     <table border="0" cellspacing="0" cellpadding="0">
+        <thead>
+          <h4 class="name">ONDERAANNEMING</h4>
+          <tr style="page-break-after: always;">
+            <th style="width: 147px" align="left" class="qty">&nbsp;</th>
+            <th style="width: 60px" align="left" class="qty">Uren</th>
+            <th style="width: 120px" align="left" class="qty">Bedrag @if($include_tax) (excl. BTW) @endif</th>
+            <th style="width: 70px" align="left" class="qty">BTW %</th>
+            <th style="width: 80px" align="left" class="qty">@if($include_tax) BTW bedrag @endif</th>
+            <th style="width: 119px" align="left" class="qty">&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody>
+        @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+          <tr style="page-break-after: always;">
+            <td class="qty"><strong>Arbeidskosten</strong></td>
+            <td class="qty">{{ ' '.number_format(CalculationEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
+            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
+            <td class="qty">21%</td>
+            <td class="qty">@if($include_tax) {{ '&euro; '.number_format(CalculationEndresult::subconCalcLaborActivityTax1AmountTax($project), 2, ",",".") }} @endif</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          <tr style="page-break-after: always;">
+            <td class="qty">&nbsp;</td>
+            <td class="qty">{{ ' '.number_format(CalculationEndresult::subconCalcLaborActivityTax2($project), 2, ",",".") }}</td>
+            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
+            <td class="qty">6%</td>
+            <td class="qty">@if($include_tax) {{ '&euro; '.number_format(CalculationEndresult::subconCalcLaborActivityTax2AmountTax($project), 2, ",",".") }} @endif</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          @else
+          <tr style="page-break-after: always;">
+            <td class="qty"><strong>Arbeidskosten</strong></td>
+            <td class="qty">{{ ''.number_format(CalculationEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
+            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
+            <td class="qty">0%</td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          @endif
+
+          @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+          <tr style="page-break-after: always;">
+            <td class="qty"><strong>Materiaalkosten</strong></td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
+            <td class="qty">21%</td>
+            <td class="qty">@if($include_tax) {{ '&euro; '.number_format(CalculationEndresult::subconCalcMaterialActivityTax1AmountTax($project), 2, ",",".") }} @endif</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          <tr style="page-break-after: always;">
+            <td class="qty">&nbsp;</td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
+            <td class="qty">6%</td>
+            <td class="qty">@if($include_tax) {{ '&euro; '.number_format(CalculationEndresult::subconCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }} @endif</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          @else
+          <tr style="page-break-after: always;">
+            <td class="qty"><strong>Materiaalkosten</strong></td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
+            <td class="qty">0%</td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          @endif
+
+          @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+          <tr style="page-break-after: always;">
+            <td class="qty"><strong>Materieelkosten</strong></td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
+            <td class="qty">21%</td>
+            <td class="qty">@if($include_tax) {{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax1AmountTax($project), 2, ",",".") }} @endif</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          <tr style="page-break-after: always;">
+            <td class="qty">&nbsp;</td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
+            <td class="qty">6%</td>
+            <td class="qty">@if($include_tax) {{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }} @endif</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          @else
+          <tr style="page-break-after: always;">
+            <td class="qty"><strong>Materieelkosten</strong></td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
+            <td class="qty">0%</td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          @endif
+          <tr>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          <tr style="page-break-after: always;">
+            <td class="qty"><strong>Totaal Onderaanneming </strong></td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">@if($include_tax) <strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontractingTax($project), 2, ",",".") }}</strong> @endif</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          <tr>
+            <td class="qty">&nbsp;</td>
+          </tr>
         </tbody>
       </table>
 
@@ -264,7 +489,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
 @if (!$only_totals)
      <table border="0" cellspacing="0" cellpadding="0">
         <thead>
-          <h4 class="name">AANNEMING j</h4>
+          <h4 class="name">AANNEMING</h4>
           <tr style="page-break-after: always;">
             <th style="width: 147px" align="left" class="qty">&nbsp;</th>
             <th style="width: 60px" align="left" class="qty">Uren</th>
