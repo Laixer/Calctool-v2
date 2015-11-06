@@ -212,7 +212,7 @@ class UserController extends Controller {
 
 			$data = array('email' => $user->email, 'amount' => number_format($order->amount, 2,",","."), 'expdate' => date('j F Y', strtotime($user->expiration_date)), 'username' => $user->username);
 			Mailgun::send('mail.paid', $data, function($message) use ($data) {
-				$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Abonement verlengt');
+				$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Abonnement verlengd');
 			});
 
 			if ($_ENV['TELEGRAM_ENABLED']) {

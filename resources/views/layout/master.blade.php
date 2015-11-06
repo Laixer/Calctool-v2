@@ -9,7 +9,7 @@
 		<meta name="description" content="" />
 		<meta name="Author" content="CalcTool.nl" />
 
-		<?# -- favicon -- ?>
+		<?php // -- favicon -- ?>
 		<link rel="apple-touch-icon" sizes="57x57" href="/images/apple-touch-icon-57x57.png">
 		<link rel="apple-touch-icon" sizes="60x60" href="/images/apple-touch-icon-60x60.png">
 		<link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png">
@@ -29,13 +29,13 @@
 		<meta name="theme-color" content="#4e4e4e">
 		<meta name="csrf-token" content="{{ csrf_token() }}" />
 
-		<?# -- mobile settings -- ?>
+		<?php // -- mobile settings -- ?>
 		<meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
 
-		<?# -- WEB FONTS -- ?>
+		<?php // -- WEB FONTS -- ?>
 		<link media="all" type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800">
 
-		<?# -- CORE CSS -- ?>
+		<?php // -- CORE CSS -- ?>
 		<link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap/css/bootstrap.min.css">
 		<link media="all" type="text/css" rel="stylesheet" href="/css/font-awesome.css">
 		<link media="all" type="text/css" rel="stylesheet" href="/plugins/owl-carousel/owl.carousel.css">
@@ -44,50 +44,52 @@
 		<link media="all" type="text/css" rel="stylesheet" href="/plugins/x-editable/css/bootstrap-editable.css">
 		<link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
 
-		<?# -- SHOP CSS -- ?>
+		<?php // -- SHOP CSS -- ?>
 		<link media="all" type="text/css" rel="stylesheet" href="/css/shop.css">
 
-		<?#-- THEME CSS -- ?>
+		<?php //-- THEME CSS -- ?>
 		<link media="all" type="text/css" rel="stylesheet" href="/css/essentials.css">
 		<link media="all" type="text/css" rel="stylesheet" href="/css/layout.css">
 		<link media="all" type="text/css" rel="stylesheet" href="/css/layout-responsive.css">
 		<link media="all" type="text/css" rel="stylesheet" href="/css/darkgreen.css">
 
-		<?# -- CUSTOM CSS -- ?>
+		<?php // -- CUSTOM CSS -- ?>
 		<link media="all" type="text/css" rel="stylesheet" href="/css/custom.css">
 
-		<?# -- Morenizr -- ?>
+		<?php // -- Morenizr -- ?>
 		<script src="/plugins/modernizr.min.js"></script>
 
-		<?# -- JQuery -- ?>
+		<?php // -- JQuery -- ?>
 		<script src="/plugins/jquery-2.1.4.min.js"></script>
 		<script type="text/javascript">
-		$.ajaxSetup({headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+			$.ajaxSetup({headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+			if (localStorage._prescnt) localStorage._prescnt++; else localStorage._prescnt = 1;
+			if (!localStorage.lastPageTag) localStorage.lastPageTag = '/';
 		</script>
 	</head>
 	<body>
-		<?# -- ONLY DEV -- ?>
+		<?php // -- ONLY DEV -- ?>
 		@if(App::environment('dev'))
 		<div style="background-color:red;z-index:200;position:fixed;top:0px;left:45%;width: 100px;text-align: center;"><a href="https://bitbucket.org/calctool/calctool-v2/commits/{{ File::get('../.revision') }}" style="color: black;">{{ 'REV: ' . substr(File::get('../.revision'), 0, 7) }}</a></div>
 		@elseif(App::environment('local'))
 		<div style="background-color:green;z-index:200;position:fixed;top:0px;left:45%;width: 100px;text-align: center;">local</div>
 		@endif
 
-		<?# -- HEADER -- ?>
+		<?php // -- HEADER -- ?>
 		@section('header')
 			@include('layout.header')
 		@show
 
-		<?# -- MAIN CONTENT -- ?>
+		<?php // -- MAIN CONTENT -- ?>
 		@yield('content')
 
 
-		<?# -- FOOTER -- ?>
+		<?php // -- FOOTER -- ?>
 		@section('footer')
 			@include('layout.footer')
 		@show
 
-		<?# -- JAVASCRIPT FILES -- ?>
+		<?php // -- JAVASCRIPT FILES -- ?>
 		<script src="/plugins/jquery.easing.1.3.js"></script>
 		<script src="/plugins/jquery.cookie.js"></script>
 		<script src="/plugins/jquery.appear.js"></script>
