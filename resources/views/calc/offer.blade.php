@@ -30,7 +30,11 @@ if (!$project || !$project->isOwner()) {
 		$contact_self = Contact::where('relation_id','=',$relation_self->id);
 	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 }
+
+
 ?>
+
+
 
 @extends('layout.master')
 
@@ -216,9 +220,11 @@ if (!$project || !$project->isOwner()) {
 		$("[name='toggle-payment']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
 			if (state) {
 				$("#amount").prop('disabled', false);
+				$(".show-downpayment").show();
 				$tpayment = true;
 			} else {
 				$("#amount").prop('disabled', true);
+				$(".show-downpayment").hide();
 				$tpayment = false;
 			}
 
@@ -404,7 +410,7 @@ if (!$project || !$project->isOwner()) {
 									  	<label>Aanbetaling toepassen</label>
 									  </div>
 									</div>
-									<div class="col-md-6">
+									<div class="col-md-12">
 										<div class="form-group">
 									      <div class="checkbox">
 									        <label>
@@ -413,21 +419,25 @@ if (!$project || !$project->isOwner()) {
 										  </div>
 										</div>
 									</div>
-									<table id="tbl-term" class="table table-hover">
-									<thead>
-										<tr>
-											<th>Termijnnummer</th>
-											<th>Bedrag</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>Aanbetalingsbedrag</td>
-											<td><input {{ ($offer_last ? ($offer_last->downpayment ? '' : 'disabled') : 'disabled') }} type="text" value="{{ ($offer_last ? number_format($offer_last->downpayment_amount, 2, ",",".") : '') }}" id="amount" name="amount" class="form-control-sm-number" /></td>
-										</tr>
-									</tbody>
-									</table>
-									Indien aanbetaling wordt ingesteld wordt dit verrekend als het 1e betalingstermijn. Eventuele navolgende betalingstermijnen worden gespecficieerd op de factuurpagina.
+
+									<div class="col-md-12 show-downpayment">
+										<table id="tbl-term" class="table table-hover">
+										<thead>
+											<tr>
+												<th>Termijnnummer</th>
+												<th>Bedrag</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Aanbetalingsbedrag</td>
+												<td><input {{ ($offer_last ? ($offer_last->downpayment ? '' : 'disabled') : 'disabled') }} type="text" value="{{ ($offer_last ? number_format($offer_last->downpayment_amount, 2, ",",".") : '') }}" id="amount" name="amount" class="form-control-sm-number" /></td>
+											</tr>
+										</tbody>
+										</table>
+										<span>Indien aanbetaling wordt ingesteld wordt dit verrekend als het 1e betalingstermijn. Eventuele navolgende betalingstermijnen worden gespecficieerd op de factuurpagina.</span>
+									</div>
+									
 								</div>
 							</div>
 						</div>
