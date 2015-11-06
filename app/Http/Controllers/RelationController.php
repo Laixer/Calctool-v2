@@ -468,6 +468,11 @@ class RelationController extends Controller {
 			$contact->note = $request->input('note');
 			$contact->relation_id = $relation->id;
 			$contact->function_id = $request->input('contactfunction');
+			if ($request->input('gender') == '-1') {
+				$contact->gender = NULL;
+			} else {
+				$contact->gender = $request->input('gender');
+			}
 
 			$contact->save();
 

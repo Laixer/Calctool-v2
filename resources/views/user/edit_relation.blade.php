@@ -297,15 +297,15 @@ $(document).ready(function() {
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="iban">IBAN rekeningnummer</label>
-										<input name="iban" id="iban" type="text" value="{{ Input::old('iban') ? Input::old('iban') : $iban->iban }}" class="form-control"/>
-										<input type="hidden" name="id" id="id" value="{{ $iban->id }}"/>
+										<input name="iban" id="iban" type="text" value="{{ Input::old('iban') ? Input::old('iban') : ($iban ? $iban->iban : '') }}" class="form-control"/>
+										<input type="hidden" name="id" id="id" value="{{ $iban ? $iban->id : '' }}"/>
 									</div>
 								</div>
 
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="btw">Naam rekeninghouder</label>
-										<input name="iban_name" id="iban_name" type="text" value="{{ Input::old('iban_name') ? Input::old('iban_name') : $iban->iban_name }}" class="form-control"/>
+										<input name="iban_name" id="iban_name" type="text" value="{{ Input::old('iban_name') ? Input::old('iban_name') : ($iban ? $iban->iban_name : '') }}" class="form-control"/>
 									</div>
 								</div>
 

@@ -97,6 +97,16 @@ $contact = Contact::where('relation_id','=',$relation->id)->first();
 							</select>
 						</div>
 					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="gender" style="display:block;">Geslacht</label>
+							<select name="gender" id="gender" class="form-control pointer">
+								<option value="-1">Selecteer</option>
+								<option value="M">Man</option>
+								<option value="V">Vrouw</option>
+							</select>
+						</div>
+					</div>
 					<div class="col-md-12">
 						<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 					</div>
