@@ -179,19 +179,22 @@ class InvoiceController extends Controller {
 			return json_encode(['success' => 0]);
 		}
 
-		$invoice->amount = $request->get('amount');
-		$invoice->rest_21 = InvoiceTerm::partTax1($project, $invoice)*$request->get('amount');
-		$invoice->rest_6 = InvoiceTerm::partTax2($project, $invoice)*$request->get('amount');
-		$invoice->rest_0 = InvoiceTerm::partTax3($project, $invoice)*$request->get('amount');
+		$amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
+		$total = str_replace(',', '.', str_replace('.', '' , $request->get('totaal')));
+
+		$invoice->amount = $amount;
+		$invoice->rest_21 = InvoiceTerm::partTax1($project, $invoice)*$amount;
+		$invoice->rest_6 = InvoiceTerm::partTax2($project, $invoice)*$amount;
+		$invoice->rest_0 = InvoiceTerm::partTax3($project, $invoice)*$amount;
 		$invoice->save();
 
 		$cnt = Invoice::where('offer_id','=', $invoice->offer_id)->count();
 		if ($cnt>1) {
 			$invoice = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',true)->first();
-			$invoice->amount = $request->get('totaal');
-			$invoice->rest_21 = InvoiceTerm::partTax1($project, $invoice)*$request->get('totaal');
-			$invoice->rest_6 = InvoiceTerm::partTax2($project, $invoice)*$request->get('totaal');
-			$invoice->rest_0 = InvoiceTerm::partTax3($project, $invoice)*$request->get('totaal');
+			$invoice->amount = $total;
+			$invoice->rest_21 = InvoiceTerm::partTax1($project, $invoice)*$total;
+			$invoice->rest_6 = InvoiceTerm::partTax2($project, $invoice)*$total;
+			$invoice->rest_0 = InvoiceTerm::partTax3($project, $invoice)*$total;
 			$invoice->save();
 		}
 

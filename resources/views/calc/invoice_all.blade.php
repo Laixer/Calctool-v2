@@ -33,7 +33,6 @@ if (!$project || !$project->isOwner()) {
 <?php }else{ ?>
 
 @section('content')
-<?# -- WRAPPER -- ?>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$termid = 0;
@@ -68,7 +67,7 @@ if (!$project || !$project->isOwner()) {
 		function calcend() {
 			$total = {{ ResultEndresult::totalProject($project) }};
 			$('.adata').each(function(){
-				$total -= $(this).val();
+				$total -= $(this).val().toString().split('.').join('').replace(',', '.');;
 			});
 			$('.sdata').each(function(){
 				var $sint = parseFloat($(this).text());
