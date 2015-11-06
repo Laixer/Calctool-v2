@@ -1,13 +1,7 @@
-bootstrap/compiled.php
+/vendor
+/node_modules
+Homestead.yaml
+Homestead.json
+.env
 composer.lock
-vendor/
-.env.*.php
-.env.php
-.env*
-.DS_Store
-Thumbs.db
-TODO
-material.xml
-*.sublime-*
-.revision
-# public/user-content/
+*.sublime-workspace
