@@ -665,13 +665,13 @@ var n = this,
 		$req = false;
 		$("#search").keyup(function() {
 			$val = $(this).val();
-			if ($val.length > 3 && !$req) {
+			if ($val.length > 2 && !$req) {
 				$group = $('#group').val();
 				$req = true;
 				$.post("/material/search", {project: {{ $project->id }}, query: $val, group: $group}, function(data) {
 					if (data) {
 						$('#tbl-material tbody tr').remove();
-						$.each(data, function(i, item) {
+						$.each(JSON.parse(data), function(i, item) {
 							$('#tbl-material tbody').append('<tr><td><a data-name="'+item.description+'" data-unit="'+item.punit+'" data-price="'+item.pricenum+'" href="javascript:void(0);">'+item.description+'</a></td><td>'+item.unit+'</td><td>'+item.price+'</td><td>'+item.tprice+'</td></tr>');
 						});
 						$('#tbl-material tbody a').on("click", onmaterialclick);
