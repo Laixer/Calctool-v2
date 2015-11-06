@@ -261,10 +261,10 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
 
     @else
 
-
+@if (!$only_totals)
      <table border="0" cellspacing="0" cellpadding="0">
         <thead>
-          <h4 class="name">AANNEMING</h4>
+          <h4 class="name">AANNEMING j</h4>
           <tr style="page-break-after: always;">
             <th style="width: 147px" align="left" class="qty">&nbsp;</th>
             <th style="width: 60px" align="left" class="qty">Uren</th>
@@ -540,8 +540,101 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
           @endif
         </tbody>
       </table>
+@else
 
+      <h1 class="name">Totalen offerte</h1>
+      <table border="0" cellspacing="0" cellpadding="0">
+        <thead>
+          <tr style="page-break-after: always;">
+            <th style="width: 207px" align="left" class="qty">&nbsp;</th>
+            <th style="width: 119px" align="left" class="qty">Bedrag @if($include_tax) (excl. BTW) @endif</th>
+            <th style="width: 70px" align="left" class="qty">&nbsp;</th>
+            <th style="width: 80px" align="left" class="qty">@if($include_tax) BTW bedrag @endif</th>
+            <th style="width: 119px" align="left" class="qty">@if($include_tax) Bedrag (incl. BTW) @endif</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="page-break-after: always;">
+            <td class="qty">Calculatief te offreren (excl. BTW)</td>
+            <td class="qty"><class="pull-right">{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          @if($include_tax)
+          @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+          <tr style="page-break-after: always;">
+            <td class="qty">BTW bedrag 21%</td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax1($project)+CalculationEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          <tr style="page-break-after: always;">
+            <td class="qty">BTW bedrag 6%</td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax2($project)+CalculationEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          @endif
+         <!--
+          <tr style="page-break-after: always;">
+            <td class="qty"><strong>Te offreren BTW bedrag</strong></td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProjectTax($project), 2, ",",".") }}</strong></td>
+            <td class="qty">&nbsp;</td>
+          </tr>
+          -->
+          <tr style="page-break-after: always;">
+            <td class="qty"><strong>Calculatief te offreren (Incl. BTW)</strong></td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty">&nbsp;</td>
+            <td class="qty"><strong class="pull-right">{{ '&euro; '.number_format(CalculationEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
+          </tr>
+          @endif
+        </tbody>
+      </table>
 
+       <div class="closingtext">{{ ($offer_last ? $offer_last->closure : '') }}</div>
+
+      <h1 class="name">Bepalingen</h1>
+      <div class="statements">
+      <li>
+        @if ($offer_last->invoice_quantity > 1)
+        Indien opdracht gegund wordt, ontvangt u {{ $offer_last->invoice_quantity }} termijnen.
+        @else
+        Indien opdracht gegund wordt, ontvangt u één eindfactuur.
+        @endif</li>
+        <li>
+        @if (DeliverTime::find($offer_last->deliver_id)->delivertime_name == "per direct" || DeliverTime::find($offer_last->deliver_id)->delivertime_name == "in overleg")
+          Wij kunnen de werkzaamheden
+          {{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
+          starten na uw opdrachtbevestiging.
+        @else
+          Wij kunnen de werkzaamheden starten binnen
+          {{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
+          na uw opdrachtbevestiging.
+        @endif</li>
+        <li>Deze offerte is geldig tot {{ Valid::find($offer_last->valid_id)->valid_name }} na dagtekening.</li>
+        @if($offer_last->extracondition)
+        <li>{{ $offer_last->extracondition }}</li>
+        @endif
+      </div>
+      <div class="signing">Met vriendelijke groet,</div>
+      <br>
+      <div class="signing">{{ Contact::find($offer_last->from_contact_id)->firstname ." ". Contact::find($offer_last->from_contact_id)->lastname }}</div>
+    </main>
+
+    <footer>
+      Deze offerte is op de computer gegenereerd en is geldig zonder handtekening.
+    </footer>
+ 
+@endif
+
+@if (!$only_totals)
       <!--PAGE HEADER SECOND START-->
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
@@ -589,6 +682,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
     <footer>
       Deze offerte is op de computer gegenereerd en is geldig zonder handtekening.
     </footer>
+ @endif
  @endif
 
     @if ($display_worktotals)
