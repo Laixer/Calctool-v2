@@ -1082,12 +1082,6 @@ if (!$project || !$project->isOwner()) {
 			<!--CONTENT TOTAL END-->
 
 			<!--CLOSER START-->
-			@if ($offer_last && $offer_last->offer_finish)
-			{{ $offer_last->closure }}
-			@else
-			<textarea name="closure" id="closure" rows="5" class="form-control">{{ ($offer_last ? $offer_last->closure : Auth::user()->pref_closure_offer) }}</textarea>
-			@endif
-			<br>
 			<br>
 			<div class="row">
 				<div class="col-sm-12">
@@ -1162,7 +1156,12 @@ if (!$project || !$project->isOwner()) {
 				@else
 					<textarea name="extracondition" id="extracondition" rows="3" class="form-control">{{ ($offer_last ? $offer_last->extracondition : Auth::user()->pref_closure_invoice) }}</textarea>
 				@endif
-
+				<br>
+				@if ($offer_last && $offer_last->offer_finish)
+				{{ $offer_last->closure }}
+				@else
+				<textarea name="closure" id="closure" rows="5" class="form-control">{{ ($offer_last ? $offer_last->closure : Auth::user()->pref_closure_offer) }}</textarea>
+				@endif
 
 
 				<br>

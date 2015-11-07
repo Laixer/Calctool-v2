@@ -171,7 +171,8 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
 
            <table border="0" cellspacing="0" cellpadding="0">
         <thead>
-          <h4 class="name">AANNEMING</h4>
+          <h4 class="name">Aanneming</h4>
+          <hr>
           <tr style="page-break-after: always;">
             <th style="width: 147px" align="left" class="qty">&nbsp;</th>
             <th style="width: 60px" align="left" class="qty">Uren</th>
@@ -281,7 +282,8 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
      <br>
      <table border="0" cellspacing="0" cellpadding="0">
         <thead>
-          <h4 class="name">ONDERAANNEMING</h4>
+          <h4 class="name">Onderaanneming</h4>
+          <hr>
           <tr style="page-break-after: always;">
             <th style="width: 147px" align="left" class="qty">&nbsp;</th>
             <th style="width: 60px" align="left" class="qty">Uren</th>
@@ -449,9 +451,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
           @endif
         </tbody>
       </table>
-
-      <div class="closingtext">{{ ($offer_last ? $offer_last->closure : '') }}</div>
-
+      <br>
       <h1 class="name">Bepalingen</h1>
       <div class="statements">
         <li>
@@ -476,6 +476,9 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
         <li>{{ $offer_last->extracondition }}</li>
         @endif
       </div>
+     
+      <div class="closingtext">{{ ($offer_last ? $offer_last->closure : '') }}</div>
+
       <div class="signing">Met vriendelijke groet,</div>
       <br>
       <div class="signing">{{ Contact::find($offer_last->from_contact_id)->firstname ." ". Contact::find($offer_last->from_contact_id)->lastname }}</div>
@@ -490,7 +493,8 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
 @if (!$only_totals)
      <table border="0" cellspacing="0" cellpadding="0">
         <thead>
-          <h4 class="name">AANNEMING</h4>
+          <h4 class="name">Aanneming</h4>
+          <hr>
           <tr style="page-break-after: always;">
             <th style="width: 147px" align="left" class="qty">&nbsp;</th>
             <th style="width: 60px" align="left" class="qty">Uren</th>
@@ -600,7 +604,8 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
      <br>
      <table border="0" cellspacing="0" cellpadding="0">
         <thead>
-          <h4 class="name">ONDERAANNEMING</h4>
+          <h4 class="name">Onderaanneming</h4>
+          <hr>
           <tr style="page-break-after: always;">
             <th style="width: 147px" align="left" class="qty">&nbsp;</th>
             <th style="width: 60px" align="left" class="qty">Uren</th>
@@ -1029,7 +1034,8 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
       <!--PAGE HEADER SECOND END-->
 
     <h1 class="name">Totalen project</h1>
-    <h4 class="name">AANNEMING</h4>
+    <h4 class="name">Aanneming</h4>
+    <hr>
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
@@ -1077,7 +1083,8 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
       </tbody>
     </table>
 
-    <h4 class="name">ONDERAANNEMING</h4>
+    <h4 class="name">Onderaanneming</h4>
+    <hr>
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
@@ -1210,7 +1217,8 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
       <!--PAGE HEADER SECOND END-->
 
     <h1 class="name">Omschrijving werkzaamheden</h1>
-    <h4 class="name">AANNEMING</h4>
+    <h4 class="name">Aanneming</h4>
+    <hr>
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr>
@@ -1231,7 +1239,8 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
         @endforeach
       </tbody>
     </table>
-     <h4 class="name">ONDERAANNEMING</h4>
+     <h4 class="name">Onderaanneming</h4>
+     <hr>
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr>
