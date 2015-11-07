@@ -242,9 +242,9 @@ if (!$project || !$project->isOwner()) {
 			var q = $('#terms').val();
 			if($.isNumeric(q)&&(q>1)&&(q<=50)) {
 				if($('input[name="toggle-payment"]').prop('checked'))
-					$('#condition-text').html('Indien opdracht wordt verstrekt, wordt gefactureerd in '+q+' termijnen, waarvan de eerste termijn een aanbetaling betreft a &euro; ' +$('#amount').val()+'.');
+					$('#condition-text').html('Indien opdracht wordt verstrekt, wordt gefactureerd in '+q+' termijnen, waarvan de eerste termijn een aanbetaling betreft a &euro; en de laatste termijn de eindfactuur.' +$('#amount').val()+'.');
 				else
-					$('#condition-text').html('Indien opdracht wordt verstrekt, wordt gefactureerd in '+q+' termijnen.');
+					$('#condition-text').html('Indien opdracht wordt verstrekt, wordt gefactureerd in '+q+' termijnen waarvan de laatste de eindfactuur. ');
 			} else {
 				$('#condition-text').text('Indien opdracht gegund wordt, ontvangt u één eindfactuur.');
 			}
@@ -495,7 +495,7 @@ if (!$project || !$project->isOwner()) {
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="display-worktotals" type="checkbox"> Kostenoverizicht per werkzaamheid specificeren
+								          <input name="display-worktotals" type="checkbox"> Totaalkosten per werkzaamheid specificeren
 								        </label>
 								      </div>
 								    </div>
@@ -1094,9 +1094,12 @@ if (!$project || !$project->isOwner()) {
 				<h4>Bepalingen</h4>
 				<ul >
 					<li>
-						<span id="condition-text">Indien opdracht gegund wordt, ontvangt u één eindfactuur.</span>
-					</li>
-					<li style="line-height:27px">
+				    @if ($offer_last->invoice_quantity > 1)
+				    Indien opdracht gegund wordt, ontvangt u {{ $offer_last->invoice_quantity }} termijnen waarvan de laatste een eindfactuur.
+				    @else
+				    Indien opdracht gegund wordt, ontvangt u één eindfactuur.
+				    @endif
+					<li>
 					@if($offer_last)
 						@if ($offer_last && $offer_last->offer_finish)
 							@if (DeliverTime::find($offer_last->deliver_id)->delivertime_name == "per direct" || DeliverTime::find($offer_last->deliver_id)->delivertime_name == "in overleg")

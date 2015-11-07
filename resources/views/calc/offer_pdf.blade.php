@@ -455,11 +455,12 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
       <h1 class="name">Bepalingen</h1>
       <div class="statements">
         <li>
-        @if ($offer_last->invoice_quantity > 1)
-        Indien opdracht gegund wordt, ontvangt u {{ $offer_last->invoice_quantity }} termijnen.
-        @else
-        Indien opdracht gegund wordt, ontvangt u één eindfactuur.
-        @endif</li>
+            @if ($offer_last->invoice_quantity > 1)
+            Indien opdracht gegund wordt, ontvangt u {{ $offer_last->invoice_quantity }} termijnen waarvan de laatste een eindfactuur.
+            @else
+            Indien opdracht gegund wordt, ontvangt u één eindfactuur.
+            @endif
+        </li>
         <li>
          @if (DeliverTime::find($offer_last->deliver_id)->delivertime_name == "per direct" || DeliverTime::find($offer_last->deliver_id)->delivertime_name == "in overleg")
           Wij kunnen de werkzaamheden
@@ -883,7 +884,8 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
         Indien opdracht gegund wordt, ontvangt u {{ $offer_last->invoice_quantity }} termijnen.
         @else
         Indien opdracht gegund wordt, ontvangt u één eindfactuur.
-        @endif</li>
+        @endif
+        </li>
         <li>
         @if (DeliverTime::find($offer_last->deliver_id)->delivertime_name == "per direct" || DeliverTime::find($offer_last->deliver_id)->delivertime_name == "in overleg")
           Wij kunnen de werkzaamheden
