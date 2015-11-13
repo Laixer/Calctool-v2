@@ -67,7 +67,7 @@ $relation = Relation::find($project->client_id);
 					</tr>
 				</thead>
 				<tbody>
-					@foreach(Offer::where('project_id', '=', $project->id)->orderBy('created_at')->get() as $offer)
+					@foreach(Offer::where('project_id', '=', $project->id)->orderBy('created_at','desc')->get() as $offer)
 					<tr>
 						<td class="col-md-2"><a href="/offer/project-{{ $project->id }}/offer-{{ $offer->id }}">{{ $offer->offer_code }}</a></td>
 						<td class="col-md-2"><?php echo date('d-m-Y', strtotime($offer->offer_make)); ?></td>
