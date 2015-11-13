@@ -60,8 +60,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
       <div id="details" class="clearfix">
         <div id="client">
           <div>{{ $relation->company_name }}</div>
-          <div>T.a.v.
-              {{ Contact::find($offer_last->to_contact_id)->firstname ." ". Contact::find($offer_last->to_contact_id)->lastname }}</div>
+          <div>T.a.v. {{ Contact::find($offer_last->to_contact_id)->getFormalName() }}</div>
           <div>{{ $relation->address_street . ' ' . $relation->address_number }}</div>
           <div>{{ $relation->address_postal . ', ' . $relation->address_city }}</div>
         </div>
@@ -72,7 +71,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
         </div>
       </div>
 
-      <div class="openingtext">Geachte {{ Contact::find($offer_last->to_contact_id)->firstname ." ". Contact::find($offer_last->to_contact_id)->lastname }},</div>
+      <div class="openingtext">Geachte {{ Contact::find($offer_last->to_contact_id)->getFormalName() }},</div>
       <div class="openingtext">{{ ($offer_last ? $offer_last->description : '') }}</div>
 
 @if (!$only_totals)

@@ -19,4 +19,15 @@ class Contact extends Model {
 		return $this->hasOne('Relation');
 	}
 
+	public function getFormalName() {
+		if ($this->gender) {
+			if ($this->gender == 'M')
+				return 'heer ' . $this->lastname;
+			else
+				return 'mevrouw' . $this->lastname;
+		} else {
+			return $this->firstname . " " . $this->lastname;
+		}
+	}
+
 }

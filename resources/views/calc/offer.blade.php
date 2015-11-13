@@ -1500,7 +1500,7 @@ if (!$project || !$project->isOwner()) {
 						</tr>
 						@endforeach
 						@endforeach
-					</tbody>INVOICE
+					</tbody>
 				</table>
 			</div>
 			<!-- DESCRIPTION TOTAL END -->
