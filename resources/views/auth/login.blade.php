@@ -4,7 +4,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	$("[name='rememberme']").bootstrapSwitch();
+	$("[name='rememberme']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 });
 </script>
 

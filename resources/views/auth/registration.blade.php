@@ -9,7 +9,7 @@ $(document).ready(function() {
 			return false;
 		}
 	});
-	$("[name='tos']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+	$("[name='tos']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		if (state) {
 			$('#btn-submit').removeClass('disabled');
 		} else {
