@@ -24,7 +24,7 @@ class Contact extends Model {
 			if ($this->gender == 'M')
 				return 'heer ' . $this->lastname;
 			else
-				return 'mevrouw' . $this->lastname;
+				return 'mevrouw ' . $this->lastname;
 		} else {
 			return $this->firstname . " " . $this->lastname;
 		}

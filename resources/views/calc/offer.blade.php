@@ -561,11 +561,11 @@ if (!$project || !$project->isOwner()) {
 					<li>{{ $relation->company_name }}</li>
 					<li>T.a.v.
 						@if ($offer_last && $offer_last->offer_finish)
-						{{ Contact::find($offer_last->to_contact_id)->firstname . ' ' . Contact::find($offer_last->to_contact_id)->lastname }}
+						{{ Contact::find($offer_last->to_contact_id)->getFormalName() }}
 						@else
 					<select name="to_contact" id="to_contact">
 						@foreach (Contact::where('relation_id','=',$relation->id)->get() as $contact)
-						<option {{ $offer_last ? ($offer_last->to_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
+						<option {{ $offer_last ? ($offer_last->to_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ Contact::find($contact->id)->getFormalName() }}</option>
 						@endforeach
 					</select>
 					@endif
@@ -593,7 +593,7 @@ if (!$project || !$project->isOwner()) {
 			<div class="col-sm-6">
 			Geachte
 		@if ($offer_last && $offer_last->offer_finish)
-		{{ Contact::find($offer_last->to_contact_id)->firstname . ' ' . Contact::find($offer_last->to_contact_id)->lastname }}
+		{{ Contact::find($offer_last->to_contact_id)->getFormalName() }}
 		@else
 		<span id="adressing"></span>
 		@endif
