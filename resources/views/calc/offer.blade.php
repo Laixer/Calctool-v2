@@ -242,9 +242,9 @@ if (!$project || !$project->isOwner()) {
 			var q = $('#terms').val();
 			if($.isNumeric(q)&&(q>1)&&(q<=50)) {
 				if($('input[name="toggle-payment"]').prop('checked'))
-					$('#condition-text').html('Indien opdracht wordt verstrekt, wordt gefactureerd in '+q+' termijnen, waarvan de eerste termijn een aanbetaling betreft á &euro; '+$('#amount').val()+'.');
+					$('#condition-text').html('Indien opdracht gegund wordt, ontvangt u '+q+' termijnen waarvan de eerste termijn een aanbetaling betreft á &euro; '+$('#amount').val()+'.');
 				else
-					$('#condition-text').html('Indien opdracht wordt verstrekt, wordt gefactureerd in '+q+' termijnen waarvan de laatste de eindfactuur.');
+					$('#condition-text').html('Indien opdracht gegund wordt, ontvangt u '+q+' termijnen waarvan de laatste een eindfactuur.');
 			} else {
 				$('#condition-text').text('Indien opdracht gegund wordt, ontvangt u één eindfactuur.');
 			}
@@ -1090,7 +1090,7 @@ if (!$project || !$project->isOwner()) {
 					<li>
 				    @if ($offer_last && $offer_last->invoice_quantity > 1)
 				    	@if ($offer_last && $offer_last->downpayment)
-				    	<div id="condition-text">Indien opdracht gegund wordt, ontvangt u {{ $offer_last->invoice_quantity }} termijnen waarvan de eerste termijn een aanbetaling betreft á &euro; {{ number_format($offer_last->downpayment, 2, ",",".") }}.</div>
+				    	<div id="condition-text">Indien opdracht gegund wordt, ontvangt u {{ $offer_last->invoice_quantity }} termijnen waarvan de eerste termijn een aanbetaling betreft á &euro; {{ number_format($offer_last->downpayment_amount, 2, ",",".") }}.</div>
 				    	@else
 				    	<div id="condition-text">Indien opdracht gegund wordt, ontvangt u {{ $offer_last->invoice_quantity }} termijnen waarvan de laatste een eindfactuur.</div>
 				    	@endif

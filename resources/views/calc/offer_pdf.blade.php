@@ -457,7 +457,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
         <li>
             @if ($offer_last && $offer_last->invoice_quantity > 1)
               @if ($offer_last && $offer_last->downpayment)
-              Indien opdracht gegund wordt, ontvangt u {{ $offer_last->invoice_quantity }} termijnen waarvan de eerste termijn een aanbetaling betreft á &euro; {{ number_format($offer_last->downpayment, 2, ",",".") }}.
+              Indien opdracht gegund wordt, ontvangt u {{ $offer_last->invoice_quantity }} termijnen waarvan de eerste termijn een aanbetaling betreft á &euro; {{ number_format($offer_last->downpayment_amount, 2, ",",".") }}.
               @else
               Indien opdracht gegund wordt, ontvangt u {{ $offer_last->invoice_quantity }} termijnen waarvan de laatste een eindfactuur.
               @endif
