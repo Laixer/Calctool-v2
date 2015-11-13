@@ -86,6 +86,8 @@ class CreateRelation extends Migration {
 			$table->string('email', 80)->nullable();
 			$table->text('note')->nullable();
 			$table->string('website', 180)->nullable();
+			$table->string('iban', 25);
+			$table->string('iban_name');
 			$table->nullableTimestamps();
 			$table->integer('logo_id')->nullable()->unsigned();
 			$table->foreign('logo_id')->references('id')->on('resource')->onUpdate('cascade')->onDelete('set null');
