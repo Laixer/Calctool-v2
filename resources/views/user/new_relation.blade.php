@@ -1,7 +1,6 @@
 @extends('layout.master')
 
 @section('content')
-<?# -- WRAPPER -- ?>
 
 <?php
 function getNewDebtorCode() {
@@ -58,6 +57,12 @@ $(document).ready(function() {
             $(this).removeClass("error-input");
         }
     });
+	$('#relationkind').change(function(e) {
+		if ($(this).val() == 2)
+			$('.company').hide('slow');
+		else
+			$('.company').show('slow');
+	});
 
 });
 </script>
@@ -233,7 +238,7 @@ $(document).ready(function() {
 					</div>
 				</div>
 
-				<h4>Contactgegevens</h4>
+				<h4>Contactpersoon</h4>
 				<div class="row">
 
 					<div class="col-md-2">
@@ -294,7 +299,7 @@ $(document).ready(function() {
 
 				</div>
 
-				<h4>Betalingsgegevens</h4>
+				<!--<h4>Betalingsgegevens</h4>
 				<div class="row">
 
 					<div class="col-md-3">
@@ -311,7 +316,7 @@ $(document).ready(function() {
 						</div>
 					</div>
 
-				</div>
+				</div>-->
 
 				<h4>Opmerkingen</h4>
 				<div class="row">
@@ -334,18 +339,4 @@ $(document).ready(function() {
 	</section>
 
 </div>
-<?#-- /WRAPPER --?>
-<script type="text/javascript">
-$(document).ready(function() {
-	<?php $response = Calctool\Models\RelationKind::where('id','=',Input::old('relationkind'))->first(); ?>
-	if('{{ ($response ? $response->kind_name : 'zakelijk') }}'=='particulier'){
-		$('.company').hide();
-		$('#relationkind option[value="{{ Input::old('relationkind') }}"]').attr("selected",true);
-	}
-	$('#relationkind').change(function() {
-		$('.company').toggle('slow');
-		console.log('check');
-	});
-});
-</script>
 @stop

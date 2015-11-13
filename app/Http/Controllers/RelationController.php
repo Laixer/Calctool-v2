@@ -394,8 +394,14 @@ class RelationController extends Controller {
 
 			/*Betalingsgevens*/
 			$iban = new \Calctool\Models\Iban;
-			$iban->iban = $request->input('iban');
-			$iban->iban_name = $request->input('iban_name');
+			if ($request->input('iban'))
+				$iban->iban = $request->input('iban');
+			else
+				$iban->iban = '';
+			if ($request->input('iban_name'))
+				$iban->iban_name = $request->input('iban_name');
+			else
+				$iban->iban_name = '';
 			$iban->relation_id = $relation->id;
 
 			$iban->save();

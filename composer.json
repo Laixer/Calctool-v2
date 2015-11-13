@@ -13,7 +13,6 @@
 		"barryvdh/laravel-snappy": "0.2.x",
 		"mollie/mollie-api-php": "1.2.x",
 		"bogardo/mailgun": "4.0.*",
-		"lucadegasperi/oauth2-server-laravel": "5.0.x",
 		"longman/telegram-bot": "*",
 		"jeroendesloovere/vcard": "1.2.*"
 	},

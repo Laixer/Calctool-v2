@@ -139,7 +139,6 @@ $(document).ready(function() {
 						</li>
 					</ul>
 
-					<?# -- tabs content -- ?>
 					<div class="tab-content">
 						<div id="company" class="tab-pane active">
 
@@ -289,7 +288,7 @@ $(document).ready(function() {
 
 						</div>
 						<div id="payment" class="tab-pane">
-							<h4>Betalingsgegevens</h4>
+							<h4>Betalingsgegevens {{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</h4>
 							<form method="POST" action="/relation/iban/update" accept-charset="UTF-8">
                             {!! csrf_field() !!}
 							<div class="row">
@@ -318,7 +317,7 @@ $(document).ready(function() {
 							</form>
 						</div>
 						<div id="contact" class="tab-pane">
-							<h4>Contactpersonen</h4>
+							<h4>Contactpersonen {{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</h4>
 							<table class="table table-striped">
 								<?# -- table head -- ?>
 								<thead>
