@@ -97,6 +97,7 @@ class OfferController extends Controller {
 
 			$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.OfferController::getOfferCode($request->input('project_id')).'-offer.pdf';
 			$pdf = PDF::loadView('calc.offer_pdf');
+			$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
 			$pdf->save('user-content/'.$newname);
 
 			$resource = new Resource;
