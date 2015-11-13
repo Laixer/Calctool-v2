@@ -29,6 +29,12 @@ class CreateRelation extends Migration {
 			$table->string('type_name', 50)->unique();
 		});
 
+		Schema::create('wholesale_type', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('type_name', 50)->unique();
+		});
+
 		Schema::create('relation_kind', function(Blueprint $table)
 		{
 			$table->increments('id');
@@ -62,6 +68,31 @@ class CreateRelation extends Migration {
 			$table->foreign('type_id')->references('id')->on('relation_type')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('kind_id')->unsigned();
 			$table->foreign('kind_id')->references('id')->on('relation_kind')->onUpdate('cascade')->onDelete('restrict');
+			$table->integer('province_id')->unsigned();
+			$table->foreign('province_id')->references('id')->on('province')->onUpdate('cascade')->onDelete('restrict');
+			$table->integer('country_id')->unsigned();
+			$table->foreign('country_id')->references('id')->on('country')->onUpdate('cascade')->onDelete('restrict');
+		});
+
+		Schema::create('wholesale', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('company_name', 50)->nullable();
+			$table->string('address_street', 50);
+			$table->string('address_number', 5);
+			$table->string('address_postal', 6);
+			$table->string('address_city', 35);
+			$table->string('phone', 12)->nullable();
+			$table->string('email', 80)->nullable();
+			$table->text('note')->nullable();
+			$table->string('website', 180)->nullable();
+			$table->nullableTimestamps();
+			$table->integer('logo_id')->nullable()->unsigned();
+			$table->foreign('logo_id')->references('id')->on('resource')->onUpdate('cascade')->onDelete('set null');
+			$table->integer('user_id')->nullable()->unsigned();
+			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
+			$table->integer('type_id')->unsigned()->nullable();
+			$table->foreign('type_id')->references('id')->on('wholesale_type')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('province_id')->unsigned();
 			$table->foreign('province_id')->references('id')->on('province')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('country_id')->unsigned();
@@ -136,6 +167,11 @@ class CreateRelation extends Migration {
 			Schema::dropIfExists('contact');
 		});
 
+		Schema::table('wholesale', function(Blueprint $table)
+		{
+			Schema::dropIfExists('wholesale');
+		});
+
 		Schema::table('relation', function(Blueprint $table)
 		{
 			Schema::dropIfExists('relation');
@@ -144,6 +180,11 @@ class CreateRelation extends Migration {
 		Schema::table('relation_kind', function(Blueprint $table)
 		{
 			Schema::dropIfExists('relation_kind');
+		});
+
+		Schema::table('wholesale_type', function(Blueprint $table)
+		{
+			Schema::dropIfExists('wholesale_type');
 		});
 
 		Schema::table('relation_type', function(Blueprint $table)

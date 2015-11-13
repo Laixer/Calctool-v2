@@ -1088,7 +1088,7 @@ if (!$project || !$project->isOwner()) {
 				<h4>Bepalingen</h4>
 				<ul >
 					<li>
-				    @if ($offer_last->invoice_quantity > 1)
+				    @if ($offer_last && $offer_last->invoice_quantity > 1)
 				    Indien opdracht gegund wordt, ontvangt u {{ $offer_last->invoice_quantity }} termijnen waarvan de laatste een eindfactuur.
 				    @else
 				    Indien opdracht gegund wordt, ontvangt u één eindfactuur.
