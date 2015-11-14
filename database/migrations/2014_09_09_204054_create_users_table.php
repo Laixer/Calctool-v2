@@ -95,15 +95,6 @@ class CreateUsersTable extends Migration {
 			$table->foreign('user_type')->references('id')->on('user_type')->onUpdate('cascade')->onDelete('restrict');
 		});
 
-		Schema::create('iban', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->string('iban', 25);
-			$table->string('iban_name');
-			$table->integer('user_id')->unsigned()->nullable();
-			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
-		});
-
 		Schema::create('project_type', function(Blueprint $table)
 		{
 			$table->increments('id');
@@ -239,10 +230,6 @@ class CreateUsersTable extends Migration {
 		Schema::table('project_type', function(Blueprint $table)
 		{
 			Schema::dropIfExists('project_type');
-		});
-		Schema::table('iban', function(Blueprint $table)
-		{
-			Schema::dropIfExists('iban');
 		});
 		Schema::table('user_account', function(Blueprint $table)
 		{

@@ -16,10 +16,6 @@ if (Input::get('nstep') == 'intro')
 	$next_step = 'intro_'.Auth::id();
 
 $relation = Relation::find(Auth::user()->self_id);
-if ($relation)
-	$iban = Iban::where('relation_id','=',$relation->id)->first();
-else
-	$iban = null;
 ?>
 
 @section('content')

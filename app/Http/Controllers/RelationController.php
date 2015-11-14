@@ -7,7 +7,6 @@ use JeroenDesloovere\VCard\VCard;
 
 use \Calctool\Models\Relation;
 use \Calctool\Models\RelationKind;
-use \Calctool\Models\Iban;
 use \Calctool\Models\Contact;
 use \Calctool\Models\ContactFunction;
 use \Calctool\Models\Resource;
@@ -105,69 +104,51 @@ class RelationController extends Controller {
 
 	public function doUpdate(Request $request)
 	{
-		$rules = array(
-			/* General */
+		$this->validate($request, [
 			'id' => array('required','integer'),
 			'debtor' => array('required','alpha_num','max:10'),
-			/* Company */
 			'company_type' => array('required_if:relationkind,zakelijk','numeric'),
 			'company_name' => array('required_if:relationkind,zakelijk','max:50'),
-			//'kvk' => array('numeric','min:8'),
-			//'btw' => array('alpha_num','min:14'),
-			//'telephone_comp' => array('alpha_num','max:12'),
 			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
-			//'website' => array('url','max:180'),
-			/* Adress */
 			'street' => array('required','alpha','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
 			'city' => array('required','alpha_num','max:35'),
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric')
-		);
+		]);
 
-		$this->validate($request, $rules);
-		/*$validator = Validator::make($request->all(), $rules);
+		/* General */
+		$relation = \Calctool\Models\Relation::find($request->input('id'));
+		if (!$relation || !$relation->isOwner()) {
+			return back()->withInput($request->all());
+		}
+		$relation->note = $request->input('note');
+		$relation->debtor_code = $request->input('debtor');
 
-		if ($validator->fails()) {
-			$messages = $validator->messages();
+		/* Company */
+		$relation_kind = \Calctool\Models\RelationKind::where('id','=',$relation->kind_id)->firstOrFail();
+		if ($relation_kind->kind_name == "zakelijk") {
+			$relation->company_name = $request->input('company_name');
+			$relation->type_id = $request->input('company_type');
+			$relation->kvk = $request->input('kvk');
+			$relation->btw = $request->input('btw');
+			$relation->phone = $request->input('telephone_comp');
+			$relation->email = $request->input('email_comp');
+			$relation->website = $request->input('website');
+		}
 
-			// redirect our user back to the form with the errors from the validator
-			return Redirect::back()->withErrors($validator)->withInput($request->all());
-		} else {*/
+		/* Adress */
+		$relation->address_street = $request->input('street');
+		$relation->address_number = $request->input('address_number');
+		$relation->address_postal = $request->input('zipcode');
+		$relation->address_city = $request->input('city');
+		$relation->province_id = $request->input('province');
+		$relation->country_id = $request->input('country');
 
-			/* General */
-			$relation = \Calctool\Models\Relation::find($request->input('id'));
-			if (!$relation || !$relation->isOwner()) {
-				return back()->withInput($request->all());
-			}
-			$relation->note = $request->input('note');
-			$relation->debtor_code = $request->input('debtor');
+		$relation->save();
 
-			/* Company */
-			$relation_kind = \Calctool\Models\RelationKind::where('id','=',$relation->kind_id)->firstOrFail();
-			if ($relation_kind->kind_name == "zakelijk") {
-				$relation->company_name = $request->input('company_name');
-				$relation->type_id = $request->input('company_type');
-				$relation->kvk = $request->input('kvk');
-				$relation->btw = $request->input('btw');
-				$relation->phone = $request->input('telephone_comp');
-				$relation->email = $request->input('email_comp');
-				$relation->website = $request->input('website');
-			}
-
-			/* Adress */
-			$relation->address_street = $request->input('street');
-			$relation->address_number = $request->input('address_number');
-			$relation->address_postal = $request->input('zipcode');
-			$relation->address_city = $request->input('city');
-			$relation->province_id = $request->input('province');
-			$relation->country_id = $request->input('country');
-
-			$relation->save();
-
-			return back()->with('success', 1);
-		//}
+		return back()->with('success', 1);
 	}
 
 	public function doUpdateContact(Request $request)
@@ -179,70 +160,50 @@ class RelationController extends Controller {
 			'email' => array('required','email','max:80'),
 		]);
 
-			$contact = \Calctool\Models\Contact::find($request->input('id'));
-			if (!$contact) {
-				return back()->withInput($request->all());
-			}
-			$relation = \Calctool\Models\Relation::find($contact->relation_id);
-			if (!$relation || !$relation->isOwner()) {
-				return back()->withInput($request->all());
-			}
-
-			if ($request->input('contact_firstname')) {
-				$contact->firstname = $request->input('contact_firstname');
-			}
-			$contact->lastname = $request->input('contact_name');
-			$contact->mobile = $request->input('mobile');
-			$contact->phone = $request->input('telephone');
-			$contact->email = $request->input('email');
-			$contact->note = $request->input('note');
-			if ($request->input('contactfunction')) {
-				$contact->function_id = $request->input('contactfunction');
-			}
-			if ($request->input('gender') == '-1') {
-				$contact->gender = NULL;
-			} else {
-				$contact->gender = $request->input('gender');
-			}
-
-			$contact->save();
-
-			return back()->with('success', 1);
-	}
-
-	public function doUpdateIban(Request $request)
-	{
-		$iban = \Calctool\Models\Iban::find($request->input('id'));
-		if (!$iban)
+		$contact = \Calctool\Models\Contact::find($request->input('id'));
+		if (!$contact) {
 			return back()->withInput($request->all());
-		$relation = \Calctool\Models\Relation::find($iban->relation_id);
+		}
+		$relation = \Calctool\Models\Relation::find($contact->relation_id);
 		if (!$relation || !$relation->isOwner()) {
 			return back()->withInput($request->all());
 		}
 
-		$iban->iban = $request->input('iban');
-		$iban->iban_name = $request->input('iban_name');
+		if ($request->input('contact_firstname')) {
+			$contact->firstname = $request->input('contact_firstname');
+		}
+		$contact->lastname = $request->input('contact_name');
+		$contact->mobile = $request->input('mobile');
+		$contact->phone = $request->input('telephone');
+		$contact->email = $request->input('email');
+		$contact->note = $request->input('note');
+		if ($request->input('contactfunction')) {
+			$contact->function_id = $request->input('contactfunction');
+		}
+		if ($request->input('gender') == '-1') {
+			$contact->gender = NULL;
+		} else {
+			$contact->gender = $request->input('gender');
+		}
 
-		$iban->save();
+		$contact->save();
 
 		return back()->with('success', 1);
 	}
 
-	public function doNewIban(Request $request)
+	public function doUpdateIban(Request $request)
 	{
-			$relation = Relation::find($request->input('id'));
-			if (!$relation || !$relation->isOwner()) {
-				return Redirect::back()->withInput($request->all());
-			}
+		$relation = \Calctool\Models\Relation::find($request->input('id'));
+		if (!$relation || !$relation->isOwner()) {
+			return back()->withInput($request->all());
+		}
 
-			$iban = new Iban;
-			$iban->iban = $request->input('iban');
-			$iban->iban_name = $request->input('iban_name');
-			$iban->relation_id = $relation->id;
+		$relation->iban = $request->input('iban');
+		$relation->iban_name = $request->input('iban_name');
 
-			$iban->save();
+		$relation->save();
 
-			return back()->with('success', 1);
+		return back()->with('success', 1);
 	}
 
 	public function doNewMyCompany(Request $request)
@@ -265,37 +226,37 @@ class RelationController extends Controller {
 			'country' => array('required','numeric'),
 		]);
 
-			/* General */
-			$relation = new Relation;
-			$relation->user_id = Auth::id();
-			$relation->note = $request->input('note');
-			$relation->debtor_code = mt_rand(1000000, 9999999);
+		/* General */
+		$relation = new Relation;
+		$relation->user_id = Auth::id();
+		$relation->note = $request->input('note');
+		$relation->debtor_code = mt_rand(1000000, 9999999);
 
-			/* Company */
-			$relation->kind_id = RelationKind::where('kind_name','=','zakelijk')->first()->id;
-			$relation->company_name = $request->input('company_name');
-			$relation->type_id = $request->input('company_type');
-			$relation->kvk = $request->input('kvk');
-			$relation->btw = $request->input('btw');
-			$relation->phone = $request->input('telephone_comp');
-			$relation->email = $request->input('email_comp');
-			$relation->website = $request->input('website');
+		/* Company */
+		$relation->kind_id = RelationKind::where('kind_name','=','zakelijk')->first()->id;
+		$relation->company_name = $request->input('company_name');
+		$relation->type_id = $request->input('company_type');
+		$relation->kvk = $request->input('kvk');
+		$relation->btw = $request->input('btw');
+		$relation->phone = $request->input('telephone_comp');
+		$relation->email = $request->input('email_comp');
+		$relation->website = $request->input('website');
 
-			/* Adress */
-			$relation->address_street = $request->input('street');
-			$relation->address_number = $request->input('address_number');
-			$relation->address_postal = $request->input('zipcode');
-			$relation->address_city = $request->input('city');
-			$relation->province_id = $request->input('province');
-			$relation->country_id = $request->input('country');
+		/* Adress */
+		$relation->address_street = $request->input('street');
+		$relation->address_number = $request->input('address_number');
+		$relation->address_postal = $request->input('zipcode');
+		$relation->address_city = $request->input('city');
+		$relation->province_id = $request->input('province');
+		$relation->country_id = $request->input('country');
 
-			$relation->save();
+		$relation->save();
 
-			$user = Auth::user();
-			$user->self_id = $relation->id;
-			$user->save();
+		$user = Auth::user();
+		$user->self_id = $relation->id;
+		$user->save();
 
-			return back()->with('success', 1);
+		return back()->with('success', 1);
 	}
 
 	public function doNew(Request $request)
@@ -307,16 +268,10 @@ class RelationController extends Controller {
 			/* Company */
 			'company_type' => array('required_if:relationkind,1','numeric'),
 			'company_name' => array('required_if:relationkind,1','max:50'),
-			//'kvk' => array('numeric','min:8'),
-			//'btw' => array('alpha_num','min:14'),
-			//'telephone_comp' => array('alpha_num','max:12'),
 			'email_comp' => array('required_if:relationkind,1','email','max:80'),
-			//'website' => array('url','max:180'),
 			/* Contact */
 			'contact_name' => array('required','max:50'),
 			'contact_firstname' => array('required','max:30'),
-			//'mobile' => array('alpha_num','max:14'),
-			//'telephone' => array('alpha_num','max:14'),
 			'email' => array('required','email','max:80'),
 			'contactfunction' => array('required','numeric'),
 			/* Adress */
@@ -326,20 +281,9 @@ class RelationController extends Controller {
 			'city' => array('required','alpha_num','max:35'),
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric'),
-			/* Payment */
-			//'iban' => array('alpha_num'),
-			//'iban_name' => array('required','max:50')
 		);
 
 		$this->validate($request, $rules);
-		//$validator = Validator::make($request->all(), $rules);
-
-		/*if ($this->validator->fails()) {
-			$messages = $validator->messages();
-
-			// redirect our user back to the form with the errors from the validator
-			return Redirect::back()->withErrors($validator)->withInput($request->all());
-		} else {*/
 
 			/* General */
 			$relation = new \Calctool\Models\Relation;
@@ -368,6 +312,11 @@ class RelationController extends Controller {
 			$relation->province_id = $request->input('province');
 			$relation->country_id = $request->input('country');
 
+			if ($request->input('iban'))
+				$relation->iban = $request->input('iban');
+			if ($request->input('iban_name'))
+				$relation->iban_name = $request->input('iban_name');
+
 			$relation->save();
 
 			/* Contact */
@@ -391,20 +340,6 @@ class RelationController extends Controller {
 			}
 
 			$contact->save();
-
-			/*Betalingsgevens*/
-			$iban = new \Calctool\Models\Iban;
-			if ($request->input('iban'))
-				$iban->iban = $request->input('iban');
-			else
-				$iban->iban = '';
-			if ($request->input('iban_name'))
-				$iban->iban_name = $request->input('iban_name');
-			else
-				$iban->iban_name = '';
-			$iban->relation_id = $relation->id;
-
-			$iban->save();
 
 			return redirect('/relation-'.$relation->id.'/edit')->with('success', 1);
 	}
