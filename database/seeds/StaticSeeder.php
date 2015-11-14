@@ -578,6 +578,18 @@ class StaticSeeder extends Seeder {
 		RelationType::create(array('type_name' => 'zonwering'));
 		$this->command->info('RelationType created');
 
+		WholesaleType::create(array('type_name' => 'Bouw'));
+		WholesaleType::create(array('type_name' => 'Installatie'));
+		WholesaleType::create(array('type_name' => 'Electra'));
+		WholesaleType::create(array('type_name' => 'Schilder'));
+		WholesaleType::create(array('type_name' => 'Hovenier'));
+		WholesaleType::create(array('type_name' => 'Sanitair'));
+		WholesaleType::create(array('type_name' => 'Verhuur'));
+		WholesaleType::create(array('type_name' => 'Groothandel'));
+		WholesaleType::create(array('type_name' => 'Veiling'));
+		WholesaleType::create(array('type_name' => 'Overig'));
+		$this->command->info('WholesaleType created');
+
 		RelationKind::create(array('kind_name' => 'zakelijk'));
 		RelationKind::create(array('kind_name' => 'particulier'));
 		$this->command->info('RelationKind created');
