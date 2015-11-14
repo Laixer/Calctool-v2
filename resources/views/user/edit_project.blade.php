@@ -504,7 +504,7 @@ else {
 
 						<div id="calc" class="tab-pane">
 						<form method="post" action="/project/updatecalc">
-                                                {!! csrf_field() !!}
+                        {!! csrf_field() !!}
 						<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
 							<div class="row">
 								<div class="col-md-3"><h5><strong>Eigen uurtarief <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier uw uurtarief op wat door heel de calculatie gebruikt wordt voor dit project. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></div>

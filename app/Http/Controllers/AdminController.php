@@ -28,21 +28,6 @@ class AdminController extends Controller {
 	|
 	*/
 
-	public function getDashboard()
-	{
-		return view('admin.dashboard');
-	}
-
-	public function getAlert()
-	{
-		return view('admin.alert');
-	}
-
-	public function getPHPInfo()
-	{
-		return view('admin.phpinfo');
-	}
-
 	public function doNewAlert(Request $request)
 	{
 		$this->validate($request, [

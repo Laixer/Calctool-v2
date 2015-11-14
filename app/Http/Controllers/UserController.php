@@ -24,31 +24,6 @@ class UserController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function getAll()
-	{
-		return view('admin.user');
-	}
-
-	public function getNew()
-	{
-		return view('admin.new_user');
-	}
-
-	public function getMyAccount()
-	{
-		return view('user.myaccount');
-	}
-
-	public function getMyAccountTelegram()
-	{
-		return view('user.myaccount_telegram');
-	}
-
-	public function getPayment()
-	{
-		return view('user.payment');
-	}
-
 	public function getMyAccountTelegramUnchain()
 	{
 		$tgram = Telegram::where('user_id','=',Auth::id())->first();

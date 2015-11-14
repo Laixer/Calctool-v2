@@ -21,31 +21,4 @@ class ApiController extends Controller {
 	{
 		return json_encode(['success' => 1, 'description' => 'API server ready', 'version' => 1]);
 	}
-
-	public function getAlert()
-	{
-		return view('admin.alert');
-	}
-
-	public function getPHPInfo()
-	{
-		return view('admin.phpinfo');
-	}
-
-	public function doNewAlert(Request $request)
-	{
-		$this->validate($request, [
-			'level' => array('required'),
-			'message' => array('required'),
-		]);
-
-		$alert = new SysMessage;
-		$alert->level = Input::get('level');
-		$alert->content = Input::get('message');
-		$alert->active = true;
-
-		$alert->save();
-
-		return json_encode(['success' => 1]);
-	}
 }

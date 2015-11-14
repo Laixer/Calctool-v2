@@ -83,10 +83,6 @@ $(document).ready(function() {
 			$(this).addClass("error-input");
 		}
 	});
-
-
-
-
 });
 </script>
 
@@ -143,7 +139,7 @@ $(document).ready(function() {
 						<div id="company" class="tab-pane active">
 
 							<form method="POST" action="/relation/update" accept-charset="UTF-8">
-			                                {!! csrf_field() !!}
+			                {!! csrf_field() !!}
 							<h4>{{ ucfirst(\Calctool\Models\RelationKind::find($relation->kind_id)->kind_name) }}e relatie</h4>
 							<div class="row">
 								<div class="col-md-2">

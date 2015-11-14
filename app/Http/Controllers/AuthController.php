@@ -96,12 +96,6 @@ class AuthController extends Controller {
 		}
 	}
 
-	public function doLogout()
-	{
-		Auth::logout(); // log the user out of our application
-		return redirect('login'); // redirect the user to the login screen
-	}
-
 	/**
 	 * Show the form for creating a new resource.
 	 *

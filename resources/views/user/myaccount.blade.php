@@ -273,7 +273,7 @@ $(document).ready(function() {
 						<div id="prefs" class="tab-pane">
 
 							<form method="POST" action="myaccount/preferences/update" accept-charset="UTF-8">
-                                                        {!! csrf_field() !!}
+                            {!! csrf_field() !!}
 
 							<h4 class="company">Voorkeuren</h4>
 
@@ -300,10 +300,10 @@ $(document).ready(function() {
 												<div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
 												<div class="col-md-1"><div class="pull-right">&euro;</div></div>
 												<div class="col-md-2">
-													<input name="pref_hourrate_calc" id="pref_hourrate_calc" type="text" class="form-control" value="{{ str_replace('.', ',', $user->pref_hourrate_calc) }}" />
+													<input name="pref_hourrate_calc" id="pref_hourrate_calc" type="text" class="form-control" value="{{ number_format($user->pref_hourrate_calc, 2, ",",".") }}" />
 												</div>
 												<div class="col-md-2">
-													<input name="pref_hourrate_more" id="pref_hourrate_more" type="text" class="form-control" value="{{ str_replace('.', ',', $user->pref_hourrate_more) }}" />
+													<input name="pref_hourrate_more" id="pref_hourrate_more" type="text" class="form-control" value="{{ number_format($user->pref_hourrate_more, 2, ",",".") }}" />
 												</div>
 											</div>
 
