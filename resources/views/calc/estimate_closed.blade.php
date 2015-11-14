@@ -13,6 +13,7 @@ use \Calctool\Models\EstimateMaterial;
 use \Calctool\Models\EstimateEquipment;
 use \Calctool\Calculus\EstimateOverview;
 use \Calctool\Models\ProjectType;
+use \Calctool\Models\Timesheet;
 use \Calctool\Calculus\EstimateEndresult;
 
 $common_access_error = false;
