@@ -81,37 +81,37 @@ class AdminController extends Controller {
 			'amount' => array('required'),
 		]);
 
-			$subtract = $request->input('amount');
+		$subtract = $request->input('amount');
 
-			$mollie = new Mollie_API_Client;
-			$mollie->setApiKey($_ENV['MOLLIE_API']);
+		$mollie = new Mollie_API_Client;
+		$mollie->setApiKey($_ENV['MOLLIE_API']);
 
-			$payment = $mollie->payments->get(Route::Input('transcode'));
+		$payment = $mollie->payments->get($request->Input('transcode'));
 
-			if ($subtract > ($payment->amount-$payment->amountRefunded))
-				return back()->withErrors($validator)->withInput(Input::all());
+		if ($subtract > ($payment->amount-$payment->amountRefunded))
+			return back()->withErrors($validator)->withInput($request->all());
 
-			$mollie->payments->refund($payment, $subtract);
+		$mollie->payments->refund($payment, $subtract);
 
-			$order = Payment::where('transaction','=',$payment->id)->first();
-			$order->status = $payment->status;
-			$order->amount = $payment->amountRefunded;
-			$order->save();
+		$order = Payment::where('transaction','=',$payment->id)->first();
+		$order->status = $payment->status;
+		$order->amount = $payment->amountRefunded;
+		$order->save();
 
-			if ($payment->amountRefunded == $payment->amount) {
-				$user = User::find($order->user_id);
-				$expdate = $user->expiration_date;
-				$user->expiration_date = date('Y-m-d', strtotime("-".$order->increment." month", strtotime($expdate)));
+		if ($payment->amountRefunded == $payment->amount) {
+			$user = User::find($order->user_id);
+			$expdate = $user->expiration_date;
+			$user->expiration_date = date('Y-m-d', strtotime("-".$order->increment." month", strtotime($expdate)));
 
-				$data = array('email' => $user->email, 'amount' => number_format($order->amount, 2,",","."), 'username' => $user->username);
-				Mailgun::send('mail.refund', $data, function($message) use ($data) {
-					$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Terugstorting');
-				});
+			$data = array('email' => $user->email, 'amount' => number_format($order->amount, 2,",","."), 'username' => $user->username);
+			Mailgun::send('mail.refund', $data, function($message) use ($data) {
+				$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Terugstorting');
+			});
 
-				$user->save();
-			}
+			$user->save();
+		}
 
-			return back()->with('success', 1);
+		return back()->with('success', 1);
 	}
 
 	public function doNewUser(Request $request)
@@ -144,7 +144,7 @@ class AdminController extends Controller {
 			/* General */
 			$user = new User;
 			$user->username = strtolower(trim($request->input('username')));
-			$user->secret = Hash::make($request->input('secret'));
+			$user->secret = \Hash::make($request->input('secret'));
 			$user->user_type = $request->input('type');
 
 			/* Server */
@@ -215,72 +215,72 @@ class AdminController extends Controller {
 			'email' => array('required','email','max:80'),
 		]);
 
-			/* General */
-			$user = User::find($user_id);
-			if ($request->input('username'))
-				$user->username = strtolower(trim($request->input('username')));
-			if ($request->input('secret'))
-				$user->secret = Hash::make($request->input('secret'));
-			if ($request->input('type'))
-				$user->user_type = $request->input('type');
+		/* General */
+		$user = User::find($user_id);
+		if ($request->input('username'))
+			$user->username = strtolower(trim($request->input('username')));
+		if ($request->input('secret'))
+			$user->secret = \Hash::make($request->input('secret'));
+		if ($request->input('type'))
+			$user->user_type = $request->input('type');
 
-			/* Contact */
-			if ($request->input('firstname'))
-				$user->firstname = $request->input('firstname');
-			else
-				$user->firstname = $user->username;
-			if ($request->input('lastname'))
-				$user->lastname = $request->input('lastname');
-			if ($request->input('email'))
-				$user->email = $request->input('email');
-			if ($request->input('mobile'))
-				$user->mobile = $request->input('mobile');
-			if ($request->input('telephone'))
-				$user->phone = $request->input('telephone');
-			if ($request->input('website'))
-				$user->website = $request->input('website');
+		/* Contact */
+		if ($request->input('firstname'))
+			$user->firstname = $request->input('firstname');
+		else
+			$user->firstname = $user->username;
+		if ($request->input('lastname'))
+			$user->lastname = $request->input('lastname');
+		if ($request->input('email'))
+			$user->email = $request->input('email');
+		if ($request->input('mobile'))
+			$user->mobile = $request->input('mobile');
+		if ($request->input('telephone'))
+			$user->phone = $request->input('telephone');
+		if ($request->input('website'))
+			$user->website = $request->input('website');
 
-			/* Adress */
-			if ($request->input('address_street'))
-				$user->address_street = $request->input('address_street');
-			if ($request->input('address_number'))
-				$user->address_number = $request->input('address_number');
-			if ($request->input('address_zipcode'))
-				$user->address_postal = $request->input('address_zipcode');
-			if ($request->input('address_city'))
-				$user->address_city = $request->input('address_city');
-			$user->province_id = $request->input('province');
-			$user->country_id = $request->input('country');
+		/* Adress */
+		if ($request->input('address_street'))
+			$user->address_street = $request->input('address_street');
+		if ($request->input('address_number'))
+			$user->address_number = $request->input('address_number');
+		if ($request->input('address_zipcode'))
+			$user->address_postal = $request->input('address_zipcode');
+		if ($request->input('address_city'))
+			$user->address_city = $request->input('address_city');
+		$user->province_id = $request->input('province');
+		$user->country_id = $request->input('country');
 
-			/* Overig */
-			if ($request->input('expdate'))
-				$user->expiration_date = $request->input('expdate');
-			if ($request->input('note'))
-				$user->note = $request->input('note');
-			if ($request->input('notepad'))
-				$user->notepad = $request->input('notepad');
-			if ($request->input('confirmdate'))
-				$user->confirmed_mail = $request->input('confirmdate');
-			if ($request->input('bandate'))
-				$user->banned = $request->input('bandate');
-			else
-				$user->banned = null;
-			if ($request->input('toggle-active'))
-				$user->active = true;
-			else
-				$user->active = false;
-			if ($request->input('toggle-api'))
-				$user->api_access = true;
-			else
-				$user->api_access = false;
-			if (!$request->input('gender') || $request->input('gender') == '-1')
-				$user->gender = NULL;
-			else
-				$user->gender = $request->input('gender');
+		/* Overig */
+		if ($request->input('expdate'))
+			$user->expiration_date = $request->input('expdate');
+		if ($request->input('note'))
+			$user->note = $request->input('note');
+		if ($request->input('notepad'))
+			$user->notepad = $request->input('notepad');
+		if ($request->input('confirmdate'))
+			$user->confirmed_mail = $request->input('confirmdate');
+		if ($request->input('bandate'))
+			$user->banned = $request->input('bandate');
+		else
+			$user->banned = null;
+		if ($request->input('toggle-active'))
+			$user->active = true;
+		else
+			$user->active = false;
+		if ($request->input('toggle-api'))
+			$user->api_access = true;
+		else
+			$user->api_access = false;
+		if (!$request->input('gender') || $request->input('gender') == '-1')
+			$user->gender = NULL;
+		else
+			$user->gender = $request->input('gender');
 
-			$user->save();
+		$user->save();
 
-			return back()->with('success', 1);
+		return back()->with('success', 1);
 	}
 
 	public function getSwitchSession()
@@ -288,17 +288,17 @@ class AdminController extends Controller {
 		if (!Auth::user()->isAdmin())
 			return back();
 
-		$cook = Cookie::make('swpsess', Auth::id(), 180);
+		$cookie = cookie('swpsess', Auth::id(), 180);
 
 		Auth::loginUsingId(Route::input('user_id'));
 
-		return redirect('/')->withCookie($cook);
+		return redirect('/')->withCookie($cookie);
 
 	}
 
 	public function getSwitchSessionBack()
 	{
-		$swap_session = Cookie::get('swpsess');
+		$swap_session = cookie()->get('swpsess');
 		if (!$swap_session)
 			return back();
 
@@ -308,7 +308,7 @@ class AdminController extends Controller {
 
 		Auth::loginUsingId($user->id);
 
-		return redirect('/')->withCookie(Cookie::forget('swpsess'));
+		return redirect('/')->withCookie(coockie()->forget('swpsess'));
 
 	}
 
