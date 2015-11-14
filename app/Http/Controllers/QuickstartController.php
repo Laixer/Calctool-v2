@@ -64,7 +64,7 @@ class QuickstartController extends Controller {
 		$relation->type_id = $request->get('company_type');
 		$relation->kvk = $request->get('kvk');
 		$relation->btw = $request->get('btw');
-		$relation->email = $request->get('email_comp');
+		$relation->email = $request->get('email');
 
 		/* Adress */
 		$relation->address_street = $request->get('street');
@@ -80,6 +80,7 @@ class QuickstartController extends Controller {
 		$contact->firstname = $request->get('contact_firstname');
 		$contact->lastname = $request->get('contact_name');
 		$contact->mobile = $request->get('mobile');
+		$contact->email = $request->get('email');
 		$contact->relation_id = $relation->id;
 		$contact->function_id = $request->get('contactfunction');
 

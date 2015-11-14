@@ -66,12 +66,13 @@ class AdminController extends Controller {
 		$this->validate($request, [
 			'id' => array('required'),
 		]);
-			$alert = SysMessage::find($request->input('id'));
-			$alert->active = false;
 
-			$alert->save();
+		$alert = SysMessage::find($request->input('id'));
+		$alert->active = false;
 
-			return json_encode(['success' => 1]);
+		$alert->save();
+
+		return json_encode(['success' => 1]);
 
 	}
 
