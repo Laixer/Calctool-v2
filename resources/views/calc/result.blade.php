@@ -491,7 +491,6 @@ $(document).ready(function() {
 									<label>Stelposten</label>
 									<div class="toggle-content">
 									<table class="table table-striped">
-										<?# -- table head -- ?>
 										<thead>
 											<tr>
 												<th class="col-md-3">Hoofdstuk</th>
@@ -538,7 +537,6 @@ $(document).ready(function() {
 									<label>Meerwerk aanneming</label>
 									<div class="toggle-content">
 									<table class="table table-striped">
-										<?# -- table head -- ?>
 										<thead>
 											<tr>
 												<th class="col-md-3">Hoofdstuk</th>

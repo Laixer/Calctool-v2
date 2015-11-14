@@ -281,7 +281,6 @@ if (!$project || !$project->isOwner())
 												</div>
 
 												<table class="table table-striped">
-													<?# -- tadble head -- ?>
 													<thead>
 														<tr>
 															<th class="col-md-5">Omschrijving</th>
@@ -294,7 +293,6 @@ if (!$project || !$project->isOwner())
 														</tr>
 													</thead>
 
-													<?# -- table items -- ?>
 													<tbody>
 														@foreach (EstimateMaterial::where('activity_id','=', $activity->id)->get() as $material)
 														<tr>

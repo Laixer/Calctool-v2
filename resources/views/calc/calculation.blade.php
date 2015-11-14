@@ -1174,7 +1174,7 @@ var n = this,
 
 
 													<tbody>
-														<tr data-id="{{ EstimateLabor::where('activity_id','=', $activity->id)->first()['id'] }}"><?# -- item -- ?>
+														<tr data-id="{{ EstimateLabor::where('activity_id','=', $activity->id)->first()['id'] }}">
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1"><span class="rate">{!! Part::find($activity->part_id)->part_name=='subcontracting' ? '<input name="rate" type="text" value="'.number_format(EstimateLabor::where('activity_id','=', $activity->id)->first()['rate'], 2,",",".").'" class="form-control-sm-number labor-amount lsavee">' : number_format($project->hour_rate, 2,",",".") !!}</span></td></td>
@@ -1208,7 +1208,6 @@ var n = this,
 												</div>
 
 												<table class="table table-striped" data-id="{{ $activity->id }}">
-													<?# -- tadble head -- ?>
 													<thead>
 														<tr>
 															<th class="col-md-5">Omschrijving</th>
