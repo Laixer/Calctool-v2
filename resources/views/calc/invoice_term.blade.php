@@ -232,17 +232,15 @@ if (!$project || !$project->isOwner()) {
 		@endif
 	</div>
 
-	<!-- modal dialog -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 
-				<div class="modal-header"><!-- modal header -->
+				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					<h4 class="modal-title" id="myModalLabel">Opties</h4>
-				</div><!-- /modal header -->
+				</div>
 
-				<!-- modal body -->
 				<div class="modal-body">
 					<div class="form-horizontal">
 						 <div class="form-group">
@@ -257,11 +255,10 @@ if (!$project || !$project->isOwner()) {
 						<br>
 					</div>
 				</div>
-				<!-- /modal body -->
 
-				<div class="modal-footer"><!-- modal footer -->
+				<div class="modal-footer">
 					<button class="btn btn-default" data-dismiss="modal">Close</button>
-				</div><!-- /modal footer -->
+				</div>
 
 			</div>
 		</div>
@@ -274,7 +271,7 @@ if (!$project || !$project->isOwner()) {
 		<input name="projectid" value="{{ $project->id }}" type="hidden"/>
 
 		<div class="white-row">
-			<!--PAGE HEADER MASTER START-->
+			<?#!--PAGE HEADER MASTER START--?>
 			<header>
 				<div class="row">
 					<div class="col-sm-6">
@@ -295,9 +292,9 @@ if (!$project || !$project->isOwner()) {
 				</div>
 			</header>
 			<hr class="margin-top10 margin-bottom10">
-			<!--PAGE HEADER MASTER END-->
+			<?#--PAGE HEADER MASTER END--?>
 
-	 		<!--ADRESSING START-->
+	 		<?#--ADRESSING START--?>
 	 		<main>
 			<div class="row">
 				<div class="col-sm-6">
@@ -321,9 +318,9 @@ if (!$project || !$project->isOwner()) {
 						<input type="hidden" id="invdateval" name="invdateval" />
 				</div>
 			</div>
-			<!--ADRESSING END-->
+			<?#--ADRESSING END--?>
 
-			<!--DECRIPTION-->
+			<?#--DECRIPTION--?>
 			<div class="row">
 				<div class="col-sm-6">
 				Geachte
@@ -342,9 +339,9 @@ if (!$project || !$project->isOwner()) {
 				</div>
 			</div>
 			<br>
-			<!--DECRIPTION END-->
+			<?#--DECRIPTION END--?>
 
-			<!--CONTENT START-->
+			<?#--CONTENT START--?>
 				<div class="show-totals">
 					<h4>Specificatie termijnfactuur</h4>
 					<table class="table table-striped hide-btw2">
@@ -409,9 +406,9 @@ if (!$project || !$project->isOwner()) {
 						</tbody>
 					</table>
 				</div>
-				<!--CONTENT, TOTAL END-->
+				<?#--CONTENT, TOTAL END--?>
 
-				<!--CLOSER START-->
+				<?#--CLOSER START--?>
 				<textarea name="closure" id="closure" rows="5" class="form-control">{{ ($invoice ? ($invoice->closure ? $invoice->closure : Auth::user()->pref_invoice_closure) : Auth::user()->pref_invoice_closure) }}</textarea>
 				<br>
 				<div class="row">
@@ -428,15 +425,9 @@ if (!$project || !$project->isOwner()) {
 					</div>
 				</div>
 				</div class="white-row">
-				<!--CLOSER END-->
+				<?#--CLOSER END--?>
 
-
-
-
-
-
-
-			<!-- INVOICE FOOTER -->
+			<?#-- INVOICE FOOTER --?>
 			<div class="row">
 
 				<div class="col-sm-6"></div>
@@ -482,7 +473,7 @@ if (!$project || !$project->isOwner()) {
 	</section>
 
 </div>
-<!-- /WRAPPER -->
+
 @stop
 
 <?php } ?>

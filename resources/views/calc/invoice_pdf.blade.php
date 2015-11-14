@@ -56,7 +56,7 @@ if ($cnt>1)
   </head>
   <body>
 
-  <!--PAGE HEADER MASTER START-->
+  <?#--PAGE HEADER MASTER START--?>
   <header class="clearfix">
     <div id="logo">
     <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
@@ -70,9 +70,9 @@ if ($cnt>1)
       <div>Rekeningnummer: {{ Iban::where('relation_id','=',$relation_self->id)->first()['iban'] }}&nbsp;|&nbsp;tnv.: {{ Iban::where('relation_id','=',$relation_self->id)->first()['iban_name'] }}</div>
 
   </header>
-  <!--PAGE HEADER MASTER END-->
+  <?#--PAGE HEADER MASTER END--?>
 
-  <!--ADRESSING START-->
+  <?#--ADRESSING START--?>
   <main>
     <div id="details" class="clearfix">
       <div id="client">
@@ -92,14 +92,14 @@ if ($cnt>1)
         <div class="date">Factuurdatum: {{ date("j M Y") }}</div>
       </div>
     </div>
-    <!--ADRESSING END-->
+    <?#--ADRESSING END--?>
 
     <div class="openingtext">Geachte</div>
     <div class="openingtext">{{ ($invoice ? $invoice->description : '') }}</div>
 
 
     @if ($total)
-    <!--TOTAL START-->
+    <?#--TOTAL START--?>
 
     <h1 class="name">Specificatie factuur</h1>
     <table border="0" cellspacing="0" cellpadding="0">
@@ -271,7 +271,7 @@ if ($cnt>1)
       </tbody>
     </table>
 
-    <!--INCLUDE TERM START-->
+    <?#--INCLUDE TERM START--?>
 
       <?php
       $cnt = Invoice::where('offer_id','=', $invoice->offer_id)->count();
@@ -339,7 +339,7 @@ if ($cnt>1)
         </tbody>
       </table>
 
-      <!--PAGE HEADER SECOND START-->
+      <?#--PAGE HEADER SECOND START--?>
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
         <div id="logo">
@@ -351,7 +351,7 @@ if ($cnt>1)
           <div class="date">{{ date("j M Y") }}</div>
         </div>
       </header>
-      <!--PAGE HEADER SECOND END-->
+      <?#--PAGE HEADER SECOND END--?>
 
       <h4>Resterend te betalen</h4>
       <table class="table table-striped hide-btw2">
@@ -416,7 +416,7 @@ if ($cnt>1)
       <?php } ?>
 
 
-      <!--INCLUDE TERM START-->
+      <?#--INCLUDE TERM START--?>
 
       <div class="closingtext">{{ ($offer_last ? $offer_last->closure : '') }}</div>
 
@@ -432,9 +432,9 @@ if ($cnt>1)
       Deze factuur is op de computer gegenereerd en is geldig zonder handtekening.
     </footer>
 
-    <!--TOTAL END-->
+    <?#--TOTAL END--?>
     @else
-    <!--CONT & SUBCONTR START-->
+    <?#--CONT & SUBCONTR START--?>
 
     <h2 class="name">Aanneming</h2>
     <table border="0" cellspacing="0" cellpadding="0">
@@ -728,7 +728,7 @@ if ($cnt>1)
       </tbody>
     </table>
 
-    <!--PAGE HEADER SECOND START-->
+    <?#--PAGE HEADER SECOND START--?>
     <div style="page-break-after:always;"></div>
     <header class="clearfix">
       <div id="logo">
@@ -740,10 +740,10 @@ if ($cnt>1)
         <div class="date">{{ date("j M Y") }}</div>
       </div>
     </header>
-    <!--PAGE HEADER SECOND END-->
+    <?#--PAGE HEADER SECOND END--?>
 
     @if ($term)
-    <!--INCLUDE TERM START-->
+    <?#--INCLUDE TERM START--?>
 
     <?php
       $cnt = Invoice::where('offer_id','=', $invoice->offer_id)->count();
@@ -877,7 +877,7 @@ if ($cnt>1)
     <?php } ?>
 
     @endif
-     <!--INCLUDE TERM END-->
+     <?#--INCLUDE TERM END--?>
 
     <div class="closingtext">{{ ($offer_last ? $offer_last->closure : '') }}</div>
 
@@ -894,13 +894,13 @@ if ($cnt>1)
   </footer>
 
   @endif
-  <!--CON & SUBCONTR END-->
+  <?#--CON & SUBCONTR END--?>
   @if ($specification)
-  <!--SPECIFICATION START-->
+  <?#--SPECIFICATION START--?>
   @if ($total)
-  <!--TOTAL START-->
+  <?#--TOTAL START--?>
 
-  <!--PAGE HEADER SECOND START-->
+  <?#--PAGE HEADER SECOND START--?>
   <div style="page-break-after:always;"></div>
   <header class="clearfix">
     <div id="logo">
@@ -912,9 +912,9 @@ if ($cnt>1)
       <div class="date">{{ date("j M Y") }}</div>
     </div>
   </header>
-  <!--PAGE HEADER SECOND END-->
+  <?#--PAGE HEADER SECOND END--?>
 
-  <!--CALCULATION TOTAL START -->
+  <?#--CALCULATION TOTAL START --?>
   <h1 class="name">Calculatie per werkzaamheid</h1>
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
@@ -931,7 +931,7 @@ if ($cnt>1)
     <tbody>
       @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->whereNull('detail_id')->get() as $activity)
-      <tr><!-- item -->
+      <tr><?#-- item --?>
         <td class="no"><strong>{{ $chapter->chapter_name }}</strong></td>
         <td class="desc">{{ $activity->activity_name }}</td>
         <td class="no"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
@@ -944,7 +944,7 @@ if ($cnt>1)
       @endforeach
       @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->whereNull('detail_id')->get() as $activity)
-      <tr><!-- item -->
+      <tr>
         <td class="no"><strong>{{ $chapter->chapter_name }}</strong></td>
         <td class="desc">{{ $activity->activity_name }}</td>
         <td class="no"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
@@ -981,9 +981,9 @@ if ($cnt>1)
       <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
     </tbody>
   </table>
-  <!--CALCULATION TOTAL END -->
+  <?#--CALCULATION TOTAL END --?>
 
-  <!--PAGE HEADER SECOND START-->
+  <?#--PAGE HEADER SECOND START--?>
   <div style="page-break-after:always;"></div>
   <header class="clearfix">
     <div id="logo">
@@ -995,9 +995,9 @@ if ($cnt>1)
       <div class="date">{{ date("j M Y") }}</div>
     </div>
   </header>
-  <!--PAGE HEADER SECOND END-->
+  <?#--PAGE HEADER SECOND END--?>
 
-  <!--ESTIMATE TOTAL START -->
+  <?#--ESTIMATE TOTAL START --?>
    <h1 class="name">Stelposten per werkzaamheid</h1>
    <table border="0" cellspacing="0" cellpadding="0">
     <thead>
@@ -1018,7 +1018,7 @@ if ($cnt>1)
         if (!EstimateOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip))
           continue;
       ?>
-      <tr><!-- item -->
+      <tr>
         <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
         <td class="qty">{{ $activity->activity_name }}</td>
         <td class="qty"><span class="pull-right">{{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }}</td>
@@ -1035,7 +1035,7 @@ if ($cnt>1)
         if (!EstimateOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip))
           continue;
       ?>
-      <tr><!-- item -->
+      <tr>
         <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
         <td class="qty">{{ $activity->activity_name }}</td>
         <td class="qty"><span class="pull-right">{{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }}</td>
@@ -1071,9 +1071,9 @@ if ($cnt>1)
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::superTotal($project), 2, ",",".") }}</span></td>
       </tbody>
     </table>
-  <!--ESTIMATE TOTAL END-->
+  <?#--ESTIMATE TOTAL END--?>
 
-  <!--PAGE HEADER SECOND START-->
+  <?#--PAGE HEADER SECOND START--?>
   <div style="page-break-after:always;"></div>
   <header class="clearfix">
     <div id="logo">
@@ -1085,9 +1085,9 @@ if ($cnt>1)
       <div class="date">{{ date("j M Y") }}</div>
     </div>
   </header>
-  <!--PAGE HEADER SECOND END-->
+  <?#--PAGE HEADER SECOND END--?>
 
-  <!--LESS TOTAL START-->
+  <?#--LESS TOTAL START--?>
   <h1 class="name">Minderwerk per werkzaamheid</h1>
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
@@ -1108,7 +1108,7 @@ if ($cnt>1)
         if (!LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip))
           continue;
       ?>
-      <tr><!-- item -->
+      <tr>
         <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
         <td class="qty">{{ $activity->activity_name }}</td>
         <td class="qty"><span class="pull-right">{{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }}</td>
@@ -1125,7 +1125,7 @@ if ($cnt>1)
         if (!LessOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip))
           continue;
       ?>
-      <tr><!-- item -->
+      <tr>
         <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
         <td class="qty">{{ $activity->activity_name }}</td>
         <td class="qty"><span class="pull-right">{{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }}</td>
@@ -1161,9 +1161,9 @@ if ($cnt>1)
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::superTotal($project), 2, ",",".") }}</span></td>
       </tbody>
     </table>
-  <!--LESS TOTAL END-->
+  <?#--LESS TOTAL END--?>
 
-  <!--PAGE HEADER SECOND START-->
+  <?#--PAGE HEADER SECOND START--?>
   <div style="page-break-after:always;"></div>
   <header class="clearfix">
     <div id="logo">
@@ -1175,9 +1175,9 @@ if ($cnt>1)
       <div class="date">{{ date("j M Y") }}</div>
     </div>
   </header>
-  <!--PAGE HEADER SECOND END-->
+  <?#--PAGE HEADER SECOND END--?>
 
-  <!--MORE TOTAL START-->
+  <?#--MORE TOTAL START--?>
   <h1 class="name">Meerwerk per werkzaamheid</h1>
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
@@ -1194,7 +1194,7 @@ if ($cnt>1)
     <tbody>
       @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
-      <tr><!-- item -->
+      <tr>
         <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
         <td class="qty">{{ $activity->activity_name }}</td>
         <td class="qty"><span class="pull-right">{{ number_format(MoreOverview::laborTotal($activity), 2, ",",".") }}</td>
@@ -1207,7 +1207,7 @@ if ($cnt>1)
       @endforeach
       @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
-      <tr><!-- item -->
+      <tr>
         <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
         <td class="qty">{{ $activity->activity_name }}</td>
         <td class="qty"><span class="pull-right">{{ number_format(MoreOverview::laborTotal($activity), 2, ",",".") }}</td>
@@ -1243,13 +1243,13 @@ if ($cnt>1)
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::superTotal($project), 2, ",",".") }}</span></td>
       </tbody>
     </table>
-  <!--MORE TOTAL END-->
+  <?#--MORE TOTAL END--?>
 
-  <!--TOTAL END-->
+  <?#--TOTAL END--?>
   @else
-  <!--CONT & SUBCONT START-->
+  <?#--CONT & SUBCONT START--?>
 
-  <!--PAGE HEADER SECOND START-->
+  <?#--PAGE HEADER SECOND START--?>
   <div style="page-break-after:always;"></div>
   <header class="clearfix">
     <div id="logo">
@@ -1261,9 +1261,9 @@ if ($cnt>1)
       <div class="date">{{ date("j M Y") }}</div>
     </div>
   </header>
-  <!--PAGE HEADER SECOND END-->
+  <?#--PAGE HEADER SECOND END--?>
 
-  <!--CALCULATION CONT & SUBCONT START-->
+  <?#--CALCULATION CONT & SUBCONT START--?>
   <h1 class="name">Totalen voor calculatie</h1>
   <h2 class="name">Aanneming</h2>
   <table border="0" cellspacing="0" cellpadding="0">
@@ -1281,7 +1281,7 @@ if ($cnt>1)
     <tbody>
       @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->whereNull('detail_id')->get() as $activity)
-      <tr><!-- item -->
+      <tr>
         <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
         <td class="qty">{{ $activity->activity_name }}</td>
         <td class="qty"><span class="pull-right">@if (!$onlyactivity)  {{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
@@ -1318,7 +1318,7 @@ if ($cnt>1)
       <tbody>
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
         @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->whereNull('detail_id')->get() as $activity)
-        <tr><!-- item -->
+        <tr>
           <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
           <td class="qty">{{ $activity->activity_name }}</td>
           <td class="qty"><span class="pull-right">@if (!$onlyactivity) {{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
@@ -1364,9 +1364,9 @@ if ($cnt>1)
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
         </tr>
     </table>
-    <!--CALCULATION CONT & SUBCONT END-->
+    <?#--CALCULATION CONT & SUBCONT END--?>
 
-    <!--PAGE HEADER SECOND START-->
+    <?#--PAGE HEADER SECOND START--?>
     <div style="page-break-after:always;"></div>
     <header class="clearfix">
       <div id="logo">
@@ -1378,9 +1378,9 @@ if ($cnt>1)
         <div class="date">{{ date("j M Y") }}</div>
       </div>
     </header>
-    <!--PAGE HEADER SECOND END-->
+    <?#--PAGE HEADER SECOND END--?>
 
-    <!--ESTIMATE CONT & SUBCOINT START-->
+    <?#--ESTIMATE CONT & SUBCOINT START--?>
     <h1 class="name">Totalen voor stelposten</h1>
     <h2 class="name">Aanneming</h2>
     <table border="0" cellspacing="0" cellpadding="0">
@@ -1402,7 +1402,7 @@ if ($cnt>1)
           if (!EstimateOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip))
             continue;
         ?>
-        <tr><!-- item -->
+        <tr>
           <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
           <td class="qty">{{ $activity->activity_name }}</td>
           <td class="qty"><span class="pull-right">{{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }}</td>
@@ -1444,7 +1444,7 @@ if ($cnt>1)
           if (!EstimateOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip))
             continue;
         ?>
-        <tr><!-- item -->
+        <tr>
           <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
           <td class="qty">{{ $activity->activity_name }}</td>
           <td class="qty"><span class="pull-right">{{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }}</td>
@@ -1489,9 +1489,9 @@ if ($cnt>1)
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::superTotal($project), 2, ",",".") }}</span></td>
         </tr>
     </table>
-    <!--ESTIMATE CONT & SUBCOINT END-->
+    <?#--ESTIMATE CONT & SUBCOINT END--?>
 
-    <!--PAGE HEADER SECOND START-->
+    <?#--PAGE HEADER SECOND START--?>
     <div style="page-break-after:always;"></div>
     <header class="clearfix">
       <div id="logo">
@@ -1503,9 +1503,9 @@ if ($cnt>1)
         <div class="date">{{ date("j M Y") }}</div>
       </div>
     </header>
-    <!--PAGE HEADER SECOND END-->
+    <?#--PAGE HEADER SECOND END--?>
 
-    <!--LESS CONT & SUBCOINT START-->
+    <?#--LESS CONT & SUBCOINT START--?>
     <h1 class="name">Totalen minderwerk</h1>
     <h2 class="name">Aanneming</h2>
     <table border="0" cellspacing="0" cellpadding="0">
@@ -1527,7 +1527,7 @@ if ($cnt>1)
           if (!LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip))
             continue;
         ?>
-        <tr><!-- item -->
+        <tr>
           <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
           <td class="qty">{{ $activity->activity_name }}</td>
           <td class="qty"><span class="pull-right">{{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }}</td>
@@ -1569,7 +1569,7 @@ if ($cnt>1)
           if (!LessOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip))
             continue;
         ?>
-        <tr><!-- item -->
+        <tr>
           <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
           <td class="qty">{{ $activity->activity_name }}</td>
           <td class="qty"><span class="pull-right">{{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }}</td>
@@ -1614,9 +1614,9 @@ if ($cnt>1)
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::superTotal($project), 2, ",",".") }}</span></td>
         </tr>
     </table>
-    <!--LESS CONT & SUBCOINT END-->
+    <?#--LESS CONT & SUBCOINT END--?>
 
-    <!--PAGE HEADER SECOND START-->
+    <?#--PAGE HEADER SECOND START--?>
     <div style="page-break-after:always;"></div>
     <header class="clearfix">
       <div id="logo">
@@ -1628,9 +1628,9 @@ if ($cnt>1)
         <div class="date">{{ date("j M Y") }}</div>
       </div>
     </header>
-    <!--PAGE HEADER SECOND END-->
+    <?#--PAGE HEADER SECOND END--?>
 
-    <!--MORE CONT & SUBCOINT START-->
+    <?#--MORE CONT & SUBCOINT START--?>
     <h1 class="name">Totalen meerwerk</h1>
     <h2 class="name">Aanneming</h2>
     <table border="0" cellspacing="0" cellpadding="0">
@@ -1648,7 +1648,7 @@ if ($cnt>1)
       <tbody>
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
         @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
-        <tr><!-- item -->
+        <tr>
           <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
           <td class="qty">{{ $activity->activity_name }}</td>
           <td class="qty"><span class="pull-right">{{ number_format(MoreOverview::laborTotal($activity), 2, ",",".") }}</td>
@@ -1686,7 +1686,7 @@ if ($cnt>1)
       <tbody>
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
         @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
-        <tr><!-- item -->
+        <tr>
           <td class="qty"><strong>{{ $chapter->chapter_name }}</strong></td>
           <td class="qty">{{ $activity->activity_name }}</td>
           <td class="qty"><span class="pull-right">{{ number_format(MoreOverview::laborTotal($activity), 2, ",",".") }}</td>
@@ -1731,18 +1731,18 @@ if ($cnt>1)
           <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::superTotal($project), 2, ",",".") }}</span></td>
         </tr>
     </table>
-    <!--LESS CONT & SUBCOINT END-->
+    <?#--LESS CONT & SUBCOINT END--?>
     @endif
     @endif
-    <!--TOTAL END-->
-    <!--SPECIFICATION END-->
+    <?#--TOTAL END--?>
+    <?#--SPECIFICATION END--?>
 
     @if ($description)
-    <!--DESCRIPTION START-->
+    <?#--DESCRIPTION START--?>
     @if ($total)
-    <!--TOTAL START-->
+    <?#--TOTAL START--?>
 
-    <!--PAGE HEADER SECOND START-->
+    <?#--PAGE HEADER SECOND START--?>
     <div style="page-break-after:always;"></div>
     <header class="clearfix">
       <div id="logo">
@@ -1754,7 +1754,7 @@ if ($cnt>1)
         <div class="date">{{ date("j M Y") }}</div>
       </div>
     </header>
-    <!--PAGE HEADER SECOND END-->
+    <?#--PAGE HEADER SECOND END--?>
 
     <h1 class="name">Omschrijving werkzaamheden</h1>
     <table border="0" cellspacing="0" cellpadding="0">
@@ -1768,7 +1768,7 @@ if ($cnt>1)
     <tbody>
       @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
       @foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
-      <tr><!-- item -->
+      <tr>
         <td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
         <td class="col-md-3">{{ $activity->activity_name }}</td>
         <td class="col-md-7"><span>{{ $activity->note }}</td>
@@ -1777,11 +1777,11 @@ if ($cnt>1)
       @endforeach
     </tbody>
   </table>
-  <!--TOTAL END-->
+  <?#--TOTAL END--?>
 
   @else
 
-  <!--PAGE HEADER SECOND START-->
+  <?#--PAGE HEADER SECOND START--?>
   <div style="page-break-after:always;"></div>
   <header class="clearfix">
     <div id="logo">
@@ -1793,9 +1793,9 @@ if ($cnt>1)
       <div class="date">{{ date("j M Y") }}</div>
     </div>
   </header>
-  <!--PAGE HEADER SECOND END-->
+  <?#--PAGE HEADER SECOND END--?>
 
-  <!--CONT & SUBCOINT START-->
+  <?#--CONT & SUBCOINT START--?>
   <h1 class="name">Omschrijving werkzaamheden</h1>
   <h2 class="name">Aanneming</h2>
   <table border="0" cellspacing="0" cellpadding="0">
@@ -1809,7 +1809,7 @@ if ($cnt>1)
     <tbody>
       @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
-      <tr><!-- item -->
+      <tr>
         <td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
         <td class="col-md-3">{{ $activity->activity_name }}</td>
         <td class="col-md-7"><span>{{ $activity->note }}</td>
@@ -1830,7 +1830,7 @@ if ($cnt>1)
     <tbody>
       @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
-      <tr><!-- item -->
+      <tr>
         <td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
         <td class="col-md-3">{{ $activity->activity_name }}</td>
         <td class="col-md-7"><span>{{ $activity->note }}</td>
@@ -1840,10 +1840,10 @@ if ($cnt>1)
     </tbody>
   </table>
   @endif
-  <!--CONT & SUBCOINT END-->
+  <?#--CONT & SUBCOINT END--?>
 
   @endif
-  <!--DESCRIPTION END-->
+  <?#--DESCRIPTION END--?>
 
   </body>
 </html>

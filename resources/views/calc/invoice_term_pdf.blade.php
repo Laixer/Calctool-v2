@@ -33,7 +33,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
   </head>
   <body>
 
-  <!--PAGE HEADER MASTER START-->
+  <?#--PAGE HEADER MASTER START--?>
   <header class="clearfix">
     <div id="logo">
     <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
@@ -47,9 +47,9 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       <div>Rekeningnummer: {{ Iban::where('relation_id','=',$relation_self->id)->first()['iban'] }}&nbsp;|&nbsp;tnv.: {{ Iban::where('relation_id','=',$relation_self->id)->first()['iban_name'] }}</div>
 
   </header>
-  <!--PAGE HEADER MASTER END-->
+  <?#--PAGE HEADER MASTER END--?>
 
-  <!--ADRESSING START-->
+  <?#--ADRESSING START--?>
   <main>
     <div id="details" class="clearfix">
       <div id="client">
@@ -69,7 +69,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         <div class="date">Factuurdatum: {{ date("j M Y") }}</div>
       </div>
     </div>
-    <!--ADRESSING END-->
+    <?#--ADRESSING END--?>
 
     <div class="openingtext">Geachte</div>
     <div class="openingtext">{{ ($invoice ? $invoice->description : '') }}</div>

@@ -362,18 +362,17 @@ if (!$project || !$project->isOwner()) {
 
 					</div>
 				</div>
-				<!-- /modal body -->
 
-				<div class="modal-footer"><!-- modal footer -->
+				<div class="modal-footer">
 					<button class="btn btn-default" data-dismiss="modal">Close</button>
-				</div><!-- /modal footer -->
+				</div>
 
 			</div>
 		</div>
 	</div>
 
 	<div class="white-row">
-		<!--PAGE HEADER MASTER START-->
+		<?#--PAGE HEADER MASTER START--?>
 		<header>
 			<div class="row">
 				<div class="col-sm-6">
@@ -394,9 +393,9 @@ if (!$project || !$project->isOwner()) {
 			</div>
 		</header>
 		<hr class="margin-top10 margin-bottom10">
-		<!--PAGE HEADER MASTER END-->
+		<?#--PAGE HEADER MASTER END--?>
 
- 		<!--ADRESSING START-->
+ 		<?#--ADRESSING START--?>
  		<main>
 		<div class="row">
 			<div class="col-sm-6">
@@ -421,9 +420,9 @@ if (!$project || !$project->isOwner()) {
 				</ul>
 			</div>
 		</div>
-		<!--ADRESSING END-->
+		<?#--ADRESSING END--?>
 
-		<!--DECRIPTION-->
+		<?#--DECRIPTION--?>
 		<div class="row">
 			<div class="col-sm-6">
 			Geachte
@@ -442,9 +441,9 @@ if (!$project || !$project->isOwner()) {
 			</div>
 		</div>
 		<br>
-		<!--DECRIPTION END-->
+		<?#--DECRIPTION END--?>
 
-		<!--CONTENT, CON & SUBCON START-->
+		<?#--CONTENT, CON & SUBCON START--?>
 		<div class="show-all" style="display:none;">
 			<h4 class="only-total">Specificatie factuur</h4>
 			<h5 class="only-total">AANNEMING</h5>
@@ -743,9 +742,9 @@ if (!$project || !$project->isOwner()) {
 				</tbody>
 			</table>
 		</div>
-		<!--CONTENT, CON & SUBCON END-->
+		<?#--CONTENT, CON & SUBCON END--?>
 
-		<!--CONTENT, TOTAL START-->
+		<?#--CONTENT, TOTAL START--?>
 		<div class="show-totals">
 			<h4 class="only-total">Specificatie factuur</h4>
 			<table class="table table-striped hide-btw1">
@@ -1054,9 +1053,9 @@ if (!$project || !$project->isOwner()) {
 			</tbody>
 		</table>
 		<?php } ?>
-		<!--CONTENT, TOTAL END-->
+		<?#--CONTENT, TOTAL END--?>
 
-		<!--CLOSER START-->
+		<?#--CLOSER START--?>
 		<textarea name="closure" id="closure" rows="5" class="form-control">{{ ($invoice ? ($invoice->closure ? $invoice->closure : Auth::user()->pref_invoice_closure) : Auth::user()->pref_invoice_closure) }}</textarea>
 		<br>
 		<div class="row">
@@ -1072,11 +1071,11 @@ if (!$project || !$project->isOwner()) {
 			</span>
 			</div>
 		</div>
-		<!--CLOSER END-->
+		<?#--CLOSER END--?>
 	</div class="white-row">
 
 	<div class="white-row show-activity">
-		<!--PAGE HEADER START-->
+		<?#--PAGE HEADER START--?>
 		<div class="row">
 			<div class="col-sm-6">
 				{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
@@ -1094,9 +1093,9 @@ if (!$project || !$project->isOwner()) {
 			</div>
 		</div>
 		<hr class="margin-top10 margin-bottom10">
-		<!--PAGE HEADER END-->
+		<?#--PAGE HEADER END--?>
 
-		<!-- DECRIPTION CON&SUBCON START -->
+		<?#-- DECRIPTION CON&SUBCON START --?>
 		<div class="show-all" style="display:none;">
 			<h4>Calculatie Aanneming</h4>
 			<table class="table table-striped only-end-total">
@@ -1206,9 +1205,9 @@ if (!$project || !$project->isOwner()) {
 				</tbody>
 			</table>
 		</div>
-		<!-- DECRIPTION CON&SUBCON END -->
+		<?#-- DECRIPTION CON&SUBCON END --?>
 
-		<!-- DECRIPTION TOTAL START -->
+		<?#-- DECRIPTION TOTAL START --?>
 		<div class="show-totals">
 			<h4>Calculatie</h4>
 			<table class="table table-striped only-end-total">
@@ -1280,11 +1279,11 @@ if (!$project || !$project->isOwner()) {
 			</table>
 		</div>
 		<h5><strong>Weergegeven bedragen zijn exclusief BTW</strong></h5>
-		<!-- DECRIPTION TOTAL END -->
+		<?#-- DECRIPTION TOTAL END --?>
 	</div>
 
 	<div class="white-row show-activity">
-		<!--PAGE HEADER START-->
+		<?#--PAGE HEADER START--?>
 		<div class="row">
 			<div class="col-sm-6">
 				{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
@@ -1302,9 +1301,9 @@ if (!$project || !$project->isOwner()) {
 			</div>
 		</div>
 		<hr class="margin-top10 margin-bottom10">
-		<!--PAGE HEADER END-->
+		<?#--PAGE HEADER END--?>
 
-		<!-- DECRIPTION ESTIM CON&SUBCON START -->
+		<?#-- DECRIPTION ESTIM CON&SUBCON START --?>
 		<div class="show-all" style="display:none;">
 			<h4>Stelposten Aanneming</h4>
 			<table class="table table-striped only-end-total">
@@ -1422,9 +1421,9 @@ if (!$project || !$project->isOwner()) {
 				</tbody>
 			</table>
 		</div>
-		<!-- DECRIPTION ESTIM CON&SUBCON END -->
+		<?#-- DECRIPTION ESTIM CON&SUBCON END --?>
 
-		<!-- DECRIPTION ESTIM TOTAL START -->
+		<?#-- DECRIPTION ESTIM TOTAL START --?>
 		<div class="show-totals">
 			<h4>Stelposten</h4>
 			<table class="table table-striped only-end-total">
@@ -1498,11 +1497,11 @@ if (!$project || !$project->isOwner()) {
 			</table>
 		</div>
 		<h5><strong>Weergegeven bedragen zijn exclusief BTW</strong></h5>
-		<!-- DECRIPTION ESTIM CON&SUBCON ENDT -->
+		<?#-- DECRIPTION ESTIM CON&SUBCON ENDT --?>
 	</div>
 
 	<div class="white-row show-activity">
-		<!--PAGE HEADER START-->
+		<?#--PAGE HEADER START--?>
 		<div class="row">
 			<div class="col-sm-6">
 				{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
@@ -1520,9 +1519,9 @@ if (!$project || !$project->isOwner()) {
 			</div>
 		</div>
 		<hr class="margin-top10 margin-bottom10">
-		<!--PAGE HEADER END-->
+		<?#--PAGE HEADER END--?>
 
-		<!-- DECRIPTION LESS CON&SUBCON START -->
+		<?#-- DECRIPTION LESS CON&SUBCON START --?>
 		<div class="show-all" style="display:none;">
 			<h4>Minderwerk Aanneming</h4>
 			<table class="table table-striped only-end-total">
@@ -1640,9 +1639,9 @@ if (!$project || !$project->isOwner()) {
 				</tbody>
 			</table>
 		</div>
-		<!-- DECRIPTION LESS CON&SUBCON END -->
+		<?#-- DECRIPTION LESS CON&SUBCON END --?>
 
-		<!-- DECRIPTION LESS TOTAL START -->
+		<?#-- DECRIPTION LESS TOTAL START --?>
 		<div class="show-totals">
 			<h4>Minderwerk</h4>
 			<table class="table table-striped only-end-total">
@@ -1716,11 +1715,11 @@ if (!$project || !$project->isOwner()) {
 			</table>
 		</div>
 		<h5><strong>Weergegeven bedragen zijn exclusief BTW</strong></h5>
-		<!-- DECRIPTION LESS TOTAL END -->
+		<?#-- DECRIPTION LESS TOTAL END --?>
 	</div>
 
 	<div class="white-row show-activity">
-		<!--PAGE HEADER START-->
+		<?#--PAGE HEADER START--?>
 		<div class="row">
 			<div class="col-sm-6">
 				{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
@@ -1736,9 +1735,9 @@ if (!$project || !$project->isOwner()) {
 				</div>
 		</div>
 		<hr class="margin-top10 margin-bottom10">
-		<!--PAGE HEADER END-->
+		<?#--PAGE HEADER END--?>
 
-		<!-- DECRIPTION MORE CON&SUBCON START -->
+		<?#-- DECRIPTION MORE CON&SUBCON START --?>
 		<div class="show-all" style="display:none;">
 			<h4>Meerwerk Aanneming</h4>
 			<table class="table table-striped only-end-total">
@@ -1848,9 +1847,9 @@ if (!$project || !$project->isOwner()) {
 				</tbody>
 			</table>
 		</div>
-		<!-- DECRIPTION MORE CON&SUBCON END -->
+		<?#-- DECRIPTION MORE CON&SUBCON END --?>
 
-		<!-- DECRIPTION MORE TOTAL START -->
+		<?#-- DECRIPTION MORE TOTAL START --?>
 		<div class="show-totals">
 			<h4>Meerwerk</h4>
 			<table class="table table-striped only-end-total">
@@ -1922,11 +1921,11 @@ if (!$project || !$project->isOwner()) {
 			</table>
 		</div>
 		<h5><strong>Weergegeven bedragen zijn exclusief BTW</strong></h5>
-		<!-- DECRIPTION MORE TOTAL END -->
+		<?#-- DECRIPTION MORE TOTAL END --?>
 	</div>
 
 	<div class="white-row show-note">
-		<!--PAGE HEADER START-->
+		<?#--PAGE HEADER START--?>
 		<div class="row">
 			<div class="col-sm-6">
 				{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
@@ -1942,9 +1941,9 @@ if (!$project || !$project->isOwner()) {
 				</div>
 		</div>
 		<hr class="margin-top10 margin-bottom10">
-		<!--PAGE HEADER END-->
+		<?#--PAGE HEADER END--?>
 
-		<!-- DECRIPTION CON&SUBCON START -->
+		<?#-- DECRIPTION CON&SUBCON START --?>
 		<div class="show-all" style="display:none;">
 			<h4>Omschrijving werkzaamheden aanneming</h4>
 			<table class="table table-striped">
@@ -1994,9 +1993,9 @@ if (!$project || !$project->isOwner()) {
 				</tbody>
 			</table>
 		</div>
-		<!-- DECRIPTION CON&SUBCON END -->
+		<?#-- DECRIPTION CON&SUBCON END --?>
 
-		<!-- DECRIPTION TOTAL START -->
+		<?#-- DECRIPTION TOTAL START --?>
 		<div class="show-totals">
 			<h4>Omschrijving werkzaamheden</h4>
 			<table class="table table-striped">
@@ -2022,11 +2021,11 @@ if (!$project || !$project->isOwner()) {
 				</tbody>
 			</table>
 		</div>
-		<!-- DECRIPTION TOTAL END -->
+		<?#-- DECRIPTION TOTAL END --?>
 	</div>
 	</form>
 
-	<!-- INVOICE FOOTER -->
+	<?#-- INVOICE FOOTER --?>
 	<div class="row">
 	<div class="col-sm-6"></div>
 		<div class="col-sm-6 text-right">
@@ -2060,7 +2059,7 @@ if (!$project || !$project->isOwner()) {
 	</div>
 	</section>
 </div>
-<!-- /WRAPPER -->
+<?#-- /WRAPPER --?>
 @stop
 
 <?php } ?>
