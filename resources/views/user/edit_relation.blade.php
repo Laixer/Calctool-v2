@@ -4,7 +4,6 @@ $relation = \Calctool\Models\Relation::find(Route::Input('relation_id'));
 if (!$relation || !$relation->isOwner()) {
 	$common_access_error = true;
 } else {
-	$iban = \Calctool\Models\Iban::where('relation_id','=',$relation->id)->first();
 	$contact = \Calctool\Models\Contact::where('relation_id','=',$relation->id)->first();
 }
 ?>
@@ -83,10 +82,6 @@ $(document).ready(function() {
 			$(this).addClass("error-input");
 		}
 	});
-
-
-
-
 });
 </script>
 
@@ -143,7 +138,7 @@ $(document).ready(function() {
 						<div id="company" class="tab-pane active">
 
 							<form method="POST" action="/relation/update" accept-charset="UTF-8">
-			                                {!! csrf_field() !!}
+			                {!! csrf_field() !!}
 							<h4>{{ ucfirst(\Calctool\Models\RelationKind::find($relation->kind_id)->kind_name) }}e relatie</h4>
 							<div class="row">
 								<div class="col-md-2">
@@ -291,20 +286,20 @@ $(document).ready(function() {
 							<h4>Betalingsgegevens {{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</h4>
 							<form method="POST" action="/relation/iban/update" accept-charset="UTF-8">
                             {!! csrf_field() !!}
+                            <input type="hidden" name="id" id="id" value="{{ $relation->id }}"/>
 							<div class="row">
 
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="iban">IBAN rekeningnummer</label>
-										<input name="iban" id="iban" type="text" value="{{ Input::old('iban') ? Input::old('iban') : ($iban ? $iban->iban : '') }}" class="form-control"/>
-										<input type="hidden" name="id" id="id" value="{{ $iban ? $iban->id : '' }}"/>
+										<input name="iban" id="iban" type="text" value="{{ Input::old('iban') ? Input::old('iban') : $relation->iban }}" class="form-control"/>
 									</div>
 								</div>
 
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="btw">Naam rekeninghouder</label>
-										<input name="iban_name" id="iban_name" type="text" value="{{ Input::old('iban_name') ? Input::old('iban_name') : ($iban ? $iban->iban_name : '') }}" class="form-control"/>
+										<input name="iban_name" id="iban_name" type="text" value="{{ Input::old('iban_name') ? Input::old('iban_name') : $relation->iban_name }}" class="form-control"/>
 									</div>
 								</div>
 

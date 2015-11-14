@@ -42,7 +42,7 @@ if (!$project || !$project->isOwner()) {
 <?php }else{ ?>
 
 @section('content')
-<?# -- WRAPPER -- ?>
+
 <script type="text/javascript">
 	$(document).ready(function() {
         $('.only-end-total tr').each(function() {

@@ -7,6 +7,7 @@ use \Calctool\Models\PartType;
 use \Calctool\Models\Detail;
 use \Calctool\Models\TimesheetKind;
 use \Calctool\Calculus\TimesheetOverview;
+use \Calctool\Models\MoreLabor;
 ?>
 
 @extends('layout.master')
@@ -121,10 +122,10 @@ use \Calctool\Calculus\TimesheetOverview;
 								<tr>
 									<th class="col-md-1">Datum</th>
 									<th class="col-md-1">Uren</th>
-									<th class="col-md-1">Soort</th>
-									<th class="col-md-3">Project</th>
-									<th class="col-md-2">Werkzaamheid</th>
-									<th class="col-md-3">Omschrijving</th>
+									<th class="col-md-2">Soort</th>
+									<th class="col-md-2">Project</th>
+									<th class="col-md-3">Werkzaamheid</th>
+									<th class="col-md-2">Omschrijving</th>
 									<th class="col-md-1">&nbsp;</th>
 								</tr>
 							</thead>
@@ -137,10 +138,10 @@ use \Calctool\Calculus\TimesheetOverview;
 								<tr data-id="{{ $timesheet->id }}">
 									<td class="col-md-1">{{ date('d-m-Y', strtotime($timesheet->register_date)) }}</td>
 									<td class="col-md-1">{{ number_format($timesheet->register_hour, 2,",",".") }}</td>
-									<td class="col-md-1">{{ ucwords(TimesheetKind::find($timesheet->timesheet_kind_id)->kind_name) }}</td>
-									<td class="col-md-3">{{ $project->project_name }}</td>
-									<td class="col-md-2">{{ $activity->activity_name }}</td>
-									<td class="col-md-3">{{ $timesheet->note }}</td>
+									<td class="col-md-2">{{ ucwords(TimesheetKind::find($timesheet->timesheet_kind_id)->kind_name) }}</td>
+									<td class="col-md-2">{{ $project->project_name }}</td>
+									<td class="col-md-3">{{ $activity->activity_name }}</td>
+									<td class="col-md-2">{{ $timesheet->note }}</td>
 									<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times deleterow"></button></td>
 								</tr>
 								@endforeach
@@ -150,7 +151,7 @@ use \Calctool\Calculus\TimesheetOverview;
 								<tr><!-- item -->
 									<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text"/></td>
 									<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
-									<td class="col-md-1">
+									<td class="col-md-2">
 										<select name="typename" id="typename" class="getact form-control-sm-text">
 											<option selected="selected" value="-1" >Selecteer</option>
 											@foreach (TimesheetKind::all() as $typename)
@@ -158,7 +159,7 @@ use \Calctool\Calculus\TimesheetOverview;
 											@endforeach
 										</select>
 									</td>
-									<td class="col-md-3">
+									<td class="col-md-2">
 										<select name="projname" id="projname" class="getact form-control-sm-text">
 											<option selected="selected" value="-1" >Selecteer</option>
 											@foreach (Project::where('user_id','=',Auth::id())->whereNull('project_close')->get() as $projectname)
@@ -166,10 +167,10 @@ use \Calctool\Calculus\TimesheetOverview;
 											@endforeach
 										</select>
 									</td>
-									<td class="col-md-2">
+									<td class="col-md-3">
 										<select disabled="disabled" name="activity" id="activity" class="form-control-sm-text"></select>
 									</td>
-									<td class="col-md-3"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
+									<td class="col-md-2"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
 									<td class="col-md-1"><button id="addnew" class="btn btn-primary btn-xs"> Toevoegen</button></td>
 								</tr>
 							</tbody>

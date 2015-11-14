@@ -4,18 +4,18 @@ namespace Calctool\Http\Controllers;
 
 use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
-use Longman\TelegramBot\Telegram;
+use Longman\TelegramBot\Telegram as TTelegram;
 use Longman\TelegramBot\Request as TRequest;
 
 use \Calctool\Models\User;
 use \Calctool\Models\UserType;
 use \Calctool\Models\Audit;
+use \Calctool\Models\Telegram;
 
 use \Auth;
 use \Redis;
 use \Hash;
 use \Mailgun;
-use \Cookie;
 
 class AuthController extends Controller {
 
@@ -96,12 +96,6 @@ class AuthController extends Controller {
 		}
 	}
 
-	public function doLogout()
-	{
-		Auth::logout(); // log the user out of our application
-		return redirect('login'); // redirect the user to the login screen
-	}
-
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -173,7 +167,7 @@ class AuthController extends Controller {
 	private function informAdmin(User $newuser)
 	{
 		if (isset($_ENV['TELEGRAM_ENABLED']) && $_ENV['TELEGRAM_ENABLED'] == "true") {
-			$telegram = new Telegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
+			$telegram = new TTelegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
 			TRequest::initialize($telegram);
 
 			foreach (User::where('user_type','=',UserType::where('user_type','=','admin')->first()->id)->get() as $admin) {

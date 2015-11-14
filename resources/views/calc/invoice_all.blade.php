@@ -182,7 +182,6 @@ if (!$project || !$project->isOwner()) {
 			<div class="white-row">
 			<h2><strong>Factuurbeheer</strong></h2>
 			<table class="table table-striped">
-				<?# -- table head -- ?>
 				<thead>
 					<tr>
 						<th class="col-md-2">Onderdeel</th>

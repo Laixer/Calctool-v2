@@ -4,7 +4,6 @@ use \Calctool\Models\Contact;
 
 ?>
 
-
 @extends('layout.master')
 
 @section('content')

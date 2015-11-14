@@ -3,8 +3,8 @@
 @section('content')
 
 <script type="text/javascript">
-$(document).ready(function() {
-	$("[name='rememberme']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+$(function() {
+    $("[name='rememberme']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 });
 </script>
 

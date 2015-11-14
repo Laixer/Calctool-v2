@@ -10,38 +10,65 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-Route::get('login', function(){ return view('auth.login'); });
+
+Route::get('login', function(){
+	return view('auth.login');
+});
 Route::post('login', array('middleware' => 'guest', 'uses' => 'AuthController@doLogin'));
-Route::get('register', function(){ return View::make('auth.registration'); });
+Route::get('register', function(){
+	return view('auth.registration');
+});
 Route::post('register', array('middleware' => 'guest', 'as' => 'register', 'uses' => 'AuthController@doRegister'));
 Route::get('confirm/{api}/{token}', array('middleware' => 'guest', 'as' => 'register', 'uses' => 'AuthController@doActivate'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
 Route::post('password/reset', array('middleware' => 'guest', 'as' => 'reset', 'uses' => 'AuthController@doBlockPassword'));
-Route::get('password/{api}/{token}', function(){ return View::make('auth.password'); })->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
+Route::get('password/{api}/{token}', function() {
+	return view('auth.password');
+})->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
 Route::post('password/{api}/{token}', array('middleware' => 'guest', 'as' => 'register', 'uses' => 'AuthController@doNewPassword'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
 
 Route::get('api/v1', array('uses' => 'ApiController@getApiRoot'));
 
-Route::get('about', function() { return View::make('generic.about'); });
-Route::get('faq', function() { return View::make('generic.faq'); });
-Route::get('terms-and-conditions', function() { return View::make('generic.terms'); });
-Route::get('privacy-policy', function() { return View::make('generic.privacy'); });
-Route::get('countdown', function() { return View::make('generic.countdown'); });
+Route::get('about', function() {
+	return view('generic.about');
+});
+Route::get('faq', function() {
+	return view('generic.faq');
+});
+Route::get('terms-and-conditions', function() {
+	return view('generic.terms');
+});
+Route::get('privacy-policy', function() {
+	return view('generic.privacy');
+});
 
 Route::post('payment/webhook/', array('as' => 'payment.order', 'uses' => 'UserController@doPaymentUpdate'));
 Route::get('hidenextstep', array('uses' => 'AuthController@doHideNextStep'));
 
-Route::get('c4586v34674v4&vwasrt/footer_pdf', function() { return View::make('calc.footer_pdf'); });
+Route::get('c4586v34674v4&vwasrt/footer_pdf', function() {
+	return view('calc.footer_pdf');
+});
 
 Route::group(array('middleware' => 'auth'), function()
 {
 	/* Generic pages */
-	Route::get('/', function(){ return View::make('base.home'); });
+	Route::get('/', function() {
+		return view('base.home');
+	});
 	Route::get('admin/switch/back', array('uses' => 'AdminController@getSwitchSessionBack'));
-	Route::get('logout', array('as' => 'logout', 'uses' => 'AuthController@doLogout'));
-	Route::get('result/project-{project_id}', function(){ return view('calc.result'); })->where('project_id', '[0-9]+');
+	Route::get('logout', function() {
+		Auth::logout();
+		return redirect('login');
+	});
+	Route::get('result/project-{project_id}', function(){
+		return view('calc.result');
+	})->where('project_id', '[0-9]+');
 	Route::get('res-{resource_id}/download', array('uses' => 'ProjectController@downloadResource'))->where('resource_id', '[0-9]+');
-	Route::get('myaccount', array('as' => 'account', 'uses' => 'UserController@getMyAccount'));
-	Route::get('myaccount/telegram', array('uses' => 'UserController@getMyAccountTelegram'));
+	Route::get('myaccount', function() {
+		return view('user.myaccount');
+	});
+	Route::get('myaccount/telegram', function() {
+		return view('user.myaccount_telegram');
+	});
 	Route::get('myaccount/telegram/unchain', array('as' => 'account', 'uses' => 'UserController@getMyAccountTelegramUnchain'));
 	Route::get('myaccount/deactivate', array('uses' => 'UserController@getMyAccountDeactivate'));
 	Route::post('myaccount/telegram/update', array('as' => 'account', 'uses' => 'UserController@doMyAccountTelegramUpdate'));
@@ -51,7 +78,9 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::post('myaccount/preferences/update', array('as' => 'preferences.update', 'uses' => 'UserController@doUpdatePreferences'));
 	Route::post('myaccount/notepad/save', array('uses' => 'UserController@doUpdateNotepad'));
 
-	Route::get('payment', array('as' => 'security.update', 'uses' => 'UserController@getPayment'));
+	Route::get('payment', function() {
+		return view('user.payment');
+	});
 	Route::post('payment', array('as' => 'security.update', 'uses' => 'UserController@doPayment'));
 	Route::get('payment/order/{token}', array('as' => 'security.update', 'uses' => 'UserController@getPaymentFinish'))->where('token', '[0-9a-z]{40}');
 
@@ -82,7 +111,9 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::get('offerversions/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOfferAll'))->where('project_id', '[0-9]+');
 	Route::get('offer/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOffer'))->where('project_id', '[0-9]+');
 	Route::post('offer/project-{project_id}', array('as' => 'invoice', 'uses' => 'OfferController@doNewOffer'));
-	Route::get('offer/project-{project_id}/offer-{offer_id}', function(){ return View::make('calc.offer_show_pdf'); })->where('project_id', '[0-9]+')->where('offer_id', '[0-9]+');
+	Route::get('offer/project-{project_id}/offer-{offer_id}', function() {
+		return View::make('calc.offer_show_pdf');
+	})->where('project_id', '[0-9]+')->where('offer_id', '[0-9]+');
 	Route::post('offer/close', array('as' => 'invoice', 'uses' => 'OfferController@doOfferClose'));
 
 	Route::get('offer/pdf/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOfferPDF'))->where('project_id', '[0-9]+');
@@ -171,13 +202,28 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::get('mycompany', array('as' => 'mycompany', 'uses' => 'RelationController@getMyCompany'));
 	Route::post('mycompany/iban/update', array('as' => 'iban.update', 'uses' => 'UserController@doUpdateIban'));
 	Route::post('mycompany/contact/new', array('as' => 'relation.new', 'uses' => 'RelationController@doMyCompanyNewContact'));
-	Route::get('mycompany/contact/new', function(){ return View::make('user.mycompany_contact'); });
+	Route::get('mycompany/contact/new', function() {
+		return view('user.mycompany_contact');
+	});
 	Route::post('mycompany/quickstart', array('uses' => 'QuickstartController@doNewMyCompanyQuickstart'));
 	Route::get('relation-{relation_id}/contact-{contact_id}/vcard', array('uses' => 'RelationController@downloadVCard'))->where('relation_id', '[0-9]+')->where('contact_id', '[0-9]+');
 
 	Route::post('relation/updatemycompany', array('as' => 'relation.update', 'uses' => 'RelationController@doUpdateMyCompany'));
 	Route::post('relation/newmycompany', array('as' => 'relation.new', 'uses' => 'RelationController@doNewMyCompany'));
 	Route::post('relation/logo/save', array('as' => 'relation.logo', 'uses' => 'RelationController@doNewLogo'));
+
+	/* Wholesale */
+	Route::get('wholesale', function() {
+		return view('user.wholesale');
+	});
+	Route::get('wholesale/new', function() {
+		return view('user.new_wholesale');
+	});
+	Route::post('wholesale/new', array('uses' => 'WholesaleController@doNew'));
+	Route::post('wholesale/update', array('uses' => 'WholesaleController@doUpdate'));
+	Route::get('wholesale-{wholesale_id}/edit', function() {
+		return view('user.edit_wholesale');
+	})->where('wholesale_id', '[0-9]+');
 
 	/* Project pages */
 	Route::get('project/new', array('as' => 'project.new', 'uses' => 'ProjectController@getNew'));
@@ -212,36 +258,46 @@ Route::group(array('middleware' => 'auth'), function()
 Route::group(array('before' => 'admin'), function()
 {
 	/* Admin */
-	Route::get('admin', array('as' => 'admin', 'uses' => 'AdminController@getDashboard'));
-	Route::get('admin/user/new', array('as' => 'user', 'uses' => 'UserController@getNew'));
+	Route::get('admin', function() {
+		return view('admin.dashboard');
+	});
+	Route::get('admin/user/new', function() {
+		return view('admin.new_user');
+	});
 	Route::post('admin/user/new', array('as' => 'user', 'uses' => 'AdminController@doNewUser'));
-	Route::get('admin/user', array('as' => 'user', 'uses' => 'UserController@getAll'));
+	Route::get('admin/user', function() {
+		return view('admin.user');
+	});
 	Route::get('admin/user-{user_id}/edit', function() {
-		return View::make('admin.edit_user');
+		return view('admin.edit_user');
 	});
 	Route::get('admin/user-{user_id}/switch', array('as' => 'user', 'uses' => 'AdminController@getSwitchSession'));
 	Route::get('admin/user-{user_id}/demo', array('as' => 'user', 'uses' => 'AdminController@getDemoProject'));
 	Route::post('admin/user-{user_id}/edit', array('as' => 'user', 'uses' => 'AdminController@doUpdateUser'));
-	Route::get('admin/alert', array('as' => 'user', 'uses' => 'AdminController@getAlert'));
+	Route::get('admin/alert', function() {
+		return view('admin.alert');
+	});
 	Route::post('admin/alert/new', array('as' => 'user', 'uses' => 'AdminController@doNewAlert'));
 	Route::post('admin/alert/delete', array('as' => 'user', 'uses' => 'AdminController@doDeleteAlert'));
-	Route::get('admin/phpinfo', array('as' => 'user', 'uses' => 'AdminController@getPHPInfo'));
+	Route::get('admin/phpinfo', function() {
+		return view('admin.phpinfo');
+	});
 	Route::post('admin/transaction/{transcode}/refund', array('as' => 'user', 'uses' => 'AdminController@doRefund'));
 	Route::get('admin/payment', function() {
-		return View::make('admin.transaction');
+		return view('admin.transaction');
 	});
 	Route::get('admin/transaction/{transcode}', function() {
-		return View::make('admin.transaction_code');
+		return view('admin.transaction_code');
 	});
 	Route::get('admin/environment', function() {
-		return View::make('admin.server');
+		return view('admin.server');
 	});
 	Route::get('admin/resource', function() {
-		return View::make('admin.resource');
+		return view('admin.resource');
 	});
 	Route::post('admin/resource/delete', array('as' => 'user', 'uses' => 'AdminController@doDeleteResource'));
 	Route::get('admin/log', function() {
-		return View::make('admin.log');
+		return view('admin.log');
 	});
 	Route::get('admin/log/truncate', array('as' => 'user', 'uses' => 'AdminController@doTruncateLog'));
 });

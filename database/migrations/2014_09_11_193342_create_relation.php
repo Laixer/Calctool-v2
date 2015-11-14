@@ -59,6 +59,8 @@ class CreateRelation extends Migration {
 			$table->string('email', 80)->nullable();
 			$table->text('note')->nullable();
 			$table->string('website', 180)->nullable();
+			$table->string('iban', 25)->nullable();
+			$table->string('iban_name')->nullable();
 			$table->nullableTimestamps();
 			$table->integer('logo_id')->nullable()->unsigned();
 			$table->foreign('logo_id')->references('id')->on('resource')->onUpdate('cascade')->onDelete('set null');
@@ -86,8 +88,8 @@ class CreateRelation extends Migration {
 			$table->string('email', 80)->nullable();
 			$table->text('note')->nullable();
 			$table->string('website', 180)->nullable();
-			$table->string('iban', 25);
-			$table->string('iban_name');
+			$table->string('iban', 25)->nullable();
+			$table->string('iban_name')->nullable();
 			$table->nullableTimestamps();
 			$table->integer('logo_id')->nullable()->unsigned();
 			$table->foreign('logo_id')->references('id')->on('resource')->onUpdate('cascade')->onDelete('set null');
@@ -123,12 +125,6 @@ class CreateRelation extends Migration {
 			$table->foreign('self_id')->references('id')->on('relation')->onUpdate('cascade')->onDelete('restrict');
 		});
 
-		Schema::table('iban', function(Blueprint $table)
-		{
-			$table->integer('relation_id')->unsigned()->nullable();
-			$table->foreign('relation_id')->references('id')->on('relation')->onUpdate('cascade')->onDelete('cascade');
-		});
-
 		Schema::table('project', function(Blueprint $table)
 		{
 			$table->integer('client_id')->unsigned();
@@ -152,11 +148,6 @@ class CreateRelation extends Migration {
 		Schema::table('project', function(Blueprint $table)
 		{
 			$table->dropForeign('project_client_id_foreign');
-		});
-
-		Schema::table('iban', function(Blueprint $table)
-		{
-			$table->dropForeign('iban_relation_id_foreign');
 		});
 
 		Schema::table('user_account', function(Blueprint $table)

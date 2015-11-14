@@ -857,7 +857,6 @@ if (!$project || !$project->isOwner()) {
 
 				<h4>Totalen Offerte</h4>
 				<table class="table table-striped hide-btw2">
-					<?# -- table head -- ?>
 					<thead>
 						<tr>
 							<th class="col-md-5">&nbsp;</th>

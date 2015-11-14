@@ -2,7 +2,7 @@
 
 @section('content')
 <script type="text/javascript">
-$(document).ready(function() {
+$(function() {
 	$(window).keydown(function(event){
 		if(event.keyCode == 13 && !$('#tos').prop('checked')) {
 			event.preventDefault();
@@ -111,6 +111,8 @@ $(document).ready(function() {
 						</ul>
 
 						<hr class="half-margins">
+
+						<h4>Direct inloggen?</h4>
 
 						<p>
 							Heb je al een account?
