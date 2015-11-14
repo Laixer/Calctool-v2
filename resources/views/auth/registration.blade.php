@@ -112,6 +112,8 @@ $(function() {
 
 						<hr class="half-margins">
 
+						<h4>Direct inloggen?</h4>
+
 						<p>
 							Heb je al een account?
 							<a href="/login">log dan hier in</a>

@@ -201,7 +201,7 @@ else
 			<h2><strong>Dash</strong>board</h2>
 			<div class="row">
 
-				<div class="col-sm-6 col-md-3">
+				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
 							<a class="item-hover" href="/mycompany">
@@ -217,7 +217,7 @@ else
 					</div>
 				</div>
 
-				<div class="col-sm-6 col-md-3">
+				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
 							<a class="item-hover" href="/material">
@@ -232,7 +232,7 @@ else
 					</div>
 				</div>
 
-				<div class="col-sm-6 col-md-3">
+				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
 							<a class="item-hover" href="/timesheet">
@@ -247,20 +247,53 @@ else
 					</div>
 				</div>
 
-				<div class="col-sm-6 col-md-3">
+				<div class="col-sm-6 col-md-2">
+					<div class="item-box item-box-show fixed-box">
+						<figure>
+							<a class="item-hover" href="/purchase">
+								<span class="overlay color2"></span>
+								<span class="inner">
+									<span class="block fa fa-dropbox fsize60"></span>
+									<strong>Inkoopfacturen</strong>
+								</span>
+							</a>
+							<a href="/purchase" class="btn btn-primary add_to_cart"><i class="fa fa-dropbox"></i> Inkoopfacturen</a>
+						</figure>
+					</div>
+				</div>
+
+				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
 							<a class="item-hover" href="/purchase">
 								<span class="overlay color2"></span>
 								<span class="inner">
 									<span class="block fa fa-shopping-cart fsize60"></span>
-									<strong>Inkoopfacturen</strong>
+									<strong>Leveranciers</strong>
 								</span>
 							</a>
-							<a href="/purchase" class="btn btn-primary add_to_cart"><i class="fa fa-shopping-cart"></i> Inkoopfacturen</a>
+							<a href="/purchase" class="btn btn-primary add_to_cart"><i class="fa fa-shopping-cart"></i> Leveranciers</a>
 						</figure>
 					</div>
 				</div>
+
+				<div class="col-sm-6 col-md-2">
+					<div class="item-box item-box-show fixed-box">
+						<figure>
+							<a class="item-hover" href="/">
+								<span class="overlay color2"></span>
+								<span class="inner">
+									<span class="block fa fa-bar-chart-o fsize60"></span>
+									<strong>Financieel</strong>
+									<br>
+									<span>Comming Soon</span>
+								</span>
+							</a>
+							<a href="/" class="btn btn-primary add_to_cart"><i class="fa fa-bar-chart-o"></i> Financieel</a>
+						</figure>
+					</div>
+				</div>
+
 			</div>
 
 			<div class="row">

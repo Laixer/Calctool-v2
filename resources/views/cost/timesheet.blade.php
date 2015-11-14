@@ -7,6 +7,7 @@ use \Calctool\Models\PartType;
 use \Calctool\Models\Detail;
 use \Calctool\Models\TimesheetKind;
 use \Calctool\Calculus\TimesheetOverview;
+use \Calctool\Models\MoreLabor;
 ?>
 
 @extends('layout.master')
