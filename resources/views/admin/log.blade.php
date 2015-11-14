@@ -34,7 +34,7 @@
 			<div class="row">
 				<div class="form-group">
 					<div class="col-md-12">
-						<textarea name="log" id="log" rows="25" class="form-control">{{ File::get('../app/storage/logs/laravel.log') }}</textarea>
+						<textarea name="log" id="log" rows="25" class="form-control">{{ file_get_contents('../storage/logs/laravel.log') }}</textarea>
 					</div>
 				</div>
 			</div>

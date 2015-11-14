@@ -141,71 +141,71 @@ class AdminController extends Controller {
 			'expdate' => array('required'),
 		]);
 
-			/* General */
-			$user = new User;
-			$user->username = strtolower(trim($request->input('username')));
-			$user->secret = \Hash::make($request->input('secret'));
-			$user->user_type = $request->input('type');
+		/* General */
+		$user = new User;
+		$user->username = strtolower(trim($request->input('username')));
+		$user->secret = Hash::make($request->input('secret'));
+		$user->user_type = $request->input('type');
 
-			/* Server */
-			$user->api = md5(mt_rand());
-			$user->token = sha1($user->secret);
-			$user->referral_key = md5(mt_rand());
-			$user->ip = $_SERVER['REMOTE_ADDR'];
+		/* Server */
+		$user->api = md5(mt_rand());
+		$user->token = sha1($user->secret);
+		$user->referral_key = md5(mt_rand());
+		$user->ip = $_SERVER['REMOTE_ADDR'];
 
-			/* Contact */
-			if ($request->input('firstname'))
-				$user->firstname = $request->input('firstname');
-			else
-				$user->firstname = $user->username;
-			if ($request->input('lastname'))
-				$user->lastname = $request->input('lastname');
-			$user->email = $request->input('email');
-			if ($request->input('mobile'))
-				$user->mobile = $request->input('mobile');
-			if ($request->input('telephone'))
-				$user->phone = $request->input('telephone');
-			if ($request->input('website'))
-				$user->website = $request->input('website');
+		/* Contact */
+		if ($request->input('firstname'))
+			$user->firstname = $request->input('firstname');
+		else
+			$user->firstname = $user->username;
+		if ($request->input('lastname'))
+			$user->lastname = $request->input('lastname');
+		$user->email = $request->input('email');
+		if ($request->input('mobile'))
+			$user->mobile = $request->input('mobile');
+		if ($request->input('telephone'))
+			$user->phone = $request->input('telephone');
+		if ($request->input('website'))
+			$user->website = $request->input('website');
 
-			/* Adress */
-			if ($request->input('address_street'))
-				$user->address_street = $request->input('address_street');
-			if ($request->input('address_number'))
-				$user->address_number = $request->input('address_number');
-			if ($request->input('address_zipcode'))
-				$user->address_postal = $request->input('address_zipcode');
-			if ($request->input('address_city'))
-				$user->address_city = $request->input('address_city');
-			$user->province_id = $request->input('province');
-			$user->country_id = $request->input('country');
+		/* Adress */
+		if ($request->input('address_street'))
+			$user->address_street = $request->input('address_street');
+		if ($request->input('address_number'))
+			$user->address_number = $request->input('address_number');
+		if ($request->input('address_zipcode'))
+			$user->address_postal = $request->input('address_zipcode');
+		if ($request->input('address_city'))
+			$user->address_city = $request->input('address_city');
+		$user->province_id = $request->input('province');
+		$user->country_id = $request->input('country');
 
-			/* Overig */
-			$user->expiration_date = $request->input('expdate');
-			if ($request->input('note'))
-				$user->note = $request->input('note');
-			if ($request->input('notepad'))
-				$user->notepad = $request->input('notepad');
-			if ($request->input('confirmdate'))
-				$user->confirmed_mail = $request->input('confirmdate');
-			if ($request->input('bandate'))
-				$user->banned = $request->input('bandate');
-			if ($request->input('toggle-active'))
-				$user->active = true;
-			else
-				$user->active = false;
-			if ($request->input('toggle-api'))
-				$user->api_access = true;
-			else
-				$user->api_access = false;
-			if (!$request->input('gender') || $request->input('gender') == '-1')
-				$user->gender = NULL;
-			else
-				$user->gender = $request->input('gender');
+		/* Overig */
+		$user->expiration_date = $request->input('expdate');
+		if ($request->input('note'))
+			$user->note = $request->input('note');
+		if ($request->input('notepad'))
+			$user->notepad = $request->input('notepad');
+		if ($request->input('confirmdate'))
+			$user->confirmed_mail = $request->input('confirmdate');
+		if ($request->input('bandate'))
+			$user->banned = $request->input('bandate');
+		if ($request->input('toggle-active'))
+			$user->active = true;
+		else
+			$user->active = false;
+		if ($request->input('toggle-api'))
+			$user->api_access = true;
+		else
+			$user->api_access = false;
+		if (!$request->input('gender') || $request->input('gender') == '-1')
+			$user->gender = NULL;
+		else
+			$user->gender = $request->input('gender');
 
-			$user->save();
+		$user->save();
 
-			return back()->with('success', 1);
+		return back()->with('success', 1);
 	}
 
 	public function doUpdateUser(Request $request, $user_id)
@@ -220,7 +220,7 @@ class AdminController extends Controller {
 		if ($request->input('username'))
 			$user->username = strtolower(trim($request->input('username')));
 		if ($request->input('secret'))
-			$user->secret = \Hash::make($request->input('secret'));
+			$user->secret = Hash::make($request->input('secret'));
 		if ($request->input('type'))
 			$user->user_type = $request->input('type');
 
@@ -283,14 +283,14 @@ class AdminController extends Controller {
 		return back()->with('success', 1);
 	}
 
-	public function getSwitchSession()
+	public function getSwitchSession(Request $request)
 	{
 		if (!Auth::user()->isAdmin())
 			return back();
 
 		$cookie = cookie('swpsess', Auth::id(), 180);
 
-		Auth::loginUsingId(Route::input('user_id'));
+		Auth::loginUsingId($request->input('user_id'));
 
 		return redirect('/')->withCookie($cookie);
 
@@ -315,19 +315,17 @@ class AdminController extends Controller {
 	public function doDeleteResource(Request $request)
 	{
 		$this->validate($request, [
-			/* General */
 			'id' => array('required'),
 		]);
 
-			/* General */
-			$resource = Resource::find($request->input('id'));
-			$resource->unlinked = true;
+		$resource = Resource::find($request->input('id'));
+		$resource->unlinked = true;
 
-			unlink($resource->file_location);
+		unlink($resource->file_location);
 
-			$resource->save();
+		$resource->save();
 
-			return json_encode(['success' => 1]);
+		return json_encode(['success' => 1]);
 	}
 
 
@@ -336,15 +334,14 @@ class AdminController extends Controller {
 		if (!Auth::user()->isAdmin())
 			return back();
 
-		//File::put('../app/storage/logs/laravel.log', '');
-		file_put_contents("../app/storage/logs/laravel.log", "");
+		file_put_contents("../storage/logs/laravel.log", "");
 
 		return back()->with('success', 1);
 	}
 
-	public function getDemoProject()
+	public function getDemoProject(Request $request)
 	{
-		DemoProjectTemplate::setup(Route::input('user_id'));
+		DemoProjectTemplate::setup($request->input('user_id'));
 
 		return back()->with('success', 1);
 	}

@@ -25,7 +25,6 @@ Route::get('about', function() { return View::make('generic.about'); });
 Route::get('faq', function() { return View::make('generic.faq'); });
 Route::get('terms-and-conditions', function() { return View::make('generic.terms'); });
 Route::get('privacy-policy', function() { return View::make('generic.privacy'); });
-Route::get('countdown', function() { return View::make('generic.countdown'); });
 
 Route::post('payment/webhook/', array('as' => 'payment.order', 'uses' => 'UserController@doPaymentUpdate'));
 Route::get('hidenextstep', array('uses' => 'AuthController@doHideNextStep'));
