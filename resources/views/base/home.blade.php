@@ -22,12 +22,12 @@ $relation = Relation::find(Auth::user()->self_id);
 
 @if ($next_step && $next_step=='intro_'.Auth::id())
 <script type="text/javascript">
-	$(document).ready(function() {
-		$('#tutModal').modal('toggle');
-		$('button[data-action="hide"]').click(function(){
-			$.get("/hidenextstep").fail(function(e) { console.log(e); });
-		});
+$(function() {
+	$('#tutModal').modal('toggle');
+	$('button[data-action="hide"]').click(function(){
+		$.get("/hidenextstep").fail(function(e) { console.log(e); });
 	});
+});
 </script>
 <div class="modal fade" id="tutModal" tabindex="-1" role="dialog" aria-labelledby="tutModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
@@ -261,14 +261,14 @@ $relation = Relation::find(Auth::user()->self_id);
 				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
-							<a class="item-hover" href="/purchase">
+							<a class="item-hover" href="/wholesale">
 								<span class="overlay color2"></span>
 								<span class="inner">
 									<span class="block fa fa-shopping-cart fsize60"></span>
 									<strong>Leveranciers</strong>
 								</span>
 							</a>
-							<a href="/purchase" class="btn btn-primary add_to_cart"><i class="fa fa-shopping-cart"></i> Leveranciers</a>
+							<a href="/wholesale" class="btn btn-primary add_to_cart"><i class="fa fa-shopping-cart"></i> Leveranciers</a>
 						</figure>
 					</div>
 				</div>

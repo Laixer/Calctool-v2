@@ -203,7 +203,7 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::post('mycompany/iban/update', array('as' => 'iban.update', 'uses' => 'UserController@doUpdateIban'));
 	Route::post('mycompany/contact/new', array('as' => 'relation.new', 'uses' => 'RelationController@doMyCompanyNewContact'));
 	Route::get('mycompany/contact/new', function() {
-		return View::make('user.mycompany_contact');
+		return view('user.mycompany_contact');
 	});
 	Route::post('mycompany/quickstart', array('uses' => 'QuickstartController@doNewMyCompanyQuickstart'));
 	Route::get('relation-{relation_id}/contact-{contact_id}/vcard', array('uses' => 'RelationController@downloadVCard'))->where('relation_id', '[0-9]+')->where('contact_id', '[0-9]+');
@@ -211,6 +211,15 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::post('relation/updatemycompany', array('as' => 'relation.update', 'uses' => 'RelationController@doUpdateMyCompany'));
 	Route::post('relation/newmycompany', array('as' => 'relation.new', 'uses' => 'RelationController@doNewMyCompany'));
 	Route::post('relation/logo/save', array('as' => 'relation.logo', 'uses' => 'RelationController@doNewLogo'));
+
+	/* Wholesale */
+	Route::get('wholesale', function() {
+		return view('user.wholesale');
+	});
+	Route::get('wholesale/new', function() {
+		return view('user.new_wholesale');
+	});
+	Route::post('wholesale/new', array('uses' => 'WholesaleController@doNew'));
 
 	/* Project pages */
 	Route::get('project/new', array('as' => 'project.new', 'uses' => 'ProjectController@getNew'));
