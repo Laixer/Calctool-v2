@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use \Calctool\Models\Relation;
 use \Calctool\Models\RelationKind;
 use \Calctool\Models\Contact;
-use \Calctool\Models\Iban;
 
 use \Auth;
 use \Cookie;

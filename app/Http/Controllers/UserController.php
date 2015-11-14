@@ -8,7 +8,6 @@ use Longman\TelegramBot\Request as TRequest;
 
 use \Calctool\Models\Payment;
 use \Calctool\Models\User;
-use \Calctool\Models\Iban;
 use \Calctool\Models\Telegram;
 use \Calctool\Models\Audit;
 
@@ -396,14 +395,14 @@ class UserController extends Controller {
 			'iban_name' => array('required','max:50')
 		]);
 
-		$iban = Iban::find($request->get('id'));
-		if (!$iban || !$iban->isOwner()) {
+		$relation = \Calctool\Models\Relation::find($request->input('id'));
+		if (!$relation || !$relation->isOwner()) {
 			return back()->withInput($request->all());
 		}
-		$iban->iban = $request->get('iban');
-		$iban->iban_name = $request->get('iban_name');
+		$relation->iban = $request->get('iban');
+		$relation->iban_name = $request->get('iban_name');
 
-		$iban->save();
+		$relation->save();
 
 		$data = array('email' => Auth::user()->email, 'username' => Auth::user()->username);
 		Mailgun::send('mail.iban_update', $data, function($message) use ($data) {
@@ -411,7 +410,7 @@ class UserController extends Controller {
 		});
 
 		if ($_ENV['TELEGRAM_ENABLED']) {
-			$tgram = Telegram::where('user_id','=',$user->id)->first();
+			$tgram = Telegram::where('user_id','=',Auth::id())->first();
 			if ($tgram && $tgram->alert) {
 
 				// create Telegram API object
@@ -431,23 +430,6 @@ class UserController extends Controller {
 		$log->event = '[IBAN_UPDATE] [SUCCESS]';
 		$log->user_id = Auth::id();
 		$log->save();
-
-		return back()->with('success', 1);
-	}
-
-	public function doNewIban(Request $request)
-	{
-		$this->validate($request, [
-			'iban' => array('alpha_num'),
-			'iban_name' => array('required','max:50')
-		]);
-
-		$iban = new Iban;
-		$iban->iban = $request->get('iban');
-		$iban->iban_name = $request->get('iban_name');
-		$iban->user_id = Auth::id();
-
-		$iban->save();
 
 		return back()->with('success', 1);
 	}
