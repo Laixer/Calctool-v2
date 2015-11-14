@@ -220,6 +220,10 @@ Route::group(array('middleware' => 'auth'), function()
 		return view('user.new_wholesale');
 	});
 	Route::post('wholesale/new', array('uses' => 'WholesaleController@doNew'));
+	Route::post('wholesale/update', array('uses' => 'WholesaleController@doUpdate'));
+	Route::get('wholesale-{wholesale_id}/edit', function() {
+		return view('user.edit_wholesale');
+	})->where('wholesale_id', '[0-9]+');
 
 	/* Project pages */
 	Route::get('project/new', array('as' => 'project.new', 'uses' => 'ProjectController@getNew'));

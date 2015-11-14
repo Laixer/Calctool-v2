@@ -15,6 +15,7 @@ use \Calctool\Models\Detail;
 use \Calctool\Models\ContactFunction;
 use \Calctool\Models\RelationType;
 use \Calctool\Models\RelationKind;
+use \Calctool\Models\WholesaleType;
 use \Calctool\Models\Valid;
 use \Calctool\Models\DeliverTime;
 use \Calctool\Models\Tax;
