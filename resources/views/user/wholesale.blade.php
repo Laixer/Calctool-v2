@@ -44,7 +44,7 @@ use \Calctool\Models\WholesaleType;
 					else
 						$userid = -1;
 					if (!Wholesale::where('user_id','=', Auth::user()->id)->where('id','!=',$userid)->count('id')) {
-						echo '<tr><td colspan="6" style="text-align: center;">Er zijn nog geen relaties</td></tr>';
+						echo '<tr><td colspan="6" style="text-align: center;">Er zijn nog geen leveranciers</td></tr>';
 					}
 					foreach (Wholesale::where('user_id','=', Auth::user()->id)->where('id','!=',$userid)->orderBy('created_at', 'desc')->get() as $wholesale) {
 					?>
