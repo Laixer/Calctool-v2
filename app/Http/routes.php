@@ -184,7 +184,9 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::post('more/deletematerial', array('as' => 'more', 'uses' => 'MoreController@doDeleteMaterial'));
 	Route::post('more/deleteequipment', array('as' => 'more', 'uses' => 'MoreController@doDeleteEquipment'));
 	Route::post('more/deletelabor', array('as' => 'more', 'uses' => 'MoreController@doDeleteLabor'));
-	Route::post('more/newactivity/{chapter_id}', array('as' => 'more', 'uses' => 'MoreController@doNewMoreActivity'))->where('chapter_id', '[0-9]+');
+	Route::post('more/newactivity/{chapter_id}', array('as' => 'more', 'uses' => 'MoreController@doNewActivity'))->where('chapter_id', '[0-9]+');
+	Route::post('more/newchapter/{project_id}', array('uses' => 'MoreController@doNewChapter'))->where('project_id', '[0-9]+');
+	Route::post('more/deletechapter', array('uses' => 'MoreController@doDeleteChapter'));
 
 	/* Relation pages */
 	Route::get('relation/new', array('as' => 'relation.new', 'uses' => 'RelationController@getNew'));
@@ -197,6 +199,7 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::post('relation/iban/new', array('as' => 'iban.update', 'uses' => 'RelationController@doNewIban'));
 	Route::get('relation', array('as' => 'relation', 'uses' => 'RelationController@getAll'));
 	Route::get('relation-{relation_id}/edit', array('as' => 'relation.edit', 'uses' => 'RelationController@getEdit'))->where('relation_id', '[0-9]+');
+	Route::get('relation-{relation_id}/delete', array('uses' => 'RelationController@getDelete'))->where('relation_id', '[0-9]+');
 	Route::get('relation-{relation_id}/contact/new', array('as' => 'relation.contact.new', 'uses' => 'RelationController@getNewContact'))->where('relation_id', '[0-9]+');
 	Route::get('relation-{relation_id}/contact-{contact_id}/edit', array('as' => 'contact.edit', 'uses' => 'RelationController@getEditContact'))->where('relation_id', '[0-9]+')->where('contact_id', '[0-9]+');
 	Route::get('mycompany', array('as' => 'mycompany', 'uses' => 'RelationController@getMyCompany'));
@@ -224,6 +227,11 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::get('wholesale-{wholesale_id}/edit', function() {
 		return view('user.edit_wholesale');
 	})->where('wholesale_id', '[0-9]+');
+	Route::get('wholesale-{wholesale_id}/show', function() {
+		return view('user.show_wholesale');
+	})->where('wholesale_id', '[0-9]+');
+	Route::post('wholesale/iban/update', array('uses' => 'WholesaleController@doUpdateIban'));
+	Route::get('wholesale-{wholesale_id}/delete', array('uses' => 'WholesaleController@getDelete'))->where('wholesale_id', '[0-9]+');
 
 	/* Project pages */
 	Route::get('project/new', array('as' => 'project.new', 'uses' => 'ProjectController@getNew'));

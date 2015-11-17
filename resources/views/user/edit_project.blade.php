@@ -5,15 +5,18 @@ use \Calctool\Models\Relation;
 use \Calctool\Models\PurchaseKind;
 use \Calctool\Models\Contact;
 use \Calctool\Models\Project;
+use \Calctool\Models\Offer;
+use \Calctool\Models\Invoice;
+use \Calctool\Models\Wholesale;
 
 $common_access_error = false;
 $project = \Calctool\Models\Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner())
 	$common_access_error = true;
 else {
-	$offer_last = \Calctool\Models\Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 	if ($offer_last)
-		$cntinv = \Calctool\Models\Invoice::where('offer_id','=', $offer_last->id)->where('invoice_close','=',true)->count('id');
+		$cntinv = Invoice::where('offer_id','=', $offer_last->id)->where('invoice_close',true)->count('id');
 	else
 		$cntinv = 0;
 }
@@ -410,7 +413,7 @@ else {
 
 						<div id="project" class="tab-pane">
 						<form method="post" {!! $offer_last && $offer_last->offer_finish ? 'action="/project/update/note"' : 'action="/project/update"' !!}>
-   	  	                                {!! csrf_field() !!}
+   	  	                {!! csrf_field() !!}
 							<h5><strong>Gegevens</strong></h5>
 								<div class="row">
 									<div class="col-md-6">
@@ -423,11 +426,19 @@ else {
 									<div class="col-md-4">
 										<div class="form-group">
 											<label for="contractor">Opdrachtgever*</label>
+											@if (!Relation::find($project->client_id)->isActive())
 											<select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} class="form-control pointer">
-											@foreach (\Calctool\Models\Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
+											@foreach (\Calctool\Models\Relation::where('user_id','=', Auth::id())->get() as $relation)
 												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ \Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</option>
 											@endforeach
 											</select>
+											@else
+											<select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} class="form-control pointer">
+											@foreach (\Calctool\Models\Relation::where('user_id','=', Auth::id())->where('active',true)->get() as $relation)
+												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ \Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</option>
+											@endforeach
+											</select>
+											@endif
 										</div>
 									</div>
 
@@ -655,7 +666,7 @@ else {
 											@foreach (\Calctool\Models\Purchase::where('project_id','=', $project->id)->get() as $purchase)
 											<tr data-id="{{ $purchase->id }}">
 												<td class="col-md-1">{{ date('d-m-Y', strtotime($purchase->register_date)) }}</td>
-												<td class="col-md-2">{{ Relation::find($purchase->relation_id)->company_name }}</td>
+												<td class="col-md-2">{{ $purchase->relation_id ? Relation::find($purchase->relation_id)->company_name : Wholesale::find($purchase->wholesale_id)->company_name }}</td>
 												<td class="col-md-1">{{ '&euro; '.number_format($purchase->amount, 2,",",".") }}</td>
 												<td class="col-md-2">{{ ucwords(PurchaseKind::find($purchase->kind_id)->kind_name) }}</td>
 												<td class="col-md-4">{{ $purchase->note }}</td>
@@ -669,8 +680,14 @@ else {
 												</td>
 												<td class="col-md-2">
 													<select name="relation" id="relation" class="form-control-sm-text">
-													@foreach (\Calctool\Models\Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
-														<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
+													@foreach (Relation::where('user_id','=', Auth::id())->where('active',true)->get() as $relation)
+														<option value="rel-{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
+													@endforeach
+													@foreach (Wholesale::where('user_id','=', Auth::id())->where('active',true)->get() as $wholesale)
+														<option value="whl-{{ $wholesale->id }}">{{ ucwords($wholesale->company_name) }}</option>
+													@endforeach
+													@foreach (Wholesale::whereNull('user_id')->get() as $wholesale)
+														<option value="whl-{{ $wholesale->id }}">{{ ucwords($wholesale->company_name) }}</option>
 													@endforeach
 													</select>
 												</td>

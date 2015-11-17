@@ -10,7 +10,6 @@
 
 			<div class="row">
 
-				<!-- REGISTER -->
 				<div class="col-md-6">
 
 					<h2>Nieuwe <strong>Wachtwoord</strong></h2>
@@ -61,9 +60,7 @@
 					{{ Form::close() }}
 
 				</div>
-				<!-- /REGISTER -->
 
-				<!-- WHY? -->
 				<div class="col-md-6">
 
 					<h2>&nbsp;</h2>
@@ -89,7 +86,6 @@
 					</div>
 
 					</div>
-				<!-- /WHY? -->
 
 			</div>
 
@@ -103,5 +99,4 @@
 
 	</div>
 </div>
-<?# -- /WRAPPER -- ?>
 @stop

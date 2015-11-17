@@ -148,7 +148,7 @@ use \Calctool\Models\MoreLabor;
 								@endforeach
 								@endforeach
 								@endforeach
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text"/></td>
 									<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
 									<td class="col-md-2">
@@ -238,7 +238,6 @@ use \Calctool\Models\MoreLabor;
 									<div class="toggle-content">
 
 									<table class="table table-striped">
-										<?# -- table head -- ?>
 										<thead>
 											<tr>
 												<th class="col-md-2">&nbsp;</th>
@@ -301,7 +300,7 @@ use \Calctool\Models\MoreLabor;
 									</div>
 								</div>
 
-							</div><!-- -->
+							</div>
 
 					</div>
 

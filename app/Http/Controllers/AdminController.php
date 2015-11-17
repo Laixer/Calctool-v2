@@ -137,7 +137,7 @@ class AdminController extends Controller {
 		$user->api = md5(mt_rand());
 		$user->token = sha1($user->secret);
 		$user->referral_key = md5(mt_rand());
-		$user->ip = Calctool::remoteAddr();
+		$user->ip = \Calctool::remoteAddr();
 
 		/* Contact */
 		if ($request->input('firstname'))
@@ -269,22 +269,22 @@ class AdminController extends Controller {
 		return back()->with('success', 1);
 	}
 
-	public function getSwitchSession(Request $request)
+	public function getSwitchSession(Request $request, $user_id)
 	{
 		if (!Auth::user()->isAdmin())
 			return back();
 
 		$cookie = cookie('swpsess', Auth::id(), 180);
 
-		Auth::loginUsingId($request->input('user_id'));
+		Auth::loginUsingId($user_id);
 
 		return redirect('/')->withCookie($cookie);
 
 	}
 
-	public function getSwitchSessionBack()
+	public function getSwitchSessionBack(Request $request)
 	{
-		$swap_session = cookie()->get('swpsess');
+		$swap_session = $request->cookie('swpsess');
 		if (!$swap_session)
 			return back();
 
@@ -294,7 +294,7 @@ class AdminController extends Controller {
 
 		Auth::loginUsingId($user->id);
 
-		return redirect('/')->withCookie(coockie()->forget('swpsess'));
+		return redirect('/')->withCookie(cookie()->forget('swpsess'));
 
 	}
 
@@ -325,9 +325,9 @@ class AdminController extends Controller {
 		return back()->with('success', 1);
 	}
 
-	public function getDemoProject(Request $request)
+	public function getDemoProject(Request $request, $user_id)
 	{
-		DemoProjectTemplate::setup($request->input('user_id'));
+		\DemoProjectTemplate::setup($user_id);
 
 		return back()->with('success', 1);
 	}

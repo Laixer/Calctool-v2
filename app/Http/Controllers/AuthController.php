@@ -62,7 +62,7 @@ class AuthController extends Controller {
 			Redis::del('auth:'.$username.':fail', 'auth:'.$username.':block');
 
 			$log = new \Calctool\Models\Audit;
-			$log->ip = Calctool::remoteAddr();
+			$log->ip = \Calctool::remoteAddr();
 			$log->event = '[LOGIN] [SUCCESS] ' . $_SERVER['HTTP_USER_AGENT'];
 			$log->user_id = Auth::id();
 			$log->save();
@@ -86,7 +86,7 @@ class AuthController extends Controller {
 			$failuser = \Calctool\Models\User::where('username', $username)->first();
 			if ($failuser) {
 				$log = new \Calctool\Models\Audit;
-				$log->ip = Calctool::remoteAddr();
+				$log->ip = \Calctool::remoteAddr();
 				$log->event = '[LOGIN] [FAILED] '.$failcount;
 				$log->user_id = $failuser->id;
 				$log->save();
@@ -117,7 +117,7 @@ class AuthController extends Controller {
 		$user->api = md5(mt_rand());
 		$user->token = sha1($user->secret);
 		$user->referral_key = md5(mt_rand());
-		$user->ip = Calctool::remoteAddr();
+		$user->ip = \Calctool::remoteAddr();
 		$user->email = $request->get('email');
 		$user->expiration_date = date('Y-m-d', strtotime("+1 month", time()));
 		$user->user_type = UserType::where('user_type','=','user')->first()->id;
@@ -155,7 +155,7 @@ class AuthController extends Controller {
 		$user->save();
 
 		$log = new Calctool\Models\Audit;
-		$log->ip = Calctool::remoteAddr();
+		$log->ip = \Calctool::remoteAddr();
 		$log->event = '[NEWPASS] [SUCCESS]';
 		$log->user_id = $user->id;
 		$log->save();
@@ -207,12 +207,12 @@ class AuthController extends Controller {
 		$user->confirmed_mail = date('Y-m-d H:i:s');
 		$user->save();
 
-		//DemoProjectTemplate::setup($user->id);
+		\DemoProjectTemplate::setup($user->id);
 
 		$this->informAdmin($user);
 
 		$log = new Audit;
-		$log->ip = Calctool::remoteAddr();
+		$log->ip = \Calctool::remoteAddr();
 		$log->event = '[ACTIVATE] [SUCCESS]';
 		$log->user_id = $user->id;
 		$log->save();
@@ -247,7 +247,7 @@ class AuthController extends Controller {
 		$user->save();
 
 		$log = new Audit;
-		$log->ip = Calctool::remoteAddr();
+		$log->ip = \Calctool::remoteAddr();
 		$log->event = '[BLOCKPASS] [SUCCESS]';
 		$log->user_id = $user->id;
 		$log->save();

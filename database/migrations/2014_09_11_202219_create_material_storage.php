@@ -27,7 +27,8 @@ class CreateMaterialStorage extends Migration {
 		Schema::create('supplier', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('supplier_name', 50)->nullable()->unique();
+			$table->integer('wholesale_id')->nullable()->unsigned();
+			$table->foreign('wholesale_id')->references('id')->on('wholesale')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('user_id')->nullable()->unsigned();
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
 		});

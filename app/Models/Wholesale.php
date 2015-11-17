@@ -34,4 +34,9 @@ class Wholesale extends Model {
 	public function isOwner() {
 		return Auth::id() == $this->user_id;
 	}
+
+	public function isActive() {
+		return $this->active;
+	}
+
 }

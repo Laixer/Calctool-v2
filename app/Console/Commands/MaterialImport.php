@@ -8,7 +8,9 @@ use Symfony\Component\Console\Input\InputArgument;
 use Nathanmac\Utilities\Parser\Parser;
 
 use \Calctool\Models\SubGroup;
+use \Calctool\Models\Wholesale;
 use \Calctool\Models\Product;
+use \Calctool\Models\Supplier;
 
 use DB;
 
@@ -45,11 +47,14 @@ class MaterialImport extends Command {
 	 */
 	public function handle()
 	{
+		$boumaat = Supplier::where('wholesale_id', Wholesale::where('company_name','bouwmaat nl')->first()['id'])->first();
+
 		$parser = new Parser();
 		$filename = $this->argument('file');
 		$contents = file_get_contents($filename);
 		$xml =  str_replace("http://www.gs1.nl Artikelbericht_bou003_31012010.xsd", "http://calctool", $contents);
 		$articles = $parser->xml($xml)['Bilateral']['PricatLine'];
+
 		DB::raw("TRUNCATE product CASCADE");
 		foreach ($articles as $key => $value) {
 			$groupcode = explode(" ", $value['AdditionalDescriptions']['SupplierProductGroupDescription']);
@@ -68,7 +73,7 @@ class MaterialImport extends Command {
 				'total_price' => $price,
 				'description' => strtolower($value['ArticleData']['SuppliersDescription']['Description']),
 				'group_id' => $subgroup->id,
-				'supplier_id' => 1
+				'supplier_id' => $boumaat->id 
 			));
 		}
 		echo "New materials loaded\n";

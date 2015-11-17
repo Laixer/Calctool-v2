@@ -70,7 +70,7 @@ class AuthCommand extends Command
 						$text .= 'Telegram is verbonden met uw account';
 
 						$log = new \Audit;
-						$log->ip = Calctool::remoteAddr();
+						$log->ip = \Calctool::remoteAddr();
 						$log->event = '[API_CONNECT] [SUCCESS] ' . $message->getFrom()->getId();
 						$log->user_id = $user->id;
 						$log->save();

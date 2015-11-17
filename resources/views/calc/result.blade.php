@@ -65,7 +65,6 @@ $(document).ready(function() {
 
 });
 </script>
-<?php //TODO issue 134 style van tooltip ?>
 <style type="text/css">
 .tooltip {
   top: 0;
@@ -81,12 +80,10 @@ $(document).ready(function() {
 
 		@include('calc.wizard', array('page' => 'result'))
 
-<!-- TODO tooltip verkleinen -->
 			<h2><strong>Resultaat Project</strong> {{$project->project_name}} <sup><a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier staan alle ingevoerde getallen samengevat in een projectresultaat en een urenresultaat waaruit een winst en verlies berekening voortkomt." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></sup></h2>
 
 			<div class="tabs nomargin">
 
-				<!-- tabs -->
 				<ul class="nav nav-tabs">
 					<li id="tab-result">
 						<a href="#result" data-toggle="tab">
@@ -135,7 +132,7 @@ $(document).ready(function() {
 									<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax1AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -146,7 +143,7 @@ $(document).ready(function() {
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								@else
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -159,7 +156,7 @@ $(document).ready(function() {
 								@endif
 
 								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -169,7 +166,7 @@ $(document).ready(function() {
 									<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax1AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -180,7 +177,7 @@ $(document).ready(function() {
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								@else
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -193,7 +190,7 @@ $(document).ready(function() {
 								@endif
 
 								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -203,7 +200,7 @@ $(document).ready(function() {
 									<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax1AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -214,7 +211,7 @@ $(document).ready(function() {
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								@else
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -226,7 +223,7 @@ $(document).ready(function() {
 								</tr>
 								@endif
 
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
 									<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-1"><strong>{{ '&euro; '.number_format(MoreEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
@@ -256,7 +253,7 @@ $(document).ready(function() {
 
 							<tbody>
 								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -266,7 +263,7 @@ $(document).ready(function() {
 									<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::subconLaborBalanceTax1AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -277,7 +274,7 @@ $(document).ready(function() {
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								@else
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -290,7 +287,7 @@ $(document).ready(function() {
 								@endif
 
 								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -300,7 +297,7 @@ $(document).ready(function() {
 									<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::subconMaterialBalanceTax1AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -311,7 +308,7 @@ $(document).ready(function() {
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								@else
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -334,7 +331,7 @@ $(document).ready(function() {
 									<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::subconEquipmentBalanceTax1AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -345,7 +342,7 @@ $(document).ready(function() {
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								@else
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -357,7 +354,7 @@ $(document).ready(function() {
 								</tr>
 								@endif
 
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4"><strong>Totaal Onderaanneming </strong></td>
 									<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-1"><strong>{{ '&euro; '.number_format(MoreEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
@@ -398,21 +395,21 @@ $(document).ready(function() {
 									<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">BTW bedrag aanneming belast met 6%</td>
 									<th class="col-md-3">&nbsp;</th>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">BTW bedrag onderaanneming belast met 21%</td>
 									<th class="col-md-3">&nbsp;</th>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">BTW bedrag onderaanneming belast met 6%</td>
 									<th class="col-md-3">&nbsp;</th>
 									<td class="col-md-2">&nbsp;</td>
@@ -420,14 +417,14 @@ $(document).ready(function() {
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								@endif
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Cumulatief BTW bedrag</td>
 									<th class="col-md-3">&nbsp;</th>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1"><strong>{{ '&euro; '.number_format(ResultEndresult::totalProjectTax($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4"><strong>Cumulatief project (Incl. BTW)</strong></td>
 									<th class="col-md-3">&nbsp;</th>
 									<td class="col-md-2">&nbsp;</td>
@@ -497,9 +494,9 @@ $(document).ready(function() {
 												<th class="col-md-3">Werkzaamheden</th>
 												<th class="col-md-2"><span class="pull-right">Gecalculeerd <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de gecalculeerde uren uit de calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i> </a></span></th>
 												<th class="col-md-1"><span class="pull-right">Gesteld <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de gestelde uren vanuit 'Stelposten Stellen'" href="#"><i class="fa fa-info-circle"></i></a></span></th>
-												<th class="col-md-1"><!--<span class="pull-right">Geboekt <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de geboekte uren uit de urenregistratie" href="#"><i class="fa fa-info-circle"></i></a></span>--></th>
-												<th class="col-md-1"><!--<span class="pull-right">Verschil <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het verschil tussen de gestelde uren en de geboekte uren" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></span>--></th>
-												<th class="col-md-1"><!--<span class="pull-right">Win./Ver. <a data-toggle="tooltip" data-placement="left" data-original-title="Dit is het verschil vertaald naar kosten op basis van het standaard uurtarief" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></span>--></th>
+												<th class="col-md-1"><?#--<span class="pull-right">Geboekt <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de geboekte uren uit de urenregistratie" href="#"><i class="fa fa-info-circle"></i></a></span>--></th>--?>
+												<th class="col-md-1"><?#--<span class="pull-right">Verschil <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het verschil tussen de gestelde uren en de geboekte uren" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></span>--></th>--?>
+												<th class="col-md-1"><?#--<span class="pull-right">Win./Ver. <a data-toggle="tooltip" data-placement="left" data-original-title="Dit is het verschil vertaald naar kosten op basis van het standaard uurtarief" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></span>--></th>--?>
 											</tr>
 										</thead>
 
@@ -543,7 +540,7 @@ $(document).ready(function() {
 												<th class="col-md-3">Werkzaamheden</th>
 												<th class="col-md-2"><span class="pull-right">Opgegeven&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de (mondeling) opgegeven uren bij de tab 'Calculeren Meerwerk' die als prijsopgaaf kunnen dienen naar de klant. Wordt de urenregistratie bijgehouden dan is die bindend." href="#"><i class="fa fa-info-circle"></i></a></span></th>
 												<th class="col-md-1"><span class="pull-right">&nbsp;</span></th>
-												<th class="col-md-1"><span class="pull-right"><!--Geboekt <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de geboekte uren uit de urenregistratie of zoals opgegeven" href="#"><i class="fa fa-info-circle"></i></a>--></span></th>
+												<th class="col-md-1"><span class="pull-right"><?#--Geboekt <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de geboekte uren uit de urenregistratie of zoals opgegeven" href="#"><i class="fa fa-info-circle"></i></a>--></span></th>--?>
 												<th class="col-md-1"><span class="pull-right">&nbsp;</span></th>
 												<th class="col-md-1"><span class="pull-right">&nbsp;</span></th>
 											</tr>
@@ -597,14 +594,14 @@ $(document).ready(function() {
 								</thead>
 
 								<tbody>
-									<tr><!-- item -->
+									<tr>
 										<td class="col-md-2"><strong>Aanneming</strong></td>
 										<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalContracting($project), 2, ",",".") }}</td>
 										<td class="col-md-3">{{ '&euro; '.number_format(ResultEndresult::totalTimesheet($project), 2, ",",".") }}</td>
 										<td class="col-md-3">{{ '&euro; '.number_format(ResultEndresult::totalContractingPurchase($project), 2, ",",".") }}</td>
 										<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalContractingBudget($project), 2, ",",".") }}</td>
 									</tr>
-									<tr><!-- item -->
+									<tr>
 										<td class="col-md-2"><strong>Onderaanneming</strong></td>
 										<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalSubcontracting($project), 2, ",",".") }}</td>
 										<td class="col-md-3">-</td>
@@ -626,7 +623,7 @@ $(document).ready(function() {
 	</section>
 
 </div>
-<!-- /WRAPPER -->
+
 @stop
 
 <?php } ?>

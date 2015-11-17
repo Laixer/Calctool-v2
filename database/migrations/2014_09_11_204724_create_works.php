@@ -28,7 +28,7 @@ class CreateWorks extends Migration {
 			$table->increments('id');
 			$table->string('chapter_name', 50);
 			$table->smallInteger('priority')->index();
-			//$table->text('note')->nullable();
+			$table->boolean('more')->default('N');
 			$table->nullableTimestamps();
 			$table->integer('project_id')->unsigned();
 			$table->foreign('project_id')->references('id')->on('project')->onUpdate('cascade')->onDelete('cascade');

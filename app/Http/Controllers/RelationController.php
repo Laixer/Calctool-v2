@@ -70,36 +70,36 @@ class RelationController extends Controller {
 			'country' => array('required','numeric')
 		]);
 
-			/* General */
-			$relation = Relation::find($request->input('id'));
-			if (!$relation || !$relation->isOwner()) {
-				return Redirect::back()->withInput($request->all());
-			}
-			$relation->note = $request->input('note');
+		/* General */
+		$relation = Relation::find($request->input('id'));
+		if (!$relation || !$relation->isOwner()) {
+			return Redirect::back()->withInput($request->all());
+		}
+		$relation->note = $request->input('note');
 
-			/* Company */
-			$relation_kind = RelationKind::where('id','=',$relation->kind_id)->firstOrFail();
-			if ($relation_kind->kind_name == "zakelijk") {
-				$relation->company_name = $request->input('company_name');
-				$relation->type_id = $request->input('company_type');
-				$relation->kvk = $request->input('kvk');
-				$relation->btw = $request->input('btw');
-				$relation->phone = $request->input('telephone_comp');
-				$relation->email = $request->input('email_comp');
-				$relation->website = $request->input('website');
-			}
+		/* Company */
+		$relation_kind = RelationKind::where('id','=',$relation->kind_id)->firstOrFail();
+		if ($relation_kind->kind_name == "zakelijk") {
+			$relation->company_name = $request->input('company_name');
+			$relation->type_id = $request->input('company_type');
+			$relation->kvk = $request->input('kvk');
+			$relation->btw = $request->input('btw');
+			$relation->phone = $request->input('telephone_comp');
+			$relation->email = $request->input('email_comp');
+			$relation->website = $request->input('website');
+		}
 
-			/* Adress */
-			$relation->address_street = $request->input('street');
-			$relation->address_number = $request->input('address_number');
-			$relation->address_postal = $request->input('zipcode');
-			$relation->address_city = $request->input('city');
-			$relation->province_id = $request->input('province');
-			$relation->country_id = $request->input('country');
+		/* Adress */
+		$relation->address_street = $request->input('street');
+		$relation->address_number = $request->input('address_number');
+		$relation->address_postal = $request->input('zipcode');
+		$relation->address_city = $request->input('city');
+		$relation->province_id = $request->input('province');
+		$relation->country_id = $request->input('country');
 
-			$relation->save();
+		$relation->save();
 
-			return back()->with('success', 1);
+		return back()->with('success', 1);
 	}
 
 	public function doUpdate(Request $request)
@@ -149,6 +149,20 @@ class RelationController extends Controller {
 		$relation->save();
 
 		return back()->with('success', 1);
+	}
+
+	public function getDelete(Request $request, $relation_id)
+	{
+		$relation = \Calctool\Models\Relation::find($relation_id);
+		if (!$relation || !$relation->isOwner()) {
+			return back()->withInput($request->all());
+		}
+
+		$relation->active = false;
+
+		$relation->save();
+
+		return redirect('/relation');
 	}
 
 	public function doUpdateContact(Request $request)
@@ -285,63 +299,63 @@ class RelationController extends Controller {
 
 		$this->validate($request, $rules);
 
-			/* General */
-			$relation = new \Calctool\Models\Relation;
-			$relation->user_id = \Auth::id();
-			$relation->note = $request->input('note');
-			$relation->kind_id = $request->input('relationkind');
-			$relation->debtor_code = $request->input('debtor');
+		/* General */
+		$relation = new \Calctool\Models\Relation;
+		$relation->user_id = \Auth::id();
+		$relation->note = $request->input('note');
+		$relation->kind_id = $request->input('relationkind');
+		$relation->debtor_code = $request->input('debtor');
 
-			/* Company */
-			$relation_kind = \Calctool\Models\RelationKind::where('id','=',$relation->kind_id)->firstOrFail();
-			if ($relation_kind->kind_name == "zakelijk") {
-				$relation->company_name = $request->input('company_name');
-				$relation->type_id = $request->input('company_type');
-				$relation->kvk = $request->input('kvk');
-				$relation->btw = $request->input('btw');
-				$relation->phone = $request->input('telephone_comp');
-				$relation->email = $request->input('email_comp');
-				$relation->website = $request->input('website');
-			}
+		/* Company */
+		$relation_kind = \Calctool\Models\RelationKind::where('id','=',$relation->kind_id)->firstOrFail();
+		if ($relation_kind->kind_name == "zakelijk") {
+			$relation->company_name = $request->input('company_name');
+			$relation->type_id = $request->input('company_type');
+			$relation->kvk = $request->input('kvk');
+			$relation->btw = $request->input('btw');
+			$relation->phone = $request->input('telephone_comp');
+			$relation->email = $request->input('email_comp');
+			$relation->website = $request->input('website');
+		}
 
-			/* Adress */
-			$relation->address_street = $request->input('street');
-			$relation->address_number = $request->input('address_number');
-			$relation->address_postal = $request->input('zipcode');
-			$relation->address_city = $request->input('city');
-			$relation->province_id = $request->input('province');
-			$relation->country_id = $request->input('country');
+		/* Adress */
+		$relation->address_street = $request->input('street');
+		$relation->address_number = $request->input('address_number');
+		$relation->address_postal = $request->input('zipcode');
+		$relation->address_city = $request->input('city');
+		$relation->province_id = $request->input('province');
+		$relation->country_id = $request->input('country');
 
-			if ($request->input('iban'))
-				$relation->iban = $request->input('iban');
-			if ($request->input('iban_name'))
-				$relation->iban_name = $request->input('iban_name');
+		if ($request->input('iban'))
+			$relation->iban = $request->input('iban');
+		if ($request->input('iban_name'))
+			$relation->iban_name = $request->input('iban_name');
 
-			$relation->save();
+		$relation->save();
 
-			/* Contact */
-			$contact = new \Calctool\Models\Contact;
-			$contact->firstname = $request->input('contact_firstname');
-			$contact->lastname = $request->input('contact_name');
-			$contact->mobile = $request->input('mobile');
-			$contact->phone = $request->input('telephone');
-			$contact->email = $request->input('email');
-			$contact->note = $request->input('note');
-			$contact->relation_id = $relation->id;
-			if ($relation_kind->kind_name == "zakelijk") {
-				$contact->function_id = $request->input('contactfunction');
-			} else {
-				$contact->function_id = ContactFunction::where('function_name','=','opdrachtgever')->first()->id;
-			}
-			if ($request->input('gender') == '-1') {
-				$contact->gender = NULL;
-			} else {
-				$contact->gender = $request->input('gender');
-			}
+		/* Contact */
+		$contact = new \Calctool\Models\Contact;
+		$contact->firstname = $request->input('contact_firstname');
+		$contact->lastname = $request->input('contact_name');
+		$contact->mobile = $request->input('mobile');
+		$contact->phone = $request->input('telephone');
+		$contact->email = $request->input('email');
+		$contact->note = $request->input('note');
+		$contact->relation_id = $relation->id;
+		if ($relation_kind->kind_name == "zakelijk") {
+			$contact->function_id = $request->input('contactfunction');
+		} else {
+			$contact->function_id = ContactFunction::where('function_name','=','opdrachtgever')->first()->id;
+		}
+		if ($request->input('gender') == '-1') {
+			$contact->gender = NULL;
+		} else {
+			$contact->gender = $request->input('gender');
+		}
 
-			$contact->save();
+		$contact->save();
 
-			return redirect('/relation-'.$relation->id.'/edit')->with('success', 1);
+		return redirect('/relation-'.$relation->id.'/edit')->with('success', 1);
 	}
 
 	public function doNewContact(Request $request)
