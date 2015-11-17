@@ -42,7 +42,29 @@ class MoreController extends Controller {
 		$proj->save();
 	}
 
-	public function doNewMoreActivity(Request $request, $chapter_id)
+	public function doNewChapter(Request $request, $project_id)
+	{
+		$this->validate($request, [
+			'chapter' => array('required','max:50'),
+		]);
+
+		$project = Project::find($project_id);
+		if (!$project || !$project->isOwner()) {
+			return back()->withInput($request->all());
+		}
+
+		$chapter = new Chapter;
+		$chapter->chapter_name = $request->get('chapter');
+		$chapter->priority = 0;
+		$chapter->project_id = $project->id;
+		$chapter->more = true;
+
+		$chapter->save();
+
+		return back()->with('success', 1);
+	}
+
+	public function doNewActivity(Request $request, $chapter_id)
 	{
 		$this->validate($request, [
 			'activity' => array('required','max:50'),
@@ -79,6 +101,25 @@ class MoreController extends Controller {
 		$this->updateMoreStatus($request->get('project'));
 
 		return back()->with('success', 1);
+	}
+
+	public function doDeleteChapter(Request $request)
+	{
+		$this->validate($request, [
+			'chapter' => array('required','integer','min:0')
+		]);
+
+		$chapter = Chapter::find($request->input('chapter'));
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
+
+		if (!$chapter->more)
+			return json_encode(['success' => 0]);
+
+		$chapter->delete();
+
+		return json_encode(['success' => 1]);
 	}
 
 	public function doNewMaterial(Request $request)

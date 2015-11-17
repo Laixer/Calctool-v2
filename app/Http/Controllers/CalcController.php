@@ -161,19 +161,19 @@ class CalcController extends Controller {
 			'chapter' => array('required','max:50'),
 		]);
 
-			$project = Project::find($project_id);
-			if (!$project || !$project->isOwner()) {
-				return back()->withInput($request->all());
-			}
+		$project = Project::find($project_id);
+		if (!$project || !$project->isOwner()) {
+			return back()->withInput($request->all());
+		}
 
-			$chapter = new Chapter;
-			$chapter->chapter_name = $request->get('chapter');
-			$chapter->priority = 0;
-			$chapter->project_id = $project->id;
+		$chapter = new Chapter;
+		$chapter->chapter_name = $request->get('chapter');
+		$chapter->priority = 0;
+		$chapter->project_id = $project->id;
 
-			$chapter->save();
+		$chapter->save();
 
-			return back()->with('success', 1);
+		return back()->with('success', 1);
 	}
 
 	public function doNewCalculationActivity(Request $request, $chapter_id)

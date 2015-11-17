@@ -476,7 +476,7 @@ var n = this,
 			if(confirm('Weet je het zeker?')){
 				var $curThis = $(this);
 				if($curThis.attr("data-id"))
-					$.post("/calculation/deletechapter", {project: {{ $project->id }}, chapter: $curThis.attr("data-id")}, function(){
+					$.post("/more/deletechapter", {project: {{ $project->id }}, chapter: $curThis.attr("data-id")}, function(){
 						$curThis.closest('.toggle-chapter').hide('slow');
 					}).fail(function(e) { console.log(e); });
 			}
@@ -957,6 +957,11 @@ var n = this,
 												</span>
 											</div>
 										</div>
+										@if ($chapter->more)
+										<div class="col-md-6 text-right">
+											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Hoofdstuk verwijderen</button>
+										</div>
+										@endif
 									</div>
 									</form>
 								</div>
@@ -964,7 +969,7 @@ var n = this,
 							@endforeach
 						</div>
 
-						<form action="/calculation/newchapter/{{ $project->id }}" method="post">
+						<form action="/more/newchapter/{{ $project->id }}" method="post">
 						{!! csrf_field() !!}
 						<div class="row">
 							<div class="col-md-6">

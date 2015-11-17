@@ -184,7 +184,9 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::post('more/deletematerial', array('as' => 'more', 'uses' => 'MoreController@doDeleteMaterial'));
 	Route::post('more/deleteequipment', array('as' => 'more', 'uses' => 'MoreController@doDeleteEquipment'));
 	Route::post('more/deletelabor', array('as' => 'more', 'uses' => 'MoreController@doDeleteLabor'));
-	Route::post('more/newactivity/{chapter_id}', array('as' => 'more', 'uses' => 'MoreController@doNewMoreActivity'))->where('chapter_id', '[0-9]+');
+	Route::post('more/newactivity/{chapter_id}', array('as' => 'more', 'uses' => 'MoreController@doNewActivity'))->where('chapter_id', '[0-9]+');
+	Route::post('more/newchapter/{project_id}', array('uses' => 'MoreController@doNewChapter'))->where('project_id', '[0-9]+');
+	Route::post('more/deletechapter', array('uses' => 'MoreController@doDeleteChapter'));
 
 	/* Relation pages */
 	Route::get('relation/new', array('as' => 'relation.new', 'uses' => 'RelationController@getNew'));
