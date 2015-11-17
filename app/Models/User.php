@@ -42,4 +42,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 		return (strtotime($this->expiration_date) >= strtotime(date('Y-m-d')));
 	}
 
+	public function myCompany() {
+		if ($this->self_id)
+			return Relation::find($this->self_id);
+		else
+			return null;
+	}
+
 }
