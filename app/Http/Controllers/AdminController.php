@@ -8,7 +8,6 @@ use \Calctool\Models\SysMessage;
 use \Calctool\Models\Payment;
 use \Calctool\Models\User;
 use \Calctool\Models\Resource;
-//use \Calctool\Database\Templates\DemoProjectTemplate;
 
 use \Storage;
 use \Auth;
@@ -270,22 +269,22 @@ class AdminController extends Controller {
 		return back()->with('success', 1);
 	}
 
-	public function getSwitchSession(Request $request)
+	public function getSwitchSession(Request $request, $user_id)
 	{
 		if (!Auth::user()->isAdmin())
 			return back();
 
 		$cookie = cookie('swpsess', Auth::id(), 180);
 
-		Auth::loginUsingId($request->input('user_id'));
+		Auth::loginUsingId($user_id);
 
 		return redirect('/')->withCookie($cookie);
 
 	}
 
-	public function getSwitchSessionBack()
+	public function getSwitchSessionBack(Request $request)
 	{
-		$swap_session = cookie()->get('swpsess');
+		$swap_session = $request->cookie('swpsess');
 		if (!$swap_session)
 			return back();
 
@@ -295,7 +294,7 @@ class AdminController extends Controller {
 
 		Auth::loginUsingId($user->id);
 
-		return redirect('/')->withCookie(coockie()->forget('swpsess'));
+		return redirect('/')->withCookie(cookie()->forget('swpsess'));
 
 	}
 
