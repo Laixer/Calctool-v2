@@ -51,6 +51,8 @@ class CreateCostRegistration extends Migration {
 			$table->foreign('project_id')->references('id')->on('project')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('relation_id')->nullable()->unsigned();
 			$table->foreign('relation_id')->references('id')->on('relation')->onUpdate('cascade')->onDelete('set null');
+			$table->integer('wholesale_id')->nullable()->unsigned();
+			$table->foreign('wholesale_id')->references('id')->on('wholesale')->onUpdate('cascade')->onDelete('set null');
 			$table->integer('kind_id')->unsigned();
 			$table->foreign('kind_id')->references('id')->on('purchase_kind')->onUpdate('cascade')->onDelete('restrict');
 		});

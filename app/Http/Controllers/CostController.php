@@ -16,6 +16,7 @@ use \Calctool\Models\Relation;
 use \Calctool\Models\Timesheet;
 use \Calctool\Models\TimesheetKind;
 use \Calctool\Models\EstimateLabor;
+use \Calctool\Models\Wholesale;
 
 class CostController extends Controller {
 
@@ -128,7 +129,7 @@ class CostController extends Controller {
 			'type' => array('required','integer'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'project' => array('required','integer'),
-			'relation' => array('required','integer')
+			'relation' => array('required')
 		]);
 
 		$project = Project::find($request->get('project'));
@@ -136,16 +137,33 @@ class CostController extends Controller {
 			return json_encode(['success' => 0]);
 		}
 
-		$purchase = Purchase::create(array(
-			'register_date' => $request->get('date'),
-			'amount' => str_replace(',', '.', str_replace('.', '' , $request->get('amount'))),
-			'relation_id' => $request->get('relation'),
-			'note' => $request->get('note'),
-			'kind_id' => $request->get('type'),
-			'project_id' => $project->id
-		));
+		$relation_id = null;
+		$wholesale_id = null;
+		$arr = explode('-', $request->get('relation'));
+		if ($arr[0] == 'rel')
+			$relation_id = $arr[1];
+		else if ($arr[0] == 'whl')
+			$wholesale_id = $arr[1];
 
-		return json_encode(['success' => 1,'relation' => Relation::find($request->get('relation'))->company_name, 'type' => ucfirst(PurchaseKind::find($request->get('type'))->kind_name), 'date' => date('d-m-Y', strtotime($request->get('date'))), 'amount' => '&euro; '.number_format($purchase->amount, 2,",","."), 'id' => $purchase->id]);
+		$purchase = new Purchase;
+		$purchase->register_date = $request->get('date');
+		$purchase->amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
+		if ($relation_id)
+			$purchase->relation_id = $relation_id;
+		else if ($wholesale_id)
+			$purchase->wholesale_id = $wholesale_id;
+		$purchase->note = $request->get('note');
+		$purchase->kind_id = $request->get('type');
+		$purchase->project_id = $project->id;
+
+		$purchase->save();
+
+		if ($relation_id)
+			$relname = Relation::find($relation_id)->company_name;
+		else if ($wholesale_id)
+			$relname = Wholesale::find($wholesale_id)->company_name;
+
+		return json_encode(['success' => 1,'relation' => $relname, 'type' => ucfirst(PurchaseKind::find($request->get('type'))->kind_name), 'date' => date('d-m-Y', strtotime($request->get('date'))), 'amount' => '&euro; '.number_format($purchase->amount, 2,",","."), 'id' => $purchase->id]);
 	}
 
 	public function doDeletePurchase(Request $request)

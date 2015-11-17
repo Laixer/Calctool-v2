@@ -3,12 +3,12 @@ use \Calctool\Models\Project;
 use \Calctool\Models\Purchase;
 use \Calctool\Models\Relation;
 use \Calctool\Models\PurchaseKind;
+use \Calctool\Models\Wholesale;
 ?>
 
 @extends('layout.master')
 
 @section('content')
-<?# -- WRAPPER -- ?>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#addnewpurchase').click(function(e) {
@@ -64,7 +64,6 @@ use \Calctool\Models\PurchaseKind;
 
 			<div class="white-row">
 				<table class="table table-striped">
-					<?# -- table head -- ?>
 					<thead>
 						<tr>
 							<th class="col-md-1">Datum</th>
@@ -82,7 +81,7 @@ use \Calctool\Models\PurchaseKind;
 						@foreach (Purchase::where('project_id','=', $project->id)->get() as $purchase)
 						<tr data-id="{{ $purchase->id }}">
 							<td class="col-md-1">{{ date('d-m-Y', strtotime($purchase->register_date)) }}</td>
-							<td class="col-md-2">{{ Relation::find($purchase->relation_id)->company_name }}</td>
+							<td class="col-md-2">{{ $purchase->relation_id ? Relation::find($purchase->relation_id)->company_name : Wholesale::find($purchase->wholesale_id)->company_name }}</td>
 							<td class="col-md-1">{{ '&euro; '.number_format($purchase->amount, 2,",",".") }}</td>
 							<td class="col-md-3">{{ $project->project_name }}</td>
 							<td class="col-md-1">{{ ucwords(PurchaseKind::find($purchase->kind_id)->kind_name) }}</td>
@@ -97,8 +96,14 @@ use \Calctool\Models\PurchaseKind;
 							</td>
 							<td class="col-md-2">
 								<select name="relation" id="relation" class="form-control-sm-text">
-								@foreach (Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
-									<option value="{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
+								@foreach (Relation::where('user_id','=', Auth::id())->get() as $relation)
+									<option value="rel-{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
+								@endforeach
+								@foreach (Wholesale::where('user_id','=', Auth::id())->get() as $wholesale)
+									<option value="whl-{{ $wholesale->id }}">{{ ucwords($wholesale->company_name) }}</option>
+								@endforeach
+								@foreach (Wholesale::whereNull('user_id')->get() as $wholesale)
+									<option value="whl-{{ $wholesale->id }}">{{ ucwords($wholesale->company_name) }}</option>
 								@endforeach
 								</select>
 							</td>

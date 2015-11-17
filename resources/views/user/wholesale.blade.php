@@ -56,7 +56,7 @@ use \Calctool\Models\WholesaleType;
 							?>
 								<tr>
 									<td class="col-md-4"><a href="{{ 'wholesale-'.$wholesale->id.'/edit'}}">{{ $wholesale->company_name }}</td>
-									<td class="col-md-2">{{ WholesaleType::find($wholesale->type_id)->type_name }}</td>
+									<td class="col-md-2">{{ ucwords(WholesaleType::find($wholesale->type_id)->type_name) }}</td>
 									<td class="col-md-2">{{ $wholesale->phone }}</td>
 									<td class="col-md-2">{{ $wholesale->email }}</td>
 									<td class="col-md-2">{{ $wholesale->address_city }}</td>
@@ -88,7 +88,7 @@ use \Calctool\Models\WholesaleType;
 							?>
 								<tr>
 									<td class="col-md-4"><a href="{{ 'wholesale-'.$wholesale->id.'/show'}}">{{ $wholesale->company_name }}</td>
-									<td class="col-md-2">{{ WholesaleType::find($wholesale->type_id)->type_name }}</td>
+									<td class="col-md-2">{{ ucwords(WholesaleType::find($wholesale->type_id)->type_name) }}</td>
 									<td class="col-md-2">{{ $wholesale->phone }}</td>
 									<td class="col-md-2">{{ $wholesale->email }}</td>
 									<td class="col-md-2">{{ $wholesale->address_city }}</td>
