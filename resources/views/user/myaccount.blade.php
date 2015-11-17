@@ -1,6 +1,5 @@
 <?php
 $user = Auth::user();
-$iban = Calctool\Models\Iban::where('user_id','=',$user->id)->where('relation_id','=',null)->first();
 ?>
 
 @extends('layout.master')

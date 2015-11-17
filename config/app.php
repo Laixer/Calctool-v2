@@ -202,6 +202,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
+        'Calctool'  => Calctool\Facades\Calctool::class,
         'Image'     => Intervention\Image\Facades\Image::class,
         'Mailgun'   => Bogardo\Mailgun\Facades\Mailgun::class,
         'PDF'       => Barryvdh\Snappy\Facades\SnappyPdf::class,

@@ -115,12 +115,11 @@ if (!$project || !$project->isOwner()) {
 				<div class="modal-dialog">
 					<div class="modal-content">
 
-						<div class="modal-header"><!-- modal header -->
+						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 							<h4 class="modal-title" id="myModalLabel2">Administratienummers</h4>
-						</div><!-- /modal header -->
+						</div>
 
-						<!-- modal body -->
 						<div class="modal-body">
 							<div class="form-horizontal">
 								<div class="form-group">
@@ -135,11 +134,10 @@ if (!$project || !$project->isOwner()) {
 								</div>
 							</div>
 						</div>
-						<!-- /modal body -->
 
-						<div class="modal-footer"><!-- modal footer -->
+						<div class="modal-footer">
 							<button class="btn btn-default" data-dismiss="modal">Close</button>
-						</div><!-- /modal footer -->
+						</div>
 
 					</div>
 				</div>
@@ -149,12 +147,11 @@ if (!$project || !$project->isOwner()) {
 				<div class="modal-dialog">
 					<div class="modal-content">
 
-						<div class="modal-header"><!-- modal header -->
+						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 							<h4 class="modal-title" id="myModalLabel2">Omschrijvingen</h4>
-						</div><!-- /modal header -->
+						</div>
 
-						<!-- modal body -->
 						<div class="modal-body">
 							<div class="form-horizontal">
 								<div class="form-group">
@@ -169,11 +166,10 @@ if (!$project || !$project->isOwner()) {
 								</div>
 							</div>
 						</div>
-						<!-- /modal body -->
 
-						<div class="modal-footer"><!-- modal footer -->
+						<div class="modal-footer">
 							<button class="btn btn-default" data-dismiss="modal">Close</button>
-						</div><!-- /modal footer -->
+						</div>
 
 					</div>
 				</div>
@@ -287,7 +283,7 @@ if (!$project || !$project->isOwner()) {
 	</section>
 
 </div>
-<!-- /WRAPPER -->
+
 @stop
 
 <?php } ?>

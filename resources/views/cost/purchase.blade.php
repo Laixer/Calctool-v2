@@ -98,7 +98,7 @@ use \Calctool\Models\PurchaseKind;
 							<td class="col-md-2">
 								<select name="relation" id="relation" class="form-control-sm-text">
 								@foreach (Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
-									<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
+									<option value="{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
 								@endforeach
 								</select>
 							</td>

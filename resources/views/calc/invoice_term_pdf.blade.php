@@ -5,7 +5,6 @@ use \Calctool\Models\Relation;
 use \Calctool\Models\Contact;
 use \Calctool\Models\Invoice;
 use \Calctool\Models\Offer;
-use \Calctool\Models\Iban;
 use \Calctool\Models\ProjectType;
 
 $total=Input::get("total");
@@ -33,7 +32,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
   </head>
   <body>
 
-  <!--PAGE HEADER MASTER START-->
+  <?#--PAGE HEADER MASTER START--?>
   <header class="clearfix">
     <div id="logo">
     <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
@@ -44,12 +43,12 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       <div>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</div>
       <div>{{ $relation_self->phone }}&nbsp;|&nbsp{{ $relation_self->email }}</div>
       <div>KVK:{{ $relation_self->kvk }}&nbsp;|&nbsp;BTW: {{ $relation_self->btw }}</div>
-      <div>Rekeningnummer: {{ Iban::where('relation_id','=',$relation_self->id)->first()['iban'] }}&nbsp;|&nbsp;tnv.: {{ Iban::where('relation_id','=',$relation_self->id)->first()['iban_name'] }}</div>
+      <div>Rekeningnummer: {{ $relation_self-iban }}&nbsp;|&nbsp;tnv.: {{ $relation_self->iban_name }}</div>
 
   </header>
-  <!--PAGE HEADER MASTER END-->
+  <?#--PAGE HEADER MASTER END--?>
 
-  <!--ADRESSING START-->
+  <?#--ADRESSING START--?>
   <main>
     <div id="details" class="clearfix">
       <div id="client">
@@ -69,7 +68,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
         <div class="date">Factuurdatum: {{ date("j M Y") }}</div>
       </div>
     </div>
-    <!--ADRESSING END-->
+    <?#--ADRESSING END--?>
 
     <div class="openingtext">Geachte</div>
     <div class="openingtext">{{ ($invoice ? $invoice->description : '') }}</div>
