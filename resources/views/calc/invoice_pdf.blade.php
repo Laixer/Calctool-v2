@@ -10,7 +10,6 @@ use \Calctool\Models\Contact;
 use \Calctool\Models\Invoice;
 use \Calctool\Models\Offer;
 use \Calctool\Models\Detail;
-use \Calctool\Models\Iban;
 use \Calctool\Models\ProjectType;
 use \Calctool\Calculus\EstimateEndresult;
 use \Calctool\Calculus\MoreEndresult;

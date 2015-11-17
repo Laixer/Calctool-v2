@@ -5,7 +5,6 @@ use \Calctool\Models\Relation;
 use \Calctool\Models\Contact;
 use \Calctool\Models\Invoice;
 use \Calctool\Models\Offer;
-use \Calctool\Models\Iban;
 use \Calctool\Models\ProjectType;
 
 $total=Input::get("total");
@@ -44,7 +43,7 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
       <div>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</div>
       <div>{{ $relation_self->phone }}&nbsp;|&nbsp{{ $relation_self->email }}</div>
       <div>KVK:{{ $relation_self->kvk }}&nbsp;|&nbsp;BTW: {{ $relation_self->btw }}</div>
-      <div>Rekeningnummer: {{ Iban::where('relation_id','=',$relation_self->id)->first()['iban'] }}&nbsp;|&nbsp;tnv.: {{ Iban::where('relation_id','=',$relation_self->id)->first()['iban_name'] }}</div>
+      <div>Rekeningnummer: {{ $relation_self-iban }}&nbsp;|&nbsp;tnv.: {{ $relation_self->iban_name }}</div>
 
   </header>
   <?#--PAGE HEADER MASTER END--?>

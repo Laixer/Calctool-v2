@@ -1,5 +1,4 @@
 <?php
-use \Calctool\Models\Iban;
 use \Calctool\Models\Relation;
 use \Calctool\Models\RelationKind;
 use \Calctool\Models\RelationType;

@@ -10,7 +10,6 @@ use \Calctool\Models\Contact;
 use \Calctool\Models\Offer;
 use \Calctool\Models\Invoice;
 use \Calctool\Models\Resource;
-use \Calctool\Models\Iban;
 use \Calctool\Models\ProjectType;
 use \Calctool\Models\Detail;
 use \Calctool\Calculus\EstimateEndresult;
@@ -386,7 +385,7 @@ if (!$project || !$project->isOwner()) {
 	  						<li>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
 	 						<li><i class="fa fa-phone"></i>&nbsp;{{ $relation_self->phone }}&nbsp;|&nbsp;<i class="fa fa-envelope-o"></i>&nbsp;{{ $relation_self->email }}</li>
 	 						<li>KVK:{{ $relation_self->kvk }}&nbsp;|&nbsp;BTW: {{ $relation_self->btw }}</li>
-							<li>Rekeningnummer: {{ Iban::where('relation_id','=',$relation_self->id)->first()['iban'] }}&nbsp;|&nbsp;tnv.: {{ Iban::where('relation_id','=',$relation_self->id)->first()['iban_name'] }}</li>
+							<li>Rekeningnummer: {{ $relation_self->iban }}&nbsp;|&nbsp;tnv.: {{ $relation_self->iban_name }}</li>
 						<ul class="list-unstyled">
 					</p>
 				</div>

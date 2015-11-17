@@ -95,7 +95,7 @@ class ProjectController extends Controller {
 		$project->save();
 
 		$log = new \Calctool\Models\Audit;
-		$log->ip = $_SERVER['REMOTE_ADDR'];
+		$log->ip = Calctool::remoteAddr();
 		$log->event = '[NEWPROJECT] [SUCCESS] ' . $request->input('name');
 		$log->user_id = Auth::id();
 		$log->save();

@@ -23,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind('calctool', function()
+        {
+            return new \Calctool\Other\Calctool;
+        });
     }
 }
