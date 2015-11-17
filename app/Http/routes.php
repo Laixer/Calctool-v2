@@ -226,6 +226,9 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::get('wholesale-{wholesale_id}/edit', function() {
 		return view('user.edit_wholesale');
 	})->where('wholesale_id', '[0-9]+');
+	Route::get('wholesale-{wholesale_id}/show', function() {
+		return view('user.show_wholesale');
+	})->where('wholesale_id', '[0-9]+');
 	Route::post('wholesale/iban/update', array('uses' => 'WholesaleController@doUpdateIban'));
 
 	/* Project pages */

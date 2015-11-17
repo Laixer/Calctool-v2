@@ -35,7 +35,7 @@ class WholesaleSeeder extends Seeder {
 
 		/* Test leverancier */
 		$wholesale = new Wholesale;
-		$wholesale->company_name = "bouwmaat nl";
+		$wholesale->company_name = "Bouwmaat NL";
 		$wholesale->type_id = $type_bouw->id;
 		$wholesale->phone = "0332992800";
 		$wholesale->email = "klantenservice@bouwmaat.nl";
