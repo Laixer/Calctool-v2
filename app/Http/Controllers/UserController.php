@@ -60,7 +60,7 @@ class UserController extends Controller {
 		}
 
 		$log = new Audit;
-		$log->ip = Calctool::remoteAddr();
+		$log->ip = \Calctool::remoteAddr();
 		$log->event = '[DEACTIVATE] [SUCCESS]';
 		$log->user_id = $user->id;
 		$log->save();
