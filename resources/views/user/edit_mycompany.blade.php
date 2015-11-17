@@ -64,14 +64,13 @@ $(document).ready(function() {
         }
     });
 
-$(document).on('change', '.btn-file :file', function() {
-  var input = $(this),
-      numFiles = input.get(0).files ? input.get(0).files.length : 1,
-      label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-  input.trigger('fileselect', [numFiles, label]);
-});
+	$(document).on('change', '.btn-file :file', function() {
+	  var input = $(this),
+	      numFiles = input.get(0).files ? input.get(0).files.length : 1,
+	      label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+	  input.trigger('fileselect', [numFiles, label]);
+	});
 
-$(document).ready( function() {
     $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
 
         var input = $(this).parents('.input-group').find(':text'),
@@ -84,7 +83,6 @@ $(document).ready( function() {
         }
 
     });
-});
 
 });
 </script>
@@ -112,11 +110,17 @@ $(document).ready( function() {
 			</div>
 			@endif
 
+			@if ($relation && !Contact::where('relation_id','=', $relation->id)->count())
+				<div class="alert alert-warning">
+					<i class="fa fa-fa fa-info-circle"></i>
+					Er moet minimaal 1 contactpersoon bestaan
+				</div>
+			@endif
+
 			<h2><strong>Mijn</strong> bedrijf</h2>
 
 				<div class="tabs nomargin-top">
 
-					<?# -- tabs -- ?>
 					<ul class="nav nav-tabs">
 						<li class="active">
 							<a href="#company" data-toggle="tab">Bedrijfsgegevens</a>
