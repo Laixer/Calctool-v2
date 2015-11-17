@@ -61,6 +61,7 @@ class CreateRelation extends Migration {
 			$table->string('website', 180)->nullable();
 			$table->string('iban', 25)->nullable();
 			$table->string('iban_name')->nullable();
+			$table->boolean('active')->default('Y');
 			$table->nullableTimestamps();
 			$table->integer('logo_id')->nullable()->unsigned();
 			$table->foreign('logo_id')->references('id')->on('resource')->onUpdate('cascade')->onDelete('set null');
@@ -90,6 +91,7 @@ class CreateRelation extends Migration {
 			$table->string('website', 180)->nullable();
 			$table->string('iban', 25)->nullable();
 			$table->string('iban_name')->nullable();
+			$table->boolean('active')->default('Y');
 			$table->nullableTimestamps();
 			$table->integer('logo_id')->nullable()->unsigned();
 			$table->foreign('logo_id')->references('id')->on('resource')->onUpdate('cascade')->onDelete('set null');
@@ -113,6 +115,7 @@ class CreateRelation extends Migration {
 			$table->string('mobile', 12)->nullable();
 			$table->string('phone', 12)->nullable();
 			$table->text('note')->nullable();
+			$table->boolean('active')->default('Y');
 			$table->integer('relation_id')->unsigned();
 			$table->foreign('relation_id')->references('id')->on('relation')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('function_id')->unsigned();

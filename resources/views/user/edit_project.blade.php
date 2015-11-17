@@ -426,11 +426,19 @@ else {
 									<div class="col-md-4">
 										<div class="form-group">
 											<label for="contractor">Opdrachtgever*</label>
+											@if (!Relation::find($project->client_id)->isActive())
 											<select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} class="form-control pointer">
-											@foreach (\Calctool\Models\Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
+											@foreach (\Calctool\Models\Relation::where('user_id','=', Auth::id())->get() as $relation)
 												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ \Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</option>
 											@endforeach
 											</select>
+											@else
+											<select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} class="form-control pointer">
+											@foreach (\Calctool\Models\Relation::where('user_id','=', Auth::id())->where('active',true)->get() as $relation)
+												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ \Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</option>
+											@endforeach
+											</select>
+											@endif
 										</div>
 									</div>
 
@@ -672,7 +680,7 @@ else {
 												</td>
 												<td class="col-md-2">
 													<select name="relation" id="relation" class="form-control-sm-text">
-													@foreach (Relation::where('user_id','=', Auth::id())->get() as $relation)
+													@foreach (Relation::where('user_id','=', Auth::id())->where('active',true)->get() as $relation)
 														<option value="rel-{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
 													@endforeach
 													@foreach (Wholesale::where('user_id','=', Auth::id())->get() as $wholesale)

@@ -1,7 +1,7 @@
 <?php
 $common_access_error = false;
 $relation = \Calctool\Models\Relation::find(Route::Input('relation_id'));
-if (!$relation || !$relation->isOwner()) {
+if (!$relation || !$relation->isOwner() || !$relation->isActive()) {
 	$common_access_error = true;
 } else {
 	$contact = \Calctool\Models\Contact::where('relation_id','=',$relation->id)->first();
@@ -121,7 +121,6 @@ $(document).ready(function() {
 
 				<div class="tabs nomargin-top">
 
-					<?# -- tabs -- ?>
 					<ul class="nav nav-tabs">
 						<li class="active">
 							<a href="#company" data-toggle="tab">{{ ucfirst( \Calctool\Models\RelationKind::find($relation->kind_id)->kind_name) }}e gegevens</a>
@@ -136,6 +135,9 @@ $(document).ready(function() {
 
 					<div class="tab-content">
 						<div id="company" class="tab-pane active">
+							<div class="pull-right">
+								<a href="/relation-{{ $relation->id }}/delete" id="acc-deactive" class="btn btn-danger">Verwijderen</a>
+							</div>
 
 							<form method="POST" action="/relation/update" accept-charset="UTF-8">
 			                {!! csrf_field() !!}

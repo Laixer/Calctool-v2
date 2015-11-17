@@ -199,6 +199,7 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::post('relation/iban/new', array('as' => 'iban.update', 'uses' => 'RelationController@doNewIban'));
 	Route::get('relation', array('as' => 'relation', 'uses' => 'RelationController@getAll'));
 	Route::get('relation-{relation_id}/edit', array('as' => 'relation.edit', 'uses' => 'RelationController@getEdit'))->where('relation_id', '[0-9]+');
+	Route::get('relation-{relation_id}/delete', array('uses' => 'RelationController@getDelete'))->where('relation_id', '[0-9]+');
 	Route::get('relation-{relation_id}/contact/new', array('as' => 'relation.contact.new', 'uses' => 'RelationController@getNewContact'))->where('relation_id', '[0-9]+');
 	Route::get('relation-{relation_id}/contact-{contact_id}/edit', array('as' => 'contact.edit', 'uses' => 'RelationController@getEditContact'))->where('relation_id', '[0-9]+')->where('contact_id', '[0-9]+');
 	Route::get('mycompany', array('as' => 'mycompany', 'uses' => 'RelationController@getMyCompany'));

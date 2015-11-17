@@ -82,7 +82,7 @@ use \Calctool\Models\Contact;
 						<div class="form-group">
 							<label for="contractor">Opdrachtgever*</label>
 							<select name="contractor" id="contractor" class="form-control pointer">
-							@foreach (Calctool\Models\Relation::where('user_id','=', Auth::user()->id)->get() as $relation)
+							@foreach (Calctool\Models\Relation::where('user_id', Auth::user()->id)->where('active',true)  ->get() as $relation)
 								<option value="{{ $relation->id }}">{!! Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); !!}</option>
 							@endforeach
 							</select>

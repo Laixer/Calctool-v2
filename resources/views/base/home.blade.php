@@ -369,8 +369,8 @@ $(function() {
 									else
 										$userid = -1;
 									?>
-									@foreach (Calctool\Models\Relation::where('user_id','=', Auth::id())->where('id','!=',$userid)->orderBy('created_at', 'desc')->limit(5)->get() as $relation)
-									<?php $contact = Calctool\Models\Contact::where('relation_id','=',$relation->id)->first(); ?>
+									@foreach (Calctool\Models\Relation::where('user_id','=', Auth::id())->where('id','!=',$userid)->where('active',true)->orderBy('created_at', 'desc')->limit(5)->get() as $relation)
+									<?php $contact = Calctool\Models\Contact::where('relation_id','=',$relation->id)->where('active',true)->first(); ?>
 									<tr>
 										<td><a href="{{ 'relation-'.$relation->id.'/edit' }}">{{ $relation->company_name ? $relation->company_name : $contact->firstname .' '. $contact->lastname }}</a></td>
 										<td>{{ $relation->company_name ? $relation->email : $contact->email }}</td>
