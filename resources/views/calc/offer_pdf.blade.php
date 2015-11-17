@@ -29,12 +29,12 @@ if ($relation_self)
    $contact_self = Contact::where('relation_id','=',$relation_self->id);
 $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 
-$include_tax = $offer_last->include_tax; <?#--BTW bedragen weergeven--?>
-$only_totals = $offer_last->only_totals; <?#--Alleen het totale offertebedrag weergeven--?>
-$seperate_subcon = !$offer_last->seperate_subcon; <?#--Onderaanneming apart weergeven--?>
-$display_worktotals = $offer_last->display_worktotals; <?#--Kosten werkzaamheden weergeven--?>
-$display_specification = $offer_last->display_specification; <?#--Hoofdstukken en werkzaamheden weergeven--?>
-$display_description = $offer_last->display_description;  <?#--Omschrijving werkzaamheden weergeven--?>
+$include_tax = $offer_last->include_tax; //BTW bedragen weergeven
+$only_totals = $offer_last->only_totals; //Alleen het totale offertebedrag weergeven
+$seperate_subcon = !$offer_last->seperate_subcon; //Onderaanneming apart weergeven
+$display_worktotals = $offer_last->display_worktotals; //Kosten werkzaamheden weergeven
+$display_specification = $offer_last->display_specification; //Hoofdstukken en werkzaamheden weergeven
+$display_description = $offer_last->display_description;  //Omschrijving werkzaamheden weergeven
 ?>
 
 <!DOCTYPE html>
