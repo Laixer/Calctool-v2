@@ -8,6 +8,7 @@ use \Calctool\Models\Offer;
 use \Calctool\Models\Iban;
 use \Calctool\Models\ProjectType;
 use \Calctool\Models\InvoiceTerm;
+use \Calctool\Models\Resource;
 
 
 $displaytax=Input::get("displaytax");
@@ -275,7 +276,7 @@ if (!$project || !$project->isOwner()) {
 			<header>
 				<div class="row">
 					<div class="col-sm-6">
-						{{ ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' }}
+						{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
 					</div>
 					<div class="col-sm-6 text-right">
 						<p>
