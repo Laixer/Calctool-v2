@@ -224,6 +224,7 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::get('wholesale-{wholesale_id}/edit', function() {
 		return view('user.edit_wholesale');
 	})->where('wholesale_id', '[0-9]+');
+	Route::post('wholesale/iban/update', array('uses' => 'WholesaleController@doUpdateIban'));
 
 	/* Project pages */
 	Route::get('project/new', array('as' => 'project.new', 'uses' => 'ProjectController@getNew'));

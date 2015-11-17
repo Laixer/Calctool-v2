@@ -18,58 +18,24 @@ class WholesaleController extends Controller {
 	 * @return Response
 	 */
 
-	public function doUpdateMyCompany(Request $request)
+	public function doUpdateIban(Request $request)
 	{
 		$this->validate($request, [
-			/* General */
 			'id' => array('required','integer'),
-			/* Company */
-			'company_type' => array('required_if:relationkind,zakelijk','numeric'),
-			'company_name' => array('required_if:relationkind,zakelijk','max:50'),
-			'kvk' => array('numeric','min:8'),
-			'btw' => array('alpha_num','min:14'),
-			'telephone_comp' => array('alpha_num','max:12'),
-			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
-			//'website' => array('url','max:180'),
-			/* Adress */
-			'street' => array('required','alpha','max:60'),
-			'address_number' => array('required','alpha_num','max:5'),
-			'zipcode' => array('required','size:6'),
-			'city' => array('required','alpha_num','max:35'),
-			'province' => array('required','numeric'),
-			'country' => array('required','numeric')
+			'iban' => array('alpha_num'),
+			'iban_name' => array('required','max:50')
 		]);
 
-			/* General */
-			$relation = Relation::find($request->input('id'));
-			if (!$relation || !$relation->isOwner()) {
-				return Redirect::back()->withInput($request->all());
-			}
-			$relation->note = $request->input('note');
+		$wholesale = Wholesale::find($request->input('id'));
+		if (!$wholesale || !$wholesale->isOwner()) {
+			return back()->withInput($request->all());
+		}
+		$wholesale->iban = $request->get('iban');
+		$wholesale->iban_name = $request->get('iban_name');
 
-			/* Company */
-			$relation_kind = RelationKind::where('id','=',$relation->kind_id)->firstOrFail();
-			if ($relation_kind->kind_name == "zakelijk") {
-				$relation->company_name = $request->input('company_name');
-				$relation->type_id = $request->input('company_type');
-				$relation->kvk = $request->input('kvk');
-				$relation->btw = $request->input('btw');
-				$relation->phone = $request->input('telephone_comp');
-				$relation->email = $request->input('email_comp');
-				$relation->website = $request->input('website');
-			}
+		$wholesale->save();
 
-			/* Adress */
-			$relation->address_street = $request->input('street');
-			$relation->address_number = $request->input('address_number');
-			$relation->address_postal = $request->input('zipcode');
-			$relation->address_city = $request->input('city');
-			$relation->province_id = $request->input('province');
-			$relation->country_id = $request->input('country');
-
-			$relation->save();
-
-			return back()->with('success', 1);
+		return back()->with('success', 1);
 	}
 
 	public function doUpdate(Request $request)
