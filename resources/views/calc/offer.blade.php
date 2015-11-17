@@ -31,10 +31,7 @@ if (!$project || !$project->isOwner()) {
 	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 }
 
-
 ?>
-
-
 
 @extends('layout.master')
 
@@ -521,18 +518,17 @@ if (!$project || !$project->isOwner()) {
 
 							</div>
 						</div>
-						<!-- /modal body -->
 
-						<div class="modal-footer"><!-- modal footer -->
+						<div class="modal-footer">
 							<button class="btn btn-default" data-dismiss="modal">Close</button>
-						</div><!-- /modal footer -->
+						</div>
 
 					</div>
 				</div>
 			</div>
 
 	<div class="white-row">
-		<!--PAGE HEADER MASTER START-->
+		<?#--PAGE HEADER MASTER START--?>
 		<header>
 			<div class="row">
 				<div class="col-sm-6">
@@ -552,9 +548,9 @@ if (!$project || !$project->isOwner()) {
 			</div>
 		</header>
 		<hr class="margin-top10 margin-bottom10">
-		<!--PAGE HEADER MASTER END-->
+		<?#--PAGE HEADER MASTER END--?>
 
- 		<!--ADRESSING START-->
+ 		<?#--ADRESSING START--?>
 		<div class="row">
 			<div class="col-sm-6">
 				<ul class="list-unstyled">
@@ -586,9 +582,9 @@ if (!$project || !$project->isOwner()) {
 				</ul>
 			</div>
 		</div>
-		<!--ADRESSING END-->
+		<?#--ADRESSING END--?>
 
-		<!--DECRIPTION-->
+		<?#--DECRIPTION--?>
 		<div class="row">
 			<div class="col-sm-6">
 			Geachte
@@ -612,9 +608,9 @@ if (!$project || !$project->isOwner()) {
 			</div>
 		</div>
 		<br>
-		<!--DECRIPTION END-->
+		<?#--DECRIPTION END--?>
 
-		<!--CONTENT, CON & SUBCON START-->
+		<?#--CONTENT, CON & SUBCON START--?>
 			<div class="show-all" style="display:none;">
 				<h4 class="only-total">Specificatie offerte</h4>
 				<div class="only-total"><strong><u>AANNEMING</u></strong></div>
@@ -905,9 +901,9 @@ if (!$project || !$project->isOwner()) {
 					</tbody>
 				</table>
 			</div>
-			<!--CONTENT, CON & SUBCON END-->
+			<?#--CONTENT, CON & SUBCON END--?>
 
-			<!--CONTENT TOTAL START-->
+			<?#--CONTENT TOTAL START--?>
 			<div class="show-totals">
 			<h4 class="only-total">Specificatie offerte</h4>
 				<table class="table table-striped hide-btw1">
@@ -1078,9 +1074,9 @@ if (!$project || !$project->isOwner()) {
 					</tbody>
 				</table>
 			</div>
-			<!--CONTENT TOTAL END-->
+			<?#--CONTENT TOTAL END--?>
 
-			<!--CLOSER START-->
+			<?#--CLOSER START--?>
 			<br>
 			<div class="row">
 				<div class="col-sm-12">
@@ -1183,10 +1179,10 @@ if (!$project || !$project->isOwner()) {
 				</div>
 			</div>
 		</div class="white-row">
-			<!--CLOSER END-->
+			<?#--CLOSER END--?>
 
 		<div class="white-row show-activity" style="display:none;">
-			<!--PAGE HEADER START-->
+			<?#--PAGE HEADER START--?>
 			<div class="row">
 				<div class="col-sm-6">
 					{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
@@ -1202,9 +1198,9 @@ if (!$project || !$project->isOwner()) {
 					</div>
 			</div>
 			<hr class="margin-top10 margin-bottom10">
-			<!--PAGE HEADER END-->
+			<?#--PAGE HEADER END--?>
 
-			<!-- SPECIFICATION CON&SUBCON START-->
+			<?#-- SPECIFICATION CON&SUBCON START--?>
 			<div class="show-all" style="display:none;">
 				<h4>Specificatie werkzaamheden</h4>
 				<div><strong><u>AANNEMING</u></strong></div>
@@ -1323,9 +1319,9 @@ if (!$project || !$project->isOwner()) {
 					</tbody>
 				</table>
 			</div>
-			<!-- SPECIFICATION CON&SUBCON END-->
+			<?#-- SPECIFICATION CON&SUBCON END--?>
 
-			<!-- SPECIFICATION TOTAL START-->
+			<?#-- SPECIFICATION TOTAL START--?>
 			<div class="show-totals">
 				<h4>Totaalkosten per werkzaamheid</h4>
 				<table class="table table-striped only-end-total">
@@ -1402,10 +1398,10 @@ if (!$project || !$project->isOwner()) {
 			</div>
 			<h6><strong>Weergegeven bedragen zijn exclusief BTW</strong></h5>
 		</div>
-			<!-- SPECIFICATION TOTAL END-->
+			<?#-- SPECIFICATION TOTAL END--?>
 
 		<div class="white-row show-note" style="display:none;">
-			<!--PAGE HEADER START-->
+			<?#--PAGE HEADER START--?>
 			<div class="row">
 				<div class="col-sm-6">
 					{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
@@ -1421,9 +1417,9 @@ if (!$project || !$project->isOwner()) {
 					</div>
 			</div>
 			<hr class="margin-top10 margin-bottom10">
-			<!--PAGE HEADER END-->
+			<?#--PAGE HEADER END--?>
 
-			<!-- DESCRIPTION CON&SUBCON START -->
+			<?#-- DESCRIPTION CON&SUBCON START --?>
 			<div class="show-all" style="display:none;">
 				<h4>Omschrijving werkzaamheden</h4>
 				<div><strong><u>AANNEMING</u></strong></div>
@@ -1474,9 +1470,9 @@ if (!$project || !$project->isOwner()) {
 					</tbody>
 				</table>
 			</div>
-			<!-- DESCRIPTION CON&SUBCON END -->
+			<?#-- DESCRIPTION CON&SUBCON END --?>
 
-			<!-- DESCRIPTION TOTAL START -->
+			<?#-- DESCRIPTION TOTAL START --?>
 			<div class="show-totals">
 				<h4>Omschrijving werkzaamheden</h4>
 				<table class="table table-striped">
@@ -1502,12 +1498,12 @@ if (!$project || !$project->isOwner()) {
 					</tbody>
 				</table>
 			</div>
-			<!-- DESCRIPTION TOTAL END -->
+			<?#-- DESCRIPTION TOTAL END --?>
 
 		</div>
 		@endif
 
-		<!-- INVOICE FOOTER START -->
+		<?#-- INVOICE FOOTER START --?>
 			<div class="row">
 				<div class="col-sm-6"></div>
 				<div class="col-sm-6">
@@ -1530,11 +1526,11 @@ if (!$project || !$project->isOwner()) {
 					</div>
 				</div>
 			</div>
-			<!-- INVOICE FOOTER END -->
+			<?#-- INVOICE FOOTER END --?>
 
 	</section>
 </div>
-<!-- /WRAPPER -->
+<?#-- /WRAPPER --?>
 @stop
 
 <?php } ?>

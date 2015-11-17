@@ -527,7 +527,7 @@ var n = this,
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
-			<div class="modal-header"><!-- modal header -->
+			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				<h4 class="modal-title" id="myModalLabel">Materialen</h4>
 			</div>
@@ -570,7 +570,7 @@ var n = this,
 <div class="modal fade" id="descModal" tabindex="-1" role="dialog" aria-labelledby="descModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
-			<div class="modal-header"><!-- modal header -->
+			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				<h4 class="modal-title" id="myModalLabel">Omschrijving werkzaamheid</h4>
 			</div>
@@ -599,10 +599,8 @@ var n = this,
 
 			<h2><strong>Meerwerk</strong> <strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u meerwerk op basis van regie toevoegen bestemd voor op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h2>
 
-
 			<div class="tabs nomargin">
 
-				<!-- tabs -->
 				<ul class="nav nav-tabs">
 					<li id="tab-calculate">
 						<a href="#calculate" data-toggle="tab">
@@ -621,7 +619,6 @@ var n = this,
 					</li>
 				</ul>
 
-				<!-- tabs content -->
 				<div class="tab-content">
 					<div id="calculate" class="tab-pane">
 						<div class="toogle">
@@ -1135,7 +1132,7 @@ var n = this,
 
 							<tbody>
 								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ number_format(MoreEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -1144,7 +1141,7 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax1AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">{{ number_format(MoreEndresult::conCalcLaborActivityTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -1154,7 +1151,7 @@ var n = this,
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
 								@else
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ number_format(MoreEndresult::conCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -1166,7 +1163,7 @@ var n = this,
 								@endif
 
 								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -1175,7 +1172,7 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax1AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -1185,7 +1182,7 @@ var n = this,
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
 								@else
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -1197,7 +1194,7 @@ var n = this,
 								@endif
 
 								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -1206,7 +1203,7 @@ var n = this,
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax1AmountTax($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
@@ -1216,7 +1213,7 @@ var n = this,
 									<td class="col-md-1">&nbsp;</td>
 								</tr>
 								@else
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -1227,7 +1224,7 @@ var n = this,
 								</tr>
 								@endif
 
-								<tr><!-- item -->
+								<tr>
 									<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
@@ -1431,7 +1428,7 @@ var n = this,
 	</section>
 
 </div>
-<!-- /WRAPPER -->
+
 @stop
 
 <?php } ?>

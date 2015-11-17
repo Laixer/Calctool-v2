@@ -105,7 +105,6 @@ if (!$project || !$project->isOwner())
 
 			<div class="tabs nomargin">
 
-				<!-- tabs -->
 				<ul class="nav nav-tabs">
 					<li id="tab-calculate">
 						<a href="#calculate" data-toggle="tab">
@@ -124,7 +123,6 @@ if (!$project || !$project->isOwner())
 					</li>
 				</ul>
 
-				<!-- tabs content -->
 				<div class="tab-content">
 					<div id="calculate" class="tab-pane">
 						<div class="toogle">
@@ -359,7 +357,7 @@ if (!$project || !$project->isOwner())
 											</tr>
 											@endforeach
 											@endforeach
-											<tr><!-- item -->
+											<tr>
 												<th class="col-md-3"><strong>Totaal Aanneming</strong></th>
 												<th class="col-md-4">&nbsp;</th>
 												<td class="col-md-1"><strong><span class="pull-right">{{ MoreOverview::contrLaborTotalAmount($project) }}</span></strong></td>
