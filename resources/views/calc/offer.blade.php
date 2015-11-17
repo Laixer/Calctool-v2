@@ -13,11 +13,7 @@ use \Calctool\Models\Activity;
 use \Calctool\Models\Part;
 use \Calctool\Calculus\CalculationOverview;
 use \Calctool\Models\Resource;
-
-
 use \Calctool\Http\Controllers\OfferController;
-
-
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
@@ -337,46 +333,7 @@ if (!$project || !$project->isOwner()) {
 		<?php } ?>
 		<?php } ?>
 	</div>
-
-	<div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel2">Offerte versies</h4>
-				</div>
-
-				<div class="modal-body">
-					<div class="table-responsive">
-						<table class="table table-hover">
-							<thead>
-								<tr>
-									<th>Offerte</th>
-									<th>Datum</th>
-								</tr>
-							</thead>
-							<tbody>
-								@foreach (Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->get() as $offer)
-								<tr>
-									<td><a href="/{{ Resource::find($offer->resource_id)->file_location }}">Offerteversienummer {{ $offer->id }}</a></td>
-									<td>{{ date('d-m-Y', strtotime(DB::table('offer')->select('created_at')->where('id','=',$offer->id)->get()[0]->created_at)) }}</td>
-								</tr>
-								@endforeach
-							</tbody>
-						</table>
-					</div>
-
-				</div>
-
-				<div class="modal-footer">
-					<button class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-
-			</div>
-		</div>
-	</div>
-
+	
 	<h2><strong>Offerte</strong></h2>
 	<form method="POST" id="frm-offer">
 		{!! csrf_field() !!}

@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use \Calctool\Models\WholesaleType;
 use \Calctool\Models\Wholesale;
+use \Calctool\Models\Supplier;
 use \Calctool\Models\Province;
 use \Calctool\Models\Country;
 
@@ -48,6 +49,23 @@ class WholesaleSeeder extends Seeder {
 		$wholesale->country_id = $country->id;
 
 		$wholesale->save();
+
+		Supplier::create(array('wholesale_id' => $wholesale->id));
+
+		/*Supplier::create(array('supplier_name' => 'bouwmaat'));
+		Supplier::create(array('supplier_name' => 'stiho'));
+		Supplier::create(array('supplier_name' => 'bo-rent'));
+		Supplier::create(array('supplier_name' => 'boels'));
+		Supplier::create(array('supplier_name' => 'megamat'));
+		Supplier::create(array('supplier_name' => 'jongeneel'));
+		Supplier::create(array('supplier_name' => 'hornbach'));
+		Supplier::create(array('supplier_name' => 'technische unie'));
+		Supplier::create(array('supplier_name' => 'simonis'));
+		Supplier::create(array('supplier_name' => 'spr coatings'));
+		Supplier::create(array('supplier_name' => 'destil'));
+		Supplier::create(array('supplier_name' => 'sigma coatings'));
+		Supplier::create(array('supplier_name' => 'molenaar'));
+		$this->command->info('Supplier created');*/
 
 	}
  }

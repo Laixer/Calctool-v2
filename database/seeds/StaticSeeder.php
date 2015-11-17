@@ -386,23 +386,7 @@ class StaticSeeder extends Seeder {
 		SubGroup::create(array('reference_code'=>'12-22-5','group_type'=>'zink'));
 		SubGroup::create(array('reference_code'=>'12-27-1','group_type'=>'airco'));
 		SubGroup::create(array('reference_code'=>'13-36-1','group_type'=>'onbekend'));
-
 		$this->command->info('SubGroup created');
-
-		Supplier::create(array('supplier_name' => 'bouwmaat'));
-		Supplier::create(array('supplier_name' => 'stiho'));
-		Supplier::create(array('supplier_name' => 'bo-rent'));
-		Supplier::create(array('supplier_name' => 'boels'));
-		Supplier::create(array('supplier_name' => 'megamat'));
-		Supplier::create(array('supplier_name' => 'jongeneel'));
-		Supplier::create(array('supplier_name' => 'hornbach'));
-		Supplier::create(array('supplier_name' => 'technische unie'));
-		Supplier::create(array('supplier_name' => 'simonis'));
-		Supplier::create(array('supplier_name' => 'spr coatings'));
-		Supplier::create(array('supplier_name' => 'destil'));
-		Supplier::create(array('supplier_name' => 'sigma coatings'));
-		Supplier::create(array('supplier_name' => 'molenaar'));
-		$this->command->info('Supplier created');
 
 		UserType::create(array('user_type' => 'system'));
 		UserType::create(array('user_type' => 'admin'));
