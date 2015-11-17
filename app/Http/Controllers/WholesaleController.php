@@ -121,46 +121,4 @@ class WholesaleController extends Controller {
 		return redirect('/wholesale-'.$wholesale->id.'/edit')->with('success', 1);
 	}
 
-	/*public function doNewLogo(Request $request)
-	{
-		$this->validate($request, [
-			'id' => array('required','integer'),
-			'image' => array('required', 'mimes:jpeg,bmp,png,gif'),
-		]);
-
-			if ($request->hasFile('image')) {
-				$file = $request->file('image');
-				$newname = Auth::id().'-'.md5(mt_rand()).'.'.$file->getClientOriginalExtension();
-				$file->move('user-content', $newname);
-
-				$image = Image::make('user-content/' . $newname)->resize(350, 100)->save();
-
-				$resource = new Resource;
-				$resource->resource_name = $newname;
-				$resource->file_location = 'user-content/' . $newname;
-				$resource->file_size = $image->filesize();
-				$resource->user_id = Auth::id();
-				$resource->description = 'Relatielogo';
-
-				$resource->save();
-
-				$relation = Relation::find($request->input('id'));
-				if (!$relation || !$relation->isOwner()) {
-					return back()->withInput($request->all());
-				}
-				$relation->logo_id = $resource->id;
-
-				$relation->save();
-
-				return back()->with('success', 1);
-			} else {
-
-				$messages->add('file', 'Geen afbeelding geupload');
-
-				// redirect our user back to the form with the errors from the validator
-				return back()->withErrors($messages);
-			}
-
-	}*/
-
 }
