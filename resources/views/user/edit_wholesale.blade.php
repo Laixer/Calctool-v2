@@ -5,7 +5,7 @@ use \Calctool\Models\WholesaleType;
 
 $common_access_error = false;
 $wholesale = Wholesale::find(Route::Input('wholesale_id'));
-if (!$wholesale || !$wholesale->isOwner()) {
+if (!$wholesale || !$wholesale->isOwner() || !$wholesale->isActive()) {
 	$common_access_error = true;
 }
 ?>
@@ -117,6 +117,9 @@ $(document).ready(function() {
 
 					<div class="tab-content">
 						<div id="company" class="tab-pane active">
+							<div class="pull-right">
+								<a href="/wholesale-{{ $wholesale->id }}/delete" id="acc-deactive" class="btn btn-danger">Verwijderen</a>
+							</div>
 
 							<form method="POST" action="/wholesale/update" accept-charset="UTF-8">
 			                {!! csrf_field() !!}

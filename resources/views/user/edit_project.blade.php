@@ -683,7 +683,7 @@ else {
 													@foreach (Relation::where('user_id','=', Auth::id())->where('active',true)->get() as $relation)
 														<option value="rel-{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
 													@endforeach
-													@foreach (Wholesale::where('user_id','=', Auth::id())->get() as $wholesale)
+													@foreach (Wholesale::where('user_id','=', Auth::id())->where('active',true)->get() as $wholesale)
 														<option value="whl-{{ $wholesale->id }}">{{ ucwords($wholesale->company_name) }}</option>
 													@endforeach
 													@foreach (Wholesale::whereNull('user_id')->get() as $wholesale)

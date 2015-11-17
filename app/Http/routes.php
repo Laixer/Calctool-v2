@@ -231,6 +231,7 @@ Route::group(array('middleware' => 'auth'), function()
 		return view('user.show_wholesale');
 	})->where('wholesale_id', '[0-9]+');
 	Route::post('wholesale/iban/update', array('uses' => 'WholesaleController@doUpdateIban'));
+	Route::get('wholesale-{wholesale_id}/delete', array('uses' => 'WholesaleController@getDelete'))->where('wholesale_id', '[0-9]+');
 
 	/* Project pages */
 	Route::get('project/new', array('as' => 'project.new', 'uses' => 'ProjectController@getNew'));

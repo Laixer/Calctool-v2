@@ -49,10 +49,10 @@ use \Calctool\Models\WholesaleType;
 
 							<tbody>
 							<?php
-							if (!Wholesale::where('user_id','=', Auth::user()->id)->count('id')) {
+							if (!Wholesale::where('user_id','=', Auth::user()->id)->where('active',true)->count('id')) {
 								echo '<tr><td colspan="6" style="text-align: center;">Er zijn nog geen leveranciers</td></tr>';
 							}
-							foreach (Wholesale::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $wholesale) {
+							foreach (Wholesale::where('user_id','=', Auth::user()->id)->where('active',true)->orderBy('created_at', 'desc')->get() as $wholesale) {
 							?>
 								<tr>
 									<td class="col-md-4"><a href="{{ 'wholesale-'.$wholesale->id.'/edit'}}">{{ $wholesale->company_name }}</td>

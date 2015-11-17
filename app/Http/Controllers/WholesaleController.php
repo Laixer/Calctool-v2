@@ -38,6 +38,20 @@ class WholesaleController extends Controller {
 		return back()->with('success', 1);
 	}
 
+	public function getDelete(Request $request, $wholesale_id)
+	{
+		$wholesale = Wholesale::find($wholesale_id);
+		if (!$wholesale || !$wholesale->isOwner()) {
+			return back()->withInput($request->all());
+		}
+
+		$wholesale->active = false;
+
+		$wholesale->save();
+
+		return redirect('/wholesale');
+	}
+
 	public function doUpdate(Request $request)
 	{
 		$this->validate($request, [
