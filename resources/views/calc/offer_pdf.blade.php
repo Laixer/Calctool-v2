@@ -29,13 +29,14 @@ if ($relation_self)
    $contact_self = Contact::where('relation_id','=',$relation_self->id);
 $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 
-$include_tax = $offer_last->include_tax; // BTW bedragen weergeven
-$only_totals = $offer_last->only_totals; //Alleen het totale offertebedrag weergeven
-$seperate_subcon = !$offer_last->seperate_subcon; //Onderaanneming apart weergeven
-$display_worktotals = $offer_last->display_worktotals; //Kosten werkzaamheden weergeven
-$display_specification = $offer_last->display_specification; ///Hoofdstukken en werkzaamheden weergeven
-$display_description = $offer_last->display_description;  //Omschrijving werkzaamheden weergeven
+$include_tax = $offer_last->include_tax; <?#--BTW bedragen weergeven--?>
+$only_totals = $offer_last->only_totals; <?#--Alleen het totale offertebedrag weergeven--?>
+$seperate_subcon = !$offer_last->seperate_subcon; <?#--Onderaanneming apart weergeven--?>
+$display_worktotals = $offer_last->display_worktotals; <?#--Kosten werkzaamheden weergeven--?>
+$display_specification = $offer_last->display_specification; <?#--Hoofdstukken en werkzaamheden weergeven--?>
+$display_description = $offer_last->display_description;  <?#--Omschrijving werkzaamheden weergeven--?>
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -431,15 +432,6 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
             <td class="qty">&nbsp;</td>
           </tr>
           @endif
-          <!--
-          <tr style="page-break-after: always;">
-            <td class="qty"><strong>Te offreren BTW bedrag</strong></td>
-            <td class="qty">&nbsp;</td>
-            <td class="qty">&nbsp;</td>
-            <td class="qty"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProjectTax($project), 2, ",",".") }}</strong></td>
-            <td class="qty">&nbsp;</td>
-          </tr>
-          -->
           <tr style="page-break-after: always;">
             <td class="qty"><strong>Calculatief te offreren (Incl. BTW)</strong></td>
             <td class="qty">&nbsp;</td>
@@ -755,15 +747,6 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
             <td class="qty">&nbsp;</td>
           </tr>
           @endif
-         <!--
-          <tr style="page-break-after: always;">
-            <td class="qty"><strong>Te offreren BTW bedrag</strong></td>
-            <td class="qty">&nbsp;</td>
-            <td class="qty">&nbsp;</td>
-            <td class="qty"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProjectTax($project), 2, ",",".") }}</strong></td>
-            <td class="qty">&nbsp;</td>
-          </tr>
-          -->
           <tr style="page-break-after: always;">
             <td class="qty"><strong>Calculatief te offreren (Incl. BTW)</strong></td>
             <td class="qty">&nbsp;</td>
@@ -812,15 +795,6 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
             <td class="qty">&nbsp;</td>
           </tr>
           @endif
-         <!--
-          <tr style="page-break-after: always;">
-            <td class="qty"><strong>Te offreren BTW bedrag</strong></td>
-            <td class="qty">&nbsp;</td>
-            <td class="qty">&nbsp;</td>
-            <td class="qty"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProjectTax($project), 2, ",",".") }}</strong></td>
-            <td class="qty">&nbsp;</td>
-          </tr>
-          -->
           <tr style="page-break-after: always;">
             <td class="qty"><strong>Calculatief te offreren (Incl. BTW)</strong></td>
             <td class="qty">&nbsp;</td>
@@ -869,7 +843,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
 @endif
 
 @if (!$only_totals)
-      <!--PAGE HEADER SECOND START-->
+      <?#--PAGE HEADER SECOND START--?>
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
         <div id="logo">
@@ -881,7 +855,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
           <div class="date">{{ date("j M Y", strtotime($offer_last->offer_make)) }}</div>
         </div>
       </header>
-      <!--PAGE HEADER SECOND END-->
+      <?#--PAGE HEADER SECOND END--?>
 
       <div class="closingtext">{{ ($offer_last ? $offer_last->closure : '') }}</div>
 
@@ -923,7 +897,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
     @if ($display_worktotals)
     @if ($seperate_subcon)
 
-      <!--PAGE HEADER SECOND START-->
+      <?#--PAGE HEADER SECOND START--?>
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
         <div id="logo">
@@ -935,7 +909,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
           <div class="date">{{ date("j M Y", strtotime($offer_last->offer_make)) }}</div>
         </div>
       </header>
-      <!--PAGE HEADER SECOND END-->
+      <?#--PAGE HEADER SECOND END--?>
 
      <h1 class="name">Totaalkosten per werkzaamheid</h1>
      <table border="0" cellspacing="0" cellpadding="0">
@@ -954,7 +928,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
         <tbody>
           @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
           @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
-          <tr><!-- item -->
+          <tr><?#-- item --?>
             <td class="qty">{{ $chapter->chapter_name }}</td>
             <td class="qty">{{ $activity->activity_name }}</td>
             <td class="qty">@if ($display_specification) <span>{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
@@ -974,7 +948,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
           @endforeach
           @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
           @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
-          <tr><!-- item -->
+          <tr><?#-- item --?>
             <td class="qty">{{ $chapter->chapter_name }}</td>
             <td class="qty">{{ $activity->activity_name }}</td>
             <td class="qty">@if ($display_specification) <span>{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
@@ -1022,7 +996,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
       <strong>Weergegeven bedragen zijn exclusief BTW</strong>
       @else
 
-      <!--PAGE HEADER SECOND START-->
+      <?#--PAGE HEADER SECOND START--?>
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
         <div id="logo">
@@ -1034,7 +1008,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
           <div class="date">{{ date("j M Y", strtotime($offer_last->offer_make)) }}</div>
         </div>
       </header>
-      <!--PAGE HEADER SECOND END-->
+      <?#--PAGE HEADER SECOND END--?>
 
     <h1 class="name">Totalen project</h1>
     <h4 class="name">Aanneming</h4>
@@ -1168,7 +1142,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
     @if ($display_description)
     @if ($seperate_subcon)
 
-      <!--PAGE HEADER SECOND START-->
+      <?#--PAGE HEADER SECOND START--?>
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
         <div id="logo">
@@ -1180,7 +1154,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
           <div class="date">{{ date("j M Y", strtotime($offer_last->offer_make)) }}</div>
         </div>
       </header>
-      <!--PAGE HEADER SECOND END-->
+      <?#--PAGE HEADER SECOND END--?>
 
     <h1 class="name">Omschrijving werkzaamheden</h1>
     <table border="0" cellspacing="0" cellpadding="0">
@@ -1194,7 +1168,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
       <tbody>
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
         @foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
-        <tr><!-- item -->
+        <tr><?#-- item --?>
           <td class="qty">{{ $chapter->chapter_name }}</td>
           <td class="qty">{{ $activity->activity_name }}</td>
           <td class="qty"><br><span>{{ $activity->note }}</td>
@@ -1205,7 +1179,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
     </table>
     @else
 
-      <!--PAGE HEADER SECOND START-->
+      <?#--PAGE HEADER SECOND START--?>
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
         <div id="logo">
@@ -1217,7 +1191,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
           <div class="date">{{ date("j M Y", strtotime($offer_last->offer_make)) }}</div>
         </div>
       </header>
-      <!--PAGE HEADER SECOND END-->
+      <?#--PAGE HEADER SECOND END--?>
 
     <h1 class="name">Omschrijving werkzaamheden</h1>
     <h4 class="name">Aanneming</h4>
@@ -1255,7 +1229,7 @@ $display_description = $offer_last->display_description;  //Omschrijving werkzaa
       <tbody>
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
         @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
-        <tr><!-- item -->
+        <tr><?#-- item --?>
           <td class="qty">{{ $chapter->chapter_name }}</td>
           <td class="qty">{{ $activity->activity_name }}</td>
           <td class="qty"><br><span>{{ $activity->note }}</td>
