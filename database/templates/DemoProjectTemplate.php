@@ -34,8 +34,8 @@ class DemoProjectTemplate {
 		$contact_function = ContactFunction::where('function_name','=','voorzitter')->first();
 
 		$relation = new Relation;
-		$relation->company_name		= 'Demo-relatie';
-		$relation->address_street	= 'Demo-straat';
+		$relation->company_name		= 'Demorelatie';
+		$relation->address_street	= 'Demostraat';
 		$relation->address_number	= '1';
 		$relation->address_postal	= '1234DE';
 		$relation->address_city		= 'Demo-stad';
@@ -56,8 +56,8 @@ class DemoProjectTemplate {
 		$relation->save();
 
 		$project = new Project;
-		$project->project_name 		= 'Demo-project';
-		$project->address_street 	= 'Demo-laan';
+		$project->project_name 		= 'Demoproject';
+		$project->address_street 	= 'Demolaan';
 		$project->address_number 	= '2';
 		$project->address_postal 	= '5678MO';
 		$project->address_city 		= 'Demo-dorp';
