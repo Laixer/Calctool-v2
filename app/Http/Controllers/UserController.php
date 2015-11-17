@@ -148,7 +148,7 @@ class UserController extends Controller {
 		$order->save();
 
 		$log = new Audit;
-		$log->ip = Calctool::remoteAddr();
+		$log->ip = \Calctool::remoteAddr();
 		$log->event = '[PAYMENT] [REQUESTED]';
 		$log->user_id = Auth::id();
 		$log->save();
@@ -206,7 +206,7 @@ class UserController extends Controller {
 			}
 
 			$log = new Audit;
-			$log->ip = Calctool::remoteAddr();
+			$log->ip = \Calctool::remoteAddr();
 			$log->event = '[PAYMENT] [SUCCESS]';
 			$log->user_id = $user->id();
 			$log->save();
@@ -287,7 +287,7 @@ class UserController extends Controller {
 		}
 
 		$log = new Audit;
-		$log->ip = Calctool::remoteAddr();
+		$log->ip = \Calctool::remoteAddr();
 		$log->event = '[SECURITY_UPDATE] [SUCCESS]';
 		$log->user_id = Auth::id();
 		$log->save();
@@ -379,7 +379,7 @@ class UserController extends Controller {
 
 		/* System */
 		$user->api = md5(mt_rand());
-		$user->ip = Calctool::remoteAddr();
+		$user->ip = \Calctool::remoteAddr();
 		$user->referral_key = md5(mt_rand());
 
 		$user->save();
@@ -493,7 +493,7 @@ class UserController extends Controller {
 		$user->save();
 
 		$log = new Audit;
-		$log->ip = Calctool::remoteAddr();
+		$log->ip = \Calctool::remoteAddr();
 		$log->event = '[PREFSUPDATE] [SUCCESS]';
 		$log->user_id = $user->id;
 		$log->save();
