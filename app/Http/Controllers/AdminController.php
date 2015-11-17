@@ -8,6 +8,7 @@ use \Calctool\Models\SysMessage;
 use \Calctool\Models\Payment;
 use \Calctool\Models\User;
 use \Calctool\Models\Resource;
+//use \Calctool\Database\Templates\DemoProjectTemplate;
 
 use \Storage;
 use \Auth;
@@ -325,9 +326,9 @@ class AdminController extends Controller {
 		return back()->with('success', 1);
 	}
 
-	public function getDemoProject(Request $request)
+	public function getDemoProject(Request $request, $user_id)
 	{
-		DemoProjectTemplate::setup($request->input('user_id'));
+		\DemoProjectTemplate::setup($user_id);
 
 		return back()->with('success', 1);
 	}
