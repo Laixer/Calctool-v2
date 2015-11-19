@@ -249,11 +249,25 @@ class UserController extends Controller {
 	public function doUpdateSecurity(Request $request)
 	{
 		$this->validate($request, [
+			'curr_secret' => array('required'),
 			'secret' => array('confirmed','min:5'),
 			'secret_confirmation' => array('min:5'),
 		]);
 
 		$user = Auth::user();
+
+		$userdata = array(
+			'username' 	=> $user->username,
+			'password' 	=> $request->input('curr_secret'),
+			'active' 	=> 1,
+			'banned' 	=> NULL
+		);
+
+		if (!Auth::validate($userdata)) {
+			$errors = new MessageBag(['status' => ['Huidige wachtwoord klopt niet']]);
+			return back()->withErrors($errors);
+		}
+
 		if ($request->get('secret'))
 			$user->secret = Hash::make($request->get('secret'));
 		if ($request->get('toggle-api'))
@@ -273,7 +287,6 @@ class UserController extends Controller {
 				$tgram = Telegram::where('user_id','=',$user->id)->first();
 				if ($tgram && $tgram->alert) {
 
-					// create Telegram API object
 					$telegram = new Longman\TelegramBot\Telegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
 					TRequest::initialize($telegram);
 

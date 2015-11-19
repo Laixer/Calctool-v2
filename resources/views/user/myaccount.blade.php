@@ -221,6 +221,16 @@ $(document).ready(function() {
 
 								<div class="col-md-4">
 									<div class="form-group">
+										<label for="curr_secret">Huidig wachtwoord</label>
+										<input name="curr_secret" id="curr_secret" type="password" class="form-control" />
+									</div>
+								</div>
+
+							</div>
+							<div class="row company">
+
+								<div class="col-md-4">
+									<div class="form-group">
 										<label for="secret">Wachtwoord</label>
 										<input name="secret" id="secret" type="password" class="form-control" />
 									</div>
