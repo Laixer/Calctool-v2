@@ -8,6 +8,7 @@ use \Calctool\Models\SysMessage;
 use \Calctool\Models\Payment;
 use \Calctool\Models\User;
 use \Calctool\Models\Resource;
+use \Calctool\Models\Audit;
 
 use \Storage;
 use \Auth;
@@ -70,7 +71,7 @@ class AdminController extends Controller {
 		$subtract = $request->input('amount');
 
 		$mollie = new Mollie_API_Client;
-		$mollie->setApiKey($_ENV['MOLLIE_API']);
+		$mollie->setApiKey(env('MOLLIE_API', null));
 
 		$payment = $mollie->payments->get($request->Input('transcode'));
 
@@ -155,14 +156,6 @@ class AdminController extends Controller {
 			$user->website = $request->input('website');
 
 		/* Adress */
-		if ($request->input('address_street'))
-			$user->address_street = $request->input('address_street');
-		if ($request->input('address_number'))
-			$user->address_number = $request->input('address_number');
-		if ($request->input('address_zipcode'))
-			$user->address_postal = $request->input('address_zipcode');
-		if ($request->input('address_city'))
-			$user->address_city = $request->input('address_city');
 		$user->province_id = $request->input('province');
 		$user->country_id = $request->input('country');
 
@@ -190,6 +183,12 @@ class AdminController extends Controller {
 			$user->gender = $request->input('gender');
 
 		$user->save();
+
+		$log = new Audit;
+		$log->ip = \Calctool::remoteAddr();
+		$log->event = '[ADMIN] [CREATE] [SUCCESS] ' . Auth::user()->username;
+		$log->user_id = $user->id;
+		$log->save();
 
 		return back()->with('success', 1);
 	}
@@ -227,14 +226,6 @@ class AdminController extends Controller {
 			$user->website = $request->input('website');
 
 		/* Adress */
-		if ($request->input('address_street'))
-			$user->address_street = $request->input('address_street');
-		if ($request->input('address_number'))
-			$user->address_number = $request->input('address_number');
-		if ($request->input('address_zipcode'))
-			$user->address_postal = $request->input('address_zipcode');
-		if ($request->input('address_city'))
-			$user->address_city = $request->input('address_city');
 		$user->province_id = $request->input('province');
 		$user->country_id = $request->input('country');
 
@@ -265,6 +256,12 @@ class AdminController extends Controller {
 			$user->gender = $request->input('gender');
 
 		$user->save();
+
+		$log = new Audit;
+		$log->ip = \Calctool::remoteAddr();
+		$log->event = '[ADMIN] [UPDATE_PROFILE] [SUCCESS] ' . Auth::user()->username;
+		$log->user_id = $user->id;
+		$log->save();
 
 		return back()->with('success', 1);
 	}

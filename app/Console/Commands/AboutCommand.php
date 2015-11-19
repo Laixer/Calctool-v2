@@ -32,7 +32,7 @@ class AboutCommand extends Command
 		$message_id = $message->getMessageId();
 		$text = $message->getText(true);
 
-		$msg = '-= Calctool v' . $_ENV['CT_VERSION'] . ' =-' . "\n\n";
+		$msg = '-= Calctool v' . env('CT_VERSION', '') . ' =-' . "\n\n";
 		$msg .= 'Services: Online' . "\n";
 		$msg .= 'COPYRIGHT © ' . date('Y') . ' CalculatieTool';
 

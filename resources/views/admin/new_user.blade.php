@@ -170,34 +170,6 @@ $(document).ready(function() {
 				<h4>Adresgegevens</h4>
 				<div class="row">
 
-					<div class="col-md-4">
-						<div class="form-group">
-							<label for="address_street">Straat</label>
-							<input name="address_street" id="address_street" type="text" value="{{ Input::old('address_street') }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-1">
-						<div class="form-group">
-							<label for="address_number">Huis nr.</label>
-							<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-2">
-						<div class="form-group">
-							<label for="address_zipcode">Postcode</label>
-							<input name="address_zipcode" id="address_zipcode" maxlength="6" type="text" value="{{ Input::old('address_zipcode') }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-3">
-						<div class="form-group">
-							<label for="address_city">Plaats</label>
-							<input name="address_city" id="address_city" type="text" value="{{ Input::old('address_city') }}" class="form-control"/>
-						</div>
-					</div>
-
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="province">Provincie</label>
