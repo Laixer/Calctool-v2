@@ -47,7 +47,7 @@ class MaterialImport extends Command {
 	 */
 	public function handle()
 	{
-		$boumaat = Supplier::where('wholesale_id', Wholesale::where('company_name','bouwmaat nl')->first()['id'])->first();
+		$boumaat = Supplier::where('wholesale_id', Wholesale::where('company_name','Bouwmaat NL')->first()['id'])->first();
 
 		$parser = new Parser();
 		$filename = $this->argument('file');

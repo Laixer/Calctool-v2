@@ -2,6 +2,7 @@
 
 namespace Calctool\Http\Controllers;
 
+use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
 
 use \Calctool\Models\SysMessage;
@@ -104,6 +105,9 @@ class AdminController extends Controller {
 
 	public function doNewUser(Request $request)
 	{
+		$request->merge(array('username' => strtolower(trim($request->input('username')))));
+		$request->merge(array('email' => strtolower(trim($request->input('email')))));
+
 		$this->validate($request, [
 			/* General */
 			'username' => array('required','unique:user_account'),
@@ -123,15 +127,13 @@ class AdminController extends Controller {
 			'address_number' => array('alpha_num','max:5'),
 			'address_zipcode' => array('size:6'),
 			'address_city' => array('alpha_num','max:35'),
-			'province' => array('numeric'),
-			'country' => array('numeric'),
 
 			'expdate' => array('required'),
 		]);
 
 		/* General */
 		$user = new User;
-		$user->username = strtolower(trim($request->input('username')));
+		$user->username = $request->input('username');
 		$user->secret = Hash::make($request->input('secret'));
 		$user->user_type = $request->input('type');
 
@@ -155,10 +157,6 @@ class AdminController extends Controller {
 			$user->phone = $request->input('telephone');
 		if ($request->input('website'))
 			$user->website = $request->input('website');
-
-		/* Adress */
-		$user->province_id = $request->input('province');
-		$user->country_id = $request->input('country');
 
 		/* Overig */
 		$user->expiration_date = $request->input('expdate');
@@ -203,8 +201,18 @@ class AdminController extends Controller {
 
 		/* General */
 		$user = User::find($user_id);
-		if ($request->input('username'))
-			$user->username = strtolower(trim($request->input('username')));
+		if ($request->input('username')) {
+			if ($user->username != $request->get('username')) {
+				$username = strtolower(trim($request->input('username')));
+
+				if (User::where('username',$username)->count()>0) {
+					$errors = new MessageBag(['status' => ['Gebruikersnaam wordt al gebruikt']]);
+					return back()->withErrors($errors);
+				}
+
+				$user->username = $username;
+			}
+		}
 		if ($request->input('secret'))
 			$user->secret = Hash::make($request->input('secret'));
 		if ($request->input('type'))
@@ -217,18 +225,24 @@ class AdminController extends Controller {
 			$user->firstname = $user->username;
 		if ($request->input('lastname'))
 			$user->lastname = $request->input('lastname');
-		if ($request->input('email'))
-			$user->email = $request->input('email');
+		if ($request->input('email')) {
+			if ($user->email != $request->get('email')) {
+				$email = strtolower(trim($request->input('email')));
+
+				if (User::where('email',$email)->count()>0) {
+					$errors = new MessageBag(['status' => ['Email wordt al gebruikt']]);
+					return back()->withErrors($errors);
+				}
+
+				$user->email = $email;
+			}
+		}
 		if ($request->input('mobile'))
 			$user->mobile = $request->input('mobile');
 		if ($request->input('telephone'))
 			$user->phone = $request->input('telephone');
 		if ($request->input('website'))
 			$user->website = $request->input('website');
-
-		/* Adress */
-		$user->province_id = $request->input('province');
-		$user->country_id = $request->input('country');
 
 		/* Overig */
 		if ($request->input('expdate'))

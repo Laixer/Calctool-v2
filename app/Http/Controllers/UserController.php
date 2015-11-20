@@ -342,7 +342,18 @@ class UserController extends Controller {
 			else
 				$user->gender = $request->get('gender');
 		}
-		$user->email = $request->get('email');
+
+		if ($user->email != $request->get('email')) {
+			$email = strtolower(trim($request->input('email')));
+
+			if (User::where('email',$email)->count()>0) {
+				$errors = new MessageBag(['status' => ['Email wordt al gebruikt']]);
+				return back()->withErrors($errors);
+			}
+
+			$user->email = $email;
+		}
+
 		if ($request->get('mobile'))
 			$user->mobile = $request->get('mobile');
 		if ($request->get('phone'))
