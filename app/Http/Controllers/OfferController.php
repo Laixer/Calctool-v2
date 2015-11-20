@@ -10,6 +10,7 @@ use \Calctool\Models\Resource;
 use \Calctool\Http\Controllers\InvoiceController;
 use \Calctool\Models\Invoice;
 use \Calctool\Calculus\ResultEndresult;
+use \Calctool\Calculus\InvoiceTerm;
 
 use \Auth;
 use \PDF;
@@ -142,7 +143,7 @@ class OfferController extends Controller {
 		$offer->offer_finish = date('Y-m-d', strtotime($request->get('date')));
 		$offer->save();
 
-		$first_id = 0;
+		$first_invoice = null;
 
 		for ($i=0; $i < $offer->invoice_quantity; $i++) {
 			$invoice = new Invoice;
@@ -150,25 +151,24 @@ class OfferController extends Controller {
 			$invoice->invoice_code = InvoiceController::getInvoiceCodeConcept($project->id);
 			$invoice->payment_condition = 30;
 			$invoice->offer_id = $offer->id;
-			if (($i+1) == $offer->invoice_quantity)
+			if (($i+1) == $offer->invoice_quantity) {
+				$project_total = ResultEndresult::totalProject($project);
+				$project_total -= $offer->downpayment_amount;
+				$invoice->amount = $project_total;
+				$invoice->rest_21 = InvoiceTerm::partTax1($project, $invoice) * $project_total;
+				$invoice->rest_6 = InvoiceTerm::partTax2($project, $invoice) * $project_total;
+				$invoice->rest_0 = InvoiceTerm::partTax3($project, $invoice) * $project_total;
 				$invoice->isclose = true;
-			if ($i == 0 && $offer->downpayment)
+			}
+			if ($i == 0 && $offer->downpayment) {
 				$invoice->amount = $offer->downpayment_amount;
+				$invoice->rest_21 = InvoiceTerm::partTax1($project, $invoice) * $offer->downpayment_amount;
+				$invoice->rest_6 = InvoiceTerm::partTax2($project, $invoice) * $offer->downpayment_amount;
+				$invoice->rest_0 = InvoiceTerm::partTax3($project, $invoice) * $offer->downpayment_amount;
+			}
 			$invoice->save();
 			if ($i == 0)
-				$first_id = $invoice->id;
-		}
-
-		if ($offer->invoice_quantity>1) {
-			$invamount = 0;
-			$invtotal = ResultEndresult::totalProject(Project::find($project->id));
-			if ($offer->downpayment)
-				$invamount = $offer->downpayment_amount;
-			$invtotal-=$invamount;
-			$input = array('id' => $first_id, 'project' => $project->id, 'amount' => $invamount, 'totaal' => $invtotal);
-			$nrequest = Request::create($request);
-			$nrequest->merge($input);
-			return app('\Calctool\Http\Controllers\InvoiceController')->doUpdateAmount($nrequest);
+				$first_invoice = $invoice;
 		}
 
 		return json_encode(['success' => 1]);

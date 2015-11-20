@@ -37,6 +37,7 @@ $display_specification = $offer_last->display_specification; //Hoofdstukken en w
 $display_description = $offer_last->display_description;  //Omschrijving werkzaamheden weergeven
 
 function invoice_condition() {
+	global $offer_last;
 	if ($offer_last && $offer_last->invoice_quantity > 1) {
 		if ($offer_last && $offer_last->downpayment) {
 			echo "Indien opdracht gegund wordt, ontvangt u " . $offer_last->invoice_quantity . " termijnen waarvan de eerste termijn een aanbetaling betreft á &euro; " . number_format($offer_last->downpayment_amount, 2, ",",".");
