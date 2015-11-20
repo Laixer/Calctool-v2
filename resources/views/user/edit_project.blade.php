@@ -649,7 +649,6 @@ else {
 								<label>Deze week</label>
 								<div class="toggle-content">-->
 									<table class="table table-striped">
-										<?# -- table head -- ?>
 										<thead>
 											<tr>
 												<th class="col-md-1">Datum</th>

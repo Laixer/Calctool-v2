@@ -123,8 +123,6 @@ class AdminController extends Controller {
 			'address_number' => array('alpha_num','max:5'),
 			'address_zipcode' => array('size:6'),
 			'address_city' => array('alpha_num','max:35'),
-			'province' => array('numeric'),
-			'country' => array('numeric'),
 
 			'expdate' => array('required'),
 		]);
@@ -155,10 +153,6 @@ class AdminController extends Controller {
 			$user->phone = $request->input('telephone');
 		if ($request->input('website'))
 			$user->website = $request->input('website');
-
-		/* Adress */
-		$user->province_id = $request->input('province');
-		$user->country_id = $request->input('country');
 
 		/* Overig */
 		$user->expiration_date = $request->input('expdate');
@@ -225,10 +219,6 @@ class AdminController extends Controller {
 			$user->phone = $request->input('telephone');
 		if ($request->input('website'))
 			$user->website = $request->input('website');
-
-		/* Adress */
-		$user->province_id = $request->input('province');
-		$user->country_id = $request->input('country');
 
 		/* Overig */
 		if ($request->input('expdate'))

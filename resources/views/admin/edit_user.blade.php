@@ -193,33 +193,6 @@ $(document).ready(function() {
 
 					</div>
 
-					<h4>Adresgegevens</h4>
-					<div class="row">
-
-						<div class="col-md-2">
-							<div class="form-group">
-								<label for="province">Provincie</label>
-								<select name="province" id="province" class="form-control pointer">
-									@foreach (\Calctool\Models\Province::all() as $province)
-										<option {{ $user->province_id==$province->id ? 'selected' : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
-									@endforeach
-								</select>
-							</div>
-						</div>
-
-						<div class="col-md-4">
-							<div class="form-group">
-								<label for="country">Land</label>
-								<select name="country" id="country" class="form-control pointer">
-									@foreach (\Calctool\Models\Country::all() as $country)
-										<option {{ $user->country_id==$country->id ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
-									@endforeach
-								</select>
-							</div>
-						</div>
-
-					</div>
-
 					<h4>Overig</h4>
 					<div class="row">
 

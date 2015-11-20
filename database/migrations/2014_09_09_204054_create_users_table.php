@@ -87,10 +87,6 @@ class CreateUsersTable extends Migration {
 			$table->decimal('administration_cost', 6, 2)->nullable()->default(12.50);
 			$table->rememberToken();
 			$table->nullableTimestamps();
-			$table->integer('province_id')->unsigned()->nullable();
-			$table->foreign('province_id')->references('id')->on('province')->onUpdate('cascade')->onDelete('restrict');
-			$table->integer('country_id')->unsigned()->nullable();
-			$table->foreign('country_id')->references('id')->on('country')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('user_type')->unsigned();
 			$table->foreign('user_type')->references('id')->on('user_type')->onUpdate('cascade')->onDelete('restrict');
 		});
