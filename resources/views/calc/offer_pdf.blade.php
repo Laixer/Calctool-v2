@@ -19,7 +19,7 @@ use \Calctool\Calculus\CalculationOverview;
 
 $c=false;
 
-$project = Project::find(Route::Input('project_id'));
+$project = Project::find($offer->project_id);
 if (!$project || !$project->isOwner()) {
   exit();
 }
@@ -27,22 +27,20 @@ $relation = Relation::find($project->client_id);
 $relation_self = Relation::find(Auth::user()->self_id);
 if ($relation_self)
    $contact_self = Contact::where('relation_id','=',$relation_self->id);
-$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 
-$include_tax = $offer_last->include_tax; //BTW bedragen weergeven
-$only_totals = $offer_last->only_totals; //Alleen het totale offertebedrag weergeven
-$seperate_subcon = !$offer_last->seperate_subcon; //Onderaanneming apart weergeven
-$display_worktotals = $offer_last->display_worktotals; //Kosten werkzaamheden weergeven
-$display_specification = $offer_last->display_specification; //Hoofdstukken en werkzaamheden weergeven
-$display_description = $offer_last->display_description;  //Omschrijving werkzaamheden weergeven
+$include_tax = $offer->include_tax; //BTW bedragen weergeven
+$only_totals = $offer->only_totals; //Alleen het totale offertebedrag weergeven
+$seperate_subcon = !$offer->seperate_subcon; //Onderaanneming apart weergeven
+$display_worktotals = $offer->display_worktotals; //Kosten werkzaamheden weergeven
+$display_specification = $offer->display_specification; //Hoofdstukken en werkzaamheden weergeven
+$display_description = $offer->display_description;  //Omschrijving werkzaamheden weergeven
 
-function invoice_condition() {
-	global $offer_last;
-	if ($offer_last && $offer_last->invoice_quantity > 1) {
-		if ($offer_last && $offer_last->downpayment) {
-			echo "Indien opdracht gegund wordt, ontvangt u " . $offer_last->invoice_quantity . " termijnen waarvan de eerste termijn een aanbetaling betreft á &euro; " . number_format($offer_last->downpayment_amount, 2, ",",".");
+function invoice_condition($offer) {
+	if ($offer && $offer->invoice_quantity > 1) {
+		if ($offer && $offer->downpayment) {
+			echo "Indien opdracht gegund wordt, ontvangt u " . $offer->invoice_quantity . " termijnen waarvan de eerste termijn een aanbetaling betreft á &euro; " . number_format($offer->downpayment_amount, 2, ",",".");
 		} else {
-			echo "Indien opdracht gegund wordt, ontvangt u " . $offer_last->invoice_quantity . " termijnen waarvan de laatste een eindfactuur.";
+			echo "Indien opdracht gegund wordt, ontvangt u " . $offer->invoice_quantity . " termijnen waarvan de laatste een eindfactuur.";
 		}
 	} else {
 		echo "Indien opdracht gegund wordt, ontvangt u één eindfactuur.";
@@ -76,19 +74,19 @@ function invoice_condition() {
 	  <div id="details" class="clearfix">
 		<div id="client">
 		  <div>{{ $relation->company_name }}</div>
-		  <div>T.a.v. {{ Contact::find($offer_last->to_contact_id)->getFormalName() }}</div>
+		  <div>T.a.v. {{ Contact::find($offer->to_contact_id)->getFormalName() }}</div>
 		  <div>{{ $relation->address_street . ' ' . $relation->address_number }}</div>
 		  <div>{{ $relation->address_postal . ', ' . $relation->address_city }}</div>
 		</div>
 		<div id="invoice">
 		  <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
 		  <div class="date">{{ $project->project_name }}</div>
-		  <div class="date">{{ date("j M Y", strtotime($offer_last->offer_make)) }}</div>
+		  <div class="date">{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
 		</div>
 	  </div>
 
-	  <div class="openingtext">Geachte {{ Contact::find($offer_last->to_contact_id)->getFormalName() }},</div>
-	  <div class="openingtext">{{ ($offer_last ? $offer_last->description : '') }}</div>
+	  <div class="openingtext">Geachte {{ Contact::find($offer->to_contact_id)->getFormalName() }},</div>
+	  <div class="openingtext">{{ ($offer ? $offer->description : '') }}</div>
 
 @if (!$only_totals)
 	  <h1 class="name">Specificatie offerte</h1>
@@ -461,29 +459,29 @@ function invoice_condition() {
 	  <h1 class="name">Bepalingen</h1>
 	  <div class="statements">
 		<li>
-			{{ invoice_condition() }}
+			{{ invoice_condition($offer) }}
 		</li>
 		<li>
-		 @if (DeliverTime::find($offer_last->deliver_id)->delivertime_name == "per direct" || DeliverTime::find($offer_last->deliver_id)->delivertime_name == "in overleg")
+		 @if (DeliverTime::find($offer->deliver_id)->delivertime_name == "per direct" || DeliverTime::find($offer->deliver_id)->delivertime_name == "in overleg")
 		  Wij kunnen de werkzaamheden
-		  {{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
+		  {{ DeliverTime::find($offer->deliver_id)->delivertime_name }}
 		  starten na uw opdrachtbevestiging.
 		@else
 		  Wij kunnen de werkzaamheden starten binnen
-		  {{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
+		  {{ DeliverTime::find($offer->deliver_id)->delivertime_name }}
 		  na uw opdrachtbevestiging.
 		@endif</li>
-		<li>Deze offerte is geldig tot {{ Valid::find($offer_last->valid_id)->valid_name }} na dagtekening.</li>
-		@if($offer_last->extracondition)
-		<li>{{ $offer_last->extracondition }}</li>
+		<li>Deze offerte is geldig tot {{ Valid::find($offer->valid_id)->valid_name }} na dagtekening.</li>
+		@if($offer->extracondition)
+		<li>{{ $offer->extracondition }}</li>
 		@endif
 	  </div>
 	 
-	  <div class="closingtext">{{ ($offer_last ? $offer_last->closure : '') }}</div>
+	  <div class="closingtext">{{ ($offer ? $offer->closure : '') }}</div>
 
 	  <div class="signing">Met vriendelijke groet,</div>
 	  <br>
-	  <div class="signing">{{ Contact::find($offer_last->from_contact_id)->firstname ." ". Contact::find($offer_last->from_contact_id)->lastname }}</div>
+	  <div class="signing">{{ Contact::find($offer->from_contact_id)->firstname ." ". Contact::find($offer->from_contact_id)->lastname }}</div>
 	</main>
 
 	<footer >
@@ -813,31 +811,31 @@ function invoice_condition() {
 		</tbody>
 	  </table>
 
-	   <div class="closingtext">{{ ($offer_last ? $offer_last->closure : '') }}</div>
+	   <div class="closingtext">{{ ($offer ? $offer->closure : '') }}</div>
 
 	  <h1 class="name">Bepalingen</h1>
 	  <div class="statements">
 		<li>
-			{{ invoice_condition() }}
+			{{ invoice_condition($offer) }}
 		</li>
 		<li>
-		@if (DeliverTime::find($offer_last->deliver_id)->delivertime_name == "per direct" || DeliverTime::find($offer_last->deliver_id)->delivertime_name == "in overleg")
+		@if (DeliverTime::find($offer->deliver_id)->delivertime_name == "per direct" || DeliverTime::find($offer->deliver_id)->delivertime_name == "in overleg")
 		  Wij kunnen de werkzaamheden
-		  {{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
+		  {{ DeliverTime::find($offer->deliver_id)->delivertime_name }}
 		  starten na uw opdrachtbevestiging.
 		@else
 		  Wij kunnen de werkzaamheden starten binnen
-		  {{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
+		  {{ DeliverTime::find($offer->deliver_id)->delivertime_name }}
 		  na uw opdrachtbevestiging.
 		@endif</li>
-		<li>Deze offerte is geldig tot {{ Valid::find($offer_last->valid_id)->valid_name }} na dagtekening.</li>
-		@if($offer_last->extracondition)
-		<li>{{ $offer_last->extracondition }}</li>
+		<li>Deze offerte is geldig tot {{ Valid::find($offer->valid_id)->valid_name }} na dagtekening.</li>
+		@if($offer->extracondition)
+		<li>{{ $offer->extracondition }}</li>
 		@endif
 	  </div>
 	  <div class="signing">Met vriendelijke groet,</div>
 	  <br>
-	  <div class="signing">{{ Contact::find($offer_last->from_contact_id)->firstname ." ". Contact::find($offer_last->from_contact_id)->lastname }}</div>
+	  <div class="signing">{{ Contact::find($offer->from_contact_id)->firstname ." ". Contact::find($offer->from_contact_id)->lastname }}</div>
 	</main>
 
 	<footer>
@@ -856,36 +854,36 @@ function invoice_condition() {
 		  <div id="invoice">
 		  <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
 		  <div class="date">{{ $project->project_name }}</div>
-		  <div class="date">{{ date("j M Y", strtotime($offer_last->offer_make)) }}</div>
+		  <div class="date">{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
 		</div>
 	  </header>
 	  <?#--PAGE HEADER SECOND END--?>
 
-	  <div class="closingtext">{{ ($offer_last ? $offer_last->closure : '') }}</div>
+	  <div class="closingtext">{{ ($offer ? $offer->closure : '') }}</div>
 
 	  <h1 class="name">Bepalingen</h1>
 	  <div class="statements">
 	  <li>
-			{{ invoice_condition() }}
+			{{ invoice_condition($offer) }}
 		</li>
 		<li>
-		@if (DeliverTime::find($offer_last->deliver_id)->delivertime_name == "per direct" || DeliverTime::find($offer_last->deliver_id)->delivertime_name == "in overleg")
+		@if (DeliverTime::find($offer->deliver_id)->delivertime_name == "per direct" || DeliverTime::find($offer->deliver_id)->delivertime_name == "in overleg")
 		  Wij kunnen de werkzaamheden
-		  {{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
+		  {{ DeliverTime::find($offer->deliver_id)->delivertime_name }}
 		  starten na uw opdrachtbevestiging.
 		@else
 		  Wij kunnen de werkzaamheden starten binnen
-		  {{ DeliverTime::find($offer_last->deliver_id)->delivertime_name }}
+		  {{ DeliverTime::find($offer->deliver_id)->delivertime_name }}
 		  na uw opdrachtbevestiging.
 		@endif</li>
-		<li>Deze offerte is geldig tot {{ Valid::find($offer_last->valid_id)->valid_name }} na dagtekening.</li>
-		@if($offer_last->extracondition)
-		<li>{{ $offer_last->extracondition }}</li>
+		<li>Deze offerte is geldig tot {{ Valid::find($offer->valid_id)->valid_name }} na dagtekening.</li>
+		@if($offer->extracondition)
+		<li>{{ $offer->extracondition }}</li>
 		@endif
 	  </div>
 	  <div class="signing">Met vriendelijke groet,</div>
 	  <br>
-	  <div class="signing">{{ Contact::find($offer_last->from_contact_id)->firstname ." ". Contact::find($offer_last->from_contact_id)->lastname }}</div>
+	  <div class="signing">{{ Contact::find($offer->from_contact_id)->firstname ." ". Contact::find($offer->from_contact_id)->lastname }}</div>
 	</main>
 
 	<footer>
@@ -906,7 +904,7 @@ function invoice_condition() {
 		  <div id="invoice">
 		  <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
 		  <div class="date">{{ $project->project_name }}</div>
-		  <div class="date">{{ date("j M Y", strtotime($offer_last->offer_make)) }}</div>
+		  <div class="date">{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
 		</div>
 	  </header>
 	  <?#--PAGE HEADER SECOND END--?>
@@ -1005,7 +1003,7 @@ function invoice_condition() {
 		  <div id="invoice">
 		  <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
 		  <div class="date">{{ $project->project_name }}</div>
-		  <div class="date">{{ date("j M Y", strtotime($offer_last->offer_make)) }}</div>
+		  <div class="date">{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
 		</div>
 	  </header>
 	  <?#--PAGE HEADER SECOND END--?>
@@ -1151,7 +1149,7 @@ function invoice_condition() {
 		  <div id="invoice">
 		  <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
 		  <div class="date">{{ $project->project_name }}</div>
-		  <div class="date">{{ date("j M Y", strtotime($offer_last->offer_make)) }}</div>
+		  <div class="date">{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
 		</div>
 	  </header>
 	  <?#--PAGE HEADER SECOND END--?>
@@ -1188,7 +1186,7 @@ function invoice_condition() {
 		  <div id="invoice">
 		  <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
 		  <div class="date">{{ $project->project_name }}</div>
-		  <div class="date">{{ date("j M Y", strtotime($offer_last->offer_make)) }}</div>
+		  <div class="date">{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
 		</div>
 	  </header>
 	  <?#--PAGE HEADER SECOND END--?>
