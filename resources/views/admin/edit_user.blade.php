@@ -34,8 +34,8 @@ $(document).ready(function() {
 		}
 	});
 
-	$("[name='toggle-api']").bootstrapSwitch();
-	$("[name='toggle-active']").bootstrapSwitch();
+	$("[name='toggle-api']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	$("[name='toggle-active']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 });
 </script>
 

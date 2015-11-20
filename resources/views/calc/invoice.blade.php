@@ -65,7 +65,7 @@ if (!$project || !$project->isOwner()) {
             $(this).find("td").eq(5).hide();
             $(this).find("th").eq(5).hide();
         });
-		$("[name='toggle-tax']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='toggle-tax']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		        $('.hide-btw1 tr').each(function() {
 	                $(this).find("td").eq(4).show();
@@ -114,7 +114,7 @@ if (!$project || !$project->isOwner()) {
 		        });
 		  }
 		});
-		$("[name='toggle-activity']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='toggle-activity']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-activity').show();
 		  	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
@@ -123,7 +123,7 @@ if (!$project || !$project->isOwner()) {
 			$('.show-activity').hide();
 		  }
 		});
-		$("[name='toggle-subcontr']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='toggle-subcontr']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-all').show();
 		  	$('.show-totals').hide();
@@ -132,14 +132,14 @@ if (!$project || !$project->isOwner()) {
 		  	$('.show-totals').show();
 		  }
 		});
-		$("[name='toggle-note']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='toggle-note']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-note').show();
 		  } else {
 			$('.show-note').hide();
 		  }
 		});
-		$("[name='toggle-endresult']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='toggle-endresult']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.only-total').hide();
 		  	$('.hide-btw1').hide();
@@ -176,7 +176,7 @@ if (!$project || !$project->isOwner()) {
 	        });
 		  }
 		});
-		$("[name='toggle-summary']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='toggle-summary']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 	        $('.only-end-total tr').each(function() {
                 $(this).find("td").eq(2).show();
@@ -202,7 +202,7 @@ if (!$project || !$project->isOwner()) {
 		  }
 		});
 		$tpayment = false;
-		$("[name='toggle-payment']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='toggle-payment']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 			if (state) {
 				$("#amount").prop('disabled', false);
 				$tpayment = true;

@@ -35,8 +35,8 @@ $(document).ready(function() {
 		}
 	});
 
-	$("[name='toggle-api']").bootstrapSwitch();
-	$("[name='pref_mailings_optin']").bootstrapSwitch();
+	$("[name='toggle-api']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	$("[name='pref_mailings_optin']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	$('#acc-deactive').click(function(e){
 		e.preventDefault();
 		if(confirm('Weet je zeker dat je je account wilt deactiveren?')){

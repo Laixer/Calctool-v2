@@ -16,7 +16,7 @@ if ($tgram) {
 
 <script type="text/javascript">
 $(document).ready(function() {
-	$("[name='toggle-alert']").bootstrapSwitch();
+	$("[name='toggle-alert']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 });
 </script>
 
