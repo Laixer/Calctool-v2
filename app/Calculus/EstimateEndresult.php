@@ -200,8 +200,8 @@ class EstimateEndresult {
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
-					} else {
-						$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
+				} else {
+						$rows = EstimateMaterial::where('activity_id','=',$activity->id)->get();
 						$set_rows = [];
 					}
 						foreach ($rows as $row)
@@ -231,7 +231,7 @@ class EstimateEndresult {
 					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
 					} else {
-						$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
+						$rows = EstimateMaterial::where('activity_id','=',$activity->id)->get();
 						$set_rows = [];
 					}
 					foreach ($rows as $row)
@@ -262,7 +262,7 @@ class EstimateEndresult {
 					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
 					} else {
-						$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
+						$rows = EstimateMaterial::where('activity_id','=',$activity->id)->get();
 						$set_rows = [];
 					}
 						foreach ($rows as $row)
@@ -300,7 +300,7 @@ class EstimateEndresult {
 					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
 					} else {
-						$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
+						$rows = EstimateEquipment::where('activity_id','=',$activity->id)->get();
 						$set_rows = [];
 					}
 						foreach ($rows as $row)
@@ -330,7 +330,7 @@ class EstimateEndresult {
 					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
 					} else {
-						$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
+						$rows = EstimateEquipment::where('activity_id','=',$activity->id)->get();
 						$set_rows = [];
 					}
 						foreach ($rows as $row)
@@ -360,7 +360,7 @@ class EstimateEndresult {
 					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
 					} else {
-						$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
+						$rows = EstimateEquipment::where('activity_id','=',$activity->id)->get();
 						$set_rows = [];
 					}
 						foreach ($rows as $row)
@@ -570,7 +570,7 @@ class EstimateEndresult {
 					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
 					} else {
-						$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
+						$rows = EstimateMaterial::where('activity_id','=',$activity->id)->get();
 						$set_rows = [];
 					}
 						foreach ($rows as $row)
@@ -600,7 +600,7 @@ class EstimateEndresult {
 					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
 					} else {
-						$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
+						$rows = EstimateMaterial::where('activity_id','=',$activity->id)->get();
 						$set_rows = [];
 					}
 						foreach ($rows as $row)
@@ -630,7 +630,7 @@ class EstimateEndresult {
 					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
 					} else {
-						$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
+						$rows = EstimateMaterial::where('activity_id','=',$activity->id)->get();
 						$set_rows = [];
 					}
 						foreach ($rows as $row)
@@ -668,7 +668,7 @@ class EstimateEndresult {
 					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
 					} else {
-						$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
+						$rows = EstimateEquipment::where('activity_id','=',$activity->id)->get();
 						$set_rows = [];
 					}
 						foreach ($rows as $row)
@@ -698,7 +698,7 @@ class EstimateEndresult {
 					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
 					} else {
-						$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
+						$rows = EstimateEquipment::where('activity_id','=',$activity->id)->get();
 						$set_rows = [];
 					}
 						foreach ($rows as $row)
@@ -728,7 +728,7 @@ class EstimateEndresult {
 					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
 					} else {
-						$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
+						$rows = EstimateEquipment::where('activity_id','=',$activity->id)->get();
 						$set_rows = [];
 					}
 						foreach ($rows as $row)

@@ -4,7 +4,7 @@ namespace Calctool\Calculus;
 
 use \Calctool\Models\CalculationLabor;
 use \Calctool\Models\EstimateLabor;
-use \Calctool\Models\TimeSheet;
+use \Calctool\Models\Timesheet;
 
 /*
  * Urenregistratie
