@@ -33,7 +33,6 @@ class OfferController extends Controller {
 	public function doNewOffer(Request $request, $projectid)
 	{
 		$this->validate($request, [
-		//$rules = array(
 			'deliver' => array('required','integer','min:0'),
 			'terms' => array('integer','min:0'),
 			'valid' => array('required','integer','min:0'),
@@ -41,83 +40,81 @@ class OfferController extends Controller {
 			'from_contact' => array('required'),
 		]);
 
-			$project = Project::find($projectid);
-			if (!$project || !$project->isOwner()) {
-				return back()->withInput($request->all());
-			}
+		$project = Project::find($projectid);
+		if (!$project || !$project->isOwner()) {
+			return back()->withInput($request->all());
+		}
 
-			$offer = new Offer;
-			$offer->to_contact_id = $request->get('to_contact');
-			$offer->from_contact_id = $request->get('from_contact');
-			$offer->description = $request->get('description');
-			$offer->offer_code = OfferController::getOfferCode($project->id);
-			$offer->extracondition = $request->get('extracondition');
-			$offer->closure = $request->get('closure');
-			if ($request->get('offdateval'))
-				$offer->offer_make =  date('Y-m-d', strtotime($request->get('offdateval')));
-			if ($request->get('toggle-payment'))
-				$offer->downpayment = $request->get('toggle-payment');
-			if ($request->get('amount'))
-				$offer->downpayment_amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
-			$offer->auto_email_reminder = false;
-			$offer->deliver_id = $request->get('deliver');
-			$offer->valid_id = $request->get('valid');
-			if ($request->get('terms'))
-				$offer->invoice_quantity = $request->get('terms');
-			$offer->project_id = $project->id;;
+		$offer = new Offer;
+		$offer->to_contact_id = $request->get('to_contact');
+		$offer->from_contact_id = $request->get('from_contact');
+		$offer->description = $request->get('description');
+		$offer->offer_code = OfferController::getOfferCode($project->id);
+		$offer->extracondition = $request->get('extracondition');
+		$offer->closure = $request->get('closure');
+		if ($request->get('offdateval'))
+			$offer->offer_make =  date('Y-m-d', strtotime($request->get('offdateval')));
+		if ($request->get('toggle-payment'))
+			$offer->downpayment = $request->get('toggle-payment');
+		if ($request->get('amount'))
+			$offer->downpayment_amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
+		$offer->auto_email_reminder = false;
+		$offer->deliver_id = $request->get('deliver');
+		$offer->valid_id = $request->get('valid');
+		if ($request->get('terms'))
+			$offer->invoice_quantity = $request->get('terms');
+		$offer->project_id = $project->id;;
 
-			if ($request->get('include-tax'))
-				$offer->include_tax = true;
-			else
-				$offer->include_tax = false;
-			if ($request->get('only-totals'))
-				$offer->only_totals = true;
-			else
-				$offer->only_totals = false;
-			if ($request->get('seperate-subcon'))
-				$offer->seperate_subcon = true;
-			else
-				$offer->seperate_subcon = false;
-			if ($request->get('display-worktotals'))
-				$offer->display_worktotals = true;
-			else
-				$offer->display_worktotals = false;
-			if ($request->get('display-specification'))
-				$offer->display_specification = true;
-			else
-				$offer->display_specification = false;
-			if ($request->get('display-description'))
-				$offer->display_description = true;
-			else
-				$offer->display_description = false;
+		if ($request->get('include-tax'))
+			$offer->include_tax = true;
+		else
+			$offer->include_tax = false;
+		if ($request->get('only-totals'))
+			$offer->only_totals = true;
+		else
+			$offer->only_totals = false;
+		if ($request->get('seperate-subcon'))
+			$offer->seperate_subcon = true;
+		else
+			$offer->seperate_subcon = false;
+		if ($request->get('display-worktotals'))
+			$offer->display_worktotals = true;
+		else
+			$offer->display_worktotals = false;
+		if ($request->get('display-specification'))
+			$offer->display_specification = true;
+		else
+			$offer->display_specification = false;
+		if ($request->get('display-description'))
+			$offer->display_description = true;
+		else
+			$offer->display_description = false;
 
-			$offer->offer_total = CalculationEndresult::totalProject($project);
+		$offer->offer_total = CalculationEndresult::totalProject($project);
+		$offer->save();
 
-			$offer->save();
+		$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.OfferController::getOfferCode($request->input('project_id')).'-offer.pdf';
+		$pdf = PDF::loadView('calc.offer_pdf');
+		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
+		$pdf->save('user-content/'.$newname);
 
-			$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.OfferController::getOfferCode($request->input('project_id')).'-offer.pdf';
-			$pdf = PDF::loadView('calc.offer_pdf');
-			$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
-			$pdf->save('user-content/'.$newname);
+		$resource = new Resource;
+		$resource->resource_name = $newname;
+		$resource->file_location = 'user-content/' . $newname;
+		$resource->file_size = filesize('user-content/' . $newname);
+		$resource->user_id = Auth::id();
+		$resource->description = 'Offerteversie';
 
-			$resource = new Resource;
-			$resource->resource_name = $newname;
-			$resource->file_location = 'user-content/' . $newname;
-			$resource->file_size = filesize('user-content/' . $newname);
-			$resource->user_id = Auth::id();
-			$resource->description = 'Offerteversie';
+		$resource->save();
 
-			$resource->save();
+		$offer->resource_id = $resource->id;
 
-			$offer->resource_id = $resource->id;
+		$offer->save();
 
-			$offer->save();
+		Auth::user()->offer_counter++;
+		Auth::user()->save();
 
-			Auth::user()->offer_counter++;
-			Auth::user()->save();
-
-			return redirect('/offer/project-'.$project->id.'/offer-'.$offer->id);
-
+		return redirect('/offer/project-'.$project->id.'/offer-'.$offer->id);
 	}
 
 	public function doOfferClose(Request $request)

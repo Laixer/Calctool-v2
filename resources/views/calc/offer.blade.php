@@ -358,7 +358,7 @@ if (!$project || !$project->isOwner()) {
 								</div>
 							</div>
 							<div class="form-horizontal">
-								<div class="form-horizontal noterms" {{ ($offer_last && $offer_last->invoice_quantity >1 ? '' : 'style="display:none;"') }} >
+								<div class="form-horizontal noterms" {!! ($offer_last && $offer_last->invoice_quantity >1 ? '' : 'style="display:none;"') !!} >
 									<div class="col-md-6">
 									  <div class="form-group">
 									  	<label>Aanbetaling toepassen</label>

@@ -234,7 +234,7 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::get('wholesale-{wholesale_id}/delete', array('uses' => 'WholesaleController@getDelete'))->where('wholesale_id', '[0-9]+');
 
 	/* Project pages */
-	Route::get('project/new', array('as' => 'project.new', 'uses' => 'ProjectController@getNew'));
+	Route::get('project/new', 'ProjectController@getNew');
 	Route::post('project/new', array('as' => 'project.new', 'uses' => 'ProjectController@doNew'));
 	Route::post('project/update', array('as' => 'project.update', 'uses' => 'ProjectController@doUpdate'));
 	Route::post('project/update/note', array('as' => 'project.update', 'uses' => 'ProjectController@doUpdateNote'));
