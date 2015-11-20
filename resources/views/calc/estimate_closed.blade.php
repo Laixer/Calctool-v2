@@ -626,11 +626,11 @@ if (!$project || !$project->isOwner())
 								<tr>
 									<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
 									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1"><strong>{{ '&euro; '.number_format(EstimateEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
+									<td class="col-md-2"><strong>{{ '&euro; '.number_format(EstimateEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1"><strong>{{ '&euro; '.number_format(EstimateEndresult::totalContractingTax($project), 2, ",",".") }}</strong></td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2"><strong>{{ '&euro; '.number_format(EstimateEndresult::totalContractingTax($project), 2, ",",".") }}</strong></td>
+									<td class="col-md-1">&nbsp;</td>
 								</tr>
 							</tbody>
 						</table>
@@ -747,11 +747,11 @@ if (!$project || !$project->isOwner())
 								<tr>
 									<td class="col-md-4"><strong>Totaal Onderaanneming </strong></td>
 									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1"><strong>{{ '&euro; '.number_format(EstimateEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
+									<td class="col-md-2"><strong>{{ '&euro; '.number_format(EstimateEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1"><strong>{{ '&euro; '.number_format(EstimateEndresult::totalSubcontractingTax($project), 2, ",",".") }}</strong></td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2"><strong>{{ '&euro; '.number_format(EstimateEndresult::totalSubcontractingTax($project), 2, ",",".") }}</strong></td>
+									<td class="col-md-1">&nbsp;</td>
 								</tr>
 							</tbody>
 						</table>
@@ -761,58 +761,74 @@ if (!$project || !$project->isOwner())
 
 							<thead>
 								<tr>
-									<th class="col-md-6">&nbsp;</th>
+									<th class="col-md-5">&nbsp;</th>
 									<th class="col-md-2">Bedrag (excl. BTW)</th>
-									<th class="col-md-2">BTW bedrag</th>
-									<th class="col-md-2">&nbsp;</th>
+									<th class="col-md-1">&nbsp;</th>
+									<th class="col-md-1">&nbsp;</th>
+									<th class="col-md-1">BTW bedrag</th>
+									<th class="col-md-2"><span class="pull-right">Bedrag (incl. BTW)</span></th>
 								</tr>
 							</thead>
 
 
 							<tbody>
 								<tr>
-									<td class="col-md-6">Calculatief te factureren (excl. BTW)</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::totalProject($project), 2, ",",".") }}</td>
-									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-5"><strong>Calculatief te factureren (excl. BTW)<strong></td>
+									<td class="col-md-2"><strong>{{ '&euro; '.number_format(EstimateEndresult::totalProject($project), 2, ",",".") }}</strong></td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr>
-									<td class="col-md-6">BTW bedrag aanneming 21%</td>
+									<td class="col-md-5">BTW bedrag aanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::totalContractingTax1($project), 2, ",",".") }}</td>
-									<td class="col-md-2">&nbsp;</td>
-								</tr>
-								<tr>
-									<td class="col-md-6">BTW bedrag aanneming 6%</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::totalContractingTax2($project), 2, ",",".") }}</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::totalContractingTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr>
-									<td class="col-md-6">BTW bedrag onderaanneming 21%</td>
+									<td class="col-md-5">BTW bedrag aanneming 6%</td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::totalContractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr>
-									<td class="col-md-6">BTW bedrag onderaanneming 6%</td>
+									<td class="col-md-5">BTW bedrag onderaanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
+									<td class="col-md-2">&nbsp;</td>
+								</tr>
+								<tr>
+									<td class="col-md-5">BTW bedrag onderaanneming 6%</td>
+									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(EstimateEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								@endif
 								<tr>
-									<td class="col-md-6">Te factureren BTW bedrag</td>
+									<td class="col-md-5"><strong>Te factureren BTW bedrag</strong></td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(EstimateEndresult::totalProjectTax($project), 2, ",",".") }}</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1"><strong>{{ '&euro; '.number_format(EstimateEndresult::totalProjectTax($project), 2, ",",".") }}</strong></td>
+									<td class="col-md-2"></td>
 								</tr>
 								<tr>
-									<td class="col-md-6"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
+									<td class="col-md-5"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2"><strong>{{ '&euro; '.number_format(EstimateEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2"><strong class="pull-right">{{ '&euro; '.number_format(EstimateEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
 								</tr>
 
 							</tbody>

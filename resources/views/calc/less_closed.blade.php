@@ -212,7 +212,7 @@ if (!$project || !$project->isOwner())
 															<th class="col-md-1">Eenheid</th>
 															<th class="col-md-1">&euro; / Eenh.</th>
 															<th class="col-md-1">Aantal</th>
-															<th class="col-md-1">+ Winst %</th>
+															<th class="col-md-1">Prijs </th>
 															<th class="col-md-1">Minderwerk</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
@@ -280,7 +280,7 @@ if (!$project || !$project->isOwner())
 															<th class="col-md-1">Eenheid</th>
 															<th class="col-md-1">&euro; / Eenh.</th>
 															<th class="col-md-1">Aantal</th>
-															<th class="col-md-1">+ Winst %</th>
+															<th class="col-md-1">Prijs </th>
 															<th class="col-md-1">Minderwerk</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
