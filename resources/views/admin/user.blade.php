@@ -57,8 +57,8 @@ if (Input::get('all') == 1) {
 			<table class="table table-striped">
 				<thead>
 					<tr>
+						<th class="col-md-1">ID</th>
 						<th class="col-md-3">Gebruikersnaam</th>
-						<th class="col-md-2">IP</th>
 						<th class="col-md-2">Email</th>
 						<th class="col-md-2">Status</th>
 						<th class="col-md-1">Type</th>
@@ -76,8 +76,8 @@ if (Input::get('all') == 1) {
 				?>
 				@foreach ($selection as $users)
 					<tr>
-						<td class="col-md-3"><a href="{{ '/admin/user-'.$users->id.'/edit' }}">{{ $users->username . ' (' . $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '') . ')' }}</a></td>
-						<td class="col-md-2">{{ $users->ip }}</td>
+						<td class="col-md-1"><a href="{{ '/admin/user-'.$users->id.'/edit' }}">{{ $users->id }}</a></td>
+						<td class="col-md-3">{{ $users->username . ' (' . $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '') . ')' }}</td>
 						<td class="col-md-2">{{ $users->email }}</td>
 						<td class="col-md-2">{{ userStatus($users) }}</td>
 						<td class="col-md-1">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>

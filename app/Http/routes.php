@@ -300,6 +300,9 @@ Route::group(array('before' => 'admin'), function()
 	Route::get('admin/environment', function() {
 		return view('admin.server');
 	});
+	Route::get('admin/project', function() {
+		return view('admin.project');
+	});
 	Route::get('admin/resource', function() {
 		return view('admin.resource');
 	});
