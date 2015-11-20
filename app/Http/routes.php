@@ -281,6 +281,7 @@ Route::group(array('before' => 'admin'), function()
 	});
 	Route::get('admin/user-{user_id}/switch', array('as' => 'user', 'uses' => 'AdminController@getSwitchSession'));
 	Route::get('admin/user-{user_id}/demo', array('as' => 'user', 'uses' => 'AdminController@getDemoProject'));
+	Route::get('admin/user-{user_id}/deblock', array('as' => 'user', 'uses' => 'AdminController@getSessionDeblock'));
 	Route::post('admin/user-{user_id}/edit', array('as' => 'user', 'uses' => 'AdminController@doUpdateUser'));
 	Route::get('admin/alert', function() {
 		return view('admin.alert');

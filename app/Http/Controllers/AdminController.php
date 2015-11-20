@@ -13,6 +13,7 @@ use \Calctool\Models\Audit;
 use \Storage;
 use \Auth;
 use \Hash;
+use \Redis;
 
 class AdminController extends Controller {
 
@@ -325,6 +326,14 @@ class AdminController extends Controller {
 	public function getDemoProject(Request $request, $user_id)
 	{
 		\DemoProjectTemplate::setup($user_id);
+
+		return back()->with('success', 1);
+	}
+
+	public function getSessionDeblock(Request $request, $user_id)
+	{
+		$username = User::find($user_id)->username;
+		Redis::del('auth:'.$username.':fail', 'auth:'.$username.':block');
 
 		return back()->with('success', 1);
 	}
