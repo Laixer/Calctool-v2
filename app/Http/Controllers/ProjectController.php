@@ -137,7 +137,7 @@ class ProjectController extends Controller {
 
 		$project->save();
 
-		return back()->with('success', 'Aangepast');
+		return back()->with('success', 'Projectgegevens aangepast');
 	}
 
 	public function doUpdateNote(Request $request)
@@ -154,7 +154,7 @@ class ProjectController extends Controller {
 
 		$project->save();
 
-		return back()->with('success', 'Aangepast');
+		return back()->with('success', 'Projectomschrijving aangepast');
 	}
 
 	public function doUpdateProfit(Request $request)
@@ -206,7 +206,7 @@ class ProjectController extends Controller {
 
 		$project->save();
 
-		return back()->with('success', 'Aangepast');
+		return back()->with('success', 'Winstpercentages aangepast');
 	}
 
 	public function doUpdateWorkExecution(Request $request)

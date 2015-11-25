@@ -45,7 +45,7 @@ class AdminController extends Controller {
 
 		$alert->save();
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Nieuwe alert is aangemaakt');
 
 	}
 
@@ -100,7 +100,7 @@ class AdminController extends Controller {
 			$user->save();
 		}
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Terugbetaling ingediend bij Payment Services Provider');
 	}
 
 	public function doNewUser(Request $request)
@@ -189,7 +189,7 @@ class AdminController extends Controller {
 		$log->user_id = $user->id;
 		$log->save();
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Nieuwe gebruiker aangemaakt');
 	}
 
 	public function doUpdateUser(Request $request, $user_id)
@@ -278,7 +278,7 @@ class AdminController extends Controller {
 		$log->user_id = $user->id;
 		$log->save();
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Gegevens gebruiker aangepast');
 	}
 
 	public function getSwitchSession(Request $request, $user_id)
@@ -334,14 +334,14 @@ class AdminController extends Controller {
 
 		file_put_contents("../storage/logs/laravel.log", "");
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Getruncate');
 	}
 
 	public function getDemoProject(Request $request, $user_id)
 	{
 		\DemoProjectTemplate::setup($user_id);
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Demo-project ingevoegd');
 	}
 
 	public function getSessionDeblock(Request $request, $user_id)
@@ -349,6 +349,6 @@ class AdminController extends Controller {
 		$username = User::find($user_id)->username;
 		Redis::del('auth:'.$username.':fail', 'auth:'.$username.':block');
 
-		return back()->with('success', 1);
+		return back()->with('success', 'sessie met succes gedeblokkeerd, de user kan weer inloggen.');
 	}
 }

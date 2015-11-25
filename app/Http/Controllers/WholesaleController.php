@@ -35,7 +35,7 @@ class WholesaleController extends Controller {
 
 		$wholesale->save();
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Betalingsgegevens zijn aangepast');
 	}
 
 	public function getDelete(Request $request, $wholesale_id)
@@ -91,7 +91,7 @@ class WholesaleController extends Controller {
 
 		$wholesale->save();
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Leveranciersgegevens zijn aangepast');
 	}
 
 	public function doNew(Request $request)
@@ -132,7 +132,7 @@ class WholesaleController extends Controller {
 
 		$wholesale->save();
 
-		return redirect('/wholesale-'.$wholesale->id.'/edit')->with('success', 1);
+		return redirect('/wholesale-'.$wholesale->id.'/edit')->with('success', 'Leverancier is toegevoegd');
 	}
 
 }

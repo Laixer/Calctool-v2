@@ -173,7 +173,7 @@ class CalcController extends Controller {
 
 		$chapter->save();
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Nieuw hoofdstuk aangemaakt');
 	}
 
 	public function doNewCalculationActivity(Request $request, $chapter_id)
@@ -207,7 +207,7 @@ class CalcController extends Controller {
 
 		$activity->save();
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Werkzaamheid aangemaakt');
 	}
 
 	public function doNewEstimateActivity(Request $request, $chapter_id)
@@ -241,7 +241,7 @@ class CalcController extends Controller {
 
 		$activity->save();
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Nieuwe stelpostwerzaamheid aangemaakt');
 	}
 
 	public function doUpdateTax(Request $request)

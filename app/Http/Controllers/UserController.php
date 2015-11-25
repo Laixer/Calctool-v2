@@ -230,7 +230,7 @@ class UserController extends Controller {
 		if ($payment->isPaid()) {
 			return redirect('myaccount')->with('success','Bedankt voor uw betaling');
 		} else if ($payment->isOpen() || $payment->isPending()) {
-			return redirect('myaccount')->with('success','Betaling is nog niet bevestigd, dit kan enkele dagen duren');
+			return redirect('myaccount')->with('success','Betaling is nog niet bevestigd, dit kan enkele dagen duren. Uw heeft in deze periode toegang tot uw account');
 		} else if ($payment->isCancelled()) {
 			$order->status = $payment->status;
 			$order->save();
@@ -408,7 +408,7 @@ class UserController extends Controller {
 
 		$user->save();
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Nieuwe gebruiker aangemaakt');
 	}
 
 	public function doUpdateIban(Request $request)
@@ -455,7 +455,7 @@ class UserController extends Controller {
 		$log->user_id = Auth::id();
 		$log->save();
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Betalingsgegevens zijn aangepast');
 	}
 
 	public function doUpdatePreferences(Request $request)

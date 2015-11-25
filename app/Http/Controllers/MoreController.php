@@ -61,7 +61,7 @@ class MoreController extends Controller {
 
 		$chapter->save();
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Nieuw hoofdstuk aangemaakt');
 	}
 
 	public function doNewActivity(Request $request, $chapter_id)
@@ -100,7 +100,7 @@ class MoreController extends Controller {
 
 		$this->updateMoreStatus($request->get('project'));
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Nieuwe werkzaamheid aangemaakt');
 	}
 
 	public function doDeleteChapter(Request $request)

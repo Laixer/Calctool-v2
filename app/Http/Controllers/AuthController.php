@@ -255,7 +255,7 @@ class AuthController extends Controller {
 		$log->user_id = $user->id;
 		$log->save();
 
-		return redirect('login')->with('success', 1);
+		return redirect('login')->with('success', 'Wachtwoord geblokkeerd');
 	}
 
 

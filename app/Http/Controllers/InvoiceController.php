@@ -154,7 +154,7 @@ class InvoiceController extends Controller {
 
 		$invoice->delete();
 
-		return back();
+		return back()->with('success', 'Termijnfactuur verwijderd');
 	}
 
 	public function doUpdateAmount(Request $request)
