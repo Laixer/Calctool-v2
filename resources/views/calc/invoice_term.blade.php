@@ -171,12 +171,6 @@ if (!$project || !$project->isOwner()) {
 			$('#frm-invoice').get(0).setAttribute('action', '/invoice/save');
 			$('#frm-invoice').submit();
 		});
-		$('.oclose').click(function(e){
-			e.preventDefault();
-			$.post("/invoice/close", {projectid: {{ $project->id }}, id: {{ $invoice->id }} }, function(data){
-				window.location.href = '/invoice/project-'+{{ $project->id }};
-			}).fail(function(e) { console.log(e); });
-		});
 		$('#invdate').datepicker().on('changeDate', function(e){
 			$('#invdate').datepicker('hide');
 			$('#invdateval').val(e.date.toLocaleString());
@@ -220,19 +214,10 @@ if (!$project || !$project->isOwner()) {
 			$end = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',true)->first();
 			if ($prev && $prev->invoice_close && $next && !$next->invoice_close) {
 				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
-				if ($invoice_version_cnt) {
-					echo '<button class="btn btn-primary oclose">Factureren</button>';
-				}
 			} else if (!$prev && $next && !$next->invoice_close) {
 				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
-				if ($invoice_version_cnt) {
-					echo '<button class="btn btn-primary oclose">Factureren</button>';
-				}
 			} else if ($prev && $prev->invoice_close && $end && !$end->invoice_close) {
 				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
-				if ($invoice_version_cnt) {
-					echo '<button class="btn btn-primary oclose">Factureren</button>';
-				}
 			}
 		}
 		?>
@@ -465,19 +450,10 @@ if (!$project || !$project->isOwner()) {
 							$end = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',true)->first();
 							if ($prev && $prev->invoice_close && $next && !$next->invoice_close) {
 								echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
-								if ($invoice_version_cnt) {
-									echo '<button class="btn btn-primary oclose">Factureren</button>';
-								}
 							} else if (!$prev && $next && !$next->invoice_close) {
 								echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
-								if ($invoice_version_cnt) {
-									echo '<button class="btn btn-primary oclose">Factureren</button>';
-								}
 							} else if ($prev && $prev->invoice_close && $end && !$end->invoice_close) {
 								echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
-								if ($invoice_version_cnt) {
-									echo '<button class="btn btn-primary oclose">Factureren</button>';
-								}
 							}
 						}
 						?>

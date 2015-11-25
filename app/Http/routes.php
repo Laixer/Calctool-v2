@@ -115,6 +115,10 @@ Route::group(array('middleware' => 'auth'), function()
 		return View::make('calc.invoice_show_final_pdf');
 	})->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
 
+	Route::get('invoice/project-{project_id}/history-invoice-{invoice_id}', function() {
+		return View::make('calc.invoice_version');
+	})->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
+
 	Route::get('offerversions/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOfferAll'))->where('project_id', '[0-9]+');
 	Route::get('offer/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOffer'))->where('project_id', '[0-9]+');
 	Route::post('offer/project-{project_id}', array('as' => 'invoice', 'uses' => 'OfferController@doNewOffer'));
