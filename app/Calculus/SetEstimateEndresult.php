@@ -14,9 +14,9 @@ use \Calctool\Models\CalculationEquipment;
 use \Calctool\Models\EstimateEquipment;
 
 /*
- * Eindresultaat
+ * Eindresultaat stelposten stellen
  */
-class EstimateEndresult {
+class SetEstimateEndresult {
 
 	public static function conCalcLaborActivityTax1($project) {
 		$total = 0;
@@ -181,11 +181,11 @@ class EstimateEndresult {
 	}
 
 	public static function conCalcLaborActivityTax1AmountTax($project) {
-		return (EstimateEndresult::conCalcLaborActivityTax1Amount($project)/100)*21;
+		return (SetEstimateEndresult::conCalcLaborActivityTax1Amount($project)/100)*21;
 	}
 
 	public static function conCalcLaborActivityTax2AmountTax($project) {
-		return (EstimateEndresult::conCalcLaborActivityTax2Amount($project)/100)*6;
+		return (SetEstimateEndresult::conCalcLaborActivityTax2Amount($project)/100)*6;
 	}
 
 	public static function conCalcMaterialActivityTax1Amount($project) {
@@ -197,12 +197,11 @@ class EstimateEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
+				$rows = [];
+				$set_rows = [];
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
-				} else {
-					$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
-					$set_rows = [];
 				}
 				foreach ($rows as $row)
 				{
@@ -227,21 +226,20 @@ class EstimateEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
+				$rows = [];
+				$set_rows = [];
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
-					} else {
-						$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
-						$set_rows = [];
-					}
-					foreach ($rows as $row)
-					{
-						$total += $row->rate * $row->amount;
-					}
-					foreach ($set_rows as $row)
-					{
-						$total += $row->set_rate * $row->set_amount;
-					}
+				}
+				foreach ($rows as $row)
+				{
+					$total += $row->rate * $row->amount;
+				}
+				foreach ($set_rows as $row)
+				{
+					$total += $row->set_rate * $row->set_amount;
+				}
 
 			}
 		}
@@ -258,33 +256,32 @@ class EstimateEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
+				$rows = [];
+				$set_rows = [];
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
-					} else {
-						$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
-						$set_rows = [];
-					}
-						foreach ($rows as $row)
-					{
-						$total += $row->rate * $row->amount;
-					}
-					foreach ($set_rows as $row)
-					{
-						$total += $row->set_rate * $row->set_amount;
-					}
+				}
+				foreach ($rows as $row)
+				{
+					$total += $row->rate * $row->amount;
+				}
+				foreach ($set_rows as $row)
+				{
+					$total += $row->set_rate * $row->set_amount;
 				}
 			}
-
-			return $total + ($total * ($project->profit_calc_contr_mat)/100);
 		}
 
+		return $total + ($total * ($project->profit_calc_contr_mat)/100);
+	}
+
 	public static function conCalcMaterialActivityTax1AmountTax($project) {
-		return (EstimateEndresult::conCalcMaterialActivityTax1Amount($project)/100)*21;
+		return (SetEstimateEndresult::conCalcMaterialActivityTax1Amount($project)/100)*21;
 	}
 
 	public static function conCalcMaterialActivityTax2AmountTax($project) {
-		return (EstimateEndresult::conCalcMaterialActivityTax2Amount($project)/100)*6;
+		return (SetEstimateEndresult::conCalcMaterialActivityTax2Amount($project)/100)*6;
 	}
 
 	public static function conCalcEquipmentActivityTax1Amount($project) {
@@ -296,26 +293,25 @@ class EstimateEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
+				$rows = [];
+				$set_rows = [];
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
-					} else {
-						$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
-						$set_rows = [];
-					}
-						foreach ($rows as $row)
-					{
-						$total += $row->rate * $row->amount;
-					}
-					foreach ($set_rows as $row)
-					{
-						$total += $row->set_rate * $row->set_amount;
-					}
+				}
+				foreach ($rows as $row)
+				{
+					$total += $row->rate * $row->amount;
+				}
+				foreach ($set_rows as $row)
+				{
+					$total += $row->set_rate * $row->set_amount;
 				}
 			}
-
-			return $total + ($total * ($project->profit_calc_contr_equip)/100);
 		}
+
+		return $total + ($total * ($project->profit_calc_contr_equip)/100);
+	}
 
 	public static function conCalcEquipmentActivityTax2Amount($project) {
 		$total = 0;
@@ -326,26 +322,25 @@ class EstimateEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
+				$rows = [];
+				$set_rows = [];
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
-					} else {
-						$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
-						$set_rows = [];
-					}
-						foreach ($rows as $row)
-					{
-						$total += $row->rate * $row->amount;
-					}
-					foreach ($set_rows as $row)
-					{
-						$total += $row->set_rate * $row->set_amount;
-					}
+				}
+				foreach ($rows as $row)
+				{
+					$total += $row->rate * $row->amount;
+				}
+				foreach ($set_rows as $row)
+				{
+					$total += $row->set_rate * $row->set_amount;
 				}
 			}
-
-			return $total + ($total * ($project->profit_calc_contr_equip)/100);
 		}
+
+		return $total + ($total * ($project->profit_calc_contr_equip)/100);
+	}
 
 	public static function conCalcEquipmentActivityTax3Amount($project) {
 		$total = 0;
@@ -356,33 +351,32 @@ class EstimateEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
+				$rows = [];
+				$set_rows = [];
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
-					} else {
-						$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
-						$set_rows = [];
-					}
-						foreach ($rows as $row)
-					{
-						$total += $row->rate * $row->amount;
-					}
-					foreach ($set_rows as $row)
-					{
-						$total += $row->set_rate * $row->set_amount;
-					}
+				}
+				foreach ($rows as $row)
+				{
+					$total += $row->rate * $row->amount;
+				}
+				foreach ($set_rows as $row)
+				{
+					$total += $row->set_rate * $row->set_amount;
 				}
 			}
-
-			return $total + ($total * ($project->profit_calc_contr_equip)/100);
 		}
 
+		return $total + ($total * ($project->profit_calc_contr_equip)/100);
+	}
+
 	public static function conCalcEquipmentActivityTax1AmountTax($project) {
-		return (EstimateEndresult::conCalcEquipmentActivityTax1Amount($project)/100)*21;
+		return (SetEstimateEndresult::conCalcEquipmentActivityTax1Amount($project)/100)*21;
 	}
 
 	public static function conCalcEquipmentActivityTax2AmountTax($project) {
-		return (EstimateEndresult::conCalcEquipmentActivityTax2Amount($project)/100)*6;
+		return (SetEstimateEndresult::conCalcEquipmentActivityTax2Amount($project)/100)*6;
 	}
 
 	public static function subconCalcLaborActivityTax1($project) {
@@ -550,11 +544,11 @@ class EstimateEndresult {
 	}
 
 	public static function subconCalcLaborActivityTax1AmountTax($project) {
-		return (EstimateEndresult::subconCalcLaborActivityTax1Amount($project)/100)*21;
+		return (SetEstimateEndresult::subconCalcLaborActivityTax1Amount($project)/100)*21;
 	}
 
 	public static function subconCalcLaborActivityTax2AmountTax($project) {
-		return (EstimateEndresult::subconCalcLaborActivityTax2Amount($project)/100)*6;
+		return (SetEstimateEndresult::subconCalcLaborActivityTax2Amount($project)/100)*6;
 	}
 
 	public static function subconCalcMaterialActivityTax1Amount($project) {
@@ -566,26 +560,25 @@ class EstimateEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
+				$rows = [];
+				$set_rows = [];
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
-					} else {
-						$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
-						$set_rows = [];
-					}
-						foreach ($rows as $row)
-					{
-						$total += $row->rate * $row->amount;
-					}
-					foreach ($set_rows as $row)
-					{
-						$total += $row->set_rate * $row->set_amount;
-					}
+				}
+				foreach ($rows as $row)
+				{
+					$total += $row->rate * $row->amount;
+				}
+				foreach ($set_rows as $row)
+				{
+					$total += $row->set_rate * $row->set_amount;
 				}
 			}
-
-			return $total + ($total * ($project->profit_calc_subcontr_mat)/100);
 		}
+
+		return $total + ($total * ($project->profit_calc_subcontr_mat)/100);
+	}
 
 	public static function subconCalcMaterialActivityTax2Amount($project) {
 		$total = 0;
@@ -596,26 +589,25 @@ class EstimateEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
+				$rows = [];
+				$set_rows = [];
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
-					} else {
-						$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
-						$set_rows = [];
-					}
-						foreach ($rows as $row)
-					{
-						$total += $row->rate * $row->amount;
-					}
-					foreach ($set_rows as $row)
-					{
-						$total += $row->set_rate * $row->set_amount;
-					}
+				}
+				foreach ($rows as $row)
+				{
+					$total += $row->rate * $row->amount;
+				}
+				foreach ($set_rows as $row)
+				{
+					$total += $row->set_rate * $row->set_amount;
 				}
 			}
-
-			return $total + ($total * ($project->profit_calc_subcontr_mat)/100);
 		}
+
+		return $total + ($total * ($project->profit_calc_subcontr_mat)/100);
+	}
 
 	public static function subconCalcMaterialActivityTax3Amount($project) {
 		$total = 0;
@@ -626,33 +618,32 @@ class EstimateEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
+				$rows = [];
+				$set_rows = [];
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateMaterial::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
-					} else {
-						$rows = CalculationMaterial::where('activity_id','=',$activity->id)->get();
-						$set_rows = [];
-					}
-						foreach ($rows as $row)
-					{
-						$total += $row->rate * $row->amount;
-					}
-					foreach ($set_rows as $row)
-					{
-						$total += $row->set_rate * $row->set_amount;
-					}
+				}
+				foreach ($rows as $row)
+				{
+					$total += $row->rate * $row->amount;
+				}
+				foreach ($set_rows as $row)
+				{
+					$total += $row->set_rate * $row->set_amount;
 				}
 			}
-
-			return $total + ($total * ($project->profit_calc_subcontr_mat)/100);
 		}
 
+		return $total + ($total * ($project->profit_calc_subcontr_mat)/100);
+	}
+
 	public static function subconCalcMaterialActivityTax1AmountTax($project) {
-		return (EstimateEndresult::subconCalcMaterialActivityTax1Amount($project)/100)*21;
+		return (SetEstimateEndresult::subconCalcMaterialActivityTax1Amount($project)/100)*21;
 	}
 
 	public static function subconCalcMaterialActivityTax2AmountTax($project) {
-		return (EstimateEndresult::subconCalcMaterialActivityTax2Amount($project)/100)*6;
+		return (SetEstimateEndresult::subconCalcMaterialActivityTax2Amount($project)/100)*6;
 	}
 
 	public static function subconCalcEquipmentActivityTax1Amount($project) {
@@ -664,26 +655,25 @@ class EstimateEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
+				$rows = [];
+				$set_rows = [];
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
-					} else {
-						$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
-						$set_rows = [];
-					}
-						foreach ($rows as $row)
-					{
-						$total += $row->rate * $row->amount;
-					}
-					foreach ($set_rows as $row)
-					{
-						$total += $row->set_rate * $row->set_amount;
-					}
+				}
+				foreach ($rows as $row)
+				{
+					$total += $row->rate * $row->amount;
+				}
+				foreach ($set_rows as $row)
+				{
+					$total += $row->set_rate * $row->set_amount;
 				}
 			}
-
-			return $total + ($total * ($project->profit_calc_subcontr_equip)/100);
 		}
+
+		return $total + ($total * ($project->profit_calc_subcontr_equip)/100);
+	}
 
 	public static function subconCalcEquipmentActivityTax2Amount($project) {
 		$total = 0;
@@ -694,26 +684,25 @@ class EstimateEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
+				$rows = [];
+				$set_rows = [];
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
-					} else {
-						$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
-						$set_rows = [];
-					}
-						foreach ($rows as $row)
-					{
-						$total += $row->rate * $row->amount;
-					}
-					foreach ($set_rows as $row)
-					{
-						$total += $row->set_rate * $row->set_amount;
-					}
+				}
+				foreach ($rows as $row)
+				{
+					$total += $row->rate * $row->amount;
+				}
+				foreach ($set_rows as $row)
+				{
+					$total += $row->set_rate * $row->set_amount;
 				}
 			}
-
-			return $total + ($total * ($project->profit_calc_subcontr_equip)/100);
 		}
+
+		return $total + ($total * ($project->profit_calc_subcontr_equip)/100);
+	}
 
 	public static function subconCalcEquipmentActivityTax3Amount($project) {
 		$total = 0;
@@ -724,49 +713,48 @@ class EstimateEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
+				$rows = [];
+				$set_rows = [];
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','false')->get();
 					$set_rows = EstimateEquipment::where('activity_id','=',$activity->id)->where('isset','=','true')->get();
-					} else {
-						$rows = CalculationEquipment::where('activity_id','=',$activity->id)->get();
-						$set_rows = [];
-					}
-						foreach ($rows as $row)
-					{
-						$total += $row->rate * $row->amount;
-					}
-					foreach ($set_rows as $row)
-					{
-						$total += $row->set_rate * $row->set_amount;
-					}
+				}
+				foreach ($rows as $row)
+				{
+					$total += $row->rate * $row->amount;
+				}
+				foreach ($set_rows as $row)
+				{
+					$total += $row->set_rate * $row->set_amount;
 				}
 			}
-
-			return $total + ($total * ($project->profit_calc_subcontr_equip)/100);
 		}
 
+		return $total + ($total * ($project->profit_calc_subcontr_equip)/100);
+	}
+
 	public static function subconCalcEquipmentActivityTax1AmountTax($project) {
-		return (EstimateEndresult::subconCalcEquipmentActivityTax1Amount($project)/100)*21;
+		return (SetEstimateEndresult::subconCalcEquipmentActivityTax1Amount($project)/100)*21;
 	}
 
 	public static function subconCalcEquipmentActivityTax2AmountTax($project) {
-		return (EstimateEndresult::subconCalcEquipmentActivityTax2Amount($project)/100)*6;
+		return (SetEstimateEndresult::subconCalcEquipmentActivityTax2Amount($project)/100)*6;
 	}
 
 	public static function totalContracting($project) {
 		$total = 0;
 
-		$total += EstimateEndresult::conCalcLaborActivityTax1Amount($project);
-		$total += EstimateEndresult::conCalcLaborActivityTax2Amount($project);
-		$total += EstimateEndresult::conCalcLaborActivityTax3Amount($project);
+		$total += SetEstimateEndresult::conCalcLaborActivityTax1Amount($project);
+		$total += SetEstimateEndresult::conCalcLaborActivityTax2Amount($project);
+		$total += SetEstimateEndresult::conCalcLaborActivityTax3Amount($project);
 
-		$total += EstimateEndresult::conCalcMaterialActivityTax1Amount($project);
-		$total += EstimateEndresult::conCalcMaterialActivityTax2Amount($project);
-		$total += EstimateEndresult::conCalcMaterialActivityTax3Amount($project);
+		$total += SetEstimateEndresult::conCalcMaterialActivityTax1Amount($project);
+		$total += SetEstimateEndresult::conCalcMaterialActivityTax2Amount($project);
+		$total += SetEstimateEndresult::conCalcMaterialActivityTax3Amount($project);
 
-		$total += EstimateEndresult::conCalcEquipmentActivityTax1Amount($project);
-		$total += EstimateEndresult::conCalcEquipmentActivityTax2Amount($project);
-		$total += EstimateEndresult::conCalcEquipmentActivityTax3Amount($project);
+		$total += SetEstimateEndresult::conCalcEquipmentActivityTax1Amount($project);
+		$total += SetEstimateEndresult::conCalcEquipmentActivityTax2Amount($project);
+		$total += SetEstimateEndresult::conCalcEquipmentActivityTax3Amount($project);
 
 		return $total;
 	}
@@ -774,14 +762,14 @@ class EstimateEndresult {
 	public static function totalContractingTax($project) {
 		$total = 0;
 
-		$total += EstimateEndresult::conCalcLaborActivityTax1AmountTax($project);
-		$total += EstimateEndresult::conCalcLaborActivityTax2AmountTax($project);
+		$total += SetEstimateEndresult::conCalcLaborActivityTax1AmountTax($project);
+		$total += SetEstimateEndresult::conCalcLaborActivityTax2AmountTax($project);
 
-		$total += EstimateEndresult::conCalcMaterialActivityTax1AmountTax($project);
-		$total += EstimateEndresult::conCalcMaterialActivityTax2AmountTax($project);
+		$total += SetEstimateEndresult::conCalcMaterialActivityTax1AmountTax($project);
+		$total += SetEstimateEndresult::conCalcMaterialActivityTax2AmountTax($project);
 
-		$total += EstimateEndresult::conCalcEquipmentActivityTax1AmountTax($project);
-		$total += EstimateEndresult::conCalcEquipmentActivityTax2AmountTax($project);
+		$total += SetEstimateEndresult::conCalcEquipmentActivityTax1AmountTax($project);
+		$total += SetEstimateEndresult::conCalcEquipmentActivityTax2AmountTax($project);
 
 		return $total;
 	}
@@ -789,17 +777,17 @@ class EstimateEndresult {
 	public static function totalSubcontracting($project) {
 		$total = 0;
 
-		$total += EstimateEndresult::subconCalcLaborActivityTax1Amount($project);
-		$total += EstimateEndresult::subconCalcLaborActivityTax2Amount($project);
-		$total += EstimateEndresult::subconCalcLaborActivityTax3Amount($project);
+		$total += SetEstimateEndresult::subconCalcLaborActivityTax1Amount($project);
+		$total += SetEstimateEndresult::subconCalcLaborActivityTax2Amount($project);
+		$total += SetEstimateEndresult::subconCalcLaborActivityTax3Amount($project);
 
-		$total += EstimateEndresult::subconCalcMaterialActivityTax1Amount($project);
-		$total += EstimateEndresult::subconCalcMaterialActivityTax2Amount($project);
-		$total += EstimateEndresult::subconCalcMaterialActivityTax3Amount($project);
+		$total += SetEstimateEndresult::subconCalcMaterialActivityTax1Amount($project);
+		$total += SetEstimateEndresult::subconCalcMaterialActivityTax2Amount($project);
+		$total += SetEstimateEndresult::subconCalcMaterialActivityTax3Amount($project);
 
-		$total += EstimateEndresult::subconCalcEquipmentActivityTax1Amount($project);
-		$total += EstimateEndresult::subconCalcEquipmentActivityTax2Amount($project);
-		$total += EstimateEndresult::subconCalcEquipmentActivityTax3Amount($project);
+		$total += SetEstimateEndresult::subconCalcEquipmentActivityTax1Amount($project);
+		$total += SetEstimateEndresult::subconCalcEquipmentActivityTax2Amount($project);
+		$total += SetEstimateEndresult::subconCalcEquipmentActivityTax3Amount($project);
 
 		return $total;
 	}
@@ -807,28 +795,28 @@ class EstimateEndresult {
 	public static function totalSubcontractingTax($project) {
 		$total = 0;
 
-		$total += EstimateEndresult::subconCalcLaborActivityTax1AmountTax($project);
-		$total += EstimateEndresult::subconCalcLaborActivityTax2AmountTax($project);
+		$total += SetEstimateEndresult::subconCalcLaborActivityTax1AmountTax($project);
+		$total += SetEstimateEndresult::subconCalcLaborActivityTax2AmountTax($project);
 
-		$total += EstimateEndresult::subconCalcMaterialActivityTax1AmountTax($project);
-		$total += EstimateEndresult::subconCalcMaterialActivityTax2AmountTax($project);
+		$total += SetEstimateEndresult::subconCalcMaterialActivityTax1AmountTax($project);
+		$total += SetEstimateEndresult::subconCalcMaterialActivityTax2AmountTax($project);
 
-		$total += EstimateEndresult::subconCalcEquipmentActivityTax1AmountTax($project);
-		$total += EstimateEndresult::subconCalcEquipmentActivityTax2AmountTax($project);
+		$total += SetEstimateEndresult::subconCalcEquipmentActivityTax1AmountTax($project);
+		$total += SetEstimateEndresult::subconCalcEquipmentActivityTax2AmountTax($project);
 
 		return $total;
 	}
 
 	public static function totalProject($project) {
-		return EstimateEndresult::totalContracting($project) + EstimateEndresult::totalSubcontracting($project);
+		return SetEstimateEndresult::totalContracting($project) + SetEstimateEndresult::totalSubcontracting($project);
 	}
 
 	public static function totalContractingTax1($project) {
 		$total = 0;
 
-		$total += EstimateEndresult::conCalcLaborActivityTax1AmountTax($project);
-		$total += EstimateEndresult::conCalcMaterialActivityTax1AmountTax($project);
-		$total += EstimateEndresult::conCalcEquipmentActivityTax1AmountTax($project);
+		$total += SetEstimateEndresult::conCalcLaborActivityTax1AmountTax($project);
+		$total += SetEstimateEndresult::conCalcMaterialActivityTax1AmountTax($project);
+		$total += SetEstimateEndresult::conCalcEquipmentActivityTax1AmountTax($project);
 
 		return $total;
 	}
@@ -836,9 +824,9 @@ class EstimateEndresult {
 	public static function totalContractingTax2($project) {
 		$total = 0;
 
-		$total += EstimateEndresult::conCalcLaborActivityTax2AmountTax($project);
-		$total += EstimateEndresult::conCalcMaterialActivityTax2AmountTax($project);
-		$total += EstimateEndresult::conCalcEquipmentActivityTax2AmountTax($project);
+		$total += SetEstimateEndresult::conCalcLaborActivityTax2AmountTax($project);
+		$total += SetEstimateEndresult::conCalcMaterialActivityTax2AmountTax($project);
+		$total += SetEstimateEndresult::conCalcEquipmentActivityTax2AmountTax($project);
 
 		return $total;
 	}
@@ -846,9 +834,9 @@ class EstimateEndresult {
 	public static function totalSubcontractingTax1($project) {
 		$total = 0;
 
-		$total += EstimateEndresult::subconCalcLaborActivityTax1AmountTax($project);
-		$total += EstimateEndresult::subconCalcMaterialActivityTax1AmountTax($project);
-		$total += EstimateEndresult::subconCalcEquipmentActivityTax1AmountTax($project);
+		$total += SetEstimateEndresult::subconCalcLaborActivityTax1AmountTax($project);
+		$total += SetEstimateEndresult::subconCalcMaterialActivityTax1AmountTax($project);
+		$total += SetEstimateEndresult::subconCalcEquipmentActivityTax1AmountTax($project);
 
 		return $total;
 	}
@@ -856,18 +844,18 @@ class EstimateEndresult {
 	public static function totalSubcontractingTax2($project) {
 		$total = 0;
 
-		$total += EstimateEndresult::subconCalcLaborActivityTax2AmountTax($project);
-		$total += EstimateEndresult::subconCalcMaterialActivityTax2AmountTax($project);
-		$total += EstimateEndresult::subconCalcEquipmentActivityTax2AmountTax($project);
+		$total += SetEstimateEndresult::subconCalcLaborActivityTax2AmountTax($project);
+		$total += SetEstimateEndresult::subconCalcMaterialActivityTax2AmountTax($project);
+		$total += SetEstimateEndresult::subconCalcEquipmentActivityTax2AmountTax($project);
 
 		return $total;
 	}
 
 	public static function totalProjectTax($project) {
-		return EstimateEndresult::totalContractingTax($project) + EstimateEndresult::totalSubcontractingTax($project);
+		return SetEstimateEndresult::totalContractingTax($project) + SetEstimateEndresult::totalSubcontractingTax($project);
 	}
 
 	public static function superTotalProject($project) {
-		return EstimateEndresult::totalProject($project) + EstimateEndresult::totalProjectTax($project);
+		return SetEstimateEndresult::totalProject($project) + SetEstimateEndresult::totalProjectTax($project);
 	}
 }

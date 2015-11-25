@@ -46,6 +46,10 @@ class Handler extends ExceptionHandler
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }
 
+        //if ($e instanceof TokenMismatchException) {
+        //    return redirect($request->fullUrl())->with('csrf_error',"Opps! Seems you couldn't submit form for a longtime. Please try again");
+        //}
+
         return parent::render($request, $e);
     }
 }
