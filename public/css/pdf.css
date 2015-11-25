@@ -150,7 +150,7 @@ table {
 
 table td {
  padding: 0 0 0 5px;
-  background: #EEEEEE;
+  background: transparent;
   text-align: left;
   border-bottom: 1px solid #FFFFFF;
 }
@@ -159,7 +159,7 @@ table th {
  white-space: nowrap;
  font-weight: bold;
  padding: 0 0 0 1px;
- /*background: #EEEEEE;*/
+ background: transparent;
  text-align: left;
  border-bottom: 2px solid #FFFFFF;
 }
@@ -169,30 +169,30 @@ table td {
 }
 
 table .no {
-   /*background: #ffffff;*/
+  background: transparent;
 }
 
 table .desc {
   text-align: left;
-  /* background: #ffffff;*/
+  background: transparent;
 }
 
 table .unit {
-   /*background: #ffffff;*/
+  background: transparent;
 }
 
 table .qty {
- /* background: #ffffff;*/
+  background: transparent;
 }
 
 table .qty-und {
-  /*background: #ffffff;*/
+  background: transparent;
   border-top: 1px solid #AAAAAA;
 
 }
 
 table .total {
- /* background: #ffffff;*/
+  background: transparent;
 }
 
 table td.no,
@@ -209,7 +209,7 @@ table tbody tr:last-child td {
 
 table tfoot td {
   padding: 5px 5px;
- /* background: #FFFFFF;*/
+  background: transparent;
   border-bottom: none;
   font-size: 1.2em;
   white-space: nowrap;
