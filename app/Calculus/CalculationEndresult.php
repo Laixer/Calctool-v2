@@ -88,15 +88,15 @@ class CalculationEndresult {
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateLabor::where('activity_id','=',$activity->id)->get();
-					} else {
-						$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
-					}
-					foreach ($rows as $row)
-					{
-						$total += $project->hour_rate * $row->amount;
-					}
+				} else {
+					$rows = CalculationLabor::where('activity_id','=',$activity->id)->get();
+				}
+				foreach ($rows as $row)
+				{
+					$total += $project->hour_rate * $row->amount;
 				}
 			}
+		}
 
 		return $total;
 	}

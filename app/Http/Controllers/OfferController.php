@@ -143,8 +143,6 @@ class OfferController extends Controller {
 		$offer->offer_finish = date('Y-m-d', strtotime($request->get('date')));
 		$offer->save();
 
-		$first_invoice = null;
-
 		for ($i=0; $i < $offer->invoice_quantity; $i++) {
 			$invoice = new Invoice;
 			$invoice->priority = $i;
@@ -167,8 +165,6 @@ class OfferController extends Controller {
 				$invoice->rest_0 = InvoiceTerm::partTax3($project, $invoice) * $offer->downpayment_amount;
 			}
 			$invoice->save();
-			if ($i == 0)
-				$first_invoice = $invoice;
 		}
 
 		return json_encode(['success' => 1]);
