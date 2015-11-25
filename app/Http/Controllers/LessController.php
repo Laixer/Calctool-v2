@@ -84,8 +84,6 @@ class LessController extends Controller {
 			'project' => array('required','integer'),
 		]);
 
-		$validator = Validator::make($request->all(), $rules);
-
 		$equipment = CalculationEquipment::find($request->get('id'));
 		if (!$equipment)
 			return json_encode(['success' => 0]);
