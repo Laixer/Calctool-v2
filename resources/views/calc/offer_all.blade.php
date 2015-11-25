@@ -48,6 +48,13 @@ if (!$project || !$project->isOwner()) {
 			@endif
 		@endif
 
+		@if (!CalculationEndresult::totalProject($project))
+		<div class="alert alert-warning">
+			<i class="fa fa-fa fa-info-circle"></i>
+			Offertes kunnne pas worden gemaakt wanneer het project waarde bevat
+		</div>
+		@endif
+
 		<h2><strong>Offertebeheer</strong></h2>
 
 		<div class="white-row">

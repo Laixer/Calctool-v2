@@ -81,9 +81,9 @@ class CreateUsersTable extends Migration {
 			$table->text('pref_email_invoice_first_demand')->nullable()->default('Nog niet beschikbaar.');
 			$table->text('pref_email_invoice_last_demand')->nullable()->default('Nog niet beschikbaar.');
 			$table->string('offernumber_prefix', 10)->default('OF');
-			$table->smallinteger('offer_counter')->default(1)->unsigned();
+			$table->smallinteger('offer_counter')->default(0)->unsigned();
 			$table->string('invoicenumber_prefix', 10)->default('FA');
-			$table->smallinteger('invoice_counter')->default(1)->unsigned();
+			$table->smallinteger('invoice_counter')->default(0)->unsigned();
 			$table->decimal('administration_cost', 6, 2)->nullable()->default(12.50);
 			$table->rememberToken();
 			$table->nullableTimestamps();
