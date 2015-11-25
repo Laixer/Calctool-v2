@@ -533,6 +533,7 @@ if (!$project || !$project->isOwner()) {
 					<li><strong>Projectnaam:</strong> {{ $project->project_name }}</li>
 					<li><strong>Offertedatum:</strong> <a href="#" class="offdate">Bewerk</a></li>
 					<li><strong>Offertenummer:</strong> {{ OfferController::getOfferCode($project->id) }}</li>
+					<li><strong>Versie:</strong> {{ Offer::where('project_id', $project->id)->count()+1 }}</li>
 					<li>&nbsp;</li>
 					<li>&nbsp;</li>
 					<input type="hidden" id="offdateval" name="offdateval" value="{{ $offer_last ? $offer_last->offer_make : '' }}" />

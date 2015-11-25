@@ -82,6 +82,7 @@ function invoice_condition($offer) {
 		  <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
 		  <div class="date">{{ $project->project_name }}</div>
 		  <div class="date">{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
+		  <div>Versie: {{ Offer::where('project_id', $project->id)->count() }}</div>
 		</div>
 	  </div>
 
