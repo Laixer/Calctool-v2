@@ -16,6 +16,7 @@ use \Calctool\Models\Part;
 use \Calctool\Calculus\MoreOverview;
 use \Calctool\Calculus\MoreEndresult;
 use \Calctool\Calculus\MoreRegister;
+use \Calctool\Models\Timesheet;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
