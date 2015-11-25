@@ -103,6 +103,18 @@ if (!$project || !$project->isOwner()) {
 		$('.deleterow').click(function(e){
 			$(this).parent().find('form').submit();
 		});
+
+		$('.dopay').click(function(e){
+			if(confirm('Factuur betalen?')){
+				$curThis = $(this);
+				$curproj = $(this).attr('data-project');
+				$curinv = $(this).attr('data-invoice');
+				$.post("/invoice/pay", {project: {{ $project->id }}, id: $curinv, projectid: $curproj}, function(data){
+					location.reload();
+				}).fail(function(e) { console.log(e); });
+			};
+		});
+
 	});
 </script>
 <div id="wrapper">
@@ -217,6 +229,9 @@ if (!$project || !$project->isOwner()) {
 						      <span class="caret"></span>
 						    </button>
 						    <ul class="dropdown-menu">
+						      @if (!$invoice->payment_date && !$project->project_close)
+						      <li><a target="blank" href="javascript:void(0);" data-invoice="{{ $invoice->id }}" data-project="{{ $project->id }}" class="dopay">Betaalt</a></li>
+						      @endif
 						      <li><a target="blank" href="/invoice/pdf/project-{{ $project->id }}/term-invoice-{{ $invoice->id }}{{ $invoice->option_query ? '?'.$invoice->option_query : '' }}">Bekijk PDF</a></li>
 						      <li><a href="/invoice/pdf/project-{{ $project->id }}/term-invoice-{{ $invoice->id }}/download?file={{ InvoiceController::getInvoiceCode($project->id).'-factuur.pdf' }}{{ $invoice->option_query ? '&'.$invoice->option_query : '' }}">Download PDF</a></li>
 						    </ul>
@@ -251,6 +266,9 @@ if (!$project || !$project->isOwner()) {
 						      <span class="caret"></span>
 						    </button>
 						    <ul class="dropdown-menu">
+						      @if (!$invoice_end->payment_date && !$project->project_close)
+						      <li><a target="blank" href="javascript:void(0);" data-invoice="{{ $invoice_end->id }}" data-project="{{ $project->id }}" class="dopay">Betaalt</a></li>
+						      @endif
 						      <li><a target="blank" href="/invoice/pdf/project-{{ $project->id }}/invoice-{{ $invoice_end->id }}{{ $invoice_end->option_query ? '?'.$invoice_end->option_query : '' }}">Bekijk PDF</a></li>
 						      <li><a href="/invoice/pdf/project-{{ $project->id }}/invoice-{{ $invoice_end->id }}/download?file={{ InvoiceController::getInvoiceCode($project->id).'-factuur.pdf' }}{{ $invoice_end->option_query ? '&'.$invoice_end->option_query : '' }}">Download PDF</a></li>
 						    </ul>
