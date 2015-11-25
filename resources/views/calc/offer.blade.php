@@ -292,7 +292,7 @@ if (!$project || !$project->isOwner()) {
 
 		@include('calc.wizard', array('page' => 'offer'))
 
-		@if(!$relation_self)
+		@if(!$relation_self || Contact::where('relation_id','=',$relation_self->id)->count()<1)
 		<div class="alert alert-danger">
 			<i class="fa fa-frown-o"></i>
 			Geen bedrijfsgegevens bekend. Vul de <a href="/mycompany">bedrijfsgegevens</a> aan.

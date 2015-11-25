@@ -102,11 +102,18 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::get('invoice/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoiceAll'))->where('project_id', '[0-9]+');
 	Route::get('invoice/project-{project_id}/invoice-{invoice_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoice'))->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
 	Route::get('invoice/project-{project_id}/term-invoice-{invoice_id}', array('as' => 'invoice', 'uses' => 'CalcController@getTermInvoice'))->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
-	Route::post('invoice/close', array('as' => 'invoice', 'uses' => 'InvoiceController@doInvoiceClose'));
+	Route::post('invoice/save', 'InvoiceController@doInvoiceVersionNew');
+	Route::post('invoice/close', 'InvoiceController@doInvoiceClose');
 	Route::post('invoice/pay', array('as' => 'invoice', 'uses' => 'InvoiceController@doInvoicePay'));
 	Route::post('invoice/invclose', array('as' => 'invoice', 'uses' => 'InvoiceController@doInvoiceCloseAjax'));
 	Route::post('invoice/term/add', array('as' => 'invoice', 'uses' => 'InvoiceController@doInvoiceNewTerm'));
 	Route::post('invoice/term/delete', array('as' => 'invoice', 'uses' => 'InvoiceController@doInvoiceDeleteTerm'));
+	Route::get('invoice/project-{project_id}/invoice-version-{invoice_id}', function() {
+		return View::make('calc.invoice_show_pdf');
+	})->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
+	Route::get('invoice/project-{project_id}/pdf-invoice-{invoice_id}', function() {
+		return View::make('calc.invoice_show_final_pdf');
+	})->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
 
 	Route::get('offerversions/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOfferAll'))->where('project_id', '[0-9]+');
 	Route::get('offer/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOffer'))->where('project_id', '[0-9]+');
@@ -114,14 +121,14 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::get('offer/project-{project_id}/offer-{offer_id}', function() {
 		return View::make('calc.offer_show_pdf');
 	})->where('project_id', '[0-9]+')->where('offer_id', '[0-9]+');
-	Route::post('offer/close', array('as' => 'invoice', 'uses' => 'OfferController@doOfferClose'));
+	Route::post('offer/close', 'OfferController@doOfferClose');
 
-	Route::get('offer/pdf/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOfferPDF'))->where('project_id', '[0-9]+');
-	Route::get('offer/pdf/project-{project_id}/download', array('as' => 'invoice', 'uses' => 'CalcController@getOfferDownloadPDF'))->where('project_id', '[0-9]+');
+	//Route::get('offer/pdf/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOfferPDF'))->where('project_id', '[0-9]+');
+	//Route::get('offer/pdf/project-{project_id}/download', array('as' => 'invoice', 'uses' => 'CalcController@getOfferDownloadPDF'))->where('project_id', '[0-9]+');
 
 	Route::get('invoice/pdf/project-{project_id}/invoice-{invoice_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoicePDF'))->where('project_id', '[0-9]+');
 	Route::get('invoice/pdf/project-{project_id}/invoice-{invoice_id}/download', array('as' => 'invoice', 'uses' => 'CalcController@getInvoiceDownloadPDF'))->where('project_id', '[0-9]+');
-	Route::get('invoice/pdf/project-{project_id}/term-invoice-{invoice_id}', array('as' => 'invoice', 'uses' => 'CalcController@getTermInvoicePDF'))->where('project_id', '[0-9]+');
+	Route::get('xyz', 'CalcController@getTermInvoicePDF');
 	Route::get('invoice/pdf/project-{project_id}/term-invoice-{invoice_id}/download', array('as' => 'invoice', 'uses' => 'CalcController@getTermInvoiceDownloadPDF'))->where('project_id', '[0-9]+');
 
 	/* Calculation acions by calculation */

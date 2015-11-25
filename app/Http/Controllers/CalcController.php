@@ -131,30 +131,33 @@ class CalcController extends Controller {
 
 	public function getInvoicePDF(Request $request)
 	{
-		$page = 0;
+		/*$page = 0;
 		$pdf = PDF::loadView('calc.invoice_pdf');
 		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
-		return $pdf->stream();
+		return $pdf->stream();*/
 	}
 
 	public function getInvoiceDownloadPDF(Request $request)
 	{
-		$page = 0;
+		/*$page = 0;
 		$pdf = PDF::loadView('calc.invoice_pdf');
 		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
-		return $pdf->download($request->get('file'));
+		return $pdf->download($request->get('file'));?*/
 	}
 
 	public function getTermInvoicePDF(Request $request)
 	{
+		//return view('calc.invoice_term_pdf');
+		/*$page = 0;	
 		$pdf = PDF::loadView('calc.invoice_term_pdf');
-		return $pdf->stream();
+		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
+		return $pdf->stream();*/
 	}
 
 	public function getTermInvoiceDownloadPDF(Request $request)
 	{
-		$pdf = PDF::loadView('calc.invoice_term_pdf');
-		return $pdf->download($request->get('file'));
+		/*$pdf = PDF::loadView('calc.invoice_term_pdf');
+		return $pdf->download($request->get('file'));*/
 	}
 
 	public function doNewChapter(Request $request, $project_id)

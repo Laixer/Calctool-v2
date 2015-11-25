@@ -6,10 +6,13 @@ use Illuminate\Http\Request;
 
 use \Calctool\Models\Project;
 use \Calctool\Models\Invoice;
+use \Calctool\Models\InvoiceVersion;
 use \Calctool\Models\Offer;
+use \Calctool\Models\Resource;
 use \Calctool\Calculus\InvoiceTerm;
 
 use \Auth;
+use \PDF;
 
 class InvoiceController extends Controller {
 
@@ -99,6 +102,98 @@ class InvoiceController extends Controller {
 		$invoice->save();
 
 		return json_encode(['success' => 1]);
+	}
+
+	public function doInvoiceVersionNew(Request $request)
+	{
+		$this->validate($request, [
+			'id' => array('required','integer'),
+			'projectid' => array('required','integer'),
+		]);
+
+		$invoice = Invoice::find($request->get('id'));
+		if (!$invoice)
+			return json_encode(['success' => 0]);
+		$offer = Offer::find($invoice->offer_id);
+		if (!$offer)
+			return json_encode(['success' => 0]);
+		$project = Project::find($offer->project_id);
+		if (!$project || !$project->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
+
+		$project = Project::find($request->get('projectid'));
+		if (!$project || !$project->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
+
+		$invoice_version = new InvoiceVersion;
+
+		if ($request->get('include-tax'))
+			$invoice_version->include_tax = true;
+		else
+			$invoice_version->include_tax = false;
+		if ($request->get('only-totals'))
+			$invoice_version->only_totals = true;
+		else
+			$invoice_version->only_totals = false;
+		if ($request->get('seperate-subcon'))
+			$invoice_version->seperate_subcon = true;
+		else
+			$invoice_version->seperate_subcon = false;
+		if ($request->get('display-worktotals'))
+			$invoice_version->display_worktotals = true;
+		else
+			$invoice_version->display_worktotals = false;
+		if ($request->get('display-specification'))
+			$invoice_version->display_specification = true;
+		else
+			$invoice_version->display_specification = false;
+		if ($request->get('display-description'))
+			$invoice_version->display_description = true;
+		else
+			$invoice_version->display_description = false;
+
+		$invoice_version->amount = $invoice->amount;
+		$invoice_version->rest_21 = $invoice->rest_21;
+		$invoice_version->rest_6 = $invoice->rest_6;
+		$invoice_version->rest_0 = $invoice->rest_0;
+		$invoice_version->description = $invoice->description;
+		$invoice_version->closure = $invoice->closure;
+		$invoice_version->reference = $invoice->reference;
+		$invoice_version->book_code = $invoice->book_code;
+		$invoice_version->invoice_code = $invoice->invoice_code;
+		$invoice_version->payment_condition = $invoice->payment_condition;
+		$invoice_version->to_contact_id = $invoice->to_contact_id;
+		$invoice_version->from_contact_id = $invoice->from_contact_id;
+		$invoice_version->invoice_id = $invoice->id;
+
+		$invoice_version->save();
+
+		$page = 0;
+		$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.$invoice_version->invoice_code.'-invoice.pdf';
+		if ($invoice->isclose) {
+			$pdf = PDF::loadView('calc.invoice_pdf', ['invoice' => $invoice_version]);
+		} else {
+			$pdf = PDF::loadView('calc.invoice_term_pdf', ['invoice' => $invoice_version]);
+		}
+		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
+		$pdf->save('user-content/'.$newname);
+
+		$resource = new Resource;
+		$resource->resource_name = $newname;
+		$resource->file_location = 'user-content/' . $newname;
+		$resource->file_size = filesize('user-content/' . $newname);
+		$resource->user_id = Auth::id();
+		$resource->description = 'Factuurversie';
+
+		$resource->save();
+
+		$invoice_version->resource_id = $resource->id;
+
+		$invoice_version->save();
+
+		return redirect('invoice/project-'.$project->id.'/invoice-version-'.$invoice_version->id);
 	}
 
 	public function doInvoiceNewTerm(Request $request)
@@ -224,28 +319,46 @@ class InvoiceController extends Controller {
 			return json_encode(['success' => 0]);
 		}
 
-		$options = [];
-		if ($request->get('toggle-note'))
-			$options['description'] = 1;
-		if ($request->get('toggle-subcontr'))
-			$options['total'] = 1;
-		if ($request->get('toggle-activity'))
-			$options['specification'] = 1;
-		if ($request->get('toggle-summary'))
-			$options['onlyactivity'] = 1;
-		if ($request->get('toggle-tax'))
-			$options['displaytax'] = 1;
-
-		if ($request->get('invdateval'))
-			$invoice->invoice_make =  date('Y-m-d', strtotime($request->get('invdateval')));
-		else
-			$invoice->invoice_make = date('Y-m-d');
+		$invoice_version = InvoiceVersion::where('invoice_id',$invoice->id)->orderBy('created_at','desc')->first();
+		$invoice->include_tax = $invoice_version->include_tax;
+		$invoice->only_totals = $invoice_version->only_totals;
+		$invoice->seperate_subcon = $invoice_version->seperate_subcon;
+		$invoice->display_worktotals = $invoice_version->display_worktotals;
+		$invoice->display_specification = $invoice_version->display_specification;
+		$invoice->display_description = $invoice_version->display_description;
+		$invoice->description = $invoice_version->description;
+		$invoice->closure = $invoice_version->closure;
+		$invoice->to_contact_id = $invoice_version->to_contact_id;
+		$invoice->from_contact_id = $invoice_version->from_contact_id;
 		$invoice->invoice_close = true;
-		$invoice->option_query = http_build_query($options);
 		$invoice->invoice_code = InvoiceController::getInvoiceCode($project->id);
 		$invoice->bill_date = date('Y-m-d H:i:s');
 
 		$invoice->save();
+
+		$page = 0;
+		$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.$invoice->invoice_code.'-invoice.pdf';
+		if ($invoice->isclose) {
+			$pdf = PDF::loadView('calc.invoice_final_pdf', ['invoice' => $invoice]);
+		} else {
+			$pdf = PDF::loadView('calc.invoice_term_final_pdf', ['invoice' => $invoice]);
+		}
+		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
+		$pdf->save('user-content/'.$newname);
+
+		$resource = new Resource;
+		$resource->resource_name = $newname;
+		$resource->file_location = 'user-content/' . $newname;
+		$resource->file_size = filesize('user-content/' . $newname);
+		$resource->user_id = Auth::id();
+		$resource->description = 'Factuurversie';
+
+		$resource->save();
+
+		$invoice->resource_id = $resource->id;
+
+		$invoice->save();
+
 		Auth::user()->invoice_counter++;
 		Auth::user()->save();
 

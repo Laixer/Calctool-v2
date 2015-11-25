@@ -9,6 +9,7 @@ use \Calctool\Models\Relation;
 use \Calctool\Models\Contact;
 use \Calctool\Models\Offer;
 use \Calctool\Models\Invoice;
+use \Calctool\Models\InvoiceVersion;
 use \Calctool\Models\Resource;
 use \Calctool\Models\ProjectType;
 use \Calctool\Models\Detail;
@@ -21,6 +22,7 @@ use \Calctool\Calculus\EstimateOverview;
 use \Calctool\Calculus\MoreOverview;
 use \Calctool\Calculus\LessOverview;
 use \Calctool\Http\Controllers\OfferController;
+use \Calctool\Http\Controllers\InvoiceController;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
@@ -33,6 +35,7 @@ if (!$project || !$project->isOwner()) {
 	$invoice = Invoice::find(Route::Input('invoice_id'));
 	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 	$invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+	$invoice_version_cnt = InvoiceVersion::where('invoice_id', $invoice->id)->count();
 }
 ?>
 
@@ -222,7 +225,14 @@ if (!$project || !$project->isOwner()) {
 		});
 		$('.osave').click(function(e){
 			e.preventDefault();
+			$('#frm-invoice').get(0).setAttribute('action', '/invoice/save');
 			$('#frm-invoice').submit();
+		});
+		$('.oclose').click(function(e){
+			e.preventDefault();
+			$.post("/invoice/close", {projectid: {{ $project->id }}, id: {{ $invoice->id }} }, function(data){
+				window.location.href = '/invoice/project-'+{{ $project->id }};
+			}).fail(function(e) { console.log(e); });
 		});
 		$('#invdate').datepicker().on('changeDate', function(e){
 			$('#invdate').datepicker('hide');
@@ -264,9 +274,15 @@ if (!$project || !$project->isOwner()) {
 		if (!$project->project_close) {
 			$prev = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->orderBy('priority', 'desc')->first();
 			if ($prev && $prev->invoice_close) {
-				echo '<button class="btn btn-primary osave">Factureren</button>';
+				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
+				if ($invoice_version_cnt) {
+					echo '<button class="btn btn-primary oclose">Factureren</button>';
+				}
 			} else if (!$prev) {
-				echo '<button class="btn btn-primary osave">Factureren</button>';
+				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
+				if ($invoice_version_cnt) {
+					echo '<button class="btn btn-primary oclose">Factureren</button>';
+				}
 			}
 		}
 		?>
@@ -285,7 +301,7 @@ if (!$project || !$project->isOwner()) {
 	</div>
 
 	<h2><strong>Eindfactuur</strong></h2>
-	<form method="POST" id="frm-invoice" action="/invoice/close">
+	<form method="POST" id="frm-invoice">
 	{!! csrf_field() !!}
 	<input name="id" value="{{ $invoice->id }}" type="hidden"/>
 	<input name="projectid" value="{{ $project->id }}" type="hidden"/>
@@ -2035,9 +2051,15 @@ if (!$project || !$project->isOwner()) {
 				if (!$project->project_close) {
 					$prev = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->orderBy('priority', 'desc')->first();
 					if ($prev && $prev->invoice_close) {
-						echo '<button class="btn btn-primary osave">Factureren</button>';
+						echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
+						if ($invoice_version_cnt) {
+							echo '<button class="btn btn-primary oclose">Factureren</button>';
+						}
 					} else if (!$prev) {
-						echo '<button class="btn btn-primary osave">Factureren</button>';
+						echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
+						if ($invoice_version_cnt) {
+							echo '<button class="btn btn-primary oclose">Factureren</button>';
+						}
 					}
 				}
 				?>
@@ -2058,7 +2080,6 @@ if (!$project || !$project->isOwner()) {
 	</div>
 	</section>
 </div>
-<?#-- /WRAPPER --?>
 @stop
 
 <?php } ?>

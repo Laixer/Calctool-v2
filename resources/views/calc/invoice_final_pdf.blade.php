@@ -30,10 +30,7 @@ $endresult=Input::get("endresult");
 $onlyactivity=Input::get("onlyactivity");
 // }
 
-$_invoice = Invoice::find($invoice->invoice_id);
-if (!$_invoice)
-  exit();
-$offer = Offer::find($_invoice->offer_id);
+$offer = Offer::find($invoice->offer_id);
 if (!$offer)
   exit();
 $project = Project::find($offer->project_id);
@@ -61,7 +58,7 @@ if ($cnt>1)
     <title>Example 2</title>
     <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" media="all" />
   </head>
-  <body style="background-image: url(http://localhost/images/concept.png);">
+  <body>
 
   <?#--PAGE HEADER MASTER START--?>
   <header class="clearfix">
