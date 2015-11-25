@@ -54,7 +54,9 @@ class OfferController extends Controller {
 		$offer->extracondition = $request->get('extracondition');
 		$offer->closure = $request->get('closure');
 		if ($request->get('offdateval'))
-			$offer->offer_make =  date('Y-m-d', strtotime($request->get('offdateval')));
+			$offer->offer_make = date('Y-m-d', strtotime($request->get('offdateval')));
+		else
+			$offer->offer_make = date('Y-m-d');
 		if ($request->get('toggle-payment'))
 			$offer->downpayment = $request->get('toggle-payment');
 		if ($request->get('amount'))
