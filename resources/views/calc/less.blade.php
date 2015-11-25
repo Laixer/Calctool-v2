@@ -1088,7 +1088,7 @@ var n = this,
 									<th class="col-md-1">&nbsp;</th>
 									<th class="col-md-1">BTW</th>
 									<th class="col-md-2">BTW bedrag</th>
-									<th class="col-md-1">jjjj</th>
+									<th class="col-md-1">&nbsp;</th>
 								</tr>
 							</thead>
 
