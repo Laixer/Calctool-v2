@@ -230,7 +230,7 @@ if (!$project || !$project->isOwner()) {
 						    </button>
 						    <ul class="dropdown-menu">
 						      @if (!$invoice->payment_date && !$project->project_close)
-						      <li><a target="blank" href="javascript:void(0);" data-invoice="{{ $invoice->id }}" data-project="{{ $project->id }}" class="dopay">Betaalt</a></li>
+						      <li><a target="blank" href="javascript:void(0);" data-invoice="{{ $invoice->id }}" data-project="{{ $project->id }}" class="dopay">Betaald</a></li>
 						      @endif
 						      <li><a target="blank" href="/invoice/pdf/project-{{ $project->id }}/term-invoice-{{ $invoice->id }}{{ $invoice->option_query ? '?'.$invoice->option_query : '' }}">Bekijk PDF</a></li>
 						      <li><a href="/invoice/pdf/project-{{ $project->id }}/term-invoice-{{ $invoice->id }}/download?file={{ InvoiceController::getInvoiceCode($project->id).'-factuur.pdf' }}{{ $invoice->option_query ? '&'.$invoice->option_query : '' }}">Download PDF</a></li>
@@ -267,7 +267,7 @@ if (!$project || !$project->isOwner()) {
 						    </button>
 						    <ul class="dropdown-menu">
 						      @if (!$invoice_end->payment_date && !$project->project_close)
-						      <li><a target="blank" href="javascript:void(0);" data-invoice="{{ $invoice_end->id }}" data-project="{{ $project->id }}" class="dopay">Betaalt</a></li>
+						      <li><a target="blank" href="javascript:void(0);" data-invoice="{{ $invoice_end->id }}" data-project="{{ $project->id }}" class="dopay">Betaald</a></li>
 						      @endif
 						      <li><a target="blank" href="/invoice/pdf/project-{{ $project->id }}/invoice-{{ $invoice_end->id }}{{ $invoice_end->option_query ? '?'.$invoice_end->option_query : '' }}">Bekijk PDF</a></li>
 						      <li><a href="/invoice/pdf/project-{{ $project->id }}/invoice-{{ $invoice_end->id }}/download?file={{ InvoiceController::getInvoiceCode($project->id).'-factuur.pdf' }}{{ $invoice_end->option_query ? '&'.$invoice_end->option_query : '' }}">Download PDF</a></li>
