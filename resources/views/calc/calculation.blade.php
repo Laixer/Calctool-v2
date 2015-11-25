@@ -818,22 +818,22 @@ var n = this,
 
 				<ul class="nav nav-tabs">
 					<li id="tab-calculate">
-						<a href="#calculate" data-toggle="tab">
+						<a href="#calculate" onclick="location.reload();" data-toggle="tab">
 							<i class="fa fa-list"></i> Calculatie
 						</a>
 					</li>
 					<li id="tab-estimate">
-						<a href="#estimate" data-toggle="tab">
+						<a href="#estimate" onclick="location.reload();" data-toggle="tab">
 							<i class="fa fa-align-justify"></i> Stelposten
 						</a>
 					</li>
 					<li id="tab-summary">
-						<a href="#summary" data-toggle="tab">
+						<a href="#summary" onclick="location.reload();" data-toggle="tab">
 							<i class="fa fa-sort-amount-asc"></i> Uittrekstaat Calculeren
 						</a>
 					</li>
 					<li id="tab-endresult">
-						<a href="#endresult" data-toggle="tab">
+						<a href="#endresult" onclick="location.reload();" data-toggle="tab">
 							<i class="fa fa-check-circle-o"></i> Eindresultaat Calculeren
 						</a>
 					</li>

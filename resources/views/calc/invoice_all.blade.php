@@ -187,8 +187,8 @@ if (!$project || !$project->isOwner()) {
 				</div>
 			</div>
 
-			<div class="white-row">
 			<h2><strong>Factuurbeheer</strong></h2>
+			<div class="white-row">
 			<table class="table table-striped">
 				<thead>
 					<tr>
