@@ -112,16 +112,16 @@ class CalcController extends Controller {
 
 	public function getOfferPDF(Request $request)
 	{
-		$pdf = PDF::loadView('calc.offer_pdf');
+		/*$pdf = PDF::loadView('calc.offer_pdf');
 		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
-		return $pdf->stream();
+		return $pdf->stream();*/
 	}
 
 	public function getOfferDownloadPDF(Request $request)
 	{
-		$pdf = PDF::loadView('calc.offer_pdf');
+		/*$pdf = PDF::loadView('calc.offer_pdf');
 		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
-		return $pdf->download($request->get('file'));
+		return $pdf->download($request->get('file'));*/
 	}
 
 	public function getInvoiceAll(Request $request)
@@ -131,15 +131,17 @@ class CalcController extends Controller {
 
 	public function getInvoicePDF(Request $request)
 	{
+		$page = 0;
 		$pdf = PDF::loadView('calc.invoice_pdf');
-		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
+		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
 		return $pdf->stream();
 	}
 
 	public function getInvoiceDownloadPDF(Request $request)
 	{
+		$page = 0;
 		$pdf = PDF::loadView('calc.invoice_pdf');
-		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
+		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
 		return $pdf->download($request->get('file'));
 	}
 

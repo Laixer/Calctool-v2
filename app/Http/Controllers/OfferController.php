@@ -96,9 +96,10 @@ class OfferController extends Controller {
 		$offer->offer_total = CalculationEndresult::totalProject($project);
 		$offer->save();
 
+		$page = 0;
 		$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.OfferController::getOfferCode($request->input('project_id')).'-offer.pdf';
 		$pdf = PDF::loadView('calc.offer_pdf', ['offer' => $offer]);
-		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
+		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
 		$pdf->save('user-content/'.$newname);
 
 		$resource = new Resource;
