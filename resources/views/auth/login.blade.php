@@ -16,7 +16,6 @@ $(function() {
 
 			<div class="row">
 
-				<?# -- LOGIN -- ?>
 				<div class="col-md-6">
 
 					<h2><strong>Login</strong></h2>
@@ -24,7 +23,6 @@ $(function() {
 					<form method="POST" action="/login" accept-charset="UTF-8" class="white-row">
 					{!! csrf_field() !!}
 
-						<?# -- alert failed -- ?>
 						@if($errors->any())
 						<div class="alert alert-danger">
 							<i class="fa fa-frown-o"></i>
@@ -38,7 +36,7 @@ $(function() {
 							<div class="form-group">
 								<div class="col-md-12">
 									<label for="username">Gebruikersnaam of e-mailadres</label>
-									<input class="form-control" name="username" type="text" id="username">
+									<input class="form-control" name="username" type="text" id="username" value="{{ old('username') }}">
 								</div>
 							</div>
 						</div>
@@ -65,9 +63,7 @@ $(function() {
 					</form>
 
 				</div>
-				<?#-- /LOGIN -- ?>
 
-				<?#-- PASSWORD --?>
 				<div class="col-md-6">
 
 					<h2>Wachtwoord <strong>Vergeten</strong>?</h2>
@@ -78,7 +74,6 @@ $(function() {
 							Heb je een account maar ben je het wachtwoord vergeten? Vraag dan hieronder een nieuwe wachtwoord aan. Mocht het niet lukken neem dan contact op met de <a href="#">helpdesk</a>.
 						</p>
 
-						<?# -- alert success -- ?>
 						@if(Session::get('success'))
 						<div class="alert alert-success">
 							<i class="fa fa-check-circle"></i>
@@ -86,7 +81,6 @@ $(function() {
 						</div>
 						@endif
 
-						<?# -- password form -- ?>
 						<label class="nobold">Vul uw e-mailadres hier in</label>
 						<form class="input-group" method="post" action="password/reset">
 							<input type="text" class="form-control" name="email" id="email" value="" placeholder="E-mail adres" />
@@ -98,7 +92,6 @@ $(function() {
 					</div>
 
 				</div>
-				<?# -- /PASSWORD -- ?>
 
 			</div>
 
@@ -111,5 +104,4 @@ $(function() {
 
 	</div>
 </div>
-<?# -- /WRAPPER -- ?>
 @stop

@@ -2,7 +2,6 @@
 
 use \Calctool\Models\Project;
 use \Calctool\Models\Offer;
-use \Calctool\Models\Relation;
 use \Calctool\Calculus\CalculationEndresult;
 
 $common_access_error = false;
@@ -12,9 +11,6 @@ if (!$project || !$project->isOwner()) {
 } else {
 	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 }
-
-$relation = Relation::find($project->client_id);
-
 ?>
 
 @extends('layout.master')
@@ -34,7 +30,6 @@ $relation = Relation::find($project->client_id);
 <?php }else{ ?>
 
 @section('content')
-<?# -- WRAPPER -- ?>
 <script type="text/javascript">
 
 </script>
@@ -53,7 +48,14 @@ $relation = Relation::find($project->client_id);
 			@endif
 		@endif
 
-			<h2><strong>Offertebeheer</strong></h2>
+		@if (!CalculationEndresult::totalProject($project))
+		<div class="alert alert-warning">
+			<i class="fa fa-fa fa-info-circle"></i>
+			Offertes kunnne pas worden gemaakt wanneer het project waarde bevat
+		</div>
+		@endif
+
+		<h2><strong>Offertebeheer</strong></h2>
 
 		<div class="white-row">
 			<table class="table table-striped">
@@ -61,20 +63,22 @@ $relation = Relation::find($project->client_id);
 					<tr>
 						<th class="col-md-2">Offertenummer</th>
 						<th class="col-md-2">Datum</th>
-						<th class="col-md-3">Opdrachtgever</th>
+						<th class="col-md-3">Versie</th>
 						<th class="col-md-3">Offertebedrag (excl. BTW)</th>
 						<th class="col-md-3">Acties</th>
 					</tr>
 				</thead>
 				<tbody>
+					<?php $i = Offer::where('project_id', '=', $project->id)->count(); ?>
 					@foreach(Offer::where('project_id', '=', $project->id)->orderBy('created_at','desc')->get() as $offer)
 					<tr>
 						<td class="col-md-2"><a href="/offer/project-{{ $project->id }}/offer-{{ $offer->id }}">{{ $offer->offer_code }}</a></td>
 						<td class="col-md-2"><?php echo date('d-m-Y', strtotime($offer->offer_make)); ?></td>
-						<td class="col-md-3">{{ $relation->company_name }}</td>
+						<td class="col-md-3">{{ $i }}</td>
 						<td class="col-md-3">{{ '&euro; '.number_format($offer->offer_total, 2, ",",".") }}</td>
 						<td class="col-md-3"><a href="/res-{{ ($offer_last->resource_id) }}/download" class="btn btn-primary btn-xs"><i class="fa fa-cloud-download fa-fw"></i> Downloaden</a></td>
 					</tr>
+					<?php $i--; ?>
 					@endforeach
 				</tbody>
 			</table>

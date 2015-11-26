@@ -788,7 +788,7 @@ var n = this,
 															<th class="col-md-1">Eenheid</th>
 															<th class="col-md-1">&euro; / Eenh. <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier de nieuwe prijs per eenheid op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 															<th class="col-md-1">Aantal <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier het nieuwe aantal op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
-															<th class="col-md-1">+ Winst % <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het totaalbedrag van de &euro;/Eenh.vermenigvuldigd met het Aantal, incl. het winstpercentage" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+															<th class="col-md-1">Prijs  <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het totaalbedrag van de &euro;/Eenh.vermenigvuldigd met het Aantal, incl. het winstpercentage" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 															<th class="col-md-1">Minderw. <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het bedrag dat in mindering wordt gebracht op de bestaande calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
@@ -867,7 +867,7 @@ var n = this,
 															<th class="col-md-1">Eenheid</th>
 															<th class="col-md-1">&euro; / Eenh. <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier de nieuwe prijs per eenheid op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 															<th class="col-md-1">Aantal <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier het nieuwe aantal op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
-															<th class="col-md-1">+ Winst % <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het totaalbedrag van de &euro;/Eenh.vermenigvuldigd met het Aantal, incl. het winstpercentage" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+															<th class="col-md-1">Prijs  <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het totaalbedrag van de &euro;/Eenh.vermenigvuldigd met het Aantal, incl. het winstpercentage" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 															<th class="col-md-1">Minderw. <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het bedrag dat in mindering wordt gebracht op de bestaande calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
@@ -1083,7 +1083,7 @@ var n = this,
 							<thead>
 								<tr>
 									<th class="col-md-4">&nbsp;</th>
-									<th class="col-md-1">Manuren</th>
+									<th class="col-md-1">Uren</th>
 									<th class="col-md-2">Bedrag (excl. BTW)</th>
 									<th class="col-md-1">&nbsp;</th>
 									<th class="col-md-1">BTW</th>
@@ -1189,11 +1189,11 @@ var n = this,
 								<tr>
 									<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
 									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1"><strong>{{ '&euro; '.number_format(LessEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
-									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1"><strong>{{ '&euro; '.number_format(LessEndresult::totalContractingTax($project), 2, ",",".") }}</strong></td>
+									<td class="col-md-1">&nbsp;</td>
 								</tr>
 							</tbody>
 						</table>
@@ -1203,7 +1203,7 @@ var n = this,
 							<thead>
 								<tr>
 									<th class="col-md-4">&nbsp;</th>
-									<th class="col-md-1">Manuren</th>
+									<th class="col-md-1">Uren</th>
 									<th class="col-md-2">Bedrag (excl. BTW)</th>
 									<th class="col-md-1">&nbsp;</th>
 									<th class="col-md-1">BTW</th>
@@ -1309,11 +1309,11 @@ var n = this,
 								<tr>
 									<td class="col-md-4"><strong>Totaal Onderaanneming </strong></td>
 									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1"><strong>{{ '&euro; '.number_format(LessEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
-									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1"><strong>{{ '&euro; '.number_format(LessEndresult::totalSubcontractingTax($project), 2, ",",".") }}</strong></td>
+									<td class="col-md-2">&nbsp;</td>
 								</tr>
 							</tbody>
 						</table>
@@ -1322,57 +1322,73 @@ var n = this,
 						<table class="table table-striped">
 							<thead>
 								<tr>
-									<th class="col-md-6">&nbsp;</th>
+									<th class="col-md-5">&nbsp;</th>
 									<th class="col-md-2">Bedrag (excl. BTW)</th>
-									<th class="col-md-2">BTW bedrag</th>
-									<th class="col-md-2">&nbsp;</th>
+									<th class="col-md-1">&nbsp;</th>
+									<th class="col-md-1">&nbsp;</th>
+									<th class="col-md-1">BTW bedrag</th>
+									<th class="col-md-2"><span class="pull-right">Bedrag (incl. BTW)</span></th>
 								</tr>
 							</thead>
 
 							<tbody>
 								<tr>
-									<td class="col-md-6">Calculatief in mindering te brengen (excl. BTW)</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::totalProject($project), 2, ",",".") }}</td>
-									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-5"><strong>Calculatief in mindering te brengen (excl. BTW)</strong></td>
+									<td class="col-md-2"><strong>{{ '&euro; '.number_format(LessEndresult::totalProject($project), 2, ",",".") }}</strong></td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
 								<tr>
-									<td class="col-md-6">BTW bedrag aanneming 21%</td>
+									<td class="col-md-5">BTW bedrag aanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::totalContractingTax1($project), 2, ",",".") }}</td>
-									<td class="col-md-2">&nbsp;</td>
-								</tr>
-								<tr>
-									<td class="col-md-6">BTW bedrag aanneming 6%</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::totalContractingTax2($project), 2, ",",".") }}</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::totalContractingTax1($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr>
-									<td class="col-md-6">BTW bedrag onderaanneming 21%</td>
+									<td class="col-md-5">BTW bedrag aanneming 6%</td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::totalContractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								<tr>
-									<td class="col-md-6">BTW bedrag onderaanneming 6%</td>
+									<td class="col-md-5">BTW bedrag onderaanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
+									<td class="col-md-2">&nbsp;</td>
+								</tr>
+								<tr>
+									<td class="col-md-5">BTW bedrag onderaanneming 6%</td>
+									<td class="col-md-2">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
 								@endif
 								<tr>
-									<td class="col-md-6">In mindering te brengen BTW bedrag</td>
+									<td class="col-md-5">In mindering te brengen BTW bedrag</td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::totalProjectTax($project), 2, ",",".") }}</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::totalProjectTax($project), 2, ",",".") }}</td>
+									<td class="col-md-1">&nbsp;</td>
 								</tr>
 								<tr>
-									<td class="col-md-6"><strong>Calculatief in mindering te brengen (Incl. BTW)</strong></td>
+									<td class="col-md-5"><strong>Calculatief in mindering te brengen (Incl. BTW)</strong></td>
 									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-2"><strong>{{ '&euro; '.number_format(LessEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-1">&nbsp;</td>
+									<td class="col-md-2"><strong class="pull-right">{{ '&euro; '.number_format(LessEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
 								</tr>
 							</tbody>
 						</table>

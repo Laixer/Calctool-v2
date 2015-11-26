@@ -298,16 +298,16 @@ $(function() {
 						<div class="pull-right">
 
 
-<div class="btn-group">
-		  <a href="/project/new" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Nieuw project</a>
-		  <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		    <span class="caret"></span>
-		    <span class="sr-only">Toggle Dropdown</span>
-		  </button>
-		  <ul class="dropdown-menu">
-		    <li><a href="/project">Alle Projecten</a></li>
-		  </ul>
-		</div>
+					<div class="btn-group">
+							  <a href="/project/new" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Nieuw project</a>
+							  <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    <span class="caret"></span>
+							    <span class="sr-only">Toggle Dropdown</span>
+							  </button>
+							  <ul class="dropdown-menu">
+							    <li><a href="/project">Alle Projecten</a></li>
+							  </ul>
+							</div>
 
 						</div>
 						<h2><strong>Actieve</strong> Projecten</h2>
@@ -339,16 +339,16 @@ $(function() {
 					<div class="white-row" style="min-height: 280px;">
 						<div class="pull-right">
 
-		<div class="btn-group">
-		  <a href="relation/new" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Nieuwe Relatie</a>
-		  <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		    <span class="caret"></span>
-		    <span class="sr-only">Toggle Dropdown</span>
-		  </button>
-		  <ul class="dropdown-menu">
-		    <li><a href="/relation">Alle Relaties</a></li>
-		  </ul>
-		</div>
+						<div class="btn-group">
+						  <a href="relation/new" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Nieuwe Relatie</a>
+						  <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    <span class="caret"></span>
+						    <span class="sr-only">Toggle Dropdown</span>
+						  </button>
+						  <ul class="dropdown-menu">
+						    <li><a href="/relation">Alle Relaties</a></li>
+						  </ul>
+						</div>
 
 						</div>
 						<h2><strong>Laatste</strong> Relaties</h2>

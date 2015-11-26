@@ -103,6 +103,9 @@ class AuthController extends Controller {
 	 */
 	public function doRegister(Request $request)
 	{
+		$request->merge(array('username' => strtolower(trim($request->input('username')))));
+		$request->merge(array('email' => strtolower(trim($request->input('email')))));
+		
 		$this->validate($request, [
 			'username' => array('required','unique:user_account'),
 			'email' => array('required','max:80','email','unique:user_account'),
@@ -111,7 +114,7 @@ class AuthController extends Controller {
 		]);
 
 		$user = new User;
-		$user->username = strtolower(trim($request->get('username')));
+		$user->username = $request->get('username');
 		$user->secret = Hash::make($request->get('secret'));
 		$user->firstname = $user->username;
 		$user->api = md5(mt_rand());
@@ -252,7 +255,7 @@ class AuthController extends Controller {
 		$log->user_id = $user->id;
 		$log->save();
 
-		return redirect('login')->with('success', 1);
+		return redirect('login')->with('success', 'Wachtwoord geblokkeerd');
 	}
 
 

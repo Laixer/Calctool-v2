@@ -93,7 +93,26 @@
 							</div>
 						</div>
 
-						<div class="col-sm-6 col-md-3"><!-- item -->
+						<div class="col-sm-6 col-md-3">
+							<div class="item-box item-box-show fixed-box">
+								<figure>
+									<a class="item-hover" href="/admin/project">
+										<span class="overlay color2"></span>
+										<span class="inner">
+											<span class="block fa fa-pencil fsize60"></span>
+											<strong>Projecten</strong>
+										</span>
+									</a>
+									<a href="/admin/resource" class="btn btn-primary add_to_cart"><i class="fa fa-pencil"></i> Projectbeheer</a>
+								</figure>
+								<div class="item-box-desc">
+									<a href="/admin/resource"><h4>Projecten</h4></a>
+									<small class="styleColor">{{ \Calctool\Models\Project::count() }} Projecten</small>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-md-3">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/environment">
@@ -147,7 +166,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-6 col-md-3"><!-- item -->
+						<!--<div class="col-sm-6 col-md-3">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/support">
@@ -161,11 +180,11 @@
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/support" ><h4>Support & Ondersteuning</h4></a>
-									<small class="styleColor">{{ \Calctool\Models\Resource::count() }} nieuwe tickets</small>
-									<small class="styleColor">{{ \Calctool\Models\Resource::count() }} open tickets</small>
+									<small class="styleColor">x nieuwe tickets</small>
+									<small class="styleColor">x open tickets</small>
 								</div>
 							</div>
-						</div>
+						</div>-->
 
 					</div>
 

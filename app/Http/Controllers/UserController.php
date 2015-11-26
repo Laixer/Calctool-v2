@@ -230,7 +230,7 @@ class UserController extends Controller {
 		if ($payment->isPaid()) {
 			return redirect('myaccount')->with('success','Bedankt voor uw betaling');
 		} else if ($payment->isOpen() || $payment->isPending()) {
-			return redirect('myaccount')->with('success','Betaling is nog niet bevestigd, dit kan enkele dagen duren');
+			return redirect('myaccount')->with('success','Betaling is nog niet bevestigd, dit kan enkele dagen duren. Uw heeft in deze periode toegang tot uw account');
 		} else if ($payment->isCancelled()) {
 			$order->status = $payment->status;
 			$order->save();
@@ -249,11 +249,25 @@ class UserController extends Controller {
 	public function doUpdateSecurity(Request $request)
 	{
 		$this->validate($request, [
+			'curr_secret' => array('required'),
 			'secret' => array('confirmed','min:5'),
 			'secret_confirmation' => array('min:5'),
 		]);
 
 		$user = Auth::user();
+
+		$userdata = array(
+			'username' 	=> $user->username,
+			'password' 	=> $request->input('curr_secret'),
+			'active' 	=> 1,
+			'banned' 	=> NULL
+		);
+
+		if (!Auth::validate($userdata)) {
+			$errors = new MessageBag(['status' => ['Huidige wachtwoord klopt niet']]);
+			return back()->withErrors($errors);
+		}
+
 		if ($request->get('secret'))
 			$user->secret = Hash::make($request->get('secret'));
 		if ($request->get('toggle-api'))
@@ -273,7 +287,6 @@ class UserController extends Controller {
 				$tgram = Telegram::where('user_id','=',$user->id)->first();
 				if ($tgram && $tgram->alert) {
 
-					// create Telegram API object
 					$telegram = new Longman\TelegramBot\Telegram($_ENV['TELEGRAM_API'], $_ENV['TELEGRAM_NAME']);
 					TRequest::initialize($telegram);
 
@@ -329,7 +342,18 @@ class UserController extends Controller {
 			else
 				$user->gender = $request->get('gender');
 		}
-		$user->email = $request->get('email');
+
+		if ($user->email != $request->get('email')) {
+			$email = strtolower(trim($request->input('email')));
+
+			if (User::where('email',$email)->count()>0) {
+				$errors = new MessageBag(['status' => ['Email wordt al gebruikt']]);
+				return back()->withErrors($errors);
+			}
+
+			$user->email = $email;
+		}
+
 		if ($request->get('mobile'))
 			$user->mobile = $request->get('mobile');
 		if ($request->get('phone'))
@@ -384,7 +408,7 @@ class UserController extends Controller {
 
 		$user->save();
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Nieuwe gebruiker aangemaakt');
 	}
 
 	public function doUpdateIban(Request $request)
@@ -431,7 +455,7 @@ class UserController extends Controller {
 		$log->user_id = Auth::id();
 		$log->save();
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Betalingsgegevens zijn aangepast');
 	}
 
 	public function doUpdatePreferences(Request $request)

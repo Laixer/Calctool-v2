@@ -884,7 +884,7 @@ if (!$project || !$project->isOwner())
 
 							<tbody>
 								<tr>
-									<td class="col-md-5">Calculatief te offreren (excl. BTW)</td>
+									<td class="col-md-5"><strong>Calculatief te offreren (excl. BTW)</strong></td>
 									<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -926,7 +926,7 @@ if (!$project || !$project->isOwner())
 								</tr>
 								@endif
 								<tr>
-									<td class="col-md-5">Te offreren BTW bedrag</td>
+									<td class="col-md-5"><strong>Te offreren BTW bedrag</strong></td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>

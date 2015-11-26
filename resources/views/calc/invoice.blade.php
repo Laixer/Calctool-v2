@@ -9,6 +9,7 @@ use \Calctool\Models\Relation;
 use \Calctool\Models\Contact;
 use \Calctool\Models\Offer;
 use \Calctool\Models\Invoice;
+use \Calctool\Models\InvoiceVersion;
 use \Calctool\Models\Resource;
 use \Calctool\Models\ProjectType;
 use \Calctool\Models\Detail;
@@ -21,6 +22,7 @@ use \Calctool\Calculus\EstimateOverview;
 use \Calctool\Calculus\MoreOverview;
 use \Calctool\Calculus\LessOverview;
 use \Calctool\Http\Controllers\OfferController;
+use \Calctool\Http\Controllers\InvoiceController;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
@@ -33,6 +35,7 @@ if (!$project || !$project->isOwner()) {
 	$invoice = Invoice::find(Route::Input('invoice_id'));
 	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 	$invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+	$invoice_version_cnt = InvoiceVersion::where('invoice_id', $invoice->id)->count();
 }
 ?>
 
@@ -65,7 +68,7 @@ if (!$project || !$project->isOwner()) {
             $(this).find("td").eq(5).hide();
             $(this).find("th").eq(5).hide();
         });
-		$("[name='toggle-tax']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='toggle-tax']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		        $('.hide-btw1 tr').each(function() {
 	                $(this).find("td").eq(4).show();
@@ -114,7 +117,7 @@ if (!$project || !$project->isOwner()) {
 		        });
 		  }
 		});
-		$("[name='toggle-activity']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='toggle-activity']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-activity').show();
 		  	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
@@ -123,7 +126,7 @@ if (!$project || !$project->isOwner()) {
 			$('.show-activity').hide();
 		  }
 		});
-		$("[name='toggle-subcontr']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='toggle-subcontr']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-all').show();
 		  	$('.show-totals').hide();
@@ -132,14 +135,14 @@ if (!$project || !$project->isOwner()) {
 		  	$('.show-totals').show();
 		  }
 		});
-		$("[name='toggle-note']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='toggle-note']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-note').show();
 		  } else {
 			$('.show-note').hide();
 		  }
 		});
-		$("[name='toggle-endresult']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='toggle-endresult']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.only-total').hide();
 		  	$('.hide-btw1').hide();
@@ -176,7 +179,7 @@ if (!$project || !$project->isOwner()) {
 	        });
 		  }
 		});
-		$("[name='toggle-summary']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='toggle-summary']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 	        $('.only-end-total tr').each(function() {
                 $(this).find("td").eq(2).show();
@@ -202,7 +205,7 @@ if (!$project || !$project->isOwner()) {
 		  }
 		});
 		$tpayment = false;
-		$("[name='toggle-payment']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='toggle-payment']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 			if (state) {
 				$("#amount").prop('disabled', false);
 				$tpayment = true;
@@ -222,6 +225,7 @@ if (!$project || !$project->isOwner()) {
 		});
 		$('.osave').click(function(e){
 			e.preventDefault();
+			$('#frm-invoice').get(0).setAttribute('action', '/invoice/save');
 			$('#frm-invoice').submit();
 		});
 		$('#invdate').datepicker().on('changeDate', function(e){
@@ -264,9 +268,9 @@ if (!$project || !$project->isOwner()) {
 		if (!$project->project_close) {
 			$prev = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->orderBy('priority', 'desc')->first();
 			if ($prev && $prev->invoice_close) {
-				echo '<button class="btn btn-primary osave">Factureren</button>';
+				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
 			} else if (!$prev) {
-				echo '<button class="btn btn-primary osave">Factureren</button>';
+				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
 			}
 		}
 		?>
@@ -285,7 +289,7 @@ if (!$project || !$project->isOwner()) {
 	</div>
 
 	<h2><strong>Eindfactuur</strong></h2>
-	<form method="POST" id="frm-invoice" action="/invoice/close">
+	<form method="POST" id="frm-invoice">
 	{!! csrf_field() !!}
 	<input name="id" value="{{ $invoice->id }}" type="hidden"/>
 	<input name="projectid" value="{{ $project->id }}" type="hidden"/>
@@ -2035,9 +2039,9 @@ if (!$project || !$project->isOwner()) {
 				if (!$project->project_close) {
 					$prev = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->orderBy('priority', 'desc')->first();
 					if ($prev && $prev->invoice_close) {
-						echo '<button class="btn btn-primary osave">Factureren</button>';
+						echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
 					} else if (!$prev) {
-						echo '<button class="btn btn-primary osave">Factureren</button>';
+						echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
 					}
 				}
 				?>
@@ -2058,7 +2062,6 @@ if (!$project || !$project->isOwner()) {
 	</div>
 	</section>
 </div>
-<?#-- /WRAPPER --?>
 @stop
 
 <?php } ?>

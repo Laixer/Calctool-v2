@@ -818,22 +818,22 @@ var n = this,
 
 				<ul class="nav nav-tabs">
 					<li id="tab-calculate">
-						<a href="#calculate" data-toggle="tab">
+						<a href="#calculate" onclick="location.reload();" data-toggle="tab">
 							<i class="fa fa-list"></i> Calculatie
 						</a>
 					</li>
 					<li id="tab-estimate">
-						<a href="#estimate" data-toggle="tab">
+						<a href="#estimate" onclick="location.reload();" data-toggle="tab">
 							<i class="fa fa-align-justify"></i> Stelposten
 						</a>
 					</li>
 					<li id="tab-summary">
-						<a href="#summary" data-toggle="tab">
+						<a href="#summary" onclick="location.reload();" data-toggle="tab">
 							<i class="fa fa-sort-amount-asc"></i> Uittrekstaat Calculeren
 						</a>
 					</li>
 					<li id="tab-endresult">
-						<a href="#endresult" data-toggle="tab">
+						<a href="#endresult" onclick="location.reload();" data-toggle="tab">
 							<i class="fa fa-check-circle-o"></i> Eindresultaat Calculeren
 						</a>
 					</li>
@@ -1784,7 +1784,7 @@ var n = this,
 
 							<tbody>
 								<tr>
-									<td class="col-md-5">Calculatief te offreren (excl. BTW)</td>
+									<td class="col-md-5"><strong>Calculatief te offreren (excl. BTW)<strong></td>
 									<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1826,7 +1826,7 @@ var n = this,
 								</tr>
 								@endif
 								<tr>
-									<td class="col-md-5">Te offreren BTW bedrag</td>
+									<td class="col-md-5"><strong>Te offreren BTW bedrag</strong></td>
 									<td class="col-md-2">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-1">&nbsp;</td>

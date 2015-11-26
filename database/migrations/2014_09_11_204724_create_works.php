@@ -26,7 +26,7 @@ class CreateWorks extends Migration {
 		Schema::create('chapter', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('chapter_name', 50);
+			$table->string('chapter_name', 100);
 			$table->smallInteger('priority')->index();
 			$table->boolean('more')->default('N');
 			$table->nullableTimestamps();
@@ -37,7 +37,7 @@ class CreateWorks extends Migration {
 		Schema::create('activity', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('activity_name', 50);
+			$table->string('activity_name', 100);
 			$table->smallInteger('priority')->index();
 			$table->text('note')->nullable();
 			$table->nullableTimestamps();

@@ -6,6 +6,7 @@ use \Calctool\Models\Invoice;
 use \Calctool\Calculus\ResultEndresult;
 use \Calctool\Http\Controllers\InvoiceController;
 use \Calctool\Models\InvoiceTerm;
+use \Calctool\Models\InvoiceVersion;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
@@ -103,6 +104,18 @@ if (!$project || !$project->isOwner()) {
 		$('.deleterow').click(function(e){
 			$(this).parent().find('form').submit();
 		});
+
+		$('.dopay').click(function(e){
+			if(confirm('Factuur betalen?')){
+				$curThis = $(this);
+				$curproj = $(this).attr('data-project');
+				$curinv = $(this).attr('data-invoice');
+				$.post("/invoice/pay", {project: {{ $project->id }}, id: $curinv, projectid: $curproj}, function(data){
+					location.reload();
+				}).fail(function(e) { console.log(e); });
+			};
+		});
+
 	});
 </script>
 <div id="wrapper">
@@ -175,13 +188,13 @@ if (!$project || !$project->isOwner()) {
 				</div>
 			</div>
 
-			<div class="white-row">
 			<h2><strong>Factuurbeheer</strong></h2>
+			<div class="white-row">
 			<table class="table table-striped">
 				<thead>
 					<tr>
 						<th class="col-md-2">Onderdeel</th>
-						<th class="col-md-2">Factuurbedrag (&euro;) <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier een termijnbedrag of eindbedrag op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+						<th class="col-md-2">Factuurbedrag (&euro;) (Excl. BTW) <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier een termijnbedrag of eindbedrag op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 						<th class="col-md-2">Factuurnummer <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier uw factuurnummer op dat behoort bij uw boekhouding." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 						<th class="col-md-1">Administratie <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier een referentie en/of een debiteurennummer op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 						<th class="col-md-2">Omschrijving <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u een aanhef en een afsluiting opgeven voor op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
@@ -200,8 +213,9 @@ if (!$project || !$project->isOwner()) {
 				$invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first();
 				?>
 				@foreach (Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority')->get() as $invoice)
+				<?php $invoice_version = InvoiceVersion::where('invoice_id', $invoice->id)->orderBy('created_at','desc')->first(); ?>
 					<tr>
-						<td class="col-md-2"><?php if (!$invoice->invoice_close && !$project->project_close) { echo '<a href="/invoice/project-' . $project->id . '/term-invoice-' . $invoice->id . '">'; } ?>{{ ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1)) }}<?php if ($invoice->invoice_close) { echo '</a>'; }?></td>
+						<td class="col-md-2"><?php if (!$invoice->invoice_close && !$project->project_close) { if ($invoice_version){ echo '<a href="/invoice/project-' . $project->id . '/invoice-version-'.$invoice_version->id.'">'; } else { echo '<a href="/invoice/project-' . $project->id . '/term-invoice-' . $invoice->id . '">'; } } else { echo '<a href="/invoice/project-' . $project->id . '/pdf-invoice-'.$invoice->id.'">'; } ?>{{ ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1)) }}<?php if ($invoice->invoice_close) { echo '</a>'; }?></td>
 						<td class="col-md-2"><?php if ($invoice->invoice_close || $project->project_close){ echo "<span class='sdata'>".number_format($invoice->amount, 2, ",",".")."</span>"; } else  { ?><input data-id="{{ $invoice->id }}" class="form-control-sm-text adata" name="amount" type="text" value="{{ number_format($invoice->amount, 2, ",",".") }}" /><?php } ?></td>
 						<td class="col-md-2">{{ $invoice->invoice_code }}</td>
 						<td class="col-md-1"><?php if (!$invoice->invoice_close && !$project->project_close) { ?><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice->reference }}" data-bookcode="{{ $invoice->book_code }}" data-id="{{ $invoice->id }}" data-target="#codeModal">bewerk</a><?php } ?></td>
@@ -217,15 +231,18 @@ if (!$project || !$project->isOwner()) {
 						      <span class="caret"></span>
 						    </button>
 						    <ul class="dropdown-menu">
-						      <li><a target="blank" href="/invoice/pdf/project-{{ $project->id }}/term-invoice-{{ $invoice->id }}{{ $invoice->option_query ? '?'.$invoice->option_query : '' }}">Bekijk PDF</a></li>
-						      <li><a href="/invoice/pdf/project-{{ $project->id }}/term-invoice-{{ $invoice->id }}/download?file={{ InvoiceController::getInvoiceCode($project->id).'-factuur.pdf' }}{{ $invoice->option_query ? '&'.$invoice->option_query : '' }}">Download PDF</a></li>
+						      @if (!$invoice->payment_date && !$project->project_close)
+						      <li><a target="blank" href="javascript:void(0);" data-invoice="{{ $invoice->id }}" data-project="{{ $project->id }}" class="dopay">Betaald</a></li>
+						      @endif
+						      <li><a href="/invoice/project-{{ $project->id }}/history-invoice-{{ $invoice->id }}">Geschiedenis</a></li>
 						    </ul>
 						  </div>
 						<?php
-						} else if ($close && !$project->project_close) {
-							echo '<form method="POST" id="frm-invoice" action="/invoice/close"><input name="id" value="'.$invoice->id.'" type="hidden"/><input type="hidden" name="_token" value="'.csrf_token().'"><input name="projectid" value="'.$project->id.'" type="hidden"/><input type="submit" class="btn btn-primary btn-xs" value="Factureren"/></form>'; $close=false;
+						//} else if ($close && !$project->project_close) {
+						//	echo '<form method="POST" id="frm-invoice" action="/invoice/close"><input name="id" value="'.$invoice->id.'" type="hidden"/><input type="hidden" name="_token" value="'.csrf_token().'"><input name="projectid" value="'.$project->id.'" type="hidden"/><input type="submit" class="btn btn-primary btn-xs" value="Factureren"/></form>'; $close=false;
 						} else {
 							echo 'Open';
+							$close=false;
 						}
 						?>
 						</td></td><input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
@@ -234,8 +251,9 @@ if (!$project || !$project->isOwner()) {
 				<?php $i++; ?>
 				@endforeach
 				<?php if ($invoice_end) { ?>
+				<?php $invoice_version = InvoiceVersion::where('invoice_id', $invoice_end->id)->orderBy('created_at','desc')->first(); ?>
 					<tr>
-						<td class="col-md-2"><?php if (!$invoice_end->invoice_close && !$project->project_close) { echo '<a href="/invoice/project-' . $project->id . '/invoice-' . $invoice_end->id . '">Eindfactuur</a>'; } else { echo 'Eindfactuur'; } ?></td>
+						<td class="col-md-2"><?php if (!$invoice_end->invoice_close && !$project->project_close) { if ($invoice_version){ echo '<a href="/invoice/project-' . $project->id . '/invoice-version-'.$invoice_version->id.'">Eindfactuur</a>'; } else { echo '<a href="/invoice/project-' . $project->id . '/invoice-' . $invoice_end->id . '">Eindfactuur</a>'; } } else { echo '<a href="/invoice/project-' . $project->id . '/pdf-invoice-'.$invoice_end->id.'">Eindfactuur</a>'; } ?></td>
 						<td class="col-md-2"><span id="endterm">0</span></td>
 						<td class="col-md-2">{{ $invoice_end->invoice_code }}</td>
 						<td class="col-md-2"><?php if (!$invoice_end->invoice_close && !$project->project_close) { ?><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice_end->reference }}" data-bookcode="{{ $invoice_end->book_code }}" data-id="{{ $invoice_end->id }}" data-target="#codeModal">bewerk</a><?php } ?></td>
@@ -251,12 +269,15 @@ if (!$project || !$project->isOwner()) {
 						      <span class="caret"></span>
 						    </button>
 						    <ul class="dropdown-menu">
-						      <li><a target="blank" href="/invoice/pdf/project-{{ $project->id }}/invoice-{{ $invoice_end->id }}{{ $invoice_end->option_query ? '?'.$invoice_end->option_query : '' }}">Bekijk PDF</a></li>
-						      <li><a href="/invoice/pdf/project-{{ $project->id }}/invoice-{{ $invoice_end->id }}/download?file={{ InvoiceController::getInvoiceCode($project->id).'-factuur.pdf' }}{{ $invoice_end->option_query ? '&'.$invoice_end->option_query : '' }}">Download PDF</a></li>
+						      @if (!$invoice_end->payment_date && !$project->project_close)
+						      <li><a target="blank" href="javascript:void(0);" data-invoice="{{ $invoice_end->id }}" data-project="{{ $project->id }}" class="dopay">Betaald</a></li>
+						      @endif
+						      <li><a href="/invoice/project-{{ $project->id }}/history-invoice-{{ $invoice->id }}">Geschiedenis</a></li>
 						    </ul>
 						  </div>
-						<?php } else if ($close && !$project->project_close) {
-							echo '<form method="POST" id="frm-invoice" action="/invoice/close"><input type="hidden" name="_token" value="'.csrf_token().'"><input name="id" value="'.$invoice_end->id.'" type="hidden"/><input name="projectid" value="'.$project->id.'" type="hidden"/><input type="submit" class="btn btn-primary btn-xs" value="Factureren"/></form>'; $close=false;
+						<?php 
+						//} else if ($close && !$project->project_close) {
+						//	echo '<form method="POST" id="frm-invoice" action="/invoice/close"><input type="hidden" name="_token" value="'.csrf_token().'"><input name="id" value="'.$invoice_end->id.'" type="hidden"/><input name="projectid" value="'.$project->id.'" type="hidden"/><input type="submit" class="btn btn-primary btn-xs" value="Factureren"/></form>'; $close=false;
 						} else {
 							echo 'Open';
 						}

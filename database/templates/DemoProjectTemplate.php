@@ -34,8 +34,8 @@ class DemoProjectTemplate {
 		$contact_function = ContactFunction::where('function_name','=','voorzitter')->first();
 
 		$relation = new Relation;
-		$relation->company_name		= 'Demo-relatie';
-		$relation->address_street	= 'Demo-straat';
+		$relation->company_name		= 'Demorelatie';
+		$relation->address_street	= 'Demostraat';
 		$relation->address_number	= '1';
 		$relation->address_postal	= '1234DE';
 		$relation->address_city		= 'Demo-stad';
@@ -56,8 +56,8 @@ class DemoProjectTemplate {
 		$relation->save();
 
 		$project = new Project;
-		$project->project_name 		= 'Demo-project';
-		$project->address_street 	= 'Demo-laan';
+		$project->project_name 		= 'Demoproject';
+		$project->address_street 	= 'Demolaan';
 		$project->address_number 	= '2';
 		$project->address_postal 	= '5678MO';
 		$project->address_city 		= 'Demo-dorp';
@@ -159,61 +159,162 @@ class DemoProjectTemplate {
 		$calculation_equipment_activity1_2->activity_id = $activity1->id;
 		$calculation_equipment_activity1_2->save();
 
-		$activity2 = new Activity;
-       	$activity2->activity_name = 'Nieuwe vloer van laminaat leggen';
-       	$activity2->priority = 1;
-       	$activity2->note = 'In de woonkamer wordt kliklaminaat gelegd, incl. ondervloer. De oude vloer wordt door de bewoners verwijdert.';
-       	$activity2->chapter_id = $chapter1->id;
-       	$activity2->tax_labor_id = $tax1->id;
-       	$activity2->tax_material_id = $tax1->id;
-       	$activity2->tax_equipment_id = $tax1->id;
-       	$activity2->part_id = 1;
-       	$activity2->part_type_id = 1;
-       	$activity2->save();
+		$activity4 = new Activity;
+       	$activity4->activity_name = 'Lamp ophangen';
+       	$activity4->priority = 2;
+       	$activity4->note = 'Lamp ophangen';
+       	$activity4->chapter_id = $chapter1->id;
+       	$activity4->tax_labor_id = $tax1->id;
+       	$activity4->tax_material_id = $tax1->id;
+       	$activity4->tax_equipment_id = $tax1->id;
+       	$activity4->part_id = 1;
+       	$activity4->part_type_id = 1;
+       	$activity4->save();
 
-		$calculation_labor_activity2 = new CalculationLabor;
-		$calculation_labor_activity2->rate = '35.00';
-		$calculation_labor_activity2->amount = '10';
-		$calculation_labor_activity2->isless = false;
-		$calculation_labor_activity2->activity_id = $activity1->id;
-		$calculation_labor_activity2->save();
+		$calculation_labor_activity4 = new CalculationLabor;
+		$calculation_labor_activity4->rate = '35.00';
+		$calculation_labor_activity4->amount = '0.5';
+		$calculation_labor_activity4->isless = false;
+		$calculation_labor_activity4->activity_id = $activity4->id;
+		$calculation_labor_activity4->save();
 
-		$calculation_material_activity2_1 = new CalculationMaterial;
-		$calculation_material_activity2_1->material_name = 'Ondervloer';
-		$calculation_material_activity2_1->unit = 'm2';
-		$calculation_material_activity2_1->rate = '12.56';
-		$calculation_material_activity2_1->amount = '15';
-		$calculation_material_activity2_1->isless = false;
-		$calculation_material_activity2_1->activity_id = $activity1->id;
-		$calculation_material_activity2_1->save();
+		$calculation_material_activity4_1 = new CalculationMaterial;
+		$calculation_material_activity4_1->material_name = 'Design lamp';
+		$calculation_material_activity4_1->unit = 'stuk';
+		$calculation_material_activity4_1->rate = '214.50';
+		$calculation_material_activity4_1->amount = '1';
+		$calculation_material_activity4_1->isless = false;
+		$calculation_material_activity4_1->activity_id = $activity4->id;
+		$calculation_material_activity4_1->save();
 		
-		$calculation_equipment_activity2_1 = new CalculationEquipment;
-		$calculation_equipment_activity2_1->equipment_name = 'Ondervloer snijder';
-		$calculation_equipment_activity2_1->unit = 'stuk';
-		$calculation_equipment_activity2_1->rate = '1';
-		$calculation_equipment_activity2_1->amount = '9.95';
-		$calculation_equipment_activity2_1->isless = false;
-		$calculation_equipment_activity2_1->activity_id = $activity1->id;
-		$calculation_equipment_activity2_1->save();
+		$calculation_equipment_activity4_1 = new CalculationEquipment;
+		$calculation_equipment_activity4_1->equipment_name = 'Trap huren';
+		$calculation_equipment_activity4_1->unit = 'stuk';
+		$calculation_equipment_activity4_1->rate = '15.75';
+		$calculation_equipment_activity4_1->amount = '1';
+		$calculation_equipment_activity4_1->isless = false;
+		$calculation_equipment_activity4_1->activity_id = $activity4->id;
+		$calculation_equipment_activity4_1->save();
 
-		$calculation_material_activity2_2 = new CalculationMaterial;
-		$calculation_material_activity2_2->material_name = 'laminaat';
-		$calculation_material_activity2_2->unit = 'm2';
-		$calculation_material_activity2_2->rate = '22.56';
-		$calculation_material_activity2_2->amount = '15';
-		$calculation_material_activity2_2->isless = false;
-		$calculation_material_activity2_2->activity_id = $activity1->id;
-		$calculation_material_activity2_2->save();
+		$calculation_material_activity4_2 = new CalculationMaterial;
+		$calculation_material_activity4_2->material_name = 'Beton schroeven met plug';
+		$calculation_material_activity4_2->unit = 'doos';
+		$calculation_material_activity4_2->rate = '12.56';
+		$calculation_material_activity4_2->amount = '1';
+		$calculation_material_activity4_2->isless = false;
+		$calculation_material_activity4_2->activity_id = $activity4->id;
+		$calculation_material_activity4_2->save();
+
+		$chapter2 = new Chapter;
+		$chapter2->chapter_name = 'Slaapkamer';
+		$chapter2->priority = 2;
+		$chapter2->project_id = $project->id;
+		$chapter2->save();
+
+       	$activity3 = new Activity;
+       	$activity3->activity_name = 'Nieuwe vloer van laminaat leggen';
+       	$activity3->priority = 1;
+       	$activity3->note = 'In de slaapkamer wordt kliklaminaat gelegd, incl. ondervloer. De oude vloer wordt door de bewoners verwijdert.';
+       	$activity3->chapter_id = $chapter2->id;
+       	$activity3->tax_labor_id = $tax2->id;
+       	$activity3->tax_material_id = $tax2->id;
+       	$activity3->tax_equipment_id = $tax2->id;
+       	$activity3->part_id = 2;
+       	$activity3->part_type_id = 1;
+       	$activity3->save();
+
+		$calculation_labor_activity3 = new CalculationLabor;
+		$calculation_labor_activity3->rate = '35.00';
+		$calculation_labor_activity3->amount = '10';
+		$calculation_labor_activity3->isless = false;
+		$calculation_labor_activity3->activity_id = $activity3->id;
+		$calculation_labor_activity3->save();
+
+		$calculation_material_activity3_1 = new CalculationMaterial;
+		$calculation_material_activity3_1->material_name = 'Ondervloer';
+		$calculation_material_activity3_1->unit = 'm2';
+		$calculation_material_activity3_1->rate = '12.56';
+		$calculation_material_activity3_1->amount = '15';
+		$calculation_material_activity3_1->isless = false;
+		$calculation_material_activity3_1->activity_id = $activity3->id;
+		$calculation_material_activity3_1->save();
 		
-		$calculation_equipment_activity2_2 = new CalculationEquipment;
-		$calculation_equipment_activity2_2->equipment_name = 'Laminaat knipper';
-		$calculation_equipment_activity2_2->unit = 'stuk';
-		$calculation_equipment_activity2_2->rate = '7.95';
-		$calculation_equipment_activity2_2->amount = '1';
-		$calculation_equipment_activity2_2->isless = false;
-		$calculation_equipment_activity2_2->activity_id = $activity1->id;
-		$calculation_equipment_activity2_2->save();
+		$calculation_equipment_activity3_1 = new CalculationEquipment;
+		$calculation_equipment_activity3_1->equipment_name = 'Ondervloer snijder';
+		$calculation_equipment_activity3_1->unit = 'stuk';
+		$calculation_equipment_activity3_1->rate = '1';
+		$calculation_equipment_activity3_1->amount = '9.95';
+		$calculation_equipment_activity3_1->isless = false;
+		$calculation_equipment_activity3_1->activity_id = $activity3->id;
+		$calculation_equipment_activity3_1->save();
+
+		$calculation_material_activity3_2 = new CalculationMaterial;
+		$calculation_material_activity3_2->material_name = 'laminaat';
+		$calculation_material_activity3_2->unit = 'm2';
+		$calculation_material_activity3_2->rate = '22.56';
+		$calculation_material_activity3_2->amount = '15';
+		$calculation_material_activity3_2->isless = false;
+		$calculation_material_activity3_2->activity_id = $activity3->id;
+		$calculation_material_activity3_2->save();
+		
+		$calculation_equipment_activity3_2 = new CalculationEquipment;
+		$calculation_equipment_activity3_2->equipment_name = 'Laminaat knipper';
+		$calculation_equipment_activity3_2->unit = 'stuk';
+		$calculation_equipment_activity3_2->rate = '7.95';
+		$calculation_equipment_activity3_2->amount = '1';
+		$calculation_equipment_activity3_2->isless = false;
+		$calculation_equipment_activity3_2->activity_id = $activity3->id;
+		$calculation_equipment_activity3_2->save();
+
+		$activity4 = new Activity;
+       	$activity4->activity_name = 'Lamp ophangen';
+       	$activity4->priority = 2;
+       	$activity4->note = 'Lamp ophangen';
+       	$activity4->chapter_id = $chapter2->id;
+       	$activity4->tax_labor_id = $tax2->id;
+       	$activity4->tax_material_id = $tax2->id;
+       	$activity4->tax_equipment_id = $tax2->id;
+       	$activity4->part_id = 2;
+       	$activity4->part_type_id = 1;
+       	$activity4->save();
+
+		$calculation_labor_activity4 = new CalculationLabor;
+		$calculation_labor_activity4->rate = '35.00';
+		$calculation_labor_activity4->amount = '0.5';
+		$calculation_labor_activity4->isless = false;
+		$calculation_labor_activity4->activity_id = $activity4->id;
+		$calculation_labor_activity4->save();
+
+		$calculation_material_activity4_1 = new CalculationMaterial;
+		$calculation_material_activity4_1->material_name = 'Design lamp';
+		$calculation_material_activity4_1->unit = 'stuk';
+		$calculation_material_activity4_1->rate = '214.50';
+		$calculation_material_activity4_1->amount = '1';
+		$calculation_material_activity4_1->isless = false;
+		$calculation_material_activity4_1->activity_id = $activity4->id;
+		$calculation_material_activity4_1->save();
+		
+		$calculation_equipment_activity4_1 = new CalculationEquipment;
+		$calculation_equipment_activity4_1->equipment_name = 'Trap huren';
+		$calculation_equipment_activity4_1->unit = 'stuk';
+		$calculation_equipment_activity4_1->rate = '15.75';
+		$calculation_equipment_activity4_1->amount = '1';
+		$calculation_equipment_activity4_1->isless = false;
+		$calculation_equipment_activity4_1->activity_id = $activity4->id;
+		$calculation_equipment_activity4_1->save();
+
+		$calculation_material_activity4_2 = new CalculationMaterial;
+		$calculation_material_activity4_2->material_name = 'Beton schroeven met plug';
+		$calculation_material_activity4_2->unit = 'doos';
+		$calculation_material_activity4_2->rate = '12.56';
+		$calculation_material_activity4_2->amount = '1';
+		$calculation_material_activity4_2->isless = false;
+		$calculation_material_activity4_2->activity_id = $activity4->id;
+		$calculation_material_activity4_2->save();
+		
+
      }
   }
 
   ?>
+  

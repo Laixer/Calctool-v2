@@ -8,8 +8,8 @@ use \Calctool\Models\Offer;
 use \Calctool\Models\Iban;
 use \Calctool\Models\ProjectType;
 use \Calctool\Models\InvoiceTerm;
+use \Calctool\Models\InvoiceVersion;
 use \Calctool\Models\Resource;
-
 
 $displaytax=Input::get("displaytax");
 $common_access_error = false;
@@ -23,6 +23,7 @@ if (!$project || !$project->isOwner()) {
 	$invoice = Invoice::find(Route::Input('invoice_id'));
 	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 	$invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+	$invoice_version_cnt = InvoiceVersion::where('invoice_id', $invoice->id)->count();
 }
 ?>
 
@@ -56,7 +57,7 @@ if (!$project || !$project->isOwner()) {
             $(this).find("td").eq(5).hide();
             $(this).find("th").eq(5).hide();
         });
-		$("[name='toggle-tax']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='include-tax']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		        $('.hide-btw1 tr').each(function() {
 	                $(this).find("td").eq(4).show();
@@ -105,7 +106,7 @@ if (!$project || !$project->isOwner()) {
 		        });
 		  }
 		});
-		$("[name='toggle-activity']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='toggle-activity']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-activity').show();
 		  	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
@@ -114,14 +115,14 @@ if (!$project || !$project->isOwner()) {
 			$('.show-activity').hide();
 		  }
 		});
-		$("[name='toggle-note']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='toggle-note']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-note').show();
 		  } else {
 			$('.show-note').hide();
 		  }
 		});
-		$("[name='toggle-summary']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='toggle-summary']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 	        $('.only-end-total tr').each(function() {
                 $(this).find("td").eq(2).show();
@@ -147,7 +148,7 @@ if (!$project || !$project->isOwner()) {
 		  }
 		});
 		$tpayment = false;
-		$("[name='toggle-payment']").bootstrapSwitch().on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='toggle-payment']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 			if (state) {
 				$("#amount").prop('disabled', false);
 				$tpayment = true;
@@ -167,6 +168,7 @@ if (!$project || !$project->isOwner()) {
 		});
 		$('.osave').click(function(e){
 			e.preventDefault();
+			$('#frm-invoice').get(0).setAttribute('action', '/invoice/save');
 			$('#frm-invoice').submit();
 		});
 		$('#invdate').datepicker().on('changeDate', function(e){
@@ -211,11 +213,11 @@ if (!$project || !$project->isOwner()) {
 			$next = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->where('priority','>',$invoice->priority)->orderBy('priority')->first();
 			$end = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',true)->first();
 			if ($prev && $prev->invoice_close && $next && !$next->invoice_close) {
-				echo '<button class="btn btn-primary osave">Factureren</button>';
+				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
 			} else if (!$prev && $next && !$next->invoice_close) {
-				echo '<button class="btn btn-primary osave">Factureren</button>';
+				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
 			} else if ($prev && $prev->invoice_close && $end && !$end->invoice_close) {
-				echo '<button class="btn btn-primary osave">Factureren</button>';
+				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
 			}
 		}
 		?>
@@ -233,6 +235,11 @@ if (!$project || !$project->isOwner()) {
 		@endif
 	</div>
 
+
+	<h2><strong>Termijnfactuur</strong></h2>
+	<form method="POST" id="frm-invoice">
+	{!! csrf_field() !!}
+
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -248,7 +255,7 @@ if (!$project || !$project->isOwner()) {
 						    <div class="col-sm-offset-0 col-sm-10">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-tax" type="checkbox" checked> BTW bedragen weergeven
+						          <input name="include-tax" type="checkbox" checked> BTW bedragen weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -264,12 +271,10 @@ if (!$project || !$project->isOwner()) {
 			</div>
 		</div>
 	</div>
-
-	<h2><strong>Termijnfactuur</strong></h2>
-	<form method="POST" id="frm-invoice" action="/invoice/close">
-	{!! csrf_field() !!}
+	
 		<input name="id" value="{{ $invoice->id }}" type="hidden"/>
 		<input name="projectid" value="{{ $project->id }}" type="hidden"/>
+
 
 		<div class="white-row">
 			<?#!--PAGE HEADER MASTER START--?>
@@ -444,11 +449,11 @@ if (!$project || !$project->isOwner()) {
 							$next = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->where('priority','>',$invoice->priority)->orderBy('priority')->first();
 							$end = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',true)->first();
 							if ($prev && $prev->invoice_close && $next && !$next->invoice_close) {
-								echo '<button class="btn btn-primary osave">Factureren</button>';
+								echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
 							} else if (!$prev && $next && !$next->invoice_close) {
-								echo '<button class="btn btn-primary osave">Factureren</button>';
+								echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
 							} else if ($prev && $prev->invoice_close && $end && !$end->invoice_close) {
-								echo '<button class="btn btn-primary osave">Factureren</button>';
+								echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
 							}
 						}
 						?>

@@ -60,7 +60,6 @@ class RelationController extends Controller {
 			'btw' => array('alpha_num','min:14'),
 			'telephone_comp' => array('alpha_num','max:12'),
 			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
-			//'website' => array('url','max:180'),
 			/* Adress */
 			'street' => array('required','alpha','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
@@ -99,7 +98,7 @@ class RelationController extends Controller {
 
 		$relation->save();
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Uw bedrijfsgegevens zijn aangepast');
 	}
 
 	public function doUpdate(Request $request)
@@ -110,7 +109,7 @@ class RelationController extends Controller {
 			'company_type' => array('required_if:relationkind,zakelijk','numeric'),
 			'company_name' => array('required_if:relationkind,zakelijk','max:50'),
 			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
-			'street' => array('required','alpha','max:60'),
+			'street' => array('required','regex:/^[A-Za-z0-9\s]*$/','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
 			'city' => array('required','alpha_num','max:35'),
@@ -148,7 +147,7 @@ class RelationController extends Controller {
 
 		$relation->save();
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Relatie is aangepast');
 	}
 
 	public function getDelete(Request $request, $relation_id)
@@ -202,7 +201,7 @@ class RelationController extends Controller {
 
 		$contact->save();
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Contactgegevens zijn aangepast');
 	}
 
 	public function doUpdateIban(Request $request)
@@ -217,7 +216,7 @@ class RelationController extends Controller {
 
 		$relation->save();
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Betalingsgegevens zijn aangepast');
 	}
 
 	public function doNewMyCompany(Request $request)
@@ -230,9 +229,8 @@ class RelationController extends Controller {
 			'btw' => array('alpha_num','min:14'),
 			'telephone_comp' => array('alpha_num','max:12'),
 			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
-			//'website' => array('url','max:180'),
 			/* Adress */
-			'street' => array('required','alpha','max:60'),
+			'street' => array('required','regex:/^[A-Za-z0-9\s]*$/','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
 			'city' => array('required','alpha_num','max:35'),
@@ -270,7 +268,7 @@ class RelationController extends Controller {
 		$user->self_id = $relation->id;
 		$user->save();
 
-		return back()->with('success', 1);
+		return back()->with('success', 'Uw bedrijfsgegevens zijn opgeslagen');
 	}
 
 	public function doNew(Request $request)
@@ -289,7 +287,7 @@ class RelationController extends Controller {
 			'email' => array('required','email','max:80'),
 			'contactfunction' => array('required','numeric'),
 			/* Adress */
-			'street' => array('required','alpha','max:60'),
+			'street' => array('required','regex:/^[A-Za-z0-9\s]*$/','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
 			'city' => array('required','alpha_num','max:35'),
@@ -431,7 +429,7 @@ class RelationController extends Controller {
 
 			$contact->save();
 
-			return redirect('/mycompany')->with('success', 1);
+			return redirect('/mycompany')->with('success', 'Nieuw contact aangemaakt');
 	}
 
 	public function doDeleteContact()
@@ -459,7 +457,7 @@ class RelationController extends Controller {
 
 			$rec->delete();
 
-			return Redirect::back()->with('success', 1);
+			return Redirect::back()->with('success', 'Contact verwijderd');
 		}
 	}
 
@@ -499,7 +497,7 @@ class RelationController extends Controller {
 
 				$relation->save();
 
-				return back()->with('success', 1);
+				return back()->with('success', 'Uw logo is geupload');
 			} else {
 
 				$messages->add('file', 'Geen afbeelding geupload');

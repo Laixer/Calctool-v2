@@ -121,13 +121,15 @@ else {
 				}).fail(function(e) { console.log(e); });
 		});
 		$('.dopay').click(function(e){
-			$curThis = $(this);
-			$curproj = $(this).attr('data-project');
-			$curinv = $(this).attr('data-invoice');
-			$.post("/invoice/pay", {project: {{ $project->id }}, id: $curinv, projectid: $curproj}, function(data){
-				$rs = jQuery.parseJSON(data);
-				$curThis.replaceWith('Betaald op ' +$rs.payment);
-			}).fail(function(e) { console.log(e); });
+			if(confirm('Factuur betalen?')){
+				$curThis = $(this);
+				$curproj = $(this).attr('data-project');
+				$curinv = $(this).attr('data-invoice');
+				$.post("/invoice/pay", {project: {{ $project->id }}, id: $curinv, projectid: $curproj}, function(data){
+					$rs = jQuery.parseJSON(data);
+					$curThis.replaceWith('Betaald op ' +$rs.payment);
+				}).fail(function(e) { console.log(e); });
+			}
 		});
 		$('.doinvclose').click(function(e){
 			$curThis = $(this);
@@ -649,7 +651,6 @@ else {
 								<label>Deze week</label>
 								<div class="toggle-content">-->
 									<table class="table table-striped">
-										<?# -- table head -- ?>
 										<thead>
 											<tr>
 												<th class="col-md-1">Datum</th>

@@ -16,6 +16,13 @@ $(function() {
 			$('#btn-submit').addClass('disabled');
 		}
 	});
+	$("#tos").click(function(e) {
+		if ($(this).prop('checked')) {
+			$('#btn-submit').removeClass('disabled');
+		} else {
+			$('#btn-submit').addClass('disabled');
+		}
+	});
 });
 </script>
 <div id="wrapper">

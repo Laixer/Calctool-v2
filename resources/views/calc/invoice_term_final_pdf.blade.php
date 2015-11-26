@@ -7,10 +7,7 @@ use \Calctool\Models\Invoice;
 use \Calctool\Models\Offer;
 use \Calctool\Models\ProjectType;
 
-$_invoice = Invoice::find($invoice->invoice_id);
-if (!$_invoice)
-  exit();
-$offer = Offer::find($_invoice->offer_id);
+$offer = Offer::find($invoice->offer_id);
 if (!$offer)
   exit();
 $project = Project::find($offer->project_id);
@@ -31,7 +28,7 @@ if ($relation_self)
     <title>Example 2</title>
     <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" media="all" />
   </head>
-  <body style="background-image: url(http://localhost/images/concept.png);">
+  <body>
 
   <?#--PAGE HEADER MASTER START--?>
   <header class="clearfix">
@@ -86,7 +83,7 @@ if ($relation_self)
       </thead>
       <tbody>
         <tr>
-          <td class="qty">{{Invoice::where('offer_id','=', $_invoice->offer_id)->where('priority','<',$_invoice->priority)->count()}}e van in totaal {{Invoice::where('offer_id','=', $_invoice->offer_id)->count()}} betalingstermijnen.</td>
+          <td class="qty">{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()}}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen.</td>
           <td class="qty">{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>

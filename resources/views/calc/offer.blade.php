@@ -292,7 +292,7 @@ if (!$project || !$project->isOwner()) {
 
 		@include('calc.wizard', array('page' => 'offer'))
 
-		@if(!$relation_self)
+		@if(!$relation_self || Contact::where('relation_id','=',$relation_self->id)->count()<1)
 		<div class="alert alert-danger">
 			<i class="fa fa-frown-o"></i>
 			Geen bedrijfsgegevens bekend. Vul de <a href="/mycompany">bedrijfsgegevens</a> aan.
@@ -358,7 +358,7 @@ if (!$project || !$project->isOwner()) {
 								</div>
 							</div>
 							<div class="form-horizontal">
-								<div class="form-horizontal noterms" {{ ($offer_last && $offer_last->invoice_quantity >1 ? '' : 'style="display:none;"') }} >
+								<div class="form-horizontal noterms" {!! ($offer_last && $offer_last->invoice_quantity >1 ? '' : 'style="display:none;"') !!} >
 									<div class="col-md-6">
 									  <div class="form-group">
 									  	<label>Aanbetaling toepassen</label>
@@ -533,6 +533,7 @@ if (!$project || !$project->isOwner()) {
 					<li><strong>Projectnaam:</strong> {{ $project->project_name }}</li>
 					<li><strong>Offertedatum:</strong> <a href="#" class="offdate">Bewerk</a></li>
 					<li><strong>Offertenummer:</strong> {{ OfferController::getOfferCode($project->id) }}</li>
+					<li><strong>Versie:</strong> {{ Offer::where('project_id', $project->id)->count()+1 }}</li>
 					<li>&nbsp;</li>
 					<li>&nbsp;</li>
 					<input type="hidden" id="offdateval" name="offdateval" value="{{ $offer_last ? $offer_last->offer_make : '' }}" />

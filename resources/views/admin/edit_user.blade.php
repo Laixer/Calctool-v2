@@ -34,8 +34,8 @@ $(document).ready(function() {
 		}
 	});
 
-	$("[name='toggle-api']").bootstrapSwitch();
-	$("[name='toggle-active']").bootstrapSwitch();
+	$("[name='toggle-api']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	$("[name='toggle-active']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 });
 </script>
 
@@ -81,6 +81,7 @@ $(document).ready(function() {
 				<ul class="dropdown-menu">
 				  <li><a href="/admin/user-{{ $user->id }}/switch">Gebruiker overnemen</a></li>
 				  <li><a href="/admin/user-{{ $user->id }}/demo">Demo project laden</a></li>
+				  <li><a href="/admin/user-{{ $user->id }}/deblock">Sessie deblokeren</a></li>
 				</ul>
 				</div>
 			</div>
@@ -192,61 +193,6 @@ $(document).ready(function() {
 
 					</div>
 
-					<h4>Adresgegevens</h4>
-					<div class="row">
-
-						<div class="col-md-4">
-							<div class="form-group">
-								<label for="address_street">Straat</label>
-								<input name="address_street" id="address_street" type="text" value="{{ Input::old('address_street') ? Input::old('address_street') : $user->address_street }}" class="form-control"/>
-							</div>
-						</div>
-
-						<div class="col-md-1">
-							<div class="form-group">
-								<label for="address_number">Huis nr.</label>
-								<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') ? Input::old('address_number') : $user->address_number}}" class="form-control"/>
-							</div>
-						</div>
-
-						<div class="col-md-2">
-							<div class="form-group">
-								<label for="address_zipcode">Postcode</label>
-								<input name="address_zipcode" id="address_zipcode" maxlength="6" type="text" value="{{ Input::old('address_zipcode') ? Input::old('address_zipcode') : $user->address_postal }}" class="form-control"/>
-							</div>
-						</div>
-
-						<div class="col-md-3">
-							<div class="form-group">
-								<label for="address_city">Plaats</label>
-								<input name="address_city" id="address_city" type="text" value="{{ Input::old('address_city') ? Input::old('address_city') : $user->address_city }}" class="form-control"/>
-							</div>
-						</div>
-
-						<div class="col-md-2">
-							<div class="form-group">
-								<label for="province">Provincie</label>
-								<select name="province" id="province" class="form-control pointer">
-									@foreach (\Calctool\Models\Province::all() as $province)
-										<option {{ $user->province_id==$province->id ? 'selected' : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
-									@endforeach
-								</select>
-							</div>
-						</div>
-
-						<div class="col-md-4">
-							<div class="form-group">
-								<label for="country">Land</label>
-								<select name="country" id="country" class="form-control pointer">
-									@foreach (\Calctool\Models\Country::all() as $country)
-										<option {{ $user->country_id==$country->id ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
-									@endforeach
-								</select>
-							</div>
-						</div>
-
-					</div>
-
 					<h4>Overig</h4>
 					<div class="row">
 
@@ -343,7 +289,7 @@ $(document).ready(function() {
 							<tr>
 								<td class="col-md-2">{{ date('d-m-Y H:i:s', strtotime(DB::table('audit')->select('created_at')->where('id',$rec->id)->get()[0]->created_at)) }}</td>
 								<td class="col-md-2">{{ $rec->ip }}</td>
-								<td class="col-md-8">{{ (strlen($rec->event)>80) ? substr($rec->event, 0, 80).'...' : $rec->event }}</td>
+								<td class="col-md-8">{{ $rec->event }}</td>
 							</tr>
 						@endforeach
 						</tbody>

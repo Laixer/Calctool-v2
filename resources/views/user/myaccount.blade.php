@@ -35,8 +35,8 @@ $(document).ready(function() {
 		}
 	});
 
-	$("[name='toggle-api']").bootstrapSwitch();
-	$("[name='pref_mailings_optin']").bootstrapSwitch();
+	$("[name='toggle-api']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	$("[name='pref_mailings_optin']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	$('#acc-deactive').click(function(e){
 		e.preventDefault();
 		if(confirm('Weet je zeker dat je je account wilt deactiveren?')){
@@ -217,6 +217,16 @@ $(document).ready(function() {
                             {!! csrf_field() !!}
 
 							<h4 class="company">Wachtwoord wijzigen</h4>
+							<div class="row company">
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="curr_secret">Huidig wachtwoord</label>
+										<input name="curr_secret" id="curr_secret" type="password" class="form-control" />
+									</div>
+								</div>
+
+							</div>
 							<div class="row company">
 
 								<div class="col-md-4">
