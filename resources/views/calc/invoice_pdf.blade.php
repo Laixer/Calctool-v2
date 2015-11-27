@@ -21,14 +21,32 @@ use \Calctool\Calculus\LessOverview;
 use \Calctool\Calculus\MoreOverview;
 use \Calctool\Http\Controllers\OfferController;
 
-//TODO {
+//DELETE //
 $total=Input::get("total");
 $specification=Input::get("specification");
 $description=Input::get("description");
 $displaytax=Input::get("displaytax");
 $endresult=Input::get("endresult");
 $onlyactivity=Input::get("onlyactivity");
-// }
+//DELETE //
+
+$project = Project::find($invoice->project_id);
+if (!$project || !$project->isOwner()) {
+  exit();
+}
+
+$relation = Relation::find($project->client_id);
+$relation_self = Relation::find(Auth::user()->self_id);
+  if ($relation_self)
+  $contact_self = Contact::where('relation_id','=',$relation_self->id);
+
+$include_tax = $invoice->include_tax; //BTW bedragen weergeven
+$only_totals = $invoice->only_totals; //Alleen het totale offertebedrag weergeven
+$seperate_subcon = !$invoice->seperate_subcon; //Onderaanneming apart weergeven
+$display_worktotals = $invoice->display_worktotals; //Kosten werkzaamheden weergeven
+$display_specification = $invoice->display_specification; //Hoofdstukken en werkzaamheden weergeven
+$display_description = $invoice->display_description;  //Omschrijving werkzaamheden weergeven
+
 
 $_invoice = Invoice::find($invoice->invoice_id);
 if (!$_invoice)
@@ -40,11 +58,6 @@ $project = Project::find($offer->project_id);
 if (!$project || !$project->isOwner()) {
   exit();
 }
-
-$relation = Relation::find($project->client_id);
-$relation_self = Relation::find(Auth::user()->self_id);
-  if ($relation_self)
-$contact_self = Contact::where('relation_id','=',$relation_self->id);
 
 $term=0;
 /*erm=0;

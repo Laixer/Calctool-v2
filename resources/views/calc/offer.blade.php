@@ -823,8 +823,8 @@ if (!$project || !$project->isOwner()) {
 					</thead>
 					<tbody>
 						<tr>
-							<td class="col-md-5">Calculatief te offreren (excl. BTW)</td>
-							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</td>
+							<td class="col-md-5"><strong>Calculatief te offreren (excl. BTW)</strong></td>
+							<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</strong></td>
 							<th class="col-md-1">&nbsp;</th>
 							<th class="col-md-1">&nbsp;</th>
 							<td class="col-md-1">&nbsp;</td>
@@ -996,8 +996,8 @@ if (!$project || !$project->isOwner()) {
 					</thead>
 					<tbody>
 						<tr>
-							<td class="col-md-5">Calculatief te offreren (excl. BTW)</td>
-							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</td>
+							<td class="col-md-5"><strong>Calculatief te offreren (excl. BTW)</strong></td>
+							<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</strong></td>
 							<th class="col-md-1">&nbsp;</th>
 							<th class="col-md-1">&nbsp;</th>
 							<td class="col-md-1">&nbsp;</td>
@@ -1342,14 +1342,14 @@ if (!$project || !$project->isOwner()) {
 					</thead>
 					<tbody>
 						<tr>
-							<td class="col-md-3">&nbsp;</td>
-							<td class="col-md-3">&nbsp;</td>
-							<td class="col-md-1"><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>
-							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
-							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
-							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
-							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
-							<td class="col-md-1">&nbsp;</td>
+							<td class="col-md-3"><strong>&nbsp;</strong></td>
+							<td class="col-md-3"><strong>&nbsp;</strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></strong></td>
+							<td class="col-md-1"><strong>&nbsp;</td>
 						</tr>
 					</tbody>
 				</table>
