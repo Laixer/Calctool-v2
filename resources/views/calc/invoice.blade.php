@@ -228,17 +228,17 @@ if (!$project || !$project->isOwner()) {
 			$('#frm-invoice').get(0).setAttribute('action', '/invoice/save');
 			$('#frm-invoice').submit();
 		});
-		$('#invdate').datepicker().on('changeDate', function(e){
-			$('#invdate').datepicker('hide');
-			$('#invdateval').val(e.date.toLocaleString());
-			$('#invdate').text(e.date.getDate() + "-" + (e.date.getMonth() + 1)  + "-" + e.date.getFullYear());
-		});
 		$('#adressing').text($('#to_contact option:selected').text());
 		$('#to_contact').change(function(e){
 			$('#adressing').text($('#to_contact option:selected').text());
 		});
+		$('.invdate').datepicker().on('changeDate', function(e){
+			$('.invdate').datepicker('hide');
+			$('#invdateval').val(e.date.toLocaleString());
+			$('.invdate').text(e.date.getDate() + "-" + (e.date.getMonth() + 1)  + "-" + e.date.getFullYear());
+		});
 		@if ($invoice_last && $invoice_last->invoice_make)
-		$('#invdate').text("{{ date('d-m-Y', strtotime($offer_last->invoice_make)) }}");
+		$('.invdate').text("{{ date('d-m-Y', strtotime($offer_last->invoice_make)) }}");
 		@endif
 	});
 </script>
@@ -427,7 +427,7 @@ if (!$project || !$project->isOwner()) {
 				<h4><strong>FACTUUR</strong></h4>
 				<ul class="list-unstyled">
 					<li><strong>Projectnaam:</strong>{{ $project->project_name }}</li>
-					<li><strong>Factuurdatum:</strong> <a href="#" id="invdate">Bewerk</a> {{-- date("j M Y") --}}</li>
+					<li><strong>Factuurdatum:</strong> <a href="#" class="invdate">Bewerk</a></li>
 					<li><strong>Factuurnummer:</strong> {{ $invoice->invoice_code }}</li>
 					<li><strong>Administratiefnummer:</strong> {{ $invoice->book_code }}</li>
 					<li><strong>Uw referentie:</strong> {{ $invoice->reference }}</li>
@@ -1112,7 +1112,7 @@ if (!$project || !$project->isOwner()) {
 				<p>
 					<h4><strong>{{ $project->project_name }}</strong></h4>
 					<ul class="list-unstyled">
-						<li><strong>Factuurdatum:</strong> {{ date("j M Y") }}</li>
+						<li><strong>Factuurdatum:</strong> <a href="#" class="invdate">Bewerk</a></li>
 						<li><strong>Factuurnummer:</strong> {{ $invoice->invoice_code }}</li>
 						<li><strong>Administratiefnummer:</strong> {{ $invoice->book_code }}</li>
 						<li><strong>Uw referentie:</strong> {{ $invoice->reference }}</li>
@@ -1320,7 +1320,7 @@ if (!$project || !$project->isOwner()) {
 				<p>
 					<h4><strong>{{ $project->project_name }}</strong></h4>
 					<ul class="list-unstyled">
-						<li><strong>Factuurdatum:</strong> {{ date("j M Y") }}</li>
+						<li><strong>Factuurdatum:</strong> <a href="#" class="invdate">Bewerk</a></li>
 						<li><strong>Factuurnummer:</strong> {{ $invoice->invoice_code }}</li>
 						<li><strong>Administratiefnummer:</strong> {{ $invoice->book_code }}</li>
 						<li><strong>Uw referentie:</strong> {{ $invoice->reference }}</li>
@@ -1538,7 +1538,7 @@ if (!$project || !$project->isOwner()) {
 				<p>
 					<h4><strong>{{ $project->project_name }}</strong></h4>
 					<ul class="list-unstyled">
-						<li><strong>Factuurdatum:</strong> {{ date("j M Y") }}</li>
+						<li><strong>Factuurdatum:</strong> <a href="#" class="invdate">Bewerk</a></li>
 						<li><strong>Factuurnummer:</strong> {{ $invoice->invoice_code }}</li>
 						<li><strong>Administratiefnummer:</strong> {{ $invoice->book_code }}</li>
 						<li><strong>Uw referentie:</strong> {{ $invoice->reference }}</li>
