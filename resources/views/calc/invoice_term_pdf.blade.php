@@ -82,17 +82,18 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
         <tr>
           <th class="qty">&nbsp;</th>
           <th class="qty">Bedrag (excl. BTW)</th>
-          <th class="qty">BTW bedrag</th>
-          <th class="qty">Bedrag (incl. BTW);</th>
+          <th class="qty">@if ($include_tax)BTW bedrag @endif</th>
+          <th class="qty">@if ($include_tax)Bedrag (incl. BTW) @endif</th>
         </tr>
       </thead>
-      <tbody>
+           <tbody>
         <tr>
           <td class="qty">{{Invoice::where('offer_id','=', $_invoice->offer_id)->where('priority','<',$_invoice->priority)->count()}}e van in totaal {{Invoice::where('offer_id','=', $_invoice->offer_id)->count()}} betalingstermijnen.</td>
           <td class="qty">{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @if ($include_tax)
         @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
         <tr>
           <td class="qty">&nbsp;<i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
@@ -114,6 +115,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
           <td class="qty">&nbsp;</td>
         </tr>
         @endif
+        
 
         @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
         <tr>
@@ -129,7 +131,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
           <td class="qty">&nbsp;</td>
         </tr>
         @endif
-
+       
         <tr>
           <td class="qty"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
           <td class="qty">&nbsp;</td>
@@ -137,6 +139,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
           <td class="qty"><strong>{{ '&euro; '.number_format($invoice->amount+(($invoice->rest_21/100)*21)+(($invoice->rest_6/100)*6), 2, ",",".") }}</strong></td>
         </tr>
       </tbody>
+      @endif
     </table>
 
     <div class="closingtext">{{ ($invoice ? $invoice->closure : '') }}</div>

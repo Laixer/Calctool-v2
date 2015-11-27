@@ -390,11 +390,12 @@ if (!$project || !$project->isOwner()) {
 					<p>
 						<h4><strong>{{ $relation_self->company_name }}</strong></h4>
 		    			<ul class="list-unstyled">
-	 						<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
+							<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
 	  						<li>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
 	 						<li><i class="fa fa-phone"></i>&nbsp;{{ $relation_self->phone }}&nbsp;|&nbsp;<i class="fa fa-envelope-o"></i>&nbsp;{{ $relation_self->email }}</li>
-	 						<li>KVK:{{ $relation_self->kvk }}&nbsp;|&nbsp;BTW: {{ $relation_self->btw }}</li>
-							<li>Rekeningnummer: {{ $relation_self->iban }}&nbsp;|&nbsp;tnv.: {{ $relation_self->iban_name }}</li>
+	 						<li><strong>KVK:</strong>{{ $relation_self->kvk }}&nbsp;|&nbsp;<strong>BTW:</strong> {{ $relation_self->btw }}</li>
+							<li><strong>Rekeningnummer:</strong> {{ $relation_self->iban }}</li>
+							<li><strong>tnv.:</strong> {{ $relation_self->iban_name }}</li>
 						<ul class="list-unstyled">
 					</p>
 				</div>

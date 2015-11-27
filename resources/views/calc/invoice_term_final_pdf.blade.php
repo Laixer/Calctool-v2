@@ -20,13 +20,16 @@ $relation = Relation::find($project->client_id);
 $relation_self = Relation::find(Auth::user()->self_id);
 if ($relation_self)
   $contact_self = Contact::where('relation_id','=',$relation_self->id);
+
+$include_tax = $invoice->include_tax; //BTW bedragen weergeven
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Example 2</title>
+    <title>Termijnfactuur</title>
     <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" media="all" />
   </head>
   <body>
@@ -76,8 +79,8 @@ if ($relation_self)
         <tr>
           <th class="qty">&nbsp;</th>
           <th class="qty">Bedrag (excl. BTW)</th>
-          <th class="qty">BTW bedrag</th>
-          <th class="qty">Bedrag (incl. BTW);</th>
+          <th class="qty">@if ($include_tax)BTW bedrag @endif</th>
+          <th class="qty">@if ($include_tax)Bedrag (incl. BTW) @endif</th>
         </tr>
       </thead>
       <tbody>
@@ -87,6 +90,7 @@ if ($relation_self)
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @if ($include_tax)
         @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
         <tr>
           <td class="qty">&nbsp;<i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
@@ -131,6 +135,7 @@ if ($relation_self)
           <td class="qty"><strong>{{ '&euro; '.number_format($invoice->amount+(($invoice->rest_21/100)*21)+(($invoice->rest_6/100)*6), 2, ",",".") }}</strong></td>
         </tr>
       </tbody>
+      @endif
     </table>
 
     <div class="closingtext">{{ ($invoice ? $invoice->closure : '') }}</div>
