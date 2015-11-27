@@ -22,6 +22,9 @@ $relation = Relation::find($project->client_id);
 $relation_self = Relation::find(Auth::user()->self_id);
 if ($relation_self)
   $contact_self = Contact::where('relation_id','=',$relation_self->id);
+
+$include_tax = $invoice->include_tax; //BTW bedragen weergeven
+
 ?>
 
 <!DOCTYPE html>

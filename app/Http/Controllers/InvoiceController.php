@@ -217,13 +217,19 @@ class InvoiceController extends Controller {
 			$ninvoice->invoice_code = $invoice->invoice_code;
 			$ninvoice->priority = $invoice->priority+1;
 			$ninvoice->offer_id = $invoice->offer_id;
+			$ninvoice->to_contact_id = $invoice->to_contact_id;
+			$ninvoice->from_contact_id = $invoice->from_contact_id;
 			$ninvoice->save();
 		} else {
+			$invoice = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first();
+
 			$ninvoice = new Invoice;
-			$ninvoice->payment_condition = 1;
-			$ninvoice->invoice_code = 'Concept';
-			$ninvoice->priority = 1;
-			$ninvoice->offer_id = $offer_last->id;
+			$ninvoice->payment_condition = $invoice->payment_condition;
+			$ninvoice->invoice_code = $invoice->invoice_code;
+			$ninvoice->priority = $invoice->priority+1;
+			$ninvoice->offer_id = $invoice->offer_id;
+			$ninvoice->to_contact_id = $invoice->to_contact_id;
+			$ninvoice->from_contact_id = $invoice->from_contact_id;
 			$ninvoice->save();
 		}
 

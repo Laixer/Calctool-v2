@@ -68,7 +68,7 @@ if (!$project || !$project->isOwner()) {
             $(this).find("td").eq(5).hide();
             $(this).find("th").eq(5).hide();
         });
-		$("[name='toggle-tax']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='include-tax']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		        $('.hide-btw1 tr').each(function() {
 	                $(this).find("td").eq(4).show();
@@ -117,16 +117,16 @@ if (!$project || !$project->isOwner()) {
 		        });
 		  }
 		});
-		$("[name='toggle-activity']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='display-specification']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-activity').show();
-		  	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
+		  	$("[name='display-worktotals']").bootstrapSwitch('toggleDisabled');
 		  } else {
-		 	$("[name='toggle-summary']").bootstrapSwitch('toggleDisabled');
+		 	$("[name='display-worktotals']").bootstrapSwitch('toggleDisabled');
 			$('.show-activity').hide();
 		  }
 		});
-		$("[name='toggle-subcontr']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='seperate-subcon']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-all').show();
 		  	$('.show-totals').hide();
@@ -135,14 +135,14 @@ if (!$project || !$project->isOwner()) {
 		  	$('.show-totals').show();
 		  }
 		});
-		$("[name='toggle-note']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='display-description']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-note').show();
 		  } else {
 			$('.show-note').hide();
 		  }
 		});
-		$("[name='toggle-endresult']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='only-totals']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.only-total').hide();
 		  	$('.hide-btw1').hide();
@@ -179,7 +179,7 @@ if (!$project || !$project->isOwner()) {
 	        });
 		  }
 		});
-		$("[name='toggle-summary']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='display-worktotals']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 	        $('.only-end-total tr').each(function() {
                 $(this).find("td").eq(2).show();
@@ -314,7 +314,7 @@ if (!$project || !$project->isOwner()) {
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-tax" type="checkbox" checked> BTW bedragen weergeven
+						          <input name="include-tax" type="checkbox" checked> BTW bedragen weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -323,7 +323,7 @@ if (!$project || !$project->isOwner()) {
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-endresult" type="checkbox"> Alleen het totale factuurbedrag weergeven<br>
+						          <input name="only-totals" type="checkbox"> Alleen het totale factuurbedrag weergeven<br>
 						        </label>
 						      </div>
 						    </div>
@@ -332,7 +332,7 @@ if (!$project || !$project->isOwner()) {
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-subcontr" type="checkbox"> Kosten onderaanneming apart weergeven
+						          <input name="seperate-subcon" type="checkbox"> Kosten onderaanneming apart weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -343,7 +343,7 @@ if (!$project || !$project->isOwner()) {
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-activity" type="checkbox" checked> Hoofdstukken en werkzaamheden weergeven
+						          <input name="display-specification" type="checkbox" checked> Hoofdstukken en werkzaamheden weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -352,7 +352,7 @@ if (!$project || !$project->isOwner()) {
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-summary" type="checkbox"> Kosten werkzaamheden weergeven<br>
+						          <input name="display-worktotals" type="checkbox"> Kosten werkzaamheden weergeven<br>
 						        </label>
 						      </div>
 						    </div>
@@ -361,7 +361,7 @@ if (!$project || !$project->isOwner()) {
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-note" type="checkbox" checked> Omschrijving werkzaamheden weergeven
+						          <input name="display-description" type="checkbox" checked> Omschrijving werkzaamheden weergeven
 						        </label>
 						      </div>
 						    </div>
