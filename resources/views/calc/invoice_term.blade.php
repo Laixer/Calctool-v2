@@ -176,6 +176,10 @@ if (!$project || !$project->isOwner()) {
 			$('#invdateval').val(e.date.toLocaleString());
 			$('#invdate').text(e.date.getDate() + "-" + (e.date.getMonth() + 1)  + "-" + e.date.getFullYear());
 		});
+		$('#adressing').text($('#to_contact option:selected').text());
+		$('#to_contact').change(function(e){
+			$('#adressing').text($('#to_contact option:selected').text());
+		});
 		@if ($invoice_last && $invoice_last->invoice_make)
 		$('#invdate').text("{{ date('d-m-Y', strtotime($offer_last->invoice_make)) }}");
 		@endif
@@ -307,7 +311,15 @@ if (!$project || !$project->isOwner()) {
 					<ul class="list-unstyled">
 						<li>{{ $relation->company_name }}</li>
 						<li>T.a.v.
-							{{ Contact::find($offer_last->to_contact_id)->firstname . ' ' . Contact::find($offer_last->to_contact_id)->lastname }}
+						@if ($invoice_last && $invoice_last->invoice_make)
+							{{ Contact::find($invoice_last->to_contact_id)->getFormalName() }}
+							@else
+						<select name="to_contact" id="to_contact">
+							@foreach (Contact::where('relation_id','=',$relation->id)->get() as $contact)
+							<option {{ $invoice_last ? ($invoice_last->to_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ Contact::find($contact->id)->getFormalName() }}</option>
+							@endforeach
+						</select>
+						@endif
 						</li>
 						<li>{{ $relation->address_street . ' ' . $relation->address_number }}<br /> {{ $relation->address_postal . ', ' . $relation->address_city }}</li>
 					</ul>
@@ -330,9 +342,14 @@ if (!$project || !$project->isOwner()) {
 			<div class="row">
 				<div class="col-sm-6">
 				Geachte
-					{{ Contact::find($invoice_last->to_contact_id)->firstname . ' ' . Contact::find($invoice_last->to_contact_id)->lastname }}
+				@if ($invoice_last && $invoice_last->invoice_make)
+				{{ Contact::find($offer_last->to_contact_id)->getFormalName() }}
+				@else
+				<span id="adressing"></span>
+				@endif
 				,
-			</div>
+
+				</div>
 			</div>
 			<br>
 			<div class="row">
@@ -424,10 +441,18 @@ if (!$project || !$project->isOwner()) {
 						<li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
 					</ul>
 					<br>
-					<span>Met vriendelijke groet,
-					<br>
-						{{ Contact::find($offer_last->from_contact_id)->firstname . ' ' . Contact::find($offer_last->from_contact_id)->lastname }}
-					</span>
+					<p>Met vriendelijke groet,
+						<br>
+						@if ($invoice_last && $invoice_last->invoice_make)
+						{{ Contact::find($invoice_last->from_contact_id)->firstname . ' ' . Contact::find($invoice_last->from_contact_id)->lastname }}
+						@else
+						<select name="from_contact" id="from_contact">
+							@foreach (Contact::where('relation_id','=',$relation_self->id)->get() as $contact)
+							<option {{ $invoice_last ? ($invoice_last->from_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
+							@endforeach
+						</select>
+						@endif
+					</p>
 					</div>
 				</div>
 				</div class="white-row">

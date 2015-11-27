@@ -51,9 +51,7 @@ if ($relation_self)
     <div id="details" class="clearfix">
       <div id="client">
         <div>{{ $relation->company_name }}</div>
-        <div>T.a.v.
-             {{ Contact::find($invoice->to_contact_id)->firstname . ' ' . Contact::find($invoice->to_contact_id)->lastname }}
-        </div>
+        <div>T.a.v. {{ Contact::find($invoice->to_contact_id)->getFormalName() }}</div>
         <div>{{ $relation->address_street . ' ' . $relation->address_number }}</div>
         <div>{{ $relation->address_postal . ', ' . $relation->address_city }}</div>
       </div>
@@ -68,7 +66,7 @@ if ($relation_self)
     </div>
     <?#--ADRESSING END--?>
 
-    <div class="openingtext">Geachte</div>
+    <div class="openingtext">Geachte {{ Contact::find($invoice->to_contact_id)->getFormalName() }},</div>
     <div class="openingtext">{{ ($invoice ? $invoice->description : '') }}</div>
 
     <h1 class="name">Specificatie termijnfactuur</h1>
@@ -141,7 +139,7 @@ if ($relation_self)
       <li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
     </div>
     <div class="signing">Met vriendelijke groet,</div>
-    <div class="signing">Mijn Naam</div>
+    <div class="signing">{{ Contact::find($invoice->from_contact_id)->firstname ." ". Contact::find($invoice->from_contact_id)->lastname }}</div>
   </main>
 
   <footer>

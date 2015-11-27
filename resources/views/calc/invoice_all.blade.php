@@ -272,7 +272,7 @@ if (!$project || !$project->isOwner()) {
 						      @if (!$invoice_end->payment_date && !$project->project_close)
 						      <li><a target="blank" href="javascript:void(0);" data-invoice="{{ $invoice_end->id }}" data-project="{{ $project->id }}" class="dopay">Betaald</a></li>
 						      @endif
-						      <li><a href="/invoice/project-{{ $project->id }}/history-invoice-{{ $invoice->id }}">Geschiedenis</a></li>
+						      <li><a href="/invoice/project-{{ $project->id }}/history-invoice-{{ $invoice_end->id }}">Geschiedenis</a></li>
 						    </ul>
 						  </div>
 						<?php 

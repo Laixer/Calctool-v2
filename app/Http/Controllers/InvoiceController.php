@@ -164,8 +164,8 @@ class InvoiceController extends Controller {
 		$invoice_version->book_code = $invoice->book_code;
 		$invoice_version->invoice_code = $invoice->invoice_code;
 		$invoice_version->payment_condition = $invoice->payment_condition;
-		$invoice_version->to_contact_id = $invoice->to_contact_id;
-		$invoice_version->from_contact_id = $invoice->from_contact_id;
+		$invoice_version->to_contact_id = $request->get('to_contact');
+		$invoice_version->from_contact_id = $request->get('from_contact');
 		$invoice_version->invoice_id = $invoice->id;
 
 		$invoice_version->save();

@@ -513,7 +513,7 @@ if (!$project || !$project->isOwner()) {
 				<ul class="list-unstyled">
 					<li>{{ $relation->company_name }}</li>
 					<li>T.a.v.
-						@if ($offer_last && $offer_last->offer_finish)
+					@if ($offer_last && $offer_last->offer_finish)
 						{{ Contact::find($offer_last->to_contact_id)->getFormalName() }}
 						@else
 					<select name="to_contact" id="to_contact">
@@ -546,14 +546,14 @@ if (!$project || !$project->isOwner()) {
 		<div class="row">
 			<div class="col-sm-6">
 			Geachte
-		@if ($offer_last && $offer_last->offer_finish)
-		{{ Contact::find($offer_last->to_contact_id)->getFormalName() }}
-		@else
-		<span id="adressing"></span>
-		@endif
-		,
+			@if ($offer_last && $offer_last->offer_finish)
+			{{ Contact::find($offer_last->to_contact_id)->getFormalName() }}
+			@else
+			<span id="adressing"></span>
+			@endif
+			,
 
-		</div>
+			</div>
 		</div>
 		<br>
 		<div class="row">
