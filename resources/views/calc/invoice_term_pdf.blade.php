@@ -32,7 +32,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Example 2</title>
+    <title>Termijnfactuur</title>
     <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" media="all" />
   </head>
   <body style="background-image: url(http://localhost/images/concept.png);">
