@@ -323,7 +323,7 @@ if (!$project || !$project->isOwner()) {
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="toggle-endresult" type="checkbox"> Alleen het totale offertebedrag weergeven<br>
+						          <input name="toggle-endresult" type="checkbox"> Alleen het totale factuurbedrag weergeven<br>
 						        </label>
 						      </div>
 						    </div>
@@ -1756,8 +1756,8 @@ if (!$project || !$project->isOwner()) {
 				<p>
 					<h4><strong>{{ $project->project_name }}</strong></h4>
 					<ul class="list-unstyled">
-						<li><strong>Offertedatum:</strong> {{ date("j M Y") }}</li>
-						<li><strong>Offertenummer:</strong> {{ OfferController::getOfferCode($project->id) }}</li>
+						<li><strong>Factuurdatum:</strong> {{ date("j M Y") }}</li>
+						<li><strong>Factuurnummer:</strong> {{ InvoiceController::getInvoiceCode($project->id) }}</li>
 					</ul>
 				</p>
 				</div>
@@ -1962,8 +1962,8 @@ if (!$project || !$project->isOwner()) {
 				<p>
 					<h4><strong>{{ $project->project_name }}</strong></h4>
 					<ul class="list-unstyled">
-						<li><strong>Offertedatum:</strong> {{ date("j M Y") }}</li>
-						<li><strong>Offertenummer:</strong> {{ OfferController::getOfferCode($project->id) }}</li>
+						<li><strong>Factuurdatum:</strong> {{ date("j M Y") }}</li>
+						<li><strong>Factuurnummer:</strong> {{ InvoiceController::getInvoiceCode($project->id) }}</li>
 					</ul>
 				</p>
 				</div>

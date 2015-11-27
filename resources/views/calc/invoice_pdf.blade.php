@@ -71,10 +71,13 @@ if ($cnt>1)
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Example 2</title>
+    <title>Factuur</title>
     <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" media="all" />
   </head>
   <body style="background-image: url(http://localhost/images/concept.png);">
+
+  
+$masterheader (
 
   <?#--PAGE HEADER MASTER START--?>
   <header class="clearfix">
@@ -112,12 +115,35 @@ if ($cnt>1)
     </div>
     <?#--ADRESSING END--?>
 
+<<<<<<< Updated upstream
     <div class="openingtext">Geachte {{ Contact::find($invoice->to_contact_id)->getFormalName() }},</div>
+=======
+  )
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="openingtext">Geachte</div>
+>>>>>>> Stashed changes
     <div class="openingtext">{{ ($invoice ? $invoice->description : '') }}</div>
 
 
     @if ($total)
     <?#--TOTAL START--?>
+
+  echo ($masterheader)
+    echo ($masterheader)
+      echo ($masterheader)
+        echo ($masterheader)
+          echo ($masterheader)
 
     <h1 class="name">Specificatie factuur</h1>
     <table border="0" cellspacing="0" cellpadding="0">
