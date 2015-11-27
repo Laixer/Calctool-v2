@@ -61,11 +61,8 @@ class AuthController extends Controller {
 
 			Redis::del('auth:'.$username.':fail', 'auth:'.$username.':block');
 
-			$log = new \Calctool\Models\Audit;
-			$log->ip = \Calctool::remoteAddr();
-			$log->event = '[LOGIN] [SUCCESS] ' . $_SERVER['HTTP_USER_AGENT'];
-			$log->user_id = Auth::id();
-			$log->save();
+			$log = new Audit('[LOGIN] [SUCCESS] ' . \Calctool::remoteAgent());
+			$log->setUserId(Auth::id())->save();
 
 			/* Redirect to dashboard*/
 			return redirect('/');

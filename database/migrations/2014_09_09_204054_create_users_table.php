@@ -136,6 +136,17 @@ class CreateUsersTable extends Migration {
 			$table->foreign('type_id')->references('id')->on('project_type')->onUpdate('cascade')->onDelete('restrict');
 		});
 
+		Schema::create('project_share', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->char('token', 40)->unique();
+			$table->text('user_note')->nullable();
+			$table->text('client_note')->nullable();
+			$table->nullableTimestamps();
+			$table->integer('project_id')->unsigned();
+			$table->foreign('project_id')->references('id')->on('project')->onUpdate('cascade')->onDelete('cascade');
+		});
+
 		Schema::create('resource', function(Blueprint $table)
 		{
 			$table->increments('id');
@@ -218,6 +229,10 @@ class CreateUsersTable extends Migration {
 		Schema::table('resource', function(Blueprint $table)
 		{
 			Schema::dropIfExists('resource');
+		});
+		Schema::table('project_share', function(Blueprint $table)
+		{
+			Schema::dropIfExists('project_share');
 		});
 		Schema::table('project', function(Blueprint $table)
 		{

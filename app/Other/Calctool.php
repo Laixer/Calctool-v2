@@ -14,4 +14,14 @@ class Calctool {
 			return $_SERVER['REMOTE_ADDR'];
 	}
 
+	public function remoteAgent()
+	{
+		return $_SERVER['HTTP_USER_AGENT'];
+	}
+
+	public function generateToken()
+	{
+		return sha1(mt_rand().time());
+	}
+
 }
