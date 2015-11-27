@@ -11,6 +11,7 @@ use \Calctool\Models\Invoice;
 use \Calctool\Models\Offer;
 use \Calctool\Models\Detail;
 use \Calctool\Models\ProjectType;
+use \Calctool\Models\Resource;
 use \Calctool\Calculus\EstimateEndresult;
 use \Calctool\Calculus\MoreEndresult;
 use \Calctool\Calculus\LessEndresult;
