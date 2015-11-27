@@ -385,7 +385,8 @@ if (!$project || !$project->isOwner()) {
 				<div class="col-sm-6">
 					{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
 				</div>
-				<div class="col-sm-6 text-right">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-4 text-left">
 					<p>
 						<h4><strong>{{ $relation_self->company_name }}</strong></h4>
 		    			<ul class="list-unstyled">
@@ -423,7 +424,7 @@ if (!$project || !$project->isOwner()) {
 				</ul>
 			</div>
 			<div class="col-sm-2"></div>
-			<div class="col-sm-4 text-right">
+			<div class="col-sm-4 text-left">
 				<h4><strong>FACTUUR</strong></h4>
 				<ul class="list-unstyled">
 					<li><strong>Projectnaam:</strong>{{ $project->project_name }}</li>
