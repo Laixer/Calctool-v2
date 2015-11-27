@@ -36,7 +36,7 @@ if ($relation_self)
   <?#--PAGE HEADER MASTER START--?>
   <header class="clearfix">
     <div id="logo">
-    <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_llocation)."\"/>"; ?>
+    <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"/".Resource::find($relation->logo_id)->file_location."\"/>"; ?>
     </div>
     <div id="company">
       <h3 class="name">{{ $relation_self->company_name }}</h3>
