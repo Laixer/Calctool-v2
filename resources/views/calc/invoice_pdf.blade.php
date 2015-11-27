@@ -21,15 +21,6 @@ use \Calctool\Calculus\LessOverview;
 use \Calctool\Calculus\MoreOverview;
 use \Calctool\Http\Controllers\OfferController;
 
-//DELETE //
-$total=Input::get("total");
-$specification=Input::get("specification");
-$description=Input::get("description");
-$displaytax=Input::get("displaytax");
-$endresult=Input::get("endresult");
-$onlyactivity=Input::get("onlyactivity");
-//DELETE //
-
 $project = Project::find($invoice->project_id);
 if (!$project || !$project->isOwner()) {
   exit();
@@ -75,10 +66,7 @@ if ($cnt>1)
     <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" media="all" />
   </head>
   <body style="background-image: url(http://localhost/images/concept.png);">
-
   
-$masterheader (
-
   <?#--PAGE HEADER MASTER START--?>
   <header class="clearfix">
     <div id="logo">
@@ -115,26 +103,8 @@ $masterheader (
     </div>
     <?#--ADRESSING END--?>
 
-<<<<<<< Updated upstream
-    <div class="openingtext">Geachte {{ Contact::find($invoice->to_contact_id)->getFormalName() }},</div>
-=======
-  )
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class="openingtext">Geachte</div>
->>>>>>> Stashed changes
-    <div class="openingtext">{{ ($invoice ? $invoice->description : '') }}</div>
-
+   <div class="openingtext">Geachte</div>
+   <div class="openingtext">{{ ($invoice ? $invoice->description : '') }}</div>
 
     @if ($total)
     <?#--TOTAL START--?>
