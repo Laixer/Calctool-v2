@@ -202,11 +202,11 @@ $(function() {
 							<a class="item-hover" href="/mycompany">
 								<span class="overlay color2"></span>
 								<span class="inner">
-									<span class="block fa fa-building fsize60"></span>
+									<span class="block fa fa-home fsize60"></span>
 									<strong>Mijn Bedrijf</strong>
 								</span>
 							</a>
-							<a href="/mycompany" class="btn btn-primary add_to_cart"><i class="fa fa-building"></i> Mijn Bedrijf</a>
+							<a href="/mycompany" class="btn btn-primary add_to_cart"><i class="fa fa-home"></i> Mijn Bedrijf</a>
 
 						</figure>
 					</div>
@@ -248,11 +248,11 @@ $(function() {
 							<a class="item-hover" href="/purchase">
 								<span class="overlay color2"></span>
 								<span class="inner">
-									<span class="block fa fa-dropbox fsize60"></span>
+									<span class="block fa fa-truck fsize60"></span>
 									<strong>Inkoopfacturen</strong>
 								</span>
 							</a>
-							<a href="/purchase" class="btn btn-primary add_to_cart"><i class="fa fa-dropbox"></i> Inkoopfacturen</a>
+							<a href="/purchase" class="btn btn-primary add_to_cart"><i class="fa fa-truck"></i> Inkoopfacturen</a>
 						</figure>
 					</div>
 				</div>
