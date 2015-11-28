@@ -23,9 +23,9 @@ use \Calctool\Models\Contact;
 			<div>
 			<br>
 
+			<h2><strong>Projecten</strong></h2>
 			<div class="white-row">
 
-				<h2><strong>Projecten</strong></h2>
 
 				<table class="table table-striped">
 					<thead>

@@ -16,12 +16,10 @@ class ResultEndresult {
 
 	public static function conLaborBalanceTax1($project) {
 		$estim = CalculationEndresult::conCalcLaborActivityTax1Amount($project);
-		//$estim2 = EstimateEndresult::conCalcLaborActivityTax1Amount($project);
 		$more = MoreEndresult::conCalcLaborActivityTax1Amount($project);
 		$less = LessEndresult::conCalcLaborActivityTax1Amount($project);
 
 		return $estim + $more + $less;
-		//return $estim + $estim2 + $more + $less;
 	}
 
 	public static function conLaborBalanceTax2($project) {
