@@ -25,4 +25,3 @@ if ($offer_last && $offer_last->offer_finish)
 	<span>Resultaat</span>
 	@endif
 </div>
-<hr />
