@@ -71,7 +71,7 @@ class CalcController extends Controller {
 			if ($project->project_close)
 				return response()->view('calc.less_closed');
 			$invoice_end = Invoice::where('offer_id','=', Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first()->id)->where('isclose','=',true)->first();
-			if ($invoice_end->invoice_close)
+			if ($invoice_end && $invoice_end->invoice_close)
 				return response()->view('calc.less_closed');
 		}
 		return response()->view('calc.less');
@@ -84,7 +84,7 @@ class CalcController extends Controller {
 			if ($project->project_close)
 				return response()->view('calc.more_closed');
 			$invoice_end = Invoice::where('offer_id','=', Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first()->id)->where('isclose','=',true)->first();
-			if ($invoice_end->invoice_close)
+			if ($invoice_end && $invoice_end->invoice_close)
 				return response()->view('calc.more_closed');
 		}
 		return response()->view('calc.more');

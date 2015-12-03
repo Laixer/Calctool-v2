@@ -169,6 +169,10 @@ div.toggle-activity > label:hover {
 	background-color: #4E4E4E !important;
 }
 
+.wizard {
+	margin: 0 0 20px 0;
+}
+
 /* Wizzard */
 .wizard a {
 	padding: 10px 16px 10px 37px;
