@@ -61,7 +61,7 @@ $(function() {
 							<div class="form-group">
 								<div class="col-md-12">
 									<label for="username">Gebruikersnaam</label>
-									<input class="form-control" name="username" type="text" id="username">
+									<input class="form-control" name="username" type="text" id="username" value="{{ old('username') }}">
 								</div>
 							</div>
 						</div>
@@ -69,7 +69,7 @@ $(function() {
 							<div class="form-group">
 								<div class="col-md-12">
 									<label for="email">E-mail adres</label>
-									<input class="form-control" name="email" type="text" id="email">
+									<input class="form-control" name="email" type="text" id="email" value="{{ old('email') }}">
 								</div>
 							</div>
 						</div>
