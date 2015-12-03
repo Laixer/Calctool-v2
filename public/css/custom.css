@@ -185,7 +185,7 @@ div.toggle-activity > label:hover {
 	position: relative;
 	display: inline-block;
 	text-decoration: none;
-	color: #666;
+	color: orange;
 }
 
 .wizard span:before {
@@ -273,11 +273,11 @@ div.toggle-activity > label:hover {
 	margin-left: 0;
 }
 .wizard .current {
-	background: #79BB00;
+	background: #4E4E4E;
 	color: #fff;
 }
 .wizard .current:after {
-	border-left-color: #79BB00;
+	border-left-color: #4E4E4E;
 }
 /*a;s de knop niet beschikbaar is moet deze grijs (niet selecteerbaar) zijn.*/
 

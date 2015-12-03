@@ -248,11 +248,11 @@ $(function() {
 							<a class="item-hover" href="/purchase">
 								<span class="overlay color2"></span>
 								<span class="inner">
-									<span class="block fa fa-truck fsize60"></span>
+									<span class="block fa fa-shopping-cart fsize60"></span>
 									<strong>Inkoopfacturen</strong>
 								</span>
 							</a>
-							<a href="/purchase" class="btn btn-primary add_to_cart"><i class="fa fa-truck"></i> Inkoopfacturen</a>
+							<a href="/purchase" class="btn btn-primary add_to_cart"><i class="fa fa-shopping-cart"></i> Inkoopfacturen</a>
 						</figure>
 					</div>
 				</div>
@@ -263,11 +263,11 @@ $(function() {
 							<a class="item-hover" href="/wholesale">
 								<span class="overlay color2"></span>
 								<span class="inner">
-									<span class="block fa fa-shopping-cart fsize60"></span>
+									<span class="block fa fa-truck fsize60"></span>
 									<strong>Leveranciers</strong>
 								</span>
 							</a>
-							<a href="/wholesale" class="btn btn-primary add_to_cart"><i class="fa fa-shopping-cart"></i> Leveranciers</a>
+							<a href="/wholesale" class="btn btn-primary add_to_cart"><i class="fa fa-truck"></i> Leveranciers</a>
 						</figure>
 					</div>
 				</div>

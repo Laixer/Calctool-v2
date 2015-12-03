@@ -1,5 +1,5 @@
 /** Colors
-	#2E363F	= blue
+	#4E4E4E	= blue
 	#1b1f23	= darker blue
 	#454b56	= brighter blue
 	#719E00	= darkgreen
@@ -18,7 +18,7 @@
 	.noimg-slider p,
 	.list-icon li:before,
 	.styleColor {
-		color:#2E363F;
+		color:#4E4E4E;
 	}
 	h4 {
 		color:#719E00;
@@ -28,7 +28,7 @@
 	div.price-table.popular,
 	.styleBackground {
 		color:#fff;
-		background-color:#2E363F;
+		background-color:#4E4E4E;
 	}
 	/* overlay two colors */
 	.overlay.color1 {
@@ -50,7 +50,7 @@
 	ul.star-rated.styleSecondColor li i,
 	.tp-catpion a,
 	.divider.styleColor .fa {
-		color:#719E00;
+		color:#4E4E4E;
 	}
 	#slider .btn.btn-default {
 		color:#719E00 !important;
@@ -58,7 +58,7 @@
 
 	a:hover, a:active {
 		/* color:#89a550; */
-		color:#79bb00;
+		color:#719E00;
 	}
 
 
@@ -97,18 +97,18 @@
 	header#topNav nav ul.nav-main li.active > a:hover,
 	header#topNav nav ul.nav-main li.active > a:focus,
 	header#topNav nav ul.nav-main li.active i.icon-caret-down {
-		color:#2E363F; 					/* active|hover color */
+		color:#4E4E4E; 					/* active|hover color */
 	}
 	header#topNav nav.mega-menu ul.nav-main li.mega-menu-item ul.dropdown-menu,
 	header#topNav nav ul.nav-main ul.dropdown-menu {
-		background-color: #2E363F; 		/* dropdown background color */
+		background-color: #4E4E4E; 		/* dropdown background color */
 	}
 	header#topNav nav.mega-menu ul.nav-main li.mega-menu-item:hover ul.sub-menu li:hover a:hover,
 	header#topNav nav ul.nav-main ul.dropdown-menu li:hover > a {
 		background-color: #1b1f23; 		/* hover background color */
 	}
 	header#topNav nav ul.nav-main li.dropdown:hover > a:after {
-		border-bottom:#2E363F 10px solid;/* arrow color */
+		border-bottom:#4E4E4E 10px solid;/* arrow color */
 	}
 	header#topNav nav.mega-menu ul.nav-main li.mega-menu-item .mega-menu-sub-title {
 		color: #ffffff; 				/* mega menu subtitle */
@@ -137,20 +137,26 @@
 
 
 	/* Buttons */
-	.btn-default {
-		border:#719E00 2px solid;
+	
+	/*.btn-default {
+		border:#4E4E4E 2px solid;
 	}
 	.btn-default:hover, .btn-default:active, .btn-default:focus {
-		/* border:#89a550 2px solid; */
-		border:#79bb00 2px solid;
+
+		border:#719E00 2px solid;
 	}
+	*/
+
 	.btn-primary {
+		background-color:#4E4E4E !important;
+	}
+	.btn-primary:active, .btn-primary:focus {
+		border:rgba(255,255,255,0) 2px solid;
 		background-color:#719E00 !important;
 	}
-	.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+	.btn-primary:hover {
 		border:rgba(255,255,255,0) 2px solid;
-		/* background-color:#89a550 !important; */
-		background-color:#79bb00 !important;
+		background-color:#719E00 !important;
 	}
 
 
@@ -204,7 +210,7 @@
 	.testimonial.color1 p,
 	.testimonial.color1 cite {
 		color:#fff;
-		background-color:#2E363F;
+		background-color:#4E4E4E;
 	}
 	.testimonial.color2 p,
 	.testimonial.color2 cite {
@@ -219,7 +225,7 @@
 
 	/* slider */
 	#slider li .noimg-slider h1{
-		color:#2E363F !important;
+		color:#4E4E4E !important;
 	}
 
 	#slider li.styleBackground .noimg-slider,
