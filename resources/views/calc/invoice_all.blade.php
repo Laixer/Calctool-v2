@@ -276,8 +276,6 @@ if (!$project || !$project->isOwner()) {
 						    </ul>
 						  </div>
 						<?php 
-						//} else if ($close && !$project->project_close) {
-						//	echo '<form method="POST" id="frm-invoice" action="/invoice/close"><input type="hidden" name="_token" value="'.csrf_token().'"><input name="id" value="'.$invoice_end->id.'" type="hidden"/><input name="projectid" value="'.$project->id.'" type="hidden"/><input type="submit" class="btn btn-primary btn-xs" value="Factureren"/></form>'; $close=false;
 						} else {
 							echo 'Open';
 						}
@@ -287,7 +285,7 @@ if (!$project || !$project->isOwner()) {
 				<?php }} ?>
 				</tbody>
 			</table>
-			@if (!$project->project_close && !$invoice_end->invoice_close)
+			@if (!$project->project_close && ($invoice_end && !$invoice_end->invoice_close))
 			<div class="row">
 				<div class="col-md-12">
 					<form method="POST" id="frm-add" action="/invoice/term/add">

@@ -93,6 +93,9 @@ var n = this,
 		$('#tab-summary').click(function(e){
 			sessionStorage.toggleTabEstim{{Auth::user()->id}} = 'summary';
 		});
+		$('#tab-endresult').click(function(e){
+			sessionStorage.toggleTabEstim{{Auth::user()->id}} = 'endresult';
+		});
 		if (sessionStorage.toggleTabEstim{{Auth::user()->id}}){
 			$toggleOpenTab = sessionStorage.toggleTabEstim{{Auth::user()->id}};
 			$('#tab-'+$toggleOpenTab).addClass('active');

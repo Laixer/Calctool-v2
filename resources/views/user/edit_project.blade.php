@@ -42,6 +42,30 @@ else {
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		$('#tab-status').click(function(e){
+			sessionStorage.toggleTabProj{{Auth::id()}} = 'status';
+		});
+		$('#tab-project').click(function(e){
+			sessionStorage.toggleTabProj{{Auth::id()}} = 'project';
+		});
+		$('#tab-calc').click(function(e){
+			sessionStorage.toggleTabProj{{Auth::id()}} = 'calc';
+		});
+		$('#tab-hour').click(function(e){
+			sessionStorage.toggleTabProj{{Auth::id()}} = 'hour';
+		});
+		$('#tab-purchase').click(function(e){
+			sessionStorage.toggleTabProj{{Auth::id()}} = 'purchase';
+		});
+		if (sessionStorage.toggleTabProj{{Auth::id()}}){
+			$toggleOpenTab = sessionStorage.toggleTabProj{{Auth::id()}};
+			$('#tab-'+$toggleOpenTab).addClass('active');
+			$('#'+$toggleOpenTab).addClass('active');
+		} else {
+			sessionStorage.toggleTabProj{{Auth::id()}} = 'status';
+			$('#tab-status').addClass('active');
+			$('#status').addClass('active');
+		}
 		$('#addnew').click(function(e) {
 			$curThis = $(this);
 			e.preventDefault();
@@ -258,26 +282,26 @@ else {
 				<div class="tabs nomargin-top">
 
 					<ul class="nav nav-tabs">
-						<li class="active">
+						<li id="tab-status">
 							<a href="#status" data-toggle="tab">Projectstatus</a>
 						</li>
-						<li>
+						<li id="tab-project">
 							<a href="#project" data-toggle="tab">Projectgegevens</a>
 						</li>
-						<li>
+						<li id="tab-calc">
 							<a href="#calc" data-toggle="tab">Uurtarief & Winstpercentages</a>
 						</li>
-						<li>
+						<li id="tab-hour">
 							<a href="#hour" data-toggle="tab">Urenregistratie</a>
 						</li>
-						<li>
+						<li id="tab-purchase">
 							<a href="#purchase" data-toggle="tab">Inkoopfacturen</a>
 						</li>
 					</ul>
 
 					<div class="tab-content">
 
-						<div id="status" class="tab-pane active">
+						<div id="status" class="tab-pane">
 							<h4>Project op basis van {{ \Calctool\Models\ProjectType::find($project->type_id)->type_name }}</h4>
 							<div class="row">
 								<div class="col-md-3"><strong>Offerte stadium</strong></div>

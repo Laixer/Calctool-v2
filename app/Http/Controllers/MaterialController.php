@@ -123,7 +123,6 @@ class MaterialController extends Controller {
 		$mysupplier = Supplier::where('user_id','=',Auth::id())->first();
 		if (!$mysupplier) {
 			$mysupplier = Supplier::create(array(
-				'supplier_name' => Auth::user()->username,
 				'user_id' => Auth::id()
 			));
 		}

@@ -62,6 +62,7 @@ class CreateMaterialStorage extends Migration {
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
 			$table->string('name', 50)->nullable()->unique();
+			$table->text('description')->nullable();
 		});
 
 		Schema::create('product_element', function(Blueprint $table)

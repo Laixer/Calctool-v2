@@ -62,8 +62,8 @@ var n = this,
 		$('.toggle').click(function(e){
 			$id = $(this).attr('id');
 			if ($(this).hasClass('active')) {
-				if (sessionStorage.toggleOpen{{Auth::user()->id}}){
-					$toggleOpen = JSON.parse(sessionStorage.toggleOpen{{Auth::user()->id}});
+				if (sessionStorage.toggleOpen{{Auth::id()}}){
+					$toggleOpen = JSON.parse(sessionStorage.toggleOpen{{Auth::id()}});
 				} else {
 					$toggleOpen = [];
 				}
@@ -73,43 +73,43 @@ var n = this,
 					if ($toggleOpen.indexOf( $id ) == -1)
 						$toggleOpen.push($id);
 				}
-				sessionStorage.toggleOpen{{Auth::user()->id}} = JSON.stringify($toggleOpen);
+				sessionStorage.toggleOpen{{Auth::id()}} = JSON.stringify($toggleOpen);
 			} else {
 				$tmpOpen = [];
-				if (sessionStorage.toggleOpen{{Auth::user()->id}}){
-					$toggleOpen = JSON.parse(sessionStorage.toggleOpen{{Auth::user()->id}});
+				if (sessionStorage.toggleOpen{{Auth::id()}}){
+					$toggleOpen = JSON.parse(sessionStorage.toggleOpen{{Auth::id()}});
 					for(var i in $toggleOpen){
 						if($toggleOpen[i] != $id)
 							$tmpOpen.push($toggleOpen[i]);
 					}
 				}
-				sessionStorage.toggleOpen{{Auth::user()->id}} = JSON.stringify($tmpOpen);
+				sessionStorage.toggleOpen{{Auth::id()}} = JSON.stringify($tmpOpen);
 			}
 		});
-		if (sessionStorage.toggleOpen{{Auth::user()->id}}){
-			$toggleOpen = JSON.parse(sessionStorage.toggleOpen{{Auth::user()->id}});
+		if (sessionStorage.toggleOpen{{Auth::id()}}){
+			$toggleOpen = JSON.parse(sessionStorage.toggleOpen{{Auth::id()}});
 			for(var i in $toggleOpen){
 				$('#'+$toggleOpen[i]).addClass('active').children('.toggle-content').toggle();
 			}
 		}
 		$('#tab-calculate').click(function(e){
-			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'calculate';
+			sessionStorage.toggleTabCalc{{Auth::id()}} = 'calculate';
 		});
 		$('#tab-estimate').click(function(e){
-			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'estimate';
+			sessionStorage.toggleTabCalc{{Auth::id()}} = 'estimate';
 		});
 		$('#tab-summary').click(function(e){
-			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'summary';
+			sessionStorage.toggleTabCalc{{Auth::id()}} = 'summary';
 		});
 		$('#tab-endresult').click(function(e){
-			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'endresult';
+			sessionStorage.toggleTabCalc{{Auth::id()}} = 'endresult';
 		});
-		if (sessionStorage.toggleTabCalc{{Auth::user()->id}}){
-			$toggleOpenTab = sessionStorage.toggleTabCalc{{Auth::user()->id}};
+		if (sessionStorage.toggleTabCalc{{Auth::id()}}){
+			$toggleOpenTab = sessionStorage.toggleTabCalc{{Auth::id()}};
 			$('#tab-'+$toggleOpenTab).addClass('active');
 			$('#'+$toggleOpenTab).addClass('active');
 		} else {
-			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'calculate';
+			sessionStorage.toggleTabCalc{{Auth::id()}} = 'calculate';
 			$('#tab-calculate').addClass('active');
 			$('#calculate').addClass('active');
 		}

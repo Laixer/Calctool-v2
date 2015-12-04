@@ -43,7 +43,24 @@ $(document).ready(function() {
 			}
 		}
 	}
-
+	$('#tab-company').click(function(e){
+		sessionStorage.toggleTabRel{{Auth::id()}} = 'company';
+	});
+	$('#tab-payment').click(function(e){
+		sessionStorage.toggleTabRel{{Auth::id()}} = 'payment';
+	});
+	$('#tab-contact').click(function(e){
+		sessionStorage.toggleTabRel{{Auth::id()}} = 'contact';
+	});
+	if (sessionStorage.toggleTabRel{{Auth::id()}}){
+		$toggleOpenTab = sessionStorage.toggleTabRel{{Auth::id()}};
+		$('#tab-'+$toggleOpenTab).addClass('active');
+		$('#'+$toggleOpenTab).addClass('active');
+	} else {
+		sessionStorage.toggleTabRel{{Auth::id()}} = 'company';
+		$('#tab-company').addClass('active');
+		$('#company').addClass('active');
+	}
 	$('#website').blur(function(e) {
 		prefixURL($(this));
 	});
@@ -122,19 +139,19 @@ $(document).ready(function() {
 				<div class="tabs nomargin-top">
 
 					<ul class="nav nav-tabs">
-						<li class="active">
+						<li id="tab-company">
 							<a href="#company" data-toggle="tab">{{ ucfirst( \Calctool\Models\RelationKind::find($relation->kind_id)->kind_name) }}e gegevens</a>
 						</li>
-						<li>
+						<li id="tab-payment">
 							<a href="#payment" data-toggle="tab">Betalingsgegevens</a>
 						</li>
-						<li>
+						<li id="tab-contact">
 							<a href="#contact" data-toggle="tab">Contacten</a>
 						</li>
 					</ul>
 
 					<div class="tab-content">
-						<div id="company" class="tab-pane active">
+						<div id="company" class="tab-pane">
 							<div class="pull-right">
 								<a href="/relation-{{ $relation->id }}/delete" id="acc-deactive" class="btn btn-danger">Verwijderen</a>
 							</div>
