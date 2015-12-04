@@ -274,6 +274,7 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::post('material/updatematerial', array('uses' => 'MaterialController@doUpdate'));
 	Route::post('material/deletematerial', array('uses' => 'MaterialController@doDelete'));
 	Route::post('material/favorite', array('uses' => 'MaterialController@doFavorite'));
+	Route::post('material/element/new', array('uses' => 'MaterialController@doNewElement'));
 });
 
 Route::group(array('before' => 'admin'), function()
