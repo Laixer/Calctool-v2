@@ -70,7 +70,7 @@ class CreateUsersTable extends Migration {
 			$table->tinyInteger('pref_profit_more_contr_equip')->default(0)->unsigned();
 			$table->tinyInteger('pref_profit_more_subcontr_mat')->default(0)->unsigned();
 			$table->tinyInteger('pref_profit_more_subcontr_equip')->default(0)->unsigned();
-			$table->text('pref_email_offer')->nullable()->default('Nog niet beschikbaar.');
+			$table->text('pref_email_offer')->nullable()->default('Hierbij doe ik u mijn offerte betreffende bovengenoemd project toekomen.');
 			$table->text('pref_offer_description')->nullable()->default('Bij deze doe ik u toekomen mijn prijsopgaaf betreffende het uit te voeren werk. Onderstaand zal ik het werk en de uit te voeren werkzaamheden specificeren zoals afgesproken.');
 			$table->text('pref_closure_offer')->nullable()->default('Hopende u hiermee een passende aanbieding gedaan te hebben, zie ik uw reactie met genoegen tegemoet. ');
 			$table->text('pref_email_invoice')->nullable()->default('Nog niet beschikbaar.');

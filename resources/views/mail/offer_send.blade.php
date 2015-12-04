@@ -43,7 +43,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
-														Geachte <strong>{{ $username }}</strong>,
+														Geachte <strong>{{ $client }}</strong>,
 													</td>
 												</tr>
 												<tr>
@@ -51,9 +51,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Je bent zojuist succesvol geregistreerd voor een gebruikersaccount van de <strong>Calculatie Tool</strong>.
-
-														Klik hieronder op <i>Activeer account</i> om uw gratis account te activeren.
+														{{ pref_email_offer }}
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->
@@ -73,15 +71,15 @@
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
 														<br>
-															Je wordt na de bevestiging direct doorgestuurd naar de <strong>Calculatie Tool</strong> en kunt 30 dagen lang gebruikmaken van alles wat de <strong>Calculatie Tool</strong> te bieden heeft. Zonder restricties, afgeschermde delen of verborgen kosten.
+															U wordt na het klikken op de link naar een beveiligde omgeving van de <strong>Calculatieool.com</strong> doorgestuurd. 
+															Hier kunt u mijn offerte bekijken, opmerkingen achterlaten en eventueel direct de offerte goedkeuren en opdracht verstrekken.
 
-															Wij geloven in simpel, eerlijk en transparant. De <strong>Calculatie Tool</strong> is niet voor niets van de zzp'er voor de zzp'er.
 														<br>
 														<br>
 															Met vriendelijke groet,
 														<br>
 														<br>
-															<strong>Cal</strong>, van <a href="{{ URL::to('/') }}"><strong>CalculatieTool</strong></a>
+															<strong>UW vakanman</strong>, {{ $user }}</strong></a>
 														<br>
 														<br>
 													</td>
