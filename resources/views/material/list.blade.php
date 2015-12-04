@@ -35,15 +35,7 @@ $(document).ready(function() {
 		$name = $('#name').val();
 		$desc = $('#desc').val();
 		$.post("/material/element/new", {name: $name, desc: $desc}, function(data) {
-			var json = $.parseJSON(data);
-			if (json.success) {
-				$curr.find('i').toggleClass('fa-star-o fa-star');
-				if ($curr.find('i').css('color') == 'rgb(0, 0, 0)') {
-					$curr.find('i').css('color','#FFD600');
-				} else {
-					$curr.find('i').css('color','#000');
-				}
-			}
+			location.reload();
 		});
 	});
 	$req = false;
@@ -364,9 +356,9 @@ $(document).ready(function() {
 							@endif
 							@foreach (Element::where('user_id','=', Auth::id())->get() as $element)
 								<tr>
-									<td class="col-md-3"><a href="/project-{{ $element->id }}/edit">{{ $element->name }}</a></td>
+									<td class="col-md-3"><a href="/material/element-{{ $element->id }}">{{ $element->name }}</a></td>
 									<td class="col-md-2">{{--  --}}</td>
-									<td class="col-md-4">{{-- $element->description --}}</td>
+									<td class="col-md-4">{{ $element->description }}</td>
 									<td class="col-md-1"></td>
 									<td class="col-md-2 text-right"><button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button></td>
 								</tr>
