@@ -10,6 +10,8 @@ use \Calctool\Models\PartType;
 use \Calctool\Models\ProjectType;
 use \Calctool\Models\Tax;
 use \Calctool\Models\Activity;
+use \Calctool\Calculus\InvoiceTerm;
+use \Calctool\Calculus\ResultEndresult;
 use \Calctool\Calculus\CalculationRegister;
 use \Calctool\Models\CalculationMaterial;
 use \Calctool\Models\CalculationEquipment;
@@ -90,9 +92,25 @@ class CalcController extends Controller {
 		return response()->view('calc.more');
 	}
 
-	public function getInvoice(Request $request)
+	public function getInvoice(Request $request, $project, $invoice_id)
 	{
-		return response()->view('calc.invoice');
+		$proj = Project::find($project);
+		$project_total = ResultEndresult::totalProject($proj);
+		$this_inv = Invoice::find($invoice_id);
+		$invoices = Invoice::where('offer_id',$this_inv->offer_id)->where('isclose',false)->get();
+
+		foreach ($invoices as $inv) {
+			$project_total -= $inv->amount;
+		}
+
+		$invoice = Invoice::where('offer_id',$this_inv->offer_id)->where('isclose',true)->first();
+		$invoice->amount = $project_total;
+		$invoice->rest_21 = InvoiceTerm::partTax1($proj, $invoice) * $project_total;
+		$invoice->rest_6 = InvoiceTerm::partTax2($proj, $invoice) * $project_total;
+		$invoice->rest_0 = InvoiceTerm::partTax3($proj, $invoice) * $project_total;
+		$invoice->save();
+
+		return view('calc.invoice');
 	}
 
 	public function getTermInvoice(Request $request)

@@ -286,8 +286,6 @@ class EstimController extends Controller {
 			'project' => array('required','integer'),
 		]);
 
-		$validator = Validator::make(Input::all(), $rules);
-
 			$equipment = EstimateEquipment::find($request->get('id'));
 			if (!$equipment)
 				return json_encode(['success' => 0]);

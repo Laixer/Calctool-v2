@@ -155,12 +155,12 @@ class OfferController extends Controller {
 			$invoice->to_contact_id = $offer->to_contact_id;
 			$invoice->from_contact_id = $offer->from_contact_id;
 			if (($i+1) == $offer->invoice_quantity) {
-				$project_total = ResultEndresult::totalProject($project);
-				$project_total -= $offer->downpayment_amount;
-				$invoice->amount = $project_total;
-				$invoice->rest_21 = InvoiceTerm::partTax1($project, $invoice) * $project_total;
-				$invoice->rest_6 = InvoiceTerm::partTax2($project, $invoice) * $project_total;
-				$invoice->rest_0 = InvoiceTerm::partTax3($project, $invoice) * $project_total;
+				//$project_total = ResultEndresult::totalProject($project);
+				//$project_total -= $offer->downpayment_amount;
+				//$invoice->amount = $project_total;
+				//$invoice->rest_21 = InvoiceTerm::partTax1($project, $invoice) * $project_total;
+				//$invoice->rest_6 = InvoiceTerm::partTax2($project, $invoice) * $project_total;
+				//$invoice->rest_0 = InvoiceTerm::partTax3($project, $invoice) * $project_total;
 				$invoice->isclose = true;
 			}
 			if ($i == 0 && $offer->downpayment) {

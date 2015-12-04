@@ -289,8 +289,8 @@ class InvoiceController extends Controller {
 		$invoice->rest_0 = InvoiceTerm::partTax3($project, $invoice)*$amount;
 		$invoice->save();
 
-		$cnt = Invoice::where('offer_id','=', $invoice->offer_id)->count();
-		if ($cnt>1) {
+		//$cnt = Invoice::where('offer_id','=', $invoice->offer_id)->count();
+		/*if ($cnt>1) {
 			$invoice = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',true)->first();
 			$invoice->amount = $total;
 			$invoice->rest_21 = InvoiceTerm::partTax1($project, $invoice)*$total;
@@ -298,6 +298,7 @@ class InvoiceController extends Controller {
 			$invoice->rest_0 = InvoiceTerm::partTax3($project, $invoice)*$total;
 			$invoice->save();
 		}
+		*/
 
 		return json_encode(['success' => 1]);
 	}
