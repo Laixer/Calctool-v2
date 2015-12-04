@@ -70,7 +70,7 @@ class CreateUsersTable extends Migration {
 			$table->tinyInteger('pref_profit_more_contr_equip')->default(0)->unsigned();
 			$table->tinyInteger('pref_profit_more_subcontr_mat')->default(0)->unsigned();
 			$table->tinyInteger('pref_profit_more_subcontr_equip')->default(0)->unsigned();
-			$table->text('pref_email_offer')->nullable()->default('Nog niet beschikbaar.');
+			$table->text('pref_email_offer')->nullable()->default('Hierbij doe ik u mijn offerte betreffende onder genoemd project toekomen.');
 			$table->text('pref_offer_description')->nullable()->default('Bij deze doe ik u toekomen mijn prijsopgaaf betreffende het uit te voeren werk. Onderstaand zal ik het werk en de uit te voeren werkzaamheden specificeren zoals afgesproken.');
 			$table->text('pref_closure_offer')->nullable()->default('Hopende u hiermee een passende aanbieding gedaan te hebben, zie ik uw reactie met genoegen tegemoet. ');
 			$table->text('pref_email_invoice')->nullable()->default('Nog niet beschikbaar.');
@@ -134,6 +134,17 @@ class CreateUsersTable extends Migration {
 			$table->foreign('country_id')->references('id')->on('country')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('type_id')->unsigned();
 			$table->foreign('type_id')->references('id')->on('project_type')->onUpdate('cascade')->onDelete('restrict');
+		});
+
+		Schema::create('project_share', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->char('token', 40)->unique();
+			$table->text('user_note')->nullable();
+			$table->text('client_note')->nullable();
+			$table->nullableTimestamps();
+			$table->integer('project_id')->unsigned();
+			$table->foreign('project_id')->references('id')->on('project')->onUpdate('cascade')->onDelete('cascade');
 		});
 
 		Schema::create('resource', function(Blueprint $table)
@@ -218,6 +229,10 @@ class CreateUsersTable extends Migration {
 		Schema::table('resource', function(Blueprint $table)
 		{
 			Schema::dropIfExists('resource');
+		});
+		Schema::table('project_share', function(Blueprint $table)
+		{
+			Schema::dropIfExists('project_share');
 		});
 		Schema::table('project', function(Blueprint $table)
 		{

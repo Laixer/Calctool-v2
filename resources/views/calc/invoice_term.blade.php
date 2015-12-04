@@ -176,6 +176,10 @@ if (!$project || !$project->isOwner()) {
 			$('#invdateval').val(e.date.toLocaleString());
 			$('#invdate').text(e.date.getDate() + "-" + (e.date.getMonth() + 1)  + "-" + e.date.getFullYear());
 		});
+		$('#adressing').text($('#to_contact option:selected').text());
+		$('#to_contact').change(function(e){
+			$('#adressing').text($('#to_contact option:selected').text());
+		});
 		@if ($invoice_last && $invoice_last->invoice_make)
 		$('#invdate').text("{{ date('d-m-Y', strtotime($offer_last->invoice_make)) }}");
 		@endif
@@ -215,6 +219,8 @@ if (!$project || !$project->isOwner()) {
 			if ($prev && $prev->invoice_close && $next && !$next->invoice_close) {
 				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
 			} else if (!$prev && $next && !$next->invoice_close) {
+				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
+			} else if (!$prev && !$next) {
 				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
 			} else if ($prev && $prev->invoice_close && $end && !$end->invoice_close) {
 				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
@@ -283,15 +289,17 @@ if (!$project || !$project->isOwner()) {
 					<div class="col-sm-6">
 						{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
 					</div>
-					<div class="col-sm-6 text-right">
+					<div class="col-sm-2"></div>
+					<div class="col-sm-4 text-left">
 						<p>
 							<h4><strong>{{ $relation_self->company_name }}</strong></h4>
 				    			<ul class="list-unstyled">
 			 						<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
 			  						<li>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
 			 						<li><i class="fa fa-phone"></i>&nbsp;{{ $relation_self->phone }}&nbsp;|&nbsp;<i class="fa fa-envelope-o"></i>&nbsp;{{ $relation_self->email }}</li>
-			 						<li>KVK:{{ $relation_self->kvk }}&nbsp;|&nbsp;BTW: {{ $relation_self->btw }}</li>
-									<li>Rekeningnummer: {{ $relation_self->iban }}&nbsp;|&nbsp;tnv.: {{ $relation_self->iban_name }}</li>
+			 						<li><strong>KVK:</strong>{{ $relation_self->kvk }}&nbsp;|&nbsp;<strong>BTW:</strong> {{ $relation_self->btw }}</li>
+									<li><strong>Rekeningnummer:</strong> {{ $relation_self->iban }}</li>
+									<li><strong>tnv.:</strong> {{ $relation_self->iban_name }}</li>
 								<ul class="list-unstyled">
 						</p>
 					</div>
@@ -307,13 +315,21 @@ if (!$project || !$project->isOwner()) {
 					<ul class="list-unstyled">
 						<li>{{ $relation->company_name }}</li>
 						<li>T.a.v.
-							{{ Contact::find($offer_last->to_contact_id)->firstname . ' ' . Contact::find($offer_last->to_contact_id)->lastname }}
+						@if ($invoice_last && $invoice_last->invoice_make)
+							{{ Contact::find($invoice_last->to_contact_id)->getFormalName() }}
+							@else
+						<select name="to_contact" id="to_contact">
+							@foreach (Contact::where('relation_id','=',$relation->id)->get() as $contact)
+							<option {{ $invoice_last ? ($invoice_last->to_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ Contact::find($contact->id)->getFormalName() }}</option>
+							@endforeach
+						</select>
+						@endif
 						</li>
 						<li>{{ $relation->address_street . ' ' . $relation->address_number }}<br /> {{ $relation->address_postal . ', ' . $relation->address_city }}</li>
 					</ul>
 				</div>
 				<div class="col-sm-2"></div>
-				<div class="col-sm-4 text-right">
+				<div class="col-sm-4 text-left">
 					<h4><strong>TERMIJNFACTUUR</strong></h4>
 					<ul class="list-unstyled">
 						<li><strong>Projectnaam:</strong>{{ $project->project_name }}</li>
@@ -330,9 +346,14 @@ if (!$project || !$project->isOwner()) {
 			<div class="row">
 				<div class="col-sm-6">
 				Geachte
-					{{ Contact::find($invoice_last->to_contact_id)->firstname . ' ' . Contact::find($invoice_last->to_contact_id)->lastname }}
+				@if ($invoice_last && $invoice_last->invoice_make)
+				{{ Contact::find($offer_last->to_contact_id)->getFormalName() }}
+				@else
+				<span id="adressing"></span>
+				@endif
 				,
-			</div>
+
+				</div>
 			</div>
 			<br>
 			<div class="row">
@@ -424,10 +445,18 @@ if (!$project || !$project->isOwner()) {
 						<li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
 					</ul>
 					<br>
-					<span>Met vriendelijke groet,
-					<br>
-						{{ Contact::find($offer_last->from_contact_id)->firstname . ' ' . Contact::find($offer_last->from_contact_id)->lastname }}
-					</span>
+					<p>Met vriendelijke groet,
+						<br>
+						@if ($invoice_last && $invoice_last->invoice_make)
+						{{ Contact::find($invoice_last->from_contact_id)->firstname . ' ' . Contact::find($invoice_last->from_contact_id)->lastname }}
+						@else
+						<select name="from_contact" id="from_contact">
+							@foreach (Contact::where('relation_id','=',$relation_self->id)->get() as $contact)
+							<option {{ $invoice_last ? ($invoice_last->from_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
+							@endforeach
+						</select>
+						@endif
+					</p>
 					</div>
 				</div>
 				</div class="white-row">

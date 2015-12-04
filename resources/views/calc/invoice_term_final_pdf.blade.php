@@ -6,6 +6,7 @@ use \Calctool\Models\Contact;
 use \Calctool\Models\Invoice;
 use \Calctool\Models\Offer;
 use \Calctool\Models\ProjectType;
+use \Calctool\Models\Resource;
 
 $offer = Offer::find($invoice->offer_id);
 if (!$offer)
@@ -19,13 +20,16 @@ $relation = Relation::find($project->client_id);
 $relation_self = Relation::find(Auth::user()->self_id);
 if ($relation_self)
   $contact_self = Contact::where('relation_id','=',$relation_self->id);
+
+$include_tax = $invoice->include_tax; //BTW bedragen weergeven
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Example 2</title>
+    <title>Termijnfactuur</title>
     <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" media="all" />
   </head>
   <body>
@@ -33,7 +37,7 @@ if ($relation_self)
   <?#--PAGE HEADER MASTER START--?>
   <header class="clearfix">
     <div id="logo">
-    <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_llocation)."\"/>"; ?>
+    <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
     </div>
     <div id="company">
       <h3 class="name">{{ $relation_self->company_name }}</h3>
@@ -51,9 +55,7 @@ if ($relation_self)
     <div id="details" class="clearfix">
       <div id="client">
         <div>{{ $relation->company_name }}</div>
-        <div>T.a.v.
-             {{ Contact::find($invoice->to_contact_id)->firstname . ' ' . Contact::find($invoice->to_contact_id)->lastname }}
-        </div>
+        <div>T.a.v. {{ Contact::find($invoice->to_contact_id)->getFormalName() }}</div>
         <div>{{ $relation->address_street . ' ' . $relation->address_number }}</div>
         <div>{{ $relation->address_postal . ', ' . $relation->address_city }}</div>
       </div>
@@ -68,7 +70,7 @@ if ($relation_self)
     </div>
     <?#--ADRESSING END--?>
 
-    <div class="openingtext">Geachte</div>
+    <div class="openingtext">Geachte {{ Contact::find($invoice->to_contact_id)->getFormalName() }},</div>
     <div class="openingtext">{{ ($invoice ? $invoice->description : '') }}</div>
 
     <h1 class="name">Specificatie termijnfactuur</h1>
@@ -77,8 +79,8 @@ if ($relation_self)
         <tr>
           <th class="qty">&nbsp;</th>
           <th class="qty">Bedrag (excl. BTW)</th>
-          <th class="qty">BTW bedrag</th>
-          <th class="qty">Bedrag (incl. BTW);</th>
+          <th class="qty">@if ($include_tax)BTW bedrag @endif</th>
+          <th class="qty">@if ($include_tax)Bedrag (incl. BTW) @endif</th>
         </tr>
       </thead>
       <tbody>
@@ -88,6 +90,7 @@ if ($relation_self)
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @if ($include_tax)
         @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
         <tr>
           <td class="qty">&nbsp;<i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
@@ -132,6 +135,7 @@ if ($relation_self)
           <td class="qty"><strong>{{ '&euro; '.number_format($invoice->amount+(($invoice->rest_21/100)*21)+(($invoice->rest_6/100)*6), 2, ",",".") }}</strong></td>
         </tr>
       </tbody>
+      @endif
     </table>
 
     <div class="closingtext">{{ ($invoice ? $invoice->closure : '') }}</div>
@@ -141,7 +145,7 @@ if ($relation_self)
       <li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
     </div>
     <div class="signing">Met vriendelijke groet,</div>
-    <div class="signing">Mijn Naam</div>
+    <div class="signing">{{ Contact::find($invoice->from_contact_id)->firstname ." ". Contact::find($invoice->from_contact_id)->lastname }}</div>
   </main>
 
   <footer>

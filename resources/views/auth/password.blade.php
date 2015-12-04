@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('content')
-<?# -- WRAPPER -- ?>
+
 <div id="wrapper">
 
 	<div id="shop">
@@ -14,7 +14,8 @@
 
 					<h2>Nieuwe <strong>Wachtwoord</strong></h2>
 
-					{{ Form::open(array('class' => 'white-row')) }}
+					<form method="POST" action="" accept-charset="UTF-8" class="white-row">
+					{!! csrf_field() !!}
 
 						@if(Session::get('success'))
 						<div class="alert alert-success">
@@ -23,7 +24,6 @@
 						</div>
 						@endif
 
-						<?# -- alert failed -- ?>
 						@if($errors->any())
 						<div class="alert alert-danger">
 							<i class="fa fa-frown-o"></i>
@@ -36,18 +36,16 @@
 						<div class="row">
 							<div class="form-group">
 								<div class="col-md-12">
-									<label></label>
-									{{ Form::label('secret', 'Wachtwoord') }}
-									{{ Form::password('secret', array('class' => 'form-control')) }}
+									<label for="secret">Wachtwoord</label>
+									<input class="form-control" name="secret" type="password" id="secret">
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="form-group">
 								<div class="col-md-12">
-									<label></label>
-									{{ Form::label('secret_confirmation', 'Herhaal wachtwoord') }}
-									{{ Form::password('secret_confirmation', array('class' => 'form-control')) }}
+									<label for="secret_confirmation">Herhaal wachtwoord</label>
+									<input class="form-control" name="secret_confirmation" type="password" id="secret_confirmation">
 								</div>
 							</div>
 						</div>
@@ -57,7 +55,7 @@
 							</div>
 						</div>
 
-					{{ Form::close() }}
+					</form>
 
 				</div>
 

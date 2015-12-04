@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use \Calctool\Models\Supplier;
 use \Calctool\Models\Product;
+use \Calctool\Models\Element;
 
 use \Auth;
 
@@ -123,7 +124,6 @@ class MaterialController extends Controller {
 		$mysupplier = Supplier::where('user_id','=',Auth::id())->first();
 		if (!$mysupplier) {
 			$mysupplier = Supplier::create(array(
-				'supplier_name' => Auth::user()->username,
 				'user_id' => Auth::id()
 			));
 		}
@@ -200,6 +200,22 @@ class MaterialController extends Controller {
 
 		$product = Product::find($request->get('matid'));
 		Auth::user()->productFavorite()->attach($product);
+
+		return json_encode(['success' => 1]);
+	}
+
+	public function doNewElement(Request $request)
+	{
+		$this->validate($request, [
+			'name' => array('required'),
+		]);
+
+		$element = new Element;
+		$element->user_id = Auth::id();
+		$element->name = $request->input('name');
+		$element->description = $request->input('desc');
+
+		$element->save();
 
 		return json_encode(['success' => 1]);
 	}

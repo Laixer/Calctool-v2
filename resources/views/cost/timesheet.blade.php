@@ -13,9 +13,24 @@ use \Calctool\Models\MoreLabor;
 @extends('layout.master')
 
 @section('content')
-<?# -- WRAPPER -- ?>
+
 <script type="text/javascript">
 	$(document).ready(function() {
+		$('#tab-hour').click(function(e){
+			sessionStorage.toggleTabHour{{Auth::id()}} = 'hour';
+		});
+		$('#tab-summary').click(function(e){
+			sessionStorage.toggleTabHour{{Auth::id()}} = 'summary';
+		});
+		if (sessionStorage.toggleTabHour{{Auth::id()}}){
+			$toggleOpenTab = sessionStorage.toggleTabHour{{Auth::id()}};
+			$('#tab-'+$toggleOpenTab).addClass('active');
+			$('#'+$toggleOpenTab).addClass('active');
+		} else {
+			sessionStorage.toggleTabHour{{Auth::id()}} = 'hour';
+			$('#tab-hour').addClass('active');
+			$('#hour').addClass('active');
+		}
 		$('#addnew').click(function(e) {
 			$curThis = $(this);
 			e.preventDefault();
@@ -101,14 +116,13 @@ use \Calctool\Models\MoreLabor;
 
 			<div class="tabs nomargin">
 
-				<!-- tabs -->
 				<ul class="nav nav-tabs">
-					<li class="active">
+					<li id="tab-hour">
 						<a href="#hour" data-toggle="tab">
 							<i class="fa fa-calendar"></i> Urenregistratie
 						</a>
 					</li>
-					<li>
+					<li id="tab-summary">
 						<a href="#summary" data-toggle="tab">
 							<i class="fa fa-sort-amount-desc"></i> Uittrekstaat
 						</a>

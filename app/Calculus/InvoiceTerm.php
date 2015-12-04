@@ -10,7 +10,7 @@ use \Calctool\Models\Invoice;
 class InvoiceTerm {
 
 	public static function conLaborBalanceTax1($project) {
-		$estim = EstimateEndresult::conCalcLaborActivityTax1Amount($project);
+		$estim = SetEstimateCalculationEndresult::conCalcLaborActivityTax1Amount($project);
 		$more = MoreEndresult::conCalcLaborActivityTax1Amount($project);
 		$less = LessEndresult::conCalcLaborActivityTax1Amount($project);
 
@@ -18,7 +18,7 @@ class InvoiceTerm {
 	}
 
 	public static function conLaborBalanceTax2($project) {
-		$estim = EstimateEndresult::conCalcLaborActivityTax2Amount($project);
+		$estim = SetEstimateCalculationEndresult::conCalcLaborActivityTax2Amount($project);
 		$more = MoreEndresult::conCalcLaborActivityTax2Amount($project);
 		$less = LessEndresult::conCalcLaborActivityTax2Amount($project);
 
@@ -26,7 +26,7 @@ class InvoiceTerm {
 	}
 
 	public static function conLaborBalanceTax3($project) {
-		$estim = EstimateEndresult::conCalcLaborActivityTax3Amount($project);
+		$estim = SetEstimateCalculationEndresult::conCalcLaborActivityTax3Amount($project);
 		$more = MoreEndresult::conCalcLaborActivityTax3Amount($project);
 		$less = LessEndresult::conCalcLaborActivityTax3Amount($project);
 
@@ -34,7 +34,7 @@ class InvoiceTerm {
 	}
 
 	public static function conMaterialBalanceTax1($project) {
-		$estim = EstimateEndresult::conCalcMaterialActivityTax1Amount($project);
+		$estim = SetEstimateCalculationEndresult::conCalcMaterialActivityTax1Amount($project);
 		$more = MoreEndresult::conCalcMaterialActivityTax1Amount($project);
 		$less = LessEndresult::conCalcMaterialActivityTax1Amount($project);
 
@@ -42,7 +42,7 @@ class InvoiceTerm {
 	}
 
 	public static function conMaterialBalanceTax2($project) {
-		$estim = EstimateEndresult::conCalcMaterialActivityTax2Amount($project);
+		$estim = SetEstimateCalculationEndresult::conCalcMaterialActivityTax2Amount($project);
 		$more = MoreEndresult::conCalcMaterialActivityTax2Amount($project);
 		$less = LessEndresult::conCalcMaterialActivityTax2Amount($project);
 
@@ -50,7 +50,7 @@ class InvoiceTerm {
 	}
 
 	public static function conMaterialBalanceTax3($project) {
-		$estim = EstimateEndresult::conCalcMaterialActivityTax3Amount($project);
+		$estim = SetEstimateCalculationEndresult::conCalcMaterialActivityTax3Amount($project);
 		$more = MoreEndresult::conCalcMaterialActivityTax3Amount($project);
 		$less = LessEndresult::conCalcMaterialActivityTax3Amount($project);
 
@@ -58,7 +58,7 @@ class InvoiceTerm {
 	}
 
 	public static function conEquipmentBalanceTax1($project) {
-		$estim = EstimateEndresult::conCalcEquipmentActivityTax1Amount($project);
+		$estim = SetEstimateCalculationEndresult::conCalcEquipmentActivityTax1Amount($project);
 		$more = MoreEndresult::conCalcEquipmentActivityTax1Amount($project);
 		$less = LessEndresult::conCalcEquipmentActivityTax1Amount($project);
 
@@ -66,7 +66,7 @@ class InvoiceTerm {
 	}
 
 	public static function conEquipmentBalanceTax2($project) {
-		$estim = EstimateEndresult::conCalcEquipmentActivityTax2Amount($project);
+		$estim = SetEstimateCalculationEndresult::conCalcEquipmentActivityTax2Amount($project);
 		$more = MoreEndresult::conCalcEquipmentActivityTax2Amount($project);
 		$less = LessEndresult::conCalcEquipmentActivityTax2Amount($project);
 
@@ -74,7 +74,7 @@ class InvoiceTerm {
 	}
 
 	public static function conEquipmentBalanceTax3($project) {
-		$estim = EstimateEndresult::conCalcEquipmentActivityTax3Amount($project);
+		$estim = SetEstimateCalculationEndresult::conCalcEquipmentActivityTax3Amount($project);
 		$more = MoreEndresult::conCalcEquipmentActivityTax3Amount($project);
 		$less = LessEndresult::conCalcEquipmentActivityTax3Amount($project);
 
@@ -82,7 +82,7 @@ class InvoiceTerm {
 	}
 
 	public static function subconLaborBalanceTax1($project) {
-		$estim = EstimateEndresult::subconCalcLaborActivityTax1Amount($project);
+		$estim = SetEstimateCalculationEndresult::subconCalcLaborActivityTax1Amount($project);
 		$more = MoreEndresult::subconCalcLaborActivityTax1Amount($project);
 		$less = LessEndresult::subconCalcLaborActivityTax1Amount($project);
 
@@ -90,7 +90,7 @@ class InvoiceTerm {
 	}
 
 	public static function subconLaborBalanceTax2($project) {
-		$estim = EstimateEndresult::subconCalcLaborActivityTax2Amount($project);
+		$estim = SetEstimateCalculationEndresult::subconCalcLaborActivityTax2Amount($project);
 		$more = MoreEndresult::subconCalcLaborActivityTax2Amount($project);
 		$less = LessEndresult::subconCalcLaborActivityTax2Amount($project);
 
@@ -98,7 +98,7 @@ class InvoiceTerm {
 	}
 
 	public static function subconLaborBalanceTax3($project) {
-		$estim = EstimateEndresult::subconCalcLaborActivityTax3Amount($project);
+		$estim = SetEstimateCalculationEndresult::subconCalcLaborActivityTax3Amount($project);
 		$more = MoreEndresult::subconCalcLaborActivityTax3Amount($project);
 		$less = LessEndresult::subconCalcLaborActivityTax3Amount($project);
 
@@ -106,7 +106,7 @@ class InvoiceTerm {
 	}
 
 	public static function subconMaterialBalanceTax1($project) {
-		$estim = EstimateEndresult::subconCalcMaterialActivityTax1Amount($project);
+		$estim = SetEstimateCalculationEndresult::subconCalcMaterialActivityTax1Amount($project);
 		$more = MoreEndresult::subconCalcMaterialActivityTax1Amount($project);
 		$less = LessEndresult::subconCalcMaterialActivityTax1Amount($project);
 
@@ -114,7 +114,7 @@ class InvoiceTerm {
 	}
 
 	public static function subconMaterialBalanceTax2($project) {
-		$estim = EstimateEndresult::subconCalcMaterialActivityTax2Amount($project);
+		$estim = SetEstimateCalculationEndresult::subconCalcMaterialActivityTax2Amount($project);
 		$more = MoreEndresult::subconCalcMaterialActivityTax2Amount($project);
 		$less = LessEndresult::subconCalcMaterialActivityTax2Amount($project);
 
@@ -122,7 +122,7 @@ class InvoiceTerm {
 	}
 
 	public static function subconMaterialBalanceTax3($project) {
-		$estim = EstimateEndresult::subconCalcMaterialActivityTax3Amount($project);
+		$estim = SetEstimateCalculationEndresult::subconCalcMaterialActivityTax3Amount($project);
 		$more = MoreEndresult::subconCalcMaterialActivityTax3Amount($project);
 		$less = LessEndresult::subconCalcMaterialActivityTax3Amount($project);
 
@@ -130,7 +130,7 @@ class InvoiceTerm {
 	}
 
 	public static function subconEquipmentBalanceTax1($project) {
-		$estim = EstimateEndresult::subconCalcEquipmentActivityTax1Amount($project);
+		$estim = SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax1Amount($project);
 		$more = MoreEndresult::subconCalcEquipmentActivityTax1Amount($project);
 		$less = LessEndresult::subconCalcEquipmentActivityTax1Amount($project);
 
@@ -138,7 +138,7 @@ class InvoiceTerm {
 	}
 
 	public static function subconEquipmentBalanceTax2($project) {
-		$estim = EstimateEndresult::subconCalcEquipmentActivityTax2Amount($project);
+		$estim = SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax2Amount($project);
 		$more = MoreEndresult::subconCalcEquipmentActivityTax2Amount($project);
 		$less = LessEndresult::subconCalcEquipmentActivityTax2Amount($project);
 
@@ -146,7 +146,7 @@ class InvoiceTerm {
 	}
 
 	public static function subconEquipmentBalanceTax3($project) {
-		$estim = EstimateEndresult::subconCalcEquipmentActivityTax3Amount($project);
+		$estim = SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax3Amount($project);
 		$more = MoreEndresult::subconCalcEquipmentActivityTax3Amount($project);
 		$less = LessEndresult::subconCalcEquipmentActivityTax3Amount($project);
 

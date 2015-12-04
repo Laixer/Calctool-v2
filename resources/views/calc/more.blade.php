@@ -89,20 +89,20 @@ var n = this,
 			}
 		}
 		$('#tab-calculate').click(function(e){
-			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'calculate';
+			sessionStorage.toggleTabMore{{Auth::user()->id}} = 'calculate';
 		});
-		$('#tab-estimate').click(function(e){
-			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'estimate';
+		$('#tab-summary').click(function(e){
+			sessionStorage.toggleTabMore{{Auth::user()->id}} = 'summary';
 		});
 		$('#tab-endresult').click(function(e){
-			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'endresult';
+			sessionStorage.toggleTabMore{{Auth::user()->id}} = 'endresult';
 		});
-		if (sessionStorage.toggleTabCalc{{Auth::user()->id}}){
-			$toggleOpenTab = sessionStorage.toggleTabCalc{{Auth::user()->id}};
+		if (sessionStorage.toggleTabMore{{Auth::user()->id}}){
+			$toggleOpenTab = sessionStorage.toggleTabMore{{Auth::user()->id}};
 			$('#tab-'+$toggleOpenTab).addClass('active');
 			$('#'+$toggleOpenTab).addClass('active');
 		} else {
-			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'calculate';
+			sessionStorage.toggleTabMore{{Auth::user()->id}} = 'calculate';
 			$('#tab-calculate').addClass('active');
 			$('#calculate').addClass('active');
 		}

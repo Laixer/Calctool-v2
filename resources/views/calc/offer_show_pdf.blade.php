@@ -38,10 +38,10 @@ if (!$offer) {
 @section('content')
 <script src="/plugins/pdf/build/pdf.js" type="text/javascript"></script>
 <script id="script">
-var url = '/{{ $res->file_location }}';
-var numPages = 0;
-PDFJS.workerSrc = '/plugins/pdf/build/pdf.worker.js';
-PDFJS.getDocument(url).then(function getPdf(pdf) {
+	var url = '/{{ $res->file_location }}';
+	var numPages = 0;
+	PDFJS.workerSrc = '/plugins/pdf/build/pdf.worker.js';
+	PDFJS.getDocument(url).then(function getPdf(pdf) {
 
 	for (var i = 0; i < pdf.numPages; i++) {
 		var ndr = '<div class="white-row"><canvas id="the-canvas'+i+'" style="border:0px solid black;text-align:center;"/></canvas></div>';
@@ -61,7 +61,28 @@ PDFJS.getDocument(url).then(function getPdf(pdf) {
 			pdf.getPage(numPages+1).then(getPage);
 		}
 	});
-
+});
+$(document).ready(function() {
+	$('#sendmail').click(function(){
+		$.post("/offer/sendmail", {
+			offer: {{ $offer->id }}
+		}, function(data){
+			var json = $.parseJSON(data);
+			if (json.success) {
+				$('#mailsent').show();
+			}
+		});
+	});
+	$('#sendpost').click(function(){
+		$.post("/offer/sendpost", {
+			offer: {{ $offer->id }}
+		}, function(data){
+			var json = $.parseJSON(data);
+			if (json.success) {
+				$('#postsent').show();
+			}
+		});
+	});
 });
 </script>
 	<div id="wrapper">
@@ -70,12 +91,33 @@ PDFJS.getDocument(url).then(function getPdf(pdf) {
 
 		@include('calc.wizard', array('page' => 'offer'))
 
+		<div id="mailsent" class="alert alert-success" style="display: none;">
+			<i class="fa fa-check-circle"></i>
+			<strong>Email verstuurd naar opdrachtgever</strong>
+		</div>
+
+		<div id="postsent" class="alert alert-success" style="display: none;">
+			<i class="fa fa-check-circle"></i>
+			<strong>De offerte zal zo snel mogelijk per post worden verzonden</strong>
+		</div>
+
 		<div class="pull-right">
 			<?php if (!$project->project_close) { ?>
 			@if ($offer_last->id == $offer->id && !$offer->offer_finish)
 			<a href="/offer/project-{{ $project->id }}" class="btn btn-primary">Bewerk</a>
 			@endif
-			<a href="/res-{{ $res->id }}/download" class="btn btn-primary">Download PDF</a>
+			<div class="btn-group">
+			  <a href="/project/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Versturen</a>
+			  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			   <span class="caret"></span>
+			    <span class="sr-only">Toggle Dropdown</span>
+			  </button>
+			  <ul class="dropdown-menu">
+			    <li><a href="javascript:void(0);" id="sendmail">Per email</a></li>
+			    <li><a href="/res-{{ $res->id }}/download">Per post (download PDF)</a></i>
+			    <li><a href="javascript:void(0);" id="sendpost">Door calculatieTool.com</a></li>
+			  </ul>
+			</div>
 			<?php } ?>
 		</div>
 

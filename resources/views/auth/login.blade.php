@@ -87,6 +87,7 @@ $(function() {
 							<span class="input-group-btn">
 								<button class="btn btn-primary">Verzenden</button>
 							</span>
+						{!! csrf_field() !!}
 						</form>
 
 					</div>

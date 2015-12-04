@@ -88,6 +88,7 @@ class DemoProjectTemplate {
 		$contact->note 				= 'Demo contactpersoon van relatie';
 		$contact->relation_id 		= $relation->id;
 		$contact->function_id 		= $contact_function->id;
+		$contact->gender	 		= 'M';
 		$contact->save();
 
         $part_contract = Part::where('part_name','=','contracting')->first();

@@ -5,16 +5,19 @@ namespace Calctool\Http\Controllers;
 use Illuminate\Http\Request;
 use \Calctool\Models\Project;
 use \Calctool\Models\Offer;
+use \Calctool\Models\OfferPost;
 use \Calctool\Calculus\CalculationEndresult;
 use \Calctool\Models\Resource;
 use \Calctool\Http\Controllers\InvoiceController;
 use \Calctool\Models\Invoice;
+use \Calctool\Models\ProjectShare;
+use \Calctool\Models\Contact;
 use \Calctool\Calculus\ResultEndresult;
 use \Calctool\Calculus\InvoiceTerm;
 
 use \Auth;
 use \PDF;
-
+use \Mailgun;
 
 class OfferController extends Controller {
 
@@ -155,12 +158,12 @@ class OfferController extends Controller {
 			$invoice->to_contact_id = $offer->to_contact_id;
 			$invoice->from_contact_id = $offer->from_contact_id;
 			if (($i+1) == $offer->invoice_quantity) {
-				$project_total = ResultEndresult::totalProject($project);
-				$project_total -= $offer->downpayment_amount;
-				$invoice->amount = $project_total;
-				$invoice->rest_21 = InvoiceTerm::partTax1($project, $invoice) * $project_total;
-				$invoice->rest_6 = InvoiceTerm::partTax2($project, $invoice) * $project_total;
-				$invoice->rest_0 = InvoiceTerm::partTax3($project, $invoice) * $project_total;
+				//$project_total = ResultEndresult::totalProject($project);
+				//$project_total -= $offer->downpayment_amount;
+				//$invoice->amount = $project_total;
+				//$invoice->rest_21 = InvoiceTerm::partTax1($project, $invoice) * $project_total;
+				//$invoice->rest_6 = InvoiceTerm::partTax2($project, $invoice) * $project_total;
+				//$invoice->rest_0 = InvoiceTerm::partTax3($project, $invoice) * $project_total;
 				$invoice->isclose = true;
 			}
 			if ($i == 0 && $offer->downpayment) {
@@ -171,6 +174,55 @@ class OfferController extends Controller {
 			}
 			$invoice->save();
 		}
+
+		return json_encode(['success' => 1]);
+	}
+
+	public function doSendOffer(Request $request)
+	{
+		$offer = Offer::find($request->input('offer'));
+		if (!$offer)
+			return json_encode(['success' => 0]);
+		$project = Project::find($offer->project_id);
+		if (!$project || !$project->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
+
+		$share = ProjectShare::where('project_id', $project->id)->first();
+		if (!$share) {
+			$share = new ProjectShare;
+			$share->project_id = $project->id;
+
+			$share->save();
+		}
+
+		$contact = Contact::find($offer->to_contact_id);
+
+		$data = array('email' => $contact->email, 'token' => $share->token, 'client' => $contact->getFormalName(), 'project_name' => $project->project_name), 'pref_email_offer' => Auth::User()->pref_email_offer);
+		Mailgun::send('mail.offer_send', $data, function($message) use ($data) {
+			$message->to($data['email'], strtolower(trim($data['username'])))->subject('Offerte ' . $data['project_name']);
+		});
+
+		return json_encode(['success' => 1]);
+	}
+
+	public function doSendPostOffer(Request $request)
+	{
+		$offer = Offer::find($request->input('offer'));
+		if (!$offer)
+			return json_encode(['success' => 0]);
+		$project = Project::find($offer->project_id);
+		if (!$project || !$project->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
+
+		if (OfferPost::where('offer_id', $offer->id)->count()>0) {
+			return json_encode(['success' => 0,'message' => 'Offerte al aangeboden']);
+		}
+		$post = new OfferPost;
+		$post->offer_id = $offer->id;
+
+		$post->save();
 
 		return json_encode(['success' => 1]);
 	}

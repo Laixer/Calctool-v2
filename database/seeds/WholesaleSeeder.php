@@ -24,11 +24,12 @@ class WholesaleSeeder extends Seeder {
 		$country = Country::where('country_name','=','nederland')->first();
 		$type_bouw = WholesaleType::where('type_name','=','bouw')->first();
 		//$type_installatie = WholesaleType::where('type_name','=','installatie')->first();
-		//$type_electra = WholesaleType::where('type_name','=','electra')->first();
-		//$type_schilder = WholesaleType::where('type_name','=','schilder')->first();
+		$type_ijzerwaren = WholesaleType::where('type_name','=','ijzerwaren')->first();
+		$type_verf = WholesaleType::where('type_name','=','verf')->first();
 		//$type_hovenier = WholesaleType::where('type_name','=','hovenier')->first();
 		//$type_sanitair = WholesaleType::where('type_name','=','sanitair')->first();
 		$type_verhuur = WholesaleType::where('type_name','=','verhuur')->first();
+		$type_electra = WholesaleType::where('type_name','=','electra')->first();
 		//$type_groothandel = WholesaleType::where('type_name','=','groothandel')->first();
 		//$type_veiling = WholesaleType::where('type_name','=','veiling')->first();
 		//$type_overig = WholesaleType::where('type_name','=','overig')->first();
@@ -66,7 +67,7 @@ class WholesaleSeeder extends Seeder {
 
 		$wholesale = new Wholesale;
 		$wholesale->company_name = "Megamat Rotterdam";
-		$wholesale->type_id = $type_verhuur->id;
+		$wholesale->type_id = $type_bouw->id;
 		$wholesale->phone = " 0102382777";
 		$wholesale->email = "info@megamat.nl";
 		$wholesale->website = "http://www.megamat.nl/";
@@ -96,10 +97,10 @@ class WholesaleSeeder extends Seeder {
 
 		$wholesale = new Wholesale;
 		$wholesale->company_name = "Raab Karcher";
-		$wholesale->type_id = $type_verhuur->id;
+		$wholesale->type_id = $type_bouw->id;
 		$wholesale->phone = "0134580200";
 		$wholesale->email = "tilburg@raabkarcher.nl";
-		$wholesale->website = "www.raabkarcher.nl";
+		$wholesale->website = "http://www.raabkarcher.nl";
 		$wholesale->address_street = "Jules Verneweg";
 		$wholesale->address_number = "104";
 		$wholesale->address_postal = "5015BM";
@@ -111,10 +112,10 @@ class WholesaleSeeder extends Seeder {
 
 		$wholesale = new Wholesale;
 		$wholesale->company_name = "PontMeyer";
-		$wholesale->type_id = $type_verhuur->id;
+		$wholesale->type_id = $type_bouw->id;
 		$wholesale->phone = "0756536262";
 		$wholesale->email = "info@pontmeyer.nl";
-		$wholesale->website = "www.pontmeyer.nl";
+		$wholesale->website = "http://www.pontmeyer.nl";
 		$wholesale->address_street = "Symon Spiersweg";
 		$wholesale->address_number = "17";
 		$wholesale->address_postal = "1506RZ";
@@ -126,7 +127,7 @@ class WholesaleSeeder extends Seeder {
 
 		$wholesale = new Wholesale;
 		$wholesale->company_name = "Breur";
-		$wholesale->type_id = $type_verhuur->id;
+		$wholesale->type_id = $type_ijzerwaren->id;
 		$wholesale->phone = "0102888444";
 		$wholesale->email = "info@breur.nl";
 		$wholesale->website = "http://www.breur.nl/";
@@ -171,10 +172,10 @@ class WholesaleSeeder extends Seeder {
 
 		$wholesale = new Wholesale;
 		$wholesale->company_name = "Hornbach";
-		$wholesale->type_id = $type_verhuur->id;
+		$wholesale->type_id = $type_bouw->id;
 		$wholesale->phone = "0302669898";
 		$wholesale->email = "info_nl@hornbach.com";
-		$wholesale->website = "www.hornbach.nl/";
+		$wholesale->website = "http://www.hornbach.nl/";
 		$wholesale->address_street = "Ravenswade";
 		$wholesale->address_number = "56";
 		$wholesale->address_postal = "3439LD";
@@ -186,13 +187,13 @@ class WholesaleSeeder extends Seeder {
 
 		$wholesale = new Wholesale;
 		$wholesale->company_name = "Technische unie";
-		$wholesale->type_id = $type_verhuur->id;
+		$wholesale->type_id = $type_electra->id;
 		$wholesale->phone = "0205450345";
 		$wholesale->email = "communicatie@technischeunie.com";
 		$wholesale->website = "https://www.mijntu.nl/";
 		$wholesale->address_street = "Bovenkerkerweg";
-		$wholesale->address_number = "10-12";
-		$wholesale->address_postal = "3118XE";
+		$wholesale->address_number = "10";
+		$wholesale->address_postal = "1185XE";
 		$wholesale->address_city = "Amstelveen";
 		$wholesale->province_id = $province->id;
 		$wholesale->country_id = $country->id;
@@ -201,7 +202,7 @@ class WholesaleSeeder extends Seeder {
 
 		$wholesale = new Wholesale;
 		$wholesale->company_name = "Simonis";
-		$wholesale->type_id = $type_verhuur->id;
+		$wholesale->type_id = $type_verf->id;
 		$wholesale->phone = "0104322888";
 		$wholesale->email = "info@simonisverf.nl";
 		$wholesale->website = "http://simonisverf.com/";
@@ -216,7 +217,7 @@ class WholesaleSeeder extends Seeder {
 
 		$wholesale = new Wholesale;
 		$wholesale->company_name = "Spr Coatings";
-		$wholesale->type_id = $type_verhuur->id;
+		$wholesale->type_id = $type_verf->id;
 		$wholesale->phone = "0104796999";
 		$wholesale->email = "info@sprcoatings.nl";
 		$wholesale->website = "http://www.sprcoatings.nl/";
@@ -231,9 +232,9 @@ class WholesaleSeeder extends Seeder {
 
 		$wholesale = new Wholesale;
 		$wholesale->company_name = "Destil";
-		$wholesale->type_id = $type_verhuur->id;
+		$wholesale->type_id = $type_ijzerwaren->id;
 		$wholesale->phone = "0134653000";
-		$wholesale->email = "www.destil.nl";
+		$wholesale->email = "http://www.destil.nl";
 		$wholesale->website = "info@destil.nl";
 		$wholesale->address_street = "Laurent Janssensstraat";
 		$wholesale->address_number = "101";
@@ -246,7 +247,7 @@ class WholesaleSeeder extends Seeder {
 
 		$wholesale = new Wholesale;
 		$wholesale->company_name = "Sigma Coatings";
-		$wholesale->type_id = $type_verhuur->id;
+		$wholesale->type_id = $type_verf->id;
 		$wholesale->phone = "0297541911";
 		$wholesale->email = "http://www.sigma.nl/";
 		$wholesale->website = "info@sigma.nl";
@@ -258,21 +259,6 @@ class WholesaleSeeder extends Seeder {
 		$wholesale->country_id = $country->id;
 		$wholesale->save();
 		Supplier::create(array('wholesale_id' => $wholesale->id));
-
-		/*Supplier::create(array('supplier_name' => 'bouwmaat'));
-		Supplier::create(array('supplier_name' => 'stiho'));
-		Supplier::create(array('supplier_name' => 'bo-rent'));
-		Supplier::create(array('supplier_name' => 'boels'));
-		Supplier::create(array('supplier_name' => 'megamat'));
-		Supplier::create(array('supplier_name' => 'jongeneel'));
-		Supplier::create(array('supplier_name' => 'hornbach'));
-		Supplier::create(array('supplier_name' => 'technische unie'));
-		Supplier::create(array('supplier_name' => 'simonis'));
-		Supplier::create(array('supplier_name' => 'spr coatings'));
-		Supplier::create(array('supplier_name' => 'destil'));
-		Supplier::create(array('supplier_name' => 'sigma coatings'));
-		Supplier::create(array('supplier_name' => 'molenaar'));
-		$this->command->info('Supplier created');*/
 
 	}
  }

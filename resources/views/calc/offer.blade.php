@@ -259,29 +259,29 @@ if (!$project || !$project->isOwner()) {
 		@if ($offer_last && $offer_last->offer_make)
 		$('.offdate').text("{{ date('d-m-Y', strtotime($offer_last->offer_make)) }}");
 
-		@if (!$offer_last->include_tax)
-			$("[name='include-tax']").bootstrapSwitch('toggleState');
-		@endif
+			@if (!$offer_last->include_tax)
+				$("[name='include-tax']").bootstrapSwitch('toggleState');
+			@endif
 
-		@if (!$offer_last->only_totals)
-			$("[name='only-totals']").bootstrapSwitch('toggleState');
-		@endif
+			@if (!$offer_last->only_totals)
+				$("[name='only-totals']").bootstrapSwitch('toggleState');
+			@endif
 
-		@if ($offer_last->seperate_subcon)
-			$("[name='seperate-subcon']").bootstrapSwitch('toggleState');
-		@endif
+			@if ($offer_last->seperate_subcon)
+				$("[name='seperate-subcon']").bootstrapSwitch('toggleState');
+			@endif
 
-		@if ($offer_last->display_worktotals)
-			$("[name='display-worktotals']").bootstrapSwitch('toggleState');
-		@endif
+			@if ($offer_last->display_worktotals)
+				$("[name='display-worktotals']").bootstrapSwitch('toggleState');
+			@endif
 
-		@if ($offer_last->display_specification)
-			$("[name='display-specification']").bootstrapSwitch('toggleState');
-		@endif
+			@if ($offer_last->display_specification)
+				$("[name='display-specification']").bootstrapSwitch('toggleState');
+			@endif
 
-		@if ($offer_last->display_description)
-			$("[name='display-description']").bootstrapSwitch('toggleState');
-		@endif
+			@if ($offer_last->display_description)
+				$("[name='display-description']").bootstrapSwitch('toggleState');
+			@endif
 
 		@endif
 	});
@@ -513,7 +513,7 @@ if (!$project || !$project->isOwner()) {
 				<ul class="list-unstyled">
 					<li>{{ $relation->company_name }}</li>
 					<li>T.a.v.
-						@if ($offer_last && $offer_last->offer_finish)
+					@if ($offer_last && $offer_last->offer_finish)
 						{{ Contact::find($offer_last->to_contact_id)->getFormalName() }}
 						@else
 					<select name="to_contact" id="to_contact">
@@ -546,14 +546,14 @@ if (!$project || !$project->isOwner()) {
 		<div class="row">
 			<div class="col-sm-6">
 			Geachte
-		@if ($offer_last && $offer_last->offer_finish)
-		{{ Contact::find($offer_last->to_contact_id)->getFormalName() }}
-		@else
-		<span id="adressing"></span>
-		@endif
-		,
+			@if ($offer_last && $offer_last->offer_finish)
+			{{ Contact::find($offer_last->to_contact_id)->getFormalName() }}
+			@else
+			<span id="adressing"></span>
+			@endif
+			,
 
-		</div>
+			</div>
 		</div>
 		<br>
 		<div class="row">
@@ -823,8 +823,8 @@ if (!$project || !$project->isOwner()) {
 					</thead>
 					<tbody>
 						<tr>
-							<td class="col-md-5">Calculatief te offreren (excl. BTW)</td>
-							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</td>
+							<td class="col-md-5"><strong>Calculatief te offreren (excl. BTW)</strong></td>
+							<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</strong></td>
 							<th class="col-md-1">&nbsp;</th>
 							<th class="col-md-1">&nbsp;</th>
 							<td class="col-md-1">&nbsp;</td>
@@ -996,8 +996,8 @@ if (!$project || !$project->isOwner()) {
 					</thead>
 					<tbody>
 						<tr>
-							<td class="col-md-5">Calculatief te offreren (excl. BTW)</td>
-							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</td>
+							<td class="col-md-5"><strong>Calculatief te offreren (excl. BTW)</strong></td>
+							<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</strong></td>
 							<th class="col-md-1">&nbsp;</th>
 							<th class="col-md-1">&nbsp;</th>
 							<td class="col-md-1">&nbsp;</td>
@@ -1176,9 +1176,9 @@ if (!$project || !$project->isOwner()) {
 						</tr>
 					</thead>
 					<tbody>
-						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
 						<?php $i = 0; ?>
-						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
 						<?php $i++; ?>
 						<tr>
 							<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
@@ -1220,9 +1220,9 @@ if (!$project || !$project->isOwner()) {
 						</tr>
 					</thead>
 					<tbody>
-						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
 						<?php $i = 0; ?>
-						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
 						<?php $i++; ?>
 						<tr>
 							<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
@@ -1296,9 +1296,9 @@ if (!$project || !$project->isOwner()) {
 						</tr>
 					</thead>
 					<tbody>
-						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
 						<?php $i = 0; ?>
-						@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->orderBy('created_at', 'desc')->get() as $activity)
 						<?php
 							$i++;
 							$mat_profit = 0;
@@ -1342,14 +1342,14 @@ if (!$project || !$project->isOwner()) {
 					</thead>
 					<tbody>
 						<tr>
-							<td class="col-md-3">&nbsp;</td>
-							<td class="col-md-3">&nbsp;</td>
-							<td class="col-md-1"><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>
-							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
-							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
-							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
-							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
-							<td class="col-md-1">&nbsp;</td>
+							<td class="col-md-3"><strong>&nbsp;</strong></td>
+							<td class="col-md-3"><strong>&nbsp;</strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></strong></td>
+							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></strong></td>
+							<td class="col-md-1"><strong>&nbsp;</td>
 						</tr>
 					</tbody>
 				</table>
@@ -1390,9 +1390,9 @@ if (!$project || !$project->isOwner()) {
 						</tr>
 					</thead>
 					<tbody>
-						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
 						<?php $i = 0; ?>
-						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
 						<?php $i++ ?>
 						<tr>
 							<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
@@ -1414,9 +1414,9 @@ if (!$project || !$project->isOwner()) {
 						</tr>
 					</thead>
 					<tbody>
-						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
 						<?php $i = 0; ?>
-						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
 						<?php $i++; ?>
 						<tr>
 							<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
@@ -1442,9 +1442,9 @@ if (!$project || !$project->isOwner()) {
 						</tr>
 					</thead>
 					<tbody>
-						@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
 						<?php $i = 0; ?>
-						@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->orderBy('created_at', 'desc')->get() as $activity)
 						<?php $i++; ?>
 						<tr>
 							<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>

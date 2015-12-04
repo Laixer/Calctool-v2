@@ -565,8 +565,9 @@ class StaticSeeder extends Seeder {
 
 		WholesaleType::create(array('type_name' => 'bouw'));
 		WholesaleType::create(array('type_name' => 'installatie'));
+		WholesaleType::create(array('type_name' => 'ijzerwaren'));
 		WholesaleType::create(array('type_name' => 'electra'));
-		WholesaleType::create(array('type_name' => 'schilder'));
+		WholesaleType::create(array('type_name' => 'verf'));
 		WholesaleType::create(array('type_name' => 'hovenier'));
 		WholesaleType::create(array('type_name' => 'sanitair'));
 		WholesaleType::create(array('type_name' => 'verhuur'));

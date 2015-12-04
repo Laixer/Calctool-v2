@@ -8,10 +8,12 @@ use \Calctool\Models\Project;
 use \Calctool\Models\Offer;
 use \Calctool\Models\Invoice;
 use \Calctool\Models\Wholesale;
+use \Calctool\Models\ProjectShare;
 
 $common_access_error = false;
-$project = \Calctool\Models\Project::find(Route::Input('project_id'));
-if (!$project || !$project->isOwner())
+$share = ProjectShare::where('token', Route::Input('token'))->first();
+$project = Project::find($share->project_id);
+if (!$project)
 	$common_access_error = true;
 else {
 	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
@@ -48,14 +50,8 @@ else {
 		$('#tab-project').click(function(e){
 			sessionStorage.toggleTabProj{{Auth::id()}} = 'project';
 		});
-		$('#tab-calc').click(function(e){
-			sessionStorage.toggleTabProj{{Auth::id()}} = 'calc';
-		});
-		$('#tab-hour').click(function(e){
-			sessionStorage.toggleTabProj{{Auth::id()}} = 'hour';
-		});
-		$('#tab-purchase').click(function(e){
-			sessionStorage.toggleTabProj{{Auth::id()}} = 'purchase';
+		$('#tab-desc').click(function(e){
+			sessionStorage.toggleTabProj{{Auth::id()}} = 'desc';
 		});
 		if (sessionStorage.toggleTabProj{{Auth::id()}}){
 			$toggleOpenTab = sessionStorage.toggleTabProj{{Auth::id()}};
@@ -242,8 +238,6 @@ else {
 
 	<section class="container">
 
-			@include('calc.wizard', array('page' => 'project'))
-
 			@if(Session::get('success'))
 			<div class="alert alert-success">
 				<i class="fa fa-check-circle"></i>
@@ -261,23 +255,7 @@ else {
 			</div>
 			@endif
 
-			@if ($offer_last)
-				@if (CalculationEndresult::totalProject($project) != $offer_last->offer_total)
-				<div class="alert alert-warning">
-					<i class="fa fa-fa fa-info-circle"></i>
-					Gegevens zijn gewijzigd ten op zichte van de laastte offerte
-				</div>
-				@endif
-			@endif
-
 			<h2><strong>Project</strong> {{$project->project_name}}</h2>
-
-			@if(!\Calctool\Models\Relation::where('user_id','=', Auth::user()->id)->count())
-			<div class="alert alert-info">
-				<i class="fa fa-info-circle"></i>
-				<strong>Let Op!</strong> Maak eerst een opdrachtgever aan onder <a href="/relation/new">nieuwe relatie</a>.
-			</div>
-			@endif
 
 				<div class="tabs nomargin-top">
 
@@ -288,14 +266,8 @@ else {
 						<li id="tab-project">
 							<a href="#project" data-toggle="tab">Projectgegevens</a>
 						</li>
-						<li id="tab-calc">
-							<a href="#calc" data-toggle="tab">Uurtarief & Winstpercentages</a>
-						</li>
-						<li id="tab-hour">
-							<a href="#hour" data-toggle="tab">Urenregistratie</a>
-						</li>
-						<li id="tab-purchase">
-							<a href="#purchase" data-toggle="tab">Inkoopfacturen</a>
+						<li id="tab-desc">
+							<a href="#desc" data-toggle="tab">Opmerkingen</a>
 						</li>
 					</ul>
 
@@ -522,217 +494,38 @@ else {
 									</div>
 
 								</div>
-							<h5><strong>Opmerkingen</strong></h5>
+
+								</form>
+							</div>
+							
+							<div id="desc" class="tab-pane">
+								<form method="POST" action="myaccount/notepad/save" accept-charset="UTF-8">
+	                            {!! csrf_field() !!}
+
+								<h4>Gebruikers opmerkingen</h4>
 								<div class="row">
 									<div class="form-group">
 										<div class="col-md-12">
-											<textarea name="note" id="note" rows="5" class="form-control">{{ Input::old('note') ? Input::old('note') : $project->note }}</textarea>
+											<textarea name="notepad" readonly="readonly" id="notepad" rows="15" class="form-control">{{ $share->user_note }}</textarea>
+										</div>
+									</div>
+								</div>
+								<h4>Opdrachtgever opmerkingen</h4>
+								<div class="row">
+									<div class="form-group">
+										<div class="col-md-12">
+											<textarea name="notepad" id="notepad" rows="15" class="form-control">{{ $share->client_note }}</textarea>
 										</div>
 									</div>
 								</div>
 								<div class="row">
-								<div class="col-md-12">
-									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
-								</div>
-								</div>
-
+										<div class="col-md-12">
+											<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+										</div>
+									</div>
 								</form>
 							</div>
 
-						<div id="calc" class="tab-pane">
-						<form method="post" action="/project/updatecalc">
-                        {!! csrf_field() !!}
-						<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
-							<div class="row">
-								<div class="col-md-3"><h5><strong>Eigen uurtarief <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier uw uurtarief op wat door heel de calculatie gebruikt wordt voor dit project. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></div>
-								<div class="col-md-1"></div>
-								<div class="col-md-2"><h5><strong>Calculatie *</strong></h5></div>
-								<div class="col-md-2"><h5><strong>Meerwerk</strong></h5></div>
-							</div>
-							<div class="row">
-								<div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
-								<div class="col-md-1"><div class="pull-right">&euro;</div></div>
-								<div class="col-md-2">
-									<input name="hour_rate" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} type="text" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : number_format($project->hour_rate, 2,",",".") }}" class="form-control form-control-sm-number"/>
-								</div>
-								<div class="col-md-2">
-									<input name="more_hour_rate" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_hour_rate" type="text" value="{{ Input::old('more_hour_rate') ? Input::old('more_hour_rate') : number_format($project->hour_rate_more, 2,",",".") }}" class="form-control form-control-sm-number"/>
-								</div>
-							</div>
-
-							<h5><strong>Aanneming <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier uw winstpercentage op wat u over uw materiaal en materieel wilt gaan rekenen. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></strong></h5>
-							<div class="row">
-								<div class="col-md-3"><label for="profit_material_1">Winstpercentage materiaal</label></div>
-								<div class="col-md-1"><div class="pull-right">%</div></div>
-								<div class="col-md-2">
-									<input name="profit_material_1" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="profit_material_1" type="number" min="0" max="200" value="{{ Input::old('profit_material_1') ? Input::old('profit_material_1') : $project->profit_calc_contr_mat }}" class="form-control form-control-sm-number"/>
-								</div>
-								<div class="col-md-2">
-									<input name="more_profit_material_1" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_profit_material_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_1') ? Input::old('more_profit_material_1') : $project->profit_more_contr_mat }}" class="form-control form-control-sm-number"/>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage materieel</label></div>
-								<div class="col-md-1"><div class="pull-right">%</div></div>
-								<div class="col-md-2">
-									<input name="profit_equipment_1" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_1') ? Input::old('profit_equipment_1') : $project->profit_calc_contr_equip }}" class="form-control form-control-sm-number"/>
-								</div>
-								<div class="col-md-2">
-									<input name="more_profit_equipment_1" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_1') ? Input::old('more_profit_equipment_1') : $project->profit_more_contr_equip }}" class="form-control form-control-sm-number"/>
-								</div>
-							</div>
-
-							<h5><strong>Onderaanneming <a data-toggle="tooltip" data-placement="bottom" data-original-title="Onderaanneming: Geef hier uw winstpercentage op wat u over het materiaal en materieel van uw onderaanneming wilt gaan rekenen. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></strong></h5>
-							<div class="row">
-								<div class="col-md-3"><label for="profit_material_2">Winstpercentage materiaal</label></div>
-								<div class="col-md-1"><div class="pull-right">%</div></div>
-								<div class="col-md-2">
-									<input name="profit_material_2" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="profit_material_2" type="number" min="0" max="200" value="{{ Input::old('profit_material_2') ? Input::old('profit_material_2') : $project->profit_calc_subcontr_mat }}" class="form-control form-control-sm-number"/>
-								</div>
-								<div class="col-md-2">
-									<input name="more_profit_material_2" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_profit_material_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_2') ? Input::old('more_profit_material_2') : $project->profit_more_subcontr_mat }}" class="form-control form-control-sm-number"/>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage materieel</label></div>
-								<div class="col-md-1"><div class="pull-right">%</div></div>
-								<div class="col-md-2">
-									<input name="profit_equipment_2" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_2') ? Input::old('profit_equipment_2') : $project->profit_calc_subcontr_equip }}" class="form-control form-control-sm-number"/>
-								</div>
-								<div class="col-md-2">
-									<input name="more_profit_equipment_2" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_2') ? Input::old('more_profit_equipment_2') : $project->profit_more_subcontr_equip }}" class="form-control form-control-sm-number"/>
-								</div>
-							</div><br />
-								<div class="row">
-								<div class="col-md-12">
-									<button class="btn btn-primary {{ ($cntinv ? 'disabled' : '') }}"><i class="fa fa-check"></i> Opslaan</button>
-								</div>
-								</div>
-						</form>
-						</div>
-
-						<div id="hour" class="tab-pane">
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th class="col-md-1">Datum</th>
-										<th class="col-md-1">Uren</th>
-										<th class="col-md-3">Soort <a data-toggle="tooltip" data-placement="bottom" data-original-title="Het is niet mogelijk een urenregistratie bij te houden van onderaanneming." href="#"><i class="fa fa-info-circle"></i></a></th>
-										<th class="col-md-1">Werkzaamheid</th>
-										<th class="col-md-3">Omschrijving</th>
-										<th class="col-md-1">&nbsp;</th>
-										<th class="col-md-1">&nbsp;</th>
-										<th class="col-md-1">&nbsp;</th>
-										<th class="col-md-1">&nbsp;</th>
-									</tr>
-								</thead>
-
-								<tbody>
-									@foreach (\Calctool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
-									@foreach (\Calctool\Models\Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
-									@foreach (\Calctool\Models\Timesheet::where('activity_id','=', $activity->id)->orderBy('register_date','desc')->get() as $timesheet)
-									<tr data-id="{{ $timesheet->id }}">
-										<td class="col-md-1">{{ date('d-m-Y', strtotime($timesheet->register_date)) }}</td>
-										<td class="col-md-1">{{ number_format($timesheet->register_hour, 2,",",".") }}</td>
-										<td class="col-md-3">{{ ucwords(\Calctool\Models\TimesheetKind::find($timesheet->timesheet_kind_id)->kind_name) }}</td>
-										<td class="col-md-3">{{ $activity->activity_name }}</td>
-										<td class="col-md-1">{{ $timesheet->note }}</td>
-										<td class="col-md-1">&nbsp;</td>
-										<td class="col-md-1">&nbsp;</td>
-										<td class="col-md-1">@if (!$project->project_close)<button class="btn btn-danger btn-xs fa fa-times deleterow"></button>@endif</td>
-									</tr>
-									@endforeach
-									@endforeach
-									@endforeach
-									@if (!$project->project_close)
-									<tr>
-										<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text"/></td>
-										<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
-										<td class="col-md-2">
-											<select name="typename" id="typename" class="form-control-sm-text">
-												<option selected="selected" >Selecteer</option>
-												@foreach (\Calctool\Models\TimesheetKind::all() as $typename)
-												<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
-												@endforeach
-											</select>
-										</td>
-										<td class="col-md-4">
-											<select disabled="disabled" name="activity" id="activity" class="form-control-sm-text"></select>
-										</td>
-										<td class="col-md-1"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
-										<td class="col-md-1">&nbsp;</td>
-										<td class="col-md-1">&nbsp;</td>
-										<td class="col-md-1"><button id="addnew" class="btn btn-primary btn-xs"> Toevoegen</button></td>
-									</tr>
-									@endif
-								</tbody>
-							</table>
-						</div>
-
-						<div id="purchase" class="tab-pane">
-
-							<!--<div class="toggle">
-								<label>Deze week</label>
-								<div class="toggle-content">-->
-									<table class="table table-striped">
-										<thead>
-											<tr>
-												<th class="col-md-1">Datum</th>
-												<th class="col-md-2">Relatie <a data-toggle="tooltip" data-placement="bottom" data-original-title="Kies hier uw relatie waar de inkoopfactuur betrekking op heeft. Staat uw relatie er nog niet bij, maak dan eerst een nieuwe relatie aan." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
-												<th class="col-md-2">Bedrag (Excl. BTW) <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier plaatst u alle facturen van uw project (facturen materiaal, materieel en onderaannemers). Deze worden gebruikt voor uw winst en verlies berekening." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
-
-												<th class="col-md-2">Soort <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier aan waar de inkoopfactuur betrekking op heeft." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
-												<th class="col-md-4">Omschrijving</th>
-												<th class="col-md-1">&nbsp;</th>
-											</tr>
-										</thead>
-
-										<tbody>
-											@foreach (\Calctool\Models\Purchase::where('project_id','=', $project->id)->get() as $purchase)
-											<tr data-id="{{ $purchase->id }}">
-												<td class="col-md-1">{{ date('d-m-Y', strtotime($purchase->register_date)) }}</td>
-												<td class="col-md-2">{{ $purchase->relation_id ? Relation::find($purchase->relation_id)->company_name : Wholesale::find($purchase->wholesale_id)->company_name }}</td>
-												<td class="col-md-1">{{ '&euro; '.number_format($purchase->amount, 2,",",".") }}</td>
-												<td class="col-md-2">{{ ucwords(PurchaseKind::find($purchase->kind_id)->kind_name) }}</td>
-												<td class="col-md-4">{{ $purchase->note }}</td>
-												<td class="col-md-1">@if (!$project->project_close)<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>@endif</td>
-											</tr>
-											@endforeach
-											@if (!$project->project_close)
-											<tr>
-												<td class="col-md-1">
-													<input type="date" name="date" id="date" class="form-control-sm-text"/>
-												</td>
-												<td class="col-md-2">
-													<select name="relation" id="relation" class="form-control-sm-text">
-													@foreach (Relation::where('user_id','=', Auth::id())->where('active',true)->get() as $relation)
-														<option value="rel-{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
-													@endforeach
-													@foreach (Wholesale::where('user_id','=', Auth::id())->where('active',true)->get() as $wholesale)
-														<option value="whl-{{ $wholesale->id }}">{{ ucwords($wholesale->company_name) }}</option>
-													@endforeach
-													@foreach (Wholesale::whereNull('user_id')->get() as $wholesale)
-														<option value="whl-{{ $wholesale->id }}">{{ ucwords($wholesale->company_name) }}</option>
-													@endforeach
-													</select>
-												</td>
-												<td class="col-md-2"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
-												<td class="col-md-2">
-													<select name="typename" id="typename" class="form-control-sm-text">
-													@foreach (\Calctool\Models\PurchaseKind::all() as $typename)
-														<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
-													@endforeach
-													</select>
-												</td>
-												<td class="col-md-4"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
-												<td class="col-md-1"><button id="addnewpurchase" class="btn btn-primary btn-xs"> Toevoegen</button></td>
-											</tr>
-											@endif
-										</tbody>
-									</table>
-								<!--</div>
-							</div>-->
-						</div>
 					</div>
 				</div>
 

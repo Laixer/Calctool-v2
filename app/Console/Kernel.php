@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         \Calctool\Console\Commands\Inspire::class,
         \Calctool\Console\Commands\DropHard::class,
         \Calctool\Console\Commands\MaterialImport::class,
+        \Calctool\Console\Commands\StorageClear::class,
     ];
 
     /**

@@ -34,7 +34,27 @@ $(document).ready(function() {
 			}
 		}
 	}
-
+	$('#tab-company').click(function(e){
+		sessionStorage.toggleTabMyComp{{Auth::id()}} = 'company';
+	});
+	$('#tab-payment').click(function(e){
+		sessionStorage.toggleTabMyComp{{Auth::id()}} = 'payment';
+	});
+	$('#tab-contact').click(function(e){
+		sessionStorage.toggleTabMyComp{{Auth::id()}} = 'contact';
+	});
+	$('#tab-logo').click(function(e){
+		sessionStorage.toggleTabMyComp{{Auth::id()}} = 'logo';
+	});
+	if (sessionStorage.toggleTabMyComp{{Auth::id()}}){
+		$toggleOpenTab = sessionStorage.toggleTabMyComp{{Auth::id()}};
+		$('#tab-'+$toggleOpenTab).addClass('active');
+		$('#'+$toggleOpenTab).addClass('active');
+	} else {
+		sessionStorage.toggleTabMyComp{{Auth::id()}} = 'company';
+		$('#tab-company').addClass('active');
+		$('#company').addClass('active');
+	}
 	$('#website').blur(function(e) {
 		prefixURL($(this));
 	});
@@ -132,22 +152,22 @@ $(document).ready(function() {
 				<div class="tabs nomargin-top">
 
 					<ul class="nav nav-tabs">
-						<li class="active">
+						<li id="tab-company">
 							<a href="#company" data-toggle="tab">Bedrijfsgegevens</a>
 						</li>
-						<li>
+						<li id="tab-payment">
 							<a href="#payment" data-toggle="tab">Betalingsgegevens</a>
 						</li>
-						<li>
+						<li id="tab-contact">
 							<a href="#contact" data-toggle="tab">Contacten</a>
 						</li>
-						<li>
+						<li id="tab-logo">
 							<a href="#logo" data-toggle="tab">Logo</a>
 						</li>
 					</ul>
 
 					<div class="tab-content">
-						<div id="company" class="tab-pane active">
+						<div id="company" class="tab-pane">
 
 							{!! $relation ? '<form action="relation/updatemycompany" method="post">' : '<form action="relation/newmycompany" method="post">' !!}
 							{!! csrf_field() !!}

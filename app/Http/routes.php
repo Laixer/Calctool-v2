@@ -26,6 +26,10 @@ Route::get('password/{api}/{token}', function() {
 })->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
 Route::post('password/{api}/{token}', array('middleware' => 'guest', 'as' => 'register', 'uses' => 'AuthController@doNewPassword'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
 
+Route::get('ex-project-overview/{token}', function() {
+	return view('user.client_page');
+})->where('token', '[0-9a-z]{40}');
+
 Route::get('api/v1', array('uses' => 'ApiController@getApiRoot'));
 
 Route::get('about', function() {
@@ -126,9 +130,8 @@ Route::group(array('middleware' => 'auth'), function()
 		return View::make('calc.offer_show_pdf');
 	})->where('project_id', '[0-9]+')->where('offer_id', '[0-9]+');
 	Route::post('offer/close', 'OfferController@doOfferClose');
-
-	//Route::get('offer/pdf/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOfferPDF'))->where('project_id', '[0-9]+');
-	//Route::get('offer/pdf/project-{project_id}/download', array('as' => 'invoice', 'uses' => 'CalcController@getOfferDownloadPDF'))->where('project_id', '[0-9]+');
+	Route::post('offer/sendmail', 'OfferController@doSendOffer');
+	Route::post('offer/sendpost', 'OfferController@doSendPostOffer');
 
 	Route::get('invoice/pdf/project-{project_id}/invoice-{invoice_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoicePDF'))->where('project_id', '[0-9]+');
 	Route::get('invoice/pdf/project-{project_id}/invoice-{invoice_id}/download', array('as' => 'invoice', 'uses' => 'CalcController@getInvoiceDownloadPDF'))->where('project_id', '[0-9]+');
@@ -272,6 +275,7 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::post('material/updatematerial', array('uses' => 'MaterialController@doUpdate'));
 	Route::post('material/deletematerial', array('uses' => 'MaterialController@doDelete'));
 	Route::post('material/favorite', array('uses' => 'MaterialController@doFavorite'));
+	Route::post('material/element/new', array('uses' => 'MaterialController@doNewElement'));
 });
 
 Route::group(array('before' => 'admin'), function()
@@ -324,6 +328,10 @@ Route::group(array('before' => 'admin'), function()
 	});
 	Route::get('admin/log/truncate', array('as' => 'user', 'uses' => 'AdminController@doTruncateLog'));
 });
+
+Route::get('xy', function() {
+	return view('mail.offer_send', array('client'=>'opdrachtgever', 'token' => '123', 'project_name' => 'projectnaam', 'user' => 'uw vakanman', 'pref_email_offer' => 'Hierbij doe ik u mijn offerte betreffende ondergenoemd project toekomen.'));
+}); 
 
 Route::any('telegram', function(){
 	if ($_ENV['TELEGRAM_ENABLED']) {

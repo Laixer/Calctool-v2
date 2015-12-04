@@ -2,6 +2,7 @@
 use \Calctool\Models\SubGroup;
 use \Calctool\Models\Supplier;
 use \Calctool\Models\Product;
+use \Calctool\Models\Element;
 ?>
 
 @extends('layout.master')
@@ -9,6 +10,34 @@ use \Calctool\Models\Product;
 @section('content')
 <script type="text/javascript">
 $(document).ready(function() {
+	$('#tab-supplier').click(function(e){
+		sessionStorage.toggleTabMat{{Auth::user()->id}} = 'supplier';
+	});
+	$('#tab-material').click(function(e){
+		sessionStorage.toggleTabMat{{Auth::user()->id}} = 'material';
+	});
+	$('#tab-element').click(function(e){
+		sessionStorage.toggleTabMat{{Auth::user()->id}} = 'element';
+	});
+	$('#tab-favorite').click(function(e){
+		sessionStorage.toggleTabMat{{Auth::user()->id}} = 'favorite';
+	});
+	if (sessionStorage.toggleTabMat{{Auth::user()->id}}){
+		$toggleOpenTab = sessionStorage.toggleTabMat{{Auth::user()->id}};
+		$('#tab-'+$toggleOpenTab).addClass('active');
+		$('#'+$toggleOpenTab).addClass('active');
+	} else {
+		sessionStorage.toggleTabMat{{Auth::user()->id}} = 'supplier';
+		$('#tab-supplier').addClass('active');
+		$('#supplier').addClass('active');
+	}
+	$('#elmModal').on('hidden.bs.modal', function() {
+		$name = $('#name').val();
+		$desc = $('#desc').val();
+		$.post("/material/element/new", {name: $name, desc: $desc}, function(data) {
+			location.reload();
+		});
+	});
 	$req = false;
 	$("#search").keyup(function() {
 		$val = $(this).val();
@@ -146,6 +175,42 @@ $(document).ready(function() {
 </script>
 <div id="wrapper">
 
+	<div class="modal fade" id="elmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel2">Nieuw element</h4>
+				</div>
+
+				<div class="modal-body">
+					<div class="form-horizontal">
+						<div class="form-group">
+							<div class="col-md-4">
+								<label>Naam</label>
+							</div>
+							<div class="col-md-8">
+								<input name="name" id="name" type="text" class="form-control" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-4">
+								<label>Opmerking</label>
+							</div>
+							<div class="col-md-8">
+								<input name="desc" id="desc" type="text" class="form-control" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-default" data-dismiss="modal">Opslaan</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<section class="container">
 
 		<div class="col-md-12">
@@ -156,24 +221,22 @@ $(document).ready(function() {
 			<div class="tabs nomargin-top">
 
 				<ul class="nav nav-tabs">
-					<li class="active">
+					<li id="tab-supplier">
 						<a href="#supplier" data-toggle="tab"><i class="fa fa-cart-arrow-down"></i> Alle leverancies</a>
 					</li>
-					<li>
+					<li id="tab-material">
 						<a href="#material" data-toggle="tab"><i class="fa fa-wrench"></i> Mijn materiaal</a>
 					</li>
-					@if (0)
-					<li>
+					<li id="tab-element">
 						<a href="#element" data-toggle="tab"><i class="fa fa-th-list"></i> Elementen</a>
 					</li>
-					@endif
-					<li>
+					<li id="tab-favorite">
 						<a href="#favorite" data-toggle="tab"><i class="fa fa-star"></i> Favorieten</a>
 					</li>
 				</ul>
 
 				<div class="tab-content">
-					<div id="supplier" class="tab-pane active">
+					<div id="supplier" class="tab-pane">
 
 						<div class="form-group input-group input-group-lg">
 							<input type="text" id="search" value="" class="form-control" placeholder="Zoek materiaal">
@@ -273,6 +336,41 @@ $(document).ready(function() {
 					</div>
 
 					<div id="element" class="tab-pane">
+						<h4>Elementen</h4>
+						<table class="table table-striped">
+							<thead>	
+								<tr>
+									<th class="col-md-3">Naam</th>
+									<th class="col-md-2">Onderdelen</th>
+									<th class="col-md-4">Omschrijving</th>
+									<th class="col-md-1"></th>
+									<th class="col-md-2"></th>
+								</tr>
+							</thead>
+
+							<tbody>
+							@if (!Element::where('user_id','=', Auth::id())->count('id'))
+							<tr>
+								<td colspan="6" style="text-align: center;">Er zijn geen elementen</td>
+							</tr>
+							@endif
+							@foreach (Element::where('user_id','=', Auth::id())->get() as $element)
+								<tr>
+									<td class="col-md-3"><a href="/material/element-{{ $element->id }}">{{ $element->name }}</a></td>
+									<td class="col-md-2">{{--  --}}</td>
+									<td class="col-md-4">{{ $element->description }}</td>
+									<td class="col-md-1"></td>
+									<td class="col-md-2 text-right"><button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button></td>
+								</tr>
+							@endforeach
+							</tbody>
+						</table>
+						<div class="row">
+							<div class="col-md-12">
+								<a href="#" data-toggle="modal" data-target="#elmModal" id="newelm" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw element</a>
+							</div>
+						</div>
+
 					</div>
 
 					<div id="favorite" class="tab-pane">

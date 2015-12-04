@@ -61,11 +61,8 @@ class AuthController extends Controller {
 
 			Redis::del('auth:'.$username.':fail', 'auth:'.$username.':block');
 
-			$log = new \Calctool\Models\Audit;
-			$log->ip = \Calctool::remoteAddr();
-			$log->event = '[LOGIN] [SUCCESS] ' . $_SERVER['HTTP_USER_AGENT'];
-			$log->user_id = Auth::id();
-			$log->save();
+			$log = new Audit('[LOGIN] [SUCCESS] ' . \Calctool::remoteAgent());
+			$log->setUserId(Auth::id())->save();
 
 			/* Redirect to dashboard*/
 			return redirect('/');
@@ -157,8 +154,7 @@ class AuthController extends Controller {
 		$user->token = sha1($user->secret);
 		$user->save();
 
-		$log = new Calctool\Models\Audit;
-		$log->ip = \Calctool::remoteAddr();
+		$log = new Audit;
 		$log->event = '[NEWPASS] [SUCCESS]';
 		$log->user_id = $user->id;
 		$log->save();
@@ -244,7 +240,7 @@ class AuthController extends Controller {
 
 		$data = array('email' => $user->email, 'api' => $user->api, 'token' => $user->token, 'username' => $user->username);
 		Mailgun::send('mail.password', $data, function($message) use ($data) {
-			$message->to($data['data'], strtolower(trim($data['username'])))->subject('Calctool - Wachtwoord herstellen');
+			$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Wachtwoord herstellen');
 		});
 
 		$user->save();

@@ -24,6 +24,30 @@ $(document).ready(function() {
 			}
 		}
 	}
+	$('#tab-company').click(function(e){
+		sessionStorage.toggleTabMyAcc{{Auth::id()}} = 'company';
+	});
+	$('#tab-payment').click(function(e){
+		sessionStorage.toggleTabMyAcc{{Auth::id()}} = 'payment';
+	});
+	$('#tab-contact').click(function(e){
+		sessionStorage.toggleTabMyAcc{{Auth::id()}} = 'contact';
+	});
+	$('#tab-prefs').click(function(e){
+		sessionStorage.toggleTabMyAcc{{Auth::id()}} = 'prefs';
+	});
+	$('#tab-notepad').click(function(e){
+		sessionStorage.toggleTabMyAcc{{Auth::id()}} = 'notepad';
+	});
+	if (sessionStorage.toggleTabMyAcc{{Auth::id()}}){
+		$toggleOpenTab = sessionStorage.toggleTabMyAcc{{Auth::id()}};
+		$('#tab-'+$toggleOpenTab).addClass('active');
+		$('#'+$toggleOpenTab).addClass('active');
+	} else {
+		sessionStorage.toggleTabMyAcc{{Auth::id()}} = 'company';
+		$('#tab-company').addClass('active');
+		$('#company').addClass('active');
+	}
 	$('#website').blur(function(e) {
 		prefixURL($(this));
 	});
@@ -74,25 +98,25 @@ $(document).ready(function() {
 				<div class="tabs nomargin-top">
 
 					<ul class="nav nav-tabs">
-						<li class="active">
+						<li id="tab-company">
 							<a href="#company" data-toggle="tab">Mijn gegevens</a>
 						</li>
-						<li>
+						<li id="tab-payment">
 							<a href="#payment" data-toggle="tab">Mijn abonnement</a>
 						</li>
-						<li>
+						<li id="tab-contact">
 							<a href="#contact" data-toggle="tab">Wachtwoord</a>
 						</li>
-						<li>
+						<li id="tab-prefs">
 							<a href="#prefs" data-toggle="tab">Voorkeuren</a>
 						</li>
-						<li>
+						<li id="tab-notepad">
 							<a href="#notepad" data-toggle="tab">Kladblok</a>
 						</li>
 					</ul>
 
 					<div class="tab-content">
-						<div id="company" class="tab-pane active">
+						<div id="company" class="tab-pane">
 
 							<form method="POST" action="/myaccount/updateuser" accept-charset="UTF-8">
 							{!! csrf_field() !!}

@@ -90,23 +90,20 @@ var n = this,
 			}
 		}
 		$('#tab-calculate').click(function(e){
-			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'calculate';
-		});
-		$('#tab-estimate').click(function(e){
-			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'estimate';
+			sessionStorage.toggleTabLess{{Auth::user()->id}} = 'calculate';
 		});
 		$('#tab-summary').click(function(e){
-			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'summary';
+			sessionStorage.toggleTabLess{{Auth::user()->id}} = 'summary';
 		});
 		$('#tab-endresult').click(function(e){
-			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'endresult';
+			sessionStorage.toggleTabLess{{Auth::user()->id}} = 'endresult';
 		});
-		if (sessionStorage.toggleTabCalc{{Auth::user()->id}}){
-			$toggleOpenTab = sessionStorage.toggleTabCalc{{Auth::user()->id}};
+		if (sessionStorage.toggleTabLess{{Auth::user()->id}}){
+			$toggleOpenTab = sessionStorage.toggleTabLess{{Auth::user()->id}};
 			$('#tab-'+$toggleOpenTab).addClass('active');
 			$('#'+$toggleOpenTab).addClass('active');
 		} else {
-			sessionStorage.toggleTabCalc{{Auth::user()->id}} = 'calculate';
+			sessionStorage.toggleTabLess{{Auth::user()->id}} = 'calculate';
 			$('#tab-calculate').addClass('active');
 			$('#calculate').addClass('active');
 		}

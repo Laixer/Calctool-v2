@@ -169,6 +169,10 @@ div.toggle-activity > label:hover {
 	background-color: #4E4E4E !important;
 }
 
+.wizard {
+	margin: 0 0 20px 0;
+}
+
 /* Wizzard */
 .wizard a {
 	padding: 10px 16px 10px 37px;
@@ -185,7 +189,7 @@ div.toggle-activity > label:hover {
 	position: relative;
 	display: inline-block;
 	text-decoration: none;
-	color: #666;
+	color: orange;
 }
 
 .wizard span:before {
@@ -219,14 +223,17 @@ div.toggle-activity > label:hover {
 	-webkit-border-radius: 4px 0 0 4px;
 	-moz-border-radius: 4px 0 0 4px;
 	border-radius: 4px 0 0 4px;
+	margin-bottom: 10px;
 }
 .wizard span:last-child {
 	-webkit-border-radius: 0 4px 4px 0;
 	-moz-border-radius: 0 4px 4px 0;
 	border-radius: 0 4px 4px 0;
+	margin-bottom: 10px;
 }
 .wizard span:first-child .badge {
 	margin-left: 0;
+
 }
 
 .wizard a:before {
@@ -270,11 +277,11 @@ div.toggle-activity > label:hover {
 	margin-left: 0;
 }
 .wizard .current {
-	background: #79BB00;
+	background: #4E4E4E;
 	color: #fff;
 }
 .wizard .current:after {
-	border-left-color: #79BB00;
+	border-left-color: #4E4E4E;
 }
 /*a;s de knop niet beschikbaar is moet deze grijs (niet selecteerbaar) zijn.*/
 

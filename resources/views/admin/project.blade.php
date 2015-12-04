@@ -56,7 +56,7 @@ use \Calctool\Models\RelationKind;
 				@foreach (Project::orderBy('created_at', 'desc')->get() as $project)
 				<?php $relation = Relation::find($project->client_id); ?>
 					<tr>
-						<td class="col-md-1"><a href="javascript:void(0);">{{ $project->id }}</a></td>
+						<td class="col-md-1">{{ $project->id }}</td>
 						<td class="col-md-3">{{ $project->project_name }}</td>
 						<td class="col-md-2">{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</td>
 						<td class="col-md-2">{{ ucfirst(User::find($project->user_id)->username) }}</td>

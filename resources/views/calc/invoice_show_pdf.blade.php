@@ -98,6 +98,8 @@ if (!$invoice) {
 				echo '<button class="btn btn-primary oclose">Factureren</button>';
 			} else if (!$prev && $next && !$next->invoice_close) {
 				echo '<button class="btn btn-primary oclose">Factureren</button>';
+			} else if (!$prev && !$next) {
+				echo '<button class="btn btn-primary oclose">Factureren</button>';
 			} else if ($prev && $prev->invoice_close && $end && !$end->invoice_close) {
 				echo '<button class="btn btn-primary oclose">Factureren</button>';
 			}
@@ -141,6 +143,8 @@ if (!$invoice) {
 					if ($prev && $prev->invoice_close && $next && !$next->invoice_close) {
 						echo '<button class="btn btn-primary oclose">Factureren</button>';
 					} else if (!$prev && $next && !$next->invoice_close) {
+						echo '<button class="btn btn-primary oclose">Factureren</button>';
+					} else if (!$prev && !$next) {
 						echo '<button class="btn btn-primary oclose">Factureren</button>';
 					} else if ($prev && $prev->invoice_close && $end && !$end->invoice_close) {
 						echo '<button class="btn btn-primary oclose">Factureren</button>';
