@@ -5,6 +5,7 @@ namespace Calctool\Http\Controllers;
 use Illuminate\Http\Request;
 use \Calctool\Models\Project;
 use \Calctool\Models\Offer;
+use \Calctool\Models\OfferPost;
 use \Calctool\Calculus\CalculationEndresult;
 use \Calctool\Models\Resource;
 use \Calctool\Http\Controllers\InvoiceController;
@@ -201,6 +202,27 @@ class OfferController extends Controller {
 		Mailgun::send('mail.offer_send', $data, function($message) use ($data) {
 			$message->to($data['email'], strtolower(trim($data['username'])))->subject('Offerte ' . $data['project_name']);
 		});
+
+		return json_encode(['success' => 1]);
+	}
+
+	public function doSendPostOffer(Request $request)
+	{
+		$offer = Offer::find($request->input('offer'));
+		if (!$offer)
+			return json_encode(['success' => 0]);
+		$project = Project::find($offer->project_id);
+		if (!$project || !$project->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
+
+		if (OfferPost::where('offer_id', $offer->id)->count()>0) {
+			return json_encode(['success' => 0,'message' => 'Offerte al aangeboden']);
+		}
+		$post = new OfferPost;
+		$post->offer_id = $offer->id;
+
+		$post->save();
 
 		return json_encode(['success' => 1]);
 	}

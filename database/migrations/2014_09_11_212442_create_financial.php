@@ -30,7 +30,6 @@ class CreateFinancial extends Migration {
 			$table->string('valid_name', 10)->unique();
 		});
 
-
 		Schema::create('offer', function(Blueprint $table)
 		{
 			$table->increments('id');
@@ -64,7 +63,15 @@ class CreateFinancial extends Migration {
 			$table->boolean('display_worktotals')->default('N');
 			$table->boolean('display_specification')->default('N');
 			$table->boolean('display_description')->default('N');
+		});
 
+		Schema::create('offer_post', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->nullableTimestamps();
+			$table->date('sent_date')->nullable();
+			$table->integer('offer_id')->unsigned();
+			$table->foreign('offer_id')->references('id')->on('offer')->onUpdate('cascade')->onDelete('cascade');
 		});
 
 		Schema::create('invoice', function(Blueprint $table)
@@ -150,6 +157,11 @@ class CreateFinancial extends Migration {
 		Schema::table('invoice', function(Blueprint $table)
 		{
 			Schema::dropIfExists('invoice');
+		});
+
+		Schema::table('offer_post', function(Blueprint $table)
+		{
+			Schema::dropIfExists('offer_post');
 		});
 
 		Schema::table('offer', function(Blueprint $table)

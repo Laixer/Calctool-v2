@@ -73,6 +73,16 @@ $(document).ready(function() {
 			}
 		});
 	});
+	$('#sendpost').click(function(){
+		$.post("/offer/sendpost", {
+			offer: {{ $offer->id }}
+		}, function(data){
+			var json = $.parseJSON(data);
+			if (json.success) {
+				$('#postsent').show();
+			}
+		});
+	});
 });
 </script>
 	<div id="wrapper">
@@ -84,6 +94,11 @@ $(document).ready(function() {
 		<div id="mailsent" class="alert alert-success" style="display: none;">
 			<i class="fa fa-check-circle"></i>
 			<strong>Email verstuurd naar opdrachtgever</strong>
+		</div>
+
+		<div id="postsent" class="alert alert-success" style="display: none;">
+			<i class="fa fa-check-circle"></i>
+			<strong>De offerte zal zo snel mogelijk per post worden verzonden</strong>
 		</div>
 
 		<div class="pull-right">
@@ -100,7 +115,7 @@ $(document).ready(function() {
 			  <ul class="dropdown-menu">
 			    <li><a href="javascript:void(0);" id="sendmail">Per email</a></li>
 			    <li><a href="/res-{{ $res->id }}/download">Per post (download PDF)</a></i>
-			    <li><a href="/project">Door calculatieTool.com</a></li>
+			    <li><a href="javascript:void(0);" id="sendpost">Door calculatieTool.com</a></li>
 			  </ul>
 			</div>
 			<?php } ?>

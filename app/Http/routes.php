@@ -131,6 +131,7 @@ Route::group(array('middleware' => 'auth'), function()
 	})->where('project_id', '[0-9]+')->where('offer_id', '[0-9]+');
 	Route::post('offer/close', 'OfferController@doOfferClose');
 	Route::post('offer/sendmail', 'OfferController@doSendOffer');
+	Route::post('offer/sendpost', 'OfferController@doSendPostOffer');
 
 	Route::get('invoice/pdf/project-{project_id}/invoice-{invoice_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoicePDF'))->where('project_id', '[0-9]+');
 	Route::get('invoice/pdf/project-{project_id}/invoice-{invoice_id}/download', array('as' => 'invoice', 'uses' => 'CalcController@getInvoiceDownloadPDF'))->where('project_id', '[0-9]+');
