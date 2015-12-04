@@ -9,12 +9,14 @@ use \Calctool\Calculus\CalculationEndresult;
 use \Calctool\Models\Resource;
 use \Calctool\Http\Controllers\InvoiceController;
 use \Calctool\Models\Invoice;
+use \Calctool\Models\ProjectShare;
+use \Calctool\Models\Contact;
 use \Calctool\Calculus\ResultEndresult;
 use \Calctool\Calculus\InvoiceTerm;
 
 use \Auth;
 use \PDF;
-
+use \Mailgun;
 
 class OfferController extends Controller {
 
@@ -171,6 +173,34 @@ class OfferController extends Controller {
 			}
 			$invoice->save();
 		}
+
+		return json_encode(['success' => 1]);
+	}
+
+	public function doSendOffer(Request $request)
+	{
+		$offer = Offer::find($request->input('offer'));
+		if (!$offer)
+			return json_encode(['success' => 0]);
+		$project = Project::find($offer->project_id);
+		if (!$project || !$project->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
+
+		$share = ProjectShare::where('project_id', $project->id)->first();
+		if (!$share) {
+			$share = new ProjectShare;
+			$share->project_id = $project->id;
+
+			$share->save();
+		}
+
+		$contact = Contact::find($offer->to_contact_id);
+
+		$data = array('email' => $contact->email, 'token' => $share->token, 'username' => $contact->getFormalName(), 'project_name' => $project->project_name);
+		Mailgun::send('mail.offer_send', $data, function($message) use ($data) {
+			$message->to($data['email'], strtolower(trim($data['username'])))->subject('Offerte ' . $data['project_name']);
+		});
 
 		return json_encode(['success' => 1]);
 	}
