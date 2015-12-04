@@ -51,7 +51,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														{{ pref_email_offer }}
+														{{ $pref_email_offer }}
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->
@@ -65,13 +65,17 @@
 														</a>
 													</td>
 												</tr>
+												<tr>
+													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 12px; text-align: center; color:#8E8E8E; line-height: 32px;">
+														{{ $project_name }}						
+													</td>
+												</tr>
 												<tr><!-- spacer after the line -->
 													<td width="100%" height="20"></td>
 												</tr>
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
-														<br>
-															U wordt na het klikken op de link naar een beveiligde omgeving van de <strong>Calculatieool.com</strong> doorgestuurd. 
+															U wordt na het klikken op de link naar een beveiligde omgeving van de <strong>CalculatieTool.com</strong> doorgestuurd. 
 															Hier kunt u mijn offerte bekijken, opmerkingen achterlaten en eventueel direct de offerte goedkeuren en opdracht verstrekken.
 
 														<br>

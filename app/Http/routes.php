@@ -330,7 +330,7 @@ Route::group(array('before' => 'admin'), function()
 });
 
 Route::get('xy', function() {
-	return view('mail.offer_send', array('client'=>'opdrachtgever', 'token' => '123', 'project_name' => 'projectnaam', 'user' => 'uw vakanman', 'pref_email_offer' => 'Hierbij doe ik u mijn offerte betreffende bovengenoemd project toekomen.'));
+	return view('mail.offer_send', array('client'=>'opdrachtgever', 'token' => '123', 'project_name' => 'projectnaam', 'user' => 'uw vakanman', 'pref_email_offer' => 'Hierbij doe ik u mijn offerte betreffende ondergenoemd project toekomen.'));
 }); 
 
 Route::any('telegram', function(){
