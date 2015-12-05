@@ -140,6 +140,27 @@ class CreateFinancial extends Migration {
 			$table->boolean('display_specification')->default('N');
 			$table->boolean('display_description')->default('N');
 		});
+
+		Schema::create('bank_account', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('account', 25);
+			$table->string('account_name');
+			$table->nullableTimestamps();
+			$table->integer('user_id')->unsigned();
+			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
+		});
+
+		Schema::create('cashbook', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->nullableTimestamps();
+			$table->decimal('amount', 9, 3);
+			$table->date('payment_date');
+			$table->string('description')->nullable();
+			$table->integer('account_id')->unsigned();
+			$table->foreign('account_id')->references('id')->on('bank_account')->onUpdate('cascade')->onDelete('cascade');
+		});
 	}
 
 	/**
@@ -149,6 +170,16 @@ class CreateFinancial extends Migration {
 	 */
 	public function down()
 	{
+		Schema::table('cashbook', function(Blueprint $table)
+		{
+			Schema::dropIfExists('cashbook');
+		});
+
+		Schema::table('bank_account', function(Blueprint $table)
+		{
+			Schema::dropIfExists('bank_account');
+		});
+
 		Schema::table('invoice_version', function(Blueprint $table)
 		{
 			Schema::dropIfExists('invoice_version');
