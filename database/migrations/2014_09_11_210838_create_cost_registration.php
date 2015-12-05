@@ -56,6 +56,18 @@ class CreateCostRegistration extends Migration {
 			$table->integer('kind_id')->unsigned();
 			$table->foreign('kind_id')->references('id')->on('purchase_kind')->onUpdate('cascade')->onDelete('restrict');
 		});
+
+		Schema::create('trip', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('start_location', 80);
+			$table->string('end_location', 80);
+			$table->decimal('distance', 9, 3);
+			$table->string('note')->nullable();
+			$table->date('trip_date');
+			$table->integer('project_id')->unsigned();
+			$table->foreign('project_id')->references('id')->on('project')->onUpdate('cascade')->onDelete('cascade');
+		});
 	}
 
 	/**
@@ -65,6 +77,11 @@ class CreateCostRegistration extends Migration {
 	 */
 	public function down()
 	{
+		Schema::table('trip', function(Blueprint $table)
+		{
+			Schema::dropIfExists('trip');
+		});
+
 		Schema::table('purchase', function(Blueprint $table)
 		{
 			Schema::dropIfExists('purchase');
