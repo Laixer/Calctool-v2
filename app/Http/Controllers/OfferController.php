@@ -198,7 +198,7 @@ class OfferController extends Controller {
 
 		$contact = Contact::find($offer->to_contact_id);
 
-		$data = array('email' => $contact->email, 'token' => $share->token, 'client' => $contact->getFormalName(), 'project_name' => $project->project_name, 'pref_email_offer' => Auth::User()->pref_email_offer));
+		$data = array('email' => $contact->email, 'token' => $share->token, 'client' => $contact->getFormalName(), 'project_name' => $project->project_name, 'pref_email_offer' => Auth::User()->pref_email_offer);
 		Mailgun::send('mail.offer_send', $data, function($message) use ($data) {
 			$message->to($data['email'], strtolower(trim($data['client'])))->subject('Offerte ' . $data['project_name']);
 		});
