@@ -21,7 +21,7 @@ if (!$offer) {
 ?>
 @extends('layout.master')
 
-<?php if($common_access_error){ ?>
+<?php if($common_access_error){ ?>	Route::post('offer/sendmail', 'OfferController@doSendOffer');
 @section('content')
 <div id="wrapper">
 	<section class="container">
@@ -107,7 +107,7 @@ $(document).ready(function() {
 			<a href="/offer/project-{{ $project->id }}" class="btn btn-primary">Bewerk</a>
 			@endif
 			<div class="btn-group">
-			  <a href="/project/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Versturen</a>
+			  <a href="offer/sendmail" class="btn btn-primary"><i class="fa fa-pencil"></i> Versturen</a>
 			  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			   <span class="caret"></span>
 			    <span class="sr-only">Toggle Dropdown</span>

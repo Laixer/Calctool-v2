@@ -200,7 +200,7 @@ class OfferController extends Controller {
 
 		$data = array('email' => $contact->email, 'token' => $share->token, 'client' => $contact->getFormalName(), 'project_name' => $project->project_name, 'pref_email_offer' => Auth::User()->pref_email_offer);
 		Mailgun::send('mail.offer_send', $data, function($message) use ($data) {
-			$message->to($data['email'], strtolower(trim($data['username'])))->subject('Offerte ' . $data['project_name']);
+			$message->to($data['email'], strtolower(trim($data['client'])))->subject('Offerte ' . $data['project_name']);
 		});
 
 		return json_encode(['success' => 1]);
