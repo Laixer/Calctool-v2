@@ -67,7 +67,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 12px; text-align: center; color:#8E8E8E; line-height: 32px;">
-														{{ $project_name }}						
+														<em>{{ $project_name }}</em>					
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->
@@ -83,7 +83,7 @@
 															Met vriendelijke groet,
 														<br>
 														<br>
-															<strong>UW vakanman</strong>, {{ $user }}</strong></a>
+															<strong>Uw vakanman</strong>, {{ $client }}</strong></a>
 														<br>
 														<br>
 													</td>

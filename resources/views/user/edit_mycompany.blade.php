@@ -8,6 +8,8 @@ use \Calctool\Models\ContactFunction;
 use \Calctool\Models\Province;
 use \Calctool\Models\Country;
 use \Calctool\Models\Resource;
+use \Calctool\Models\BankAccount;
+use \Calctool\Models\Cashbook;
 
 $relation = Relation::find(Auth::user()->self_id);
 ?>
@@ -43,6 +45,9 @@ $(document).ready(function() {
 	$('#tab-contact').click(function(e){
 		sessionStorage.toggleTabMyComp{{Auth::id()}} = 'contact';
 	});
+	$('#tab-cashbook').click(function(e){
+		sessionStorage.toggleTabMyComp{{Auth::id()}} = 'cashbook';
+	});
 	$('#tab-logo').click(function(e){
 		sessionStorage.toggleTabMyComp{{Auth::id()}} = 'logo';
 	});
@@ -59,6 +64,13 @@ $(document).ready(function() {
 		prefixURL($(this));
 	});
 	$('#iban').blur(function() {
+		if (! IBAN.isValid($(this).val()) ) {
+			$(this).parent().addClass('has-error');
+		} else {
+			$(this).parent().removeClass('has-error');
+		}
+	});
+	$('#account').blur(function() {
 		if (! IBAN.isValid($(this).val()) ) {
 			$(this).parent().addClass('has-error');
 		} else {
@@ -113,11 +125,120 @@ $(document).ready(function() {
         }
 
     });
-
+	$('#accountModal').on('hidden.bs.modal', function() {
+		$.post("/mycompany/cashbook/account/new", {account: $('#account').val(), account_name: $('#account_name').val(), amount: $('#amount').val()}, function(data) {
+			location.reload();
+		});
+	});
+	$('#cashbookModal').on('hidden.bs.modal', function() {
+		$.post("/mycompany/cashbook/new", {account: $('#account2').val(), amount: $('#amount2').val(), date: $('#date').val(), desc: $('#desc').val()}, function(data) {
+			location.reload();
+		});
+	});
 });
 </script>
 
 <div id="wrapper">
+
+	<div class="modal fade" id="accountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel2">Nieuwe rekening</h4>
+				</div>
+
+				<div class="modal-body">
+					<div class="form-horizontal">
+						<div class="form-group">
+							<div class="col-md-4">
+								<label>Rekening</label>
+							</div>
+							<div class="col-md-8">
+								<input name="account" id="account" type="text" class="form-control" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-4">
+								<label>Naam</label>
+							</div>
+							<div class="col-md-8">
+								<input name="account_name" id="account_name" type="text" class="form-control" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-4">
+								<label>Startbedrag</label>
+							</div>
+							<div class="col-md-8">
+								<input name="amount" id="amount" type="text" class="form-control" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-default" data-dismiss="modal">Opslaan</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="cashbookModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel2">Nieuwe regel</h4>
+				</div>
+
+				<div class="modal-body">
+					<div class="form-horizontal">
+						<div class="form-group">
+							<div class="col-md-4">
+								<label>Rekening</label>
+							</div>
+							<div class="col-md-8">
+								<select name="account2" id="account2" class="form-control pointer">
+								@foreach (BankAccount::where('user_id', Auth::id())->get() as $account)
+									<option value="{{ $account->id }}">{{ $account->account }}</option>
+								@endforeach
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-4">
+								<label>Bedrag</label>
+							</div>
+							<div class="col-md-8">
+								<input name="amount2" id="amount2" type="text" class="form-control" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-4">
+								<label>Datum</label>
+							</div>
+							<div class="col-md-8">
+								<input type="date" name="date" id="date" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-md-4">
+								<label>Omschrijving</label>
+							</div>
+							<div class="col-md-8">
+								<input name="desc" id="desc" type="text" class="form-control" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-default" data-dismiss="modal">Opslaan</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<section class="container">
 
@@ -160,6 +281,9 @@ $(document).ready(function() {
 						</li>
 						<li id="tab-contact">
 							<a href="#contact" data-toggle="tab">Contacten</a>
+						</li>
+						<li id="tab-cashbook">
+							<a href="#cashbook" data-toggle="tab">Kasboek</a>
 						</li>
 						<li id="tab-logo">
 							<a href="#logo" data-toggle="tab">Logo</a>
@@ -362,6 +486,51 @@ $(document).ready(function() {
 							<div class="row">
 								<div class="col-md-12">
 									<a href="/mycompany/contact/new" {{ $relation ? '' : 'disabled' }} class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
+								</div>
+							</div>
+						</div>
+						<div id="cashbook" class="tab-pane">
+							<h4>Rekeningen</h4>
+							<div class="row">
+								<div class="col-md-3"><strong>Rekening</strong></div>
+								<div class="col-md-2"><strong>Saldo</strong></div>
+							</div>
+							@foreach (BankAccount::where('user_id', Auth::id())->get() as $account)
+							<div class="row">
+								<div class="col-md-3">{{ $account->account }}</div>
+								<div class="col-md-2">&euro;{{ number_format(Cashbook::where('account_id', $account->id)->sum('amount'), 2, ",",".") }}</div>
+								<div class="col-md-3"></div>
+							</div>
+							@endforeach
+							<br />
+							<h4>Af en bij</h4>
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th class="col-md-2">Rekening</th>
+										<th class="col-md-2">Bedrag</th>
+										<th class="col-md-2">Datum</th>
+										<th class="col-md-6">Omschrijving</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									@foreach (BankAccount::where('user_id', Auth::id())->get() as $account)
+									@foreach (Cashbook::where('account_id', $account->id)->orderBy('payment_date','desc')->get() as $row)
+									<tr>
+										<td class="col-md-2">{{ $account->account }}</a></td>
+										<td class="col-md-2">{{ ($row->amount > 0 ? '+' : '') . number_format($row->amount, 2, ",",".") }}</td>
+										<td class="col-md-2">{{ date('d-m-Y', strtotime($row->payment_date)) }}</td>
+										<td class="col-md-6">{{ $row->description }}</td>
+									</tr>
+									@endforeach
+									@endforeach
+								</tbody>
+							</table>
+							<div class="row">
+								<div class="col-md-12">
+									<a href="#" data-toggle="modal" data-target="#cashbookModal" id="newcash" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuwe regel</a>
+									<a href="#" data-toggle="modal" data-target="#accountModal" id="newacc" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuwe rekening</a>
 								</div>
 							</div>
 						</div>
