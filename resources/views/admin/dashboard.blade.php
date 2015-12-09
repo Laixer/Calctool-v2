@@ -119,15 +119,33 @@
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-envelope fsize60"></span>
-											<strong>Verstuur opdrachten</strong>
+											<strong>Opdrachten</strong>
 										</span>
 									</a>
-									<a href="/admin/support" class="btn btn-primary add_to_cart"><i class="fa fa-envelope"></i> Verstuur opdrachten</a>
+									<a href="/admin/snailmail" class="btn btn-primary add_to_cart"><i class="fa fa-envelope"></i> Opdrachten</a>
 								</figure>
 								<div class="item-box-desc">
-									<a href="/admin/support"><h4>Opdrachtbeheer</h4></a>
+									<a href="/admin/snailmail"><h4>Opdrachtbeheer</h4></a>
 									<small class="styleColor">{{ \Calctool\Models\OfferPost::whereNull('sent_date')->count() }} te versturen offerte(s)</small>
 									<!--<small class="styleColor">x open tickets</small>-->	
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-md-3">
+							<div class="item-box item-box-show fixed-box">
+								<figure>
+									<a class="item-hover" href="/admin/message">
+										<span class="overlay color2"></span>
+										<span class="inner">
+											<span class="block fa fa-envelope-o fsize60"></span>
+											<strong>Berichten</strong>
+										</span>
+									</a>
+									<a href="/admin/message" class="btn btn-primary add_to_cart"><i class="fa fa-envelope-o"></i> Berichten</a>
+								</figure>
+								<div class="item-box-desc">
+									<a href="/admin/message"><h4>Berichtenbox</h4></a>
 								</div>
 							</div>
 						</div>
@@ -150,7 +168,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-6 col-md-3"><!-- item -->
+						<div class="col-sm-6 col-md-3">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/phpinfo">
@@ -168,7 +186,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-6 col-md-3"><!-- item -->
+						<div class="col-sm-6 col-md-3">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/log">

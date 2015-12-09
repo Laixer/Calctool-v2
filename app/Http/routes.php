@@ -334,6 +334,9 @@ Route::group(array('before' => 'admin'), function()
 	Route::get('admin/snailmail', function() {
 		return view('admin.snailmail');
 	});
+	Route::get('admin/message', function() {
+		return view('admin.message');
+	});
 	Route::post('admin/snailmail/done', 'AdminController@doOfferPostDone');
 	Route::get('admin/resource', function() {
 		return view('admin.resource');
