@@ -225,18 +225,6 @@ else {
 				location.reload();
 			});
     	});
-		<?php if ($offer_last) { ?>
-		$('#dobx').datepicker().on('changeDate', function(e){
-			$('#dobx').datepicker('hide');
-			$.post("/offer/close", {
-				date: e.date.toLocaleString(),
-				offer: {{ $offer_last->id }},
-				project: {{ $project->id }}
-			}, function(data){
-				location.reload();
-			});
-    	});
-    	<?php } ?>
 	});
 </script>
 <div id="wrapper">
@@ -320,21 +308,7 @@ else {
 							</div>
 							<div class="row">
 								<div class="col-md-3">Opdracht ontvangen <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je opdracht hebt gekregen op je offerte. De calculatie slaat dan definitief dicht." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></div>
-								<div class="col-md-2">
-									<?php
-										if (!\Calctool\Calculus\CalculationEndresult::totalProject($project)) {
-											echo "Geen offerte bedrag";
-										} else {
-											if ($offer_last && $offer_last->offer_finish) {
-												echo date('d-m-Y', strtotime($offer_last->offer_finish));
-											} else if ($offer_last) {
-												echo '<a href="#" id="dobx">Bewerk</a>';
-											} else {
-												echo "Geen offerte bedrag";
-											}
-										}
-									?>
-								</div>
+								<div class="col-md-2">{{ $offer_last && $offer_last->offer_finish ? date('d-m-Y', strtotime($offer_last->offer_finish)) : '' }}</div>
 							</div>
 								<br>
 							<div class="row">

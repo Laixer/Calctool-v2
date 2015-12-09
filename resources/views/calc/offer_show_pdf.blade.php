@@ -113,7 +113,7 @@ $(document).ready(function() {
 
 					    <div class="form-group">
 					        <label class="col-xs-3 control-label">Bevestiging</label>
-					        <div class="col-xs-5 date">
+					        <div class="col-xs-6 date">
 					            <div class="input-group input-append date" id="dateRangePicker">
 					                <input type="text" class="form-control" name="date" />
 					                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -145,7 +145,7 @@ $(document).ready(function() {
 		</div>
 
 		<div class="pull-right">
-			<?php if (!$project->project_close) { ?>
+			<?php if (!$project->project_close && !$offer->offer_finish) { ?>
 			@if ($offer_last->id == $offer->id && !$offer->offer_finish)
 			<a href="#" data-toggle="modal" data-target="#confirmModal" class="btn btn-primary">Opdracht bevestigen</a>
 			<a href="/offer/project-{{ $project->id }}" class="btn btn-primary">Bewerk</a>
@@ -162,6 +162,8 @@ $(document).ready(function() {
 			    <li><a href="javascript:void(0);" id="sendpost">Door calculatieTool.com</a></li>
 			  </ul>
 			</div>
+			<?php } else { ?>
+			<a href="/res-{{ $res->id }}/download" class="btn btn-primary">Download PDF</a>
 			<?php } ?>
 		</div>
 
@@ -173,7 +175,7 @@ $(document).ready(function() {
 			<div class="col-sm-6"></div>
 			<div class="col-sm-6">
 				<div class="padding20 pull-right">
-					<?php if (!$project->project_close) { ?>
+					<?php if (!$project->project_close && !$offer->offer_finish) { ?>
 					@if ($offer_last->id == $offer->id && !$offer->offer_finish)
 					<a href="#" data-toggle="modal" data-target="#confirmModal" class="btn btn-primary">Opdracht bevestigen</a>
 					<a href="/offer/project-{{ $project->id }}" class="btn btn-primary">Bewerk</a>
@@ -190,6 +192,8 @@ $(document).ready(function() {
 					    <li><a href="javascript:void(0);" id="sendpost">Door calculatieTool.com</a></li>
 					  </ul>
 					</div>
+					<?php } else { ?>
+					<a href="/res-{{ $res->id }}/download" class="btn btn-primary">Download PDF</a>
 					<?php } ?>
 				</div>
 			</div>
