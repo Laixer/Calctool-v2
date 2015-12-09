@@ -135,9 +135,12 @@ $(document).ready(function() {
 			location.reload();
 		});
 	});
+    $('#dateRangePicker').datepicker();
 });
 </script>
-
+<style>
+.datepicker{z-index:1151 !important;}
+</style>
 <div id="wrapper">
 
 	<div class="modal fade" id="accountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
@@ -215,14 +218,15 @@ $(document).ready(function() {
 								<input name="amount2" id="amount2" type="text" class="form-control" />
 							</div>
 						</div>
-						<div class="form-group">
-							<div class="col-md-4">
-								<label>Datum</label>
-							</div>
-							<div class="col-md-8">
-								<input type="date" name="date" id="date" class="form-control">
-							</div>
-						</div>
+					    <div class="form-group">
+					        <label class="col-md-4">Datum</label>
+					        <div class="col-md-8 date">
+					            <div class="input-group input-append date" id="dateRangePicker">
+					                <input type="text" class="form-control" name="date" id="date" />
+					                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+					            </div>
+					        </div>
+					    </div>
 						<div class="form-group">
 							<div class="col-md-4">
 								<label>Omschrijving</label>
