@@ -9,8 +9,11 @@ use \Calctool\Models\ProjectType;
 use \Calctool\Models\Offer;
 use \Calctool\Models\Invoice;
 use \Calctool\Models\Wholesale;
+use \Calctool\Models\ProjectShare;
+
 
 $common_access_error = false;
+$share = ProjectShare::where('token', Route::Input('token'))->first();
 $project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner())
 	$common_access_error = true;
@@ -57,6 +60,9 @@ else {
 		});
 		$('#tab-purchase').click(function(e){
 			sessionStorage.toggleTabProj{{Auth::id()}} = 'purchase';
+		});
+		$('#tab-communication').click(function(e){
+			sessionStorage.toggleTabProj{{Auth::id()}} = 'communication';
 		});
 		if (sessionStorage.toggleTabProj{{Auth::id()}}){
 			$toggleOpenTab = sessionStorage.toggleTabProj{{Auth::id()}};
@@ -285,6 +291,9 @@ else {
 						</li>
 						<li id="tab-purchase">
 							<a href="#purchase" data-toggle="tab">Inkoopfacturen</a>
+						</li>
+						<li id="tab-communication">
+							<a href="#communication" data-toggle="tab">Communicatie opdrachtgever</a>
 						</li>
 					</ul>
 
@@ -709,6 +718,33 @@ else {
 									</table>
 								<!--</div>
 							</div>-->
+						</div>
+						<div id="communication" class="tab-pane">
+							<form method="POST" action="/" accept-charset="UTF-8">
+                            {!! csrf_field() !!}
+
+							<h4>Gebruikers opmerkingen</h4>
+							<div class="row">
+								<div class="form-group">
+									<div class="col-md-12">
+										<textarea name="user_note" readonly="readonly" id="user_note" rows="15" class="form-control"></textarea>
+									</div>
+								</div>
+							</div>
+							<h4>Opdrachtgever opmerkingen</h4>
+							<div class="row">
+								<div class="form-group">
+									<div class="col-md-12">
+										<textarea name="client_note" id="client_note" rows="15" class="form-control"></textarea>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+									<div class="col-md-12">
+										<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+									</div>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>

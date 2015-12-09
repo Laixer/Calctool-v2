@@ -2,6 +2,7 @@
 
 use \Calctool\Calculus\CalculationEndresult;
 use \Calctool\Models\Relation;
+use \Calctool\Models\Resource;
 use \Calctool\Models\PurchaseKind;
 use \Calctool\Models\RelationKind;
 use \Calctool\Models\Contact;
@@ -12,6 +13,8 @@ use \Calctool\Models\Offer;
 use \Calctool\Models\Invoice;
 use \Calctool\Models\Wholesale;
 use \Calctool\Models\ProjectShare;
+use \Calctool\Models\User;
+
 
 $common_access_error = false;
 $share = ProjectShare::where('token', Route::Input('token'))->first();
@@ -20,11 +23,12 @@ if (!$project)
 	$common_access_error = true;
 else {
 	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+	$relation_self = Relation::find(User::find($project->user_id)->self_id);
 	if ($offer_last)
 		$cntinv = Invoice::where('offer_id','=', $offer_last->id)->where('invoice_close',true)->count('id');
 	else
 		$cntinv = 0;
-}
+} 
 ?>
 
 @extends('layout.master')
@@ -42,6 +46,27 @@ else {
 </div>
 @stop
 <?php }else{ ?>
+
+
+@section('header')
+
+<header id="topNav" class="topHead">
+	<div class="container">
+
+		<button class="btn btn-mobile" data-toggle="collapse" data-target=".nav-main-collapse">
+			<i class="fa fa-bars"></i>
+		</button>
+
+		<div class="row">
+			<div class="col-md-3">
+				<a class="logo" href="/">
+				{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" width=\"200px\" />" : '' !!}
+				</a>
+			</div>
+		</div>
+	</div>
+</header>
+@endsection
 
 @section('content')
 
@@ -267,7 +292,7 @@ else {
 							<a href="#status" data-toggle="tab">Projectstatus</a>
 						</li>
 						<li id="tab-desc">
-							<a href="#desc" data-toggle="tab">Opmerkingen</a>
+							<a href="#desc" data-toggle="tab">Communicatie met uw vakaman</a>
 						</li>
 					</ul>
 
@@ -275,65 +300,106 @@ else {
 
 						<div id="status" class="tab-pane">
 							<div class="row">
-								<div class="col-md-6">	
-									<div class="row">
-										<div class="col-md-12">
-										<h4>Projectgegevens</h4>
+								<div class="col-md-12">
+								<br>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="col-md-4">	
+										<div class="row">
+											<h4>Projectgegevens</h4>
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-12">
+										<div class="row">
 											<label for="name">Projectnaam</label>
 											<span>{{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : $project->project_name) }}</span>
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-12">
+										<div class="row">
 											<label for="street">Straat </label>
-											<span> {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : $project->address_street) }}</span>
+											<span> {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : $project->address_street) }} {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : $project->address_number) }}</span>
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-12">
-											<label for="address_number">Huis nr. </label>
-											<span> {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : $project->address_number) }}</span>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-12">
+										<div class="row">
 											<label for="zipcode">Postcode </label>
 											<span> {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : $project->address_postal) }}</span>
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-12">
+										<div class="row">
 											<label for="city">Plaats </label>
 											<span> {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : $project->address_city) }}</span>
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-12">
-										<label for="province">Provincie </label>
-										<span> {{ ucwords(Province::find($project->province_id)->province_name) }} </span>		
-									</div>
-									</div>
-									<div class="row">
-										<div class="col-md-12">
+										<div class="row">
+											<label for="province">Provincie </label>
+											<span> {{ ucwords(Province::find($project->province_id)->province_name) }} </span>		
+										</div>
+										<div class="row">
 											<label for="country">Land </label>
 											<span> {{ ucwords(Country::find($project->country_id)->country_name) }} </span>
 										</div>
 									</div>
-								</div>						
-								<div class="col-md-6">
-									<div class="row">
-										<h4>Opdrachtgever</h4>
-										<label>Opdrachtgever </label>
-										<?php $relation = Relation::find($project->client_id); ?>
-										@if (!$relation->isActive())
-											<span> {{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</span>
-										@else
-											<span> {{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</span>
-										@endif
+
+									<div class="col-md-4">
+										<div class="row">
+											<h4>Uw gegevens</h4>
+										</div>
+										<div class="row">
+											<label>Opdrachtgever </label>
+											<?php $relation = Relation::find($project->client_id); ?>
+											@if (!$relation->isActive())
+												<span> {{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</span>
+											@else
+												<span> {{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</span>
+											@endif
+										</div>
+										<div class="row">
+											<label for="name">Straat</label>
+											<span>{{ $relation->address_street }} {{ $relation->address_number }}</span>
+										</div>
+										<div class="row">
+											<label for="name">Postcode</label>
+											<span>{{ $relation->address_postal }}</span>
+										</div>
+										<div class="row">
+											<label for="name">Plaats</label>
+											<span>{{ $relation->address_city }}</span>
+										</div>
+										<div class="row">
+											<label for="name">Contactpersoon</label>
+											<span>{{ $relation->address_city }}</span>
+										</div>
+										<div class="row">
+											<label for="name">Telefoon</label>
+											<span>{{ $relation->address_city }}</span>
+										</div>									
+									</div>
+
+									<div class="col-md-4">	
+										<div class="row">
+											<h4>Uw vakman</h4>
+										</div>
+
+										<div class="row">
+											<label for="name">Bedrijfsnaam</label>
+											<span>{{ $relation_self->company_name }} </span>
+										</div>
+										<div class="row">
+											<label for="name">Straat</label>
+											<span>{{ $relation_self->address_street }} {{ $relation->address_number }}</span>
+										</div>
+										<div class="row">
+											<label for="name">Postcode</label>
+											<span>{{ $relation_self->address_postal }}</span>
+										</div>
+										<div class="row">
+											<label for="name">Plaats</label>
+											<span>{{ $relation_self->address_city }}</span>
+										</div>
+										<div class="row">
+											<label for="name">Contactpersoon</label>
+											<span>{{ $relation_self->address_city }}</span>
+										</div>
+										<div class="row">
+											<label for="name">Telefoon</label>
+											<span>{{ $relation_self->address_city }}</span>
+										</div>		
 									</div>
 								</div>
 							</div>
@@ -351,7 +417,7 @@ else {
 								<div class="col-md-3"><i><?php if ($offer_last) { echo 'Laatste wijziging: '.date('d-m-Y', strtotime(DB::table('offer')->select('updated_at')->where('id','=',$offer_last->id)->get()[0]->updated_at)); } ?></i></div>
 							</div>
 							<div class="row">
-								<div class="col-md-3">Opdracht geven <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je opdracht hebt gekregen op je offerte. De calculatie slaat dan definitief dicht." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></div>
+								<div class="col-md-3">Opdracht geven <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer u opdracht geeft aan uw vakaman. U gaat met deze actie dus akkoord met de offerte." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></div>
 								<div class="col-md-2">
 									<?php
 										if (!\Calctool\Calculus\CalculationEndresult::totalProject($project)) {
@@ -370,33 +436,33 @@ else {
 							</div>
 						</div>
 									
-							<div id="desc" class="tab-pane">
-								<form method="POST" action="myaccount/notepad/save" accept-charset="UTF-8">
-	                            {!! csrf_field() !!}
+						<div id="desc" class="tab-pane">
+							<form method="POST" action="/ex-project-overview/{{ $share->token }}/update" accept-charset="UTF-8">
+                            {!! csrf_field() !!}
 
-								<h4>Gebruikers opmerkingen</h4>
-								<div class="row">
-									<div class="form-group">
-										<div class="col-md-12">
-											<textarea name="notepad" readonly="readonly" id="notepad" rows="15" class="form-control">{{ $share->user_note }}</textarea>
-										</div>
+							<h4>Gebruikers opmerkingen</h4>
+							<div class="row">
+								<div class="form-group">
+									<div class="col-md-12">
+										<textarea name="user_note" readonly="readonly" id="user_note" rows="15" class="form-control">{{ $share->user_note }}</textarea>
 									</div>
 								</div>
-								<h4>Opdrachtgever opmerkingen</h4>
-								<div class="row">
-									<div class="form-group">
-										<div class="col-md-12">
-											<textarea name="notepad" id="notepad" rows="15" class="form-control">{{ $share->client_note }}</textarea>
-										</div>
-									</div>
-								</div>
-								<div class="row">
-										<div class="col-md-12">
-											<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
-										</div>
-									</div>
-								</form>
 							</div>
+							<h4>Opdrachtgever opmerkingen</h4>
+							<div class="row">
+								<div class="form-group">
+									<div class="col-md-12">
+										<textarea name="client_note" id="client_note" rows="15" class="form-control">{{ $share->client_note }}</textarea>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+									<div class="col-md-12">
+										<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+									</div>
+								</div>
+							</form>
+						</div>
 
 					</div>
 				</div>
@@ -408,3 +474,4 @@ else {
 </div>
 @stop
 <?php } ?>
+
