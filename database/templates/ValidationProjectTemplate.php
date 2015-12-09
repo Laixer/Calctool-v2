@@ -20,9 +20,9 @@ use \Calctool\Models\CalculationEquipment;
 
 /*
  * Static Models Only
- * Template for demo project
+ * Template for calculus validation
  */
-class DemoProjectTemplate {
+class ValidationProjectTemplate {
 
 	public static function setup($userid)
 	{
@@ -54,7 +54,7 @@ class DemoProjectTemplate {
 		$relation->save();
 
 		$project = new Project;
-		$project->project_name 		= 'Demoproject';
+		$project->project_name 		= 'Validatieproject';
 		$project->address_street 	= 'Demolaan';
 		$project->address_number 	= '2';
 		$project->address_postal 	= '5678MO';
@@ -310,8 +310,6 @@ class DemoProjectTemplate {
 		$calculation_material_activity4_2->isless = false;
 		$calculation_material_activity4_2->activity_id = $activity4->id;
 		$calculation_material_activity4_2->save();
-		
-
      }
   }
 

@@ -298,6 +298,8 @@ Route::group(array('before' => 'admin'), function()
 	});
 	Route::get('admin/user-{user_id}/switch', array('as' => 'user', 'uses' => 'AdminController@getSwitchSession'));
 	Route::get('admin/user-{user_id}/demo', array('as' => 'user', 'uses' => 'AdminController@getDemoProject'));
+	Route::get('admin/user-{user_id}/validation', array('as' => 'user', 'uses' => 'AdminController@getValidationProject'));
+	Route::get('admin/user-{user_id}/stabu', array('as' => 'user', 'uses' => 'AdminController@getStabuProject'));
 	Route::get('admin/user-{user_id}/deblock', array('as' => 'user', 'uses' => 'AdminController@getSessionDeblock'));
 	Route::post('admin/user-{user_id}/edit', array('as' => 'user', 'uses' => 'AdminController@doUpdateUser'));
 	Route::get('admin/alert', function() {
@@ -331,6 +333,7 @@ Route::group(array('before' => 'admin'), function()
 	Route::get('admin/log/truncate', array('as' => 'user', 'uses' => 'AdminController@doTruncateLog'));
 });
 
+/* Moet weer verwijderd worden */
 Route::get('xy', function() {
 	return view('mail.offer_send', array('client'=>'opdrachtgever', 'token' => '123', 'project_name' => 'projectnaam', 'user' => 'uw vakanman', 'pref_email_offer' => 'Hierbij doe ik u mijn offerte betreffende ondergenoemd project toekomen.'));
 }); 

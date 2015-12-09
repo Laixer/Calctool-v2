@@ -33,6 +33,26 @@ class StabuProjectTemplate {
 		$relationkind = RelationKind::where('kind_name','=','zakelijk')->first();
 		$contact_function = ContactFunction::where('function_name','=','voorzitter')->first();
 
+		$relation = new Relation;
+		$relation->company_name		= 'STABUrelatie';
+		$relation->address_street	= 'STABUstraat';
+		$relation->address_number	= '1';
+		$relation->address_postal	= '1234DE';
+		$relation->address_city		= 'STABU-stad';
+		$relation->debtor_code 		= 'STABU123';
+		$relation->kvk		 		= '12345678';
+		$relation->btw 				= 'NL1234567890B1';
+		$relation->note 			= 'Dit is een STABU relatie';
+		$relation->email 			= 'STABU-relatie@calculatietool.com';
+		$relation->phone 			= '0101111111';
+		$relation->website 			= 'http://www.calculatietool.com';
+		$relation->user_id 			= $userid;
+		$relation->type_id 			= $relationtype->id;
+		$relation->kind_id 			= $relationkind->id;
+		$relation->province_id 		= $province->id;
+		$relation->country_id 		= $country->id;
+		$relation->save();
+
 		$project = new Project;
 		$project->project_name 		= 'STABU Project';
 		$project->address_street 	= 'STABU';

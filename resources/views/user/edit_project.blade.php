@@ -340,6 +340,7 @@ else {
 								<div class="col-md-3"><i>{{ $project->update_less ? 'Laatste wijziging: '.date('d-m-Y', strtotime($project->update_less)) : '' }}</i></div>
 							</div>
 								<br>
+@if (0)
 							<div class="row">
 								<div class="col-md-3"><strong>Financieel</strong></div>
 								<div class="col-md-2"><strong>Gefactureerd</strong></div>
@@ -405,6 +406,7 @@ else {
 							</div>
 							<?php } ?>
 								<br>
+@endif
 							<div class="row">
 								<div class="col-md-3"><strong>Project gesloten</strong> <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je project kan worden gesloten. Zijn alle facturen betaald?" href="#"><i class="fa fa-info-circle"></i></a></div>
 								<div class="col-md-2">{!! $project->project_close ? date('d-m-Y', strtotime($project->project_close)) : '<a href="#" id="projclose">Bewerk</a>' !!}</a></div>

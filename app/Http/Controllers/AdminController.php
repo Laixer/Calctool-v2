@@ -344,6 +344,20 @@ class AdminController extends Controller {
 		return back()->with('success', 'Demo-project ingevoegd');
 	}
 
+	public function getValidationProject(Request $request, $user_id)
+	{
+		\ValidationProjectTemplate::setup($user_id);
+
+		return back()->with('success', 'Validatiie-project ingevoegd');
+	}
+
+	public function getStabuProject(Request $request, $user_id)
+	{
+		\StabuProjectTemplate::setup($user_id);
+
+		return back()->with('success', 'STABU-project ingevoegd');
+	}
+
 	public function getSessionDeblock(Request $request, $user_id)
 	{
 		$username = User::find($user_id)->username;

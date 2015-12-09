@@ -356,9 +356,7 @@ if (!$project || !$project->isOwner()) {
 										<input value="{{ ($offer_last ? $offer_last->invoice_quantity : '1') }}" name="terms" id="terms" min="1" max="50" type="number" class="form-control" />
 									</div>
 								</div>
-							</div>
-							<div class="form-horizontal">
-								<div class="form-horizontal noterms" {!! ($offer_last && $offer_last->invoice_quantity >1 ? '' : 'style="display:none;"') !!} >
+								<div class="noterms" {!! ($offer_last && $offer_last->invoice_quantity >1 ? '' : 'style="display:none;"') !!} >
 									<div class="col-md-6">
 									  <div class="form-group">
 									  	<label>Aanbetaling toepassen</label>
