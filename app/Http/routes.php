@@ -323,6 +323,10 @@ Route::group(array('before' => 'admin'), function()
 	Route::get('admin/project', function() {
 		return view('admin.project');
 	});
+	Route::get('admin/snailmail', function() {
+		return view('admin.snailmail');
+	});
+	Route::post('admin/snailmail/done', 'AdminController@doOfferPostDone');
 	Route::get('admin/resource', function() {
 		return view('admin.resource');
 	});
