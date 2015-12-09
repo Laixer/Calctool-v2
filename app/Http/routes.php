@@ -83,6 +83,13 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::post('myaccount/preferences/update', array('as' => 'preferences.update', 'uses' => 'UserController@doUpdatePreferences'));
 	Route::post('myaccount/notepad/save', array('uses' => 'UserController@doUpdateNotepad'));
 
+	Route::get('messagebox/message-{message}/read', 'MessageBoxController@doRead')->where('message', '[0-9]+');
+	Route::get('messagebox/message-{message}/delete', 'MessageBoxController@doDelete')->where('message', '[0-9]+');
+	Route::get('messagebox/message-{message}', 'MessageBoxController@getMessage')->where('message', '[0-9]+');
+	Route::get('messagebox', function() {
+		return view('user.messagebox');
+	});
+
 	Route::get('payment', function() {
 		return view('user.payment');
 	});

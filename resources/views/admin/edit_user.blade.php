@@ -74,17 +74,14 @@ $(document).ready(function() {
 
 			<div class="pull-right">
 				<div class="btn-group" role="group">
-				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				  Opties
-				  <span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu">
-				  <li><a href="/admin/user-{{ $user->id }}/switch">Gebruiker overnemen</a></li>
-				  <li><a href="/admin/user-{{ $user->id }}/deblock">Sessie deblokeren</a></li>
-				  <li><a href="/admin/user-{{ $user->id }}/demo">Demo project laden</a></li>
-				  <li><a href="/admin/user-{{ $user->id }}/validation">Validatie project laden</a></li>
-				  <li><a href="/admin/user-{{ $user->id }}/stabu">STABU project laden</a></li>
-				</ul>
+					<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opties<span class="caret"></span></button>
+					<ul class="dropdown-menu">
+					  <li><a href="/admin/user-{{ $user->id }}/switch">Gebruiker overnemen</a></li>
+					  <li><a href="/admin/user-{{ $user->id }}/deblock">Sessie deblokeren</a></li>
+					  <li><a href="/admin/user-{{ $user->id }}/demo">Demo project laden</a></li>
+					  <li><a href="/admin/user-{{ $user->id }}/validation">Validatie project laden</a></li>
+					  <li><a href="/admin/user-{{ $user->id }}/stabu">STABU project laden</a></li>
+					</ul>
 				</div>
 			</div>
 

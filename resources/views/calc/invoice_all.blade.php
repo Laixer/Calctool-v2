@@ -238,8 +238,6 @@ if (!$project || !$project->isOwner()) {
 						    </ul>
 						  </div>
 						<?php
-						//} else if ($close && !$project->project_close) {
-						//	echo '<form method="POST" id="frm-invoice" action="/invoice/close"><input name="id" value="'.$invoice->id.'" type="hidden"/><input type="hidden" name="_token" value="'.csrf_token().'"><input name="projectid" value="'.$project->id.'" type="hidden"/><input type="submit" class="btn btn-primary btn-xs" value="Factureren"/></form>'; $close=false;
 						} else {
 							echo 'Open';
 							$close=false;

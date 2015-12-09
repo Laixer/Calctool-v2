@@ -47,7 +47,6 @@ else {
 @stop
 <?php }else{ ?>
 
-
 @section('header')
 
 <header id="topNav" class="topHead">

@@ -150,12 +150,8 @@ $(document).ready(function() {
 			<a href="#" data-toggle="modal" data-target="#confirmModal" class="btn btn-primary">Opdracht bevestigen</a>
 			<a href="/offer/project-{{ $project->id }}" class="btn btn-primary">Bewerk</a>
 			@endif
-			<div class="btn-group">
-			  <a href="offer/sendmail" class="btn btn-primary"><i class="fa fa-pencil"></i> Versturen</a>
-			  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			   <span class="caret"></span>
-			    <span class="sr-only">Toggle Dropdown</span>
-			  </button>
+			<div class="btn-group" role="group">
+			  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Versturen&nbsp;&nbsp;<span class="caret"></span></button>
 			  <ul class="dropdown-menu">
 			    <li><a href="javascript:void(0);" id="sendmail">Per email</a></li>
 			    <li><a href="/res-{{ $res->id }}/download">Per post (download PDF)</a></i>
@@ -180,12 +176,8 @@ $(document).ready(function() {
 					<a href="#" data-toggle="modal" data-target="#confirmModal" class="btn btn-primary">Opdracht bevestigen</a>
 					<a href="/offer/project-{{ $project->id }}" class="btn btn-primary">Bewerk</a>
 					@endif
-					<div class="btn-group">
-					  <a href="offer/sendmail" class="btn btn-primary"><i class="fa fa-pencil"></i> Versturen</a>
-					  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					   <span class="caret"></span>
-					    <span class="sr-only">Toggle Dropdown</span>
-					  </button>
+					<div class="btn-group" role="group">
+					  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Versturen&nbsp;&nbsp;<span class="caret"></span></button>
 					  <ul class="dropdown-menu">
 					    <li><a href="javascript:void(0);" id="sendmail">Per email</a></li>
 					    <li><a href="/res-{{ $res->id }}/download">Per post (download PDF)</a></i>

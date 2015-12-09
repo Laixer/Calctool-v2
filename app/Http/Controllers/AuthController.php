@@ -11,6 +11,7 @@ use \Calctool\Models\User;
 use \Calctool\Models\UserType;
 use \Calctool\Models\Audit;
 use \Calctool\Models\Telegram;
+use \Calctool\Models\MessageBox;
 
 use \Auth;
 use \Redis;
@@ -209,6 +210,14 @@ class AuthController extends Controller {
 		\DemoProjectTemplate::setup($user->id);
 
 		$this->informAdmin($user);
+
+		$message = new MessageBox;
+		$message->subject = 'Standaard notificatie';
+		$message->message = 'Beste Systeem,<br /><br />Het systeem is geladen en de database is opgebouwd. Materialendatabase kan nog ontbreken als deze niet is geladen via de commandline.<br />Vergeet niet de standaardmelding te verwijderen als alles in orde is.<br /><br />Systeem',
+		$message->from_user = User::where('username', 'system')->first()['id'];
+		$message->user_id =	$user->id;
+
+		$message->save();
 
 		$log = new Audit;
 		$log->ip = \Calctool::remoteAddr();
