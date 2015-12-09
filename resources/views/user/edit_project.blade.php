@@ -5,12 +5,13 @@ use \Calctool\Models\Relation;
 use \Calctool\Models\PurchaseKind;
 use \Calctool\Models\Contact;
 use \Calctool\Models\Project;
+use \Calctool\Models\ProjectType;
 use \Calctool\Models\Offer;
 use \Calctool\Models\Invoice;
 use \Calctool\Models\Wholesale;
 
 $common_access_error = false;
-$project = \Calctool\Models\Project::find(Route::Input('project_id'));
+$project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner())
 	$common_access_error = true;
 else {
@@ -272,7 +273,7 @@ else {
 
 			<h2><strong>Project</strong> {{$project->project_name}}</h2>
 
-			@if(!\Calctool\Models\Relation::where('user_id','=', Auth::user()->id)->count())
+			@if(!Relation::where('user_id','=', Auth::user()->id)->count())
 			<div class="alert alert-info">
 				<i class="fa fa-info-circle"></i>
 				<strong>Let Op!</strong> Maak eerst een opdrachtgever aan onder <a href="/relation/new">nieuwe relatie</a>.
@@ -302,7 +303,7 @@ else {
 					<div class="tab-content">
 
 						<div id="status" class="tab-pane">
-							<h4>Project op basis van {{ \Calctool\Models\ProjectType::find($project->type_id)->type_name }}</h4>
+							<h4>Project op basis van {{ ProjectType::find($project->type_id)->type_name }}</h4>
 							<div class="row">
 								<div class="col-md-3"><strong>Offerte stadium</strong></div>
 								<div class="col-md-2"><strong></strong></div>

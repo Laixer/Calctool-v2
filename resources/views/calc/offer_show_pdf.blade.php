@@ -83,9 +83,52 @@ $(document).ready(function() {
 			}
 		});
 	});
+    $('#dateRangePicker').datepicker().on('changeDate', function(e){
+		$.post("/offer/close", {
+			date: e.date.toLocaleString(),
+			offer: {{ $offer_last->id }},
+			project: {{ $project->id }}
+		}, function(data){
+			location.reload();
+		});
+	});
 });
 </script>
+<style>
+.datepicker{z-index:1151 !important;}
+</style>
 	<div id="wrapper">
+
+	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel2">Opdracht bevestiging</h4>
+				</div>
+
+				<div class="modal-body">
+					<div class="form-horizontal">
+
+					    <div class="form-group">
+					        <label class="col-xs-3 control-label">Bevestiging</label>
+					        <div class="col-xs-5 date">
+					            <div class="input-group input-append date" id="dateRangePicker">
+					                <input type="text" class="form-control" name="date" />
+					                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+					            </div>
+					        </div>
+					    </div>
+
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-default" data-dismiss="modal">Opslaan</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<section class="container">
 
@@ -104,6 +147,7 @@ $(document).ready(function() {
 		<div class="pull-right">
 			<?php if (!$project->project_close) { ?>
 			@if ($offer_last->id == $offer->id && !$offer->offer_finish)
+			<a href="#" data-toggle="modal" data-target="#confirmModal" class="btn btn-primary">Opdracht bevestigen</a>
 			<a href="/offer/project-{{ $project->id }}" class="btn btn-primary">Bewerk</a>
 			@endif
 			<div class="btn-group">
@@ -131,9 +175,21 @@ $(document).ready(function() {
 				<div class="padding20 pull-right">
 					<?php if (!$project->project_close) { ?>
 					@if ($offer_last->id == $offer->id && !$offer->offer_finish)
+					<a href="#" data-toggle="modal" data-target="#confirmModal" class="btn btn-primary">Opdracht bevestigen</a>
 					<a href="/offer/project-{{ $project->id }}" class="btn btn-primary">Bewerk</a>
 					@endif
-					<a href="/res-{{ $res->id }}/download" class="btn btn-primary">Download PDF</a>
+					<div class="btn-group">
+					  <a href="offer/sendmail" class="btn btn-primary"><i class="fa fa-pencil"></i> Versturen</a>
+					  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					   <span class="caret"></span>
+					    <span class="sr-only">Toggle Dropdown</span>
+					  </button>
+					  <ul class="dropdown-menu">
+					    <li><a href="javascript:void(0);" id="sendmail">Per email</a></li>
+					    <li><a href="/res-{{ $res->id }}/download">Per post (download PDF)</a></i>
+					    <li><a href="javascript:void(0);" id="sendpost">Door calculatieTool.com</a></li>
+					  </ul>
+					</div>
 					<?php } ?>
 				</div>
 			</div>
