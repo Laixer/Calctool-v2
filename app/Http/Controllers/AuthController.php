@@ -213,9 +213,16 @@ class AuthController extends Controller {
 
 		$message = new MessageBox;
 		$message->subject = 'Standaard notificatie';
-		$message->message = 'Beste Systeem,<br /><br />Het systeem is geladen en de database is opgebouwd. Materialendatabase kan nog ontbreken als deze niet is geladen via de commandline.<br />Vergeet niet de standaardmelding te verwijderen als alles in orde is.<br /><br />Systeem',
+		$message->message = 'Beste Systeem,<br /><br />Het systeem is geladen en de database is opgebouwd. Materialendatabase kan nog ontbreken als deze niet is geladen via de commandline.<br />Vergeet niet de standaardmelding te verwijderen als alles in orde is.<br /><br />Groet, Maikel van de CalculatieTool.com',
 		$message->from_user = User::where('username', 'system')->first()['id'];
 		$message->user_id =	$user->id;
+
+		$message = new MessageBox;
+		$message->subject = 'Welkom ' . $user->username;
+		$message->message = 'Beste ' . $user->username . ',<br /><br />Welkom bij de CalculatieTool.com,<br /><br />Je account is aangemaakt en klaar voor gebruik.<br />Wanneer de QuickStart of de mijn bedrijf-pagina is ingevuld kan je direct aan de slag met je eerste project.<br /><br />Groet, Maikel van de CalculatieTool.com',
+		$message->from_user = User::where('username', 'system')->first()['id'];
+		$message->user_id =	$user->id;
+
 
 		$message->save();
 
