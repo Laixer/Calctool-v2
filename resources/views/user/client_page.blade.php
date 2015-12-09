@@ -3,7 +3,10 @@
 use \Calctool\Calculus\CalculationEndresult;
 use \Calctool\Models\Relation;
 use \Calctool\Models\PurchaseKind;
+use \Calctool\Models\RelationKind;
 use \Calctool\Models\Contact;
+use \Calctool\Models\Country;
+use \Calctool\Models\Province;
 use \Calctool\Models\Project;
 use \Calctool\Models\Offer;
 use \Calctool\Models\Invoice;
@@ -263,9 +266,6 @@ else {
 						<li id="tab-status">
 							<a href="#status" data-toggle="tab">Projectstatus</a>
 						</li>
-						<li id="tab-project">
-							<a href="#project" data-toggle="tab">Projectgegevens</a>
-						</li>
 						<li id="tab-desc">
 							<a href="#desc" data-toggle="tab">Opmerkingen</a>
 						</li>
@@ -274,15 +274,76 @@ else {
 					<div class="tab-content">
 
 						<div id="status" class="tab-pane">
-							<h4>Project op basis van {{ \Calctool\Models\ProjectType::find($project->type_id)->type_name }}</h4>
 							<div class="row">
-								<div class="col-md-3"><strong>Offerte stadium</strong></div>
-								<div class="col-md-2"><strong></strong></div>
+								<div class="col-md-6">	
+									<div class="row">
+										<div class="col-md-12">
+										<h4>Projectgegevens</h4>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<label for="name">Projectnaam</label>
+											<span>{{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : $project->project_name) }}</span>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<label for="street">Straat </label>
+											<span> {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : $project->address_street) }}</span>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<label for="address_number">Huis nr. </label>
+											<span> {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : $project->address_number) }}</span>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<label for="zipcode">Postcode </label>
+											<span> {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : $project->address_postal) }}</span>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<label for="city">Plaats </label>
+											<span> {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : $project->address_city) }}</span>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+										<label for="province">Provincie </label>
+										<span> {{ ucwords(Province::find($project->province_id)->province_name) }} </span>		
+									</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<label for="country">Land </label>
+											<span> {{ ucwords(Country::find($project->country_id)->country_name) }} </span>
+										</div>
+									</div>
+								</div>						
+								<div class="col-md-6">
+									<div class="row">
+										<h4>Opdrachtgever</h4>
+										<label>Opdrachtgever </label>
+										<?php $relation = Relation::find($project->client_id); ?>
+										@if (!$relation->isActive())
+											<span> {{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</span>
+										@else
+											<span> {{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</span>
+										@endif
+									</div>
+								</div>
 							</div>
+
+							<br>
+					
 							<div class="row">
-								<div class="col-md-3">Calculatie gestart</div>
-								<div class="col-md-2"><?php echo date('d-m-Y', strtotime(DB::table('project')->select('created_at')->where('id','=',$project->id)->get()[0]->created_at)); ?></div>
-								<div class="col-md-3"><i>Laatste wijziging: <?php echo date('d-m-Y', strtotime(DB::table('project')->select('updated_at')->where('id','=',$project->id)->get()[0]->updated_at)); ?></i></div>
+								<div class="col-md-12">
+								<h4>Projectacties</h4>
+								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-3">Offerte opgesteld</div>
@@ -290,7 +351,7 @@ else {
 								<div class="col-md-3"><i><?php if ($offer_last) { echo 'Laatste wijziging: '.date('d-m-Y', strtotime(DB::table('offer')->select('updated_at')->where('id','=',$offer_last->id)->get()[0]->updated_at)); } ?></i></div>
 							</div>
 							<div class="row">
-								<div class="col-md-3">Opdracht ontvangen <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je opdracht hebt gekregen op je offerte. De calculatie slaat dan definitief dicht." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></div>
+								<div class="col-md-3">Opdracht geven <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je opdracht hebt gekregen op je offerte. De calculatie slaat dan definitief dicht." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></div>
 								<div class="col-md-2">
 									<?php
 										if (!\Calctool\Calculus\CalculationEndresult::totalProject($project)) {
@@ -307,197 +368,8 @@ else {
 									?>
 								</div>
 							</div>
-								<br>
-							<div class="row">
-								<div class="col-md-3"><strong>Opdracht stadium</strong></div>
-							</div>
-							<div class="row">
-								<div class="col-md-3">Start uitvoering <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in dat je met uitvoering bent begonnen" href="#"><i class="fa fa-info-circle"></i></a></div>
-								<div class="col-md-2"><?php if ($project->project_close) { echo $project->work_execution ? date('d-m-Y', strtotime($project->work_execution)) : ''; }else{ if ($project->work_execution){ echo date('d-m-Y', strtotime($project->work_execution)); }else{ ?><a href="#" id="wordexec">Bewerk</a><?php } } ?></div>
-								<div class="col-md-3"></div>
-							</div>
-							<div class="row">
-								<div class="col-md-3">Geplande opleverdatum <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in dat je het moet/wilt/verwacht opleveren" href="#"><i class="fa fa-info-circle"></i></a></div>
-								<div class="col-md-2"><?php if ($project->project_close) { echo $project->work_completion ? date('d-m-Y', strtotime($project->work_completion)) : ''; }else{ if ($project->work_completion){ echo date('d-m-Y', strtotime($project->work_completion)); }else{ ?><a href="#" id="wordcompl">Bewerk</a><?php } } ?></div>
-								<div class="col-md-3"></div>
-							</div>
-							<div class="row">
-								<div class="col-md-3">Stelposten gesteld</div>
-								<div class="col-md-2"><i>{{ $project->start_estimate ? date('d-m-Y', strtotime($project->start_estimate)) : '' }}</i></div>
-								<div class="col-md-3"><i>{{ $project->update_estimate ? 'Laatste wijziging: '.date('d-m-Y', strtotime($project->update_estimate)) : '' }}</i></div>
-							</div>
-							<div class="row">
-								<div class="col-md-3">Meerwerk toegevoegd</div>
-								<div class="col-md-2">{{ $project->start_more ? date('d-m-Y', strtotime($project->start_more)) : '' }}</div>
-								<div class="col-md-3"><i>{{ $project->update_more ? 'Laatste wijziging: '.date('d-m-Y', strtotime($project->update_more)) : '' }}</i></div>
-							</div>
-							<div class="row">
-								<div class="col-md-3">Minderwerk verwerkt</div>
-								<div class="col-md-2">{{ $project->start_less ? date('d-m-Y', strtotime($project->start_less)) : '' }}</div>
-								<div class="col-md-3"><i>{{ $project->update_less ? 'Laatste wijziging: '.date('d-m-Y', strtotime($project->update_less)) : '' }}</i></div>
-							</div>
-								<br>
-							<div class="row">
-								<div class="col-md-3"><strong>Financieel</strong></div>
-								<div class="col-md-2"><strong>Gefactureerd</strong></div>
-								<div class="col-md-3"><strong>Betaalstatus</strong></div>
-								<div class="col-md-3"><strong>Bekijk factuur</strong></div>
-							</div>
-							<?php
-							if ($offer_last) {
-							$i=0;
-							$close = true;
-							$invoice_end = \Calctool\Models\Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first();
-							?>
-							@foreach (\Calctool\Models\Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority')->get() as $invoice)
-							<div class="row">
-								<div class="col-md-3">{{ ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1)) }}</div>
-								<div class="col-md-2">
-								<?php
-								if (!$invoice->bill_date && $close && !$project->project_close) {
-									echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs doinvclose">Factureren</a>';
-									$close=false;
-								} else if (!$invoice->bill_date) {
-									echo '<a href="/invoice/project-'.$project->id.'/term-invoice-'.$invoice->id . '" class="btn btn-primary btn-xxs">Bekijken</a>';
-								} else
-									echo date('d-m-Y', strtotime($invoice->bill_date));
-								?>
-								</div>
-								<div class="col-md-3"><?php
-								if ($invoice->invoice_close && !$invoice->payment_date && !$project->project_close)
-									echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs dopay">Betaald</a>';
-								elseif ($invoice->invoice_close && $invoice->payment_date)
-									echo 'Betaald op '.date('d-m-Y', strtotime($invoice->payment_date));
-								?></div>
-								<div class="col-md-3"><?php if ($invoice->bill_date){ echo '<a target="blank" href="/invoice/pdf/project-'.$project->id.'/term-invoice-'.$invoice->id . ($invoice->option_query ? '?'.$invoice->option_query : '') . '" class="btn btn-primary btn-xxs">Bekijk PDF</a>'; }?></div>
-							</div>
-							<?php $i++; ?>
-							@endforeach
-							@if ($invoice_end)
-							<div class="row">
-								<div class="col-md-3">Eindfactuur</div>
-								<div class="col-md-2">
-								<?php
-								if (!$invoice_end->bill_date && $close && !$project->project_close) {
-									echo '<a href="javascript:void(0);" data-invoice="'.$invoice_end->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs doinvclose">Factureren</a>';
-									$close=false;
-								} else if (!$invoice_end->bill_date) {
-									echo '<a href="/invoice/project-'.$project->id.'/invoice-'.$invoice_end->id.'" class="btn btn-primary btn-xxs">Bekijken</a>';
-								} else
-									echo date('d-m-Y', strtotime($invoice_end->bill_date));
-								?>
-								</div>
-								<div class="col-md-3"><?php
-								if ($invoice_end->invoice_close && !$invoice_end->payment_date && !$project->project_close)
-									echo '<a href="javascript:void(0);" data-invoice="'.$invoice_end->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs dopay">Betaald</a>';
-								elseif ($invoice_end->invoice_close && $invoice_end->payment_date)
-									echo 'Betaald op '.date('d-m-Y', strtotime($invoice_end->payment_date));
-								?></div>
-								<div class="col-md-3"><?php if ($invoice_end->bill_date){ echo '<a target="blank" href="/invoice/pdf/project-'.$project->id.'/invoice-'.$invoice_end->id . ($invoice_end->option_query ? '?'.$invoice_end->option_query : '') . '" class="btn btn-primary btn-xxs">Bekijk PDF</a>'; }?></div>
-							</div>
-							@endif
-							<?php }else{ ?>
-							<div class="row">
-								<div class="col-md-12">Geen geregistreerde uren</div>
-							</div>
-							<?php } ?>
-								<br>
-							<div class="row">
-								<div class="col-md-3"><strong>Project gesloten</strong> <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je project kan worden gesloten. Zijn alle facturen betaald?" href="#"><i class="fa fa-info-circle"></i></a></div>
-								<div class="col-md-2">{!! $project->project_close ? date('d-m-Y', strtotime($project->project_close)) : '<a href="#" id="projclose">Bewerk</a>' !!}</a></div>
-								<div class="col-md-3"></div>
-							</div>
 						</div>
-
-						<div id="project" class="tab-pane">
-						<form method="post" {!! $offer_last && $offer_last->offer_finish ? 'action="/project/update/note"' : 'action="/project/update"' !!}>
-   	  	                {!! csrf_field() !!}
-							<h5><strong>Gegevens</strong></h5>
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group">
-											<label for="name">Projectnaam*</label>
-											<input name="name" id="name" type="text" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} value="{{ Input::old('name') ? Input::old('name') : $project->project_name }}" class="form-control" />
-											<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
-										</div>
-									</div>
-									<div class="col-md-4">
-										<div class="form-group">
-											<label for="contractor">Opdrachtgever*</label>
-											@if (!Relation::find($project->client_id)->isActive())
-											<select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} class="form-control pointer">
-											@foreach (\Calctool\Models\Relation::where('user_id','=', Auth::id())->get() as $relation)
-												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ \Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</option>
-											@endforeach
-											</select>
-											@else
-											<select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} class="form-control pointer">
-											@foreach (\Calctool\Models\Relation::where('user_id','=', Auth::id())->where('active',true)->get() as $relation)
-												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ \Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</option>
-											@endforeach
-											</select>
-											@endif
-										</div>
-									</div>
-
-								</div>
-							<h5><strong>Adresgegevens</strong></h5>
-									<div class="row">
-
-									<div class="col-md-4">
-										<div class="form-group">
-											<label for="street">Straat*</label>
-											<input name="street" id="street" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} type="text" value="{{ Input::old('street') ? Input::old('street') : $project->address_street}}" class="form-control"/>
-										</div>
-									</div>
-									<div class="col-md-1">
-										<div class="form-group">
-											<label for="address_number">Huis nr.*</label>
-											<input name="address_number" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="address_number" type="text" value="{{ Input::old('address_number') ? Input::old('address_number') : $project->address_number }}" class="form-control"/>
-										</div>
-									</div>
-
-									<div class="col-md-2">
-										<div class="form-group">
-											<label for="zipcode">Postcode*</label>
-											<input name="zipcode" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="zipcode" type="text" maxlength="6" value="{{ Input::old('zipcode') ? Input::old('zipcode') : $project->address_postal }}" class="form-control"/>
-										</div>
-									</div>
-
-									<div class="col-md-3">
-										<div class="form-group">
-											<label for="city">Plaats*</label>
-											<input name="city" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="city" type="text" value="{{ Input::old('city') ? Input::old('city'): $project->address_city }}" class="form-control"/>
-										</div>
-									</div>
-
-									<div class="col-md-2">
-										<div class="form-group">
-											<label for="province">Provincie*</label>
-											<select name="province" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="province" class="form-control pointer">
-												@foreach (\Calctool\Models\Province::all() as $province)
-													<option {{ $project->province_id==$province->id ? 'selected' : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
-												@endforeach
-											</select>
-										</div>
-									</div>
-
-									<div class="col-md-4">
-										<div class="form-group">
-											<label for="country">Land*</label>
-											<select name="country" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="country" class="form-control pointer">
-												@foreach (\Calctool\Models\Country::all() as $country)
-													<option {{ $project->country_id==$country->id ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
-												@endforeach
-											</select>
-										</div>
-									</div>
-
-								</div>
-
-								</form>
-							</div>
-							
+									
 							<div id="desc" class="tab-pane">
 								<form method="POST" action="myaccount/notepad/save" accept-charset="UTF-8">
 	                            {!! csrf_field() !!}
