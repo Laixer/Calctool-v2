@@ -24,13 +24,9 @@ class ClientController extends Controller {
 		if (! $project_share) {
 			return back();
 		}
-		
-		if (Auth::check()){
-			$project_share->user_note = $request->input('user_note');
-		} else {
-			$project_share->client_note = $request->input('client_note');
-		}
 
+		$project_share->client_note = $request->input('client_note');
+		
 		$project_share->save();
 
 		return back();

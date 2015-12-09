@@ -13,14 +13,14 @@ use \Calctool\Models\ProjectShare;
 
 
 $common_access_error = false;
-$share = ProjectShare::where('token', Route::Input('token'))->first();
 $project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner())
 	$common_access_error = true;
 else {
-	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+	$offer_last = Offer::where('project_id',$project->id)->orderBy('created_at', 'desc')->first();
+	$share = ProjectShare::where('project_id', $project->id)->first();
 	if ($offer_last)
-		$cntinv = Invoice::where('offer_id','=', $offer_last->id)->where('invoice_close',true)->count('id');
+		$cntinv = Invoice::where('offer_id',$offer_last->id)->where('invoice_close',true)->count('id');
 	else
 		$cntinv = 0;
 }
@@ -720,22 +720,23 @@ else {
 							</div>-->
 						</div>
 						<div id="communication" class="tab-pane">
-							<form method="POST" action="/" accept-charset="UTF-8">
+							<form method="POST" action="/project/update/communication" accept-charset="UTF-8">
                             {!! csrf_field() !!}
+                            <input type="hidden" name="project" value="{{ $project->id }}"/>
 
-							<h4>Gebruikers opmerkingen</h4>
+							<h4>Jouw opmerkingen voor verzending bij digitale offerte</h4>
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-12">
-										<textarea name="user_note" readonly="readonly" id="user_note" rows="15" class="form-control"></textarea>
+										<textarea name="user_note" id="user_note" rows="10" class="form-control">{{ $share ? $share->user_note : ''}}</textarea>
 									</div>
 								</div>
 							</div>
-							<h4>Opdrachtgever opmerkingen</h4>
+							<h4>Opmerkingen van jouw opdrachtegver op digitaal verzonden offerte</h4>
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-12">
-										<textarea name="client_note" id="client_note" rows="15" class="form-control"></textarea>
+										<textarea name="client_note" readonly="readonly" id="client_note" rows="10" class="form-control">{{  $share ? $share->client_note : ''}}</textarea>
 									</div>
 								</div>
 							</div>
