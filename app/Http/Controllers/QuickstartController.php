@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use \Calctool\Models\Relation;
 use \Calctool\Models\RelationKind;
 use \Calctool\Models\Contact;
+use \Calctool\Models\Province;
 
 use \Auth;
 use \Cookie;
@@ -90,6 +91,39 @@ class QuickstartController extends Controller {
 		$user->save();
 
 		return redirect('/')->with('success', 1)->withCookie(cookie()->forget('nstep'))->withCookie(cookie()->forever('_stxs'.$user->id, 1));
+	}
+
+	public function getExternalAddress(Request $request)
+	{
+		$headers = array();
+		$headers[] = 'X-Api-Key: ' . $_ENV['POSTCODE_API'];
+
+		//$url = 'https://postcode-api.apiwise.nl/v2/addresses/?postcode=' . $request->get('zipcode') . '&number=' . $request->get('number');
+		$url = 'https://postcode-api.apiwise.nl/v2/addresses/?postcode=' . $request->get('zipcode') . '&number=' . $request->get('number');
+ 
+		$curl = curl_init($url);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+
+		// De ruwe JSON response
+		$response = curl_exec($curl);
+
+		// Gebruik json_decode() om de response naar een PHP array te converteren
+		$data = json_decode($response);
+
+		curl_close($curl);
+
+		if (count($data->_embedded->addresses) == 1) {
+			$address['postcode'] = $data->_embedded->addresses[0]->postcode;
+			$address['street'] = $data->_embedded->addresses[0]->street;
+			$address['number'] = $data->_embedded->addresses[0]->number;
+			$address['province'] = $data->_embedded->addresses[0]->province->label;
+			$address['province_id'] = Province::where('province_name', strtolower($data->_embedded->addresses[0]->province->label))->first()['id'];
+			$address['city'] = $data->_embedded->addresses[0]->city->label;
+			return json_encode($address);
+		}
+
+		return;
 	}
 
 }

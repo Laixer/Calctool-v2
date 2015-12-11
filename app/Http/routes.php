@@ -237,6 +237,7 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::post('mycompany/quickstart', array('uses' => 'QuickstartController@doNewMyCompanyQuickstart'));
 	Route::post('mycompany/cashbook/account/new', array('uses' => 'CashbookController@doNewAccount'));
 	Route::post('mycompany/cashbook/new', array('uses' => 'CashbookController@doNewCashRow'));
+	Route::post('mycompany/quickstart/address', 'QuickstartController@getExternalAddress');
 
 	Route::get('relation-{relation_id}/contact-{contact_id}/vcard', array('uses' => 'RelationController@downloadVCard'))->where('relation_id', '[0-9]+')->where('contact_id', '[0-9]+');
 	Route::post('relation/updatemycompany', array('as' => 'relation.update', 'uses' => 'RelationController@doUpdateMyCompany'));

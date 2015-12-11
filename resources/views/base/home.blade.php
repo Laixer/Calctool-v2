@@ -26,6 +26,25 @@ $(function() {
 	$('button[data-action="hide"]').click(function(){
 		$.get("/hidenextstep").fail(function(e) { console.log(e); });
 	});
+	$('.autoappend').blur(function(e){
+		$number = $('#address_number').val();
+		$zipcode = $('#zipcode').val();
+		if ($number && $zipcode) {
+
+			$.post("mycompany/quickstart/address", {
+				zipcode: $zipcode,
+				number: $number,
+			}, function(data) {
+				if (data) {
+					var json = $.parseJSON(data);
+					$('#street').val(json.street);
+					$('#city').val(json.city);
+					$("#province").find('option:selected').removeAttr("selected");
+					$('#province option[value=' + json.province_id + ']').attr('selected','selected');
+				}
+			});
+		}
+	});
 });
 </script>
 <div class="modal fade" id="tutModal" tabindex="-1" role="dialog" aria-labelledby="tutModalLabel" aria-hidden="true">
@@ -83,14 +102,14 @@ $(function() {
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="address_number">Huis nr.*</label>
-							<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') ? Input::old('address_number') : ($relation ? $relation->address_number : '') }}" class="form-control"/>
+							<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') ? Input::old('address_number') : ($relation ? $relation->address_number : '') }}" class="form-control autoappend"/>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="zipcode">Postcode*</label>
-							<input name="zipcode" id="zipcode" maxlength="6" type="text" value="{{ Input::old('zipcode') ? Input::old('zipcode') : ($relation ? $relation->address_postal : '') }}" class="form-control"/>
+							<input name="zipcode" id="zipcode" maxlength="6" type="text" value="{{ Input::old('zipcode') ? Input::old('zipcode') : ($relation ? $relation->address_postal : '') }}" class="form-control autoappend"/>
 						</div>
 					</div>
 				</div>
