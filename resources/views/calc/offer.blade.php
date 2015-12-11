@@ -394,7 +394,7 @@ if (!$project || !$project->isOwner()) {
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button class="btn btn-default" data-dismiss="modal">Close</button>
+							<button class="btn btn-default" data-dismiss="modal">Sluiten</button>
 						</div>
 					</div>
 				</div>

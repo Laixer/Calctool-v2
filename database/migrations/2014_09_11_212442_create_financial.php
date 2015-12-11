@@ -141,6 +141,15 @@ class CreateFinancial extends Migration {
 			$table->boolean('display_description')->default('N');
 		});
 
+		Schema::create('invoice_version_post', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->nullableTimestamps();
+			$table->date('sent_date')->nullable();
+			$table->integer('invoice_version_id')->unsigned();
+			$table->foreign('invoice_version_id')->references('id')->on('invoice_version')->onUpdate('cascade')->onDelete('cascade');
+		});
+
 		Schema::create('bank_account', function(Blueprint $table)
 		{
 			$table->increments('id');
