@@ -16,12 +16,12 @@ use \Calctool\Models\MessageBox;
 			<div>
 				<ol class="breadcrumb">
 				  <li><a href="/">Home</a></li>
-				  <li class="active">Berichten</li>
+				  <li class="active">Notificaties</li>
 				</ol>
 			<div>
 			<br>
 
-			<h2><strong>Berichten</strong></h2>
+			<h2><strong>Notificaties</strong></h2>
 			<div class="white-row">
 
 				<table class="table table-striped">

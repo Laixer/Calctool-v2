@@ -10,6 +10,7 @@ use \Calctool\Models\Payment;
 use \Calctool\Models\User;
 use \Calctool\Models\OfferPost;
 use \Calctool\Models\Resource;
+use \Calctool\Models\MessageBox;
 use \Calctool\Models\Audit;
 
 use \Storage;
@@ -339,6 +340,28 @@ class AdminController extends Controller {
 		$post->save();
 
 		return json_encode(['success' => 1]);
+	}
+
+	public function doSendNotification(Request $request)
+	{
+		$this->validate($request, [
+			'user' => array('required'),
+			'subject' => array('required'),
+			'message' => array('required'),
+		]);
+
+		if ($request->input('user') == -1)
+			return back();
+
+		$message = new MessageBox;
+		$message->subject = $request->input('subject');
+		$message->message = nl2br($request->input('message'));
+		$message->from_user = Auth::id();
+		$message->user_id =	$request->input('user');
+
+		$message->save();
+
+		return back()->with('success', 'Bericht verstuurd');
 	}
 
 	public function doTruncateLog()

@@ -1640,7 +1640,7 @@ footer .footer-bar .toTop:hover {
 				border-radius: 4px;
 	}
 	header#topNav li.quick-cart:before {
-		content: "\f003";
+		content: "\f0f3";
 	}
 	header#topNav li.quick-cart .badge {
 		font-family:'Open Sans';

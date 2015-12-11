@@ -23,10 +23,19 @@ use \Calctool\Models\MessageBox;
 			<div>
 			<br />
 
+			@if(Session::get('success'))
+			<div class="alert alert-success">
+				<i class="fa fa-check-circle"></i>
+				<strong>{{ Session::get('success') }}</strong>
+			</div>
+			@endif
+
 			<h2><strong>Nieuw bericht</strong></h2>
 			<div class="white-row">
 
 			<h4>Bericht aan gebruiker</h4>
+			<form method="POST" action="" accept-charset="UTF-8">
+            {!! csrf_field() !!}
 
 				<div class="row">
 					<div class="col-md-6">
@@ -45,14 +54,14 @@ use \Calctool\Models\MessageBox;
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
-							<label for="firstname">Onderwerp</label>
-							<input name="firstname" id="firstname" type="text" class="form-control">
+							<label for="subject">Onderwerp</label>
+							<input name="subject" id="subject" type="text" class="form-control">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-md-12">
-							<textarea name="notepad" id="notepad" rows="10" class="form-control"></textarea>
+							<textarea name="message" id="message" rows="10" class="form-control"></textarea>
 						</div>
 					</div>
 				</div>
@@ -62,6 +71,7 @@ use \Calctool\Models\MessageBox;
 						<button class="btn btn-primary"><i class="fa fa-check"></i> Versturen</button>
 					</div>
 				</div>
+			</form>
 
 			</div>
 		</div>

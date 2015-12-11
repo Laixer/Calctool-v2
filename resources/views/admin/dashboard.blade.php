@@ -138,14 +138,14 @@
 									<a class="item-hover" href="/admin/message">
 										<span class="overlay color2"></span>
 										<span class="inner">
-											<span class="block fa fa-envelope-o fsize60"></span>
-											<strong>Berichten</strong>
+											<span class="block fa fa-bell fsize60"></span>
+											<strong>Notificaties</strong>
 										</span>
 									</a>
-									<a href="/admin/message" class="btn btn-primary add_to_cart"><i class="fa fa-envelope-o"></i> Berichten</a>
+									<a href="/admin/message" class="btn btn-primary add_to_cart"><i class="fa fa-bell"></i> Notificaties</a>
 								</figure>
 								<div class="item-box-desc">
-									<a href="/admin/message"><h4>Berichtenbox</h4></a>
+									<a href="/admin/message"><h4>Notificaties</h4></a>
 								</div>
 							</div>
 						</div>

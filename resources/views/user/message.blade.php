@@ -17,7 +17,7 @@ if (!$message || !$message->isOwner()) {
 		<div class="alert alert-danger">
 			<i class="fa fa-frown-o"></i>
 			<strong>Fout</strong>
-			Deit bericht bestaat niet
+			Dit bericht bestaat niet
 		</div>
 	</section>
 </div>
@@ -35,7 +35,7 @@ if (!$message || !$message->isOwner()) {
 			<div>
 				<ol class="breadcrumb">
 				  <li><a href="/">Home</a></li>
-				  <li><a href="/messagebox">Berichten</a></li>
+				  <li><a href="/messagebox">Notificaties</a></li>
 				  <li class="active">{{ $message->subject }}</li>
 				</ol>
 			<div>

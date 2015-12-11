@@ -61,6 +61,7 @@ use \Calctool\Models\MessageBox;
 						</form>
 					</li>
 					@endif
+					@if (Auth::check())
 					<li class="quick-cart">
 						<?php
 						$msg_cnt = MessageBox::where('user_id','=', Auth::id())->where('active', true)->whereNull('read')->count();
@@ -71,11 +72,11 @@ use \Calctool\Models\MessageBox;
 						<div class="quick-cart-content">
 
 							@if ($msg_cnt == 0)
-							<p> Je hebt geen nieuwe berichten</p>
+							<p> Geen nieuwe meldingen</p>
 							@elseif ($msg_cnt == 1)
-							<p> Je hebt 1 nieuw bericht</p>
+							<p> 1 ongelezen notificatie</p>
 							@else
-							<p> Je hebt {{ $msg_cnt }} nieuwe berichten</p>
+							<p> {{ $msg_cnt }} ongelezen notificaties</p>
 							@endif
 
 							@foreach(MessageBox::where('user_id','=', Auth::id())->where('active', true)->whereNull('read')->get() as $message)
@@ -90,13 +91,14 @@ use \Calctool\Models\MessageBox;
 
 							<div class="row cart-footer">
 								<div class="col-md-12">
-									<a href="/messagebox" class="btn btn-primary btn-xs fullwidth">Alle berichten</a>
+									<a href="/messagebox" class="btn btn-primary btn-xs fullwidth">Alle notificaties</a>
 								</div>
 							</div>
 
 						</div>
 
 					</li>
+					@endif
 				</ul>
 			</nav>
 		</div>
