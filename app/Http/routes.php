@@ -137,6 +137,7 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::get('offer/project-{project_id}/offer-{offer_id}', function() {
 		return View::make('calc.offer_show_pdf');
 	})->where('project_id', '[0-9]+')->where('offer_id', '[0-9]+');
+	Route::get('offer/project-{project_id}/offer-{offer_id}/mail-preview', 'OfferController@getSendOfferPreview')->where('project_id', '[0-9]+')->where('offer_id', '[0-9]+');
 	Route::post('offer/close', 'OfferController@doOfferClose');
 	Route::post('offer/sendmail', 'OfferController@doSendOffer');
 	Route::post('offer/sendpost', 'OfferController@doSendPostOffer');

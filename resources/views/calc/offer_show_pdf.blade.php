@@ -33,6 +33,7 @@ if (!$offer) {
 	</section>
 </div>
 @stop
+
 <?php }else{ ?>
 
 @section('content')
@@ -144,6 +145,12 @@ $(document).ready(function() {
 			<strong>De offerte zal zo snel mogelijk per post worden verzonden</strong>
 		</div>
 
+		<div class="modal fade ajax_modal_container" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content"></div>
+			</div>
+		</div>
+
 		<div class="pull-right">
 			<?php if (!$project->project_close && !$offer->offer_finish) { ?>
 			@if ($offer_last->id == $offer->id && !$offer->offer_finish)
@@ -153,7 +160,7 @@ $(document).ready(function() {
 			<div class="btn-group" role="group">
 			  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Versturen&nbsp;&nbsp;<span class="caret"></span></button>
 			  <ul class="dropdown-menu">
-			    <li><a href="javascript:void(0);" id="sendmail">Per email</a></li>
+				<li><a href="/offer/project-{{ $project->id }}/offer-{{ $offer->id }}/mail-preview" data-toggle="modal" data-target=".ajax_modal_container">Per email</a></li>
 			    <li><a href="/res-{{ $res->id }}/download">Per post (download PDF)</a></i>
 			    <li><a href="javascript:void(0);" id="sendpost">Door calculatieTool.com</a></li>
 			  </ul>
@@ -179,11 +186,11 @@ $(document).ready(function() {
 					<div class="btn-group" role="group">
 					  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Versturen&nbsp;&nbsp;<span class="caret"></span></button>
 					  <ul class="dropdown-menu">
-					    <li><a href="javascript:void(0);" id="sendmail">Per email</a></li>
+						<li><a href="/offer/project-{{ $project->id }}/offer-{offer_id}/mail-preview" data-toggle="modal" data-target=".ajax_modal_container">Per email</a></li>
 					    <li><a href="/res-{{ $res->id }}/download">Per post (download PDF)</a></i>
 					    <li><a href="javascript:void(0);" id="sendpost">Door calculatieTool.com</a></li>
 					  </ul>
-					</div>
+					 </div>
 					<?php } else { ?>
 					<a href="/res-{{ $res->id }}/download" class="btn btn-primary">Download PDF</a>
 					<?php } ?>
@@ -196,3 +203,6 @@ $(document).ready(function() {
 @stop
 
 <?php } ?>
+
+
+

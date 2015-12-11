@@ -293,7 +293,7 @@ else {
 							<a href="#purchase" data-toggle="tab">Inkoopfacturen</a>
 						</li>
 						<li id="tab-communication">
-							<a href="#communication" data-toggle="tab">Communicatie opdrachtgever</a>
+							<a href="#communication" data-toggle="tab">Communicatie opdrachtgever </a>
 						</li>
 					</ul>
 
@@ -724,7 +724,9 @@ else {
                             {!! csrf_field() !!}
                             <input type="hidden" name="project" value="{{ $project->id }}"/>
 
-							<h4>Jouw opmerkingen voor verzending bij digitale offerte</h4>
+                           <h4>Communicatie met opdrachtgever <a data-toggle="tooltip" data-placement="bottom" data-original-title="Uitsluitend bij een met e-mail verzonden offerte." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h5>
+
+							<h5><strong>Jouw opmerkingen</strong></h5>
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-12">
@@ -732,7 +734,7 @@ else {
 									</div>
 								</div>
 							</div>
-							<h4>Opmerkingen van jouw opdrachtegver op digitaal verzonden offerte</h4>
+							<h5><strong>Opmerkingen van je opdrachtegver</strong></h5>
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-12">

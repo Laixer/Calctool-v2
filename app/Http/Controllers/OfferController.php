@@ -199,12 +199,44 @@ class OfferController extends Controller {
 		$contact_client = Contact::find($offer->to_contact_id);
 		$contact_user = Contact::find($offer->from_contact_id);
 
-		$data = array('email' => $contact_client->email, 'token' => $share->token, 'client' => $contact_client->getFormalName(), 'user' => $contact_user->getFormalName(), 'project_name' => $project->project_name, 'pref_email_offer' => Auth::User()->pref_email_offer);
+		$data = array('email' => $contact_client->email, 'preview' => false, 'token' => $share->token, 'client' => $contact_client->getFormalName(), 'user' => $contact_user->getFormalName(), 'project_name' => $project->project_name, 'pref_email_offer' => Auth::User()->pref_email_offer);
 		Mailgun::send('mail.offer_send', $data, function($message) use ($data) {
 			$message->to($data['email'], strtolower(trim($data['client'])))->subject('Offerte ' . $data['project_name']);
 		});
 
 		return json_encode(['success' => 1]);
+	}
+
+	public function getSendOfferPreview(Request $request, $project_id, $offer_id)
+	{
+		$offer = Offer::find($offer_id);
+		if (!$offer)
+			return json_encode(['success' => 0]);
+		$project = Project::find($project_id);
+		if (!$project || !$project->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
+
+		$share = ProjectShare::where('project_id', $project->id)->first();
+		if (!$share) {
+			$share = new ProjectShare;
+			$share->project_id = $project->id;
+
+			$share->save();
+		}
+
+		$contact_client = Contact::find($offer->to_contact_id);
+		$contact_user = Contact::find($offer->from_contact_id);
+
+		$data = array(
+			'preview' => true,
+			'client'=> $contact_client->getFormalName(),
+			'token' => $share->token,
+			'project_name' => $project->project_name,
+			'user' => $contact_user->getFormalName(),
+			'pref_email_offer' => Auth::User()->pref_email_offer
+		);
+		return view('mail.offer_send', $data);
 	}
 
 	public function doSendPostOffer(Request $request)
