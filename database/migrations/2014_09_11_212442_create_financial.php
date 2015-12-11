@@ -189,6 +189,11 @@ class CreateFinancial extends Migration {
 			Schema::dropIfExists('bank_account');
 		});
 
+		Schema::table('invoice_version_post', function(Blueprint $table)
+		{
+			Schema::dropIfExists('invoice_version_post');
+		});
+
 		Schema::table('invoice_version', function(Blueprint $table)
 		{
 			Schema::dropIfExists('invoice_version');
