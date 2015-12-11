@@ -158,12 +158,6 @@ class OfferController extends Controller {
 			$invoice->to_contact_id = $offer->to_contact_id;
 			$invoice->from_contact_id = $offer->from_contact_id;
 			if (($i+1) == $offer->invoice_quantity) {
-				//$project_total = ResultEndresult::totalProject($project);
-				//$project_total -= $offer->downpayment_amount;
-				//$invoice->amount = $project_total;
-				//$invoice->rest_21 = InvoiceTerm::partTax1($project, $invoice) * $project_total;
-				//$invoice->rest_6 = InvoiceTerm::partTax2($project, $invoice) * $project_total;
-				//$invoice->rest_0 = InvoiceTerm::partTax3($project, $invoice) * $project_total;
 				$invoice->isclose = true;
 			}
 			if ($i == 0 && $offer->downpayment) {
@@ -200,7 +194,17 @@ class OfferController extends Controller {
 		$contact_client = Contact::find($offer->to_contact_id);
 		$contact_user = Contact::find($offer->from_contact_id);
 
-		$data = array('email' => $contact_client->email, 'pdf' => $res->file_location, 'preview' => false, 'token' => $share->token, 'client' => $contact_client->getFormalName(), 'user' => $contact_user->getFormalName(), 'project_name' => $project->project_name, 'pref_email_offer' => Auth::User()->pref_email_offer);
+		$data = array(
+			'email' => $contact_client->email,
+			'pdf' => $res->file_location,
+			'preview' => false,
+			'offer_id' => $offer->id,
+			'token' => $share->token,
+			'client' => $contact_client->getFormalName(),
+			'user' => $contact_user->getFormalName(),
+			'project_name' => $project->project_name,
+			'pref_email_offer' => Auth::User()->pref_email_offer
+		);
 		Mailgun::send('mail.offer_send', $data, function($message) use ($data) {
 			$message->to($data['email'], strtolower(trim($data['client'])))->subject('Offerte ' . $data['project_name']);
 			$message->attach($data['pdf']);
@@ -232,6 +236,7 @@ class OfferController extends Controller {
 
 		$data = array(
 			'preview' => true,
+			'offer_id' => $offer->id,
 			'client'=> $contact_client->getFormalName(),
 			'token' => $share->token,
 			'project_name' => $project->project_name,

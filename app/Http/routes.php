@@ -126,6 +126,9 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::get('invoice/project-{project_id}/pdf-invoice-{invoice_id}', function() {
 		return View::make('calc.invoice_show_final_pdf');
 	})->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
+	Route::get('invoice/project-{project_id}/invoice-{offer_id}/mail-preview', 'InvoiceController@getSendOfferPreview')->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
+	Route::post('invoice/sendmail', 'InvoiceController@doSendOffer');
+	Route::post('invoice/sendpost', 'InvoiceController@doSendPostOffer');
 
 	Route::get('invoice/project-{project_id}/history-invoice-{invoice_id}', function() {
 		return View::make('calc.invoice_version');

@@ -12,8 +12,8 @@
 
 		$(document).ready(function() {
 			$('#sendmail').click(function(){
-				$.post("/offer/sendmail", {
-					offer: 1
+				$.post("/invoice/sendmail", {
+					invoice: {{ $invoice_id }}
 				}, function(data){
 					var json = $.parseJSON(data);
 					if (json.success) {

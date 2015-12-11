@@ -13,7 +13,7 @@
 		$(document).ready(function() {
 			$('#sendmail').click(function(){
 				$.post("/offer/sendmail", {
-					offer: 1
+					offer: {{ $offer_id }}
 				}, function(data){
 					var json = $.parseJSON(data);
 					if (json.success) {
