@@ -53,7 +53,7 @@
 		_toggle();
 		//_bgimage();
 		_globalSearch();
-		//_quickCart();
+		_quickCart();
 		_placeholder();
 
 		/** Bootstrap Tooltip **/

@@ -8,7 +8,6 @@ use \Calctool\Models\BankAccount;
 use \Calctool\Models\Cashbook;
 
 use \Auth;
-//use \Cookie;
 
 class CashbookController extends Controller {
 

@@ -51,8 +51,6 @@ class DemoProjectTemplate {
 		$relation->kind_id 			= $relationkind->id;
 		$relation->province_id 		= $province->id;
 		$relation->country_id 		= $country->id;
-		//$iban->iban					='NL45ING0111111111';
-		//$iban->iban_name			='Demo Eigenaar';
 		$relation->save();
 
 		$project = new Project;

@@ -30,7 +30,7 @@
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/user" ><h4>Gebruikers</h4></a>
-									<small class="styleColor">{{ \Calctool\Models\User::where('active','=','true')->count() }} actieve gebruikers</small>
+									<small class="styleColor">{{ \Calctool\Models\User::where('active','=','true')->count() }} actieve gebruiker(s)</small>
 								</div>
 							</div>
 						</div>
@@ -50,7 +50,7 @@
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/alert" ><h4>Alerts</h4></a>
-									<small class="styleColor">{{ \Calctool\Models\SysMessage::count() }} alerts</small>
+									<small class="styleColor">{{ \Calctool\Models\SysMessage::count() }} alert(s)</small>
 								</div>
 							</div>
 						</div>
@@ -69,7 +69,7 @@
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/payment"><h4>Betalingen</h4></a>
-									<small class="styleColor">{{ \Calctool\Models\Payment::count() }} transacties</small>
+									<small class="styleColor">{{ \Calctool\Models\Payment::count() }} transactie(s)</small>
 								</div>
 							</div>
 						</div>
@@ -88,7 +88,7 @@
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/resource"><h4>Bestanden</h4></a>
-									<small class="styleColor">{{ \Calctool\Models\Resource::count() }} bestanden</small>
+									<small class="styleColor">{{ \Calctool\Models\Resource::count() }} bestand(en)</small>
 								</div>
 							</div>
 						</div>
@@ -107,7 +107,45 @@
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/resource"><h4>Projecten</h4></a>
-									<small class="styleColor">{{ \Calctool\Models\Project::count() }} Projecten</small>
+									<small class="styleColor">{{ \Calctool\Models\Project::count() }} Project(en)</small>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-md-3">
+							<div class="item-box item-box-show fixed-box">
+								<figure>
+									<a class="item-hover" href="/admin/snailmail">
+										<span class="overlay color2"></span>
+										<span class="inner">
+											<span class="block fa fa-envelope fsize60"></span>
+											<strong>Opdrachten</strong>
+										</span>
+									</a>
+									<a href="/admin/snailmail" class="btn btn-primary add_to_cart"><i class="fa fa-envelope"></i> Opdrachten</a>
+								</figure>
+								<div class="item-box-desc">
+									<a href="/admin/snailmail"><h4>Opdrachtbeheer</h4></a>
+									<small class="styleColor">{{ \Calctool\Models\OfferPost::whereNull('sent_date')->count() }} te versturen offerte(s)</small>
+									<!--<small class="styleColor">x open tickets</small>-->	
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-md-3">
+							<div class="item-box item-box-show fixed-box">
+								<figure>
+									<a class="item-hover" href="/admin/message">
+										<span class="overlay color2"></span>
+										<span class="inner">
+											<span class="block fa fa-bell fsize60"></span>
+											<strong>Notificaties</strong>
+										</span>
+									</a>
+									<a href="/admin/message" class="btn btn-primary add_to_cart"><i class="fa fa-bell"></i> Notificaties</a>
+								</figure>
+								<div class="item-box-desc">
+									<a href="/admin/message"><h4>Notificaties</h4></a>
 								</div>
 							</div>
 						</div>
@@ -130,7 +168,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-6 col-md-3"><!-- item -->
+						<div class="col-sm-6 col-md-3">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/phpinfo">
@@ -148,7 +186,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-6 col-md-3"><!-- item -->
+						<div class="col-sm-6 col-md-3">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/log">
@@ -165,26 +203,6 @@
 								</div>
 							</div>
 						</div>
-
-						<!--<div class="col-sm-6 col-md-3">
-							<div class="item-box item-box-show fixed-box">
-								<figure>
-									<a class="item-hover" href="/admin/support">
-										<span class="overlay color2"></span>
-										<span class="inner">
-											<span class="block fa fa-question-circle fsize60"></span>
-											<strong>Support & Ondersteuning</strong>
-										</span>
-									</a>
-									<a href="/admin/support" class="btn btn-primary add_to_cart"><i class="fa fa-question-circle"></i> Ticketsysteem</a>
-								</figure>
-								<div class="item-box-desc">
-									<a href="/admin/support" ><h4>Support & Ondersteuning</h4></a>
-									<small class="styleColor">x nieuwe tickets</small>
-									<small class="styleColor">x open tickets</small>
-								</div>
-							</div>
-						</div>-->
 
 					</div>
 

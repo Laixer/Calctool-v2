@@ -5,18 +5,22 @@ use \Calctool\Models\Relation;
 use \Calctool\Models\PurchaseKind;
 use \Calctool\Models\Contact;
 use \Calctool\Models\Project;
+use \Calctool\Models\ProjectType;
 use \Calctool\Models\Offer;
 use \Calctool\Models\Invoice;
 use \Calctool\Models\Wholesale;
+use \Calctool\Models\ProjectShare;
+
 
 $common_access_error = false;
-$project = \Calctool\Models\Project::find(Route::Input('project_id'));
+$project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner())
 	$common_access_error = true;
 else {
-	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+	$offer_last = Offer::where('project_id',$project->id)->orderBy('created_at', 'desc')->first();
+	$share = ProjectShare::where('project_id', $project->id)->first();
 	if ($offer_last)
-		$cntinv = Invoice::where('offer_id','=', $offer_last->id)->where('invoice_close',true)->count('id');
+		$cntinv = Invoice::where('offer_id',$offer_last->id)->where('invoice_close',true)->count('id');
 	else
 		$cntinv = 0;
 }
@@ -56,6 +60,9 @@ else {
 		});
 		$('#tab-purchase').click(function(e){
 			sessionStorage.toggleTabProj{{Auth::id()}} = 'purchase';
+		});
+		$('#tab-communication').click(function(e){
+			sessionStorage.toggleTabProj{{Auth::id()}} = 'communication';
 		});
 		if (sessionStorage.toggleTabProj{{Auth::id()}}){
 			$toggleOpenTab = sessionStorage.toggleTabProj{{Auth::id()}};
@@ -224,18 +231,6 @@ else {
 				location.reload();
 			});
     	});
-		<?php if ($offer_last) { ?>
-		$('#dobx').datepicker().on('changeDate', function(e){
-			$('#dobx').datepicker('hide');
-			$.post("/offer/close", {
-				date: e.date.toLocaleString(),
-				offer: {{ $offer_last->id }},
-				project: {{ $project->id }}
-			}, function(data){
-				location.reload();
-			});
-    	});
-    	<?php } ?>
 	});
 </script>
 <div id="wrapper">
@@ -272,7 +267,7 @@ else {
 
 			<h2><strong>Project</strong> {{$project->project_name}}</h2>
 
-			@if(!\Calctool\Models\Relation::where('user_id','=', Auth::user()->id)->count())
+			@if(!Relation::where('user_id','=', Auth::user()->id)->count())
 			<div class="alert alert-info">
 				<i class="fa fa-info-circle"></i>
 				<strong>Let Op!</strong> Maak eerst een opdrachtgever aan onder <a href="/relation/new">nieuwe relatie</a>.
@@ -297,12 +292,15 @@ else {
 						<li id="tab-purchase">
 							<a href="#purchase" data-toggle="tab">Inkoopfacturen</a>
 						</li>
+						<li id="tab-communication">
+							<a href="#communication" data-toggle="tab">Communicatie opdrachtgever </a>
+						</li>
 					</ul>
 
 					<div class="tab-content">
 
 						<div id="status" class="tab-pane">
-							<h4>Project op basis van {{ \Calctool\Models\ProjectType::find($project->type_id)->type_name }}</h4>
+							<h4>Project op basis van {{ ProjectType::find($project->type_id)->type_name }}</h4>
 							<div class="row">
 								<div class="col-md-3"><strong>Offerte stadium</strong></div>
 								<div class="col-md-2"><strong></strong></div>
@@ -319,21 +317,7 @@ else {
 							</div>
 							<div class="row">
 								<div class="col-md-3">Opdracht ontvangen <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je opdracht hebt gekregen op je offerte. De calculatie slaat dan definitief dicht." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></div>
-								<div class="col-md-2">
-									<?php
-										if (!\Calctool\Calculus\CalculationEndresult::totalProject($project)) {
-											echo "Geen offerte bedrag";
-										} else {
-											if ($offer_last && $offer_last->offer_finish) {
-												echo date('d-m-Y', strtotime($offer_last->offer_finish));
-											} else if ($offer_last) {
-												echo '<a href="#" id="dobx">Bewerk</a>';
-											} else {
-												echo "Geen offerte bedrag";
-											}
-										}
-									?>
-								</div>
+								<div class="col-md-2">{{ $offer_last && $offer_last->offer_finish ? date('d-m-Y', strtotime($offer_last->offer_finish)) : '' }}</div>
 							</div>
 								<br>
 							<div class="row">
@@ -365,6 +349,7 @@ else {
 								<div class="col-md-3"><i>{{ $project->update_less ? 'Laatste wijziging: '.date('d-m-Y', strtotime($project->update_less)) : '' }}</i></div>
 							</div>
 								<br>
+@if (0)
 							<div class="row">
 								<div class="col-md-3"><strong>Financieel</strong></div>
 								<div class="col-md-2"><strong>Gefactureerd</strong></div>
@@ -430,6 +415,7 @@ else {
 							</div>
 							<?php } ?>
 								<br>
+@endif
 							<div class="row">
 								<div class="col-md-3"><strong>Project gesloten</strong> <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je project kan worden gesloten. Zijn alle facturen betaald?" href="#"><i class="fa fa-info-circle"></i></a></div>
 								<div class="col-md-2">{!! $project->project_close ? date('d-m-Y', strtotime($project->project_close)) : '<a href="#" id="projclose">Bewerk</a>' !!}</a></div>
@@ -732,6 +718,36 @@ else {
 									</table>
 								<!--</div>
 							</div>-->
+						</div>
+						<div id="communication" class="tab-pane">
+							<form method="POST" action="/project/update/communication" accept-charset="UTF-8">
+                            {!! csrf_field() !!}
+                            <input type="hidden" name="project" value="{{ $project->id }}"/>
+
+                           <h4>Communicatie met opdrachtgever <a data-toggle="tooltip" data-placement="bottom" data-original-title="Uitsluitend bij een met e-mail verzonden offerte." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h5>
+
+							<h5><strong>Jouw opmerkingen</strong></h5>
+							<div class="row">
+								<div class="form-group">
+									<div class="col-md-12">
+										<textarea name="user_note" id="user_note" rows="10" class="form-control">{{ $share ? $share->user_note : ''}}</textarea>
+									</div>
+								</div>
+							</div>
+							<h5><strong>Opmerkingen van je opdrachtegver</strong></h5>
+							<div class="row">
+								<div class="form-group">
+									<div class="col-md-12">
+										<textarea name="client_note" readonly="readonly" id="client_note" rows="10" class="form-control">{{  $share ? $share->client_note : ''}}</textarea>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+									<div class="col-md-12">
+										<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+									</div>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>

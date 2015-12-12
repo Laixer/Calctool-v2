@@ -1,3 +1,8 @@
+<?php
+use \Calctool\Models\User;
+use \Calctool\Models\MessageBox;
+?>
+
 <header id="topNav" class="topHead">
 	<div class="container">
 
@@ -16,11 +21,6 @@
 					<li>
 						<a href="/">Home</a>
 					</li>
-					@if (0)
-					<li>
-						{{ HTML::link('help', 'Help') }}
-					</li>
-					@endif
 					@if (Auth::check())
 					<li>
 						<a href="/myaccount">Mijn account</a>
@@ -59,6 +59,44 @@
 								<button class="btn btn-primary notransition"><i class="fa fa-search"></i></button>
 							</span>
 						</form>
+					</li>
+					@endif
+					@if (Auth::check())
+					<li class="quick-cart">
+						<?php
+						$msg_cnt = MessageBox::where('user_id','=', Auth::id())->where('active', true)->whereNull('read')->count();
+						?>
+						@if ($msg_cnt > 0)
+						<span class="badge pull-right">{{ $msg_cnt }}</span>
+						@endif
+						<div class="quick-cart-content">
+
+							@if ($msg_cnt == 0)
+							<p> Geen nieuwe meldingen</p>
+							@elseif ($msg_cnt == 1)
+							<p> 1 ongelezen notificatie</p>
+							@else
+							<p> {{ $msg_cnt }} ongelezen notificaties</p>
+							@endif
+
+							@foreach(MessageBox::where('user_id','=', Auth::id())->where('active', true)->whereNull('read')->get() as $message)
+							<a class="item" href="/messagebox/message-{{ $message->id }}">
+								<i class="fa fa-envelope pull-left fsize30" style="margin-right: 10px; margin-left: 8px;"></i>
+								<div class="inline-block">
+									<span class="price">{{ ucfirst(User::find($message->from_user)->username) }}</span>
+									<span class="title">{{ $message->subject }}</span>
+								</div>
+							</a>
+							@endforeach
+
+							<div class="row cart-footer">
+								<div class="col-md-12">
+									<a href="/messagebox" class="btn btn-primary btn-xs fullwidth">Alle notificaties</a>
+								</div>
+							</div>
+
+						</div>
+
 					</li>
 					@endif
 				</ul>

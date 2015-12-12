@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use \Calctool\Models\Project;
 use \Calctool\Models\Resource;
+use \Calctool\Models\ProjectShare;
 
 use \Auth;
 
@@ -261,5 +262,29 @@ class ProjectController extends Controller {
 		$project->save();
 
 		return json_encode(['success' => 1]);
+	}
+
+	public function doCommunication(Request $request)
+	{
+
+		$this->validate($request, [
+			'project' => array('required','integer'),
+		]);
+
+		$project = Project::find($request->input('project'));
+		if (!$project || !$project->isOwner()) {
+			return back()->withInput($request->all());
+		}
+
+		$project_share = ProjectShare::where('project_id', $project->id)->first();
+		if (! $project_share) {
+			return back()->withInput($request->all());
+		}
+
+		$project_share->user_note = $request->input('user_note');
+		
+		$project_share->save();
+
+		return back();
 	}
 }

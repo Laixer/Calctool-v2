@@ -1,5 +1,7 @@
 <?php
 use \Calctool\Models\Payment;
+use \Calctool\Models\User;
+
 ?>
 
 @extends('layout.master')

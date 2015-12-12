@@ -8,7 +8,10 @@ use Illuminate\Http\Request;
 use \Calctool\Models\SysMessage;
 use \Calctool\Models\Payment;
 use \Calctool\Models\User;
+use \Calctool\Models\OfferPost;
+use \Calctool\Models\InvoicePost;
 use \Calctool\Models\Resource;
+use \Calctool\Models\MessageBox;
 use \Calctool\Models\Audit;
 
 use \Storage;
@@ -326,6 +329,55 @@ class AdminController extends Controller {
 		return json_encode(['success' => 1]);
 	}
 
+	public function doOfferPostDone(Request $request)
+	{
+		$this->validate($request, [
+			'id' => array('required'),
+		]);
+
+		$post = OfferPost::find($request->input('id'));
+		$post->sent_date = date('d-m-Y');
+
+		$post->save();
+
+		return json_encode(['success' => 1]);
+	}
+
+	public function doInvoicePostDone(Request $request)
+	{
+		$this->validate($request, [
+			'id' => array('required'),
+		]);
+
+		$post = InvoicePost::find($request->input('id'));
+		$post->sent_date = date('d-m-Y');
+
+		$post->save();
+
+		return json_encode(['success' => 1]);
+	}
+
+	public function doSendNotification(Request $request)
+	{
+		$this->validate($request, [
+			'user' => array('required'),
+			'subject' => array('required'),
+			'message' => array('required'),
+		]);
+
+		if ($request->input('user') == -1)
+			return back();
+
+		$message = new MessageBox;
+		$message->subject = $request->input('subject');
+		$message->message = nl2br($request->input('message'));
+		$message->from_user = Auth::id();
+		$message->user_id =	$request->input('user');
+
+		$message->save();
+
+		return back()->with('success', 'Bericht verstuurd');
+	}
 
 	public function doTruncateLog()
 	{
@@ -342,6 +394,20 @@ class AdminController extends Controller {
 		\DemoProjectTemplate::setup($user_id);
 
 		return back()->with('success', 'Demo-project ingevoegd');
+	}
+
+	public function getValidationProject(Request $request, $user_id)
+	{
+		\ValidationProjectTemplate::setup($user_id);
+
+		return back()->with('success', 'Validatiie-project ingevoegd');
+	}
+
+	public function getStabuProject(Request $request, $user_id)
+	{
+		\StabuProjectTemplate::setup($user_id);
+
+		return back()->with('success', 'STABU-project ingevoegd');
 	}
 
 	public function getSessionDeblock(Request $request, $user_id)

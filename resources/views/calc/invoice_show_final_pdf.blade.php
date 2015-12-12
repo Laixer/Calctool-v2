@@ -41,11 +41,10 @@ if (!$invoice) {
 @section('content')
 <script src="/plugins/pdf/build/pdf.js" type="text/javascript"></script>
 <script id="script">
-	var url = '/{{ $res->file_location }}';
-	var numPages = 0;
-	PDFJS.workerSrc = '/plugins/pdf/build/pdf.worker.js';
-	PDFJS.getDocument(url).then(function getPdf(pdf) {
-
+var url = '/{{ $res->file_location }}';
+var numPages = 0;
+PDFJS.workerSrc = '/plugins/pdf/build/pdf.worker.js';
+PDFJS.getDocument(url).then(function getPdf(pdf) {
 	for (var i = 0; i < pdf.numPages; i++) {
 		var ndr = '<div class="white-row"><canvas id="the-canvas'+i+'" style="border:0px solid black;text-align:center;"/></canvas></div>';
 		$('#pages').append(ndr);
@@ -64,7 +63,28 @@ if (!$invoice) {
 			pdf.getPage(numPages+1).then(getPage);
 		}
 	});
-
+});
+$(document).ready(function() {
+	$('#sendmail').click(function(){
+		$.post("/invoice/sendmail", {
+			invoice: {{ $invoice->id }}
+		}, function(data){
+			var json = $.parseJSON(data);
+			if (json.success) {
+				$('#mailsent').show();
+			}
+		});
+	});
+	$('#sendpost').click(function(){
+		$.post("/invoice/sendpost", {
+			invoice: {{ $invoice->id }}
+		}, function(data){
+			var json = $.parseJSON(data);
+			if (json.success) {
+				$('#postsent').show();
+			}
+		});
+	});
 });
 </script>
 	<div id="wrapper">
@@ -73,9 +93,32 @@ if (!$invoice) {
 
 		@include('calc.wizard', array('page' => 'invoice'))
 
+		<div id="mailsent" class="alert alert-success" style="display: none;">
+			<i class="fa fa-check-circle"></i>
+			<strong>Email verstuurd naar opdrachtgever</strong>
+		</div>
+
+		<div id="postsent" class="alert alert-success" style="display: none;">
+			<i class="fa fa-check-circle"></i>
+			<strong>De factuur zal zo snel mogelijk per post worden verzonden</strong>
+		</div>
+
+		<div class="modal fade ajax_modal_container" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content"></div>
+			</div>
+		</div>
+
 		<div class="pull-right">
 			<?php if (!$project->project_close) { ?>
-			<a href="/res-{{ $res->id }}/download" class="btn btn-primary">Download PDF</a>
+			<div class="btn-group" role="group">
+			  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Versturen&nbsp;&nbsp;<span class="caret"></span></button>
+			  <ul class="dropdown-menu">
+				<li><a href="/invoice/project-{{ $project->id }}/invoice-{{ $invoice->id }}/mail-preview" data-toggle="modal" data-target=".ajax_modal_container">Per email</a></li>
+			    <li><a href="/res-{{ $res->id }}/download">Per post (download PDF)</a></i>
+			    <li><a href="javascript:void(0);" id="sendpost">Door calculatieTool.com</a></li>
+			  </ul>
+			  </div>
 			<?php } ?>
 		</div>
 
@@ -88,7 +131,14 @@ if (!$invoice) {
 			<div class="col-sm-6">
 				<div class="padding20 pull-right">
 					<?php if (!$project->project_close) { ?>
-					<a href="/res-{{ $res->id }}/download" class="btn btn-primary">Download PDF</a>
+					<div class="btn-group" role="group">
+					  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Versturen&nbsp;&nbsp;<span class="caret"></span></button>
+					  <ul class="dropdown-menu">
+						<li><a href="/invoice/project-{{ $project->id }}/invoice-{{ $invoice->id }}/mail-preview" data-toggle="modal" data-target=".ajax_modal_container">Per email</a></li>
+					    <li><a href="/res-{{ $res->id }}/download">Per post (download PDF)</a></i>
+					    <li><a href="javascript:void(0);" id="sendpost">Door calculatieTool.com</a></li>
+					  </ul>
+					  </div>
 					<?php } ?>
 				</div>
 			</div>

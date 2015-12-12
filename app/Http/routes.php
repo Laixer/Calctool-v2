@@ -29,6 +29,7 @@ Route::post('password/{api}/{token}', array('middleware' => 'guest', 'as' => 're
 Route::get('ex-project-overview/{token}', function() {
 	return view('user.client_page');
 })->where('token', '[0-9a-z]{40}');
+Route::post('ex-project-overview/{token}/update', 'ClientController@doUpdateCommunication')->where('token', '[0-9a-z]{40}');
 
 Route::get('api/v1', array('uses' => 'ApiController@getApiRoot'));
 
@@ -82,6 +83,13 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::post('myaccount/preferences/update', array('as' => 'preferences.update', 'uses' => 'UserController@doUpdatePreferences'));
 	Route::post('myaccount/notepad/save', array('uses' => 'UserController@doUpdateNotepad'));
 
+	Route::get('messagebox/message-{message}/read', 'MessageBoxController@doRead')->where('message', '[0-9]+');
+	Route::get('messagebox/message-{message}/delete', 'MessageBoxController@doDelete')->where('message', '[0-9]+');
+	Route::get('messagebox/message-{message}', 'MessageBoxController@getMessage')->where('message', '[0-9]+');
+	Route::get('messagebox', function() {
+		return view('user.messagebox');
+	});
+
 	Route::get('payment', function() {
 		return view('user.payment');
 	});
@@ -118,6 +126,9 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::get('invoice/project-{project_id}/pdf-invoice-{invoice_id}', function() {
 		return View::make('calc.invoice_show_final_pdf');
 	})->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
+	Route::get('invoice/project-{project_id}/invoice-{offer_id}/mail-preview', 'InvoiceController@getSendOfferPreview')->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
+	Route::post('invoice/sendmail', 'InvoiceController@doSendOffer');
+	Route::post('invoice/sendpost', 'InvoiceController@doSendPostOffer');
 
 	Route::get('invoice/project-{project_id}/history-invoice-{invoice_id}', function() {
 		return View::make('calc.invoice_version');
@@ -129,6 +140,7 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::get('offer/project-{project_id}/offer-{offer_id}', function() {
 		return View::make('calc.offer_show_pdf');
 	})->where('project_id', '[0-9]+')->where('offer_id', '[0-9]+');
+	Route::get('offer/project-{project_id}/offer-{offer_id}/mail-preview', 'OfferController@getSendOfferPreview')->where('project_id', '[0-9]+')->where('offer_id', '[0-9]+');
 	Route::post('offer/close', 'OfferController@doOfferClose');
 	Route::post('offer/sendmail', 'OfferController@doSendOffer');
 	Route::post('offer/sendpost', 'OfferController@doSendPostOffer');
@@ -225,6 +237,7 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::post('mycompany/quickstart', array('uses' => 'QuickstartController@doNewMyCompanyQuickstart'));
 	Route::post('mycompany/cashbook/account/new', array('uses' => 'CashbookController@doNewAccount'));
 	Route::post('mycompany/cashbook/new', array('uses' => 'CashbookController@doNewCashRow'));
+	Route::post('mycompany/quickstart/address', 'QuickstartController@getExternalAddress');
 
 	Route::get('relation-{relation_id}/contact-{contact_id}/vcard', array('uses' => 'RelationController@downloadVCard'))->where('relation_id', '[0-9]+')->where('contact_id', '[0-9]+');
 	Route::post('relation/updatemycompany', array('as' => 'relation.update', 'uses' => 'RelationController@doUpdateMyCompany'));
@@ -254,6 +267,7 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::post('project/new', array('as' => 'project.new', 'uses' => 'ProjectController@doNew'));
 	Route::post('project/update', array('as' => 'project.update', 'uses' => 'ProjectController@doUpdate'));
 	Route::post('project/update/note', array('as' => 'project.update', 'uses' => 'ProjectController@doUpdateNote'));
+	Route::post('project/update/communication', array('as' => 'project.update', 'uses' => 'ProjectController@doCommunication'));
 	Route::post('project/updatecalc', array('as' => 'project.update', 'uses' => 'ProjectController@doUpdateProfit'));
 	Route::get('project', array('as' => 'project', 'uses' => 'ProjectController@getAll'));
 	Route::get('project-{project_id}/edit', array('as' => 'project.edit', 'uses' => 'ProjectController@getEdit'))->where('project_id', '[0-9]+');
@@ -298,6 +312,8 @@ Route::group(array('before' => 'admin'), function()
 	});
 	Route::get('admin/user-{user_id}/switch', array('as' => 'user', 'uses' => 'AdminController@getSwitchSession'));
 	Route::get('admin/user-{user_id}/demo', array('as' => 'user', 'uses' => 'AdminController@getDemoProject'));
+	Route::get('admin/user-{user_id}/validation', array('as' => 'user', 'uses' => 'AdminController@getValidationProject'));
+	Route::get('admin/user-{user_id}/stabu', array('as' => 'user', 'uses' => 'AdminController@getStabuProject'));
 	Route::get('admin/user-{user_id}/deblock', array('as' => 'user', 'uses' => 'AdminController@getSessionDeblock'));
 	Route::post('admin/user-{user_id}/edit', array('as' => 'user', 'uses' => 'AdminController@doUpdateUser'));
 	Route::get('admin/alert', function() {
@@ -321,6 +337,15 @@ Route::group(array('before' => 'admin'), function()
 	Route::get('admin/project', function() {
 		return view('admin.project');
 	});
+	Route::get('admin/snailmail', function() {
+		return view('admin.snailmail');
+	});
+	Route::get('admin/message', function() {
+		return view('admin.message');
+	});
+	Route::post('admin/message', 'AdminController@doSendNotification');
+	Route::post('admin/snailmail/offer/done', 'AdminController@doOfferPostDone');
+	Route::post('admin/snailmail/invoice/done', 'AdminController@doInvoicePostDone');
 	Route::get('admin/resource', function() {
 		return view('admin.resource');
 	});
@@ -330,10 +355,6 @@ Route::group(array('before' => 'admin'), function()
 	});
 	Route::get('admin/log/truncate', array('as' => 'user', 'uses' => 'AdminController@doTruncateLog'));
 });
-
-Route::get('xy', function() {
-	return view('mail.offer_send', array('client'=>'opdrachtgever', 'token' => '123', 'project_name' => 'projectnaam', 'user' => 'uw vakanman', 'pref_email_offer' => 'Hierbij doe ik u mijn offerte betreffende ondergenoemd project toekomen.'));
-}); 
 
 Route::any('telegram', function(){
 	if ($_ENV['TELEGRAM_ENABLED']) {

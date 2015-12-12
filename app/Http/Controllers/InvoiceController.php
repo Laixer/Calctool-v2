@@ -8,11 +8,14 @@ use \Calctool\Models\Project;
 use \Calctool\Models\Invoice;
 use \Calctool\Models\InvoiceVersion;
 use \Calctool\Models\Offer;
+use \Calctool\Models\Contact;
 use \Calctool\Models\Resource;
+use \Calctool\Models\InvoicePost;
 use \Calctool\Calculus\InvoiceTerm;
 
 use \Auth;
 use \PDF;
+use \Mailgun;
 
 class InvoiceController extends Controller {
 
@@ -289,17 +292,6 @@ class InvoiceController extends Controller {
 		$invoice->rest_0 = InvoiceTerm::partTax3($project, $invoice)*$amount;
 		$invoice->save();
 
-		//$cnt = Invoice::where('offer_id','=', $invoice->offer_id)->count();
-		/*if ($cnt>1) {
-			$invoice = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',true)->first();
-			$invoice->amount = $total;
-			$invoice->rest_21 = InvoiceTerm::partTax1($project, $invoice)*$total;
-			$invoice->rest_6 = InvoiceTerm::partTax2($project, $invoice)*$total;
-			$invoice->rest_0 = InvoiceTerm::partTax3($project, $invoice)*$total;
-			$invoice->save();
-		}
-		*/
-
 		return json_encode(['success' => 1]);
 	}
 
@@ -429,6 +421,92 @@ class InvoiceController extends Controller {
 		Auth::user()->save();
 
 		return json_encode(['success' => 1, 'billing' => date('d-m-Y')]);
+	}
+
+	public function doSendOffer(Request $request)
+	{
+		$invoice = Invoice::find($request->input('invoice'));
+		if (!$invoice)
+			return json_encode(['success' => 0]);
+		$offer = Offer::find($invoice->offer_id);
+		if (!$offer)
+			return json_encode(['success' => 0]);
+		$project = Project::find($offer->project_id);
+		if (!$project || !$project->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
+
+		$res = Resource::find($invoice->resource_id);
+		$contact_client = Contact::find($invoice->to_contact_id);
+		$contact_user = Contact::find($invoice->from_contact_id);
+
+		$data = array(
+			'email' => $contact_client->email,
+			'pdf' => $res->file_location,
+			'preview' => false,
+			'invoice_id' => $invoice->id,
+			'client'=> $contact_client->getFormalName(),
+			'project_name' => $project->project_name,
+			'user' => $contact_user->getFormalName(),
+			'pref_email_invoice' => Auth::User()->pref_email_invoice
+		);
+		Mailgun::send('mail.invoice_send', $data, function($message) use ($data) {
+			$message->to($data['email'], strtolower(trim($data['client'])))->subject('Factuur ' . $data['project_name']);
+			$message->attach($data['pdf']);
+		});
+
+		return json_encode(['success' => 1]);
+	}
+
+	public function getSendOfferPreview(Request $request, $project_id, $invoice_id)
+	{
+		$invoice = Invoice::find($invoice_id);
+		if (!$invoice)
+			return json_encode(['success' => 0]);
+		$offer = Offer::find($invoice->offer_id);
+		if (!$offer)
+			return json_encode(['success' => 0]);
+		$project = Project::find($offer->project_id);
+		if (!$project || !$project->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
+
+		$contact_client = Contact::find($invoice->to_contact_id);
+		$contact_user = Contact::find($invoice->from_contact_id);
+
+		$data = array(
+			'preview' => true,
+			'invoice_id' => $invoice->id,
+			'client'=> $contact_client->getFormalName(),
+			'project_name' => $project->project_name,
+			'user' => $contact_user->getFormalName(),
+			'pref_email_invoice' => Auth::User()->pref_email_invoice
+		);
+		return view('mail.invoice_send', $data);
+	}
+
+	public function doSendPostOffer(Request $request)
+	{
+		$invoice = Invoice::find($request->get('invoice'));
+		if (!$invoice)
+			return json_encode(['success' => 0]);
+		$offer = Offer::find($invoice->offer_id);
+		if (!$offer)
+			return json_encode(['success' => 0]);
+		$project = Project::find($offer->project_id);
+		if (!$project || !$project->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
+
+		if (InvoicePost::where('invoice_id', $invoice->id)->count()>0) {
+			return json_encode(['success' => 0,'message' => 'Factuur al aangeboden']);
+		}
+		$post = new InvoicePost;
+		$post->invoice_id = $invoice->id;
+
+		$post->save();
+
+		return json_encode(['success' => 1]);
 	}
 
 	/* id = $project->id */

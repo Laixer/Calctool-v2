@@ -197,9 +197,24 @@ class CreateUsersTable extends Migration {
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
 		});
 
+		Schema::create('messagebox', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('subject', 80);
+			$table->text('message');
+			$table->timestamps();
+			$table->boolean('active')->default('Y');
+			$table->dateTime('read')->nullable();
+			$table->integer('from_user')->unsigned()->nullable();
+			$table->foreign('from_user')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
+			$table->integer('user_id')->unsigned();
+			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
+		});
+
 		$seq_user_account = "ALTER SEQUENCE user_account_id_seq RESTART WITH 1000";
 		$seq_project = "ALTER SEQUENCE project_id_seq RESTART WITH 10000";
 		$seq_order = "ALTER SEQUENCE project_id_seq RESTART WITH 1000";
+		$seq_order = "ALTER SEQUENCE messagebox_id_seq RESTART WITH 10000";
 
 		DB::unprepared($seq_user_account);
 		DB::unprepared($seq_project);
@@ -214,6 +229,10 @@ class CreateUsersTable extends Migration {
 	public function down()
 	{
 
+		Schema::table('messagebox', function(Blueprint $table)
+		{
+			Schema::dropIfExists('messagebox');
+		});
 		Schema::table('audit', function(Blueprint $table)
 		{
 			Schema::dropIfExists('audit');
