@@ -36,7 +36,7 @@ $(function() {
 		number = $('#address_number').val();
 		if (number && zipcode) {
 
-			$.post("mycompany/quickstart/address", {
+			$.post("/mycompany/quickstart/address", {
 				zipcode: zipcode,
 				number: number,
 			}, function(data) {

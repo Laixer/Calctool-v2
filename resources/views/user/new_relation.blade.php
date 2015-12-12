@@ -74,6 +74,29 @@ $(document).ready(function() {
 		}
 	});
 
+	var zipcode = $('#zipcode').val();
+	var number = $('#address_number').val();
+	$('.autoappend').blur(function(e){
+		if (number == $('#address_number').val() && zipcode == $('#zipcode').val())
+			return;
+		zipcode = $('#zipcode').val();
+		number = $('#address_number').val();
+		if (number && zipcode) {
+
+			$.post("/mycompany/quickstart/address", {
+				zipcode: zipcode,
+				number: number,
+			}, function(data) {
+				if (data) {
+					var json = $.parseJSON(data);
+					$('#street').val(json.street);
+					$('#city').val(json.city);
+					$("#province").find('option:selected').removeAttr("selected");
+					$('#province option[value=' + json.province_id + ']').attr('selected','selected');
+				}
+			});
+		}
+	});
 });
 </script>
 
@@ -197,24 +220,24 @@ $(document).ready(function() {
 				<h4>Adresgegevens</h4>
 				<div class="row">
 
-					<div class="col-md-4">
-						<div class="form-group">
-							<label for="street">Straat*</label>
-							<input name="street" id="street" type="text" value="{{ Input::old('street') }}" class="form-control"/>
-						</div>
-					</div>
-
 					<div class="col-md-1">
 						<div class="form-group">
 							<label for="address_number">Huis nr.*</label>
-							<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') }}" class="form-control"/>
+							<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') }}" class="form-control autoappend"/>
 						</div>
 					</div>
 
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="zipcode">Postcode*</label>
-							<input name="zipcode" id="zipcode" maxlength="6" type="text" value="{{ Input::old('zipcode') }}" class="form-control"/>
+							<input name="zipcode" id="zipcode" maxlength="6" type="text" value="{{ Input::old('zipcode') }}" class="form-control autoappend"/>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="street">Straat*</label>
+							<input name="street" id="street" type="text" value="{{ Input::old('street') }}" class="form-control"/>
 						</div>
 					</div>
 
