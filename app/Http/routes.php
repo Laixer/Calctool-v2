@@ -344,7 +344,8 @@ Route::group(array('before' => 'admin'), function()
 		return view('admin.message');
 	});
 	Route::post('admin/message', 'AdminController@doSendNotification');
-	Route::post('admin/snailmail/done', 'AdminController@doOfferPostDone');
+	Route::post('admin/snailmail/offer/done', 'AdminController@doOfferPostDone');
+	Route::post('admin/snailmail/invoice/done', 'AdminController@doInvoicePostDone');
 	Route::get('admin/resource', function() {
 		return view('admin.resource');
 	});
@@ -354,11 +355,6 @@ Route::group(array('before' => 'admin'), function()
 	});
 	Route::get('admin/log/truncate', array('as' => 'user', 'uses' => 'AdminController@doTruncateLog'));
 });
-
-/* Moet weer verwijderd worden */
-Route::get('xy', function() {
-	return view('mail.offer_send', array('client'=>'opdrachtgever', 'token' => '123', 'project_name' => 'projectnaam', 'user' => 'uw vakanman', 'pref_email_offer' => 'Hierbij doe ik u mijn offerte betreffende ondergenoemd project toekomen.'));
-}); 
 
 Route::any('telegram', function(){
 	if ($_ENV['TELEGRAM_ENABLED']) {

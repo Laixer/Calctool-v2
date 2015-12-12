@@ -9,6 +9,7 @@ use \Calctool\Models\SysMessage;
 use \Calctool\Models\Payment;
 use \Calctool\Models\User;
 use \Calctool\Models\OfferPost;
+use \Calctool\Models\InvoicePost;
 use \Calctool\Models\Resource;
 use \Calctool\Models\MessageBox;
 use \Calctool\Models\Audit;
@@ -335,6 +336,20 @@ class AdminController extends Controller {
 		]);
 
 		$post = OfferPost::find($request->input('id'));
+		$post->sent_date = date('d-m-Y');
+
+		$post->save();
+
+		return json_encode(['success' => 1]);
+	}
+
+	public function doInvoicePostDone(Request $request)
+	{
+		$this->validate($request, [
+			'id' => array('required'),
+		]);
+
+		$post = InvoicePost::find($request->input('id'));
 		$post->sent_date = date('d-m-Y');
 
 		$post->save();
