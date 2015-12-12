@@ -39,7 +39,7 @@ class QuickstartController extends Controller {
 			'company_name' => array('required_if:relationkind,zakelijk','max:50'),
 			'kvk' => array('numeric','min:8'),
 			'btw' => array('alpha_num','min:14'),
-			'street' => array('required','alpha','max:60'),
+			'street' => array('required','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
 			'city' => array('required','alpha_num','max:35'),
@@ -98,17 +98,13 @@ class QuickstartController extends Controller {
 		$headers = array();
 		$headers[] = 'X-Api-Key: ' . $_ENV['POSTCODE_API'];
 
-		//$url = 'https://postcode-api.apiwise.nl/v2/addresses/?postcode=' . $request->get('zipcode') . '&number=' . $request->get('number');
 		$url = 'https://postcode-api.apiwise.nl/v2/addresses/?postcode=' . $request->get('zipcode') . '&number=' . $request->get('number');
  
 		$curl = curl_init($url);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
-		// De ruwe JSON response
 		$response = curl_exec($curl);
-
-		// Gebruik json_decode() om de response naar een PHP array te converteren
 		$data = json_decode($response);
 
 		curl_close($curl);

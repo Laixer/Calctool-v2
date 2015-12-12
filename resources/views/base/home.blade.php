@@ -4,6 +4,7 @@ use \Calctool\Models\RelationKind;
 use \Calctool\Models\RelationType;
 use \Calctool\Models\Province;
 use \Calctool\Models\Country;
+use \Calctool\Models\Contact;
 use \Calctool\Models\ContactFunction;
 ?>
 
@@ -26,14 +27,18 @@ $(function() {
 	$('button[data-action="hide"]').click(function(){
 		$.get("/hidenextstep").fail(function(e) { console.log(e); });
 	});
+	var zipcode = $('#zipcode').val();
+	var number = $('#address_number').val();
 	$('.autoappend').blur(function(e){
-		$number = $('#address_number').val();
-		$zipcode = $('#zipcode').val();
-		if ($number && $zipcode) {
+		if (number == $('#address_number').val() && zipcode == $('#zipcode').val())
+			return;
+		zipcode = $('#zipcode').val();
+		number = $('#address_number').val();
+		if (number && zipcode) {
 
 			$.post("mycompany/quickstart/address", {
-				zipcode: $zipcode,
-				number: $number,
+				zipcode: zipcode,
+				number: number,
 			}, function(data) {
 				if (data) {
 					var json = $.parseJSON(data);
@@ -92,13 +97,6 @@ $(function() {
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-7">
-						<div class="form-group">
-							<label for="street">Straat*</label>
-							<input name="street" id="street" type="text" value="{{ Input::old('street') ? Input::old('street') : ($relation ? $relation->address_street : '') }}" class="form-control"/>
-						</div>
-					</div>
-
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="address_number">Huis nr.*</label>
@@ -110,6 +108,13 @@ $(function() {
 						<div class="form-group">
 							<label for="zipcode">Postcode*</label>
 							<input name="zipcode" id="zipcode" maxlength="6" type="text" value="{{ Input::old('zipcode') ? Input::old('zipcode') : ($relation ? $relation->address_postal : '') }}" class="form-control autoappend"/>
+						</div>
+					</div>
+
+					<div class="col-md-7">
+						<div class="form-group">
+							<label for="street">Straat*</label>
+							<input name="street" id="street" type="text" value="{{ Input::old('street') ? Input::old('street') : ($relation ? $relation->address_street : '') }}" class="form-control"/>
 						</div>
 					</div>
 				</div>
@@ -147,13 +152,13 @@ $(function() {
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="contact_firstname">Voornaam*</label>
-							<input name="contact_firstname" id="contact_firstname" type="text" value="{{ Input::old('contact_firstname') }}" class="form-control"/>
+							<input name="contact_firstname" id="contact_firstname" type="text" value="{{ Input::old('contact_firstname') ? Input::old('contact_firstname') : ($relation ? Contact::where('relation_id', $relation->id)->first()['firstname'] : '') }}" class="form-control"/>
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="contact_name">Achternaam*</label>
-							<input name="contact_name" id="contact_name" type="text" value="{{ Input::old('contact_name') }}" class="form-control"/>
+							<input name="contact_name" id="contact_name" type="text" value="{{ Input::old('contact_name') ? Input::old('contact_name') : ($relation ? Contact::where('relation_id', $relation->id)->first()['lastname'] : '') }}" class="form-control"/>
 						</div>
 					</div>
 					<div class="col-md-3">
