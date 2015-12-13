@@ -13,6 +13,8 @@ use \Calctool\Models\InvoicePost;
 use \Calctool\Models\Resource;
 use \Calctool\Models\MessageBox;
 use \Calctool\Models\Audit;
+use \Database\Templates\DemoProjectTemplate;
+use \Database\Templates\ValidationProjectTemplate;
 
 use \Storage;
 use \Auth;
