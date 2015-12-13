@@ -119,12 +119,11 @@ $(function() {
 
 						<hr class="half-margins">
 
-						<h4>Direct inloggen?</h4>
-
+						<h4>Klantenservice</h4>
 						<p>
-							Heb je al een account?
-							<a href="/login">log dan hier in</a>
+							Als u op zoek bent naar hulp of gewoon een vraag wilt stellen, neem dan <a href="about">contact</a> met ons op.
 						</p>
+
 					</div>
 
 					</div>
@@ -132,11 +131,11 @@ $(function() {
 			</div>
 
 			<div class="white-row">
-						<h4>Klantenservice</h4>
+						<h4>Direct inloggen?</h4>
 						<p>
-							Als u op zoek bent naar hulp of gewoon een vraag wilt stellen, neem dan <a href="about">contact</a> met ons op.
+							Heb je al een account?
+							<a href="/login">log dan hier in</a>
 						</p>
-					</div>
 
 		</section>
 

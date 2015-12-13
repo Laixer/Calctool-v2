@@ -402,7 +402,7 @@ class AdminController extends Controller {
 	{
 		\ValidationProjectTemplate::setup($user_id);
 
-		return back()->with('success', 'Validatiie-project ingevoegd');
+		return back()->with('success', 'Validatie-project ingevoegd');
 	}
 
 	public function getStabuProject(Request $request, $user_id)
