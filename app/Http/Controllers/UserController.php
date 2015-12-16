@@ -10,6 +10,7 @@ use \Calctool\Models\Payment;
 use \Calctool\Models\User;
 use \Calctool\Models\Telegram;
 use \Calctool\Models\Audit;
+use \Calctool\Models\BankAccount;
 
 use \Auth;
 use \Hash;
@@ -41,7 +42,10 @@ class UserController extends Controller {
 
 		$data = array('email' => $user->email, 'username' => $user->username);
 		Mailgun::send('mail.deactivate', $data, function($message) use ($data) {
-			$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Account gedeactiveerd');
+			$message->to($data['email'], strtolower(trim($data['username'])));
+			$message->subject('CalculatieTool.com - Account gedeactiveerd');
+			$message->from('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});
 
 		if ($_ENV['TELEGRAM_ENABLED']) {
@@ -186,7 +190,10 @@ class UserController extends Controller {
 
 			$data = array('email' => $user->email, 'amount' => number_format($order->amount, 2,",","."), 'expdate' => date('j F Y', strtotime($user->expiration_date)), 'username' => $user->username);
 			Mailgun::send('mail.paid', $data, function($message) use ($data) {
-				$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Abonnement verlengd');
+				$message->to($data['email'], strtolower(trim($data['username'])));
+				$message->subject('CalculatieTool.com - Abonnement verlengd');
+				$message->from('info@calculatietool.com', 'CalculatieTool.com');
+				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 			});
 
 			if ($_ENV['TELEGRAM_ENABLED']) {
@@ -280,7 +287,10 @@ class UserController extends Controller {
 		if ($request->get('secret')) {
 			$data = array('email' => Auth::user()->email, 'username' => Auth::user()->username);
 			Mailgun::send('mail.password_update', $data, function($message) use ($data) {
-				$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Wachtwoord aangepast');
+				$message->to($data['email'], strtolower(trim($data['username'])));
+				$message->subject('CalculatieTool.com - Wachtwoord aangepast');
+				$message->from('info@calculatietool.com', 'CalculatieTool.com');
+				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 			});
 
 			if ($_ENV['TELEGRAM_ENABLED']) {
@@ -423,6 +433,16 @@ class UserController extends Controller {
 		if (!$relation || !$relation->isOwner()) {
 			return back()->withInput($request->all());
 		}
+
+		if (!$relation->iban && !$relation->iban_name) {
+			$account = new BankAccount;
+			$account->user_id = Auth::id();
+			$account->account = $request->input('iban');
+			$account->account_name = $request->input('iban_name');
+
+			$account->save();
+		}
+
 		$relation->iban = $request->get('iban');
 		$relation->iban_name = $request->get('iban_name');
 
@@ -430,7 +450,10 @@ class UserController extends Controller {
 
 		$data = array('email' => Auth::user()->email, 'username' => Auth::user()->username);
 		Mailgun::send('mail.iban_update', $data, function($message) use ($data) {
-			$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Betaalgegevens aangepast');
+			$message->to($data['email'], strtolower(trim($data['username'])));
+			$message->subject('CalculatieTool.com - Betaalgegevens aangepast');
+			$message->from('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});
 
 		if ($_ENV['TELEGRAM_ENABLED']) {

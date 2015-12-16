@@ -34,12 +34,12 @@
 						<li>Bedrijfsnaam: CalculatieTool</li>
 						<li>Vestigingsadres: Odinholm 21, 3124SC Schiedam</li>
 						<li>CalculatieTool heeft geen vast kantooradres</li>
-						<li>Contactgegevens: info@calctool.nl</li>
+						<li>Contactgegevens: info@calculatietool.com</li>
 						<li>KvK-nummer: 54565243</li>
 						<li>BTW-nummer: NL851353423B01</li>
 						<li>Rekeningnummer: NL45ISABO12344556789</li>
 						<li>Commercieel websiteadres: http://www.calculatietool.com</li>
-						<li>Technisch websiteadres: https://www.calctool.nl</li>
+						<li>Technisch websiteadres: https://app.calculatietool.com</li>
 					</ul>
 					<br>
 					<p>Wij hebben geen vast kantoor. We werken vanuit huis en flexibele werkplekken. Dit houdt de kosten laag en blijven we dynamisch. Natuurlijk hebben we wel een postadres waar alle stukken naartoe kunnen die niet met de e-mail kunnen en waarop het bedrijf staat geregistreerd.</p>

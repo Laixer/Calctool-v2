@@ -99,7 +99,10 @@ class AdminController extends Controller {
 
 			$data = array('email' => $user->email, 'amount' => number_format($order->amount, 2,",","."), 'username' => $user->username);
 			Mailgun::send('mail.refund', $data, function($message) use ($data) {
-				$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Terugstorting');
+				$message->to($data['email'], strtolower(trim($data['username'])));
+				$message->subject('CalculatieTool.com - Terugstorting');
+				$message->from('info@calculatietool.com', 'CalculatieTool.com');
+				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 			});
 
 			$user->save();

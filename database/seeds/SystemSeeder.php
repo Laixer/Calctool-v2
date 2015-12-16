@@ -19,7 +19,7 @@ class SystemSeeder extends Seeder {
 		$this->command->info('Tables deleted');
 
 		$system_user_type = UserType::where('user_type','=','system')->first();
-		$user_user_type = UserType::where('user_type','=','user')->first();
+		$guest_user_type = UserType::where('user_type','=','guest')->first();
 
 		$system_user = User::create(array(
 			'username' => 'system',
@@ -33,14 +33,14 @@ class SystemSeeder extends Seeder {
 			'registration_date' => date('Y-m-d'),
 			'expiration_date' => date('Y-m-d', strtotime("+100 year", time())),
 			'referral_key' => md5(mt_rand()),
-			'email' => 'info@calctool.nl',
+			'email' => 'info@calculatietool.com',
 			'user_type' => $system_user_type->id
 		));
 
-		$cal_user = User::create(array(
-			'username' => 'cal',
+		$guest_user = User::create(array(
+			'username' => 'guest',
 			'secret' => Hash::make('ABC@123'),
-			'firstname' => 'Cal',
+			'firstname' => 'Guest',
 			'api' => md5(mt_rand()),
 			'token' => sha1(Hash::make('ABC@123')),
 			'ip' => '::1',
@@ -49,8 +49,8 @@ class SystemSeeder extends Seeder {
 			'registration_date' => date('Y-m-d'),
 			'expiration_date' => date('Y-m-d', strtotime("+100 year", time())),
 			'referral_key' => md5(mt_rand()),
-			'email' => 'cal@calctool.nl',
-			'user_type' => $user_user_type->id
+			'email' => 'guest@calculatietool.com',
+			'user_type' => $guest_user_type->id
 		));
 
 		MessageBox::create(array(

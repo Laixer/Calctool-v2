@@ -206,8 +206,11 @@ class OfferController extends Controller {
 			'pref_email_offer' => Auth::User()->pref_email_offer
 		);
 		Mailgun::send('mail.offer_send', $data, function($message) use ($data) {
-			$message->to($data['email'], strtolower(trim($data['client'])))->subject('Offerte ' . $data['project_name']);
+			$message->to($data['email'], strtolower(trim($data['client'])));
 			$message->attach($data['pdf']);
+			$message->subject('Offerte ' . $data['project_name']);
+			$message->from('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});
 
 		return json_encode(['success' => 1]);

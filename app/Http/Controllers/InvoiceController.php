@@ -451,8 +451,11 @@ class InvoiceController extends Controller {
 			'pref_email_invoice' => Auth::User()->pref_email_invoice
 		);
 		Mailgun::send('mail.invoice_send', $data, function($message) use ($data) {
-			$message->to($data['email'], strtolower(trim($data['client'])))->subject('Factuur ' . $data['project_name']);
+			$message->to($data['email'], strtolower(trim($data['client'])));
 			$message->attach($data['pdf']);
+			$message->subject('Factuur ' . $data['project_name']);
+			$message->from('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});
 
 		return json_encode(['success' => 1]);

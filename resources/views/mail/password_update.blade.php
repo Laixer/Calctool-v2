@@ -99,7 +99,7 @@
 											<tbody>
 												<tr><!-- copyright -->
 													<td width="100%" style="font-family: helvetica, Arial, sans-serif; font-size: 11px; text-align: center; line-height: 24px;">
-														<center>Copyright &copy; {{ date('Y') }} Calctool.nl. Alle rechten voorbehouden.</center>
+														<center>Copyright &copy; {{ date('Y') }} CalculatieTool.com Alle rechten voorbehouden.</center>
 													</td>
 												</tr>
 											</tbody>
