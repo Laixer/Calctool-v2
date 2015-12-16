@@ -18,7 +18,7 @@ $(function() {
 
 				<div class="col-md-6">
 
-					<h2><strong>Login</strong></h2>
+					<h2><strong>Log</strong>In</h2>
 
 					<form method="POST" action="/login" accept-charset="UTF-8" class="white-row">
 					{!! csrf_field() !!}
@@ -97,9 +97,10 @@ $(function() {
 			</div>
 
 
-			<p class="white-row">
-				Nog geen account? <a href="/register">Maak er een aan</a>, het is gratis!
-			</p>
+			<div class="white-row">
+				<h4>Nog Registreren?</h4>			
+				<span>Nog geen account? <a href="/register">Maak er een aan</a>, het is gratis!</span>
+			</div>
 
 		</section>
 

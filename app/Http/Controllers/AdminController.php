@@ -13,6 +13,8 @@ use \Calctool\Models\InvoicePost;
 use \Calctool\Models\Resource;
 use \Calctool\Models\MessageBox;
 use \Calctool\Models\Audit;
+use \Database\Templates\DemoProjectTemplate;
+use \Database\Templates\ValidationProjectTemplate;
 
 use \Storage;
 use \Auth;
@@ -400,7 +402,7 @@ class AdminController extends Controller {
 	{
 		\ValidationProjectTemplate::setup($user_id);
 
-		return back()->with('success', 'Validatiie-project ingevoegd');
+		return back()->with('success', 'Validatie-project ingevoegd');
 	}
 
 	public function getStabuProject(Request $request, $user_id)

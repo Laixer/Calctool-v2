@@ -24,7 +24,7 @@ class MessageBoxController extends Controller {
 		if (!$message || !$message->isOwner())
 			return back();
 
-		$message->read = date('d-m-Y');
+		$message->read = date('Y-m-d');
 
 		$message->save();
 
