@@ -1,4 +1,4 @@
-# **CalcTool | CalculatieTool** #
+# **CalculatieTool.com** #
 
 ## status for Production
 [![Deployment status from Production](https://calctool.deploybot.com/badge/77558059864400/10989.svg)](http://deploybot.com)
