@@ -73,7 +73,7 @@ class CreateUsersTable extends Migration {
 			$table->text('pref_email_offer')->nullable()->default('Hierbij doe ik u mijn offerte betreffende onder genoemd project toekomen.');
 			$table->text('pref_offer_description')->nullable()->default('Bij deze doe ik u toekomen mijn prijsopgaaf betreffende het uit te voeren werk. Onderstaand zal ik het werk en de uit te voeren werkzaamheden specificeren zoals afgesproken.');
 			$table->text('pref_closure_offer')->nullable()->default('Hopende u hiermee een passende aanbieding gedaan te hebben, zie ik uw reactie met genoegen tegemoet. ');
-			$table->text('pref_email_invoice')->nullable()->default('Nog niet beschikbaar.');
+			$table->text('pref_email_invoice')->nullable()->default('Hierbij doe ik u mijn factuur toekomen.');
 			$table->text('pref_invoice_description')->nullable()->default('Bij deze doe ik u toekomen mijn factuur betreffende het uitgevoerde werk behorende bij offerte [projectnaam]. Hierin zit tevens het eventule meer- en minderwerk verwerkt zoals besproken.');
 			$table->text('pref_invoice_closure')->nullable()->default('Met dank voor uw opdracht en vertrouwen.');
 			$table->text('pref_email_invoice_first_reminder')->nullable()->default('Nog niet beschikbaar.');
