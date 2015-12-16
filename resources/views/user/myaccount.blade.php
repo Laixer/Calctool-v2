@@ -67,9 +67,64 @@ $(document).ready(function() {
 			location.href = '/myaccount/deactivate'
 		}
 	});
+	$('#promocode').blur(function(e){
+		e.preventDefault();
+		$field = $(this);
+		if ($field.val()) {
+			$.post("/payment/promocode", {
+				code: $field.val()
+			}, function(data) {
+				if (data.success) {
+					$field.addClass('success-input');
+					$('#currprice').text(data.famount);
+				} else {
+					$field.addClass('error-input');
+					$('#errmess').show();
+				}
+			});
+		}
+	});
 });
 </script>
+<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModal" aria-hidden="true">
+	<div class="modal-dialog modal-dialog">
+		<div class="modal-content">
 
+			<div class="modal-body">
+				@if($errors->has())
+				<div class="alert alert-danger">
+					<i class="fa fa-frown-o"></i>
+					<strong>Fout</strong>
+					@foreach ($errors->all() as $error)
+						{{ $error }}
+					@endforeach
+				</div>
+				@endif
+
+				<div class="bs-callout text-center styleBackground nomargin-top">
+					<h2>Verleng met een maand voor &euro; <strong id="currprice">27</strong>,-</h2>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="promocode">Promotiecode</label>
+							<input name="promocode" id="promocode" type="text" class="form-control">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<span id="errmess" style="color:rgb(248, 97, 97);display:none;"><br />JA jammer, die werkt niet. Gewoon de volle mep aub.</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<div class="col-md-12">
+					<a href="/payment" class="btn btn-primary"><i class="fa fa-check"></i> Betalen</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <div id="wrapper">
 
 	<section class="container">
@@ -200,7 +255,7 @@ $(document).ready(function() {
 
 							<div class="pull-right">
 								<a href="javascript:void(0);" id="acc-deactive" class="btn btn-danger">Account deactiveren</a>
-								<a href="/payment" class="btn btn-primary">Abonnement verlengen</a>
+								<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#paymentModal">Abonnement verlengen</a>
 							</div>
 
 							<h4>Abonnementsduur</h4>

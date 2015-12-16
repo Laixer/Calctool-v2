@@ -26,9 +26,9 @@ use \Calctool\Models\MessageBox;
 						<a href="/myaccount">Mijn account</a>
 					</li>
 					@endif
-					@if (0)
+					@if (1)
 					<li>
-						{{ HTML::link('about', 'Over ons') }}
+						<a href="/about">Over ons</a>
 					</li>
 					@endif
 					@if (Auth::check() && Auth::user()->isAdmin())

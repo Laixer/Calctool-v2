@@ -90,11 +90,9 @@ Route::group(array('middleware' => 'auth'), function()
 		return view('user.messagebox');
 	});
 
-	Route::get('payment', function() {
-		return view('user.payment');
-	});
-	Route::post('payment', array('as' => 'security.update', 'uses' => 'UserController@doPayment'));
+	Route::get('payment', 'UserController@getPayment');
 	Route::get('payment/order/{token}', array('as' => 'security.update', 'uses' => 'UserController@getPaymentFinish'))->where('token', '[0-9a-z]{40}');
+	Route::post('payment/promocode', 'UserController@doCheckPromotionCode');
 
 	/* Actions by calculation */
 	Route::post('calculation/newchapter/{project_id}', array('as' => 'calculation', 'uses' => 'CalcController@doNewChapter'))->where('project_id', '[0-9]+');
