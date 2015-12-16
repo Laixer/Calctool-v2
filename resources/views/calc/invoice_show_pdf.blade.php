@@ -72,7 +72,7 @@ if (!$invoice) {
 	$('.oclose').click(function(e){
 		e.preventDefault();
 		$.post("/invoice/close", {projectid: {{ $project->id }}, id: {{ $_invoice->id }} }, function(data){
-			window.location.href = '/invoice/project-'+{{ $project->id }};
+			window.location.href = '/invoice/project-'+{{ $project->id }}+'/pdf-invoice-'+{{ $_invoice->id }};
 		}).fail(function(e) { console.log(e); });
 	});
 

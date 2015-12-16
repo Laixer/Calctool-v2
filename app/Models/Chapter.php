@@ -9,8 +9,6 @@ class Chapter extends Model {
 	protected $table = 'chapter';
 	protected $guarded = array('id', 'priority');
 
-	public $timestamps = false;
-
 	public function project() {
 		return $this->hasOne('Project');
 	}
