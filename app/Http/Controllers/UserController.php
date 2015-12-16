@@ -93,15 +93,17 @@ class UserController extends Controller {
 		$amount = 27;
 		$description = 'Verleng met een maand';
 		$increment_months = 1;
+		$promo_id = 0;
 
 		$promocode = $request->cookie('_dccod'.Auth::id());
 		if ($promocode) {
 			$promo = Promotion::find($promocode)->where('active', true)->where('valid', '>=', date('Y-m-d H:i:s'))->first();
 			if ($promo) {
-				$order = Payment::where('user_id',Auth::id())->where('promotion_id',$promo->id)->first();
-				if (!$order) {
+				$_order = Payment::where('user_id',Auth::id())->where('promotion_id',$promo->id)->first();
+				if (!$_order) {
 					$amount = $promo->amount;
 					$description .= ' Actie:' . $promo->name;
+					$promo_id = $promo->id;
 				}
 			}
 		}
@@ -133,7 +135,7 @@ class UserController extends Controller {
 		$order->method = '';
 		$order->user_id = Auth::id();
 		if ($promocode) {
-			$order->promotion_id = $promocode->id;
+			$order->promotion_id = $promo_id;
 		}
 
 		$order->save();
