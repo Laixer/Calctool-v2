@@ -120,6 +120,10 @@ div.tabs ul.nav-tabs a {
 	border: #d43f3a 2px solid;
 }
 
+.success-input {
+	border: #1EBE00 2px solid;
+}
+
 /* Actieve hoofdstukken, niet actief and border */
 /* gebruikt op Calculatiepagina*/
 div.toggle-chapter > label {
