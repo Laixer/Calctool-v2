@@ -161,6 +161,17 @@ class CreateUsersTable extends Migration {
 			$table->integer('project_id')->nullable()->unsigned();
 			$table->foreign('project_id')->references('id')->on('project')->onUpdate('cascade')->onDelete('cascade');
 		});
+		
+		Schema::create('promotion', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('name', 80);
+			$table->string('code', 20);
+			$table->decimal('amount', 9, 3);
+			$table->timestamps();
+			$table->boolean('active')->default('Y');
+			$table->dateTime('valid');
+		});
 
 		Schema::create('payment', function(Blueprint $table)
 		{
@@ -173,6 +184,8 @@ class CreateUsersTable extends Migration {
 			$table->string('method', 25);
 			$table->integer('increment');
 			$table->timestamps();
+			$table->integer('promotion_id')->unsigned()->nullable();
+			$table->foreign('promotion_id')->references('id')->on('promotion')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
 		});
@@ -221,6 +234,8 @@ class CreateUsersTable extends Migration {
 		DB::unprepared($seq_order);
 	}
 
+
+
 	/**
 	 * Reverse the migrations.
 	 *
@@ -244,6 +259,10 @@ class CreateUsersTable extends Migration {
 		Schema::table('payment', function(Blueprint $table)
 		{
 			Schema::dropIfExists('payment');
+		});
+		Schema::table('promotion', function(Blueprint $table)
+		{
+			Schema::dropIfExists('promotion');
 		});
 		Schema::table('resource', function(Blueprint $table)
 		{
