@@ -96,9 +96,14 @@ class UserController extends Controller {
 
 		$promocode = $request->cookie('_dccod'.Auth::id());
 		if ($promocode) {
-			$promo = Promotion::find($promocode); //where
-			$amount = $promo->amount;
-			$description .= ' Actie:' . $promo->name;
+			$promo = Promotion::find($promocode)->where('active', true)->where('valid', '>=', date('Y-m-d H:i:s'))->first();
+			if ($promo) {
+				$order = Payment::where('user_id',Auth::id())->where('promotion_id',$promo->id)->first();
+				if (!$order) {
+					$amount = $promo->amount;
+					$description .= ' Actie:' . $promo->name;
+				}
+			}
 		}
 
 		$mollie = new \Mollie_API_Client;
@@ -127,6 +132,9 @@ class UserController extends Controller {
 		$order->description = $description;
 		$order->method = '';
 		$order->user_id = Auth::id();
+		if ($promocode) {
+			$order->promotion_id = $promocode->id;
+		}
 
 		$order->save();
 
@@ -531,6 +539,10 @@ class UserController extends Controller {
 
 		$promo = Promotion::where('code', strtoupper($request->get('code')))->where('active', true)->where('valid', '>=', date('Y-m-d H:i:s'))->first();
 		if (!$promo)
+			return json_encode(['success' => 0]);
+
+		$order = Payment::where('user_id',Auth::id())->where('promotion_id',$promo->id)->first();
+		if ($order)
 			return json_encode(['success' => 0]);
 
 		return response()->json(['success' => 1, 'amount' => $promo->amount, 'famount' => number_format($promo->amount, 0,",",".")])->withCookie(cookie('_dccod'.Auth::id(), $promo->id, 30));
