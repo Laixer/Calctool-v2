@@ -538,7 +538,7 @@ $(document).ready(function() {
 											<div class="row">
 												<div class="form-group">
 													<div class="col-md-12">
-														<textarea name="pref_email_invoice_last_reminder" id="pref_email_invoice_last_reminder" rows="5" class="form-control">{{ $user->pref_email_invoice_last_reminder }}</textarea>
+														<textarea name="pref_email_invoice_demand" id="pref_email_invoice_last_reminder" rows="5" class="form-control">{{ $user->pref_email_invoice_last_reminder }}</textarea>
 													</div>
 												</div>
 											</div>
