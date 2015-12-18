@@ -156,11 +156,11 @@
 									<a class="item-hover" href="/admin/message">
 										<span class="overlay color2"></span>
 										<span class="inner">
-											<span class="block fa fa-bell fsize60"></span>
+											<span class="block fa fa-percent fsize60"></span>
 											<strong>Acties</strong>
 										</span>
 									</a>
-									<a href="/admin/message" class="btn btn-primary add_to_cart"><i class="fa fa-bell"></i> Acties</a>
+									<a href="/admin/message" class="btn btn-primary add_to_cart"><i class="fa fa-percent"></i> Acties</a>
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/message"><h4>Acties</h4></a>

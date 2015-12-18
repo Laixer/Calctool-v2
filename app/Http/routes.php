@@ -30,8 +30,9 @@ Route::get('ex-project-overview/{token}', function() {
 	return view('user.client_page');
 })->where('token', '[0-9a-z]{40}');
 Route::post('ex-project-overview/{token}/update', 'ClientController@doUpdateCommunication')->where('token', '[0-9a-z]{40}');
+Route::get('ex-project-overview/{token}/done', 'ClientController@doOfferAccept')->where('token', '[0-9a-z]{40}');
 
-Route::get('api/v1', array('uses' => 'ApiController@getApiRoot'));
+Route::get('api/v1', 'ApiController@getApiRoot');
 
 Route::get('about', function() {
 	return view('generic.about');

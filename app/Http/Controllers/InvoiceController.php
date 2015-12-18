@@ -519,9 +519,12 @@ class InvoiceController extends Controller {
 	}
 
 	/* id = $project->id */
-	public static function getInvoiceCodeConcept($id)
+	public static function getInvoiceCodeConcept($id, $user = null)
 	{
-		return sprintf("%s%05d-CONCEPT-%s", Auth::user()->invoicenumber_prefix, $id, date('y'));
+		if (!$user) {
+			$user = Auth::user();
+		}
+		return sprintf("%s%05d-CONCEPT-%s", $user->invoicenumber_prefix, $id, date('y'));
 	}
 
 }
