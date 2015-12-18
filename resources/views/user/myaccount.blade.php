@@ -112,7 +112,7 @@ $(document).ready(function() {
 						</div>
 					</div>
 					<div class="col-md-6">
-						<span id="errmess" style="color:rgb(248, 97, 97);display:none;"><br />JA jammer, die werkt niet. Gewoon de volle mep aub.</span>
+						<span id="errmess" style="color:rgb(248, 97, 97);display:none;"><br />Deze promotiecode bestaat niet of is niet meer geldig.</span>
 					</div>
 				</div>
 			</div>
@@ -542,7 +542,7 @@ $(document).ready(function() {
 													</div>
 												</div>
 											</div>
-											<div class="row">
+											<!--<div class="row">
 												<div class="col-md-3">
 													<div class="form-group">
 														<label for="administration_cost">Administratiekosten</label>
@@ -550,19 +550,12 @@ $(document).ready(function() {
 													</div>
 												</div>
 											</div>
-											<h5>1e vordering van de factuur</h5>
+											-->
+											<h5>Vorderingswaaeschuwing van de factuur</h5>
 											<div class="row">
 												<div class="form-group">
 													<div class="col-md-12">
-														<textarea name="pref_email_invoice_first_demand" id="pref_email_invoice_first_demand" rows="5" class="form-control">{{ $user->pref_email_invoice_first_demand }}</textarea>
-													</div>
-												</div>
-											</div>
-											<h5>Laatste vorderingswaaeschuwing van de factuur</h5>
-											<div class="row">
-												<div class="form-group">
-													<div class="col-md-12">
-														<textarea name="pref_email_invoice_last_demand" id="pref_email_invoice_last_demand" rows="5" class="form-control">{{ $user->pref_email_invoice_last_demand }}</textarea>
+														<textarea name="pref_email_invoice_demand" id="pref_email_invoice_last_demand" rows="5" class="form-control">{{ $user->pref_email_invoice_last_demand }}</textarea>
 													</div>
 												</div>
 											</div>
