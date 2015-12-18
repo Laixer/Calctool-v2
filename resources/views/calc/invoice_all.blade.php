@@ -227,7 +227,11 @@ if (!$project || !$project->isOwner()) {
 						?>
 						  <div class="btn-group" role="group">
 						    <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    @if ($invoice->payment_date)
+						    Betaald
+						    @else
 						      Gefactureerd
+						     @endif
 						      <span class="caret"></span>
 						    </button>
 						    <ul class="dropdown-menu">
@@ -263,7 +267,11 @@ if (!$project || !$project->isOwner()) {
 						?>
 						  <div class="btn-group" role="group">
 						    <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    @if ($invoice_end->payment_date)
+						    Betaald
+						    @else
 						      Gefactureerd
+						     @endif
 						      <span class="caret"></span>
 						    </button>
 						    <ul class="dropdown-menu">
