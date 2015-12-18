@@ -7,25 +7,6 @@
 		<title>Calculatie Tool</strong> - Uw opdrachtgever heeft gereageerd.</title>
 	</head>
 
-	@if ($preview)
-	<script lang="text/javascript">
-
-		$(document).ready(function() {
-			$('#sendmail').click(function(){
-				$.post("/offer/sendmail", {
-					offer: {{ $offer_id }}
-				}, function(data){
-					var json = $.parseJSON(data);
-					if (json.success) {
-						$('#mailsent').show();
-					}
-				});
-			});
-		});
-
-	</script>
-	@endif
-
 	<body style="margin:0; margin-top:30px; margin-bottom:30px; padding:0; width:100%; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; background-color: #F4F5F7;">
 
 
@@ -70,7 +51,9 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Uw opdrachtgever voor project {{ $project_name }} heeft geregeerd. Bekijk zijn reactie in uw account.
+														Uw opdrachtgever voor project {{ $project_name }} heeft geregeerd.<br />
+														De reactie van uw opdrachtgever:<br />
+														{!! $note !!}
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->
@@ -132,12 +115,6 @@
 							</tbody>
 						</table>
 						<!-- /ROW FOOTER -->
-
-						@if ($preview)
-						<div class="modal-footer">
-							<a class="btn btn-primary pull-right" id="sendmail" class="close" data-dismiss="modal" aria-hidden="true">Verstuur definitief</a>
-						</div>
-						@endif
 
 					</td>
 				</tr>

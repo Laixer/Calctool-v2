@@ -12,6 +12,7 @@ use \Calctool\Models\Invoice;
 use \Calctool\Models\ProjectShare;
 
 use \Auth;
+use \Mailgun;
 
 class ClientController extends Controller {
 
@@ -41,6 +42,16 @@ class ClientController extends Controller {
 		$message->user_id =	$project->user_id;
 
 		$message->save();
+
+		$user = User::find($project->user_id);
+
+		$data = array('email' => $user->email, 'username' => $user->username, 'project_name' => $project->project_name, 'note' => nl2br($request->input('client_note')));
+		Mailgun::send('mail.client_reacted', $data, function($message) use ($data) {
+			$message->to($data['email'], strtolower(trim($data['username'])));
+			$message->subject('CalculatieTool.com - Uw opdrachtgever heeft gereageerd');
+			$message->from('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+		});
 
 		return back()->with('success', 'Opmerking toegevoegd aan project');
 	}
@@ -85,6 +96,17 @@ class ClientController extends Controller {
 		$message->user_id =	$project->user_id;
 
 		$message->save();
+
+		$user = User::find($project->user_id);
+
+		$data = array('email' => $user->email, 'username' => $user->username, 'project_name' => $project->project_name);
+		Mailgun::send('mail.offer_accepted', $data, function($message) use ($data) {
+			$message->to($data['email'], strtolower(trim($data['username'])));
+			$message->subject('CalculatieTool.com - Offerte bevestigd');
+			$message->from('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+		});
+
 
 		return back()->with('success', 'Offerte is bevestigd');
 	}
