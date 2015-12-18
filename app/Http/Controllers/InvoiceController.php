@@ -11,6 +11,8 @@ use \Calctool\Models\Offer;
 use \Calctool\Models\Contact;
 use \Calctool\Models\Resource;
 use \Calctool\Models\InvoicePost;
+use \Calctool\Models\Relation;
+use \Calctool\Models\User;
 use \Calctool\Calculus\InvoiceTerm;
 
 use \Auth;
@@ -440,6 +442,11 @@ class InvoiceController extends Controller {
 		$contact_client = Contact::find($invoice->to_contact_id);
 		$contact_user = Contact::find($invoice->from_contact_id);
 
+		$user_logo = '';
+		$relation_self = Relation::find(Auth::user()->self_id);
+		if ($relation_self->logo_id)
+			$user_logo = Resource::find($relation_self->logo_id)->file_location;
+
 		$data = array(
 			'email' => $contact_client->email,
 			'pdf' => $res->file_location,
@@ -448,7 +455,8 @@ class InvoiceController extends Controller {
 			'client'=> $contact_client->getFormalName(),
 			'project_name' => $project->project_name,
 			'user' => $contact_user->getFormalName(),
-			'pref_email_invoice' => Auth::User()->pref_email_invoice
+			'pref_email_invoice' => Auth::User()->pref_email_invoice,
+			'user_logo' => $user_logo
 		);
 		Mailgun::send('mail.invoice_send', $data, function($message) use ($data) {
 			$message->to($data['email'], strtolower(trim($data['client'])));
@@ -477,13 +485,19 @@ class InvoiceController extends Controller {
 		$contact_client = Contact::find($invoice->to_contact_id);
 		$contact_user = Contact::find($invoice->from_contact_id);
 
+		$user_logo = '';
+		$relation_self = Relation::find(Auth::user()->self_id);
+		if ($relation_self->logo_id)
+			$user_logo = Resource::find($relation_self->logo_id)->file_location;
+
 		$data = array(
 			'preview' => true,
 			'invoice_id' => $invoice->id,
 			'client'=> $contact_client->getFormalName(),
 			'project_name' => $project->project_name,
 			'user' => $contact_user->getFormalName(),
-			'pref_email_invoice' => Auth::User()->pref_email_invoice
+			'pref_email_invoice' => Auth::User()->pref_email_invoice,
+			'user_logo' => $user_logo
 		);
 		return view('mail.invoice_send', $data);
 	}
