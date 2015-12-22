@@ -16,7 +16,7 @@
 
 					<div class="row">
 
-						<div class="col-sm-6 col-md-3"><!-- item -->
+						<div class="col-sm-12 col-md-3"><!-- item -->
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/user">
@@ -35,7 +35,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-6 col-md-3">
+						<div class="col-sm-12 col-md-3">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/alert">
@@ -55,7 +55,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-6 col-md-3"><!-- item -->
+						<div class="col-sm-12 col-md-3"><!-- item -->
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/payment">
@@ -74,7 +74,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-6 col-md-3"><!-- item -->
+						<div class="col-sm-12 col-md-3"><!-- item -->
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/resource">
@@ -93,7 +93,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-6 col-md-3">
+						<div class="col-sm-12 col-md-3">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/project">
@@ -112,27 +112,27 @@
 							</div>
 						</div>
 
-						<div class="col-sm-6 col-md-3">
+						<div class="col-sm-12 col-md-3">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/snailmail">
 										<span class="overlay color2"></span>
 										<span class="inner">
-											<span class="block fa fa-envelope fsize60"></span>
+											<span class="block fa fa-print fsize60"></span>
 											<strong>Opdrachten</strong>
 										</span>
 									</a>
-									<a href="/admin/snailmail" class="btn btn-primary add_to_cart"><i class="fa fa-envelope"></i> Opdrachten</a>
+									<a href="/admin/snailmail" class="btn btn-primary add_to_cart"><i class="fa fa-print"></i>Printservice</a>
 								</figure>
 								<div class="item-box-desc">
-									<a href="/admin/snailmail"><h4>Opdrachtbeheer</h4></a>
-									<small class="styleColor">{{ \Calctool\Models\OfferPost::whereNull('sent_date')->count() }} te versturen offerte(s)</small>
-									<!--<small class="styleColor">x open tickets</small>-->	
+									<a href="/admin/snailmail"><h4>Printservice</h4></a>
+									<small class="styleColor">{{ \Calctool\Models\OfferPost::whereNull('sent_date')->count() }} te versturen offertes</small>
+									<small class="styleColor">{{ \Calctool\Models\InvoicePost::whereNull('sent_date')->count() }} te versturen facturen</small>
 								</div>
 							</div>
 						</div>
 
-						<div class="col-sm-6 col-md-3">
+						<div class="col-sm-12 col-md-3">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/message">
@@ -150,7 +150,25 @@
 							</div>
 						</div>
 
-						<div class="col-sm-6 col-md-3">
+						<div class="col-sm-12 col-md-3">
+							<div class="item-box item-box-show fixed-box">
+								<figure>
+									<a class="item-hover" href="/admin/message">
+										<span class="overlay color2"></span>
+										<span class="inner">
+											<span class="block fa fa-percent fsize60"></span>
+											<strong>Acties</strong>
+										</span>
+									</a>
+									<a href="/admin/message" class="btn btn-primary add_to_cart"><i class="fa fa-percent"></i> Acties</a>
+								</figure>
+								<div class="item-box-desc">
+									<a href="/admin/message"><h4>Acties</h4></a>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-12 col-md-3">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/environment">
@@ -168,7 +186,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-6 col-md-3">
+						<div class="col-sm-12 col-md-3">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/phpinfo">
@@ -186,7 +204,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-6 col-md-3">
+						<div class="col-sm-12 col-md-3">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/log">

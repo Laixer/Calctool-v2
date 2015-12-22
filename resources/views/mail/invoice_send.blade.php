@@ -43,14 +43,15 @@
 										<!-- Headline Header -->
 										<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
 											<tbody>
-
+												@if ($user_logo)
 												<tr><!-- logo -->
 													<td width="100%" style="font-family: helvetica, Arial, sans-serif; font-size: 18px; letter-spacing: 0px;">
 														<a href="{{ URL::to('/') }}" style="text-decoration: none;">
-															<img src="{{ URL::to('/') }}/images/logo2.png" alt="Calctool" border="0" width="166" height="auto" style="with: 166px; height: auto; border: 5px solid #ffffff;" />
+															<img src="{{ URL::to('/') }}/{{ $user_logo }}" alt="Calctool" border="0" width="166" height="auto" style="with: 166px; height: auto; border: 5px solid #ffffff;" />
 														</a>
 													</td>
 												</tr>
+												@endif
 												<tr><!-- spacer before the line -->
 													<td width="100%" height="20"></td>
 												</tr>
@@ -122,7 +123,7 @@
 											<tbody>
 												<tr><!-- copyright -->
 													<td width="100%" style="font-family: helvetica, Arial, sans-serif; font-size: 11px; text-align: center; line-height: 24px;">
-														<center>Copyright &copy; {{ date('Y') }} Calctool.nl. Alle rechten voorbehouden.</center>
+														<center>Copyright &copy; {{ date('Y') }} CalculatieTool.com Alle rechten voorbehouden.</center>
 													</td>
 												</tr>
 											</tbody>

@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<title><strong>Calculatie Tool</strong> - Account activatie</title>
+		<title><strong>CalculatieTool.com</strong> - Account activatie</title>
 	</head>
 
 	<body style="margin:0; margin-top:30px; margin-bottom:30px; padding:0; width:100%; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; background-color: #F4F5F7;">
@@ -117,7 +117,7 @@
 											<tbody>
 												<tr><!-- copyright -->
 													<td width="100%" style="font-family: helvetica, Arial, sans-serif; font-size: 11px; text-align: center; line-height: 24px;">
-														<center>Copyright &copy; {{ date('Y') }} Calctool.nl. Alle rechten voorbehouden.</center>
+														<center>Copyright &copy; {{ date('Y') }} CalculatieTool.com Alle rechten voorbehouden.</center>
 													</td>
 												</tr>
 											</tbody>

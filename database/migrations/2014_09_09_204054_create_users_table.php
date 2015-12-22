@@ -70,16 +70,15 @@ class CreateUsersTable extends Migration {
 			$table->tinyInteger('pref_profit_more_contr_equip')->default(0)->unsigned();
 			$table->tinyInteger('pref_profit_more_subcontr_mat')->default(0)->unsigned();
 			$table->tinyInteger('pref_profit_more_subcontr_equip')->default(0)->unsigned();
-			$table->text('pref_email_offer')->nullable()->default('Hierbij doe ik u mijn offerte betreffende onder genoemd project toekomen.');
+			$table->text('pref_email_offer')->nullable()->default('Bij deze doe ik u toekomen mijn prijsopgaaf betreffende het uit te voeren werk zoals eerder opgenomen. De offerte heb ik in de bijlage ingevoegd. Mocht u vragen hebben, stel ze gerust, dan beantwoord ik deze graag.');
 			$table->text('pref_offer_description')->nullable()->default('Bij deze doe ik u toekomen mijn prijsopgaaf betreffende het uit te voeren werk. Onderstaand zal ik het werk en de uit te voeren werkzaamheden specificeren zoals afgesproken.');
-			$table->text('pref_closure_offer')->nullable()->default('Hopende u hiermee een passende aanbieding gedaan te hebben, zie ik uw reactie met genoegen tegemoet. ');
-			$table->text('pref_email_invoice')->nullable()->default('Nog niet beschikbaar.');
-			$table->text('pref_invoice_description')->nullable()->default('Bij deze doe ik u toekomen mijn factuur betreffende het uitgevoerde werk behorende bij offerte [projectnaam]. Hierin zit tevens het eventule meer- en minderwerk verwerkt zoals besproken.');
-			$table->text('pref_invoice_closure')->nullable()->default('Met dank voor uw opdracht en vertrouwen.');
-			$table->text('pref_email_invoice_first_reminder')->nullable()->default('Nog niet beschikbaar.');
-			$table->text('pref_email_invoice_last_reminder')->nullable()->default('Nog niet beschikbaar.');
-			$table->text('pref_email_invoice_first_demand')->nullable()->default('Nog niet beschikbaar.');
-			$table->text('pref_email_invoice_last_demand')->nullable()->default('Nog niet beschikbaar.');
+			$table->text('pref_closure_offer')->nullable()->default('Hopende u hiermee een passende aanbieding gedaan te hebben, zie ik uw reactie met genoegen tegemoet.');
+			$table->text('pref_email_invoice')->nullable()->default('Bij deze doe ik u toekomen mijn factuur betreffende het uitgevoerde werk. De factuur heb ik in de bijlage ingevoegd. Mocht u vragen hebben, stel ze gerust, dan beantwoord ik deze graag.');
+			$table->text('pref_invoice_description')->nullable()->default('Bij deze doe ik u toekomen mijn factuur betreffende het uitgevoerde werk behorende bij offerte [projectnaam]. Hierin zit tevens het eventuele meer- en minderwerk en de stelpost verwerkt zoals besproken.');
+			$table->text('pref_invoice_closure')->nullable()->default('Met dank voor uw opdracht en vertrouwen in ons bedrijf.');
+			$table->text('pref_email_invoice_first_reminder')->nullable()->default('Volgens onze administratie hebben wij nog geen betaling van bijgevoegde factuur mogen ontvangen. Wij verzoeken u het verschuldigde bedrag binnen 14 dagen over te maken op het in de factuur benoemde rekeningnummer onder vermelding van uw debiteurennummer en het factuurnummer. Heeft u vragen over de factuur of bent u van mening dat deze ten onrechte is verstuurd, neem dan contact op met ondergetekende. Indien het bedrag inmiddels is overgemaakt kunt u deze brief uiteraard als niet verzonden beschouwen. ');
+			$table->text('pref_email_invoice_last_reminder')->nullable()->default('Uit onze administratie is gebleken dat bovenvermelde factuur na onze eerste herinnering nog steeds niet door u is voldaan. De betalingstermijn is hiermee onaanvaardbaar overschreden. Wij verzoeken u het verschuldigde bedrag binnen 7 dagen over te maken op het in de factuur benoemde rekeningnummer onder vermelding van uw debiteurennummer en het factuurnummer. Heeft u vragen over de factuur of bent u van mening dat deze ten onrechte is verstuurd, neem dan contact op met ondergetekende. Indien het bedrag inmiddels is overgemaakt kunt u deze brief uiteraard als niet verzonden beschouwen. ');
+			$table->text('pref_email_invoice_demand')->nullable()->default('Ondanks twee eerdere herinneringen hebben wij nog geen betaling van bijgevoegde factuur mogen ontvangen. Wij verzoeken u dringend het verschuldigde bedrag binnen 5 dagen over te maken op het in de factuur benoemde rekeningnummer onder vermelding van uw debiteurennummer en het factuurnummer. Als deze laatste aanmaning u niet aanzet tot betaling binnen de genoemde termijn, zijn wij genoodzaakt de vordering definitief uit handen te geven. Alle hieruit voortkomende kosten zullen voor uw rekening komen.');
 			$table->string('offernumber_prefix', 10)->default('OF');
 			$table->smallinteger('offer_counter')->default(1)->unsigned();
 			$table->string('invoicenumber_prefix', 10)->default('FA');
@@ -161,6 +160,17 @@ class CreateUsersTable extends Migration {
 			$table->integer('project_id')->nullable()->unsigned();
 			$table->foreign('project_id')->references('id')->on('project')->onUpdate('cascade')->onDelete('cascade');
 		});
+		
+		Schema::create('promotion', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('name', 80);
+			$table->string('code', 20);
+			$table->decimal('amount', 9, 3);
+			$table->timestamps();
+			$table->boolean('active')->default('Y');
+			$table->dateTime('valid');
+		});
 
 		Schema::create('payment', function(Blueprint $table)
 		{
@@ -173,6 +183,8 @@ class CreateUsersTable extends Migration {
 			$table->string('method', 25);
 			$table->integer('increment');
 			$table->timestamps();
+			$table->integer('promotion_id')->unsigned()->nullable();
+			$table->foreign('promotion_id')->references('id')->on('promotion')->onUpdate('cascade')->onDelete('cascade');
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('user_account')->onUpdate('cascade')->onDelete('cascade');
 		});
@@ -221,6 +233,8 @@ class CreateUsersTable extends Migration {
 		DB::unprepared($seq_order);
 	}
 
+
+
 	/**
 	 * Reverse the migrations.
 	 *
@@ -244,6 +258,10 @@ class CreateUsersTable extends Migration {
 		Schema::table('payment', function(Blueprint $table)
 		{
 			Schema::dropIfExists('payment');
+		});
+		Schema::table('promotion', function(Blueprint $table)
+		{
+			Schema::dropIfExists('promotion');
 		});
 		Schema::table('resource', function(Blueprint $table)
 		{

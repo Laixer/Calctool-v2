@@ -11,6 +11,8 @@ use \Calctool\Models\Offer;
 use \Calctool\Models\Contact;
 use \Calctool\Models\Resource;
 use \Calctool\Models\InvoicePost;
+use \Calctool\Models\Relation;
+use \Calctool\Models\User;
 use \Calctool\Calculus\InvoiceTerm;
 
 use \Auth;
@@ -361,7 +363,7 @@ class InvoiceController extends Controller {
 		Auth::user()->invoice_counter++;
 		Auth::user()->save();
 
-		return redirect('/invoice/project-'.$project->id);
+		return redirect('/invoice/project-'.$project->id.'/pdf-invoice-'.$invoice->id);
 	}
 
 	public function doInvoicePay(Request $request)
@@ -440,6 +442,11 @@ class InvoiceController extends Controller {
 		$contact_client = Contact::find($invoice->to_contact_id);
 		$contact_user = Contact::find($invoice->from_contact_id);
 
+		$user_logo = '';
+		$relation_self = Relation::find(Auth::user()->self_id);
+		if ($relation_self->logo_id)
+			$user_logo = Resource::find($relation_self->logo_id)->file_location;
+
 		$data = array(
 			'email' => $contact_client->email,
 			'pdf' => $res->file_location,
@@ -448,11 +455,15 @@ class InvoiceController extends Controller {
 			'client'=> $contact_client->getFormalName(),
 			'project_name' => $project->project_name,
 			'user' => $contact_user->getFormalName(),
-			'pref_email_invoice' => Auth::User()->pref_email_invoice
+			'pref_email_invoice' => Auth::User()->pref_email_invoice,
+			'user_logo' => $user_logo
 		);
 		Mailgun::send('mail.invoice_send', $data, function($message) use ($data) {
-			$message->to($data['email'], strtolower(trim($data['client'])))->subject('Factuur ' . $data['project_name']);
+			$message->to($data['email'], strtolower(trim($data['client'])));
 			$message->attach($data['pdf']);
+			$message->subject('Factuur ' . $data['project_name']);
+			$message->from('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});
 
 		return json_encode(['success' => 1]);
@@ -474,13 +485,19 @@ class InvoiceController extends Controller {
 		$contact_client = Contact::find($invoice->to_contact_id);
 		$contact_user = Contact::find($invoice->from_contact_id);
 
+		$user_logo = '';
+		$relation_self = Relation::find(Auth::user()->self_id);
+		if ($relation_self->logo_id)
+			$user_logo = Resource::find($relation_self->logo_id)->file_location;
+
 		$data = array(
 			'preview' => true,
 			'invoice_id' => $invoice->id,
 			'client'=> $contact_client->getFormalName(),
 			'project_name' => $project->project_name,
 			'user' => $contact_user->getFormalName(),
-			'pref_email_invoice' => Auth::User()->pref_email_invoice
+			'pref_email_invoice' => Auth::User()->pref_email_invoice,
+			'user_logo' => $user_logo
 		);
 		return view('mail.invoice_send', $data);
 	}
@@ -516,9 +533,12 @@ class InvoiceController extends Controller {
 	}
 
 	/* id = $project->id */
-	public static function getInvoiceCodeConcept($id)
+	public static function getInvoiceCodeConcept($id, $user = null)
 	{
-		return sprintf("%s%05d-CONCEPT-%s", Auth::user()->invoicenumber_prefix, $id, date('y'));
+		if (!$user) {
+			$user = Auth::user();
+		}
+		return sprintf("%s%05d-CONCEPT-%s", $user->invoicenumber_prefix, $id, date('y'));
 	}
 
 }

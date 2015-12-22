@@ -10,6 +10,8 @@ use \Calctool\Models\Payment;
 use \Calctool\Models\User;
 use \Calctool\Models\Telegram;
 use \Calctool\Models\Audit;
+use \Calctool\Models\Promotion;
+use \Calctool\Models\BankAccount;
 
 use \Auth;
 use \Hash;
@@ -41,7 +43,10 @@ class UserController extends Controller {
 
 		$data = array('email' => $user->email, 'username' => $user->username);
 		Mailgun::send('mail.deactivate', $data, function($message) use ($data) {
-			$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Account gedeactiveerd');
+			$message->to($data['email'], strtolower(trim($data['username'])));
+			$message->subject('CalculatieTool.com - Account gedeactiveerd');
+			$message->from('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});
 
 		if ($_ENV['TELEGRAM_ENABLED']) {
@@ -83,43 +88,28 @@ class UserController extends Controller {
 		return back()->with('success', 'Instellingen opgeslagen');
 	}
 
-	public function doPayment(Request $request)
+	public function getPayment(Request $request)
 	{
-		$this->validate($request, [
-			'payoption' => array('required'),
-		]);
+		$amount = 27;
+		$description = 'Verleng met een maand';
+		$increment_months = 1;
+		$promo_id = 0;
+
+		$promocode = $request->cookie('_dccod'.Auth::id());
+		if ($promocode) {
+			$promo = Promotion::find($promocode)->where('active', true)->where('valid', '>=', date('Y-m-d H:i:s'))->first();
+			if ($promo) {
+				$_order = Payment::where('user_id',Auth::id())->where('promotion_id',$promo->id)->first();
+				if (!$_order) {
+					$amount = $promo->amount;
+					$description .= ' Actie:' . $promo->name;
+					$promo_id = $promo->id;
+				}
+			}
+		}
 
 		$mollie = new \Mollie_API_Client;
 		$mollie->setApiKey($_ENV['MOLLIE_API']);
-
-		$amount = 0;
-		$description = 'None';
-		$increment_months = 0;
-		switch ($request->get('payoption')) {
-			case 1:
-				$amount = 36.24;
-				$description = 'Verleng met een maand';
-				$increment_months = 1;
-				break;
-			case 3:
-				$amount = 97.84;
-				$description = 'Verleng met 4 maanden';
-				$increment_months = 3;
-				break;
-			case 6:
-				$amount = 184.83;
-				$description = 'Verleng met 6 maanden';
-				$increment_months = 6;
-				break;
-			case 12:
-				$amount = 347.90;
-				$description = 'Verleng met 12 maanden';
-				$increment_months = 12;
-				break;
-			default:
-				$errors = new MessageBag(['status' => ['Geen geldige optie']]);
-				return redirect('myaccount')->withErrors($errors);
-		}
 
 		$token = sha1(mt_rand().time());
 
@@ -144,6 +134,9 @@ class UserController extends Controller {
 		$order->description = $description;
 		$order->method = '';
 		$order->user_id = Auth::id();
+		if ($promocode) {
+			$order->promotion_id = $promo_id;
+		}
 
 		$order->save();
 
@@ -153,7 +146,7 @@ class UserController extends Controller {
 		$log->user_id = Auth::id();
 		$log->save();
 
-		return redirect($payment->links->paymentUrl);
+		return redirect($payment->links->paymentUrl)->withCookie(cookie()->forget('_dccod'.Auth::id()));
 	}
 
 	public function doPaymentUpdate(Request $request)
@@ -186,7 +179,10 @@ class UserController extends Controller {
 
 			$data = array('email' => $user->email, 'amount' => number_format($order->amount, 2,",","."), 'expdate' => date('j F Y', strtotime($user->expiration_date)), 'username' => $user->username);
 			Mailgun::send('mail.paid', $data, function($message) use ($data) {
-				$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Abonnement verlengd');
+				$message->to($data['email'], strtolower(trim($data['username'])));
+				$message->subject('CalculatieTool.com - Abonnement verlengd');
+				$message->from('info@calculatietool.com', 'CalculatieTool.com');
+				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 			});
 
 			if ($_ENV['TELEGRAM_ENABLED']) {
@@ -280,7 +276,10 @@ class UserController extends Controller {
 		if ($request->get('secret')) {
 			$data = array('email' => Auth::user()->email, 'username' => Auth::user()->username);
 			Mailgun::send('mail.password_update', $data, function($message) use ($data) {
-				$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Wachtwoord aangepast');
+				$message->to($data['email'], strtolower(trim($data['username'])));
+				$message->subject('CalculatieTool.com - Wachtwoord aangepast');
+				$message->from('info@calculatietool.com', 'CalculatieTool.com');
+				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 			});
 
 			if ($_ENV['TELEGRAM_ENABLED']) {
@@ -423,6 +422,16 @@ class UserController extends Controller {
 		if (!$relation || !$relation->isOwner()) {
 			return back()->withInput($request->all());
 		}
+
+		if (!$relation->iban && !$relation->iban_name) {
+			$account = new BankAccount;
+			$account->user_id = Auth::id();
+			$account->account = $request->input('iban');
+			$account->account_name = $request->input('iban_name');
+
+			$account->save();
+		}
+
 		$relation->iban = $request->get('iban');
 		$relation->iban_name = $request->get('iban_name');
 
@@ -430,7 +439,10 @@ class UserController extends Controller {
 
 		$data = array('email' => Auth::user()->email, 'username' => Auth::user()->username);
 		Mailgun::send('mail.iban_update', $data, function($message) use ($data) {
-			$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Betaalgegevens aangepast');
+			$message->to($data['email'], strtolower(trim($data['username'])));
+			$message->subject('CalculatieTool.com - Betaalgegevens aangepast');
+			$message->from('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});
 
 		if ($_ENV['TELEGRAM_ENABLED']) {
@@ -523,5 +535,18 @@ class UserController extends Controller {
 		$log->save();
 
 		return back()->with('success', 'Voorkeuren opgeslagen');
+	}
+
+	public function doCheckPromotionCode(Request $request) {
+
+		$promo = Promotion::where('code', strtoupper($request->get('code')))->where('active', true)->where('valid', '>=', date('Y-m-d H:i:s'))->first();
+		if (!$promo)
+			return json_encode(['success' => 0]);
+
+		$order = Payment::where('user_id',Auth::id())->where('promotion_id',$promo->id)->first();
+		if ($order)
+			return json_encode(['success' => 0]);
+
+		return response()->json(['success' => 1, 'amount' => $promo->amount, 'famount' => number_format($promo->amount, 0,",",".")])->withCookie(cookie('_dccod'.Auth::id(), $promo->id, 30));
 	}
 }

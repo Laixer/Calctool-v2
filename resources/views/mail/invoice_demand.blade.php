@@ -4,8 +4,27 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<title><strong>CalculatieTool.com</strong> - Abonnement verlengd</title>
+		<title>Vordering Factuur {{ $project_name }}</title>
 	</head>
+
+	@if ($preview)
+	<script lang="text/javascript">
+
+		$(document).ready(function() {
+			$('#sendmail').click(function(){
+				$.post("/invoice/sendmail", {
+					invoice: {{ $invoice_id }}
+				}, function(data){
+					var json = $.parseJSON(data);
+					if (json.success) {
+						$('#mailsent').show();
+					}
+				});
+			});
+		});
+
+	</script>
+	@endif
 
 	<body style="margin:0; margin-top:30px; margin-bottom:30px; padding:0; width:100%; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; background-color: #F4F5F7;">
 
@@ -42,8 +61,8 @@
 													<td width="100%" height="30"></td>
 												</tr>
 												<tr>
-													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; line-height: 24px; color:#8E8E8E;">
-														Goededag <strong>{{ ucfirst($username) }}</strong>,
+													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
+														Geachte <strong>{{ $client }}</strong>,
 													</td>
 												</tr>
 												<tr>
@@ -51,20 +70,23 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														De betaling van <strong>{{ $amount }}</strong> is in goede orde ontvangen en je account is verlengt tot <strong>{{ $expdate }}</strong>.
+														{{ $pref_email_invoice_demand }}
 													</td>
 												</tr>
+												<tr><!-- spacer after the line -->
+													<td width="100%" height="20"></td>
+												</tr>
+																								
 												<tr><!-- spacer after the line -->
 													<td width="100%" height="20"></td>
 												</tr>
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
 														<br>
-														<br>
 															Met vriendelijke groet,
 														<br>
 														<br>
-															<strong>Cal</strong>, van <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
+															<strong>Uw vakanman</strong>, {{ $user }}</strong></a>
 														<br>
 														<br>
 													</td>
@@ -114,6 +136,11 @@
 						</table>
 						<!-- /ROW FOOTER -->
 
+						@if ($preview)
+						<div class="modal-footer">
+							<a class="btn btn-primary pull-right" id="sendmail" class="close" data-dismiss="modal" aria-hidden="true">Verstuur definitief</a>
+						</div>
+						@endif
 
 					</td>
 				</tr>

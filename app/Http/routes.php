@@ -30,8 +30,9 @@ Route::get('ex-project-overview/{token}', function() {
 	return view('user.client_page');
 })->where('token', '[0-9a-z]{40}');
 Route::post('ex-project-overview/{token}/update', 'ClientController@doUpdateCommunication')->where('token', '[0-9a-z]{40}');
+Route::get('ex-project-overview/{token}/done', 'ClientController@doOfferAccept')->where('token', '[0-9a-z]{40}');
 
-Route::get('api/v1', array('uses' => 'ApiController@getApiRoot'));
+Route::get('api/v1', 'ApiController@getApiRoot');
 
 Route::get('about', function() {
 	return view('generic.about');
@@ -90,11 +91,9 @@ Route::group(array('middleware' => 'auth'), function()
 		return view('user.messagebox');
 	});
 
-	Route::get('payment', function() {
-		return view('user.payment');
-	});
-	Route::post('payment', array('as' => 'security.update', 'uses' => 'UserController@doPayment'));
+	Route::get('payment', 'UserController@getPayment');
 	Route::get('payment/order/{token}', array('as' => 'security.update', 'uses' => 'UserController@getPaymentFinish'))->where('token', '[0-9a-z]{40}');
+	Route::post('payment/promocode', 'UserController@doCheckPromotionCode');
 
 	/* Actions by calculation */
 	Route::post('calculation/newchapter/{project_id}', array('as' => 'calculation', 'uses' => 'CalcController@doNewChapter'))->where('project_id', '[0-9]+');

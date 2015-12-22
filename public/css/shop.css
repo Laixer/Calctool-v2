@@ -16,11 +16,11 @@
 	overflow:hidden;
 }
 #shop .item-box figure {
-	height:260px;
+	height:160px;
 }
-	#shop .item-box figure img {
-		margin:auto;
-	}
+#shop .item-box figure img {
+	margin:auto;
+}
 #shop .item-box-desc {
 	height:100px;
 }

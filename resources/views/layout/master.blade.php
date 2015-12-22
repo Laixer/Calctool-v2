@@ -7,7 +7,7 @@
 		<title>Calculatie Tool - Online calculeren & offreren</title>
 		<meta name="keywords" content="Calculeren" />
 		<meta name="description" content="" />
-		<meta name="Author" content="CalcTool.nl" />
+		<meta name="Author" content="CalculatieTool.com" />
 
 		<?php // -- favicon -- ?>
 		<link rel="apple-touch-icon" sizes="57x57" href="/images/apple-touch-icon-57x57.png">

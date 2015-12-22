@@ -125,7 +125,11 @@ class AuthController extends Controller {
 
 		$data = array('email' => $user->email, 'api' => $user->api, 'token' => $user->token, 'username' => $user->username);
 		Mailgun::send('mail.confirm', $data, function($message) use ($data) {
-			$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Account activatie');
+			$message->to($data['email'], strtolower(trim($data['username'])));
+			$message->subject('CalculatieTool.com - Account activatie');
+			$message->bcc('info@calculatietool.com', 'CalculatieTool.com');
+			$message->from('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});
 
 		$user->save();
@@ -249,7 +253,10 @@ class AuthController extends Controller {
 
 		$data = array('email' => $user->email, 'api' => $user->api, 'token' => $user->token, 'username' => $user->username);
 		Mailgun::send('mail.password', $data, function($message) use ($data) {
-			$message->to($data['email'], strtolower(trim($data['username'])))->subject('Calctool - Wachtwoord herstellen');
+			$message->to($data['email'], strtolower(trim($data['username'])));
+			$message->subject('CalculatieTool.com - Wachtwoord herstellen');
+			$message->from('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});
 
 		$user->save();

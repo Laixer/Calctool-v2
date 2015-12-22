@@ -89,176 +89,6 @@ else {
 			$('#tab-status').addClass('active');
 			$('#status').addClass('active');
 		}
-		$('#addnew').click(function(e) {
-			$curThis = $(this);
-			e.preventDefault();
-			$date = $curThis.closest("tr").find("input[name='date']").val();
-			$hour = $curThis.closest("tr").find("input[name='hour']").val();
-			$type = $curThis.closest("tr").find("select[name='typename']").val();
-			$activity = $curThis.closest("tr").find("select[name='activity']").val();
-			$note = $curThis.closest("tr").find("input[name='note']").val();
-			$.post("/timesheet/new", {
-				date: $date,
-				hour: $hour,
-				type: $type,
-				activity: $activity,
-				note: $note,
-				project: {{ $project->id }},
-			}, function(data){
-				var $curTable = $curThis.closest("table");
-				var json = $.parseJSON(data);
-				if (json.success) {
-					$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
-					.find("td:eq(0)").text($date).end()
-					.find("td:eq(1)").text(json.hour).end()
-					.find("td:eq(2)").text(json.type).end()
-					.find("td:eq(3)").text(json.activity).end()
-					.find("td:eq(4)").text($note).end()
-					.find("td:eq(7)").html('<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>').end()
-					.prependTo($curTable);
-					$curThis.closest("tr").find("input").val("");
-					$curThis.closest("tr").find("select").val("");
-				}
-			});
-		});
-		$('#addnewpurchase').click(function(e) {
-			$curThis = $(this);
-			e.preventDefault();
-			$date = $curThis.closest("tr").find("input[name='date']").val();
-			$hour = $curThis.closest("tr").find("input[name='hour']").val();
-			$type = $curThis.closest("tr").find("select[name='typename']").val();
-			$relation = $curThis.closest("tr").find("select[name='relation']").val();
-			$note = $curThis.closest("tr").find("input[name='note']").val();
-			$.post("/purchase/new", {
-				date: $date,
-				amount: $hour,
-				type: $type,
-				relation: $relation,
-				note: $note,
-				project: {{ $project->id }}
-			}, function(data){
-				var $curTable = $curThis.closest("table");
-				var json = $.parseJSON(data);
-				$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
-				.find("td:eq(0)").text($date).end()
-				.find("td:eq(1)").text(json.relation).end()
-				.find("td:eq(2)").html(json.amount).end()
-				.find("td:eq(3)").text(json.type).end()
-				.find("td:eq(4)").text($note).end()
-				.find("td:eq(7)").html('<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>').end()
-				.prependTo($curTable);
-				$curThis.closest("tr").find("input").val("");
-				$curThis.closest("tr").find("select").val("");
-			});
-		});
-		$("body").on("click", ".deleterow", function(e){
-			e.preventDefault();
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				$.post("/timesheet/delete", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(){
-					$curThis.closest("tr").hide("slow");
-				}).fail(function(e) { console.log(e); });
-		});
-		$("body").on("click", ".deleterowp", function(e){
-			e.preventDefault();
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				$.post("/purchase/delete", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(){
-					$curThis.closest("tr").hide("slow");
-				}).fail(function(e) { console.log(e); });
-		});
-		$('.dopay').click(function(e){
-			if(confirm('Factuur betalen?')){
-				$curThis = $(this);
-				$curproj = $(this).attr('data-project');
-				$curinv = $(this).attr('data-invoice');
-				$.post("/invoice/pay", {project: {{ $project->id }}, id: $curinv, projectid: $curproj}, function(data){
-					$rs = jQuery.parseJSON(data);
-					$curThis.replaceWith('Betaald op ' +$rs.payment);
-				}).fail(function(e) { console.log(e); });
-			}
-		});
-		$('.doinvclose').click(function(e){
-			$curThis = $(this);
-			$curproj = $(this).attr('data-project');
-			$curinv = $(this).attr('data-invoice');
-			$.post("/invoice/invclose", {project: {{ $project->id }}, id: $curinv, projectid: $curproj}, function(data){
-				$rs = jQuery.parseJSON(data);
-				$curThis.replaceWith($rs.billing);
-			}).fail(function(e) { console.log(e); });
-		});
-		$('#typename').change(function(e){
-			$.get('/timesheet/activity/{{ $project->id }}/' + $(this).val(), function(data){
-				$('#activity').prop('disabled', false).find('option').remove();
-				$('#activity').prop('disabled', false).find('optgroup').remove();
-				var groups = new Array();
-				$.each(data, function(idx, item) {
-					var index = -1;
-					for(var i = 0, len = groups.length; i < len; i++) {
-					    if (groups[i].group === item.chapter) {
-					        groups[i].data.push({value: item.id, text: item.activity_name});
-					        index = i;
-					        break;
-					    }
-					}
-					if (index == -1) {
-						groups.push({group: item.chapter, data: [{value: item.id, text: item.activity_name}]});
-					}
-				});
-				$.each(groups, function(idx, item){
-				    $('#activity').append($('<optgroup>', {
-				        label: item.group
-				    }));
-				    $.each(item.data, function(idx2, item2){
-					    $('#activity').append($('<option>', {
-					        value: item2.value,
-					        text : item2.text
-					    }));
-				    });
-				});
-			});
-		});
-		$('#projclose').datepicker().on('changeDate', function(e){
-			$('#projclose').datepicker('hide');
-			if(confirm('Project sluiten?')){
-				$.post("/project/updateprojectclose", {
-					date: e.date.toLocaleString(),
-					project: {{ $project->id }}
-				}, function(data){
-					location.reload();
-				});
-			}
-    	});
-		$('#wordexec').datepicker().on('changeDate', function(e){
-			$('#wordexec').datepicker('hide');
-			$.post("/project/updateworkexecution", {
-				date: e.date.toLocaleString(),
-				project: {{ $project->id }}
-			}, function(data){
-				location.reload();
-			});
-    	});
-		$('#wordcompl').datepicker().on('changeDate', function(e){
-			$('#wordcompl').datepicker('hide');
-			$.post("/project/updateworkcompletion", {
-				date: e.date.toLocaleString(),
-				project: {{ $project->id }}
-			}, function(data){
-				location.reload();
-			});
-    	});
-		<?php if ($offer_last) { ?>
-		$('#dobx').datepicker().on('changeDate', function(e){
-			$('#dobx').datepicker('hide');
-			$.post("/offer/close", {
-				date: e.date.toLocaleString(),
-				offer: {{ $offer_last->id }},
-				project: {{ $project->id }}
-			}, function(data){
-				location.reload();
-			});
-    	});
-    	<?php } ?>
 	});
 </script>
 <div id="wrapper">
@@ -415,24 +245,16 @@ else {
 								<div class="col-md-2"><?php if ($offer_last) { echo date('d-m-Y', strtotime(DB::table('offer')->select('created_at')->where('id','=',$offer_last->id)->get()[0]->created_at)); } ?></div>
 								<div class="col-md-3"><i><?php if ($offer_last) { echo 'Laatste wijziging: '.date('d-m-Y', strtotime(DB::table('offer')->select('updated_at')->where('id','=',$offer_last->id)->get()[0]->updated_at)); } ?></i></div>
 							</div>
+
+							<br>
+
+							@if ($offer_last && !$offer_last->offer_finish)
 							<div class="row">
-								<div class="col-md-3">Opdracht geven <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer u opdracht geeft aan uw vakaman. U gaat met deze actie dus akkoord met de offerte." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></div>
-								<div class="col-md-2">
-									<?php
-										if (!\Calctool\Calculus\CalculationEndresult::totalProject($project)) {
-											echo "Geen offerte bedrag";
-										} else {
-											if ($offer_last && $offer_last->offer_finish) {
-												echo date('d-m-Y', strtotime($offer_last->offer_finish));
-											} else if ($offer_last) {
-												echo '<a href="#" id="dobx">Bewerk</a>';
-											} else {
-												echo "Geen offerte bedrag";
-											}
-										}
-									?>
+								<div class="col-md-12">
+									<a href="/ex-project-overview/{{ $share->token }}/done" id="offer-ok" class="btn btn-primary"><i class="fa fa-check"></i> Geef opdracht</a>
 								</div>
 							</div>
+							@endif
 						</div>
 									
 						<div id="desc" class="tab-pane">
@@ -456,15 +278,15 @@ else {
 								</div>
 							</div>
 							<div class="row">
-									<div class="col-md-12">
-										<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
-									</div>
+								<div class="col-md-12">
+									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 								</div>
-							</form>
-						</div>
-
+							</div>
+						</form>
 					</div>
+
 				</div>
+			</div>
 
 		</div>
 

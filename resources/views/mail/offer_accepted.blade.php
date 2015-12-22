@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<title><strong>CalculatieTool.com</strong> - Abonnement verlengd</title>
+		<title><strong>CalculatieTool.com</strong> - Offerte bevestigd</title>
 	</head>
 
 	<body style="margin:0; margin-top:30px; margin-bottom:30px; padding:0; width:100%; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; background-color: #F4F5F7;">
@@ -21,7 +21,7 @@
 								<tr>
 									<td style="border-collapse:collapse; vertical-align:middle; text-align center; padding:20px;">
 
-										<!-- Headline Header -->
+																			<!-- Headline Header -->
 										<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
 											<tbody>
 
@@ -51,7 +51,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														De betaling van <strong>{{ $amount }}</strong> is in goede orde ontvangen en je account is verlengt tot <strong>{{ $expdate }}</strong>.
+														Uw opdrachtgever voor project {{ $project_name }} heeft de opdracht bevestigd en u het werk gegund.
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->
@@ -113,7 +113,6 @@
 							</tbody>
 						</table>
 						<!-- /ROW FOOTER -->
-
 
 					</td>
 				</tr>

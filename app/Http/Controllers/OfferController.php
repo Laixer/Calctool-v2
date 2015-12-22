@@ -194,6 +194,11 @@ class OfferController extends Controller {
 		$contact_client = Contact::find($offer->to_contact_id);
 		$contact_user = Contact::find($offer->from_contact_id);
 
+		$user_logo = '';
+		$relation_self = Relation::find(Auth::user()->self_id);
+		if ($relation_self->logo_id)
+			$user_logo = Resource::find($relation_self->logo_id)->file_location;
+
 		$data = array(
 			'email' => $contact_client->email,
 			'pdf' => $res->file_location,
@@ -203,11 +208,15 @@ class OfferController extends Controller {
 			'client' => $contact_client->getFormalName(),
 			'user' => $contact_user->getFormalName(),
 			'project_name' => $project->project_name,
-			'pref_email_offer' => Auth::User()->pref_email_offer
+			'pref_email_offer' => Auth::User()->pref_email_offer,
+			'user_logo' => $user_logo
 		);
 		Mailgun::send('mail.offer_send', $data, function($message) use ($data) {
-			$message->to($data['email'], strtolower(trim($data['client'])))->subject('Offerte ' . $data['project_name']);
+			$message->to($data['email'], strtolower(trim($data['client'])));
 			$message->attach($data['pdf']);
+			$message->subject('Offerte ' . $data['project_name']);
+			$message->from('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});
 
 		return json_encode(['success' => 1]);
@@ -234,6 +243,11 @@ class OfferController extends Controller {
 		$contact_client = Contact::find($offer->to_contact_id);
 		$contact_user = Contact::find($offer->from_contact_id);
 
+		$user_logo = '';
+		$relation_self = Relation::find(Auth::user()->self_id);
+		if ($relation_self->logo_id)
+			$user_logo = Resource::find($relation_self->logo_id)->file_location;
+
 		$data = array(
 			'preview' => true,
 			'offer_id' => $offer->id,
@@ -241,7 +255,8 @@ class OfferController extends Controller {
 			'token' => $share->token,
 			'project_name' => $project->project_name,
 			'user' => $contact_user->getFormalName(),
-			'pref_email_offer' => Auth::User()->pref_email_offer
+			'pref_email_offer' => Auth::User()->pref_email_offer,
+			'user_logo' => $user_logo
 		);
 		return view('mail.offer_send', $data);
 	}
