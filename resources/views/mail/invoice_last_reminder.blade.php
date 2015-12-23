@@ -7,25 +7,6 @@
 		<title>Laatste Betalingsherinnering Factuur {{ $project_name }}</title>
 	</head>
 
-	@if ($preview)
-	<script lang="text/javascript">
-
-		$(document).ready(function() {
-			$('#sendmail').click(function(){
-				$.post("/invoice/sendmail", {
-					invoice: {{ $invoice_id }}
-				}, function(data){
-					var json = $.parseJSON(data);
-					if (json.success) {
-						$('#mailsent').show();
-					}
-				});
-			});
-		});
-
-	</script>
-	@endif
-
 	<body style="margin:0; margin-top:30px; margin-bottom:30px; padding:0; width:100%; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; background-color: #F4F5F7;">
 
 
@@ -135,12 +116,6 @@
 							</tbody>
 						</table>
 						<!-- /ROW FOOTER -->
-
-						@if ($preview)
-						<div class="modal-footer">
-							<a class="btn btn-primary pull-right" id="sendmail" class="close" data-dismiss="modal" aria-hidden="true">Verstuur definitief</a>
-						</div>
-						@endif
 
 					</td>
 				</tr>
