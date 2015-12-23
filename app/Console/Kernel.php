@@ -77,7 +77,7 @@ class Kernel extends ConsoleKernel
                         'email' => $contact_client->email,
                         'project_name' => $project->project_name,
                         'client' => $contact_client->getFormalName(),
-                        'pref_email_invoice' => $user->pref_email_invoice,
+                        'pref_email_invoice_last_reminder' => $user->pref_email_invoice_last_reminder,
                         'user' => $contact_user->getFormalName()
                     );
                     Mailgun::send('mail.invoice_last_reminder', $data, function($message) use ($data) {

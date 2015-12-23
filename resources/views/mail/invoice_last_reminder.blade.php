@@ -51,7 +51,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														{{ $pref_email_invoice }}
+														{{ $pref_email_invoice_last_reminder }}
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->
