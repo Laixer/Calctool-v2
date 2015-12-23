@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<title>Vordering Factuur {{ $project_name }}</title>
+		<title><strong>CalculatieTool.com</strong> - Account verlengen</title>
 	</head>
 
 	<body style="margin:0; margin-top:30px; margin-bottom:30px; padding:0; width:100%; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; background-color: #F4F5F7;">
@@ -42,8 +42,8 @@
 													<td width="100%" height="30"></td>
 												</tr>
 												<tr>
-													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
-														Geachte <strong>{{ $client }}</strong>,
+													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; line-height: 24px; color:#8E8E8E;">
+														Goededag <strong>{{ ucfirst($username) }}</strong>,
 													</td>
 												</tr>
 												<tr>
@@ -51,23 +51,20 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														{{ $pref_email_invoice_demand }}
+														Je CalculatieTool account verloopt bijna. Indien je het account wilt blijven gebruiken dien je eze te verlegnen onder "mijn Account".
 													</td>
 												</tr>
-												<tr><!-- spacer after the line -->
-													<td width="100%" height="20"></td>
-												</tr>
-																								
 												<tr><!-- spacer after the line -->
 													<td width="100%" height="20"></td>
 												</tr>
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
 														<br>
+														<br>
 															Met vriendelijke groet,
 														<br>
 														<br>
-															<strong>Uw vakanman</strong>, {{ $user }}</strong></a>
+															<strong>Cal</strong>, van <a href="{{ URL::to('/') }}"><strong>CalculatieTool</strong></a>
 														<br>
 														<br>
 													</td>
@@ -116,6 +113,7 @@
 							</tbody>
 						</table>
 						<!-- /ROW FOOTER -->
+
 
 					</td>
 				</tr>

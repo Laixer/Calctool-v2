@@ -39,7 +39,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 	}
 
 	public function hasPayed() {
-		return (strtotime($this->expiration_date) >= strtotime(date('Y-m-d')));
+		return (strtotime($this->expiration_date) >= time());
+	}
+
+	public function isAlmostDue() {
+		return strtotime($this->expiration_date . "-5 days") == strtotime(date('Y-m-d'));
 	}
 
 	public function myCompany() {

@@ -343,6 +343,11 @@ Route::group(array('before' => 'admin'), function()
 		return view('admin.message');
 	});
 	Route::post('admin/message', 'AdminController@doSendNotification');
+	Route::post('admin/promo', 'AdminController@doNewPromotion');
+	Route::get('admin/promo/{id}/delete', 'AdminController@doDeletePromotion');
+	Route::get('admin/promo', function() {
+		return view('admin.promo');
+	});
 	Route::post('admin/snailmail/offer/done', 'AdminController@doOfferPostDone');
 	Route::post('admin/snailmail/invoice/done', 'AdminController@doInvoicePostDone');
 	Route::get('admin/resource', function() {

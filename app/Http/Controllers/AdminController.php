@@ -16,6 +16,7 @@ use \Calctool\Models\Resource;
 use \Calctool\Models\MessageBox;
 use \Calctool\Models\Audit;
 use \Calctool\Models\Project;
+use \Calctool\Models\Promotion;
 use \Database\Templates\DemoProjectTemplate;
 use \Database\Templates\ValidationProjectTemplate;
 
@@ -408,6 +409,36 @@ class AdminController extends Controller {
 		$message->save();
 
 		return back()->with('success', 'Bericht verstuurd');
+	}
+
+	public function doNewPromotion(Request $request)
+	{
+		$this->validate($request, [
+			'name' => array('required'),
+			'code' => array('required'),
+			'amount' => array('required'),
+			'valid' => array('required'),
+		]);
+
+		$promo = new Promotion;
+		$promo->name = $request->input('name');
+		$promo->code = strtoupper($request->input('code'));
+		$promo->amount = $request->input('amount');
+		$promo->valid = date('Y-m-d H:i:s', strtotime($request->input('valid')));
+
+		$promo->save();
+
+		return back()->with('success', 'Actiecode aangemaakt');
+	}
+
+	public function doDeletePromotion(Request $request, $id)
+	{
+		$promo = Promotion::find($id);
+		$promo->active = false;
+
+		$promo->save();
+
+		return back()->with('success', 'Actiecode verwijderd');
 	}
 
 	public function doTruncateLog()
