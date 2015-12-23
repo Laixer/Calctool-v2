@@ -1152,36 +1152,6 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity8_5->activity_id = $activity8->id;
 						$calculation_equipment_activity8_5->save();
 
-		
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		$chapter3 = new Chapter;
 		$chapter3->chapter_name = 'S-A-H3';
 		$chapter3->priority = 3;
