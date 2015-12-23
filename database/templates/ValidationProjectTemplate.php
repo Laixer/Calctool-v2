@@ -121,7 +121,8 @@ class ValidationProjectTemplate {
 				$calculation_labor_activity1 = new CalculationLabor;
 				$calculation_labor_activity1->rate = '10.00';
 				$calculation_labor_activity1->amount = '10';
-				$calculation_labor_activity1->isless = false;
+				$calculation_labor_activity1->isless = true;
+				$calculation_labor_activity1->less_amount = '0.0';
 				$calculation_labor_activity1->activity_id = $activity1->id;
 				$calculation_labor_activity1->save();
 
@@ -130,7 +131,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity1_1->unit = '1';
 					$calculation_material_activity1_1->rate = '1';
 					$calculation_material_activity1_1->amount = '1';
-					$calculation_material_activity1_1->isless = false;
+					$calculation_material_activity1_1->isless = true;
+					$calculation_material_activity1_1->less_rate = '1';
+					$calculation_material_activity1_1->less_amount = '0.1';
 					$calculation_material_activity1_1->activity_id = $activity1->id;
 					$calculation_material_activity1_1->save();
 
@@ -139,7 +142,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity1_2->unit = '2';
 					$calculation_material_activity1_2->rate = '1';
 					$calculation_material_activity1_2->amount = '2';
-					$calculation_material_activity1_2->isless = false;
+					$calculation_material_activity1_2->isless = true;
+					$calculation_material_activity1_2->less_rate = '1';
+					$calculation_material_activity1_2->less_amount = '0.2';
 					$calculation_material_activity1_2->activity_id = $activity1->id;
 					$calculation_material_activity1_2->save();
 
@@ -148,7 +153,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity1_3->unit = '3';
 					$calculation_material_activity1_3->rate = '1';
 					$calculation_material_activity1_3->amount = '3';
-					$calculation_material_activity1_3->isless = false;
+					$calculation_material_activity1_3->isless = true;
+					$calculation_material_activity1_3->less_rate = '1';
+					$calculation_material_activity1_3->less_amount = '0.3';
 					$calculation_material_activity1_3->activity_id = $activity1->id;
 					$calculation_material_activity1_3->save();
 
@@ -157,7 +164,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity1_4->unit = '4';
 					$calculation_material_activity1_4->rate = '1';
 					$calculation_material_activity1_4->amount = '4';
-					$calculation_material_activity1_4->isless = false;
+					$calculation_material_activity1_4->isless = true;
+					$calculation_material_activity1_4->less_rate = '1';
+					$calculation_material_activity1_4->less_amount = '0.4';
 					$calculation_material_activity1_4->activity_id = $activity1->id;
 					$calculation_material_activity1_4->save();
 
@@ -166,7 +175,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity1_5->unit = '5';
 					$calculation_material_activity1_5->rate = '1';
 					$calculation_material_activity1_5->amount = '5';
-					$calculation_material_activity1_5->isless = false;
+					$calculation_material_activity1_5->isless = true;
+					$calculation_material_activity1_5->less_rate = '1';
+					$calculation_material_activity1_5->less_amount = '0.5';
 					$calculation_material_activity1_5->activity_id = $activity1->id;
 					$calculation_material_activity1_5->save();
 				
@@ -175,7 +186,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity1_1->unit = '6';
 						$calculation_equipment_activity1_1->rate = '2';
 						$calculation_equipment_activity1_1->amount = '1';
-						$calculation_equipment_activity1_1->isless = false;
+						$calculation_equipment_activity1_1->isless = true;
+						$calculation_equipment_activity1_1->less_rate = '2';
+						$calculation_equipment_activity1_1->less_amount = '0.1';
 						$calculation_equipment_activity1_1->activity_id = $activity1->id;
 						$calculation_equipment_activity1_1->save();
 						
@@ -184,7 +197,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity1_2->unit = '7';
 						$calculation_equipment_activity1_2->rate = '2';
 						$calculation_equipment_activity1_2->amount = '2';
-						$calculation_equipment_activity1_2->isless = false;
+						$calculation_equipment_activity1_2->isless = true;
+						$calculation_equipment_activity1_2->less_rate = '2';
+						$calculation_equipment_activity1_2->less_amount = '0.2';
 						$calculation_equipment_activity1_2->activity_id = $activity1->id;
 						$calculation_equipment_activity1_2->save();
 
@@ -193,7 +208,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity1_3->unit = '8';
 						$calculation_equipment_activity1_3->rate = '2';
 						$calculation_equipment_activity1_3->amount = '3';
-						$calculation_equipment_activity1_3->isless = false;
+						$calculation_equipment_activity1_3->isless = true;
+						$calculation_equipment_activity1_3->less_rate = '2';
+						$calculation_equipment_activity1_3->less_amount = '0.3';
 						$calculation_equipment_activity1_3->activity_id = $activity1->id;
 						$calculation_equipment_activity1_3->save();
 						
@@ -202,7 +219,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity1_4->unit = '9';
 						$calculation_equipment_activity1_4->rate = '2';
 						$calculation_equipment_activity1_4->amount = '4';
-						$calculation_equipment_activity1_4->isless = false;
+						$calculation_equipment_activity1_4->isless = true;
+						$calculation_equipment_activity1_4->less_rate = '2';
+						$calculation_equipment_activity1_4->less_amount = '0.4';
 						$calculation_equipment_activity1_4->activity_id = $activity1->id;
 						$calculation_equipment_activity1_4->save();
 
@@ -211,7 +230,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity1_5->unit = '10';
 						$calculation_equipment_activity1_5->rate = '2';
 						$calculation_equipment_activity1_5->amount = '5';
-						$calculation_equipment_activity1_5->isless = false;
+						$calculation_equipment_activity1_5->isless = true;
+						$calculation_equipment_activity1_5->less_rate = '2';
+						$calculation_equipment_activity1_5->less_amount = '0.5';
 						$calculation_equipment_activity1_5->activity_id = $activity1->id;
 						$calculation_equipment_activity1_5->save();
 
@@ -230,7 +251,8 @@ class ValidationProjectTemplate {
 				$calculation_labor_activity2 = new CalculationLabor;
 				$calculation_labor_activity2->rate = '10.00';
 				$calculation_labor_activity2->amount = '11';
-				$calculation_labor_activity2->isless = false;
+				$calculation_labor_activity2->isless = true;
+				$calculation_labor_activity2->less_amount = '1.0';
 				$calculation_labor_activity2->activity_id = $activity2->id;
 				$calculation_labor_activity2->save();
 
@@ -239,7 +261,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity2_1->unit = '11';
 					$calculation_material_activity2_1->rate = '3';
 					$calculation_material_activity2_1->amount = '1';
-					$calculation_material_activity2_1->isless = false;
+					$calculation_material_activity2_1->isless = true;
+					$calculation_material_activity2_1->less_rate = '3';
+					$calculation_material_activity2_1->less_amount = '0.1';
 					$calculation_material_activity2_1->activity_id = $activity2->id;
 					$calculation_material_activity2_1->save();
 
@@ -248,7 +272,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity2_2->unit = '12';
 					$calculation_material_activity2_2->rate = '3';
 					$calculation_material_activity2_2->amount = '2';
-					$calculation_material_activity2_2->isless = false;
+					$calculation_material_activity2_2->isless = true;
+					$calculation_material_activity2_2->less_rate = '3';
+					$calculation_material_activity2_2->less_amount = '0.2';
 					$calculation_material_activity2_2->activity_id = $activity2->id;
 					$calculation_material_activity2_2->save();
 
@@ -257,7 +283,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity2_3->unit = '13';
 					$calculation_material_activity2_3->rate = '3';
 					$calculation_material_activity2_3->amount = '3';
-					$calculation_material_activity2_3->isless = false;
+					$calculation_material_activity2_3->isless = true;
+					$calculation_material_activity2_3->less_rate = '3';
+					$calculation_material_activity2_3->less_amount = '0.3';
 					$calculation_material_activity2_3->activity_id = $activity2->id;
 					$calculation_material_activity2_3->save();
 
@@ -266,7 +294,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity2_4->unit = '14';
 					$calculation_material_activity2_4->rate = '3';
 					$calculation_material_activity2_4->amount = '4';
-					$calculation_material_activity2_4->isless = false;
+					$calculation_material_activity2_4->isless = true;
+					$calculation_material_activity2_4->less_rate = '3';
+					$calculation_material_activity2_4->less_amount = '0.4';
 					$calculation_material_activity2_4->activity_id = $activity2->id;
 					$calculation_material_activity2_4->save();
 
@@ -275,7 +305,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity2_5->unit = '15';
 					$calculation_material_activity2_5->rate = '3';
 					$calculation_material_activity2_5->amount = '5';
-					$calculation_material_activity2_5->isless = false;
+					$calculation_material_activity2_5->isless = true;
+					$calculation_material_activity2_5->less_rate = '3';
+					$calculation_material_activity2_5->less_amount = '0.5';
 					$calculation_material_activity2_5->activity_id = $activity2->id;
 					$calculation_material_activity2_5->save();
 				
@@ -284,7 +316,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity2_1->unit = '16';
 						$calculation_equipment_activity2_1->rate = '4';
 						$calculation_equipment_activity2_1->amount = '1';
-						$calculation_equipment_activity2_1->isless = false;
+						$calculation_equipment_activity2_1->isless = true;
+						$calculation_equipment_activity2_1->less_rate = '4';
+						$calculation_equipment_activity2_1->less_amount = '0.1';
 						$calculation_equipment_activity2_1->activity_id = $activity2->id;
 						$calculation_equipment_activity2_1->save();
 						
@@ -293,7 +327,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity2_2->unit = '17';
 						$calculation_equipment_activity2_2->rate = '4';
 						$calculation_equipment_activity2_2->amount = '2';
-						$calculation_equipment_activity2_2->isless = false;
+						$calculation_equipment_activity2_2->isless = true;
+						$calculation_equipment_activity2_2->less_rate = '4';
+						$calculation_equipment_activity2_2->less_amount = '0.2';
 						$calculation_equipment_activity2_2->activity_id = $activity2->id;
 						$calculation_equipment_activity2_2->save();
 
@@ -302,7 +338,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity2_3->unit = '18';
 						$calculation_equipment_activity2_3->rate = '4';
 						$calculation_equipment_activity2_3->amount = '3';
-						$calculation_equipment_activity2_3->isless = false;
+						$calculation_equipment_activity2_3->isless = true;
+						$calculation_equipment_activity2_3->less_rate = '4';
+						$calculation_equipment_activity2_3->less_amount = '0.3';
 						$calculation_equipment_activity2_3->activity_id = $activity2->id;
 						$calculation_equipment_activity2_3->save();
 						
@@ -311,7 +349,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity2_4->unit = '19';
 						$calculation_equipment_activity2_4->rate = '4';
 						$calculation_equipment_activity2_4->amount = '4';
-						$calculation_equipment_activity2_4->isless = false;
+						$calculation_equipment_activity2_4->isless = true;
+						$calculation_equipment_activity2_4->less_rate = '4';
+						$calculation_equipment_activity2_4->less_amount = '0.4';
 						$calculation_equipment_activity2_4->activity_id = $activity2->id;
 						$calculation_equipment_activity2_4->save();
 
@@ -320,7 +360,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity2_5->unit = '20';
 						$calculation_equipment_activity2_5->rate = '4';
 						$calculation_equipment_activity2_5->amount = '5';
-						$calculation_equipment_activity2_5->isless = false;
+						$calculation_equipment_activity2_5->isless = true;
+						$calculation_equipment_activity2_5->less_rate = '4';
+						$calculation_equipment_activity2_5->less_amount = '0.5';
 						$calculation_equipment_activity2_5->activity_id = $activity2->id;
 						$calculation_equipment_activity2_5->save();
 
@@ -339,7 +381,8 @@ class ValidationProjectTemplate {
 				$calculation_labor_activity3 = new CalculationLabor;
 				$calculation_labor_activity3->rate = '10.00';
 				$calculation_labor_activity3->amount = '12';
-				$calculation_labor_activity3->isless = false;
+				$calculation_labor_activity3->isless = true;
+				$calculation_labor_activity3->less_amount = '2.0';
 				$calculation_labor_activity3->activity_id = $activity3->id;
 				$calculation_labor_activity3->save();
 
@@ -348,7 +391,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity3_1->unit = '21';
 					$calculation_material_activity3_1->rate = '5';
 					$calculation_material_activity3_1->amount = '1';
-					$calculation_material_activity3_1->isless = false;
+					$calculation_material_activity3_1->isless = true;
+					$calculation_material_activity3_1->less_rate = '5';
+					$calculation_material_activity3_1->less_amount = '0.1';
 					$calculation_material_activity3_1->activity_id = $activity3->id;
 					$calculation_material_activity3_1->save();
 
@@ -357,7 +402,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity3_2->unit = '22';
 					$calculation_material_activity3_2->rate = '5';
 					$calculation_material_activity3_2->amount = '2';
-					$calculation_material_activity3_2->isless = false;
+					$calculation_material_activity3_2->isless = true;
+					$calculation_material_activity3_2->less_rate = '5';
+					$calculation_material_activity3_2->less_amount = '0.2';
 					$calculation_material_activity3_2->activity_id = $activity3->id;
 					$calculation_material_activity3_2->save();
 
@@ -366,7 +413,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity3_3->unit = '23';
 					$calculation_material_activity3_3->rate = '5';
 					$calculation_material_activity3_3->amount = '3';
-					$calculation_material_activity3_3->isless = false;
+					$calculation_material_activity3_3->isless = true;
+					$calculation_material_activity3_3->less_rate = '5';
+					$calculation_material_activity3_3->less_amount = '0.3';
 					$calculation_material_activity3_3->activity_id = $activity3->id;
 					$calculation_material_activity3_3->save();
 
@@ -375,7 +424,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity3_4->unit = '24';
 					$calculation_material_activity3_4->rate = '5';
 					$calculation_material_activity3_4->amount = '4';
-					$calculation_material_activity3_4->isless = false;
+					$calculation_material_activity3_4->isless = true;
+					$calculation_material_activity3_4->less_rate = '5';
+					$calculation_material_activity3_4->less_amount = '0.4';
 					$calculation_material_activity3_4->activity_id = $activity3->id;
 					$calculation_material_activity3_4->save();
 
@@ -384,7 +435,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity3_5->unit = '25';
 					$calculation_material_activity3_5->rate = '5';
 					$calculation_material_activity3_5->amount = '5';
-					$calculation_material_activity3_5->isless = false;
+					$calculation_material_activity3_5->isless = true;
+					$calculation_material_activity3_5->less_rate = '5';
+					$calculation_material_activity3_5->less_amount = '0.5';
 					$calculation_material_activity3_5->activity_id = $activity3->id;
 					$calculation_material_activity3_5->save();
 				
@@ -393,7 +446,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity3_1->unit = '26';
 						$calculation_equipment_activity3_1->rate = '6';
 						$calculation_equipment_activity3_1->amount = '1';
-						$calculation_equipment_activity3_1->isless = false;
+						$calculation_equipment_activity3_1->isless = true;
+						$calculation_equipment_activity3_1->less_rate = '6';
+						$calculation_equipment_activity3_1->less_amount = '0.1';
 						$calculation_equipment_activity3_1->activity_id = $activity3->id;
 						$calculation_equipment_activity3_1->save();
 						
@@ -402,7 +457,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity3_2->unit = '27';
 						$calculation_equipment_activity3_2->rate = '6';
 						$calculation_equipment_activity3_2->amount = '2';
-						$calculation_equipment_activity3_2->isless = false;
+						$calculation_equipment_activity3_2->isless = true;
+						$calculation_equipment_activity3_2->less_rate = '6';
+						$calculation_equipment_activity3_2->less_amount = '0.2';
 						$calculation_equipment_activity3_2->activity_id = $activity3->id;
 						$calculation_equipment_activity3_2->save();
 
@@ -411,7 +468,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity3_3->unit = '28';
 						$calculation_equipment_activity3_3->rate = '6';
 						$calculation_equipment_activity3_3->amount = '3';
-						$calculation_equipment_activity3_3->isless = false;
+						$calculation_equipment_activity3_3->isless = true;
+						$calculation_equipment_activity3_3->less_rate = '6';
+						$calculation_equipment_activity3_3->less_amount = '0.3';
 						$calculation_equipment_activity3_3->activity_id = $activity3->id;
 						$calculation_equipment_activity3_3->save();
 						
@@ -420,7 +479,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity3_4->unit = '29';
 						$calculation_equipment_activity3_4->rate = '6';
 						$calculation_equipment_activity3_4->amount = '4';
-						$calculation_equipment_activity3_4->isless = false;
+						$calculation_equipment_activity3_4->isless = true;
+						$calculation_equipment_activity3_4->less_rate = '6';
+						$calculation_equipment_activity3_4->less_amount = '0.4';
 						$calculation_equipment_activity3_4->activity_id = $activity3->id;
 						$calculation_equipment_activity3_4->save();
 
@@ -429,7 +490,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity3_5->unit = '30';
 						$calculation_equipment_activity3_5->rate = '6';
 						$calculation_equipment_activity3_5->amount = '5';
-						$calculation_equipment_activity3_5->isless = false;
+						$calculation_equipment_activity3_5->isless = true;
+						$calculation_equipment_activity3_5->less_rate = '6';
+						$calculation_equipment_activity3_5->less_amount = '0.5';
 						$calculation_equipment_activity3_5->activity_id = $activity3->id;
 						$calculation_equipment_activity3_5->save();
 
@@ -448,7 +511,8 @@ class ValidationProjectTemplate {
 				$calculation_labor_activity4 = new CalculationLabor;
 				$calculation_labor_activity4->rate = '10.00';
 				$calculation_labor_activity4->amount = '13';
-				$calculation_labor_activity4->isless = false;
+				$calculation_labor_activity4->isless = true;
+				$calculation_labor_activity4->less_amount = '3.0';
 				$calculation_labor_activity4->activity_id = $activity4->id;
 				$calculation_labor_activity4->save();
 
@@ -457,7 +521,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity4_1->unit = '31';
 					$calculation_material_activity4_1->rate = '7';
 					$calculation_material_activity4_1->amount = '1';
-					$calculation_material_activity4_1->isless = false;
+					$calculation_material_activity4_1->isless = true;
+					$calculation_material_activity4_1->less_rate = '7';
+					$calculation_material_activity4_1->less_amount = '0.1';
 					$calculation_material_activity4_1->activity_id = $activity4->id;
 					$calculation_material_activity4_1->save();
 
@@ -466,7 +532,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity4_2->unit = '32';
 					$calculation_material_activity4_2->rate = '7';
 					$calculation_material_activity4_2->amount = '2';
-					$calculation_material_activity4_2->isless = false;
+					$calculation_material_activity4_2->isless = true;
+					$calculation_material_activity4_2->less_rate = '7';
+					$calculation_material_activity4_2->less_amount = '0.2';
 					$calculation_material_activity4_2->activity_id = $activity4->id;
 					$calculation_material_activity4_2->save();
 
@@ -475,7 +543,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity4_3->unit = '33';
 					$calculation_material_activity4_3->rate = '7';
 					$calculation_material_activity4_3->amount = '3';
-					$calculation_material_activity4_3->isless = false;
+					$calculation_material_activity4_3->isless = true;
+					$calculation_material_activity4_3->less_rate = '7';
+					$calculation_material_activity4_3->less_amount = '0.3';
 					$calculation_material_activity4_3->activity_id = $activity4->id;
 					$calculation_material_activity4_3->save();
 
@@ -484,7 +554,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity4_4->unit = '34';
 					$calculation_material_activity4_4->rate = '7';
 					$calculation_material_activity4_4->amount = '4';
-					$calculation_material_activity4_4->isless = false;
+					$calculation_material_activity4_4->isless = true;
+					$calculation_material_activity4_4->less_rate = '7';
+					$calculation_material_activity4_4->less_amount = '0.4';
 					$calculation_material_activity4_4->activity_id = $activity4->id;
 					$calculation_material_activity4_4->save();
 
@@ -493,7 +565,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity4_5->unit = '35';
 					$calculation_material_activity4_5->rate = '7';
 					$calculation_material_activity4_5->amount = '5';
-					$calculation_material_activity4_5->isless = false;
+					$calculation_material_activity4_5->isless = true;
+					$calculation_material_activity4_5->less_rate = '7';
+					$calculation_material_activity4_5->less_amount = '0.5';
 					$calculation_material_activity4_5->activity_id = $activity4->id;
 					$calculation_material_activity4_5->save();
 				
@@ -502,7 +576,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity4_1->unit = '36';
 						$calculation_equipment_activity4_1->rate = '8';
 						$calculation_equipment_activity4_1->amount = '1';
-						$calculation_equipment_activity4_1->isless = false;
+						$calculation_equipment_activity4_1->isless = true;
+						$calculation_equipment_activity4_1->less_rate = '8';
+						$calculation_equipment_activity4_1->less_amount = '0.1';
 						$calculation_equipment_activity4_1->activity_id = $activity4->id;
 						$calculation_equipment_activity4_1->save();
 						
@@ -511,7 +587,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity4_2->unit = '37';
 						$calculation_equipment_activity4_2->rate = '8';
 						$calculation_equipment_activity4_2->amount = '2';
-						$calculation_equipment_activity4_2->isless = false;
+						$calculation_equipment_activity4_2->isless = true;
+						$calculation_equipment_activity4_2->less_rate = '8';
+						$calculation_equipment_activity4_2->less_amount = '0.2';
 						$calculation_equipment_activity4_2->activity_id = $activity4->id;
 						$calculation_equipment_activity4_2->save();
 
@@ -520,7 +598,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity4_3->unit = '38';
 						$calculation_equipment_activity4_3->rate = '8';
 						$calculation_equipment_activity4_3->amount = '3';
-						$calculation_equipment_activity4_3->isless = false;
+						$calculation_equipment_activity4_3->isless = true;
+						$calculation_equipment_activity4_3->less_rate = '8';
+						$calculation_equipment_activity4_3->less_amount = '0.3';
 						$calculation_equipment_activity4_3->activity_id = $activity4->id;
 						$calculation_equipment_activity4_3->save();
 						
@@ -529,7 +609,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity4_4->unit = '39';
 						$calculation_equipment_activity4_4->rate = '8';
 						$calculation_equipment_activity4_4->amount = '4';
-						$calculation_equipment_activity4_4->isless = false;
+						$calculation_equipment_activity4_4->isless = true;
+						$calculation_equipment_activity4_4->less_rate = '8';
+						$calculation_equipment_activity4_4->less_amount = '0.4';
 						$calculation_equipment_activity4_4->activity_id = $activity4->id;
 						$calculation_equipment_activity4_4->save();
 
@@ -538,7 +620,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity4_5->unit = '40';
 						$calculation_equipment_activity4_5->rate = '8';
 						$calculation_equipment_activity4_5->amount = '5';
-						$calculation_equipment_activity4_5->isless = false;
+						$calculation_equipment_activity4_5->isless = true;
+						$calculation_equipment_activity4_5->less_rate = '8';
+						$calculation_equipment_activity4_5->less_amount = '0.5';
 						$calculation_equipment_activity4_5->activity_id = $activity4->id;
 						$calculation_equipment_activity4_5->save();
 
@@ -563,7 +647,8 @@ class ValidationProjectTemplate {
 				$calculation_labor_activity5 = new CalculationLabor;
 				$calculation_labor_activity5->rate = '11.00';
 				$calculation_labor_activity5->amount = '14';
-				$calculation_labor_activity5->isless = false;
+				$calculation_labor_activity5->isless = true;
+				$calculation_labor_activity5->less_amount = '4.0';
 				$calculation_labor_activity5->activity_id = $activity5->id;
 				$calculation_labor_activity5->save();
 
@@ -572,7 +657,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity5_1->unit = '41';
 					$calculation_material_activity5_1->rate = '9';
 					$calculation_material_activity5_1->amount = '1';
-					$calculation_material_activity5_1->isless = false;
+					$calculation_material_activity5_1->isless = true;
+					$calculation_material_activity5_1->less_rate = '9';
+					$calculation_material_activity5_1->less_amount = '0.1';
 					$calculation_material_activity5_1->activity_id = $activity5->id;
 					$calculation_material_activity5_1->save();
 
@@ -581,7 +668,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity5_2->unit = '42';
 					$calculation_material_activity5_2->rate = '9';
 					$calculation_material_activity5_2->amount = '2';
-					$calculation_material_activity5_2->isless = false;
+					$calculation_material_activity5_2->isless = true;
+					$calculation_material_activity5_2->less_rate = '9';
+					$calculation_material_activity5_2->less_amount = '0.2';
 					$calculation_material_activity5_2->activity_id = $activity5->id;
 					$calculation_material_activity5_2->save();
 
@@ -590,7 +679,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity5_3->unit = '43';
 					$calculation_material_activity5_3->rate = '9';
 					$calculation_material_activity5_3->amount = '3';
-					$calculation_material_activity5_3->isless = false;
+					$calculation_material_activity5_3->isless = true;
+					$calculation_material_activity5_3->less_rate = '9';
+					$calculation_material_activity5_3->less_amount = '0.3';
 					$calculation_material_activity5_3->activity_id = $activity5->id;
 					$calculation_material_activity5_3->save();
 
@@ -599,7 +690,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity5_4->unit = '44';
 					$calculation_material_activity5_4->rate = '9';
 					$calculation_material_activity5_4->amount = '4';
-					$calculation_material_activity5_4->isless = false;
+					$calculation_material_activity5_4->isless = true;
+					$calculation_material_activity5_4->less_rate = '9';
+					$calculation_material_activity5_4->less_amount = '0.4';
 					$calculation_material_activity5_4->activity_id = $activity5->id;
 					$calculation_material_activity5_4->save();
 
@@ -608,7 +701,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity5_5->unit = '45';
 					$calculation_material_activity5_5->rate = '9';
 					$calculation_material_activity5_5->amount = '5';
-					$calculation_material_activity5_5->isless = false;
+					$calculation_material_activity5_5->isless = true;
+					$calculation_material_activity5_5->less_rate = '9';
+					$calculation_material_activity5_5->less_amount = '0.5';
 					$calculation_material_activity5_5->activity_id = $activity5->id;
 					$calculation_material_activity5_5->save();
 				
@@ -617,7 +712,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity5_1->unit = '46';
 						$calculation_equipment_activity5_1->rate = '10';
 						$calculation_equipment_activity5_1->amount = '1';
-						$calculation_equipment_activity5_1->isless = false;
+						$calculation_equipment_activity5_1->isless = true;
+						$calculation_equipment_activity5_1->less_rate = '10';
+						$calculation_equipment_activity5_1->less_amount = '0.1';
 						$calculation_equipment_activity5_1->activity_id = $activity5->id;
 						$calculation_equipment_activity5_1->save();
 						
@@ -626,7 +723,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity5_2->unit = '47';
 						$calculation_equipment_activity5_2->rate = '10';
 						$calculation_equipment_activity5_2->amount = '2';
-						$calculation_equipment_activity5_2->isless = false;
+						$calculation_equipment_activity5_2->isless = true;
+						$calculation_equipment_activity5_2->less_rate = '10';
+						$calculation_equipment_activity5_2->less_amount = '0.2';
 						$calculation_equipment_activity5_2->activity_id = $activity5->id;
 						$calculation_equipment_activity5_2->save();
 
@@ -635,7 +734,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity5_3->unit = '48';
 						$calculation_equipment_activity5_3->rate = '10';
 						$calculation_equipment_activity5_3->amount = '3';
-						$calculation_equipment_activity5_3->isless = false;
+						$calculation_equipment_activity5_3->isless = true;
+						$calculation_equipment_activity5_3->less_rate = '10';
+						$calculation_equipment_activity5_3->less_amount = '0.3';
 						$calculation_equipment_activity5_3->activity_id = $activity5->id;
 						$calculation_equipment_activity5_3->save();
 						
@@ -644,7 +745,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity5_4->unit = '49';
 						$calculation_equipment_activity5_4->rate = '10';
 						$calculation_equipment_activity5_4->amount = '4';
-						$calculation_equipment_activity5_4->isless = false;
+						$calculation_equipment_activity5_4->isless = true;
+						$calculation_equipment_activity5_4->less_rate = '10';
+						$calculation_equipment_activity5_4->less_amount = '0.4';
 						$calculation_equipment_activity5_4->activity_id = $activity5->id;
 						$calculation_equipment_activity5_4->save();
 
@@ -653,7 +756,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity5_5->unit = '50';
 						$calculation_equipment_activity5_5->rate = '10';
 						$calculation_equipment_activity5_5->amount = '5';
-						$calculation_equipment_activity5_5->isless = false;
+						$calculation_equipment_activity5_5->isless = true;
+						$calculation_equipment_activity5_5->less_rate = '10';
+						$calculation_equipment_activity5_5->less_amount = '0.5';
 						$calculation_equipment_activity5_5->activity_id = $activity5->id;
 						$calculation_equipment_activity5_5->save();
 
@@ -672,7 +777,8 @@ class ValidationProjectTemplate {
 				$calculation_labor_activity6 = new CalculationLabor;
 				$calculation_labor_activity6->rate = '11.00';
 				$calculation_labor_activity6->amount = '15';
-				$calculation_labor_activity6->isless = false;
+				$calculation_labor_activity6->isless = true;
+				$calculation_labor_activity6->less_amount = '5.0';
 				$calculation_labor_activity6->activity_id = $activity6->id;
 				$calculation_labor_activity6->save();
 
@@ -681,7 +787,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity6_1->unit = '51';
 					$calculation_material_activity6_1->rate = '11';
 					$calculation_material_activity6_1->amount = '1';
-					$calculation_material_activity6_1->isless = false;
+					$calculation_material_activity6_1->isless = true;
+					$calculation_material_activity6_1->less_rate = '11';
+					$calculation_material_activity6_1->less_amount= '0.1';
 					$calculation_material_activity6_1->activity_id = $activity6->id;
 					$calculation_material_activity6_1->save();
 
@@ -690,7 +798,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity6_2->unit = '52';
 					$calculation_material_activity6_2->rate = '11';
 					$calculation_material_activity6_2->amount = '2';
-					$calculation_material_activity6_2->isless = false;
+					$calculation_material_activity6_2->isless = true;
+					$calculation_material_activity6_2->less_rate = '11';
+					$calculation_material_activity6_2->less_amount= '0.2';
 					$calculation_material_activity6_2->activity_id = $activity6->id;
 					$calculation_material_activity6_2->save();
 
@@ -699,7 +809,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity6_3->unit = '53';
 					$calculation_material_activity6_3->rate = '11';
 					$calculation_material_activity6_3->amount = '3';
-					$calculation_material_activity6_3->isless = false;
+					$calculation_material_activity6_3->isless = true;
+					$calculation_material_activity6_3->less_rate = '11';
+					$calculation_material_activity6_3->less_amount= '0.3';
 					$calculation_material_activity6_3->activity_id = $activity6->id;
 					$calculation_material_activity6_3->save();
 
@@ -708,7 +820,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity6_4->unit = '54';
 					$calculation_material_activity6_4->rate = '11';
 					$calculation_material_activity6_4->amount = '4';
-					$calculation_material_activity6_4->isless = false;
+					$calculation_material_activity6_4->isless = true;
+					$calculation_material_activity6_4->less_rate = '11';
+					$calculation_material_activity6_4->less_amount= '0.4';
 					$calculation_material_activity6_4->activity_id = $activity6->id;
 					$calculation_material_activity6_4->save();
 
@@ -717,7 +831,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity6_5->unit = '55';
 					$calculation_material_activity6_5->rate = '11';
 					$calculation_material_activity6_5->amount = '5';
-					$calculation_material_activity6_5->isless = false;
+					$calculation_material_activity6_5->isless = true;
+					$calculation_material_activity6_5->less_rate = '11';
+					$calculation_material_activity6_5->less_amount= '0.5';
 					$calculation_material_activity6_5->activity_id = $activity6->id;
 					$calculation_material_activity6_5->save();
 				
@@ -726,7 +842,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity6_1->unit = '56';
 						$calculation_equipment_activity6_1->rate = '12';
 						$calculation_equipment_activity6_1->amount = '1';
-						$calculation_equipment_activity6_1->isless = false;
+						$calculation_equipment_activity6_1->isless = true;
+						$calculation_equipment_activity6_1->less_rate = '12';
+						$calculation_equipment_activity6_1->less_amount= '0.1';
 						$calculation_equipment_activity6_1->activity_id = $activity6->id;
 						$calculation_equipment_activity6_1->save();
 						
@@ -735,7 +853,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity6_2->unit = '57';
 						$calculation_equipment_activity6_2->rate = '12';
 						$calculation_equipment_activity6_2->amount = '2';
-						$calculation_equipment_activity6_2->isless = false;
+						$calculation_equipment_activity6_2->isless = true;
+						$calculation_equipment_activity6_2->less_rate = '12';
+						$calculation_equipment_activity6_2->less_amount= '0.2';
 						$calculation_equipment_activity6_2->activity_id = $activity6->id;
 						$calculation_equipment_activity6_2->save();
 
@@ -744,7 +864,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity6_3->unit = '58';
 						$calculation_equipment_activity6_3->rate = '12';
 						$calculation_equipment_activity6_3->amount = '3';
-						$calculation_equipment_activity6_3->isless = false;
+						$calculation_equipment_activity6_3->isless = true;
+						$calculation_equipment_activity6_3->less_rate = '12';
+						$calculation_equipment_activity6_3->less_amount= '0.3';
 						$calculation_equipment_activity6_3->activity_id = $activity6->id;
 						$calculation_equipment_activity6_3->save();
 						
@@ -753,7 +875,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity6_4->unit = '59';
 						$calculation_equipment_activity6_4->rate = '12';
 						$calculation_equipment_activity6_4->amount = '4';
-						$calculation_equipment_activity6_4->isless = false;
+						$calculation_equipment_activity6_4->isless = true;
+						$calculation_equipment_activity6_4->less_rate = '12';
+						$calculation_equipment_activity6_4->less_amount= '0.4';
 						$calculation_equipment_activity6_4->activity_id = $activity6->id;
 						$calculation_equipment_activity6_4->save();
 
@@ -762,7 +886,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity6_5->unit = '60';
 						$calculation_equipment_activity6_5->rate = '12';
 						$calculation_equipment_activity6_5->amount = '5';
-						$calculation_equipment_activity6_5->isless = false;
+						$calculation_equipment_activity6_5->isless = true;
+						$calculation_equipment_activity6_5->less_rate = '12';
+						$calculation_equipment_activity6_5->less_amount= '0.5';
 						$calculation_equipment_activity6_5->activity_id = $activity6->id;
 						$calculation_equipment_activity6_5->save();
 
@@ -781,7 +907,8 @@ class ValidationProjectTemplate {
 				$calculation_labor_activity7 = new CalculationLabor;
 				$calculation_labor_activity7->rate = '11.00';
 				$calculation_labor_activity7->amount = '16';
-				$calculation_labor_activity7->isless = false;
+				$calculation_labor_activity7->isless = true;
+				$calculation_labor_activity7->less_amount = '6.0';
 				$calculation_labor_activity7->activity_id = $activity7->id;
 				$calculation_labor_activity7->save();
 
@@ -790,7 +917,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity7_1->unit = '61';
 					$calculation_material_activity7_1->rate = '13';
 					$calculation_material_activity7_1->amount = '1';
-					$calculation_material_activity7_1->isless = false;
+					$calculation_material_activity7_1->isless = true;
+					$calculation_material_activity7_1->less_rate = '13';
+					$calculation_material_activity7_1->less_amount= '0.1';
 					$calculation_material_activity7_1->activity_id = $activity7->id;
 					$calculation_material_activity7_1->save();
 
@@ -799,7 +928,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity7_2->unit = '62';
 					$calculation_material_activity7_2->rate = '13';
 					$calculation_material_activity7_2->amount = '2';
-					$calculation_material_activity7_2->isless = false;
+					$calculation_material_activity7_2->isless = true;
+					$calculation_material_activity7_2->less_rate = '13';
+					$calculation_material_activity7_2->less_amount= '0.2';
 					$calculation_material_activity7_2->activity_id = $activity7->id;
 					$calculation_material_activity7_2->save();
 
@@ -808,7 +939,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity7_3->unit = '63';
 					$calculation_material_activity7_3->rate = '13';
 					$calculation_material_activity7_3->amount = '3';
-					$calculation_material_activity7_3->isless = false;
+					$calculation_material_activity7_3->isless = true;
+					$calculation_material_activity7_3->less_rate = '13';
+					$calculation_material_activity7_3->less_amount= '0.3';
 					$calculation_material_activity7_3->activity_id = $activity7->id;
 					$calculation_material_activity7_3->save();
 
@@ -817,7 +950,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity7_4->unit = '64';
 					$calculation_material_activity7_4->rate = '13';
 					$calculation_material_activity7_4->amount = '4';
-					$calculation_material_activity7_4->isless = false;
+					$calculation_material_activity7_4->isless = true;
+					$calculation_material_activity7_4->less_rate = '13';
+					$calculation_material_activity7_4->less_amount= '0.4';
 					$calculation_material_activity7_4->activity_id = $activity7->id;
 					$calculation_material_activity7_4->save();
 
@@ -826,7 +961,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity7_5->unit = '65';
 					$calculation_material_activity7_5->rate = '13';
 					$calculation_material_activity7_5->amount = '5';
-					$calculation_material_activity7_5->isless = false;
+					$calculation_material_activity7_5->isless = true;
+					$calculation_material_activity7_5->less_rate = '13';
+					$calculation_material_activity7_5->less_amount= '0.5';
 					$calculation_material_activity7_5->activity_id = $activity7->id;
 					$calculation_material_activity7_5->save();
 				
@@ -835,7 +972,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity7_1->unit = '66';
 						$calculation_equipment_activity7_1->rate = '14';
 						$calculation_equipment_activity7_1->amount = '1';
-						$calculation_equipment_activity7_1->isless = false;
+						$calculation_equipment_activity7_1->isless = true;
+						$calculation_equipment_activity7_1->less_rate = '14';
+						$calculation_equipment_activity7_1->less_amount = '0.1';
 						$calculation_equipment_activity7_1->activity_id = $activity7->id;
 						$calculation_equipment_activity7_1->save();
 						
@@ -844,7 +983,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity7_2->unit = '67';
 						$calculation_equipment_activity7_2->rate = '14';
 						$calculation_equipment_activity7_2->amount = '2';
-						$calculation_equipment_activity7_2->isless = false;
+						$calculation_equipment_activity7_2->isless = true;
+						$calculation_equipment_activity7_2->less_rate = '14';
+						$calculation_equipment_activity7_2->less_amount = '0.2';
 						$calculation_equipment_activity7_2->activity_id = $activity7->id;
 						$calculation_equipment_activity7_2->save();
 
@@ -853,7 +994,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity7_3->unit = '68';
 						$calculation_equipment_activity7_3->rate = '14';
 						$calculation_equipment_activity7_3->amount = '3';
-						$calculation_equipment_activity7_3->isless = false;
+						$calculation_equipment_activity7_3->isless = true;
+						$calculation_equipment_activity7_3->less_rate = '14';
+						$calculation_equipment_activity7_3->less_amount = '0.3';
 						$calculation_equipment_activity7_3->activity_id = $activity7->id;
 						$calculation_equipment_activity7_3->save();
 						
@@ -862,7 +1005,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity7_4->unit = '69';
 						$calculation_equipment_activity7_4->rate = '14';
 						$calculation_equipment_activity7_4->amount = '4';
-						$calculation_equipment_activity7_4->isless = false;
+						$calculation_equipment_activity7_4->isless = true;
+						$calculation_equipment_activity7_4->less_rate = '14';
+						$calculation_equipment_activity7_4->less_amount = '0.4';
 						$calculation_equipment_activity7_4->activity_id = $activity7->id;
 						$calculation_equipment_activity7_4->save();
 
@@ -871,7 +1016,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity7_5->unit = '70';
 						$calculation_equipment_activity7_5->rate = '14';
 						$calculation_equipment_activity7_5->amount = '5';
-						$calculation_equipment_activity7_5->isless = false;
+						$calculation_equipment_activity7_5->isless = true;
+						$calculation_equipment_activity7_5->less_rate = '14';
+						$calculation_equipment_activity7_5->less_amount = '0.5';
 						$calculation_equipment_activity7_5->activity_id = $activity7->id;
 						$calculation_equipment_activity7_5->save();
 
@@ -890,7 +1037,8 @@ class ValidationProjectTemplate {
 	  			$calculation_labor_activity8 = new CalculationLabor;
 				$calculation_labor_activity8->rate = '11.00';
 				$calculation_labor_activity8->amount = '17';
-				$calculation_labor_activity8->isless = false;
+				$calculation_labor_activity8->isless = true;
+				$calculation_labor_activity8->less_amount = '7.0';
 				$calculation_labor_activity8->activity_id = $activity8->id;
 				$calculation_labor_activity8->save();
 
@@ -899,7 +1047,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity8_1->unit = '71';
 					$calculation_material_activity8_1->rate = '15';
 					$calculation_material_activity8_1->amount = '1';
-					$calculation_material_activity8_1->isless = false;
+					$calculation_material_activity8_1->isless = true;
+					$calculation_material_activity8_1->less_rate = '15';
+					$calculation_material_activity8_1->less_amount= '0.1';
 					$calculation_material_activity8_1->activity_id = $activity8->id;
 					$calculation_material_activity8_1->save();
 
@@ -908,7 +1058,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity8_2->unit = '72';
 					$calculation_material_activity8_2->rate = '15';
 					$calculation_material_activity8_2->amount = '2';
-					$calculation_material_activity8_2->isless = false;
+					$calculation_material_activity8_2->isless = true;
+					$calculation_material_activity8_2->less_rate = '15';
+					$calculation_material_activity8_2->less_amount= '0.2';
 					$calculation_material_activity8_2->activity_id = $activity8->id;
 					$calculation_material_activity8_2->save();
 
@@ -917,7 +1069,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity8_3->unit = '73';
 					$calculation_material_activity8_3->rate = '15';
 					$calculation_material_activity8_3->amount = '3';
-					$calculation_material_activity8_3->isless = false;
+					$calculation_material_activity8_3->isless = true;
+					$calculation_material_activity8_3->less_rate = '15';
+					$calculation_material_activity8_3->less_amount= '0.3';
 					$calculation_material_activity8_3->activity_id = $activity8->id;
 					$calculation_material_activity8_3->save();
 
@@ -926,7 +1080,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity8_4->unit = '74';
 					$calculation_material_activity8_4->rate = '15';
 					$calculation_material_activity8_4->amount = '4';
-					$calculation_material_activity8_4->isless = false;
+					$calculation_material_activity8_4->isless = true;
+					$calculation_material_activity8_4->less_rate = '15';
+					$calculation_material_activity8_4->less_amount= '0.4';
 					$calculation_material_activity8_4->activity_id = $activity8->id;
 					$calculation_material_activity8_4->save();
 
@@ -935,7 +1091,9 @@ class ValidationProjectTemplate {
 					$calculation_material_activity8_5->unit = '75';
 					$calculation_material_activity8_5->rate = '15';
 					$calculation_material_activity8_5->amount = '5';
-					$calculation_material_activity8_5->isless = false;
+					$calculation_material_activity8_5->isless = true;
+					$calculation_material_activity8_5->less_rate = '15';
+					$calculation_material_activity8_5->less_amount= '0.5';
 					$calculation_material_activity8_5->activity_id = $activity8->id;
 					$calculation_material_activity8_5->save();
 				
@@ -944,7 +1102,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity8_1->unit = '76';
 						$calculation_equipment_activity8_1->rate = '16';
 						$calculation_equipment_activity8_1->amount = '1';
-						$calculation_equipment_activity8_1->isless = false;
+						$calculation_equipment_activity8_1->isless = true;
+						$calculation_equipment_activity8_1->less_rate = '16';
+						$calculation_equipment_activity8_1->less_amount= '0.1';
 						$calculation_equipment_activity8_1->activity_id = $activity8->id;
 						$calculation_equipment_activity8_1->save();
 						
@@ -953,7 +1113,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity8_2->unit = '77';
 						$calculation_equipment_activity8_2->rate = '16';
 						$calculation_equipment_activity8_2->amount = '2';
-						$calculation_equipment_activity8_2->isless = false;
+						$calculation_equipment_activity8_2->isless = true;
+						$calculation_equipment_activity8_2->less_rate = '16';
+						$calculation_equipment_activity8_2->less_amount= '0.2';
 						$calculation_equipment_activity8_2->activity_id = $activity8->id;
 						$calculation_equipment_activity8_2->save();
 
@@ -962,7 +1124,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity8_3->unit = '78';
 						$calculation_equipment_activity8_3->rate = '16';
 						$calculation_equipment_activity8_3->amount = '3';
-						$calculation_equipment_activity8_3->isless = false;
+						$calculation_equipment_activity8_3->isless = true;
+						$calculation_equipment_activity8_3->less_rate = '16';
+						$calculation_equipment_activity8_3->less_amount= '0.3';
 						$calculation_equipment_activity8_3->activity_id = $activity8->id;
 						$calculation_equipment_activity8_3->save();
 						
@@ -971,7 +1135,9 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity8_4->unit = '79';
 						$calculation_equipment_activity8_4->rate = '16';
 						$calculation_equipment_activity8_4->amount = '4';
-						$calculation_equipment_activity8_4->isless = false;
+						$calculation_equipment_activity8_4->isless = true;
+						$calculation_equipment_activity8_4->less_rate = '16';
+						$calculation_equipment_activity8_4->less_amount= '0.4';
 						$calculation_equipment_activity8_4->activity_id = $activity8->id;
 						$calculation_equipment_activity8_4->save();
 
@@ -980,9 +1146,41 @@ class ValidationProjectTemplate {
 						$calculation_equipment_activity8_5->unit = '80';
 						$calculation_equipment_activity8_5->rate = '16';
 						$calculation_equipment_activity8_5->amount = '5';
-						$calculation_equipment_activity8_5->isless = false;
+						$calculation_equipment_activity8_5->isless = true;
+						$calculation_equipment_activity8_5->less_rate = '16';
+						$calculation_equipment_activity8_5->less_amount = '0.5';
 						$calculation_equipment_activity8_5->activity_id = $activity8->id;
 						$calculation_equipment_activity8_5->save();
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		$chapter3 = new Chapter;
 		$chapter3->chapter_name = 'S-A-H3';
@@ -1016,7 +1214,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity9_1->rate = '1';
 					$Estimate_material_activity9_1->amount = '1';
 					$Estimate_material_activity9_1->original = true;
-					$Estimate_material_activity9_1->isset = false;
+					$Estimate_material_activity9_1->isset = true;
+					$Estimate_material_activity9_1->set_material_name = 'S-A-H3W9-MAT1-SET';
+					$Estimate_material_activity9_1->set_unit = '81-SET';
+					$Estimate_material_activity9_1->set_rate = '1';
+					$Estimate_material_activity9_1->set_amount = '0.11';
 					$Estimate_material_activity9_1->activity_id = $activity9->id;
 					$Estimate_material_activity9_1->save();
 
@@ -1026,7 +1228,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity9_2->rate = '1';
 					$Estimate_material_activity9_2->amount = '2';
 					$Estimate_material_activity9_2->original = true;
-					$Estimate_material_activity9_2->isset = false;
+					$Estimate_material_activity9_2->isset = true;
+					$Estimate_material_activity9_2->set_material_name = 'S-A-H3W9-MAT2-SET';
+					$Estimate_material_activity9_2->set_unit = '82-SET';
+					$Estimate_material_activity9_2->set_rate = '1';
+					$Estimate_material_activity9_2->set_amount = '0.22';
 					$Estimate_material_activity9_2->activity_id = $activity9->id;
 					$Estimate_material_activity9_2->save();
 
@@ -1036,7 +1242,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity9_3->rate = '1';
 					$Estimate_material_activity9_3->amount = '3';
 					$Estimate_material_activity9_3->original = true;
-					$Estimate_material_activity9_3->isset = false;
+					$Estimate_material_activity9_3->isset = true;
+					$Estimate_material_activity9_3->set_material_name = 'S-A-H3W9-MAT3-SET';
+					$Estimate_material_activity9_3->set_unit = '83-SET';
+					$Estimate_material_activity9_3->set_rate = '1';
+					$Estimate_material_activity9_3->set_amount = '0.33';
 					$Estimate_material_activity9_3->activity_id = $activity9->id;
 					$Estimate_material_activity9_3->save();
 
@@ -1046,7 +1256,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity9_4->rate = '1';
 					$Estimate_material_activity9_4->amount = '4';
 					$Estimate_material_activity9_4->original = true;
-					$Estimate_material_activity9_4->isset = false;
+					$Estimate_material_activity9_4->isset = true;
+					$Estimate_material_activity9_4->set_material_name = 'S-A-H3W9-MAT4-SET';
+					$Estimate_material_activity9_4->set_unit = '84-SET';
+					$Estimate_material_activity9_4->set_rate = '1';
+					$Estimate_material_activity9_4->set_amount = '0.44';
 					$Estimate_material_activity9_4->activity_id = $activity9->id;
 					$Estimate_material_activity9_4->save();
 
@@ -1056,7 +1270,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity9_5->rate = '1';
 					$Estimate_material_activity9_5->amount = '5';
 					$Estimate_material_activity9_5->original = true;
-					$Estimate_material_activity9_5->isset = false;
+					$Estimate_material_activity9_5->isset = true;
+					$Estimate_material_activity9_5->set_material_name = 'S-A-H3W9-MAT5-SET';
+					$Estimate_material_activity9_5->set_unit = '85-SET';
+					$Estimate_material_activity9_5->set_rate = '1';
+					$Estimate_material_activity9_5->set_amount = '0.55';
 					$Estimate_material_activity9_5->activity_id = $activity9->id;
 					$Estimate_material_activity9_5->save();
 				
@@ -1064,9 +1282,13 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity9_1->equipment_name = 'S-A-H3W9-EQU1';
 						$Estimate_equipment_activity9_1->unit = '86';
 						$Estimate_equipment_activity9_1->rate = '2';
-						$Estimate_equipment_activity9_1->amount = '1';
+						$Estimate_equipment_activity9_1->amount = '2';
 						$Estimate_equipment_activity9_1->original = true;
-						$Estimate_equipment_activity9_1->isset = false;
+						$Estimate_equipment_activity9_1->isset = true;
+						$Estimate_equipment_activity9_1->set_equipment_name = 'S-A-H3W9-EQU1-SET';
+						$Estimate_equipment_activity9_1->set_unit = '86-SET';
+						$Estimate_equipment_activity9_1->set_rate = '2';
+						$Estimate_equipment_activity9_1->set_amount = '0.11';
 						$Estimate_equipment_activity9_1->activity_id = $activity9->id;
 						$Estimate_equipment_activity9_1->save();
 						
@@ -1076,7 +1298,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity9_2->rate = '2';
 						$Estimate_equipment_activity9_2->amount = '2';
 						$Estimate_equipment_activity9_2->original = true;
-						$Estimate_equipment_activity9_2->isset = false;
+						$Estimate_equipment_activity9_2->isset = true;
+						$Estimate_equipment_activity9_2->set_equipment_name = 'S-A-H3W9-EQU2-SET';
+						$Estimate_equipment_activity9_2->set_unit = '87-SET';
+						$Estimate_equipment_activity9_2->set_rate = '2';
+						$Estimate_equipment_activity9_2->set_amount = '0.22';
 						$Estimate_equipment_activity9_2->activity_id = $activity9->id;
 						$Estimate_equipment_activity9_2->save();
 
@@ -1086,7 +1312,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity9_3->rate = '2';
 						$Estimate_equipment_activity9_3->amount = '3';
 						$Estimate_equipment_activity9_3->original = true;
-						$Estimate_equipment_activity9_3->isset = false;
+						$Estimate_equipment_activity9_3->isset = true;
+						$Estimate_equipment_activity9_3->set_equipment_name = 'S-A-H3W9-EQU3-SET';
+						$Estimate_equipment_activity9_3->set_unit = '88-SET';
+						$Estimate_equipment_activity9_3->set_rate = '2';
+						$Estimate_equipment_activity9_3->set_amount = '0.33';
 						$Estimate_equipment_activity9_3->activity_id = $activity9->id;
 						$Estimate_equipment_activity9_3->save();
 						
@@ -1096,7 +1326,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity9_4->rate = '2';
 						$Estimate_equipment_activity9_4->amount = '4';
 						$Estimate_equipment_activity9_4->original = true;
-						$Estimate_equipment_activity9_4->isset = false;
+						$Estimate_equipment_activity9_4->isset = true;
+						$Estimate_equipment_activity9_4->set_equipment_name = 'S-A-H3W9-EQU4-SET';
+						$Estimate_equipment_activity9_4->set_unit = '89-SET';
+						$Estimate_equipment_activity9_4->set_rate = '2';
+						$Estimate_equipment_activity9_4->set_amount = '0.44';
 						$Estimate_equipment_activity9_4->activity_id = $activity9->id;
 						$Estimate_equipment_activity9_4->save();
 
@@ -1106,7 +1340,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity9_5->rate = '2';
 						$Estimate_equipment_activity9_5->amount = '5';
 						$Estimate_equipment_activity9_5->original = true;
-						$Estimate_equipment_activity9_5->isset = false;
+						$Estimate_equipment_activity9_5->isset = true;
+						$Estimate_equipment_activity9_5->set_equipment_name = 'S-A-H3W9-EQU5-SET';
+						$Estimate_equipment_activity9_5->set_unit = '90-SET';
+						$Estimate_equipment_activity9_5->set_rate = '2';
+						$Estimate_equipment_activity9_5->set_amount = '0.55';
 						$Estimate_equipment_activity9_5->activity_id = $activity9->id;
 						$Estimate_equipment_activity9_5->save();
 
@@ -1136,7 +1374,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity10_1->rate = '3';
 					$Estimate_material_activity10_1->amount = '1';
 					$Estimate_material_activity10_1->original = true;
-					$Estimate_material_activity10_1->isset = false;
+					$Estimate_material_activity10_1->isset = true;
+					$Estimate_material_activity10_1->set_material_name = 'S-A-H3W10-MAT1-SET';
+					$Estimate_material_activity10_1->set_unit = '91-SET';
+					$Estimate_material_activity10_1->set_rate = '3';
+					$Estimate_material_activity10_1->set_amount = '0.11';
 					$Estimate_material_activity10_1->activity_id = $activity10->id;
 					$Estimate_material_activity10_1->save();
 
@@ -1146,7 +1388,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity10_2->rate = '3';
 					$Estimate_material_activity10_2->amount = '2';
 					$Estimate_material_activity10_2->original = true;
-					$Estimate_material_activity10_2->isset = false;
+					$Estimate_material_activity10_2->isset = true;
+					$Estimate_material_activity10_2->set_material_name = 'S-A-H3W10-MAT2-SET';
+					$Estimate_material_activity10_2->set_unit = '92-SET';
+					$Estimate_material_activity10_2->set_rate = '3';
+					$Estimate_material_activity10_2->set_amount = '0.22';
 					$Estimate_material_activity10_2->activity_id = $activity10->id;
 					$Estimate_material_activity10_2->save();
 
@@ -1156,7 +1402,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity10_3->rate = '3';
 					$Estimate_material_activity10_3->amount = '3';
 					$Estimate_material_activity10_3->original = true;
-					$Estimate_material_activity10_3->isset = false;
+					$Estimate_material_activity10_3->isset = true;
+					$Estimate_material_activity10_3->set_material_name = 'S-A-H3W10-MAT3-SET';
+					$Estimate_material_activity10_3->set_unit = '93-SET';
+					$Estimate_material_activity10_3->set_rate = '3';
+					$Estimate_material_activity10_3->set_amount = '0.33';
 					$Estimate_material_activity10_3->activity_id = $activity10->id;
 					$Estimate_material_activity10_3->save();
 
@@ -1166,7 +1416,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity10_4->rate = '3';
 					$Estimate_material_activity10_4->amount = '4';
 					$Estimate_material_activity10_4->original = true;
-					$Estimate_material_activity10_4->isset = false;
+					$Estimate_material_activity10_4->isset = true;
+					$Estimate_material_activity10_4->set_material_name = 'S-A-H3W10-MAT4-SET';
+					$Estimate_material_activity10_4->set_unit = '94-SET';
+					$Estimate_material_activity10_4->set_rate = '3';
+					$Estimate_material_activity10_4->set_amount = '0.44';
 					$Estimate_material_activity10_4->activity_id = $activity10->id;
 					$Estimate_material_activity10_4->save();
 
@@ -1176,7 +1430,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity10_5->rate = '3';
 					$Estimate_material_activity10_5->amount = '5';
 					$Estimate_material_activity10_5->original = true;
-					$Estimate_material_activity10_5->isset = false;
+					$Estimate_material_activity10_5->isset = true;
+					$Estimate_material_activity10_5->set_material_name = 'S-A-H3W10-MAT5-SET';
+					$Estimate_material_activity10_5->set_unit = '95-SET';
+					$Estimate_material_activity10_5->set_rate = '3';
+					$Estimate_material_activity10_5->set_amount = '0.55';
 					$Estimate_material_activity10_5->activity_id = $activity10->id;
 					$Estimate_material_activity10_5->save();
 				
@@ -1186,7 +1444,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity10_1->rate = '4';
 						$Estimate_equipment_activity10_1->amount = '1';
 						$Estimate_equipment_activity10_1->original = true;
-						$Estimate_equipment_activity10_1->isset = false;
+						$Estimate_equipment_activity10_1->isset = true;
+						$Estimate_equipment_activity10_1->set_equipment_name = 'S-A-H3W10-EQU1-SET';
+						$Estimate_equipment_activity10_1->set_unit = '96-SET';
+						$Estimate_equipment_activity10_1->set_rate = '4';
+						$Estimate_equipment_activity10_1->set_amount = '0.11';
 						$Estimate_equipment_activity10_1->activity_id = $activity10->id;
 						$Estimate_equipment_activity10_1->save();
 						
@@ -1196,7 +1458,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity10_2->rate = '4';
 						$Estimate_equipment_activity10_2->amount = '2';
 						$Estimate_equipment_activity10_2->original = true;
-						$Estimate_equipment_activity10_2->isset = false;
+						$Estimate_equipment_activity10_2->isset = true;
+						$Estimate_equipment_activity10_2->set_equipment_name = 'S-A-H3W10-EQU2-SET';
+						$Estimate_equipment_activity10_2->set_unit = '97-SET';
+						$Estimate_equipment_activity10_2->set_rate = '4';
+						$Estimate_equipment_activity10_2->set_amount = '0.22';
 						$Estimate_equipment_activity10_2->activity_id = $activity10->id;
 						$Estimate_equipment_activity10_2->save();
 
@@ -1206,7 +1472,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity10_3->rate = '4';
 						$Estimate_equipment_activity10_3->amount = '3';
 						$Estimate_equipment_activity10_3->original = true;
-						$Estimate_equipment_activity10_3->isset = false;
+						$Estimate_equipment_activity10_3->isset = true;
+						$Estimate_equipment_activity10_3->set_equipment_name = 'S-A-H3W10-EQU3-SET';
+						$Estimate_equipment_activity10_3->set_unit = '98-SET';
+						$Estimate_equipment_activity10_3->set_rate = '4';
+						$Estimate_equipment_activity10_3->set_amount = '0.33';
 						$Estimate_equipment_activity10_3->activity_id = $activity10->id;
 						$Estimate_equipment_activity10_3->save();
 						
@@ -1216,7 +1486,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity10_4->rate = '4';
 						$Estimate_equipment_activity10_4->amount = '4';
 						$Estimate_equipment_activity10_4->original = true;
-						$Estimate_equipment_activity10_4->isset = false;
+						$Estimate_equipment_activity10_4->isset = true;
+						$Estimate_equipment_activity10_4->set_equipment_name = 'S-A-H3W10-EQU4-SET';
+						$Estimate_equipment_activity10_4->set_unit = '99-SET';
+						$Estimate_equipment_activity10_4->set_rate = '4';
+						$Estimate_equipment_activity10_4->set_amount = '0.44';
 						$Estimate_equipment_activity10_4->activity_id = $activity10->id;
 						$Estimate_equipment_activity10_4->save();
 
@@ -1226,7 +1500,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity10_5->rate = '4';
 						$Estimate_equipment_activity10_5->amount = '5';
 						$Estimate_equipment_activity10_5->original = true;
-						$Estimate_equipment_activity10_5->isset = false;
+						$Estimate_equipment_activity10_5->isset = true;
+						$Estimate_equipment_activity10_5->set_equipment_name = 'S-A-H3W10-EQU5-SET';
+						$Estimate_equipment_activity10_5->set_unit = '100-SET';
+						$Estimate_equipment_activity10_5->set_rate = '4';
+						$Estimate_equipment_activity10_5->set_amount = '0.55';
 						$Estimate_equipment_activity10_5->activity_id = $activity10->id;
 						$Estimate_equipment_activity10_5->save();
 
@@ -1246,7 +1524,7 @@ class ValidationProjectTemplate {
 				$Estimate_labor_activity11->rate = '10.00';
 				$Estimate_labor_activity11->amount = '20';
 				$Estimate_labor_activity11->original = true;
-				$Estimate_labor_activity11->isset = false;
+				$Estimate_labor_activity11->isset = true;
 				$Estimate_labor_activity11->activity_id = $activity11->id;
 				$Estimate_labor_activity11->save();
 
@@ -1256,7 +1534,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity11_1->rate = '5';
 					$Estimate_material_activity11_1->amount = '1';
 					$Estimate_material_activity11_1->original = true;
-					$Estimate_material_activity11_1->isset = false;
+					$Estimate_material_activity11_1->isset = true;
+					$Estimate_material_activity11_1->set_material_name = 'S-A-H3W11-MAT1-SET';
+					$Estimate_material_activity11_1->set_unit = '101-SET';
+					$Estimate_material_activity11_1->set_rate = '5';
+					$Estimate_material_activity11_1->set_amount = '0.11';
 					$Estimate_material_activity11_1->activity_id = $activity11->id;
 					$Estimate_material_activity11_1->save();
 
@@ -1266,7 +1548,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity11_2->rate = '5';
 					$Estimate_material_activity11_2->amount = '2';
 					$Estimate_material_activity11_2->original = true;
-					$Estimate_material_activity11_2->isset = false;
+					$Estimate_material_activity11_2->isset = true;
+					$Estimate_material_activity11_2->set_material_name = 'S-A-H3W11-MAT2-SET';
+					$Estimate_material_activity11_2->set_unit = '102-SET';
+					$Estimate_material_activity11_2->set_rate = '5';
+					$Estimate_material_activity11_2->set_amount = '0.22';
 					$Estimate_material_activity11_2->activity_id = $activity11->id;
 					$Estimate_material_activity11_2->save();
 
@@ -1276,7 +1562,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity11_3->rate = '5';
 					$Estimate_material_activity11_3->amount = '3';
 					$Estimate_material_activity11_3->original = true;
-					$Estimate_material_activity11_3->isset = false;
+					$Estimate_material_activity11_3->isset = true;
+					$Estimate_material_activity11_3->set_material_name = 'S-A-H3W11-MAT3-SET';
+					$Estimate_material_activity11_3->set_unit = '103-SET';
+					$Estimate_material_activity11_3->set_rate = '5';
+					$Estimate_material_activity11_3->set_amount = '0.33';
 					$Estimate_material_activity11_3->activity_id = $activity11->id;
 					$Estimate_material_activity11_3->save();
 
@@ -1286,7 +1576,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity11_4->rate = '5';
 					$Estimate_material_activity11_4->amount = '4';
 					$Estimate_material_activity11_4->original = true;
-					$Estimate_material_activity11_4->isset = false;
+					$Estimate_material_activity11_4->isset = true;
+					$Estimate_material_activity11_4->set_material_name = 'S-A-H3W11-MAT4-SET';
+					$Estimate_material_activity11_4->set_unit = '104-SET';
+					$Estimate_material_activity11_4->set_rate = '5';
+					$Estimate_material_activity11_4->set_amount = '0.44';
 					$Estimate_material_activity11_4->activity_id = $activity11->id;
 					$Estimate_material_activity11_4->save();
 
@@ -1296,7 +1590,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity11_5->rate = '5';
 					$Estimate_material_activity11_5->amount = '5';
 					$Estimate_material_activity11_5->original = true;
-					$Estimate_material_activity11_5->isset = false;
+					$Estimate_material_activity11_5->isset = true;
+					$Estimate_material_activity11_5->set_material_name = 'S-A-H3W11-MAT5-SET';
+					$Estimate_material_activity11_5->set_unit = '105-SET';
+					$Estimate_material_activity11_5->set_rate = '5';
+					$Estimate_material_activity11_5->set_amount = '0.55';
 					$Estimate_material_activity11_5->activity_id = $activity11->id;
 					$Estimate_material_activity11_5->save();
 				
@@ -1306,7 +1604,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity11_1->rate = '6';
 						$Estimate_equipment_activity11_1->amount = '1';
 						$Estimate_equipment_activity11_1->original = true;
-						$Estimate_equipment_activity11_1->isset = false;
+						$Estimate_equipment_activity11_1->isset = true;
+						$Estimate_equipment_activity11_1->set_equipment_name = 'S-A-H3W11-EQU1-SET';
+						$Estimate_equipment_activity11_1->set_unit = '106-SET';
+						$Estimate_equipment_activity11_1->set_rate = '6';
+						$Estimate_equipment_activity11_1->set_amount = '0.11';
 						$Estimate_equipment_activity11_1->activity_id = $activity11->id;
 						$Estimate_equipment_activity11_1->save();
 						
@@ -1316,7 +1618,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity11_2->rate = '6';
 						$Estimate_equipment_activity11_2->amount = '2';
 						$Estimate_equipment_activity11_2->original = true;
-						$Estimate_equipment_activity11_2->isset = false;
+						$Estimate_equipment_activity11_2->isset = true;
+						$Estimate_equipment_activity11_2->set_equipment_name = 'S-A-H3W11-EQU2-SET';
+						$Estimate_equipment_activity11_2->set_unit = '107-SET';
+						$Estimate_equipment_activity11_2->set_rate = '6';
+						$Estimate_equipment_activity11_2->set_amount = '0.22';
 						$Estimate_equipment_activity11_2->activity_id = $activity11->id;
 						$Estimate_equipment_activity11_2->save();
 
@@ -1326,7 +1632,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity11_3->rate = '6';
 						$Estimate_equipment_activity11_3->amount = '3';
 						$Estimate_equipment_activity11_3->original = true;
-						$Estimate_equipment_activity11_3->isset = false;
+						$Estimate_equipment_activity11_3->isset = true;
+						$Estimate_equipment_activity11_3->set_equipment_name = 'S-A-H3W11-EQU3-SET';
+						$Estimate_equipment_activity11_3->set_unit = '108-SET';
+						$Estimate_equipment_activity11_3->set_rate = '6';
+						$Estimate_equipment_activity11_3->set_amount = '0.33';
 						$Estimate_equipment_activity11_3->activity_id = $activity11->id;
 						$Estimate_equipment_activity11_3->save();
 						
@@ -1336,7 +1646,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity11_4->rate = '6';
 						$Estimate_equipment_activity11_4->amount = '4';
 						$Estimate_equipment_activity11_4->original = true;
-						$Estimate_equipment_activity11_4->isset = false;
+						$Estimate_equipment_activity11_4->isset = true;
+						$Estimate_equipment_activity11_4->set_equipment_name = 'S-A-H3W11-EQU4-SET';
+						$Estimate_equipment_activity11_4->set_unit = '109-SET';
+						$Estimate_equipment_activity11_4->set_rate = '6';
+						$Estimate_equipment_activity11_4->set_amount = '0.44';
 						$Estimate_equipment_activity11_4->activity_id = $activity11->id;
 						$Estimate_equipment_activity11_4->save();
 
@@ -1346,7 +1660,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity11_5->rate = '6';
 						$Estimate_equipment_activity11_5->amount = '5';
 						$Estimate_equipment_activity11_5->original = true;
-						$Estimate_equipment_activity11_5->isset = false;
+						$Estimate_equipment_activity11_5->isset = true;
+						$Estimate_equipment_activity11_5->set_equipment_name = 'S-A-H3W11-EQU5-SET';
+						$Estimate_equipment_activity11_5->set_unit = '110-SET';
+						$Estimate_equipment_activity11_5->set_rate = '6';
+						$Estimate_equipment_activity11_5->set_amount = '0.55';
 						$Estimate_equipment_activity11_5->activity_id = $activity11->id;
 						$Estimate_equipment_activity11_5->save();
 
@@ -1366,7 +1684,7 @@ class ValidationProjectTemplate {
 				$Estimate_labor_activity12->rate = '10.00';
 				$Estimate_labor_activity12->amount = '21';
 				$Estimate_labor_activity12->original = true;
-				$Estimate_labor_activity12->isset = false;
+				$Estimate_labor_activity12->isset = true;
 				$Estimate_labor_activity12->activity_id = $activity12->id;
 				$Estimate_labor_activity12->save();
 
@@ -1376,7 +1694,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity12_1->rate = '7';
 					$Estimate_material_activity12_1->amount = '1';
 					$Estimate_material_activity12_1->original = true;
-					$Estimate_material_activity12_1->isset = false;
+					$Estimate_material_activity12_1->isset = true;
+					$Estimate_material_activity12_1->set_material_name = 'S-A-H3W12-MAT1-SET';
+					$Estimate_material_activity12_1->set_unit = '111-SET';
+					$Estimate_material_activity12_1->set_rate = '7';
+					$Estimate_material_activity12_1->set_amount = '0.11';
 					$Estimate_material_activity12_1->activity_id = $activity12->id;
 					$Estimate_material_activity12_1->save();
 
@@ -1386,7 +1708,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity12_2->rate = '7';
 					$Estimate_material_activity12_2->amount = '2';
 					$Estimate_material_activity12_2->original = true;
-					$Estimate_material_activity12_2->isset = false;
+					$Estimate_material_activity12_2->isset = true;
+					$Estimate_material_activity12_2->set_material_name = 'S-A-H3W12-MAT2-SET';
+					$Estimate_material_activity12_2->set_unit = '112-SET';
+					$Estimate_material_activity12_2->set_rate = '7';
+					$Estimate_material_activity12_2->set_amount = '0.22';
 					$Estimate_material_activity12_2->activity_id = $activity12->id;
 					$Estimate_material_activity12_2->save();
 
@@ -1396,7 +1722,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity12_3->rate = '7';
 					$Estimate_material_activity12_3->amount = '3';
 					$Estimate_material_activity12_3->original = true;
-					$Estimate_material_activity12_3->isset = false;
+					$Estimate_material_activity12_3->isset = true;
+					$Estimate_material_activity12_3->set_material_name = 'S-A-H3W12-MAT3-SET';
+					$Estimate_material_activity12_3->set_unit = '113-SET';
+					$Estimate_material_activity12_3->set_rate = '7';
+					$Estimate_material_activity12_3->set_amount = '0.33';
 					$Estimate_material_activity12_3->activity_id = $activity12->id;
 					$Estimate_material_activity12_3->save();
 
@@ -1406,7 +1736,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity12_4->rate = '7';
 					$Estimate_material_activity12_4->amount = '4';
 					$Estimate_material_activity12_4->original = true;
-					$Estimate_material_activity12_4->isset = false;
+					$Estimate_material_activity12_4->isset = true;
+					$Estimate_material_activity12_4->set_material_name = 'S-A-H3W12-MAT4-SET';
+					$Estimate_material_activity12_4->set_unit = '114-SET';
+					$Estimate_material_activity12_4->set_rate = '7';
+					$Estimate_material_activity12_4->set_amount = '0.44';
 					$Estimate_material_activity12_4->activity_id = $activity12->id;
 					$Estimate_material_activity12_4->save();
 
@@ -1416,7 +1750,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity12_5->rate = '7';
 					$Estimate_material_activity12_5->amount = '5';
 					$Estimate_material_activity12_5->original = true;
-					$Estimate_material_activity12_5->isset = false;
+					$Estimate_material_activity12_5->isset = true;
+					$Estimate_material_activity12_5->set_material_name = 'S-A-H3W12-MAT5-SET';
+					$Estimate_material_activity12_5->set_unit = '115-SET';
+					$Estimate_material_activity12_5->set_rate = '7';
+					$Estimate_material_activity12_5->set_amount = '0.55';
 					$Estimate_material_activity12_5->activity_id = $activity12->id;
 					$Estimate_material_activity12_5->save();
 				
@@ -1426,7 +1764,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity12_1->rate = '8';
 						$Estimate_equipment_activity12_1->amount = '1';
 						$Estimate_equipment_activity12_1->original = true;
-						$Estimate_equipment_activity12_1->isset = false;
+						$Estimate_equipment_activity12_1->isset = true;
+						$Estimate_equipment_activity12_1->set_equipment_name = 'S-A-H3W12-EQU1-SET';
+						$Estimate_equipment_activity12_1->set_unit = '116-SET';
+						$Estimate_equipment_activity12_1->set_rate = '8';
+						$Estimate_equipment_activity12_1->set_amount = '0.11';
 						$Estimate_equipment_activity12_1->activity_id = $activity12->id;
 						$Estimate_equipment_activity12_1->save();
 						
@@ -1436,7 +1778,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity12_2->rate = '8';
 						$Estimate_equipment_activity12_2->amount = '2';
 						$Estimate_equipment_activity12_2->original = true;
-						$Estimate_equipment_activity12_2->isset = false;
+						$Estimate_equipment_activity12_2->isset = true;
+						$Estimate_equipment_activity12_2->set_equipment_name = 'S-A-H3W12-EQU2-SET';
+						$Estimate_equipment_activity12_2->set_unit = '117-SET';
+						$Estimate_equipment_activity12_2->set_rate = '8';
+						$Estimate_equipment_activity12_2->set_amount = '0.22';
 						$Estimate_equipment_activity12_2->activity_id = $activity12->id;
 						$Estimate_equipment_activity12_2->save();
 
@@ -1446,7 +1792,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity12_3->rate = '8';
 						$Estimate_equipment_activity12_3->amount = '3';
 						$Estimate_equipment_activity12_3->original = true;
-						$Estimate_equipment_activity12_3->isset = false;
+						$Estimate_equipment_activity12_3->isset = true;
+						$Estimate_equipment_activity12_3->set_equipment_name = 'S-A-H3W12-EQU3-SET';
+						$Estimate_equipment_activity12_3->set_unit = '118-SET';
+						$Estimate_equipment_activity12_3->set_rate = '8';
+						$Estimate_equipment_activity12_3->set_amount = '0.33';
 						$Estimate_equipment_activity12_3->activity_id = $activity12->id;
 						$Estimate_equipment_activity12_3->save();
 						
@@ -1456,7 +1806,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity12_4->rate = '8';
 						$Estimate_equipment_activity12_4->amount = '4';
 						$Estimate_equipment_activity12_4->original = true;
-						$Estimate_equipment_activity12_4->isset = false;
+						$Estimate_equipment_activity12_4->isset = true;
+						$Estimate_equipment_activity12_4->set_equipment_name = 'S-A-H3W12-EQU4-SET';
+						$Estimate_equipment_activity12_4->set_unit = '119-SET';
+						$Estimate_equipment_activity12_4->set_rate = '8';
+						$Estimate_equipment_activity12_4->set_amount = '0.44';
 						$Estimate_equipment_activity12_4->activity_id = $activity12->id;
 						$Estimate_equipment_activity12_4->save();
 
@@ -1466,7 +1820,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity12_5->rate = '8';
 						$Estimate_equipment_activity12_5->amount = '5';
 						$Estimate_equipment_activity12_5->original = true;
-						$Estimate_equipment_activity12_5->isset = false;
+						$Estimate_equipment_activity12_5->isset = true;
+						$Estimate_equipment_activity12_5->set_equipment_name = 'S-A-H3W12-EQU5-SET';
+						$Estimate_equipment_activity12_5->set_unit = '120-SET';
+						$Estimate_equipment_activity12_5->set_rate = '8';
+						$Estimate_equipment_activity12_5->set_amount = '0.55';
 						$Estimate_equipment_activity12_5->activity_id = $activity12->id;
 						$Estimate_equipment_activity12_5->save();
 
@@ -1502,7 +1860,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity13_1->rate = '9';
 					$Estimate_material_activity13_1->amount = '1';
 					$Estimate_material_activity13_1->original = true;
-					$Estimate_material_activity13_1->isset = false;
+					$Estimate_material_activity13_1->isset = true;
+					$Estimate_material_activity13_1->set_material_name = 'S-O-H4W13-MAT1-SET';
+					$Estimate_material_activity13_1->set_unit = '121-SET';
+					$Estimate_material_activity13_1->set_rate = '9';
+					$Estimate_material_activity13_1->set_amount = '0.11';
 					$Estimate_material_activity13_1->activity_id = $activity13->id;
 					$Estimate_material_activity13_1->save();
 
@@ -1512,7 +1874,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity13_2->rate = '9';
 					$Estimate_material_activity13_2->amount = '2';
 					$Estimate_material_activity13_2->original = true;
-					$Estimate_material_activity13_2->isset = false;
+					$Estimate_material_activity13_2->isset = true;
+					$Estimate_material_activity13_2->set_material_name = 'S-O-H4W13-MAT2-SET';
+					$Estimate_material_activity13_2->set_unit = '122-SET';
+					$Estimate_material_activity13_2->set_rate = '9';
+					$Estimate_material_activity13_2->set_amount = '0.22';
 					$Estimate_material_activity13_2->activity_id = $activity13->id;
 					$Estimate_material_activity13_2->save();
 
@@ -1522,7 +1888,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity13_3->rate = '9';
 					$Estimate_material_activity13_3->amount = '3';
 					$Estimate_material_activity13_3->original = true;
-					$Estimate_material_activity13_3->isset = false;
+					$Estimate_material_activity13_3->isset = true;
+					$Estimate_material_activity13_3->set_material_name = 'S-O-H4W13-MAT3-SET';
+					$Estimate_material_activity13_3->set_unit = '123-SET';
+					$Estimate_material_activity13_3->set_rate = '9';
+					$Estimate_material_activity13_3->set_amount = '0.33';
 					$Estimate_material_activity13_3->activity_id = $activity13->id;
 					$Estimate_material_activity13_3->save();
 
@@ -1532,7 +1902,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity13_4->rate = '9';
 					$Estimate_material_activity13_4->amount = '4';
 					$Estimate_material_activity13_4->original = true;
-					$Estimate_material_activity13_4->isset = false;
+					$Estimate_material_activity13_4->isset = true;
+					$Estimate_material_activity13_4->set_material_name = 'S-O-H4W13-MAT4-SET';
+					$Estimate_material_activity13_4->set_unit = '124-SET';
+					$Estimate_material_activity13_4->set_rate = '9';
+					$Estimate_material_activity13_4->set_amount = '0.44';
 					$Estimate_material_activity13_4->activity_id = $activity13->id;
 					$Estimate_material_activity13_4->save();
 
@@ -1542,7 +1916,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity13_5->rate = '9';
 					$Estimate_material_activity13_5->amount = '5';
 					$Estimate_material_activity13_5->original = true;
-					$Estimate_material_activity13_5->isset = false;
+					$Estimate_material_activity13_5->isset = true;
+					$Estimate_material_activity13_5->set_material_name = 'S-O-H4W13-MAT5-SET';
+					$Estimate_material_activity13_5->set_unit = '125-SET';
+					$Estimate_material_activity13_5->set_rate = '9';
+					$Estimate_material_activity13_5->set_amount = '0.55';
 					$Estimate_material_activity13_5->activity_id = $activity13->id;
 					$Estimate_material_activity13_5->save();
 				
@@ -1552,7 +1930,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity13_1->rate = '10';
 						$Estimate_equipment_activity13_1->amount = '1';
 						$Estimate_equipment_activity13_1->original = true;
-						$Estimate_equipment_activity13_1->isset = false;
+						$Estimate_equipment_activity13_1->isset = true;
+						$Estimate_equipment_activity13_1->set_equipment_name = 'S-O-H4W13-EQU1-SET';
+						$Estimate_equipment_activity13_1->set_unit = '126-SET';
+						$Estimate_equipment_activity13_1->set_rate = '10';
+						$Estimate_equipment_activity13_1->set_amount = '0.11';
 						$Estimate_equipment_activity13_1->activity_id = $activity13->id;
 						$Estimate_equipment_activity13_1->save();
 						
@@ -1562,7 +1944,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity13_2->rate = '10';
 						$Estimate_equipment_activity13_2->amount = '2';
 						$Estimate_equipment_activity13_2->original = true;
-						$Estimate_equipment_activity13_2->isset = false;
+						$Estimate_equipment_activity13_2->isset = true;
+						$Estimate_equipment_activity13_2->set_equipment_name = 'S-O-H4W13-EQU2-SET';
+						$Estimate_equipment_activity13_2->set_unit = '127-SET';
+						$Estimate_equipment_activity13_2->set_rate = '10';
+						$Estimate_equipment_activity13_2->set_amount = '0.22';
 						$Estimate_equipment_activity13_2->activity_id = $activity13->id;
 						$Estimate_equipment_activity13_2->save();
 
@@ -1572,7 +1958,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity13_3->rate = '10';
 						$Estimate_equipment_activity13_3->amount = '3';
 						$Estimate_equipment_activity13_3->original = true;
-						$Estimate_equipment_activity13_3->isset = false;
+						$Estimate_equipment_activity13_3->isset = true;
+						$Estimate_equipment_activity13_3->set_equipment_name = 'S-O-H4W13-EQU3-SET';
+						$Estimate_equipment_activity13_3->set_unit = '128-SET';
+						$Estimate_equipment_activity13_3->set_rate = '10';
+						$Estimate_equipment_activity13_3->set_amount = '0.33';
 						$Estimate_equipment_activity13_3->activity_id = $activity13->id;
 						$Estimate_equipment_activity13_3->save();
 						
@@ -1582,7 +1972,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity13_4->rate = '10';
 						$Estimate_equipment_activity13_4->amount = '4';
 						$Estimate_equipment_activity13_4->original = true;
-						$Estimate_equipment_activity13_4->isset = false;
+						$Estimate_equipment_activity13_4->isset = true;
+						$Estimate_equipment_activity13_4->set_equipment_name = 'S-O-H4W13-EQU4-SET';
+						$Estimate_equipment_activity13_4->set_unit = '129-SET';
+						$Estimate_equipment_activity13_4->set_rate = '10';
+						$Estimate_equipment_activity13_4->set_amount = '0.44';
 						$Estimate_equipment_activity13_4->activity_id = $activity13->id;
 						$Estimate_equipment_activity13_4->save();
 
@@ -1592,7 +1986,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity13_5->rate = '10';
 						$Estimate_equipment_activity13_5->amount = '5';
 						$Estimate_equipment_activity13_5->original = true;
-						$Estimate_equipment_activity13_5->isset = false;
+						$Estimate_equipment_activity13_5->isset = true;
+						$Estimate_equipment_activity13_5->set_equipment_name = 'S-O-H4W13-EQU5-SET';
+						$Estimate_equipment_activity13_5->set_unit = '130-SET';
+						$Estimate_equipment_activity13_5->set_rate = '10';
+						$Estimate_equipment_activity13_5->set_amount = '0.55';
 						$Estimate_equipment_activity13_5->activity_id = $activity13->id;
 						$Estimate_equipment_activity13_5->save();
 
@@ -1622,7 +2020,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity14_1->rate = '11';
 					$Estimate_material_activity14_1->amount = '1';
 					$Estimate_material_activity14_1->original = true;
-					$Estimate_material_activity14_1->isset = false;
+					$Estimate_material_activity14_1->isset = true;
+					$Estimate_material_activity14_1->set_material_name = 'S-O-H4W14-MAT1-SET';
+					$Estimate_material_activity14_1->set_unit = '131-SET';
+					$Estimate_material_activity14_1->set_rate = '11';
+					$Estimate_material_activity14_1->set_amount = '0.11';
 					$Estimate_material_activity14_1->activity_id = $activity14->id;
 					$Estimate_material_activity14_1->save();
 
@@ -1632,7 +2034,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity14_2->rate = '11';
 					$Estimate_material_activity14_2->amount = '2';
 					$Estimate_material_activity14_2->original = true;
-					$Estimate_material_activity14_2->isset = false;
+					$Estimate_material_activity14_2->isset = true;
+					$Estimate_material_activity14_2->set_material_name = 'S-O-H4W14-MAT2-SET';
+					$Estimate_material_activity14_2->set_unit = '132-SET';
+					$Estimate_material_activity14_2->set_rate = '11';
+					$Estimate_material_activity14_2->set_amount = '0.22';
 					$Estimate_material_activity14_2->activity_id = $activity14->id;
 					$Estimate_material_activity14_2->save();
 
@@ -1642,7 +2048,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity14_3->rate = '11';
 					$Estimate_material_activity14_3->amount = '3';
 					$Estimate_material_activity14_3->original = true;
-					$Estimate_material_activity14_3->isset = false;
+					$Estimate_material_activity14_3->isset = true;
+					$Estimate_material_activity14_3->set_material_name = 'S-O-H4W14-MAT3-SET';
+					$Estimate_material_activity14_3->set_unit = '133-SET';
+					$Estimate_material_activity14_3->set_rate = '11';
+					$Estimate_material_activity14_3->set_amount = '0.33';
 					$Estimate_material_activity14_3->activity_id = $activity14->id;
 					$Estimate_material_activity14_3->save();
 
@@ -1652,7 +2062,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity14_4->rate = '11';
 					$Estimate_material_activity14_4->amount = '4';
 					$Estimate_material_activity14_4->original = true;
-					$Estimate_material_activity14_4->isset = false;
+					$Estimate_material_activity14_4->isset = true;
+					$Estimate_material_activity14_4->set_material_name = 'S-O-H4W14-MAT4-SET';
+					$Estimate_material_activity14_4->set_unit = '134-SET';
+					$Estimate_material_activity14_4->set_rate = '11';
+					$Estimate_material_activity14_4->set_amount = '0.44';
 					$Estimate_material_activity14_4->activity_id = $activity14->id;
 					$Estimate_material_activity14_4->save();
 
@@ -1662,7 +2076,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity14_5->rate = '11';
 					$Estimate_material_activity14_5->amount = '5';
 					$Estimate_material_activity14_5->original = true;
-					$Estimate_material_activity14_5->isset = false;
+					$Estimate_material_activity14_5->isset = true;
+					$Estimate_material_activity14_5->set_material_name = 'S-O-H4W14-MAT5-SET';
+					$Estimate_material_activity14_5->set_unit = '135-SET';
+					$Estimate_material_activity14_5->set_rate = '11';
+					$Estimate_material_activity14_5->set_amount = '0.55';
 					$Estimate_material_activity14_5->activity_id = $activity14->id;
 					$Estimate_material_activity14_5->save();
 				
@@ -1672,7 +2090,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity14_1->rate = '12';
 						$Estimate_equipment_activity14_1->amount = '1';
 						$Estimate_equipment_activity14_1->original = true;
-						$Estimate_equipment_activity14_1->isset = false;
+						$Estimate_equipment_activity14_1->isset = true;
+						$Estimate_equipment_activity14_1->set_equipment_name = 'S-O-H4W14-EQU1-SET';
+						$Estimate_equipment_activity14_1->set_unit = '136-SET';
+						$Estimate_equipment_activity14_1->set_rate = '12';
+						$Estimate_equipment_activity14_1->set_amount = '0.11';
 						$Estimate_equipment_activity14_1->activity_id = $activity14->id;
 						$Estimate_equipment_activity14_1->save();
 						
@@ -1682,7 +2104,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity14_2->rate = '12';
 						$Estimate_equipment_activity14_2->amount = '2';
 						$Estimate_equipment_activity14_2->original = true;
-						$Estimate_equipment_activity14_2->isset = false;
+						$Estimate_equipment_activity14_2->isset = true;
+						$Estimate_equipment_activity14_2->set_equipment_name = 'S-O-H4W14-EQU2-SET';
+						$Estimate_equipment_activity14_2->set_unit = '137-SET';
+						$Estimate_equipment_activity14_2->set_rate = '12';
+						$Estimate_equipment_activity14_2->set_amount = '0.22';
 						$Estimate_equipment_activity14_2->activity_id = $activity14->id;
 						$Estimate_equipment_activity14_2->save();
 
@@ -1692,7 +2118,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity14_3->rate = '12';
 						$Estimate_equipment_activity14_3->amount = '3';
 						$Estimate_equipment_activity14_3->original = true;
-						$Estimate_equipment_activity14_3->isset = false;
+						$Estimate_equipment_activity14_3->isset = true;
+						$Estimate_equipment_activity14_3->set_equipment_name = 'S-O-H4W14-EQU3-SET';
+						$Estimate_equipment_activity14_3->set_unit = '138-SET';
+						$Estimate_equipment_activity14_3->set_rate = '12';
+						$Estimate_equipment_activity14_3->set_amount = '0.33';
 						$Estimate_equipment_activity14_3->activity_id = $activity14->id;
 						$Estimate_equipment_activity14_3->save();
 						
@@ -1702,7 +2132,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity14_4->rate = '12';
 						$Estimate_equipment_activity14_4->amount = '4';
 						$Estimate_equipment_activity14_4->original = true;
-						$Estimate_equipment_activity14_4->isset = false;
+						$Estimate_equipment_activity14_4->isset = true;
+						$Estimate_equipment_activity14_4->set_equipment_name = 'S-O-H4W14-EQU4-SET';
+						$Estimate_equipment_activity14_4->set_unit = '139-SET';
+						$Estimate_equipment_activity14_4->set_rate = '12';
+						$Estimate_equipment_activity14_4->set_amount = '0.44';
 						$Estimate_equipment_activity14_4->activity_id = $activity14->id;
 						$Estimate_equipment_activity14_4->save();
 
@@ -1712,7 +2146,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity14_5->rate = '12';
 						$Estimate_equipment_activity14_5->amount = '5';
 						$Estimate_equipment_activity14_5->original = true;
-						$Estimate_equipment_activity14_5->isset = false;
+						$Estimate_equipment_activity14_5->isset = true;
+						$Estimate_equipment_activity14_5->set_equipment_name = 'S-O-H4W14-EQU5-SET';
+						$Estimate_equipment_activity14_5->set_unit = '140-SET';
+						$Estimate_equipment_activity14_5->set_rate = '12';
+						$Estimate_equipment_activity14_5->set_amount = '0.55';
 						$Estimate_equipment_activity14_5->activity_id = $activity14->id;
 						$Estimate_equipment_activity14_5->save();
 
@@ -1732,7 +2170,7 @@ class ValidationProjectTemplate {
 				$Estimate_labor_activity15->rate = '11.00';
 				$Estimate_labor_activity15->amount = '24';
 				$Estimate_labor_activity15->original = true;
-				$Estimate_labor_activity15->isset = false;
+				$Estimate_labor_activity15->isset = true;
 				$Estimate_labor_activity15->activity_id = $activity15->id;
 				$Estimate_labor_activity15->save();
 
@@ -1742,7 +2180,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity15_1->rate = '13';
 					$Estimate_material_activity15_1->amount = '1';
 					$Estimate_material_activity15_1->original = true;
-					$Estimate_material_activity15_1->isset = false;
+					$Estimate_material_activity15_1->isset = true;
+					$Estimate_material_activity15_1->set_material_name = 'S-O-H4W15-MAT1-SET';
+					$Estimate_material_activity15_1->set_unit = '141-SET';
+					$Estimate_material_activity15_1->set_rate = '13';
+					$Estimate_material_activity15_1->set_amount = '0.11';
 					$Estimate_material_activity15_1->activity_id = $activity15->id;
 					$Estimate_material_activity15_1->save();
 
@@ -1752,7 +2194,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity15_2->rate = '13';
 					$Estimate_material_activity15_2->amount = '2';
 					$Estimate_material_activity15_2->original = true;
-					$Estimate_material_activity15_2->isset = false;
+					$Estimate_material_activity15_2->isset = true;
+					$Estimate_material_activity15_2->set_material_name = 'S-O-H4W15-MAT2-SET';
+					$Estimate_material_activity15_2->set_unit = '142-SET';
+					$Estimate_material_activity15_2->set_rate = '13';
+					$Estimate_material_activity15_2->set_amount = '0.22';
 					$Estimate_material_activity15_2->activity_id = $activity15->id;
 					$Estimate_material_activity15_2->save();
 
@@ -1762,7 +2208,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity15_3->rate = '13';
 					$Estimate_material_activity15_3->amount = '3';
 					$Estimate_material_activity15_3->original = true;
-					$Estimate_material_activity15_3->isset = false;
+					$Estimate_material_activity15_3->isset = true;
+					$Estimate_material_activity15_3->set_material_name = 'S-O-H4W15-MAT3-SET';
+					$Estimate_material_activity15_3->set_unit = '143-SET';
+					$Estimate_material_activity15_3->set_rate = '13';
+					$Estimate_material_activity15_3->set_amount = '0.33';
 					$Estimate_material_activity15_3->activity_id = $activity15->id;
 					$Estimate_material_activity15_3->save();
 
@@ -1772,7 +2222,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity15_4->rate = '13';
 					$Estimate_material_activity15_4->amount = '4';
 					$Estimate_material_activity15_4->original = true;
-					$Estimate_material_activity15_4->isset = false;
+					$Estimate_material_activity15_4->isset = true;
+					$Estimate_material_activity15_4->set_material_name = 'S-O-H4W15-MAT4-SET';
+					$Estimate_material_activity15_4->set_unit = '144-SET';
+					$Estimate_material_activity15_4->set_rate = '13';
+					$Estimate_material_activity15_4->set_amount = '0.44';
 					$Estimate_material_activity15_4->activity_id = $activity15->id;
 					$Estimate_material_activity15_4->save();
 
@@ -1782,7 +2236,11 @@ class ValidationProjectTemplate {
 					$Estimate_material_activity15_5->rate = '13';
 					$Estimate_material_activity15_5->amount = '5';
 					$Estimate_material_activity15_5->original = true;
-					$Estimate_material_activity15_5->isset = false;
+					$Estimate_material_activity15_5->isset = true;
+					$Estimate_material_activity15_5->set_material_name = 'S-O-H4W15-MAT5-SET';
+					$Estimate_material_activity15_5->set_unit = '145-SET';
+					$Estimate_material_activity15_5->set_rate = '13';
+					$Estimate_material_activity15_5->set_amount = '0.55';
 					$Estimate_material_activity15_5->activity_id = $activity15->id;
 					$Estimate_material_activity15_5->save();
 				
@@ -1792,7 +2250,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity15_1->rate = '14';
 						$Estimate_equipment_activity15_1->amount = '1';
 						$Estimate_equipment_activity15_1->original = true;
-						$Estimate_equipment_activity15_1->isset = false;
+						$Estimate_equipment_activity15_1->isset = true;
+						$Estimate_equipment_activity15_1->set_equipment_name = 'S-O-H4W15-EQU1-SET';
+						$Estimate_equipment_activity15_1->set_unit = '146-SET';
+						$Estimate_equipment_activity15_1->set_rate = '14';
+						$Estimate_equipment_activity15_1->set_amount = '0.11';
 						$Estimate_equipment_activity15_1->activity_id = $activity15->id;
 						$Estimate_equipment_activity15_1->save();
 						
@@ -1802,7 +2264,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity15_2->rate = '14';
 						$Estimate_equipment_activity15_2->amount = '2';
 						$Estimate_equipment_activity15_2->original = true;
-						$Estimate_equipment_activity15_2->isset = false;
+						$Estimate_equipment_activity15_2->isset = true;
+						$Estimate_equipment_activity15_2->set_equipment_name = 'S-O-H4W15-EQU2-SET';
+						$Estimate_equipment_activity15_2->set_unit = '147-SET';
+						$Estimate_equipment_activity15_2->set_rate = '14';
+						$Estimate_equipment_activity15_2->set_amount = '0.22';
 						$Estimate_equipment_activity15_2->activity_id = $activity15->id;
 						$Estimate_equipment_activity15_2->save();
 
@@ -1812,7 +2278,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity15_3->rate = '14';
 						$Estimate_equipment_activity15_3->amount = '3';
 						$Estimate_equipment_activity15_3->original = true;
-						$Estimate_equipment_activity15_3->isset = false;
+						$Estimate_equipment_activity15_3->isset = true;
+						$Estimate_equipment_activity15_3->set_equipment_name = 'S-O-H4W15-EQU3-SET';
+						$Estimate_equipment_activity15_3->set_unit = '148-SET';
+						$Estimate_equipment_activity15_3->set_rate = '14';
+						$Estimate_equipment_activity15_3->set_amount = '0.33';
 						$Estimate_equipment_activity15_3->activity_id = $activity15->id;
 						$Estimate_equipment_activity15_3->save();
 						
@@ -1822,7 +2292,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity15_4->rate = '14';
 						$Estimate_equipment_activity15_4->amount = '4';
 						$Estimate_equipment_activity15_4->original = true;
-						$Estimate_equipment_activity15_4->isset = false;
+						$Estimate_equipment_activity15_4->isset = true;
+						$Estimate_equipment_activity15_4->set_equipment_name = 'S-O-H4W15-EQU4-SET';
+						$Estimate_equipment_activity15_4->set_unit = '149-SET';
+						$Estimate_equipment_activity15_4->set_rate = '14';
+						$Estimate_equipment_activity15_4->set_amount = '0.44';
 						$Estimate_equipment_activity15_4->activity_id = $activity15->id;
 						$Estimate_equipment_activity15_4->save();
 
@@ -1832,7 +2306,11 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity15_5->rate = '14';
 						$Estimate_equipment_activity15_5->amount = '5';
 						$Estimate_equipment_activity15_5->original = true;
-						$Estimate_equipment_activity15_5->isset = false;
+						$Estimate_equipment_activity15_5->isset = true;
+						$Estimate_equipment_activity15_5->set_equipment_name = 'S-O-H4W15-EQU5-SET';
+						$Estimate_equipment_activity15_5->set_unit = '150-SET';
+						$Estimate_equipment_activity15_5->set_rate = '14';
+						$Estimate_equipment_activity15_5->set_amount = '0.55';
 						$Estimate_equipment_activity15_5->activity_id = $activity15->id;
 						$Estimate_equipment_activity15_5->save();
 
@@ -1852,7 +2330,7 @@ class ValidationProjectTemplate {
 				$Estimate_labor_activity16->rate = '11.00';
 				$Estimate_labor_activity16->amount = '25';
 				$Estimate_labor_activity16->original = true;
-				$Estimate_labor_activity16->isset = false;
+				$Estimate_labor_activity16->isset = true;
 				$Estimate_labor_activity16->activity_id = $activity16->id;
 				$Estimate_labor_activity16->save();
 

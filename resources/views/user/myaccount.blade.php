@@ -526,7 +526,7 @@ $(document).ready(function() {
 													</div>
 												</div>
 											</div>
-											<h5>1e betalingsherinnering van de factuur</h5>
+											<h5>1e betalingsherinnering van de factuur (direct na verstrijken van de ingestelde betalingsconditie van de factuur)</h5>
 											<div class="row">
 												<div class="form-group">
 													<div class="col-md-12">
@@ -534,7 +534,7 @@ $(document).ready(function() {
 													</div>
 												</div>
 											</div>
-											<h5>Laatste betalingsherinnering van de factuur</h5>
+											<h5>Laatste betalingsherinnering van de factuur (14 dagen na de 1e betalingsherinnering)</h5>
 											<div class="row">
 												<div class="form-group">
 													<div class="col-md-12">
@@ -551,11 +551,11 @@ $(document).ready(function() {
 												</div>
 											</div>
 											-->
-											<h5>Vorderingswaaeschuwing van de factuur</h5>
+											<h5>Vorderingswaaeschuwing van de factuur (7 dagen na de laatste (2e) betalingsherinnering)</h5>
 											<div class="row">
 												<div class="form-group">
 													<div class="col-md-12">
-														<textarea name="pref_email_invoice_demand" id="pref_email_invoice_last_demand" rows="5" class="form-control">{{ $user->pref_email_invoice_last_demand }}</textarea>
+														<textarea name="pref_email_invoice_demand" id="pref_email_invoice_demand" rows="5" class="form-control">{{ $user->pref_email_invoice_demand }}</textarea>
 													</div>
 												</div>
 											</div>
