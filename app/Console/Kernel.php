@@ -121,8 +121,7 @@ class Kernel extends ConsoleKernel
                 }
             }
 
-        // })->dailyAt('6:30');
-        })->everyMinute();
+        })->dailyAt('6:30');
 
         $schedule->call(function() {
             foreach (User::where('active',true)->whereNotNull('confirmed_mail')->whereNull('banned')->get() as $user) {
