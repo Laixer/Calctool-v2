@@ -5,6 +5,7 @@ namespace Calctool\Calculus;
 use \Calctool\Models\Chapter;
 use \Calctool\Models\Activity;
 use \Calctool\Models\Part;
+use \Calctool\Models\Project;
 use \Calctool\Models\MoreLabor;
 use \Calctool\Models\Detail;
 use \Calctool\Models\MoreMaterial;
@@ -25,6 +26,12 @@ class MoreOverview {
 			$row = MoreLabor::where('activity_id', '=', $activity->id)->first();
 			$amount = $row['amount'];
 			$rate = $row['rate'];
+		}
+
+		$part = Part::find($activity->part_id);
+		if ($part->part_name == 'contracting') {
+			$project = Project::find(Chapter::find($activity->chapter_id)->project_id);
+			$rate = $project->hour_rate_more;
 		}
 
 		return $rate * $amount;
