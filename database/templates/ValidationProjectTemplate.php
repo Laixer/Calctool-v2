@@ -20,6 +20,11 @@ use \Calctool\Models\CalculationEquipment;
 use \Calctool\Models\EstimateLabor;
 use \Calctool\Models\EstimateMaterial;
 use \Calctool\Models\EstimateEquipment;
+use \Calctool\Models\Detail;
+use \Calctool\Models\MoreLabor;
+use \Calctool\Models\MoreMaterial;
+use \Calctool\Models\MoreEquipment;
+
 
 /*
  * Static Models Only
@@ -96,6 +101,7 @@ class ValidationProjectTemplate {
 		$part_type_calc = PartType::where('type_name','=','calculation')->first();
 		$part_subcontract = Part::where('part_name','=','subcontracting')->first();
 		$part_type_est = PartType::where('type_name','=','estimate')->first();
+		$detail = Detail::where('detail_name','=','more')->first();
 		$tax1 = Tax::where('tax_rate','=','21')->first();
 		$tax2 = Tax::where('tax_rate','=','6')->first();
 		$tax3 = Tax::where('tax_rate','=','0')->first();
@@ -2403,6 +2409,830 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity16_5->isset = false;
 						$Estimate_equipment_activity16_5->activity_id = $activity16->id;
 						$Estimate_equipment_activity16_5->save();
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		$chapter5 = new Chapter;
+		$chapter5->chapter_name = 'MW-A-H5';
+		$chapter5->priority = 5;
+		$chapter5->project_id = $project->id;
+		$chapter5->save();
+
+	       	$activity17 = new Activity;
+	       	$activity17->activity_name = 'MW-A-H5W17-21/21/21';
+	       	$activity17->priority = 17;
+	       	$activity17->note = '';
+	       	$activity17->chapter_id = $chapter5->id;
+	       	$activity17->tax_labor_id = $tax1->id;
+	       	$activity17->tax_material_id = $tax1->id;
+	       	$activity17->tax_equipment_id = $tax1->id;
+	       	$activity17->part_id = 1;
+	       	$activity17->part_type_id = 1;
+	       	$activity17->detail_id = 1;
+	       	$activity17->save();
+
+				$calculation_labor_activity17 = new MoreLabor;
+				$calculation_labor_activity17->rate = '10.00';
+				$calculation_labor_activity17->amount = '10';
+				$calculation_labor_activity17->activity_id = $activity17->id;
+				$calculation_labor_activity17->save();
+
+					$calculation_material_activity17_1 = new MoreMaterial;
+					$calculation_material_activity17_1->material_name = 'MW-A-H5W17-MAT1';
+					$calculation_material_activity17_1->unit = '161';
+					$calculation_material_activity17_1->rate = '1';
+					$calculation_material_activity17_1->amount = '1';
+					$calculation_material_activity17_1->activity_id = $activity17->id;
+					$calculation_material_activity17_1->save();
+
+					$calculation_material_activity17_2 = new MoreMaterial;
+					$calculation_material_activity17_2->material_name = 'MW-A-H5W17-MAT2';
+					$calculation_material_activity17_2->unit = '162';
+					$calculation_material_activity17_2->rate = '1';
+					$calculation_material_activity17_2->amount = '2';
+					$calculation_material_activity17_2->activity_id = $activity17->id;
+					$calculation_material_activity17_2->save();
+
+					$calculation_material_activity17_3 = new MoreMaterial;
+					$calculation_material_activity17_3->material_name = 'MW-A-H5W17-MAT2';
+					$calculation_material_activity17_3->unit = '163';
+					$calculation_material_activity17_3->rate = '1';
+					$calculation_material_activity17_3->amount = '3';
+					$calculation_material_activity17_3->activity_id = $activity17->id;
+					$calculation_material_activity17_3->save();
+
+					$calculation_material_activity17_4 = new MoreMaterial;
+					$calculation_material_activity17_4->material_name = 'MW-A-H5W17-MAT3';
+					$calculation_material_activity17_4->unit = '164';
+					$calculation_material_activity17_4->rate = '1';
+					$calculation_material_activity17_4->amount = '4';
+					$calculation_material_activity17_4->activity_id = $activity17->id;
+					$calculation_material_activity17_4->save();
+
+					$calculation_material_activity17_5 = new MoreMaterial;
+					$calculation_material_activity17_5->material_name = 'MW-A-H5W17-MAT5';
+					$calculation_material_activity17_5->unit = '165';
+					$calculation_material_activity17_5->rate = '1';
+					$calculation_material_activity17_5->amount = '5';
+					$calculation_material_activity17_5->activity_id = $activity17->id;
+					$calculation_material_activity17_5->save();
+				
+						$calculation_equipment_activity17_1 = new MoreEquipment;
+						$calculation_equipment_activity17_1->equipment_name = 'MW-A-H5W17-EQU1';
+						$calculation_equipment_activity17_1->unit = '166';
+						$calculation_equipment_activity17_1->rate = '2';
+						$calculation_equipment_activity17_1->amount = '1';
+						$calculation_equipment_activity17_1->activity_id = $activity17->id;
+						$calculation_equipment_activity17_1->save();
+						
+						$calculation_equipment_activity17_2 = new MoreEquipment;
+						$calculation_equipment_activity17_2->equipment_name = 'MW-A-H5W17-EQU2';
+						$calculation_equipment_activity17_2->unit = '167';
+						$calculation_equipment_activity17_2->rate = '2';
+						$calculation_equipment_activity17_2->amount = '2';
+						$calculation_equipment_activity17_2->activity_id = $activity17->id;
+						$calculation_equipment_activity17_2->save();
+
+						$calculation_equipment_activity17_3 = new MoreEquipment;
+						$calculation_equipment_activity17_3->equipment_name = 'MW-A-H5W17-EQU3';
+						$calculation_equipment_activity17_3->unit = '168';
+						$calculation_equipment_activity17_3->rate = '2';
+						$calculation_equipment_activity17_3->amount = '3';
+						$calculation_equipment_activity17_3->activity_id = $activity17->id;
+						$calculation_equipment_activity17_3->save();
+						
+						$calculation_equipment_activity17_4 = new MoreEquipment;
+						$calculation_equipment_activity17_4->equipment_name = 'MW-A-H5W17-EQU4';
+						$calculation_equipment_activity17_4->unit = '169';
+						$calculation_equipment_activity17_4->rate = '2';
+						$calculation_equipment_activity17_4->amount = '4';
+						$calculation_equipment_activity17_4->activity_id = $activity17->id;
+						$calculation_equipment_activity17_4->save();
+
+						$calculation_equipment_activity17_5 = new MoreEquipment;
+						$calculation_equipment_activity17_5->equipment_name = 'MW-A-H5W17-EQU5';
+						$calculation_equipment_activity17_5->unit = '170';
+						$calculation_equipment_activity17_5->rate = '2';
+						$calculation_equipment_activity17_5->amount = '5';
+						$calculation_equipment_activity17_5->activity_id = $activity17->id;
+						$calculation_equipment_activity17_5->save();
+
+			$activity18 = new Activity;
+	       	$activity18->activity_name = 'MW-A-H5W18-21/21/6';
+	       	$activity18->priority = 18;
+	       	$activity18->note = '';
+	       	$activity18->chapter_id = $chapter5->id;
+	       	$activity18->tax_labor_id = $tax1->id;
+	       	$activity18->tax_material_id = $tax1->id;
+	       	$activity18->tax_equipment_id = $tax2->id;
+	       	$activity18->part_id = 1;
+	       	$activity18->part_type_id = 1;
+	      	$activity18->detail_id = 1;
+	       	$activity18->save();
+
+				$calculation_labor_activity18 = new MoreLabor;
+				$calculation_labor_activity18->rate = '10.00';
+				$calculation_labor_activity18->amount = '11';
+				$calculation_labor_activity18->activity_id = $activity18->id;
+				$calculation_labor_activity18->save();
+
+					$calculation_material_activity18_1 = new MoreMaterial;
+					$calculation_material_activity18_1->material_name = 'MW-A-H5W18-MAT1';
+					$calculation_material_activity18_1->unit = '171';
+					$calculation_material_activity18_1->rate = '3';
+					$calculation_material_activity18_1->amount = '1';
+					$calculation_material_activity18_1->activity_id = $activity18->id;
+					$calculation_material_activity18_1->save();
+
+					$calculation_material_activity18_2 = new MoreMaterial;
+					$calculation_material_activity18_2->material_name = 'MW-A-H5W18-MAT2';
+					$calculation_material_activity18_2->unit = '172';
+					$calculation_material_activity18_2->rate = '3';
+					$calculation_material_activity18_2->amount = '2';
+					$calculation_material_activity18_2->activity_id = $activity18->id;
+					$calculation_material_activity18_2->save();
+
+					$calculation_material_activity18_3 = new MoreMaterial;
+					$calculation_material_activity18_3->material_name = 'MW-A-H5W18-MAT3';
+					$calculation_material_activity18_3->unit = '173';
+					$calculation_material_activity18_3->rate = '3';
+					$calculation_material_activity18_3->amount = '3';
+					$calculation_material_activity18_3->activity_id = $activity18->id;
+					$calculation_material_activity18_3->save();
+
+					$calculation_material_activity18_4 = new MoreMaterial;
+					$calculation_material_activity18_4->material_name = 'MW-A-H5W18-MAT4';
+					$calculation_material_activity18_4->unit = '174';
+					$calculation_material_activity18_4->rate = '3';
+					$calculation_material_activity18_4->amount = '4';
+					$calculation_material_activity18_4->activity_id = $activity18->id;
+					$calculation_material_activity18_4->save();
+
+					$calculation_material_activity18_5 = new MoreMaterial;
+					$calculation_material_activity18_5->material_name = 'MW-A-H5W18-MAT5';
+					$calculation_material_activity18_5->unit = '175';
+					$calculation_material_activity18_5->rate = '3';
+					$calculation_material_activity18_5->amount = '5';
+					$calculation_material_activity18_5->activity_id = $activity18->id;
+					$calculation_material_activity18_5->save();
+				
+						$calculation_equipment_activity18_1 = new MoreEquipment;
+						$calculation_equipment_activity18_1->equipment_name = 'MW-A-H5W18-EQU1';
+						$calculation_equipment_activity18_1->unit = '176';
+						$calculation_equipment_activity18_1->rate = '4';
+						$calculation_equipment_activity18_1->amount = '1';
+						$calculation_equipment_activity18_1->activity_id = $activity18->id;
+						$calculation_equipment_activity18_1->save();
+						
+						$calculation_equipment_activity18_2 = new MoreEquipment;
+						$calculation_equipment_activity18_2->equipment_name = 'MW-A-H5W18-EQU2';
+						$calculation_equipment_activity18_2->unit = '177';
+						$calculation_equipment_activity18_2->rate = '4';
+						$calculation_equipment_activity18_2->amount = '2';
+						$calculation_equipment_activity18_2->activity_id = $activity18->id;
+						$calculation_equipment_activity18_2->save();
+
+						$calculation_equipment_activity18_3 = new MoreEquipment;
+						$calculation_equipment_activity18_3->equipment_name = 'MW-A-H5W18-EQU3';
+						$calculation_equipment_activity18_3->unit = '178';
+						$calculation_equipment_activity18_3->rate = '4';
+						$calculation_equipment_activity18_3->amount = '3';
+						$calculation_equipment_activity18_3->activity_id = $activity18->id;
+						$calculation_equipment_activity18_3->save();
+						
+						$calculation_equipment_activity18_4 = new MoreEquipment;
+						$calculation_equipment_activity18_4->equipment_name = 'MW-A-H5W18-EQU4';
+						$calculation_equipment_activity18_4->unit = '179';
+						$calculation_equipment_activity18_4->rate = '4';
+						$calculation_equipment_activity18_4->amount = '4';
+						$calculation_equipment_activity18_4->activity_id = $activity18->id;
+						$calculation_equipment_activity18_4->save();
+
+						$calculation_equipment_activity18_5 = new MoreEquipment;
+						$calculation_equipment_activity18_5->equipment_name = 'MW-A-H5W18-EQU5';
+						$calculation_equipment_activity18_5->unit = '180';
+						$calculation_equipment_activity18_5->rate = '4';
+						$calculation_equipment_activity18_5->amount = '5';
+						$calculation_equipment_activity18_5->activity_id = $activity18->id;
+						$calculation_equipment_activity18_5->save();
+
+			$activity19 = new Activity;
+	       	$activity19->activity_name = 'MW-A-H5W19-21/6/6';
+	       	$activity19->priority = 19;
+	       	$activity19->note = '';
+	       	$activity19->chapter_id = $chapter5->id;
+	       	$activity19->tax_labor_id = $tax1->id;
+	       	$activity19->tax_material_id = $tax2->id;
+	       	$activity19->tax_equipment_id = $tax2->id;
+	       	$activity19->part_id = 1;
+	       	$activity19->part_type_id = 1;
+	       	$activity19->detail_id = 1;
+	       	$activity19->save();
+
+				$calculation_labor_activity19 = new MoreLabor;
+				$calculation_labor_activity19->rate = '10.00';
+				$calculation_labor_activity19->amount = '12';
+				$calculation_labor_activity19->activity_id = $activity19->id;
+				$calculation_labor_activity19->save();
+
+					$calculation_material_activity19_1 = new MoreMaterial;
+					$calculation_material_activity19_1->material_name = 'MW-A-H5W19-MAT1';
+					$calculation_material_activity19_1->unit = '181';
+					$calculation_material_activity19_1->rate = '5';
+					$calculation_material_activity19_1->amount = '1';
+					$calculation_material_activity19_1->activity_id = $activity19->id;
+					$calculation_material_activity19_1->save();
+
+					$calculation_material_activity19_2 = new MoreMaterial;
+					$calculation_material_activity19_2->material_name = 'MW-A-H5W19-MAT2';
+					$calculation_material_activity19_2->unit = '182';
+					$calculation_material_activity19_2->rate = '5';
+					$calculation_material_activity19_2->amount = '2';
+					$calculation_material_activity19_2->activity_id = $activity19->id;
+					$calculation_material_activity19_2->save();
+
+					$calculation_material_activity19_3 = new MoreMaterial;
+					$calculation_material_activity19_3->material_name = 'MW-A-H5W19-MAT3';
+					$calculation_material_activity19_3->unit = '183';
+					$calculation_material_activity19_3->rate = '5';
+					$calculation_material_activity19_3->amount = '3';
+					$calculation_material_activity19_3->activity_id = $activity19->id;
+					$calculation_material_activity19_3->save();
+
+					$calculation_material_activity19_4 = new MoreMaterial;
+					$calculation_material_activity19_4->material_name = 'MW-A-H5W19-MAT4';
+					$calculation_material_activity19_4->unit = '184';
+					$calculation_material_activity19_4->rate = '5';
+					$calculation_material_activity19_4->amount = '4';
+					$calculation_material_activity19_4->activity_id = $activity19->id;
+					$calculation_material_activity19_4->save();
+
+					$calculation_material_activity19_5 = new MoreMaterial;
+					$calculation_material_activity19_5->material_name = 'MW-A-H5W19-MAT5';
+					$calculation_material_activity19_5->unit = '185';
+					$calculation_material_activity19_5->rate = '5';
+					$calculation_material_activity19_5->amount = '5';
+					$calculation_material_activity19_5->activity_id = $activity19->id;
+					$calculation_material_activity19_5->save();
+				
+						$calculation_equipment_activity19_1 = new MoreEquipment;
+						$calculation_equipment_activity19_1->equipment_name = 'MW-A-H5W19-EQU1';
+						$calculation_equipment_activity19_1->unit = '186';
+						$calculation_equipment_activity19_1->rate = '6';
+						$calculation_equipment_activity19_1->amount = '1';
+						$calculation_equipment_activity19_1->activity_id = $activity19->id;
+						$calculation_equipment_activity19_1->save();
+						
+						$calculation_equipment_activity19_2 = new MoreEquipment;
+						$calculation_equipment_activity19_2->equipment_name = 'MW-A-H5W19-EQU2';
+						$calculation_equipment_activity19_2->unit = '187';
+						$calculation_equipment_activity19_2->rate = '6';
+						$calculation_equipment_activity19_2->amount = '2';
+						$calculation_equipment_activity19_2->activity_id = $activity19->id;
+						$calculation_equipment_activity19_2->save();
+
+						$calculation_equipment_activity19_3 = new MoreEquipment;
+						$calculation_equipment_activity19_3->equipment_name = 'MW-A-H5W19-EQU3';
+						$calculation_equipment_activity19_3->unit = '188';
+						$calculation_equipment_activity19_3->rate = '6';
+						$calculation_equipment_activity19_3->amount = '3';
+						$calculation_equipment_activity19_3->activity_id = $activity19->id;
+						$calculation_equipment_activity19_3->save();
+						
+						$calculation_equipment_activity19_4 = new MoreEquipment;
+						$calculation_equipment_activity19_4->equipment_name = 'MW-A-H5W19-EQU4';
+						$calculation_equipment_activity19_4->unit = '189';
+						$calculation_equipment_activity19_4->rate = '6';
+						$calculation_equipment_activity19_4->amount = '4';
+						$calculation_equipment_activity19_4->activity_id = $activity19->id;
+						$calculation_equipment_activity19_4->save();
+
+						$calculation_equipment_activity19_5 = new MoreEquipment;
+						$calculation_equipment_activity19_5->equipment_name = 'MW-A-H5W19-EQU5';
+						$calculation_equipment_activity19_5->unit = '190';
+						$calculation_equipment_activity19_5->rate = '6';
+						$calculation_equipment_activity19_5->amount = '5';
+						$calculation_equipment_activity19_5->activity_id = $activity19->id;
+						$calculation_equipment_activity19_5->save();
+
+			$activity20 = new Activity;
+	       	$activity20->activity_name = 'MW-A-H5W20-6/6/6';
+	       	$activity20->priority = 20;
+	       	$activity20->note = '';
+	       	$activity20->chapter_id = $chapter5->id;
+	       	$activity20->tax_labor_id = $tax2->id;
+	       	$activity20->tax_material_id = $tax2->id;
+	       	$activity20->tax_equipment_id = $tax2->id;
+	       	$activity20->part_id = 1;
+	       	$activity20->part_type_id = 1;
+	       	$activity20->detail_id = 1;
+	       	$activity20->save();
+
+				$calculation_labor_activity20 = new MoreLabor;
+				$calculation_labor_activity20->rate = '10.00';
+				$calculation_labor_activity20->amount = '13';
+				$calculation_labor_activity20->activity_id = $activity20->id;
+				$calculation_labor_activity20->save();
+
+					$calculation_material_activity20_1 = new MoreMaterial;
+					$calculation_material_activity20_1->material_name = 'MW-A-H5W20-MAT1';
+					$calculation_material_activity20_1->unit = '191';
+					$calculation_material_activity20_1->rate = '7';
+					$calculation_material_activity20_1->amount = '1';
+					$calculation_material_activity20_1->activity_id = $activity20->id;
+					$calculation_material_activity20_1->save();
+
+					$calculation_material_activity20_2 = new MoreMaterial;
+					$calculation_material_activity20_2->material_name = 'MW-A-H5W20-MAT2';
+					$calculation_material_activity20_2->unit = '192';
+					$calculation_material_activity20_2->rate = '7';
+					$calculation_material_activity20_2->amount = '2';
+					$calculation_material_activity20_2->activity_id = $activity20->id;
+					$calculation_material_activity20_2->save();
+
+					$calculation_material_activity20_3 = new MoreMaterial;
+					$calculation_material_activity20_3->material_name = 'MW-A-H5W20-MAT3';
+					$calculation_material_activity20_3->unit = '193';
+					$calculation_material_activity20_3->rate = '7';
+					$calculation_material_activity20_3->amount = '3';
+					$calculation_material_activity20_3->activity_id = $activity20->id;
+					$calculation_material_activity20_3->save();
+
+					$calculation_material_activity20_4 = new MoreMaterial;
+					$calculation_material_activity20_4->material_name = 'MW-A-H5W20-MAT4';
+					$calculation_material_activity20_4->unit = '194';
+					$calculation_material_activity20_4->rate = '7';
+					$calculation_material_activity20_4->amount = '4';
+					$calculation_material_activity20_4->activity_id = $activity20->id;
+					$calculation_material_activity20_4->save();
+
+					$calculation_material_activity20_5 = new MoreMaterial;
+					$calculation_material_activity20_5->material_name = 'MW-A-H5W20-MAT5';
+					$calculation_material_activity20_5->unit = '195';
+					$calculation_material_activity20_5->rate = '7';
+					$calculation_material_activity20_5->amount = '5';
+					$calculation_material_activity20_5->activity_id = $activity20->id;
+					$calculation_material_activity20_5->save();
+				
+						$calculation_equipment_activity20_1 = new MoreEquipment;
+						$calculation_equipment_activity20_1->equipment_name = 'MW-A-H5W20-EQU1';
+						$calculation_equipment_activity20_1->unit = '196';
+						$calculation_equipment_activity20_1->rate = '8';
+						$calculation_equipment_activity20_1->amount = '1';
+						$calculation_equipment_activity20_1->activity_id = $activity20->id;
+						$calculation_equipment_activity20_1->save();
+						
+						$calculation_equipment_activity20_2 = new MoreEquipment;
+						$calculation_equipment_activity20_2->equipment_name = 'MW-A-H5W20-EQU2';
+						$calculation_equipment_activity20_2->unit = '197';
+						$calculation_equipment_activity20_2->rate = '8';
+						$calculation_equipment_activity20_2->amount = '2';
+						$calculation_equipment_activity20_2->activity_id = $activity20->id;
+						$calculation_equipment_activity20_2->save();
+
+						$calculation_equipment_activity20_3 = new MoreEquipment;
+						$calculation_equipment_activity20_3->equipment_name = 'MW-A-H5W20-EQU3';
+						$calculation_equipment_activity20_3->unit = '198';
+						$calculation_equipment_activity20_3->rate = '8';
+						$calculation_equipment_activity20_3->amount = '3';
+						$calculation_equipment_activity20_3->activity_id = $activity20->id;
+						$calculation_equipment_activity20_3->save();
+						
+						$calculation_equipment_activity20_4 = new MoreEquipment;
+						$calculation_equipment_activity20_4->equipment_name = 'MW-A-H5W20-EQU4';
+						$calculation_equipment_activity20_4->unit = '199';
+						$calculation_equipment_activity20_4->rate = '8';
+						$calculation_equipment_activity20_4->amount = '4';
+						$calculation_equipment_activity20_4->activity_id = $activity20->id;
+						$calculation_equipment_activity20_4->save();
+
+						$calculation_equipment_activity20_5 = new MoreEquipment;
+						$calculation_equipment_activity20_5->equipment_name = 'MW-A-H5W20-EQU5';
+						$calculation_equipment_activity20_5->unit = '200';
+						$calculation_equipment_activity20_5->rate = '8';
+						$calculation_equipment_activity20_5->amount = '5';
+						$calculation_equipment_activity20_5->activity_id = $activity20->id;
+						$calculation_equipment_activity20_5->save();
+
+		$chapter6 = new Chapter;
+		$chapter6->chapter_name = 'MW-O-H6';
+		$chapter6->priority = 6;
+		$chapter6->project_id = $project->id;
+		$chapter6->save();
+
+	       	$activity21 = new Activity;
+	       	$activity21->activity_name = 'MW-O-H6W21-21/21/21';
+	       	$activity21->priority = 21;
+	       	$activity21->note = '';
+	       	$activity21->chapter_id = $chapter6->id;
+	       	$activity21->tax_labor_id = $tax1->id;
+	       	$activity21->tax_material_id = $tax1->id;
+	       	$activity21->tax_equipment_id = $tax1->id;
+	       	$activity21->part_id = 2;
+	       	$activity21->part_type_id = 1;
+	       	$activity21->detail_id = 1;
+	       	$activity21->save();
+
+				$calculation_labor_activity21 = new MoreLabor;
+				$calculation_labor_activity21->rate = '11.00';
+				$calculation_labor_activity21->amount = '14';
+				$calculation_labor_activity21->activity_id = $activity21->id;
+				$calculation_labor_activity21->save();
+
+					$calculation_material_activity21_1 = new MoreMaterial;
+					$calculation_material_activity21_1->material_name = 'MW-O-H6W21-MAT1';
+					$calculation_material_activity21_1->unit = '201';
+					$calculation_material_activity21_1->rate = '9';
+					$calculation_material_activity21_1->amount = '1';
+					$calculation_material_activity21_1->activity_id = $activity21->id;
+					$calculation_material_activity21_1->save();
+
+					$calculation_material_activity21_2 = new MoreMaterial;
+					$calculation_material_activity21_2->material_name = 'MW-O-H6W21-MAT2';
+					$calculation_material_activity21_2->unit = '202';
+					$calculation_material_activity21_2->rate = '9';
+					$calculation_material_activity21_2->amount = '2';
+					$calculation_material_activity21_2->activity_id = $activity21->id;
+					$calculation_material_activity21_2->save();
+
+					$calculation_material_activity21_3 = new MoreMaterial;
+					$calculation_material_activity21_3->material_name = 'MW-O-H6W21-MAT3';
+					$calculation_material_activity21_3->unit = '203';
+					$calculation_material_activity21_3->rate = '9';
+					$calculation_material_activity21_3->amount = '3';
+					$calculation_material_activity21_3->activity_id = $activity21->id;
+					$calculation_material_activity21_3->save();
+
+					$calculation_material_activity21_4 = new MoreMaterial;
+					$calculation_material_activity21_4->material_name = 'MW-O-H6W21-MAT4';
+					$calculation_material_activity21_4->unit = '204';
+					$calculation_material_activity21_4->rate = '9';
+					$calculation_material_activity21_4->amount = '4';
+					$calculation_material_activity21_4->activity_id = $activity21->id;
+					$calculation_material_activity21_4->save();
+
+					$calculation_material_activity21_5 = new MoreMaterial;
+					$calculation_material_activity21_5->material_name = 'MW-O-H6W21-MAT5';
+					$calculation_material_activity21_5->unit = '205';
+					$calculation_material_activity21_5->rate = '9';
+					$calculation_material_activity21_5->amount = '5';
+					$calculation_material_activity21_5->activity_id = $activity21->id;
+					$calculation_material_activity21_5->save();
+				
+						$calculation_equipment_activity21_1 = new MoreEquipment;
+						$calculation_equipment_activity21_1->equipment_name = 'MW-O-H6W21-EQU1';
+						$calculation_equipment_activity21_1->unit = '206';
+						$calculation_equipment_activity21_1->rate = '10';
+						$calculation_equipment_activity21_1->amount = '1';
+						$calculation_equipment_activity21_1->activity_id = $activity21->id;
+						$calculation_equipment_activity21_1->save();
+						
+						$calculation_equipment_activity21_2 = new MoreEquipment;
+						$calculation_equipment_activity21_2->equipment_name = 'MW-O-H6W21-EQU2';
+						$calculation_equipment_activity21_2->unit = '207';
+						$calculation_equipment_activity21_2->rate = '10';
+						$calculation_equipment_activity21_2->amount = '2';
+						$calculation_equipment_activity21_2->activity_id = $activity21->id;
+						$calculation_equipment_activity21_2->save();
+
+						$calculation_equipment_activity21_3 = new MoreEquipment;
+						$calculation_equipment_activity21_3->equipment_name = 'MW-O-H6W21-EQU3';
+						$calculation_equipment_activity21_3->unit = '208';
+						$calculation_equipment_activity21_3->rate = '10';
+						$calculation_equipment_activity21_3->amount = '3';
+						$calculation_equipment_activity21_3->activity_id = $activity21->id;
+						$calculation_equipment_activity21_3->save();
+						
+						$calculation_equipment_activity21_4 = new MoreEquipment;
+						$calculation_equipment_activity21_4->equipment_name = 'MW-O-H6W21-EQU4';
+						$calculation_equipment_activity21_4->unit = '209';
+						$calculation_equipment_activity21_4->rate = '10';
+						$calculation_equipment_activity21_4->amount = '4';
+						$calculation_equipment_activity21_4->activity_id = $activity21->id;
+						$calculation_equipment_activity21_4->save();
+
+						$calculation_equipment_activity21_5 = new MoreEquipment;
+						$calculation_equipment_activity21_5->equipment_name = 'MW-O-H6W21-EQU5';
+						$calculation_equipment_activity21_5->unit = '210';
+						$calculation_equipment_activity21_5->rate = '10';
+						$calculation_equipment_activity21_5->amount = '5';
+						$calculation_equipment_activity21_5->activity_id = $activity21->id;
+						$calculation_equipment_activity21_5->save();
+
+			$activity22 = new Activity;
+	       	$activity22->activity_name = 'MW-O-H6W22-21/21/6';
+	       	$activity22->priority = 22;
+	       	$activity22->note = '';
+	       	$activity22->chapter_id = $chapter6->id;
+	       	$activity22->tax_labor_id = $tax1->id;
+	       	$activity22->tax_material_id = $tax1->id;
+	       	$activity22->tax_equipment_id = $tax2->id;
+	       	$activity22->part_id = 2;
+	       	$activity22->part_type_id = 1;
+	       	$activity22->detail_id = 1;
+	       	$activity22->save();
+
+				$calculation_labor_activity22 = new MoreLabor;
+				$calculation_labor_activity22->rate = '11.00';
+				$calculation_labor_activity22->amount = '15';
+				$calculation_labor_activity22->activity_id = $activity22->id;
+				$calculation_labor_activity22->save();
+
+					$calculation_material_activity22_1 = new MoreMaterial;
+					$calculation_material_activity22_1->material_name = 'MW-O-H6W22-MAT1';
+					$calculation_material_activity22_1->unit = '211';
+					$calculation_material_activity22_1->rate = '11';
+					$calculation_material_activity22_1->amount = '1';
+					$calculation_material_activity22_1->activity_id = $activity22->id;
+					$calculation_material_activity22_1->save();
+
+					$calculation_material_activity22_2 = new MoreMaterial;
+					$calculation_material_activity22_2->material_name = 'MW-O-H6W22-MAT2';
+					$calculation_material_activity22_2->unit = '212';
+					$calculation_material_activity22_2->rate = '11';
+					$calculation_material_activity22_2->amount = '2';
+					$calculation_material_activity22_2->activity_id = $activity22->id;
+					$calculation_material_activity22_2->save();
+
+					$calculation_material_activity22_3 = new MoreMaterial;
+					$calculation_material_activity22_3->material_name = 'MW-O-H6W22-MAT3';
+					$calculation_material_activity22_3->unit = '213';
+					$calculation_material_activity22_3->rate = '11';
+					$calculation_material_activity22_3->amount = '3';
+					$calculation_material_activity22_3->activity_id = $activity22->id;
+					$calculation_material_activity22_3->save();
+
+					$calculation_material_activity22_4 = new MoreMaterial;
+					$calculation_material_activity22_4->material_name = 'MW-O-H6W22-MAT4';
+					$calculation_material_activity22_4->unit = '214';
+					$calculation_material_activity22_4->rate = '11';
+					$calculation_material_activity22_4->amount = '4';
+					$calculation_material_activity22_4->activity_id = $activity22->id;
+					$calculation_material_activity22_4->save();
+
+					$calculation_material_activity22_5 = new MoreMaterial;
+					$calculation_material_activity22_5->material_name = 'MW-O-H6W22-MAT5';
+					$calculation_material_activity22_5->unit = '215';
+					$calculation_material_activity22_5->rate = '11';
+					$calculation_material_activity22_5->amount = '5';
+					$calculation_material_activity22_5->activity_id = $activity22->id;
+					$calculation_material_activity22_5->save();
+				
+						$calculation_equipment_activity22_1 = new MoreEquipment;
+						$calculation_equipment_activity22_1->equipment_name = 'MW-O-H6W22-EQU1';
+						$calculation_equipment_activity22_1->unit = '216';
+						$calculation_equipment_activity22_1->rate = '12';
+						$calculation_equipment_activity22_1->amount = '1';
+						$calculation_equipment_activity22_1->activity_id = $activity22->id;
+						$calculation_equipment_activity22_1->save();
+						
+						$calculation_equipment_activity22_2 = new MoreEquipment;
+						$calculation_equipment_activity22_2->equipment_name = 'MW-O-H6W22-EQU2';
+						$calculation_equipment_activity22_2->unit = '217';
+						$calculation_equipment_activity22_2->rate = '12';
+						$calculation_equipment_activity22_2->amount = '2';
+						$calculation_equipment_activity22_2->activity_id = $activity22->id;
+						$calculation_equipment_activity22_2->save();
+
+						$calculation_equipment_activity22_3 = new MoreEquipment;
+						$calculation_equipment_activity22_3->equipment_name = 'MW-O-H6W22-EQU3';
+						$calculation_equipment_activity22_3->unit = '218';
+						$calculation_equipment_activity22_3->rate = '12';
+						$calculation_equipment_activity22_3->amount = '3';
+						$calculation_equipment_activity22_3->activity_id = $activity22->id;
+						$calculation_equipment_activity22_3->save();
+						
+						$calculation_equipment_activity22_4 = new MoreEquipment;
+						$calculation_equipment_activity22_4->equipment_name = 'MW-O-H6W22-EQU4';
+						$calculation_equipment_activity22_4->unit = '219';
+						$calculation_equipment_activity22_4->rate = '12';
+						$calculation_equipment_activity22_4->amount = '4';
+						$calculation_equipment_activity22_4->activity_id = $activity22->id;
+						$calculation_equipment_activity22_4->save();
+
+						$calculation_equipment_activity22_5 = new MoreEquipment;
+						$calculation_equipment_activity22_5->equipment_name = 'MW-O-H6W22-EQU5';
+						$calculation_equipment_activity22_5->unit = '220';
+						$calculation_equipment_activity22_5->rate = '12';
+						$calculation_equipment_activity22_5->amount = '5';
+						$calculation_equipment_activity22_5->activity_id = $activity22->id;
+						$calculation_equipment_activity22_5->save();
+
+			$activity23 = new Activity;
+	       	$activity23->activity_name = 'MW-O-H6W23-21/6/6';
+	       	$activity23->priority = 23;
+	       	$activity23->note = '';
+	       	$activity23->chapter_id = $chapter6->id;
+	       	$activity23->tax_labor_id = $tax1->id;
+	       	$activity23->tax_material_id = $tax2->id;
+	       	$activity23->tax_equipment_id = $tax2->id;
+	       	$activity23->part_id = 2;
+	       	$activity23->part_type_id = 1;
+	       	$activity23->detail_id = 1;
+	       	$activity23->save();
+
+				$calculation_labor_activity23 = new MoreLabor;
+				$calculation_labor_activity23->rate = '11.00';
+				$calculation_labor_activity23->amount = '16';
+				$calculation_labor_activity23->activity_id = $activity23->id;
+				$calculation_labor_activity23->save();
+
+					$calculation_material_activity23_1 = new MoreMaterial;
+					$calculation_material_activity23_1->material_name = 'MW-O-H6W23-MAT1';
+					$calculation_material_activity23_1->unit = '221';
+					$calculation_material_activity23_1->rate = '13';
+					$calculation_material_activity23_1->amount = '1';
+					$calculation_material_activity23_1->activity_id = $activity23->id;
+					$calculation_material_activity23_1->save();
+
+					$calculation_material_activity23_2 = new MoreMaterial;
+					$calculation_material_activity23_2->material_name = 'MW-O-H6W23-MAT2';
+					$calculation_material_activity23_2->unit = '222';
+					$calculation_material_activity23_2->rate = '13';
+					$calculation_material_activity23_2->amount = '2';
+					$calculation_material_activity23_2->activity_id = $activity23->id;
+					$calculation_material_activity23_2->save();
+
+					$calculation_material_activity23_3 = new MoreMaterial;
+					$calculation_material_activity23_3->material_name = 'MW-O-H6W23-MAT3';
+					$calculation_material_activity23_3->unit = '223';
+					$calculation_material_activity23_3->rate = '13';
+					$calculation_material_activity23_3->amount = '3';
+					$calculation_material_activity23_3->activity_id = $activity23->id;
+					$calculation_material_activity23_3->save();
+
+					$calculation_material_activity23_4 = new MoreMaterial;
+					$calculation_material_activity23_4->material_name = 'MW-O-H6W23-MAT4';
+					$calculation_material_activity23_4->unit = '224';
+					$calculation_material_activity23_4->rate = '13';
+					$calculation_material_activity23_4->amount = '4';
+					$calculation_material_activity23_4->activity_id = $activity23->id;
+					$calculation_material_activity23_4->save();
+
+					$calculation_material_activity23_5 = new MoreMaterial;
+					$calculation_material_activity23_5->material_name = 'MW-O-H6W23-MAT5';
+					$calculation_material_activity23_5->unit = '225';
+					$calculation_material_activity23_5->rate = '13';
+					$calculation_material_activity23_5->amount = '5';
+					$calculation_material_activity23_5->activity_id = $activity23->id;
+					$calculation_material_activity23_5->save();
+				
+						$calculation_equipment_activity23_1 = new MoreEquipment;
+						$calculation_equipment_activity23_1->equipment_name = 'MW-O-H6W23-EQU1';
+						$calculation_equipment_activity23_1->unit = '226';
+						$calculation_equipment_activity23_1->rate = '14';
+						$calculation_equipment_activity23_1->amount = '1';
+						$calculation_equipment_activity23_1->activity_id = $activity23->id;
+						$calculation_equipment_activity23_1->save();
+						
+						$calculation_equipment_activity23_2 = new MoreEquipment;
+						$calculation_equipment_activity23_2->equipment_name = 'MW-O-H6W23-EQU2';
+						$calculation_equipment_activity23_2->unit = '227';
+						$calculation_equipment_activity23_2->rate = '14';
+						$calculation_equipment_activity23_2->amount = '2';
+						$calculation_equipment_activity23_2->activity_id = $activity23->id;
+						$calculation_equipment_activity23_2->save();
+
+						$calculation_equipment_activity23_3 = new MoreEquipment;
+						$calculation_equipment_activity23_3->equipment_name = 'MW-O-H6W23-EQU3';
+						$calculation_equipment_activity23_3->unit = '228';
+						$calculation_equipment_activity23_3->rate = '14';
+						$calculation_equipment_activity23_3->amount = '3';
+						$calculation_equipment_activity23_3->activity_id = $activity23->id;
+						$calculation_equipment_activity23_3->save();
+						
+						$calculation_equipment_activity23_4 = new MoreEquipment;
+						$calculation_equipment_activity23_4->equipment_name = 'MW-O-H6W23-EQU4';
+						$calculation_equipment_activity23_4->unit = '229';
+						$calculation_equipment_activity23_4->rate = '14';
+						$calculation_equipment_activity23_4->amount = '4';
+						$calculation_equipment_activity23_4->activity_id = $activity23->id;
+						$calculation_equipment_activity23_4->save();
+
+						$calculation_equipment_activity23_5 = new MoreEquipment;
+						$calculation_equipment_activity23_5->equipment_name = 'MW-O-H6W23-EQU5';
+						$calculation_equipment_activity23_5->unit = '230';
+						$calculation_equipment_activity23_5->rate = '14';
+						$calculation_equipment_activity23_5->amount = '5';
+						$calculation_equipment_activity23_5->activity_id = $activity23->id;
+						$calculation_equipment_activity23_5->save();
+
+			$activity24= new Activity;
+	       	$activity24->activity_name = 'MW-O-H6W24-6/6/6';
+	       	$activity24->priority = 24;
+	       	$activity24->note = '';
+	       	$activity24->chapter_id = $chapter6->id;
+	       	$activity24->tax_labor_id = $tax2->id;
+	       	$activity24->tax_material_id = $tax2->id;
+	       	$activity24->tax_equipment_id = $tax2->id;
+	       	$activity24->part_id = 2;
+	       	$activity24->part_type_id = 1;
+	       	$activity24->detail_id = 1;
+	       	$activity24->save();
+
+	  			$calculation_labor_activity24 = new MoreLabor;
+				$calculation_labor_activity24->rate = '11.00';
+				$calculation_labor_activity24->amount = '17';
+				$calculation_labor_activity24->activity_id = $activity24->id;
+				$calculation_labor_activity24->save();
+
+					$calculation_material_activity24_1 = new MoreMaterial;
+					$calculation_material_activity24_1->material_name = 'MW-O-H6W24-MAT1';
+					$calculation_material_activity24_1->unit = '231';
+					$calculation_material_activity24_1->rate = '15';
+					$calculation_material_activity24_1->amount = '1';
+					$calculation_material_activity24_1->activity_id = $activity24->id;
+					$calculation_material_activity24_1->save();
+
+					$calculation_material_activity24_2 = new MoreMaterial;
+					$calculation_material_activity24_2->material_name = 'MW-O-H6W24-MAT2';
+					$calculation_material_activity24_2->unit = '232';
+					$calculation_material_activity24_2->rate = '15';
+					$calculation_material_activity24_2->amount = '2';
+					$calculation_material_activity24_2->activity_id = $activity24->id;
+					$calculation_material_activity24_2->save();
+
+					$calculation_material_activity24_3 = new MoreMaterial;
+					$calculation_material_activity24_3->material_name = 'MW-O-H6W24-MAT3';
+					$calculation_material_activity24_3->unit = '233';
+					$calculation_material_activity24_3->rate = '15';
+					$calculation_material_activity24_3->amount = '3';
+					$calculation_material_activity24_3->activity_id = $activity24->id;
+					$calculation_material_activity24_3->save();
+
+					$calculation_material_activity24_4 = new MoreMaterial;
+					$calculation_material_activity24_4->material_name = 'MW-O-H6W24-MAT4';
+					$calculation_material_activity24_4->unit = '234';
+					$calculation_material_activity24_4->rate = '15';
+					$calculation_material_activity24_4->amount = '4';
+					$calculation_material_activity24_4->activity_id = $activity24->id;
+					$calculation_material_activity24_4->save();
+
+					$calculation_material_activity24_5 = new MoreMaterial;
+					$calculation_material_activity24_5->material_name = 'MW-O-H6W24-MAT5';
+					$calculation_material_activity24_5->unit = '235';
+					$calculation_material_activity24_5->rate = '15';
+					$calculation_material_activity24_5->amount = '5';
+					$calculation_material_activity24_5->activity_id = $activity24->id;
+					$calculation_material_activity24_5->save();
+				
+						$calculation_equipment_activity24_1 = new MoreEquipment;
+						$calculation_equipment_activity24_1->equipment_name = 'MW-O-H6W24-EQU1';
+						$calculation_equipment_activity24_1->unit = '236';
+						$calculation_equipment_activity24_1->rate = '16';
+						$calculation_equipment_activity24_1->amount = '1';
+						$calculation_equipment_activity24_1->activity_id = $activity24->id;
+						$calculation_equipment_activity24_1->save();
+						
+						$calculation_equipment_activity24_2 = new MoreEquipment;
+						$calculation_equipment_activity24_2->equipment_name = 'MW-O-H6W24-EQU2';
+						$calculation_equipment_activity24_2->unit = '237';
+						$calculation_equipment_activity24_2->rate = '16';
+						$calculation_equipment_activity24_2->amount = '2';
+						$calculation_equipment_activity24_2->activity_id = $activity24->id;
+						$calculation_equipment_activity24_2->save();
+
+						$calculation_equipment_activity24_3 = new MoreEquipment;
+						$calculation_equipment_activity24_3->equipment_name = 'MW-O-H6W24-EQU3';
+						$calculation_equipment_activity24_3->unit = '238';
+						$calculation_equipment_activity24_3->rate = '16';
+						$calculation_equipment_activity24_3->amount = '3';
+						$calculation_equipment_activity24_3->activity_id = $activity24->id;
+						$calculation_equipment_activity24_3->save();
+						
+						$calculation_equipment_activity24_4 = new MoreEquipment;
+						$calculation_equipment_activity24_4->equipment_name = 'MW-O-H6W24-EQU4';
+						$calculation_equipment_activity24_4->unit = '239';
+						$calculation_equipment_activity24_4->rate = '16';
+						$calculation_equipment_activity24_4->amount = '4';
+						$calculation_equipment_activity24_4->activity_id = $activity24->id;
+						$calculation_equipment_activity24_4->save();
+
+						$calculation_equipment_activity24_5 = new MoreEquipment;
+						$calculation_equipment_activity24_5->equipment_name = 'MW-O-H6W24-EQU5';
+						$calculation_equipment_activity24_5->unit = '240';
+						$calculation_equipment_activity24_5->rate = '16';
+						$calculation_equipment_activity24_5->amount = '5';
+						$calculation_equipment_activity24_5->activity_id = $activity24->id;
+						$calculation_equipment_activity24_5->save();
 
 
      }
