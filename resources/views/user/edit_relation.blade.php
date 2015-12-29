@@ -166,11 +166,11 @@ $(document).ready(function() {
 						<li id="tab-company">
 							<a href="#company" data-toggle="tab">{{ ucfirst( \Calctool\Models\RelationKind::find($relation->kind_id)->kind_name) }}e gegevens</a>
 						</li>
-						<li id="tab-payment">
-							<a href="#payment" data-toggle="tab">Betalingsgegevens</a>
-						</li>
 						<li id="tab-contact">
 							<a href="#contact" data-toggle="tab">Contacten</a>
+						</li>
+						<li id="tab-payment">
+							<a href="#payment" data-toggle="tab">Betalingsgegevens</a>
 						</li>
 					</ul>
 
@@ -184,9 +184,9 @@ $(document).ready(function() {
 			                {!! csrf_field() !!}
 							<h4>{{ ucfirst(\Calctool\Models\RelationKind::find($relation->kind_id)->kind_name) }}e relatie</h4>
 							<div class="row">
-								<div class="col-md-2">
+								<div class="col-md-3">
 									<div class="form-group">
-										<label for="debtor">Debiteurennummer</label>
+										<label for="debtor">Debiteurennummer</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit nummer is gegenereerd door de CalculatieTool.com. Je kunt dit vervangen door je eigen boekhoudkundige nummering." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
 										<input name="debtor" id="debtor" type="text" value="{{ Input::old('debtor') ? Input::old('debtor') : $relation->debtor_code }}" class="form-control"/>
 										<input type="hidden" name="id" id="id" value="{{ $relation->id }}"/>
 									</div>
@@ -323,38 +323,8 @@ $(document).ready(function() {
 								</div>
 							</div>
 						</form>
-
 						</div>
-						<div id="payment" class="tab-pane">
-							<h4>Betalingsgegevens {{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</h4>
-							<form method="POST" action="/relation/iban/update" accept-charset="UTF-8">
-                            {!! csrf_field() !!}
-                            <input type="hidden" name="id" id="id" value="{{ $relation->id }}"/>
-							<div class="row">
-
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="iban">IBAN rekeningnummer</label>
-										<input name="iban" id="iban" type="text" value="{{ Input::old('iban') ? Input::old('iban') : $relation->iban }}" class="form-control"/>
-									</div>
-								</div>
-
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="btw">Naam rekeninghouder</label>
-										<input name="iban_name" id="iban_name" type="text" value="{{ Input::old('iban_name') ? Input::old('iban_name') : $relation->iban_name }}" class="form-control"/>
-									</div>
-								</div>
-
-							</div>
-							<div class="row">
-								<div class="col-md-12">
-									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
-								</div>
-							</div>
-							</form>
-						</div>
-						<div id="contact" class="tab-pane">
+												<div id="contact" class="tab-pane">
 							<h4>Contactpersonen {{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</h4>
 							<table class="table table-striped">
 								<?# -- table head -- ?>
@@ -388,6 +358,35 @@ $(document).ready(function() {
 									<a href="/relation-{{ $relation->id }}/contact/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
 								</div>
 							</div>
+						</div>
+						<div id="payment" class="tab-pane">
+							<h4>Betalingsgegevens {{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</h4>
+							<form method="POST" action="/relation/iban/update" accept-charset="UTF-8">
+                            {!! csrf_field() !!}
+                            <input type="hidden" name="id" id="id" value="{{ $relation->id }}"/>
+							<div class="row">
+
+								<div class="col-md-3">
+									<div class="form-group">
+										<label for="iban">IBAN rekeningnummer</label>
+										<input name="iban" id="iban" type="text" value="{{ Input::old('iban') ? Input::old('iban') : $relation->iban }}" class="form-control"/>
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<div class="form-group">
+										<label for="btw">Naam rekeninghouder</label>
+										<input name="iban_name" id="iban_name" type="text" value="{{ Input::old('iban_name') ? Input::old('iban_name') : $relation->iban_name }}" class="form-control"/>
+									</div>
+								</div>
+
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+								</div>
+							</div>
+							</form>
 						</div>
 					</div>
 				</div>
