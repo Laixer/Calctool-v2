@@ -117,11 +117,10 @@ class Kernel extends ConsoleKernel
                     $message->user_id = $project->user_id;
 
                     $message->save();
-
                 }
             }
-
-        })->dailyAt('6:30');
+ 
+        })->dailyAt('06:30');
 
         $schedule->call(function() {
             foreach (User::where('active',true)->whereNotNull('confirmed_mail')->whereNull('banned')->get() as $user) {

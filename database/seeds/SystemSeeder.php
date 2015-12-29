@@ -49,7 +49,7 @@ class SystemSeeder extends Seeder {
 			'registration_date' => date('Y-m-d'),
 			'expiration_date' => date('Y-m-d', strtotime("+100 year", time())),
 			'referral_key' => md5(mt_rand()),
-			'email' => 'guest@calculatietool.com',
+			'email' => 'guest@calctool.nl',
 			'user_type' => $guest_user_type->id
 		));
 
