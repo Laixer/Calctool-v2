@@ -18,15 +18,15 @@ use \Calctool\Models\MessageBox;
 		<div class="navbar-collapse nav-main-collapse collapse pull-right">
 			<nav class="nav-main mega-menu">
 				<ul class="nav nav-pills nav-main scroll-menu" id="topMain">
+					@if (Auth::check())
 					<li>
 						<a href="/">Dashboard</a>
 					</li>
-					@if (Auth::check())
 					<li>
 						<a href="/myaccount">Mijn account</a>
 					</li>
 					@endif
-					@if (1)
+					@if (0)
 					<li>
 						<a href="/about">Over ons</a>
 					</li>

@@ -94,7 +94,7 @@ class UserController extends Controller {
 		$amount = 27;
 		$description = 'Verleng met een maand';
 		$increment_months = 1;
-		$promo_id = 0;
+		$promo_id = -1;
 
 		if (Redis::exists('promo:'.Auth::user()->username)) {
 			$promo = Promotion::find(Redis::get('promo:'.Auth::user()->username))->where('active', true)->where('valid', '>=', date('Y-m-d H:i:s'))->first();
@@ -135,7 +135,7 @@ class UserController extends Controller {
 		$order->description = $description;
 		$order->method = '';
 		$order->user_id = Auth::id();
-		if ($promocode) {
+		if ($promo_id != -1) {
 			$order->promotion_id = $promo_id;
 		}
 
