@@ -38,12 +38,12 @@ class DemoProjectTemplate {
 		$relation->address_street	= 'Demostraat';
 		$relation->address_number	= '1';
 		$relation->address_postal	= '1234DE';
-		$relation->address_city		= 'Demo-stad';
+		$relation->address_city		= 'Demostad';
 		$relation->debtor_code 		= 'DEMO123';
 		$relation->kvk		 		= '12345678';
 		$relation->btw 				= 'NL1234567890B1';
 		$relation->note 			= 'Dit is een demo relatie';
-		$relation->email 			= 'demo-relatie@calculatietool.com';
+		$relation->email 			= 'demo@calculatietool.com';
 		$relation->phone 			= '0101111111';
 		$relation->website 			= 'http://www.calculatietool.com';
 		$relation->user_id 			= $userid;
@@ -58,7 +58,7 @@ class DemoProjectTemplate {
 		$project->address_street 	= 'Demolaan';
 		$project->address_number 	= '2';
 		$project->address_postal 	= '5678MO';
-		$project->address_city 		= 'Demo-dorp';
+		$project->address_city 		= 'Demodorp';
 		$project->note 				= 'Dit is een demo project';
 		$project->hour_rate 		= 35;
 		$project->hour_rate_more 	= 45;
@@ -80,7 +80,7 @@ class DemoProjectTemplate {
 		$contact = new Contact;
 		$contact->firstname 		= 'Demo';
 		$contact->lastname 			= 'Eigenaar';
-		$contact->email 			= 'demo-eigenaar@calculatietool.com';
+		$contact->email 			= 'demo@calculatietool.com';
 		$contact->mobile 			= '0622222222';
 		$contact->phone 			= '0102222222';
 		$contact->note 				= 'Demo contactpersoon van relatie';

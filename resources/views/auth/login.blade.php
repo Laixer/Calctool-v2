@@ -99,7 +99,7 @@ $(function() {
 
 			<div class="white-row">
 				<h4>Nog Registreren?</h4>			
-				<span>Nog geen account? <a href="/register">Maak er een aan</a>, het is gratis!</span>
+				<span>Nog geen account? <a href="/register">Maak er één aan</a>, het is <strong>gratis!</strong></span>
 			</div>
 
 		</section>

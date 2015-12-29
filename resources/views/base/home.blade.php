@@ -227,7 +227,6 @@ $(function() {
 								<span class="overlay color2"></span>
 								<span class="inner">
 									<span class="block fa fa-home fsize60"></span>
-									<strong>Mijn Bedrijf</strong>
 								</span>
 							</a>
 							<a href="/mycompany" class="btn btn-primary add_to_cart"><i class="fa fa-home"></i> Mijn Bedrijf</a>
@@ -243,7 +242,6 @@ $(function() {
 								<span class="overlay color2"></span>
 								<span class="inner">
 									<span class="block fa fa-wrench fsize60"></span>
-									<strong>Materialen</strong>
 								</span>
 							</a>
 							<a href="/material" class="btn btn-primary add_to_cart"><i class="fa fa-wrench"></i> Materialen</a>
@@ -273,7 +271,6 @@ $(function() {
 								<span class="overlay color2"></span>
 								<span class="inner">
 									<span class="block fa fa-shopping-cart fsize60"></span>
-									<strong>Inkoopfacturen</strong>
 								</span>
 							</a>
 							<a href="/purchase" class="btn btn-primary add_to_cart"><i class="fa fa-shopping-cart"></i> Inkoopfacturen</a>
@@ -288,7 +285,6 @@ $(function() {
 								<span class="overlay color2"></span>
 								<span class="inner">
 									<span class="block fa fa-truck fsize60"></span>
-									<strong>Leveranciers</strong>
 								</span>
 							</a>
 							<a href="/wholesale" class="btn btn-primary add_to_cart"><i class="fa fa-truck"></i> Leveranciers</a>
@@ -303,9 +299,6 @@ $(function() {
 								<span class="overlay color2"></span>
 								<span class="inner">
 									<span class="block fa fa-bar-chart-o fsize60"></span>
-									<strong>Financieel</strong>
-									<br>
-									<span>Comming Soon</span>
 								</span>
 							</a>
 							<a href="/" class="btn btn-primary add_to_cart"><i class="fa fa-bar-chart-o"></i> Financieel</a>

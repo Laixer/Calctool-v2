@@ -304,17 +304,17 @@ $(document).ready(function() {
 						<li id="tab-company">
 							<a href="#company" data-toggle="tab">Bedrijfsgegevens</a>
 						</li>
-						<li id="tab-payment">
-							<a href="#payment" data-toggle="tab">Betalingsgegevens</a>
-						</li>
 						<li id="tab-contact">
 							<a href="#contact" data-toggle="tab">Contacten</a>
 						</li>
-						<li id="tab-cashbook">
-							<a href="#cashbook" data-toggle="tab">Kasboek</a>
+						<li id="tab-payment">
+							<a href="#payment" data-toggle="tab">Betalingsgegevens</a>
 						</li>
 						<li id="tab-logo">
 							<a href="#logo" data-toggle="tab">Logo</a>
+						</li>
+						<li id="tab-cashbook">
+							<a href="#cashbook" data-toggle="tab">Kasboek</a>
 						</li>
 					</ul>
 
@@ -377,7 +377,7 @@ $(document).ready(function() {
 
 								<div class="col-md-4">
 									<div class="form-group">
-										<label for="email_comp">Email*</label>
+										<label for="email_comp">Email</label>
 										<input name="email_comp" id="email_comp" type="email" value="{{ Input::old('email_comp') ? Input::old('email_comp') : ($relation ? $relation->email : '') }}" class="form-control"/>
 									</div>
 								</div>
@@ -452,35 +452,6 @@ $(document).ready(function() {
 								</div>
 							</div>
 						</form>
-
-						</div>
-						<div id="payment" class="tab-pane">
-							<h4>Betalingsgegevens</h4>
-							<form action="mycompany/iban/update" method="post">
-							{!! csrf_field() !!}
-							<div class="row">
-							<input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
-
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="iban">IBAN rekeningnummer</label>
-										<input name="iban" id="iban" type="text" value="{{ Input::old('iban') ? Input::old('iban') : ($relation ? $relation->iban : '') }}" {{ $relation ? '' : 'disabled' }} class="form-control"/>
-									</div>
-								</div>
-
-								<div class="col-md-3">
-									<div class="form-group">
-										<label for="btw">Naam rekeninghouder</label>
-										<input name="iban_name" id="iban_name" type="text" {{ $relation ? '' : 'disabled' }} value="{{ Input::old('iban_name') ? Input::old('iban_name') : ($relation ? $relation->iban_name : '') }}" class="form-control"/>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-12">
-									<button class="btn btn-primary {{ $relation ? '' : 'disabled' }}"><i class="fa fa-check"></i> Opslaan</button>
-								</div>
-							</div>
-							</form>
 						</div>
 						<div id="contact" class="tab-pane">
 							<h4>Contactpersonen</h4>
@@ -516,6 +487,62 @@ $(document).ready(function() {
 									<a href="/mycompany/contact/new" {{ $relation ? '' : 'disabled' }} class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
 								</div>
 							</div>
+						</div>
+						<div id="payment" class="tab-pane">
+							<h4>Betalingsgegevens</h4>
+							<form action="mycompany/iban/update" method="post">
+							{!! csrf_field() !!}
+							<div class="row">
+							<input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
+
+								<div class="col-md-3">
+									<div class="form-group">
+										<label for="iban">IBAN rekeningnummer</label>
+										<input name="iban" id="iban" type="text" value="{{ Input::old('iban') ? Input::old('iban') : ($relation ? $relation->iban : '') }}" {{ $relation ? '' : 'disabled' }} class="form-control"/>
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<div class="form-group">
+										<label for="btw">Naam rekeninghouder</label>
+										<input name="iban_name" id="iban_name" type="text" {{ $relation ? '' : 'disabled' }} value="{{ Input::old('iban_name') ? Input::old('iban_name') : ($relation ? $relation->iban_name : '') }}" class="form-control"/>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<button class="btn btn-primary {{ $relation ? '' : 'disabled' }}"><i class="fa fa-check"></i> Opslaan</button>
+								</div>
+							</div>
+							</form>
+						</div>
+						<div id="logo" class="tab-pane">
+							<h4>Logo</h4>
+							<form action="relation/logo/save" method="post" enctype="multipart/form-data">
+							{!! csrf_field() !!}
+							<input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
+
+							{!! ($relation && $relation->logo_id) ? "<div><h5>Huidige logo</h5><img src=\"/".Resource::find($relation->logo_id)->file_location."\"/></div>" : '' !!}
+
+							<div class="form-group">
+								<label for="image">Afbeelding Uploaden</label>
+								<div class="input-group col-md-4">
+					                <span class="input-group-btn">
+					                    <span class="btn btn-primary btn-file {{ $relation ? '' : 'disabled' }}">
+					                        Browse&hellip; <input {{ $relation ? '' : 'disabled' }} name="image" type="file" multiple>
+					                    </span>
+					                </span>
+					                <input type="text" class="form-control" readonly>
+					            </div>
+				            </div>
+
+							<div class="row">
+								<div class="col-md-12">
+									<button class="btn btn-primary {{ $relation ? '' : 'disabled' }}"><i class="fa fa-check"></i> Opslaan</button>
+								</div>
+							</div>
+
+							</form>
 						</div>
 						<div id="cashbook" class="tab-pane">
 							<h4>Rekeningen</h4>
@@ -561,34 +588,6 @@ $(document).ready(function() {
 									<a href="#" data-toggle="modal" data-target="#accountModal" id="newacc" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuwe rekening</a>
 								</div>
 							</div>
-						</div>
-						<div id="logo" class="tab-pane">
-							<h4>Logo</h4>
-							<form action="relation/logo/save" method="post" enctype="multipart/form-data">
-							{!! csrf_field() !!}
-							<input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
-
-							{!! ($relation && $relation->logo_id) ? "<div><h5>Huidige logo</h5><img src=\"/".Resource::find($relation->logo_id)->file_location."\"/></div>" : '' !!}
-
-							<div class="form-group">
-								<label for="image">Afbeelding Uploaden</label>
-								<div class="input-group col-md-4">
-					                <span class="input-group-btn">
-					                    <span class="btn btn-primary btn-file {{ $relation ? '' : 'disabled' }}">
-					                        Browse&hellip; <input {{ $relation ? '' : 'disabled' }} name="image" type="file" multiple>
-					                    </span>
-					                </span>
-					                <input type="text" class="form-control" readonly>
-					            </div>
-				            </div>
-
-							<div class="row">
-								<div class="col-md-12">
-									<button class="btn btn-primary {{ $relation ? '' : 'disabled' }}"><i class="fa fa-check"></i> Opslaan</button>
-								</div>
-							</div>
-
-							</form>
 						</div>
 					</div>
 				</div>

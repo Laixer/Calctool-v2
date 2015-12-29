@@ -19,7 +19,7 @@ use \Calctool\Models\MessageBox;
 			<nav class="nav-main mega-menu">
 				<ul class="nav nav-pills nav-main scroll-menu" id="topMain">
 					<li>
-						<a href="/">Home</a>
+						<a href="/">Dashboard</a>
 					</li>
 					@if (Auth::check())
 					<li>
