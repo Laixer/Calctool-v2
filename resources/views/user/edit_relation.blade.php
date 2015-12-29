@@ -52,6 +52,9 @@ $(document).ready(function() {
 	$('#tab-contact').click(function(e){
 		sessionStorage.toggleTabRel{{Auth::id()}} = 'contact';
 	});
+	$('#tab-invoices').click(function(e){
+		sessionStorage.toggleTabRel{{Auth::id()}} = 'invoices';
+	});
 	if (sessionStorage.toggleTabRel{{Auth::id()}}){
 		$toggleOpenTab = sessionStorage.toggleTabRel{{Auth::id()}};
 		$('#tab-'+$toggleOpenTab).addClass('active');
@@ -171,6 +174,9 @@ $(document).ready(function() {
 						</li>
 						<li id="tab-payment">
 							<a href="#payment" data-toggle="tab">Betalingsgegevens</a>
+						</li>
+						<li id="tab-invoices">
+							<a href="#invoices" data-toggle="tab">Facturen</a>
 						</li>
 					</ul>
 
@@ -324,7 +330,7 @@ $(document).ready(function() {
 							</div>
 						</form>
 						</div>
-												<div id="contact" class="tab-pane">
+						<div id="contact" class="tab-pane">
 							<h4>Contactpersonen {{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</h4>
 							<table class="table table-striped">
 								<?# -- table head -- ?>
@@ -388,6 +394,41 @@ $(document).ready(function() {
 							</div>
 							</form>
 						</div>
+						<div id="invoices" class="tab-pane">
+							<h4>Facturen</h4>
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th class="col-md-2">Voornaam</th>
+										<th class="col-md-2">Achternaam</th>
+										<th class="col-md-2">Functie</th>
+										<th class="col-md-2">Telefoon</th>
+										<th class="col-md-2">Mobiel</th>
+										<th class="col-md-2">Email</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									@foreach (Project::where('user_id','=', User::id())->get() as $project)
+									@foreach (Invoice::where('project_id','=', $project->id)->get() as $invoice)
+									<tr>
+										<td class="col-md-2"><a href="/relation-{{ $relation->id }}/contact-{{ $contact->id }}/edit">{{ $contact->firstname }}</a></td>
+										<td class="col-md-2">{{ $contact->lastname }}</td>
+										<td class="col-md-2">{{ ucfirst(\Calctool\Models\ContactFunction::find($contact->function_id)->function_name) }}</td>
+										<td class="col-md-2">{{ $contact->phone }}</td>
+										<td class="col-md-2">{{ $contact->mobile }}</td>
+										<td class="col-md-2">{{ $contact->email }}</td>
+									</tr>
+									@endforeach
+									@endforeach
+								</tbody>
+							</table>
+							<div class="row">
+								<div class="col-md-12">
+									<a href="/relation-{{ $relation->id }}/contact/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 
@@ -396,7 +437,6 @@ $(document).ready(function() {
 	</section>
 
 </div>
-<?#-- /WRAPPER --?>
 <script type="text/javascript">
 $(document).ready(function() {
 	<?php $response = \Calctool\Models\RelationKind::where('id','=',Input::old('relationkind'))->first(); ?>

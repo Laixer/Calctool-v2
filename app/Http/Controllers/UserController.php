@@ -14,6 +14,7 @@ use \Calctool\Models\Promotion;
 use \Calctool\Models\BankAccount;
 
 use \Auth;
+use \Redis;
 use \Hash;
 use \Mailgun;
 
@@ -95,15 +96,15 @@ class UserController extends Controller {
 		$increment_months = 1;
 		$promo_id = 0;
 
-		$promocode = $request->cookie('_dccod'.Auth::id());
-		if ($promocode) {
-			$promo = Promotion::find($promocode)->where('active', true)->where('valid', '>=', date('Y-m-d H:i:s'))->first();
+		if (Redis::exists('promo:'.Auth::user()->username)) {
+			$promo = Promotion::find(Redis::get('promo:'.Auth::user()->username))->where('active', true)->where('valid', '>=', date('Y-m-d H:i:s'))->first();
 			if ($promo) {
 				$_order = Payment::where('user_id',Auth::id())->where('promotion_id',$promo->id)->first();
 				if (!$_order) {
 					$amount = $promo->amount;
 					$description .= ' Actie:' . $promo->name;
 					$promo_id = $promo->id;
+					Redis::del('promo:'.Auth::user()->username);
 				}
 			}
 		}
@@ -547,6 +548,9 @@ class UserController extends Controller {
 		if ($order)
 			return json_encode(['success' => 0]);
 
-		return response()->json(['success' => 1, 'amount' => $promo->amount, 'famount' => number_format($promo->amount, 0,",",".")])->withCookie(cookie('_dccod'.Auth::id(), $promo->id, 30));
+		Redis::set('promo:'.$username, $promo->id);
+		Redis::expire('promo:'.$username, 600);
+
+		return response()->json(['success' => 1, 'amount' => $promo->amount, 'famount' => number_format($promo->amount, 0,",",".")]);
 	}
 }

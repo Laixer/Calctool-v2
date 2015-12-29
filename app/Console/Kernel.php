@@ -69,7 +69,6 @@ class Kernel extends ConsoleKernel
                     $message = new MessageBox;
                     $message->subject = 'Factuur over betalingsdatum';
                     $message->message = 'Een vordering voor '.$project->project_name.' is verzonden naar '.$contact_client->getFormalName().'. De CalculatieTool.com neemt nu geen verdere stappen meer voor afhandeling van deze factuur.';
-
                     $message->from_user = User::where('username', 'system')->first()['id'];
                     $message->user_id = $project->user_id;
 

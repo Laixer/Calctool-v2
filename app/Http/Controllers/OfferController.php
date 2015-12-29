@@ -279,6 +279,28 @@ class OfferController extends Controller {
 
 		$post->save();
 
+/*    $data = array(
+        'email' => $contact_client->email,
+        'project_name' => $project->project_name,
+        'client' => $contact_client->getFormalName(),
+        'pref_email_invoice_last_reminder' => $user->pref_email_invoice_last_reminder,
+        'user' => $contact_user->getFormalName()
+    );
+    Mailgun::send('mail.invoice_last_reminder', $data, function($message) use ($data) {
+        $message->to($data['email'], strtolower(trim($data['client'])));
+        $message->subject('CalculatieTool.com - Tweede betalingsherinnering');
+        $message->from('info@calculatietool.com', 'CalculatieTool.com');
+        $message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+    });
+
+    $message = new MessageBox;
+    $message->subject = 'Factuur over betalingsdatum';
+    $message->message = 'Een 2e betalingsherinnering voor '.$project->project_name.' is verzonden naar '.$contact_client->getFormalName().'.';
+    $message->from_user = User::where('username', 'system')->first()['id'];
+    $message->user_id = $project->user_id;*/
+
+        $message->save();
+
 		return json_encode(['success' => 1]);
 	}
 
