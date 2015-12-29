@@ -45,6 +45,9 @@ class Kernel extends ConsoleKernel
                 $project = Project::find($offer->project_id);
                 $user = User::find($project->user_id);
 
+                if (!$project->pref_email_reminder)
+                    continue;
+
                 $contact_client = Contact::find($invoice->to_contact_id);
                 $contact_user = Contact::find($invoice->from_contact_id);
 

@@ -135,6 +135,11 @@ class ProjectController extends Controller {
 		$project->province_id = $request->input('province');
 		$project->country_id = $request->input('country');
 		$project->client_id = $request->input('contractor');
+		if ($request->input('toggle-mail-reminder')) {
+			$project->pref_email_reminder = true;
+		} else {
+			$project->pref_email_reminder = false;
+		}
 
 		$project->save();
 

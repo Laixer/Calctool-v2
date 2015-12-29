@@ -11,7 +11,6 @@ use \Calctool\Models\Invoice;
 use \Calctool\Models\Wholesale;
 use \Calctool\Models\ProjectShare;
 
-
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner())
@@ -231,6 +230,7 @@ else {
 				location.reload();
 			});
     	});
+    	$("[name='toggle-mail-reminder']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	});
 </script>
 <div id="wrapper">
@@ -286,14 +286,6 @@ else {
 						<li id="tab-calc">
 							<a href="#calc" data-toggle="tab">Uurtarief & Winstpercentages</a>
 						</li>
-						<!--
-						<li id="tab-hour">
-							<a href="#hour" data-toggle="tab">Urenregistratie</a>
-						</li>
-						<li id="tab-purchase">
-							<a href="#purchase" data-toggle="tab">Inkoopfacturen</a>
-						</li>
-						-->
 						<li id="tab-communication">
 							<a href="#communication" data-toggle="tab">Communicatie opdrachtgever </a>
 						</li>
@@ -510,7 +502,16 @@ else {
 									</div>
 
 								</div>
-							<h5><strong>Opmerkingen</strong></h5>
+								<h5><strong>Email herinnering</strong></h5>
+								<div class="row">
+									<div class="col-md-2">
+										<div class="form-group">
+											<input name="toggle-mail-reminder" type="checkbox" {{ $project->pref_email_reminder ? 'checked' : '' }}>
+										</div>
+									</div>
+								</div>
+
+								<h5><strong>Opmerkingen</strong></h5>
 								<div class="row">
 									<div class="form-group">
 										<div class="col-md-12">

@@ -60,7 +60,7 @@ $(document).ready(function() {
 	});
 
 	$("[name='toggle-api']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
-	$("[name='pref_mailings_optin']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	$("[name='pref_use_ct_numbering']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	$('#acc-deactive').click(function(e){
 		e.preventDefault();
 		if(confirm('Weet je zeker dat je je account wilt deactiveren?')){
@@ -505,8 +505,8 @@ $(document).ready(function() {
 											<div class="row">
 												<div class="col-md-4">
 													<div class="form-group">
-														<label for="pref_mailings_optin" style="display:block;">Email reminders sturen?</label>
-														<input name="pref_mailings_optin" type="checkbox" {{ $user->pref_mailings_optin ? 'checked' : '' }}>
+														<label for="pref_use_ct_numbering" style="display:block;">Gebruik CalculatieTool nummering</label>
+														<input name="pref_use_ct_numbering" type="checkbox" {{ $user->pref_use_ct_numbering ? 'checked' : '' }}>
 													</div>
 												</div>
 											</div>
@@ -542,15 +542,6 @@ $(document).ready(function() {
 													</div>
 												</div>
 											</div>
-											<!--<div class="row">
-												<div class="col-md-3">
-													<div class="form-group">
-														<label for="administration_cost">Administratiekosten</label>
-														<input name="administration_cost" id="administration_cost" type="text" class="form-control" value="{{ str_replace('.', ',', $user->administration_cost) }}" />
-													</div>
-												</div>
-											</div>
-											-->
 											<h5>Vorderingswaaeschuwing van de factuur (7 dagen na de laatste (2e) betalingsherinnering)</h5>
 											<div class="row">
 												<div class="form-group">
@@ -607,7 +598,7 @@ $(document).ready(function() {
 						<div id="notepad" class="tab-pane">
 
 							<form method="POST" action="myaccount/notepad/save" accept-charset="UTF-8">
-                                                        {!! csrf_field() !!}
+                            !! csrf_field() !!}
 
 							<h4>Kladblok</h4>
 							<div class="row">

@@ -473,10 +473,10 @@ class UserController extends Controller {
 	public function doUpdatePreferences(Request $request)
 	{
 		$user = Auth::user();
-		if ($request->get('pref_mailings_optin'))
-			$user->pref_mailings_optin = true;
+		if ($request->get('pref_use_ct_numbering'))
+			$user->pref_use_ct_numbering = true;
 		else
-			$user->pref_mailings_optin = false;
+			$user->pref_use_ct_numbering = false;
 
 		if ($request->get('pref_hourrate_calc'))
 			$user->pref_hourrate_calc = str_replace(',', '.', str_replace('.', '' , $request->get('pref_hourrate_calc')));
