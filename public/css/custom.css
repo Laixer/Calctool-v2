@@ -47,7 +47,7 @@ div.featured-box {
 /* kleur icoon, background inverted on hoover*/
 div.featured-box i.fa:hover {
 	color: #4E4E4E;
-	background: #79BB00;
+	background: #517A00;
 }
 
 /* panel accordion box*/
@@ -56,7 +56,7 @@ div.featured-box i.fa:hover {
 }
 
 .panel-default > .panel-heading:hover {
-	background: #79BB00;
+	background: #517A00;
 }
 
 /* kleur tabbladen*/
@@ -133,18 +133,18 @@ div.toggle-chapter > label {
 
 div.toggle-chapter.active > label {
 	color: #fff;
-	background: #79BB00;
-	border: #79BB00 2px solid;
+	background: #517A00;
+	border: #517A00 2px solid;
 }
 
 div.toggle-chapter > label:hover {
 	color: #fff;
-	background: #79BB00;
-	border: #79BB00 2px solid;
+	background: #517A00;
+	border: #517A00 2px solid;
 }
 
 .btn-primary-chapter, .btn-primary-chapter:hover {
-	background: #79BB00 !important;
+	background: #517A00 !important;
 }
 
 /* Actieve werkzaamheden grijs, niet actief grijze border, incl knop */
@@ -193,7 +193,7 @@ div.toggle-activity > label:hover {
 	position: relative;
 	display: inline-block;
 	text-decoration: none;
-	color: orange;
+	color: #4e4e4e;
 }
 
 .wizard span:before {

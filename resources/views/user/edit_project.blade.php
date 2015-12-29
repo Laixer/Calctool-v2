@@ -286,12 +286,14 @@ else {
 						<li id="tab-calc">
 							<a href="#calc" data-toggle="tab">Uurtarief & Winstpercentages</a>
 						</li>
+						<!--
 						<li id="tab-hour">
 							<a href="#hour" data-toggle="tab">Urenregistratie</a>
 						</li>
 						<li id="tab-purchase">
 							<a href="#purchase" data-toggle="tab">Inkoopfacturen</a>
 						</li>
+						-->
 						<li id="tab-communication">
 							<a href="#communication" data-toggle="tab">Communicatie opdrachtgever </a>
 						</li>

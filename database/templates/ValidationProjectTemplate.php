@@ -2450,7 +2450,7 @@ class ValidationProjectTemplate {
 	       	$activity17->save();
 
 				$calculation_labor_activity17 = new MoreLabor;
-				$calculation_labor_activity17->rate = '10.00';
+				$calculation_labor_activity17->rate = '20.00';
 				$calculation_labor_activity17->amount = '10';
 				$calculation_labor_activity17->activity_id = $activity17->id;
 				$calculation_labor_activity17->save();
@@ -2549,7 +2549,7 @@ class ValidationProjectTemplate {
 	       	$activity18->save();
 
 				$calculation_labor_activity18 = new MoreLabor;
-				$calculation_labor_activity18->rate = '10.00';
+				$calculation_labor_activity18->rate = '20.00';
 				$calculation_labor_activity18->amount = '11';
 				$calculation_labor_activity18->activity_id = $activity18->id;
 				$calculation_labor_activity18->save();
@@ -2648,7 +2648,7 @@ class ValidationProjectTemplate {
 	       	$activity19->save();
 
 				$calculation_labor_activity19 = new MoreLabor;
-				$calculation_labor_activity19->rate = '10.00';
+				$calculation_labor_activity19->rate = '20.00';
 				$calculation_labor_activity19->amount = '12';
 				$calculation_labor_activity19->activity_id = $activity19->id;
 				$calculation_labor_activity19->save();
@@ -2747,7 +2747,7 @@ class ValidationProjectTemplate {
 	       	$activity20->save();
 
 				$calculation_labor_activity20 = new MoreLabor;
-				$calculation_labor_activity20->rate = '10.00';
+				$calculation_labor_activity20->rate = '20.00';
 				$calculation_labor_activity20->amount = '13';
 				$calculation_labor_activity20->activity_id = $activity20->id;
 				$calculation_labor_activity20->save();
