@@ -727,7 +727,7 @@ else {
                             {!! csrf_field() !!}
                             <input type="hidden" name="project" value="{{ $project->id }}"/>
 
-                           <h4>Communicatie met opdrachtgever <a data-toggle="tooltip" data-placement="bottom" data-original-title="Uitsluitend bij een met e-mail verzonden offerte." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h5>
+                           <h4>Communicatie met opdrachtgever <a data-toggle="tooltip" data-placement="bottom" data-original-title="Alleen mogelijk wanneer een offerte verzonden is per e-mail op de offerte pagina." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h5>
 
 							<h5><strong>Jouw opmerkingen</strong></h5>
 							<div class="row">
@@ -737,7 +737,7 @@ else {
 									</div>
 								</div>
 							</div>
-							<h5><strong>Opmerkingen van je opdrachtegver</strong></h5>
+							<h5><strong>Opmerkingen van je opdrachtgever</strong></h5>
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-12">

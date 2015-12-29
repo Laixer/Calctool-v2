@@ -211,7 +211,7 @@ $(document).ready(function() {
 
 						<div class="col-md-3">
 							<div class="form-group">
-								<label for="iban">Blokkeeringsdatum</label>
+								<label for="iban">Blokkeringsdatum</label>
 								<input name="bandate" id="bandate" type="date" value="{{ ($user->banned ? date('Y-m-d', strtotime($user->banned)) : '') }}" class="form-control"/>
 							</div>
 						</div>

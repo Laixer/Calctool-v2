@@ -103,10 +103,10 @@
 											<strong>Projecten</strong>
 										</span>
 									</a>
-									<a href="/admin/resource" class="btn btn-primary add_to_cart"><i class="fa fa-pencil"></i> Projectbeheer</a>
+									<a href="/admin/project" class="btn btn-primary add_to_cart"><i class="fa fa-pencil"></i> Projectbeheer</a>
 								</figure>
 								<div class="item-box-desc">
-									<a href="/admin/resource"><h4>Projecten</h4></a>
+									<a href="/admin/project"><h4>Projecten</h4></a>
 									<small class="styleColor">{{ \Calctool\Models\Project::count() }} Project(en)</small>
 								</div>
 							</div>
