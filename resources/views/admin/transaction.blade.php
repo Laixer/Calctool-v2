@@ -8,7 +8,6 @@ use \Calctool\Models\User;
 
 @section('content')
 
-<?# -- WRAPPER -- ?>
 <div id="wrapper">
 
 	<section class="container">
@@ -28,7 +27,6 @@ use \Calctool\Models\User;
 
 			<div class="white-row">
 			<table class="table table-striped">
-				<?# -- table head -- ?>
 				<thead>
 					<tr>
 						<th class="col-md-2">Transactie</th>
@@ -41,7 +39,6 @@ use \Calctool\Models\User;
 					</tr>
 				</thead>
 
-				<!-- table items -->
 				<tbody>
 				@foreach (Payment::orderBy('created_at', 'desc')->get() as $payment)
 					<tr>
@@ -62,5 +59,4 @@ use \Calctool\Models\User;
 	</section>
 
 </div>
-<!-- /WRAPPER -->
 @stop

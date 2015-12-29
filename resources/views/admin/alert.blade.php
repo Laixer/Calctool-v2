@@ -60,7 +60,7 @@
 			</table>
 
 			<form method="POST" action="/admin/alert/new" accept-charset="UTF-8">
-                        {!! csrf_field() !!}
+            {!! csrf_field() !!}
 			<h4>Nieuwe melding</h4>
 			<div class="row">
 
