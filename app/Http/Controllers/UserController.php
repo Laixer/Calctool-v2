@@ -548,6 +548,7 @@ class UserController extends Controller {
 		if ($order)
 			return json_encode(['success' => 0]);
 
+		Redis::del('promo:'.Auth::user()->username);
 		Redis::set('promo:'.Auth::user()->username, $promo->id);
 		Redis::expire('promo:'.Auth::user()->username, 600);
 
