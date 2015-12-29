@@ -158,7 +158,7 @@ use \Calctool\Models\Contact;
 					</div>
 				</div>
 
-				<h4>Opmerkingen</h4>
+				<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
 				<div class="row">
 					<div class="form-group">
 						<div class="col-md-12">

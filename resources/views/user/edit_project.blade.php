@@ -511,7 +511,7 @@ else {
 									</div>
 								</div>
 
-								<h5><strong>Opmerkingen</strong></h5>
+								<h5><strong>Kladblok van project </strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h5>
 								<div class="row">
 									<div class="form-group">
 										<div class="col-md-12">
