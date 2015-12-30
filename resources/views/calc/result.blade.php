@@ -498,6 +498,8 @@ $(document).ready(function() {
 												<th class="col-md-2"><span class="pull-right">Gecalculeerd <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de gecalculeerde uren uit de calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i> </a></span></th>
 												<th class="col-md-1"><span class="pull-right">Gesteld <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de gestelde uren vanuit 'Stelposten Stellen'" href="#"><i class="fa fa-info-circle"></i></a></span></th>
 												<th class="col-md-1"><span class="pull-right">Geboekt <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de geboekte uren uit de urenregistratie" href="#"><i class="fa fa-info-circle"></i></a></span></th>
+												<th class="col-md-1"><span class="pull-right">Verschil <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de geboekte uren uit de urenregistratie" href="#"><i class="fa fa-info-circle"></i></a></span></th>
+												<th class="col-md-1"><span class="pull-right">Euro <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de geboekte uren uit de urenregistratie" href="#"><i class="fa fa-info-circle"></i></a></span></th>
 											</tr>
 										</thead>
 
@@ -522,10 +524,10 @@ $(document).ready(function() {
 												<th class="col-md-3"><strong>Totaal Stelposten</strong></th>
 												<th class="col-md-3">&nbsp;</th>
 												<td class="col-md-2"><strong><span class="pull-right">{{ number_format($rs_1, 2, ",",".") }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ number_format($rs_3, 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ number_format($rs_2, 2, ",",".") }}</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{-- number_format($rs_3, 2, ",",".") --}}</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{-- number_format($rs_4, 2, ",",".") --}}</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{-- number_format($rs_5, 2, ",",".") --}}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ number_format($rs_4, 2, ",",".") }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ number_format($rs_5, 2, ",",".") }}</span></strong></td>
 											</tr>
 										</tbody>
 									</table>
