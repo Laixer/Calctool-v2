@@ -97,15 +97,12 @@ class UserController extends Controller {
 		$promo_id = -1;
 
 		if (Redis::exists('promo:'.Auth::user()->username)) {
-			$promo = Promotion::find(Redis::get('promo:'.Auth::user()->username))->where('active', true)->where('valid', '>=', date('Y-m-d H:i:s'))->first();
+			$promo = Promotion::find(Redis::get('promo:'.Auth::user()->username));
 			if ($promo) {
-				$_order = Payment::where('user_id',Auth::id())->where('promotion_id',$promo->id)->first();
-				if (!$_order) {
-					$amount = $promo->amount;
-					$description .= ' Actie:' . $promo->name;
-					$promo_id = $promo->id;
-					Redis::del('promo:'.Auth::user()->username);
-				}
+				$amount = $promo->amount;
+				$description .= ' Actie:' . $promo->name;
+				$promo_id = $promo->id;
+				Redis::del('promo:'.Auth::user()->username);
 			}
 		}
 
