@@ -368,6 +368,28 @@ class CalcController extends Controller {
 			return json_encode(['success' => 1]);
 	}
 
+	public function doUpdateUseTimesheet(Request $request)
+	{
+		$this->validate($request, [
+			'state' => array('required'),
+			'activity' => array('required','integer')
+		]);
+
+		$activity = Activity::find($request->input('activity'));
+		if (!$activity)
+			return json_encode(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
+
+		$activity->use_timesheet = $request->get('state');
+
+		$activity->save();
+
+		return json_encode(['success' => 1]);
+	}
+
 	public function doDeleteActivity(Request $request)
 	{
 		$this->validate($request, [

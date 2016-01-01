@@ -705,6 +705,11 @@ var n = this,
 				$notecurr.attr('data-note', $('#note').val());
 			}).fail(function(e) { console.log(e); });
 		});
+		$('.use-timesheet').bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
+			$.post("/calculation/activity/usetimesheet", {project: {{ $project->id }}, activity: $(this).data('id'), state: state}, function(){
+				location.reload();
+			}).fail(function(e) { console.log(e); });
+		});
 	});
 </script>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -833,9 +838,14 @@ var n = this,
 											<label>{{ $activity->activity_name }}</label>
 											<div class="toggle-content">
 												<div class="row">
-													<div class="col-md-4"></div>
 													<div class="col-md-2"></div>
-	    											<div class="col-md-2"></div>
+													<div class="col-md-2"></div>
+	    											<div class="col-md-4 text-right">
+	    												<div class="form-group">
+															<label for="use_timesheet">Urenregistratie gebriuken</label>
+															<input name="use_timesheet" class="use-timesheet" data-id="{{ $activity->id }}" type="checkbox" {{ $activity->use_timesheet ? 'checked' : '' }}>
+														</div>
+													</div>
 													<div class="col-md-1 text-right"><strong>{{ Part::find($activity->part_id)->part_name=='subcontracting' ? 'Onderaanneming' : 'Aanneming' }}</strong></div>
 													<div class="col-md-3 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving toevoegen</button></div>
 												</div>
@@ -847,8 +857,7 @@ var n = this,
 												</div>
 												<table class="table table-striped" data-id="{{ $activity->id }}">
 													<?php
-													$count = EstimateLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
-													if ($count) {
+													if ($activity->use_timesheet) {
 													?>
 													<thead>
 														<tr>
@@ -876,7 +885,7 @@ var n = this,
 
 													<tbody>
 														<?php
-														if ($count) {
+														if ($activity->use_timesheet) {
 														?>
 														@foreach (EstimateLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->get() as $labor)
 														<tr data-id="{{ $labor->hour_id }}">

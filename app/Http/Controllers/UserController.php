@@ -123,7 +123,7 @@ class UserController extends Controller {
 				"token" => $token,
 				"uid" => Auth::id(),
 				"incr" => $increment_months,
-				"promo" => $promo_id;
+				"promo" => $promo_id,
 			),
 		));
 
