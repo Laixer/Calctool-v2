@@ -1499,6 +1499,8 @@ class ValidationProjectTemplate {
 				$Estimate_labor_activity11 = new EstimateLabor;
 				$Estimate_labor_activity11->rate = '10.00';
 				$Estimate_labor_activity11->amount = '20';
+				$Estimate_labor_activity11->set_rate = '10.00';
+				$Estimate_labor_activity11->set_amount = '0';
 				$Estimate_labor_activity11->original = true;
 				$Estimate_labor_activity11->isset = true;
 				$Estimate_labor_activity11->activity_id = $activity11->id;
@@ -1659,6 +1661,8 @@ class ValidationProjectTemplate {
 				$Estimate_labor_activity12 = new EstimateLabor;
 				$Estimate_labor_activity12->rate = '10.00';
 				$Estimate_labor_activity12->amount = '21';
+				$Estimate_labor_activity12->set_rate = '10.00';
+				$Estimate_labor_activity12->set_amount = '0';
 				$Estimate_labor_activity12->original = true;
 				$Estimate_labor_activity12->isset = true;
 				$Estimate_labor_activity12->activity_id = $activity12->id;
@@ -2145,6 +2149,8 @@ class ValidationProjectTemplate {
 				$Estimate_labor_activity15 = new EstimateLabor;
 				$Estimate_labor_activity15->rate = '11.00';
 				$Estimate_labor_activity15->amount = '24';
+				$Estimate_labor_activity15->set_rate = '11.00';
+				$Estimate_labor_activity15->set_amount = '0';
 				$Estimate_labor_activity15->original = true;
 				$Estimate_labor_activity15->isset = true;
 				$Estimate_labor_activity15->activity_id = $activity15->id;
@@ -2305,6 +2311,8 @@ class ValidationProjectTemplate {
 	  			$Estimate_labor_activity16 = new EstimateLabor;
 				$Estimate_labor_activity16->rate = '11.00';
 				$Estimate_labor_activity16->amount = '25';
+				$Estimate_labor_activity16->set_rate = '11.00';
+				$Estimate_labor_activity16->set_amount = '0';
 				$Estimate_labor_activity16->original = true;
 				$Estimate_labor_activity16->isset = true;
 				$Estimate_labor_activity16->activity_id = $activity16->id;
