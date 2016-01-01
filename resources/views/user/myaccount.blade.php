@@ -84,6 +84,18 @@ $(document).ready(function() {
 			});
 		}
 	});
+	
+	 $('#summernote').summernote({
+	            height: $(this).attr("data-height") || 200,
+	            toolbar: [
+	                ["fontsize", ["fontsize"]],
+	                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+	                ["para", ["ul", "ol", "paragraph"]],
+	                ["table", ["table"]],
+	                ["media", ["link", "picture", "video"]],
+	                ["misc", ["codeview"]]
+	            ]
+	        })
 });
 </script>
 <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModal" aria-hidden="true">
@@ -598,13 +610,14 @@ $(document).ready(function() {
 						<div id="notepad" class="tab-pane">
 
 							<form method="POST" action="myaccount/notepad/save" accept-charset="UTF-8">
-                            !! csrf_field() !!}
+                            {!! csrf_field() !!}
 
 							<h4>Kladblok</h4>
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-12">
-										<textarea name="notepad" id="notepad" rows="15" class="form-control">{{ $user->notepad }}</textarea>
+										<textarea name="notepad" id="summernote" rows="15" class="form-control">{{ $user->notepad }}</textarea>
+									
 									</div>
 								</div>
 							</div>

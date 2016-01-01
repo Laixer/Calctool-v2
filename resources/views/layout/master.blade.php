@@ -101,6 +101,7 @@
 		<script src="/plugins/owl-carousel/owl.carousel.min.js"></script>
 		<script src="/plugins/x-editable/js/bootstrap-editable.min.js"></script>
 		<script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+		<script src="/plugins/summernote/summernote.min.js"></script>
 
 		<script src="/js/scripts.js"></script>
 	</body>

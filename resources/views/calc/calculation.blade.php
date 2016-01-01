@@ -729,14 +729,24 @@ var n = this,
 			$notecurr = $(this);
 			$curval = $(this).attr('data-note');
 			$curid = $(this).attr('data-id');
-			$('#note').val($curval);
+			//$('#note').val($curval);
+			$('.summernote').code($curval);
 			$('#noteact').val($curid);
 		});
 		$('#descModal').on('hidden.bs.modal', function() {
-			$.post("/calculation/noteactivity", {project: {{ $project->id }}, activity: $('#noteact').val(), note: $('#note').val()}, function(){
-				$notecurr.attr('data-note', $('#note').val());
+			$.post("/calculation/noteactivity", {project: {{ $project->id }}, activity: $('#noteact').val(), note: $('.summernote').code()}, function(){
+				$notecurr.attr('data-note', $('.summernote').code(''));
 			}).fail(function(e) { console.log(e); });
 		});
+
+        $('.summernote').summernote({
+            height: $(this).attr("data-height") || 200,
+            toolbar: [
+                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+                ["para", ["ul", "ol", "paragraph"]],
+                ["media", ["link", "picture"]],
+            ]
+        })
 	});
 </script>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -793,7 +803,7 @@ var n = this,
 			<div class="modal-body">
 				<div class="form-group">
 					<div class="col-md-12">
-						<textarea name="note" id="note" rows="5" class="form-control"></textarea>
+						<textarea name="note" id="note" rows="5" class="form-control summernote"></textarea>
 						<input type="hidden" name="noteact" id="noteact" />
 					</div>
 				</div>

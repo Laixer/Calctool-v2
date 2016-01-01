@@ -10,6 +10,7 @@ use \Calctool\Models\Offer;
 use \Calctool\Models\Invoice;
 use \Calctool\Models\Wholesale;
 use \Calctool\Models\ProjectShare;
+use \Calctool\Models\RelationKind;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
@@ -231,7 +232,30 @@ else {
 			});
     	});
     	$("[name='toggle-mail-reminder']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+		
+	        $('#summernote').summernote({
+	            height: $(this).attr("data-height") || 200,
+	            toolbar: [
+	                ["fontsize", ["fontsize"]],
+	                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+	                ["para", ["ul", "ol", "paragraph"]],
+	                ["table", ["table"]],
+	                ["media", ["link", "picture", "video"]],
+	            ]
+	        })
+
+	        $('.summernote').summernote({
+	            height: $(this).attr("data-height") || 200,
+	            toolbar: [
+	                ["fontsize", ["fontsize"]],
+	                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+	                ["para", ["ul", "ol", "paragraph"]],
+	                ["table", ["table"]],
+	                ["media", ["link", "picture", "video"]],
+	            ]
+	        })
 	});
+
 </script>
 <div id="wrapper">
 
@@ -286,9 +310,11 @@ else {
 						<li id="tab-calc">
 							<a href="#calc" data-toggle="tab">Uurtarief & Winstpercentages</a>
 						</li>
+						@if ($share && $share->client_note )
 						<li id="tab-communication">
 							<a href="#communication" data-toggle="tab">Communicatie opdrachtgever </a>
 						</li>
+						@endif
 					</ul>
 
 					<div class="tab-content">
@@ -513,9 +539,11 @@ else {
 
 								<h5><strong>Kladblok van project </strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h5>
 								<div class="row">
-									<div class="form-group">
+									<div class="form-group ">
 										<div class="col-md-12">
-											<textarea name="note" id="note" rows="5" class="form-control">{{ Input::old('note') ? Input::old('note') : $project->note }}</textarea>
+										<!-- <textarea class="summernote form-control" data-height="200"></textarea> -->
+										<textarea name="note" id="summernote" data-height="200" class="form-control">{{ Input::old('note') ? Input::old('note') : $project->note }}</textarea>
+
 										</div>
 									</div>
 								</div>
@@ -723,36 +751,73 @@ else {
 							</div>-->
 						</div>
 						<div id="communication" class="tab-pane">
-							<form method="POST" action="/project/update/communication" accept-charset="UTF-8">
-                            {!! csrf_field() !!}
-                            <input type="hidden" name="project" value="{{ $project->id }}"/>
+							<div class="form-group">
+								<div class="col-md-9">
+									<form method="POST" action="/project/update/communication" accept-charset="UTF-8">
+		                            {!! csrf_field() !!}
+		                            <input type="hidden" name="project" value="{{ $project->id }}"/>
 
-                           <h4>Communicatie met opdrachtgever <a data-toggle="tooltip" data-placement="bottom" data-original-title="Alleen mogelijk wanneer een offerte verzonden is per e-mail op de offerte pagina." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h5>
-
-							<h5><strong>Jouw opmerkingen</strong></h5>
-							<div class="row">
-								<div class="form-group">
-									<div class="col-md-12">
-										<textarea name="user_note" id="user_note" rows="10" class="form-control">{{ $share ? $share->user_note : ''}}</textarea>
+		                           	<h5><strong>Vraag opmerkingen van je opdrachtgever </strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Alleen mogelijk wanneer een offerte verzonden is per e-mail op de offerte pagina." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h5>
+									<div class="row">
+										<div class="form-group">
+											<div class="col-md-12">
+												<div class="white-row well">
+													{!!  $share ? $share->client_note : ''!!}
+												</div>
+											</div>
+										</div>
 									</div>
+									<h5><strong>Jouw reactie</strong></h5>
+									<div class="row">
+										<div class="form-group">
+											<div class="col-md-12">
+												<textarea name="user_note" id="user_note" rows="10" class="summernote form-control">{{ $share ? $share->user_note : ''}}</textarea>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+											<div class="col-md-12">
+												<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="col-md-3">
+									<div class="row">
+										<h5><strong>Gegevens van uw relatie</strong></h5>
+									</div>
+									<div class="row">
+										<label>Opdrachtgever </label>
+										<?php $relation = Relation::find($project->client_id); ?>
+										@if (!$relation->isActive())
+											<span> {{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</span>
+										@else
+											<span> {{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</span>
+										@endif
+									</div>
+									<div class="row">
+										<label for="name">Straat</label>
+										<span>{{ $relation->address_street }} {{ $relation->address_number }}</span>
+									</div>
+									<div class="row">
+										<label for="name">Postcode</label>
+										<span>{{ $relation->address_postal }}</span>
+									</div>
+									<div class="row">
+										<label for="name">Plaats</label>
+										<span>{{ $relation->address_city }}</span>
+									</div>
+									<div class="row">
+										<label for="name">Contactpersoon</label>
+										<span>{{ $relation->address_city }}</span>
+									</div>
+									<div class="row">
+										<label for="name">Telefoon</label>
+										<span>{{ $relation->address_city }}</span>
+									</div>									
 								</div>
 							</div>
-							<h5><strong>Opmerkingen van je opdrachtgever</strong></h5>
-							<div class="row">
-								<div class="form-group">
-									<div class="col-md-12">
-										<textarea name="client_note" readonly="readonly" id="client_note" rows="10" class="form-control">{{  $share ? $share->client_note : ''}}</textarea>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-									<div class="col-md-12">
-										<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
-									</div>
-								</div>
-							</form>
 						</div>
-					</div>
 				</div>
 
 		</div>

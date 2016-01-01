@@ -1170,7 +1170,7 @@ function invoice_condition($offer) {
 		<tr>
 		  <td class="qty">{{ $chapter->chapter_name }}</td>
 		  <td class="qty">{{ $activity->activity_name }}</td>
-		  <td class="qty"><br><span>{{ $activity->note }}</td>
+		  <td class="qty"><br><span>{!! $activity->note !!}</td>
 		</tr>
 		@endforeach
 		@endforeach
