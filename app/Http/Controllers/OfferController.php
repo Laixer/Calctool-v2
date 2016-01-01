@@ -12,6 +12,7 @@ use \Calctool\Http\Controllers\InvoiceController;
 use \Calctool\Models\Invoice;
 use \Calctool\Models\ProjectShare;
 use \Calctool\Models\Contact;
+use \Calctool\Models\Relation;
 use \Calctool\Calculus\ResultEndresult;
 use \Calctool\Calculus\InvoiceTerm;
 
