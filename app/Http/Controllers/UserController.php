@@ -120,9 +120,10 @@ class UserController extends Controller {
 			"webhookUrl" => url('payment/webhook/'),
 			"redirectUrl" => url('payment/order/'.$token),
 			"metadata"    => array(
-			"token" => $token,
-			"uid" => Auth::id(),
-			"incr" => $increment_months
+				"token" => $token,
+				"uid" => Auth::id(),
+				"incr" => $increment_months,
+				"promo" => $promo_id;
 			),
 		));
 
@@ -135,10 +136,6 @@ class UserController extends Controller {
 		$order->description = $description;
 		$order->method = '';
 		$order->user_id = Auth::id();
-		if ($promo_id != -1) {
-			$order->promotion_id = $promo_id;
-		}
-
 		$order->save();
 
 		$log = new Audit;
@@ -166,6 +163,10 @@ class UserController extends Controller {
 
 		if ($payment->metadata->uid != $order->user_id)
 			return;
+
+		if ($payment->metadata->promo != -1) {
+			$order->promotion_id = $payment->metadata->promo;
+		}
 
 		$order->status = $payment->status;
 		$order->method = $payment->method;
