@@ -1447,7 +1447,7 @@ if (!$project || !$project->isOwner()) {
 						<tr>
 							<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 							<td class="col-md-3">{{ $activity->activity_name }}</td>
-							<td class="col-md-7"><span>{{ $activity->note }}</td>
+							<td class="col-md-7"><span>{!! $activity->note !!}</td>
 						</tr>
 						@endforeach
 						@endforeach
