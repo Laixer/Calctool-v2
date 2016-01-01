@@ -24,6 +24,7 @@ use \Storage;
 use \Auth;
 use \Hash;
 use \Redis;
+use \Mailgun;
 
 class AdminController extends Controller {
 
@@ -73,7 +74,7 @@ class AdminController extends Controller {
 
 	}
 
-	public function doRefund(Request $request)
+	public function doRefund(Request $request, $transcode)
 	{
 		$this->validate($request, [
 			'amount' => array('required'),
@@ -84,7 +85,7 @@ class AdminController extends Controller {
 		$mollie = new \Mollie_API_Client;
 		$mollie->setApiKey(env('MOLLIE_API', null));
 
-		$payment = $mollie->payments->get($request->Input('transcode'));
+		$payment = $mollie->payments->get($transcode);
 
 		if ($subtract > ($payment->amount-$payment->amountRefunded))
 			return back()->withErrors($validator)->withInput($request->all());

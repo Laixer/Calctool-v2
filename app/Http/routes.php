@@ -323,7 +323,7 @@ Route::group(array('before' => 'admin'), function()
 	Route::get('admin/phpinfo', function() {
 		return view('admin.phpinfo');
 	});
-	Route::post('admin/transaction/{transcode}/refund', array('as' => 'user', 'uses' => 'AdminController@doRefund'));
+	Route::post('admin/transaction/{transcode}/refund', 'AdminController@doRefund');
 	Route::get('admin/payment', function() {
 		return view('admin.transaction');
 	});
