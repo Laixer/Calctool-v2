@@ -523,6 +523,11 @@ var n = this,
 				$notecurr.attr('data-note', $('#note').val());
 			}).fail(function(e) { console.log(e); });
 		});
+		$('.use-timesheet').bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
+			$.post("/calculation/activity/usetimesheet", {project: {{ $project->id }}, activity: $(this).data('id'), state: state}, function(){
+				location.reload();
+			}).fail(function(e) { console.log(e); });
+		});
 	});
 </script>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -632,16 +637,18 @@ var n = this,
 									<div class="toogle">
 
 										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
-										<?php
-										$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
-										?>
 										<div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
 											<label>{{ $activity->activity_name }}</label>
 											<div class="toggle-content">
 												<div class="row">
-													<div class="col-md-4"></div>
+													<div class="col-md-4">
+	    												<div class="form-group">
+															<label for="use_timesheet">Urenregistratie gebriuken</label>
+															<input name="use_timesheet" class="use-timesheet" data-id="{{ $activity->id }}" type="checkbox" {{ $activity->use_timesheet ? 'checked' : '' }}>
+														</div>
+													</div>
 													<?php
-													if ($count) {
+													if ($activity->use_timesheet) {
 													?>
 													<div class="col-md-4"><strong>Aanneming</strong></div>
 													<?php } else { ?>
@@ -673,7 +680,7 @@ var n = this,
 												</div>
 												<table class="table table-striped" data-id="{{ $activity->id }}">
 													<?php
-													if ($count) {
+													if ($activity->use_timesheet) {
 													?>
 													<thead>
 														<tr>
@@ -704,7 +711,7 @@ var n = this,
 
 													<tbody>
 														<?php
-														if ($count) {
+														if ($activity->use_timesheet) {
 														?>
 														@foreach (MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->get() as $labor)
 														<tr data-id="{{ Timesheet::find($labor->hour_id)->id }}">
