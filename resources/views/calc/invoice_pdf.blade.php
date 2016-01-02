@@ -1773,7 +1773,7 @@ if ($cnt>1)
       <tr>
         <td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
         <td class="col-md-3">{{ $activity->activity_name }}</td>
-        <td class="col-md-7"><span>{{ $activity->note }}</td>
+        <td class="col-md-7"><span>{!! $activity->note !!}</td>
       </tr>
       @endforeach
       @endforeach
@@ -1814,7 +1814,7 @@ if ($cnt>1)
       <tr>
         <td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
         <td class="col-md-3">{{ $activity->activity_name }}</td>
-        <td class="col-md-7"><span>{{ $activity->note }}</td>
+        <td class="col-md-7"><span>{!! $activity->note !!}</td>
       </tr>
       @endforeach
       @endforeach
@@ -1835,7 +1835,7 @@ if ($cnt>1)
       <tr>
         <td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
         <td class="col-md-3">{{ $activity->activity_name }}</td>
-        <td class="col-md-7"><span>{{ $activity->note }}</td>
+        <td class="col-md-7"><span>{!! $activity->note !!}</td>
       </tr>
       @endforeach
       @endforeach
