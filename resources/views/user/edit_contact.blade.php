@@ -1,10 +1,16 @@
 <?php
+
+use \Calctool\Models\RelationKind;
+use \Calctool\Models\ContactFunction;
+use \Calctool\Models\Contact;
+use \Calctool\Models\Relation;
+
 $common_access_error = false;
-$contact = \Calctool\Models\Contact::find(Route::Input('contact_id'));
+$contact = Contact::find(Route::Input('contact_id'));
 if (!$contact) {
 	$common_access_error = true;
 } else {
-	$relation = \Calctool\Models\Relation::find($contact->relation_id);
+	$relation = Relation::find($contact->relation_id);
 	if (!$relation || !$relation->isOwner()) {
 		$common_access_error = true;
 	}
@@ -128,12 +134,12 @@ if (!$contact) {
 						</div>
 					</div>
 
-					@if (\Calctool\Models\RelationKind::find($relation->kind_id)->kind_name=='zakelijk')
+					@if (RelationKind::find($relation->kind_id)->kind_name=='zakelijk')
 					<div class="col-md-4 company">
 						<div class="form-group">
 							<label for="contactfunction">Functie*</label>
 							<select name="contactfunction" id="contactfunction" class="form-control pointer">
-							@foreach (\Calctool\Models\ContactFunction::all() as $function)
+							@foreach (ContactFunction::all() as $function)
 								<option {{ $contact->function_id==$function->id ? 'selected' : '' }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
 							@endforeach
 							</select>
