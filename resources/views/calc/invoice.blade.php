@@ -973,7 +973,7 @@ if (!$project || !$project->isOwner()) {
 				@else
 				<tr>
 					<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 0% BTW categorie</i></td>
-					<td class="col-md-2">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_0'), 2, ",",".") }}</td>
+					<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_0'), 2, ",",".") }}</td>
 					<td class="col-md-2">&nbsp;</td>
 					<td class="col-md-2">&nbsp;</td>
 				</tr>
@@ -1995,7 +1995,7 @@ if (!$project || !$project->isOwner()) {
 					<tr>
 						<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 						<td class="col-md-3">{{ $activity->activity_name }}</td>
-						<td class="col-md-7"><span>{{ $activity->note }}</td>
+						<td class="col-md-7"><span>{!! $activity->note !!}</td>
 					</tr>
 					@endforeach
 					@endforeach
@@ -2019,7 +2019,7 @@ if (!$project || !$project->isOwner()) {
 					<tr>
 						<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 						<td class="col-md-3">{{ $activity->activity_name }}</td>
-						<td class="col-md-7"><span>{{ $activity->note }}</td>
+						<td class="col-md-7"><span>{!! $activity->note !!}</td>
 					</tr>
 					@endforeach
 					@endforeach
@@ -2047,7 +2047,7 @@ if (!$project || !$project->isOwner()) {
 					<tr>
 						<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 						<td class="col-md-3">{{ $activity->activity_name }}</td>
-						<td class="col-md-7"><span>{{ $activity->note }}</td>
+						<td class="col-md-7"><span>{!! $activity->note !!}</td>
 					</tr>
 					@endforeach
 					@endforeach

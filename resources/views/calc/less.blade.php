@@ -654,6 +654,17 @@ var n = this,
 				$notecurr.attr('data-note', $('#note').val());
 			}).fail(function(e) { console.log(e); });
 		});
+
+        $('.summernote').summernote({
+            height: $(this).attr("data-height") || 200,
+            toolbar: [
+                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+                ["para", ["ul", "ol", "paragraph"]],
+                ["table", ["table"]],
+                ["media", ["link", "picture", "video"]],
+            ]
+        })
+
 	});
 </script>
 <div class="modal fade" id="descModal" tabindex="-1" role="dialog" aria-labelledby="descModalLabel" aria-hidden="true">
@@ -661,13 +672,13 @@ var n = this,
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h4 class="modal-title" id="myModalLabel">Omschrijving werkzaamheid</h4>
+				<h4 class="modal-title" id="myModalLabel">Omschrijving aanpassen</h4>
 			</div>
 
 			<div class="modal-body">
 				<div class="form-group">
 					<div class="col-md-12">
-						<textarea name="note" id="note" rows="5" class="form-control"></textarea>
+						<textarea name="note" id="note" rows="5" class="summernote form-control"></textarea>
 						<input type="hidden" name="noteact" id="noteact" />
 					</div>
 				</div>
@@ -728,7 +739,7 @@ var n = this,
 													<div class="col-md-2"></div>
 	    											<div class="col-md-2"></div>
 													<div class="col-md-1 text-right"><strong>{{ Part::find($activity->part_id)->part_name=='subcontracting' ? 'Onderaanneming' : 'Aanneming' }}</strong></div>
-													<div class="col-md-3 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving toevoegen</button></div>
+													<div class="col-md-3 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving aanpassen</button></div>
 												</div>
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>

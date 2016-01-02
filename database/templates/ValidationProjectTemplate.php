@@ -86,8 +86,8 @@ class ValidationProjectTemplate {
 		$project->save();
 
 		$contact = new Contact;
-		$contact->firstname 		= 'Val';
-		$contact->lastname 			= 'Idatie';
+		$contact->firstname 		= 'Vali';
+		$contact->lastname 			= 'Datie';
 		$contact->email 			= 'validatie@calculatietool.com';
 		$contact->mobile 			= '0622222222';
 		$contact->phone 			= '0102222222';

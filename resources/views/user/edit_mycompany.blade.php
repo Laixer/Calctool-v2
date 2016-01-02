@@ -160,6 +160,17 @@ $(document).ready(function() {
 			});
 		}
 	});
+
+	 $('#summernote').summernote({
+	        height: $(this).attr("data-height") || 200,
+	        toolbar: [
+	            ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+	            ["para", ["ul", "ol", "paragraph"]],
+	            ["table", ["table"]],
+	            ["media", ["link", "picture", "video"]],
+	            ["misc", ["codeview"]]
+	        ]
+	    })
 });
 </script>
 <style>
@@ -438,11 +449,11 @@ $(document).ready(function() {
 								</div>
 							</div>
 
-							<h4>Opmerkingen</h4>
+							<h4>Kladblok van mijn bedrijf <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok je eigen bedrijf en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-12">
-										<textarea name="note" id="note" rows="10" class="form-control">{{ Input::old('note') ? Input::old('note') : ($relation ? $relation->note : '') }}</textarea>
+										<textarea name="note" id="summernote" rows="10" class="form-control">{{ Input::old('note') ? Input::old('note') : ($relation ? $relation->note : '') }}</textarea>
 									</div>
 								</div>
 							</div>

@@ -5,6 +5,7 @@ use \Calctool\Models\ContactFunction;
 use \Calctool\Models\Contact;
 use \Calctool\Models\Relation;
 
+
 $common_access_error = false;
 $contact = Contact::find(Route::Input('contact_id'));
 if (!$contact) {

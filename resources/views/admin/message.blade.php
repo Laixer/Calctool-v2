@@ -8,6 +8,22 @@ use \Calctool\Models\MessageBox;
 
 @section('content')
 
+<script type="text/javascript">
+$(document).ready(function() {
+
+	 $('.summernote').summernote({
+	        height: $(this).attr("data-height") || 200,
+	        toolbar: [
+	            ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+	            ["para", ["ul", "ol", "paragraph"]],
+	            ["table", ["table"]],
+	            ["media", ["link", "picture", "video"]],
+	            ["misc", ["codeview"]]
+	        ]
+	    })
+});
+</script>
+
 <div id="wrapper">
 
 	<section class="container">
@@ -61,7 +77,7 @@ use \Calctool\Models\MessageBox;
 
 					<div class="form-group">
 						<div class="col-md-12">
-							<textarea name="message" id="message" rows="10" class="form-control"></textarea>
+							<textarea name="message" id="message" rows="10" class="summernote form-control"></textarea>
 						</div>
 					</div>
 				</div>

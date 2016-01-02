@@ -9,6 +9,8 @@ use \Calctool\Models\RelationKind;
 use \Calctool\Models\RelationType;
 use \Calctool\Models\Province;
 use \Calctool\Models\Country;
+use \Calctool\Models\Invoice;
+
 
 $common_access_error = false;
 $relation = Relation::find(Route::Input('relation_id'));
@@ -137,6 +139,17 @@ $(document).ready(function() {
 			});
 		}
 	});
+
+    $('#summernote').summernote({
+        height: $(this).attr("data-height") || 200,
+        toolbar: [
+            ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+            ["para", ["ul", "ol", "paragraph"]],
+            ["table", ["table"]],
+            ["media", ["link", "picture", "video"]],
+        ]
+    })
+	      
 });
 </script>
 
@@ -330,7 +343,7 @@ $(document).ready(function() {
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-12">
-										<textarea name="note" id="note" rows="10" class="form-control">{{ Input::old('note') ? Input::old('note') : $relation->note }}</textarea>
+										<textarea name="note" id="summernote" rows="10" class="form-control">{{ Input::old('note') ? Input::old('note') : $relation->note }}</textarea>
 									</div>
 								</div>
 							</div>
@@ -406,6 +419,7 @@ $(document).ready(function() {
 						</div>
 						<div id="invoices" class="tab-pane">
 							<h4>Facturen</h4>
+							@if(0)
 							<table class="table table-striped">
 								<thead>
 									<tr>
@@ -438,6 +452,7 @@ $(document).ready(function() {
 									<a href="/relation-{{ $relation->id }}/contact/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
 								</div>
 							</div>
+							@endif
 						</div>
 					</div>
 				</div>

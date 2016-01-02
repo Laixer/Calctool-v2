@@ -19,6 +19,7 @@ use \Calctool\Models\Timesheet;
 use \Calctool\Models\TimesheetKind;
 use \Calctool\Models\Purchase;
 
+
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner())
@@ -451,6 +452,7 @@ else {
 						<div id="project" class="tab-pane">
 						<form method="post" {!! $offer_last && $offer_last->offer_finish ? 'action="/project/update/note"' : 'action="/project/update"' !!}>
    	  	                {!! csrf_field() !!}
+						<h4>Projectgegevens</h4>	
 							<h5><strong>Gegevens</strong></h5>
 								<div class="row">
 									<div class="col-md-6">
@@ -480,7 +482,7 @@ else {
 									</div>
 
 								</div>
-							<h5><strong>Adresgegevens</strong></h5>
+								<h5><strong>Adresgegevens</strong></h5>
 									<div class="row">
 
 									<div class="col-md-4">
@@ -533,7 +535,9 @@ else {
 									</div>
 
 								</div>
-								<h5><strong>Email herinnering</strong></h5>
+								<h4>Projectinstellingen</h4>
+
+								<h5><strong>Email herinnering aanzetten </strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="De CalculatieTool.com kan bij digitaal verstuurde offertes en facturen respectievelijk na het verstrijken van geldigheid van de offerte of ingestelde betalingsconditie van de factuur auomatische herinneringen sturen naar je klant. Jij als gebruiker wordt hierover altijd geinformeerd met een bericht in je notificaties. De teskt in de te verzenden mail staat default ingesteld in je 'voorkeuren' onder 'mijn account', deze is aanpasbaar per account." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h5>
 								<div class="row">
 									<div class="col-md-2">
 										<div class="form-group">
@@ -542,11 +546,10 @@ else {
 									</div>
 								</div>
 
-								<h5><strong>Kladblok van project </strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h5>
+								<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
 								<div class="row">
 									<div class="form-group ">
 										<div class="col-md-12">
-										<!-- <textarea class="summernote form-control" data-height="200"></textarea> -->
 										<textarea name="note" id="summernote" data-height="200" class="form-control">{{ Input::old('note') ? Input::old('note') : $project->note }}</textarea>
 
 										</div>

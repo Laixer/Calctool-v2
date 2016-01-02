@@ -710,6 +710,17 @@ var n = this,
 				location.reload();
 			}).fail(function(e) { console.log(e); });
 		});
+
+        $('#summernote').summernote({
+            height: $(this).attr("data-height") || 200,
+            toolbar: [
+                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+                ["para", ["ul", "ol", "paragraph"]],
+                ["table", ["table"]],
+                ["media", ["link", "picture", "video"]],
+            ]
+        })
+
 	});
 </script>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -766,7 +777,7 @@ var n = this,
 			<div class="modal-body">
 				<div class="form-group">
 					<div class="col-md-12">
-						<textarea name="note" id="note" rows="5" class="form-control"></textarea>
+						<textarea name="note" id="summernote" rows="5" class="form-control"></textarea>
 						<input type="hidden" name="noteact" id="noteact" />
 					</div>
 				</div>
@@ -842,8 +853,8 @@ var n = this,
 													<div class="col-md-2"></div>
 	    											<div class="col-md-4 text-right">
 	    												<div class="form-group">
-															<label for="use_timesheet">Urenregistratie gebriuken</label>
-															<input name="use_timesheet" class="use-timesheet" data-id="{{ $activity->id }}" type="checkbox" {{ $activity->use_timesheet ? 'checked' : '' }}>
+															<label for="use_timesheet">Urenregistratie gebruiken</label>
+															<input name="use_timesheet" class="use-timesheet btn-xs" data-id="{{ $activity->id }}" type="checkbox" {{ $activity->use_timesheet ? 'checked' : '' }}>
 														</div>
 													</div>
 													<div class="col-md-1 text-right"><strong>{{ Part::find($activity->part_id)->part_name=='subcontracting' ? 'Onderaanneming' : 'Aanneming' }}</strong></div>
