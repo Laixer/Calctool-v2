@@ -1,10 +1,21 @@
 <?php
+
+use \Calctool\Models\Project;
+use \Calctool\Models\User;
+use \Calctool\Models\Relation;
+use \Calctool\Models\Contact;
+use \Calctool\Models\ContactFunction;
+use \Calctool\Models\RelationKind;
+use \Calctool\Models\RelationType;
+use \Calctool\Models\Province;
+use \Calctool\Models\Country;
+
 $common_access_error = false;
-$relation = \Calctool\Models\Relation::find(Route::Input('relation_id'));
+$relation = Relation::find(Route::Input('relation_id'));
 if (!$relation || !$relation->isOwner() || !$relation->isActive()) {
 	$common_access_error = true;
 } else {
-	$contact = \Calctool\Models\Contact::where('relation_id','=',$relation->id)->first();
+	$contact = Contact::where('relation_id','=',$relation->id)->first();
 }
 ?>
 
@@ -167,7 +178,7 @@ $(document).ready(function() {
 
 					<ul class="nav nav-tabs">
 						<li id="tab-company">
-							<a href="#company" data-toggle="tab">{{ ucfirst( \Calctool\Models\RelationKind::find($relation->kind_id)->kind_name) }}e gegevens</a>
+							<a href="#company" data-toggle="tab">{{ ucfirst( RelationKind::find($relation->kind_id)->kind_name) }}e gegevens</a>
 						</li>
 						<li id="tab-contact">
 							<a href="#contact" data-toggle="tab">Contacten</a>
@@ -188,7 +199,7 @@ $(document).ready(function() {
 
 							<form method="POST" action="/relation/update" accept-charset="UTF-8">
 			                {!! csrf_field() !!}
-							<h4>{{ ucfirst(\Calctool\Models\RelationKind::find($relation->kind_id)->kind_name) }}e relatie</h4>
+							<h4>{{ ucfirst(RelationKind::find($relation->kind_id)->kind_name) }}e relatie</h4>
 							<div class="row">
 								<div class="col-md-3">
 									<div class="form-group">
@@ -200,7 +211,7 @@ $(document).ready(function() {
 
 							</div>
 
-							@if (\Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk')
+							@if (RelationKind::find($relation->kind_id)->kind_name == 'zakelijk')
 							<h4 class="company">Bedrijfsgegevens</h4>
 							<div class="row company">
 
@@ -215,7 +226,7 @@ $(document).ready(function() {
 									<div class="form-group">
 										<label for="company_type">Bedrijfstype*</label>
 										<select name="company_type" id="company_type" class="form-control pointer">
-										@foreach (\Calctool\Models\RelationType::all() as $type)
+										@foreach (RelationType::all() as $type)
 											<option {{ $relation->type_id==$type->id ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
 										@endforeach
 										</select>
@@ -295,7 +306,7 @@ $(document).ready(function() {
 									<div class="form-group">
 										<label for="province">Provincie*</label>
 										<select name="province" id="province" class="form-control pointer">
-											@foreach (\Calctool\Models\Province::all() as $province)
+											@foreach (Province::all() as $province)
 												<option {{ $relation->province_id==$province->id ? 'selected' : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
 											@endforeach
 										</select>
@@ -306,7 +317,7 @@ $(document).ready(function() {
 									<div class="form-group">
 										<label for="country">Land*</label>
 										<select name="country" id="country" class="form-control pointer">
-											@foreach (\Calctool\Models\Country::all() as $country)
+											@foreach (Country::all() as $country)
 												<option {{ $relation->country_id==$country->id ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
 											@endforeach
 										</select>
@@ -345,13 +356,12 @@ $(document).ready(function() {
 									</tr>
 								</thead>
 
-								<!-- table items -->
 								<tbody>
-									@foreach (\Calctool\Models\Contact::where('relation_id','=', $relation->id)->get() as $contact)
-									<tr><!-- item -->
+									@foreach (Contact::where('relation_id','=', $relation->id)->get() as $contact)
+									<tr>
 										<td class="col-md-2"><a href="/relation-{{ $relation->id }}/contact-{{ $contact->id }}/edit">{{ $contact->firstname }}</a></td>
 										<td class="col-md-2">{{ $contact->lastname }}</td>
-										<td class="col-md-2">{{ ucfirst(\Calctool\Models\ContactFunction::find($contact->function_id)->function_name) }}</td>
+										<td class="col-md-2">{{ ucfirst(ContactFunction::find($contact->function_id)->function_name) }}</td>
 										<td class="col-md-2">{{ $contact->phone }}</td>
 										<td class="col-md-2">{{ $contact->mobile }}</td>
 										<td class="col-md-2">{{ $contact->email }}</td>
@@ -409,12 +419,12 @@ $(document).ready(function() {
 								</thead>
 
 								<tbody>
-									@foreach (Project::where('user_id','=', User::id())->get() as $project)
+									@foreach (Project::where('user_id','=', Auth::id())->get() as $project)
 									@foreach (Invoice::where('project_id','=', $project->id)->get() as $invoice)
 									<tr>
 										<td class="col-md-2"><a href="/relation-{{ $relation->id }}/contact-{{ $contact->id }}/edit">{{ $contact->firstname }}</a></td>
 										<td class="col-md-2">{{ $contact->lastname }}</td>
-										<td class="col-md-2">{{ ucfirst(\Calctool\Models\ContactFunction::find($contact->function_id)->function_name) }}</td>
+										<td class="col-md-2">{{ ucfirst(ContactFunction::find($contact->function_id)->function_name) }}</td>
 										<td class="col-md-2">{{ $contact->phone }}</td>
 										<td class="col-md-2">{{ $contact->mobile }}</td>
 										<td class="col-md-2">{{ $contact->email }}</td>
@@ -439,7 +449,7 @@ $(document).ready(function() {
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-	<?php $response = \Calctool\Models\RelationKind::where('id','=',Input::old('relationkind'))->first(); ?>
+	<?php $response = RelationKind::where('id','=',Input::old('relationkind'))->first(); ?>
 	if('{{ ($response ? $response->kind_name : 'zakelijk') }}'=='particulier'){
 		$('.company').hide();
 		$('#relationkind option[value="{{ Input::old('relationkind') }}"]').attr("selected",true);

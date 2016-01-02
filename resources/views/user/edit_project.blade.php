@@ -11,6 +11,13 @@ use \Calctool\Models\Invoice;
 use \Calctool\Models\Wholesale;
 use \Calctool\Models\ProjectShare;
 use \Calctool\Models\RelationKind;
+use \Calctool\Models\Province;
+use \Calctool\Models\Country;
+use \Calctool\Models\Chapter;
+use \Calctool\Models\Activity;
+use \Calctool\Models\Timesheet;
+use \Calctool\Models\TimesheetKind;
+use \Calctool\Models\Purchase;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
@@ -378,9 +385,9 @@ else {
 							if ($offer_last) {
 							$i=0;
 							$close = true;
-							$invoice_end = \Calctool\Models\Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first();
+							$invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first();
 							?>
-							@foreach (\Calctool\Models\Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority')->get() as $invoice)
+							@foreach (Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority')->get() as $invoice)
 							<div class="row">
 								<div class="col-md-3">{{ ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1)) }}</div>
 								<div class="col-md-2">
@@ -458,14 +465,14 @@ else {
 											<label for="contractor">Opdrachtgever*</label>
 											@if (!Relation::find($project->client_id)->isActive())
 											<select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} class="form-control pointer">
-											@foreach (\Calctool\Models\Relation::where('user_id','=', Auth::id())->get() as $relation)
-												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ \Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</option>
+											@foreach (Relation::where('user_id','=', Auth::id())->get() as $relation)
+												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</option>
 											@endforeach
 											</select>
 											@else
 											<select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} class="form-control pointer">
-											@foreach (\Calctool\Models\Relation::where('user_id','=', Auth::id())->where('active',true)->get() as $relation)
-												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ \Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</option>
+											@foreach (Relation::where('user_id','=', Auth::id())->where('active',true)->get() as $relation)
+												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</option>
 											@endforeach
 											</select>
 											@endif
@@ -507,7 +514,7 @@ else {
 										<div class="form-group">
 											<label for="province">Provincie*</label>
 											<select name="province" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="province" class="form-control pointer">
-												@foreach (\Calctool\Models\Province::all() as $province)
+												@foreach (Province::all() as $province)
 													<option {{ $project->province_id==$province->id ? 'selected' : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
 												@endforeach
 											</select>
@@ -518,7 +525,7 @@ else {
 										<div class="form-group">
 											<label for="country">Land*</label>
 											<select name="country" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="country" class="form-control pointer">
-												@foreach (\Calctool\Models\Country::all() as $country)
+												@foreach (Country::all() as $country)
 													<option {{ $project->country_id==$country->id ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
 												@endforeach
 											</select>
@@ -643,9 +650,9 @@ else {
 								</thead>
 
 								<tbody>
-									@foreach (\Calctool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
-									@foreach (\Calctool\Models\Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
-									@foreach (\Calctool\Models\Timesheet::where('activity_id','=', $activity->id)->orderBy('register_date','desc')->get() as $timesheet)
+									@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+									@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
+									@foreach (Timesheet::where('activity_id','=', $activity->id)->orderBy('register_date','desc')->get() as $timesheet)
 									<tr data-id="{{ $timesheet->id }}">
 										<td class="col-md-1">{{ date('d-m-Y', strtotime($timesheet->register_date)) }}</td>
 										<td class="col-md-1">{{ number_format($timesheet->register_hour, 2,",",".") }}</td>
@@ -666,7 +673,7 @@ else {
 										<td class="col-md-2">
 											<select name="typename" id="typename" class="form-control-sm-text">
 												<option selected="selected" >Selecteer</option>
-												@foreach (\Calctool\Models\TimesheetKind::all() as $typename)
+												@foreach (TimesheetKind::all() as $typename)
 												<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
 												@endforeach
 											</select>
@@ -703,7 +710,7 @@ else {
 										</thead>
 
 										<tbody>
-											@foreach (\Calctool\Models\Purchase::where('project_id','=', $project->id)->get() as $purchase)
+											@foreach (Purchase::where('project_id','=', $project->id)->get() as $purchase)
 											<tr data-id="{{ $purchase->id }}">
 												<td class="col-md-1">{{ date('d-m-Y', strtotime($purchase->register_date)) }}</td>
 												<td class="col-md-2">{{ $purchase->relation_id ? Relation::find($purchase->relation_id)->company_name : Wholesale::find($purchase->wholesale_id)->company_name }}</td>
@@ -734,7 +741,7 @@ else {
 												<td class="col-md-2"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
 												<td class="col-md-2">
 													<select name="typename" id="typename" class="form-control-sm-text">
-													@foreach (\Calctool\Models\PurchaseKind::all() as $typename)
+													@foreach (PurchaseKind::all() as $typename)
 														<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
 													@endforeach
 													</select>
