@@ -594,7 +594,7 @@ var n = this,
 			<div class="modal-body">
 				<div class="form-group">
 					<div class="col-md-12">
-						<textarea name="note" id="summernote" rows="5" class="summernote form-control"></textarea>
+						<textarea name="note" id="summernote" rows="5" class="form-control"></textarea>
 						<input type="hidden" name="noteact" id="noteact" />
 					</div>
 				</div>
