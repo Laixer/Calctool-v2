@@ -236,7 +236,6 @@ else {
 	        $('#summernote').summernote({
 	            height: $(this).attr("data-height") || 200,
 	            toolbar: [
-	                ["fontsize", ["fontsize"]],
 	                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
 	                ["para", ["ul", "ol", "paragraph"]],
 	                ["table", ["table"]],
@@ -247,7 +246,6 @@ else {
 	        $('.summernote').summernote({
 	            height: $(this).attr("data-height") || 200,
 	            toolbar: [
-	                ["fontsize", ["fontsize"]],
 	                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
 	                ["para", ["ul", "ol", "paragraph"]],
 	                ["table", ["table"]],
