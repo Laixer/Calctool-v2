@@ -477,25 +477,25 @@ class UserController extends Controller {
 		else
 			$user->pref_use_ct_numbering = false;
 
-		if ($request->get('pref_hourrate_calc'))
+		if ($request->get('pref_hourrate_calc') != "")
 			$user->pref_hourrate_calc = str_replace(',', '.', str_replace('.', '' , $request->get('pref_hourrate_calc')));
-		if ($request->get('pref_hourrate_more'))
+		if ($request->get('pref_hourrate_more') != "")
 			$user->pref_hourrate_more = str_replace(',', '.', str_replace('.', '' , $request->get('pref_hourrate_more')));
-		if ($request->get('pref_profit_calc_contr_mat'))
+		if ($request->get('pref_profit_calc_contr_mat') != "")
 			$user->pref_profit_calc_contr_mat = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_calc_contr_mat')));
-		if ($request->get('pref_profit_calc_contr_equip'))
+		if ($request->get('pref_profit_calc_contr_equip') != "")
 			$user->pref_profit_calc_contr_equip = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_calc_contr_equip')));
-		if ($request->get('pref_profit_calc_subcontr_mat'))
+		if ($request->get('pref_profit_calc_subcontr_mat') != "")
 			$user->pref_profit_calc_subcontr_mat = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_calc_subcontr_mat')));
-		if ($request->get('pref_profit_calc_subcontr_equip'))
+		if ($request->get('pref_profit_calc_subcontr_equip') != "")
 			$user->pref_profit_calc_subcontr_equip = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_calc_subcontr_equip')));
-		if ($request->get('pref_profit_more_contr_mat'))
+		if ($request->get('pref_profit_more_contr_mat') != "")
 			$user->pref_profit_more_contr_mat = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_more_contr_mat')));
-		if ($request->get('pref_profit_more_contr_equip'))
+		if ($request->get('pref_profit_more_contr_equip') != "")
 			$user->pref_profit_more_contr_equip = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_more_contr_equip')));
-		if ($request->get('pref_profit_more_subcontr_mat'))
+		if ($request->get('pref_profit_more_subcontr_mat') != "")
 			$user->pref_profit_more_subcontr_mat = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_more_subcontr_mat')));
-		if ($request->get('pref_profit_more_subcontr_equip'))
+		if ($request->get('pref_profit_more_subcontr_equip') != "")
 			$user->pref_profit_more_subcontr_equip = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_more_subcontr_equip')));
 
 		if ($request->get('pref_email_offer'))
@@ -518,11 +518,11 @@ class UserController extends Controller {
 			$user->pref_email_invoice_first_demand = $request->get('pref_email_invoice_first_demand');
 		if ($request->get('pref_email_invoice_last_demand'))
 			$user->pref_email_invoice_last_demand = $request->get('pref_email_invoice_last_demand');
-		if ($request->get('offernumber_prefix'))
+		if ($request->get('offernumber_prefix') != "")
 			$user->offernumber_prefix = $request->get('offernumber_prefix');
-		if ($request->get('invoicenumber_prefix'))
+		if ($request->get('invoicenumber_prefix') != "")
 			$user->invoicenumber_prefix = $request->get('invoicenumber_prefix');
-		if ($request->get('administration_cost'))
+		if ($request->get('administration_cost') != "")
 			$user->administration_cost = str_replace(',', '.', str_replace('.', '' , $request->get('administration_cost')));
 
 		$user->save();
