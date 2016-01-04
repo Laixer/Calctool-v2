@@ -977,7 +977,7 @@ if ($cnt>1)
     <tbody>
       <td class="qty">&nbsp;</td>
       <td class="qty">&nbsp;</td>
-      <td class="qty"><span class="pull-right">{{ number_formatCalculationOverview::laborSuperTotalAmount($project), 2, ",",".") }}</span></td>
+      <td class="qty"><span class="pull-right">{{ number_format(CalculationOverview::laborSuperTotalAmount($project), 2, ",",".") }}</span></td>
       <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
       <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
       <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
@@ -1335,7 +1335,7 @@ if ($cnt>1)
          <tr style="page-break-after: always;">
           <th class="qty"><strong>Totaal onderaanneming</strong></th>
           <th class="qty">&nbsp;</th>
-          <td class="qty"><strong><span class="pull-right">@if (!$onlyactivity) {{ number_formatCalculationOverview::subcontrLaborTotalAmount($project), 2, ",",".") }} @endif</span></strong></td>
+          <td class="qty"><strong><span class="pull-right">@if (!$onlyactivity) {{ number_format(CalculationOverview::subcontrLaborTotalAmount($project), 2, ",",".") }} @endif</span></strong></td>
           <td class="qty"><strong><span class="pull-right">@if (!$onlyactivity) {{ '&euro; '.number_format(CalculationOverview::subcontrLaborTotal($project), 2, ",",".") }} @endif</span></strong></td>
           <td class="qty"><strong><span class="pull-right">@if (!$onlyactivity) {{ '&euro; '.number_format(CalculationOverview::subcontrMaterialTotal($project), 2, ",",".") }} @endif</span></strong></td>
           <td class="qty"><strong><span class="pull-right">@if (!$onlyactivity) {{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, ",",".") }} @endif</span></strong></td>
@@ -1360,7 +1360,7 @@ if ($cnt>1)
         <tr style="page-break-after: always;">
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
-          <td class="qty"><span class="pull-right">@if (!$onlyactivity) {{ number_formatCalculationOverview::laborSuperTotalAmount($project), 2, ",",".") }} @endif</span></td>
+          <td class="qty"><span class="pull-right">@if (!$onlyactivity) {{ number_format(CalculationOverview::laborSuperTotalAmount($project), 2, ",",".") }} @endif</span></td>
           <td class="qty"><span class="pull-right">@if (!$onlyactivity) {{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }} @endif</span></td>
           <td class="qty"><span class="pull-right">@if (!$onlyactivity) {{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }} @endif</span></td>
           <td class="qty"><span class="pull-right">@if (!$onlyactivity) {{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }} @endif</span></td>
@@ -1665,7 +1665,7 @@ if ($cnt>1)
         <tr style="page-break-after: always;">
           <th class="qty"><strong>Totaal aanneming</strong></th>
           <th class="qty">&nbsp;</th>
-          <td class="qty"><strong><span class="pull-right">{{ number_formatMoreOverview::contrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
+          <td class="qty"><strong><span class="pull-right">{{ number_format(MoreOverview::contrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
           <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
           <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
           <td class="qty"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>

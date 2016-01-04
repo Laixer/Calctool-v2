@@ -10,7 +10,7 @@ use \Calctool\Models\RelationType;
 use \Calctool\Models\Province;
 use \Calctool\Models\Country;
 use \Calctool\Models\Invoice;
-
+use \Calctool\Models\Offer;
 
 $common_access_error = false;
 $relation = Relation::find(Route::Input('relation_id'));
@@ -418,31 +418,33 @@ $(document).ready(function() {
 							</form>
 						</div>
 						<div id="invoices" class="tab-pane">
-							<h4>Facturen</h4>
-							@if(0)
+							<h4>Facturen bij relatie</h4>
+							
 							<table class="table table-striped">
 								<thead>
 									<tr>
-										<th class="col-md-2">Voornaam</th>
-										<th class="col-md-2">Achternaam</th>
-										<th class="col-md-2">Functie</th>
-										<th class="col-md-2">Telefoon</th>
-										<th class="col-md-2">Mobiel</th>
-										<th class="col-md-2">Email</th>
+										<th class="col-md-2">Factuur</th>
+										<th class="col-md-2">Project</th>
+										<th class="col-md-2">Bedrag</th>
+										<th class="col-md-2">Datum</th>
+										<th class="col-md-2"></th>
+										<th class="col-md-2">Status</th>
 									</tr>
 								</thead>
 
 								<tbody>
-									@foreach (Project::where('user_id','=', Auth::id())->get() as $project)
-									@foreach (Invoice::where('project_id','=', $project->id)->get() as $invoice)
+									@foreach (Project::where('user_id','=', Auth::id())->where('client_id',$relation->id)->orderBy('created_at','desc')->get() as $project)
+									@foreach (Offer::where('project_id','=', $project->id)->orderBy('created_at','desc')->get() as $offer)
+									@foreach (Invoice::where('offer_id','=', $offer->id)->whereNotNUll('bill_date')->orderBy('created_at','desc')->get() as $invoice)
 									<tr>
-										<td class="col-md-2"><a href="/relation-{{ $relation->id }}/contact-{{ $contact->id }}/edit">{{ $contact->firstname }}</a></td>
-										<td class="col-md-2">{{ $contact->lastname }}</td>
-										<td class="col-md-2">{{ ucfirst(ContactFunction::find($contact->function_id)->function_name) }}</td>
-										<td class="col-md-2">{{ $contact->phone }}</td>
-										<td class="col-md-2">{{ $contact->mobile }}</td>
-										<td class="col-md-2">{{ $contact->email }}</td>
+										<td class="col-md-2">{{ $invoice->invoice_code }}</a></td>
+										<td class="col-md-2">{{ $project->project_name }}</td>
+										<td class="col-md-2">{!! '&euro;&nbsp;'.number_format($invoice->amount, 2, ",",".") !!}</td>
+										<td class="col-md-2">{{ date('d-m-Y', strtotime(DB::table('invoice')->select('created_at')->where('id','=',$invoice->id)->get()[0]->created_at)) }}</td>
+										<td class="col-md-2">{{--  --}}</td>
+										<td class="col-md-2">{{ $invoice->payment_date ? 'Betaald' : 'Gefactureerd' }}</td>
 									</tr>
+									@endforeach
 									@endforeach
 									@endforeach
 								</tbody>
@@ -452,7 +454,7 @@ $(document).ready(function() {
 									<a href="/relation-{{ $relation->id }}/contact/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
 								</div>
 							</div>
-							@endif
+							
 						</div>
 					</div>
 				</div>
