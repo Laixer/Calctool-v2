@@ -86,7 +86,7 @@ use \Calctool\Models\Contact;
 								<option value="{{ $relation->id }}">{!! Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); !!}</option>
 							@endforeach
 							</select>
-							<a href="/relation/new">+ Nieuwe opdrachtgever toevoegen</a>
+							<a href="/relation/new?redirect={{ Request::path() }}">+ Nieuwe opdrachtgever toevoegen</a>
 						</div>
 					</div>
 					<div class="col-md-2">
