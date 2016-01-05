@@ -34,7 +34,7 @@ if (!$message || !$message->isOwner()) {
 
 			<div>
 				<ol class="breadcrumb">
-				  <li><a href="/">Home</a></li>
+				  <li><a href="/">Dashboard</a></li>
 				  <li><a href="/messagebox">Notificaties</a></li>
 				  <li class="active">{{ $message->subject }}</li>
 				</ol>

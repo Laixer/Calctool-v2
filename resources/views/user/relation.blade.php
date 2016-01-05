@@ -9,7 +9,7 @@
 
 			<div>
 			<ol class="breadcrumb">
-			  <li><a href="/">Home</a></li>
+			  <li><a href="/">Dashboard</a></li>
 			  <li>Relaties</li>
 			</ol>
 			<div>

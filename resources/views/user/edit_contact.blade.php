@@ -69,7 +69,7 @@ if (!$contact) {
 			@if (Auth::user()->myCompany() && Auth::user()->myCompany()->id == $relation->id)
 			<div>
 			<ol class="breadcrumb">
-			  <li><a href="/">Home</a></li>
+			  <li><a href="/">Dashboard</a></li>
 			  <li><a href="/mycompany">Mijn bedrijf</a></li>
 			 <li class="active">contact bewerken</li>
 			</ol>
@@ -78,7 +78,7 @@ if (!$contact) {
 			@else
 			<div>
 			<ol class="breadcrumb">
-			  <li><a href="/">Home</a></li>
+			  <li><a href="/">Dashboard</a></li>
 			  <li><a href="/relation">Relaties</a></li>
 			  <li><a href="/relation-{{ $relation->id }}/edit">{{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</a></li>
 			  <li class="active">contact bewerken</li>

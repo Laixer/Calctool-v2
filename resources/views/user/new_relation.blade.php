@@ -108,7 +108,7 @@ $(document).ready(function() {
 
 			<div>
 				<ol class="breadcrumb">
-				  <li><a href="/">Home</a></li>
+				  <li><a href="/">Dashboard</a></li>
 				  <li><a href="/relation">Relaties</a></li>
 				  <li>Nieuw Contact</li>
 				</ol>

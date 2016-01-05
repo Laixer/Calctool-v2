@@ -7,7 +7,7 @@ if ($offer_last && $offer_last->offer_finish)
 ?>
 
 <div class="wizard">
-	<a href="/"> Home</a>
+	<a href="/"> Dashboard</a>
 	<a href="/project-{{ $project->id }}/edit" {!! $page=='project' ? 'class="current"' : '' !!} >Project</a>
 	<a href="/calculation/project-{{ $project->id }}" {!! $page=='calculation' ? 'class="current"' : '' !!} >Calculeren</a>
 	<a href="/offerversions/project-{{ $project->id }}" {!! $page=='offer' ? 'class="current"' : '' !!} >Offerte</a>
