@@ -12,7 +12,6 @@ use \Calctool\Models\MessageBox;
 
 		<a class="logo" href="/">
 			<img src="/images/logo2.png" width="200px" alt="Calctool" />
-			<sup style="color: #719E00;font-weight: 100;">Beta</sup>
 		</a>
 
 		<div class="navbar-collapse nav-main-collapse collapse pull-right">
