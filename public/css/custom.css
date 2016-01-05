@@ -179,7 +179,7 @@ div.toggle-activity > label:hover {
 
 /* Wizzard */
 .wizard a {
-	padding: 10px 16px 10px 36px;
+	padding: 10px 16px 10px 34px;
 	/*margin-right: 5px;*/
 	background: #E8E8E8;
 	position: relative;
@@ -187,7 +187,7 @@ div.toggle-activity > label:hover {
 	text-decoration: none;
 }
 .wizard span {
-	padding: 10px 19px 10px 36px;
+	padding: 10px 16px 10px 34px;
 	margin-right: 5px;
 	background: #E8E8E8;
 	position: relative;
