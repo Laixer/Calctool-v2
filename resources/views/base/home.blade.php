@@ -50,17 +50,19 @@ $(function() {
 			});
 		}
 	});
+	$('#intrnext').click(function(e){
+		// $('#frm-quick').submit();
+		$('#introform').hide('slide', function(){
+			$('#introvid').show('slide', {direction: "right"});
+			$('.modal-footer').hide('slide', {direction: "up"});
+		});
+	});
 });
 </script>
 <div class="modal fade" id="tutModal" tabindex="-1" role="dialog" aria-labelledby="tutModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
-			<div class="modal-header" style="background-color: #333">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h4 class="modal-title" id="myModalLabel">Welkom bij de Calculatietool</h4>
-			</div>
-
-			<div class="modal-body">
+			<div class="modal-body" id="introform">
 				<p>Na het invullen van deze QuickStart kan je direct starten met de CalculatieTool.
 
 				@if($errors->has())
@@ -73,7 +75,7 @@ $(function() {
 				</div>
 				@endif
 
-				<form action="/mycompany/quickstart" method="post">
+				<form id="frm-quick" action="/mycompany/quickstart" method="post">
 				{!! csrf_field() !!}
 
 				<h4 class="company">Jouw Bedrijfsgegevens</h4>
@@ -179,13 +181,20 @@ $(function() {
 					</div>
 				</div>
 			</div>
+			</form>
+
+			<div class="modal-body" id="introvid" style="display:none;padding:0px;">
+			  <video id="x" class="video-js vjs-sublime-skin" controls preload="none" width="900" height="540" data-setup="{}">
+			    <source src="http://dev.calculatietool.com/video/calculatie_demo.mp4" type='video/mp4' />
+			    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+			  </video>
+			</div>
 
 			<div class="modal-footer">
 				<div class="col-md-12">
-					<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+					<button id="intrnext" class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 				</div>
 			</div>
-			</form>
 
 		</div>
 	</div>

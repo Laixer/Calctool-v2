@@ -63,6 +63,7 @@
 
 		<?php // -- JQuery -- ?>
 		<script src="/plugins/jquery-2.1.4.min.js"></script>
+		<script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
 		<script type="text/javascript">
 			$.ajaxSetup({headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
 			if (localStorage._prescnt) localStorage._prescnt++; else localStorage._prescnt = 1;
