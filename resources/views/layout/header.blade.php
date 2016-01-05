@@ -11,7 +11,7 @@ use \Calctool\Models\MessageBox;
 		</button>
 
 		<a class="logo" href="/">
-			<img src="/images/logo2.png" width="200px" alt="Calctool" />
+			<img src="/images/logo2.png" width="229px" alt="Calctool" />
 		</a>
 
 		<div class="navbar-collapse nav-main-collapse collapse pull-right">
