@@ -437,7 +437,7 @@ $(document).ready(function() {
 									@foreach (Offer::where('project_id','=', $project->id)->orderBy('created_at','desc')->get() as $offer)
 									@foreach (Invoice::where('offer_id','=', $offer->id)->whereNotNUll('bill_date')->orderBy('created_at','desc')->get() as $invoice)
 									<tr>
-										<td class="col-md-2">{{ $invoice->invoice_code }}</a></td>
+										<td class="col-md-2"><a href="http://localhost/invoice/project-{{ $project->id }}/pdf-invoice-{{ $invoice->id }}">{{ $invoice->invoice_code }}</a></td>
 										<td class="col-md-2">{{ $project->project_name }}</td>
 										<td class="col-md-2">{!! '&euro;&nbsp;'.number_format($invoice->amount, 2, ",",".") !!}</td>
 										<td class="col-md-2">{{ date('d-m-Y', strtotime(DB::table('invoice')->select('created_at')->where('id','=',$invoice->id)->get()[0]->created_at)) }}</td>
@@ -448,13 +448,7 @@ $(document).ready(function() {
 									@endforeach
 									@endforeach
 								</tbody>
-							</table>
-							<div class="row">
-								<div class="col-md-12">
-									<a href="/relation-{{ $relation->id }}/contact/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
-								</div>
-							</div>
-							
+							</table>							
 						</div>
 					</div>
 				</div>
