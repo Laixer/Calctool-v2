@@ -817,11 +817,26 @@ var n = this,
 		</div>
 	</div>
 </div>
+<div class="modal fade" id="demoModal" tabindex="-1" role="dialog" aria-labelledby="DemoModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+			<div class="modal-body">
+			  <video id="calculatie_demo" class="video-js vjs-sublime-skin" controls preload="none" width="960" height="540" data-setup="{}">
+			    <source src="http://dev.calculatietool.com/video/calculatie_demo.mp4" type='video/mp4' />
+			    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+			  </video>
+			</div>
+	</div>
+</div>
 <div id="wrapper">
 
 	<section class="container fix-footer-bottom">
 
 		@include('calc.wizard', array('page' => 'calculation'))
+
+			<div class="pull-right">
+				<!--<button id="pop-x" data-toggle="modal" data-target="#descModal" class="btn btn-primary"></button>-->
+				<h2><a href="javascript:void(0);" data-toggle="modal" data-target="#demoModal"><span class="glyphicon glyphicon-expand" aria-hidden="true"></span></a></h2>
+			</div>
 
 			<h2><strong>Calculeren</strong></h2>
 
@@ -1082,7 +1097,7 @@ var n = this,
 									</div>
 
 									<form method="POST" action="/calculation/calc/newactivity/{{ $chapter->id }}" accept-charset="UTF-8">
-                                		{!! csrf_field() !!}
+                                    {!! csrf_field() !!}
 									<div class="row">
 										<div class="col-md-6">
 
