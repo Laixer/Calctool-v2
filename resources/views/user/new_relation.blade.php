@@ -135,7 +135,7 @@ $(document).ready(function() {
 			<h2><strong>Nieuwe</strong> relatie</h2>
 
 			<div class="white-row">
-				<form method="POST" action="/relation/new" accept-charset="UTF-8">
+				<form method="POST" action="/relation/new{{ Input::get('redirect') ? '?redirect='.Input::get('redirect') : '' }}" accept-charset="UTF-8">
 				{!! csrf_field() !!}
 				<div class="row">
 
