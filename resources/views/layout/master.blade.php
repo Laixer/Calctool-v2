@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<!--[if IE 8]><html class="ie ie8"><![endif]-->
-<!--[if IE 9]><html class="ie ie9"><![endif]-->
+
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>Calculatie Tool - Online calculeren & offreren</title>
+		<title>CalculatieTool.com - Online calculeren & offreren</title>
 		<meta name="keywords" content="Calculeren" />
 		<meta name="description" content="" />
 		<meta name="Author" content="CalculatieTool.com" />
@@ -43,7 +42,6 @@
 		<link media="all" type="text/css" rel="stylesheet" href="/plugins/owl-carousel/owl.transitions.css">
 		<link media="all" type="text/css" rel="stylesheet" href="/plugins/x-editable/css/bootstrap-editable.css">
 		<link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
-		<!-- <link type="text/css" rel="stylesheet" href="/plugins/videojs/video-js.min.css"> -->
 		<link type="text/css" rel="stylesheet" href="/plugins/videojs/videojs-sublime-skin.css">
 
 		<?php // -- SHOP CSS -- ?>

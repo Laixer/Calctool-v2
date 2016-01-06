@@ -113,5 +113,4 @@ if (File::exists('../.revision')) {
 	</section>
 
 </div>
-<!-- /WRAPPER -->
-@stop
+s@stop

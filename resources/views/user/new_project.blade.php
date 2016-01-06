@@ -246,5 +246,4 @@ use \Calctool\Models\Contact;
 	</section>
 
 </div>
-<!-- /WRAPPER -->
 @stop

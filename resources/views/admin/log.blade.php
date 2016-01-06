@@ -44,5 +44,4 @@
 	</section>
 
 </div>
-<!-- /WRAPPER -->
 @stop

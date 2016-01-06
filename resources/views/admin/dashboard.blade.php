@@ -16,7 +16,7 @@
 
 					<div class="row">
 
-						<div class="col-sm-12 col-md-3"><!-- item -->
+						<div class="col-sm-12 col-md-3">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/user">
@@ -55,7 +55,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-12 col-md-3"><!-- item -->
+						<div class="col-sm-12 col-md-3">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/payment">
@@ -74,7 +74,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-12 col-md-3"><!-- item -->
+						<div class="col-sm-12 col-md-3">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/resource">

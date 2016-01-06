@@ -822,8 +822,7 @@ var n = this,
 			<div class="modal-body">
 			  <video id="calculatie_demo" class="video-js vjs-sublime-skin" controls preload="none" width="960" height="540" poster="/images/video_leader.png" data-setup="{}">
 			    <source src="http://dev.calculatietool.com/video/calculatie_demo.mp4" type='video/mp4' />
-<!-- 			    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
- -->			  </video>
+			  </video>
 			</div>
 	</div>
 </div>

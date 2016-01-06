@@ -139,5 +139,4 @@ $payment = $mollie->payments->get(Route::Input('transcode'));
 	</section>
 
 </div>
-<!-- /WRAPPER -->
 @stop
