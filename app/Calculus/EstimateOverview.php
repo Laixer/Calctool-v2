@@ -22,12 +22,13 @@ class EstimateOverview {
 	public static function laborActivity($activity) {
 		$total = 0;
 
-		$count = EstimateLabor::where('activity_id','=', $activity->id)->where('isset','=','true')->where('original','=','false')->count('id');
+		//$count = EstimateLabor::where('activity_id','=', $activity->id)->where('isset','=','true')->where('original','=','false')->count('id');
 		if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 			$rows = EstimateLabor::where('activity_id', '=', $activity->id)->get();
 			foreach ($rows as $row)
 			{
-				if ($count) {
+				//if ($count) {
+				if ($activity->use_timesheet) {
 					if ($row->isset && !$row->original) {
 						if (!$row->set_rate)
 							$total += $row->rate * $row->set_amount;
@@ -35,7 +36,7 @@ class EstimateOverview {
 							$total += $row->set_rate * $row->set_amount;
 					}
 				} else {
-					if ($row->isset)
+					if ($row->isset && !$row->hour_id)
 						if (!$row->set_rate)
 							$total += $row->rate * $row->set_amount;
 						else
@@ -52,17 +53,18 @@ class EstimateOverview {
 	public static function laborTotal($activity) {
 		$total = 0;
 
-		$count = EstimateLabor::where('activity_id','=', $activity->id)->where('isset','=','true')->where('original','=','false')->count('id');
+		//$count = EstimateLabor::where('activity_id','=', $activity->id)->where('isset','=','true')->where('original','=','false')->count('id');
 		if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 			$rows = EstimateLabor::where('activity_id', '=', $activity->id)->get();
 			foreach ($rows as $row)
 			{
-				if ($count) {
+				//if ($count) {
+				if ($activity->use_timesheet) {
 					if ($row->isset && !$row->original) {
 						$total += $row->set_amount;
 					}
 				} else {
-					if ($row->isset)
+					if ($row->isset && !$row->hour_id)
 						$total += $row->set_amount;
 					else
 						$total += $row->amount;

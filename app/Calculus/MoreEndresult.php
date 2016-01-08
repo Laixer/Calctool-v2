@@ -23,8 +23,9 @@ class MoreEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
-				if (!$count)
+				// $count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
+				// if (!$count)
+				if (!$activity->use_timesheet)
 					$total += MoreLabor::where('activity_id','=',$activity->id)->sum('amount');
 				else
 					$total += MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->sum('amount');
@@ -43,8 +44,9 @@ class MoreEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
-				if (!$count)
+				// $count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
+				// if (!$count)
+				if (!$activity->use_timesheet)
 					$total += MoreLabor::where('activity_id','=',$activity->id)->sum('amount');
 				else
 					$total += MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->sum('amount');
@@ -63,8 +65,9 @@ class MoreEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
-				if (!$count)
+				//$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
+				//if (!$count)
+				if (!$activity->use_timesheet)
 					$total += MoreLabor::where('activity_id','=',$activity->id)->sum('amount');
 				else
 					$total += MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->sum('amount');
@@ -83,8 +86,9 @@ class MoreEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
-				if (!$count)
+				// $count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
+				// if (!$count)
+				if (!$activity->use_timesheet)
 					 $rows = MoreLabor::where('activity_id','=',$activity->id)->get();
 				 else
 				  $rows = MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->get();
@@ -107,8 +111,9 @@ class MoreEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
-				if (!$count)
+				// $count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
+				// if (!$count)
+				if (!$activity->use_timesheet)
 					 $rows = MoreLabor::where('activity_id','=',$activity->id)->get();
 				 else
 				  $rows = MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->get();
@@ -131,8 +136,9 @@ class MoreEndresult {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
-				$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
-				if (!$count)
+				//$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
+				//if (!$count)
+				if (!$activity->use_timesheet)
 					 $rows = MoreLabor::where('activity_id','=',$activity->id)->get();
 				 else
 				  $rows = MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->get();
