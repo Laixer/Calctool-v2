@@ -53,35 +53,27 @@ $(function() {
 		}
 	});
 	$('#intrnext').click(function(e){
-			$.post("/mycompany/quickstart", {
-				company_type: $('#company_type').val(),
-				company_name: $('#company_name').val(),
-				kvk: $('#kvk').val(),
-				btw: $('#btw').val(),
-				street: $('#street').val(),
-				address_number: $('#address_number').val(),
-				zipcode: $('#zipcode').val(),
-				city: $('#city').val(),
-				province: $('#province').val(),
-				country: $('#country').val(),
-				contact_name: $('#contact_name').val(),
-				contact_firstname: $('#contact_firstname').val(),
-				email: $('#email').val(),
-				contactfunction: $('#contactfunction').val(),
-			}, function(data) {
-				/*if (data) {
-					var json = $.parseJSON(data);
-					$('#street').val(json.street);
-					$('#city').val(json.city);
-					$("#province").find('option:selected').removeAttr("selected");
-					$('#province option[value=' + json.province_id + ']').attr('selected','selected');
-				}*/
-				$('#introform').hide('slide', function(){
-					$('#introvid').show('slide', {direction: "right"});
-					$('.modal-footer').hide('slide', {direction: "up"});
-				});
+		$.post("/mycompany/quickstart", {
+			company_type: $('#company_type').val(),
+			company_name: $('#company_name').val(),
+			kvk: $('#kvk').val(),
+			btw: $('#btw').val(),
+			street: $('#street').val(),
+			address_number: $('#address_number').val(),
+			zipcode: $('#zipcode').val(),
+			city: $('#city').val(),
+			province: $('#province').val(),
+			country: $('#country').val(),
+			contact_name: $('#contact_name').val(),
+			contact_firstname: $('#contact_firstname').val(),
+			email: $('#email').val(),
+			contactfunction: $('#contactfunction').val(),
+		}, function(data) {
+			$('#introform').hide('slide', function(){
+				$('#introvid').show('slide', {direction: "right"});
+				$('.modal-footer').hide('slide', {direction: "up"});
 			});
-
+		});
 	});
 });
 </script>

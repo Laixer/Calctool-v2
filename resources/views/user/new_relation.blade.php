@@ -1,3 +1,10 @@
+<?php
+
+use \Calctool\Models\RelationKind;
+use \Calctool\Models\RelationType;
+
+?>
+
 @extends('layout.master')
 
 @section('content')
@@ -57,12 +64,17 @@ $(document).ready(function() {
             $(this).removeClass("error-input");
         }
     });
+
 	$('#relationkind').change(function(e) {
 		if ($(this).val() == 2)
 			$('.company').hide('slow');
 		else
 			$('.company').show('slow');
 	});
+
+	@if (old('relationkind') && old('relationkind') == 2)
+	$('.company').hide();
+	@endif
 
 	$('#street').blur(function() {
 		var streetcheck = $(this).val();
@@ -143,8 +155,8 @@ $(document).ready(function() {
 						<div class="form-group">
 							<label for="relationkind">Relatiesoort*</label>
 							<select name="relationkind" id="relationkind" class="form-control pointer">
-							@foreach (Calctool\Models\RelationKind::all() as $kind)
-								<option value="{{ $kind->id }}">{{ ucwords($kind->kind_name) }}</option>
+							@foreach (RelationKind::all() as $kind)
+								<option {{ old('relationkind') && old('relationkind') == $kind->id ? 'selected' : '' }} value="{{ $kind->id }}">{{ ucwords($kind->kind_name) }}</option>
 							@endforeach
 							</select>
 						</div>
@@ -173,7 +185,7 @@ $(document).ready(function() {
 						<div class="form-group">
 							<label for="company_type">Bedrijfstype*</label>
 							<select name="company_type" id="company_type" class="form-control pointer">
-							@foreach (Calctool\Models\RelationType::all() as $type)
+							@foreach (RelationType::all() as $type)
 								<option value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
 							@endforeach
 							</select>

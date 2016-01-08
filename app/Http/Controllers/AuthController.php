@@ -105,7 +105,7 @@ class AuthController extends Controller {
 		$request->merge(array('email' => strtolower(trim($request->input('email')))));
 		
 		$this->validate($request, [
-			'username' => array('required','unique:user_account'),
+			'username' => array('required','max:30','unique:user_account'),
 			'email' => array('required','max:80','email','unique:user_account'),
 			'secret' => array('required','confirmed','min:5'),
 			'secret_confirmation' => array('required','min:5'),
