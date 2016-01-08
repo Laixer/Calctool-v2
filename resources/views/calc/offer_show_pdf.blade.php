@@ -39,10 +39,10 @@ if (!$offer) {
 @section('content')
 <script src="/plugins/pdf/build/pdf.js" type="text/javascript"></script>
 <script id="script">
-	var url = '/{{ $res->file_location }}';
-	var numPages = 0;
-	PDFJS.workerSrc = '/plugins/pdf/build/pdf.worker.js';
-	PDFJS.getDocument(url).then(function getPdf(pdf) {
+var url = '/{{ $res->file_location }}';
+var numPages = 0;
+PDFJS.workerSrc = '/plugins/pdf/build/pdf.worker.js';
+PDFJS.getDocument(url).then(function getPdf(pdf) {
 
 	for (var i = 0; i < pdf.numPages; i++) {
 		var ndr = '<div class="white-row"><canvas id="the-canvas'+i+'" style="border:0px solid black;text-align:center;"/></canvas></div>';
@@ -84,6 +84,12 @@ $(document).ready(function() {
 			}
 		});
 	});
+    // $( "#dateRangePicker" ).datepicker({
+    // 	beforeShow: function() {
+    // 		$("#ui-datepicker-div").css("z-index", "9999");  
+    // 	},
+    // });
+    // $("#ui-datepicker-div").css("z-index", "9999");   
     $('#dateRangePicker').datepicker().on('changeDate', function(e){
 		$.post("/offer/close", {
 			date: e.date.toLocaleString(),

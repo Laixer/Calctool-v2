@@ -90,7 +90,7 @@ class QuickstartController extends Controller {
 		$user->self_id = $relation->id;
 		$user->save();
 
-		return redirect('/')->with('success', 1)->withCookie(cookie()->forget('nstep'))->withCookie(cookie()->forever('_stxs'.$user->id, 1));
+		return response()->json(['success' => 1])->withCookie(cookie()->forget('nstep'))->withCookie(cookie()->forever('_stxs'.$user->id, 1));
 	}
 
 	public function getExternalAddress(Request $request)

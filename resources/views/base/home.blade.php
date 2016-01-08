@@ -21,6 +21,8 @@ $relation = Relation::find(Auth::user()->self_id);
 @section('content')
 
 @if ($next_step && $next_step=='intro_'.Auth::id())
+<script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
+<link media="all" type="text/css" rel="stylesheet" href="/plugins/jquery-ui/jquery-ui.css">
 <script type="text/javascript">
 $(function() {
 	$('#tutModal').modal('toggle');
@@ -51,10 +53,26 @@ $(function() {
 		}
 	});
 	$('#intrnext').click(function(e){
-		// $('#frm-quick').submit();
-		$('#introform').hide('slide', function(){
-			$('#introvid').show('slide', {direction: "right"});
-			$('.modal-footer').hide('slide', {direction: "up"});
+		$.post("/mycompany/quickstart", {
+			company_type: $('#company_type').val(),
+			company_name: $('#company_name').val(),
+			kvk: $('#kvk').val(),
+			btw: $('#btw').val(),
+			street: $('#street').val(),
+			address_number: $('#address_number').val(),
+			zipcode: $('#zipcode').val(),
+			city: $('#city').val(),
+			province: $('#province').val(),
+			country: $('#country').val(),
+			contact_name: $('#contact_name').val(),
+			contact_firstname: $('#contact_firstname').val(),
+			email: $('#email').val(),
+			contactfunction: $('#contactfunction').val(),
+		}, function(data) {
+			$('#introform').hide('slide', function(){
+				$('#introvid').show('slide', {direction: "right"});
+				$('.modal-footer').hide('slide', {direction: "up"});
+			});
 		});
 	});
 });
