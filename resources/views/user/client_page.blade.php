@@ -89,6 +89,16 @@ else {
 			$('#tab-status').addClass('active');
 			$('#status').addClass('active');
 		}
+
+		$('.summernote').summernote({
+            height: $(this).attr("data-height") || 200,
+            toolbar: [
+                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+                ["para", ["ul", "ol", "paragraph"]],
+                ["table", ["table"]],
+                ["media", ["link", "picture", "video"]],
+            ]
+        })
 	});
 </script>
 <div id="wrapper">
@@ -261,19 +271,22 @@ else {
 							<form method="POST" action="/ex-project-overview/{{ $share->token }}/update" accept-charset="UTF-8">
                             {!! csrf_field() !!}
 
-							<h4>Gebruikers opmerkingen</h4>
+							<h4>Uw opmerkingen / vragen aan uw vakman</h4>
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-12">
-										<textarea name="user_note" readonly="readonly" id="user_note" rows="15" class="form-control">{{ $share->user_note }}</textarea>
+										<textarea name="client_note" id="client_note" rows="15" class="summernote form-control">{{ $share->client_note }}</textarea>
 									</div>
 								</div>
 							</div>
-							<h4>Opdrachtgever opmerkingen</h4>
+
+							<h4>Opmerkingen van uw vakman</h4>
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-12">
-										<textarea name="client_note" id="client_note" rows="15" class="form-control">{{ $share->client_note }}</textarea>
+										<div class="white-row well">
+											<span>{!! $share->user_note !!}</span>
+										</div>										
 									</div>
 								</div>
 							</div>

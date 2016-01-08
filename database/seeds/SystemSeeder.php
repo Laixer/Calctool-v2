@@ -31,7 +31,7 @@ class SystemSeeder extends Seeder {
 			'active' => 'Y',
 			'confirmed_mail' => date('Y-m-d'),
 			'registration_date' => date('Y-m-d'),
-			'expiration_date' => date('Y-m-d', strtotime("+100 year", time())),
+			'expiration_date' => date('Y-m-d', strtotime("+1 month", time())), // date('Y-m-d', strtotime("+100 year", time())),
 			'referral_key' => md5(mt_rand()),
 			'email' => 'info@calculatietool.com',
 			'user_type' => $system_user_type->id
@@ -47,7 +47,7 @@ class SystemSeeder extends Seeder {
 			'active' => 'Y',
 			'confirmed_mail' => date('Y-m-d'),
 			'registration_date' => date('Y-m-d'),
-			'expiration_date' => date('Y-m-d', strtotime("+100 year", time())),
+			'expiration_date' => date('Y-m-d', strtotime("+1 month", time())), // date('Y-m-d', strtotime("+100 year", time())),
 			'referral_key' => md5(mt_rand()),
 			'email' => 'guest@calctool.nl',
 			'user_type' => $guest_user_type->id

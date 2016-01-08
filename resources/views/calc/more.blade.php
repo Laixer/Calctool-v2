@@ -116,8 +116,10 @@ var n = this,
 		$(".radio-activity").change(function(){
 			if ($(this).val()==2) {
 				$(this).closest('.toggle-content').find(".rate").html('<input name="rate" type="text" value="{{ number_format($project->hour_rate_more, 2,",",".") }}" class="form-control-sm-number labor-amount lsave">');
+				$('.hide_if_subcon').hide();
 			} else {
 				$(this).closest('.toggle-content').find(".rate").text('{{ number_format($project->hour_rate_more, 2,",",".") }}');
+				$('.hide_if_subcon').show();
 			}
 			$.post("/calculation/updatepart", {project: {{ $project->id }}, value: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
 		});
@@ -523,6 +525,21 @@ var n = this,
 				$notecurr.attr('data-note', $('#note').val());
 			}).fail(function(e) { console.log(e); });
 		});
+		$('.use-timesheet').bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
+			$.post("/calculation/activity/usetimesheet", {project: {{ $project->id }}, activity: $(this).data('id'), state: state}, function(){
+				location.reload();
+			}).fail(function(e) { console.log(e); });
+		});
+
+		$('#summernote').summernote({
+            height: $(this).attr("data-height") || 200,
+            toolbar: [
+                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+                ["para", ["ul", "ol", "paragraph"]],
+                ["table", ["table"]],
+                ["media", ["link", "picture", "video"]],
+            ]
+        })
 	});
 </script>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -579,7 +596,7 @@ var n = this,
 			<div class="modal-body">
 				<div class="form-group">
 					<div class="col-md-12">
-						<textarea name="note" id="note" rows="5" class="form-control"></textarea>
+						<textarea name="note" id="summernote" rows="5" class="form-control"></textarea>
 						<input type="hidden" name="noteact" id="noteact" />
 					</div>
 				</div>
@@ -632,16 +649,18 @@ var n = this,
 									<div class="toogle">
 
 										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
-										<?php
-										$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
-										?>
 										<div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
 											<label>{{ $activity->activity_name }}</label>
 											<div class="toggle-content">
 												<div class="row">
-													<div class="col-md-4"></div>
+													<div class="col-md-4">
+	    												<div class="form-group hide_if_subcon" {!! ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'style="display:none;"' : '') !!}>
+	    													<label for="use_timesheet">Urenregistratie gebruiken</label>
+															<input name="use_timesheet" class="use-timesheet" data-id="{{ $activity->id }}" type="checkbox" {{ $activity->use_timesheet ? 'checked' : '' }}>
+														</div>
+													</div>
 													<?php
-													if ($count) {
+													if ($activity->use_timesheet) {
 													?>
 													<div class="col-md-4"><strong>Aanneming</strong></div>
 													<?php } else { ?>
@@ -673,7 +692,7 @@ var n = this,
 												</div>
 												<table class="table table-striped" data-id="{{ $activity->id }}">
 													<?php
-													if ($count) {
+													if ($activity->use_timesheet) {
 													?>
 													<thead>
 														<tr>
@@ -704,7 +723,7 @@ var n = this,
 
 													<tbody>
 														<?php
-														if ($count) {
+														if ($activity->use_timesheet) {
 														?>
 														@foreach (MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->get() as $labor)
 														<tr data-id="{{ Timesheet::find($labor->hour_id)->id }}">
@@ -1025,7 +1044,7 @@ var n = this,
 											<tr>
 												<th class="col-md-3"><strong>Totaal Aanneming</strong></th>
 												<th class="col-md-4">&nbsp;</th>
-												<td class="col-md-1"><strong><span class="pull-right">{{ MoreOverview::contrLaborTotalAmount($project) }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(MoreOverview::contrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1073,7 +1092,7 @@ var n = this,
 											<tr>
 												<th class="col-md-3"><strong>Totaal Onderaanneming</strong></th>
 												<th class="col-md-4">&nbsp;</th>
-												<td class="col-md-1"><strong><span class="pull-right">{{ MoreOverview::subcontrLaborTotalAmount($project) }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(MoreOverview::subcontrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1105,7 +1124,7 @@ var n = this,
 											<tr>
 												<th class="col-md-3">&nbsp;</th>
 												<th class="col-md-4">&nbsp;</th>
-												<td class="col-md-1"><span class="pull-right"><strong>{{ MoreOverview::laborSuperTotalAmount($project) }}</span></td>
+												<td class="col-md-1"><span class="pull-right"><strong>{{ number_format(MoreOverview::laborSuperTotalAmount($project), 2, ",",".") }}</span></td>
 												<td class="col-md-1"><span class="pull-right"><strong>{{ '&euro; '.number_format(MoreOverview::laborSuperTotal($project), 2, ",",".") }}</strong></span></td>
 												<td class="col-md-1"><span class="pull-right"><strong>{{ '&euro; '.number_format(MoreOverview::materialSuperTotal($project), 2, ",",".") }}</strong></span></td>
 												<td class="col-md-1"><span class="pull-right"><strong>{{ '&euro; '.number_format(MoreOverview::equipmentSuperTotal($project), 2, ",",".") }}</strong></span></td>

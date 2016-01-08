@@ -15,7 +15,7 @@ use \Calctool\Models\WholesaleType;
 
 			<div>
 			<ol class="breadcrumb">
-			  <li><a href="/">Home</a></li>
+			  <li><a href="/">Dashboard</a></li>
 			  <li>Leveranciers</li>
 			</ol>
 			<div>

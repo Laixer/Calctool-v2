@@ -36,6 +36,17 @@ $(document).ready(function() {
 
 	$("[name='toggle-api']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	$("[name='toggle-active']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+
+	 $('.summernote').summernote({
+	        height: $(this).attr("data-height") || 200,
+	        toolbar: [
+	            ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+	            ["para", ["ul", "ol", "paragraph"]],
+	            ["table", ["table"]],
+	            ["media", ["link", "picture", "video"]],
+	            ["misc", ["codeview"]]
+	        ]
+	    })
 });
 </script>
 
@@ -211,7 +222,7 @@ $(document).ready(function() {
 
 						<div class="col-md-3">
 							<div class="form-group">
-								<label for="iban">Blokkeeringsdatum</label>
+								<label for="iban">Blokkeringsdatum</label>
 								<input name="bandate" id="bandate" type="date" value="{{ ($user->banned ? date('Y-m-d', strtotime($user->banned)) : '') }}" class="form-control"/>
 							</div>
 						</div>
@@ -248,19 +259,19 @@ $(document).ready(function() {
 
 					</div>
 
-					<h4>Opmerkingen</h4>
+					<h4>Opmerkingen <a data-toggle="tooltip" data-placement="bottom" data-original-title="Niet zichtbaar voor de gebruiker." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
 					<div class="row">
 						<div class="form-group">
 							<div class="col-md-12">
-								<textarea name="note" id="note" rows="10" class="form-control">{{ Input::old('note') ? Input::old('note') : $user->note }}</textarea>
+								<textarea name="note" id="note" rows="10" class="summernote form-control">{{ Input::old('note') ? Input::old('note') : $user->note }}</textarea>
 							</div>
 						</div>
 					</div>
-					<h4>Kladblok</h4>
+					<h4>Kladblok van de gebruiker</h4>
 					<div class="row">
 						<div class="form-group">
 							<div class="col-md-12">
-								<textarea name="notepad" id="notepad" rows="10" class="form-control">{{ Input::old('notepad') ? Input::old('notepad') : $user->notepad }}</textarea>
+								<textarea name="notepad" id="note" rows="10" class="summernote form-control">{{ Input::old('notepad') ? Input::old('notepad') : $user->notepad }}</textarea>
 							</div>
 						</div>
 					</div>

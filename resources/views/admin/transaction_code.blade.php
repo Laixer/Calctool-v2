@@ -8,7 +8,6 @@ $mollie->setApiKey($_ENV['MOLLIE_API']);
 
 $payment = $mollie->payments->get(Route::Input('transcode'));
 ?>
-<?# -- WRAPPER -- ?>
 <div id="wrapper">
 
 	<section class="container">
@@ -124,6 +123,7 @@ $payment = $mollie->payments->get(Route::Input('transcode'));
 				@endif
 				<br />
 				<form name="frm-refund" action="/admin/transaction/{{ $payment->id }}/refund" method="post">
+				{!! csrf_field() !!}
 					<div class="input-group col-md-3">
 					  <input type="text" name="amount" {{ $payment->amount-$payment->amountRefunded ? '' : 'disabled' }} value="{{ ($payment->amount-$payment->amountRefunded) }}" class="form-control">
 				      <span class="input-group-btn">
@@ -139,5 +139,4 @@ $payment = $mollie->payments->get(Route::Input('transcode'));
 	</section>
 
 </div>
-<!-- /WRAPPER -->
 @stop

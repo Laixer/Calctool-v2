@@ -19,7 +19,7 @@ body {
   width: 21cm;
   height: 29.7cm;
   margin: 0 auto;
-  color: #4E4E4E;
+  color: #000000;
   background: #FFFFFF;
   font-size: 14px;
     font-family: 'Arial';
@@ -144,6 +144,7 @@ table {
   border-spacing: 0;
   margin-bottom: 5px;
   padding: 0 0 0 10px;
+  /*overflow: visible !important;*/
 }
 
 table td {
@@ -160,10 +161,15 @@ table th {
  background: transparent;
  text-align: left;
  border-bottom: 2px solid transparent;
+ /*display: table-header-group*/
 }
 
 table td {
  /*text-align: right;*/
+}
+
+table tr {
+    page-break-inside: avoid;
 }
 
 table .no {

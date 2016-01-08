@@ -135,6 +135,11 @@ class ProjectController extends Controller {
 		$project->province_id = $request->input('province');
 		$project->country_id = $request->input('country');
 		$project->client_id = $request->input('contractor');
+		if ($request->input('toggle-mail-reminder')) {
+			$project->pref_email_reminder = true;
+		} else {
+			$project->pref_email_reminder = false;
+		}
 
 		$project->save();
 
@@ -191,14 +196,14 @@ class ProjectController extends Controller {
 
 		if ($hour_rate)
 			$project->hour_rate = $hour_rate;
-		$project->hour_rate_more = $hour_rate_more;
-		if ($request->input('profit_material_1'))
+			$project->hour_rate_more = $hour_rate_more;
+		if ($request->input('profit_material_1') != "")
 			$project->profit_calc_contr_mat = $request->input('profit_material_1');
-		if ($request->input('profit_equipment_1'))
+		if ($request->input('profit_equipment_1') != "")
 			$project->profit_calc_contr_equip = $request->input('profit_equipment_1');
-		if ($request->input('profit_material_2'))
+		if ($request->input('profit_material_2') != "")
 			$project->profit_calc_subcontr_mat = $request->input('profit_material_2');
-		if ($request->input('profit_equipment_2'))
+		if ($request->input('profit_equipment_2') != "")
 			$project->profit_calc_subcontr_equip = $request->input('profit_equipment_2');
 		$project->profit_more_contr_mat = $request->input('more_profit_material_1');
 		$project->profit_more_contr_equip = $request->input('more_profit_equipment_1');

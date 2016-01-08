@@ -31,7 +31,7 @@ class CreateCalculation extends Migration {
 		Schema::create('calculation_material', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('material_name', 50);
+			$table->string('material_name', 100);
 			$table->string('unit', 10);
 			$table->decimal('rate', 9, 3)->unsigned()->index();
 			$table->decimal('amount', 9, 3)->unsigned()->index();
@@ -45,7 +45,7 @@ class CreateCalculation extends Migration {
 		Schema::create('calculation_equipment', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('equipment_name', 50);
+			$table->string('equipment_name', 100);
 			$table->string('unit', 10);
 			$table->decimal('rate', 9, 3)->unsigned()->index();
 			$table->decimal('amount', 9, 3)->unsigned()->index();
@@ -71,7 +71,7 @@ class CreateCalculation extends Migration {
 		Schema::create('more_material', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('material_name', 50);
+			$table->string('material_name', 100);
 			$table->string('unit', 10);
 			$table->decimal('rate', 9, 3)->unsigned()->index();
 			$table->decimal('amount', 9, 3)->unsigned()->index();
@@ -82,7 +82,7 @@ class CreateCalculation extends Migration {
 		Schema::create('more_equipment', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('equipment_name', 50);
+			$table->string('equipment_name', 100);
 			$table->string('unit', 10);
 			$table->decimal('rate', 9, 3)->unsigned()->index();
 			$table->decimal('amount', 9, 3)->unsigned()->index();
@@ -108,7 +108,7 @@ class CreateCalculation extends Migration {
 		Schema::create('estimate_material', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('material_name', 50)->nullable();
+			$table->string('material_name', 100)->nullable();
 			$table->string('unit', 10)->nullable();
 			$table->decimal('rate', 9, 3)->unsigned()->nullable()->index();
 			$table->decimal('amount', 9, 3)->unsigned()->nullable()->index();
@@ -125,7 +125,7 @@ class CreateCalculation extends Migration {
 		Schema::create('estimate_equipment', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('equipment_name', 50)->nullable();
+			$table->string('equipment_name', 100)->nullable();
 			$table->string('unit', 10)->nullable();
 			$table->decimal('rate', 9, 3)->unsigned()->nullable()->index();
 			$table->decimal('amount', 9, 3)->unsigned()->nullable()->index();

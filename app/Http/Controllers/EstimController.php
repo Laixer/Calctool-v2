@@ -38,7 +38,7 @@ class EstimController extends Controller {
 	public function doNewEstimateMaterial(Request $request)
 	{
 		$this->validate($request, [
-			'name' => array('required','max:50'),
+			'name' => array('required','max:100'),
 			'unit' => array('required','max:10'),
 			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
@@ -72,7 +72,7 @@ class EstimController extends Controller {
 	public function doNewEstimateEquipment(Request $request)
 	{
 		$this->validate($request, [
-			'name' => array('required','max:50'),
+			'name' => array('required','max:100'),
 			'unit' => array('required','max:10'),
 			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
@@ -140,7 +140,7 @@ class EstimController extends Controller {
 	{
 		$this->validate($request, [
 			'id' => array('integer','min:0'),
-			'name' => array('max:50'),
+			'name' => array('max:100'),
 			'unit' => array('max:10'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
@@ -175,7 +175,7 @@ class EstimController extends Controller {
 	{
 		$this->validate($request, [
 			'id' => array('integer','min:0'),
-			'name' => array('max:50'),
+			'name' => array('max:100'),
 			'unit' => array('max:10'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),

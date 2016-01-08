@@ -35,7 +35,7 @@ $(function() {
 
 				<div class="col-md-6">
 
-					<h2>Maak <strong>Account</strong> aan</h2>
+					<h2>Maak een <strong>Account</strong> aan</h2>
 
 					<form action="/register" method="post" class="white-row">
 					{!! csrf_field() !!}

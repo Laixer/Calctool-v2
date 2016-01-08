@@ -9,7 +9,7 @@
 
 			<div class="col-md-9">
 				<h2>
-					<strong>Oops</strong>, Deze pagina is niet beschikbaar!
+					<strong>Oeps</strong>, Deze pagina is niet beschikbaar!
 					<span class="subtitle">Ons excuus, de pagina {{ Request::path() }} kon niet worden gevonden.</span>
 				</h2>
 
@@ -33,9 +33,11 @@
 
 				<h4>NAVIGATIE</h4>
 				<ul class="nav nav-list">
-					<li><a href="/"><i class="fa fa-circle-o"></i> Home</a></li>
-					<li><a href="/about"><i class="fa fa-circle-o"></i> Over Ons</a></li>
-					<li><a href="/about"><i class="fa fa-circle-o"></i> Contact</a></li>
+					<li><a href="/"><i class="fa fa-circle-o"></i> Dashboard</a></li>
+					<li><a href="http://calculatietool.com/"><i class="fa fa-circle-o"></i> Homepage</a></li>
+					<li><a href="http://calculatietool.com/blog/"><i class="fa fa-circle-o"></i> Blog</a></li>
+					<li><a href="http://calculatietool.com/over-ons/"><i class="fa fa-circle-o"></i> Over Ons</a></li>
+					<li><a href="http://calculatietool.com/common/contact/"><i class="fa fa-circle-o"></i> Contact</a></li>
 				</ul>
 
 			</aside>

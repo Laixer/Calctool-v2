@@ -14,6 +14,7 @@ use \Calctool\Models\Promotion;
 use \Calctool\Models\BankAccount;
 
 use \Auth;
+use \Redis;
 use \Hash;
 use \Mailgun;
 
@@ -93,18 +94,15 @@ class UserController extends Controller {
 		$amount = 27;
 		$description = 'Verleng met een maand';
 		$increment_months = 1;
-		$promo_id = 0;
+		$promo_id = -1;
 
-		$promocode = $request->cookie('_dccod'.Auth::id());
-		if ($promocode) {
-			$promo = Promotion::find($promocode)->where('active', true)->where('valid', '>=', date('Y-m-d H:i:s'))->first();
+		if (Redis::exists('promo:'.Auth::user()->username)) {
+			$promo = Promotion::find(Redis::get('promo:'.Auth::user()->username));
 			if ($promo) {
-				$_order = Payment::where('user_id',Auth::id())->where('promotion_id',$promo->id)->first();
-				if (!$_order) {
-					$amount = $promo->amount;
-					$description .= ' Actie:' . $promo->name;
-					$promo_id = $promo->id;
-				}
+				$amount = $promo->amount;
+				$description .= ' Actie:' . $promo->name;
+				$promo_id = $promo->id;
+				Redis::del('promo:'.Auth::user()->username);
 			}
 		}
 
@@ -119,9 +117,10 @@ class UserController extends Controller {
 			"webhookUrl" => url('payment/webhook/'),
 			"redirectUrl" => url('payment/order/'.$token),
 			"metadata"    => array(
-			"token" => $token,
-			"uid" => Auth::id(),
-			"incr" => $increment_months
+				"token" => $token,
+				"uid" => Auth::id(),
+				"incr" => $increment_months,
+				"promo" => $promo_id,
 			),
 		));
 
@@ -134,10 +133,6 @@ class UserController extends Controller {
 		$order->description = $description;
 		$order->method = '';
 		$order->user_id = Auth::id();
-		if ($promocode) {
-			$order->promotion_id = $promo_id;
-		}
-
 		$order->save();
 
 		$log = new Audit;
@@ -165,6 +160,10 @@ class UserController extends Controller {
 
 		if ($payment->metadata->uid != $order->user_id)
 			return;
+
+		if ($payment->metadata->promo != -1) {
+			$order->promotion_id = $payment->metadata->promo;
+		}
 
 		$order->status = $payment->status;
 		$order->method = $payment->method;
@@ -473,30 +472,30 @@ class UserController extends Controller {
 	public function doUpdatePreferences(Request $request)
 	{
 		$user = Auth::user();
-		if ($request->get('pref_mailings_optin'))
-			$user->pref_mailings_optin = true;
+		if ($request->get('pref_use_ct_numbering'))
+			$user->pref_use_ct_numbering = true;
 		else
-			$user->pref_mailings_optin = false;
+			$user->pref_use_ct_numbering = false;
 
-		if ($request->get('pref_hourrate_calc'))
+		if ($request->get('pref_hourrate_calc') != "")
 			$user->pref_hourrate_calc = str_replace(',', '.', str_replace('.', '' , $request->get('pref_hourrate_calc')));
-		if ($request->get('pref_hourrate_more'))
+		if ($request->get('pref_hourrate_more') != "")
 			$user->pref_hourrate_more = str_replace(',', '.', str_replace('.', '' , $request->get('pref_hourrate_more')));
-		if ($request->get('pref_profit_calc_contr_mat'))
+		if ($request->get('pref_profit_calc_contr_mat') != "")
 			$user->pref_profit_calc_contr_mat = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_calc_contr_mat')));
-		if ($request->get('pref_profit_calc_contr_equip'))
+		if ($request->get('pref_profit_calc_contr_equip') != "")
 			$user->pref_profit_calc_contr_equip = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_calc_contr_equip')));
-		if ($request->get('pref_profit_calc_subcontr_mat'))
+		if ($request->get('pref_profit_calc_subcontr_mat') != "")
 			$user->pref_profit_calc_subcontr_mat = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_calc_subcontr_mat')));
-		if ($request->get('pref_profit_calc_subcontr_equip'))
+		if ($request->get('pref_profit_calc_subcontr_equip') != "")
 			$user->pref_profit_calc_subcontr_equip = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_calc_subcontr_equip')));
-		if ($request->get('pref_profit_more_contr_mat'))
+		if ($request->get('pref_profit_more_contr_mat') != "")
 			$user->pref_profit_more_contr_mat = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_more_contr_mat')));
-		if ($request->get('pref_profit_more_contr_equip'))
+		if ($request->get('pref_profit_more_contr_equip') != "")
 			$user->pref_profit_more_contr_equip = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_more_contr_equip')));
-		if ($request->get('pref_profit_more_subcontr_mat'))
+		if ($request->get('pref_profit_more_subcontr_mat') != "")
 			$user->pref_profit_more_subcontr_mat = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_more_subcontr_mat')));
-		if ($request->get('pref_profit_more_subcontr_equip'))
+		if ($request->get('pref_profit_more_subcontr_equip') != "")
 			$user->pref_profit_more_subcontr_equip = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_more_subcontr_equip')));
 
 		if ($request->get('pref_email_offer'))
@@ -519,11 +518,11 @@ class UserController extends Controller {
 			$user->pref_email_invoice_first_demand = $request->get('pref_email_invoice_first_demand');
 		if ($request->get('pref_email_invoice_last_demand'))
 			$user->pref_email_invoice_last_demand = $request->get('pref_email_invoice_last_demand');
-		if ($request->get('offernumber_prefix'))
+		if ($request->get('offernumber_prefix') != "")
 			$user->offernumber_prefix = $request->get('offernumber_prefix');
-		if ($request->get('invoicenumber_prefix'))
+		if ($request->get('invoicenumber_prefix') != "")
 			$user->invoicenumber_prefix = $request->get('invoicenumber_prefix');
-		if ($request->get('administration_cost'))
+		if ($request->get('administration_cost') != "")
 			$user->administration_cost = str_replace(',', '.', str_replace('.', '' , $request->get('administration_cost')));
 
 		$user->save();
@@ -547,6 +546,10 @@ class UserController extends Controller {
 		if ($order)
 			return json_encode(['success' => 0]);
 
-		return response()->json(['success' => 1, 'amount' => $promo->amount, 'famount' => number_format($promo->amount, 0,",",".")])->withCookie(cookie('_dccod'.Auth::id(), $promo->id, 30));
+		Redis::del('promo:'.Auth::user()->username);
+		Redis::set('promo:'.Auth::user()->username, $promo->id);
+		Redis::expire('promo:'.Auth::user()->username, 600);
+
+		return response()->json(['success' => 1, 'amount' => $promo->amount, 'famount' => number_format($promo->amount, 0,",",".")]);
 	}
 }

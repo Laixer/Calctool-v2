@@ -60,7 +60,7 @@ $(document).ready(function() {
 	});
 
 	$("[name='toggle-api']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
-	$("[name='pref_mailings_optin']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	$("[name='pref_use_ct_numbering']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	$('#acc-deactive').click(function(e){
 		e.preventDefault();
 		if(confirm('Weet je zeker dat je je account wilt deactiveren?')){
@@ -84,6 +84,17 @@ $(document).ready(function() {
 			});
 		}
 	});
+	
+	 $('#summernote').summernote({
+	            height: $(this).attr("data-height") || 200,
+	            toolbar: [
+	                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+	                ["para", ["ul", "ol", "paragraph"]],
+	                ["table", ["table"]],
+	                ["media", ["link", "picture", "video"]],
+	                ["misc", ["codeview"]]
+	            ]
+	        })
 });
 </script>
 <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModal" aria-hidden="true">
@@ -453,8 +464,8 @@ $(document).ready(function() {
 									</div>
 									<div id="acordion2" class="collapse">
 										<div class="panel-body">
-
-											<h5>Omschrijving voor op de offerte</h5>
+											<h4>Offerte</h4>
+											<h5><strong>Omschrijving voor op de offerte</strong></h5>
 											<div class="row">
 												<div class="form-group">
 													<div class="col-md-12">
@@ -462,7 +473,7 @@ $(document).ready(function() {
 													</div>
 												</div>
 											</div>
-											<h5>Sluitingstekst voor op de offerte</h5>
+											<h5><strong>Sluitingstekst voor op de offerte</strong></h5>
 											<div class="row">
 												<div class="form-group">
 													<div class="col-md-12">
@@ -470,7 +481,8 @@ $(document).ready(function() {
 													</div>
 												</div>
 											</div>
-											<h5>Omschrijving voor op de factuur</h5>
+											<h4>Factuur</h4>
+											<h5><strong>Omschrijving voor op de factuur</strong></h5>
 											<div class="row">
 												<div class="form-group">
 													<div class="col-md-12">
@@ -478,7 +490,7 @@ $(document).ready(function() {
 													</div>
 												</div>
 											</div>
-											<h5>Sluitingstekst voor op de factuur</h5>
+											<h5><strong>Sluitingstekst voor op de factuur</strong></h5>
 											<div class="row">
 												<div class="form-group">
 													<div class="col-md-12">
@@ -502,15 +514,8 @@ $(document).ready(function() {
 									<div id="acordion3" class="collapse">
 										<div class="panel-body">
 
-											<div class="row">
-												<div class="col-md-4">
-													<div class="form-group">
-														<label for="pref_mailings_optin" style="display:block;">Email reminders sturen?</label>
-														<input name="pref_mailings_optin" type="checkbox" {{ $user->pref_mailings_optin ? 'checked' : '' }}>
-													</div>
-												</div>
-											</div>
-											<h5>Beschrijving voor in de email bij verzending van de offerte</h5>
+											<h4>Offerte</h4>
+											<h5><strong>Beschrijving voor in de email bij verzending van de offerte</strong></h5>
 											<div class="row">
 												<div class="form-group">
 													<div class="col-md-12">
@@ -518,7 +523,8 @@ $(document).ready(function() {
 													</div>
 												</div>
 											</div>
-											<h5>Beschrijving voor in de email bij verzending van de factuur</h5>
+											<h4>Factuur</h4>
+											<h5><strong>Beschrijving voor in de email bij verzending van de factuur</strong></h5>
 											<div class="row">
 												<div class="form-group">
 													<div class="col-md-12">
@@ -526,7 +532,7 @@ $(document).ready(function() {
 													</div>
 												</div>
 											</div>
-											<h5>1e betalingsherinnering van de factuur (direct na verstrijken van de ingestelde betalingsconditie van de factuur)</h5>
+											<h5><strong>1e betalingsherinnering van de factuur (direct na verstrijken van de ingestelde betalingsconditie van de factuur)</strong></h5>
 											<div class="row">
 												<div class="form-group">
 													<div class="col-md-12">
@@ -534,7 +540,7 @@ $(document).ready(function() {
 													</div>
 												</div>
 											</div>
-											<h5>Laatste betalingsherinnering van de factuur (14 dagen na de 1e betalingsherinnering)</h5>
+											<h5><strong>Laatste betalingsherinnering van de factuur (14 dagen na de 1e betalingsherinnering)</strong></h5>
 											<div class="row">
 												<div class="form-group">
 													<div class="col-md-12">
@@ -542,16 +548,7 @@ $(document).ready(function() {
 													</div>
 												</div>
 											</div>
-											<!--<div class="row">
-												<div class="col-md-3">
-													<div class="form-group">
-														<label for="administration_cost">Administratiekosten</label>
-														<input name="administration_cost" id="administration_cost" type="text" class="form-control" value="{{ str_replace('.', ',', $user->administration_cost) }}" />
-													</div>
-												</div>
-											</div>
-											-->
-											<h5>Vorderingswaaeschuwing van de factuur (7 dagen na de laatste (2e) betalingsherinnering)</h5>
+											<h5><strong>Vorderingswaaeschuwing van de factuur (7 dagen na de laatste (2e) betalingsherinnering)</strong></h5>
 											<div class="row">
 												<div class="form-group">
 													<div class="col-md-12">
@@ -576,18 +573,21 @@ $(document).ready(function() {
 										<div class="panel-body">
 
 											<div class="row">
-												<div class="col-md-3">
+												<div class="col-md-4">
 													<div class="form-group">
-														<label for="offernumber_prefix">Tekst voor offertenummer</label>
+														<label for="pref_use_ct_numbering" style="display:block;">Gebruik CalculatieTool nummering</label>
+														<input name="pref_use_ct_numbering" type="checkbox" {{ $user->pref_use_ct_numbering ? 'checked' : '' }}>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="offernumber_prefix"><strong>Tekst voor offertenummer</strong></label>
 														<input name="offernumber_prefix" id="offernumber_prefix" type="text" class="form-control" value="{{ $user->offernumber_prefix }}" />
 													</div>
 												</div>
-											</div>
-
-											<div class="row">
-												<div class="col-md-3">
+												<div class="col-md-4">
 													<div class="form-group">
-														<label for="invoicenumber_prefix">Tekst voor factuurnummer</label>
+														<label for="invoicenumber_prefix"><strong>Tekst voor factuurnummer</strong></label>
 														<input name="invoicenumber_prefix" id="invoicenumber_prefix" type="text" class="form-control" value="{{ $user->invoicenumber_prefix }}" />
 													</div>
 												</div>
@@ -607,13 +607,14 @@ $(document).ready(function() {
 						<div id="notepad" class="tab-pane">
 
 							<form method="POST" action="myaccount/notepad/save" accept-charset="UTF-8">
-                                                        {!! csrf_field() !!}
+                            {!! csrf_field() !!}
 
-							<h4>Kladblok</h4>
+							<h4>Kladblok van mijn Account <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok je account en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-12">
-										<textarea name="notepad" id="notepad" rows="15" class="form-control">{{ $user->notepad }}</textarea>
+										<textarea name="notepad" id="summernote" rows="15" class="form-control">{{ $user->notepad }}</textarea>
+									
 									</div>
 								</div>
 							</div>

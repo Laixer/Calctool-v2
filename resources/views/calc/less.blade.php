@@ -654,6 +654,17 @@ var n = this,
 				$notecurr.attr('data-note', $('#note').val());
 			}).fail(function(e) { console.log(e); });
 		});
+
+        $('.summernote').summernote({
+            height: $(this).attr("data-height") || 200,
+            toolbar: [
+                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+                ["para", ["ul", "ol", "paragraph"]],
+                ["table", ["table"]],
+                ["media", ["link", "picture", "video"]],
+            ]
+        })
+
 	});
 </script>
 <div class="modal fade" id="descModal" tabindex="-1" role="dialog" aria-labelledby="descModalLabel" aria-hidden="true">
@@ -661,13 +672,13 @@ var n = this,
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h4 class="modal-title" id="myModalLabel">Omschrijving werkzaamheid</h4>
+				<h4 class="modal-title" id="myModalLabel">Omschrijving aanpassen</h4>
 			</div>
 
 			<div class="modal-body">
 				<div class="form-group">
 					<div class="col-md-12">
-						<textarea name="note" id="note" rows="5" class="form-control"></textarea>
+						<textarea name="note" id="note" rows="5" class="summernote form-control"></textarea>
 						<input type="hidden" name="noteact" id="noteact" />
 					</div>
 				</div>
@@ -686,7 +697,7 @@ var n = this,
 
 		@include('calc.wizard', array('page' => 'less'))
 
-			<h2><strong>Minderwerk</strong> <strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u hoeveelheden in mindering brengen op de bestaande calculatie bedoeld als minderwerk op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h2>
+			<h2><strong>Minderwerk </strong><strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u hoeveelheden in mindering brengen op de bestaande calculatie bedoeld als minderwerk op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h2>
 
 			<div class="tabs nomargin">
 
@@ -728,7 +739,7 @@ var n = this,
 													<div class="col-md-2"></div>
 	    											<div class="col-md-2"></div>
 													<div class="col-md-1 text-right"><strong>{{ Part::find($activity->part_id)->part_name=='subcontracting' ? 'Onderaanneming' : 'Aanneming' }}</strong></div>
-													<div class="col-md-3 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving toevoegen</button></div>
+													<div class="col-md-3 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving aanpassen</button></div>
 												</div>
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>
@@ -977,7 +988,7 @@ var n = this,
 											<tr>
 												<th class="col-md-3"><strong>Totaal Aanneming</strong></th>
 												<th class="col-md-2">&nbsp;</th>
-												<td class="col-md-1"><strong><span class="pull-right">{{ LessOverview::contrLaborTotalAmount($project) }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(LessOverview::contrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1026,7 +1037,7 @@ var n = this,
 											<tr>
 												<th class="col-md-3"><strong>Totaal Onderaanneming</strong></th>
 												<th class="col-md-4">&nbsp;</th>
-												<td class="col-md-1"><strong><span class="pull-right">{{ LessOverview::subcontrLaborTotalAmount($project) }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(LessOverview::subcontrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1058,7 +1069,7 @@ var n = this,
 											<tr>
 												<th class="col-md-4">&nbsp;</th>
 												<th class="col-md-3">&nbsp;</th>
-												<td class="col-md-1"><span class="pull-right"><strong>{{ LessOverview::laborSuperTotalAmount($project) }}</strong></span></td>
+												<td class="col-md-1"><span class="pull-right"><strong>{{ number_format(LessOverview::laborSuperTotalAmount($project), 2, ",",".") }}</strong></span></td>
 												<td class="col-md-1"><span class="pull-right"><strong>{{ '&euro; '.number_format(LessOverview::laborSuperTotal($project), 2, ",",".") }}</strong></span></td>
 												<td class="col-md-1"><span class="pull-right"><strong>{{ '&euro; '.number_format(LessOverview::materialSuperTotal($project), 2, ",",".") }}</strong></span></td>
 												<td class="col-md-1"><span class="pull-right"><strong>{{ '&euro; '.number_format(LessOverview::equipmentSuperTotal($project), 2, ",",".") }}</strong></span></td>

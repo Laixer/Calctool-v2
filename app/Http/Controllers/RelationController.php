@@ -353,6 +353,9 @@ class RelationController extends Controller {
 
 		$contact->save();
 
+		if ($request->get('redirect'))
+			return redirect('/'.$request->get('redirect'));
+
 		return redirect('/relation-'.$relation->id.'/edit')->with('success', 1);
 	}
 

@@ -12,6 +12,10 @@ use \Calctool\Http\Controllers\InvoiceController;
 use \Calctool\Models\Invoice;
 use \Calctool\Models\ProjectShare;
 use \Calctool\Models\Contact;
+use \Calctool\Models\User;
+use \Calctool\Models\UserType;
+use \Calctool\Models\Relation;
+use \Calctool\Models\MessageBox;
 use \Calctool\Calculus\ResultEndresult;
 use \Calctool\Calculus\InvoiceTerm;
 
@@ -278,6 +282,27 @@ class OfferController extends Controller {
 		$post->offer_id = $offer->id;
 
 		$post->save();
+
+		foreach (User::where('user_type','=',UserType::where('user_type','=','admin')->first()->id)->get() as $admin) {
+
+			$message = new MessageBox;
+			$message->subject = 'Te printen offerte';
+			$message->message = 'Offerte ' . $offer->offer_code . ' staat klaar om geprint te worden';
+			$message->from_user = User::where('username', 'system')->first()['id'];
+			$message->user_id =	$admin->id;
+
+			$message->save();
+		}
+
+	    $data = array(
+	        'code' => $offer->offer_code
+	    );
+	    Mailgun::send('mail.print', $data, function($message) use ($data) {
+	        $message->to('info@calculatietool.com', 'CalculatieTool.com');
+	        $message->subject('CalculatieTool.com - Printopdracht');
+	        $message->from('info@calculatietool.com', 'CalculatieTool.com');
+	        $message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+	    });
 
 		return json_encode(['success' => 1]);
 	}

@@ -11,22 +11,21 @@ use \Calctool\Models\MessageBox;
 		</button>
 
 		<a class="logo" href="/">
-			<img src="/images/logo2.png" width="200px" alt="Calctool" />
-			<sup style="color: #719E00;font-weight: 100;">Beta</sup>
+			<img src="/images/logo2.png" width="229px" alt="Calctool" />
 		</a>
 
 		<div class="navbar-collapse nav-main-collapse collapse pull-right">
 			<nav class="nav-main mega-menu">
 				<ul class="nav nav-pills nav-main scroll-menu" id="topMain">
+					@if (Auth::check())
 					<li>
 						<a href="/">Dashboard</a>
 					</li>
-					@if (Auth::check())
 					<li>
 						<a href="/myaccount">Mijn account</a>
 					</li>
 					@endif
-					@if (1)
+					@if (0)
 					<li>
 						<a href="/about">Over ons</a>
 					</li>

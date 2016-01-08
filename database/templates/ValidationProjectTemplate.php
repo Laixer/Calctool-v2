@@ -86,8 +86,8 @@ class ValidationProjectTemplate {
 		$project->save();
 
 		$contact = new Contact;
-		$contact->firstname 		= 'Val';
-		$contact->lastname 			= 'Idatie';
+		$contact->firstname 		= 'Vali';
+		$contact->lastname 			= 'Datie';
 		$contact->email 			= 'validatie@calculatietool.com';
 		$contact->mobile 			= '0622222222';
 		$contact->phone 			= '0102222222';
@@ -115,7 +115,7 @@ class ValidationProjectTemplate {
 	       	$activity1 = new Activity;
 	       	$activity1->activity_name = 'C-A-H1W1-21/21/21';
 	       	$activity1->priority = 1;
-	       	$activity1->note = '';
+	       	$activity1->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity1->chapter_id = $chapter1->id;
 	       	$activity1->tax_labor_id = $tax1->id;
 	       	$activity1->tax_material_id = $tax1->id;
@@ -245,7 +245,7 @@ class ValidationProjectTemplate {
 			$activity2 = new Activity;
 	       	$activity2->activity_name = 'C-A-H1W2-21/21/6';
 	       	$activity2->priority = 2;
-	       	$activity2->note = '';
+	       	$activity2->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity2->chapter_id = $chapter1->id;
 	       	$activity2->tax_labor_id = $tax1->id;
 	       	$activity2->tax_material_id = $tax1->id;
@@ -375,7 +375,7 @@ class ValidationProjectTemplate {
 			$activity3 = new Activity;
 	       	$activity3->activity_name = 'C-A-H1W3-21/6/6';
 	       	$activity3->priority = 3;
-	       	$activity3->note = '';
+	       	$activity3->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity3->chapter_id = $chapter1->id;
 	       	$activity3->tax_labor_id = $tax1->id;
 	       	$activity3->tax_material_id = $tax2->id;
@@ -505,7 +505,7 @@ class ValidationProjectTemplate {
 			$activity4 = new Activity;
 	       	$activity4->activity_name = 'C-A-H1W4-6/6/6';
 	       	$activity4->priority = 4;
-	       	$activity4->note = '';
+	       	$activity4->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity4->chapter_id = $chapter1->id;
 	       	$activity4->tax_labor_id = $tax2->id;
 	       	$activity4->tax_material_id = $tax2->id;
@@ -641,7 +641,7 @@ class ValidationProjectTemplate {
 	       	$activity5 = new Activity;
 	       	$activity5->activity_name = 'C-O-H2W5-21/21/21';
 	       	$activity5->priority = 5;
-	       	$activity5->note = '';
+	       	$activity5->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity5->chapter_id = $chapter2->id;
 	       	$activity5->tax_labor_id = $tax1->id;
 	       	$activity5->tax_material_id = $tax1->id;
@@ -771,7 +771,7 @@ class ValidationProjectTemplate {
 			$activity6 = new Activity;
 	       	$activity6->activity_name = 'C-O-H2W6-21/21/6';
 	       	$activity6->priority = 6;
-	       	$activity6->note = '';
+	       	$activity6->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity6->chapter_id = $chapter2->id;
 	       	$activity6->tax_labor_id = $tax1->id;
 	       	$activity6->tax_material_id = $tax1->id;
@@ -901,7 +901,7 @@ class ValidationProjectTemplate {
 			$activity7 = new Activity;
 	       	$activity7->activity_name = 'C-O-H2W7-21/6/6';
 	       	$activity7->priority = 7;
-	       	$activity7->note = '';
+	       	$activity7->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity7->chapter_id = $chapter2->id;
 	       	$activity7->tax_labor_id = $tax1->id;
 	       	$activity7->tax_material_id = $tax2->id;
@@ -1031,7 +1031,7 @@ class ValidationProjectTemplate {
 			$activity8= new Activity;
 	       	$activity8->activity_name = 'C-O-H2W8-6/6/6';
 	       	$activity8->priority = 8;
-	       	$activity8->note = '';
+	       	$activity8->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity8->chapter_id = $chapter2->id;
 	       	$activity8->tax_labor_id = $tax2->id;
 	       	$activity8->tax_material_id = $tax2->id;
@@ -1167,7 +1167,7 @@ class ValidationProjectTemplate {
 	       	$activity9 = new Activity;
 	       	$activity9->activity_name = 'S-A-H3W9-21/21/21';
 	       	$activity9->priority = 9;
-	       	$activity9->note = '';
+	       	$activity9->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity9->chapter_id = $chapter3->id;
 	       	$activity9->tax_labor_id = $tax1->id;
 	       	$activity9->tax_material_id = $tax1->id;
@@ -1257,7 +1257,7 @@ class ValidationProjectTemplate {
 						$Estimate_equipment_activity9_1 = new EstimateEquipment;
 						$Estimate_equipment_activity9_1->equipment_name = 'S-A-H3W9-EQU1';
 						$Estimate_equipment_activity9_1->unit = '86';
-						$Estimate_equipment_activity9_1->rate = '2';
+						$Estimate_equipment_activity9_1->rate = '1';
 						$Estimate_equipment_activity9_1->amount = '2';
 						$Estimate_equipment_activity9_1->original = true;
 						$Estimate_equipment_activity9_1->isset = true;
@@ -1327,7 +1327,7 @@ class ValidationProjectTemplate {
 			$activity10 = new Activity;
 	       	$activity10->activity_name = 'S-A-H3W10-21/21/6';
 	       	$activity10->priority = 10;
-	       	$activity10->note = '';
+	       	$activity10->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity10->chapter_id = $chapter3->id;
 	       	$activity10->tax_labor_id = $tax1->id;
 	       	$activity10->tax_material_id = $tax1->id;
@@ -1487,7 +1487,7 @@ class ValidationProjectTemplate {
 			$activity11 = new Activity;
 	       	$activity11->activity_name = 'S-A-H3W11-21/6/6';
 	       	$activity11->priority = 11;
-	       	$activity11->note = '';
+	       	$activity11->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity11->chapter_id = $chapter3->id;
 	       	$activity11->tax_labor_id = $tax1->id;
 	       	$activity11->tax_material_id = $tax2->id;
@@ -1499,6 +1499,8 @@ class ValidationProjectTemplate {
 				$Estimate_labor_activity11 = new EstimateLabor;
 				$Estimate_labor_activity11->rate = '10.00';
 				$Estimate_labor_activity11->amount = '20';
+				$Estimate_labor_activity11->set_rate = '10.00';
+				$Estimate_labor_activity11->set_amount = '0';
 				$Estimate_labor_activity11->original = true;
 				$Estimate_labor_activity11->isset = true;
 				$Estimate_labor_activity11->activity_id = $activity11->id;
@@ -1647,7 +1649,7 @@ class ValidationProjectTemplate {
 			$activity12 = new Activity;
 	       	$activity12->activity_name = 'S-A-H3W12-6/6/6';
 	       	$activity12->priority = 12;
-	       	$activity12->note = '';
+	       	$activity12->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity12->chapter_id = $chapter3->id;
 	       	$activity12->tax_labor_id = $tax2->id;
 	       	$activity12->tax_material_id = $tax2->id;
@@ -1659,6 +1661,8 @@ class ValidationProjectTemplate {
 				$Estimate_labor_activity12 = new EstimateLabor;
 				$Estimate_labor_activity12->rate = '10.00';
 				$Estimate_labor_activity12->amount = '21';
+				$Estimate_labor_activity12->set_rate = '10.00';
+				$Estimate_labor_activity12->set_amount = '0';
 				$Estimate_labor_activity12->original = true;
 				$Estimate_labor_activity12->isset = true;
 				$Estimate_labor_activity12->activity_id = $activity12->id;
@@ -1813,7 +1817,7 @@ class ValidationProjectTemplate {
 	       	$activity13 = new Activity;
 	       	$activity13->activity_name = 'S-O-H4W13-21/21/21';
 	       	$activity13->priority = 13;
-	       	$activity13->note = '';
+	       	$activity13->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity13->chapter_id = $chapter4->id;
 	       	$activity13->tax_labor_id = $tax1->id;
 	       	$activity13->tax_material_id = $tax1->id;
@@ -1973,7 +1977,7 @@ class ValidationProjectTemplate {
 			$activity14 = new Activity;
 	       	$activity14->activity_name = 'S-O-H4W14-21/21/6';
 	       	$activity14->priority = 14;
-	       	$activity14->note = '';
+	       	$activity14->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity14->chapter_id = $chapter4->id;
 	       	$activity14->tax_labor_id = $tax1->id;
 	       	$activity14->tax_material_id = $tax1->id;
@@ -2133,7 +2137,7 @@ class ValidationProjectTemplate {
 			$activity15 = new Activity;
 	       	$activity15->activity_name = 'S-O-H4W15-21/6/6';
 	       	$activity15->priority = 15;
-	       	$activity15->note = '';
+	       	$activity15->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity15->chapter_id = $chapter4->id;
 	       	$activity15->tax_labor_id = $tax1->id;
 	       	$activity15->tax_material_id = $tax2->id;
@@ -2145,6 +2149,8 @@ class ValidationProjectTemplate {
 				$Estimate_labor_activity15 = new EstimateLabor;
 				$Estimate_labor_activity15->rate = '11.00';
 				$Estimate_labor_activity15->amount = '24';
+				$Estimate_labor_activity15->set_rate = '11.00';
+				$Estimate_labor_activity15->set_amount = '0';
 				$Estimate_labor_activity15->original = true;
 				$Estimate_labor_activity15->isset = true;
 				$Estimate_labor_activity15->activity_id = $activity15->id;
@@ -2293,7 +2299,7 @@ class ValidationProjectTemplate {
 			$activity16= new Activity;
 	       	$activity16->activity_name = 'S-O-H4W16-6/6/6';
 	       	$activity16->priority = 16;
-	       	$activity16->note = '';
+	       	$activity16->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity16->chapter_id = $chapter4->id;
 	       	$activity16->tax_labor_id = $tax2->id;
 	       	$activity16->tax_material_id = $tax2->id;
@@ -2305,6 +2311,8 @@ class ValidationProjectTemplate {
 	  			$Estimate_labor_activity16 = new EstimateLabor;
 				$Estimate_labor_activity16->rate = '11.00';
 				$Estimate_labor_activity16->amount = '25';
+				$Estimate_labor_activity16->set_rate = '11.00';
+				$Estimate_labor_activity16->set_amount = '0';
 				$Estimate_labor_activity16->original = true;
 				$Estimate_labor_activity16->isset = true;
 				$Estimate_labor_activity16->activity_id = $activity16->id;
@@ -2439,7 +2447,7 @@ class ValidationProjectTemplate {
 	       	$activity17 = new Activity;
 	       	$activity17->activity_name = 'MW-A-H5W17-21/21/21';
 	       	$activity17->priority = 17;
-	       	$activity17->note = '';
+	       	$activity17->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity17->chapter_id = $chapter5->id;
 	       	$activity17->tax_labor_id = $tax1->id;
 	       	$activity17->tax_material_id = $tax1->id;
@@ -2538,7 +2546,7 @@ class ValidationProjectTemplate {
 			$activity18 = new Activity;
 	       	$activity18->activity_name = 'MW-A-H5W18-21/21/6';
 	       	$activity18->priority = 18;
-	       	$activity18->note = '';
+	       	$activity18->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity18->chapter_id = $chapter5->id;
 	       	$activity18->tax_labor_id = $tax1->id;
 	       	$activity18->tax_material_id = $tax1->id;
@@ -2637,7 +2645,7 @@ class ValidationProjectTemplate {
 			$activity19 = new Activity;
 	       	$activity19->activity_name = 'MW-A-H5W19-21/6/6';
 	       	$activity19->priority = 19;
-	       	$activity19->note = '';
+	       	$activity19->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity19->chapter_id = $chapter5->id;
 	       	$activity19->tax_labor_id = $tax1->id;
 	       	$activity19->tax_material_id = $tax2->id;
@@ -2736,7 +2744,7 @@ class ValidationProjectTemplate {
 			$activity20 = new Activity;
 	       	$activity20->activity_name = 'MW-A-H5W20-6/6/6';
 	       	$activity20->priority = 20;
-	       	$activity20->note = '';
+	       	$activity20->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity20->chapter_id = $chapter5->id;
 	       	$activity20->tax_labor_id = $tax2->id;
 	       	$activity20->tax_material_id = $tax2->id;
@@ -2841,7 +2849,7 @@ class ValidationProjectTemplate {
 	       	$activity21 = new Activity;
 	       	$activity21->activity_name = 'MW-O-H6W21-21/21/21';
 	       	$activity21->priority = 21;
-	       	$activity21->note = '';
+	       	$activity21->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity21->chapter_id = $chapter6->id;
 	       	$activity21->tax_labor_id = $tax1->id;
 	       	$activity21->tax_material_id = $tax1->id;
@@ -2940,7 +2948,7 @@ class ValidationProjectTemplate {
 			$activity22 = new Activity;
 	       	$activity22->activity_name = 'MW-O-H6W22-21/21/6';
 	       	$activity22->priority = 22;
-	       	$activity22->note = '';
+	       	$activity22->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity22->chapter_id = $chapter6->id;
 	       	$activity22->tax_labor_id = $tax1->id;
 	       	$activity22->tax_material_id = $tax1->id;
@@ -3039,7 +3047,7 @@ class ValidationProjectTemplate {
 			$activity23 = new Activity;
 	       	$activity23->activity_name = 'MW-O-H6W23-21/6/6';
 	       	$activity23->priority = 23;
-	       	$activity23->note = '';
+	       	$activity23->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity23->chapter_id = $chapter6->id;
 	       	$activity23->tax_labor_id = $tax1->id;
 	       	$activity23->tax_material_id = $tax2->id;
@@ -3138,7 +3146,7 @@ class ValidationProjectTemplate {
 			$activity24= new Activity;
 	       	$activity24->activity_name = 'MW-O-H6W24-6/6/6';
 	       	$activity24->priority = 24;
-	       	$activity24->note = '';
+	       	$activity24->note = 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren 60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.';
 	       	$activity24->chapter_id = $chapter6->id;
 	       	$activity24->tax_labor_id = $tax2->id;
 	       	$activity24->tax_material_id = $tax2->id;

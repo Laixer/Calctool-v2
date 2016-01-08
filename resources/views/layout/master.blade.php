@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<!--[if IE 8]><html class="ie ie8"><![endif]-->
-<!--[if IE 9]><html class="ie ie9"><![endif]-->
+
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>Calculatie Tool - Online calculeren & offreren</title>
+		<title>CalculatieTool.com - Online calculeren & offreren</title>
 		<meta name="keywords" content="Calculeren" />
 		<meta name="description" content="" />
 		<meta name="Author" content="CalculatieTool.com" />
@@ -43,6 +42,7 @@
 		<link media="all" type="text/css" rel="stylesheet" href="/plugins/owl-carousel/owl.transitions.css">
 		<link media="all" type="text/css" rel="stylesheet" href="/plugins/x-editable/css/bootstrap-editable.css">
 		<link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
+		<link type="text/css" rel="stylesheet" href="/plugins/videojs/videojs-sublime-skin.css">
 
 		<?php // -- SHOP CSS -- ?>
 		<link media="all" type="text/css" rel="stylesheet" href="/css/shop.css">
@@ -101,6 +101,8 @@
 		<script src="/plugins/owl-carousel/owl.carousel.min.js"></script>
 		<script src="/plugins/x-editable/js/bootstrap-editable.min.js"></script>
 		<script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+		<script src="/plugins/summernote/summernote.min.js"></script>
+		<script src="/plugins/videojs/video.min.js"></script>
 
 		<script src="/js/scripts.js"></script>
 	</body>

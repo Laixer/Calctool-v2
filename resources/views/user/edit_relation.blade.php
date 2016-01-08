@@ -1,10 +1,23 @@
 <?php
+
+use \Calctool\Models\Project;
+use \Calctool\Models\User;
+use \Calctool\Models\Relation;
+use \Calctool\Models\Contact;
+use \Calctool\Models\ContactFunction;
+use \Calctool\Models\RelationKind;
+use \Calctool\Models\RelationType;
+use \Calctool\Models\Province;
+use \Calctool\Models\Country;
+use \Calctool\Models\Invoice;
+use \Calctool\Models\Offer;
+
 $common_access_error = false;
-$relation = \Calctool\Models\Relation::find(Route::Input('relation_id'));
+$relation = Relation::find(Route::Input('relation_id'));
 if (!$relation || !$relation->isOwner() || !$relation->isActive()) {
 	$common_access_error = true;
 } else {
-	$contact = \Calctool\Models\Contact::where('relation_id','=',$relation->id)->first();
+	$contact = Contact::where('relation_id','=',$relation->id)->first();
 }
 ?>
 
@@ -51,6 +64,9 @@ $(document).ready(function() {
 	});
 	$('#tab-contact').click(function(e){
 		sessionStorage.toggleTabRel{{Auth::id()}} = 'contact';
+	});
+	$('#tab-invoices').click(function(e){
+		sessionStorage.toggleTabRel{{Auth::id()}} = 'invoices';
 	});
 	if (sessionStorage.toggleTabRel{{Auth::id()}}){
 		$toggleOpenTab = sessionStorage.toggleTabRel{{Auth::id()}};
@@ -123,6 +139,17 @@ $(document).ready(function() {
 			});
 		}
 	});
+
+    $('#summernote').summernote({
+        height: $(this).attr("data-height") || 200,
+        toolbar: [
+            ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+            ["para", ["ul", "ol", "paragraph"]],
+            ["table", ["table"]],
+            ["media", ["link", "picture", "video"]],
+        ]
+    })
+	      
 });
 </script>
 
@@ -151,7 +178,7 @@ $(document).ready(function() {
 
 			<div>
 			<ol class="breadcrumb">
-			  <li><a href="/">Home</a></li>
+			  <li><a href="/">Dashboard</a></li>
 			  <li><a href="/relation">Relaties</a></li>
 			 <li>{{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</li>
 			</ol>
@@ -164,13 +191,16 @@ $(document).ready(function() {
 
 					<ul class="nav nav-tabs">
 						<li id="tab-company">
-							<a href="#company" data-toggle="tab">{{ ucfirst( \Calctool\Models\RelationKind::find($relation->kind_id)->kind_name) }}e gegevens</a>
+							<a href="#company" data-toggle="tab">{{ ucfirst( RelationKind::find($relation->kind_id)->kind_name) }}e gegevens</a>
 						</li>
 						<li id="tab-contact">
 							<a href="#contact" data-toggle="tab">Contacten</a>
 						</li>
 						<li id="tab-payment">
 							<a href="#payment" data-toggle="tab">Betalingsgegevens</a>
+						</li>
+						<li id="tab-invoices">
+							<a href="#invoices" data-toggle="tab">Facturen</a>
 						</li>
 					</ul>
 
@@ -182,7 +212,7 @@ $(document).ready(function() {
 
 							<form method="POST" action="/relation/update" accept-charset="UTF-8">
 			                {!! csrf_field() !!}
-							<h4>{{ ucfirst(\Calctool\Models\RelationKind::find($relation->kind_id)->kind_name) }}e relatie</h4>
+							<h4>{{ ucfirst(RelationKind::find($relation->kind_id)->kind_name) }}e relatie</h4>
 							<div class="row">
 								<div class="col-md-3">
 									<div class="form-group">
@@ -194,7 +224,7 @@ $(document).ready(function() {
 
 							</div>
 
-							@if (\Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk')
+							@if (RelationKind::find($relation->kind_id)->kind_name == 'zakelijk')
 							<h4 class="company">Bedrijfsgegevens</h4>
 							<div class="row company">
 
@@ -209,7 +239,7 @@ $(document).ready(function() {
 									<div class="form-group">
 										<label for="company_type">Bedrijfstype*</label>
 										<select name="company_type" id="company_type" class="form-control pointer">
-										@foreach (\Calctool\Models\RelationType::all() as $type)
+										@foreach (RelationType::all() as $type)
 											<option {{ $relation->type_id==$type->id ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
 										@endforeach
 										</select>
@@ -289,7 +319,7 @@ $(document).ready(function() {
 									<div class="form-group">
 										<label for="province">Provincie*</label>
 										<select name="province" id="province" class="form-control pointer">
-											@foreach (\Calctool\Models\Province::all() as $province)
+											@foreach (Province::all() as $province)
 												<option {{ $relation->province_id==$province->id ? 'selected' : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
 											@endforeach
 										</select>
@@ -300,7 +330,7 @@ $(document).ready(function() {
 									<div class="form-group">
 										<label for="country">Land*</label>
 										<select name="country" id="country" class="form-control pointer">
-											@foreach (\Calctool\Models\Country::all() as $country)
+											@foreach (Country::all() as $country)
 												<option {{ $relation->country_id==$country->id ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
 											@endforeach
 										</select>
@@ -313,7 +343,7 @@ $(document).ready(function() {
 							<div class="row">
 								<div class="form-group">
 									<div class="col-md-12">
-										<textarea name="note" id="note" rows="10" class="form-control">{{ Input::old('note') ? Input::old('note') : $relation->note }}</textarea>
+										<textarea name="note" id="summernote" rows="10" class="form-control">{{ Input::old('note') ? Input::old('note') : $relation->note }}</textarea>
 									</div>
 								</div>
 							</div>
@@ -324,7 +354,7 @@ $(document).ready(function() {
 							</div>
 						</form>
 						</div>
-												<div id="contact" class="tab-pane">
+						<div id="contact" class="tab-pane">
 							<h4>Contactpersonen {{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</h4>
 							<table class="table table-striped">
 								<?# -- table head -- ?>
@@ -339,13 +369,12 @@ $(document).ready(function() {
 									</tr>
 								</thead>
 
-								<!-- table items -->
 								<tbody>
-									@foreach (\Calctool\Models\Contact::where('relation_id','=', $relation->id)->get() as $contact)
-									<tr><!-- item -->
+									@foreach (Contact::where('relation_id','=', $relation->id)->get() as $contact)
+									<tr>
 										<td class="col-md-2"><a href="/relation-{{ $relation->id }}/contact-{{ $contact->id }}/edit">{{ $contact->firstname }}</a></td>
 										<td class="col-md-2">{{ $contact->lastname }}</td>
-										<td class="col-md-2">{{ ucfirst(\Calctool\Models\ContactFunction::find($contact->function_id)->function_name) }}</td>
+										<td class="col-md-2">{{ ucfirst(ContactFunction::find($contact->function_id)->function_name) }}</td>
 										<td class="col-md-2">{{ $contact->phone }}</td>
 										<td class="col-md-2">{{ $contact->mobile }}</td>
 										<td class="col-md-2">{{ $contact->email }}</td>
@@ -388,6 +417,39 @@ $(document).ready(function() {
 							</div>
 							</form>
 						</div>
+						<div id="invoices" class="tab-pane">
+							<h4>Facturen bij relatie</h4>
+							
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th class="col-md-2">Factuur</th>
+										<th class="col-md-2">Project</th>
+										<th class="col-md-2">Bedrag</th>
+										<th class="col-md-2">Datum</th>
+										<th class="col-md-2"></th>
+										<th class="col-md-2">Status</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									@foreach (Project::where('user_id','=', Auth::id())->where('client_id',$relation->id)->orderBy('created_at','desc')->get() as $project)
+									@foreach (Offer::where('project_id','=', $project->id)->orderBy('created_at','desc')->get() as $offer)
+									@foreach (Invoice::where('offer_id','=', $offer->id)->whereNotNUll('bill_date')->orderBy('created_at','desc')->get() as $invoice)
+									<tr>
+										<td class="col-md-2"><a href="http://localhost/invoice/project-{{ $project->id }}/pdf-invoice-{{ $invoice->id }}">{{ $invoice->invoice_code }}</a></td>
+										<td class="col-md-2">{{ $project->project_name }}</td>
+										<td class="col-md-2">{!! '&euro;&nbsp;'.number_format($invoice->amount, 2, ",",".") !!}</td>
+										<td class="col-md-2">{{ date('d-m-Y', strtotime(DB::table('invoice')->select('created_at')->where('id','=',$invoice->id)->get()[0]->created_at)) }}</td>
+										<td class="col-md-2">{{--  --}}</td>
+										<td class="col-md-2">{{ $invoice->payment_date ? 'Betaald' : 'Gefactureerd' }}</td>
+									</tr>
+									@endforeach
+									@endforeach
+									@endforeach
+								</tbody>
+							</table>							
+						</div>
 					</div>
 				</div>
 
@@ -396,10 +458,9 @@ $(document).ready(function() {
 	</section>
 
 </div>
-<?#-- /WRAPPER --?>
 <script type="text/javascript">
 $(document).ready(function() {
-	<?php $response = \Calctool\Models\RelationKind::where('id','=',Input::old('relationkind'))->first(); ?>
+	<?php $response = RelationKind::where('id','=',Input::old('relationkind'))->first(); ?>
 	if('{{ ($response ? $response->kind_name : 'zakelijk') }}'=='particulier'){
 		$('.company').hide();
 		$('#relationkind option[value="{{ Input::old('relationkind') }}"]').attr("selected",true);

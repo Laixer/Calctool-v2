@@ -27,5 +27,4 @@
 	</section>
 
 </div>
-<!-- /WRAPPER -->
 @stop

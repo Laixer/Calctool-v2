@@ -5,6 +5,10 @@ namespace Calctool\Calculus;
 use \Calctool\Models\CalculationLabor;
 use \Calctool\Models\EstimateLabor;
 use \Calctool\Models\Timesheet;
+use \Calctool\Models\Chapter;
+use \Calctool\Models\Activity;
+use \Calctool\Models\TimesheetKind;
+use \Calctool\Models\MoreLabor;
 
 /*
  * Urenregistratie

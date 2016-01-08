@@ -59,7 +59,7 @@ class CreateUsersTable extends Migration {
 			$table->integer('mobile')->nullable()->unsigned();
 			$table->integer('phone')->nullable()->unsigned();
 			$table->string('email', 80)->unique();
-			$table->boolean('pref_mailings_optin')->default('N');
+			$table->boolean('pref_use_ct_numbering')->default('Y');
 			$table->decimal('pref_hourrate_calc', 6, 3)->nullable();
 			$table->decimal('pref_hourrate_more', 6, 3)->nullable();
 			$table->tinyInteger('pref_profit_calc_contr_mat')->default(0)->unsigned();
@@ -105,6 +105,7 @@ class CreateUsersTable extends Migration {
 			$table->string('address_postal', 6);
 			$table->string('address_city', 35);
 			$table->text('note')->nullable();
+			$table->boolean('pref_email_reminder')->default('N');
 			$table->decimal('hour_rate', 6, 3)->unsigned()->default(0);;
 			$table->decimal('hour_rate_more', 6, 3)->nullable()->unsigned();
 			$table->tinyInteger('profit_calc_contr_mat')->unsigned()->default(0);

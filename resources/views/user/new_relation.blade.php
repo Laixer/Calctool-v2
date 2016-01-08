@@ -1,3 +1,10 @@
+<?php
+
+use \Calctool\Models\RelationKind;
+use \Calctool\Models\RelationType;
+
+?>
+
 @extends('layout.master')
 
 @section('content')
@@ -57,12 +64,17 @@ $(document).ready(function() {
             $(this).removeClass("error-input");
         }
     });
+
 	$('#relationkind').change(function(e) {
 		if ($(this).val() == 2)
 			$('.company').hide('slow');
 		else
 			$('.company').show('slow');
 	});
+
+	@if (old('relationkind') && old('relationkind') == 2)
+	$('.company').hide();
+	@endif
 
 	$('#street').blur(function() {
 		var streetcheck = $(this).val();
@@ -108,7 +120,7 @@ $(document).ready(function() {
 
 			<div>
 				<ol class="breadcrumb">
-				  <li><a href="/">Home</a></li>
+				  <li><a href="/">Dashboard</a></li>
 				  <li><a href="/relation">Relaties</a></li>
 				  <li>Nieuw Contact</li>
 				</ol>
@@ -135,7 +147,7 @@ $(document).ready(function() {
 			<h2><strong>Nieuwe</strong> relatie</h2>
 
 			<div class="white-row">
-				<form method="POST" action="/relation/new" accept-charset="UTF-8">
+				<form method="POST" action="/relation/new{{ Input::get('redirect') ? '?redirect='.Input::get('redirect') : '' }}" accept-charset="UTF-8">
 				{!! csrf_field() !!}
 				<div class="row">
 
@@ -143,8 +155,8 @@ $(document).ready(function() {
 						<div class="form-group">
 							<label for="relationkind">Relatiesoort*</label>
 							<select name="relationkind" id="relationkind" class="form-control pointer">
-							@foreach (Calctool\Models\RelationKind::all() as $kind)
-								<option value="{{ $kind->id }}">{{ ucwords($kind->kind_name) }}</option>
+							@foreach (RelationKind::all() as $kind)
+								<option {{ old('relationkind') && old('relationkind') == $kind->id ? 'selected' : '' }} value="{{ $kind->id }}">{{ ucwords($kind->kind_name) }}</option>
 							@endforeach
 							</select>
 						</div>
@@ -173,7 +185,7 @@ $(document).ready(function() {
 						<div class="form-group">
 							<label for="company_type">Bedrijfstype*</label>
 							<select name="company_type" id="company_type" class="form-control pointer">
-							@foreach (Calctool\Models\RelationType::all() as $type)
+							@foreach (RelationType::all() as $type)
 								<option value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
 							@endforeach
 							</select>
@@ -331,25 +343,6 @@ $(document).ready(function() {
 					</div>
 
 				</div>
-
-				<!--<h4>Betalingsgegevens</h4>
-				<div class="row">
-
-					<div class="col-md-3">
-						<div class="form-group">
-							<label for="iban">IBAN rekeningnummer</label>
-							<input name="iban" id="iban" type="text" value="{{ Input::old('iban') }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-3">
-						<div class="form-group">
-							<label for="btw">Naam rekeninghouder</label>
-							<input name="iban_name" id="iban_name" type="text" value="{{ Input::old('iban_name') }}" class="form-control"/>
-						</div>
-					</div>
-
-				</div>-->
 
 				<h4>Opmerkingen</h4>
 				<div class="row">

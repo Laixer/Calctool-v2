@@ -1769,11 +1769,12 @@ if ($cnt>1)
     </thead>
     <tbody>
       @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+      <?php $i = true; ?>
       @foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
       <tr>
-        <td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-        <td class="col-md-3">{{ $activity->activity_name }}</td>
-        <td class="col-md-7"><span>{{ $activity->note }}</td>
+        <td class="col-md-2" valign="top"><br/><strong><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></strong></td>
+        <td class="col-md-3" valign="top"><br/>{{ $activity->activity_name }}</td>
+        <td class="col-md-7" valign="top"><br/><span>{!! $activity->note !!}</td>
       </tr>
       @endforeach
       @endforeach
@@ -1810,11 +1811,12 @@ if ($cnt>1)
     </thead>
     <tbody>
       @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+      <?php $i = true; ?>
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
       <tr>
-        <td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-        <td class="col-md-3">{{ $activity->activity_name }}</td>
-        <td class="col-md-7"><span>{{ $activity->note }}</td>
+        <td class="col-md-2" valign="top"><br/><strong><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></strong></td>
+        <td class="col-md-3" valign="top"><br/>{{ $activity->activity_name }}</td>
+        <td class="col-md-7" valign="top"><br/><span>{!! $activity->note !!}</td>
       </tr>
       @endforeach
       @endforeach
@@ -1831,11 +1833,12 @@ if ($cnt>1)
     </thead>
     <tbody>
       @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+      <?php $i = true; ?>
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
       <tr>
-        <td class="col-md-2"><strong>{{ $chapter->chapter_name }}</strong></td>
-        <td class="col-md-3">{{ $activity->activity_name }}</td>
-        <td class="col-md-7"><span>{{ $activity->note }}</td>
+        <td class="col-md-2" valign="top"><br/><strong><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></strong></td>
+        <td class="col-md-3" valign="top"><br/>{{ $activity->activity_name }}</td>
+        <td class="col-md-7" valign="top"><br/><span>{!! $activity->note !!}</td>
       </tr>
       @endforeach
       @endforeach

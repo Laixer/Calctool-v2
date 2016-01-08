@@ -39,7 +39,7 @@ use \Calctool\Models\Promotion;
 					<tr>
 						<th class="col-md-1">Actie</th>
 						<th class="col-md-3">Code</th>
-						<th class="col-md-2">Bedrag</th>
+						<th class="col-md-2">Nieuw Bedrag</th>
 						<th class="col-md-2">Aangemaakt</th>
 						<th class="col-md-2">Geldig tot</th>
 						<th class="col-md-1"></th>
@@ -96,7 +96,7 @@ use \Calctool\Models\Promotion;
 
 				<div class="row">
 					<div class="col-md-12">
-						<button class="btn btn-primary"><i class="fa fa-check"></i> Versturen</button>
+						<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 					</div>
 				</div>
 			</form>

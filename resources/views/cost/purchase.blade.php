@@ -135,5 +135,4 @@ use \Calctool\Models\Wholesale;
 	</section>
 
 </div>
-<!-- /WRAPPER -->
 @stop

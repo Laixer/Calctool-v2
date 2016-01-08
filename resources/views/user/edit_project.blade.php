@@ -10,6 +10,14 @@ use \Calctool\Models\Offer;
 use \Calctool\Models\Invoice;
 use \Calctool\Models\Wholesale;
 use \Calctool\Models\ProjectShare;
+use \Calctool\Models\RelationKind;
+use \Calctool\Models\Province;
+use \Calctool\Models\Country;
+use \Calctool\Models\Chapter;
+use \Calctool\Models\Activity;
+use \Calctool\Models\Timesheet;
+use \Calctool\Models\TimesheetKind;
+use \Calctool\Models\Purchase;
 
 
 $common_access_error = false;
@@ -231,7 +239,29 @@ else {
 				location.reload();
 			});
     	});
+    	$("[name='toggle-mail-reminder']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+		
+	        $('#summernote').summernote({
+	            height: $(this).attr("data-height") || 200,
+	            toolbar: [
+	                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+	                ["para", ["ul", "ol", "paragraph"]],
+	                ["table", ["table"]],
+	                ["media", ["link", "picture", "video"]],
+	            ]
+	        })
+
+	        $('.summernote').summernote({
+	            height: $(this).attr("data-height") || 200,
+	            toolbar: [
+	                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+	                ["para", ["ul", "ol", "paragraph"]],
+	                ["table", ["table"]],
+	                ["media", ["link", "picture", "video"]],
+	            ]
+	        })
 	});
+
 </script>
 <div id="wrapper">
 
@@ -286,17 +316,11 @@ else {
 						<li id="tab-calc">
 							<a href="#calc" data-toggle="tab">Uurtarief & Winstpercentages</a>
 						</li>
-						<!--
-						<li id="tab-hour">
-							<a href="#hour" data-toggle="tab">Urenregistratie</a>
-						</li>
-						<li id="tab-purchase">
-							<a href="#purchase" data-toggle="tab">Inkoopfacturen</a>
-						</li>
-						-->
+						@if ($share && $share->client_note )
 						<li id="tab-communication">
 							<a href="#communication" data-toggle="tab">Communicatie opdrachtgever </a>
 						</li>
+						@endif
 					</ul>
 
 					<div class="tab-content">
@@ -362,9 +386,9 @@ else {
 							if ($offer_last) {
 							$i=0;
 							$close = true;
-							$invoice_end = \Calctool\Models\Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first();
+							$invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first();
 							?>
-							@foreach (\Calctool\Models\Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority')->get() as $invoice)
+							@foreach (Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority')->get() as $invoice)
 							<div class="row">
 								<div class="col-md-3">{{ ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1)) }}</div>
 								<div class="col-md-2">
@@ -428,6 +452,7 @@ else {
 						<div id="project" class="tab-pane">
 						<form method="post" {!! $offer_last && $offer_last->offer_finish ? 'action="/project/update/note"' : 'action="/project/update"' !!}>
    	  	                {!! csrf_field() !!}
+						<h4>Projectgegevens</h4>	
 							<h5><strong>Gegevens</strong></h5>
 								<div class="row">
 									<div class="col-md-6">
@@ -442,14 +467,14 @@ else {
 											<label for="contractor">Opdrachtgever*</label>
 											@if (!Relation::find($project->client_id)->isActive())
 											<select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} class="form-control pointer">
-											@foreach (\Calctool\Models\Relation::where('user_id','=', Auth::id())->get() as $relation)
-												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ \Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</option>
+											@foreach (Relation::where('user_id','=', Auth::id())->get() as $relation)
+												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</option>
 											@endforeach
 											</select>
 											@else
 											<select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} class="form-control pointer">
-											@foreach (\Calctool\Models\Relation::where('user_id','=', Auth::id())->where('active',true)->get() as $relation)
-												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ \Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</option>
+											@foreach (Relation::where('user_id','=', Auth::id())->where('active',true)->get() as $relation)
+												<option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</option>
 											@endforeach
 											</select>
 											@endif
@@ -457,7 +482,7 @@ else {
 									</div>
 
 								</div>
-							<h5><strong>Adresgegevens</strong></h5>
+								<h5><strong>Adresgegevens</strong></h5>
 									<div class="row">
 
 									<div class="col-md-4">
@@ -491,7 +516,7 @@ else {
 										<div class="form-group">
 											<label for="province">Provincie*</label>
 											<select name="province" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="province" class="form-control pointer">
-												@foreach (\Calctool\Models\Province::all() as $province)
+												@foreach (Province::all() as $province)
 													<option {{ $project->province_id==$province->id ? 'selected' : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
 												@endforeach
 											</select>
@@ -502,7 +527,7 @@ else {
 										<div class="form-group">
 											<label for="country">Land*</label>
 											<select name="country" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="country" class="form-control pointer">
-												@foreach (\Calctool\Models\Country::all() as $country)
+												@foreach (Country::all() as $country)
 													<option {{ $project->country_id==$country->id ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
 												@endforeach
 											</select>
@@ -510,11 +535,23 @@ else {
 									</div>
 
 								</div>
-							<h5><strong>Opmerkingen</strong></h5>
+								<h4>Projectinstellingen</h4>
+
+								<h5><strong>Email herinnering aanzetten </strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="De CalculatieTool.com kan bij digitaal verstuurde offertes en facturen respectievelijk na het verstrijken van geldigheid van de offerte of ingestelde betalingsconditie van de factuur auomatische herinneringen sturen naar je klant. Jij als gebruiker wordt hierover altijd geinformeerd met een bericht in je notificaties. De teskt in de te verzenden mail staat default ingesteld in je 'voorkeuren' onder 'mijn account', deze is aanpasbaar per account." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h5>
 								<div class="row">
-									<div class="form-group">
+									<div class="col-md-2">
+										<div class="form-group">
+											<input name="toggle-mail-reminder" type="checkbox" {{ $project->pref_email_reminder ? 'checked' : '' }}>
+										</div>
+									</div>
+								</div>
+
+								<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
+								<div class="row">
+									<div class="form-group ">
 										<div class="col-md-12">
-											<textarea name="note" id="note" rows="5" class="form-control">{{ Input::old('note') ? Input::old('note') : $project->note }}</textarea>
+										<textarea name="note" id="summernote" data-height="200" class="form-control">{{ Input::old('note') ? Input::old('note') : $project->note }}</textarea>
+
 										</div>
 									</div>
 								</div>
@@ -616,9 +653,9 @@ else {
 								</thead>
 
 								<tbody>
-									@foreach (\Calctool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
-									@foreach (\Calctool\Models\Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
-									@foreach (\Calctool\Models\Timesheet::where('activity_id','=', $activity->id)->orderBy('register_date','desc')->get() as $timesheet)
+									@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+									@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
+									@foreach (Timesheet::where('activity_id','=', $activity->id)->orderBy('register_date','desc')->get() as $timesheet)
 									<tr data-id="{{ $timesheet->id }}">
 										<td class="col-md-1">{{ date('d-m-Y', strtotime($timesheet->register_date)) }}</td>
 										<td class="col-md-1">{{ number_format($timesheet->register_hour, 2,",",".") }}</td>
@@ -639,7 +676,7 @@ else {
 										<td class="col-md-2">
 											<select name="typename" id="typename" class="form-control-sm-text">
 												<option selected="selected" >Selecteer</option>
-												@foreach (\Calctool\Models\TimesheetKind::all() as $typename)
+												@foreach (TimesheetKind::all() as $typename)
 												<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
 												@endforeach
 											</select>
@@ -676,7 +713,7 @@ else {
 										</thead>
 
 										<tbody>
-											@foreach (\Calctool\Models\Purchase::where('project_id','=', $project->id)->get() as $purchase)
+											@foreach (Purchase::where('project_id','=', $project->id)->get() as $purchase)
 											<tr data-id="{{ $purchase->id }}">
 												<td class="col-md-1">{{ date('d-m-Y', strtotime($purchase->register_date)) }}</td>
 												<td class="col-md-2">{{ $purchase->relation_id ? Relation::find($purchase->relation_id)->company_name : Wholesale::find($purchase->wholesale_id)->company_name }}</td>
@@ -707,7 +744,7 @@ else {
 												<td class="col-md-2"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
 												<td class="col-md-2">
 													<select name="typename" id="typename" class="form-control-sm-text">
-													@foreach (\Calctool\Models\PurchaseKind::all() as $typename)
+													@foreach (PurchaseKind::all() as $typename)
 														<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
 													@endforeach
 													</select>
@@ -722,36 +759,73 @@ else {
 							</div>-->
 						</div>
 						<div id="communication" class="tab-pane">
-							<form method="POST" action="/project/update/communication" accept-charset="UTF-8">
-                            {!! csrf_field() !!}
-                            <input type="hidden" name="project" value="{{ $project->id }}"/>
+							<div class="form-group">
+								<div class="col-md-9">
+									<form method="POST" action="/project/update/communication" accept-charset="UTF-8">
+		                            {!! csrf_field() !!}
+		                            <input type="hidden" name="project" value="{{ $project->id }}"/>
 
-                           <h4>Communicatie met opdrachtgever <a data-toggle="tooltip" data-placement="bottom" data-original-title="Uitsluitend bij een met e-mail verzonden offerte." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h5>
-
-							<h5><strong>Jouw opmerkingen</strong></h5>
-							<div class="row">
-								<div class="form-group">
-									<div class="col-md-12">
-										<textarea name="user_note" id="user_note" rows="10" class="form-control">{{ $share ? $share->user_note : ''}}</textarea>
+		                           	<h5><strong>Vraag opmerkingen van je opdrachtgever </strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Alleen mogelijk wanneer een offerte verzonden is per e-mail op de offerte pagina." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h5>
+									<div class="row">
+										<div class="form-group">
+											<div class="col-md-12">
+												<div class="white-row well">
+													{!!  $share ? $share->client_note : ''!!}
+												</div>
+											</div>
+										</div>
 									</div>
+									<h5><strong>Jouw reactie</strong></h5>
+									<div class="row">
+										<div class="form-group">
+											<div class="col-md-12">
+												<textarea name="user_note" id="user_note" rows="10" class="summernote form-control">{{ $share ? $share->user_note : ''}}</textarea>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+											<div class="col-md-12">
+												<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="col-md-3">
+									<div class="row">
+										<h5><strong>Gegevens van uw relatie</strong></h5>
+									</div>
+									<div class="row">
+										<label>Opdrachtgever </label>
+										<?php $relation = Relation::find($project->client_id); ?>
+										@if (!$relation->isActive())
+											<span> {{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</span>
+										@else
+											<span> {{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</span>
+										@endif
+									</div>
+									<div class="row">
+										<label for="name">Straat</label>
+										<span>{{ $relation->address_street }} {{ $relation->address_number }}</span>
+									</div>
+									<div class="row">
+										<label for="name">Postcode</label>
+										<span>{{ $relation->address_postal }}</span>
+									</div>
+									<div class="row">
+										<label for="name">Plaats</label>
+										<span>{{ $relation->address_city }}</span>
+									</div>
+									<div class="row">
+										<label for="name">Contactpersoon</label>
+										<span>{{ $relation->address_city }}</span>
+									</div>
+									<div class="row">
+										<label for="name">Telefoon</label>
+										<span>{{ $relation->address_city }}</span>
+									</div>									
 								</div>
 							</div>
-							<h5><strong>Opmerkingen van je opdrachtegver</strong></h5>
-							<div class="row">
-								<div class="form-group">
-									<div class="col-md-12">
-										<textarea name="client_note" readonly="readonly" id="client_note" rows="10" class="form-control">{{  $share ? $share->client_note : ''}}</textarea>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-									<div class="col-md-12">
-										<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
-									</div>
-								</div>
-							</form>
 						</div>
-					</div>
 				</div>
 
 		</div>

@@ -15,7 +15,7 @@ use \Calctool\Models\MessageBox;
 
 			<div>
 				<ol class="breadcrumb">
-				  <li><a href="/">Home</a></li>
+				  <li><a href="/">Dashboard</a></li>
 				  <li class="active">Notificaties</li>
 				</ol>
 			<div>

@@ -1134,8 +1134,8 @@ if (!$project || !$project->isOwner()) {
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-2">Hoofdstuk</th>
-						<th class="col-md-3">Werkzaamheden</th>
+						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
@@ -1149,8 +1149,8 @@ if (!$project || !$project->isOwner()) {
 					@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->whereNull('detail_id')->get() as $activity)
 					<?php $i++; ?>
 					<tr>
-						<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
-						<td class="col-md-3">{{ $activity->activity_name }}</td>
+						<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
+						<td class="col-md-4">{{ $activity->activity_name }}</td>
 						<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
@@ -1160,9 +1160,9 @@ if (!$project || !$project->isOwner()) {
 					@endforeach
 					@endforeach
 					<tr>
-						<th class="col-md-3"><strong>Totaal aanneming</strong></th>
-						<th class="col-md-2">&nbsp;</th>
-						<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::contrLaborTotalAmount($project) }}</span></strong></td>
+						<td class="col-md-3"><strong>Totaal aanneming</strong></th>
+						<td class="col-md-4">&nbsp;</th>
+						<td class="col-md-1"><strong><span class="pull-right">{{ number_format(CalculationOverview::contrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1175,8 +1175,8 @@ if (!$project || !$project->isOwner()) {
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-2">Hoofdstuk</th>
-						<th class="col-md-3">Werkzaamheden</th>
+						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
@@ -1190,8 +1190,8 @@ if (!$project || !$project->isOwner()) {
 					@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->whereNull('detail_id')->get() as $activity)
 					<?php $i++ ?>
 					<tr>
-						<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
-						<td class="col-md-3">{{ $activity->activity_name }}</td>
+						<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
+						<td class="col-md-4">{{ $activity->activity_name }}</td>
 						<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
@@ -1201,9 +1201,9 @@ if (!$project || !$project->isOwner()) {
 					@endforeach
 					@endforeach
 					<tr>
-						<th class="col-md-3"><strong>Totaal onderaanneming</strong></th>
-						<th class="col-md-2">&nbsp;</th>
-						<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::subcontrLaborTotalAmount($project) }}</span></strong></td>
+						<td class="col-md-3"><strong>Totaal onderaanneming</strong></th>
+						<td class="col-md-4">&nbsp;</th>
+						<td class="col-md-1"><strong><span class="pull-right">{{ number_format(CalculationOverview::subcontrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1217,7 +1217,7 @@ if (!$project || !$project->isOwner()) {
 				<thead>
 					<tr>
 						<th class="col-md-3">&nbsp;</th>
-						<th class="col-md-2">&nbsp;</th>
+						<th class="col-md-4">&nbsp;</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
@@ -1228,8 +1228,8 @@ if (!$project || !$project->isOwner()) {
 				<tbody>
 					<tr>
 						<td class="col-md-3">&nbsp;</td>
-						<td class="col-md-2">&nbsp;</td>
-						<td class="col-md-1"><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>
+						<td class="col-md-4">&nbsp;</td>
+						<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborSuperTotalAmount($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
@@ -1246,8 +1246,8 @@ if (!$project || !$project->isOwner()) {
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-2">Hoofdstukken</th>
-						<th class="col-md-3">Werkzaamheden</th>
+						<th class="col-md-3">Hoofdstukken</th>
+						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
@@ -1272,8 +1272,8 @@ if (!$project || !$project->isOwner()) {
 					}
 					?>
 					<tr>
-						<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
-						<td class="col-md-3">{{ $activity->activity_name }}</td>
+						<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
+						<td class="col-md-4">{{ $activity->activity_name }}</td>
 						<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $mat_profit), 2, ",",".") }}</span></td>
@@ -1290,7 +1290,7 @@ if (!$project || !$project->isOwner()) {
 				<thead>
 					<tr>
 						<th class="col-md-3">&nbsp;</th>
-						<th class="col-md-2">&nbsp;</th>
+						<th class="col-md-4">&nbsp;</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
@@ -1301,8 +1301,8 @@ if (!$project || !$project->isOwner()) {
 				<tbody>
 					<tr>
 						<td class="col-md-3">&nbsp;</td>
-						<td class="col-md-2">&nbsp;</td>
-						<td class="col-md-1"><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></td>
+						<td class="col-md-4">&nbsp;</td>
+						<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborSuperTotalAmount($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
@@ -1342,8 +1342,8 @@ if (!$project || !$project->isOwner()) {
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-2">Hoofdstuk</th>
-						<th class="col-md-3">Werkzaamheden</th>
+						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
@@ -1361,8 +1361,8 @@ if (!$project || !$project->isOwner()) {
 						$i++;
 					?>
 					<tr>
-						<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
-						<td class="col-md-3">{{ $activity->activity_name }}</td>
+						<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
+						<td class="col-md-4">{{ $activity->activity_name }}</td>
 						<td class="col-md-1"><span class="pull-right">{{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }}</td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::laborActivity($activity), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
@@ -1372,9 +1372,9 @@ if (!$project || !$project->isOwner()) {
 					@endforeach
 					@endforeach
 					<tr>
-						<th class="col-md-3"><strong>Totaal aanneming</strong></th>
-						<th class="col-md-2">&nbsp;</th>
-						<td class="col-md-1"><strong><span class="pull-right">{{ EstimateOverview::contrLaborTotalAmount($project) }}</span></strong></td>
+						<td class="col-md-3"><strong>Totaal aanneming</strong></th>
+						<td class="col-md-4">&nbsp;</th>
+						<td class="col-md-1"><strong><span class="pull-right">{{ number_format(EstimateOverview::contrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1387,8 +1387,8 @@ if (!$project || !$project->isOwner()) {
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-2">Hoofdstuk</th>
-						<th class="col-md-3">Werkzaamheden</th>
+						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
@@ -1406,8 +1406,8 @@ if (!$project || !$project->isOwner()) {
 						$i++;
 					?>
 					<tr>
-						<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
-						<td class="col-md-3">{{ $activity->activity_name }}</td>
+						<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
+						<td class="col-md-4">{{ $activity->activity_name }}</td>
 						<td class="col-md-1"><span class="pull-right">{{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }}</td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::laborActivity($activity), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
@@ -1417,9 +1417,9 @@ if (!$project || !$project->isOwner()) {
 					@endforeach
 					@endforeach
 					<tr>
-						<th class="col-md-3"><strong>Totaal onderaanneming</strong></th>
-						<th class="col-md-2">&nbsp;</th>
-						<td class="col-md-1"><strong><span class="pull-right">{{ EstimateOverview::subcontrLaborTotalAmount($project) }}</span></strong></td>
+						<td class="col-md-3"><strong>Totaal onderaanneming</strong></th>
+						<td class="col-md-4">&nbsp;</th>
+						<td class="col-md-1"><strong><span class="pull-right">{{ number_format(EstimateOverview::subcontrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1433,7 +1433,7 @@ if (!$project || !$project->isOwner()) {
 				<thead>
 					<tr>
 						<th class="col-md-3">&nbsp;</th>
-						<th class="col-md-2">&nbsp;</th>
+						<th class="col-md-4">&nbsp;</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
@@ -1444,8 +1444,8 @@ if (!$project || !$project->isOwner()) {
 				<tbody>
 					<tr>
 						<td class="col-md-3">&nbsp;</td>
-						<td class="col-md-2">&nbsp;</td>
-						<td class="col-md-1"><span class="pull-right">{{ EstimateOverview::laborSuperTotalAmount($project) }}</span></td>
+						<td class="col-md-4">&nbsp;</td>
+						<td class="col-md-1"><span class="pull-right">{{ number_format(EstimateOverview::laborSuperTotalAmount($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
@@ -1462,8 +1462,8 @@ if (!$project || !$project->isOwner()) {
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-2">Hoofdstuk</th>
-						<th class="col-md-3">Werkzaamheden</th>
+						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
@@ -1490,8 +1490,8 @@ if (!$project || !$project->isOwner()) {
 						$i++;
 					?>
 					<tr>
-						<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
-						<td class="col-md-3">{{ $activity->activity_name }}</td>
+						<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
+						<td class="col-md-4">{{ $activity->activity_name }}</td>
 						<td class="col-md-1"><span class="pull-right">{{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }}</td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::laborActivity($activity), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::materialActivityProfit($activity, $mat_profit), 2, ",",".") }}</span></td>
@@ -1508,7 +1508,7 @@ if (!$project || !$project->isOwner()) {
 				<thead>
 					<tr>
 						<th class="col-md-3">&nbsp;</th>
-						<th class="col-md-2">&nbsp;</th>
+						<th class="col-md-4">&nbsp;</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
@@ -1519,8 +1519,8 @@ if (!$project || !$project->isOwner()) {
 				<tbody>
 					<tr>
 						<td class="col-md-3">&nbsp;</td>
-						<td class="col-md-2">&nbsp;</td>
-						<td class="col-md-1"><span class="pull-right">{{ EstimateOverview::laborSuperTotalAmount($project) }}</span></td>
+						<td class="col-md-4">&nbsp;</td>
+						<td class="col-md-1"><span class="pull-right">{{ number_format(EstimateOverview::laborSuperTotalAmount($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
@@ -1560,8 +1560,8 @@ if (!$project || !$project->isOwner()) {
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-2">Hoofdstuk</th>
-						<th class="col-md-3">Werkzaamheden</th>
+						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
@@ -1579,8 +1579,8 @@ if (!$project || !$project->isOwner()) {
 						$i++;
 					?>
 					<tr>
-						<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
-						<td class="col-md-3">{{ $activity->activity_name }}</td>
+						<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
+						<td class="col-md-4">{{ $activity->activity_name }}</td>
 						<td class="col-md-1"><span class="pull-right">{{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }}</td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::laborActivity($activity), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
@@ -1591,8 +1591,8 @@ if (!$project || !$project->isOwner()) {
 					@endforeach
 					<tr>
 						<td class="col-md-3"><strong>Totaal aanneming</strong></td>
-						<td class="col-md-2">&nbsp;</td>
-						<td class="col-md-1"><strong><span class="pull-right">{{ LessOverview::contrLaborTotalAmount($project) }}</span></strong></td>
+						<td class="col-md-4">&nbsp;</td>
+						<td class="col-md-1"><strong><span class="pull-right">{{ number_format(LessOverview::contrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1605,8 +1605,8 @@ if (!$project || !$project->isOwner()) {
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-2">Hoofdstuk</th>
-						<th class="col-md-3">Werkzaamheden</th>
+						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
@@ -1624,8 +1624,8 @@ if (!$project || !$project->isOwner()) {
 						$i++;
 					?>
 					<tr>
-						<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
-						<td class="col-md-3">{{ $activity->activity_name }}</td>
+						<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
+						<td class="col-md-4">{{ $activity->activity_name }}</td>
 						<td class="col-md-1"><span class="pull-right">{{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }}</td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::laborActivity($activity), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
@@ -1636,8 +1636,8 @@ if (!$project || !$project->isOwner()) {
 					@endforeach
 					<tr>
 						<td class="col-md-3"><strong>Totaal onderaanneming</strong></td>
-						<td class="col-md-2">&nbsp;</td>
-						<td class="col-md-1"><strong><span class="pull-right">{{ LessOverview::subcontrLaborTotalAmount($project) }}</span></strong></td>
+						<td class="col-md-4">&nbsp;</td>
+						<td class="col-md-1"><strong><span class="pull-right">{{ number_format(LessOverview::subcontrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1651,7 +1651,7 @@ if (!$project || !$project->isOwner()) {
 				<thead>
 					<tr>
 						<th class="col-md-3">&nbsp;</th>
-						<th class="col-md-2">&nbsp;</th>
+						<th class="col-md-4">&nbsp;</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
@@ -1662,8 +1662,8 @@ if (!$project || !$project->isOwner()) {
 				<tbody>
 					<tr>
 						<td class="col-md-3">&nbsp;</td>
-						<td class="col-md-2">&nbsp;</td>
-						<td class="col-md-1"><span class="pull-right">{{ LessOverview::laborSuperTotalAmount($project) }}</span></td>
+						<td class="col-md-4">&nbsp;</td>
+						<td class="col-md-1"><span class="pull-right">{{ number_format(LessOverview::laborSuperTotalAmount($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
@@ -1680,8 +1680,8 @@ if (!$project || !$project->isOwner()) {
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-2">Hoofdstuk</th>
-						<th class="col-md-3">Werkzaamheden</th>
+						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
@@ -1708,8 +1708,8 @@ if (!$project || !$project->isOwner()) {
 						$i++;
 					?>
 					<tr>
-						<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name :'' }}</td>
-						<td class="col-md-3">{{ $activity->activity_name }}</td>
+						<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name :'' }}</td>
+						<td class="col-md-4">{{ $activity->activity_name }}</td>
 						<td class="col-md-1"><span class="pull-right">{{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }}</td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::laborActivity($activity), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $mat_profit), 2, ",",".") }}</span></td>
@@ -1726,7 +1726,7 @@ if (!$project || !$project->isOwner()) {
 				<thead>
 					<tr>
 						<th class="col-md-3">&nbsp;</th>
-						<th class="col-md-2">&nbsp;</th>
+						<th class="col-md-4">&nbsp;</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
@@ -1737,8 +1737,8 @@ if (!$project || !$project->isOwner()) {
 				<tbody>
 					<tr>
 						<td class="col-md-3">&nbsp;</td>
-						<td class="col-md-2">&nbsp;</td>
-						<td class="col-md-1"><span class="pull-right">{{ LessOverview::laborSuperTotalAmount($project) }}</span></td>
+						<td class="col-md-4">&nbsp;</td>
+						<td class="col-md-1"><span class="pull-right">{{ number_format(LessOverview::laborSuperTotalAmount($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
@@ -1776,8 +1776,8 @@ if (!$project || !$project->isOwner()) {
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-2">Hoofdstuk</th>
-						<th class="col-md-3">Werkzaamheden</th>
+						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
@@ -1791,8 +1791,8 @@ if (!$project || !$project->isOwner()) {
 					@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
 					<?php $i++; ?>
 					<tr>
-						<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
-						<td class="col-md-3">{{ $activity->activity_name }}</td>
+						<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
+						<td class="col-md-4">{{ $activity->activity_name }}</td>
 						<td class="col-md-1"><span class="pull-right">{{ number_format(MoreOverview::laborTotal($activity), 2, ",",".") }}</td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(MoreOverview::laborActivity($activity), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(MoreOverview::materialActivityProfit($activity, $project->profit_more_contr_mat), 2, ",",".") }}</span></td>
@@ -1804,7 +1804,7 @@ if (!$project || !$project->isOwner()) {
 					<tr>
 						<th class="col-md-3"><strong>Totaal aanneming</strong></th>
 						<th class="col-md-2">&nbsp;</th>
-						<td class="col-md-1"><strong><span class="pull-right">{{ MoreOverview::contrLaborTotalAmount($project) }}</span></strong></td>
+						<td class="col-md-1"><strong><span class="pull-right">{{ number_format(MoreOverview::contrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1817,8 +1817,8 @@ if (!$project || !$project->isOwner()) {
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-2">Hoofdstuk</th>
-						<th class="col-md-3">Werkzaamheden</th>
+						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
@@ -1832,8 +1832,8 @@ if (!$project || !$project->isOwner()) {
 					@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
 					<?php $i++; ?>
 					<tr>
-						<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
-						<td class="col-md-3">{{ $activity->activity_name }}</td>
+						<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
+						<td class="col-md-4">{{ $activity->activity_name }}</td>
 						<td class="col-md-1"><span class="pull-right">{{ number_format(MoreOverview::laborTotal($activity), 2, ",",".") }}</td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(MoreOverview::laborActivity($activity), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(MoreOverview::materialActivityProfit($activity, $project->profit_more_subcontr_mat), 2, ",",".") }}</span></td>
@@ -1844,8 +1844,8 @@ if (!$project || !$project->isOwner()) {
 					@endforeach
 					<tr>
 						<td class="col-md-3"><strong>Totaal onderaanneming</strong></td>
-						<td class="col-md-2">&nbsp;</td>
-						<td class="col-md-1"><strong><span class="pull-right">{{ MoreOverview::subcontrLaborTotalAmount($project) }}</span></strong></td>
+						<td class="col-md-4">&nbsp;</td>
+						<td class="col-md-1"><strong><span class="pull-right">{{ number_format(MoreOverview::subcontrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1859,7 +1859,7 @@ if (!$project || !$project->isOwner()) {
 				<thead>
 					<tr>
 						<th class="col-md-3">&nbsp;</th>
-						<th class="col-md-2">&nbsp;</th>
+						<th class="col-md-4">&nbsp;</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
@@ -1870,8 +1870,8 @@ if (!$project || !$project->isOwner()) {
 				<tbody>
 					<tr>
 						<td class="col-md-3">&nbsp;</td>
-						<td class="col-md-2">&nbsp;</td>
-						<td class="col-md-1"><span class="pull-right">{{ MoreOverview::laborSuperTotalAmount($project) }}</span></td>
+						<td class="col-md-4">&nbsp;</td>
+						<td class="col-md-1"><span class="pull-right">{{ number_format(MoreOverview::laborSuperTotalAmount($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
@@ -1888,8 +1888,8 @@ if (!$project || !$project->isOwner()) {
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-2">Hoofdstuk</th>
-						<th class="col-md-3">Werkzaamheden</th>
+						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
@@ -1914,8 +1914,8 @@ if (!$project || !$project->isOwner()) {
 						$i++;
 					?>
 					<tr>
-						<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
-						<td class="col-md-3">{{ $activity->activity_name }}</td>
+						<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
+						<td class="col-md-4">{{ $activity->activity_name }}</td>
 						<td class="col-md-1"><span class="pull-right">{{ number_format(MoreOverview::laborTotal($activity), 2, ",",".") }}</td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(MoreOverview::laborActivity($activity), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(MoreOverview::materialActivityProfit($activity, $mat_profit), 2, ",",".") }}</span></td>
@@ -1932,7 +1932,7 @@ if (!$project || !$project->isOwner()) {
 				<thead>
 					<tr>
 						<th class="col-md-3">&nbsp;</th>
-						<th class="col-md-2">&nbsp;</th>
+						<th class="col-md-4">&nbsp;</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
@@ -1943,8 +1943,8 @@ if (!$project || !$project->isOwner()) {
 				<tbody>
 					<tr>
 						<td class="col-md-3">&nbsp;</td>
-						<td class="col-md-2">&nbsp;</td>
-						<td class="col-md-1"><span class="pull-right">{{ MoreOverview::laborSuperTotalAmount($project) }}</span></td>
+						<td class="col-md-4">&nbsp;</td>
+						<td class="col-md-1"><span class="pull-right">{{ number_format(MoreOverview::laborSuperTotalAmount($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::laborSuperTotal($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::materialSuperTotal($project), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></td>
@@ -1995,7 +1995,7 @@ if (!$project || !$project->isOwner()) {
 					<tr>
 						<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 						<td class="col-md-3">{{ $activity->activity_name }}</td>
-						<td class="col-md-7"><span>{{ $activity->note }}</td>
+						<td class="col-md-7"><span>{!! $activity->note !!}</td>
 					</tr>
 					@endforeach
 					@endforeach
@@ -2019,7 +2019,7 @@ if (!$project || !$project->isOwner()) {
 					<tr>
 						<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 						<td class="col-md-3">{{ $activity->activity_name }}</td>
-						<td class="col-md-7"><span>{{ $activity->note }}</td>
+						<td class="col-md-7"><span>{!! $activity->note !!}</td>
 					</tr>
 					@endforeach
 					@endforeach
@@ -2047,7 +2047,7 @@ if (!$project || !$project->isOwner()) {
 					<tr>
 						<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 						<td class="col-md-3">{{ $activity->activity_name }}</td>
-						<td class="col-md-7"><span>{{ $activity->note }}</td>
+						<td class="col-md-7"><span>{!! $activity->note !!}</td>
 					</tr>
 					@endforeach
 					@endforeach

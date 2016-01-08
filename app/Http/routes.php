@@ -105,6 +105,7 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::post('calculation/noteactivity', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateNote'));
 	Route::post('calculation/deleteactivity', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteActivity'));
 	Route::post('calculation/deletechapter', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteChapter'));
+	Route::post('calculation/activity/usetimesheet', 'CalcController@doUpdateUseTimesheet');
 
 	Route::post('invoice/updatecondition', array('as' => 'invoice', 'uses' => 'InvoiceController@doUpdateCondition'));
 	Route::post('invoice/updatecode', array('as' => 'invoice', 'uses' => 'InvoiceController@doUpdateCode'));
@@ -233,9 +234,9 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::get('mycompany/contact/new', function() {
 		return view('user.mycompany_contact');
 	});
-	Route::post('mycompany/quickstart', array('uses' => 'QuickstartController@doNewMyCompanyQuickstart'));
-	Route::post('mycompany/cashbook/account/new', array('uses' => 'CashbookController@doNewAccount'));
-	Route::post('mycompany/cashbook/new', array('uses' => 'CashbookController@doNewCashRow'));
+	Route::post('mycompany/quickstart', 'QuickstartController@doNewMyCompanyQuickstart');
+	Route::post('mycompany/cashbook/account/new', 'CashbookController@doNewAccount');
+	Route::post('mycompany/cashbook/new', 'CashbookController@doNewCashRow');
 	Route::post('mycompany/quickstart/address', 'QuickstartController@getExternalAddress');
 
 	Route::get('relation-{relation_id}/contact-{contact_id}/vcard', array('uses' => 'RelationController@downloadVCard'))->where('relation_id', '[0-9]+')->where('contact_id', '[0-9]+');
@@ -323,7 +324,7 @@ Route::group(array('before' => 'admin'), function()
 	Route::get('admin/phpinfo', function() {
 		return view('admin.phpinfo');
 	});
-	Route::post('admin/transaction/{transcode}/refund', array('as' => 'user', 'uses' => 'AdminController@doRefund'));
+	Route::post('admin/transaction/{transcode}/refund', 'AdminController@doRefund');
 	Route::get('admin/payment', function() {
 		return view('admin.transaction');
 	});

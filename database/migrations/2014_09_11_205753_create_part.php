@@ -41,6 +41,7 @@ class CreatePart extends Migration {
 			$table->foreign('part_id')->references('id')->on('part')->onUpdate('cascade')->onDelete('restrict');
 			$table->integer('part_type_id')->unsigned();
 			$table->foreign('part_type_id')->references('id')->on('part_type')->onUpdate('cascade')->onDelete('restrict');
+			$table->boolean('use_timesheet')->default('N');
 			$table->integer('detail_id')->nullable()->unsigned();
 			$table->foreign('detail_id')->references('id')->on('detail')->onUpdate('cascade')->onDelete('restrict');
 		});

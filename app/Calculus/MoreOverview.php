@@ -18,8 +18,9 @@ class MoreOverview {
 /*--More Overview - total per activitys--*/
 /*labor activity total*/
 	public static function laborActivity($activity) {
-		$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
-		if ($count) {
+		// $count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
+		// if ($count) {
+		if ($activity->use_timesheet) {
 			$amount = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->sum('amount');
 			$rate = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->first()['rate'];
 		} else {
@@ -38,8 +39,9 @@ class MoreOverview {
 	}
 
 	public static function laborTotal($activity) {
-		$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
-		if ($count)
+		// $count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
+		// if ($count)
+		if ($activity->use_timesheet)
 			return MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->sum('amount');
 		return MoreLabor::where('activity_id', '=', $activity->id)->first()['amount'];
 	}

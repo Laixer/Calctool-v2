@@ -16,7 +16,7 @@
 
 					<div class="row">
 
-						<div class="col-sm-12 col-md-3"><!-- item -->
+						<div class="col-sm-12 col-md-3">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/user">
@@ -55,7 +55,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-12 col-md-3"><!-- item -->
+						<div class="col-sm-12 col-md-3">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/payment">
@@ -74,7 +74,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-12 col-md-3"><!-- item -->
+						<div class="col-sm-12 col-md-3">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/resource">
@@ -103,10 +103,10 @@
 											<strong>Projecten</strong>
 										</span>
 									</a>
-									<a href="/admin/resource" class="btn btn-primary add_to_cart"><i class="fa fa-pencil"></i> Projectbeheer</a>
+									<a href="/admin/project" class="btn btn-primary add_to_cart"><i class="fa fa-pencil"></i> Projectbeheer</a>
 								</figure>
 								<div class="item-box-desc">
-									<a href="/admin/resource"><h4>Projecten</h4></a>
+									<a href="/admin/project"><h4>Projecten</h4></a>
 									<small class="styleColor">{{ \Calctool\Models\Project::count() }} Project(en)</small>
 								</div>
 							</div>

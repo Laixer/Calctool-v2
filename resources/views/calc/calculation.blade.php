@@ -729,14 +729,25 @@ var n = this,
 			$notecurr = $(this);
 			$curval = $(this).attr('data-note');
 			$curid = $(this).attr('data-id');
-			$('#note').val($curval);
+			console.log($curval);
+			$('.summernote').code($curval);
 			$('#noteact').val($curid);
 		});
 		$('#descModal').on('hidden.bs.modal', function() {
-			$.post("/calculation/noteactivity", {project: {{ $project->id }}, activity: $('#noteact').val(), note: $('#note').val()}, function(){
-				$notecurr.attr('data-note', $('#note').val());
+			$.post("/calculation/noteactivity", {project: {{ $project->id }}, activity: $('#noteact').val(), note: $('.summernote').code()}, function(){
+				$notecurr.attr('data-note', $('.summernote').code());
+				$('.summernote').code('');
 			}).fail(function(e) { console.log(e); });
 		});
+
+        $('.summernote').summernote({
+            height: $(this).attr("data-height") || 200,
+            toolbar: [
+                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+                ["para", ["ul", "ol", "paragraph"]],
+                ["media", ["link", "picture"]],
+            ]
+        })
 	});
 </script>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -793,7 +804,7 @@ var n = this,
 			<div class="modal-body">
 				<div class="form-group">
 					<div class="col-md-12">
-						<textarea name="note" id="note" rows="5" class="form-control"></textarea>
+						<textarea name="note" id="note" rows="5" class="form-control summernote"></textarea>
 						<input type="hidden" name="noteact" id="noteact" />
 					</div>
 				</div>
@@ -806,11 +817,25 @@ var n = this,
 		</div>
 	</div>
 </div>
+<div class="modal fade" id="demoModal" tabindex="-1" role="dialog" aria-labelledby="DemoModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+			<div class="modal-body">
+			  <video id="calculatie_demo" class="video-js vjs-sublime-skin" controls preload="none" width="960" height="540" poster="/images/video_leader.png" data-setup="{}">
+			    <source src="http://dev.calculatietool.com/video/calculatie_demo.mp4" type='video/mp4' />
+			  </video>
+			</div>
+	</div>
+</div>
 <div id="wrapper">
 
 	<section class="container fix-footer-bottom">
 
 		@include('calc.wizard', array('page' => 'calculation'))
+
+			<div class="pull-right">
+				<!--<button id="pop-x" data-toggle="modal" data-target="#descModal" class="btn btn-primary"></button>-->
+				<h2><a href="javascript:void(0);" data-toggle="modal" data-target="#demoModal"><span class="glyphicon glyphicon-expand" aria-hidden="true"></span></a></h2>
+			</div>
 
 			<h2><strong>Calculeren</strong></h2>
 
@@ -1071,7 +1096,7 @@ var n = this,
 									</div>
 
 									<form method="POST" action="/calculation/calc/newactivity/{{ $chapter->id }}" accept-charset="UTF-8">
-                                		{!! csrf_field() !!}
+                                    {!! csrf_field() !!}
 									<div class="row">
 										<div class="col-md-6">
 
@@ -1420,7 +1445,7 @@ var n = this,
 											<tr>
 												<th class="col-md-3"><strong>Totaal Aanneming</strong></th>
 												<th class="col-md-3">&nbsp;</th>
-												<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::contrLaborTotalAmount($project) }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(CalculationOverview::contrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1472,7 +1497,7 @@ var n = this,
 											<tr>
 												<th class="col-md-3"><strong>Totaal Onderaanneming</strong></th>
 												<th class="col-md-3">&nbsp;</th>
-												<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::subcontrLaborTotalAmount($project) }}</span></strong></td>
+												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(CalculationOverview::subcontrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>

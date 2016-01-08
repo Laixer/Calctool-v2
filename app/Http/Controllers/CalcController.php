@@ -202,7 +202,7 @@ class CalcController extends Controller {
 	public function doNewCalculationActivity(Request $request, $chapter_id)
 	{
 		$this->validate($request, [
-			'activity' => array('required','max:50'),
+			'activity' => array('required','max:100'),
 		]);
 
 		$chapter = Chapter::find($chapter_id);
@@ -236,7 +236,7 @@ class CalcController extends Controller {
 	public function doNewEstimateActivity(Request $request, $chapter_id)
 	{
 		$this->validate($request, [
-			'activity' => array('required','max:50'),
+			'activity' => array('required','max:100'),
 		]);
 
 		$chapter = Chapter::find($chapter_id);
@@ -368,6 +368,28 @@ class CalcController extends Controller {
 			return json_encode(['success' => 1]);
 	}
 
+	public function doUpdateUseTimesheet(Request $request)
+	{
+		$this->validate($request, [
+			'state' => array('required'),
+			'activity' => array('required','integer')
+		]);
+
+		$activity = Activity::find($request->input('activity'));
+		if (!$activity)
+			return json_encode(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
+
+		$activity->use_timesheet = $request->get('state');
+
+		$activity->save();
+
+		return json_encode(['success' => 1]);
+	}
+
 	public function doDeleteActivity(Request $request)
 	{
 		$this->validate($request, [
@@ -406,7 +428,7 @@ class CalcController extends Controller {
 	public function doNewCalculationMaterial(Request $request)
 	{
 		$this->validate($request, [
-			'name' => array('required','max:50'),
+			'name' => array('required','max:100'),
 			'unit' => array('required','max:10'),
 			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
@@ -435,7 +457,7 @@ class CalcController extends Controller {
 	public function doNewCalculationEquipment(Request $request)
 	{
 		$this->validate($request, [
-			'name' => array('required','max:50'),
+			'name' => array('required','max:100'),
 			'unit' => array('required','max:10'),
 			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
@@ -565,7 +587,7 @@ class CalcController extends Controller {
 	{
 		$this->validate($request, [
 			'id' => array('integer','min:0'),
-			'name' => array('max:50'),
+			'name' => array('max:100'),
 			'unit' => array('max:10'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
@@ -596,7 +618,7 @@ class CalcController extends Controller {
 	{
 		$this->validate($request, [
 			'id' => array('integer','min:0'),
-			'name' => array('max:50'),
+			'name' => array('max:100'),
 			'unit' => array('max:10'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
@@ -664,7 +686,7 @@ class CalcController extends Controller {
 	public function doNewEstimateMaterial(Request $request)
 	{
 		$this->validate($request, [
-			'name' => array('required','max:50'),
+			'name' => array('required','max:100'),
 			'unit' => array('required','max:10'),
 			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
@@ -695,7 +717,7 @@ class CalcController extends Controller {
 	public function doNewEstimateEquipment(Request $request)
 	{
 		$this->validate($request, [
-			'name' => array('required','max:50'),
+			'name' => array('required','max:100'),
 			'unit' => array('required','max:10'),
 			'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
@@ -829,7 +851,7 @@ class CalcController extends Controller {
 	{
 		$this->validate($request, [
 			'id' => array('integer','min:0'),
-			'name' => array('max:50'),
+			'name' => array('max:100'),
 			'unit' => array('max:10'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
@@ -860,7 +882,7 @@ class CalcController extends Controller {
 	{
 		$this->validate($request, [
 			'id' => array('integer','min:0'),
-			'name' => array('max:50'),
+			'name' => array('max:100'),
 			'unit' => array('max:10'),
 			'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')

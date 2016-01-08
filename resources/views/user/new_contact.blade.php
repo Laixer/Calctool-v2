@@ -50,7 +50,7 @@ if (!$relation || !$relation->isOwner()) {
 
 			<div>
 			<ol class="breadcrumb">
-			  <li><a href="/">Home</a></li>
+			  <li><a href="/">Dashboard</a></li>
 			  <li><a href="/relation">Relaties</a></li>
 			  <li><a href="/relation-{{ $relation->id }}/edit">{{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</a></li>
 			 <li class="active" /relation-{{ $relation->id }}/contact/new">nieuw contact</li>

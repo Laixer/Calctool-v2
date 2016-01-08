@@ -1,10 +1,17 @@
 <?php
+
+use \Calctool\Models\RelationKind;
+use \Calctool\Models\ContactFunction;
+use \Calctool\Models\Contact;
+use \Calctool\Models\Relation;
+
+
 $common_access_error = false;
-$contact = \Calctool\Models\Contact::find(Route::Input('contact_id'));
+$contact = Contact::find(Route::Input('contact_id'));
 if (!$contact) {
 	$common_access_error = true;
 } else {
-	$relation = \Calctool\Models\Relation::find($contact->relation_id);
+	$relation = Relation::find($contact->relation_id);
 	if (!$relation || !$relation->isOwner()) {
 		$common_access_error = true;
 	}
@@ -62,7 +69,7 @@ if (!$contact) {
 			@if (Auth::user()->myCompany() && Auth::user()->myCompany()->id == $relation->id)
 			<div>
 			<ol class="breadcrumb">
-			  <li><a href="/">Home</a></li>
+			  <li><a href="/">Dashboard</a></li>
 			  <li><a href="/mycompany">Mijn bedrijf</a></li>
 			 <li class="active">contact bewerken</li>
 			</ol>
@@ -71,7 +78,7 @@ if (!$contact) {
 			@else
 			<div>
 			<ol class="breadcrumb">
-			  <li><a href="/">Home</a></li>
+			  <li><a href="/">Dashboard</a></li>
 			  <li><a href="/relation">Relaties</a></li>
 			  <li><a href="/relation-{{ $relation->id }}/edit">{{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</a></li>
 			  <li class="active">contact bewerken</li>
@@ -128,12 +135,12 @@ if (!$contact) {
 						</div>
 					</div>
 
-					@if (\Calctool\Models\RelationKind::find($relation->kind_id)->kind_name=='zakelijk')
+					@if (RelationKind::find($relation->kind_id)->kind_name=='zakelijk')
 					<div class="col-md-4 company">
 						<div class="form-group">
 							<label for="contactfunction">Functie*</label>
 							<select name="contactfunction" id="contactfunction" class="form-control pointer">
-							@foreach (\Calctool\Models\ContactFunction::all() as $function)
+							@foreach (ContactFunction::all() as $function)
 								<option {{ $contact->function_id==$function->id ? 'selected' : '' }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
 							@endforeach
 							</select>

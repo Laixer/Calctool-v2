@@ -8,7 +8,6 @@ use \Calctool\Models\Contact;
 @extends('layout.master')
 
 @section('content')
-<?# -- WRAPPER -- ?>
 <div id="wrapper">
 
 	<section class="container">
