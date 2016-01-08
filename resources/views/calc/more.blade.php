@@ -116,8 +116,10 @@ var n = this,
 		$(".radio-activity").change(function(){
 			if ($(this).val()==2) {
 				$(this).closest('.toggle-content').find(".rate").html('<input name="rate" type="text" value="{{ number_format($project->hour_rate_more, 2,",",".") }}" class="form-control-sm-number labor-amount lsave">');
+				$('.hide_if_subcon').hide();
 			} else {
 				$(this).closest('.toggle-content').find(".rate").text('{{ number_format($project->hour_rate_more, 2,",",".") }}');
+				$('.hide_if_subcon').show();
 			}
 			$.post("/calculation/updatepart", {project: {{ $project->id }}, value: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
 		});
@@ -652,8 +654,8 @@ var n = this,
 											<div class="toggle-content">
 												<div class="row">
 													<div class="col-md-4">
-	    												<div class="form-group">
-															<label for="use_timesheet">Urenregistratie gebruiken</label>
+	    												<div class="form-group hide_if_subcon" {!! ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'style="display:none;"' : '') !!}>
+	    													<label for="use_timesheet">Urenregistratie gebruiken</label>
 															<input name="use_timesheet" class="use-timesheet" data-id="{{ $activity->id }}" type="checkbox" {{ $activity->use_timesheet ? 'checked' : '' }}>
 														</div>
 													</div>
