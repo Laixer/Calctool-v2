@@ -43,7 +43,6 @@
 		<link media="all" type="text/css" rel="stylesheet" href="/plugins/owl-carousel/owl.transitions.css">
 		<link media="all" type="text/css" rel="stylesheet" href="/plugins/x-editable/css/bootstrap-editable.css">
 		<link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
-		<!-- <link type="text/css" rel="stylesheet" href="/plugins/videojs/video-js.min.css"> -->
 		<link type="text/css" rel="stylesheet" href="/plugins/videojs/videojs-sublime-skin.css">
 
 		<?php // -- SHOP CSS -- ?>
@@ -63,7 +62,6 @@
 
 		<?php // -- JQuery -- ?>
 		<script src="/plugins/jquery-2.1.4.min.js"></script>
-		<script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
 		<script type="text/javascript">
 			$.ajaxSetup({headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
 			if (localStorage._prescnt) localStorage._prescnt++; else localStorage._prescnt = 1;
