@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<!--[if IE 8]><html class="ie ie8"><![endif]-->
-<!--[if IE 9]><html class="ie ie9"><![endif]-->
+
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>Calculatie Tool - Online calculeren & offreren</title>
+		<title>CalculatieTool.com - Online calculeren & offreren</title>
 		<meta name="keywords" content="Calculeren" />
 		<meta name="description" content="" />
 		<meta name="Author" content="CalculatieTool.com" />

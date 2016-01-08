@@ -193,12 +193,11 @@ use \Calctool\Models\MoreLabor;
 
 					<div id="summary" class="tab-pane">
 
-							<div class="toogle"><!-- -->
+							<div class="toogle">
 								<div class="toggle active">
 									<label>Actieve projecten</label>
 									<div class="toggle-content">
 									<table class="table table-striped">
-										<?# -- table head -- ?>
 										<thead>
 											<tr>
 												<th class="col-md-2">Project</th>
@@ -325,5 +324,4 @@ use \Calctool\Models\MoreLabor;
 	</section>
 
 </div>
-<!-- /WRAPPER -->
 @stop

@@ -332,25 +332,6 @@ $(document).ready(function() {
 
 				</div>
 
-				<!--<h4>Betalingsgegevens</h4>
-				<div class="row">
-
-					<div class="col-md-3">
-						<div class="form-group">
-							<label for="iban">IBAN rekeningnummer</label>
-							<input name="iban" id="iban" type="text" value="{{ Input::old('iban') }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-3">
-						<div class="form-group">
-							<label for="btw">Naam rekeninghouder</label>
-							<input name="iban_name" id="iban_name" type="text" value="{{ Input::old('iban_name') }}" class="form-control"/>
-						</div>
-					</div>
-
-				</div>-->
-
 				<h4>Opmerkingen</h4>
 				<div class="row">
 					<div class="form-group">
