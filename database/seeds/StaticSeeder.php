@@ -541,6 +541,7 @@ class StaticSeeder extends Seeder {
 		RelationType::create(array('type_name' => 'metselaar'));
 		RelationType::create(array('type_name' => 'meubelmaker'));
 		RelationType::create(array('type_name' => 'natuursteenwerker'));
+		RelationType::create(array('type_name' => 'onderhoudsbedrijf'));		
 		RelationType::create(array('type_name' => 'opdrachtgever'));
 		RelationType::create(array('type_name' => 'overheid'));
 		RelationType::create(array('type_name' => 'overig'));
