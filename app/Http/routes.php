@@ -151,29 +151,34 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::get('invoice/pdf/project-{project_id}/term-invoice-{invoice_id}/download', array('as' => 'invoice', 'uses' => 'CalcController@getTermInvoiceDownloadPDF'))->where('project_id', '[0-9]+');
 
 	/* Calculation acions by calculation */
-	Route::post('calculation/calc/newmaterial', array('as' => 'calculation', 'uses' => 'CalcController@doNewCalculationMaterial'));
-	Route::post('calculation/calc/newequipment', array('as' => 'calculation', 'uses' => 'CalcController@doNewCalculationEquipment'));
-	Route::post('calculation/calc/newlabor', array('as' => 'calculation', 'uses' => 'CalcController@doNewCalculationLabor'));
-	Route::post('calculation/calc/deletematerial', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteCalculationMaterial'));
-	Route::post('calculation/calc/deleteequipment', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteCalculationEquipment'));
-	Route::post('calculation/calc/deletelabor', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteCalculationLabor'));
-	Route::post('calculation/calc/updatematerial', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateCalculationMaterial'));
-	Route::post('calculation/calc/updateequipment', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateCalculationEquipment'));
-	Route::post('calculation/calc/updatelabor', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateCalculationLabor'));
+	Route::post('calculation/calc/newmaterial', 'CalcController@doNewCalculationMaterial');
+	Route::post('calculation/calc/newequipment', 'CalcController@doNewCalculationEquipment');
+	Route::post('calculation/calc/newlabor', 'CalcController@doNewCalculationLabor');
+	Route::post('calculation/calc/deletematerial', 'CalcController@doDeleteCalculationMaterial');
+	Route::post('calculation/calc/deleteequipment', 'CalcController@doDeleteCalculationEquipment');
+	Route::post('calculation/calc/deletelabor', 'CalcController@doDeleteCalculationLabor');
+	Route::post('calculation/calc/updatematerial', 'CalcController@doUpdateCalculationMaterial');
+	Route::post('calculation/calc/updateequipment', 'CalcController@doUpdateCalculationEquipment');
+	Route::post('calculation/calc/updatelabor', 'CalcController@doUpdateCalculationLabor');
 
 	/* Estimate acions by calculation */
-	Route::post('calculation/estim/newmaterial', array('as' => 'calculation', 'uses' => 'CalcController@doNewEstimateMaterial'));
-	Route::post('calculation/estim/newequipment', array('as' => 'calculation', 'uses' => 'CalcController@doNewEstimateEquipment'));
-	Route::post('calculation/estim/newlabor', array('as' => 'calculation', 'uses' => 'CalcController@doNewEstimateLabor'));
-	Route::post('calculation/estim/deletematerial', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteEstimateMaterial'));
-	Route::post('calculation/estim/deleteequipment', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteEstimateEquipment'));
-	Route::post('calculation/estim/deletelabor', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteEstimateLabor'));
-	Route::post('calculation/estim/updatematerial', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateEstimateMaterial'));
-	Route::post('calculation/estim/updateequipment', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateEstimateEquipment'));
-	Route::post('calculation/estim/updatelabor', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateEstimateLabor'));
+	Route::post('calculation/estim/newmaterial', 'CalcController@doNewEstimateMaterial');
+	Route::post('calculation/estim/newequipment', 'CalcController@doNewEstimateEquipment');
+	Route::post('calculation/estim/newlabor', 'CalcController@doNewEstimateLabor');
+	Route::post('calculation/estim/deletematerial', 'CalcController@doDeleteEstimateMaterial');
+	Route::post('calculation/estim/deleteequipment', 'CalcController@doDeleteEstimateEquipment');
+	Route::post('calculation/estim/deletelabor', 'CalcController@doDeleteEstimateLabor');
+	Route::post('calculation/estim/updatematerial', 'CalcController@doUpdateEstimateMaterial');
+	Route::post('calculation/estim/updateequipment', 'CalcController@doUpdateEstimateEquipment');
+	Route::post('calculation/estim/updatelabor', 'CalcController@doUpdateEstimateLabor');
+
+	/* Blancrow acions by calculation */
+	Route::post('blancrow/newrow', 'BlancController@doNewRow');
+	Route::post('blancrow/updaterow', 'BlancController@doUpdateRow');
 
 	/* Calculation pages */
 	Route::get('calculation/project-{project_id}', array('as' => 'calculation', 'uses' => 'CalcController@getCalculation'))->where('project_id', '[0-9]+');
+	Route::get('blancrow/project-{project_id}', 'BlancController@getBlanc')->where('project_id', '[0-9]+');
 	Route::get('estimate/project-{project_id}', array('as' => 'estimate', 'uses' => 'CalcController@getEstimate'))->where('project_id', '[0-9]+');
 
 	/* Estimate acions by estimate */
