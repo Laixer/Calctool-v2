@@ -186,25 +186,25 @@ class BlancController extends Controller {
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
 		]);
 
-			$equipment = CalculationEquipment::find($request->input('id'));
-			if (!$equipment)
-				return json_encode(['success' => 0]);
-			$activity = Activity::find($equipment->activity_id);
-			if (!$activity)
-				return json_encode(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
-			}
+		$equipment = CalculationEquipment::find($request->input('id'));
+		if (!$equipment)
+			return json_encode(['success' => 0]);
+		$activity = Activity::find($equipment->activity_id);
+		if (!$activity)
+			return json_encode(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
 
-			$equipment->equipment_name = $request->get('name');
-			$equipment->unit = $request->get('unit');
-			$equipment->rate = str_replace(',', '.', str_replace('.', '' , $request->get('rate')));
-			$equipment->amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
+		$equipment->equipment_name = $request->get('name');
+		$equipment->unit = $request->get('unit');
+		$equipment->rate = str_replace(',', '.', str_replace('.', '' , $request->get('rate')));
+		$equipment->amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
 
-			$equipment->save();
+		$equipment->save();
 
-			return json_encode(['success' => 1]);
+		return json_encode(['success' => 1]);
 	}
 
 	public function doUpdateCalculationLabor(Request $request)
