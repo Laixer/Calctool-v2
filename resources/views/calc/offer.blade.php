@@ -2,6 +2,7 @@
 
 use \Calctool\Models\Project;
 use \Calctool\Models\Relation;
+use \Calctool\Models\Tax;
 use \Calctool\Models\Offer;
 use \Calctool\Calculus\CalculationEndresult;
 use \Calctool\Models\Contact;
@@ -9,9 +10,11 @@ use \Calctool\Models\ProjectType;
 use \Calctool\Models\DeliverTime;
 use \Calctool\Models\Valid;
 use \Calctool\Models\Chapter;
+use \Calctool\Models\BlancRow;
 use \Calctool\Models\Activity;
 use \Calctool\Models\Part;
 use \Calctool\Calculus\CalculationOverview;
+use \Calctool\Calculus\BlancRowsEndresult;
 use \Calctool\Models\Resource;
 use \Calctool\Http\Controllers\OfferController;
 
@@ -27,6 +30,7 @@ if (!$project || !$project->isOwner()) {
 	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 }
 
+$type = ProjectType::find($project->type_id);
 ?>
 
 @extends('layout.master')
@@ -324,7 +328,7 @@ if (!$project || !$project->isOwner()) {
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
 		<button class="btn btn-primary osave">Opslaan</button>
 		<?php } ?>
-		<?php }else{ ?>
+		<?php } else { ?>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
 		@if (CalculationEndresult::totalProject($project))
@@ -898,6 +902,8 @@ if (!$project || !$project->isOwner()) {
 			<?#--CONTENT TOTAL START--?>
 			<div class="show-totals">
 			<h4 class="only-total">Specificatie offerte</h4>
+
+				@if($type->type_name != 'blanco offerte')
 				<table class="table table-striped hide-btw1">
 					<thead>
 						<tr>
@@ -1015,6 +1021,32 @@ if (!$project || !$project->isOwner()) {
 						</tr>
 					</tbody>
 				</table>
+				@else
+				<table class="table table-striped hide-btw1">
+					<thead>
+						<tr>
+							<th class="col-md-4">Omschrijving</th>
+							<th class="col-md-2">€ / Eenh (excl. BTW)</th>
+							<th class="col-md-1">Aantal</th>
+							<th class="col-md-1">Totaal</th>
+							<th class="col-md-1">BTW</th>
+							<th class="col-md-1">BTW bedrag</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (BlancRow::where('project_id','=', $project->id)->get() as $row)
+						<tr>
+							<td class="col-md-4">{{ $row->description }}</td>
+							<td class="col-md-2">{{ '&euro; '.number_format($row->rate, 2, ",",".") }}</td>
+							<td class="col-md-1">{{ '&euro; '.number_format($row->amount, 2, ",",".") }}</td>
+							<td class="col-md-1">{{ '&euro; '.number_format($row->rate * $row->amount, 2, ",",".") }}</td>
+							<td class="col-md-1">{{ Tax::find($row->tax_id)->tax_rate }}%</td>
+							<td class="col-md-1">{{ '&euro; '.number_format(($row->rate * $row->amount/100) * Tax::find($row->tax_id)->tax_rate, 2, ",",".") }}</td>
+						</tr>
+						@endforeach
+					</tbody>
+				</table>
+				@endif
 
 				<h4>Totalen Offerte</h4>
 				<table class="table table-striped hide-btw2">
@@ -1043,7 +1075,7 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-2">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax1($project)+CalculationEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
+							<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax1($project)+CalculationEndresult::totalSubcontractingTax1($project)+BlancRowsEndresult::rowTax1AmountTax($project), 2, ",",".") }}</td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
 						<tr>
@@ -1051,7 +1083,7 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-2">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax2($project)+CalculationEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
+							<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax2($project)+CalculationEndresult::totalSubcontractingTax2($project)+BlancRowsEndresult::rowTax2AmountTax($project), 2, ",",".") }}</td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
 						@endif
@@ -1061,7 +1093,7 @@ if (!$project || !$project->isOwner()) {
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-2"><strong class="pull-right">{{ '&euro; '.number_format(CalculationEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
+							<td class="col-md-2"><strong class="pull-right">{{ '&euro; '.number_format(CalculationEndresult::superTotalProject($project)+BlancRowsEndresult::rowTax1AmountTax($project)+BlancRowsEndresult::rowTax2AmountTax($project), 2, ",",".") }}</strong></td>
 						</tr>
 					</tbody>
 				</table>

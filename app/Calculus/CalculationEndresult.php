@@ -684,7 +684,7 @@ class CalculationEndresult {
 	}
 
 	public static function totalProject($project) {
-		return CalculationEndresult::totalContracting($project) + CalculationEndresult::totalSubcontracting($project);
+		return CalculationEndresult::totalContracting($project) + CalculationEndresult::totalSubcontracting($project) + BlancRowsEndresult::totalProject($project);
 	}
 
 	public static function totalContractingTax1($project) {
