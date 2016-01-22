@@ -94,10 +94,6 @@ use \Calctool\Models\Contact;
 							<label for="type">Type</label>
 							<select name="type" id="type" class="form-control pointer">
 								@foreach (Calctool\Models\ProjectType::all() as $type)
-								<?php
-								if ($type->type_name != 'calculatie' && $type->type_name != 'BTW verlegd')
-									continue;
-								?>
 									<option {{ $type->type_name=='calculatie' ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
 								@endforeach
 							</select>
