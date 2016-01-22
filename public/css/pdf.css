@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Arial';
-    src: url(/fonts/SourceSansPro-Regular.ttf);
+    /*src: url(/fonts/SourceSansPro-Regular.ttf);*/
 }
 
 .clearfix:after {
@@ -21,16 +21,77 @@ body {
   margin: 0 auto;
   color: #000000;
   background: #FFFFFF;
-  font-size: 14px;
-    font-family: 'Arial';
+  font-size: 12px;
+    /*font-family: 'Arial';*/
 }
 
 header {
   padding: 10px 0;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   border-bottom: 1px solid #AAAAAA;
-    font-family: 'Arial';
+  /*font-family: 'Arial';*/
 }
+
+h1.name {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 5px;
+  padding-left: 5px;
+/*  border-style: solid;
+  border-width: 0px;
+  border-color: #AAAAAA;*/
+}
+
+h3.name {
+  font-size: 18px;
+  font-weight: normal;
+  margin: 0;
+  /*padding-left: 10px;*/
+  /*DZA*/
+}
+
+/*Spacing onder header*/
+#heading {
+  margin-bottom: 10px;
+}
+
+/*Aanvullende spacing onde rheader*/
+#spacing {
+  margin-bottom: 30px;
+}
+
+/*Opende vrije tekst*/
+.openingtext {
+  font-size: 12px;
+  margin: 20px  0 20px 0;
+  padding-left: 10px;
+}
+
+/*Afsluitende vrije tekst*/
+.closingtext {
+  font-size: 12px;
+  margin: 20px  0 20px 0;
+  padding-left: 10px;
+}
+
+/*Bepalingen*/
+.terms {
+  font-size: 12px;
+  margin: 0  0 10px 0;
+  padding-left:10px;
+}
+
+/*Afsluiting van het document*/
+.from {
+  font-size: 12px;
+  margin: 0  0 10px 0;
+  padding-left:10px;
+}
+
+
+
+
+
 
 #logo {
   float: left;
@@ -40,6 +101,27 @@ header {
 #logo img {
   height: 70px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #company {
   float: right;
@@ -68,17 +150,6 @@ header {
 }
 
 
-/*DZA aproved*/
-h1.name {
-  font-size: 16px;
-  font-weight: bold;
-  margin: 5px;
-  padding-left: 5px;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #AAAAAA;
-}
-
 h2.name {
   font-size: 14px;
   font-weight: bold;
@@ -87,12 +158,6 @@ h2.name {
   padding-left: 5px;
 }
 
-h3.name {
-  font-size: 22px;
-  font-weight: normal;
-  margin: 0;
-  padding-left: 10px;
-}
 
 h4.name {
   font-size: 14px;
@@ -108,24 +173,6 @@ h4.name {
   float: left;
 }
 
-.openingtext {
-  font-size: 14px;
-  margin: 20px  0 20px 0;
-  padding-left: 10px;
-}
-
-.closingtext {
-  font-size: 14px;
-  margin: 20px  0 20px 0;
-  padding-left: 10px;
-}
-
-.statements {
-  font-size: 14px;
-  margin: 0  0 10px 0;
-  padding-left:10px;
-}
-
 .name {
   font-size: 14px;
 }
@@ -135,7 +182,7 @@ h4.name {
   margin: 20px  0 20px 0;
   padding-left: 10px;
 }
-/*DZA aproved*/
+
 
 
 
@@ -143,7 +190,7 @@ table {
   width: 100%;
   border-spacing: 0;
   margin-bottom: 5px;
-  padding: 0 0 0 10px;
+  /*padding: 0 0 0 10px;*/
   /*overflow: visible !important;*/
 }
 
@@ -151,7 +198,7 @@ table td {
   padding: 0 0 0 5px;
   background: transparent;
   text-align: left;
-  border-bottom: 1px solid transparent;
+  /*border-bottom: 1px solid;*/
 }
 
 table th {
@@ -161,7 +208,8 @@ table th {
  background: transparent;
  text-align: left;
  border-bottom: 2px solid transparent;
- /*display: table-header-group*/
+/* display: table-header-group;*/
+/*border-bottom: 1px solid;*/
 }
 
 table td {
@@ -185,9 +233,19 @@ table .unit {
   background: transparent;
 }
 
+/*DZA origineel*/
 table .qty {
   background: transparent;
+  margin: 5px;
+  padding-left: 10px;
 }
+/*DZA aagepast naar onderstande */
+table .qty {
+  background: transparent;
+  margin: 5px;
+  padding-left: 10px;
+}
+/*DZA eine*/
 
 table .qty-und {
   background: transparent;
@@ -204,7 +262,7 @@ table td.desc,
 table td.unit,
 table td.qty,
 table td.total {
-  font-size: 1.0em;
+  font-size: 12px;
 }
 
 table tbody tr:last-child td {
@@ -215,7 +273,7 @@ table tfoot td {
   padding: 5px 5px;
   background: transparent;
   border-bottom: none;
-  font-size: 1.2em;
+  font-size: 10px;
   white-space: nowrap;
   border-top: 1px solid #AAAAAA;
 }
@@ -226,7 +284,7 @@ table tfoot tr:first-child td {
 
 table tfoot tr:last-child td {
  /* color: #57B223;*/
-  font-size: 1.4em;
+  font-size: 10px;
   border-top: 1px solid #57B223;
 
 }
@@ -246,7 +304,7 @@ table tfoot tr td:first-child {
 }
 
 #notices .notice {
-  font-size: 1.2em;
+  font-size: 10px;
 }
 
 footer {
