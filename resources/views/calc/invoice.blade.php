@@ -243,6 +243,43 @@ if (!$project || !$project->isOwner()) {
 		@if ($invoice_last && $invoice_last->invoice_make)
 		$('.invdate').text("{{ date('d-m-Y', strtotime($offer_last->invoice_make)) }}");
 		@endif
+
+
+
+
+		@if ($offer_last && $offer_last->offer_make)
+		$('.offdate').text("{{ date('d-m-Y', strtotime($offer_last->offer_make)) }}");
+
+			@if (!$offer_last->include_tax)
+				$("[name='include-tax']").bootstrapSwitch('toggleState');
+			@endif
+
+			@if (!$offer_last->only_totals)
+				$("[name='only-totals']").bootstrapSwitch('toggleState');
+			@endif
+
+			@if ($offer_last->seperate_subcon)
+				$("[name='seperate-subcon']").bootstrapSwitch('toggleState');
+			@endif
+
+			@if ($offer_last->display_worktotals)
+				$("[name='display-worktotals']").bootstrapSwitch('toggleState');
+			@endif
+
+			@if ($offer_last->display_specification)
+				$("[name='display-specification']").bootstrapSwitch('toggleState');
+			@endif
+
+			@if ($offer_last->display_description)
+				$("[name='display-description']").bootstrapSwitch('toggleState');
+			@endif
+		@endif
+
+
+
+
+
+
 	});
 </script>
 <div id="wrapper">

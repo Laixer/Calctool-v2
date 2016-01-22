@@ -423,7 +423,7 @@ if ($cnt>1)
       <div class="closingtext">{{ ($invoice ? $invoice->closure : '') }}</div>
 
       <h1 class="name">Bepalingen</h1>
-      <div class="statements">
+      <div class="terms">
         <li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
       </div>
       <div class="signing">Met vriendelijke groet,</div>
@@ -884,7 +884,7 @@ if ($cnt>1)
     <div class="closingtext">{{ ($invoice ? $invoice->closure : '') }}</div>
 
     <h1 class="name">Bepalingen</h1>
-    <div class="statements">
+    <div class="terms">
       <li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
     </div>
     <div class="signing">Met vriendelijke groet,</div>

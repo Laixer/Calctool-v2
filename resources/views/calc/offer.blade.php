@@ -486,20 +486,42 @@ if (!$project || !$project->isOwner()) {
 		<?#--PAGE HEADER MASTER START--?>
 		<header>
 			<div class="row">
-				<div class="col-sm-6">
+				<div class="col-sm-7">
 					{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
 				</div>
-				<div class="col-sm-6 text-right">
+				
+				<div class="col-sm-2">
 					<p>
 						<h4><strong>{{ $relation_self->company_name }}</strong></h4>
 		    				<ul class="list-unstyled">
-	 						<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
-	  						<li>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
-							<li><i class="fa fa-phone"></i>&nbsp;{{ $relation_self->phone }}&nbsp;|&nbsp;<i class="fa fa-envelope-o"></i>&nbsp;{{ $relation_self->email }}</li>
-	 						<li>KVK:{{ $relation_self->kvk }}&nbsp;|&nbsp;BTW: {{ $relation_self->btw }}</li>
-						<ul class="list-unstyled">
+	 						<li><strong>Adres:</strong></li>
+	  						<li>&nbsp;</li>
+							<li><strong>Telefoon: <i class="fa fa-phone"></i></strong></li>
+	 						<li><strong>E-mail: <i class="fa fa-envelope-o"></i></strong></li>
+	 						<li><strong>KVK</strong></li>
+						</ul>
 					</p>
 				</div>
+
+				<div class="col-sm-3">
+					<p>
+						<h4><strong>&nbsp;</strong></h4>
+		    				<ul class="list-unstyled">
+	 						<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
+	  						<li>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
+							<li>{{ $relation_self->phone }}</li>
+	 						<li>{{ $relation_self->email }}</li>
+	 						<li>{{ $relation_self->kvk }}</li>
+						</ul>
+					</p>
+				</div>
+
+
+
+
+
+
+
 			</div>
 		</header>
 		<hr class="margin-top10 margin-bottom10">
@@ -507,6 +529,8 @@ if (!$project || !$project->isOwner()) {
 
  		<?#--ADRESSING START--?>
 		<div class="row">
+			<div class="col-sm-1">
+			</div>
 			<div class="col-sm-6">
 				<ul class="list-unstyled">
 					<li>{{ $relation->company_name }}</li>
@@ -524,7 +548,7 @@ if (!$project || !$project->isOwner()) {
 					<li>{{ $relation->address_street . ' ' . $relation->address_number }}<br /> {{ $relation->address_postal . ', ' . $relation->address_city }}</li>
 				</ul>
 			</div>
-			<div class="col-sm-2"></div>
+			<div class="col-sm-1"></div>
 			<div class="col-sm-4 text-right">
 				<h4><strong>OFFERTE</strong></h4>
 				<ul class="list-unstyled">
@@ -569,15 +593,15 @@ if (!$project || !$project->isOwner()) {
 		<?#--CONTENT, CON & SUBCON START--?>
 			<div class="show-all" style="display:none;">
 				<h4 class="only-total">Specificatie offerte</h4>
-				<div class="only-total"><strong><u>AANNEMING</u></strong></div>
+				<!-- <div class="only-total"><strong><u>AANNEMING</u></strong></div> -->
 				<table class="table table-striped hide-btw1">
 					<thead>
 						<tr>
-							<th class="col-md-4">&nbsp;</th>
+							<th class="col-md-4">AANNEMING</th>
 							<th class="col-md-1">Uren</th>
 							<th class="col-md-2">Bedrag (excl. BTW)</th>
 							<th class="col-md-1">&nbsp;</th>
-							<th class="col-md-1">BTW</th>
+							<th class="col-md-1">BTW1</th>
 							<th class="col-md-2">BTW bedrag</th>
 							<th class="col-md-1">&nbsp;</th>
 						</tr>
@@ -679,24 +703,25 @@ if (!$project || !$project->isOwner()) {
 						<tr>
 							<td class="col-md-4"><strong>Totaal aanneming</strong></td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
-							<td class="col-md-2">&nbsp;</td>
+							<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax($project), 2, ",",".") }}</strong></td>
-							<td class="col-md-2">&nbsp;</td>
+							<td class="col-md-1">&nbsp;</td>
+							<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax($project), 2, ",",".") }}</strong></td>
+							<td class="col-md-1">&nbsp;</td>
 						</tr>
 					</tbody>
 				</table>
 
-				<div class="only-total"><strong><u>ONDERAANNEMING</u></strong></div>
+				<!-- <div class="only-total"><strong>ONDERAANNEMING</strong><hr></div> -->
+				<hr>
 				<table class="table table-striped hide-btw1">
 					<thead>
 						<tr>
-							<th class="col-md-4">&nbsp;</th>
+							<th class="col-md-4">ONDERAANNEMING</th>
 							<th class="col-md-1">Uren</th>
 							<th class="col-md-2">Bedrag (excl. BTW)</th>
 							<th class="col-md-1">&nbsp;</th>
-							<th class="col-md-1">BTW</th>
+							<th class="col-md-1">BTW2</th>
 							<th class="col-md-2">BTW bedrag</th>
 							<th class="col-md-1">&nbsp;</th>
 						</tr>
@@ -798,21 +823,21 @@ if (!$project || !$project->isOwner()) {
 						<tr>
 							<td class="col-md-4"><strong>Totaal onderaanneming</strong></td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
-							<td class="col-md-2">&nbsp;</td>
+							<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontractingTax($project), 2, ",",".") }}</strong></td>
-							<td class="col-md-2">&nbsp;</td>
+							<td class="col-md-1">&nbsp;</td>
+							<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontractingTax($project), 2, ",",".") }}</strong></td>
+							<td class="col-md-1">&nbsp;</td>
 						</tr>
 					</tbody>
 				</table>
 
-				<h4>Totalen Offerte</h4>
+				<h4>Totalen Offerte3</h4>
 				<table class="table table-striped hide-btw2">
 					<thead>
 						<tr>
 							<th class="col-md-5">&nbsp;</th>
-							<th class="col-md-2">Bedrag (excl. BTW)</th>
+							<th class="col-md-2">Bedrag (excl. BTW)3</th>
 							<th class="col-md-1">&nbsp;</th>
 							<th class="col-md-1">&nbsp;</th>
 							<th class="col-md-1">BTW bedrag</th>
@@ -823,8 +848,8 @@ if (!$project || !$project->isOwner()) {
 						<tr>
 							<td class="col-md-5"><strong>Calculatief te offreren (excl. BTW)</strong></td>
 							<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</strong></td>
-							<th class="col-md-1">&nbsp;</th>
-							<th class="col-md-1">&nbsp;</th>
+							<td class="col-md-1">&nbsp;</td>
+							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
@@ -869,7 +894,7 @@ if (!$project || !$project->isOwner()) {
 							<th class="col-md-1">Uren</th>
 							<th class="col-md-2">Bedrag (excl. BTW)</th>
 							<th class="col-md-1">&nbsp;</th>
-							<th class="col-md-1">BTW</th>
+							<th class="col-md-1">BTW3</th>
 							<th class="col-md-1">BTW bedrag</th>
 							<th class="col-md-2">&nbsp;</th>
 						</tr>
@@ -996,8 +1021,8 @@ if (!$project || !$project->isOwner()) {
 						<tr>
 							<td class="col-md-5"><strong>Calculatief te offreren (excl. BTW)</strong></td>
 							<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</strong></td>
-							<th class="col-md-1">&nbsp;</th>
-							<th class="col-md-1">&nbsp;</th>
+							<td class="col-md-1">&nbsp;</td>
+							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>

@@ -56,8 +56,8 @@ $(function() {
 		$.post("/mycompany/quickstart", {
 			company_type: $('#company_type').val(),
 			company_name: $('#company_name').val(),
-			kvk: $('#kvk').val(),
-			btw: $('#btw').val(),
+			// kvk: $('#kvk').val(),
+			// btw: $('#btw').val(),
 			street: $('#street').val(),
 			address_number: $('#address_number').val(),
 			zipcode: $('#zipcode').val(),
@@ -81,7 +81,8 @@ $(function() {
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-body" id="introform">
-				<p>Na het invullen van deze QuickStart kan je direct starten met de CalculatieTool.
+				<h4>Na de <strong>QuickStart</strong> kan je direct starten met je eerste calculatie & offerte.</h4>
+				<hr>
 
 				@if($errors->has())
 				<div class="alert alert-danger">
@@ -107,7 +108,7 @@ $(function() {
 					</div>
 					<div class="col-md-5">
 						<div class="form-group">
-							<label for="company_type">Bedrijfstype*</label>
+							<label for="company_type">Bedrijfstype</label>
 							<select name="company_type" id="company_type" class="form-control pointer">
 							@foreach (RelationType::all() as $type)
 								<option {{ $relation ? ($relation->type_id==$type->id ? 'selected' : '') : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
@@ -119,21 +120,21 @@ $(function() {
 				<div class="row">
 					<div class="col-md-2">
 						<div class="form-group">
-							<label for="address_number">Huis nr.*</label>
+							<label for="address_number">Huis nr.</label>
 							<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') ? Input::old('address_number') : ($relation ? $relation->address_number : '') }}" class="form-control autoappend"/>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="zipcode">Postcode*</label>
+							<label for="zipcode">Postcode</label>
 							<input name="zipcode" id="zipcode" maxlength="6" type="text" value="{{ Input::old('zipcode') ? Input::old('zipcode') : ($relation ? $relation->address_postal : '') }}" class="form-control autoappend"/>
 						</div>
 					</div>
 
 					<div class="col-md-7">
 						<div class="form-group">
-							<label for="street">Straat*</label>
+							<label for="street">Straat</label>
 							<input name="street" id="street" type="text" value="{{ Input::old('street') ? Input::old('street') : ($relation ? $relation->address_street : '') }}" class="form-control"/>
 						</div>
 					</div>
@@ -141,7 +142,7 @@ $(function() {
 				<div class="row">
 					<div class="col-md-4">
 						<div class="form-group">
-							<label for="city">Plaats*</label>
+							<label for="city">Plaats</label>
 							<input name="city" id="city" type="text" value="{{ Input::old('city') ? Input::old('city') : ($relation ? $relation->address_city : '') }}" class="form-control"/>
 						</div>
 					</div>
@@ -171,19 +172,19 @@ $(function() {
 				<div class="row">
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="contact_firstname">Voornaam*</label>
+							<label for="contact_firstname">Voornaam</label>
 							<input name="contact_firstname" id="contact_firstname" type="text" value="{{ Input::old('contact_firstname') ? Input::old('contact_firstname') : ($relation ? Contact::where('relation_id', $relation->id)->first()['firstname'] : '') }}" class="form-control"/>
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="contact_name">Achternaam*</label>
+							<label for="contact_name">Achternaam</label>
 							<input name="contact_name" id="contact_name" type="text" value="{{ Input::old('contact_name') ? Input::old('contact_name') : ($relation ? Contact::where('relation_id', $relation->id)->first()['lastname'] : '') }}" class="form-control"/>
 						</div>
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="email">Email*</label>
+							<label for="email">Email</label>
 							<input name="email" id="email" type="email" value="{{ Auth::user()->email }}" class="form-control"/>
 						</div>
 					</div>
@@ -198,6 +199,7 @@ $(function() {
 						</div>
 					</div>
 				</div>
+				<span>Na het invullen van de QuickStart is het mogelijk meer bedrijfsgegevens op te geven onder "Mijn bedrijf".</span>
 			</div>
 			</form>
 
@@ -209,8 +211,11 @@ $(function() {
 			</div>
 
 			<div class="modal-footer">
-				<div class="col-md-12">
-					<button id="intrnext" class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+				<div class="col-md-6">
+					<p>Scherm 1/2<p>
+				</div>
+				<div class="col-md-6">
+					<button id="intrnext" class="btn btn-primary"><i class="fa fa-check"></i> Volgende</button>
 				</div>
 			</div>
 
@@ -283,7 +288,6 @@ $(function() {
 								<span class="overlay color2"></span>
 								<span class="inner">
 									<span class="block fa fa-clock-o fsize60"></span>
-									<strong>Urenregistratie</strong>
 								</span>
 							</a>
 							<a href="/timesheet" class="btn btn-primary add_to_cart"><i class="fa fa-clock-o"></i> Urenregistratie</a>
