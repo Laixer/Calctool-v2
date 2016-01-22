@@ -548,14 +548,25 @@ if (!$project || !$project->isOwner()) {
 					<li>{{ $relation->address_street . ' ' . $relation->address_number }}<br /> {{ $relation->address_postal . ', ' . $relation->address_city }}</li>
 				</ul>
 			</div>
-			<div class="col-sm-1"></div>
-			<div class="col-sm-4 text-right">
+			<div class="col-sm-2">
 				<h4><strong>OFFERTE</strong></h4>
 				<ul class="list-unstyled">
-					<li><strong>Projectnaam:</strong> {{ $project->project_name }}</li>
-					<li><strong>Offertedatum:</strong> <a href="#" class="offdate">Bewerk</a></li>
-					<li><strong>Offertenummer:</strong> {{ OfferController::getOfferCode($project->id) }}</li>
-					<li><strong>Versie:</strong> {{ Offer::where('project_id', $project->id)->count()+1 }}</li>
+					<li><strong>Projectnaam:</strong></li>
+					<li><strong>Offertedatum:</strong></li>
+					<li><strong>Offertenummer:</strong></li>
+					<li><strong>Versie:</strong></li>
+					<li>&nbsp;</li>
+					<li>&nbsp;</li>
+					<input type="hidden" id="offdateval" name="offdateval" value="{{ $offer_last ? $offer_last->offer_make : '' }}" />
+				</ul>
+			</div>
+			<div class="col-sm-3">
+				<h4><strong>OFFERTE</strong></h4>
+				<ul class="list-unstyled">
+					<li>{{ $project->project_name }}</li>
+					<li><a href="#" class="offdate">Bewerk</a></li>
+					<li>{{ OfferController::getOfferCode($project->id) }}</li>
+					<li>{{ Offer::where('project_id', $project->id)->count() }}</li>
 					<li>&nbsp;</li>
 					<li>&nbsp;</li>
 					<input type="hidden" id="offdateval" name="offdateval" value="{{ $offer_last ? $offer_last->offer_make : '' }}" />
