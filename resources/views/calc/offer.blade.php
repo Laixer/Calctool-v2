@@ -616,7 +616,7 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-1">Uren</th>
 							<th class="col-md-2">Bedrag (excl. BTW)</th>
 							<th class="col-md-1">&nbsp;</th>
-							<th class="col-md-1">BTW1</th>
+							<th class="col-md-1">BTW</th>
 							<th class="col-md-2">BTW bedrag</th>
 							<th class="col-md-1">&nbsp;</th>
 						</tr>
@@ -736,7 +736,7 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-1">Uren</th>
 							<th class="col-md-2">Bedrag (excl. BTW)</th>
 							<th class="col-md-1">&nbsp;</th>
-							<th class="col-md-1">BTW2</th>
+							<th class="col-md-1">BTW</th>
 							<th class="col-md-2">BTW bedrag</th>
 							<th class="col-md-1">&nbsp;</th>
 						</tr>
@@ -847,12 +847,12 @@ $type = ProjectType::find($project->type_id);
 					</tbody>
 				</table>
 
-				<h4>Totalen Offerte3</h4>
+				<h4>Totalen Offerte</h4>
 				<table class="table table-striped hide-btw2">
 					<thead>
 						<tr>
 							<th class="col-md-5">&nbsp;</th>
-							<th class="col-md-2">Bedrag (excl. BTW)3</th>
+							<th class="col-md-2">Bedrag (excl. BTW)</th>
 							<th class="col-md-1">&nbsp;</th>
 							<th class="col-md-1">&nbsp;</th>
 							<th class="col-md-1">BTW bedrag</th>
@@ -1011,7 +1011,7 @@ $type = ProjectType::find($project->type_id);
 						@endif
 
 						<tr>
-							<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
+							<td class="col-md-4"><strong>Totaal Aanneming</strong></td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContracting($project)+CalculationEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
 							<td class="col-md-1">&nbsp;</td>
@@ -1049,7 +1049,7 @@ $type = ProjectType::find($project->type_id);
 				@endif
 
 				<h4>Totalen Offerte</h4>
-				<table class="table table-striped hide-btw2">
+				<table class="table table-striped hide-btwz">
 					<thead>
 						<tr>
 							<th class="col-md-5">&nbsp;</th>
