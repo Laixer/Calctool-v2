@@ -55,7 +55,7 @@
 
 		<?php // -- CUSTOM CSS -- ?>
 		<link media="all" type="text/css" rel="stylesheet" href="/css/custom.css">
-		<link media="all" type="text/css" rel="stylesheet" href="/plugins/feedback_me/css/jquery.feedback_me.css">
+		<link media="all" type="text/css" rel="stylesheet" href="/plugins/feedback/css/jquery.feedback_me.css">
 
 		<?php // -- Morenizr -- ?>
 		<script src="/plugins/modernizr.min.js"></script>
@@ -76,13 +76,12 @@
 			        show_asterisk_for_required: true,
 			        feedback_url: "/feedback",
 			        custom_params: {
-			            csrf: "my_secret_token",
 			            user_id: "john_doe",
 			            feedback_type: "clean"
 			        },
 			        delayed_options: {
 			            send_fail : "Sending failed :(.",
-			            send_success : "Sent successfully :) , wow! even this message is customizable!!!"
+			            send_success : "Bedankt voor de feedback!"
 			        }
 			    };
 			    fm.init(fm_options);
@@ -126,7 +125,7 @@
 		<script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 		<script src="/plugins/summernote/summernote.min.js"></script>
 		<script src="/plugins/videojs/video.min.js"></script>
-		<script src="/plugins/feedback_me/js/jquery.feedback_me.js"></script>
+		<script src="/plugins/feedback/js/jquery.feedback_me.js"></script>
 
 		<script src="/js/scripts.js"></script>
 	</body>
