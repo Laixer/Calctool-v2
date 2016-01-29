@@ -11,6 +11,8 @@ use \Calctool\Http\Controllers\OfferController;
 use \Calctool\Models\DeliverTime;
 use \Calctool\Models\Valid;
 use \Calctool\Models\Chapter;
+use \Calctool\Models\Tax;
+use \Calctool\Models\BlancRow;
 use \Calctool\Models\Activity;
 use \Calctool\Models\Part;
 use \Calctool\Models\PartType;
@@ -34,6 +36,8 @@ $seperate_subcon = !$offer->seperate_subcon; //Onderaanneming apart weergeven
 $display_worktotals = $offer->display_worktotals; //Kosten werkzaamheden weergeven
 $display_specification = $offer->display_specification; //Hoofdstukken en werkzaamheden weergeven
 $display_description = $offer->display_description;  //Omschrijving werkzaamheden weergeven
+
+$type = ProjectType::find($project->type_id);
 
 function invoice_condition($offer) {
 	if ($offer && $offer->invoice_quantity > 1) {
@@ -130,6 +134,33 @@ function invoice_condition($offer) {
 
 @if (!$only_totals)
 	  <h1 class="name">Specificatie offerte</h1>
+	  <hr>
+	  @if($type->type_name == 'blanco offerte')
+	  <table border="0" cellspacing="0" cellpadding="0">
+		<thead>
+		  <tr style="page-break-after: always;">
+			<th style="width: 147px" align="left" class="qty">Omschrijving</th>
+			<th style="width: 60px" align="left" class="qty">€ / Eenh (excl. BTW)</th>
+			<th style="width: 119px" align="left" class="qty">Aantal</th>
+			<th style="width: 70px" align="left" class="qty">Totaal</th>
+			<th style="width: 80px" align="left" class="qty">BTW</th>
+			<th style="width: 119px" align="left" class="qty">BTW bedrag</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  @foreach (BlancRow::where('project_id','=', $project->id)->get() as $row)
+		  <tr style="page-break-after: always;">
+			<td class="qty">{{ $row->description }}</td>
+			<td class="qty">{{ '&euro; '.number_format($row->rate, 2, ",",".") }}</td>
+			<td class="qty">{{ '&euro; '.number_format($row->amount, 2, ",",".") }}</td>
+			<td class="qty">{{ '&euro; '.number_format($row->rate * $row->amount, 2, ",",".") }}</td>
+			<td class="qty">{{ Tax::find($row->tax_id)->tax_rate }}%</td>
+			<td class="qty">{{ '&euro; '.number_format(($row->rate * $row->amount/100) * Tax::find($row->tax_id)->tax_rate, 2, ",",".") }}</td>
+		  </tr>
+		  @endforeach
+		</tbody>
+	  </table>
+	  @else
 	  <hr>
 	  @if ($seperate_subcon)
 	  <table border="0" cellspacing="0" cellpadding="0">
@@ -444,6 +475,7 @@ function invoice_condition($offer) {
 		</tbody>
 	  </table>
 
+@endif
 @endif
 
 	  <h1 class="name">Totalen offerte</h1>

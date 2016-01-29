@@ -434,6 +434,7 @@ $type = ProjectType::find($project->type_id);
 								      </div>
 								    </div>
 								  </div>
+								  @if($type->type_name != 'blanco offerte')
 								   <div class="form-group">
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
@@ -474,6 +475,7 @@ $type = ProjectType::find($project->type_id);
 								      </div>
 								    </div>
 								  </div>
+								  @endif
 
 							</div>
 						</div>
