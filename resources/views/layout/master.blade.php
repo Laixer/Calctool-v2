@@ -71,14 +71,12 @@
 			    fm_options = {
 			        position: "right-top",
 			        name_required: true,
-			        message_placeholder: "Go ahead, type your feedback here...",
+			        message_placeholder: "Opmerkingen, vragen en suggesties zijn welkom",
 			        message_required: true,
+					name_label: "Naam",
+					message_label: "Bericht",
 			        show_asterisk_for_required: true,
 			        feedback_url: "/feedback",
-			        custom_params: {
-			            user_id: "john_doe",
-			            feedback_type: "clean"
-			        },
 			        delayed_options: {
 			            send_fail : "Sending failed :(.",
 			            send_success : "Bedankt voor de feedback!"
