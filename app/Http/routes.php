@@ -48,9 +48,6 @@ Route::get('privacy-policy', function() {
 });
 
 Route::post('feedback', 'FeedbackController@send');
-// Route::get('feedback', function() {
-// 	return view('mail.feedback', ['name' => 'kaas', 'user' => 'SYSTEM', 'message' => 'woei', 'remote' => '187324', 'agent' => 'hdfhd']);
-// });
 
 Route::post('payment/webhook/', array('as' => 'payment.order', 'uses' => 'UserController@doPaymentUpdate'));
 Route::get('hidenextstep', array('uses' => 'AuthController@doHideNextStep'));

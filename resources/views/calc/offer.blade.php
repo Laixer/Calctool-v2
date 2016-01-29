@@ -727,7 +727,6 @@ $type = ProjectType::find($project->type_id);
 					</tbody>
 				</table>
 
-				<!-- <div class="only-total"><strong>ONDERAANNEMING</strong><hr></div> -->
 				<hr>
 				<table class="table table-striped hide-btw1">
 					<thead>
