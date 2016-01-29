@@ -51,11 +51,13 @@
 
 .feedback_content label {
 	display: inline-block;
+	color: #417A00;
 }
 
 .feedback_name {
 	display: block;
 	width: 340px;
+	color: #4E4E4E;
 }
 
 .feedback_email {
@@ -67,6 +69,7 @@
 	display: block;
 	width: 340px;
 	resize: none;
+	color: #4E4E4E;
 }
 
 .feedback_submit {
@@ -92,10 +95,11 @@
 	-ms-transform: rotate(-90deg);
 	-o-transform: rotate(-90deg);
 	filter:none;
+	color: #517A00;
 }
 
 .fm_clean {
-	background-color: #DDDDDD;
+	background-color: #CCCCCC;
 }
 
 .fm_clean.feedback_trigger:hover {
@@ -105,9 +109,9 @@
 .fm_clean button{
   	padding: 5px 10px;
 	display: inline;
-	background: #777;
+	background: #517A00;
 	border: none;
-	color: #fff;
+	color: #CCCCCC;
 	cursor: pointer;
 	font-weight: bold;
 	border-radius: 5px;
@@ -507,7 +511,7 @@
 	position: absolute;
 	right: 0;
 	padding: 1px;
-	background: #FFFFFF;
+	background: #CCCCCC;
 	cursor: pointer;
 }
 
@@ -515,7 +519,7 @@
 	position: fixed;
 	width: 200px;
 	height: 50px;
-	background-color: #FFFFFF;
+	background-color: #CCCCCC;
 	top: 50%;
 	left: 50%;
 	vertical-align: middle;
