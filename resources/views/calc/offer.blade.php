@@ -326,13 +326,13 @@ $type = ProjectType::find($project->type_id);
 		<?php if (!$offer_last->offer_finish) { ?>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
-		<button class="btn btn-primary osave">Opslaan</button>
+		<button class="btn btn-primary osave">Bekijk in PDF</button>
 		<?php } ?>
 		<?php } else { ?>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
 		@if (CalculationEndresult::totalProject($project))
-		<button class="btn btn-primary osave">Opslaan</button>
+		<button class="btn btn-primary osave">Bekijk in PDF</button>
 		@endif
 		<?php } ?>
 		<?php } ?>
@@ -533,9 +533,7 @@ $type = ProjectType::find($project->type_id);
 
  		<?#--ADRESSING START--?>
 		<div class="row">
-			<div class="col-sm-1">
-			</div>
-			<div class="col-sm-6">
+			<div class="col-sm-7">
 				<ul class="list-unstyled">
 					<li>{{ $relation->company_name }}</li>
 					<li>T.a.v.
@@ -565,7 +563,7 @@ $type = ProjectType::find($project->type_id);
 				</ul>
 			</div>
 			<div class="col-sm-3">
-				<h4><strong>OFFERTE</strong></h4>
+				<h4><strong>&nbsp;</strong></h4>
 				<ul class="list-unstyled">
 					<li>{{ $project->project_name }}</li>
 					<li><a href="#" class="offdate">Bewerk</a></li>
@@ -1537,13 +1535,13 @@ $type = ProjectType::find($project->type_id);
 						<?php if (!$offer_last->offer_finish) { ?>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
-						<button class="btn btn-primary osave">Opslaan</button>
+						<button class="btn btn-primary osave">Bekijk in PDF</button>
 						<?php } ?>
 						<?php }else{ ?>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
 						@if (CalculationEndresult::totalProject($project))
-						<button class="btn btn-primary osave">Opslaan</button>
+						<button class="btn btn-primary osave">Bekijk in PDF</button>
 						@endif
 						<?php } ?>
 						<?php } ?>
