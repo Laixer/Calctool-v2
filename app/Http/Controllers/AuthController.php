@@ -160,7 +160,7 @@ class AuthController extends Controller {
 		$user->save();
 
 		$log = new Audit;
-		$log->event = '[NEWPASS] [SUCCESS]';
+		$log->event = '[NEWPASS] [SUCCESS]'  . \Calctool::remoteAgent());
 		$log->user_id = $user->id;
 		$log->save();
 
@@ -225,7 +225,7 @@ class AuthController extends Controller {
 
 		$log = new Audit;
 		$log->ip = \Calctool::remoteAddr();
-		$log->event = '[ACTIVATE] [SUCCESS]';
+		$log->event = '[ACTIVATE] [SUCCESS]' . \Calctool::remoteAgent());
 		$log->user_id = $user->id;
 		$log->save();
 
