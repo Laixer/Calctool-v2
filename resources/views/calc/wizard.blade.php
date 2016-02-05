@@ -4,7 +4,7 @@ use \Calctool\Models\ProjectType;
 use \Calctool\Models\Offer;
 
 $type = ProjectType::find($project->type_id);
-if ($type->type_name == 'blanco offerte') {
+if ($type->type_name == 'blanco offerte & factuur') {
 ?>
 
 <div class="wizard">

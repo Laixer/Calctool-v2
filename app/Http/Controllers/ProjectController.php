@@ -45,7 +45,7 @@ class ProjectController extends Controller {
 
 	public function doNew(Request $request)
 	{
-		$this->validate($request, [
+		$validator = $this->validate($request, [
 			'name' => array('required','max:50'),
 			'street' => array('required','alpha','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),

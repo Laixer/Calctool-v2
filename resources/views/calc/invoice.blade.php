@@ -814,7 +814,7 @@ $type = ProjectType::find($project->type_id);
 		<?#--CONTENT, TOTAL START--?>
 		<div class="show-totals">
 			<h4 class="only-total">Specificatie factuur</h4>
-			@if($type->type_name != 'blanco offerte')
+			@if($type->type_name != 'blanco offerte & factuur')
 			<table class="table table-striped hide-btw1">
 				<thead>
 					<tr>
