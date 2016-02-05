@@ -110,7 +110,7 @@ $(document).ready(function() {
 		</div>
 
 		<div class="pull-right">
-			<?php if (!$project->project_close) { ?>
+			<?php if (!$project->project_close && !$invoice->payment_date) { ?>
 			<div class="btn-group" role="group">
 			  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Versturen&nbsp;&nbsp;<span class="caret"></span></button>
 			  <ul class="dropdown-menu">
@@ -130,7 +130,7 @@ $(document).ready(function() {
 			<div class="col-sm-6"></div>
 			<div class="col-sm-6">
 				<div class="padding20 pull-right">
-					<?php if (!$project->project_close) { ?>
+					<?php if (!$project->project_close && !$invoice->payment_date) { ?>
 					<div class="btn-group" role="group">
 					  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Versturen&nbsp;&nbsp;<span class="caret"></span></button>
 					  <ul class="dropdown-menu">

@@ -316,9 +316,9 @@ $type = ProjectType::find($project->type_id);
 		if (!$project->project_close) {
 			$prev = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->orderBy('priority', 'desc')->first();
 			if ($prev && $prev->invoice_close) {
-				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
+				echo '<button class="btn btn-primary osave">Voorbeeld</button>&nbsp;';
 			} else if (!$prev) {
-				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
+				echo '<button class="btn btn-primary osave">Voorbeeld</button>&nbsp;';
 			}
 		}
 		?>
@@ -2139,9 +2139,9 @@ $type = ProjectType::find($project->type_id);
 				if (!$project->project_close) {
 					$prev = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->orderBy('priority', 'desc')->first();
 					if ($prev && $prev->invoice_close) {
-						echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
+						echo '<button class="btn btn-primary osave">Voorbeeld</button>&nbsp;';
 					} else if (!$prev) {
-						echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
+						echo '<button class="btn btn-primary osave">Voorbeeld</button>&nbsp;';
 					}
 				}
 				?>
