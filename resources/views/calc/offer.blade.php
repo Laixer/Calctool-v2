@@ -326,13 +326,13 @@ $type = ProjectType::find($project->type_id);
 		<?php if (!$offer_last->offer_finish) { ?>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
-		<button class="btn btn-primary osave">Bekijk in PDF</button>
+		<button class="btn btn-primary osave">Voorbeeld</button>
 		<?php } ?>
 		<?php } else { ?>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
 		@if (CalculationEndresult::totalProject($project))
-		<button class="btn btn-primary osave">Bekijk in PDF</button>
+		<button class="btn btn-primary osave">Voorbeeld</button>
 		@endif
 		<?php } ?>
 		<?php } ?>
@@ -1536,13 +1536,13 @@ $type = ProjectType::find($project->type_id);
 						<?php if (!$offer_last->offer_finish) { ?>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
-						<button class="btn btn-primary osave">Bekijk in PDF</button>
+						<button class="btn btn-primary osave">Voorbeeld</button>
 						<?php } ?>
 						<?php }else{ ?>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
 						@if (CalculationEndresult::totalProject($project))
-						<button class="btn btn-primary osave">Bekijk in PDF</button>
+						<button class="btn btn-primary osave">Voorbeeld</button>
 						@endif
 						<?php } ?>
 						<?php } ?>
