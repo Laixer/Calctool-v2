@@ -32,7 +32,6 @@ if ($offer_last && $offer_last->offer_finish)
 	<a href="/project-{{ $project->id }}/edit" {!! $page=='project' ? 'class="current"' : '' !!} >Project</a>
 	<a href="/more/project-{{ $project->id }}" {!! $page=='more' ? 'class="current"' : ''!!} >Regie</a>
 	<a href="/invoice/project-{{ $project->id }}" {!! $page=='invoice' ? 'class="current"' : ''!!} >Factuur</a>
-	<a href="/result/project-{{ $project->id }}" {!! $page=='result' ? 'class="current"' : '' !!} >Resultaat</a>
 </div>
 
 <?php
