@@ -16,7 +16,6 @@ use \Calctool\Models\Detail;
 use \Calctool\Models\BlancRow;
 use \Calctool\Models\Tax;
 use \Calctool\Calculus\EstimateEndresult;
-//use \Calctool\Calculus\CalculationEndresult;
 use \Calctool\Calculus\SetEstimateCalculationEndresult;
 use \Calctool\Calculus\MoreEndresult;
 use \Calctool\Calculus\LessEndresult;
@@ -373,6 +372,7 @@ $type = ProjectType::find($project->type_id);
 						      </div>
 						    </div>
 						  </div>
+						  @if($type->type_name != 'blanco offerte & factuur')
 						   <div class="form-group">
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
@@ -411,6 +411,7 @@ $type = ProjectType::find($project->type_id);
 						      </div>
 						    </div>
 						  </div>
+						  @endif
 
 					</div>
 				</div>
