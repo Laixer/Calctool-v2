@@ -26,7 +26,7 @@ class MoreEndresult {
 				// $count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
 				// if (!$count)
 				if (!$activity->use_timesheet)
-					$total += MoreLabor::where('activity_id','=',$activity->id)->sum('amount');
+					$total += MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->sum('amount');
 				else
 					$total += MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->sum('amount');
 			}
@@ -47,7 +47,7 @@ class MoreEndresult {
 				// $count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
 				// if (!$count)
 				if (!$activity->use_timesheet)
-					$total += MoreLabor::where('activity_id','=',$activity->id)->sum('amount');
+					$total += MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->sum('amount');
 				else
 					$total += MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->sum('amount');
 			}
@@ -68,7 +68,7 @@ class MoreEndresult {
 				//$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
 				//if (!$count)
 				if (!$activity->use_timesheet)
-					$total += MoreLabor::where('activity_id','=',$activity->id)->sum('amount');
+					$total += MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->sum('amount');
 				else
 					$total += MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->sum('amount');
 			}
@@ -89,7 +89,7 @@ class MoreEndresult {
 				// $count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
 				// if (!$count)
 				if (!$activity->use_timesheet)
-					 $rows = MoreLabor::where('activity_id','=',$activity->id)->get();
+					 $rows = MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->get();
 				 else
 				  $rows = MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->get();
 				foreach ($rows as $row)
@@ -114,7 +114,7 @@ class MoreEndresult {
 				// $count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
 				// if (!$count)
 				if (!$activity->use_timesheet)
-					 $rows = MoreLabor::where('activity_id','=',$activity->id)->get();
+					 $rows = MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->get();
 				 else
 				  $rows = MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->get();
 				foreach ($rows as $row)
@@ -139,7 +139,7 @@ class MoreEndresult {
 				//$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
 				//if (!$count)
 				if (!$activity->use_timesheet)
-					 $rows = MoreLabor::where('activity_id','=',$activity->id)->get();
+					 $rows = MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->get();
 				 else
 				  $rows = MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->get();
 				foreach ($rows as $row)
