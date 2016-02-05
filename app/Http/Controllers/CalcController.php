@@ -82,12 +82,15 @@ class CalcController extends Controller {
 	public function getMore(Request $request, $projectid)
 	{
 		$project = Project::find($projectid);
+		$type = ProjectType::find($project->type_id);
 		if ($project) {
 			if ($project->project_close)
 				return response()->view('calc.more_closed');
-			$invoice_end = Invoice::where('offer_id','=', Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first()->id)->where('isclose','=',true)->first();
-			if ($invoice_end && $invoice_end->invoice_close)
-				return response()->view('calc.more_closed');
+			if ($type->type_name != 'regie') {
+				$invoice_end = Invoice::where('offer_id','=', Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first()->id)->where('isclose','=',true)->first();
+				if ($invoice_end && $invoice_end->invoice_close)
+					return response()->view('calc.more_closed');
+			}
 		}
 		return response()->view('calc.more');
 	}

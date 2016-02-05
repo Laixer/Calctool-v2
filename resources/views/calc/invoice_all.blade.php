@@ -188,6 +188,13 @@ if (!$project || !$project->isOwner()) {
 				</div>
 			</div>
 
+			@if (!ResultEndresult::totalProject($project))
+			<div class="alert alert-warning">
+				<i class="fa fa-fa fa-info-circle"></i>
+				Facturen kunnen pas worden gemaakt wanneer het project waarde bevat
+			</div>
+			@else
+
 			<h2><strong>Factuurbeheer</strong></h2>
 			<div class="white-row">
 			<table class="table table-striped">
@@ -303,6 +310,7 @@ if (!$project || !$project->isOwner()) {
 			</div>
 			@endif
 		</div>
+		@endif
 		</div>
 
 	</section>

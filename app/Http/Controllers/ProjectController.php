@@ -5,8 +5,14 @@ namespace Calctool\Http\Controllers;
 use Illuminate\Http\Request;
 
 use \Calctool\Models\Project;
+use \Calctool\Models\Offer;
+use \Calctool\Models\Invoice;
+use \Calctool\Models\ProjectType;
 use \Calctool\Models\Resource;
+use \Calctool\Models\Relation;
+use \Calctool\Models\Contact;
 use \Calctool\Models\ProjectShare;
+use \Calctool\Http\Controllers\InvoiceController;
 
 use \Auth;
 
@@ -48,6 +54,7 @@ class ProjectController extends Controller {
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric'),
 			'contractor' => array('required','numeric'),
+			'type' => array('required'),
 			'hour_rate' => array('required','regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
 			'more_hour_rate' => array('required','regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
 			'profit_material_1' => array('required','numeric','between:0,200'),
@@ -94,6 +101,36 @@ class ProjectController extends Controller {
 		$project->client_id = $request->input('contractor');
 
 		$project->save();
+
+		$type = ProjectType::find($project->type_id);
+		if ($type->type_name == 'regie') {
+			$relation = Relation::find($project->client_id);
+			$relation_self = Relation::find(Auth::user()->self_id);
+			$contact = Contact::where('relation_id','=', $relation->id)->first();
+			$contact_self = Contact::where('relation_id','=', $relation_self->id)->first();
+
+			$offer = new Offer;
+			$offer->to_contact_id = $contact->id;
+			$offer->from_contact_id = $contact_self->id;
+			$offer->offer_code = 'REGIE';
+			$offer->auto_email_reminder = false;
+			$offer->deliver_id = 1;
+			$offer->valid_id = 1;
+			$offer->offer_finish = date('Y-m-d');
+			$offer->project_id = $project->id;;
+			$offer->offer_total = 0;
+			$offer->save();
+
+			$invoice = new Invoice;
+			$invoice->priority = 0;
+			$invoice->invoice_code = InvoiceController::getInvoiceCodeConcept($project->id);
+			$invoice->payment_condition = 30;
+			$invoice->offer_id = $offer->id;
+			$invoice->to_contact_id = $contact->id;
+			$invoice->from_contact_id = $contact_self->id;
+			$invoice->isclose = true;
+			$invoice->save();
+		}
 
 		$log = new \Calctool\Models\Audit;
 		$log->ip = \Calctool::remoteAddr();

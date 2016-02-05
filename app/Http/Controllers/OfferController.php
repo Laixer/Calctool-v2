@@ -130,7 +130,6 @@ class OfferController extends Controller {
 
 	public function doOfferClose(Request $request)
 	{
-		
 		$this->validate($request, [
 			'date' => array('required'),
 			'offer' => array('required','integer'),

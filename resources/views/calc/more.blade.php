@@ -22,6 +22,9 @@ $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner())
 	$common_access_error = true;
+
+$type = ProjectType::find($project->type_id);
+
 ?>
 
 @extends('layout.master')
@@ -547,7 +550,7 @@ var n = this,
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h4 class="modal-title" id="myModalLabel">Materialen</h4>
+				<h4 class="modal-title" id="myModalLabel">{{ $type->type_name == 'regie' ? 'Regie' : 'Materialen' }}</h4>
 			</div>
 
 			<div class="modal-body">
@@ -615,24 +618,24 @@ var n = this,
 
 		@include('calc.wizard', array('page' => 'more'))
 
-			<h2><strong>Meerwerk</strong> <strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u meerwerk op basis van regie toevoegen bestemd voor op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h2>
+			<h2><strong>{{ $type->type_name == 'regie' ? 'Regie' : 'Materialen' }}</strong> <strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u meerwerk op basis van regie toevoegen bestemd voor op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h2>
 
 			<div class="tabs nomargin">
 
 				<ul class="nav nav-tabs">
 					<li id="tab-calculate">
 						<a href="#calculate" data-toggle="tab">
-							<i class="fa fa-list"></i> Calculeren Meerwerk
+							<i class="fa fa-list"></i> Calculeren {{ $type->type_name == 'regie' ? 'Regie' : 'Materialen' }}
 						</a>
 					</li>
 					<li id="tab-summary">
 						<a href="#summary" data-toggle="tab">
-							<i class="fa fa-align-justify"></i> Uittrekstaat Meerwerk
+							<i class="fa fa-align-justify"></i> Uittrekstaat {{ $type->type_name == 'regie' ? 'Regie' : 'Materialen' }}
 						</a>
 					</li>
 					<li id="tab-endresult">
 						<a href="#endresult" data-toggle="tab">
-							<i class="fa fa-check-circle-o"></i> Eindresultaat Meerwerk
+							<i class="fa fa-check-circle-o"></i> Eindresultaat {{ $type->type_name == 'regie' ? 'Regie' : 'Materialen' }}
 						</a>
 					</li>
 				</ul>
