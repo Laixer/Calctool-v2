@@ -3,9 +3,11 @@
 namespace Calctool\Calculus;
 
 use \Calctool\Models\Invoice;
+use \Calctool\Calculus\BlancRowsEndresult;
 
 /*
  * Eindresultaat
+
  */
 class InvoiceTerm {
 
@@ -204,6 +206,8 @@ class InvoiceTerm {
 		$total += InvoiceTerm::subconMaterialBalanceTax1($project);
 		$total += InvoiceTerm::subconEquipmentBalanceTax1($project);
 
+		$total += BlancRowsEndresult::rowTax1Amount($project);
+
 		return $total;
 	}
 
@@ -218,6 +222,8 @@ class InvoiceTerm {
 		$total += InvoiceTerm::subconMaterialBalanceTax2($project);
 		$total += InvoiceTerm::subconEquipmentBalanceTax2($project);
 
+		$total += BlancRowsEndresult::rowTax2Amount($project);
+
 		return $total;
 	}
 
@@ -231,6 +237,8 @@ class InvoiceTerm {
 		$total += InvoiceTerm::subconLaborBalanceTax3($project);
 		$total += InvoiceTerm::subconMaterialBalanceTax3($project);
 		$total += InvoiceTerm::subconEquipmentBalanceTax3($project);
+
+		$total += BlancRowsEndresult::rowTax3Amount($project);
 
 		return $total;
 	}

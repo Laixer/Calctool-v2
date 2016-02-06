@@ -2,7 +2,9 @@
 
 use \Calctool\Models\Project;
 use \Calctool\Models\Offer;
+use \Calctool\Models\ProjectType;
 use \Calctool\Calculus\CalculationEndresult;
+
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
@@ -11,6 +13,8 @@ if (!$project || !$project->isOwner()) {
 } else {
 	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 }
+
+// $type = ProjectType::find($project->type_id);
 ?>
 
 @extends('layout.master')

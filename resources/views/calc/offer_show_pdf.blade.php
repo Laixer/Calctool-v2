@@ -160,9 +160,6 @@ $(document).ready(function() {
 		<div class="pull-right">
 			<?php if (!$project->project_close && !$offer->offer_finish) { ?>
 			@if ($offer_last->id == $offer->id && !$offer->offer_finish)
-			<a href="#" data-toggle="modal" data-target="#confirmModal" class="btn btn-primary">Opdracht bevestigen</a>
-			<a href="/offer/project-{{ $project->id }}" class="btn btn-primary">Bewerk</a>
-			@endif
 			<div class="btn-group" role="group">
 			  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Versturen&nbsp;&nbsp;<span class="caret"></span></button>
 			  <ul class="dropdown-menu">
@@ -171,6 +168,9 @@ $(document).ready(function() {
 			    <li><a href="javascript:void(0);" id="sendpost">Door calculatieTool.com</a></li>
 			  </ul>
 			</div>
+			<a href="/offer/project-{{ $project->id }}" class="btn btn-primary">Bewerken</a>
+			<a href="#" data-toggle="modal" data-target="#confirmModal" class="btn btn-primary">Opdracht bevestigen</a>
+			@endif
 			<?php } else { ?>
 			<a href="/res-{{ $res->id }}/download" class="btn btn-primary">Download PDF</a>
 			<?php } ?>
@@ -186,9 +186,6 @@ $(document).ready(function() {
 				<div class="padding20 pull-right">
 					<?php if (!$project->project_close && !$offer->offer_finish) { ?>
 					@if ($offer_last->id == $offer->id && !$offer->offer_finish)
-					<a href="#" data-toggle="modal" data-target="#confirmModal" class="btn btn-primary">Opdracht bevestigen</a>
-					<a href="/offer/project-{{ $project->id }}" class="btn btn-primary">Bewerk</a>
-					@endif
 					<div class="btn-group" role="group">
 					  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Versturen&nbsp;&nbsp;<span class="caret"></span></button>
 					  <ul class="dropdown-menu">
@@ -197,6 +194,9 @@ $(document).ready(function() {
 					    <li><a href="javascript:void(0);" id="sendpost">Door calculatieTool.com</a></li>
 					  </ul>
 					 </div>
+					<a href="/offer/project-{{ $project->id }}" class="btn btn-primary">Bewerken</a>
+					<a href="#" data-toggle="modal" data-target="#confirmModal" class="btn btn-primary">Opdracht bevestigen</a>
+					@endif
 					<?php } else { ?>
 					<a href="/res-{{ $res->id }}/download" class="btn btn-primary">Download PDF</a>
 					<?php } ?>

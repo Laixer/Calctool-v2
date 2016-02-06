@@ -217,13 +217,13 @@ if (!$project || !$project->isOwner()) {
 			$next = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->where('priority','>',$invoice->priority)->orderBy('priority')->first();
 			$end = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',true)->first();
 			if ($prev && $prev->invoice_close && $next && !$next->invoice_close) {
-				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
+				echo '<button class="btn btn-primary osave">Voorbeeld</button>&nbsp;';
 			} else if (!$prev && $next && !$next->invoice_close) {
-				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
+				echo '<button class="btn btn-primary osave">Voorbeeld</button>&nbsp;';
 			} else if (!$prev && !$next) {
-				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
+				echo '<button class="btn btn-primary osave">Voorbeeld</button>&nbsp;';
 			} else if ($prev && $prev->invoice_close && $end && !$end->invoice_close) {
-				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
+				echo '<button class="btn btn-primary osave">Voorbeeld</button>&nbsp;';
 			}
 		}
 		?>
@@ -478,11 +478,11 @@ if (!$project || !$project->isOwner()) {
 							$next = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->where('priority','>',$invoice->priority)->orderBy('priority')->first();
 							$end = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',true)->first();
 							if ($prev && $prev->invoice_close && $next && !$next->invoice_close) {
-								echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
+								echo '<button class="btn btn-primary osave">Voorbeeld</button>&nbsp;';
 							} else if (!$prev && $next && !$next->invoice_close) {
-								echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
+								echo '<button class="btn btn-primary osave">Voorbeeld</button>&nbsp;';
 							} else if ($prev && $prev->invoice_close && $end && !$end->invoice_close) {
-								echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
+								echo '<button class="btn btn-primary osave">Voorbeeld</button>&nbsp;';
 							}
 						}
 						?>

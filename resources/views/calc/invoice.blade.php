@@ -13,8 +13,9 @@ use \Calctool\Models\InvoiceVersion;
 use \Calctool\Models\Resource;
 use \Calctool\Models\ProjectType;
 use \Calctool\Models\Detail;
+use \Calctool\Models\BlancRow;
+use \Calctool\Models\Tax;
 use \Calctool\Calculus\EstimateEndresult;
-//use \Calctool\Calculus\CalculationEndresult;
 use \Calctool\Calculus\SetEstimateCalculationEndresult;
 use \Calctool\Calculus\MoreEndresult;
 use \Calctool\Calculus\LessEndresult;
@@ -23,6 +24,7 @@ use \Calctool\Calculus\CalculationOverview;
 use \Calctool\Calculus\EstimateOverview;
 use \Calctool\Calculus\MoreOverview;
 use \Calctool\Calculus\LessOverview;
+use \Calctool\Calculus\BlancRowsEndresult;
 use \Calctool\Http\Controllers\OfferController;
 use \Calctool\Http\Controllers\InvoiceController;
 use \Calctool\Calculus\CalculationLabor;
@@ -40,6 +42,8 @@ if (!$project || !$project->isOwner()) {
 	$invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 	$invoice_version_cnt = InvoiceVersion::where('invoice_id', $invoice->id)->count();
 }
+
+$type = ProjectType::find($project->type_id);
 ?>
 
 @extends('layout.master')
@@ -243,6 +247,43 @@ if (!$project || !$project->isOwner()) {
 		@if ($invoice_last && $invoice_last->invoice_make)
 		$('.invdate').text("{{ date('d-m-Y', strtotime($offer_last->invoice_make)) }}");
 		@endif
+
+
+
+
+		@if ($offer_last && $offer_last->offer_make)
+		$('.offdate').text("{{ date('d-m-Y', strtotime($offer_last->offer_make)) }}");
+
+			@if (!$offer_last->include_tax)
+				$("[name='include-tax']").bootstrapSwitch('toggleState');
+			@endif
+
+			@if (!$offer_last->only_totals)
+				$("[name='only-totals']").bootstrapSwitch('toggleState');
+			@endif
+
+			@if ($offer_last->seperate_subcon)
+				$("[name='seperate-subcon']").bootstrapSwitch('toggleState');
+			@endif
+
+			@if ($offer_last->display_worktotals)
+				$("[name='display-worktotals']").bootstrapSwitch('toggleState');
+			@endif
+
+			@if ($offer_last->display_specification)
+				$("[name='display-specification']").bootstrapSwitch('toggleState');
+			@endif
+
+			@if ($offer_last->display_description)
+				$("[name='display-description']").bootstrapSwitch('toggleState');
+			@endif
+		@endif
+
+
+
+
+
+
 	});
 </script>
 <div id="wrapper">
@@ -275,9 +316,9 @@ if (!$project || !$project->isOwner()) {
 		if (!$project->project_close) {
 			$prev = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->orderBy('priority', 'desc')->first();
 			if ($prev && $prev->invoice_close) {
-				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
+				echo '<button class="btn btn-primary osave">Voorbeeld</button>&nbsp;';
 			} else if (!$prev) {
-				echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
+				echo '<button class="btn btn-primary osave">Voorbeeld</button>&nbsp;';
 			}
 		}
 		?>
@@ -331,6 +372,7 @@ if (!$project || !$project->isOwner()) {
 						      </div>
 						    </div>
 						  </div>
+						  @if($type->type_name != 'blanco offerte & factuur')
 						   <div class="form-group">
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
@@ -369,6 +411,7 @@ if (!$project || !$project->isOwner()) {
 						      </div>
 						    </div>
 						  </div>
+						  @endif
 
 					</div>
 				</div>
@@ -772,6 +815,7 @@ if (!$project || !$project->isOwner()) {
 		<?#--CONTENT, TOTAL START--?>
 		<div class="show-totals">
 			<h4 class="only-total">Specificatie factuur</h4>
+			@if($type->type_name != 'blanco offerte & factuur')
 			<table class="table table-striped hide-btw1">
 				<thead>
 					<tr>
@@ -889,6 +933,32 @@ if (!$project || !$project->isOwner()) {
 					</tr>
 				</tbody>
 			</table>
+			@else
+			<table class="table table-striped hide-btw1">
+				<thead>
+					<tr>
+						<th class="col-md-4">Omschrijving</th>
+						<th class="col-md-2">€ / Eenh (excl. BTW)</th>
+						<th class="col-md-1">Aantal</th>
+						<th class="col-md-1">Totaal</th>
+						<th class="col-md-1">BTW</th>
+						<th class="col-md-1">BTW bedrag</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (BlancRow::where('project_id','=', $project->id)->get() as $row)
+					<tr>
+						<td class="col-md-4">{{ $row->description }}</td>
+						<td class="col-md-2">{{ '&euro; '.number_format($row->rate, 2, ",",".") }}</td>
+						<td class="col-md-1">{{ '&euro; '.number_format($row->amount, 2, ",",".") }}</td>
+						<td class="col-md-1">{{ '&euro; '.number_format($row->rate * $row->amount, 2, ",",".") }}</td>
+						<td class="col-md-1">{{ Tax::find($row->tax_id)->tax_rate }}%</td>
+						<td class="col-md-1">{{ '&euro; '.number_format(($row->rate * $row->amount/100) * Tax::find($row->tax_id)->tax_rate, 2, ",",".") }}</td>
+					</tr>
+					@endforeach
+				</tbody>
+			</table>
+			@endif
 			<h4>Totalen Factuur</h4>
 			<table class="table table-striped hide-btw2">
 				<thead>
@@ -911,13 +981,13 @@ if (!$project || !$project->isOwner()) {
 					<tr>
 						<td class="col-md-6">BTW bedrag 21%</td>
 						<td class="col-md-2">&nbsp;</td>
-						<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax1($project)+ResultEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
+						<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax1($project)+ResultEndresult::totalSubcontractingTax1($project)+BlancRowsEndresult::rowTax1AmountTax($project), 2, ",",".") }}</td>
 						<td class="col-md-2">&nbsp;</td>
 					</tr>
 					<tr>
 						<td class="col-md-6">BTW bedrag 6%</td>
 						<td class="col-md-2">&nbsp;</td>
-						<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax2($project)+ResultEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
+						<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax2($project)+ResultEndresult::totalSubcontractingTax2($project)+BlancRowsEndresult::rowTax2AmountTax($project), 2, ",",".") }}</td>
 						<td class="col-md-2">&nbsp;</td>
 					</tr>
 					@endif
@@ -931,7 +1001,7 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-6"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
 						<td class="col-md-2">&nbsp;</td>
 						<td class="col-md-2">&nbsp;</td>
-						<td class="col-md-2"><strong>{{ '&euro; '.number_format(ResultEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
+						<td class="col-md-2"><strong>{{ '&euro; '.number_format(ResultEndresult::superTotalProject($project)+BlancRowsEndresult::rowTax1AmountTax($project)+BlancRowsEndresult::rowTax2AmountTax($project), 2, ",",".") }}</strong></td>
 					</tr>
 				</tbody>
 			</table>
@@ -2069,9 +2139,9 @@ if (!$project || !$project->isOwner()) {
 				if (!$project->project_close) {
 					$prev = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->orderBy('priority', 'desc')->first();
 					if ($prev && $prev->invoice_close) {
-						echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
+						echo '<button class="btn btn-primary osave">Voorbeeld</button>&nbsp;';
 					} else if (!$prev) {
-						echo '<button class="btn btn-primary osave">Opslaan</button>&nbsp;';
+						echo '<button class="btn btn-primary osave">Voorbeeld</button>&nbsp;';
 					}
 				}
 				?>

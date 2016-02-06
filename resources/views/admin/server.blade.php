@@ -81,7 +81,7 @@ if (File::exists('../.revision')) {
 				</div>
 				<div class="row">
 					<div class="col-md-2">Versie</div>
-					<div class="col-md-10">{{ $_ENV['CT_VERSION'] }}</div>
+					<div class="col-md-10">{{ config('version.describe') }}</div>
 				</div>
 				<div class="row">
 					<div class="col-md-2">Revisie</div>

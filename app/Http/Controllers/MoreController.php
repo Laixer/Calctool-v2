@@ -392,7 +392,7 @@ class MoreController extends Controller {
 			$_activity = Activity::find($_labor->activity_id);
 			$_chapter = Chapter::find($_activity->chapter_id);
 			$_project = Project::find($_chapter->project_id);
-			$rate = $_project->hour_rate;
+			$rate = $_project->hour_rate_more;
 		} else {
 			$rate = str_replace(',', '.', str_replace('.', '' , $rate));
 		}

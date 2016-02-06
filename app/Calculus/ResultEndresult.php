@@ -9,6 +9,7 @@ use \Calctool\Models\PurchaseKind;
 use \Calctool\Models\Timesheet;
 use \Calctool\Models\TimesheetKind;
 
+use \Calctool\Calculus\BlancRowsEndresult;
 
 /*
  * Eindresultaat
@@ -274,7 +275,7 @@ class ResultEndresult {
 	}
 
 	public static function totalProject($project) {
-		return ResultEndresult::totalContracting($project) + ResultEndresult::totalSubcontracting($project);
+		return ResultEndresult::totalContracting($project) + ResultEndresult::totalSubcontracting($project) + BlancRowsEndresult::totalProject($project);
 	}
 
 	public static function totalContractingTax1($project) {

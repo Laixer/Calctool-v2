@@ -37,8 +37,8 @@ class QuickstartController extends Controller {
 			/* Company */
 			'company_type' => array('required_if:relationkind,zakelijk','numeric'),
 			'company_name' => array('required_if:relationkind,zakelijk','max:50'),
-			'kvk' => array('numeric','min:8'),
-			'btw' => array('alpha_num','min:14'),
+			// 'kvk' => array('numeric','min:8'),
+			// 'btw' => array('alpha_num','min:14'),
 			'street' => array('required','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
@@ -62,8 +62,8 @@ class QuickstartController extends Controller {
 		$relation->kind_id = RelationKind::where('kind_name','=','zakelijk')->first()->id;
 		$relation->company_name = $request->get('company_name');
 		$relation->type_id = $request->get('company_type');
-		$relation->kvk = $request->get('kvk');
-		$relation->btw = $request->get('btw');
+		// $relation->kvk = $request->get('kvk');
+		// $relation->btw = $request->get('btw');
 		$relation->email = $request->get('email');
 
 		/* Adress */

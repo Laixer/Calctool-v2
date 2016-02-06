@@ -11,6 +11,9 @@ use \Calctool\Models\Invoice;
 use \Calctool\Models\Offer;
 use \Calctool\Models\Detail;
 use \Calctool\Models\ProjectType;
+use \Calctool\Models\Resource;
+use \Calctool\Models\BlancRow;
+use \Calctool\Models\Tax;
 use \Calctool\Calculus\EstimateEndresult;
 use \Calctool\Calculus\MoreEndresult;
 use \Calctool\Calculus\LessEndresult;
@@ -19,6 +22,7 @@ use \Calctool\Calculus\CalculationOverview;
 use \Calctool\Calculus\EstimateOverview;
 use \Calctool\Calculus\LessOverview;
 use \Calctool\Calculus\MoreOverview;
+use \Calctool\Calculus\BlancRowsEndresult;
 use \Calctool\Http\Controllers\OfferController;
 
 $_invoice = Invoice::find($invoice->invoice_id);
@@ -45,6 +49,8 @@ $display_specification = $invoice->display_specification; //Hoofdstukken en werk
 $display_description = $invoice->display_description;  //Omschrijving werkzaamheden weergeven
 
 $term=0;
+
+$type = ProjectType::find($project->type_id);
 /*erm=0;
 $cnt = Invoice::where('offer_id','=', $invoice->offer_id)->count();
 if ($cnt>1)
@@ -100,10 +106,36 @@ if ($cnt>1)
    <div class="openingtext">Geachte</div>
    <div class="openingtext">{{ ($invoice ? $invoice->description : '') }}</div>
 
-    @if ($only_totals)
+    @if (!$only_totals)
     <?#--TOTAL START--?>
 
     <h1 class="name">Specificatie factuur</h1>
+    @if($type->type_name == 'blanco offerte & factuur')
+    <table border="0" cellspacing="0" cellpadding="0">
+    <thead>
+      <tr style="page-break-after: always;">
+      <th style="width: 147px" align="left" class="qty">Omschrijving</th>
+      <th style="width: 60px" align="left" class="qty">€ / Eenh (excl. BTW)</th>
+      <th style="width: 119px" align="left" class="qty">Aantal</th>
+      <th style="width: 70px" align="left" class="qty">Totaal</th>
+      <th style="width: 80px" align="left" class="qty">BTW</th>
+      <th style="width: 119px" align="left" class="qty">BTW bedrag</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (BlancRow::where('project_id','=', $project->id)->get() as $row)
+      <tr style="page-break-after: always;">
+      <td class="qty">{{ $row->description }}</td>
+      <td class="qty">{{ '&euro; '.number_format($row->rate, 2, ",",".") }}</td>
+      <td class="qty">{{ '&euro; '.number_format($row->amount, 2, ",",".") }}</td>
+      <td class="qty">{{ '&euro; '.number_format($row->rate * $row->amount, 2, ",",".") }}</td>
+      <td class="qty">{{ Tax::find($row->tax_id)->tax_rate }}%</td>
+      <td class="qty">{{ '&euro; '.number_format(($row->rate * $row->amount/100) * Tax::find($row->tax_id)->tax_rate, 2, ",",".") }}</td>
+      </tr>
+      @endforeach
+    </tbody>
+    </table>
+    @else
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
@@ -220,6 +252,7 @@ if ($cnt>1)
         </tr>
       </tbody>
     </table>
+    @endif
 
     <h1 class="name">Totalen Factuur</h1>
     <table border="0" cellspacing="0" cellpadding="0">
@@ -242,19 +275,19 @@ if ($cnt>1)
         <tr style="page-break-after: always;">
           <td class="qty">BTW bedrag calculatie belast met 21%</td>
           <td class="qty">&nbsp;</td>
-          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax1($project)+ResultEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
+          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax1($project)+ResultEndresult::totalSubcontractingTax1($project)+BlancRowsEndresult::rowTax1AmountTax($project), 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
         </tr>
         <tr style="page-break-after: always;">
           <td class="qty">BTW bedrag calculatie belast met 6%</td>
           <td class="qty">&nbsp;</td>
-          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax2($project)+ResultEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
+          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax2($project)+ResultEndresult::totalSubcontractingTax2($project)+BlancRowsEndresult::rowTax2AmountTax($project), 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
         </tr>
         <tr style="page-break-after: always;">
           <td class="qty">BTW bedrag calculatie belast met 6%</td>
           <td class="qty">&nbsp;</td>
-          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax2($project)+ResultEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
+          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax2($project)+ResultEndresult::totalSubcontractingTax2($project)+BlancRowsEndresult::rowTax1AmountTax($project)+BlancRowsEndresult::rowTax2AmountTax($project), 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
         </tr>
         @endif
@@ -262,13 +295,13 @@ if ($cnt>1)
           <td class="qty">Te factureren BTW bedrag</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
-          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalProjectTax($project), 2, ",",".") }}</td>
+          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalProjectTax($project)+BlancRowsEndresult::rowTax1AmountTax($project)+BlancRowsEndresult::rowTax2AmountTax($project), 2, ",",".") }}</td>
         </tr>
         <tr style="page-break-after: always;">
           <td class="qty"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
-          <td class="qty"><strong>{{ '&euro; '.number_format(ResultEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
+          <td class="qty"><strong>{{ '&euro; '.number_format(ResultEndresult::superTotalProject($project)+BlancRowsEndresult::rowTax1AmountTax($project)+BlancRowsEndresult::rowTax2AmountTax($project), 2, ",",".") }}</strong></td>
         </tr>
       </tbody>
     </table>
@@ -423,7 +456,7 @@ if ($cnt>1)
       <div class="closingtext">{{ ($invoice ? $invoice->closure : '') }}</div>
 
       <h1 class="name">Bepalingen</h1>
-      <div class="statements">
+      <div class="terms">
         <li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
       </div>
       <div class="signing">Met vriendelijke groet,</div>
@@ -884,7 +917,7 @@ if ($cnt>1)
     <div class="closingtext">{{ ($invoice ? $invoice->closure : '') }}</div>
 
     <h1 class="name">Bepalingen</h1>
-    <div class="statements">
+    <div class="terms">
       <li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
     </div>
     <div class="signing">Met vriendelijke groet,</div>

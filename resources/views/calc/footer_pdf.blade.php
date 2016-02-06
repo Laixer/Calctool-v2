@@ -12,7 +12,7 @@ if ($relation_self) {
 			<div style="float: left;">
 				{{ $relation_self->company_name }} |
 				Rekeningnummer: {{ $relation_self->iban }} |
-				tnv.: {{ $relation_self->iban_name }} |
+				<!-- tnv.: {{ $relation_self->iban_name }} | -->
 				KVK: {{ $relation_self->kvk }} |
 				BTW: {{ $relation_self->btw }}
 			</div>
