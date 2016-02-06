@@ -184,7 +184,7 @@ class InvoiceController extends Controller {
 		} else {
 			$pdf = PDF::loadView('calc.invoice_term_pdf', ['invoice' => $invoice_version]);
 		}
-		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
+		$pdf->setOption('footer-html', url('/') . '/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
 		$pdf->save('user-content/'.$newname);
 
 		$resource = new Resource;
@@ -346,7 +346,7 @@ class InvoiceController extends Controller {
 		} else {
 			$pdf = PDF::loadView('calc.invoice_term_final_pdf', ['invoice' => $invoice]);
 		}
-		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
+		$pdf->setOption('footer-html', url('/') . '/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
 		$pdf->save('user-content/'.$newname);
 
 		$resource = new Resource;
