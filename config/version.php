@@ -13,6 +13,6 @@ return [
     |
     */
 
-    'describe' => 'v3.0.8',
+    'describe' => '0.2.3a-1300-gc762411',
 
 ];
