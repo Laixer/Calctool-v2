@@ -625,17 +625,17 @@ var n = this,
 				<ul class="nav nav-tabs">
 					<li id="tab-calculate">
 						<a href="#calculate" data-toggle="tab">
-							<i class="fa fa-list"></i> Calculeren {{ $type->type_name == 'regie' ? 'Regie' : 'Materialen' }}
+							<i class="fa fa-list"></i> Calculeren {{ $type->type_name == 'regie' ? 'Regie' : 'Meerwerk' }}
 						</a>
 					</li>
 					<li id="tab-summary">
 						<a href="#summary" data-toggle="tab">
-							<i class="fa fa-align-justify"></i> Uittrekstaat {{ $type->type_name == 'regie' ? 'Regie' : 'Materialen' }}
+							<i class="fa fa-align-justify"></i> Uittrekstaat {{ $type->type_name == 'regie' ? 'Regie' : 'Meerwerk' }}
 						</a>
 					</li>
 					<li id="tab-endresult">
 						<a href="#endresult" data-toggle="tab">
-							<i class="fa fa-check-circle-o"></i> Eindresultaat {{ $type->type_name == 'regie' ? 'Regie' : 'Materialen' }}
+							<i class="fa fa-check-circle-o"></i> Eindresultaat {{ $type->type_name == 'regie' ? 'Regie' : 'Meerwerk' }}
 						</a>
 					</li>
 				</ul>
