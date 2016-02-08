@@ -14,17 +14,17 @@
 Route::get('login', function(){
 	return view('auth.login');
 });
-Route::post('login', array('middleware' => 'guest', 'uses' => 'AuthController@doLogin'));
+Route::post('login', array('middleware' => 'guest', 'AuthController@doLogin'));
 Route::get('register', function(){
 	return view('auth.registration');
 });
-Route::post('register', array('middleware' => 'guest', 'as' => 'register', 'uses' => 'AuthController@doRegister'));
-Route::get('confirm/{api}/{token}', array('middleware' => 'guest', 'as' => 'register', 'uses' => 'AuthController@doActivate'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
-Route::post('password/reset', array('middleware' => 'guest', 'as' => 'reset', 'uses' => 'AuthController@doBlockPassword'));
+Route::post('register', array('middleware' => 'guest', 'AuthController@doRegister'));
+Route::get('confirm/{api}/{token}', array('middleware' => 'guest', 'AuthController@doActivate'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
+Route::post('password/reset', array('middleware' => 'guest', 'AuthController@doBlockPassword'));
 Route::get('password/{api}/{token}', function() {
 	return view('auth.password');
 })->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
-Route::post('password/{api}/{token}', array('middleware' => 'guest', 'as' => 'register', 'uses' => 'AuthController@doNewPassword'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
+Route::post('password/{api}/{token}', array('middleware' => 'guest', 'AuthController@doNewPassword'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
 
 Route::get('ex-project-overview/{token}', function() {
 	return view('user.client_page');
@@ -49,20 +49,20 @@ Route::get('privacy-policy', function() {
 
 Route::post('feedback', 'FeedbackController@send');
 
-Route::post('payment/webhook/', array('as' => 'payment.order', 'uses' => 'UserController@doPaymentUpdate'));
-Route::get('hidenextstep', array('uses' => 'AuthController@doHideNextStep'));
+Route::post('payment/webhook/', 'UserController@doPaymentUpdate');
+Route::get('hidenextstep', 'AuthController@doHideNextStep');
 
 Route::get('c4586v34674v4&vwasrt/footer_pdf', function() {
 	return view('calc.footer_pdf');
 });
 
-Route::group(array('middleware' => 'auth'), function()
+Route::group(['middleware' => 'auth'], function()
 {
 	/* Generic pages */
 	Route::get('/', function() {
 		return view('base.home');
 	});
-	Route::get('admin/switch/back', array('uses' => 'AdminController@getSwitchSessionBack'));
+	Route::get('admin/switch/back', 'AdminController@getSwitchSessionBack');
 	Route::get('logout', function() {
 		Auth::logout();
 		return redirect('login');
@@ -70,21 +70,21 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::get('result/project-{project_id}', function(){
 		return view('calc.result');
 	})->where('project_id', '[0-9]+');
-	Route::get('res-{resource_id}/download', array('uses' => 'ProjectController@downloadResource'))->where('resource_id', '[0-9]+');
+	Route::get('res-{resource_id}/download', 'ProjectController@downloadResource')->where('resource_id', '[0-9]+');
 	Route::get('myaccount', function() {
 		return view('user.myaccount');
 	});
 	Route::get('myaccount/telegram', function() {
 		return view('user.myaccount_telegram');
 	});
-	Route::get('myaccount/telegram/unchain', array('as' => 'account', 'uses' => 'UserController@getMyAccountTelegramUnchain'));
-	Route::get('myaccount/deactivate', array('uses' => 'UserController@getMyAccountDeactivate'));
-	Route::post('myaccount/telegram/update', array('as' => 'account', 'uses' => 'UserController@doMyAccountTelegramUpdate'));
-	Route::post('myaccount/updateuser', array('as' => 'account', 'uses' => 'UserController@doMyAccountUser'));
-	Route::post('myaccount/iban/new', array('as' => 'iban.update', 'uses' => 'UserController@doNewIban'));
-	Route::post('myaccount/security/update', array('as' => 'security.update', 'uses' => 'UserController@doUpdateSecurity'));
-	Route::post('myaccount/preferences/update', array('as' => 'preferences.update', 'uses' => 'UserController@doUpdatePreferences'));
-	Route::post('myaccount/notepad/save', array('uses' => 'UserController@doUpdateNotepad'));
+	Route::get('myaccount/telegram/unchain', 'UserController@getMyAccountTelegramUnchain');
+	Route::get('myaccount/deactivate', 'UserController@getMyAccountDeactivate');
+	Route::post('myaccount/telegram/update', 'UserController@doMyAccountTelegramUpdate');
+	Route::post('myaccount/updateuser', 'UserController@doMyAccountUser');
+	Route::post('myaccount/iban/new', 'UserController@doNewIban');
+	Route::post('myaccount/security/update', 'UserController@doUpdateSecurity');
+	Route::post('myaccount/preferences/update', 'UserController@doUpdatePreferences');
+	Route::post('myaccount/notepad/save', 'UserController@doUpdateNotepad');
 
 	Route::get('messagebox/message-{message}/read', 'MessageBoxController@doRead')->where('message', '[0-9]+');
 	Route::get('messagebox/message-{message}/delete', 'MessageBoxController@doDelete')->where('message', '[0-9]+');
@@ -94,7 +94,7 @@ Route::group(array('middleware' => 'auth'), function()
 	});
 
 	Route::get('payment', 'UserController@getPayment');
-	Route::get('payment/order/{token}', array('as' => 'security.update', 'uses' => 'UserController@getPaymentFinish'))->where('token', '[0-9a-z]{40}');
+	Route::get('payment/order/{token}', 'UserController@getPaymentFinish')->where('token', '[0-9a-z]{40}');
 	Route::post('payment/promocode', 'UserController@doCheckPromotionCode');
 
 	/* Actions by calculation */
@@ -301,71 +301,71 @@ Route::group(array('middleware' => 'auth'), function()
 	Route::post('material/element/new', array('uses' => 'MaterialController@doNewElement'));
 });
 
-Route::group(array('before' => 'admin'), function()
+Route::group(['before' => 'admin', 'prefix' => 'admin'], function()
 {
 	/* Admin */
-	Route::get('admin', function() {
+	Route::get('/', function() {
 		return view('admin.dashboard');
 	});
-	Route::get('admin/user/new', function() {
+	Route::get('user/new', function() {
 		return view('admin.new_user');
 	});
-	Route::post('admin/user/new', array('as' => 'user', 'uses' => 'AdminController@doNewUser'));
-	Route::get('admin/user', function() {
+	Route::post('user/new', array('as' => 'user', 'uses' => 'AdminController@doNewUser'));
+	Route::get('user', function() {
 		return view('admin.user');
 	});
-	Route::get('admin/user-{user_id}/edit', function() {
+	Route::get('user-{user_id}/edit', function() {
 		return view('admin.edit_user');
 	});
-	Route::get('admin/user-{user_id}/switch', array('as' => 'user', 'uses' => 'AdminController@getSwitchSession'));
-	Route::get('admin/user-{user_id}/demo', array('as' => 'user', 'uses' => 'AdminController@getDemoProject'));
-	Route::get('admin/user-{user_id}/validation', array('as' => 'user', 'uses' => 'AdminController@getValidationProject'));
-	Route::get('admin/user-{user_id}/stabu', array('as' => 'user', 'uses' => 'AdminController@getStabuProject'));
-	Route::get('admin/user-{user_id}/deblock', array('as' => 'user', 'uses' => 'AdminController@getSessionDeblock'));
-	Route::post('admin/user-{user_id}/edit', array('as' => 'user', 'uses' => 'AdminController@doUpdateUser'));
-	Route::get('admin/alert', function() {
+	Route::get('user-{user_id}/switch', array('as' => 'user', 'uses' => 'AdminController@getSwitchSession'));
+	Route::get('user-{user_id}/demo', array('as' => 'user', 'uses' => 'AdminController@getDemoProject'));
+	Route::get('user-{user_id}/validation', array('as' => 'user', 'uses' => 'AdminController@getValidationProject'));
+	Route::get('user-{user_id}/stabu', array('as' => 'user', 'uses' => 'AdminController@getStabuProject'));
+	Route::get('user-{user_id}/deblock', array('as' => 'user', 'uses' => 'AdminController@getSessionDeblock'));
+	Route::post('user-{user_id}/edit', array('as' => 'user', 'uses' => 'AdminController@doUpdateUser'));
+	Route::get('alert', function() {
 		return view('admin.alert');
 	});
-	Route::post('admin/alert/new', array('as' => 'user', 'uses' => 'AdminController@doNewAlert'));
-	Route::post('admin/alert/delete', array('as' => 'user', 'uses' => 'AdminController@doDeleteAlert'));
-	Route::get('admin/phpinfo', function() {
+	Route::post('alert/new', array('as' => 'user', 'uses' => 'AdminController@doNewAlert'));
+	Route::post('alert/delete', array('as' => 'user', 'uses' => 'AdminController@doDeleteAlert'));
+	Route::get('phpinfo', function() {
 		return view('admin.phpinfo');
 	});
-	Route::post('admin/transaction/{transcode}/refund', 'AdminController@doRefund');
-	Route::get('admin/payment', function() {
+	Route::post('transaction/{transcode}/refund', 'AdminController@doRefund');
+	Route::get('payment', function() {
 		return view('admin.transaction');
 	});
-	Route::get('admin/transaction/{transcode}', function() {
+	Route::get('transaction/{transcode}', function() {
 		return view('admin.transaction_code');
 	});
-	Route::get('admin/environment', function() {
+	Route::get('environment', function() {
 		return view('admin.server');
 	});
-	Route::get('admin/project', function() {
+	Route::get('project', function() {
 		return view('admin.project');
 	});
-	Route::get('admin/snailmail', function() {
+	Route::get('snailmail', function() {
 		return view('admin.snailmail');
 	});
-	Route::get('admin/message', function() {
+	Route::get('message', function() {
 		return view('admin.message');
 	});
-	Route::post('admin/message', 'AdminController@doSendNotification');
-	Route::post('admin/promo', 'AdminController@doNewPromotion');
-	Route::get('admin/promo/{id}/delete', 'AdminController@doDeletePromotion');
-	Route::get('admin/promo', function() {
+	Route::post('message', 'AdminController@doSendNotification');
+	Route::post('promo', 'AdminController@doNewPromotion');
+	Route::get('promo/{id}/delete', 'AdminController@doDeletePromotion');
+	Route::get('promo', function() {
 		return view('admin.promo');
 	});
-	Route::post('admin/snailmail/offer/done', 'AdminController@doOfferPostDone');
-	Route::post('admin/snailmail/invoice/done', 'AdminController@doInvoicePostDone');
-	Route::get('admin/resource', function() {
+	Route::post('snailmail/offer/done', 'AdminController@doOfferPostDone');
+	Route::post('snailmail/invoice/done', 'AdminController@doInvoicePostDone');
+	Route::get('resource', function() {
 		return view('admin.resource');
 	});
-	Route::post('admin/resource/delete', array('as' => 'user', 'uses' => 'AdminController@doDeleteResource'));
-	Route::get('admin/log', function() {
+	Route::post('resource/delete', array('as' => 'user', 'uses' => 'AdminController@doDeleteResource'));
+	Route::get('log', function() {
 		return view('admin.log');
 	});
-	Route::get('admin/log/truncate', array('as' => 'user', 'uses' => 'AdminController@doTruncateLog'));
+	Route::get('log/truncate', array('as' => 'user', 'uses' => 'AdminController@doTruncateLog'));
 });
 
 Route::any('telegram', function(){
