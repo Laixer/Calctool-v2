@@ -14,23 +14,26 @@
 Route::get('login', function(){
 	return view('auth.login');
 });
-Route::post('login', array('middleware' => 'guest', 'AuthController@doLogin'));
-Route::get('register', function(){
-	return view('auth.registration');
-});
-Route::post('register', array('middleware' => 'guest', 'AuthController@doRegister'));
-Route::get('confirm/{api}/{token}', array('middleware' => 'guest', 'AuthController@doActivate'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
-Route::post('password/reset', array('middleware' => 'guest', 'AuthController@doBlockPassword'));
-Route::get('password/{api}/{token}', function() {
-	return view('auth.password');
-})->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
-Route::post('password/{api}/{token}', array('middleware' => 'guest', 'AuthController@doNewPassword'))->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
 
-Route::get('ex-project-overview/{token}', function() {
-	return view('user.client_page');
-})->where('token', '[0-9a-z]{40}');
-Route::post('ex-project-overview/{token}/update', 'ClientController@doUpdateCommunication')->where('token', '[0-9a-z]{40}');
-Route::get('ex-project-overview/{token}/done', 'ClientController@doOfferAccept')->where('token', '[0-9a-z]{40}');
+Route::group(['middleware' => 'guest'], function() {
+	Route::get('register', function(){
+		return view('auth.registration');
+	});
+	Route::post('login', 'AuthController@doLogin');
+	Route::post('register', 'AuthController@doRegister');
+	Route::get('confirm/{api}/{token}', 'AuthController@doActivate')->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
+	Route::post('password/reset', 'AuthController@doBlockPassword');
+	Route::get('password/{api}/{token}', function() {
+		return view('auth.password');
+	})->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
+	Route::post('password/{api}/{token}', 'AuthController@doNewPassword')->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
+
+	Route::get('ex-project-overview/{token}', function() {
+		return view('user.client_page');
+	})->where('token', '[0-9a-z]{40}');
+	Route::post('ex-project-overview/{token}/update', 'ClientController@doUpdateCommunication')->where('token', '[0-9a-z]{40}');
+	Route::get('ex-project-overview/{token}/done', 'ClientController@doOfferAccept')->where('token', '[0-9a-z]{40}');
+});
 
 Route::get('api/v1', 'ApiController@getApiRoot');
 
