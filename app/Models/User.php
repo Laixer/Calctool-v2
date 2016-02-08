@@ -53,4 +53,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 			return null;
 	}
 
+	public function encodedName() {
+		return str_replace(' ', '_', strtolower($this->username));
+	}
+
 }

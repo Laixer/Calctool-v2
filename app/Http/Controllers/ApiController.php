@@ -19,6 +19,6 @@ class ApiController extends Controller {
 
 	public function getApiRoot()
 	{
-		return json_encode(['success' => 1, 'description' => 'API server ready', 'version' => 1]);
+		return response()->json(['success' => 1, 'description' => 'API server ready', 'version' => 1]);
 	}
 }

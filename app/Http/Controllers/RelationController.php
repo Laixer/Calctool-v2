@@ -13,6 +13,7 @@ use \Calctool\Models\Resource;
 
 use \Auth;
 use \Image;
+use \Storage;
 
 class RelationController extends Controller {
 
@@ -478,6 +479,7 @@ class RelationController extends Controller {
 
 			if ($request->hasFile('image')) {
 				$file = $request->file('image');
+				Storage::put(Auth::user()->encodedName() . '/user_logo.' . $file->getClientOriginalExtension(), file_get_contents($file->getRealPath()));
 				$newname = Auth::id().'-'.md5(mt_rand()).'.'.$file->getClientOriginalExtension();
 				$file->move('user-content', $newname);
 
