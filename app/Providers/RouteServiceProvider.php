@@ -26,19 +26,6 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-    	$router->filter('admin', function()
-    	{
-    		if (Auth::guest())
-    		{
-    			return guest('login');
-    		}
-
-    		if (!Auth::user()->isAdmin())
-    		{
-    			return view('generic.404', array('url' => Request::path()), 404);
-    		}
-    	});
-
         parent::boot($router);
     }
 

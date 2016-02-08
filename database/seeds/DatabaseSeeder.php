@@ -12,12 +12,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Model::unguard();
-
         $this->call(StaticSeeder::class);
         $this->call(WholesaleSeeder::class);
         $this->call(SystemSeeder::class);
-
-        Model::reguard();
     }
 }
