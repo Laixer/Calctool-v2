@@ -68,7 +68,7 @@ use \Calctool\Models\Wholesale;
 						<tr>
 							<th class="col-md-1">Datum</th>
 							<th class="col-md-2">Relatie</th>
-							<th class="col-md-1">Factuurbedrag</th>
+							<th class="col-md-1">Bedrag</th>
 							<th class="col-md-3">Project</th>
 							<th class="col-md-1">Soort</th>
 							<th class="col-md-3">Omschrijving</th>
