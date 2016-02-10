@@ -77,6 +77,11 @@ class ProjectController extends Controller {
 			return back()->withErrors($validator)->withInput($request->all());
 		}
 
+
+		if (!Relation::find(Auth::user()->self_id)) {
+			return back();
+		}
+
 		$project = new \Calctool\Models\Project;
 		$project->project_name = $request->input('name');
 		$project->address_street = $request->input('street');

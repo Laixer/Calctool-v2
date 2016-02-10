@@ -22,6 +22,13 @@ $(document).ready(function() {
         ]
     });
     $("[name='tax_reverse']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+    $('#type').change(function(){
+    	if (this.value==1) {
+    		$('.hide-regie').hide();
+    	} else {
+    		$('.hide-regie').show();
+    	}
+    })
 });
 
 </script>
@@ -171,8 +178,8 @@ $(document).ready(function() {
 					</div>
 				</div>
 
-				<h4>Financieel</h4>
-				<div class="tabs nomargin-top">
+				<h4 class="hide-regie">Financieel</h4>
+				<div class="tabs nomargin-top hide-regie">
 
 
 							<div class="row">
@@ -234,13 +241,13 @@ $(document).ready(function() {
 								</div>
 							</div>
 
-				</div>
+						</div>
 
-				<div class="row">
-					<div class="col-md-12">
-						<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+					<div class="row">
+						<div class="col-md-12">
+							<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+						</div>
 					</div>
-				</div>
 
 				</form>
 			</div>

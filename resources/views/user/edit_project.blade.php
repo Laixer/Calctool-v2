@@ -32,6 +32,8 @@ else {
 	else
 		$cntinv = 0;
 }
+
+$type = ProjectType::find($project->type_id);
 ?>
 
 @extends('layout.master')
@@ -314,9 +316,11 @@ else {
 						<li id="tab-project">
 							<a href="#project" data-toggle="tab">Projectgegevens</a>
 						</li>
+						@if ($type->type_name != 'regie')
 						<li id="tab-calc">
 							<a href="#calc" data-toggle="tab">Uurtarief & Winstpercentages</a>
 						</li>
+						@endif
 						@if ($share && $share->client_note )
 						<li id="tab-communication">
 							<a href="#communication" data-toggle="tab">Communicatie opdrachtgever </a>
@@ -571,6 +575,7 @@ else {
 								</form>
 							</div>
 
+						@if ($type->type_name != 'regie')
 						<div id="calc" class="tab-pane">
 						<form method="post" action="/project/updatecalc">
                         {!! csrf_field() !!}
@@ -642,6 +647,7 @@ else {
 								</div>
 						</form>
 						</div>
+						@endif
 
 						<div id="hour" class="tab-pane">
 							<table class="table table-striped">
