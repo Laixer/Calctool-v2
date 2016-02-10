@@ -123,7 +123,7 @@ $(document).ready(function() {
 							</thead>
 
 							<tbody>
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -157,7 +157,7 @@ $(document).ready(function() {
 								</tr>
 								@endif
 
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -191,7 +191,7 @@ $(document).ready(function() {
 								</tr>
 								@endif
 
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -254,7 +254,7 @@ $(document).ready(function() {
 							</thead>
 
 							<tbody>
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -288,7 +288,7 @@ $(document).ready(function() {
 								</tr>
 								@endif
 
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -322,7 +322,7 @@ $(document).ready(function() {
 								</tr>
 								@endif
 
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -389,7 +389,7 @@ $(document).ready(function() {
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">BTW bedrag aanneming belast met 21%</td>
 									<th class="col-md-3">&nbsp;</th>

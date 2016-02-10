@@ -677,7 +677,7 @@ var n = this,
 													<div class="col-md-2"><h4>Arbeid<strong> <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u meerwerk op basis van regie toevoegen bestemd voor op de factuur. Voor arbeid geldt: uren die bij de urenregistratie geboekt worden overschrijven de opgegeven hoeveel arbeid voor deze werkzaamheid." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
 													<div class="col-md-2">
-													@if (ProjectType::find($project->type_id)->type_name == 'BTW verlegd')
+													@if (!$project->tax_reverse)
 														<span>0%</span>
 													@else
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-labor" id="type" class="form-control-sm-text pointer select-tax">
@@ -769,7 +769,7 @@ var n = this,
 													<div class="col-md-2"><h4>Materiaal</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
 													<div class="col-md-2">
-													@if (ProjectType::find($project->type_id)->type_name == 'BTW verlegd')
+													@if (!$project->tax_reverse)
 														<span>0%</span>
 													@else
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-material" id="type" class="form-control-sm-text pointer select-tax">
@@ -868,7 +868,7 @@ var n = this,
 													<div class="col-md-2"><h4>Materieel</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
 													<div class="col-md-2">
-													@if (ProjectType::find($project->type_id)->type_name == 'BTW verlegd')
+													@if (!$project->tax_reverse)
 														<span>0%</span>
 													@else
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-equipment" id="type" class="form-control-sm-text pointer select-tax">
@@ -1159,7 +1159,7 @@ var n = this,
 							</thead>
 
 							<tbody>
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ number_format(MoreEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -1190,7 +1190,7 @@ var n = this,
 								</tr>
 								@endif
 
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1221,7 +1221,7 @@ var n = this,
 								</tr>
 								@endif
 
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1279,7 +1279,7 @@ var n = this,
 							</thead>
 
 							<tbody>
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ number_format(MoreEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -1310,7 +1310,7 @@ var n = this,
 								</tr>
 								@endif
 
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1341,7 +1341,7 @@ var n = this,
 								</tr>
 								@endif
 
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1406,7 +1406,7 @@ var n = this,
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-5">BTW bedrag aanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>

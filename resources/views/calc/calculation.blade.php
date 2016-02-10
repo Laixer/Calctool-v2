@@ -897,7 +897,7 @@ var n = this,
 													<div class="col-md-2"><h4>Arbeid</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
 													<div class="col-md-2">
-													@if (ProjectType::find($project->type_id)->type_name == 'BTW verlegd')
+													@if ($project->tax_reverse)
 														<span>0%</span>
 													@else
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-labor" id="type" class="form-control-sm-text pointer select-tax">
@@ -943,7 +943,7 @@ var n = this,
 													<div class="col-md-2"><h4>Materiaal</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
 													<div class="col-md-2">
-													@if (ProjectType::find($project->type_id)->type_name == 'BTW verlegd')
+													@if ($project->tax_reverse)
 														<span>0%</span>
 													@else
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-material" id="type" class="form-control-sm-text pointer select-tax">
@@ -1018,7 +1018,7 @@ var n = this,
 													<div class="col-md-2"><h4>Materieel</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
 													<div class="col-md-2">
-													@if (ProjectType::find($project->type_id)->type_name == 'BTW verlegd')
+													@if ($project->tax_reverse)
 														<span>0%</span>
 													@else
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-equipment" id="type" class="form-control-sm-text pointer select-tax">
@@ -1167,7 +1167,7 @@ var n = this,
 													<div class="col-md-2"><h4>Arbeid</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
 													<div class="col-md-2">
-													@if (ProjectType::find($project->type_id)->type_name == 'BTW verlegd')
+													@if ($project->tax_reverse)
 														<span>0%</span>
 													@else
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-labor" id="type" class="form-control-sm-text pointer select-estim-tax">
@@ -1215,7 +1215,7 @@ var n = this,
 													<div class="col-md-2"><h4>Materiaal</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
 													<div class="col-md-2">
-													@if (ProjectType::find($project->type_id)->type_name == 'BTW verlegd')
+													@if ($project->tax_reverse)
 														<span>0%</span>
 													@else
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-material" id="type" class="form-control-sm-text pointer select-estim-tax">
@@ -1291,7 +1291,7 @@ var n = this,
 													<div class="col-md-2"><h4>Materieel</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
 													<div class="col-md-2">
-													@if (ProjectType::find($project->type_id)->type_name == 'BTW verlegd')
+													@if ($project->tax_reverse)
 														<span>0%</span>
 													@else
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-equipment" id="type" class="form-control-sm-text pointer select-estim-tax">
@@ -1567,7 +1567,7 @@ var n = this,
 
 
 							<tbody>
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ number_format(CalculationEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -1598,7 +1598,7 @@ var n = this,
 								</tr>
 								@endif
 
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1629,7 +1629,7 @@ var n = this,
 								</tr>
 								@endif
 
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1687,7 +1687,7 @@ var n = this,
 							</thead>
 
 							<tbody>
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ number_format(CalculationEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -1718,7 +1718,7 @@ var n = this,
 								</tr>
 								@endif
 
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1749,7 +1749,7 @@ var n = this,
 								</tr>
 								@endif
 
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -1816,7 +1816,7 @@ var n = this,
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-5">BTW bedrag aanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>

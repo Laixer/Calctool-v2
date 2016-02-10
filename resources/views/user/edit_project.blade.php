@@ -241,25 +241,26 @@ else {
     	});
     	$("[name='toggle-mail-reminder']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 		
-	        $('#summernote').summernote({
-	            height: $(this).attr("data-height") || 200,
-	            toolbar: [
-	                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
-	                ["para", ["ul", "ol", "paragraph"]],
-	                ["table", ["table"]],
-	                ["media", ["link", "picture", "video"]],
-	            ]
-	        })
+        $('#summernote').summernote({
+            height: $(this).attr("data-height") || 200,
+            toolbar: [
+                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+                ["para", ["ul", "ol", "paragraph"]],
+                ["table", ["table"]],
+                ["media", ["link", "picture", "video"]],
+            ]
+        })
 
-	        $('.summernote').summernote({
-	            height: $(this).attr("data-height") || 200,
-	            toolbar: [
-	                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
-	                ["para", ["ul", "ol", "paragraph"]],
-	                ["table", ["table"]],
-	                ["media", ["link", "picture", "video"]],
-	            ]
-	        })
+        $('.summernote').summernote({
+            height: $(this).attr("data-height") || 200,
+            toolbar: [
+                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+                ["para", ["ul", "ol", "paragraph"]],
+                ["table", ["table"]],
+                ["media", ["link", "picture", "video"]],
+            ]
+        })
+	    $("[name='tax_reverse']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	});
 
 </script>
@@ -375,7 +376,7 @@ else {
 								<div class="col-md-3"><i>{{ $project->update_less ? 'Laatste wijziging: '.date('d-m-Y', strtotime($project->update_less)) : '' }}</i></div>
 							</div>
 								<br>
-@if (0)
+							@if (0)
 							<div class="row">
 								<div class="col-md-3"><strong>Financieel</strong></div>
 								<div class="col-md-2"><strong>Gefactureerd</strong></div>
@@ -441,7 +442,7 @@ else {
 							</div>
 							<?php } ?>
 								<br>
-@endif
+							@endif
 							<div class="row">
 								<div class="col-md-3"><strong>Project gesloten</strong> <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je project kan worden gesloten. Zijn alle facturen betaald?" href="#"><i class="fa fa-info-circle"></i></a></div>
 								<div class="col-md-2">{!! $project->project_close ? date('d-m-Y', strtotime($project->project_close)) : '<a href="#" id="projclose">Bewerk</a>' !!}</a></div>
@@ -478,6 +479,12 @@ else {
 											@endforeach
 											</select>
 											@endif
+										</div>
+									</div>
+									<div class="col-md-2">
+										<label for="type">BTW verlegt</label>
+										<div class="form-group">
+											<input name="tax_reverse" type="checkbox" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} {{ $project->tax_reverse ? 'checked' : '' }}>
 										</div>
 									</div>
 

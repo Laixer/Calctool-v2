@@ -9,18 +9,19 @@ use \Calctool\Models\Contact;
 @section('content')
 <script type="text/javascript" src="/plugins/summernote/summernote.min.js"></script>
 <script type="text/javascript">
-	$(document).ready(function() {
-  $('.summernote').summernote({
-            height: jQuery(this).attr("data-height") || 200,
-            toolbar: [
-                ["fontsize", ["fontsize"]],
-                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
-                ["para", ["ul", "ol", "paragraph"]],
-                ["table", ["table"]],
-                ["media", ["link", "picture", "video"]],
-                ["misc", ["codeview"]]
-            ]
-        });
+$(document).ready(function() {
+	$('.summernote').summernote({
+        height: jQuery(this).attr("data-height") || 200,
+        toolbar: [
+            ["fontsize", ["fontsize"]],
+            ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+            ["para", ["ul", "ol", "paragraph"]],
+            ["table", ["table"]],
+            ["media", ["link", "picture", "video"]],
+            ["misc", ["codeview"]]
+        ]
+    });
+    $("[name='tax_reverse']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 });
 
 </script>
@@ -99,6 +100,13 @@ use \Calctool\Models\Contact;
 							</select>
 						</div>
 					</div>
+					<div class="col-md-4">
+						<label for="type">BTW verlegt</label>
+						<div class="form-group">
+							<input name="tax_reverse" type="checkbox">
+						</div>
+					</div>
+
 				</div>
 
 				<h4>Adres project</h4>

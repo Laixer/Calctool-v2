@@ -175,7 +175,7 @@ function invoice_condition($offer) {
 		  </tr>
 		</thead>
 		<tbody>
-		@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+		@if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
 			<td class="qty">Arbeidskosten</td>
 			<td class="qty">{{ ''.number_format(CalculationEndresult::conCalcLaborActivityTax1($project)+CalculationEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -200,7 +200,7 @@ function invoice_condition($offer) {
 		  </tr>
 		  @endif
 
-		  @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
 			<td class="qty">Materiaalkosten</td>
 			<td class="qty">&nbsp;</td>
@@ -225,7 +225,7 @@ function invoice_condition($offer) {
 		  </tr>
 		  @endif
 
-		  @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
 			<td class="qty">Materieelkosten</td>
 			<td class="qty">&nbsp;</td>
@@ -267,7 +267,7 @@ function invoice_condition($offer) {
 		</thead>
 
 		<tbody>
-		@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+		@if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
 			<td class="qty">Arbeidskosten</td>
 			<td class="qty">{{ ''.number_format(CalculationEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -295,7 +295,7 @@ function invoice_condition($offer) {
 		  </tr>
 		  @endif
 
-		  @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
 			<td class="qty">Materiaalkosten</td>
 			<td class="qty">&nbsp;</td>
@@ -323,7 +323,7 @@ function invoice_condition($offer) {
 		  </tr>
 		  @endif
 
-		  @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
 			<td class="qty">Materieelkosten</td>
 			<td class="qty">&nbsp;</td>
@@ -375,7 +375,7 @@ function invoice_condition($offer) {
 		  </tr>
 		</thead>
 		<tbody>
-		@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+		@if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
 			<td class="qty">Arbeidskosten</td>
 			<td class="qty">{{ ' '.number_format(CalculationEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -403,7 +403,7 @@ function invoice_condition($offer) {
 		  </tr>
 		  @endif
 
-		  @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
 			<td class="qty">Materiaalkosten</td>
 			<td class="qty">&nbsp;</td>
@@ -431,7 +431,7 @@ function invoice_condition($offer) {
 		  </tr>
 		  @endif
 
-		  @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
 			<td class="qty">Materieelkosten</td>
 			<td class="qty">&nbsp;</td>
@@ -499,7 +499,7 @@ function invoice_condition($offer) {
 			<td class="qty">&nbsp;</td>
 		  </tr>
 		  @if($include_tax)
-		  @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
 			<td class="qty">BTW bedrag 21%</td>
 			<td class="qty">&nbsp;</td>
@@ -571,7 +571,7 @@ function invoice_condition($offer) {
 		</thead>
 
 		<tbody>
-		@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+		@if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
 			<td class="qty"><strong>Arbeidskosten</strong></td>
 			<td class="qty">{{ ''.number_format(CalculationEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -599,7 +599,7 @@ function invoice_condition($offer) {
 		  </tr>
 		  @endif
 
-		  @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
 			<td class="qty"><strong>Materiaalkosten</strong></td>
 			<td class="qty">&nbsp;</td>
@@ -627,7 +627,7 @@ function invoice_condition($offer) {
 		  </tr>
 		  @endif
 
-		  @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
 			<td class="qty"><strong>Materieelkosten</strong></td>
 			<td class="qty">&nbsp;</td>
@@ -680,7 +680,7 @@ function invoice_condition($offer) {
 		  </tr>
 		</thead>
 		<tbody>
-		@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+		@if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
 			<td class="qty"><strong>Arbeidskosten</strong></td>
 			<td class="qty">{{ ' '.number_format(CalculationEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -708,7 +708,7 @@ function invoice_condition($offer) {
 		  </tr>
 		  @endif
 
-		  @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
 			<td class="qty"><strong>Materiaalkosten</strong></td>
 			<td class="qty">&nbsp;</td>
@@ -736,7 +736,7 @@ function invoice_condition($offer) {
 		  </tr>
 		  @endif
 
-		  @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
 			<td class="qty"><strong>Materieelkosten</strong></td>
 			<td class="qty">&nbsp;</td>
@@ -801,7 +801,7 @@ function invoice_condition($offer) {
 			<td class="qty">&nbsp;</td>
 		  </tr>
 		  @if($include_tax)
-		  @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
 			<td class="qty">BTW bedrag 21%</td>
 			<td class="qty">&nbsp;</td>
@@ -850,7 +850,7 @@ function invoice_condition($offer) {
 			<td class="qty">&nbsp;</td>
 		  </tr>
 		  @if($include_tax)
-		  @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
 			<td class="qty">BTW bedrag 21%</td>
 			<td class="qty">&nbsp;</td>
