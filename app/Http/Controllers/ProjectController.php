@@ -47,7 +47,7 @@ class ProjectController extends Controller {
 	{
 		$validator = $this->validate($request, [
 			'name' => array('required','max:50'),
-			'street' => array('required','alpha','max:60'),
+			'street' => array('required','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
 			'city' => array('required','alpha_num','max:35'),
@@ -182,6 +182,11 @@ class ProjectController extends Controller {
 		} else {
 			$project->pref_email_reminder = false;
 		}
+
+		if ($request->input('tax_reverse'))
+			$project->tax_reverse = true;
+		else
+			$project->tax_reverse = false;
 
 		$project->save();
 
