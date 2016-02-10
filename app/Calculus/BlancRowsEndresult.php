@@ -94,6 +94,7 @@ class BlancRowsEndresult {
 
 		$total += BlancRowsEndresult::rowTax1Amount($project);
 		$total += BlancRowsEndresult::rowTax2Amount($project);
+		$total += BlancRowsEndresult::rowTax3Amount($project);
 
 		return $total;
 	}

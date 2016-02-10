@@ -60,17 +60,24 @@ class BlancController extends Controller {
 		$this->validate($request, [
 			'name' => array('required','max:100'),
 			'rate' => array('required','max:10'),
-			'tax' => array('required','max:10'),
+			// 'tax' => array('required','max:10'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 		]);
 
-		if (!Project::find($request->input('project'))->isOwner()) {
+		$project = Project::find($request->input('project'));
+		if (!$project->isOwner()) {
 			return json_encode(['success' => 0]);
+		}
+
+		if ($project->tax_reverse) {
+			$tax_id = 1;
+		} else {
+			$tax_id = $request->get('tax');
 		}
 
 		$row = BlancRow::create(array(
 			"description" => $request->get('name'),
-			"tax_id" => $request->get('tax'),
+			"tax_id" => $tax_id,
 			"rate" => str_replace(',', '.', str_replace('.', '' , $request->get('rate'))),
 			"amount" => str_replace(',', '.', str_replace('.', '' , $request->get('amount'))),
 			"project_id" => $request->input('project'),

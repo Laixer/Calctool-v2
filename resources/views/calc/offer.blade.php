@@ -1046,7 +1046,7 @@ $type = ProjectType::find($project->type_id);
 				@endif
 
 				<h4>Totalen Offerte</h4>
-				<table class="table table-striped hide-btwz">
+				<table class="table table-striped hide-btw2">
 					<thead>
 						<tr>
 							<th class="col-md-5">&nbsp;</th>
