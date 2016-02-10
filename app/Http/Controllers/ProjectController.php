@@ -183,10 +183,10 @@ class ProjectController extends Controller {
 			$project->pref_email_reminder = false;
 		}
 
-		if ($request->input('tax_reverse'))
-			$project->tax_reverse = true;
-		else
-			$project->tax_reverse = false;
+		// if ($request->input('tax_reverse'))
+		// 	$project->tax_reverse = true;
+		// else
+		// 	$project->tax_reverse = false;
 
 		$project->save();
 

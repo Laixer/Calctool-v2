@@ -481,12 +481,12 @@ else {
 											@endif
 										</div>
 									</div>
-									<div class="col-md-2">
+									<!-- <div class="col-md-2">
 										<label for="type">BTW verlegt</label>
 										<div class="form-group">
 											<input name="tax_reverse" type="checkbox" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} {{ $project->tax_reverse ? 'checked' : '' }}>
 										</div>
-									</div>
+									</div> -->
 
 								</div>
 								<h5><strong>Adresgegevens</strong></h5>
