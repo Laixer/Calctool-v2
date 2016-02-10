@@ -677,7 +677,7 @@ var n = this,
 													<div class="col-md-2"><h4>Arbeid<strong> <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u meerwerk op basis van regie toevoegen bestemd voor op de factuur. Voor arbeid geldt: uren die bij de urenregistratie geboekt worden overschrijven de opgegeven hoeveel arbeid voor deze werkzaamheid." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
 													<div class="col-md-2">
-													@if (!$project->tax_reverse)
+													@if ($project->tax_reverse)
 														<span>0%</span>
 													@else
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-labor" id="type" class="form-control-sm-text pointer select-tax">
@@ -769,7 +769,7 @@ var n = this,
 													<div class="col-md-2"><h4>Materiaal</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
 													<div class="col-md-2">
-													@if (!$project->tax_reverse)
+													@if ($project->tax_reverse)
 														<span>0%</span>
 													@else
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-material" id="type" class="form-control-sm-text pointer select-tax">
@@ -868,7 +868,7 @@ var n = this,
 													<div class="col-md-2"><h4>Materieel</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
 													<div class="col-md-2">
-													@if (!$project->tax_reverse)
+													@if ($project->tax_reverse)
 														<span>0%</span>
 													@else
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-equipment" id="type" class="form-control-sm-text pointer select-tax">
