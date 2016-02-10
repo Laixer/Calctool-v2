@@ -440,7 +440,7 @@ $(document).ready(function() {
 						<div id="hour_overview" class="tab-pane">
 							<div class="toogle">
 								<div class="toggle active">
-									<label>Aanneming (vanuit de originele calculatie)</label>
+									<label>Calculatie</label>
 									<div class="toggle-content">
 									<table class="table table-striped">
 										<thead>
@@ -473,7 +473,7 @@ $(document).ready(function() {
 											@endforeach
 											@endforeach
 											<tr>
-												<th class="col-md-3"><strong>Totaal Aanneming</strong></th>
+												<th class="col-md-3"><strong>Totaal Calculatie</strong></th>
 												<th class="col-md-3">&nbsp;</th>
 												<td class="col-md-2"><strong><span class="pull-right">{{ number_format($rs_1, 2, ",",".") }}</span></strong></td>
 												<td class="col-md-1"><strong><span class="pull-right">{{ number_format($rs_2, 2, ",",".") }}</span></strong></td>
@@ -483,7 +483,6 @@ $(document).ready(function() {
 											</tr>
 										</tbody>
 									</table>
-									<span><strong>Het is voor onderaanneming niet mogelijk een urenregistratie bij te houden.</strong></span>
 									</div>
 								</div>
 
@@ -498,7 +497,7 @@ $(document).ready(function() {
 												<th class="col-md-2"><span class="pull-right">Gecalculeerd <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de gecalculeerde uren uit de calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i> </a></span></th>
 												<th class="col-md-1"><span class="pull-right">Gesteld <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de gestelde uren vanuit 'Stelposten Stellen'" href="#"><i class="fa fa-info-circle"></i></a></span></th>
 												<th class="col-md-1"><span class="pull-right">Geboekt <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de geboekte uren uit de urenregistratie" href="#"><i class="fa fa-info-circle"></i></a></span></th>
-												<th class="col-md-1"><span class="pull-right">Verschil <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het verschil tussen de gecalculeerde OF de gestelde minus de geboekte uren." href="#"><i class="fa fa-info-circle"></i></a></span></th>
+												<th class="col-md-1"><span class="pull-right">Verschil <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het verschil tussen de gecalculeerde OF de gestelde uren minus de geboekte uren." href="#"><i class="fa fa-info-circle"></i></a></span></th>
 												<th class="col-md-1"><span class="pull-right">Win./Ver. <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het verschil vertaald naar kosten op basis van het standaard uurtarief" href="#"><i class="fa fa-info-circle"></i></a></span></th>
 											</tr>
 										</thead>
@@ -534,7 +533,7 @@ $(document).ready(function() {
 									</div>
 								</div>
 								<div class="toggle active">
-									<label>Meerwerk aanneming</label>
+									<label>Meerwerk</label>
 									<div class="toggle-content">
 									<table class="table table-striped">
 										<thead>
@@ -544,7 +543,7 @@ $(document).ready(function() {
 												<th class="col-md-2"><span class="pull-right">Gecalculeerd <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de (mondeling) opgegeven uren bij de tab 'Calculeren Meerwerk' die als prijsopgaaf kunnen dienen naar de klant. Wordt de urenregistratie bijgehouden dan is die bindend." href="#"><i class="fa fa-info-circle"></i></a></span></th>
 												<th class="col-md-1"><span class="pull-right">&nbsp;</span></th>
 												<th class="col-md-1"><span class="pull-right">Geboekt <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de geboekte uren uit de urenregistratie" href="#"><i class="fa fa-info-circle"></i></a></span></th>
-												<th class="col-md-1"><span class="pull-right">Verschil <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het verschil tussen de gecalculeerde OF de gestelde minus de geboekte uren." href="#"><i class="fa fa-info-circle"></i></a></span></th>
+												<th class="col-md-1"><span class="pull-right">Verschil <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het verschil tussen de gecalculeerde uren minus de geboekte uren." href="#"><i class="fa fa-info-circle"></i></a></span></th>
 												<th class="col-md-1"><span class="pull-right">Win./Ver. <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het verschil vertaald naar kosten op basis van het standaard uurtarief" href="#"><i class="fa fa-info-circle"></i></a></span></th>
 											</tr>
 										</thead>
@@ -579,6 +578,7 @@ $(document).ready(function() {
 									</table>
 									</div>
 								</div>
+								<span><strong>Het is voor onderaanneming niet mogelijk een urenregistratie bij te houden.</strong></span>
 
 							</div>
 						</div>
