@@ -304,7 +304,7 @@ Route::group(['middleware' => 'auth'], function()
 	Route::post('material/element/new', array('uses' => 'MaterialController@doNewElement'));
 });
 
-Route::group(['before' => 'admin', 'prefix' => 'admin'], function()
+Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'], function()
 {
 	/* Admin */
 	Route::get('/', function() {
