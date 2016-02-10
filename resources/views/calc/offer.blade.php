@@ -558,7 +558,6 @@ $type = ProjectType::find($project->type_id);
 					<li><strong>Projectnaam:</strong></li>
 					<li><strong>Offertedatum:</strong></li>
 					<li><strong>Offertenummer:</strong></li>
-					<li><strong>Versie:</strong></li>
 					<li>&nbsp;</li>
 					<li>&nbsp;</li>
 					<input type="hidden" id="offdateval" name="offdateval" value="{{ $offer_last ? $offer_last->offer_make : '' }}" />
@@ -570,7 +569,6 @@ $type = ProjectType::find($project->type_id);
 					<li>{{ $project->project_name }}</li>
 					<li><a href="#" class="offdate">Bewerk</a></li>
 					<li>{{ OfferController::getOfferCode($project->id) }}</li>
-					<li>{{ Offer::where('project_id', $project->id)->count() }}</li>
 					<li>&nbsp;</li>
 					<li>&nbsp;</li>
 					<input type="hidden" id="offdateval" name="offdateval" value="{{ $offer_last ? $offer_last->offer_make : '' }}" />
@@ -910,7 +908,7 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-1">Uren</th>
 							<th class="col-md-2">Bedrag (excl. BTW)</th>
 							<th class="col-md-1">&nbsp;</th>
-							<th class="col-md-1">BTW3</th>
+							<th class="col-md-1">BTW</th>
 							<th class="col-md-1">BTW bedrag</th>
 							<th class="col-md-2">&nbsp;</th>
 						</tr>

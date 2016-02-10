@@ -499,7 +499,7 @@ $(document).ready(function() {
 												<th class="col-md-1"><span class="pull-right">Gesteld <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de gestelde uren vanuit 'Stelposten Stellen'" href="#"><i class="fa fa-info-circle"></i></a></span></th>
 												<th class="col-md-1"><span class="pull-right">Geboekt <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de geboekte uren uit de urenregistratie" href="#"><i class="fa fa-info-circle"></i></a></span></th>
 												<th class="col-md-1"><span class="pull-right">Verschil <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de geboekte uren uit de urenregistratie" href="#"><i class="fa fa-info-circle"></i></a></span></th>
-												<th class="col-md-1"><span class="pull-right">Euro<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de geboekte uren uit de urenregistratie" href="#"><i class="fa fa-info-circle"></i></a></span></th>
+												<th class="col-md-1"><span class="pull-right">Win./Ver. <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de geboekte uren uit de urenregistratie" href="#"><i class="fa fa-info-circle"></i></a></span></th>
 											</tr>
 										</thead>
 
@@ -541,11 +541,11 @@ $(document).ready(function() {
 											<tr>
 												<th class="col-md-3">Hoofdstuk</th>
 												<th class="col-md-3">Werkzaamheden</th>
-												<th class="col-md-2"><span class="pull-right">Opgegeven&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de (mondeling) opgegeven uren bij de tab 'Calculeren Meerwerk' die als prijsopgaaf kunnen dienen naar de klant. Wordt de urenregistratie bijgehouden dan is die bindend." href="#"><i class="fa fa-info-circle"></i></a></span></th>
+												<th class="col-md-2"><span class="pull-right">Gecalculeerd<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de (mondeling) opgegeven uren bij de tab 'Calculeren Meerwerk' die als prijsopgaaf kunnen dienen naar de klant. Wordt de urenregistratie bijgehouden dan is die bindend." href="#"><i class="fa fa-info-circle"></i></a></span></th>
+												<th class="col-md-1"><span class="pull-right">&nbsp;</span></th>
 												<th class="col-md-1"><span class="pull-right">Geboekt</span></th>
 												<th class="col-md-1"><span class="pull-right">Verschil<?php #--Geboekt <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de geboekte uren uit de urenregistratie of zoals opgegeven" href="#"><i class="fa fa-info-circle"></i></a>--></span></th> ?>
-												<th class="col-md-1"><span class="pull-right">Euro</span></th>
-												<th class="col-md-1"><span class="pull-right">&nbsp;</span></th>
+												<th class="col-md-1"><span class="pull-right">Win./Ver. </span></th>
 											</tr>
 										</thead>
 
@@ -559,10 +559,10 @@ $(document).ready(function() {
 												<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
 												<td class="col-md-2"><span class="pull-right"><?php $rs_set = Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'); $x = ($activity->use_timesheet ? $rs_set : MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->sum('amount')); $rs_1 += $x; echo number_format($activity->use_timesheet ? $rs_set : MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->sum('amount'), 2,",",".") ?></span></td>
+												<td class="col-md-1"><span class="pull-right">&nbsp;</span></td>
 												<td class="col-md-1"><span class="pull-right"><?php $rs_set = Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'); $y = $rs_set; $rs_1 += $y; echo number_format($rs_set, 2,",",".") ?></span></td>
 												<td class="col-md-1"><span class="pull-right"><?php $rs_3 += ($x-$y); echo number_format($x-$y, 2,",",".") ?></span></td>
 												<td class="col-md-1"><span class="pull-right"><?php $rs_4 += ($x-$y)*$project->hour_rate_more; echo number_format(($x-$y)*$project->hour_rate_more, 2,",",".") ?></span></td>
-												<td class="col-md-1"><span class="pull-right">&nbsp;</span></td>
 											</tr>
 											@endforeach
 											@endforeach
