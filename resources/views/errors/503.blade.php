@@ -27,7 +27,7 @@
                 <div class="e404"><i class="fa fa-refresh"></i></div>
                 <h2>
                     De applicatie wordt geüpdatet...
-                    <span class="subtitle">Ons excuus, probeer het in een paar minuten nogmaals</span>
+                    <span class="subtitle">Onze excuses, probeer het over een paar minuten nogmaals.</span>
                 </h2>
             </div>
 

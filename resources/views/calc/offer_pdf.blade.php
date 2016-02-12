@@ -806,14 +806,14 @@ function invoice_condition($offer) {
 			<td class="qty">BTW bedrag 21%</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">&nbsp;</td>
-			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax1($project)+CalculationEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
+			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax1($project)+CalculationEndresult::totalSubcontractingTax1($project)+BlancRowsEndresult::rowTax1AmountTax($project), 2, ",",".") }}</td>
 			<td class="qty">&nbsp;</td>
 		  </tr>
 		  <tr style="page-break-after: always;">
 			<td class="qty">BTW bedrag 6%</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">&nbsp;</td>
-			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax2($project)+CalculationEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
+			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax2($project)+CalculationEndresult::totalSubcontractingTax2($project)+BlancRowsEndresult::rowTax2AmountTax($project), 2, ",",".") }}</td>
 			<td class="qty">&nbsp;</td>
 		  </tr>
 		  @endif
@@ -855,14 +855,14 @@ function invoice_condition($offer) {
 			<td class="qty">BTW bedrag 21%</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">&nbsp;</td>
-			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax1($project)+CalculationEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
+			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax1($project)+CalculationEndresult::totalSubcontractingTax1($project)+BlancRowsEndresult::rowTax1AmountTax($project), 2, ",",".") }}</td>
 			<td class="qty">&nbsp;</td>
 		  </tr>
 		  <tr style="page-break-after: always;">
 			<td class="qty">BTW bedrag 6%</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">&nbsp;</td>
-			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax2($project)+CalculationEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
+			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax2($project)+CalculationEndresult::totalSubcontractingTax2($project)+BlancRowsEndresult::rowTax2AmountTax($project), 2, ",",".") }}</td>
 			<td class="qty">&nbsp;</td>
 		  </tr>
 		  @endif
@@ -871,7 +871,7 @@ function invoice_condition($offer) {
 			<td class="qty">&nbsp;</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">&nbsp;</td>
-			<td class="qty"><strong class="pull-right">{{ '&euro; '.number_format(CalculationEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
+			<td class="qty"><strong class="pull-right">{{ '&euro; '.number_format(CalculationEndresult::superTotalProject($project)+BlancRowsEndresult::rowTax1AmountTax($project)+BlancRowsEndresult::rowTax2AmountTax($project), 2, ",",".") }}</strong></td>								
 		  </tr>
 		  @endif
 		</tbody>
