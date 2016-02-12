@@ -591,66 +591,66 @@ $type = ProjectType::find($project->type_id);
 							<div class="row">
 								<div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
 								<div class="col-md-1"><div class="pull-right">&euro;</div></div>
+								@if ($type->type_name != 'regie')
 								<div class="col-md-2">
 									<input name="hour_rate" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} type="text" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : number_format($project->hour_rate, 2,",",".") }}" class="form-control form-control-sm-number"/>
 								</div>
-								@if ($type->type_name != 'regie')
+								@endif
 								<div class="col-md-2">
 									<input name="more_hour_rate" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_hour_rate" type="text" value="{{ Input::old('more_hour_rate') ? Input::old('more_hour_rate') : number_format($project->hour_rate_more, 2,",",".") }}" class="form-control form-control-sm-number"/>
 								</div>
-								@endif
 							</div>
 
 							<h5><strong>Aanneming <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier uw winstpercentage op wat u over uw materiaal en materieel wilt gaan rekenen. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></strong></h5>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_material_1">Winstpercentage materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
+								@if ($type->type_name != 'regie')
 								<div class="col-md-2">
 									<input name="profit_material_1" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="profit_material_1" type="number" min="0" max="200" value="{{ Input::old('profit_material_1') ? Input::old('profit_material_1') : $project->profit_calc_contr_mat }}" class="form-control form-control-sm-number"/>
 								</div>
-								@if ($type->type_name != 'regie')
+								@endif
 								<div class="col-md-2">
 									<input name="more_profit_material_1" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_profit_material_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_1') ? Input::old('more_profit_material_1') : $project->profit_more_contr_mat }}" class="form-control form-control-sm-number"/>
 								</div>
-								@endif
 							</div>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage materieel</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
+								@if ($type->type_name != 'regie')
 								<div class="col-md-2">
 									<input name="profit_equipment_1" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_1') ? Input::old('profit_equipment_1') : $project->profit_calc_contr_equip }}" class="form-control form-control-sm-number"/>
 								</div>
-								@if ($type->type_name != 'regie')
+								@endif
 								<div class="col-md-2">
 									<input name="more_profit_equipment_1" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_1') ? Input::old('more_profit_equipment_1') : $project->profit_more_contr_equip }}" class="form-control form-control-sm-number"/>
 								</div>
-								@endif
 							</div>
 
 							<h5><strong>Onderaanneming <a data-toggle="tooltip" data-placement="bottom" data-original-title="Onderaanneming: Geef hier uw winstpercentage op wat u over het materiaal en materieel van uw onderaanneming wilt gaan rekenen. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></strong></h5>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_material_2">Winstpercentage materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
+								@if ($type->type_name != 'regie')
 								<div class="col-md-2">
 									<input name="profit_material_2" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="profit_material_2" type="number" min="0" max="200" value="{{ Input::old('profit_material_2') ? Input::old('profit_material_2') : $project->profit_calc_subcontr_mat }}" class="form-control form-control-sm-number"/>
 								</div>
-								@if ($type->type_name != 'regie')
+								@endif
 								<div class="col-md-2">
 									<input name="more_profit_material_2" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_profit_material_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_2') ? Input::old('more_profit_material_2') : $project->profit_more_subcontr_mat }}" class="form-control form-control-sm-number"/>
 								</div>
-								@endif
 							</div>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage materieel</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
+								@if ($type->type_name != 'regie')
 								<div class="col-md-2">
 									<input name="profit_equipment_2" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_2') ? Input::old('profit_equipment_2') : $project->profit_calc_subcontr_equip }}" class="form-control form-control-sm-number"/>
 								</div>
-								@if ($type->type_name != 'regie')
+								@endif
 								<div class="col-md-2">
 									<input name="more_profit_equipment_2" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_2') ? Input::old('more_profit_equipment_2') : $project->profit_more_subcontr_equip }}" class="form-control form-control-sm-number"/>
 								</div>
-								@endif
 							</div><br />
 								<div class="row">
 								<div class="col-md-12">
