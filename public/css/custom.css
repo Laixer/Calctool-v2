@@ -143,8 +143,27 @@ div.toggle-chapter > label:hover {
 	border: #517A00 2px solid;
 }
 
-.btn-primary-chapter, .btn-primary-chapter:hover {
+.btn-primary-chapter, .btn-primary-chapter-sp:hover {
 	background: #517A00 !important;
+}
+
+/* Actieve hoofdstukken, niet actief and border */
+/* gebruikt op Calculatiepagina*/
+div.toggle-chaptersp > label {
+	background: #fff;
+	border: #8E8E8E 2px solid;
+}
+
+div.toggle-chaptersp.active > label {
+	color: #fff;
+	background: #551a8b;
+	border: #551a8b 2px solid;
+}
+
+div.toggle-chaptersp > label:hover {
+	color: #fff;
+	background: #551a8b;
+	border: #551a8b 2px solid;
 }
 
 /* Actieve werkzaamheden grijs, niet actief grijze border, incl knop */

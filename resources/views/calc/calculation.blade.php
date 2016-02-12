@@ -1136,7 +1136,7 @@ var n = this,
 						<div class="toogle">
 
 							@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
-							<div id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
+							<div id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chaptersp">
 								<label>{{ $chapter->chapter_name }}</label>
 								<div class="toggle-content">
 
