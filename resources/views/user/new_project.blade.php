@@ -111,7 +111,7 @@ $(document).ready(function() {
 						</div>
 					</div>
 					<div class="col-md-4">
-						<label for="type">BTW verlegt</label>
+						<label for="type">BTW verlegd</label>
 						<div class="form-group">
 							<input name="tax_reverse" type="checkbox">
 						</div>

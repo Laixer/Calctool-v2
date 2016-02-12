@@ -360,8 +360,8 @@ if (!$project || !$project->isOwner())
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
-															<td class="col-md-1">{{ number_format(EstimateLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}</td>
-															<td class="col-md-1">{{ '&euro; '.number_format(CalculationRegister::estimLaborTotal(EstimateLabor::where('activity_id','=', $activity->id)->first()['rate'], EstimateLabor::where('activity_id','=', $activity->id)->first()['amount']), 2, ",",".") }}</td>
+															<td class="col-md-1">{{ number_format(EstimateLabor::where('activity_id', $activity->id)->whereNull('hour_id')->first()['amount'], 2, ",",".") }}</td>
+															<td class="col-md-1">{{ '&euro; '.number_format(CalculationRegister::estimLaborTotal(EstimateLabor::where('activity_id', $activity->id)->whereNull('hour_id')->first()['rate'], EstimateLabor::where('activity_id', $activity->id)->whereNull('hour_id')->first()['amount']), 2, ",",".") }}</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1"></td>
 														</tr>

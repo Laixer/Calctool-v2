@@ -213,7 +213,7 @@ var n = this,
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th class="col-md-6">Ochrijving</th>
+							<th class="col-md-6">Omschrijving</th>
 							<th class="col-md-1">&euro; / Eenh.</th>
 							<th class="col-md-1">Aantal</th>
 							<th class="col-md-1">BTW</th>

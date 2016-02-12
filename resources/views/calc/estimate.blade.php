@@ -918,7 +918,7 @@ var n = this,
 														</tr>
 														<?php }else{ ?>
 														<?php
-														$labor = EstimateLabor::where('activity_id','=', $activity->id)->first();
+														$labor = EstimateLabor::where('activity_id', $activity->id)->whereNull('hour_id')->first();
 														$rate = $labor['original'] ? ($labor['isset'] ? $labor['set_rate'] : $labor['rate']) : $labor['set_rate'];
 														?>
 														<tr data-id="{{ $labor['id'] }}">
