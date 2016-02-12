@@ -314,7 +314,6 @@ use \Calctool\Models\MoreLabor;
 								</div>
 
 							</div>
-
 					</div>
 
 				</div>
