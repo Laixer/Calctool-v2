@@ -496,37 +496,31 @@ $type = ProjectType::find($project->type_id);
 					{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
 				</div>
 				
-				<div class="col-sm-2">
-					<p>
-						<h4><strong>{{ $relation_self->company_name }}</strong></h4>
+				<div class="col-sm-5">
+					<h4><strong>{{ $relation_self->company_name }}</strong></h4>
+					<div class="col-sm-6" style="padding-left:0px;">
+						<p>
 		    				<ul class="list-unstyled">
-	 						<li><strong>Adres:</strong></li>
-	  						<li>&nbsp;</li>
-							<li><strong>Telefoon: <i class="fa fa-phone"></i></strong></li>
-	 						<li><strong>E-mail: <i class="fa fa-envelope-o"></i></strong></li>
-	 						<li><strong>KVK</strong></li>
-						</ul>
-					</p>
-				</div>
-
-				<div class="col-sm-3">
-					<p>
-						<h4><strong>&nbsp;</strong></h4>
+		 						<li><strong>Adres:</strong></li>
+		  						<li>&nbsp;</li>
+								<li><strong>Telefoon: <i class="fa fa-phone"></i></strong></li>
+		 						<li><strong>E-mail: <i class="fa fa-envelope-o"></i></strong></li>
+		 						<li><strong>KVK</strong></li>
+							</ul>
+						</p>
+					</div>
+					<div class="col-sm-6">
+						<p>
 		    				<ul class="list-unstyled">
-	 						<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
-	  						<li>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
-							<li>{{ $relation_self->phone }}</li>
-	 						<li>{{ $relation_self->email }}</li>
-	 						<li>{{ $relation_self->kvk }}</li>
-						</ul>
-					</p>
+		 						<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
+		  						<li>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
+								<li>{{ $relation_self->phone }}</li>
+		 						<li>{{ $relation_self->email }}</li>
+		 						<li>{{ $relation_self->kvk }}</li>
+							</ul>
+						</p>
+					</div>
 				</div>
-
-
-
-
-
-
 
 			</div>
 		</header>
