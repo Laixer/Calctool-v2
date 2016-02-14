@@ -1384,7 +1384,7 @@ var n = this,
 							</tbody>
 						</table>
 
-						<h4>Totalen Meerwerk</h4>
+						<h4>Totalen {{ $type->type_name == 'regie' ? 'Project' : 'Meerwerk' }}</h4>
 						<table class="table table-striped">
 							<thead>
 								<tr>
