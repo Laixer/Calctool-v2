@@ -149,17 +149,12 @@ if (!$project || !$project->isOwner())
 											<label>{{ $activity->activity_name }}</label>
 											<div class="toggle-content">
 												<div class="row">
-													<div class="col-md-4"></div>
-													<div class="col-md-2"></div>
-	    											<div class="col-md-2"></div>
-													<div class="col-md-1"></div>
-													<div class="col-md-3 text-right"><strong>{{ Part::find($activity->part_id)->part_name=='subcontracting' ? 'Onderaanneming' : 'Aanneming' }}</strong></div>
+													<div class="col-md-10"></div>
+													<div class="col-md-2 text-right label label-info"><strong>{{ Part::find($activity->part_id)->part_name=='subcontracting' ? 'Onderaanneming' : 'Aanneming' }}</strong></div>
 												</div>
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>
-													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2">{{ Tax::find($activity->tax_labor_id)->tax_rate }}%</div>
-													<div class="col-md-6"></div>
+													<div class="col-md-1 text-right label label-info"><strong>BTW {{ Tax::find($activity->tax_labor_id)->tax_rate }}%</strong></div>
 												</div>
 												<table class="table table-striped" data-id="{{ $activity->id }}">
 													<?php
@@ -221,9 +216,7 @@ if (!$project || !$project->isOwner())
 
 												<div class="row">
 													<div class="col-md-2"><h4>Materiaal</h4></div>
-													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2">{{ Tax::find($activity->tax_material_id)->tax_rate }}%</div>
-													<div class="col-md-8"></div>
+													<div class="col-md-1 text-right label label-info"><strong>BTW {{ Tax::find($activity->tax_material_id)->tax_rate }}%</strong></div>
 												</div>
 
 												<table class="table table-striped">
