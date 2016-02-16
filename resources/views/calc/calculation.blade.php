@@ -922,8 +922,8 @@ var n = this,
 															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">Uurtarief</th>
 															<th class="col-md-1">Aantal</th>
-															<th class="col-md-1">Prijs</th>
 															<th class="col-md-1">&nbsp;</th>
+															<th class="col-md-1">Prijs</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -934,8 +934,8 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1"><span class="rate">{!! Part::find($activity->part_id)->part_name=='subcontracting' ? '<input name="rate" type="text" value="'.number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['rate'], 2,",",".").'" class="form-control-sm-number labor-amount lsave">' : number_format($project->hour_rate, 2,",",".") !!}</span></td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal(Part::find($activity->part_id)->part_name=='subcontracting' ? CalculationLabor::where('activity_id','=', $activity->id)->first()['rate'] : $project->hour_rate, CalculationLabor::where('activity_id','=', $activity->id)->first()['amount']), 2, ",",".") }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal(Part::find($activity->part_id)->part_name=='subcontracting' ? CalculationLabor::where('activity_id','=', $activity->id)->first()['rate'] : $project->hour_rate, CalculationLabor::where('activity_id','=', $activity->id)->first()['amount']), 2, ",",".") }}</span></td>
 															<td class="col-md-1 text-right"><button class="btn btn-danger ldeleterow btn-xs fa fa-times"></button></td>
 														</tr>
 													</tbody>
@@ -1193,8 +1193,8 @@ var n = this,
 															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">Uurtarief</th>
 															<th class="col-md-1">Aantal</th>
-															<th class="col-md-1">Prijs</th>
 															<th class="col-md-1">&nbsp;</th>
+															<th class="col-md-1">Prijs</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -1206,8 +1206,8 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1"><span class="rate">{!! Part::find($activity->part_id)->part_name=='subcontracting' ? '<input name="rate" type="text" value="'.number_format(EstimateLabor::where('activity_id','=', $activity->id)->first()['rate'], 2,",",".").'" class="form-control-sm-number labor-amount lsavee">' : number_format($project->hour_rate, 2,",",".") !!}</span></td></td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(EstimateLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsavee" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal(Part::find($activity->part_id)->part_name=='subcontracting' ? EstimateLabor::where('activity_id','=', $activity->id)->first()['rate'] : $project->hour_rate, EstimateLabor::where('activity_id','=', $activity->id)->first()['amount']), 2, ",",".") }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal(Part::find($activity->part_id)->part_name=='subcontracting' ? EstimateLabor::where('activity_id','=', $activity->id)->first()['rate'] : $project->hour_rate, EstimateLabor::where('activity_id','=', $activity->id)->first()['amount']), 2, ",",".") }}</span></td>
 															<td class="col-md-1 text-right"><button class="btn btn-danger ldeleterowe btn-xs fa fa-times"></button></td>
 														</tr>
 													</tbody>
