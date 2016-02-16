@@ -35,12 +35,12 @@
 		<link media="all" type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800">
 
 		<?php // -- CORE CSS -- ?>
-		<link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap/css/bootstrap.min.css">
-		<link media="all" type="text/css" rel="stylesheet" href="/css/font-awesome.css">
-		<link media="all" type="text/css" rel="stylesheet" href="/plugins/owl-carousel/owl.carousel.css">
-		<link media="all" type="text/css" rel="stylesheet" href="/plugins/owl-carousel/owl.theme.css">
-		<link media="all" type="text/css" rel="stylesheet" href="/plugins/owl-carousel/owl.transitions.css">
-		<link media="all" type="text/css" rel="stylesheet" href="/plugins/x-editable/css/bootstrap-editable.css">
+		<link media="all" type="text/css" rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.min.css">
+		<link media="all" type="text/css" rel="stylesheet" href="/components/font-awesome/css/font-awesome.css">
+		<link media="all" type="text/css" rel="stylesheet" href="/components/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css">
+		<!-- <link media="all" type="text/css" rel="stylesheet" href="/plugins/owl-carousel/owl.carousel.css"> -->
+		<!-- <link media="all" type="text/css" rel="stylesheet" href="/plugins/owl-carousel/owl.theme.css"> -->
+		<!-- <link media="all" type="text/css" rel="stylesheet" href="/plugins/owl-carousel/owl.transitions.css"> -->
 		<link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
 		<link type="text/css" rel="stylesheet" href="/plugins/videojs/videojs-sublime-skin.css">
 
@@ -57,14 +57,11 @@
 		<link media="all" type="text/css" rel="stylesheet" href="/css/custom.css">
 		<link media="all" type="text/css" rel="stylesheet" href="/plugins/feedback/css/jquery.feedback_me.css">
 
-		<?php // -- Morenizr -- ?>
-		<script src="/plugins/modernizr.min.js"></script>
-
 		<?php // -- Angular -- ?>
 		<script src="/components/angular/angular.min.js"></script>
 
 		<?php // -- JQuery -- ?>
-		<script src="/plugins/jquery-2.1.4.min.js"></script>
+		<script src="/components/jquery/dist/jquery.min.js"></script>
 		<script type="text/javascript">
 			$.ajaxSetup({headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
 			if (localStorage._prescnt) localStorage._prescnt++; else localStorage._prescnt = 1;
@@ -113,16 +110,16 @@
 		@show
 
 		<?php // -- JAVASCRIPT FILES -- ?>
-		<script src="/plugins/jquery.easing.1.3.js"></script>
-		<script src="/plugins/jquery.cookie.js"></script>
-		<script src="/plugins/jquery.appear.js"></script>
-		<script src="/plugins/jquery.isotope.js"></script>
+		<!--<script src="/plugins/jquery.easing.1.3.js"></script>-->
+		<!--<script src="/plugins/jquery.cookie.js"></script>-->
+		<!--<script src="/plugins/jquery.appear.js"></script>-->
+		<!--<script src="/plugins/jquery.isotope.js"></script>-->
 		<script src="/plugins/jquery.number.min.js"></script>
 		<script src="/plugins/masonry.js"></script>
 
-		<script src="/plugins/bootstrap/js/bootstrap.min.js"></script>
-		<script src="/plugins/owl-carousel/owl.carousel.min.js"></script>
-		<script src="/plugins/x-editable/js/bootstrap-editable.min.js"></script>
+		<script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="/components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+		<!--<script src="/plugins/owl-carousel/owl.carousel.min.js"></script>-->
 		<script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 		<script src="/plugins/summernote/summernote.min.js"></script>
 		<script src="/plugins/videojs/video.min.js"></script>
