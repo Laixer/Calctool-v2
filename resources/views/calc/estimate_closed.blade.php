@@ -197,8 +197,7 @@ if (!$project || !$project->isOwner())
 													<div class="col-md-4"></div>
 													<div class="col-md-2"></div>
 	    											<div class="col-md-2"></div>
-													<div class="col-md-1 text-right"><strong>{{ Part::find($activity->part_id)->part_name=='subcontracting' ? 'Onderaanneming' : 'Aanneming' }}</strong></div>
-													<div class="col-md-3"></div>
+													<div class="col-md-4 text-right"><strong>{{ Part::find($activity->part_id)->part_name=='subcontracting' ? 'Onderaanneming' : 'Aanneming' }}</strong></div>
 												</div>
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>
@@ -227,14 +226,13 @@ if (!$project || !$project->isOwner())
 													<?php }else { ?>
 													<thead>
 														<tr>
-															<th class="col-md-5">Omschrijving</th>
+															<th class="col-md-6">Omschrijving</th>
 															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">Uurtarief</th>
 															<th class="col-md-1">Aantal</th>
+															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">Prijs</th>
-															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
+
 														</tr>
 													</thead>
 													<?php } ?>
@@ -260,14 +258,13 @@ if (!$project || !$project->isOwner())
 														$labor = EstimateLabor::where('activity_id','=', $activity->id)->first();
 														?>
 														<tr>
-															<td class="col-md-5">Arbeidsuren</td>
+															<td class="col-md-6">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1">{{ number_format($labor['original'] ? ($labor['isset'] ? $labor['set_amount'] : $labor['amount']) : $labor['set_amount'], 2, ",",".") }}</td>
+															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ '&euro; '.number_format(EstimateRegister::estimLaborTotal($project->hour_rate, $labor['original'] ? ($labor['isset'] ? $labor['set_amount'] : $labor['amount']) : $labor['set_amount']), 2, ",",".") }}</td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"></td>
+
 														</tr>
 														<?php } ?>
 													</tbody>
@@ -283,38 +280,38 @@ if (!$project || !$project->isOwner())
 												<table class="table table-striped">
 													<thead>
 														<tr>
-															<th class="col-md-5">Omschrijving</th>
+															<th class="col-md-6">Omschrijving</th>
 															<th class="col-md-1">Eenheid</th>
 															<th class="col-md-1">&euro; / Eenh.</th>
 															<th class="col-md-1">Aantal</th>
 															<th class="col-md-1">Prijs</th>
 															<th class="col-md-1">+ Winst %</th>
-															<th class="col-md-1">&nbsp;</th>
+
 														</tr>
 													</thead>
 
 													<tbody>
 														@foreach (EstimateMaterial::where('activity_id','=', $activity->id)->get() as $material)
 														<tr>
-															<td class="col-md-5">{{ $material->original ? ($material->isset ? $material->set_material_name : $material->material_name) : $material->set_material_name }}</td>
+															<td class="col-md-6">{{ $material->original ? ($material->isset ? $material->set_material_name : $material->material_name) : $material->set_material_name }}</td>
 															<td class="col-md-1">{{ $material->original ? ($material->isset ? $material->set_unit : $material->unit) : $material->set_unit }}</td>
 															<td class="col-md-1">{{ number_format($material->original ? ($material->isset ? $material->set_rate : $material->rate) : $material->set_rate, 2,",",".") }}</td>
 															<td class="col-md-1">{{ number_format($material->original ? ($material->isset ? $material->set_amount : $material->amount) : $material->set_amount, 2,",",".") }}</td>
 															<td class="col-md-1">{{ '&euro; '.number_format($material->original ? ($material->isset ? $material->set_rate * $material->set_amount : $material->rate * $material->amount) : $material->set_rate * $material->set_amount, 2,",",".") }}</td>
 															<td class="col-md-1">{{ '&euro; '.number_format(($material->original ? ($material->isset ? $material->set_rate * $material->set_amount : $material->rate * $material->amount) : $material->set_rate * $material->set_amount) *((100+$profit_mat)/100), 2,",",".") }}</td>
-															<td class="col-md-1"></td>
+
 														</tr>
 														@endforeach
 													</tbody>
 													<tbody>
 														<tr>
-															<td class="col-md-5"><strong>Totaal</strong></td>
+															<td class="col-md-6"><strong>Totaal</strong></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1"><strong>{{ '&euro; '.number_format(EstimateRegister::estimMaterialTotal($activity->id, $profit_mat), 2, ",",".") }}</td>
 															<td class="col-md-1"><strong>{{ '&euro; '.number_format(EstimateRegister::estimMaterialTotalProfit($activity->id, $profit_mat), 2, ",",".") }}</td>
-															<td class="col-md-1">&nbsp;</td>
+
 														</tr>
 													</tbody>
 												</table>
@@ -330,38 +327,38 @@ if (!$project || !$project->isOwner())
 
 													<thead>
 														<tr>
-															<th class="col-md-5">Omschrijving</th>
+															<th class="col-md-6">Omschrijving</th>
 															<th class="col-md-1">Eenheid</th>
 															<th class="col-md-1">&euro; / Eenh.</th>
 															<th class="col-md-1">Aantal</th>
 															<th class="col-md-1">Prijs</th>
 															<th class="col-md-1">+ Winst %</th>
-															<th class="col-md-1">&nbsp;</th>
+
 														</tr>
 													</thead>
 
 													<tbody>
 														@foreach (EstimateEquipment::where('activity_id','=', $activity->id)->get() as $equipment)
 														<tr>
-															<td class="col-md-5">{{ $equipment->original ? ($equipment->isset ? $equipment->set_equipment_name : $equipment->equipment_name) : $equipment->set_equipment_name }}</td>
+															<td class="col-md-6">{{ $equipment->original ? ($equipment->isset ? $equipment->set_equipment_name : $equipment->equipment_name) : $equipment->set_equipment_name }}</td>
 															<td class="col-md-1">{{ $equipment->original ? ($equipment->isset ? $equipment->set_unit : $equipment->unit) : $equipment->set_unit }}</td>
 															<td class="col-md-1">{{ number_format($equipment->original ? ($equipment->isset ? $equipment->set_rate : $equipment->rate) : $equipment->set_rate, 2,",",".") }}</td>
 															<td class="col-md-1">{{ number_format($equipment->original ? ($equipment->isset ? $equipment->set_amount : $equipment->amount) : $equipment->set_amount, 2,",",".") }}</td>
 															<td class="col-md-1">{{ '&euro; '.number_format($equipment->original ? ($equipment->isset ? $equipment->set_rate * $equipment->set_amount : $equipment->rate * $equipment->amount) : $equipment->set_rate * $equipment->set_amount, 2,",",".") }}</td>
 															<td class="col-md-1">{{ '&euro; '.number_format(($equipment->original ? ($equipment->isset ? $equipment->set_rate * $equipment->set_amount : $equipment->rate * $equipment->amount) : $equipment->set_rate * $equipment->set_amount)*((100+$profit_equip)/100), 2,",",".") }}</td>
-															<td class="col-md-1"></td>
+
 														</tr>
 														@endforeach
 													</tbody>
 													<tbody>
 														<tr>
-															<td class="col-md-5"><strong>Totaal</strong></td>
+															<td class="col-md-6"><strong>Totaal</strong></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1"><strong>{{ '&euro; '.number_format(EstimateRegister::estimEquipmentTotal($activity->id, $profit_equip), 2, ",",".") }}</strong></td>
 															<td class="col-md-1"><strong>{{ '&euro; '.number_format(EstimateRegister::estimEquipmentTotalProfit($activity->id, $profit_equip), 2, ",",".") }}</strong></td>
-															<td class="col-md-1">&nbsp;</td>
+
 														</tr>
 													</tbody>
 												</table>

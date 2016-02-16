@@ -178,8 +178,8 @@ if (!$project || !$project->isOwner())
 															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">Uurtarief</th>
 															<th class="col-md-1">Aantal</th>
-															<th class="col-md-1">Prijs</th>
 															<th class="col-md-1">&nbsp;</th>
+															<th class="col-md-1">Prijs</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -190,8 +190,8 @@ if (!$project || !$project->isOwner())
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1">{{ number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}</td>
-															<td class="col-md-1">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($project->hour_rate, CalculationLabor::where('activity_id','=', $activity->id)->first()['amount']),2, ",",".") }}</td>
 															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($project->hour_rate, CalculationLabor::where('activity_id','=', $activity->id)->first()['amount']),2, ",",".") }}</td>
 															<td class="col-md-1"></td>
 														</tr>
 													</tbody>
@@ -308,7 +308,7 @@ if (!$project || !$project->isOwner())
 						<div class="toogle">
 
 							@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
-							<div id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chaptersp">
+							<div id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
 								<label>{{ $chapter->chapter_name }}</label>
 								<div class="toggle-content">
 
@@ -349,8 +349,8 @@ if (!$project || !$project->isOwner())
 															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">Uurtarief</th>
 															<th class="col-md-1">Aantal</th>
-															<th class="col-md-1">Prijs</th>
 															<th class="col-md-1">&nbsp;</th>
+															<th class="col-md-1">Prijs</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -361,8 +361,8 @@ if (!$project || !$project->isOwner())
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1">{{ number_format(EstimateLabor::where('activity_id', $activity->id)->whereNull('hour_id')->first()['amount'], 2, ",",".") }}</td>
-															<td class="col-md-1">{{ '&euro; '.number_format(CalculationRegister::estimLaborTotal(EstimateLabor::where('activity_id', $activity->id)->whereNull('hour_id')->first()['rate'], EstimateLabor::where('activity_id', $activity->id)->whereNull('hour_id')->first()['amount']), 2, ",",".") }}</td>
 															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-1">{{ '&euro; '.number_format(CalculationRegister::estimLaborTotal(EstimateLabor::where('activity_id', $activity->id)->whereNull('hour_id')->first()['rate'], EstimateLabor::where('activity_id', $activity->id)->whereNull('hour_id')->first()['amount']), 2, ",",".") }}</td>
 															<td class="col-md-1"></td>
 														</tr>
 													</tbody>

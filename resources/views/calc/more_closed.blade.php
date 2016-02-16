@@ -178,13 +178,13 @@ if (!$project || !$project->isOwner())
 													<?php }else { ?>
 													<thead>
 														<tr>
-															<th class="col-md-5">Omschrijving</th>
+															<th class="col-md-6">Omschrijving</th>
 															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">Uurtarief</th>
 															<th class="col-md-1">Aantal</th>
+															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">Prijs</th>
-															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
+
 														</tr>
 													</thead>
 													<?php } ?>
@@ -207,13 +207,13 @@ if (!$project || !$project->isOwner())
 															$labor = MoreLabor::where('activity_id','=', $activity->id)->first();
 														?>
 														<tr >
-															<td class="col-md-5">Arbeidsuren</td>
+															<td class="col-md-6">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ $labor ? number_format($project->hour_rate_more, 2,",",".") : '' }}</td>
 															<td class="col-md-1">{{ $labor ? number_format($labor->amount, 2, ",",".") : '' }}</td>
-															<td class="col-md-1">{{ $labor ? ('&euro; '.number_format(MoreRegister::laborTotal($labor->rate, $labor->amount), 2, ",",".")) : '' }}</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"></td>
+															<td class="col-md-1">{{ $labor ? ('&euro; '.number_format(MoreRegister::laborTotal($labor->rate, $labor->amount), 2, ",",".")) : '' }}</td>
+															
 														</tr>
 														<?php } ?>
 													</tbody>
@@ -229,38 +229,38 @@ if (!$project || !$project->isOwner())
 												<table class="table table-striped">
 													<thead>
 														<tr>
-															<th class="col-md-5">Omschrijving</th>
+															<th class="col-md-6">Omschrijving</th>
 															<th class="col-md-1">Eenheid</th>
 															<th class="col-md-1">&euro; / Eenh.</th>
 															<th class="col-md-1">Aantal</th>
 															<th class="col-md-1">Prijs</th>
 															<th class="col-md-1">+ Winst %</th>
-															<th class="col-md-1">&nbsp;</th>
+
 														</tr>
 													</thead>
 
 													<tbody>
 														@foreach (MoreMaterial::where('activity_id','=', $activity->id)->get() as $material)
 														<tr>
-															<td class="col-md-5">{{ $material->material_name }}</td>
+															<td class="col-md-6">{{ $material->material_name }}</td>
 															<td class="col-md-1">{{ $material->unit }}</td>
 															<td class="col-md-1">{{ number_format($material->rate, 2,",",".") }}</td>
 															<td class="col-md-1">{{ number_format($material->amount, 2,",",".") }}</td>
 															<td class="col-md-1">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
 															<td class="col-md-1">{{ '&euro; '.number_format($material->rate*$material->amount*((100+$profit_mat)/100), 2,",",".") }}</td>
-															<td class="col-md-1"></td>
+
 														</tr>
 														@endforeach
 													</tbody>
 													<tbody>
 														<tr>
-															<td class="col-md-5"><strong>Totaal</strong></td>
+															<td class="col-md-6"><strong>Totaal</strong></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1"><strong>{{ '&euro; '.number_format(MoreRegister::materialTotal($activity->id, $profit_mat), 2, ",",".") }}</td>
 															<td class="col-md-1"><strong>{{ '&euro; '.number_format(MoreRegister::materialTotalProfit($activity->id, $profit_mat), 2, ",",".") }}</td>
-															<td class="col-md-1">&nbsp;</td>
+
 														</tr>
 													</tbody>
 												</table>
@@ -275,38 +275,38 @@ if (!$project || !$project->isOwner())
 												<table class="table table-striped">
 													<thead>
 														<tr>
-															<th class="col-md-5">Omschrijving</th>
+															<th class="col-md-6">Omschrijving</th>
 															<th class="col-md-1">Eenheid</th>
 															<th class="col-md-1">&euro; / Eenh.</th>
 															<th class="col-md-1">Aantal</th>
 															<th class="col-md-1">Prijs</th>
 															<th class="col-md-1">+ Winst %</th>
-															<th class="col-md-1">&nbsp;</th>
+	
 														</tr>
 													</thead>
 
 													<tbody>
 														@foreach (MoreEquipment::where('activity_id','=', $activity->id)->get() as $equipment)
 														<tr>
-															<td class="col-md-5">{{ $equipment->equipment_name }}</td>
+															<td class="col-md-6">{{ $equipment->equipment_name }}</td>
 															<td class="col-md-1">{{ $equipment->unit }}</td>
 															<td class="col-md-1">{{ number_format($equipment->rate, 2,",",".") }}</td>
 															<td class="col-md-1">{{ number_format($equipment->amount, 2,",",".") }}</td>
 															<td class="col-md-1">{{ '&euro; '.number_format($equipment->rate*$equipment->amount, 2,",",".") }}</td>
 															<td class="col-md-1">{{ '&euro; '.number_format($equipment->rate*$equipment->amount*((100+$profit_equip)/100), 2,",",".") }}</td>
-															<td class="col-md-1"></td>
+
 														</tr>
 														@endforeach
 													</tbody>
 													<tbody>
 														<tr>
-															<td class="col-md-5"><strong>Totaal</strong></td>
+															<td class="col-md-6"><strong>Totaal</strong></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1"><strong>{{ '&euro; '.number_format(MoreRegister::equipmentTotal($activity->id, $profit_equip), 2, ",",".") }}</td>
 															<td class="col-md-1"><strong>{{ '&euro; '.number_format(MoreRegister::equipmentTotalProfit($activity->id, $profit_equip), 2, ",",".") }}</td>
-															<td class="col-md-1">&nbsp;</td>
+
 														</tr>
 													</tbody>
 												</table>
