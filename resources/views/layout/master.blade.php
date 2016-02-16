@@ -60,6 +60,9 @@
 		<?php // -- Morenizr -- ?>
 		<script src="/plugins/modernizr.min.js"></script>
 
+		<?php // -- Angular -- ?>
+		<script src="/components/angular/angular.min.js"></script>
+
 		<?php // -- JQuery -- ?>
 		<script src="/plugins/jquery-2.1.4.min.js"></script>
 		<script type="text/javascript">

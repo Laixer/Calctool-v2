@@ -50,7 +50,19 @@ class CalcController extends Controller {
 			if ($offer_last && $offer_last->offer_finish)
 				return response()->view('calc.calculation_closed');
 		}
-		return response()->view('calc.calculation');
+		return view('calc.calculation');
+	}
+
+	public function getCalculationSummary(Request $request, $projectid)
+	{
+		$project = Project::find($projectid);
+		return view('calc.particles.summary', ['project' => $project]);
+	}
+
+	public function getCalculationEndresult(Request $request, $projectid)
+	{
+		$project = Project::find($projectid);
+		return view('calc.particles.endresult', ['project' => $project]);
 	}
 
 	public function getEstimate(Request $request, $projectid)

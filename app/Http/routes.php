@@ -182,7 +182,9 @@ Route::group(['middleware' => 'auth'], function()
 	Route::post('blancrow/updaterow', 'BlancController@doUpdateRow');
 
 	/* Calculation pages */
-	Route::get('calculation/project-{project_id}', array('as' => 'calculation', 'uses' => 'CalcController@getCalculation'))->where('project_id', '[0-9]+');
+	Route::get('calculation/project-{project_id}', 'CalcController@getCalculation')->where('project_id', '[0-9]+');
+	Route::get('calculation/summary/project-{project_id}', 'CalcController@getCalculationSummary')->where('project_id', '[0-9]+');
+	Route::get('calculation/endresult/project-{project_id}', 'CalcController@getCalculationEndresult')->where('project_id', '[0-9]+');
 	Route::get('blancrow/project-{project_id}', 'BlancController@getBlanc')->where('project_id', '[0-9]+');
 	Route::get('estimate/project-{project_id}', array('as' => 'estimate', 'uses' => 'CalcController@getEstimate'))->where('project_id', '[0-9]+');
 
