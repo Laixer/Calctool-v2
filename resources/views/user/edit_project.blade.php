@@ -293,7 +293,7 @@ $type = ProjectType::find($project->type_id);
 				@if (CalculationEndresult::totalProject($project) != $offer_last->offer_total)
 				<div class="alert alert-warning">
 					<i class="fa fa-fa fa-info-circle"></i>
-					Gegevens zijn gewijzigd ten op zichte van de laastte offerte
+					De invoergegevens zijn gewijzigd ten op zichte van de laatste offerte
 				</div>
 				@endif
 			@endif

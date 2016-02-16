@@ -14,10 +14,10 @@ use \Calctool\Models\WholesaleType;
 		<div class="col-md-12">
 
 			<div>
-			<ol class="breadcrumb">
-			  <li><a href="/">Dashboard</a></li>
-			  <li>Leveranciers</li>
-			</ol>
+				<ol class="breadcrumb">
+				  <li><a href="/">Dashboard</a></li>
+				  <li>Leveranciers</li>
+				</ol>
 			<div>
 			<br>
 

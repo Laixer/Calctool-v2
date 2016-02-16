@@ -8,10 +8,10 @@
 		<div class="col-md-12">
 
 			<div>
-			<ol class="breadcrumb">
-			  <li><a href="/">Dashboard</a></li>
-			  <li>Relaties</li>
-			</ol>
+				<ol class="breadcrumb">
+				  <li><a href="/">Dashboard</a></li>
+				  <li>Relaties</li>
+				</ol>
 			<div>
 			<br>
 
