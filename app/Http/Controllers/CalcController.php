@@ -56,13 +56,13 @@ class CalcController extends Controller {
 	public function getCalculationSummary(Request $request, $projectid)
 	{
 		$project = Project::find($projectid);
-		return view('calc.particles.summary', ['project' => $project]);
+		return view('calc.calc_particles.summary', ['project' => $project]);
 	}
 
 	public function getCalculationEndresult(Request $request, $projectid)
 	{
 		$project = Project::find($projectid);
-		return view('calc.particles.endresult', ['project' => $project]);
+		return view('calc.calc_particles.endresult', ['project' => $project]);
 	}
 
 	public function getEstimate(Request $request, $projectid)
@@ -76,6 +76,18 @@ class CalcController extends Controller {
 				return response()->view('calc.estimate_closed');
 		}
 		return response()->view('calc.estimate');
+	}
+
+	public function getEstimateSummary(Request $request, $projectid)
+	{
+		$project = Project::find($projectid);
+		return view('calc.estim_particles.summary', ['project' => $project]);
+	}
+
+	public function getEstimateEndresult(Request $request, $projectid)
+	{
+		$project = Project::find($projectid);
+		return view('calc.estim_particles.endresult', ['project' => $project]);
 	}
 
 	public function getLess(Request $request, $projectid)

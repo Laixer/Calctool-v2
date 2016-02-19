@@ -152,7 +152,6 @@ Route::group(['middleware' => 'auth'], function()
 
 	Route::get('invoice/pdf/project-{project_id}/invoice-{invoice_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoicePDF'))->where('project_id', '[0-9]+');
 	Route::get('invoice/pdf/project-{project_id}/invoice-{invoice_id}/download', array('as' => 'invoice', 'uses' => 'CalcController@getInvoiceDownloadPDF'))->where('project_id', '[0-9]+');
-	Route::get('xyz', 'CalcController@getTermInvoicePDF');
 	Route::get('invoice/pdf/project-{project_id}/term-invoice-{invoice_id}/download', array('as' => 'invoice', 'uses' => 'CalcController@getTermInvoiceDownloadPDF'))->where('project_id', '[0-9]+');
 
 	/* Calculation acions by calculation */
@@ -186,7 +185,9 @@ Route::group(['middleware' => 'auth'], function()
 	Route::get('calculation/summary/project-{project_id}', 'CalcController@getCalculationSummary')->where('project_id', '[0-9]+');
 	Route::get('calculation/endresult/project-{project_id}', 'CalcController@getCalculationEndresult')->where('project_id', '[0-9]+');
 	Route::get('blancrow/project-{project_id}', 'BlancController@getBlanc')->where('project_id', '[0-9]+');
-	Route::get('estimate/project-{project_id}', array('as' => 'estimate', 'uses' => 'CalcController@getEstimate'))->where('project_id', '[0-9]+');
+	Route::get('estimate/project-{project_id}', 'CalcController@getEstimate')->where('project_id', '[0-9]+');
+	Route::get('estimate/summary/project-{project_id}', 'CalcController@getEstimateSummary')->where('project_id', '[0-9]+');
+	Route::get('estimate/endresult/project-{project_id}', 'CalcController@getEstimateEndresult')->where('project_id', '[0-9]+');
 
 	/* Estimate acions by estimate */
 	Route::post('estimate/newlabor', array('as' => 'calculation', 'uses' => 'EstimController@doNewEstimateLabor'));
