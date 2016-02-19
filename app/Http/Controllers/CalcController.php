@@ -131,6 +131,18 @@ class CalcController extends Controller {
 		return response()->view('calc.more');
 	}
 
+	public function getMoreSummary(Request $request, $projectid)
+	{
+		$project = Project::find($projectid);
+		return view('calc.more_particles.summary', ['project' => $project]);
+	}
+
+	public function getMoreEndresult(Request $request, $projectid)
+	{
+		$project = Project::find($projectid);
+		return view('calc.more_particles.endresult', ['project' => $project]);
+	}
+
 	public function getInvoice(Request $request, $project, $invoice_id)
 	{
 		$proj = Project::find($project);

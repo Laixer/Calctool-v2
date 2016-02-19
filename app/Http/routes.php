@@ -216,6 +216,8 @@ Route::group(['middleware' => 'auth'], function()
 
 	/* More pages */
 	Route::get('more/project-{project_id}', array('as' => 'more', 'uses' => 'CalcController@getMore'));
+	Route::get('more/summary/project-{project_id}', 'CalcController@getMoreSummary')->where('project_id', '[0-9]+');
+	Route::get('more/endresult/project-{project_id}', 'CalcController@getMoreEndresult')->where('project_id', '[0-9]+');
 	Route::post('more/newmaterial', array('as' => 'more', 'uses' => 'MoreController@doNewMaterial'));
 	Route::post('more/newequipment', array('as' => 'more', 'uses' => 'MoreController@doNewEquipment'));
 	Route::post('more/newlabor', array('as' => 'more', 'uses' => 'MoreController@doNewLabor'));
