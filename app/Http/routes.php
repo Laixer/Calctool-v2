@@ -205,6 +205,8 @@ Route::group(['middleware' => 'auth'], function()
 
 	/* Less pages */
 	Route::get('less/project-{project_id}', array('as' => 'less', 'uses' => 'CalcController@getLess'))->where('project_id', '[0-9]+');
+	Route::get('less/summary/project-{project_id}', 'CalcController@getLessSummary')->where('project_id', '[0-9]+');
+	Route::get('less/endresult/project-{project_id}', 'CalcController@getLessEndresult')->where('project_id', '[0-9]+');
 	Route::post('less/updatelabor', array('as' => 'less', 'uses' => 'LessController@doUpdateLabor'));
 	Route::post('less/updateequipment', array('as' => 'less', 'uses' => 'LessController@doUpdateEquipment'));
 	Route::post('less/updatematerial', array('as' => 'less', 'uses' => 'LessController@doUpdateMaterial'));

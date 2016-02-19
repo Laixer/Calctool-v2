@@ -103,6 +103,18 @@ class CalcController extends Controller {
 		return response()->view('calc.less');
 	}
 
+	public function getLessSummary(Request $request, $projectid)
+	{
+		$project = Project::find($projectid);
+		return view('calc.less_particles.summary', ['project' => $project]);
+	}
+
+	public function getLessEndresult(Request $request, $projectid)
+	{
+		$project = Project::find($projectid);
+		return view('calc.less_particles.endresult', ['project' => $project]);
+	}
+
 	public function getMore(Request $request, $projectid)
 	{
 		$project = Project::find($projectid);

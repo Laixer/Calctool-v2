@@ -1,9 +1,9 @@
 <?php
-use \Calctool\Calculus\SetEstimateEndresult;
+
+use \Calctool\Calculus\LessEndresult;
 ?>
 <h4>Aanneming</h4>
 <table class="table table-striped">
-
 	<thead>
 		<tr>
 			<th class="col-md-4">&nbsp;</th>
@@ -16,32 +16,31 @@ use \Calctool\Calculus\SetEstimateEndresult;
 		</tr>
 	</thead>
 
-
 	<tbody>
 		@if (!$project->tax_reverse)
 		<tr>
 			<td class="col-md-4">Arbeidskosten</td>
-			<td class="col-md-1">{{ number_format(SetEstimateEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
+			<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">21%</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcLaborActivityTax1AmountTax($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax1AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
 		<tr>
 			<td class="col-md-4">&nbsp;</td>
-			<td class="col-md-1">{{ number_format(SetEstimateEndresult::conCalcLaborActivityTax2($project), 2, ",",".") }}</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
+			<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax2($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">6%</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
 		@else
 		<tr>
 			<td class="col-md-4">Arbeidskosten</td>
-			<td class="col-md-1">{{ number_format(SetEstimateEndresult::conCalcLaborActivityTax3($project), 2, ",",".") }}</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
+			<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax3($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">0%</td>
 			<td class="col-md-2">&nbsp;</td>
@@ -53,26 +52,26 @@ use \Calctool\Calculus\SetEstimateEndresult;
 		<tr>
 			<td class="col-md-4">Materiaalkosten</td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">21%</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcMaterialActivityTax1AmountTax($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax1AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
 		<tr>
 			<td class="col-md-4">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">6%</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
 		@else
 		<tr>
 			<td class="col-md-4">Materiaalkosten</td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">0%</td>
 			<td class="col-md-2">&nbsp;</td>
@@ -84,26 +83,26 @@ use \Calctool\Calculus\SetEstimateEndresult;
 		<tr>
 			<td class="col-md-4">Materieelkosten</td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">21%</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcEquipmentActivityTax1AmountTax($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax1AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
 		<tr>
 			<td class="col-md-4">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">6%</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
 		@else
 		<tr>
 			<td class="col-md-4">Materieelkosten</td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">0%</td>
 			<td class="col-md-2">&nbsp;</td>
@@ -114,10 +113,10 @@ use \Calctool\Calculus\SetEstimateEndresult;
 		<tr>
 			<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-2"><strong>{{ '&euro; '.number_format(SetEstimateEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
+			<td class="col-md-2"><strong>{{ '&euro; '.number_format(LessEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-2"><strong>{{ '&euro; '.number_format(SetEstimateEndresult::totalContractingTax($project), 2, ",",".") }}</strong></td>
+			<td class="col-md-2"><strong>{{ '&euro; '.number_format(LessEndresult::totalContractingTax($project), 2, ",",".") }}</strong></td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
 	</tbody>
@@ -125,7 +124,6 @@ use \Calctool\Calculus\SetEstimateEndresult;
 
 <h4>Onderaanneming</h4>
 <table class="table table-striped">
-
 	<thead>
 		<tr>
 			<th class="col-md-4">&nbsp;</th>
@@ -138,32 +136,31 @@ use \Calctool\Calculus\SetEstimateEndresult;
 		</tr>
 	</thead>
 
-
 	<tbody>
 		@if (!$project->tax_reverse)
 		<tr>
 			<td class="col-md-4">Arbeidskosten</td>
-			<td class="col-md-1">{{ number_format(SetEstimateEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
+			<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">21%</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcLaborActivityTax1AmountTax($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax1AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
 		<tr>
 			<td class="col-md-4">&nbsp;</td>
-			<td class="col-md-1">{{ number_format(SetEstimateEndresult::subconCalcLaborActivityTax2($project), 2, ",",".") }}</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
+			<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax2($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">6%</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
 		@else
 		<tr>
 			<td class="col-md-4">Arbeidskosten</td>
-			<td class="col-md-1">{{ number_format(SetEstimateEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
+			<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">0%</td>
 			<td class="col-md-2">&nbsp;</td>
@@ -175,26 +172,26 @@ use \Calctool\Calculus\SetEstimateEndresult;
 		<tr>
 			<td class="col-md-4">Materiaalkosten</td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">21%</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcMaterialActivityTax1AmountTax($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcMaterialActivityTax1AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
 		<tr>
 			<td class="col-md-4">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">6%</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
 		@else
 		<tr>
 			<td class="col-md-4">Materiaalkosten</td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">0%</td>
 			<td class="col-md-2">&nbsp;</td>
@@ -206,26 +203,26 @@ use \Calctool\Calculus\SetEstimateEndresult;
 		<tr>
 			<td class="col-md-4">Materieelkosten</td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">21%</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcEquipmentActivityTax1AmountTax($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax1AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
 		<tr>
 			<td class="col-md-4">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">6%</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
 		@else
 		<tr>
 			<td class="col-md-4">Materieelkosten</td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
+			<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">0%</td>
 			<td class="col-md-2">&nbsp;</td>
@@ -236,18 +233,17 @@ use \Calctool\Calculus\SetEstimateEndresult;
 		<tr>
 			<td class="col-md-4"><strong>Totaal Onderaanneming </strong></td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-2"><strong>{{ '&euro; '.number_format(SetEstimateEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
+			<td class="col-md-2"><strong>{{ '&euro; '.number_format(LessEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-2"><strong>{{ '&euro; '.number_format(SetEstimateEndresult::totalSubcontractingTax($project), 2, ",",".") }}</strong></td>
+			<td class="col-md-2"><strong>{{ '&euro; '.number_format(LessEndresult::totalSubcontractingTax($project), 2, ",",".") }}</strong></td>
 			<td class="col-md-2">&nbsp;</td>
 		</tr>
 	</tbody>
 </table>
 
-<h4>Totalen Stelpost</h4>
+<h4>Totalen Minderwerk</h4>
 <table class="table table-striped">
-
 	<thead>
 		<tr>
 			<th class="col-md-5">&nbsp;</th>
@@ -259,11 +255,10 @@ use \Calctool\Calculus\SetEstimateEndresult;
 		</tr>
 	</thead>
 
-
 	<tbody>
 		<tr>
-			<td class="col-md-5"><strong>Calculatief te factureren (excl. BTW)<strong></td>
-			<td class="col-md-2"><strong>{{ '&euro; '.number_format(SetEstimateEndresult::totalProject($project), 2, ",",".") }}</strong></td>
+			<td class="col-md-5"><strong>Calculatief in mindering te brengen (excl. BTW)</strong></td>
+			<td class="col-md-2"><strong>{{ '&euro; '.number_format(LessEndresult::totalProject($project), 2, ",",".") }}</strong></td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -275,7 +270,7 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-2">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateEndresult::totalContractingTax1($project), 2, ",",".") }}</td>
+			<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::totalContractingTax1($project), 2, ",",".") }}</td>
 			<td class="col-md-2">&nbsp;</td>
 		</tr>
 		<tr>
@@ -283,7 +278,7 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-2">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateEndresult::totalContractingTax2($project), 2, ",",".") }}</td>
+			<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::totalContractingTax2($project), 2, ",",".") }}</td>
 			<td class="col-md-2">&nbsp;</td>
 		</tr>
 		<tr>
@@ -291,7 +286,7 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-2">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
+			<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
 			<td class="col-md-2">&nbsp;</td>
 		</tr>
 		<tr>
@@ -299,28 +294,25 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-2">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
+			<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 			<td class="col-md-2">&nbsp;</td>
 		</tr>
 		@endif
 		<tr>
-			<td class="col-md-5"><strong>Te factureren BTW bedrag</strong></td>
+			<td class="col-md-5">In mindering te brengen BTW bedrag</td>
 			<td class="col-md-2">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-1"><strong>{{ '&euro; '.number_format(SetEstimateEndresult::totalProjectTax($project), 2, ",",".") }}</strong></td>
-			<td class="col-md-2"></td>
+			<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::totalProjectTax($project), 2, ",",".") }}</td>
+			<td class="col-md-1">&nbsp;</td>
 		</tr>
 		<tr>
-			<td class="col-md-5"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
+			<td class="col-md-5"><strong>Calculatief in mindering te brengen (Incl. BTW)</strong></td>
 			<td class="col-md-2">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
-			<td class="col-md-2"><strong class="pull-right">{{ '&euro; '.number_format(SetEstimateEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
+			<td class="col-md-2"><strong class="pull-right">{{ '&euro; '.number_format(LessEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
 		</tr>
-
 	</tbody>
-
-
 </table>
