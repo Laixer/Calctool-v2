@@ -222,6 +222,20 @@ var n = this,
 						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
 						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
 						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+						var sub_total = 0;
+						$curThis.closest("tbody").find(".total-incl-tax").each(function(index){
+							var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+							if (_cal)
+								sub_total += _cal;
+						});
+						$curThis.closest("table").find('.equip_subtotal').text('€ '+$.number(sub_total,2,',','.'));
+						var sub_total_profit = 0;
+						$curThis.closest("tbody").find(".total-ex-tax").each(function(index){
+							var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+							if (_cal)
+								sub_total_profit += _cal;
+						});
+						$curThis.closest("table").find('.equip_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
 					} else {
 						$.each(json.message, function(i, item) {
 							if(json.message['name'])
@@ -403,6 +417,20 @@ var n = this,
 						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
 						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
 						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+						var sub_total = 0;
+						$curThis.closest("tbody").find(".total-incl-tax").each(function(index){
+							var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+							if (_cal)
+								sub_total += _cal;
+						});
+						$curThis.closest("table").find('.equip_subtotal').text('€ '+$.number(sub_total,2,',','.'));
+						var sub_total_profit = 0;
+						$curThis.closest("tbody").find(".total-ex-tax").each(function(index){
+							var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+							if (_cal)
+								sub_total_profit += _cal;
+						});
+						$curThis.closest("table").find('.equip_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
 					} else {
 						$.each(json.message, function(i, item) {
 							if(json.message['name'])
@@ -440,6 +468,20 @@ var n = this,
 						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
 						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
 						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+						var sub_total = 0;
+						$curThis.closest("tbody").find(".total-incl-tax").each(function(index){
+							var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+							if (_cal)
+								sub_total += _cal;
+						});
+						$curThis.closest("table").find('.mat_subtotal').text('€ '+$.number(sub_total,2,',','.'));
+						var sub_total_profit = 0;
+						$curThis.closest("tbody").find(".total-ex-tax").each(function(index){
+							var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+							if (_cal)
+								sub_total_profit += _cal;
+						});
+						$curThis.closest("table").find('.mat_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
 					} else {
 						$.each(json.message, function(i, item) {
 							if(json.message['name'])
@@ -477,6 +519,20 @@ var n = this,
 						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
 						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
 						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+						var sub_total = 0;
+						$curThis.closest("tbody").find(".total-incl-tax").each(function(index){
+							var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+							if (_cal)
+								sub_total += _cal;
+						});
+						$curThis.closest("table").find('.equip_subtotal').text('€ '+$.number(sub_total,2,',','.'));
+						var sub_total_profit = 0;
+						$curThis.closest("tbody").find(".total-ex-tax").each(function(index){
+							var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+							if (_cal)
+								sub_total_profit += _cal;
+						});
+						$curThis.closest("table").find('.equip_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
 					} else {
 						$.each(json.message, function(i, item) {
 							if(json.message['name'])
@@ -600,6 +656,20 @@ var n = this,
 						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
 						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
 						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+						var sub_total = 0;
+						$curThis.closest("tbody").find(".total-incl-tax").each(function(index){
+							var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+							if (_cal)
+								sub_total += _cal;
+						});
+						$curThis.closest("table").find('.mat_subtotal').text('€ '+$.number(sub_total,2,',','.'));
+						var sub_total_profit = 0;
+						$curThis.closest("tbody").find(".total-ex-tax").each(function(index){
+							var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+							if (_cal)
+								sub_total_profit += _cal;
+						});
+						$curThis.closest("table").find('.mat_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
 					} else {
 						$.each(json.message, function(i, item) {
 							if(json.message['name'])
@@ -644,6 +714,20 @@ var n = this,
 						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
 						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
 						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+						var sub_total = 0;
+						$curThis.closest("tbody").find(".total-incl-tax").each(function(index){
+							var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+							if (_cal)
+								sub_total += _cal;
+						});
+						$curThis.closest("table").find('.equip_subtotal').text('€ '+$.number(sub_total,2,',','.'));
+						var sub_total_profit = 0;
+						$curThis.closest("tbody").find(".total-ex-tax").each(function(index){
+							var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+							if (_cal)
+								sub_total_profit += _cal;
+						});
+						$curThis.closest("table").find('.equip_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
 					} else {
 						$.each(json.message, function(i, item) {
 							if(json.message['name'])
@@ -1118,8 +1202,8 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::calcEquipmentTotal($activity->id, $profit_equip), 2, ",",".") }}</span></td>
-															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::calcEquipmentTotalProfit($activity->id, $profit_equip), 2, ",",".") }}</span></td>
+															<td class="col-md-1"><strong class="equip_subtotal">{{ '&euro; '.number_format(CalculationRegister::calcEquipmentTotal($activity->id, $profit_equip), 2, ",",".") }}</span></td>
+															<td class="col-md-1"><strong class="equip_subtotal_profit">{{ '&euro; '.number_format(CalculationRegister::calcEquipmentTotalProfit($activity->id, $profit_equip), 2, ",",".") }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -1314,8 +1398,8 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::estimMaterialTotal($activity->id, $profit_mat), 2, ",",".") }}</span></td>
-															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::estimMaterialTotalProfit($activity->id, $profit_mat), 2, ",",".") }}</span></td>
+															<td class="col-md-1"><strong class="mat_subtotal">{{ '&euro; '.number_format(CalculationRegister::estimMaterialTotal($activity->id, $profit_mat), 2, ",",".") }}</span></td>
+															<td class="col-md-1"><strong class="mat_subtotal_profit">{{ '&euro; '.number_format(CalculationRegister::estimMaterialTotalProfit($activity->id, $profit_mat), 2, ",",".") }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -1390,8 +1474,8 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::estimEquipmentTotal($activity->id, $profit_equip), 2, ",",".") }}</span></td>
-															<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationRegister::estimEquipmentTotalProfit($activity->id, $profit_equip), 2, ",",".") }}</span></td>
+															<td class="col-md-1"><strong class="equip_subtotal">{{ '&euro; '.number_format(CalculationRegister::estimEquipmentTotal($activity->id, $profit_equip), 2, ",",".") }}</span></td>
+															<td class="col-md-1"><strong class="equip_subtotal_profit">{{ '&euro; '.number_format(CalculationRegister::estimEquipmentTotalProfit($activity->id, $profit_equip), 2, ",",".") }}</span></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
