@@ -110,6 +110,7 @@ var n = this,
 			$toggleOpenTab = sessionStorage.toggleTabCalc{{Auth::id()}};
 			$('#tab-'+$toggleOpenTab).addClass('active');
 			$('#'+$toggleOpenTab).addClass('active');
+			$('#tab-'+$toggleOpenTab).trigger("click");
 		} else {
 			sessionStorage.toggleTabCalc{{Auth::id()}} = 'calculate';
 			$('#tab-calculate').addClass('active');

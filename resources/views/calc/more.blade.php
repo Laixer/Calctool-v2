@@ -106,6 +106,7 @@ var n = this,
 			$toggleOpenTab = sessionStorage.toggleTabMore{{Auth::user()->id}};
 			$('#tab-'+$toggleOpenTab).addClass('active');
 			$('#'+$toggleOpenTab).addClass('active');
+			$('#tab-'+$toggleOpenTab).trigger("click");
 		} else {
 			sessionStorage.toggleTabMore{{Auth::user()->id}} = 'calculate';
 			$('#tab-calculate').addClass('active');
