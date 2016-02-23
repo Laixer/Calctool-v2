@@ -1070,9 +1070,17 @@ var n = this,
 						</div>
 					</div>
 
-					<div id="summary" class="tab-pane"></div>
+					<div id="summary" class="tab-pane">
+						<div class="row text-center">
+							<img src="/images/loading_icon.gif" height="120" />
+						</div>
+					</div>
 
-					<div id="endresult" class="tab-pane"></div>
+					<div id="endresult" class="tab-pane">
+						<div class="row text-center">
+							<img src="/images/loading_icon.gif" height="120" />
+						</div>
+					</div>
 
 				</div>
 
