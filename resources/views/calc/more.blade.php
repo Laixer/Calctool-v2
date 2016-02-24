@@ -844,7 +844,7 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>
+															<td class="col-md-1"><strong class="mat_subtotaal">
 															<?php
 															if (Part::find($activity->part_id)->part_name=='contracting') {
 																$profit = $project->profit_more_contr_mat;
@@ -852,8 +852,8 @@ var n = this,
 																$profit = $project->profit_more_subcontr_mat;
 															}
 															echo '&euro; '.number_format(MoreRegister::materialTotal($activity->id, $profit), 2, ",",".");
-															?></span></td>
-															<td class="col-md-1"><strong>
+															?></strong></td>
+															<td class="col-md-1"><strong class="mat_subtotaal_profit">
 															<?php
 															if (Part::find($activity->part_id)->part_name=='contracting') {
 																$profit = $project->profit_more_contr_mat;
@@ -861,7 +861,7 @@ var n = this,
 																$profit = $project->profit_more_subcontr_mat;
 															}
 															echo '&euro; '.number_format(MoreRegister::materialTotalProfit($activity->id, $profit), 2, ",",".");
-															?></span></td>
+															?></strong></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
