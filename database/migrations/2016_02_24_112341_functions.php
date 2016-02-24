@@ -204,6 +204,6 @@ class Functions extends Migration
      */
     public function down()
     {
-        //
+        //TODO
     }
 }
