@@ -59,7 +59,7 @@ if (!$project || !$project->isOwner()) {
 				</thead>
 				<tbody>
 					<?php $i = InvoiceVersion::where('invoice_id', '=', $invoice->id)->count(); ?>
-					@foreach(InvoiceVersion::where('invoice_id', '=', $invoice->id)->orderBy('created_at','desc')->get() as $version)
+					@foreach(InvoiceVersion::where('invoice_id', '=', $invoice->id)->orderBy('created_at')->get() as $version)
 					<tr>
 						<td class="col-md-2"><a href="/invoice/project-{{ $project->id }}/invoice-version-{{ $version->id }}">{{ $version->invoice_code.'-'.$i }}</a></td>
 						<td class="col-md-2"><?php echo date('d-m-Y', strtotime(DB::table('invoice_version')->where('id',$version->id)->select(DB::raw('created_at'))->first()->created_at)); ?></td>

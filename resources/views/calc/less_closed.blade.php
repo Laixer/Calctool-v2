@@ -130,7 +130,7 @@ if (!$project || !$project->isOwner())
 					<div id="calculate" class="tab-pane">
 						<div class="toogle">
 
-							@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+							@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
 							<div id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
 								<label>{{ $chapter->chapter_name }}</label>
 								<div class="toggle-content">
@@ -138,7 +138,7 @@ if (!$project || !$project->isOwner())
 									<div class="toogle">
 
 										<?php
-										foreach(Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->orderBy('created_at', 'desc')->get() as $activity) {
+										foreach(Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->orderBy('created_at')->get() as $activity) {
 											if (Part::find($activity->part_id)->part_name=='contracting') {
 												$profit_mat = $project->profit_calc_contr_mat;
 												$profit_equip = $project->profit_calc_contr_equip;
@@ -357,9 +357,9 @@ if (!$project || !$project->isOwner())
 										</thead>
 
 										<tbody>
-											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
 											<?php $i = 0; ?>
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->orderBy('created_at')->get() as $activity)
 
 											<?php $i++; ?>
 											<tr>
@@ -406,9 +406,9 @@ if (!$project || !$project->isOwner())
 										</thead>
 
 										<tbody>
-											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
 											<?php $i = 0; ?>
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->orderBy('created_at')->get() as $activity)
 											<?php $i++; ?>
 											<tr>
 												<td class="col-md-3"><strong>{{ $i==1 ? $chapter->chapter_name : '' }}</strong></td>

@@ -782,14 +782,14 @@ var n = this,
 					<div id="calculate" class="tab-pane">
 						<div class="toogle">
 
-							@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+							@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
 							<div id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
 								<label>{{ $chapter->chapter_name }}</label>
 								<div class="toggle-content">
 
 									<div class="toogle">
 
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
+										@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->orderBy('created_at')->get() as $activity)
 										<div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
 											<label>{{ $activity->activity_name }}</label>
 											<div class="toggle-content">
