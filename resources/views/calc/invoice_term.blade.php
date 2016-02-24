@@ -387,7 +387,7 @@ if (!$project || !$project->isOwner()) {
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
-							@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+							@if (!$project->tax_reverse)
 							<tr>
 								<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
 								<td class="col-md-2">{{ '&euro; '.number_format($invoice->rest_21, 2, ",",".") }}</td>
@@ -409,7 +409,7 @@ if (!$project || !$project->isOwner()) {
 							</tr>
 							@endif
 
-							@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+							@if (!$project->tax_reverse)
 							<tr>
 								<td class="col-md-6">BTW bedrag 21%</td>
 								<td class="col-md-2">&nbsp;</td>

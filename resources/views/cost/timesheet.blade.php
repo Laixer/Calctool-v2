@@ -112,6 +112,14 @@ use \Calctool\Models\MoreLabor;
 
 		<div class="col-md-12">
 
+			<div>
+				<ol class="breadcrumb">
+				  <li><a href="/">Home</a></li>
+				  <li class="active">Urenregistratie</li>
+				</ol>
+			<div>
+			<br>
+
 			<h2><strong>Urenregistratie</strong></h2>
 
 			<div class="tabs nomargin">
@@ -314,7 +322,6 @@ use \Calctool\Models\MoreLabor;
 								</div>
 
 							</div>
-
 					</div>
 
 				</div>

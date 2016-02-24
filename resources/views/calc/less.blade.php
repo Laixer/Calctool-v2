@@ -94,14 +94,17 @@ var n = this,
 		});
 		$('#tab-summary').click(function(e){
 			sessionStorage.toggleTabLess{{Auth::user()->id}} = 'summary';
+			$('#summary').load('summary/project-{{ $project->id }}');
 		});
 		$('#tab-endresult').click(function(e){
 			sessionStorage.toggleTabLess{{Auth::user()->id}} = 'endresult';
+			$('#endresult').load('endresult/project-{{ $project->id }}');
 		});
 		if (sessionStorage.toggleTabLess{{Auth::user()->id}}){
 			$toggleOpenTab = sessionStorage.toggleTabLess{{Auth::user()->id}};
 			$('#tab-'+$toggleOpenTab).addClass('active');
 			$('#'+$toggleOpenTab).addClass('active');
+			$('#tab-'+$toggleOpenTab).trigger("click");
 		} else {
 			sessionStorage.toggleTabLess{{Auth::user()->id}} = 'calculate';
 			$('#tab-calculate').addClass('active');
@@ -143,6 +146,20 @@ var n = this,
 							var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
 							$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
 							$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+							var sub_total = 0;
+							$curThis.closest("tbody").find(".total-incl-tax").each(function(index){
+								var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+								if (_cal)
+									sub_total += _cal;
+							});
+							$curThis.closest("table").find('.mat_subtotal').text('€ '+$.number(sub_total,2,',','.'));
+							var sub_total_profit = 0;
+							$curThis.closest("tbody").find(".total-ex-tax").each(function(index){
+								var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+								if (_cal)
+									sub_total_profit += _cal;
+							});
+							$curThis.closest("table").find('.mat_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
 						} else {
 							$.each(json.message, function(i, item) {
 								if(json.message['name'])
@@ -184,6 +201,20 @@ var n = this,
 							var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
 							$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
 							$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+							var sub_total = 0;
+							$curThis.closest("tbody").find(".total-incl-tax").each(function(index){
+								var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+								if (_cal)
+									sub_total += _cal;
+							});
+							$curThis.closest("table").find('.equip_subtotal').text('€ '+$.number(sub_total,2,',','.'));
+							var sub_total_profit = 0;
+							$curThis.closest("tbody").find(".total-ex-tax").each(function(index){
+								var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+								if (_cal)
+									sub_total_profit += _cal;
+							});
+							$curThis.closest("table").find('.equip_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
 						} else {
 							$.each(json.message, function(i, item) {
 								if(json.message['name'])
@@ -286,335 +317,335 @@ var n = this,
 				});
 			}
 		});
-		$("body").on("blur", ".dsave", function(){
-			var flag = true;
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				return false;
-			$curThis.closest("tr").find("input").each(function(){
-				if(!$(this).val())
-					flag = false;
-			});
-			if(flag){
-				$.post("/calculation/calc/newmaterial", {
-					name: $curThis.closest("tr").find("input[name='name']").val(),
-					unit: $curThis.closest("tr").find("input[name='unit']").val(),
-					rate: $curThis.closest("tr").find("input[name='rate']").val(),
-					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id"),
-					project: {{ $project->id }},
-				}, function(data){
-					var json = $.parseJSON(data);
-					$curThis.closest("tr").find("input").removeClass("error-input");
-					if (json.success) {
-						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
-						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
-						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
-					} else {
-						$.each(json.message, function(i, item) {
-							if(json.message['name'])
-								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-							if(json.message['unit'])
-								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-							if(json.message['rate'])
-								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-							if(json.message['amount'])
-								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-						});
-					}
-				}).fail(function(e){
-					console.log(e);
-				});
-			}
-		});
-		$("body").on("blur", ".esave", function(){
-			var flag = true;
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				return false;
-			$curThis.closest("tr").find("input").each(function(){
-				if(!$(this).val())
-					flag = false;
-			});
-			if(flag){
-				$.post("/calculation/calc/newequipment", {
-					name: $curThis.closest("tr").find("input[name='name']").val(),
-					unit: $curThis.closest("tr").find("input[name='unit']").val(),
-					rate: $curThis.closest("tr").find("input[name='rate']").val(),
-					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id"),
-					project: {{ $project->id }},
-				}, function(data){
-					var json = $.parseJSON(data);
-					$curThis.closest("tr").find("input").removeClass("error-input");
-					if (json.success) {
-						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
-						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
-						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
-					} else {
-						$.each(json.message, function(i, item) {
-							if(json.message['name'])
-								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-							if(json.message['unit'])
-								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-							if(json.message['rate'])
-								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-							if(json.message['amount'])
-								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-						});
-					}
-				}).fail(function(e){
-					console.log(e);
-				});
-			}
-		});
-		$("body").on("change", ".dsavee", function(){
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id")){
-				$.post("/calculation/estim/updatematerial", {
-					id: $curThis.closest("tr").attr("data-id"),
-					name: $curThis.closest("tr").find("input[name='name']").val(),
-					unit: $curThis.closest("tr").find("input[name='unit']").val(),
-					rate: $curThis.closest("tr").find("input[name='rate']").val(),
-					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					project: {{ $project->id }},
-				}, function(data){
-					var json = $.parseJSON(data);
-					$curThis.closest("tr").find("input").removeClass("error-input");
-					if (json.success) {
-						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
-						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
-						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
-					} else {
-						$.each(json.message, function(i, item) {
-							if(json.message['name'])
-								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-							if(json.message['unit'])
-								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-							if(json.message['rate'])
-								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-							if(json.message['amount'])
-								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-						});
-					}
-				}).fail(function(e){
-					console.log(e);
-				});
-			}
-		});
-		$("body").on("change", ".esavee", function(){
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id")){
-				$.post("/calculation/estim/updateequipment", {
-					id: $curThis.closest("tr").attr("data-id"),
-					name: $curThis.closest("tr").find("input[name='name']").val(),
-					unit: $curThis.closest("tr").find("input[name='unit']").val(),
-					rate: $curThis.closest("tr").find("input[name='rate']").val(),
-					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					project: {{ $project->id }},
-				}, function(data){
-					var json = $.parseJSON(data);
-					$curThis.closest("tr").find("input").removeClass("error-input");
-					if (json.success) {
-						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
-						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
-						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
-					} else {
-						$.each(json.message, function(i, item) {
-							if(json.message['name'])
-								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-							if(json.message['unit'])
-								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-							if(json.message['rate'])
-								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-							if(json.message['amount'])
-								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-						});
-					}
-				}).fail(function(e){
-					console.log(e);
-				});
-			}
-		});
-		$("body").on("change", ".lsavee", function(){
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id")){
-				$.post("/calculation/estim/updatelabor", {
-					id: $curThis.closest("tr").attr("data-id"),
-					rate: $curThis.closest("tr").find("input[name='rate']").val(),
-					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					project: {{ $project->id }},
-				}, function(data){
-					var json = $.parseJSON(data);
-					$curThis.closest("tr").find("input").removeClass("error-input");
-					if (json.success) {
-						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = $curThis.closest("tr").find("input[name='rate']").val()
-						if (rate) {
-							rate.toString().split('.').join('').replace(',', '.');
-						} else {
-							rate = {{$project->hour_rate}};
-						}
-						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-					} else {
-						$.each(json.message, function(i, item) {
-							if(json.message['name'])
-								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-							if(json.message['unit'])
-								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-							if(json.message['rate'])
-								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-							if(json.message['amount'])
-								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-						});
-					}
-				}).fail(function(e){
-					console.log(e);
-				});
-			}
-		});
-		$("body").on("blur", ".lsavee", function(){
-			var flag = true;
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				return false;
-			$curThis.closest("tr").find("input").each(function(){
-				if(!$(this).val())
-					flag = false;
-			});
-			if(flag){
-				$.post("/calculation/estim/newlabor", {
-					rate: $curThis.closest("tr").find("input[name='rate']").val(),
-					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id"),
-					project: {{ $project->id }},
-				}, function(data){
-					var json = $.parseJSON(data);
-					$curThis.closest("tr").find("input").removeClass("error-input");
-					if (json.success) {
-						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = $curThis.closest("tr").find("input[name='rate']").val()
-						if (rate) {
-							rate.toString().split('.').join('').replace(',', '.');
-						} else {
-							rate = {{$project->hour_rate}};
-						}
-						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-					} else {
-						$.each(json.message, function(i, item) {
-							if(json.message['rate'])
-								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-							if(json.message['amount'])
-								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-						});
-					}
-				}).fail(function(e){
-					console.log(e);
-				});
-			}
-		});
-		$("body").on("blur", ".dsavee", function(){
-			var flag = true;
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				return false;
-			$curThis.closest("tr").find("input").each(function(){
-				if(!$(this).val())
-					flag = false;
-			});
-			if(flag){
-				$.post("/calculation/estim/newmaterial", {
-					name: $curThis.closest("tr").find("input[name='name']").val(),
-					unit: $curThis.closest("tr").find("input[name='unit']").val(),
-					rate: $curThis.closest("tr").find("input[name='rate']").val(),
-					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id"),
-					project: {{ $project->id }},
-				}, function(data){
-					var json = $.parseJSON(data);
-					$curThis.closest("tr").find("input").removeClass("error-input");
-					if (json.success) {
-						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
-						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
-						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
-					} else {
-						$.each(json.message, function(i, item) {
-							if(json.message['name'])
-								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-							if(json.message['unit'])
-								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-							if(json.message['rate'])
-								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-							if(json.message['amount'])
-								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-						});
-					}
-				}).fail(function(e){
-					console.log(e);
-				});
-			}
-		});
-		$("body").on("blur", ".esavee", function(){
-			var flag = true;
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				return false;
-			$curThis.closest("tr").find("input").each(function(){
-				if(!$(this).val())
-					flag = false;
-			});
-			if(flag){
-				$.post("/calculation/estim/newequipment", {
-					name: $curThis.closest("tr").find("input[name='name']").val(),
-					unit: $curThis.closest("tr").find("input[name='unit']").val(),
-					rate: $curThis.closest("tr").find("input[name='rate']").val(),
-					amount: $curThis.closest("tr").find("input[name='amount']").val(),
-					activity: $curThis.closest("table").attr("data-id"),
-					project: {{ $project->id }},
-				}, function(data){
-					var json = $.parseJSON(data);
-					$curThis.closest("tr").find("input").removeClass("error-input");
-					if (json.success) {
-						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
-						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
-						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
-					} else {
-						$.each(json.message, function(i, item) {
-							if(json.message['name'])
-								$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-							if(json.message['unit'])
-								$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-							if(json.message['rate'])
-								$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-							if(json.message['amount'])
-								$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-						});
-					}
-				}).fail(function(e){
-					console.log(e);
-				});
-			}
-		});
+		// $("body").on("blur", ".dsave", function(){
+		// 	var flag = true;
+		// 	var $curThis = $(this);
+		// 	if($curThis.closest("tr").attr("data-id"))
+		// 		return false;
+		// 	$curThis.closest("tr").find("input").each(function(){
+		// 		if(!$(this).val())
+		// 			flag = false;
+		// 	});
+		// 	if(flag){
+		// 		$.post("/calculation/calc/newmaterial", {
+		// 			name: $curThis.closest("tr").find("input[name='name']").val(),
+		// 			unit: $curThis.closest("tr").find("input[name='unit']").val(),
+		// 			rate: $curThis.closest("tr").find("input[name='rate']").val(),
+		// 			amount: $curThis.closest("tr").find("input[name='amount']").val(),
+		// 			activity: $curThis.closest("table").attr("data-id"),
+		// 			project: {{ $project->id }},
+		// 		}, function(data){
+		// 			var json = $.parseJSON(data);
+		// 			$curThis.closest("tr").find("input").removeClass("error-input");
+		// 			if (json.success) {
+		// 				$curThis.closest("tr").attr("data-id", json.id);
+		// 				var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
+		// 				var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+		// 				var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
+		// 				$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+		// 				$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+		// 			} else {
+		// 				$.each(json.message, function(i, item) {
+		// 					if(json.message['name'])
+		// 						$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+		// 					if(json.message['unit'])
+		// 						$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+		// 					if(json.message['rate'])
+		// 						$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+		// 					if(json.message['amount'])
+		// 						$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+		// 				});
+		// 			}
+		// 		}).fail(function(e){
+		// 			console.log(e);
+		// 		});
+		// 	}
+		// });
+		// $("body").on("blur", ".esave", function(){
+		// 	var flag = true;
+		// 	var $curThis = $(this);
+		// 	if($curThis.closest("tr").attr("data-id"))
+		// 		return false;
+		// 	$curThis.closest("tr").find("input").each(function(){
+		// 		if(!$(this).val())
+		// 			flag = false;
+		// 	});
+		// 	if(flag){
+		// 		$.post("/calculation/calc/newequipment", {
+		// 			name: $curThis.closest("tr").find("input[name='name']").val(),
+		// 			unit: $curThis.closest("tr").find("input[name='unit']").val(),
+		// 			rate: $curThis.closest("tr").find("input[name='rate']").val(),
+		// 			amount: $curThis.closest("tr").find("input[name='amount']").val(),
+		// 			activity: $curThis.closest("table").attr("data-id"),
+		// 			project: {{ $project->id }},
+		// 		}, function(data){
+		// 			var json = $.parseJSON(data);
+		// 			$curThis.closest("tr").find("input").removeClass("error-input");
+		// 			if (json.success) {
+		// 				$curThis.closest("tr").attr("data-id", json.id);
+		// 				var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
+		// 				var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+		// 				var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
+		// 				$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+		// 				$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+		// 			} else {
+		// 				$.each(json.message, function(i, item) {
+		// 					if(json.message['name'])
+		// 						$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+		// 					if(json.message['unit'])
+		// 						$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+		// 					if(json.message['rate'])
+		// 						$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+		// 					if(json.message['amount'])
+		// 						$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+		// 				});
+		// 			}
+		// 		}).fail(function(e){
+		// 			console.log(e);
+		// 		});
+		// 	}
+		// });
+		// $("body").on("change", ".dsavee", function(){
+		// 	var $curThis = $(this);
+		// 	if($curThis.closest("tr").attr("data-id")){
+		// 		$.post("/calculation/estim/updatematerial", {
+		// 			id: $curThis.closest("tr").attr("data-id"),
+		// 			name: $curThis.closest("tr").find("input[name='name']").val(),
+		// 			unit: $curThis.closest("tr").find("input[name='unit']").val(),
+		// 			rate: $curThis.closest("tr").find("input[name='rate']").val(),
+		// 			amount: $curThis.closest("tr").find("input[name='amount']").val(),
+		// 			project: {{ $project->id }},
+		// 		}, function(data){
+		// 			var json = $.parseJSON(data);
+		// 			$curThis.closest("tr").find("input").removeClass("error-input");
+		// 			if (json.success) {
+		// 				$curThis.closest("tr").attr("data-id", json.id);
+		// 				var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
+		// 				var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+		// 				var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
+		// 				$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+		// 				$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+		// 			} else {
+		// 				$.each(json.message, function(i, item) {
+		// 					if(json.message['name'])
+		// 						$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+		// 					if(json.message['unit'])
+		// 						$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+		// 					if(json.message['rate'])
+		// 						$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+		// 					if(json.message['amount'])
+		// 						$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+		// 				});
+		// 			}
+		// 		}).fail(function(e){
+		// 			console.log(e);
+		// 		});
+		// 	}
+		// });
+		// $("body").on("change", ".esavee", function(){
+		// 	var $curThis = $(this);
+		// 	if($curThis.closest("tr").attr("data-id")){
+		// 		$.post("/calculation/estim/updateequipment", {
+		// 			id: $curThis.closest("tr").attr("data-id"),
+		// 			name: $curThis.closest("tr").find("input[name='name']").val(),
+		// 			unit: $curThis.closest("tr").find("input[name='unit']").val(),
+		// 			rate: $curThis.closest("tr").find("input[name='rate']").val(),
+		// 			amount: $curThis.closest("tr").find("input[name='amount']").val(),
+		// 			project: {{ $project->id }},
+		// 		}, function(data){
+		// 			var json = $.parseJSON(data);
+		// 			$curThis.closest("tr").find("input").removeClass("error-input");
+		// 			if (json.success) {
+		// 				$curThis.closest("tr").attr("data-id", json.id);
+		// 				var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
+		// 				var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+		// 				var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
+		// 				$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+		// 				$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+		// 			} else {
+		// 				$.each(json.message, function(i, item) {
+		// 					if(json.message['name'])
+		// 						$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+		// 					if(json.message['unit'])
+		// 						$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+		// 					if(json.message['rate'])
+		// 						$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+		// 					if(json.message['amount'])
+		// 						$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+		// 				});
+		// 			}
+		// 		}).fail(function(e){
+		// 			console.log(e);
+		// 		});
+		// 	}
+		// });
+		// $("body").on("change", ".lsavee", function(){
+		// 	var $curThis = $(this);
+		// 	if($curThis.closest("tr").attr("data-id")){
+		// 		$.post("/calculation/estim/updatelabor", {
+		// 			id: $curThis.closest("tr").attr("data-id"),
+		// 			rate: $curThis.closest("tr").find("input[name='rate']").val(),
+		// 			amount: $curThis.closest("tr").find("input[name='amount']").val(),
+		// 			project: {{ $project->id }},
+		// 		}, function(data){
+		// 			var json = $.parseJSON(data);
+		// 			$curThis.closest("tr").find("input").removeClass("error-input");
+		// 			if (json.success) {
+		// 				$curThis.closest("tr").attr("data-id", json.id);
+		// 				var rate = $curThis.closest("tr").find("input[name='rate']").val()
+		// 				if (rate) {
+		// 					rate.toString().split('.').join('').replace(',', '.');
+		// 				} else {
+		// 					rate = {{$project->hour_rate}};
+		// 				}
+		// 				var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+		// 				$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+		// 			} else {
+		// 				$.each(json.message, function(i, item) {
+		// 					if(json.message['name'])
+		// 						$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+		// 					if(json.message['unit'])
+		// 						$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+		// 					if(json.message['rate'])
+		// 						$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+		// 					if(json.message['amount'])
+		// 						$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+		// 				});
+		// 			}
+		// 		}).fail(function(e){
+		// 			console.log(e);
+		// 		});
+		// 	}
+		// });
+		// $("body").on("blur", ".lsavee", function(){
+		// 	var flag = true;
+		// 	var $curThis = $(this);
+		// 	if($curThis.closest("tr").attr("data-id"))
+		// 		return false;
+		// 	$curThis.closest("tr").find("input").each(function(){
+		// 		if(!$(this).val())
+		// 			flag = false;
+		// 	});
+		// 	if(flag){
+		// 		$.post("/calculation/estim/newlabor", {
+		// 			rate: $curThis.closest("tr").find("input[name='rate']").val(),
+		// 			amount: $curThis.closest("tr").find("input[name='amount']").val(),
+		// 			activity: $curThis.closest("table").attr("data-id"),
+		// 			project: {{ $project->id }},
+		// 		}, function(data){
+		// 			var json = $.parseJSON(data);
+		// 			$curThis.closest("tr").find("input").removeClass("error-input");
+		// 			if (json.success) {
+		// 				$curThis.closest("tr").attr("data-id", json.id);
+		// 				var rate = $curThis.closest("tr").find("input[name='rate']").val()
+		// 				if (rate) {
+		// 					rate.toString().split('.').join('').replace(',', '.');
+		// 				} else {
+		// 					rate = {{$project->hour_rate}};
+		// 				}
+		// 				var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+		// 				$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+		// 			} else {
+		// 				$.each(json.message, function(i, item) {
+		// 					if(json.message['rate'])
+		// 						$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+		// 					if(json.message['amount'])
+		// 						$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+		// 				});
+		// 			}
+		// 		}).fail(function(e){
+		// 			console.log(e);
+		// 		});
+		// 	}
+		// });
+		// $("body").on("blur", ".dsavee", function(){
+		// 	var flag = true;
+		// 	var $curThis = $(this);
+		// 	if($curThis.closest("tr").attr("data-id"))
+		// 		return false;
+		// 	$curThis.closest("tr").find("input").each(function(){
+		// 		if(!$(this).val())
+		// 			flag = false;
+		// 	});
+		// 	if(flag){
+		// 		$.post("/calculation/estim/newmaterial", {
+		// 			name: $curThis.closest("tr").find("input[name='name']").val(),
+		// 			unit: $curThis.closest("tr").find("input[name='unit']").val(),
+		// 			rate: $curThis.closest("tr").find("input[name='rate']").val(),
+		// 			amount: $curThis.closest("tr").find("input[name='amount']").val(),
+		// 			activity: $curThis.closest("table").attr("data-id"),
+		// 			project: {{ $project->id }},
+		// 		}, function(data){
+		// 			var json = $.parseJSON(data);
+		// 			$curThis.closest("tr").find("input").removeClass("error-input");
+		// 			if (json.success) {
+		// 				$curThis.closest("tr").attr("data-id", json.id);
+		// 				var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
+		// 				var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+		// 				var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
+		// 				$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+		// 				$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+		// 			} else {
+		// 				$.each(json.message, function(i, item) {
+		// 					if(json.message['name'])
+		// 						$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+		// 					if(json.message['unit'])
+		// 						$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+		// 					if(json.message['rate'])
+		// 						$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+		// 					if(json.message['amount'])
+		// 						$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+		// 				});
+		// 			}
+		// 		}).fail(function(e){
+		// 			console.log(e);
+		// 		});
+		// 	}
+		// });
+		// $("body").on("blur", ".esavee", function(){
+		// 	var flag = true;
+		// 	var $curThis = $(this);
+		// 	if($curThis.closest("tr").attr("data-id"))
+		// 		return false;
+		// 	$curThis.closest("tr").find("input").each(function(){
+		// 		if(!$(this).val())
+		// 			flag = false;
+		// 	});
+		// 	if(flag){
+		// 		$.post("/calculation/estim/newequipment", {
+		// 			name: $curThis.closest("tr").find("input[name='name']").val(),
+		// 			unit: $curThis.closest("tr").find("input[name='unit']").val(),
+		// 			rate: $curThis.closest("tr").find("input[name='rate']").val(),
+		// 			amount: $curThis.closest("tr").find("input[name='amount']").val(),
+		// 			activity: $curThis.closest("table").attr("data-id"),
+		// 			project: {{ $project->id }},
+		// 		}, function(data){
+		// 			var json = $.parseJSON(data);
+		// 			$curThis.closest("tr").find("input").removeClass("error-input");
+		// 			if (json.success) {
+		// 				$curThis.closest("tr").attr("data-id", json.id);
+		// 				var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
+		// 				var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+		// 				var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
+		// 				$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+		// 				$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+		// 			} else {
+		// 				$.each(json.message, function(i, item) {
+		// 					if(json.message['name'])
+		// 						$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+		// 					if(json.message['unit'])
+		// 						$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+		// 					if(json.message['rate'])
+		// 						$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+		// 					if(json.message['amount'])
+		// 						$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+		// 				});
+		// 			}
+		// 		}).fail(function(e){
+		// 			console.log(e);
+		// 		});
+		// 	}
+		// });
 		$("body").on("click", ".sresetrow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
@@ -622,6 +653,20 @@ var n = this,
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input[name='rate']").val(json.rate);
 					$curThis.closest("tr").find("input[name='amount']").val(json.amount);
+					var sub_total = 0;
+					$curThis.closest("tbody").find(".total-incl-tax").each(function(index){
+						var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+						if (_cal)
+							sub_total += _cal;
+					});
+					$curThis.closest("table").find('.mat_subtotal').text('€ '+$.number(sub_total,2,',','.'));
+					var sub_total_profit = 0;
+					$curThis.closest("tbody").find(".total-ex-tax").each(function(index){
+						var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+						if (_cal)
+							sub_total_profit += _cal;
+					});
+					$curThis.closest("table").find('.mat_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
 				}).fail(function(e) { console.log(e); });
 		});
 		$("body").on("click", ".eresetrow", function(){
@@ -631,6 +676,20 @@ var n = this,
 					var json = $.parseJSON(data);
 					$curThis.closest("tr").find("input[name='rate']").val(json.rate);
 					$curThis.closest("tr").find("input[name='amount']").val(json.amount);
+					var sub_total = 0;
+					$curThis.closest("tbody").find(".total-incl-tax").each(function(index){
+						var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+						if (_cal)
+							sub_total += _cal;
+					});
+					$curThis.closest("table").find('.equip_subtotal').text('€ '+$.number(sub_total,2,',','.'));
+					var sub_total_profit = 0;
+					$curThis.closest("tbody").find(".total-ex-tax").each(function(index){
+						var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+						if (_cal)
+							sub_total_profit += _cal;
+					});
+					$curThis.closest("table").find('.equip_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
 				}).fail(function(e) { console.log(e); });
 		});
 		$("body").on("click", ".lresetrow", function(){
@@ -723,14 +782,14 @@ var n = this,
 					<div id="calculate" class="tab-pane">
 						<div class="toogle">
 
-							@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+							@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
 							<div id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
 								<label>{{ $chapter->chapter_name }}</label>
 								<div class="toggle-content">
 
 									<div class="toogle">
 
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
+										@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->orderBy('created_at')->get() as $activity)
 										<div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
 											<label>{{ $activity->activity_name }}</label>
 											<div class="toggle-content">
@@ -846,7 +905,7 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 
-															<td class="col-md-1"><strong>
+															<td class="col-md-1"><strong class="mat_subtotal">
 															<?php
 															if (Part::find($activity->part_id)->part_name=='contracting') {
 																$profit = $project->profit_calc_contr_mat;
@@ -854,8 +913,8 @@ var n = this,
 																$profit = $project->profit_calc_subcontr_mat;
 															}
 															echo '&euro; '.number_format(LessRegister::lessMaterialTotalProfit($activity->id, $profit), 2, ",",".");
-															?></span></td>
-															<td class="col-md-1"><strong>{{'&euro; ' .number_format(LessRegister::lessMaterialDeltaTotal($activity->id, $profit), 2, ",",".") }}</strong></td>
+															?></strong></td>
+															<td class="col-md-1"><strong class="mat_subtotal_profit">{{'&euro; ' .number_format(LessRegister::lessMaterialDeltaTotal($activity->id, $profit), 2, ",",".") }}</strong></td>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -923,7 +982,7 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"><strong>
+															<td class="col-md-1"><strong class="equip_subtotal">
 															<?php
 															if (Part::find($activity->part_id)->part_name=='contracting') {
 																$profit = $project->profit_calc_contr_equip;
@@ -931,8 +990,8 @@ var n = this,
 																$profit = $project->profit_calc_subcontr_equip;
 															}
 															echo '&euro; '.number_format(LessRegister::lessEquipmentTotalProfit($activity->id, $profit), 2, ",",".");
-															?></span></td>
-															<td class="col-md-1"><strong>{{'&euro; ' .number_format(LessRegister::lessEquipmentDeltaTotal($activity->id, $profit), 2, ",",".") }}</strong></th>
+															?></strong></td>
+															<td class="col-md-1"><strong class="equip_subtotal_profit">{{'&euro; ' .number_format(LessRegister::lessEquipmentDeltaTotal($activity->id, $profit), 2, ",",".") }}</strong></th>
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
@@ -950,456 +1009,15 @@ var n = this,
 					</div>
 
 					<div id="summary" class="tab-pane">
-						<div class="toogle">
-
-							<div class="toggle toggle-chapter active">
-								<label>Aanneming</label>
-								<div class="toggle-content">
-
-									<table class="table table-striped">
-										<thead>
-											<tr>
-												<th class="col-md-3">Hoofdstuk</th>
-												<th class="col-md-4">Werkzaamheden</th>
-												<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
-												<th class="col-md-1"><span class="pull-right">Arbeid</th>
-												<th class="col-md-1"><span class="pull-right">Materiaal</th>
-												<th class="col-md-1"><span class="pull-right">Materieel</th>
-												<th class="col-md-1"><span class="pull-right">Totaal <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het bedrag dat in mindering wordt gebracht op de bestaande calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
-											</tr>
-										</thead>
-
-										<tbody>
-											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
-											<?php $i = 0; ?>
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
-											<?php $i++; ?>
-											<tr>
-												<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
-												<td class="col-md-4">{{ $activity->activity_name }}</td>
-												<td class="col-md-1"><span class="pull-right">{{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }}</td>
-												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::laborActivity($activity), 2, ",",".") }}</span></td>
-												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
-												<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
-												<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
-											</tr>
-											@endforeach
-											@endforeach
-											<tr>
-												<th class="col-md-3"><strong>Totaal Aanneming</strong></th>
-												<th class="col-md-2">&nbsp;</th>
-												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(LessOverview::contrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
-											</tr>
-										</tbody>
-									</table>
-
-								</div>
-							</div>
-
-							<div class="toggle toggle-chapter active">
-								<label>Onderaanneming</label>
-								<div class="toggle-content">
-
-									<table class="table table-striped">
-										<thead>
-											<tr>
-												<th class="col-md-3">Hoofdstuk</th>
-												<th class="col-md-4">Werkzaamheden</th>
-												<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
-												<th class="col-md-1"><span class="pull-right">Arbeid</th>
-												<th class="col-md-1"><span class="pull-right">Materiaal</th>
-												<th class="col-md-1"><span class="pull-right">Materieel</th>
-												<th class="col-md-1"><span class="pull-right">Totaal <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het bedrag dat in mindering wordt gebracht op de bestaande calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
-											</tr>
-										</thead>
-
-										<tbody>
-											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
-											<?php $i = 0; ?>
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
-											<?php $i++ ?>
-											<tr>
-												<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
-												<td class="col-md-4">{{ $activity->activity_name }}</td>
-												<td class="col-md-1"><span class="pull-right">{{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }}</td>
-												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::laborActivity($activity), 2, ",",".") }}</span></td>
-												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
-												<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
-												<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
-												<td class="col-md-1 text-center {{-- LessOverview::estimateCheck($activity) --}}"></td>
-											</tr>
-											@endforeach
-											@endforeach
-											<tr>
-												<th class="col-md-3"><strong>Totaal Onderaanneming</strong></th>
-												<th class="col-md-4">&nbsp;</th>
-												<td class="col-md-1"><strong><span class="pull-right">{{ number_format(LessOverview::subcontrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
-												<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
-											</tr>
-										</tbody>
-									</table>
-
-								</div>
-							</div>
-
-							<div class="toggle toggle-chapter active">
-								<label>Totalen project</label>
-								<div class="toggle-content">
-									<table class="table table-striped">
-										<thead>
-											<tr>
-												<th class="col-md-4">&nbsp;</th>
-												<th class="col-md-3">&nbsp;</th>
-												<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
-												<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
-												<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
-												<th class="col-md-1"><span class="pull-right">Materieel</span></th>
-												<th class="col-md-1"><span class="pull-right">Totaal <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het bedrag dat in mindering wordt gebracht op de bestaande calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></span></th>
-											</tr>
-										</thead>
-
-										<tbody>
-											<tr>
-												<th class="col-md-4">&nbsp;</th>
-												<th class="col-md-3">&nbsp;</th>
-												<td class="col-md-1"><span class="pull-right"><strong>{{ number_format(LessOverview::laborSuperTotalAmount($project), 2, ",",".") }}</strong></span></td>
-												<td class="col-md-1"><span class="pull-right"><strong>{{ '&euro; '.number_format(LessOverview::laborSuperTotal($project), 2, ",",".") }}</strong></span></td>
-												<td class="col-md-1"><span class="pull-right"><strong>{{ '&euro; '.number_format(LessOverview::materialSuperTotal($project), 2, ",",".") }}</strong></span></td>
-												<td class="col-md-1"><span class="pull-right"><strong>{{ '&euro; '.number_format(LessOverview::equipmentSuperTotal($project), 2, ",",".") }}</strong></span></td>
-												<td class="col-md-1"><span class="pull-right"><strong>{{ '&euro; '.number_format(LessOverview::superTotal($project), 2, ",",".") }}</strong></span></td>
-											</tr>
-										</tbody>
-									</table>
-									<h5><strong>Weergegeven bedragen zijn exclusief BTW</strong></h5>
-								</div>
-							</div>
-
+						<div class="row text-center">
+							<img src="/images/loading_icon.gif" height="120" />
 						</div>
 					</div>
 
 					<div id="endresult" class="tab-pane">
-
-						<h4>Aanneming</h4>
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th class="col-md-4">&nbsp;</th>
-									<th class="col-md-1">Uren</th>
-									<th class="col-md-2">Bedrag (excl. BTW)</th>
-									<th class="col-md-1">&nbsp;</th>
-									<th class="col-md-1">BTW</th>
-									<th class="col-md-2">BTW bedrag</th>
-									<th class="col-md-1">&nbsp;</th>
-								</tr>
-							</thead>
-
-							<tbody>
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
-								<tr>
-									<td class="col-md-4">Arbeidskosten</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">21%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax1AmountTax($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								<tr>
-									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax2($project), 2, ",",".") }}</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">6%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								@else
-								<tr>
-									<td class="col-md-4">Arbeidskosten</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax3($project), 2, ",",".") }}</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">0%</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								@endif
-
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
-								<tr>
-									<td class="col-md-4">Materiaalkosten</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">21%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax1AmountTax($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								<tr>
-									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">6%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								@else
-								<tr>
-									<td class="col-md-4">Materiaalkosten</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">0%</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								@endif
-
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
-								<tr>
-									<td class="col-md-4">Materieelkosten</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">21%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax1AmountTax($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								<tr>
-									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">6%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								@else
-								<tr>
-									<td class="col-md-4">Materieelkosten</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">0%</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								@endif
-
-								<tr>
-									<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2"><strong>{{ '&euro; '.number_format(LessEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2"><strong>{{ '&euro; '.number_format(LessEndresult::totalContractingTax($project), 2, ",",".") }}</strong></td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-							</tbody>
-						</table>
-
-						<h4>Onderaanneming</h4>
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th class="col-md-4">&nbsp;</th>
-									<th class="col-md-1">Uren</th>
-									<th class="col-md-2">Bedrag (excl. BTW)</th>
-									<th class="col-md-1">&nbsp;</th>
-									<th class="col-md-1">BTW</th>
-									<th class="col-md-2">BTW bedrag</th>
-									<th class="col-md-1">&nbsp;</th>
-								</tr>
-							</thead>
-
-							<tbody>
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
-								<tr>
-									<td class="col-md-4">Arbeidskosten</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">21%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax1AmountTax($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								<tr>
-									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax2($project), 2, ",",".") }}</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">6%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								@else
-								<tr>
-									<td class="col-md-4">Arbeidskosten</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">0%</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								@endif
-
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
-								<tr>
-									<td class="col-md-4">Materiaalkosten</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">21%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcMaterialActivityTax1AmountTax($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								<tr>
-									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">6%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								@else
-								<tr>
-									<td class="col-md-4">Materiaalkosten</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">0%</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								@endif
-
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
-								<tr>
-									<td class="col-md-4">Materieelkosten</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">21%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax1AmountTax($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								<tr>
-									<td class="col-md-4">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">6%</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								@else
-								<tr>
-									<td class="col-md-4">Materieelkosten</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">0%</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								@endif
-
-								<tr>
-									<td class="col-md-4"><strong>Totaal Onderaanneming </strong></td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2"><strong>{{ '&euro; '.number_format(LessEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2"><strong>{{ '&euro; '.number_format(LessEndresult::totalSubcontractingTax($project), 2, ",",".") }}</strong></td>
-									<td class="col-md-2">&nbsp;</td>
-								</tr>
-							</tbody>
-						</table>
-
-						<h4>Totalen Minderwerk</h4>
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th class="col-md-5">&nbsp;</th>
-									<th class="col-md-2">Bedrag (excl. BTW)</th>
-									<th class="col-md-1">&nbsp;</th>
-									<th class="col-md-1">&nbsp;</th>
-									<th class="col-md-1">BTW bedrag</th>
-									<th class="col-md-2"><span class="pull-right">Bedrag (incl. BTW)</span></th>
-								</tr>
-							</thead>
-
-							<tbody>
-								<tr>
-									<td class="col-md-5"><strong>Calculatief in mindering te brengen (excl. BTW)</strong></td>
-									<td class="col-md-2"><strong>{{ '&euro; '.number_format(LessEndresult::totalProject($project), 2, ",",".") }}</strong></td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2">&nbsp;</td>
-								</tr>
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
-								<tr>
-									<td class="col-md-5">BTW bedrag aanneming 21%</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::totalContractingTax1($project), 2, ",",".") }}</td>
-									<td class="col-md-2">&nbsp;</td>
-								</tr>
-								<tr>
-									<td class="col-md-5">BTW bedrag aanneming 6%</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::totalContractingTax2($project), 2, ",",".") }}</td>
-									<td class="col-md-2">&nbsp;</td>
-								</tr>
-								<tr>
-									<td class="col-md-5">BTW bedrag onderaanneming 21%</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
-									<td class="col-md-2">&nbsp;</td>
-								</tr>
-								<tr>
-									<td class="col-md-5">BTW bedrag onderaanneming 6%</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
-									<td class="col-md-2">&nbsp;</td>
-								</tr>
-								@endif
-								<tr>
-									<td class="col-md-5">In mindering te brengen BTW bedrag</td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::totalProjectTax($project), 2, ",",".") }}</td>
-									<td class="col-md-1">&nbsp;</td>
-								</tr>
-								<tr>
-									<td class="col-md-5"><strong>Calculatief in mindering te brengen (Incl. BTW)</strong></td>
-									<td class="col-md-2">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-1">&nbsp;</td>
-									<td class="col-md-2"><strong class="pull-right">{{ '&euro; '.number_format(LessEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
-								</tr>
-							</tbody>
-						</table>
+						<div class="row text-center">
+							<img src="/images/loading_icon.gif" height="120" />
+						</div>
 					</div>
 				</div>
 

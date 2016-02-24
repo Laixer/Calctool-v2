@@ -164,7 +164,7 @@ $(document).ready(function() {
 
 					<div class="col-md-2">
 						<div class="form-group">
-							<label for="debtor">Debiteurennummer*</label>
+							<label for="debtor">Debiteurennummer*</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit nummer is gegenereerd door de CalculatieTool.com. Je kunt dit vervangen door je eigen boekhoudkundige nummering." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
 							<input name="debtor" id="debtor" type="text" value="{{ Input::old('debtor') ? Input::old('debtor') : getNewDebtorCode() }}" class="form-control"/>
 						</div>
 					</div>

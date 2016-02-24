@@ -496,37 +496,31 @@ $type = ProjectType::find($project->type_id);
 					{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
 				</div>
 				
-				<div class="col-sm-2">
-					<p>
-						<h4><strong>{{ $relation_self->company_name }}</strong></h4>
+				<div class="col-sm-5">
+					<h4><strong>{{ $relation_self->company_name }}</strong></h4>
+					<div class="col-sm-6" style="padding-left:0px;">
+						<p>
 		    				<ul class="list-unstyled">
-	 						<li><strong>Adres:</strong></li>
-	  						<li>&nbsp;</li>
-							<li><strong>Telefoon: <i class="fa fa-phone"></i></strong></li>
-	 						<li><strong>E-mail: <i class="fa fa-envelope-o"></i></strong></li>
-	 						<li><strong>KVK</strong></li>
-						</ul>
-					</p>
-				</div>
-
-				<div class="col-sm-3">
-					<p>
-						<h4><strong>&nbsp;</strong></h4>
+		 						<li><strong>Adres:</strong></li>
+		  						<li>&nbsp;</li>
+								<li><strong>Telefoon: <i class="fa fa-phone"></i></strong></li>
+		 						<li><strong>E-mail: <i class="fa fa-envelope-o"></i></strong></li>
+		 						<li><strong>KVK</strong></li>
+							</ul>
+						</p>
+					</div>
+					<div class="col-sm-6">
+						<p>
 		    				<ul class="list-unstyled">
-	 						<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
-	  						<li>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
-							<li>{{ $relation_self->phone }}</li>
-	 						<li>{{ $relation_self->email }}</li>
-	 						<li>{{ $relation_self->kvk }}</li>
-						</ul>
-					</p>
+		 						<li>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</li>
+		  						<li>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</li>
+								<li>{{ $relation_self->phone }}</li>
+		 						<li>{{ $relation_self->email }}</li>
+		 						<li>{{ $relation_self->kvk }}</li>
+							</ul>
+						</p>
+					</div>
 				</div>
-
-
-
-
-
-
 
 			</div>
 		</header>
@@ -558,7 +552,6 @@ $type = ProjectType::find($project->type_id);
 					<li><strong>Projectnaam:</strong></li>
 					<li><strong>Offertedatum:</strong></li>
 					<li><strong>Offertenummer:</strong></li>
-					<li><strong>Versie:</strong></li>
 					<li>&nbsp;</li>
 					<li>&nbsp;</li>
 					<input type="hidden" id="offdateval" name="offdateval" value="{{ $offer_last ? $offer_last->offer_make : '' }}" />
@@ -570,7 +563,6 @@ $type = ProjectType::find($project->type_id);
 					<li>{{ $project->project_name }}</li>
 					<li><a href="#" class="offdate">Bewerk</a></li>
 					<li>{{ OfferController::getOfferCode($project->id) }}</li>
-					<li>{{ Offer::where('project_id', $project->id)->count() }}</li>
 					<li>&nbsp;</li>
 					<li>&nbsp;</li>
 					<input type="hidden" id="offdateval" name="offdateval" value="{{ $offer_last ? $offer_last->offer_make : '' }}" />
@@ -622,7 +614,7 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 					</thead>
 					<tbody>
-						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+						@if (!$project->tax_reverse)
 						<tr>
 							<td class="col-md-4">Arbeidskosten</td>
 							<td class="col-md-1">{{ ''.number_format(CalculationEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -653,7 +645,7 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 						@endif
 
-						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+						@if (!$project->tax_reverse)
 						<tr>
 							<td class="col-md-4">Materiaalkosten</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -684,7 +676,7 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 						@endif
 
-						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+						@if (!$project->tax_reverse)
 						<tr>
 							<td class="col-md-4">Materieelkosten</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -741,7 +733,7 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 					</thead>
 					<tbody>
-						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+						@if (!$project->tax_reverse)
 						<tr>
 							<td class="col-md-4">Arbeidskosten</td>
 							<td class="col-md-1">{{ ' '.number_format(CalculationEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -772,7 +764,7 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 						@endif
 
-						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+						@if (!$project->tax_reverse)
 						<tr>
 							<td class="col-md-4">Materiaalkosten</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -803,7 +795,7 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 						@endif
 
-						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+						@if (!$project->tax_reverse)
 						<tr>
 							<td class="col-md-4">Materieelkosten</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -867,7 +859,7 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
-						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+						@if (!$project->tax_reverse)
 						<tr>
 							<td class="col-md-5">BTW bedrag 21%</td>
 							<td class="col-md-2">&nbsp;</td>
@@ -910,13 +902,13 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-1">Uren</th>
 							<th class="col-md-2">Bedrag (excl. BTW)</th>
 							<th class="col-md-1">&nbsp;</th>
-							<th class="col-md-1">BTW3</th>
+							<th class="col-md-1">BTW</th>
 							<th class="col-md-1">BTW bedrag</th>
 							<th class="col-md-2">&nbsp;</th>
 						</tr>
 					</thead>
 					<tbody>
-						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+						@if (!$project->tax_reverse)
 						<tr>
 							<td class="col-md-4">Arbeidskosten</td>
 							<td class="col-md-1">{{ ''.number_format(CalculationEndresult::conCalcLaborActivityTax1($project)+CalculationEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -947,7 +939,7 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 						@endif
 
-						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+						@if (!$project->tax_reverse)
 						<tr>
 							<td class="col-md-4">Materiaalkosten</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -978,7 +970,7 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 						@endif
 
-						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+						@if (!$project->tax_reverse)
 						<tr>
 							<td class="col-md-4">Materieelkosten</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -1048,7 +1040,7 @@ $type = ProjectType::find($project->type_id);
 				@endif
 
 				<h4>Totalen Offerte</h4>
-				<table class="table table-striped hide-btwz">
+				<table class="table table-striped hide-btw2">
 					<thead>
 						<tr>
 							<th class="col-md-5">&nbsp;</th>
@@ -1068,7 +1060,7 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
-						@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+						@if (!$project->tax_reverse)
 						<tr>
 							<td class="col-md-5">BTW bedrag 21%</td>
 							<td class="col-md-2">&nbsp;</td>
@@ -1241,9 +1233,9 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 					</thead>
 					<tbody>
-						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
 						<?php $i = 0; ?>
-						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('created_at')->get() as $activity)
 						<?php $i++; ?>
 						<tr>
 							<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
@@ -1285,9 +1277,9 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 					</thead>
 					<tbody>
-						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
 						<?php $i = 0; ?>
-						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('created_at')->get() as $activity)
 						<?php $i++; ?>
 						<tr>
 							<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
@@ -1361,9 +1353,9 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 					</thead>
 					<tbody>
-						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
 						<?php $i = 0; ?>
-						@foreach (Activity::where('chapter_id','=', $chapter->id)->orderBy('created_at', 'desc')->get() as $activity)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->orderBy('created_at')->get() as $activity)
 						<?php
 							$i++;
 							$mat_profit = 0;
@@ -1455,9 +1447,9 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 					</thead>
 					<tbody>
-						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
 						<?php $i = 0; ?>
-						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('created_at')->get() as $activity)
 						<?php $i++ ?>
 						<tr>
 							<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
@@ -1479,9 +1471,9 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 					</thead>
 					<tbody>
-						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
 						<?php $i = 0; ?>
-						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('created_at')->get() as $activity)
 						<?php $i++; ?>
 						<tr>
 							<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
@@ -1507,9 +1499,9 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 					</thead>
 					<tbody>
-						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
 						<?php $i = 0; ?>
-						@foreach (Activity::where('chapter_id','=', $chapter->id)->orderBy('created_at', 'desc')->get() as $activity)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->orderBy('created_at')->get() as $activity)
 						<?php $i++; ?>
 						<tr>
 							<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>

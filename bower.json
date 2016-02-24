@@ -1,0 +1,13 @@
+{
+  "name": "calculatietool",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "1.5.0",
+    "jquery-ui": "^1.11.4",
+    "bootstrap": "^3.3.6",
+    "font-awesome": "fontawesome#^4.5.0",
+    "bootstrap-editable": "*",
+    "x-editable": "^1.5.1"
+  },
+  "private": true
+}

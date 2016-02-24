@@ -528,7 +528,7 @@ $type = ProjectType::find($project->type_id);
 					</tr>
 				</thead>
 				<tbody>
-					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+					@if (!$project->tax_reverse)
 					<tr>
 						<td class="col-md-5">Arbeidskosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -559,7 +559,7 @@ $type = ProjectType::find($project->type_id);
 					</tr>
 					@endif
 
-					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+					@if (!$project->tax_reverse)
 					<tr>
 						<td class="col-md-5">Materiaalkosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -590,7 +590,7 @@ $type = ProjectType::find($project->type_id);
 					</tr>
 					@endif
 
-					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+					@if (!$project->tax_reverse)
 					<tr>
 						<td class="col-md-5">Materieelkosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -647,7 +647,7 @@ $type = ProjectType::find($project->type_id);
 					</tr>
 				</thead>
 				<tbody>
-					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+					@if (!$project->tax_reverse)
 					<tr>
 						<td class="col-md-5">Arbeidskosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -678,7 +678,7 @@ $type = ProjectType::find($project->type_id);
 					</tr>
 					@endif
 
-					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+					@if (!$project->tax_reverse)
 					<tr>
 						<td class="col-md-5">Materiaalkosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -709,7 +709,7 @@ $type = ProjectType::find($project->type_id);
 					</tr>
 					@endif
 
-					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+					@if (!$project->tax_reverse)
 					<tr>
 						<td class="col-md-5">Materieelkosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -769,7 +769,7 @@ $type = ProjectType::find($project->type_id);
 						<td class="col-md-2">&nbsp;</td>
 						<td class="col-md-2">&nbsp;</td>
 					</tr>
-					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+					@if (!$project->tax_reverse)
 					<tr>
 						<td class="col-md-6">BTW bedrag aanneming belast met 21%</td>
 						<td class="col-md-2">&nbsp;</td>
@@ -829,7 +829,7 @@ $type = ProjectType::find($project->type_id);
 					</tr>
 				</thead>
 				<tbody>
-					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+					@if (!$project->tax_reverse)
 					<tr>
 						<td class="col-md-5">Arbeidskosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcLaborActivityTax1Amount($project)+SetEstimateCalculationEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -860,7 +860,7 @@ $type = ProjectType::find($project->type_id);
 					</tr>
 					@endif
 
-					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+					@if (!$project->tax_reverse)
 					<tr>
 						<td class="col-md-5">Materiaalkosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcMaterialActivityTax1Amount($project)+SetEstimateCalculationEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -891,7 +891,7 @@ $type = ProjectType::find($project->type_id);
 					</tr>
 					@endif
 
-					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+					@if (!$project->tax_reverse)
 					<tr>
 						<td class="col-md-5">Materieelkosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcEquipmentActivityTax1Amount($project)+SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -977,7 +977,7 @@ $type = ProjectType::find($project->type_id);
 						<td class="col-md-2">&nbsp;</td>
 						<td class="col-md-2">&nbsp;</td>
 					</tr>
-					@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+					@if (!$project->tax_reverse)
 					<tr>
 						<td class="col-md-6">BTW bedrag 21%</td>
 						<td class="col-md-2">&nbsp;</td>
@@ -1027,7 +1027,7 @@ $type = ProjectType::find($project->type_id);
 					<td class="col-md-2">&nbsp;</td>
 					<td class="col-md-2">&nbsp;</td>
 				</tr>
-				@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+				@if (!$project->tax_reverse)
 				<tr>
 					<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
 					<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21'), 2, ",",".") }}</td>
@@ -1049,7 +1049,7 @@ $type = ProjectType::find($project->type_id);
 				</tr>
 				@endif
 
-				@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+				@if (!$project->tax_reverse)
 				<tr>
 					<td class="col-md-6">BTW bedrag 21%</td>
 					<td class="col-md-2">&nbsp;</td>
@@ -1096,7 +1096,7 @@ $type = ProjectType::find($project->type_id);
 					<td class="col-md-2">&nbsp;</td>
 					<td class="col-md-2">&nbsp;</td>
 				</tr>
-				@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+				@if (!$project->tax_reverse)
 				<tr>
 					<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
 					<td class="col-md-2">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21, 2, ",",".") }}</td>
@@ -1118,7 +1118,7 @@ $type = ProjectType::find($project->type_id);
 				</tr>
 				@endif
 
-				@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+				@if (!$project->tax_reverse)
 				<tr>
 					<td class="col-md-6">BTW bedrag 21%</td>
 					<td class="col-md-2">&nbsp;</td>

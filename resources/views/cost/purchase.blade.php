@@ -60,6 +60,14 @@ use \Calctool\Models\Wholesale;
 
 		<div class="col-md-12">
 
+			<div>
+				<ol class="breadcrumb">
+				  <li><a href="/">Home</a></li>
+				  <li class="active">Inkoopfacturen</li>
+				</ol>
+			<div>
+			<br>
+
 			<h2><strong>Inkoopfacturen</strong></h2>
 
 			<div class="white-row">
@@ -68,7 +76,7 @@ use \Calctool\Models\Wholesale;
 						<tr>
 							<th class="col-md-1">Datum</th>
 							<th class="col-md-2">Relatie</th>
-							<th class="col-md-1">Factuurbedrag</th>
+							<th class="col-md-1">Bedrag</th>
 							<th class="col-md-3">Project</th>
 							<th class="col-md-1">Soort</th>
 							<th class="col-md-3">Omschrijving</th>

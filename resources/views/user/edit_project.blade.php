@@ -32,6 +32,8 @@ else {
 	else
 		$cntinv = 0;
 }
+
+$type = ProjectType::find($project->type_id);
 ?>
 
 @extends('layout.master')
@@ -241,25 +243,26 @@ else {
     	});
     	$("[name='toggle-mail-reminder']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 		
-	        $('#summernote').summernote({
-	            height: $(this).attr("data-height") || 200,
-	            toolbar: [
-	                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
-	                ["para", ["ul", "ol", "paragraph"]],
-	                ["table", ["table"]],
-	                ["media", ["link", "picture", "video"]],
-	            ]
-	        })
+        $('#summernote').summernote({
+            height: $(this).attr("data-height") || 200,
+            toolbar: [
+                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+                ["para", ["ul", "ol", "paragraph"]],
+                ["table", ["table"]],
+                ["media", ["link", "picture", "video"]],
+            ]
+        })
 
-	        $('.summernote').summernote({
-	            height: $(this).attr("data-height") || 200,
-	            toolbar: [
-	                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
-	                ["para", ["ul", "ol", "paragraph"]],
-	                ["table", ["table"]],
-	                ["media", ["link", "picture", "video"]],
-	            ]
-	        })
+        $('.summernote').summernote({
+            height: $(this).attr("data-height") || 200,
+            toolbar: [
+                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+                ["para", ["ul", "ol", "paragraph"]],
+                ["table", ["table"]],
+                ["media", ["link", "picture", "video"]],
+            ]
+        })
+	    $("[name='tax_reverse']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	});
 
 </script>
@@ -290,7 +293,7 @@ else {
 				@if (CalculationEndresult::totalProject($project) != $offer_last->offer_total)
 				<div class="alert alert-warning">
 					<i class="fa fa-fa fa-info-circle"></i>
-					Gegevens zijn gewijzigd ten op zichte van de laastte offerte
+					De invoergegevens zijn gewijzigd ten op zichte van de laatste offerte
 				</div>
 				@endif
 			@endif
@@ -313,9 +316,11 @@ else {
 						<li id="tab-project">
 							<a href="#project" data-toggle="tab">Projectgegevens</a>
 						</li>
+						@if ($type->type_name != 'blanco offerte & factuur')
 						<li id="tab-calc">
 							<a href="#calc" data-toggle="tab">Uurtarief & Winstpercentages</a>
 						</li>
+						@endif
 						@if ($share && $share->client_note )
 						<li id="tab-communication">
 							<a href="#communication" data-toggle="tab">Communicatie opdrachtgever </a>
@@ -375,7 +380,7 @@ else {
 								<div class="col-md-3"><i>{{ $project->update_less ? 'Laatste wijziging: '.date('d-m-Y', strtotime($project->update_less)) : '' }}</i></div>
 							</div>
 								<br>
-@if (0)
+							@if (0)
 							<div class="row">
 								<div class="col-md-3"><strong>Financieel</strong></div>
 								<div class="col-md-2"><strong>Gefactureerd</strong></div>
@@ -441,7 +446,7 @@ else {
 							</div>
 							<?php } ?>
 								<br>
-@endif
+							@endif
 							<div class="row">
 								<div class="col-md-3"><strong>Project gesloten</strong> <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je project kan worden gesloten. Zijn alle facturen betaald?" href="#"><i class="fa fa-info-circle"></i></a></div>
 								<div class="col-md-2">{!! $project->project_close ? date('d-m-Y', strtotime($project->project_close)) : '<a href="#" id="projclose">Bewerk</a>' !!}</a></div>
@@ -480,6 +485,12 @@ else {
 											@endif
 										</div>
 									</div>
+									<!-- <div class="col-md-2">
+										<label for="type">BTW verlegd</label>
+										<div class="form-group">
+											<input name="tax_reverse" type="checkbox" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} {{ $project->tax_reverse ? 'checked' : '' }}>
+										</div>
+									</div> -->
 
 								</div>
 								<h5><strong>Adresgegevens</strong></h5>
@@ -564,6 +575,7 @@ else {
 								</form>
 							</div>
 
+						@if ($type->type_name != 'blanco offerte & factuur')
 						<div id="calc" class="tab-pane">
 						<form method="post" action="/project/updatecalc">
                         {!! csrf_field() !!}
@@ -571,15 +583,19 @@ else {
 							<div class="row">
 								<div class="col-md-3"><h5><strong>Eigen uurtarief <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier uw uurtarief op wat door heel de calculatie gebruikt wordt voor dit project. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></div>
 								<div class="col-md-1"></div>
+								@if ($type->type_name != 'regie')
 								<div class="col-md-2"><h5><strong>Calculatie *</strong></h5></div>
 								<div class="col-md-2"><h5><strong>Meerwerk</strong></h5></div>
+								@endif
 							</div>
 							<div class="row">
 								<div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
 								<div class="col-md-1"><div class="pull-right">&euro;</div></div>
+								@if ($type->type_name != 'regie')
 								<div class="col-md-2">
 									<input name="hour_rate" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} type="text" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : number_format($project->hour_rate, 2,",",".") }}" class="form-control form-control-sm-number"/>
 								</div>
+								@endif
 								<div class="col-md-2">
 									<input name="more_hour_rate" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_hour_rate" type="text" value="{{ Input::old('more_hour_rate') ? Input::old('more_hour_rate') : number_format($project->hour_rate_more, 2,",",".") }}" class="form-control form-control-sm-number"/>
 								</div>
@@ -589,9 +605,11 @@ else {
 							<div class="row">
 								<div class="col-md-3"><label for="profit_material_1">Winstpercentage materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
+								@if ($type->type_name != 'regie')
 								<div class="col-md-2">
 									<input name="profit_material_1" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="profit_material_1" type="number" min="0" max="200" value="{{ Input::old('profit_material_1') ? Input::old('profit_material_1') : $project->profit_calc_contr_mat }}" class="form-control form-control-sm-number"/>
 								</div>
+								@endif
 								<div class="col-md-2">
 									<input name="more_profit_material_1" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_profit_material_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_1') ? Input::old('more_profit_material_1') : $project->profit_more_contr_mat }}" class="form-control form-control-sm-number"/>
 								</div>
@@ -599,9 +617,11 @@ else {
 							<div class="row">
 								<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage materieel</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
+								@if ($type->type_name != 'regie')
 								<div class="col-md-2">
 									<input name="profit_equipment_1" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_1') ? Input::old('profit_equipment_1') : $project->profit_calc_contr_equip }}" class="form-control form-control-sm-number"/>
 								</div>
+								@endif
 								<div class="col-md-2">
 									<input name="more_profit_equipment_1" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_1') ? Input::old('more_profit_equipment_1') : $project->profit_more_contr_equip }}" class="form-control form-control-sm-number"/>
 								</div>
@@ -611,9 +631,11 @@ else {
 							<div class="row">
 								<div class="col-md-3"><label for="profit_material_2">Winstpercentage materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
+								@if ($type->type_name != 'regie')
 								<div class="col-md-2">
 									<input name="profit_material_2" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="profit_material_2" type="number" min="0" max="200" value="{{ Input::old('profit_material_2') ? Input::old('profit_material_2') : $project->profit_calc_subcontr_mat }}" class="form-control form-control-sm-number"/>
 								</div>
+								@endif
 								<div class="col-md-2">
 									<input name="more_profit_material_2" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_profit_material_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_2') ? Input::old('more_profit_material_2') : $project->profit_more_subcontr_mat }}" class="form-control form-control-sm-number"/>
 								</div>
@@ -621,9 +643,11 @@ else {
 							<div class="row">
 								<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage materieel</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
+								@if ($type->type_name != 'regie')
 								<div class="col-md-2">
 									<input name="profit_equipment_2" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_2') ? Input::old('profit_equipment_2') : $project->profit_calc_subcontr_equip }}" class="form-control form-control-sm-number"/>
 								</div>
+								@endif
 								<div class="col-md-2">
 									<input name="more_profit_equipment_2" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_2') ? Input::old('more_profit_equipment_2') : $project->profit_more_subcontr_equip }}" class="form-control form-control-sm-number"/>
 								</div>
@@ -635,6 +659,7 @@ else {
 								</div>
 						</form>
 						</div>
+						@endif
 
 						<div id="hour" class="tab-pane">
 							<table class="table table-striped">

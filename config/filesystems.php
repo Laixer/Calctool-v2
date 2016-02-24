@@ -45,12 +45,12 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root'   => storage_path('app'),
+            'root'   => storage_path('userbin'),
         ],
 
-        'public' => [
+        'video' => [
             'driver' => 'local',
-            'root'   => 'user-content',
+            'root'   => storage_path('vid'),
         ],
 
         'ftp' => [
@@ -67,23 +67,23 @@ return [
             // 'timeout'  => 30,
         ],
 
-        's3' => [
-            'driver' => 's3',
-            'key'    => 'your-key',
-            'secret' => 'your-secret',
-            'region' => 'your-region',
-            'bucket' => 'your-bucket',
-        ],
+        // 's3' => [
+        //     'driver' => 's3',
+        //     'key'    => 'your-key',
+        //     'secret' => 'your-secret',
+        //     'region' => 'your-region',
+        //     'bucket' => 'your-bucket',
+        // ],
 
-        'rackspace' => [
-            'driver'    => 'rackspace',
-            'username'  => 'your-username',
-            'key'       => 'your-key',
-            'container' => 'your-container',
-            'endpoint'  => 'https://identity.api.rackspacecloud.com/v2.0/',
-            'region'    => 'IAD',
-            'url_type'  => 'publicURL',
-        ],
+        // 'rackspace' => [
+        //     'driver'    => 'rackspace',
+        //     'username'  => 'your-username',
+        //     'key'       => 'your-key',
+        //     'container' => 'your-container',
+        //     'endpoint'  => 'https://identity.api.rackspacecloud.com/v2.0/',
+        //     'region'    => 'IAD',
+        //     'url_type'  => 'publicURL',
+        // ],
 
     ],
 

@@ -2,6 +2,9 @@
 
 namespace Calctool\Http\Controllers;
 
+use Auth;
+use \Calctool\Models\Project;
+
 class ApiController extends Controller {
 
 	/*
@@ -19,6 +22,13 @@ class ApiController extends Controller {
 
 	public function getApiRoot()
 	{
-		return json_encode(['success' => 1, 'description' => 'API server ready', 'version' => 1]);
+		return response()->json(['success' => 1, 'description' => 'API server ready', 'version' => 1]);
 	}
+
+	public function getProjects()
+	{
+		$projects = Project::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+		return response()->json($projects);
+	}
+
 }

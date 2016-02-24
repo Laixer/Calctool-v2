@@ -47,7 +47,7 @@ class ProjectController extends Controller {
 	{
 		$validator = $this->validate($request, [
 			'name' => array('required','max:50'),
-			'street' => array('required','alpha','max:60'),
+			'street' => array('required','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
 			'city' => array('required','alpha_num','max:35'),
@@ -77,6 +77,11 @@ class ProjectController extends Controller {
 			return back()->withErrors($validator)->withInput($request->all());
 		}
 
+
+		if (!Relation::find(Auth::user()->self_id)) {
+			return back();
+		}
+
 		$project = new \Calctool\Models\Project;
 		$project->project_name = $request->input('name');
 		$project->address_street = $request->input('street');
@@ -99,6 +104,11 @@ class ProjectController extends Controller {
 		$project->country_id = $request->input('country');
 		$project->type_id = $request->input('type');
 		$project->client_id = $request->input('contractor');
+
+		if ($request->input('tax_reverse'))
+			$project->tax_reverse = true;
+		else
+			$project->tax_reverse = false;
 
 		$project->save();
 
@@ -177,6 +187,11 @@ class ProjectController extends Controller {
 		} else {
 			$project->pref_email_reminder = false;
 		}
+
+		// if ($request->input('tax_reverse'))
+		// 	$project->tax_reverse = true;
+		// else
+		// 	$project->tax_reverse = false;
 
 		$project->save();
 

@@ -21,6 +21,21 @@ class Kernel extends HttpKernel
     ];
 
     /**
+     * The application's route middleware groups.
+     *
+     * @var array
+     */
+    protected $middlewareGroups = [
+        'admin' => [
+            \Calctool\Http\Middleware\Admin::class,
+        ],
+
+        'api' => [
+            'throttle:60,1',
+        ],
+    ];
+
+    /**
      * The application's route middleware.
      *
      * @var array

@@ -213,7 +213,7 @@ var n = this,
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th class="col-md-6">Ochrijving</th>
+							<th class="col-md-6">Omschrijving</th>
 							<th class="col-md-1">&euro; / Eenh.</th>
 							<th class="col-md-1">Aantal</th>
 							<th class="col-md-1">BTW</th>
@@ -229,11 +229,19 @@ var n = this,
 							<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($row->rate, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
 							<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($row->amount, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
 							<td class="col-md-1">
+							@if ($project->tax_reverse)
+								<span>0%</span>
+							@else
 								<select name="tax" id="type" class="dsave">
 									@foreach (Tax::orderBy('tax_rate', 'desc')->get() as $tax)
+									<?php
+									if ($tax->id == 1)
+										continue;
+									?>
 									<option value="{{ $tax->id }}">{{ $tax->tax_rate }}%</option>
 									@endforeach
 								</select>
+							@endif
 							</td>
 							<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($row->rate*$row->amount, 2,",",".") }}</span></td>
 							<td class="col-md-1 text-right">
@@ -246,11 +254,19 @@ var n = this,
 							<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number dsave" /></td>
 							<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsave" /></td>
 							<td class="col-md-1">
+							@if ($project->tax_reverse)
+								<span>0%</span>
+							@else
 								<select name="tax" id="type" class="dsave">
 									@foreach (Tax::orderBy('tax_rate', 'desc')->get() as $tax)
+									<?php
+									if ($tax->id == 1)
+										continue;
+									?>
 									<option value="{{ $tax->id }}">{{ $tax->tax_rate }}%</option>
 									@endforeach
 								</select>
+							@endif
 							</td>
 							<td class="col-md-1"><span class="total-ex-tax"></span></td>
 							<td class="col-md-1 text-right">

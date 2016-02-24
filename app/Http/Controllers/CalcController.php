@@ -50,7 +50,19 @@ class CalcController extends Controller {
 			if ($offer_last && $offer_last->offer_finish)
 				return response()->view('calc.calculation_closed');
 		}
-		return response()->view('calc.calculation');
+		return view('calc.calculation');
+	}
+
+	public function getCalculationSummary(Request $request, $projectid)
+	{
+		$project = Project::find($projectid);
+		return view('calc.calc_particles.summary', ['project' => $project]);
+	}
+
+	public function getCalculationEndresult(Request $request, $projectid)
+	{
+		$project = Project::find($projectid);
+		return view('calc.calc_particles.endresult', ['project' => $project]);
 	}
 
 	public function getEstimate(Request $request, $projectid)
@@ -66,6 +78,18 @@ class CalcController extends Controller {
 		return response()->view('calc.estimate');
 	}
 
+	public function getEstimateSummary(Request $request, $projectid)
+	{
+		$project = Project::find($projectid);
+		return view('calc.estim_particles.summary', ['project' => $project]);
+	}
+
+	public function getEstimateEndresult(Request $request, $projectid)
+	{
+		$project = Project::find($projectid);
+		return view('calc.estim_particles.endresult', ['project' => $project]);
+	}
+
 	public function getLess(Request $request, $projectid)
 	{
 		$project = Project::find($projectid);
@@ -77,6 +101,18 @@ class CalcController extends Controller {
 				return response()->view('calc.less_closed');
 		}
 		return response()->view('calc.less');
+	}
+
+	public function getLessSummary(Request $request, $projectid)
+	{
+		$project = Project::find($projectid);
+		return view('calc.less_particles.summary', ['project' => $project]);
+	}
+
+	public function getLessEndresult(Request $request, $projectid)
+	{
+		$project = Project::find($projectid);
+		return view('calc.less_particles.endresult', ['project' => $project]);
 	}
 
 	public function getMore(Request $request, $projectid)
@@ -93,6 +129,18 @@ class CalcController extends Controller {
 			}
 		}
 		return response()->view('calc.more');
+	}
+
+	public function getMoreSummary(Request $request, $projectid)
+	{
+		$project = Project::find($projectid);
+		return view('calc.more_particles.summary', ['project' => $project]);
+	}
+
+	public function getMoreEndresult(Request $request, $projectid)
+	{
+		$project = Project::find($projectid);
+		return view('calc.more_particles.endresult', ['project' => $project]);
 	}
 
 	public function getInvoice(Request $request, $project, $invoice_id)

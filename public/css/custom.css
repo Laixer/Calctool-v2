@@ -144,7 +144,7 @@ div.toggle-chapter > label:hover {
 }
 
 .btn-primary-chapter, .btn-primary-chapter:hover {
-	background: #517A00 !important;
+	background: #517A00;
 }
 
 /* Actieve werkzaamheden grijs, niet actief grijze border, incl knop */

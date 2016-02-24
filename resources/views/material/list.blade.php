@@ -215,8 +215,15 @@ $(document).ready(function() {
 
 		<div class="col-md-12">
 
+			<div>
+				<ol class="breadcrumb">
+				  <li><a href="/">Home</a></li>
+				  <li class="active">Materialendatabase</li>
+				</ol>
+			<div>
+			<br>
 
-			<h2><strong>Materialenlijst</strong></h2>
+			<h2><strong>Materialendatabase</strong></h2>
 
 			<div class="tabs nomargin-top">
 

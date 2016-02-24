@@ -91,7 +91,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
           <td class="qty">&nbsp;</td>
         </tr>
         @if ($include_tax)
-        @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+        @if (!$project->tax_reverse)
         <tr>
           <td class="qty">&nbsp;<i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
           <td class="qty">{{ '&euro; '.number_format($invoice->rest_21, 2, ",",".") }}</td>
@@ -113,7 +113,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
         </tr>
         @endif
 
-        @if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+        @if (!$project->tax_reverse)
         <tr>
           <td class="qty">BTW bedrag 21%</td>
           <td class="qty">&nbsp;</td>

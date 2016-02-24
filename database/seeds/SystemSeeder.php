@@ -21,43 +21,43 @@ class SystemSeeder extends Seeder {
 		$system_user_type = UserType::where('user_type','=','system')->first();
 		$guest_user_type = UserType::where('user_type','=','guest')->first();
 
-		$system_user = User::create(array(
-			'username' => 'system',
-			'secret' => Hash::make('ABC@123'),
-			'firstname' => 'SYSTEM',
-			'api' => md5(mt_rand()),
-			'token' => sha1(Hash::make('ABC@123')),
-			'ip' => '::1',
-			'active' => 'Y',
-			'confirmed_mail' => date('Y-m-d'),
-			'registration_date' => date('Y-m-d'),
-			'expiration_date' => date('Y-m-d', strtotime("+1 month", time())), // date('Y-m-d', strtotime("+100 year", time())),
-			'referral_key' => md5(mt_rand()),
-			'email' => 'info@calculatietool.com',
-			'user_type' => $system_user_type->id
-		));
+		$system_user = new User;
+		$system_user->username = 'system';
+		$system_user->secret = Hash::make('ABC@123');
+		$system_user->firstname = 'SYSTEM';
+		$system_user->api = md5(mt_rand());
+		$system_user->token = sha1(Hash::make('ABC@123'));
+		$system_user->ip = '::1';
+		$system_user->active = 'Y';
+		$system_user->confirmed_mail = date('Y-m-d');
+		$system_user->registration_date = date('Y-m-d');
+		$system_user->expiration_date = date('Y-m-d', strtotime("+1 month", time()));
+		$system_user->referral_key = md5(mt_rand());
+		$system_user->email = 'info@calculatietool.com';
+		$system_user->user_type = $system_user_type->id;
+		$system_user->save();
 
-		$guest_user = User::create(array(
-			'username' => 'guest',
-			'secret' => Hash::make('ABC@123'),
-			'firstname' => 'Guest',
-			'api' => md5(mt_rand()),
-			'token' => sha1(Hash::make('ABC@123')),
-			'ip' => '::1',
-			'active' => 'Y',
-			'confirmed_mail' => date('Y-m-d'),
-			'registration_date' => date('Y-m-d'),
-			'expiration_date' => date('Y-m-d', strtotime("+1 month", time())), // date('Y-m-d', strtotime("+100 year", time())),
-			'referral_key' => md5(mt_rand()),
-			'email' => 'guest@calctool.nl',
-			'user_type' => $guest_user_type->id
-		));
+		$guest_user = new User;
+		$guest_user->username = 'guest';
+		$guest_user->secret = Hash::make('ABC@123');
+		$guest_user->firstname = 'Guest';
+		$guest_user->api = md5(mt_rand());
+		$guest_user->token = sha1(Hash::make('ABC@123'));
+		$guest_user->ip = '::1';
+		$guest_user->active = 'Y';
+		$guest_user->confirmed_mail = date('Y-m-d');
+		$guest_user->registration_date = date('Y-m-d');
+		$guest_user->expiration_date = date('Y-m-d', strtotime("+1 month", time()));
+		$guest_user->referral_key = md5(mt_rand());
+		$guest_user->email = 'guest@calctool.nl';
+		$guest_user->user_type = $guest_user_type->id;
+		$guest_user->save();
 
-		MessageBox::create(array(
-			'subject' => 'Standaard notificatie',
-			'message' => 'Beste Systeem,<br /><br />Het systeem is geladen en de database is opgebouwd. Materialendatabase kan nog ontbreken als deze niet is geladen via de commandline.<br />Vergeet niet de standaardmelding te verwijderen als alles in orde is.<br /><br />Systeem',
-			'from_user' => $system_user->id,
-			'user_id' => $system_user->id
-		));
+		$message = new MessageBox;
+		$message->subject = 'Standaard notificatie';
+		$message->message = 'Beste Systeem,<br /><br />Het systeem is geladen en de database is opgebouwd. Materialendatabase kan nog ontbreken als deze niet is geladen via de commandline.<br />Vergeet niet de standaardmelding te verwijderen als alles in orde is.<br /><br />Systeem';
+		$message->from_user = $system_user->id;
+		$message->user_id = $system_user->id;
+		$message->save();
 	}
  }

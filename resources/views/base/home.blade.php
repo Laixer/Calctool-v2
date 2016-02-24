@@ -326,13 +326,13 @@ $(function() {
 				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
-							<a class="item-hover" href="/">
+							<a class="item-hover" href="/relation">
 								<span class="overlay color2"></span>
 								<span class="inner">
-									<span class="block fa fa-bar-chart-o fsize60"></span>
+									<span class="block fa fa-users fsize60"></span>
 								</span>
 							</a>
-							<a href="/" class="btn btn-primary add_to_cart"><i class="fa fa-bar-chart-o"></i> Financieel</a>
+							<a href="/relation" class="btn btn-primary add_to_cart"><i class="fa fa-users"></i> Relaties</a>
 						</figure>
 					</div>
 				</div>

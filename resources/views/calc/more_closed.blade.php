@@ -128,7 +128,7 @@ if (!$project || !$project->isOwner())
 					<div id="calculate" class="tab-pane">
 						<div class="toogle">
 
-							@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+							@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
 							<div id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
 								<label>{{ $chapter->chapter_name }}</label>
 								<div class="toggle-content">
@@ -136,7 +136,7 @@ if (!$project || !$project->isOwner())
 									<div class="toogle">
 
 										<?php
-										foreach(Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->orderBy('created_at', 'desc')->get() as $activity) {
+										foreach(Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->orderBy('created_at')->get() as $activity) {
 											if (Part::find($activity->part_id)->part_name=='contracting') {
 												$profit_mat = $project->profit_more_contr_mat;
 												$profit_equip = $project->profit_more_contr_equip;
@@ -149,17 +149,12 @@ if (!$project || !$project->isOwner())
 											<label>{{ $activity->activity_name }}</label>
 											<div class="toggle-content">
 												<div class="row">
-													<div class="col-md-4"></div>
-													<div class="col-md-2"></div>
-	    											<div class="col-md-2"></div>
-													<div class="col-md-1"></div>
-													<div class="col-md-3 text-right"><strong>{{ Part::find($activity->part_id)->part_name=='subcontracting' ? 'Onderaanneming' : 'Aanneming' }}</strong></div>
+													<div class="col-md-10"></div>
+													<div class="col-md-2 text-right label label-info"><strong>{{ Part::find($activity->part_id)->part_name=='subcontracting' ? 'Onderaanneming' : 'Aanneming' }}</strong></div>
 												</div>
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>
-													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2">{{ Tax::find($activity->tax_labor_id)->tax_rate }}%</div>
-													<div class="col-md-6"></div>
+													<div class="col-md-1 text-right label label-info"><strong>BTW {{ Tax::find($activity->tax_labor_id)->tax_rate }}%</strong></div>
 												</div>
 												<table class="table table-striped" data-id="{{ $activity->id }}">
 													<?php
@@ -178,13 +173,13 @@ if (!$project || !$project->isOwner())
 													<?php }else { ?>
 													<thead>
 														<tr>
-															<th class="col-md-5">Omschrijving</th>
+															<th class="col-md-6">Omschrijving</th>
 															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">Uurtarief</th>
 															<th class="col-md-1">Aantal</th>
+															<th class="col-md-1">&nbsp;</th>
 															<th class="col-md-1">Prijs</th>
-															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
+
 														</tr>
 													</thead>
 													<?php } ?>
@@ -207,13 +202,13 @@ if (!$project || !$project->isOwner())
 															$labor = MoreLabor::where('activity_id','=', $activity->id)->first();
 														?>
 														<tr >
-															<td class="col-md-5">Arbeidsuren</td>
+															<td class="col-md-6">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ $labor ? number_format($project->hour_rate_more, 2,",",".") : '' }}</td>
 															<td class="col-md-1">{{ $labor ? number_format($labor->amount, 2, ",",".") : '' }}</td>
-															<td class="col-md-1">{{ $labor ? ('&euro; '.number_format(MoreRegister::laborTotal($labor->rate, $labor->amount), 2, ",",".")) : '' }}</td>
 															<td class="col-md-1">&nbsp;</td>
-															<td class="col-md-1"></td>
+															<td class="col-md-1">{{ $labor ? ('&euro; '.number_format(MoreRegister::laborTotal($labor->rate, $labor->amount), 2, ",",".")) : '' }}</td>
+															
 														</tr>
 														<?php } ?>
 													</tbody>
@@ -221,46 +216,44 @@ if (!$project || !$project->isOwner())
 
 												<div class="row">
 													<div class="col-md-2"><h4>Materiaal</h4></div>
-													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2">{{ Tax::find($activity->tax_material_id)->tax_rate }}%</div>
-													<div class="col-md-8"></div>
+													<div class="col-md-1 text-right label label-info"><strong>BTW {{ Tax::find($activity->tax_material_id)->tax_rate }}%</strong></div>
 												</div>
 
 												<table class="table table-striped">
 													<thead>
 														<tr>
-															<th class="col-md-5">Omschrijving</th>
+															<th class="col-md-6">Omschrijving</th>
 															<th class="col-md-1">Eenheid</th>
 															<th class="col-md-1">&euro; / Eenh.</th>
 															<th class="col-md-1">Aantal</th>
 															<th class="col-md-1">Prijs</th>
 															<th class="col-md-1">+ Winst %</th>
-															<th class="col-md-1">&nbsp;</th>
+
 														</tr>
 													</thead>
 
 													<tbody>
 														@foreach (MoreMaterial::where('activity_id','=', $activity->id)->get() as $material)
 														<tr>
-															<td class="col-md-5">{{ $material->material_name }}</td>
+															<td class="col-md-6">{{ $material->material_name }}</td>
 															<td class="col-md-1">{{ $material->unit }}</td>
 															<td class="col-md-1">{{ number_format($material->rate, 2,",",".") }}</td>
 															<td class="col-md-1">{{ number_format($material->amount, 2,",",".") }}</td>
 															<td class="col-md-1">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
 															<td class="col-md-1">{{ '&euro; '.number_format($material->rate*$material->amount*((100+$profit_mat)/100), 2,",",".") }}</td>
-															<td class="col-md-1"></td>
+
 														</tr>
 														@endforeach
 													</tbody>
 													<tbody>
 														<tr>
-															<td class="col-md-5"><strong>Totaal</strong></td>
+															<td class="col-md-6"><strong>Totaal</strong></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1"><strong>{{ '&euro; '.number_format(MoreRegister::materialTotal($activity->id, $profit_mat), 2, ",",".") }}</td>
 															<td class="col-md-1"><strong>{{ '&euro; '.number_format(MoreRegister::materialTotalProfit($activity->id, $profit_mat), 2, ",",".") }}</td>
-															<td class="col-md-1">&nbsp;</td>
+
 														</tr>
 													</tbody>
 												</table>
@@ -275,38 +268,38 @@ if (!$project || !$project->isOwner())
 												<table class="table table-striped">
 													<thead>
 														<tr>
-															<th class="col-md-5">Omschrijving</th>
+															<th class="col-md-6">Omschrijving</th>
 															<th class="col-md-1">Eenheid</th>
 															<th class="col-md-1">&euro; / Eenh.</th>
 															<th class="col-md-1">Aantal</th>
 															<th class="col-md-1">Prijs</th>
 															<th class="col-md-1">+ Winst %</th>
-															<th class="col-md-1">&nbsp;</th>
+	
 														</tr>
 													</thead>
 
 													<tbody>
 														@foreach (MoreEquipment::where('activity_id','=', $activity->id)->get() as $equipment)
 														<tr>
-															<td class="col-md-5">{{ $equipment->equipment_name }}</td>
+															<td class="col-md-6">{{ $equipment->equipment_name }}</td>
 															<td class="col-md-1">{{ $equipment->unit }}</td>
 															<td class="col-md-1">{{ number_format($equipment->rate, 2,",",".") }}</td>
 															<td class="col-md-1">{{ number_format($equipment->amount, 2,",",".") }}</td>
 															<td class="col-md-1">{{ '&euro; '.number_format($equipment->rate*$equipment->amount, 2,",",".") }}</td>
 															<td class="col-md-1">{{ '&euro; '.number_format($equipment->rate*$equipment->amount*((100+$profit_equip)/100), 2,",",".") }}</td>
-															<td class="col-md-1"></td>
+
 														</tr>
 														@endforeach
 													</tbody>
 													<tbody>
 														<tr>
-															<td class="col-md-5"><strong>Totaal</strong></td>
+															<td class="col-md-6"><strong>Totaal</strong></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1"><strong>{{ '&euro; '.number_format(MoreRegister::equipmentTotal($activity->id, $profit_equip), 2, ",",".") }}</td>
 															<td class="col-md-1"><strong>{{ '&euro; '.number_format(MoreRegister::equipmentTotalProfit($activity->id, $profit_equip), 2, ",",".") }}</td>
-															<td class="col-md-1">&nbsp;</td>
+
 														</tr>
 													</tbody>
 												</table>
@@ -343,9 +336,9 @@ if (!$project || !$project->isOwner())
 										</thead>
 
 										<tbody>
-											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
 											<?php $i = 0; ?>
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->orderBy('created_at')->get() as $activity)
 											<?php $i++; ?>
 											<tr>
 												<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
@@ -391,9 +384,9 @@ if (!$project || !$project->isOwner())
 										</thead>
 
 										<tbody>
-											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at', 'desc')->get() as $chapter)
+											@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
 											<?php $i = 0; ?>
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->orderBy('created_at', 'desc')->get() as $activity)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->orderBy('created_at')->get() as $activity)
 											<?php $i++; ?>
 											<tr>
 												<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
@@ -473,7 +466,7 @@ if (!$project || !$project->isOwner())
 							</thead>
 
 							<tbody>
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ number_format(MoreEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -504,7 +497,7 @@ if (!$project || !$project->isOwner())
 								</tr>
 								@endif
 
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -535,7 +528,7 @@ if (!$project || !$project->isOwner())
 								</tr>
 								@endif
 
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -593,7 +586,7 @@ if (!$project || !$project->isOwner())
 							</thead>
 
 							<tbody>
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Arbeidskosten</td>
 									<td class="col-md-1">{{ number_format(MoreEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
@@ -624,7 +617,7 @@ if (!$project || !$project->isOwner())
 								</tr>
 								@endif
 
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Materiaalkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -655,7 +648,7 @@ if (!$project || !$project->isOwner())
 								</tr>
 								@endif
 
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-4">Materieelkosten</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -720,7 +713,7 @@ if (!$project || !$project->isOwner())
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">&nbsp;</td>
 								</tr>
-								@if (ProjectType::find($project->type_id)->type_name != 'BTW verlegd')
+								@if (!$project->tax_reverse)
 								<tr>
 									<td class="col-md-5">BTW bedrag aanneming 21%</td>
 									<td class="col-md-2">&nbsp;</td>
