@@ -24,7 +24,8 @@
         <div class="row">
 
             <div class="col-md-12 text-center">
-                <div class="e404"><i class="fa fa-refresh"></i></div>
+                <div class="e404">
+                <i class="fa fa-refresh fa-spin"></i></div>
                 <h2>
                     De applicatie wordt geüpdatet...
                     <span class="subtitle">Onze excuses, probeer het over een paar minuten nogmaals.</span>
