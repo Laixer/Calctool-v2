@@ -750,28 +750,92 @@ var n = this,
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
 				$.post("/calculation/calc/deletematerial", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(){
-					$curThis.closest("tr").hide("slow");
+					var body = $curThis.closest("tbody");
+					var table = $curThis.closest("table");
+					$curThis.closest("tr").remove();
+					var sub_total = 0;
+					body.find(".total-incl-tax").each(function(index){
+						var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+						if (_cal)
+							sub_total += _cal;
+					});
+					table.find('.mat_subtotal').text('€ '+$.number(sub_total,2,',','.'));
+					var sub_total_profit = 0;
+					body.find(".total-ex-tax").each(function(index){
+						var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+						if (_cal)
+							sub_total_profit += _cal;
+					});
+					table.find('.mat_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
 				}).fail(function(e) { console.log(e); });
 		});
 		$("body").on("click", ".edeleterow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
 				$.post("/calculation/calc/deleteequipment", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(){
-					$curThis.closest("tr").hide("slow");
+					var body = $curThis.closest("tbody");
+					var table = $curThis.closest("table");
+					$curThis.closest("tr").remove();
+					var sub_total = 0;
+					body.find(".total-incl-tax").each(function(index){
+						var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+						if (_cal)
+							sub_total += _cal;
+					});
+					table.find('.equip_subtotal').text('€ '+$.number(sub_total,2,',','.'));
+					var sub_total_profit = 0;
+					body.find(".total-ex-tax").each(function(index){
+						var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+						if (_cal)
+							sub_total_profit += _cal;
+					});
+					table.find('.equip_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
 				}).fail(function(e) { console.log(e); });
 		});
 		$("body").on("click", ".sdeleterowe", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
 				$.post("/calculation/estim/deletematerial", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(){
-					$curThis.closest("tr").hide("slow");
+					var body = $curThis.closest("tbody");
+					var table = $curThis.closest("table");
+					$curThis.closest("tr").remove();
+					var sub_total = 0;
+					body.find(".total-incl-tax").each(function(index){
+						var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+						if (_cal)
+							sub_total += _cal;
+					});
+					table.find('.mat_subtotal').text('€ '+$.number(sub_total,2,',','.'));
+					var sub_total_profit = 0;
+					body.find(".total-ex-tax").each(function(index){
+						var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+						if (_cal)
+							sub_total_profit += _cal;
+					});
+					table.find('.mat_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
 				}).fail(function(e) { console.log(e); });
 		});
 		$("body").on("click", ".edeleterowe", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
 				$.post("/calculation/estim/deleteequipment", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(){
-					$curThis.closest("tr").hide("slow");
+					var body = $curThis.closest("tbody");
+					var table = $curThis.closest("table");
+					$curThis.closest("tr").remove();
+					var sub_total = 0;
+					body.find(".total-incl-tax").each(function(index){
+						var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+						if (_cal)
+							sub_total += _cal;
+					});
+					table.find('.equip_subtotal').text('€ '+$.number(sub_total,2,',','.'));
+					var sub_total_profit = 0;
+					body.find(".total-ex-tax").each(function(index){
+						var _cal = parseInt($(this).text().substring(2).split('.').join('').replace(',', '.'));
+						if (_cal)
+							sub_total_profit += _cal;
+					});
+					table.find('.equip_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
 				}).fail(function(e) { console.log(e); });
 		});
 		$("body").on("click", ".ldeleterow", function(){
