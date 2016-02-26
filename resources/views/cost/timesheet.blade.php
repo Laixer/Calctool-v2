@@ -31,49 +31,7 @@ use \Calctool\Models\MoreLabor;
 			$('#tab-hour').addClass('active');
 			$('#hour').addClass('active');
 		}
-		$('#addnew').click(function(e) {
-			$curThis = $(this);
-			e.preventDefault();
-			$date = $curThis.closest("tr").find("input[name='date']").val();
-			$hour = $curThis.closest("tr").find("input[name='hour']").val();
-			$type = $curThis.closest("tr").find("select[name='typename']").val();
-			$activity = $curThis.closest("tr").find("select[name='activity']").val();
-			$note = $curThis.closest("tr").find("input[name='note']").val();
-			$.post("/timesheet/new", {
-				date: $date,
-				hour: $hour,
-				type: $type,
-				activity: $activity,
-				note: $note,
-			}, function(data){
-				var $curTable = $curThis.closest("table");
-				var json = $.parseJSON(data);
-				if (json.success) {
-					$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
-					.find("td:eq(0)").text(json.date).end()
-					.find("td:eq(1)").html(json.hour).end()
-					.find("td:eq(2)").text(json.type).end()
-					.find("td:eq(3)").text(json.project).end()
-					.find("td:eq(4)").text(json.activity).end()
-					.find("td:eq(5)").text($note).end()
-					.find("td:eq(6)").html('<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>').end()
-					.prependTo($curTable);
-					$curThis.closest("tr").find("input").val("");
-					$curThis.closest("tr").find("select").val("");
-				}
-			});
-		});
-		$("body").on("click", ".deleterow", function(e){
-			e.preventDefault();
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				$.post("/timesheet/delete", {id: $curThis.closest("tr").attr("data-id")}, function(){
-					$curThis.closest("tr").hide("slow");
-				}).fail(function(e) { console.log(e); });
-		});
 		$('.getact').change(function(e){
-			if ($('#projname').val() == -1 || $('#typename').val() == -1)
-				return;
 			$.get('/timesheet/activity/' + $('#projname').val() + '/' + $('#typename').val(), function(data){
 				$('#activity').prop('disabled', false).find('option').remove();
 				$('#activity').prop('disabled', false).find('optgroup').remove();
