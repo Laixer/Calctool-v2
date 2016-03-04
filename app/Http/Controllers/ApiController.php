@@ -8,6 +8,9 @@ use \Calctool\Models\Chapter;
 use \Calctool\Models\Activity;
 use \Calctool\Models\Timesheet;
 use \Calctool\Models\TimesheetKind;
+use \Calctool\Models\Purchase;
+use \Calctool\Models\PurchaseKind;
+use \Calctool\Models\Wholesale;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller {
@@ -38,7 +41,7 @@ class ApiController extends Controller {
 
 	public function getTimesheet()
 	{
-		$projects = Project::where('user_id','=',Auth::user()->id)->select('id')->get();
+		$projects = Project::where('user_id','=',Auth::id())->select('id')->get();
 		$chapters = Chapter::whereIn('project_id', $projects->toArray())->select('id')->get();
 		$activities = Activity::whereIn('chapter_id', $chapters->toArray())->select('id')->get();
 		$timesheets = Timesheet::whereIn('activity_id', $activities->toArray())->get();
@@ -119,6 +122,75 @@ class ApiController extends Controller {
 		}
 
 		return response()->json(['success' => 1, 'note' => $timesheet->note, 'type' => $type, 'activity' => Activity::find($timesheet->activity_id)->activity_name, 'hour' => number_format($timesheet->register_hour, 2,",","."), 'date' => date('d-m-Y', strtotime($request->get('date'))), 'project' => $_project->project_name, 'id' => $timesheet->id]);
+	}
+
+	public function getPurchase()
+	{
+		$projects = Project::where('user_id','=',Auth::id())->select('id')->get();
+		$purchases = Purchase::whereIn('project_id', $projects->toArray())->get();
+
+		foreach ($purchases as $purchase) {
+			$purchase['relation'] = $purchase->relation_id ? Relation::find($purchase->relation_id)->company_name : Wholesale::find($purchase->wholesale_id)->company_name;
+			$purchase['project_name'] = Project::find($purchase->project_id)->project_name;
+			$purchase['amount'] = number_format($purchase['amount'], 2, ",",".");
+			$purchase['purchase_kind'] = ucfirst(PurchaseKind::find($purchase['kind_id'])->kind_name);
+			$purchase['register_date'] = date('d-m-Y', strtotime($purchase['register_date']));
+		}
+
+		return response()->json($purchases->toArray());
+	}
+
+	public function doPurchaseDelete(Request $request)
+	{
+		$this->validate($request, [
+			'id' => array('required'),
+		]);
+
+		Purchase::destroy($request->input('id'));
+	}
+
+	public function doPurchaseNew(Request $request)
+	{
+		$this->validate($request, [
+			'date' => array('required'),
+			'type' => array('required','integer'),
+			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'project' => array('required','integer'),
+			'relation' => array('required')
+		]);
+
+		$project = Project::find($request->get('project'));
+		if (!$project || !$project->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
+
+		$relation_id = null;
+		$wholesale_id = null;
+		$arr = explode('-', $request->get('relation'));
+		if ($arr[0] == 'rel')
+			$relation_id = $arr[1];
+		else if ($arr[0] == 'whl')
+			$wholesale_id = $arr[1];
+
+		$purchase = new Purchase;
+		$purchase->register_date = $request->get('date');
+		$purchase->amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
+		if ($relation_id)
+			$purchase->relation_id = $relation_id;
+		else if ($wholesale_id)
+			$purchase->wholesale_id = $wholesale_id;
+		$purchase->note = $request->get('note');
+		$purchase->kind_id = $request->get('type');
+		$purchase->project_id = $project->id;
+
+		$purchase->save();
+
+		if ($relation_id)
+			$relname = Relation::find($relation_id)->company_name;
+		else if ($wholesale_id)
+			$relname = Wholesale::find($wholesale_id)->company_name;
+
+		return response()->json(['success' => 1, 'note' => $purchase->note, 'relation' => $relname, 'type' => ucfirst(PurchaseKind::find($request->get('type'))->kind_name), 'date' => date('d-m-Y', strtotime($request->get('date'))), 'amount' => number_format($purchase->amount, 2,",","."), 'project' => $project->project_name, 'id' => $purchase->id]);
 	}
 
 }

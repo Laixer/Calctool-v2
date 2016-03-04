@@ -316,7 +316,7 @@ angular.module('timesheetApp', []).controller('timesheetController', function($s
 			};
 
 			$scope.timesheets.push(data);
-			console.log(response.data);
+			// console.log(response.data);
 		});
 	};
 });

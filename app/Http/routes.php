@@ -38,9 +38,15 @@ Route::group(['middleware' => 'guest'], function() {
 Route::group(['prefix' => 'api/v1', 'middleware' => 'auth'], function() {
 	Route::get('/', 'ApiController@getApiRoot');
 	Route::get('/projects', 'ApiController@getProjects');
+
 	Route::get('/timesheet', 'ApiController@getTimesheet');
 	Route::post('/timesheet/delete', 'ApiController@doTimesheetDelete');
 	Route::post('/timesheet/new', 'ApiController@doTimesheetNew');
+
+	Route::get('/purchase', 'ApiController@getPurchase');
+	Route::post('/purchase/delete', 'ApiController@doPurchaseDelete');
+	Route::post('/purchase/new', 'ApiController@doPurchaseNew');
+
 });
 
 Route::get('about', function() {
