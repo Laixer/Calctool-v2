@@ -74,11 +74,11 @@ use \Calctool\Models\Wholesale;
 				<table class="table table-striped" ng-controller="purchaseController">
 					<thead>
 						<tr>
-							<th class="col-md-1">Datum</th>
-							<th class="col-md-2">Relatie</th>
-							<th class="col-md-1">Bedrag</th>
-							<th class="col-md-3">Project</th>
-							<th class="col-md-1">Soort</th>
+							<th class="col-md-1" ng-click="orderByField='register_date'; reverseSort = !reverseSort">Datum</th>
+							<th class="col-md-2" ng-click="orderByField='relation'; reverseSort = !reverseSort">Relatie</th>
+							<th class="col-md-1" ng-click="orderByField='amount'; reverseSort = !reverseSort">Bedrag</th>
+							<th class="col-md-3" ng-click="orderByField='project_name'; reverseSort = !reverseSort">Project</th>
+							<th class="col-md-1" ng-click="orderByField='purchase_kind'; reverseSort = !reverseSort">Soort</th>
 							<th class="col-md-3">Omschrijving</th>
 							<th class="col-md-1">&nbsp;</th>
 						</tr>
