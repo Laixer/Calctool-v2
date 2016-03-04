@@ -11,6 +11,7 @@ use \Calctool\Models\TimesheetKind;
 use \Calctool\Models\Purchase;
 use \Calctool\Models\PurchaseKind;
 use \Calctool\Models\Wholesale;
+use \Calctool\Models\Relation;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller {
