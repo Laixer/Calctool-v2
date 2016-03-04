@@ -32,6 +32,13 @@ use \Calctool\Models\MoreLabor;
 			$('#hour').addClass('active');
 		}
 		$('.getact').change(function(e){
+			var $type = $('#projname option:selected').attr('data-type');
+			if ($type == 1) {
+				$('#typename').prop('disabled', true);
+			} else {
+				$('#typename').prop('disabled', false);
+			}
+
 			$.get('/timesheet/activity/' + $('#projname').val() + '/' + $('#typename').val(), function(data){
 				$('#activity').prop('disabled', false).find('option').remove();
 				$('#activity').prop('disabled', false).find('optgroup').remove();
@@ -126,7 +133,7 @@ use \Calctool\Models\MoreLabor;
 									<td class="col-md-2">
 										<select name="projname" id="projname" class="getact form-control-sm-text" ng-model="projname">
 											@foreach (Project::where('user_id','=',Auth::id())->whereNull('project_close')->get() as $projectname)
-											<option value="{{ $projectname->id }}">{{ ucwords($projectname->project_name) }}</option>
+											<option data-type="{{ $projectname->type_id }}" value="{{ $projectname->id }}">{{ ucwords($projectname->project_name) }}</option>
 											@endforeach
 										</select>
 									</td>
