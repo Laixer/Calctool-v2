@@ -320,7 +320,7 @@ class UserController extends Controller {
 	public function doMyAccountUser(Request $request)
 	{
 		$this->validate($request, [
-			'firstname' => array('required','max:30'),
+			// 'firstname' => array('required','max:30'),
 			'mobile' => array('numeric','max:14'),
 			'phone' => array('numeric','max:14'),
 			'email' => array('required','email','max:80'),
@@ -373,7 +373,7 @@ class UserController extends Controller {
 
 			/* Contact */
 			'lastname' => array('required','max:50'),
-			'firstname' => array('required','max:30'),
+			// 'firstname' => array('required','max:30'),
 			'gender' => array('required'),
 			'mobile' => array('alpha_num','max:14'),
 			'telephone' => array('alpha_num','max:14'),

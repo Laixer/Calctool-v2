@@ -53,7 +53,7 @@ $contact = Contact::where('relation_id','=',$relation->id)->first();
 
 					<div class="col-md-2">
 						<div class="form-group">
-							<label for="contact_firstname">Voornaam*</label>
+							<label for="contact_firstname">Voornaam</label>
 							<input name="contact_firstname" id="contact_firstname" type="text" value="{{ Input::old('contact_firstname') }}" class="form-control"/>
 						</div>
 					</div>
