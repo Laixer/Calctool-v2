@@ -484,6 +484,7 @@ class StaticSeeder extends Seeder {
 		$this->command->info('Detail created');
 
 		ContactFunction::create(array('function_name' => 'adjunct-directeur'));
+		ContactFunction::create(array('function_name' => 'eigenaar'));
 		ContactFunction::create(array('function_name' => 'afdelingshoofd'));
 		ContactFunction::create(array('function_name' => 'teamleider'));
 		ContactFunction::create(array('function_name' => 'ploegbaas'));
@@ -550,7 +551,7 @@ class StaticSeeder extends Seeder {
 		RelationType::create(array('type_name' => 'stukadoor'));
 		RelationType::create(array('type_name' => 'tegelzetter'));
 		RelationType::create(array('type_name' => 'timmerman'));
-		RelationType::create(array('type_name' => 'tuinman'));
+		RelationType::create(array('type_name' => 'hovenier'));
 		RelationType::create(array('type_name' => 'tussenpersoon'));
 		RelationType::create(array('type_name' => 'vereniging van eigenaren'));
 		RelationType::create(array('type_name' => 'verfgroothandel'));
