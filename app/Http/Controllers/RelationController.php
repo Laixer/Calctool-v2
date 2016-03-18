@@ -62,7 +62,7 @@ class RelationController extends Controller {
 			'telephone_comp' => array('alpha_num','max:12'),
 			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
 			/* Adress */
-			'street' => array('required','alpha','max:60'),
+			'street' => array('required','alpha_num','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
 			'city' => array('required','alpha_num','max:35'),
@@ -231,7 +231,8 @@ class RelationController extends Controller {
 			'telephone_comp' => array('alpha_num','max:12'),
 			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
 			/* Adress */
-			'street' => array('required','regex:/^[A-Za-z0-9\s]*$/','max:60'),
+			// 'street' => array('required','regex:/^[A-Za-z0-9\s]*$/','max:60'),
+			'street' => array('required','alpha_num','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
 			'city' => array('required','alpha_num','max:35'),

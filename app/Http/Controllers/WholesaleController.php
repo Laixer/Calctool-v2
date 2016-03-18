@@ -59,7 +59,7 @@ class WholesaleController extends Controller {
 			'company_type' => array('required_if:relationkind,zakelijk','numeric'),
 			'company_name' => array('required_if:relationkind,zakelijk','max:50'),
 			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
-			'street' => array('required','alpha','max:60'),
+			'street' => array('required','alpha_num','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
 			'city' => array('required','alpha_num','max:35'),
@@ -103,7 +103,7 @@ class WholesaleController extends Controller {
 			/* Contact */
 			'email' => array('email','max:80'),
 			/* Adress */
-			'street' => array('required','alpha','max:60'),
+			'street' => array('required','alpha_num','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
 			'city' => array('required','alpha_num','max:35'),

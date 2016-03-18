@@ -136,7 +136,7 @@ class AdminController extends Controller {
 			'website' => array('url','max:180'),
 
 			/* Adress */
-			'address_street' => array('alpha','max:60'),
+			'address_street' => array('alpha_num','max:60'),
 			'address_number' => array('alpha_num','max:5'),
 			'address_zipcode' => array('size:6'),
 			'address_city' => array('alpha_num','max:35'),
