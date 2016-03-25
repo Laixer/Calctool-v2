@@ -207,7 +207,7 @@ $(function() {
 
 			<div class="modal-body" id="introvid" style="display:none;padding:0px;">
 			  <video id="intro_vid" class="video-js vjs-sublime-skin" controls preload="none" width="900" height="540" data-setup="{}">
-			    <source src="http://dev.calculatietool.com/video/vid_intro_1.mp4" type='video/mp4' />
+			    <source src="/video/vid_intro_1.mp4" type='video/mp4' />
 			    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
 			  </video>
 			</div>
