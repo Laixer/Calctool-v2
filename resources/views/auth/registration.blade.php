@@ -12,15 +12,19 @@ $(function() {
 	$("[name='tos']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		if (state) {
 			$('#btn-submit').removeClass('disabled');
+			$('#btn-submit').prop('disabled', false);
 		} else {
 			$('#btn-submit').addClass('disabled');
+			$('#btn-submit').prop('disabled', true);
 		}
 	});
 	$("#tos").click(function(e) {
 		if ($(this).prop('checked')) {
 			$('#btn-submit').removeClass('disabled');
+			$('#btn-submit').prop('disabled', false);
 		} else {
 			$('#btn-submit').addClass('disabled');
+			$('#btn-submit').prop('disabled', true);
 		}
 	});
 });
@@ -93,7 +97,7 @@ $(function() {
 								</span>
 							</div>
 							<div class="col-md-12">
-								<input type="submit" id="btn-submit" value="Aanmelden" class="btn btn-primary pull-right push-bottom disabled" data-loading-text="Loading...">
+								<input type="submit" id="btn-submit" disabled value="Aanmelden" class="btn btn-primary pull-right push-bottom disabled" data-loading-text="Loading...">
 							</div>
 						</div>
 
