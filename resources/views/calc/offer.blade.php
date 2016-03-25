@@ -554,7 +554,6 @@ $type = ProjectType::find($project->type_id);
 					<li><strong>Offertenummer:</strong></li>
 					<li>&nbsp;</li>
 					<li>&nbsp;</li>
-					<input type="hidden" id="offdateval" name="offdateval" value="{{ $offer_last ? $offer_last->offer_make : '' }}" />
 				</ul>
 			</div>
 			<div class="col-sm-3">
