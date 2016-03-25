@@ -25,6 +25,7 @@ $relation = Relation::find(Auth::user()->self_id);
 <link media="all" type="text/css" rel="stylesheet" href="/plugins/jquery-ui/jquery-ui.css">
 <script type="text/javascript">
 $(function() {
+	var myPlayer = videojs('intro_vid');
 	$('#tutModal').modal('toggle');
 	$('button[data-action="hide"]').click(function(){
 		$.get("/hidenextstep").fail(function(e) { console.log(e); });
@@ -56,8 +57,6 @@ $(function() {
 		$.post("/mycompany/quickstart", {
 			company_type: $('#company_type').val(),
 			company_name: $('#company_name').val(),
-			// kvk: $('#kvk').val(),
-			// btw: $('#btw').val(),
 			street: $('#street').val(),
 			address_number: $('#address_number').val(),
 			zipcode: $('#zipcode').val(),
@@ -74,6 +73,9 @@ $(function() {
 				$('.modal-footer').hide('slide', {direction: "up"});
 			});
 		});
+	});
+	$('#tutModal').on('hidden.bs.modal', function () {
+		myPlayer.pause();
 	});
 });
 </script>
@@ -204,8 +206,8 @@ $(function() {
 			</form>
 
 			<div class="modal-body" id="introvid" style="display:none;padding:0px;">
-			  <video id="x" class="video-js vjs-sublime-skin" controls preload="none" width="900" height="540" data-setup="{}">
-			    <source src="/video/vid_intro_1.mp4" type='video/mp4' />
+			  <video id="intro_vid" class="video-js vjs-sublime-skin" controls preload="none" width="900" height="540" data-setup="{}">
+			    <source src="http://dev.calculatietool.com/video/vid_intro_1.mp4" type='video/mp4' />
 			    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
 			  </video>
 			</div>
