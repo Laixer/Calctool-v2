@@ -1,5 +1,6 @@
 <?php
 use \Calctool\Models\Relation;
+use \Calctool\Models\Project;
 use \Calctool\Models\RelationKind;
 use \Calctool\Models\RelationType;
 use \Calctool\Models\Province;
@@ -341,99 +342,107 @@ $(function() {
 
 			<div class="row">
 
-				<div class="col-md-6">
-					<div class="white-row" style="min-height: 280px;">
-						<div class="pull-right">
+				<div id="wrapper" ng-app="projectApp">
 
+					<div class="col-md-12">
 
-					<div class="btn-group">
-							  <a href="/project/new" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Nieuw project</a>
-							  <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							    <span class="caret"></span>
-							    <span class="sr-only">Toggle Dropdown</span>
-							  </button>
-							  <ul class="dropdown-menu">
-							    <li><a href="/project">Alle Projecten</a></li>
-							  </ul>
+						<h2><strong>Openstaande</strong> Projecten</h2>
+						<div class="white-row" ng-controller="projectController">
+
+							@if (0)
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th class="col-md-3">Projectnaam</th>
+										<th class="col-md-2">Opdrachtgever</th>
+										<th class="col-md-1">Type</th>
+										<th class="col-md-3">Adres</th>
+										<th class="col-md-2">Plaats</th>
+										<th class="col-md-1">Status</th>
+									</tr>
+								</thead>
+
+								<tbody>
+								@if (!Project::where('user_id','=', Auth::user()->id)->count('id'))
+								<tr>
+									<td colspan="6" style="text-align: center;">Er zijn nog geen projecten</td>
+								</tr>
+								@endif
+								@foreach (Project::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $project)
+								<?php $relation = Relation::find($project->client_id); ?>
+									<tr>
+										<td class="col-md-3"><a href="/project-{{ $project->id }}/edit">{{ $project->project_name }}</a></td>
+										<td class="col-md-2">{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</td>
+										<td class="col-md-1">{{ $project->type->type_name }}</td>
+										<td class="col-md-3">{{ $project->address_street }} {{ $project->address_number }}</td>
+										<td class="col-md-2">{{ $project->address_city }}</td>
+										<td class="col-md-1">{{ $project->project_close ? 'Gesloten' : 'Open' }}</td>
+									</tr>
+								@endforeach
+								</tbody>
+							</table>
+							@endif
+							<div class="form-group">
+								<input type="text" ng-model="query" class="form-control" placeholder="Zoek in projecten">
+							</div>
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th class="col-md-3">Projectnaam</th>
+										<th class="col-md-2">Opdrachtgever</th>
+										<th class="col-md-1">Type</th>
+										<th class="col-md-3">Adres</th>
+										<th class="col-md-2">Plaats</th>
+										<th class="col-md-1">Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="project in projects | filter: query | orderBy: 'project_name' as results">
+										<td class="col-md-3"><a href="/project-@{{ project.id }}/edit">@{{ project.project_name }}</a></td>
+										<td class="col-md-2">{{-- RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) --}}</td>
+										<td class="col-md-1">{{-- $project->type->type_name --}}</td>
+										<td class="col-md-3">@{{ project.address_street }} @{{ project.address_number }}</td>
+										<td class="col-md-2">@{{ project.address_city }}</td>
+										<td class="col-md-1">@{{ project.project_close ? 'Gesloten' : 'Open' }}</td>
+									</tr>
+									<tr ng-show="results == 0">
+										<td colspan="6" style="text-align: center;">Geen projecten beschikbaar</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="row">
+								<div class="col-md-3">
+									
+									<div class="btn-group">
+								  		<a href="/project/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw project</a>
+								 		<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    		<span class="caret"></span>
+								   		<span class="sr-only">Toggle Dropdown</span>
+								 		</button>
+								 		<ul class="dropdown-menu">
+								   			<li><a href="/project">Gesloten projecten</a></li>
+								   			<li><a href="/project">Alle Projecten</a></li>
+								 		</ul>
+									</div>
+								</div>
 							</div>
 
 						</div>
-						<h2><strong>Actieve</strong> Projecten</h2>
-						<div class="table-responsive">
-							<table class="table table-hover">
-								<thead>
-									<tr>
-										<th>Project</th>
-										<th>Opdrachtgever</th>
-										<th>Type</th>
-									</tr>
-								</thead>
-								<tbody>
-									@foreach (Calctool\Models\Project::where('user_id','=', Auth::id())->whereNull('project_close')->orderBy('created_at', 'desc')->limit(5)->get() as $project)
-									<?php $relation = \Calctool\Models\Relation::find($project->client_id); ?>
-									<tr>
-										<td><a href="{{ '/project-'.$project->id.'/edit' }}">{{ $project->project_name }}</td>
-										<td>{!! \Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (\Calctool\Models\Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.\Calctool\Models\Contact::where('relation_id','=',$relation->id)->first()['lastname']); !!}</td>
-										<td>{!! ucfirst($project->type->type_name) !!}</td>
-									</tr>
-									@endforeach
-								</tbody>
-							</table>
-						</div>
 					</div>
+
 				</div>
+				<script type="text/javascript">
+				angular.module('projectApp', []).controller('projectController', function($scope, $http) {
+					$http.get('/api/v1/projects').then(function(response){
+						$scope.projects = response.data;
+					});
 
-				<div class="col-md-6">
-					<div class="white-row" style="min-height: 280px;">
-						<div class="pull-right">
-
-						<div class="btn-group">
-						  <a href="relation/new" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Nieuwe Relatie</a>
-						  <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						    <span class="caret"></span>
-						    <span class="sr-only">Toggle Dropdown</span>
-						  </button>
-						  <ul class="dropdown-menu">
-						    <li><a href="/relation">Alle Relaties</a></li>
-						  </ul>
-						</div>
-
-						</div>
-						<h2><strong>Laatste</strong> Relaties</h2>
-						<div class="table-responsive">
-							<table class="table table-hover">
-								<thead>
-									<tr>
-										<th>Naam</th>
-										<th>Email</th>
-										<th>Type</th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php
-									$userid = Auth::user()->self_id;
-									if(Auth::user()->self_id)
-										$userid = Auth::user()->self_id;
-									else
-										$userid = -1;
-									?>
-									@foreach (Calctool\Models\Relation::where('user_id','=', Auth::id())->where('id','!=',$userid)->where('active',true)->orderBy('created_at', 'desc')->limit(5)->get() as $relation)
-									<?php $contact = Calctool\Models\Contact::where('relation_id','=',$relation->id)->where('active',true)->first(); ?>
-									<tr>
-										<td><a href="{{ 'relation-'.$relation->id.'/edit' }}">{{ $relation->company_name ? $relation->company_name : $contact->firstname .' '. $contact->lastname }}</a></td>
-										<td>{{ $relation->company_name ? $relation->email : $contact->email }}</td>
-										<td>{{ ucfirst(RelationKind::find($relation->kind_id)->kind_name) }}</td>
-									</tr>
-									@endforeach
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
+				});
+				</script>
 
 			</div>
+		</div>
+	</div> 
 
-		</section>
-	</div>
 </div>
 @stop
