@@ -31,49 +31,14 @@ use \Calctool\Models\MoreLabor;
 			$('#tab-hour').addClass('active');
 			$('#hour').addClass('active');
 		}
-		$('#addnew').click(function(e) {
-			$curThis = $(this);
-			e.preventDefault();
-			$date = $curThis.closest("tr").find("input[name='date']").val();
-			$hour = $curThis.closest("tr").find("input[name='hour']").val();
-			$type = $curThis.closest("tr").find("select[name='typename']").val();
-			$activity = $curThis.closest("tr").find("select[name='activity']").val();
-			$note = $curThis.closest("tr").find("input[name='note']").val();
-			$.post("/timesheet/new", {
-				date: $date,
-				hour: $hour,
-				type: $type,
-				activity: $activity,
-				note: $note,
-			}, function(data){
-				var $curTable = $curThis.closest("table");
-				var json = $.parseJSON(data);
-				if (json.success) {
-					$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
-					.find("td:eq(0)").text(json.date).end()
-					.find("td:eq(1)").html(json.hour).end()
-					.find("td:eq(2)").text(json.type).end()
-					.find("td:eq(3)").text(json.project).end()
-					.find("td:eq(4)").text(json.activity).end()
-					.find("td:eq(5)").text($note).end()
-					.find("td:eq(6)").html('<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>').end()
-					.prependTo($curTable);
-					$curThis.closest("tr").find("input").val("");
-					$curThis.closest("tr").find("select").val("");
-				}
-			});
-		});
-		$("body").on("click", ".deleterow", function(e){
-			e.preventDefault();
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				$.post("/timesheet/delete", {id: $curThis.closest("tr").attr("data-id")}, function(){
-					$curThis.closest("tr").hide("slow");
-				}).fail(function(e) { console.log(e); });
-		});
 		$('.getact').change(function(e){
-			if ($('#projname').val() == -1 || $('#typename').val() == -1)
-				return;
+			var $type = $('#projname option:selected').attr('data-type');
+			if ($type == 1) {
+				$('#typename').prop('disabled', true);
+			} else {
+				$('#typename').prop('disabled', false);
+			}
+
 			$.get('/timesheet/activity/' + $('#projname').val() + '/' + $('#typename').val(), function(data){
 				$('#activity').prop('disabled', false).find('option').remove();
 				$('#activity').prop('disabled', false).find('optgroup').remove();
@@ -108,7 +73,7 @@ use \Calctool\Models\MoreLabor;
 </script>
 <div id="wrapper">
 
-	<section class="container">
+	<section class="container" ng-app="timesheetApp">
 
 		<div class="col-md-12">
 
@@ -139,61 +104,51 @@ use \Calctool\Models\MoreLabor;
 
 				<div class="tab-content">
 					<div id="hour" class="tab-pane active">
-						<table class="table table-striped">
+						<table class="table table-striped" ng-controller="timesheetController">
 							<thead>
 								<tr>
-									<th class="col-md-1">Datum</th>
-									<th class="col-md-1">Uren</th>
-									<th class="col-md-2">Soort</th>
-									<th class="col-md-2">Project</th>
-									<th class="col-md-3">Werkzaamheid</th>
+									<th class="col-md-1" ng-click="orderByField='register_date'; reverseSort = !reverseSort">Datum</th>
+									<th class="col-md-1" ng-click="orderByField='register_hour'; reverseSort = !reverseSort">Uren</th>
+									<th class="col-md-2" ng-click="orderByField='project_name'; reverseSort = !reverseSort">Project</th>
+									<th class="col-md-2" ng-click="orderByField='timesheet_kind'; reverseSort = !reverseSort">Soort</th>
+									<th class="col-md-3" ng-click="orderByField='activity_name'; reverseSort = !reverseSort">Werkzaamheid</th>
 									<th class="col-md-2">Omschrijving</th>
 									<th class="col-md-1">&nbsp;</th>
 								</tr>
 							</thead>
 
 							<tbody>
-								@foreach (Project::where('user_id','=',Auth::user()->id)->get() as $project)
-								@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-								@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
-								@foreach (Timesheet::where('activity_id','=', $activity->id)->orderBy('register_date','desc')->get() as $timesheet)
-								<tr data-id="{{ $timesheet->id }}">
-									<td class="col-md-1">{{ date('d-m-Y', strtotime($timesheet->register_date)) }}</td>
-									<td class="col-md-1">{{ number_format($timesheet->register_hour, 2,",",".") }}</td>
-									<td class="col-md-2">{{ ucwords(TimesheetKind::find($timesheet->timesheet_kind_id)->kind_name) }}</td>
-									<td class="col-md-2">{{ $project->project_name }}</td>
-									<td class="col-md-3">{{ $activity->activity_name }}</td>
-									<td class="col-md-2">{{ $timesheet->note }}</td>
-									<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times deleterow"></button></td>
+								<tr ng-repeat="timesheet in timesheets | filter: query | orderBy:orderByField:reverseSort as results">
+									<td class="col-md-1">@{{ timesheet.register_date }}</td>
+									<td class="col-md-1">@{{ timesheet.register_hour }}</td>
+									<td class="col-md-2">@{{ timesheet.project_name }}</td>
+									<td class="col-md-2">@{{ timesheet.timesheet_kind }}</td>
+									<td class="col-md-3">@{{ timesheet.activity_name }}</td>
+									<td class="col-md-2">@{{ timesheet.note }}</td>
+									<td class="col-md-1 text-right"><button ng-click="deleteRow($index)" class="btn btn-danger btn-xs fa fa-times"></button></td>
 								</tr>
-								@endforeach
-								@endforeach
-								@endforeach
-								@endforeach
 								<tr>
-									<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text"/></td>
-									<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
+									<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text" ng-model="date"/></td>
+									<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text" ng-model="hour"/></td>
 									<td class="col-md-2">
-										<select name="typename" id="typename" class="getact form-control-sm-text">
-											<option selected="selected" value="-1" >Selecteer</option>
-											@foreach (TimesheetKind::all() as $typename)
-											<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
+										<select name="projname" id="projname" class="getact form-control-sm-text" ng-model="projname">
+											@foreach (Project::where('user_id','=',Auth::id())->whereNull('project_close')->get() as $projectname)
+											<option data-type="{{ $projectname->type_id }}" value="{{ $projectname->id }}">{{ ucwords($projectname->project_name) }}</option>
 											@endforeach
 										</select>
 									</td>
 									<td class="col-md-2">
-										<select name="projname" id="projname" class="getact form-control-sm-text">
-											<option selected="selected" value="-1" >Selecteer</option>
-											@foreach (Project::where('user_id','=',Auth::id())->whereNull('project_close')->get() as $projectname)
-											<option value="{{ $projectname->id }}">{{ ucwords($projectname->project_name) }}</option>
+										<select name="typename" id="typename" class="getact form-control-sm-text" ng-model="typename">
+											@foreach (TimesheetKind::all() as $typename)
+											<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
 											@endforeach
 										</select>
 									</td>
 									<td class="col-md-3">
 										<select disabled="disabled" name="activity" id="activity" class="form-control-sm-text"></select>
 									</td>
-									<td class="col-md-2"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
-									<td class="col-md-1"><button id="addnew" class="btn btn-primary btn-xs"> Toevoegen</button></td>
+									<td class="col-md-2"><input type="text" ng-model="note" name="note" id="note" class="form-control-sm-text"/></td>
+									<td class="col-md-1"><button ng-click="addRow()" class="btn btn-primary btn-xs"> Toevoegen</button></td>
 								</tr>
 							</tbody>
 						</table>
@@ -331,4 +286,45 @@ use \Calctool\Models\MoreLabor;
 	</section>
 
 </div>
+<script type="text/javascript">
+angular.module('timesheetApp', []).controller('timesheetController', function($scope, $http) {
+	$http.get('/api/v1/timesheet').then(function(response){
+		$scope.timesheets = response.data;
+	});
+
+	$scope.orderByField = 'register_date';
+	$scope.reverseSort = false;
+
+	$scope.deleteRow = function(id) {
+		var row = $scope.timesheets[id];
+
+		$http.post('/api/v1/timesheet/delete', {id: row.id}).then(function(response){
+			$scope.timesheets.splice(id, 1);
+		});
+	};
+
+	$scope.addRow = function() {
+		var data = {
+			date: $scope.date,
+			hour: $scope.hour,
+			type: $scope.typename,
+			activity: $('#activity').val(),
+			note: $scope.note,
+		};
+		
+		$http.post('/api/v1/timesheet/new', data).then(function(response){
+			var data = {
+				register_date: response.data.date,
+				register_hour: response.data.hour,
+				project_name: response.data.project,
+				timesheet_kind: response.data.type,
+				activity_name: response.data.activity,
+				note: response.data.note,
+			};
+
+			$scope.timesheets.push(data);
+		});
+	};
+});
+</script>
 @stop

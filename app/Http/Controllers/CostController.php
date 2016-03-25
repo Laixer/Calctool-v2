@@ -61,20 +61,26 @@ class CostController extends Controller {
 			return json_encode(['success' => 0]);
 		}
 
+		$_activity = Activity::find($request->get('activity'));
+		$_chapter = Chapter::find($_activity->chapter_id);
+		$_project = Project::find($_chapter->project_id);
+
+		$type_id = $request->get('type');
+		if (ProjectType::find($_project->type_id)->type_name == 'regie') {
+			$type_id = 3;
+		}
+
 		$timesheet = Timesheet::create(array(
 			'register_date' => $request->get('date'),
 			'register_hour' => str_replace(',', '.', str_replace('.', '' , $request->get('hour'))),
 			'activity_id' => $activity->id,
 			'note' => $request->get('note'),
-			'timesheet_kind_id' => $request->get('type')
+			'timesheet_kind_id' => $type_id
 		));
 
-		$_activity = Activity::find($request->get('activity'));
-		$_chapter = Chapter::find($_activity->chapter_id);
-		$_project = Project::find($_chapter->project_id);
 
 		$type = 'Aanneming';
-		if (TimesheetKind::find($request->get('type'))->kind_name == 'meerwerk')
+		if (TimesheetKind::find($type_id)->kind_name == 'meerwerk')
 		{
 			$type = 'Meerwerk';
 			$labor = MoreLabor::create(array(
@@ -85,7 +91,7 @@ class CostController extends Controller {
 			));
 		}
 
-		if (TimesheetKind::find($request->get('type'))->kind_name == 'stelpost')
+		if (TimesheetKind::find($type_id)->kind_name == 'stelpost')
 		{
 			$type = 'Stelpost';
 			$labor = EstimateLabor::create(array(

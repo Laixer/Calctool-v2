@@ -161,7 +161,7 @@ class ProjectController extends Controller {
 		$this->validate($request, [
 			'id' => array('required','integer'),
 			'name' => array('required','max:50'),
-			'street' => array('required','alpha','max:60'),
+			'street' => array('required','alpha_num','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
 			'city' => array('required','alpha_num','max:35'),

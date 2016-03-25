@@ -30,6 +30,10 @@ class Kernel extends HttpKernel
             \Calctool\Http\Middleware\Admin::class,
         ],
 
+        'payzone' => [
+            \Calctool\Http\Middleware\PayRestrict::class,
+        ],
+
         'api' => [
             'throttle:60,1',
         ],

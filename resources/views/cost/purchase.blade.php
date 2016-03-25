@@ -56,7 +56,7 @@ use \Calctool\Models\Wholesale;
 </script>
 <div id="wrapper">
 
-	<section class="container">
+	<section class="container" ng-app="purchaseApp">
 
 		<div class="col-md-12">
 
@@ -71,39 +71,35 @@ use \Calctool\Models\Wholesale;
 			<h2><strong>Inkoopfacturen</strong></h2>
 
 			<div class="white-row">
-				<table class="table table-striped">
+				<table class="table table-striped" ng-controller="purchaseController">
 					<thead>
 						<tr>
-							<th class="col-md-1">Datum</th>
-							<th class="col-md-2">Relatie</th>
-							<th class="col-md-1">Bedrag</th>
-							<th class="col-md-3">Project</th>
-							<th class="col-md-1">Soort</th>
+							<th class="col-md-1" ng-click="orderByField='register_date'; reverseSort = !reverseSort">Datum</th>
+							<th class="col-md-2" ng-click="orderByField='relation'; reverseSort = !reverseSort">Relatie</th>
+							<th class="col-md-1" ng-click="orderByField='amount'; reverseSort = !reverseSort">Bedrag</th>
+							<th class="col-md-3" ng-click="orderByField='project_name'; reverseSort = !reverseSort">Project</th>
+							<th class="col-md-1" ng-click="orderByField='purchase_kind'; reverseSort = !reverseSort">Soort</th>
 							<th class="col-md-3">Omschrijving</th>
 							<th class="col-md-1">&nbsp;</th>
 						</tr>
 					</thead>
 
 					<tbody>
-						@foreach (Project::where('user_id','=',Auth::user()->id)->get() as $project)
-						@foreach (Purchase::where('project_id','=', $project->id)->get() as $purchase)
-						<tr data-id="{{ $purchase->id }}">
-							<td class="col-md-1">{{ date('d-m-Y', strtotime($purchase->register_date)) }}</td>
-							<td class="col-md-2">{{ $purchase->relation_id ? Relation::find($purchase->relation_id)->company_name : Wholesale::find($purchase->wholesale_id)->company_name }}</td>
-							<td class="col-md-1">{{ '&euro; '.number_format($purchase->amount, 2,",",".") }}</td>
-							<td class="col-md-3">{{ $project->project_name }}</td>
-							<td class="col-md-1">{{ ucwords(PurchaseKind::find($purchase->kind_id)->kind_name) }}</td>
-							<td class="col-md-3">{{ $purchase->note }}</td>
-							<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times deleterow"></button></td>
+						<tr ng-repeat="purchase in purchases | filter: query | orderBy:orderByField:reverseSort as results">
+							<td class="col-md-1">@{{ purchase.register_date }}</td>
+							<td class="col-md-2">@{{ purchase.relation }}</td>
+							<td class="col-md-1">@{{ purchase.amount }}</td>
+							<td class="col-md-3">@{{ purchase.project_name }}</td>
+							<td class="col-md-1">@{{ purchase.purchase_kind }}</td>
+							<td class="col-md-3">@{{ purchase.note }}</td>
+							<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times" ng-click="deleteRow($index)"></button></td>
 						</tr>
-						@endforeach
-						@endforeach
 						<tr>
 							<td class="col-md-1">
-								<input type="date" name="date" id="date" class="form-control-sm-text"/>
+								<input type="date" ng-model="date" name="date" id="date" class="form-control-sm-text"/>
 							</td>
 							<td class="col-md-2">
-								<select name="relation" id="relation" class="form-control-sm-text">
+								<select name="relation" id="relation" class="form-control-sm-text" ng-model="relation">
 								@foreach (Relation::where('user_id','=', Auth::id())->where('active',true)->get() as $relation)
 									<option value="rel-{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
 								@endforeach
@@ -115,23 +111,23 @@ use \Calctool\Models\Wholesale;
 								@endforeach
 								</select>
 							</td>
-							<td class="col-md-1"><input type="text" min="0" name="amount" id="amount" class="form-control-sm-text"/></td>
+							<td class="col-md-1"><input ng-model="amount" type="text" min="0" name="amount" id="amount" class="form-control-sm-text"/></td>
 							<td class="col-md-3">
-								<select name="projname" id="projname" class="form-control-sm-text">
+								<select name="projname" id="projname" class="form-control-sm-text" ng-model="projname">
 								@foreach (Project::where('user_id','=',Auth::id())->whereNull('project_close')->get() as $projectname)
 									<option value="{{ $projectname->id }}">{{ ucwords($projectname->project_name) }}</option>
 								@endforeach
 								</select>
 							</td>
 							<td class="col-md-1">
-								<select name="typename" id="typename" class="form-control-sm-text">
+								<select name="typename" id="typename" class="form-control-sm-text" ng-model="typename">
 								@foreach (PurchaseKind::all() as $typename)
 									<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
 								@endforeach
 								</select>
 							</td>
-							<td class="col-md-3"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
-							<td class="col-md-1"><button id="addnewpurchase" class="btn btn-primary btn-xs"> Toevoegen</button></td>
+							<td class="col-md-3"><input type="text" name="note" id="note" ng-model="note" class="form-control-sm-text"/></td>
+							<td class="col-md-1"><button ng-click="addRow()" class="btn btn-primary btn-xs"> Toevoegen</button></td>
 						</tr>
 					</tbody>
 				</table>
@@ -143,4 +139,47 @@ use \Calctool\Models\Wholesale;
 	</section>
 
 </div>
+<script type="text/javascript">
+angular.module('purchaseApp', []).controller('purchaseController', function($scope, $http) {
+	$http.get('/api/v1/purchase').then(function(response){
+		$scope.purchases = response.data;
+	});
+
+	$scope.orderByField = 'register_date';
+	$scope.reverseSort = false;
+
+	$scope.deleteRow = function(id) {
+		var row = $scope.purchases[id];
+
+		$http.post('/api/v1/purchase/delete', {id: row.id}).then(function(response){
+			$scope.purchases.splice(id, 1);
+		});
+	};
+
+	$scope.addRow = function() {
+		var data = {
+			date: $scope.date,
+			amount: $scope.amount,
+			type: $scope.typename,
+			relation: $scope.relation,
+			note: $scope.note,
+			project: $scope.projname,
+		};
+		
+		$http.post('/api/v1/purchase/new', data).then(function(response){
+			var data = {
+				register_date: response.data.date,
+				amount: response.data.amount,
+				relation: response.data.relation,
+				project_name: response.data.project,
+				purchase_kind: response.data.type,
+				note: response.data.note,
+			};
+
+			$scope.purchases.push(data);
+			console.log(response.data);
+		});
+	};
+});
+</script>
 @stop

@@ -62,7 +62,7 @@ class RelationController extends Controller {
 			'telephone_comp' => array('alpha_num','max:12'),
 			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
 			/* Adress */
-			'street' => array('required','alpha','max:60'),
+			'street' => array('required','alpha_num','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
 			'city' => array('required','alpha_num','max:35'),
@@ -170,7 +170,7 @@ class RelationController extends Controller {
 		$this->validate($request, [
 			'id' => array('required','integer'),
 			'contact_name' => array('required','max:50'),
-			'contact_firstname' => array('required','max:30'),
+			// 'contact_firstname' => array('required','max:30'),
 			'email' => array('required','email','max:80'),
 		]);
 
@@ -231,7 +231,8 @@ class RelationController extends Controller {
 			'telephone_comp' => array('alpha_num','max:12'),
 			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
 			/* Adress */
-			'street' => array('required','regex:/^[A-Za-z0-9\s]*$/','max:60'),
+			// 'street' => array('required','regex:/^[A-Za-z0-9\s]*$/','max:60'),
+			'street' => array('required','alpha_num','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
 			'city' => array('required','alpha_num','max:35'),
@@ -284,7 +285,7 @@ class RelationController extends Controller {
 			'email_comp' => array('required_if:relationkind,1','email','max:80'),
 			/* Contact */
 			'contact_name' => array('required','max:50'),
-			'contact_firstname' => array('required','max:30'),
+			// 'contact_firstname' => array('required','max:30'),
 			'email' => array('required','email','max:80'),
 			'contactfunction' => array('required','numeric'),
 			/* Adress */
@@ -365,7 +366,7 @@ class RelationController extends Controller {
 		$this->validate($request, [
 			'id' => array('required','integer'),
 			'contact_name' => array('required','max:50'),
-			'contact_firstname' => array('required','max:30'),
+			// 'contact_firstname' => array('required','max:30'),
 			'email' => array('required','email','max:80'),
 		]);
 
@@ -404,7 +405,7 @@ class RelationController extends Controller {
 			/* Contact */
 			'id' => array('required','integer'),
 			'contact_name' => array('required','max:50'),
-			'contact_firstname' => array('required','max:30'),
+			// 'contact_firstname' => array('required','max:30'),
 			//'mobile' => array('alpha_num','max:14'),
 			//'telephone' => array('alpha_num','max:14'),
 			'email' => array('required','email','max:80'),

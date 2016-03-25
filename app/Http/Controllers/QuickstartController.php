@@ -47,7 +47,7 @@ class QuickstartController extends Controller {
 			'country' => array('required','numeric'),
 			/* Contacty */
 			'contact_name' => array('required','max:50'),
-			'contact_firstname' => array('required','max:30'),
+			// 'contact_firstname' => array('required','max:30'),
 			'email' => array('required','email','max:80'),
 			'contactfunction' => array('required','numeric'),
 		]);

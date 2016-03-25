@@ -20,7 +20,7 @@ use \Calctool\Models\CalculationEquipment;
 
 /*
  * Static Models Only
- * Template for demo project
+ * Template for voorbeeldproject
  */
 class DemoProjectTemplate {
 
@@ -34,16 +34,16 @@ class DemoProjectTemplate {
 		$contact_function = ContactFunction::where('function_name','=','voorzitter')->first();
 
 		$relation = new Relation;
-		$relation->company_name		= 'Demorelatie';
-		$relation->address_street	= 'Demostraat';
+		$relation->company_name		= 'Voorbeeldrelatie';
+		$relation->address_street	= 'Voorbeeldstraat';
 		$relation->address_number	= '1';
 		$relation->address_postal	= '1234DE';
-		$relation->address_city		= 'Demostad';
-		$relation->debtor_code 		= 'DEMO123';
+		$relation->address_city		= 'Voorbeeldtad';
+		$relation->debtor_code 		= 'Voorbeeld123';
 		$relation->kvk		 		= '12345678';
 		$relation->btw 				= 'NL1234567890B1';
-		$relation->note 			= 'Dit is een demo relatie';
-		$relation->email 			= 'demo@calculatietool.com';
+		$relation->note 			= 'Dit is een voorbeeldrelatie';
+		$relation->email 			= 'voorbeeld@calculatietool.com';
 		$relation->phone 			= '0101111111';
 		$relation->website 			= 'http://www.calculatietool.com';
 		$relation->user_id 			= $userid;
@@ -54,12 +54,12 @@ class DemoProjectTemplate {
 		$relation->save();
 
 		$project = new Project;
-		$project->project_name 		= 'Demoproject';
-		$project->address_street 	= 'Demolaan';
+		$project->project_name 		= 'Voorbeeldproject';
+		$project->address_street 	= 'Voorbeeldlaan';
 		$project->address_number 	= '2';
 		$project->address_postal 	= '5678MO';
-		$project->address_city 		= 'Demodorp';
-		$project->note 				= 'Dit is een demo project';
+		$project->address_city 		= 'Voorbeelddorp';
+		$project->note 				= 'Dit is een voorbeeldproject';
 		$project->hour_rate 		= 35;
 		$project->hour_rate_more 	= 45;
 		$project->user_id 			= $userid;
@@ -78,12 +78,12 @@ class DemoProjectTemplate {
 		$project->save();
 
 		$contact = new Contact;
-		$contact->firstname 		= 'Demo';
+		$contact->firstname 		= 'Voorbeeld';
 		$contact->lastname 			= 'Eigenaar';
-		$contact->email 			= 'demo@calculatietool.com';
+		$contact->email 			= 'voorbeeld@calculatietool.com';
 		$contact->mobile 			= '0622222222';
 		$contact->phone 			= '0102222222';
-		$contact->note 				= 'Demo contactpersoon van relatie';
+		$contact->note 				= 'Voorbeeld contactpersoon van relatie';
 		$contact->relation_id 		= $relation->id;
 		$contact->function_id 		= $contact_function->id;
 		$contact->gender	 		= 'M';
