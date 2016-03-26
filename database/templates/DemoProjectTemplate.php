@@ -39,7 +39,7 @@ class DemoProjectTemplate {
 		$relation->address_number	= '1';
 		$relation->address_postal	= '1234DE';
 		$relation->address_city		= 'Voorbeeldtad';
-		$relation->debtor_code 		= 'Voorbeeld123';
+		$relation->debtor_code 		= 'DEMO123';
 		$relation->kvk		 		= '12345678';
 		$relation->btw 				= 'NL1234567890B1';
 		$relation->note 			= 'Dit is een voorbeeldrelatie';
