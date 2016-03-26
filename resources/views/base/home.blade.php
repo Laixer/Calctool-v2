@@ -73,6 +73,11 @@ $(function() {
 				$('#introvid').show('slide', {direction: "right"});
 				$('.modal-footer').hide('slide', {direction: "up"});
 			});
+		}).error(function(data) {
+			$('#introerr').show();
+			$.each(data.responseJSON, function(i, val) {
+				$('#introerrlist').append("<li>" + val + "</li>")
+			});
 		});
 	});
 	$('#tutModal').on('hidden.bs.modal', function () {
@@ -87,15 +92,11 @@ $(function() {
 				<h4>Na de <strong>QuickStart</strong> kan je direct starten met je eerste calculatie & offerte.</h4>
 				<hr>
 
-				@if($errors->has())
-				<div class="alert alert-danger">
+				<div id="introerr" style="display:none;" class="alert alert-danger">
 					<i class="fa fa-frown-o"></i>
 					<strong>Fout</strong>
-					@foreach ($errors->all() as $error)
-						{{ $error }}
-					@endforeach
+					<lu id="introerrlist"></lu>
 				</div>
-				@endif
 
 				<form id="frm-quick" action="/mycompany/quickstart" method="post">
 				{!! csrf_field() !!}
