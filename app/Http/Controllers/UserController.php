@@ -54,7 +54,7 @@ class UserController extends Controller {
 			$tgram = Telegram::where('user_id','=',$user->id)->first();
 			if ($tgram && $tgram->alert) {
 
-				$telegram = new Longman\TelegramBot\Telegram($env('TELEGRAM_API'), $env('TELEGRAM_NAME');
+				$telegram = new Longman\TelegramBot\Telegram($env('TELEGRAM_API'), $env('TELEGRAM_NAME'));
 				TRequest::initialize($telegram);
 
 				$data = array();
