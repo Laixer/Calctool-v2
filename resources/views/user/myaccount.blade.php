@@ -150,6 +150,13 @@ $(document).ready(function() {
 			<div>
 			<br>
 
+			@if (!Auth::user()->hasPayed())
+			<div class="alert alert-danger">
+				<i class="fa fa-danger"></i>
+				Account is gedeactiveerd, abonnement is verlopen.
+			</div>
+			@endif
+
 			@if(Session::get('success'))
 			<div class="alert alert-success">
 				<i class="fa fa-check-circle"></i>

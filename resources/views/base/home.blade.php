@@ -246,13 +246,6 @@ $(function() {
 			@endif
 			@endif
 
-			@if (!Auth::user()->hasPayed())
-			<div class="alert alert-danger">
-				<i class="fa fa-danger"></i>
-				Account is gedeactiveerd, abonnement is verlopen.
-			</div>
-			@endif
-
 			<h2><strong>Dash</strong>board</h2>
 			<div class="row">
 
@@ -261,11 +254,11 @@ $(function() {
 						<figure>
 							<a class="item-hover" href="/mycompany">
 								<span class="overlay color2"></span>
-								<span class="inner">
+								<span class="inner" style="top:40%;">
 									<span class="block fa fa-home fsize60"></span>
 								</span>
 							</a>
-							<a href="/mycompany" class="btn btn-primary add_to_cart"><i class="fa fa-home"></i> Mijn Bedrijf</a>
+							<a href="/mycompany" class="btn btn-primary add_to_cart"><strong> Mijn Bedrijf</strong></a>
 
 						</figure>
 					</div>
@@ -276,11 +269,11 @@ $(function() {
 						<figure>
 							<a class="item-hover" href="/material">
 								<span class="overlay color2"></span>
-								<span class="inner">
+								<span class="inner" style="top:40%;">
 									<span class="block fa fa-wrench fsize60"></span>
 								</span>
 							</a>
-							<a href="/material" class="btn btn-primary add_to_cart"><i class="fa fa-wrench"></i> Materialen</a>
+							<a href="/material" class="btn btn-primary add_to_cart"><strong> Materialen</strong></a>
 						</figure>
 					</div>
 				</div>
@@ -290,11 +283,11 @@ $(function() {
 						<figure>
 							<a class="item-hover" href="/timesheet">
 								<span class="overlay color2"></span>
-								<span class="inner">
+								<span class="inner" style="top:40%;">
 									<span class="block fa fa-clock-o fsize60"></span>
 								</span>
 							</a>
-							<a href="/timesheet" class="btn btn-primary add_to_cart"><i class="fa fa-clock-o"></i> Urenregistratie</a>
+							<a href="/timesheet" class="btn btn-primary add_to_cart"><strong> Urenregistratie</strong></a>
 						</figure>
 					</div>
 				</div>
@@ -304,11 +297,11 @@ $(function() {
 						<figure>
 							<a class="item-hover" href="/purchase">
 								<span class="overlay color2"></span>
-								<span class="inner">
+								<span class="inner" style="top:40%;">
 									<span class="block fa fa-shopping-cart fsize60"></span>
 								</span>
 							</a>
-							<a href="/purchase" class="btn btn-primary add_to_cart"><i class="fa fa-shopping-cart"></i> Inkoopfacturen</a>
+							<a href="/purchase" class="btn btn-primary add_to_cart"><strong> Inkoopfacturen</strong></a>
 						</figure>
 					</div>
 				</div>
@@ -318,11 +311,11 @@ $(function() {
 						<figure>
 							<a class="item-hover" href="/wholesale">
 								<span class="overlay color2"></span>
-								<span class="inner">
+								<span class="inner" style="top:40%;">
 									<span class="block fa fa-truck fsize60"></span>
 								</span>
 							</a>
-							<a href="/wholesale" class="btn btn-primary add_to_cart"><i class="fa fa-truck"></i> Leveranciers</a>
+							<a href="/wholesale" class="btn btn-primary add_to_cart"><strong> Leveranciers</strong></a>
 						</figure>
 					</div>
 				</div>
@@ -332,11 +325,11 @@ $(function() {
 						<figure>
 							<a class="item-hover" href="/relation">
 								<span class="overlay color2"></span>
-								<span class="inner">
+								<span class="inner" style="top:40%;">
 									<span class="block fa fa-users fsize60"></span>
 								</span>
 							</a>
-							<a href="/relation" class="btn btn-primary add_to_cart"><i class="fa fa-users"></i> Relaties</a>
+							<a href="/relation" class="btn btn-primary add_to_cart"><strong> Relaties</strong></a>
 						</figure>
 					</div>
 				</div>
@@ -345,7 +338,7 @@ $(function() {
 
 			<div class="row">
 
-				<div id="wrapper" ng-app="projectApp">
+				<div id="wrapper" ng-app="projectApp" class="nopadding-top">
 
 					<div class="col-md-12">
 

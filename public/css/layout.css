@@ -1235,9 +1235,9 @@ span.js_loader {
 	width:100%;
 	position:relative;
 
-	-webkit-border-radius:6px;
+/*	-webkit-border-radius:6px;
 	   -moz-border-radius:6px;
-			border-radius:6px;
+			border-radius:6px;*/
 }
 	.item-box.fullwidth {
 		max-width:100%;
@@ -1291,7 +1291,7 @@ span.js_loader {
 
 
 /* hover */
-.item-box .item-hover,
+/*.item-box .item-hover,
 .item-box .item-hover .overlay {
 	-webkit-border-top-right-radius: 6px;
 	 -webkit-border-top-left-radius: 6px;
@@ -1299,7 +1299,7 @@ span.js_loader {
 		-moz-border-radius-topright: 6px;
 			 border-top-left-radius: 6px;
 			border-top-right-radius: 6px;
-}
+}*/
 .item-box .item-hover {
 	opacity: 0;
 	filter: alpha(opacity=0);
