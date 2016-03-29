@@ -170,7 +170,7 @@ class AuthController extends Controller {
 
 	private function informAdmin(User $newuser)
 	{
-		if (isset($env('TELEGRAM_ENABLED')) && $env('TELEGRAM_ENABLED') == "true") {
+		if ($env('TELEGRAM_ENABLED') && $env('TELEGRAM_ENABLED') == "true") {
 			$telegram = new TTelegram($env('TELEGRAM_API'), $env('TELEGRAM_NAME'));
 			TRequest::initialize($telegram);
 
