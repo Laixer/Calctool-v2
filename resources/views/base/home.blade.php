@@ -246,7 +246,7 @@ $(function() {
 			@endif
 			@endif
 
-			<h2><strong>Dash</strong>board</h2>
+			<h1 style="margin: 10px 0 20px 0;"><strong>Welkom</strong>, {{ Auth::user()->firstname }}</h1>
 			<div class="row">
 
 				<div class="col-sm-6 col-md-2">
@@ -344,40 +344,6 @@ $(function() {
 
 						<h2><strong>Openstaande</strong> Projecten</h2>
 						<div class="white-row" ng-controller="projectController">
-
-							@if (0)
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th class="col-md-3">Projectnaam</th>
-										<th class="col-md-2">Opdrachtgever</th>
-										<th class="col-md-1">Type</th>
-										<th class="col-md-3">Adres</th>
-										<th class="col-md-2">Plaats</th>
-										<th class="col-md-1">Status</th>
-									</tr>
-								</thead>
-
-								<tbody>
-								@if (!Project::where('user_id','=', Auth::user()->id)->count('id'))
-								<tr>
-									<td colspan="6" style="text-align: center;">Er zijn nog geen projecten</td>
-								</tr>
-								@endif
-								@foreach (Project::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $project)
-								<?php $relation = Relation::find($project->client_id); ?>
-									<tr>
-										<td class="col-md-3"><a href="/project-{{ $project->id }}/edit">{{ $project->project_name }}</a></td>
-										<td class="col-md-2">{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</td>
-										<td class="col-md-1">{{ $project->type->type_name }}</td>
-										<td class="col-md-3">{{ $project->address_street }} {{ $project->address_number }}</td>
-										<td class="col-md-2">{{ $project->address_city }}</td>
-										<td class="col-md-1">{{ $project->project_close ? 'Gesloten' : 'Open' }}</td>
-									</tr>
-								@endforeach
-								</tbody>
-							</table>
-							@endif
 							<div class="form-group">
 								<input type="text" ng-model="query" class="form-control" placeholder="Zoek in projecten">
 							</div>
