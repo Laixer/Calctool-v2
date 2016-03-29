@@ -391,10 +391,10 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 });
 
 Route::any('telegram', function(){
-	if ($env('TELEGRAM_ENABLED')) {
+	if (env('TELEGRAM_ENABLED')) {
 		try {
 			// create Telegram API object
-			$telegram = new Longman\TelegramBot\Telegram($env('TELEGRAM_API'), $env('TELEGRAM_NAME'));
+			$telegram = new Longman\TelegramBot\Telegram(env('TELEGRAM_API'), env('TELEGRAM_NAME'));
 
 			$telegram->handle();
 		} catch (Longman\TelegramBot\Exception\TelegramException $e) {

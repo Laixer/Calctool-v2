@@ -50,11 +50,11 @@ class UserController extends Controller {
 			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});
 
-		if ($env('TELEGRAM_ENABLED')) {
+		if (env('TELEGRAM_ENABLED')) {
 			$tgram = Telegram::where('user_id','=',$user->id)->first();
 			if ($tgram && $tgram->alert) {
 
-				$telegram = new Longman\TelegramBot\Telegram($env('TELEGRAM_API'), $env('TELEGRAM_NAME'));
+				$telegram = new Longman\TelegramBot\Telegram(env('TELEGRAM_API'), env('TELEGRAM_NAME'));
 				TRequest::initialize($telegram);
 
 				$data = array();
@@ -107,7 +107,7 @@ class UserController extends Controller {
 		}
 
 		$mollie = new \Mollie_API_Client;
-		$mollie->setApiKey($env('MOLLIE_API'));
+		$mollie->setApiKey(env('MOLLIE_API'));
 
 		$token = sha1(mt_rand().time());
 
@@ -152,7 +152,7 @@ class UserController extends Controller {
 		}
 
 		$mollie = new \Mollie_API_Client;
-		$mollie->setApiKey($env('MOLLIE_API'));
+		$mollie->setApiKey(env('MOLLIE_API'));
 
 		$payment = $mollie->payments->get($order->transaction);
 		if ($payment->metadata->token != $order->token)
@@ -184,12 +184,12 @@ class UserController extends Controller {
 				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 			});
 
-			if ($env('TELEGRAM_ENABLED')) {
+			if (env('TELEGRAM_ENABLED')) {
 				$tgram = Telegram::where('user_id','=',$user->id)->first();
 				if ($tgram && $tgram->alert) {
 
 					// create Telegram API object
-					$telegram = new Longman\TelegramBot\Telegram($env('TELEGRAM_API'), $env('TELEGRAM_NAME'));
+					$telegram = new Longman\TelegramBot\Telegram(env('TELEGRAM_API'), env('TELEGRAM_NAME'));
 					TRequest::initialize($telegram);
 
 					$data = array();
@@ -219,7 +219,7 @@ class UserController extends Controller {
 		}
 
 		$mollie = new \Mollie_API_Client;
-		$mollie->setApiKey($env('MOLLIE_API'));
+		$mollie->setApiKey(env('MOLLIE_API'));
 
 		$payment = $mollie->payments->get($order->transaction);
 		if ($payment->isPaid()) {
@@ -281,11 +281,11 @@ class UserController extends Controller {
 				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 			});
 
-			if ($env('TELEGRAM_ENABLED')) {
+			if (env('TELEGRAM_ENABLED')) {
 				$tgram = Telegram::where('user_id','=',$user->id)->first();
 				if ($tgram && $tgram->alert) {
 
-					$telegram = new Longman\TelegramBot\Telegram($env('TELEGRAM_API'), $env('TELEGRAM_NAME'));
+					$telegram = new Longman\TelegramBot\Telegram(env('TELEGRAM_API'), env('TELEGRAM_NAME'));
 					TRequest::initialize($telegram);
 
 					$data = array();
@@ -444,12 +444,12 @@ class UserController extends Controller {
 			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});
 
-		if ($env('TELEGRAM_ENABLED')) {
+		if (env('TELEGRAM_ENABLED')) {
 			$tgram = Telegram::where('user_id','=',Auth::id())->first();
 			if ($tgram && $tgram->alert) {
 
 				// create Telegram API object
-				$telegram = new Longman\TelegramBot\Telegram($env('TELEGRAM_API'), $env('TELEGRAM_NAME'));
+				$telegram = new Longman\TelegramBot\Telegram(env('TELEGRAM_API'), env('TELEGRAM_NAME'));
 				TRequest::initialize($telegram);
 
 				$data = array();

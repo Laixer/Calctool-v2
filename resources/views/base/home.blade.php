@@ -246,7 +246,7 @@ $(function() {
 			@endif
 			@endif
 
-			<h1 style="margin: 10px 0 20px 0;"><strong>Welkom</strong>, {{ Auth::user()->firstname }}</h1>
+			<h2 style="margin: 10px 0 20px 0;"><strong>Welkom</strong>, {{ Auth::user()->firstname }}</h2>
 			<div class="row">
 
 				<div class="col-sm-6 col-md-2">
