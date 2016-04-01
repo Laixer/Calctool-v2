@@ -342,7 +342,7 @@ $(function() {
 
 					<div class="col-md-12">
 
-						<h2><strong>Openstaande</strong> Projecten</h2>
+						<h2><strong>Jouw</strong> Projecten</h2>
 						<div class="white-row" ng-controller="projectController">
 							<div class="row">
 								<div class="form-group col-md-10">
@@ -382,14 +382,7 @@ $(function() {
 									
 									<div class="btn-group">
 								  		<a href="/project/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw project</a>
-								 		<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								    		<span class="caret"></span>
-								   		<span class="sr-only">Toggle Dropdown</span>
-								 		</button>
-								 		<ul class="dropdown-menu">
-								   			<li><a href="/project">Gesloten projecten</a></li>
-								   			<li><a href="/project">Alle Projecten</a></li>
-								 		</ul>
+								 		
 									</div>
 								</div>
 							</div>
