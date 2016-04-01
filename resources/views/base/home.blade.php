@@ -350,19 +350,19 @@ $(function() {
 							<table class="table table-striped">
 								<thead>
 									<tr>
-										<th class="col-md-3">Projectnaam</th>
-										<th class="col-md-2">Opdrachtgever</th>
-										<th class="col-md-1">Type</th>
-										<th class="col-md-3">Adres</th>
-										<th class="col-md-2">Plaats</th>
+										<th class="col-md-3" ng-click="orderByField='project_name'; reverseSort = !reverseSort">Projectnaam</th>
+										<th class="col-md-2" ng-click="orderByField='relation'; reverseSort = !reverseSort">Opdrachtgever</th>
+										<th class="col-md-1" ng-click="orderByField='type_name'; reverseSort = !reverseSort">Type</th>
+										<th class="col-md-3" ng-click="orderByField='address_street'; reverseSort = !reverseSort">Adres</th>
+										<th class="col-md-2" ng-click="orderByField='address_city'; reverseSort = !reverseSort">Plaats</th>
 										<th class="col-md-1">Status</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-repeat="project in projects | filter: query | orderBy: 'project_name' as results">
+									<tr ng-repeat="project in projects | filter: query | orderBy: orderByField:reverseSort as results">
 										<td class="col-md-3"><a href="/project-@{{ project.id }}/edit">@{{ project.project_name }}</a></td>
-										<td class="col-md-2">{{-- RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) --}}</td>
-										<td class="col-md-1">{{-- $project->type->type_name --}}</td>
+										<td class="col-md-2">@{{ project.relation }}</td>
+										<td class="col-md-1">@{{ project.type.type_name }}</td>
 										<td class="col-md-3">@{{ project.address_street }} @{{ project.address_number }}</td>
 										<td class="col-md-2">@{{ project.address_city }}</td>
 										<td class="col-md-1">@{{ project.project_close ? 'Gesloten' : 'Open' }}</td>

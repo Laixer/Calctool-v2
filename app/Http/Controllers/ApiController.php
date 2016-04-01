@@ -12,6 +12,7 @@ use \Calctool\Models\Purchase;
 use \Calctool\Models\PurchaseKind;
 use \Calctool\Models\Wholesale;
 use \Calctool\Models\Relation;
+use \Calctool\Models\RelationKind;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller {
@@ -37,6 +38,13 @@ class ApiController extends Controller {
 	public function getProjects()
 	{
 		$projects = Project::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+
+		foreach ($projects as $project) {
+			$relation = Relation::find($project->client_id);
+			$project['relation'] = RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']);
+			$project['type'] = $project->type->type_name;
+		}
+
 		return response()->json($projects);
 	}
 
