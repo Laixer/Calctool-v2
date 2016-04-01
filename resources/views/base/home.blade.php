@@ -344,8 +344,13 @@ $(function() {
 
 						<h2><strong>Openstaande</strong> Projecten</h2>
 						<div class="white-row" ng-controller="projectController">
-							<div class="form-group">
-								<input type="text" ng-model="query" class="form-control" placeholder="Zoek in projecten">
+							<div class="row">
+								<div class="form-group col-md-10">
+									<input type="text" ng-model="query" class="form-control" placeholder="Zoek in projecten">
+								</div>
+								<div class="form-group col-md-2">
+									<input name="toggle-close" type="checkbox">
+								</div>
 							</div>
 							<table class="table table-striped">
 								<thead>
@@ -396,7 +401,33 @@ $(function() {
 				<script type="text/javascript">
 				angular.module('projectApp', []).controller('projectController', function($scope, $http) {
 					$http.get('/api/v1/projects').then(function(response){
-						$scope.projects = response.data;
+						$scope._projects = response.data;
+						$scope.projects = [];
+						angular.forEach($scope._projects, function(value, key) {
+						  if (value.project_close == null) {
+							$scope.projects.push(value);
+						  }
+						});
+					});
+					$("[name='toggle-close']").bootstrapSwitch({onText: 'Gesloten', offText: 'Open'});
+					$("[name='toggle-close']").on('switchChange.bootstrapSwitch', function (event, state) {
+				        if (state == false) {
+							$scope.projects = [];
+							angular.forEach($scope._projects, function(value, key) {
+							  if (value.project_close == null) {
+								$scope.projects.push(value);
+							  }
+							});
+							$scope.$apply();
+				        } else {
+							$scope.projects = [];
+							angular.forEach($scope._projects, function(value, key) {
+							  if (value.project_close != null) {
+								$scope.projects.push(value);
+							  }
+							});
+							$scope.$apply();
+				        }
 					});
 
 				});
