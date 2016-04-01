@@ -13,6 +13,7 @@ use \Calctool\Models\PurchaseKind;
 use \Calctool\Models\Wholesale;
 use \Calctool\Models\Relation;
 use \Calctool\Models\RelationKind;
+use \Calctool\Models\Contact;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller {
