@@ -246,14 +246,7 @@ $(function() {
 			@endif
 			@endif
 
-			@if (!Auth::user()->hasPayed())
-			<div class="alert alert-danger">
-				<i class="fa fa-danger"></i>
-				Account is gedeactiveerd, abonnement is verlopen.
-			</div>
-			@endif
-
-			<h2><strong>Dash</strong>board</h2>
+			<h2 style="margin: 10px 0 20px 0;"><strong>Welkom</strong>, {{ Auth::user()->firstname }}</h2>
 			<div class="row">
 
 				<div class="col-sm-6 col-md-2">
@@ -261,11 +254,11 @@ $(function() {
 						<figure>
 							<a class="item-hover" href="/mycompany">
 								<span class="overlay color2"></span>
-								<span class="inner">
+								<span class="inner" style="top:40%;">
 									<span class="block fa fa-home fsize60"></span>
 								</span>
 							</a>
-							<a href="/mycompany" class="btn btn-primary add_to_cart"><i class="fa fa-home"></i> Mijn Bedrijf</a>
+							<a href="/mycompany" class="btn btn-primary add_to_cart"><strong> Mijn Bedrijf</strong></a>
 
 						</figure>
 					</div>
@@ -276,11 +269,11 @@ $(function() {
 						<figure>
 							<a class="item-hover" href="/material">
 								<span class="overlay color2"></span>
-								<span class="inner">
+								<span class="inner" style="top:40%;">
 									<span class="block fa fa-wrench fsize60"></span>
 								</span>
 							</a>
-							<a href="/material" class="btn btn-primary add_to_cart"><i class="fa fa-wrench"></i> Materialen</a>
+							<a href="/material" class="btn btn-primary add_to_cart"><strong> Materialen</strong></a>
 						</figure>
 					</div>
 				</div>
@@ -290,11 +283,11 @@ $(function() {
 						<figure>
 							<a class="item-hover" href="/timesheet">
 								<span class="overlay color2"></span>
-								<span class="inner">
+								<span class="inner" style="top:40%;">
 									<span class="block fa fa-clock-o fsize60"></span>
 								</span>
 							</a>
-							<a href="/timesheet" class="btn btn-primary add_to_cart"><i class="fa fa-clock-o"></i> Urenregistratie</a>
+							<a href="/timesheet" class="btn btn-primary add_to_cart"><strong> Urenregistratie</strong></a>
 						</figure>
 					</div>
 				</div>
@@ -304,11 +297,11 @@ $(function() {
 						<figure>
 							<a class="item-hover" href="/purchase">
 								<span class="overlay color2"></span>
-								<span class="inner">
+								<span class="inner" style="top:40%;">
 									<span class="block fa fa-shopping-cart fsize60"></span>
 								</span>
 							</a>
-							<a href="/purchase" class="btn btn-primary add_to_cart"><i class="fa fa-shopping-cart"></i> Inkoopfacturen</a>
+							<a href="/purchase" class="btn btn-primary add_to_cart"><strong> Inkoopfacturen</strong></a>
 						</figure>
 					</div>
 				</div>
@@ -318,11 +311,11 @@ $(function() {
 						<figure>
 							<a class="item-hover" href="/wholesale">
 								<span class="overlay color2"></span>
-								<span class="inner">
+								<span class="inner" style="top:40%;">
 									<span class="block fa fa-truck fsize60"></span>
 								</span>
 							</a>
-							<a href="/wholesale" class="btn btn-primary add_to_cart"><i class="fa fa-truck"></i> Leveranciers</a>
+							<a href="/wholesale" class="btn btn-primary add_to_cart"><strong> Leveranciers</strong></a>
 						</figure>
 					</div>
 				</div>
@@ -332,11 +325,11 @@ $(function() {
 						<figure>
 							<a class="item-hover" href="/relation">
 								<span class="overlay color2"></span>
-								<span class="inner">
+								<span class="inner" style="top:40%;">
 									<span class="block fa fa-users fsize60"></span>
 								</span>
 							</a>
-							<a href="/relation" class="btn btn-primary add_to_cart"><i class="fa fa-users"></i> Relaties</a>
+							<a href="/relation" class="btn btn-primary add_to_cart"><strong> Relaties</strong></a>
 						</figure>
 					</div>
 				</div>
@@ -345,65 +338,36 @@ $(function() {
 
 			<div class="row">
 
-				<div id="wrapper" ng-app="projectApp">
+				<div id="wrapper" ng-app="projectApp" class="nopadding-top">
 
 					<div class="col-md-12">
 
-						<h2><strong>Openstaande</strong> Projecten</h2>
+						<h2><strong>Jouw</strong> Projecten</h2>
 						<div class="white-row" ng-controller="projectController">
-
-							@if (0)
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th class="col-md-3">Projectnaam</th>
-										<th class="col-md-2">Opdrachtgever</th>
-										<th class="col-md-1">Type</th>
-										<th class="col-md-3">Adres</th>
-										<th class="col-md-2">Plaats</th>
-										<th class="col-md-1">Status</th>
-									</tr>
-								</thead>
-
-								<tbody>
-								@if (!Project::where('user_id','=', Auth::user()->id)->count('id'))
-								<tr>
-									<td colspan="6" style="text-align: center;">Er zijn nog geen projecten</td>
-								</tr>
-								@endif
-								@foreach (Project::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $project)
-								<?php $relation = Relation::find($project->client_id); ?>
-									<tr>
-										<td class="col-md-3"><a href="/project-{{ $project->id }}/edit">{{ $project->project_name }}</a></td>
-										<td class="col-md-2">{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</td>
-										<td class="col-md-1">{{ $project->type->type_name }}</td>
-										<td class="col-md-3">{{ $project->address_street }} {{ $project->address_number }}</td>
-										<td class="col-md-2">{{ $project->address_city }}</td>
-										<td class="col-md-1">{{ $project->project_close ? 'Gesloten' : 'Open' }}</td>
-									</tr>
-								@endforeach
-								</tbody>
-							</table>
-							@endif
-							<div class="form-group">
-								<input type="text" ng-model="query" class="form-control" placeholder="Zoek in projecten">
+							<div class="row">
+								<div class="form-group col-md-10">
+									<input type="text" ng-model="query" class="form-control" placeholder="Zoek in projecten">
+								</div>
+								<div class="form-group col-md-2">
+									<input name="toggle-close" type="checkbox">
+								</div>
 							</div>
 							<table class="table table-striped">
 								<thead>
 									<tr>
-										<th class="col-md-3">Projectnaam</th>
-										<th class="col-md-2">Opdrachtgever</th>
-										<th class="col-md-1">Type</th>
-										<th class="col-md-3">Adres</th>
-										<th class="col-md-2">Plaats</th>
+										<th class="col-md-3" ng-click="orderByField='project_name'; reverseSort = !reverseSort">Projectnaam</th>
+										<th class="col-md-2" ng-click="orderByField='relation'; reverseSort = !reverseSort">Opdrachtgever</th>
+										<th class="col-md-1" ng-click="orderByField='type_name'; reverseSort = !reverseSort">Type</th>
+										<th class="col-md-3" ng-click="orderByField='address_street'; reverseSort = !reverseSort">Adres</th>
+										<th class="col-md-2" ng-click="orderByField='address_city'; reverseSort = !reverseSort">Plaats</th>
 										<th class="col-md-1">Status</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-repeat="project in projects | filter: query | orderBy: 'project_name' as results">
+									<tr ng-repeat="project in projects | filter: query | orderBy: orderByField:reverseSort as results">
 										<td class="col-md-3"><a href="/project-@{{ project.id }}/edit">@{{ project.project_name }}</a></td>
-										<td class="col-md-2">{{-- RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) --}}</td>
-										<td class="col-md-1">{{-- $project->type->type_name --}}</td>
+										<td class="col-md-2">@{{ project.relation }}</td>
+										<td class="col-md-1">@{{ project.type.type_name }}</td>
 										<td class="col-md-3">@{{ project.address_street }} @{{ project.address_number }}</td>
 										<td class="col-md-2">@{{ project.address_city }}</td>
 										<td class="col-md-1">@{{ project.project_close ? 'Gesloten' : 'Open' }}</td>
@@ -418,14 +382,7 @@ $(function() {
 									
 									<div class="btn-group">
 								  		<a href="/project/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw project</a>
-								 		<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								    		<span class="caret"></span>
-								   		<span class="sr-only">Toggle Dropdown</span>
-								 		</button>
-								 		<ul class="dropdown-menu">
-								   			<li><a href="/project">Gesloten projecten</a></li>
-								   			<li><a href="/project">Alle Projecten</a></li>
-								 		</ul>
+								 		
 									</div>
 								</div>
 							</div>
@@ -437,7 +394,33 @@ $(function() {
 				<script type="text/javascript">
 				angular.module('projectApp', []).controller('projectController', function($scope, $http) {
 					$http.get('/api/v1/projects').then(function(response){
-						$scope.projects = response.data;
+						$scope._projects = response.data;
+						$scope.projects = [];
+						angular.forEach($scope._projects, function(value, key) {
+						  if (value.project_close == null) {
+							$scope.projects.push(value);
+						  }
+						});
+					});
+					$("[name='toggle-close']").bootstrapSwitch({onText: 'Gesloten', offText: 'Open'});
+					$("[name='toggle-close']").on('switchChange.bootstrapSwitch', function (event, state) {
+				        if (state == false) {
+							$scope.projects = [];
+							angular.forEach($scope._projects, function(value, key) {
+							  if (value.project_close == null) {
+								$scope.projects.push(value);
+							  }
+							});
+							$scope.$apply();
+				        } else {
+							$scope.projects = [];
+							angular.forEach($scope._projects, function(value, key) {
+							  if (value.project_close != null) {
+								$scope.projects.push(value);
+							  }
+							});
+							$scope.$apply();
+				        }
 					});
 
 				});

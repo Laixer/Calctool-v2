@@ -47,6 +47,9 @@ if (!$message || !$message->isOwner()) {
 
 			<h2><strong>{{ $message->subject }}</strong></h2>
 			<div class="white-row">
+				<div><strong>Datum:</strong> {{ date('d-m-Y', strtotime(DB::table('messagebox')->select(DB::raw('created_at'))->first()->created_at)) }}</div>
+				<div><strong>Van:</strong> {{ User::find($message->from_user)->username }}</div>
+				<br />
 				{!! $message->message !!}
 			</div>
 		</div>
