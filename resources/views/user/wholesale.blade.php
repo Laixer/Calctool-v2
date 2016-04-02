@@ -16,6 +16,7 @@ use \Calctool\Models\WholesaleType;
 			<div>
 				<ol class="breadcrumb">
 				  <li><a href="/">Dashboard</a></li>
+				  <li><a href="/purchase">Inkoopfacturen</a></li>
 				  <li>Leveranciers</li>
 				</ol>
 			<div>

@@ -37,7 +37,8 @@ if (!$wholesale || $wholesale->user_id) {
 
 			<div>
 			<ol class="breadcrumb">
-			  <li><a href="/">Home</a></li>
+			  <li><a href="/">Dashboard</a></li>
+			  <li><a href="/purchase">Inkoopfacturen</a></li>
 			  <li><a href="/wholesale">Leveranciers</a></li>
 			 <li>{{ $wholesale->company_name }}</li>
 			</ol>
