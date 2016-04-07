@@ -249,6 +249,9 @@ $(function() {
 			<h2 style="margin: 10px 0 20px 0;"><strong>Welkom</strong>, {{ Auth::user()->firstname }}</h2>
 			<div class="row">
 
+				<div class="col-sm-6 col-md-1">
+				</div>
+
 				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
@@ -306,7 +309,7 @@ $(function() {
 					</div>
 				</div>
 
-				<div class="col-sm-6 col-md-2">
+			<!-- 	<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
 							<a class="item-hover" href="/wholesale">
@@ -318,7 +321,7 @@ $(function() {
 							<a href="/wholesale" class="btn btn-primary add_to_cart"><strong> Leveranciers</strong></a>
 						</figure>
 					</div>
-				</div>
+				</div> -->
 
 				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
@@ -334,6 +337,9 @@ $(function() {
 					</div>
 				</div>
 
+				<div class="col-sm-6 col-md-1">
+				</div>
+
 			</div>
 
 			<div class="row">
@@ -341,36 +347,37 @@ $(function() {
 				<div id="wrapper" ng-app="projectApp" class="nopadding-top">
 
 					<div class="col-md-12">
-
+						<br>
 						<h2><strong>Jouw</strong> Projecten</h2>
 						<div class="white-row" ng-controller="projectController">
 							<div class="row">
-								<div class="form-group col-md-10">
+								<div class="form-group col-md-8">
 									<input type="text" ng-model="query" class="form-control" placeholder="Zoek in projecten">
 								</div>
-								<div class="form-group col-md-2">
+								<div class="form-group col-md-4" STYLE="text-align: right;" >
+									<span><strong>Projectstatus: &nbsp;</strong></span>
 									<input name="toggle-close" type="checkbox">
 								</div>
 							</div>
 							<table class="table table-striped">
 								<thead>
 									<tr>
-										<th class="col-md-3" ng-click="orderByField='project_name'; reverseSort = !reverseSort">Projectnaam</th>
+										<th class="col-md-4" ng-click="orderByField='project_name'; reverseSort = !reverseSort">Projectnaam</th>
 										<th class="col-md-2" ng-click="orderByField='relation'; reverseSort = !reverseSort">Opdrachtgever</th>
 										<th class="col-md-1" ng-click="orderByField='type_name'; reverseSort = !reverseSort">Type</th>
 										<th class="col-md-3" ng-click="orderByField='address_street'; reverseSort = !reverseSort">Adres</th>
 										<th class="col-md-2" ng-click="orderByField='address_city'; reverseSort = !reverseSort">Plaats</th>
-										<th class="col-md-1">Status</th>
+										<!-- <th class="col-md-1">Status</th> -->
 									</tr>
 								</thead>
 								<tbody>
 									<tr ng-repeat="project in projects | filter: query | orderBy: orderByField:reverseSort as results">
-										<td class="col-md-3"><a href="/project-@{{ project.id }}/edit">@{{ project.project_name }}</a></td>
+										<td class="col-md-4"><a href="/project-@{{ project.id }}/edit">@{{ project.project_name }}</a></td>
 										<td class="col-md-2">@{{ project.relation }}</td>
 										<td class="col-md-1">@{{ project.type.type_name }}</td>
 										<td class="col-md-3">@{{ project.address_street }} @{{ project.address_number }}</td>
 										<td class="col-md-2">@{{ project.address_city }}</td>
-										<td class="col-md-1">@{{ project.project_close ? 'Gesloten' : 'Open' }}</td>
+										<!-- <td class="col-md-1">@{{ project.project_close ? 'Gesloten' : 'Open' }}</td> -->
 									</tr>
 									<tr ng-show="results == 0">
 										<td colspan="6" style="text-align: center;">Geen projecten beschikbaar</td>

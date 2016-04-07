@@ -12,8 +12,8 @@ $(document).ready(function() {
 
 			<section class="container text-center">
 				<h1 class="text-center">
-					<strong>Admin</strong> dashboard
-					<span class="subtitle">POWER TO THE ADMIN!</span>
+					<strong>Admin</strong> Dashboard
+					<span class="subtitle">CalculatieTool.com</span>
 				</h1>
 			</section>
 
@@ -23,7 +23,7 @@ $(document).ready(function() {
 
 					<div class="row">
 
-						<div class="col-sm-12 col-md-3">
+						<div class="col-sm-12 col-md-2">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/user">
@@ -33,16 +33,16 @@ $(document).ready(function() {
 											<strong>Gebruikers</strong>
 										</span>
 									</a>
-									<a href="/admin/user" class="btn btn-primary add_to_cart"><i class="fa fa-user"></i> Beheer gebruikers</a>
+									<a href="/admin/user" class="btn btn-primary add_to_cart"><i class="fa fa-user"></i> Gebruikers</a>
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/user" ><h4>Gebruikers</h4></a>
-									<small class="styleColor">{{ \Calctool\Models\User::where('active','=','true')->count() }} actieve gebruiker(s)</small>
+									<small class="styleColor">{{ \Calctool\Models\User::where('active','=','true')->count() }} actieve gebruikers</small>
 								</div>
 							</div>
 						</div>
 
-						<div class="col-sm-12 col-md-3">
+						<div class="col-sm-12 col-md-2">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/alert">
@@ -52,7 +52,7 @@ $(document).ready(function() {
 											<strong>Alerts</strong>
 										</span>
 									</a>
-									<a href="/admin/alert" class="btn btn-primary add_to_cart"><i class="fa fa-warning"></i> Beheer alerts</a>
+									<a href="/admin/alert" class="btn btn-primary add_to_cart"><i class="fa fa-warning"></i> Alerts</a>
 
 								</figure>
 								<div class="item-box-desc">
@@ -62,26 +62,26 @@ $(document).ready(function() {
 							</div>
 						</div>
 
-						<div class="col-sm-12 col-md-3">
+						<div class="col-sm-12 col-md-2">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/payment">
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-usd fsize60"></span>
-											<strong>Betalingen</strong>
+											<strong>Transacties</strong>
 										</span>
 									</a>
-									<a href="/admin/payment" class="btn btn-primary add_to_cart"><i class="fa fa-usd"></i> Transacties & Betalingen</a>
+									<a href="/admin/payment" class="btn btn-primary add_to_cart"><i class="fa fa-usd"></i> Transacties</a>
 								</figure>
 								<div class="item-box-desc">
-									<a href="/admin/payment"><h4>Betalingen</h4></a>
+									<a href="/admin/payment"><h4>Transacties</h4></a>
 									<small class="styleColor">{{ \Calctool\Models\Payment::count() }} transactie(s)</small>
 								</div>
 							</div>
 						</div>
 
-						<div class="col-sm-12 col-md-3">
+						<div class="col-sm-12 col-md-2">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/resource">
@@ -91,7 +91,7 @@ $(document).ready(function() {
 											<strong>Bestanden</strong>
 										</span>
 									</a>
-									<a href="/admin/resource" class="btn btn-primary add_to_cart"><i class="fa fa-file"></i> Bestandsbeheer</a>
+									<a href="/admin/resource" class="btn btn-primary add_to_cart"><i class="fa fa-file"></i> Bestanden</a>
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/resource"><h4>Bestanden</h4></a>
@@ -100,7 +100,7 @@ $(document).ready(function() {
 							</div>
 						</div>
 
-						<div class="col-sm-12 col-md-3">
+						<div class="col-sm-12 col-md-2">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/project">
@@ -110,36 +110,36 @@ $(document).ready(function() {
 											<strong>Projecten</strong>
 										</span>
 									</a>
-									<a href="/admin/project" class="btn btn-primary add_to_cart"><i class="fa fa-pencil"></i> Projectbeheer</a>
+									<a href="/admin/project" class="btn btn-primary add_to_cart"><i class="fa fa-pencil"></i> Projecten</a>
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/project"><h4>Projecten</h4></a>
-									<small class="styleColor">{{ \Calctool\Models\Project::count() }} Project(en)</small>
+									<small class="styleColor">{{ \Calctool\Models\Project::count() }} Projecten</small>
 								</div>
 							</div>
 						</div>
 
-						<div class="col-sm-12 col-md-3">
+						<div class="col-sm-12 col-md-2">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/snailmail">
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-print fsize60"></span>
-											<strong>Opdrachten</strong>
+											<strong>Printservice</strong>
 										</span>
 									</a>
 									<a href="/admin/snailmail" class="btn btn-primary add_to_cart"><i class="fa fa-print"></i>Printservice</a>
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/snailmail"><h4>Printservice</h4></a>
-									<small class="styleColor">{{ \Calctool\Models\OfferPost::whereNull('sent_date')->count() }} te versturen offertes</small>
-									<small class="styleColor">{{ \Calctool\Models\InvoicePost::whereNull('sent_date')->count() }} te versturen facturen</small>
+									<small class="styleColor">{{ \Calctool\Models\OfferPost::whereNull('sent_date')->count() }} offertes</small>
+									<small class="styleColor">{{ \Calctool\Models\InvoicePost::whereNull('sent_date')->count() }} facturen</small>
 								</div>
 							</div>
 						</div>
 
-						<div class="col-sm-12 col-md-3">
+						<div class="col-sm-12 col-md-2">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/message">
@@ -157,7 +157,7 @@ $(document).ready(function() {
 							</div>
 						</div>
 
-						<div class="col-sm-12 col-md-3">
+						<div class="col-sm-12 col-md-2">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/promo">
@@ -175,7 +175,7 @@ $(document).ready(function() {
 							</div>
 						</div>
 
-						<div class="col-sm-12 col-md-3">
+						<div class="col-sm-12 col-md-2">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/environment">
@@ -193,7 +193,7 @@ $(document).ready(function() {
 							</div>
 						</div>
 
-						<div class="col-sm-12 col-md-3">
+						<div class="col-sm-12 col-md-2">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/phpinfo">
@@ -203,7 +203,7 @@ $(document).ready(function() {
 											<strong>PHP Info</strong>
 										</span>
 									</a>
-									<a href="/admin/phpinfo" class="btn btn-primary add_to_cart"><i class="fa fa-wrench"></i> PHP configuratie</a>
+									<a href="/admin/phpinfo" class="btn btn-primary add_to_cart"><i class="fa fa-wrench"></i> PHP Info</a>
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/phpinfo" ><h4>PHP Info</h4></a>
@@ -211,20 +211,20 @@ $(document).ready(function() {
 							</div>
 						</div>
 
-						<div class="col-sm-12 col-md-3">
+						<div class="col-sm-12 col-md-2">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
 									<a class="item-hover" href="/admin/log">
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-list-alt fsize60"></span>
-											<strong>Applicatie logs</strong>
+											<strong>Logviewer</strong>
 										</span>
 									</a>
 									<a href="/admin/log" class="btn btn-primary add_to_cart"><i class="fa fa-list-alt"></i> Logviewer</a>
 								</figure>
 								<div class="item-box-desc">
-									<a href="/admin/log" ><h4>Applicatie logs</h4></a>
+									<a href="/admin/log" ><h4>Logviewer</h4></a>
 								</div>
 							</div>
 						</div>
