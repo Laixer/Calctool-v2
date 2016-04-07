@@ -1,6 +1,13 @@
 @extends('layout.master')
 
 @section('content')
+<script type="text/javascript">
+$(document).ready(function() {
+	clippy.load('Clippy', function(agent) {
+		agent.show();
+	});
+});
+</script>
 		<div id="wrapper">
 
 			<section class="container text-center">
