@@ -77,9 +77,8 @@ class ProjectController extends Controller {
 			return back()->withErrors($validator)->withInput($request->all());
 		}
 
-
 		if (!Relation::find(Auth::user()->self_id)) {
-			return back();
+			return back()->withErrors(['error' => 'Mijn bedrijf bestaat niet'])->withInput($request->all());
 		}
 
 		$project = new \Calctool\Models\Project;
