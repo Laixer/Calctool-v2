@@ -3,6 +3,7 @@ use \Calctool\Models\Project;
 use \Calctool\Models\User;
 use \Calctool\Models\Relation;
 use \Calctool\Models\RelationKind;
+use \Calctool\Models\Contact;
 ?>
 
 @extends('layout.master')

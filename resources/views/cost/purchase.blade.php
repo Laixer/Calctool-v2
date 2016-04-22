@@ -62,7 +62,7 @@ use \Calctool\Models\Wholesale;
 
 			<div>
 				<ol class="breadcrumb">
-				  <li><a href="/">Home</a></li>
+				  <li><a href="/">Dashboard</a></li>
 				  <li class="active">Inkoopfacturen</li>
 				</ol>
 			<div>
@@ -131,6 +131,15 @@ use \Calctool\Models\Wholesale;
 						</tr>
 					</tbody>
 				</table>
+
+				<div class="row">
+					<div class="col-md-3">
+						<div class="btn-group">
+					  		<a href="/wholesale" class="btn btn-primary"><i class="fa fa-pencil"></i> Leveranciers</a>
+					 	</div>
+					</div>
+				</div>
+				
 			</div>
 			</div>
 
