@@ -1078,13 +1078,15 @@ var n = this,
 														<button data-id="{{ $activity->id }}" class="btn btn-danger btn-xs deleteact">Verwijderen</button>
 													</div>
 												</div>
+
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>
-													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2">
 													@if ($project->tax_reverse)
-														<span>0%</span>
+													<div class="col-md-1 text-right label label-info"><strong>BTW 0%</strong></div>
+													<div class="col-md-2"></div>
 													@else
+													<div class="col-md-1 text-right"><strong>BTW</strong></div>	
+													<div class="col-md-2">
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-labor" id="type" class="form-control-sm-text pointer select-tax">
 															@foreach (Tax::all() as $tax)
 															<?php
@@ -1094,10 +1096,11 @@ var n = this,
 															<option value="{{ $tax->id }}" {{ ($activity->tax_labor_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
 															@endforeach
 														</select>
-													@endif
 													</div>
+													@endif
 													<div class="col-md-6"></div>
 												</div>
+
 												<table class="table table-striped" data-id="{{ $activity->id }}">
 													<thead>
 														<tr>
@@ -1126,11 +1129,12 @@ var n = this,
 
 												<div class="row">
 													<div class="col-md-2"><h4>Materiaal</h4></div>
-													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2">
 													@if ($project->tax_reverse)
-														<span>0%</span>
+													<div class="col-md-1 text-right label label-info"><strong>BTW 0%</strong></div>
+													<div class="col-md-2"></div>
 													@else
+													<div class="col-md-1 text-right"><strong>BTW</strong></div>	
+													<div class="col-md-2">
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-material" id="type" class="form-control-sm-text pointer select-tax">
 															@foreach (Tax::all() as $tax)
 															<?php
@@ -1140,9 +1144,9 @@ var n = this,
 															<option value="{{ $tax->id }}" {{ ($activity->tax_material_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
 															@endforeach
 														</select>
-													@endif
 													</div>
-													<div class="col-md-2"></div>
+													@endif
+													<div class="col-md-6"></div>
 												</div>
 
 												<table class="table table-striped" data-id="{{ $activity->id }}">
@@ -1198,14 +1202,15 @@ var n = this,
 														</tr>
 													</tbody>
 												</table>
-
+												
 												<div class="row">
 													<div class="col-md-2"><h4>Materieel</h4></div>
-													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2">
 													@if ($project->tax_reverse)
-														<span>0%</span>
+													<div class="col-md-1 text-right label label-info"><strong>BTW 0%</strong></div>
+													<div class="col-md-2"></div>
 													@else
+													<div class="col-md-1 text-right"><strong>BTW</strong></div>	
+													<div class="col-md-2">
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-equipment" id="type" class="form-control-sm-text pointer select-tax">
 															@foreach (Tax::all() as $tax)
 															<?php
@@ -1215,13 +1220,12 @@ var n = this,
 															<option value="{{ $tax->id }}" {{ ($activity->tax_equipment_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
 															@endforeach
 														</select>
-													@endif
 													</div>
-													<div class="col-md-8"></div>
+													@endif
+													<div class="col-md-6"></div>
 												</div>
 
 												<table class="table table-striped" data-id="{{ $activity->id }}">
-
 													<thead>
 														<tr>
 															<th class="col-md-5">Omschrijving</th>
@@ -1360,11 +1364,12 @@ var n = this,
 
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>
-													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2">
 													@if ($project->tax_reverse)
-														<span>0%</span>
+													<div class="col-md-1 text-right label label-info"><strong>BTW 0%</strong></div>
+													<div class="col-md-2"></div>
 													@else
+													<div class="col-md-1 text-right"><strong>BTW</strong></div>	
+													<div class="col-md-2">
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-labor" id="type" class="form-control-sm-text pointer select-estim-tax">
 															@foreach (Tax::all() as $tax)
 															<?php
@@ -1374,10 +1379,11 @@ var n = this,
 															<option value="{{ $tax->id }}" {{ ($activity->tax_labor_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
 															@endforeach
 														</select>
-													@endif
 													</div>
+													@endif
 													<div class="col-md-6"></div>
 												</div>
+
 												<table class="table table-striped" data-id="{{ $activity->id }}">
 
 													<thead>
@@ -1408,11 +1414,12 @@ var n = this,
 
 												<div class="row">
 													<div class="col-md-2"><h4>Materiaal</h4></div>
-													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2">
 													@if ($project->tax_reverse)
-														<span>0%</span>
+													<div class="col-md-1 text-right label label-info"><strong>BTW 0%</strong></div>
+													<div class="col-md-2"></div>
 													@else
+													<div class="col-md-1 text-right"><strong>BTW</strong></div>	
+													<div class="col-md-2">
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-material" id="type" class="form-control-sm-text pointer select-estim-tax">
 														@foreach (Tax::all() as $tax)
 															<?php
@@ -1422,9 +1429,9 @@ var n = this,
 															<option value="{{ $tax->id }}" {{ ($activity->tax_material_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
 														@endforeach
 														</select>
-													@endif
 													</div>
-													<div class="col-md-2"></div>
+													@endif
+													<div class="col-md-6"></div>
 												</div>
 
 												<table class="table table-striped" data-id="{{ $activity->id }}">
@@ -1484,11 +1491,12 @@ var n = this,
 
 												<div class="row">
 													<div class="col-md-2"><h4>Materieel</h4></div>
-													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2">
 													@if ($project->tax_reverse)
-														<span>0%</span>
+													<div class="col-md-1 text-right label label-info"><strong>BTW 0%</strong></div>
+													<div class="col-md-2"></div>
 													@else
+													<div class="col-md-1 text-right"><strong>BTW</strong></div>	
+													<div class="col-md-2">
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-equipment" id="type" class="form-control-sm-text pointer select-estim-tax">
 														@foreach (Tax::all() as $tax)
 															<?php
@@ -1498,9 +1506,9 @@ var n = this,
 															<option value="{{ $tax->id }}" {{ ($activity->tax_equipment_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
 														@endforeach
 														</select>
-													@endif
 													</div>
-													<div class="col-md-8"></div>
+													@endif
+													<div class="col-md-6"></div>
 												</div>
 
 												<table class="table table-striped" data-id="{{ $activity->id }}">
