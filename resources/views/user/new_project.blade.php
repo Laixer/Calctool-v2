@@ -22,6 +22,7 @@ $(document).ready(function() {
         ]
     });
     $("[name='tax_reverse']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+    $("[name='use_estimate']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
     $('#type').change(function(){
 		if (this.value==1) {
     		$('.hide-regie2').hide();
@@ -110,10 +111,16 @@ $(document).ready(function() {
 							</select>
 						</div>
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<label for="type">BTW verlegd</label>
 						<div class="form-group">
 							<input name="tax_reverse" type="checkbox">
+						</div>
+					</div>
+					<div class="col-md-3">
+						<label for="type">Stelposten</label>
+						<div class="form-group">
+							<input name="use_estimate" type="checkbox">
 						</div>
 					</div>
 

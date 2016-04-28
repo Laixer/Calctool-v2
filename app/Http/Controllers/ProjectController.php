@@ -109,6 +109,11 @@ class ProjectController extends Controller {
 		else
 			$project->tax_reverse = false;
 
+		if ($request->input('use_estimate'))
+			$project->use_estimate = true;
+		else
+			$project->use_estimate = false;
+
 		$project->save();
 
 		$type = ProjectType::find($project->type_id);

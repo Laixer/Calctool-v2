@@ -107,6 +107,9 @@ class CreateUsersTable extends Migration {
 			$table->text('note')->nullable();
 			$table->boolean('pref_email_reminder')->default('N');
 			$table->boolean('tax_reverse')->default('N');
+			$table->boolean('use_estimate')->default('N');
+			$table->boolean('use_more')->default('N');
+			$table->boolean('use_less')->default('N');
 			$table->decimal('hour_rate', 6, 3)->unsigned()->default(0);;
 			$table->decimal('hour_rate_more', 6, 3)->nullable()->unsigned();
 			$table->tinyInteger('profit_calc_contr_mat')->unsigned()->default(0);

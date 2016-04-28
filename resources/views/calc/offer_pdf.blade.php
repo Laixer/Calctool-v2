@@ -1,4 +1,4 @@
-<?php
+a<?php
 
 use \Calctool\Models\Project;
 use \Calctool\Models\Relation;
@@ -979,7 +979,9 @@ function invoice_condition($offer) {
 			<th style="width: 51px" class="qty">@if ($display_specification) Materiaal @endif</th>
 			<th style="width: 51px" class="qty">@if ($display_specification) Materieel @endif</th>
 			<th style="width: 51px" class="qty">Totaal</th>
+			@if ($project->use_estimate)
 			<th style="width: 51px" class="qty">Stelpost</th>
+			@endif
 		  </tr>
 		</thead>
 		<tbody>
@@ -993,6 +995,7 @@ function invoice_condition($offer) {
 			<td class="qty">@if ($display_specification) <span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span>@endif</td>
 			<td class="qty">@if ($display_specification) <span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span>@endif</td>
 			<td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
+			@if ($project->use_estimate)
 			<td class="qty text-center">
 			<?php
 			  if (PartType::find($activity->part_type_id)->type_name=='estimate') {
@@ -1000,6 +1003,7 @@ function invoice_condition($offer) {
 			  }
 			?>
 			</td>
+			@endif
 		  </tr>
 		  @endforeach
 		  @endforeach
@@ -1013,6 +1017,7 @@ function invoice_condition($offer) {
 			<td class="qty">@if ($display_specification) <span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span>@endif</td>
 			<td class="qty">@if ($display_specification) <span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span>@endif</td>
 			<td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
+			@if ($project->use_estimate)
 			<td class="qty text-center">
 			<?php
 			  if (PartType::find($activity->part_type_id)->type_name=='estimate') {
@@ -1020,6 +1025,7 @@ function invoice_condition($offer) {
 			  }
 			?>
 			</td>
+			@endif
 		  </tr>
 		  @endforeach
 		  @endforeach
@@ -1079,7 +1085,9 @@ function invoice_condition($offer) {
 		  <th style="width: 51px" class="qty">@if ($display_specification) Materiaal @endif</th>
 		  <th style="width: 51px" class="qty">@if ($display_specification) Materieel @endif</th>
 		  <th style="width: 51px" class="qty">Totaal</th>
+		  @if ($project->use_estimate)
 		  <th style="width: 51px" class="qty">Stelpost</th>
+		  @endif
 		 </tr>
 	  </thead>
 	  <tbody>
@@ -1093,6 +1101,7 @@ function invoice_condition($offer) {
 		  <td class="qty">@if ($display_specification)<span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span>@endif</td>
 		  <td class="qty">@if ($display_specification)<span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span>@endif</td>
 		  <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }}</td>
+		  @if ($project->use_estimate)
 		  <td class="qty text-center">
 		  <?php
 			if (PartType::find($activity->part_type_id)->type_name=='estimate') {
@@ -1100,6 +1109,7 @@ function invoice_condition($offer) {
 		   }
 		  ?>
 		  </td>
+		  @endif
 		</tr>
 		@endforeach
 		@endforeach
@@ -1111,7 +1121,9 @@ function invoice_condition($offer) {
 		  <td class="qty">@if ($display_specification)<strong><span>{{ '&euro; '.number_format(CalculationOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong>@endif</td>
 		  <td class="qty">@if ($display_specification)<strong><span>{{ '&euro; '.number_format(CalculationOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong>@endif</td>
 		  <td class="qty"><strong><span>{{ '&euro; '.number_format(CalculationOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
+		  @if ($project->use_estimate)
 		  <td class="qty">&nbsp;</td>
+		  @endif
 		</tr>
 	  </tbody>
 	</table>
@@ -1127,7 +1139,9 @@ function invoice_condition($offer) {
 		  <th style="width: 51px" class="qty">@if ($display_specification) Materiaal @endif</th>
 		  <th style="width: 51px" class="qty">@if ($display_specification) Materieel @endif</th>
 		  <th style="width: 51px" class="qty">Totaal</th>
+		  @if ($project->use_estimate)
 		  <th style="width: 51px" class="qty">Stelpost</th>
+		  @endif
 		 </tr>
 	  </thead>
 	  <tbody>
@@ -1141,6 +1155,7 @@ function invoice_condition($offer) {
 		  <td class="qty">@if ($display_specification)<span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span>@endif</td>
 		  <td class="qty">@if ($display_specification)<span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span>@endif</td>
 		  <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
+		  @if ($project->use_estimate)
 		  <td class="qty text-center">
 		  <?php
 			if (PartType::find($activity->part_type_id)->type_name=='estimate') {
@@ -1148,6 +1163,7 @@ function invoice_condition($offer) {
 			}
 		  ?>
 		  </td>
+		  @endif
 		</tr>
 		@endforeach
 		@endforeach
@@ -1159,7 +1175,9 @@ function invoice_condition($offer) {
 		  <td class="qty">@if ($display_specification)<strong><span>{{ '&euro; '.number_format(CalculationOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong>@endif</td>
 		  <td class="qty">@if ($display_specification)<strong><span>{{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong>@endif</td>
 		  <td class="qty"><strong><span>{{ '&euro; '.number_format(CalculationOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
+		  @if ($project->use_estimate)
 		  <td class="qty">&nbsp;</td>
+		  @endif
 		</tr>
 	  </tbody>
 	</table>

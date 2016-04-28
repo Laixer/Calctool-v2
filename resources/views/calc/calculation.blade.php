@@ -1026,11 +1026,13 @@ var n = this,
 							<i class="fa fa-list"></i> Calculatie
 						</a>
 					</li>
+					@if ($project->use_estimate)
 					<li id="tab-estimate">
 						<a href="#estimate" data-toggle="tab">
 							<i class="fa fa-align-justify"></i> Stelposten
 						</a>
 					</li>
+					@endif
 					<li id="tab-summary">
 						<a href="#summary" data-toggle="tab">
 							<i class="fa fa-sort-amount-asc"></i> Uittrekstaat Calculeren
@@ -1315,6 +1317,7 @@ var n = this,
 						</form>
 					</div>
 
+					@if ($project->use_estimate)
 					<div id="estimate" class="tab-pane">
 						<div class="toogle">
 
@@ -1594,6 +1597,7 @@ var n = this,
 						</div>
 						</form>
 					</div>
+					@endif
 
 					<div id="summary" class="tab-pane">
 						<div class="row text-center">

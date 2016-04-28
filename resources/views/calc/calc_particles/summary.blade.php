@@ -22,7 +22,9 @@ use \Calctool\Models\Part;
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
 						<th class="col-md-1"><span class="pull-right">Materieel</th>
 						<th class="col-md-1"><span class="pull-right">Totaal</th>
+						@if ($project->use_estimate)
 						<th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
+						@endif
 					</tr>
 				</thead>
 
@@ -39,7 +41,9 @@ use \Calctool\Models\Part;
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
+						@if ($project->use_estimate)
 						<td class="col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
+						@endif
 					</tr>
 					@endforeach
 					@endforeach
@@ -51,7 +55,9 @@ use \Calctool\Models\Part;
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
+						@if ($project->use_estimate)
 						<th class="col-md-1">&nbsp;</th>
+						@endif
 					</tr>
 				</tbody>
 			</table>
@@ -74,7 +80,9 @@ use \Calctool\Models\Part;
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
 						<th class="col-md-1"><span class="pull-right">Materieel</th>
 						<th class="col-md-1"><span class="pull-right">Totaal</th>
+						@if ($project->use_estimate)
 						<th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
+						@endif
 					</tr>
 				</thead>
 
@@ -91,7 +99,9 @@ use \Calctool\Models\Part;
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
+						@if ($project->use_estimate)
 						<td class="col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
+						@endif
 					</tr>
 					@endforeach
 					@endforeach
@@ -103,7 +113,9 @@ use \Calctool\Models\Part;
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
+						@if ($project->use_estimate)
 						<th class="col-md-1">&nbsp;</th>
+						@endif
 					</tr>
 				</tbody>
 			</table>

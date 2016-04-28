@@ -117,11 +117,13 @@ if (!$project || !$project->isOwner())
 							<i class="fa fa-list"></i> Calculeren
 						</a>
 					</li>
+					@if ($project->use_estimate)
 					<li id="tab-estimate">
 						<a href="#estimate" data-toggle="tab">
 							<i class="fa fa-align-justify"></i> Stelposten
 						</a>
 					</li>
+					@endif
 					<li id="tab-summary">
 						<a href="#summary" data-toggle="tab">
 							<i class="fa fa-sort-amount-asc"></i> Uittrekstaat Calculeren
@@ -296,6 +298,7 @@ if (!$project || !$project->isOwner())
 
 					</div>
 
+					@if ($project->use_estimate)
 					<div id="estimate" class="tab-pane">
 						<div class="toogle">
 
@@ -463,6 +466,7 @@ if (!$project || !$project->isOwner())
 						</div>
 
 					</div>
+					@endif
 
 					<div id="summary" class="tab-pane">
 						<div class="toogle">
