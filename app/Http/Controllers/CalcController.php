@@ -264,7 +264,8 @@ class CalcController extends Controller {
 		$part = Part::where('part_name','=','contracting')->first();
 		$part_type = PartType::where('type_name','=','calculation')->first();
 		$project = Project::find($chapter->project_id);
-		if (ProjectType::find($project->type_id)->type_name == 'BTW verlegd')
+
+		if ($project->tax_reverse)
 			$tax = Tax::where('tax_rate','=',0)->first();
 		else
 			$tax = Tax::where('tax_rate','=',21)->first();
@@ -298,7 +299,7 @@ class CalcController extends Controller {
 		$part = Part::where('part_name','=','contracting')->first();
 		$part_type = PartType::where('type_name','=','estimate')->first();
 		$project = Project::find($chapter->project_id);
-		if (ProjectType::find($project->type_id)->type_name == 'BTW verlegd')
+		if ($project->tax_reverse)
 			$tax = Tax::where('tax_rate','=',0)->first();
 		else
 			$tax = Tax::where('tax_rate','=',21)->first();
@@ -404,19 +405,19 @@ class CalcController extends Controller {
 			'activity' => array('required','integer')
 		]);
 
-			$activity = Activity::find($request->input('activity'));
-			if (!$activity)
-				return json_encode(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
-			}
+		$activity = Activity::find($request->input('activity'));
+		if (!$activity)
+			return json_encode(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
 
-			$activity->note = $request->get('note');
+		$activity->note = $request->get('note');
 
-			$activity->save();
+		$activity->save();
 
-			return json_encode(['success' => 1]);
+		return json_encode(['success' => 1]);
 	}
 
 	public function doUpdateUseTimesheet(Request $request)
@@ -447,17 +448,17 @@ class CalcController extends Controller {
 			'activity' => array('required','integer','min:0')
 		]);
 
-			$activity = Activity::find($request->input('activity'));
-			if (!$activity)
-				return json_encode(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
-			}
+		$activity = Activity::find($request->input('activity'));
+		if (!$activity)
+			return json_encode(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
 
-			$activity->delete();
+		$activity->delete();
 
-			return json_encode(['success' => 1]);
+		return json_encode(['success' => 1]);
 	}
 
 	public function doDeleteChapter(Request $request)

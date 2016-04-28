@@ -80,7 +80,7 @@ class MoreController extends Controller {
 		$part_type = PartType::where('type_name','=','calculation')->first();
 		$detail = Detail::where('detail_name','=','more')->first();
 		$project = Project::find($chapter->project_id);
-		if (ProjectType::find($project->type_id)->type_name == 'BTW verlegd')
+		if ($project->tax_reverse)
 			$tax = Tax::where('tax_rate','=',0)->first();
 		else
 			$tax = Tax::where('tax_rate','=',21)->first();
