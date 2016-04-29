@@ -23,6 +23,8 @@ $(document).ready(function() {
     });
     $("[name='tax_reverse']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
     $("[name='use_estimate']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+    $("[name='use_more']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+    $("[name='use_less']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
     $('#type').change(function(){
 		if (this.value==1) {
     		$('.hide-regie2').hide();
@@ -121,6 +123,18 @@ $(document).ready(function() {
 						<label for="type">Stelposten</label>
 						<div class="form-group">
 							<input name="use_estimate" type="checkbox">
+						</div>
+					</div>
+					<div class="col-md-3">
+						<label for="type">Meerwerk</label>
+						<div class="form-group">
+							<input name="use_more" type="checkbox">
+						</div>
+					</div>
+					<div class="col-md-3">
+						<label for="type">Minderwerk</label>
+						<div class="form-group">
+							<input name="use_less" type="checkbox">
 						</div>
 					</div>
 

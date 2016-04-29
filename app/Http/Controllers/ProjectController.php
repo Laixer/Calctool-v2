@@ -114,6 +114,16 @@ class ProjectController extends Controller {
 		else
 			$project->use_estimate = false;
 
+		if ($request->input('use_more'))
+			$project->use_more = true;
+		else
+			$project->use_more = false;
+
+		if ($request->input('use_less'))
+			$project->use_less = true;
+		else
+			$project->use_less = false;
+
 		$project->save();
 
 		$type = ProjectType::find($project->type_id);
