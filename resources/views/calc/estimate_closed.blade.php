@@ -311,7 +311,7 @@ if (!$project || !$project->isOwner())
 												</table>
 
 												<div class="row">
-													<div class="col-md-2"><h4>Materieel</h4></div>
+													<div class="col-md-2"><h4>Overig</h4></div>
 													<div class="col-md-1 text-right label label-info"><strong>BTW {{ Tax::find($activity->tax_equipment_id)->tax_rate }}%</strong></div>
 												</div>
 
@@ -379,7 +379,7 @@ if (!$project || !$project->isOwner())
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</th>
-												<th class="col-md-1"><span class="pull-right">Materieel</th>
+												<th class="col-md-1"><span class="pull-right">Overig</th>
 												<th class="col-md-1"><span class="pull-right">Totaal</th>
 											</tr>
 										</thead>
@@ -429,7 +429,7 @@ if (!$project || !$project->isOwner())
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</th>
-												<th class="col-md-1"><span class="pull-right">Materieel</th>
+												<th class="col-md-1"><span class="pull-right">Overig</th>
 												<th class="col-md-1"><span class="pull-right">Totaal</th>
 											</tr>
 										</thead>
@@ -478,7 +478,7 @@ if (!$project || !$project->isOwner())
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 												<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
-												<th class="col-md-1"><span class="pull-right">Materieel</span></th>
+												<th class="col-md-1"><span class="pull-right">Overig</span></th>
 												<th class="col-md-1"><span class="pull-right">Totaal</span></th>
 											</tr>
 										</thead>
@@ -571,7 +571,7 @@ if (!$project || !$project->isOwner())
 								</tr>
 								@else
 								<tr>
-									<td class="col-md-4">Materiaalkosten</td>
+									<td class="col-md-4">Overige kosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -583,7 +583,7 @@ if (!$project || !$project->isOwner())
 
 								@if (!$project->tax_reverse)
 								<tr>
-									<td class="col-md-4">Materieelkosten</td>
+									<td class="col-md-4">Overige kosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -602,7 +602,7 @@ if (!$project || !$project->isOwner())
 								</tr>
 								@else
 								<tr>
-									<td class="col-md-4">Materieelkosten</td>
+									<td class="col-md-4">Overige kosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -704,7 +704,7 @@ if (!$project || !$project->isOwner())
 
 								@if (!$project->tax_reverse)
 								<tr>
-									<td class="col-md-4">Materieelkosten</td>
+									<td class="col-md-4">Overige kosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>
@@ -723,7 +723,7 @@ if (!$project || !$project->isOwner())
 								</tr>
 								@else
 								<tr>
-									<td class="col-md-4">Materieelkosten</td>
+									<td class="col-md-4">Overige kosten</td>
 									<td class="col-md-1">&nbsp;</td>
 									<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">&nbsp;</td>

@@ -677,7 +677,7 @@ $(document).ready(function() {
 												</div>
 											</div>
 											<div class="row">
-												<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage materieel</label></div>
+												<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage overig</label></div>
 												<div class="col-md-1"><div class="pull-right">%</div></div>
 												<div class="col-md-2">
 														<input name="pref_profit_calc_contr_equip" id="pref_profit_calc_contr_equip" type="text" class="form-control" value="{{ $user->pref_profit_calc_contr_equip }}" />
@@ -699,7 +699,7 @@ $(document).ready(function() {
 												</div>
 											</div>
 											<div class="row">
-												<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage materieel</label></div>
+												<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage overig</label></div>
 												<div class="col-md-1"><div class="pull-right">%</div></div>
 												<div class="col-md-2">
 														<input name="pref_profit_calc_subcontr_equip" id="pref_profit_calc_subcontr_equip" type="text" class="form-control" value="{{ $user->pref_profit_calc_subcontr_equip }}" />

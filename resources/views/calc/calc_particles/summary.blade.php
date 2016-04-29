@@ -20,7 +20,7 @@ use \Calctool\Models\Part;
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
-						<th class="col-md-1"><span class="pull-right">Materieel</th>
+						<th class="col-md-1"><span class="pull-right">Overig</th>
 						<th class="col-md-1"><span class="pull-right">Totaal</th>
 						@if ($project->use_estimate)
 						<th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
@@ -78,7 +78,7 @@ use \Calctool\Models\Part;
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
-						<th class="col-md-1"><span class="pull-right">Materieel</th>
+						<th class="col-md-1"><span class="pull-right">Overig</th>
 						<th class="col-md-1"><span class="pull-right">Totaal</th>
 						@if ($project->use_estimate)
 						<th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
@@ -135,7 +135,7 @@ use \Calctool\Models\Part;
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
-						<th class="col-md-1"><span class="pull-right">Materieel</span></th>
+						<th class="col-md-1"><span class="pull-right">Overig</span></th>
 						<th class="col-md-1"><span class="pull-right">Totaal</span></th>
 						<th class="col-md-1">&nbsp;</th>
 					</tr>
