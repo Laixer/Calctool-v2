@@ -388,7 +388,7 @@ $type = ProjectType::find($project->type_id);
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="display-specification" type="checkbox" checked> Hoofdstukken en werkzaamheden weergeven
+						          <input name="display-specification" type="checkbox" checked> Onderdelen en werkzaamheden weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -1204,7 +1204,7 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
@@ -1245,7 +1245,7 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
@@ -1316,7 +1316,7 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstukken</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
@@ -1412,7 +1412,7 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
@@ -1457,7 +1457,7 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
@@ -1532,7 +1532,7 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
@@ -1630,7 +1630,7 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
@@ -1675,7 +1675,7 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
@@ -1750,7 +1750,7 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
@@ -1846,7 +1846,7 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
@@ -1887,7 +1887,7 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
@@ -1958,7 +1958,7 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
@@ -2052,7 +2052,7 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th class="col-md-2">Hoofdstuk</th>
+						<th class="col-md-2">Onderdeel</th>
 						<th class="col-md-3">Werkzaamheden</th>
 						<th class="col-md-7"><span>Omschrijving</th>
 					</tr>
@@ -2076,7 +2076,7 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th class="col-md-2">Hoofdstuk</th>
+						<th class="col-md-2">Onderdeel</th>
 						<th class="col-md-3">Werkzaamheden</th>
 						<th class="col-md-7"><span>Omschrijving</th>
 					</tr>
@@ -2104,7 +2104,7 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th class="col-md-2">Hoofdstuk</th>
+						<th class="col-md-2">Onderdeel</th>
 						<th class="col-md-3">Werkzaamheden</th>
 						<th class="col-md-7"><span>Omschrijving</th>
 					</tr>

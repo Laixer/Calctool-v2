@@ -124,7 +124,7 @@ div.tabs ul.nav-tabs a {
 	border: #1EBE00 2px solid;
 }
 
-/* Actieve hoofdstukken, niet actief and border */
+/* Actieve onderdelen, niet actief and border */
 /* gebruikt op Calculatiepagina*/
 div.toggle-chapter > label {
 	background: #fff;

@@ -34,7 +34,7 @@ $include_tax = $offer->include_tax; //BTW bedragen weergeven
 $only_totals = $offer->only_totals; //Alleen het totale offertebedrag weergeven
 $seperate_subcon = !$offer->seperate_subcon; //Onderaanneming apart weergeven
 $display_worktotals = $offer->display_worktotals; //Kosten werkzaamheden weergeven
-$display_specification = $offer->display_specification; //Hoofdstukken en werkzaamheden weergeven
+$display_specification = $offer->display_specification; //Onderdeelken en werkzaamheden weergeven
 $display_description = $offer->display_description;  //Omschrijving werkzaamheden weergeven
 
 $type = ProjectType::find($project->type_id);
@@ -972,7 +972,7 @@ function invoice_condition($offer) {
 	 <table border="0" cellspacing="0" cellpadding="0">
 		<thead>
 		  <tr style="page-break-after: always;">
-			<th style="width: 130px" class="qty">Hoofdstuk</th>
+			<th style="width: 130px" class="qty">Onderdeel</th>
 			<th style="width: 170px" class="qty">Werkzaamheid</th>
 			<th style="width: 40px" class="qty">@if ($display_specification) Uren @endif</th>
 			<th style="width: 51px" class="qty">@if ($display_specification) Arbeid @endif</th>
@@ -1078,7 +1078,7 @@ function invoice_condition($offer) {
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <thead>
 		<tr style="page-break-after: always;">
-		  <th style="width: 130px" class="qty">Hoofdstuk</th>
+		  <th style="width: 130px" class="qty">Onderdeel</th>
 		  <th style="width: 170px" class="qty">Werkzaamheid</th>
 		  <th style="width: 40px" class="qty">@if ($display_specification) Uren @endif</th>
 		  <th style="width: 51px" class="qty">@if ($display_specification) Arbeid @endif</th>
@@ -1132,7 +1132,7 @@ function invoice_condition($offer) {
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <thead>
 		<tr style="page-break-after: always;">
-		  <th style="width: 130px" class="qty">Hoofdstuk</th>
+		  <th style="width: 130px" class="qty">Onderdeel</th>
 		  <th style="width: 170px" class="qty">Werkzaamheid</th>
 		  <th style="width: 40px" class="qty">@if ($display_specification) Uren @endif</th>
 		  <th style="width: 51px" class="qty">@if ($display_specification) Arbeid @endif</th>
@@ -1233,7 +1233,7 @@ function invoice_condition($offer) {
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <thead>
 		<tr>
-		  <th style="width: 130px" class="qty">Hoofdstuk</th>
+		  <th style="width: 130px" class="qty">Onderdeel</th>
 		  <th style="width: 170px" class="qty">Werkzaamheid</th>
 		  <th class="qty">Omschrijving</th>
 		</tr>
@@ -1272,7 +1272,7 @@ function invoice_condition($offer) {
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <thead>
 		<tr>
-		  <th style="width: 130px"class="qty">Hoofdstuk</th>
+		  <th style="width: 130px"class="qty">Onderdeel</th>
 		  <th style="width: 170px"class="qty">Werkzaamheid</th>
 		  <th class="qty">Omschrijving</th>
 		</tr>
@@ -1294,7 +1294,7 @@ function invoice_condition($offer) {
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <thead>
 		<tr>
-		  <th style="width: 130px" class="qty">Hoofdstuk</th>
+		  <th style="width: 130px" class="qty">Onderdeel</th>
 		  <th style="width: 170px" class="qty">Werkzaamheid</th>
 		  <th class="qty">Omschrijving</th>
 		</tr>

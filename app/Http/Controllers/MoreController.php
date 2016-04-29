@@ -61,7 +61,7 @@ class MoreController extends Controller {
 
 		$chapter->save();
 
-		return back()->with('success', 'Nieuw hoofdstuk aangemaakt');
+		return back()->with('success', 'Nieuw onderdeel aangemaakt');
 	}
 
 	public function doNewActivity(Request $request, $chapter_id)

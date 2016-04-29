@@ -45,7 +45,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
 $only_totals = $invoice->only_totals; //Alleen het totale offertebedrag weergeven
 $seperate_subcon = !$invoice->seperate_subcon; //Onderaanneming apart weergeven
 $display_worktotals = $invoice->display_worktotals; //Kosten werkzaamheden weergeven
-$display_specification = $invoice->display_specification; //Hoofdstukken en werkzaamheden weergeven
+$display_specification = $invoice->display_specification; //Onderdeel en werkzaamheden weergeven
 $display_description = $invoice->display_description;  //Omschrijving werkzaamheden weergeven
 
 $term=0;
@@ -954,7 +954,7 @@ if ($cnt>1)
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-        <th class="no">Hoofdstuk</th>
+        <th class="no">Onderdeel</th>
         <th class="desc">Werkzaamheid</th>
         <th class="no">Arbeidsuren</th>
         <th class="desc">Arbeid</th>
@@ -1037,7 +1037,7 @@ if ($cnt>1)
    <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-        <th class="qty">Hoofdstuk</th>
+        <th class="qty">Onderdeel</th>
         <th class="qty">Werkzaamheid</th>
         <th class="qty">Arbeidsuren</th>
         <th class="qty">Arbeid</th>
@@ -1127,7 +1127,7 @@ if ($cnt>1)
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-        <th class="no">Hoofdstuk</th>
+        <th class="no">Onderdeel</th>
         <th class="desc">Werkzaamheid</th>
         <th class="no">Arbeidsuren</th>
         <th class="desc">Arbeid</th>
@@ -1217,7 +1217,7 @@ if ($cnt>1)
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-        <th class="no">Hoofdstuk</th>
+        <th class="no">Onderdeel</th>
         <th class="desc">Werkzaamheid</th>
         <th class="no">Arbeidsuren</th>
         <th class="desc">Arbeid</th>
@@ -1304,7 +1304,7 @@ if ($cnt>1)
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-          <th style="width: 181px" class="qty">Hoofdstuk</th>
+          <th style="width: 181px" class="qty">Onderdeel</th>
           <th style="width: 170px" class="qty">Werkzaamheid</th>
           <th style="width: 40px" class="qty">@if (!$display_worktotals) Arbeidsuren @endif</th>
           <th style="width: 51px" class="qty">@if (!$display_worktotals) Arbeid @endif</th>
@@ -1341,7 +1341,7 @@ if ($cnt>1)
    <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
-          <th style="width: 181px" class="qty">Hoofdstuk</th>
+          <th style="width: 181px" class="qty">Onderdeel</th>
           <th style="width: 170px" class="qty">Werkzaamheid</th>
           <th style="width: 40px" class="qty">@if (!$display_worktotals) Arbeidsuren @endif</th>
           <th style="width: 51px" class="qty">@if (!$display_worktotals) Arbeid @endif</th>
@@ -1421,7 +1421,7 @@ if ($cnt>1)
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
-          <th class="no">Hoofdstuk</th>
+          <th class="no">Onderdeel</th>
           <th class="desc">Werkzaamheid</th>
           <th class="no">Arbeidsuren</th>
           <th class="desc">Arbeid</th>
@@ -1463,7 +1463,7 @@ if ($cnt>1)
    <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
-          <th class="no">Hoofdstuk</th>
+          <th class="no">Onderdeel</th>
           <th class="desc">Werkzaamheid</th>
           <th class="no">Arbeidsuren</th>
           <th class="desc">Arbeid</th>
@@ -1546,7 +1546,7 @@ if ($cnt>1)
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
-          <th class="no">Hoofdstuk</th>
+          <th class="no">Onderdeel</th>
           <th class="desc">Werkzaamheid</th>
           <th class="no">Arbeidsuren</th>
           <th class="desc">Arbeid</th>
@@ -1588,7 +1588,7 @@ if ($cnt>1)
    <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
-          <th class="no">Hoofdstuk</th>
+          <th class="no">Onderdeel</th>
           <th class="desc">Werkzaamheid</th>
           <th class="no">Arbeidsuren</th>
           <th class="desc">Arbeid</th>
@@ -1671,7 +1671,7 @@ if ($cnt>1)
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
-          <th class="no">Hoofdstuk</th>
+          <th class="no">Onderdeel</th>
           <th class="desc">Werkzaamheid</th>
           <th class="no">Arbeidsuren</th>
           <th class="desc">Arbeid</th>
@@ -1709,7 +1709,7 @@ if ($cnt>1)
    <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
-          <th class="no">Hoofdstuk</th>
+          <th class="no">Onderdeel</th>
           <th class="desc">Werkzaamheid</th>
           <th class="no">Arbeidsuren</th>
           <th class="desc">Arbeid</th>
@@ -1795,7 +1795,7 @@ if ($cnt>1)
     <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-        <th class="no">Hoofdstuk</th>
+        <th class="no">Onderdeel</th>
         <th class="desc">Werkzaamheid</th>
         <th class="no">Omschrijving</th>
       </tr>
@@ -1837,7 +1837,7 @@ if ($cnt>1)
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-        <th class="no">Hoofdstuk</th>
+        <th class="no">Onderdeel</th>
         <th class="desc">Werkzaamheid</th>
         <th class="no">Omschrijving</th>
       </tr>
@@ -1859,7 +1859,7 @@ if ($cnt>1)
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-        <th class="no">Hoofdstuk</th>
+        <th class="no">Onderdeel</th>
         <th class="desc">Werkzaamheid</th>
         <th class="no">Omschrijving</th>
       </tr>

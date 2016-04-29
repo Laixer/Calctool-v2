@@ -164,7 +164,7 @@ use \Calctool\Models\MoreLabor;
 										<thead>
 											<tr>
 												<th class="col-md-2">Project</th>
-												<th class="col-md-2">Hoofdstuk</th>
+												<th class="col-md-2">Onderdeel</th>
 												<th class="col-md-3">Werkzaamheid</th>
 												<th class="col-md-2">Gecalculeerde uren</th>
 												<th class="col-md-2">Geregistreerde uren</th>

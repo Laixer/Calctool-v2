@@ -260,9 +260,7 @@ if (!$project || !$project->isOwner())
 
 												<div class="row">
 													<div class="col-md-2"><h4>Materieel</h4></div>
-													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2">{{ Tax::find($activity->tax_equipment_id)->tax_rate }}%</div>
-													<div class="col-md-8"></div>
+													<div class="col-md-1 text-right label label-info"><strong>BTW {{ Tax::find($activity->tax_equipment_id)->tax_rate }}%</strong>
 												</div>
 
 												<table class="table table-striped">
@@ -325,7 +323,7 @@ if (!$project || !$project->isOwner())
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th class="col-md-3">Hoofdstuk</th>
+												<th class="col-md-3">Onderdeel</th>
 												<th class="col-md-4">Werkzaamheden</th>
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>
@@ -373,7 +371,7 @@ if (!$project || !$project->isOwner())
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th class="col-md-3">Hoofdstuk</th>
+												<th class="col-md-3">Onderdeel</th>
 												<th class="col-md-4">Werkzaamheden</th>
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>

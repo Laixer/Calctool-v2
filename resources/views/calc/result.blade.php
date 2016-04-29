@@ -445,7 +445,7 @@ $(document).ready(function() {
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th class="col-md-3">Hoofdstuk	</th>
+												<th class="col-md-3">Onderdeel</th>
 												<th class="col-md-3">Werkzaamheden</th>
 												<th class="col-md-2"><span class="pull-right">Gecalculeerd <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de gecalculeerde uren uit de offerte." href="javascript:void(0);"><i class="fa fa-info-circle"></i> </a></span></th>
 												<th class="col-md-1"><span class="pull-right">Minderw. <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het bedrag dat voorkomt uit 'Calculeren Minderwerk'" href="#"><i class="fa fa-info-circle"></i></a></span></th>
@@ -492,7 +492,7 @@ $(document).ready(function() {
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th class="col-md-3">Hoofdstuk</th>
+												<th class="col-md-3">Onderdeel</th>
 												<th class="col-md-3">Werkzaamheden</th>
 												<th class="col-md-2"><span class="pull-right">Gecalculeerd <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de gecalculeerde uren uit de calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i> </a></span></th>
 												<th class="col-md-1"><span class="pull-right">Gesteld <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de gestelde uren vanuit 'Stelposten Stellen'" href="#"><i class="fa fa-info-circle"></i></a></span></th>
@@ -538,7 +538,7 @@ $(document).ready(function() {
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th class="col-md-3">Hoofdstuk</th>
+												<th class="col-md-3">Onderdeel</th>
 												<th class="col-md-3">Werkzaamheden</th>
 												<th class="col-md-2"><span class="pull-right">Gecalculeerd <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit zijn de (mondeling) opgegeven uren bij de tab 'Calculeren Meerwerk' die als prijsopgaaf kunnen dienen naar de klant. Wordt de urenregistratie bijgehouden dan is die bindend." href="#"><i class="fa fa-info-circle"></i></a></span></th>
 												<th class="col-md-1"><span class="pull-right">&nbsp;</span></th>

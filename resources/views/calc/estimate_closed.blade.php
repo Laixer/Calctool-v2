@@ -374,7 +374,7 @@ if (!$project || !$project->isOwner())
 
 										<thead>
 											<tr>
-												<th class="col-md-3">Hoofdstuk</th>
+												<th class="col-md-3">Onderdeel</th>
 												<th class="col-md-3">Werkzaamheden</th>
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>
@@ -424,7 +424,7 @@ if (!$project || !$project->isOwner())
 
 										<thead>
 											<tr>
-												<th class="col-md-3">Hoofdstuk</th>
+												<th class="col-md-3">Onderdeel</th>
 												<th class="col-md-3">Werkzaamheden</th>
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>

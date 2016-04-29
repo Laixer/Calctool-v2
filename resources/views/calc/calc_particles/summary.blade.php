@@ -15,7 +15,7 @@ use \Calctool\Models\Part;
 
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-3">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
@@ -73,7 +73,7 @@ use \Calctool\Models\Part;
 
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-3">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
