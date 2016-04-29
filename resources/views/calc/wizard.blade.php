@@ -53,10 +53,10 @@ if ($offer_last && $offer_last->offer_finish)
 	@if ($project->use_estimate)
 	<a href="/estimate/project-{{ $project->id }}" {!! $page=='estimate' ? 'class="current"' : '' !!}>Stelposten stellen</a>
 	@endif
-	@if ($project->use_more)
+	@if ($project->use_less)
 	<a href="/less/project-{{ $project->id }}" {!! $page=='less' ? 'class="current"' : '' !!} >Minderwerk</a>
 	@endif
-	@if ($project->use_less)
+	@if ($project->use_more)
 	<a href="/more/project-{{ $project->id }}" {!! $page=='more' ? 'class="current"' : ''!!} >Meerwerk</a>
 	@endif
 	<a href="/invoice/project-{{ $project->id }}" {!! $page=='invoice' ? 'class="current"' : ''!!} >Factuur</a>
@@ -65,10 +65,10 @@ if ($offer_last && $offer_last->offer_finish)
 	@if ($project->use_estimate)
 	<span>Stelposten stellen</span>
 	@endif
-	@if ($project->use_more)
+	@if ($project->use_less)
 	<span>Minderwerk</span>
 	@endif
-	@if ($project->use_less)
+	@if ($project->use_more)
 	<span>Meerwerk</span>
 	@endif
 	<span>Factuur</span>
