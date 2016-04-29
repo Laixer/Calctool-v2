@@ -972,6 +972,7 @@ var n = this,
 
 									<form action="/more/newactivity/{{ $chapter->id }}" method="post">
 									{!! csrf_field() !!}
+									<div><hr></div>
 									<div class="row">
 										<div class="col-md-6">
 

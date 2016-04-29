@@ -1308,6 +1308,7 @@ var n = this,
 
 						<form method="POST" action="/calculation/newchapter/{{ $project->id }}" accept-charset="UTF-8">
                             {!! csrf_field() !!}
+						<div><hr></div>
 						<div class="row">
 							<div class="col-md-6">
 								<div class="input-group">
@@ -1593,6 +1594,7 @@ var n = this,
 
 						<form method="POST" action="/calculation/newchapter/{{ $project->id }}" accept-charset="UTF-8">
                            {!! csrf_field() !!}
+						<div><hr></div>
 						<div class="row">
 							<div class="col-md-6">
 								<div class="input-group">
