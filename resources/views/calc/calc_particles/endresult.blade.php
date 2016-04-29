@@ -83,7 +83,7 @@ use \Calctool\Calculus\CalculationEndresult;
 
 		@if (!$project->tax_reverse)
 		<tr>
-			<td class="col-md-4">Materieelkosten</td>
+			<td class="col-md-4">Overige kosten</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -102,7 +102,7 @@ use \Calctool\Calculus\CalculationEndresult;
 		</tr>
 		@else
 		<tr>
-			<td class="col-md-4">Materieelkosten</td>
+			<td class="col-md-4">Overige kosten</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -203,7 +203,7 @@ use \Calctool\Calculus\CalculationEndresult;
 
 		@if (!$project->tax_reverse)
 		<tr>
-			<td class="col-md-4">Materieelkosten</td>
+			<td class="col-md-4">Overige kosten</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -222,7 +222,7 @@ use \Calctool\Calculus\CalculationEndresult;
 		</tr>
 		@else
 		<tr>
-			<td class="col-md-4">Materieelkosten</td>
+			<td class="col-md-4">Overige kosten</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</span></td>
 			<td class="col-md-1">&nbsp;</td>

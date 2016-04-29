@@ -20,7 +20,7 @@ use \Calctool\Calculus\LessOverview;
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
-						<th class="col-md-1"><span class="pull-right">Materieel</th>
+						<th class="col-md-1"><span class="pull-right">Overig</th>
 						<th class="col-md-1"><span class="pull-right">Totaal <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het bedrag dat in mindering wordt gebracht op de bestaande calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 					</tr>
 				</thead>
@@ -68,7 +68,7 @@ use \Calctool\Calculus\LessOverview;
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
-						<th class="col-md-1"><span class="pull-right">Materieel</th>
+						<th class="col-md-1"><span class="pull-right">Overig</th>
 						<th class="col-md-1"><span class="pull-right">Totaal <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het bedrag dat in mindering wordt gebracht op de bestaande calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 					</tr>
 				</thead>
@@ -116,7 +116,7 @@ use \Calctool\Calculus\LessOverview;
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
-						<th class="col-md-1"><span class="pull-right">Materieel</span></th>
+						<th class="col-md-1"><span class="pull-right">Overig</span></th>
 						<th class="col-md-1"><span class="pull-right">Totaal <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is het bedrag dat in mindering wordt gebracht op de bestaande calculatie." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></span></th>
 					</tr>
 				</thead>

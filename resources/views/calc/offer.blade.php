@@ -461,7 +461,7 @@ $type = ProjectType::find($project->type_id);
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="display-specification" type="checkbox" disabled> Aanvullend specificeren op arbeid, materiaal en materieel
+								          <input name="display-specification" type="checkbox" disabled> Aanvullend specificeren op arbeid, materiaal en overig
 								        </label>
 								      </div>
 								    </div>
@@ -677,7 +677,7 @@ $type = ProjectType::find($project->type_id);
 
 						@if (!$project->tax_reverse)
 						<tr>
-							<td class="col-md-4">Materieelkosten</td>
+							<td class="col-md-4">Overige kosten</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -696,7 +696,7 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 						@else
 						<tr>
-							<td class="col-md-4">Materieelkosten</td>
+							<td class="col-md-4">Overige kosten</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -796,7 +796,7 @@ $type = ProjectType::find($project->type_id);
 
 						@if (!$project->tax_reverse)
 						<tr>
-							<td class="col-md-4">Materieelkosten</td>
+							<td class="col-md-4">Overige kosten</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -815,7 +815,7 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 						@else
 						<tr>
-							<td class="col-md-4">Materieelkosten</td>
+							<td class="col-md-4">Overige kosten</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -971,7 +971,7 @@ $type = ProjectType::find($project->type_id);
 
 						@if (!$project->tax_reverse)
 						<tr>
-							<td class="col-md-4">Materieelkosten</td>
+							<td class="col-md-4">Overige kosten</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax1Amount($project)+CalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -990,7 +990,7 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 						@else
 						<tr>
-							<td class="col-md-4">Materieelkosten</td>
+							<td class="col-md-4">Overige kosten</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax3Amount($project)+CalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
@@ -1226,7 +1226,7 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</th>
 							<th class="col-md-1"><span class="pull-right">Materiaal</th>
-							<th class="col-md-1"><span class="pull-right">Materieel</th>
+							<th class="col-md-1"><span class="pull-right">Overig</th>
 							<th class="col-md-1"><span class="pull-right">Totaal</th>
 							@if ($project->use_estimate)
 							<th class="col-md-1"><span>&nbsp;&nbsp;&nbsp;Stelpost</th>
@@ -1276,7 +1276,7 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</th>
 							<th class="col-md-1"><span class="pull-right">Materiaal</th>
-							<th class="col-md-1"><span class="pull-right">Materieel</th>
+							<th class="col-md-1"><span class="pull-right">Overig</th>
 							<th class="col-md-1"><span class="pull-right">Totaal</th>
 							@if ($project->use_estimate)
 							<th class="col-md-1"><span>&nbsp;&nbsp;&nbsp;Stelpost</th>
@@ -1326,7 +1326,7 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 							<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
-							<th class="col-md-1"><span class="pull-right">Materieel</span></th>
+							<th class="col-md-1"><span class="pull-right">Overig</span></th>
 							<th class="col-md-1"><span class="pull-right">Totaal</span></th>
 							<th class="col-md-1">&nbsp;</th>
 						</tr>
@@ -1358,7 +1358,7 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</th>
 							<th class="col-md-1"><span class="pull-right">Materiaal</th>
-							<th class="col-md-1"><span class="pull-right">Materieel</th>
+							<th class="col-md-1"><span class="pull-right">Overig</th>
 							<th class="col-md-1"><span class="pull-right">Totaal</th>
 							@if ($project->use_estimate)
 							<th class="col-md-1"><span>&nbsp;&nbsp;&nbsp;Stelpost</th>
@@ -1407,7 +1407,7 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 							<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
-							<th class="col-md-1"><span class="pull-right">Materieel</span></th>
+							<th class="col-md-1"><span class="pull-right">Overig</span></th>
 							<th class="col-md-1"><span class="pull-right">Totaal</span></th>
 							<th class="col-md-1">&nbsp;</th>
 						</tr>

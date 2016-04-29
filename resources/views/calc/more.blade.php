@@ -868,7 +868,7 @@ var n = this,
 												</table>
 
 												<div class="row">
-													<div class="col-md-2"><h4>Materieel</h4></div>
+													<div class="col-md-2"><h4>Overig</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
 													<div class="col-md-2">
 													@if ($project->tax_reverse)

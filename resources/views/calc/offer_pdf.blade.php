@@ -227,7 +227,7 @@ function invoice_condition($offer) {
 
 		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
-			<td class="qty">Materieelkosten</td>
+			<td class="qty">Overige kosten</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax1Amount($project)+CalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="qty">21%</td>
@@ -242,7 +242,7 @@ function invoice_condition($offer) {
 		  </tr>
 		  @else
 		  <tr style="page-break-after: always;">
-			<td class="qty">strong>Materieelkosten</strong></td>
+			<td class="qty">strong>Overige kosten</strong></td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax3Amount($project)+CalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 			<td class="qty">0%</td>
@@ -325,7 +325,7 @@ function invoice_condition($offer) {
 
 		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
-			<td class="qty">Materieelkosten</td>
+			<td class="qty">Overige kosten</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="qty">21%</td>
@@ -342,7 +342,7 @@ function invoice_condition($offer) {
 		  </tr>
 		  @else
 		  <tr style="page-break-after: always;">
-			<td class="qty">Materieelkosten</td>
+			<td class="qty">Overige kosten</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 			<td class="qty">0%</td>
@@ -433,7 +433,7 @@ function invoice_condition($offer) {
 
 		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
-			<td class="qty">Materieelkosten</td>
+			<td class="qty">Overige kosten</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="qty">21%</td>
@@ -450,7 +450,7 @@ function invoice_condition($offer) {
 		  </tr>
 		  @else
 		  <tr style="page-break-after: always;">
-			<td class="qty">Materieelkosten</td>
+			<td class="qty">Overige kosten</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 			<td class="qty">0%</td>
@@ -629,7 +629,7 @@ function invoice_condition($offer) {
 
 		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
-			<td class="qty"><strong>Materieelkosten</strong></td>
+			<td class="qty"><strong>Overige kosten</strong></td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="qty">21%</td>
@@ -646,7 +646,7 @@ function invoice_condition($offer) {
 		  </tr>
 		  @else
 		  <tr style="page-break-after: always;">
-			<td class="qty"><strong>Materieelkosten</strong></td>
+			<td class="qty"><strong>Overige kosten</strong></td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 			<td class="qty">0%</td>
@@ -738,7 +738,7 @@ function invoice_condition($offer) {
 
 		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
-			<td class="qty"><strong>Materieelkosten</strong></td>
+			<td class="qty"><strong>Overige kosten</strong></td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="qty">21%</td>
@@ -755,7 +755,7 @@ function invoice_condition($offer) {
 		  </tr>
 		  @else
 		  <tr style="page-break-after: always;">
-			<td class="qty"><strong>Materieelkosten</strong></td>
+			<td class="qty"><strong>Overige kosten</strong></td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 			<td class="qty">0%</td>
@@ -977,7 +977,7 @@ function invoice_condition($offer) {
 			<th style="width: 40px" class="qty">@if ($display_specification) Uren @endif</th>
 			<th style="width: 51px" class="qty">@if ($display_specification) Arbeid @endif</th>
 			<th style="width: 51px" class="qty">@if ($display_specification) Materiaal @endif</th>
-			<th style="width: 51px" class="qty">@if ($display_specification) Materieel @endif</th>
+			<th style="width: 51px" class="qty">@if ($display_specification) Overig @endif</th>
 			<th style="width: 51px" class="qty">Totaal</th>
 			@if ($project->use_estimate)
 			<th style="width: 51px" class="qty">Stelpost</th>
@@ -1041,7 +1041,7 @@ function invoice_condition($offer) {
 			<th style="width: 40px" class="qty">@if ($display_specification) Uren @endif</th>
 			<th style="width: 51px" class="qty">@if ($display_specification) Arbeid @endif</th>
 			<th style="width: 51px" class="qty">@if ($display_specification) Materiaal @endif</th>
-			<th style="width: 51px" class="qty">@if ($display_specification) Materieel @endif</th>
+			<th style="width: 51px" class="qty">@if ($display_specification) Overig @endif</th>
 			<th style="width: 51px" class="qty">@if ($display_specification)Totaal @endif</th>
 			<th style="width: 51px" class="qty">&nbsp;</th>
 		  </tr>
@@ -1083,7 +1083,7 @@ function invoice_condition($offer) {
 		  <th style="width: 40px" class="qty">@if ($display_specification) Uren @endif</th>
 		  <th style="width: 51px" class="qty">@if ($display_specification) Arbeid @endif</th>
 		  <th style="width: 51px" class="qty">@if ($display_specification) Materiaal @endif</th>
-		  <th style="width: 51px" class="qty">@if ($display_specification) Materieel @endif</th>
+		  <th style="width: 51px" class="qty">@if ($display_specification) Overig @endif</th>
 		  <th style="width: 51px" class="qty">Totaal</th>
 		  @if ($project->use_estimate)
 		  <th style="width: 51px" class="qty">Stelpost</th>
@@ -1137,7 +1137,7 @@ function invoice_condition($offer) {
 		  <th style="width: 40px" class="qty">@if ($display_specification) Uren @endif</th>
 		  <th style="width: 51px" class="qty">@if ($display_specification) Arbeid @endif</th>
 		  <th style="width: 51px" class="qty">@if ($display_specification) Materiaal @endif</th>
-		  <th style="width: 51px" class="qty">@if ($display_specification) Materieel @endif</th>
+		  <th style="width: 51px" class="qty">@if ($display_specification) Overig @endif</th>
 		  <th style="width: 51px" class="qty">Totaal</th>
 		  @if ($project->use_estimate)
 		  <th style="width: 51px" class="qty">Stelpost</th>
@@ -1191,7 +1191,7 @@ function invoice_condition($offer) {
 			<th style="width: 40px" class="qty"class="qty">@if ($display_specification) Uren @endif</th>
 			<th style="width: 51px" class="qty"class="qty">@if ($display_specification) Arbeid @endif</th>
 			<th style="width: 51px" class="qty"class="qty">@if ($display_specification) Materiaal @endif</th>
-			<th style="width: 51px" class="qty"class="qty">@if ($display_specification) Materieel @endif</th>
+			<th style="width: 51px" class="qty"class="qty">@if ($display_specification) Overig @endif</th>
 			<th style="width: 51px" class="qty"class="qty">Totaal</th>
 			<th style="width: 51px" class="qty"class="qty">&nbsp;</th>
 		  </tr>

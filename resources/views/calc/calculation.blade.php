@@ -1204,7 +1204,7 @@ var n = this,
 												</table>
 												
 												<div class="row">
-													<div class="col-md-2"><h4>Materieel</h4></div>
+													<div class="col-md-2"><h4>Overig</h4></div>
 													@if ($project->tax_reverse)
 													<div class="col-md-1 text-right label label-info"><strong>BTW 0%</strong></div>
 													<div class="col-md-2"></div>
@@ -1490,7 +1490,7 @@ var n = this,
 												</table>
 
 												<div class="row">
-													<div class="col-md-2"><h4>Materieel</h4></div>
+													<div class="col-md-2"><h4>Overig</h4></div>
 													@if ($project->tax_reverse)
 													<div class="col-md-1 text-right label label-info"><strong>BTW 0%</strong></div>
 													<div class="col-md-2"></div>

@@ -601,7 +601,7 @@ $type = ProjectType::find($project->type_id);
 								</div>
 							</div>
 
-							<h5><strong>Aanneming <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier uw winstpercentage op wat u over uw materiaal en materieel wilt gaan rekenen. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></strong></h5>
+							<h5><strong>Aanneming <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier uw winstpercentage op wat u over uw materiaal en overig wilt gaan rekenen. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></strong></h5>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_material_1">Winstpercentage materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
@@ -615,7 +615,7 @@ $type = ProjectType::find($project->type_id);
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage materieel</label></div>
+								<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage overig</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								@if ($type->type_name != 'regie')
 								<div class="col-md-2">
@@ -627,7 +627,7 @@ $type = ProjectType::find($project->type_id);
 								</div>
 							</div>
 
-							<h5><strong>Onderaanneming <a data-toggle="tooltip" data-placement="bottom" data-original-title="Onderaanneming: Geef hier uw winstpercentage op wat u over het materiaal en materieel van uw onderaanneming wilt gaan rekenen. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></strong></h5>
+							<h5><strong>Onderaanneming <a data-toggle="tooltip" data-placement="bottom" data-original-title="Onderaanneming: Geef hier uw winstpercentage op wat u over het materiaal en overig van uw onderaanneming wilt gaan rekenen. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></strong></h5>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_material_2">Winstpercentage materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
@@ -641,7 +641,7 @@ $type = ProjectType::find($project->type_id);
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage materieel</label></div>
+								<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage overig</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								@if ($type->type_name != 'regie')
 								<div class="col-md-2">
@@ -729,7 +729,7 @@ $type = ProjectType::find($project->type_id);
 											<tr>
 												<th class="col-md-1">Datum</th>
 												<th class="col-md-2">Relatie <a data-toggle="tooltip" data-placement="bottom" data-original-title="Kies hier uw relatie waar de inkoopfactuur betrekking op heeft. Staat uw relatie er nog niet bij, maak dan eerst een nieuwe relatie aan." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
-												<th class="col-md-2">Bedrag (Excl. BTW) <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier plaatst u alle facturen van uw project (facturen materiaal, materieel en onderaannemers). Deze worden gebruikt voor uw winst en verlies berekening." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+												<th class="col-md-2">Bedrag (Excl. BTW) <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier plaatst u alle facturen van uw project (facturen materiaal, overig en onderaannemers). Deze worden gebruikt voor uw winst en verlies berekening." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 
 												<th class="col-md-2">Soort <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier aan waar de inkoopfactuur betrekking op heeft." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 												<th class="col-md-4">Omschrijving</th>

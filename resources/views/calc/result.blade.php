@@ -193,7 +193,7 @@ $(document).ready(function() {
 
 								@if (!$project->tax_reverse)
 								<tr>
-									<td class="col-md-4">Materieelkosten</td>
+									<td class="col-md-4">Overige kosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -214,7 +214,7 @@ $(document).ready(function() {
 								</tr>
 								@else
 								<tr>
-									<td class="col-md-4">Materieelkosten</td>
+									<td class="col-md-4">Overige kosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -324,7 +324,7 @@ $(document).ready(function() {
 
 								@if (!$project->tax_reverse)
 								<tr>
-									<td class="col-md-4">Materieelkosten</td>
+									<td class="col-md-4">Overige kosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -345,7 +345,7 @@ $(document).ready(function() {
 								</tr>
 								@else
 								<tr>
-									<td class="col-md-4">Materieelkosten</td>
+									<td class="col-md-4">Overige kosten</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 									<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>

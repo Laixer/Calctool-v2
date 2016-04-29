@@ -84,7 +84,7 @@ $type = ProjectType::find($project->type_id);
 
 		@if (!$project->tax_reverse)
 		<tr>
-			<td class="col-md-4">Materieelkosten</td>
+			<td class="col-md-4">Overige kosten</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -103,7 +103,7 @@ $type = ProjectType::find($project->type_id);
 		</tr>
 		@else
 		<tr>
-			<td class="col-md-4">Materieelkosten</td>
+			<td class="col-md-4">Overige kosten</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -204,7 +204,7 @@ $type = ProjectType::find($project->type_id);
 
 		@if (!$project->tax_reverse)
 		<tr>
-			<td class="col-md-4">Materieelkosten</td>
+			<td class="col-md-4">Overige kosten</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -223,7 +223,7 @@ $type = ProjectType::find($project->type_id);
 		</tr>
 		@else
 		<tr>
-			<td class="col-md-4">Materieelkosten</td>
+			<td class="col-md-4">Overige kosten</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>

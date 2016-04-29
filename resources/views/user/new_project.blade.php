@@ -233,7 +233,7 @@ $(document).ready(function() {
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage materieel</label></div>
+								<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage overig</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2 hide-regie2">
 									<input name="profit_equipment_1" id="profit_equipment_1" type="text" min="0" max="200" maxlength="3" value="{{ Input::old('profit_equipment_1') ? Input::old('profit_equipment_1') : Auth::user()->pref_profit_calc_contr_equip }}" class="form-control-sm-number"/>
@@ -254,7 +254,7 @@ $(document).ready(function() {
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage materieel</label></div>
+								<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage overig</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								<div class="col-md-2 hide-regie2">
 									<input name="profit_equipment_2" id="profit_equipment_2" type="text" min="0" max="200" maxlength="3" value="{{ Input::old('profit_equipment_2') ? Input::old('profit_equipment_2') : Auth::user()->pref_profit_calc_subcontr_equip }}" class="form-control-sm-number"/>
