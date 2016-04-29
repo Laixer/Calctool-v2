@@ -109,6 +109,10 @@ class QuickstartController extends Controller {
 
 		curl_close($curl);
 
+		if (empty($data)) {
+			return;
+		}
+
 		if (count($data->_embedded->addresses) == 1) {
 			$address['postcode'] = $data->_embedded->addresses[0]->postcode;
 			$address['street'] = $data->_embedded->addresses[0]->street;

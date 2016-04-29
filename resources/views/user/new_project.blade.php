@@ -105,7 +105,7 @@ $(document).ready(function() {
 					</div>
 					<div class="col-md-2">
 						<div class="form-group">
-							<label for="type">Type</label>
+							<label for="type">Soort project</label>
 							<select name="type" id="type" class="form-control pointer">
 								@foreach (Calctool\Models\ProjectType::all() as $type)
 									<option {{ $type->type_name=='calculatie' ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
