@@ -110,7 +110,7 @@ class RelationController extends Controller {
 			'company_type' => array('required_if:relationkind,zakelijk','numeric'),
 			'company_name' => array('required_if:relationkind,zakelijk','max:50'),
 			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
-			'street' => array('required','regex:/^[A-Za-z0-9\s]*$/','max:60'),
+			'street' => array('required','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
 			'city' => array('required','alpha_num','max:35'),

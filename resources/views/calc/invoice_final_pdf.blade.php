@@ -110,7 +110,7 @@ if ($cnt>1)
     <?#--TOTAL START--?>
 
     <h1 class="name">Specificatie factuur</h1>
-    @if($type->type_name == 'blanco offerte & factuur')
+    @if($type->type_name == 'snelle offerte en factuur')
     <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">

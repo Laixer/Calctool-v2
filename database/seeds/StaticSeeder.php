@@ -468,7 +468,7 @@ class StaticSeeder extends Seeder {
 
 		$ProjectType1 = ProjectType::create(array('type_name' => 'regie'));
 		$ProjectType2 = ProjectType::create(array('type_name' => 'calculatie'));
-		$ProjectType3 = ProjectType::create(array('type_name' => 'blanco offerte & factuur'));
+		$ProjectType3 = ProjectType::create(array('type_name' => 'snelle offerte en factuur'));
 		$this->command->info('ProjectType created');
 
 		$Part1 = Part::create(array('part_name' => 'contracting'));

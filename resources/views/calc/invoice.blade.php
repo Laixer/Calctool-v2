@@ -372,7 +372,7 @@ $type = ProjectType::find($project->type_id);
 						      </div>
 						    </div>
 						  </div>
-						  @if($type->type_name != 'blanco offerte & factuur')
+						  @if($type->type_name != 'snelle offerte en factuur')
 						   <div class="form-group">
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
@@ -815,7 +815,7 @@ $type = ProjectType::find($project->type_id);
 		<?#--CONTENT, TOTAL START--?>
 		<div class="show-totals">
 			<h4 class="only-total">Specificatie factuur</h4>
-			@if($type->type_name != 'blanco offerte & factuur')
+			@if($type->type_name != 'snelle offerte en factuur')
 			<table class="table table-striped hide-btw1">
 				<thead>
 					<tr>

@@ -135,7 +135,7 @@ function invoice_condition($offer) {
 @if (!$only_totals)
 	  <h1 class="name">Specificatie offerte</h1>
 	  <hr>
-	  @if($type->type_name == 'blanco offerte & factuur')
+	  @if($type->type_name == 'snelle offerte en factuur')
 	  <table border="0" cellspacing="0" cellpadding="0">
 		<thead>
 		  <tr style="page-break-after: always;">
