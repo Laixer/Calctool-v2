@@ -113,7 +113,7 @@ $(document).ready(function() {
 							</select>
 						</div>
 					</div>
-					<div class="col-md-3 hide-regie hide-regie2">
+					<div class="col-md-3 hide-regie">
 						<label for="type">BTW verlegd</label>
 						<div class="form-group">
 							<input name="tax_reverse" type="checkbox">
