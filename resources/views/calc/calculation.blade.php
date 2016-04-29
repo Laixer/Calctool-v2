@@ -1597,18 +1597,18 @@ var n = this,
 						</div>
 
 						<form method="POST" action="/calculation/newchapter/{{ $project->id }}" accept-charset="UTF-8">
-                           {!! csrf_field() !!}
-						<div><hr></div>
-						<div class="row">
-							<div class="col-md-6">
-								<div class="input-group">
-									<input type="text" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw Onderdeel">
-									<span class="input-group-btn">
-										<button class="btn btn-primary btn-primary-chapter">Voeg toe</button>
-									</span>
+						{!! csrf_field() !!}
+							<div><hr></div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="input-group">
+										<input type="text" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw Onderdeel">
+										<span class="input-group-btn">
+											<button class="btn btn-primary btn-primary-chapter">Voeg toe</button>
+										</span>
+									</div>
 								</div>
 							</div>
-						</div>
 						</form>
 					</div>
 					@endif
