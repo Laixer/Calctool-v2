@@ -316,7 +316,7 @@ $type = ProjectType::find($project->type_id);
 						<li id="tab-project">
 							<a href="#project" data-toggle="tab">Projectgegevens</a>
 						</li>
-						@if ($type->type_name != 'blanco offerte & factuur')
+						@if ($type->type_name != 'snelle offerte en factuur')
 						<li id="tab-calc">
 							<a href="#calc" data-toggle="tab">Uurtarief & Winstpercentages</a>
 						</li>
@@ -575,7 +575,7 @@ $type = ProjectType::find($project->type_id);
 								</form>
 							</div>
 
-						@if ($type->type_name != 'blanco offerte & factuur')
+						@if ($type->type_name != 'snelle offerte en factuur')
 						<div id="calc" class="tab-pane">
 						<form method="post" action="/project/updatecalc">
                         {!! csrf_field() !!}

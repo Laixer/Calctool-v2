@@ -4,7 +4,7 @@ use \Calctool\Models\ProjectType;
 use \Calctool\Models\Offer;
 
 $type = ProjectType::find($project->type_id);
-if ($type->type_name == 'blanco offerte & factuur') {
+if ($type->type_name == 'snelle offerte en factuur') {
 $show_all = false;
 $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 if ($offer_last && $offer_last->offer_finish)
