@@ -997,7 +997,8 @@ var n = this,
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="demoModal" tabindex="-1" role="dialog" aria-labelledby="DemoModalLabel" aria-hidden="true">
+<!-- start demo filmpje -->
+<!-- <div class="modal fade" id="demoModal" tabindex="-1" role="dialog" aria-labelledby="DemoModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 			<div class="modal-body">
 			  <video id="calculatie_demo" class="video-js vjs-sublime-skin" controls preload="none" width="960" height="540" poster="/images/video_leader.png" data-setup="{}">
@@ -1005,16 +1006,19 @@ var n = this,
 			  </video>
 			</div>
 	</div>
-</div>
+</div> -->
+<!-- eind demo filmpje -->
 <div id="wrapper">
 
 	<section class="container fix-footer-bottom">
 
 		@include('calc.wizard', array('page' => 'calculation'))
 
-			<div class="pull-right">
+			<!-- start aanroepen demo filmpje -->
+			<!-- <div class="pull-right">
 				<h2><a href="javascript:void(0);" data-toggle="modal" data-target="#demoModal"><span class="glyphicon glyphicon-expand" aria-hidden="true"></span></a></h2>
-			</div>
+			</div> -->
+			<!-- eind aanroepen demo filmpje -->
 
 			<h2><strong>Calculeren</strong></h2>
 
