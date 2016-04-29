@@ -60,7 +60,6 @@ class BlancController extends Controller {
 		$this->validate($request, [
 			'name' => array('required','max:100'),
 			'rate' => array('required','max:10'),
-			// 'tax' => array('required','max:10'),
 			'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 		]);
 
@@ -114,20 +113,20 @@ class BlancController extends Controller {
 			'id' => array('required','integer','min:0'),
 		]);
 
-			$rec = CalculationMaterial::find($request->input('id'));
-			if (!$rec)
-				return json_encode(['success' => 0]);
-			$activity = Activity::find($rec->activity_id);
-			if (!$activity)
-				return json_encode(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
-			}
+		$rec = CalculationMaterial::find($request->input('id'));
+		if (!$rec)
+			return json_encode(['success' => 0]);
+		$activity = Activity::find($rec->activity_id);
+		if (!$activity)
+			return json_encode(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
 
-			$rec->delete();
+		$rec->delete();
 
-			return json_encode(['success' => 1]);
+		return json_encode(['success' => 1]);
 	}
 
 	public function doDeleteCalculationEquipment(Request $request)
@@ -136,20 +135,20 @@ class BlancController extends Controller {
 			'id' => array('required','integer','min:0'),
 		]);
 
-			$rec = CalculationEquipment::find($request->input('id'));
-			if (!$rec)
-				return json_encode(['success' => 0]);
-			$activity = Activity::find($rec->activity_id);
-			if (!$activity)
-				return json_encode(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
-			}
+		$rec = CalculationEquipment::find($request->input('id'));
+		if (!$rec)
+			return json_encode(['success' => 0]);
+		$activity = Activity::find($rec->activity_id);
+		if (!$activity)
+			return json_encode(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
 
-			$rec->delete();
+		$rec->delete();
 
-			return json_encode(['success' => 1]);
+		return json_encode(['success' => 1]);
 	}
 
 	public function doUpdateRow(Request $request)
@@ -158,11 +157,11 @@ class BlancController extends Controller {
 			'id' => array('integer','min:0'),
 			'name' => array('max:100'),
 			'rate' => array('max:10'),
-			'tax' => array('required','max:10'),
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
 		]);
 
-		if (!Project::find($request->input('project'))->isOwner()) {
+		$project = Project::find($request->input('project'));
+		if (!$project->isOwner()) {
 			return json_encode(['success' => 0]);
 		}
 
@@ -173,8 +172,14 @@ class BlancController extends Controller {
 			return json_encode(['success' => 0]);
 		}
 
+		if ($project->tax_reverse) {
+			$tax_id = 1;
+		} else {
+			$tax_id = $request->get('tax');
+		}
+
 		$row->description = $request->get('name');
-		$row->tax_id = $request->get('tax');
+		$row->tax_id = $tax_id;
 		$row->rate = str_replace(',', '.', str_replace('.', '' , $request->get('rate')));
 		$row->amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
 
