@@ -1,6 +1,7 @@
 <?php
 
 use \Calctool\Models\Contact;
+use \Calctool\Models\Project;
 
 ?>
 
@@ -41,6 +42,8 @@ $(document).ready(function() {
 <div id="wrapper">
 
 	<section class="container">
+
+		@include('calc.wizard', array('page' => 'calculation'))
 
 		<div class="col-md-12">
 

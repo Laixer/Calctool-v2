@@ -83,6 +83,11 @@ class ValidationProjectTemplate {
 		$project->profit_more_contr_equip 		= 15;
 		$project->profit_more_subcontr_mat 		= 16;
 		$project->profit_more_subcontr_equip	= 17;
+
+		$project->use_estimate	= 'Y';
+		$project->use_more	= 'N';
+		$project->use_less	= 'Y';
+		
 		$project->save();
 
 		$contact = new Contact;
