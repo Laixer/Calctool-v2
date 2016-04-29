@@ -65,7 +65,7 @@ class RelationController extends Controller {
 			'street' => array('required','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
-			'city' => array('required','alpha_num','max:35'),
+			'city' => array('required','max:35'),
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric')
 		]);
@@ -113,7 +113,7 @@ class RelationController extends Controller {
 			'street' => array('required','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
-			'city' => array('required','alpha_num','max:35'),
+			'city' => array('required','max:35'),
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric')
 		]);
@@ -231,11 +231,10 @@ class RelationController extends Controller {
 			'telephone_comp' => array('alpha_num','max:12'),
 			'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
 			/* Adress */
-			// 'street' => array('required','regex:/^[A-Za-z0-9\s]*$/','max:60'),
-			'street' => array('required','alpha_num','max:60'),
+			'street' => array('required','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
-			'city' => array('required','alpha_num','max:35'),
+			'city' => array('required','max:35'),
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric'),
 		]);
@@ -289,10 +288,10 @@ class RelationController extends Controller {
 			'email' => array('required','email','max:80'),
 			'contactfunction' => array('required','numeric'),
 			/* Adress */
-			'street' => array('required','regex:/^[A-Za-z0-9\s]*$/','max:60'),
+			'street' => array('required','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
-			'city' => array('required','alpha_num','max:35'),
+			'city' => array('required','max:35'),
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric'),
 		);
@@ -366,7 +365,6 @@ class RelationController extends Controller {
 		$this->validate($request, [
 			'id' => array('required','integer'),
 			'contact_name' => array('required','max:50'),
-			// 'contact_firstname' => array('required','max:30'),
 			'email' => array('required','email','max:80'),
 		]);
 
@@ -405,36 +403,33 @@ class RelationController extends Controller {
 			/* Contact */
 			'id' => array('required','integer'),
 			'contact_name' => array('required','max:50'),
-			// 'contact_firstname' => array('required','max:30'),
-			//'mobile' => array('alpha_num','max:14'),
-			//'telephone' => array('alpha_num','max:14'),
 			'email' => array('required','email','max:80'),
 			'contactfunction' => array('required','numeric'),
 		]);
 
-			$relation = Relation::find($request->input('id'));
-			if (!$relation || !$relation->isOwner()) {
-				return Redirect::back()->withInput($request->all());
-			}
+		$relation = Relation::find($request->input('id'));
+		if (!$relation || !$relation->isOwner()) {
+			return Redirect::back()->withInput($request->all());
+		}
 
-			$contact = new Contact;
-			$contact->firstname = $request->input('contact_firstname');
-			$contact->lastname = $request->input('contact_name');
-			$contact->mobile = $request->input('mobile');
-			$contact->phone = $request->input('telephone');
-			$contact->email = $request->input('email');
-			$contact->note = $request->input('note');
-			$contact->relation_id = $relation->id;
-			$contact->function_id = $request->input('contactfunction');
-			if ($request->input('gender') == '-1') {
-				$contact->gender = NULL;
-			} else {
-				$contact->gender = $request->input('gender');
-			}
+		$contact = new Contact;
+		$contact->firstname = $request->input('contact_firstname');
+		$contact->lastname = $request->input('contact_name');
+		$contact->mobile = $request->input('mobile');
+		$contact->phone = $request->input('telephone');
+		$contact->email = $request->input('email');
+		$contact->note = $request->input('note');
+		$contact->relation_id = $relation->id;
+		$contact->function_id = $request->input('contactfunction');
+		if ($request->input('gender') == '-1') {
+			$contact->gender = NULL;
+		} else {
+			$contact->gender = $request->input('gender');
+		}
 
-			$contact->save();
+		$contact->save();
 
-			return redirect('/mycompany')->with('success', 'Nieuw contact aangemaakt');
+		return redirect('/mycompany')->with('success', 'Nieuw contact aangemaakt');
 	}
 
 	public function doDeleteContact()
@@ -478,39 +473,39 @@ class RelationController extends Controller {
 			'image' => array('required', 'mimes:jpeg,bmp,png,gif'),
 		]);
 
-			if ($request->hasFile('image')) {
-				$file = $request->file('image');
-				Storage::put(Auth::user()->encodedName() . '/user_logo.' . $file->getClientOriginalExtension(), file_get_contents($file->getRealPath()));
-				$newname = Auth::id().'-'.md5(mt_rand()).'.'.$file->getClientOriginalExtension();
-				$file->move('user-content', $newname);
+		if ($request->hasFile('image')) {
+			$file = $request->file('image');
+			Storage::put(Auth::user()->encodedName() . '/user_logo.' . $file->getClientOriginalExtension(), file_get_contents($file->getRealPath()));
+			$newname = Auth::id().'-'.md5(mt_rand()).'.'.$file->getClientOriginalExtension();
+			$file->move('user-content', $newname);
 
-				$image = Image::make('user-content/' . $newname)->resize(350, 100)->save();
+			$image = Image::make('user-content/' . $newname)->resize(350, 100)->save();
 
-				$resource = new Resource;
-				$resource->resource_name = $newname;
-				$resource->file_location = 'user-content/' . $newname;
-				$resource->file_size = $image->filesize();
-				$resource->user_id = Auth::id();
-				$resource->description = 'Relatielogo';
+			$resource = new Resource;
+			$resource->resource_name = $newname;
+			$resource->file_location = 'user-content/' . $newname;
+			$resource->file_size = $image->filesize();
+			$resource->user_id = Auth::id();
+			$resource->description = 'Relatielogo';
 
-				$resource->save();
+			$resource->save();
 
-				$relation = Relation::find($request->input('id'));
-				if (!$relation || !$relation->isOwner()) {
-					return back()->withInput($request->all());
-				}
-				$relation->logo_id = $resource->id;
-
-				$relation->save();
-
-				return back()->with('success', 'Uw logo is geupload');
-			} else {
-
-				$messages->add('file', 'Geen afbeelding geupload');
-
-				// redirect our user back to the form with the errors from the validator
-				return back()->withErrors($messages);
+			$relation = Relation::find($request->input('id'));
+			if (!$relation || !$relation->isOwner()) {
+				return back()->withInput($request->all());
 			}
+			$relation->logo_id = $resource->id;
+
+			$relation->save();
+
+			return back()->with('success', 'Uw logo is geupload');
+		} else {
+
+			$messages->add('file', 'Geen afbeelding geupload');
+
+			// redirect our user back to the form with the errors from the validator
+			return back()->withErrors($messages);
+		}
 
 	}
 
@@ -550,11 +545,12 @@ class RelationController extends Controller {
 
 		// return vcard as a download
 		return $vcard->download();
-return \Response::make(
-    $vcard->getOutput(),
-    200,
-    $vcard->getHeaders(true)
-);
+
+		//return \Response::make(
+		//    $vcard->getOutput(),
+		//    200,
+		//    $vcard->getHeaders(true)
+		//);
 
 
 	}

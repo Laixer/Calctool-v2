@@ -178,7 +178,7 @@ class ProjectController extends Controller {
 			'street' => array('required','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
-			'city' => array('required','alpha_num','max:35'),
+			'city' => array('required','max:35'),
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric'),
 		]);
