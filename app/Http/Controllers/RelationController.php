@@ -65,7 +65,7 @@ class RelationController extends Controller {
 			'street' => array('required','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
-			'city' => array('required','alpha_num','max:35'),
+			'city' => array('required','max:35'),
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric')
 		]);
@@ -113,7 +113,7 @@ class RelationController extends Controller {
 			'street' => array('required','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
-			'city' => array('required','alpha_num','max:35'),
+			'city' => array('required','max:35'),
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric')
 		]);
@@ -235,7 +235,7 @@ class RelationController extends Controller {
 			'street' => array('required','alpha_num','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
-			'city' => array('required','alpha_num','max:35'),
+			'city' => array('required','max:35'),
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric'),
 		]);
@@ -292,7 +292,7 @@ class RelationController extends Controller {
 			'street' => array('required','regex:/^[A-Za-z0-9\s]*$/','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
-			'city' => array('required','alpha_num','max:35'),
+			'city' => array('required','max:35'),
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric'),
 		);
