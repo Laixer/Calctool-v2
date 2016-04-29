@@ -26,9 +26,9 @@ $(document).ready(function() {
     $("[name='use_more']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
     $("[name='use_less']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
     $('#type').change(function(){
-		if (this.value==1) {
+		if (this.value==1) { // regie
     		$('.hide-regie2').hide();
-    	}else if (this.value==3) {
+    	}else if (this.value==3) { // blanco 
     		$('.hide-regie').hide();
     	} else {
     		$('.hide-regie').show();
@@ -113,25 +113,25 @@ $(document).ready(function() {
 							</select>
 						</div>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-3 hide-regie hide-regie2">
 						<label for="type">BTW verlegd</label>
 						<div class="form-group">
 							<input name="tax_reverse" type="checkbox">
 						</div>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-3 hide-regie hide-regie2">
 						<label for="type">Stelposten</label>
 						<div class="form-group">
 							<input name="use_estimate" type="checkbox">
 						</div>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-3 hide-regie hide-regie2">
 						<label for="type">Meerwerk</label>
 						<div class="form-group">
 							<input name="use_more" type="checkbox">
 						</div>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-3 hide-regie hide-regie2">
 						<label for="type">Minderwerk</label>
 						<div class="form-group">
 							<input name="use_less" type="checkbox">
