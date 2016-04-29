@@ -80,8 +80,9 @@ if (!$project || !$project->isOwner()) {
 					</tr>
 				</thead>
 				<tbody>
-					<?php $i = Offer::where('project_id', '=', $project->id)->count(); ?>
+					<?php $i = 0; ?>
 					@foreach(Offer::where('project_id', '=', $project->id)->orderBy('created_at')->get() as $offer)
+					<?php $i++; ?>
 					<tr>
 						<td class="col-md-2"><a href="/offer/project-{{ $project->id }}/offer-{{ $offer->id }}">{{ $offer->offer_code }}</a></td>
 						<td class="col-md-2"><?php echo date('d-m-Y', strtotime($offer->offer_make)); ?></td>
@@ -89,7 +90,6 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-3">{{ '&euro; '.number_format($offer->offer_total, 2, ",",".") }}</td>
 						<td class="col-md-3"><a href="/res-{{ ($offer_last->resource_id) }}/download" class="btn btn-primary btn-xs"><i class="fa fa-cloud-download fa-fw"></i> Downloaden</a></td>
 					</tr>
-					<?php $i--; ?>
 					@endforeach
 				</tbody>
 			</table>
