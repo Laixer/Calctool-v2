@@ -3,6 +3,25 @@
 use \Calctool\Models\ProjectType;
 use \Calctool\Models\Offer;
 
+if (empty($project)) {
+?>
+
+<div class="wizard">
+	<a href="/"> Dashboard</a>
+	<a href="/project/new" class="current">Project</a>
+	<span>Project</span>
+	<span>Calculeren</span>
+	<span>Offerte</span>
+	<span>Stelposten stellen</span>
+	<span>Minderwerk</span>
+	<span>Meerwerk</span>
+	<span>Factuur</span>
+	<span>Resultaat</span>
+</div>
+
+<?php
+} else {
+
 $type = ProjectType::find($project->type_id);
 if ($type->type_name == 'snelle offerte en factuur') {
 $show_all = false;
@@ -76,4 +95,4 @@ if ($offer_last && $offer_last->offer_finish)
 	@endif
 </div>
 
-<?php } ?>
+<?php } } ?>

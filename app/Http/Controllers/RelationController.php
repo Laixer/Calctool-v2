@@ -540,18 +540,7 @@ class RelationController extends Controller {
 			$vcard->addPhoneNumber($relation->phone, 'WORK');
 		if ($relation->mobile)
 			$vcard->addPhoneNumber($relation->mobile, 'WORK');
-		//$vcard->addAddress(null, null, 'street', 'worktown', null, 'workpostcode', 'Belgium');
-		//$vcard->addURL('http://www.jeroendesloovere.be');
 
-		// return vcard as a download
 		return $vcard->download();
-
-		//return \Response::make(
-		//    $vcard->getOutput(),
-		//    200,
-		//    $vcard->getHeaders(true)
-		//);
-
-
 	}
 }
