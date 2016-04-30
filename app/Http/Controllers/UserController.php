@@ -107,7 +107,7 @@ class UserController extends Controller {
 		}
 
 		$mollie = new \Mollie_API_Client;
-		$mollie->setApiKey(env('MOLLIE_API'));
+		$mollie->setApiKey(config('services.mollie.key'));
 
 		$token = sha1(mt_rand().time());
 
@@ -152,7 +152,7 @@ class UserController extends Controller {
 		}
 
 		$mollie = new \Mollie_API_Client;
-		$mollie->setApiKey(env('MOLLIE_API'));
+		$mollie->setApiKey(config('services.mollie.key'));
 
 		$payment = $mollie->payments->get($order->transaction);
 		if ($payment->metadata->token != $order->token)
@@ -219,7 +219,7 @@ class UserController extends Controller {
 		}
 
 		$mollie = new \Mollie_API_Client;
-		$mollie->setApiKey(env('MOLLIE_API'));
+		$mollie->setApiKey(config('services.mollie.key'));
 
 		$payment = $mollie->payments->get($order->transaction);
 		if ($payment->isPaid()) {
