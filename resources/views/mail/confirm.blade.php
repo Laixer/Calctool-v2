@@ -81,7 +81,7 @@
 															Met vriendelijke groet,
 														<br>
 														<br>
-															<strong>Cal</strong>, van <a href="{{ URL::to('/') }}"><strong>CalculatieTool</strong></a>
+															<strong>Cal</strong>, van <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
 														<br>
 														<br>
 													</td>
