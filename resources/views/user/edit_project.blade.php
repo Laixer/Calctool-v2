@@ -670,7 +670,7 @@ $type = ProjectType::find($project->type_id);
 									<div class="white-row">
 										<h5><strong for="type">BTW verlegd</strong></h5>
 										<div class="form-group">
-											<input name="tax_reverse" type="checkbox" {{ $project->tax_reverse ? 'checked' : '' }}>
+											<input name="tax_reverse" {{ ($offer_last ? 'disabled' : '') }} type="checkbox" {{ $project->tax_reverse ? 'checked' : '' }}>
 										</div>
 										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
 									</div>
@@ -680,17 +680,17 @@ $type = ProjectType::find($project->type_id);
 									<div class="white-row">
 										<h5><strong for="type">Stelposten</strong></h5>
 										<div class="form-group">
-											<input name="use_estimate" type="checkbox" {{ $project->use_estimate ? 'checked' : '' }}>
+											<input name="use_estimate" {{ ($offer_last ? 'disabled' : '') }} type="checkbox" {{ $project->use_estimate ? 'checked' : '' }}>
 										</div>
 										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
 									</div>
 								</div>
-
+								<?php $offer_last ? $invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first() : $invoice_end = null; ?>
 								<div class="col-md-4">
 									<div class="white-row">
 										<h5><strong for="type">Meerwerk</strong></h5>
 										<div class="form-group">
-											<input name="use_more" type="checkbox" {{ $project->use_more ? 'checked' : '' }}>
+											<input name="use_more" type="checkbox" {{ ($invoice_end ? 'disabled' : '') }} {{ $project->use_more ? 'checked' : '' }}>
 										</div>
 										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
 									</div>
@@ -701,7 +701,7 @@ $type = ProjectType::find($project->type_id);
 									<div class="white-row">
 										<h5><strong for="type">Minderwerk</strong></h5>
 										<div class="form-group">
-											<input name="use_less" type="checkbox" {{ $project->use_less ? 'checked' : '' }}>
+											<input name="use_less" type="checkbox" {{ ($invoice_end ? 'disabled' : '') }} {{ $project->use_less ? 'checked' : '' }}>
 										</div>
 										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
 									</div>
@@ -726,128 +726,6 @@ $type = ProjectType::find($project->type_id);
 							</form>
 						</div>
 
-						<div id="hour" class="tab-pane">
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th class="col-md-1">Datum</th>
-										<th class="col-md-1">Uren</th>
-										<th class="col-md-3">Soort <a data-toggle="tooltip" data-placement="bottom" data-original-title="Het is niet mogelijk een urenregistratie bij te houden van onderaanneming." href="#"><i class="fa fa-info-circle"></i></a></th>
-										<th class="col-md-1">Werkzaamheid</th>
-										<th class="col-md-3">Omschrijving</th>
-										<th class="col-md-1">&nbsp;</th>
-										<th class="col-md-1">&nbsp;</th>
-										<th class="col-md-1">&nbsp;</th>
-										<th class="col-md-1">&nbsp;</th>
-									</tr>
-								</thead>
-
-								<tbody>
-									@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-									@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
-									@foreach (Timesheet::where('activity_id','=', $activity->id)->orderBy('register_date','desc')->get() as $timesheet)
-									<tr data-id="{{ $timesheet->id }}">
-										<td class="col-md-1">{{ date('d-m-Y', strtotime($timesheet->register_date)) }}</td>
-										<td class="col-md-1">{{ number_format($timesheet->register_hour, 2,",",".") }}</td>
-										<td class="col-md-3">{{ ucwords(\Calctool\Models\TimesheetKind::find($timesheet->timesheet_kind_id)->kind_name) }}</td>
-										<td class="col-md-3">{{ $activity->activity_name }}</td>
-										<td class="col-md-1">{{ $timesheet->note }}</td>
-										<td class="col-md-1">&nbsp;</td>
-										<td class="col-md-1">&nbsp;</td>
-										<td class="col-md-1">@if (!$project->project_close)<button class="btn btn-danger btn-xs fa fa-times deleterow"></button>@endif</td>
-									</tr>
-									@endforeach
-									@endforeach
-									@endforeach
-									@if (!$project->project_close)
-									<tr>
-										<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text"/></td>
-										<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
-										<td class="col-md-2">
-											<select name="typename" id="typename" class="form-control-sm-text">
-												<option selected="selected" >Selecteer</option>
-												@foreach (TimesheetKind::all() as $typename)
-												<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
-												@endforeach
-											</select>
-										</td>
-										<td class="col-md-4">
-											<select disabled="disabled" name="activity" id="activity" class="form-control-sm-text"></select>
-										</td>
-										<td class="col-md-1"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
-										<td class="col-md-1">&nbsp;</td>
-										<td class="col-md-1">&nbsp;</td>
-										<td class="col-md-1"><button id="addnew" class="btn btn-primary btn-xs"> Toevoegen</button></td>
-									</tr>
-									@endif
-								</tbody>
-							</table>
-						</div>
-
-						<div id="purchase" class="tab-pane">
-
-							<!--<div class="toggle">
-								<label>Deze week</label>
-								<div class="toggle-content">-->
-									<table class="table table-striped">
-										<thead>
-											<tr>
-												<th class="col-md-1">Datum</th>
-												<th class="col-md-2">Relatie <a data-toggle="tooltip" data-placement="bottom" data-original-title="Kies hier uw relatie waar de inkoopfactuur betrekking op heeft. Staat uw relatie er nog niet bij, maak dan eerst een nieuwe relatie aan." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
-												<th class="col-md-2">Bedrag (Excl. BTW) <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier plaatst u alle facturen van uw project (facturen materiaal, overig en onderaannemers). Deze worden gebruikt voor uw winst en verlies berekening." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
-
-												<th class="col-md-2">Soort <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier aan waar de inkoopfactuur betrekking op heeft." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
-												<th class="col-md-4">Omschrijving</th>
-												<th class="col-md-1">&nbsp;</th>
-											</tr>
-										</thead>
-
-										<tbody>
-											@foreach (Purchase::where('project_id','=', $project->id)->get() as $purchase)
-											<tr data-id="{{ $purchase->id }}">
-												<td class="col-md-1">{{ date('d-m-Y', strtotime($purchase->register_date)) }}</td>
-												<td class="col-md-2">{{ $purchase->relation_id ? Relation::find($purchase->relation_id)->company_name : Wholesale::find($purchase->wholesale_id)->company_name }}</td>
-												<td class="col-md-1">{{ '&euro; '.number_format($purchase->amount, 2,",",".") }}</td>
-												<td class="col-md-2">{{ ucwords(PurchaseKind::find($purchase->kind_id)->kind_name) }}</td>
-												<td class="col-md-4">{{ $purchase->note }}</td>
-												<td class="col-md-1">@if (!$project->project_close)<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>@endif</td>
-											</tr>
-											@endforeach
-											@if (!$project->project_close)
-											<tr>
-												<td class="col-md-1">
-													<input type="date" name="date" id="date" class="form-control-sm-text"/>
-												</td>
-												<td class="col-md-2">
-													<select name="relation" id="relation" class="form-control-sm-text">
-													@foreach (Relation::where('user_id','=', Auth::id())->where('active',true)->get() as $relation)
-														<option value="rel-{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
-													@endforeach
-													@foreach (Wholesale::where('user_id','=', Auth::id())->where('active',true)->get() as $wholesale)
-														<option value="whl-{{ $wholesale->id }}">{{ ucwords($wholesale->company_name) }}</option>
-													@endforeach
-													@foreach (Wholesale::whereNull('user_id')->get() as $wholesale)
-														<option value="whl-{{ $wholesale->id }}">{{ ucwords($wholesale->company_name) }}</option>
-													@endforeach
-													</select>
-												</td>
-												<td class="col-md-2"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
-												<td class="col-md-2">
-													<select name="typename" id="typename" class="form-control-sm-text">
-													@foreach (PurchaseKind::all() as $typename)
-														<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
-													@endforeach
-													</select>
-												</td>
-												<td class="col-md-4"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
-												<td class="col-md-1"><button id="addnewpurchase" class="btn btn-primary btn-xs"> Toevoegen</button></td>
-											</tr>
-											@endif
-										</tbody>
-									</table>
-								<!--</div>
-							</div>-->
-						</div>
 						<div id="communication" class="tab-pane">
 							<div class="form-group">
 								<div class="col-md-9">
