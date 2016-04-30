@@ -51,7 +51,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Het wachtwoord van je account voor de <strong>Calculatie Tool</strong> is aangepast.
+														Het wachtwoord van je account voor de <strong>CalculatieTool.com</strong> is aangepast.
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->
@@ -63,7 +63,7 @@
 															Met vriendelijke groet,
 														<br>
 														<br>
-															<strong>Cal</strong>, van <a href="{{ URL::to('/') }}"><strong>CalculatieTool</strong></a>
+															<strong>Cal</strong>, van <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
 														<br>
 														<br>
 													</td>
