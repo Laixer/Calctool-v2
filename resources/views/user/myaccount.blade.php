@@ -182,6 +182,7 @@ $(document).ready(function() {
 							<form method="POST" action="/myaccount/updateuser" accept-charset="UTF-8">
 							{!! csrf_field() !!}
 
+							<div data-intro="Stap 1: Voor een juiste werking van de CalculatieTool.com moeten er eerst een aantal gegevens van je bedrijf bekend zijn.">
 							<h4 class="company">Contactgegevens</h4>
 							<div class="row company">
 								<div class="col-md-3">
@@ -190,6 +191,7 @@ $(document).ready(function() {
 										<input tname="username" id="username" ype="text" disabled="" value="{{ $user->username }}" class="form-control"/>
 									</div>
 								</div>
+							</div>
 							</div>
 							<div class="row company">
 								<div class="col-md-4">

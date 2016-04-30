@@ -675,15 +675,16 @@ $type = ProjectType::find($project->type_id);
 							<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
 							<div class="row">
 
-								<div class="col-md-4">
-									<div class="white-row">
-										<h5><strong for="type">BTW verlegd</strong></h5>
-										<div class="form-group">
-											<input name="tax_reverse" disabled type="checkbox" {{ $project->tax_reverse ? 'checked' : '' }}>
-										</div>
-										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
-									</div>
+								<div class="col-md-2">
+									<h5><strong for="type">BTW verlegd</strong></h5>
+								</div>	
+								<div class="col-md-2 form-group">
+									<input name="tax_reverse" disabled type="checkbox" {{ $project->tax_reverse ? 'checked' : '' }}>
 								</div>
+								<div class="col-md-8">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+								</div>
+							</div>
 
 								<?php $offer_last ? $invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first() : $invoice_end = null;
 								
@@ -735,7 +736,7 @@ $type = ProjectType::find($project->type_id);
 								}
 
 								?>
-								<div class="col-md-4">
+								<div class="col-md-12">
 									<div class="white-row">
 										<h5><strong for="type">Stelposten</strong></h5>
 										<div class="form-group">
@@ -745,7 +746,7 @@ $type = ProjectType::find($project->type_id);
 									</div>
 								</div>
 								
-								<div class="col-md-4">
+								<div class="col-md-12">
 									<div class="white-row">
 										<h5><strong for="type">Meerwerk</strong></h5>
 										<div class="form-group">

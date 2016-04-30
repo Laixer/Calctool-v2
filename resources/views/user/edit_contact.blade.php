@@ -96,6 +96,7 @@ if (!$contact) {
 			<div class="white-row">
 				<form method="POST" action="/relation/contact/update" accept-charset="UTF-8">
                                 {!! csrf_field() !!}
+
 				<h4>Contactgegevens</h4>
 				<div class="row">
 
