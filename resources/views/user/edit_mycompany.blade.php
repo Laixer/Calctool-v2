@@ -246,9 +246,9 @@ $(document).ready(function() {
 							</div>
 							<div class="col-md-8">
 								<select name="account2" id="account2" class="form-control pointer">
-								@foreach (BankAccount::where('user_id', Auth::id())->get() as $account)
+									@foreach (BankAccount::where('user_id', Auth::id())->get() as $account)
 									<option value="{{ $account->id }}">{{ $account->account }}</option>
-								@endforeach
+									@endforeach
 								</select>
 							</div>
 						</div>
@@ -367,9 +367,9 @@ $(document).ready(function() {
 									<div class="form-group">
 										<label for="company_type">Bedrijfstype*</label>
 										<select name="company_type" id="company_type" class="form-control pointer">
-										@foreach (RelationType::all() as $type)
-											<option {{ $relation ? ($relation->type_id==$type->id ? 'selected' : '') : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
-										@endforeach
+											@foreach (RelationType::all() as $type)
+											<option {{ $relation ? ($relation->type_id==$type->id ? 'selected' : '') : (old('company_type') == $type->id ? 'selected' : '') }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
+											@endforeach
 										</select>
 									</div>
 								</div>
@@ -447,7 +447,7 @@ $(document).ready(function() {
 										<label for="province">Provincie*</label>
 										<select name="province" id="province" class="form-control pointer">
 											@foreach (Province::all() as $province)
-												<option {{ $relation ? ($relation->province_id==$province->id ? 'selected' : '') : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
+												<option {{ $relation ? ($relation->province_id==$province->id ? 'selected' : '') : (old('province') == $province->id ? 'selected' : '') }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
 											@endforeach
 										</select>
 									</div>

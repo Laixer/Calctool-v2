@@ -107,9 +107,9 @@ if (!$relation || !$relation->isOwner()) {
 						<div class="form-group">
 							<label for="contactfunction">Functie*</label>
 							<select name="contactfunction" id="contactfunction" class="form-control pointer">
-							@foreach (\Calctool\Models\ContactFunction::all() as $function)
-								<option {{ $function->function_name=='directeur' ? 'selected' : '' }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
-							@endforeach
+								@foreach (\Calctool\Models\ContactFunction::all() as $function)
+								<option {{ (old('contactfunction') ? (old('contactfunction') == $function->id ? 'selected' : '') : $function->function_name=='directeur' ? 'selected' : '') }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
+								@endforeach
 							</select>
 						</div>
 					</div>
@@ -119,8 +119,8 @@ if (!$relation || !$relation->isOwner()) {
 							<label for="gender" style="display:block;">Geslacht</label>
 							<select name="gender" id="gender" class="form-control pointer">
 								<option value="-1">Selecteer</option>
-								<option value="M">Man</option>
-								<option value="V">Vrouw</option>
+								<option {{ (old('gender') == 'M' ? 'selected' : '') }} value="M">Man</option>
+								<option {{ (old('gender') == 'V' ? 'selected' : '') }} value="V">Vrouw</option>
 							</select>
 						</div>
 					</div>

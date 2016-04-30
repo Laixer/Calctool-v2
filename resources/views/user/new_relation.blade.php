@@ -325,9 +325,9 @@ $(document).ready(function() {
 						<div class="form-group">
 							<label for="contactfunction">Functie*</label>
 							<select name="contactfunction" id="contactfunction" class="form-control pointer">
-							@foreach (Calctool\Models\ContactFunction::all() as $function)
+								@foreach (Calctool\Models\ContactFunction::all() as $function)
 								<option {{ (old('contactfunction') ? (old('contactfunction') == $function->id ? 'selected' : '') : $function->function_name=='directeur' ? 'selected' : '') }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
-							@endforeach
+								@endforeach
 							</select>
 						</div>
 					</div>

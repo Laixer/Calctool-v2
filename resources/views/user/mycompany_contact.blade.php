@@ -5,6 +5,11 @@ use \Calctool\Models\Contact;
 use \Calctool\Models\ContactFunction;
 
 $relation = Relation::find(Auth::user()->self_id);
+if (!$relation) {
+	header("Location: /mycompany");
+	exit();	
+}
+
 $contact = Contact::where('relation_id','=',$relation->id)->first();
 ?>
 
