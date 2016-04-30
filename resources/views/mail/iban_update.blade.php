@@ -51,7 +51,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Het IBAN rekeningnummer en/of de tenaamstelling is aangepast op <strong>Calculatie Tool</strong>.
+														Het IBAN rekeningnummer en/of de tenaamstelling is aangepast op <strong>CalculatieTool.com</strong>.
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->
@@ -59,13 +59,13 @@
 												</tr>
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
-														Indien je geen wijzigingen hebt doorgevoerd in je betalingsgegevens adviseren wij dit controleren of contact op te nemen met <a href="https://calctool.nl/about">helpdesk</strong></a>.
+														Indien je geen wijzigingen hebt doorgevoerd in je betalingsgegevens adviseren wij dit te controleren of contact op te nemen met de<a href="https://calctool.nl/about">helpdesk</strong></a>.
 														<br>
 														<br>
 															Met vriendelijke groet,
 														<br>
 														<br>
-															<strong>Cal</strong>, van <a href="{{ URL::to('/') }}"><strong>CalculatieTool</strong></a>
+															<strong>Cal</strong>, van <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
 														<br>
 														<br>
 													</td>
