@@ -123,7 +123,7 @@ $(document).ready(function() {
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="company_type">Leveralciertype*</label>
+							<label for="company_type">Leverancier type*</label>
 							<select name="company_type" id="company_type" class="form-control pointer">
 							@foreach (WholesaleType::all() as $type)
 								<option value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
