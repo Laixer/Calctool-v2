@@ -53,7 +53,21 @@ $(document).ready(function() {
 		sessionStorage.toggleTabMyComp{{Auth::id()}} = 'prefs';
 	});
 
-
+	if (sessionStorage.introDemo) {
+		introJs().goToStep(sessionStorage.introDemo).
+		setOption('nextLabel', 'Volgende').
+		setOption('prevLabel', 'Vorige').
+		setOption('skipLabel', 'Overslaan').
+		setOption('doneLabel', 'Volgende pagina').
+		start().oncomplete(function(){
+			window.location.href = '/mycompany?intro=true';
+			sessionStorage.introDemo = 1;
+		}).onexit(function(){
+			sessionStorage.removeItem('introDemo');
+		}).onchange(function(){
+			sessionStorage.introDemo = this._currentStep;
+		});
+	}
 
 	if (sessionStorage.toggleTabMyComp{{Auth::id()}}){
 		$toggleOpenTab = sessionStorage.toggleTabMyComp{{Auth::id()}};

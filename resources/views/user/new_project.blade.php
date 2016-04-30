@@ -62,8 +62,149 @@ $(document).ready(function() {
 		}
 	});
 });
-
 </script>
+<div class="modal fade" id="tutModal" tabindex="-1" role="dialog" aria-labelledby="tutModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-body" id="introform">
+				<h4>Na de <strong>QuickStart</strong> kan je direct starten met je eerste calculatie & offerte.</h4>
+				<hr>
+
+				<div id="introerr" style="display:none;" class="alert alert-danger">
+					<i class="fa fa-frown-o"></i>
+					<strong>Fout</strong>
+					<lu id="introerrlist"></lu>
+				</div>
+
+				<form id="frm-quick" action="/mycompany/quickstart" method="post">
+				{!! csrf_field() !!}
+
+				<h4 class="company">Jouw Bedrijfsgegevens</h4>
+				<input type="hidden" name="id" id="id" value=""/>
+				<div class="row">
+					<div class="col-md-7">
+						<div class="form-group">
+							<label for="company_name">Bedrijfsnaam</label>
+							<input name="company_name" id="company_name" type="text" value="" class="form-control" />
+						</div>
+					</div>
+					<div class="col-md-5">
+						<div class="form-group">
+							<label for="company_type">Bedrijfstype</label>
+							<select name="company_type" id="company_type" class="form-control pointer">
+							@if (0)
+							@foreach (RelationType::all() as $type)
+								<option {{ $relation ? ($relation->type_id==$type->id ? 'selected' : '') : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
+							@endforeach
+							@endif
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="address_number">Huis nr.</label>
+							<input name="address_number" id="address_number" type="text" value="" class="form-control autoappend"/>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="zipcode">Postcode</label>
+							<input name="zipcode" id="zipcode" maxlength="6" type="text" value="" class="form-control autoappend"/>
+						</div>
+					</div>
+
+					<div class="col-md-7">
+						<div class="form-group">
+							<label for="street">Straat</label>
+							<input name="street" id="street" type="text" value="" class="form-control"/>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="city">Plaats</label>
+							<input name="city" id="city" type="text" value="" class="form-control"/>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="province">Provincie*</label>
+							<select name="province" id="province" class="form-control pointer">
+								@if (0)
+								@foreach (Province::all() as $province)
+									<option {{ $relation ? ($relation->province_id==$province->id ? 'selected' : '') : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
+								@endforeach
+								@endif
+							</select>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="country">Land*</label>
+							<select name="country" id="country" class="form-control pointer">
+								@if (0)
+								@foreach (Country::all() as $country)
+									<option {{ $relation ? ($relation->country_id==$country->id ? 'selected' : '') : ($country->country_name=='nederland' ? 'selected' : '')}} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
+								@endforeach
+								@endif
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<h4>Jouw Contactgegevens</h4>
+				<div class="row">
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="contact_firstname">Voornaam</label>
+							<input name="contact_firstname" id="contact_firstname" type="text" value="{{-- Input::old('contact_firstname') ? Input::old('contact_firstname') : ($relation ? Contact::where('relation_id', $relation->id)->first()['firstname'] : '') --}}" class="form-control"/>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="contact_name">Achternaam</label>
+							<input name="contact_name" id="contact_name" type="text" value="{{-- Input::old('contact_name') ? Input::old('contact_name') : ($relation ? Contact::where('relation_id', $relation->id)->first()['lastname'] : '') --}}" class="form-control"/>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="email">Email</label>
+							<input name="email" id="email" type="email" value="{{-- Auth::user()->email --}}" class="form-control"/>
+						</div>
+					</div>
+					<div class="col-md-3 company">
+						<div class="form-group">
+							<label for="contactfunction">Functie</label>
+							<select name="contactfunction" id="contactfunction" class="form-control pointer">
+							@if (0)
+							@foreach (ContactFunction::all() as $function)
+								<option {{ $function->function_name=='directeur' ? 'selected' : '' }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
+							@endforeach
+							@endif
+							</select>
+						</div>
+					</div>
+				</div>
+				<span>Na het invullen van de QuickStart is het mogelijk meer bedrijfsgegevens op te geven onder "Mijn bedrijf".</span>
+			</div>
+			</form>
+
+			<div class="modal-footer">
+				<div class="col-md-6">
+					<p>Scherm 1/2<p>
+				</div>
+				<div class="col-md-6">
+					<button id="intrnext" class="btn btn-primary"><i class="fa fa-check"></i> Volgende</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
 <div id="wrapper">
 
 	<section class="container">
@@ -128,7 +269,8 @@ $(document).ready(function() {
 											<option value="{{ $relation->id }}">{!! Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); !!}</option>
 											@endforeach
 										</select>
-										<a href="/relation/new?redirect={{ Request::path() }}">+ Nieuwe opdrachtgever toevoegen</a>
+										<!--<a href="/relation/new?redirect={{ Request::path() }}">+ Nieuwe opdrachtgever toevoegen</a>-->
+										<a href="#" data-toggle="modal" data-target="#tutModal">+ Nieuwe opdrachtgever toevoegen</a>
 									</div>
 								</div>
 								<div class="col-md-2">
