@@ -31,7 +31,7 @@ $(document).ready(function() {
 		setOption('doneLabel', 'Volgende pagina').
 		start().oncomplete(function(){
 			window.location.href = '/mycompany?intro=true';
-			sessionStorage.introDemo = 1;
+			sessionStorage.introDemo = 0;
 		}).onexit(function(){
 			sessionStorage.removeItem('introDemo');
 		}).onchange(function(){
@@ -414,11 +414,7 @@ $(document).ready(function() {
 						@else
 						<h2><strong>Je eerste</strong> stap</h2>
 						<div class="bs-callout text-center whiteBg">
-<<<<<<< Updated upstream
-							<h3><button id="starttour" class="btn btn-primary btn-lg">Take the Tour</button> <strong>OF</strong> <a href="/project/new" class="btn btn-primary btn-lg" data-step="9" data-intro="Stap 9: Maak nu je eerste prject aan.">Start nieuw project</a></h3>
-=======
-							<h3><a href="javascript:void(0);" onclick="javascript:introJs().start();" class="btn btn-primary btn-lg">Take the Tour</a> <strong>OF</strong> <a href="/project/new" class="btn btn-primary btn-lg">Start nieuw project</a></h3>
->>>>>>> Stashed changes
+							<h3><button id="starttour" class="btn btn-primary btn-lg">Take the Tour</button> <strong>OF</strong> <a href="/project/new" class="btn btn-primary btn-lg" kaas-intro="Stap 9: Maak nu je eerste prject aan.">Start nieuw project</a></h3>
 						</div>
 						@endif
 					</div>
