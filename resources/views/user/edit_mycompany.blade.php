@@ -196,10 +196,12 @@ $(document).ready(function() {
 			@if($errors->has())
 			<div class="alert alert-danger">
 				<i class="fa fa-frown-o"></i>
-				<strong>Fout</strong>
-				@foreach ($errors->all() as $error)
-					{{ $error }}
-				@endforeach
+				<strong>Fouten in de invoer</strong>
+				<ul>
+					@foreach ($errors->all() as $error)
+					<li><h5 class="nomargin">{{ $error }}</h5></li>
+					@endforeach
+				</ul>
 			</div>
 			@endif
 

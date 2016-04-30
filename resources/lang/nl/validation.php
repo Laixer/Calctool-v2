@@ -88,6 +88,10 @@ return [
     */
 
     'custom' => [
+        'username' => [
+            'required' => 'Gebruikersnaam kan niet leeg zijn',
+            'unique' => 'Deze gebruikersnaam is al in gebruik',
+        ],
         'name' => [
             'required' => 'Naam is een verplicht veld',
         ],
@@ -105,6 +109,7 @@ return [
         ],
         'email' => [
             'required' => 'Email is een verplicht veld',
+            'email' => 'Email is niet geldig',
         ],
         'contact_name' => [
             'required' => 'Achternaam contactpersoon is een verplicht veld',
@@ -114,10 +119,27 @@ return [
         ],
         'company_name' => [
             'required_if' => 'Bedrijfsnaam is een verplicht veld voor deze relatiesoort',
+            'required' => 'Bedrijfsnaam is een verplicht veld',
         ],
         'debtor' => [
             'required' => 'Het debiteurennummer is een verplicht veld',
-        ]
+        ],
+        'website' => [
+            'url' => 'De URL van de website is ongeldig',
+        ],
+        'curr_secret' => [
+            'required' => 'Geef het huidige wachtwoord op',
+        ],
+        'secret' => [
+            'confirmed' => 'Wachtwoorden komen niet overeen',
+            'min' => 'Nieuwe wachtwoord moet minimaal 5 characters bevatten',
+            'required' => 'Geef een wachtwoord op',
+        ],
+        'secret_confirmation' => [
+            'min' => 'Bevestig het wachtwoord',
+            'required' => 'Bevestig het wachtwoord',
+        ],
+        
     ],
 
     /*

@@ -244,7 +244,7 @@ class UserController extends Controller {
 	public function doUpdateSecurity(Request $request)
 	{
 		$this->validate($request, [
-			'curr_secret' => array('required'),
+			'curr_secret' => array('required','bail'),
 			'secret' => array('confirmed','min:5'),
 			'secret_confirmation' => array('min:5'),
 		]);
