@@ -112,13 +112,13 @@ $(document).ready(function() {
 							<h4>Projectgegevens</h4>
 							<h5><strong>Gegevens</strong></h5>
 							<div class="row">
-								<div class="col-md-6">
+								<div class="col-md-5">
 									<div class="form-group">
 										<label for="name">Projectnaam*</label>
 										<input name="name" id="name" type="text" value="{{ Input::old('name') }}" class="form-control" />
 									</div>
 								</div>
-								<div class="col-md-4">
+								<div class="col-md-3">
 									<div class="form-group">
 										<label for="contractor">Opdrachtgever*</label>
 										<select name="contractor" id="contractor" class="form-control pointer">
@@ -139,6 +139,13 @@ $(document).ready(function() {
 										</select>
 									</div>
 								</div>
+								<div class="col-md-2">
+								<label for="tax_reverse">BTW verlegd</label>
+									<div class="form-group">
+										<input name="tax_reverse" type="checkbox">
+									</div>
+								</div>
+
 							</div>
 
 							<h5><strong>Adresgegevens</strong></h5>
@@ -193,7 +200,7 @@ $(document).ready(function() {
 										</select>
 									</div>
 								</div>
-							</div>
+							</div>		
 
 							<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
 					        <div class="row">

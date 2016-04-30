@@ -467,14 +467,6 @@ $(document).ready(function() {
 								</div>
 							</div>
 
-							<h4>Kladblok van mijn bedrijf <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok je eigen bedrijf en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
-							<div class="row">
-								<div class="form-group">
-									<div class="col-md-12">
-										<textarea name="note" id="summernote" rows="10" class="form-control">{{ Input::old('note') ? Input::old('note') : ($relation ? $relation->note : '') }}</textarea>
-									</div>
-								</div>
-							</div>
 							<div class="row">
 								<div class="col-md-12">
 									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
@@ -619,16 +611,7 @@ $(document).ready(function() {
 							</div>
 						</div>
 
-
-
-
-
-
-
-
-
-
-<div id="prefs" class="tab-pane">
+						<div id="prefs" class="tab-pane">
 
 							<form method="POST" action="myaccount/preferences/update" accept-charset="UTF-8">
                             {!! csrf_field() !!}
