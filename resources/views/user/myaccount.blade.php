@@ -33,9 +33,6 @@ $(document).ready(function() {
 	$('#tab-contact').click(function(e){
 		sessionStorage.toggleTabMyAcc{{Auth::id()}} = 'contact';
 	});
-	$('#tab-notepad').click(function(e){
-		sessionStorage.toggleTabMyAcc{{Auth::id()}} = 'notepad';
-	});
 	if (sessionStorage.toggleTabMyAcc{{Auth::id()}}){
 		$toggleOpenTab = sessionStorage.toggleTabMyAcc{{Auth::id()}};
 		$('#tab-'+$toggleOpenTab).addClass('active');
@@ -81,17 +78,7 @@ $(document).ready(function() {
 			});
 		}
 	});
-	
-	 $('#summernote').summernote({
-	            height: $(this).attr("data-height") || 200,
-	            toolbar: [
-	                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
-	                ["para", ["ul", "ol", "paragraph"]],
-	                ["table", ["table"]],
-	                ["media", ["link", "picture", "video"]],
-	                ["misc", ["codeview"]]
-	            ]
-	        })
+
 });
 </script>
 <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModal" aria-hidden="true">
@@ -185,9 +172,6 @@ $(document).ready(function() {
 						<li id="tab-contact">
 							<a href="#contact" data-toggle="tab">Wachtwoord</a>
 						</li>
-						<li id="tab-notepad">
-							<a href="#notepad" data-toggle="tab">Kladblok</a>
-						</li>
 					</ul>
 
 					<div class="tab-content">
@@ -249,7 +233,7 @@ $(document).ready(function() {
 
 								<div class="col-md-3">
 									<div class="form-group">
-										<label for="email">Email</label>
+										<label for="email">Email*</label>
 										<input name="email" id="email" type="email" value="{{ Input::old('email') ? Input::old('email') : $user->email }}" class="form-control"/>
 									</div>
 								</div>
@@ -376,28 +360,6 @@ $(document).ready(function() {
 								</div>
 							</div>
 						</form>
-
-						</div>
-						<div id="notepad" class="tab-pane">
-
-							<form method="POST" action="myaccount/notepad/save" accept-charset="UTF-8">
-                            {!! csrf_field() !!}
-
-							<h4>Kladblok van mijn Account <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok je account en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
-							<div class="row">
-								<div class="form-group">
-									<div class="col-md-12">
-										<textarea name="notepad" id="summernote" rows="15" class="form-control">{{ $user->notepad }}</textarea>
-									
-									</div>
-								</div>
-							</div>
-							<div class="row">
-									<div class="col-md-12">
-										<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
-									</div>
-								</div>
-							</form>
 
 						</div>
 					</div>

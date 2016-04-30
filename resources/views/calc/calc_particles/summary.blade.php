@@ -137,7 +137,9 @@ use \Calctool\Models\Part;
 						<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
 						<th class="col-md-1"><span class="pull-right">Overig</span></th>
 						<th class="col-md-1"><span class="pull-right">Totaal</span></th>
+						@if ($project->use_estimate)
 						<th class="col-md-1">&nbsp;</th>
+						@endif
 					</tr>
 				</thead>
 
@@ -150,7 +152,9 @@ use \Calctool\Models\Part;
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></strong></td>
+						@if ($project->use_estimate)
 						<th class="col-md-1">&nbsp;</th>
+						@endif
 					</tr>
 				</tbody>
 			</table>
