@@ -15,10 +15,54 @@ use \Calctool\Models\Cashbook;
 <?php
 
 $relation = Relation::find(Auth::user()->self_id);
+$user = Auth::user();
 ?>
 
 @section('content')
 
+<script type="text/javascript" src="/js/iban.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	function prefixURL(field) {
+		var cur_val = $(field).val();
+		if (!cur_val)
+			return;
+		var ini = cur_val.substring(0,4);
+		if (ini == 'http')
+			return;
+		else {
+			if (cur_val.indexOf("www") >=0) {
+				$(field).val('http://' + cur_val);
+			} else {
+				$(field).val('http://www.' + cur_val);
+			}
+		}
+	}
+	
+	$('#accountModal').on('hidden.bs.modal', function() {
+		$.post("/mycompany/cashbook/account/new", {account: $('#account').val(), account_name: $('#account_name').val(), amount: $('#amount').val()}, function(data) {
+			location.reload();
+		});
+	});
+	$('#cashbookModal').on('hidden.bs.modal', function() {
+		$.post("/mycompany/cashbook/new", {account: $('#account2').val(), amount: $('#amount2').val(), date: $('#date').val(), desc: $('#desc').val()}, function(data) {
+			location.reload();
+		});
+	});
+
+	$('#summernote').summernote({
+	        height: $(this).attr("data-height") || 200,
+	        toolbar: [
+	            ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+	            ["para", ["ul", "ol", "paragraph"]],
+	            ["table", ["table"]],
+	            ["media", ["link", "picture", "video"]],
+	            ["misc", ["codeview"]]
+	        ]
+	    })
+});
+
+</script>
 
 <div id="wrapper">
 
@@ -123,8 +167,8 @@ $relation = Relation::find(Auth::user()->self_id);
 		</div>
 	</div>
 
+	<section class="container">
 	<div id="shop">
-		<section class="container">
 
 		<div class="col-md-12">
 
