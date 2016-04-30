@@ -249,7 +249,7 @@ $(function() {
 			<h2 style="margin: 10px 0 20px 0;"><strong>Welkom</strong>, {{ Auth::user()->firstname }}</h2>
 			<div class="row">
 
-				<div class="col-sm-6 col-md-2">
+				<div class="col-sm-6 col-md-2" data-intro="Hierzo staat alles over mijn bedrijf, en alle shit">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
 							<a class="item-hover" href="/mycompany">
@@ -264,7 +264,7 @@ $(function() {
 					</div>
 				</div>
 
-				<div class="col-sm-6 col-md-2">
+				<div class="col-sm-6 col-md-2" data-intro="Hier komt een lijst van de bouwmaat en shit">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
 							<a class="item-hover" href="/material">
@@ -391,7 +391,7 @@ $(function() {
 						@else
 						<h2><strong>Je eerste</strong> stap</h2>
 						<div class="bs-callout text-center whiteBg">
-							<h3><a href="#tour" class="btn btn-primary btn-lg">Take the Tour</a> <strong>OF</strong> <a href="/project/new" class="btn btn-primary btn-lg">Start nieuw project</a></h3>
+							<h3><a href="javascript:void(0);" onclick="javascript:introJs().start();" class="btn btn-primary btn-lg">Take the Tour</a> <strong>OF</strong> <a href="/project/new" class="btn btn-primary btn-lg">Start nieuw project</a></h3>
 						</div>
 						@endif
 					</div>
