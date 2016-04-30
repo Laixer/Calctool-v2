@@ -36,12 +36,11 @@ $(document).ready(function() {
 			sessionStorage.introDemo = 0;
 		}).onexit(function(){
 			sessionStorage.introDemo = 0;
-		}).onchange(function(){
-			sessionStorage.introDemo = this._currentStep;
 		});
-		sessionStorage.introDemo = 1;
 	});
-	$('#introModal').modal('toggle');
+	if (!sessionStorage.introDemo) {
+		$('#introModal').modal('toggle');
+	}
 });
 </script>
 <div class="modal fade" id="introModal" tabindex="-1" role="dialog" aria-labelledby="introModalLabel" aria-hidden="true">
