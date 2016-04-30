@@ -110,7 +110,7 @@ return [
             'required' => 'Achternaam contactpersoon is een verplicht veld',
         ],
         'email_comp' => [
-            'required_if' => 'Bedrijfs email is een verplicht veld voor deze relatiesoort',
+            'required_if' => 'Email bedrijf is een verplicht veld voor deze relatiesoort',
         ],
         'company_name' => [
             'required_if' => 'Bedrijfsnaam is een verplicht veld voor deze relatiesoort',
