@@ -246,7 +246,7 @@ $(function() {
 			@endif
 			@endif
 
-			<h2 style="margin: 10px 0 20px 0;"><strong>Welkom </strong>, {{ Auth::user()->firstname }}</h2>
+			<h2 style="margin: 10px 0 20px 0;"><strong>Welkom</strong>, {{ Auth::user()->firstname }}</h2>
 			<div class="row">
 
 				<div class="col-sm-6 col-md-2">
@@ -342,6 +342,7 @@ $(function() {
 
 					<div class="col-md-12">
 						<br>
+						@if (Project::where('user_id','=', Auth::user()->id)->count('id')>0)
 						<h2><strong>Jouw</strong> Projecten</h2>
 						<div class="white-row" ng-controller="projectController">
 							<div class="row">
@@ -361,7 +362,6 @@ $(function() {
 										<th class="col-md-1" ng-click="orderByField='type_name'; reverseSort = !reverseSort">Type</th>
 										<th class="col-md-3" ng-click="orderByField='address_street'; reverseSort = !reverseSort">Adres</th>
 										<th class="col-md-2" ng-click="orderByField='address_city'; reverseSort = !reverseSort">Plaats</th>
-										<!-- <th class="col-md-1">Status</th> -->
 									</tr>
 								</thead>
 								<tbody>
@@ -371,7 +371,6 @@ $(function() {
 										<td class="col-md-1">@{{ project.type.type_name }}</td>
 										<td class="col-md-3">@{{ project.address_street }} @{{ project.address_number }}</td>
 										<td class="col-md-2">@{{ project.address_city }}</td>
-										<!-- <td class="col-md-1">@{{ project.project_close ? 'Gesloten' : 'Open' }}</td> -->
 									</tr>
 									<tr ng-show="results == 0">
 										<td colspan="6" style="text-align: center;">Geen projecten beschikbaar</td>
@@ -389,6 +388,12 @@ $(function() {
 							</div>
 
 						</div>
+						@else
+						<h2><strong>Je eerste</strong> stap</h2>
+						<div class="bs-callout text-center whiteBg">
+							<h3><a href="#tour" class="btn btn-primary btn-lg">Take the Tour</a> <strong>OF</strong> <a href="/project/new" class="btn btn-primary btn-lg">Start nieuw project</a></h3>
+						</div>
+						@endif
 					</div>
 
 				</div>
