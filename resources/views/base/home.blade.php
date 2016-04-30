@@ -323,13 +323,13 @@ $(function() {
 				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
-							<a class="item-hover" href="/">
+							<a class="item-hover" href="/apps">
 								<span class="overlay color2"></span>
 								<span class="inner" style="top:40%;">
 									<span class="block fa fa-gears fsize60"></span> comming soon
 								</span>
 							</a>
-							<a href="/" class="btn btn-primary add_to_cart"><strong> Apps</strong></a>
+							<a href="/apps" class="btn btn-primary add_to_cart"><strong> Apps</strong></a>
 						</figure>
 					</div>
 				</div>
