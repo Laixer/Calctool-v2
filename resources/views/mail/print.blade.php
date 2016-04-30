@@ -43,7 +43,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; line-height: 24px; color:#8E8E8E;">
-														Factuur of offerte met nummer {{ $code }} kan geprint worden
+														De factuur of offerte met nummer {{ $code }} kan geprint worden.
 													</td>
 												</tr>
 											</tbody>
