@@ -58,7 +58,7 @@ return [
     'not_in'               => 'Het geselecteerde :attribute is ongeldig.',
     'numeric'              => 'De :attribute moet een nummer wezen.',
     'regex'                => 'De :attribute format is invalid.',
-    'required'             => 'De :attribute veld is vereist.',
+    'required'             => 'Het veld \':attribute\' is vereist.',
     'required_if'          => 'De :attribute veld is vereist wanneer :other is :value.',
     'required_with'        => 'De :attribute veld is vereist wanneer :values is present.',
     'required_with_all'    => 'De :attribute veld is vereist wanneer :values is present.',
@@ -88,9 +88,33 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'name' => [
+            'required' => 'Naam is een verplicht veld',
         ],
+        'street' => [
+            'required' => 'Straat is een verplicht veld',
+        ],
+        'address_number' => [
+            'required' => 'Huisnummer is een verplicht veld',
+        ],
+        'zipcode' => [
+            'required' => 'Postcode is een verplicht veld',
+        ],
+        'city' => [
+            'required' => 'Plaats is een verplicht veld',
+        ],
+        'email' => [
+            'required' => 'Email is een verplicht veld',
+        ],
+        'contact_name' => [
+            'required' => 'Achternaam contactpersoon is een verplicht veld',
+        ],
+        'email_comp' => [
+            'required_if' => 'Bedrijfs email is een verplicht veld voor deze relatiesoort',
+        ],
+        'company_name' => [
+            'required_if' => 'Bedrijfsnaam is een verplicht veld voor deze relatiesoort',
+        ]
     ],
 
     /*
