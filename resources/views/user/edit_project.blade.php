@@ -753,7 +753,7 @@ $type = ProjectType::find($project->type_id);
 									</div>
 									<div class="row">
 											<div class="col-md-12">
-												<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+												<button class="btn btn-primary"><i class="fa fa-check"></i> Verzenden</button>
 											</div>
 										</div>
 									</form>
