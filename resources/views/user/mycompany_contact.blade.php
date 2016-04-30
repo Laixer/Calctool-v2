@@ -56,7 +56,7 @@ $contact = Contact::where('relation_id','=',$relation->id)->first();
 		<div class="white-row">
 		<form action="/mycompany/contact/new" method="post">
 		{!! csrf_field() !!}
-<div data-step="6" data-intro="Stap 6: Voeg een nieuw contact toe. Alleen de velden met (*) zijn verplicht.">
+<div data-step="1" data-intro="Stap 6: Voeg een nieuw contact toe. Alleen de velden met (*) zijn verplicht.">
 		<h4>Contactgegevens</h4>
 		<div class="row">
 			<div class="col-md-2">
@@ -121,7 +121,7 @@ $contact = Contact::where('relation_id','=',$relation->id)->first();
 </div>
 		<div class="white-row">
 			<div class="col-md-2">
-				<button class="btn btn-primary" data-step="7" data-intro="Stap 7: Sla je contact van je bedrijf op."><i class="fa fa-check"></i> Opslaan</button>
+				<button class="btn btn-primary" data-step="2" data-intro="Stap 7: Sla je contact van je bedrijf op."><i class="fa fa-check"></i> Opslaan</button>
 			</div>
 		</div>
 		</form>

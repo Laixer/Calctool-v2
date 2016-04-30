@@ -270,7 +270,7 @@ $(document).ready(function() {
 			<h2 style="margin: 10px 0 20px 0;"><strong>Welkom</strong>, {{ Auth::user()->firstname }}</h2>
 			<div class="row">
 
-				<div class="col-sm-6 col-md-2" data-intro="Stap 1: Voor een juiste werking van de CalculatieTool.com moeten er eerst een aantal gegevens van je bedrijf bekend zijn.">
+				<div class="col-sm-6 col-md-2" data-step="1" data-intro="Stap 1: Voor een juiste werking van de CalculatieTool.com moeten er eerst een aantal gegevens van je bedrijf bekend zijn.">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
 							<a class="item-hover" href="/mycompany">
@@ -284,6 +284,8 @@ $(document).ready(function() {
 						</figure>
 					</div>
 				</div>
+
+
 
 				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
@@ -378,18 +380,18 @@ $(document).ready(function() {
 							<table class="table table-striped">
 								<thead>
 									<tr>
-										<th class="col-md-4" ng-click="orderByField='project_name'; reverseSort = !reverseSort">Projectnaam</th>
+										<th class="col-md-3" ng-click="orderByField='project_name'; reverseSort = !reverseSort">Projectnaam</th>
 										<th class="col-md-2" ng-click="orderByField='relation'; reverseSort = !reverseSort">Opdrachtgever</th>
-										<th class="col-md-1" ng-click="orderByField='type_name'; reverseSort = !reverseSort">Type</th>
+										<th class="col-md-2" ng-click="orderByField='type_name'; reverseSort = !reverseSort">Type</th>
 										<th class="col-md-3" ng-click="orderByField='address_street'; reverseSort = !reverseSort">Adres</th>
 										<th class="col-md-2" ng-click="orderByField='address_city'; reverseSort = !reverseSort">Plaats</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr ng-repeat="project in projects | filter: query | orderBy: orderByField:reverseSort as results">
-										<td class="col-md-4"><a href="/project-@{{ project.id }}/edit">@{{ project.project_name }}</a></td>
+										<td class="col-md-3"><a href="/project-@{{ project.id }}/edit">@{{ project.project_name }}</a></td>
 										<td class="col-md-2">@{{ project.relation }}</td>
-										<td class="col-md-1">@{{ project.type.type_name }}</td>
+										<td class="col-md-2">@{{ project.type.type_name }}</td>
 										<td class="col-md-3">@{{ project.address_street }} @{{ project.address_number }}</td>
 										<td class="col-md-2">@{{ project.address_city }}</td>
 									</tr>
@@ -412,7 +414,11 @@ $(document).ready(function() {
 						@else
 						<h2><strong>Je eerste</strong> stap</h2>
 						<div class="bs-callout text-center whiteBg">
+<<<<<<< Updated upstream
 							<h3><button id="starttour" class="btn btn-primary btn-lg">Take the Tour</button> <strong>OF</strong> <a href="/project/new" class="btn btn-primary btn-lg" data-step="9" data-intro="Stap 9: Maak nu je eerste prject aan.">Start nieuw project</a></h3>
+=======
+							<h3><a href="javascript:void(0);" onclick="javascript:introJs().start();" class="btn btn-primary btn-lg">Take the Tour</a> <strong>OF</strong> <a href="/project/new" class="btn btn-primary btn-lg">Start nieuw project</a></h3>
+>>>>>>> Stashed changes
 						</div>
 						@endif
 					</div>
@@ -452,6 +458,13 @@ $(document).ready(function() {
 
 				});
 				</script>
+    <script type="text/javascript">
+      document.getElementById('startButton').onclick = function() {
+        introJs().setOption('doneLabel', 'Next page').start().oncomplete(function() {
+          window.location.href = '/?multipage=true';
+        });
+      };
+    </script>
 
 			</div>
 		</div>

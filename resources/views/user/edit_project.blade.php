@@ -745,7 +745,7 @@ $type = ProjectType::find($project->type_id);
 									</div>
 								</div>
 								<div class="col-md-10">		
-									<p>Voeg de module stelposten toe aan je calculatie. Je kan nu stelpoten toe gaan voegen aan je offerte en deze later definitief maken/stellen voor op de factuur.</p>
+									<p>Voeg de module stelposten toe aan je calculatie. Je kan nu stelposten toe gaan voegen aan je offerte en deze later definitief maken/stellen voor op de factuur.</p>
 								</div>
 							</div>
 
