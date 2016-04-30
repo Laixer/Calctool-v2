@@ -842,17 +842,22 @@ $type = ProjectType::find($project->type_id);
 										<label for="name">Plaats</label>
 										<span>{{ $relation->address_city }}</span>
 									</div>
+
+									<?php
+										$contact=Contact::where('relation_id',$relation->id)->first();
+									?>
 									<div class="row">
 										<label for="name">Contactpersoon</label>
-										<span>{{ $relation->address_city }}</span>
+										<span>{{ $contact->getFormalName() }}</span>
 									</div>
 									<div class="row">
 										<label for="name">Telefoon</label>
-										<span>{{ $relation->address_city }}</span>
-									</div>									
-								</div>
+										<span>{{ $contact->mobile }}</span>
+									</div>		
+								</div>									
 							</div>
 						</div>
+					</div>
 				</div>
 
 		</div>

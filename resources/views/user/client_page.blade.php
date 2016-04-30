@@ -217,27 +217,31 @@ else {
 
 										<div class="row">
 											<label for="name">Bedrijfsnaam</label>
-											<span>{{ $relation_self->company_name }} </span>
+											<span>{{ $relation->company_name }} </span>
 										</div>
 										<div class="row">
 											<label for="name">Straat</label>
-											<span>{{ $relation_self->address_street }} {{ $relation->address_number }}</span>
+											<span>{{ $relation->address_street }} {{ $relation->address_number }}</span>
 										</div>
 										<div class="row">
 											<label for="name">Postcode</label>
-											<span>{{ $relation_self->address_postal }}</span>
+											<span>{{ $relation->address_postal }}</span>
 										</div>
 										<div class="row">
 											<label for="name">Plaats</label>
-											<span>{{ $relation_self->address_city }}</span>
+											<span>{{ $relation->address_city }}</span>
 										</div>
+										
+										<?php
+											$contact=Contact::where('relation_id',$relation_self->id)->first();
+										?>
 										<div class="row">
 											<label for="name">Contactpersoon</label>
-											<span>{{ $relation_self->address_city }}</span>
+											<span>{{ $contact->getFormalName() }}</span>
 										</div>
 										<div class="row">
 											<label for="name">Telefoon</label>
-											<span>{{ $relation_self->address_city }}</span>
+											<span>{{ $contact->mobile }}</span>
 										</div>		
 									</div>
 								</div>
