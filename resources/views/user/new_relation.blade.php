@@ -185,9 +185,9 @@ $(document).ready(function() {
 						<div class="form-group">
 							<label for="company_type">Bedrijfstype*</label>
 							<select name="company_type" id="company_type" class="form-control pointer">
-							@foreach (RelationType::all() as $type)
+								@foreach (RelationType::all() as $type)
 								<option {{ (old('company_type') == $type->id ? 'selected' : '') }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
-							@endforeach
+								@endforeach
 							</select>
 						</div>
 					</div>
@@ -235,14 +235,14 @@ $(document).ready(function() {
 					<div class="col-md-1">
 						<div class="form-group">
 							<label for="address_number">Huis nr.*</label>
-							<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') }}" class="form-control autoappend"/>
+							<input name="address_number" id="address_number" type="text" value="{{ old('address_number') }}" class="form-control autoappend"/>
 						</div>
 					</div>
 
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="zipcode">Postcode*</label>
-							<input name="zipcode" id="zipcode" maxlength="6" type="text" value="{{ Input::old('zipcode') }}" class="form-control autoappend"/>
+							<input name="zipcode" id="zipcode" maxlength="6" type="text" value="{{ old('zipcode') }}" class="form-control autoappend"/>
 						</div>
 					</div>
 

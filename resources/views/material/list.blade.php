@@ -218,12 +218,12 @@ $(document).ready(function() {
 			<div>
 				<ol class="breadcrumb">
 				  <li><a href="/">Home</a></li>
-				  <li class="active">Materialendatabase</li>
+				  <li class="active">Materialen</li>
 				</ol>
 			<div>
 			<br>
 
-			<h2><strong>Materialendatabase</strong></h2>
+			<h2><strong>Materialen</strong></h2>
 
 			<div class="tabs nomargin-top">
 
@@ -243,7 +243,7 @@ $(document).ready(function() {
 				</ul>
 
 				<div class="tab-content">
-					<div id="supplier" class="tab-pane">
+					<div id="supplier" class="tab-pane">data
 
 						<div class="form-group input-group input-group-lg">
 							<input type="text" id="search" value="" class="form-control" placeholder="Zoek materiaal">
