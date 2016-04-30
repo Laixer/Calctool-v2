@@ -9,7 +9,7 @@ use \Calctool\Calculus\LessOverview;
 <div>
 
 	<div>
-		<label>Aanneming</label>
+		<h4>Aanneming</h4>
 		<div class="toggle-content">
 
 			<table class="table table-striped">
@@ -57,7 +57,7 @@ use \Calctool\Calculus\LessOverview;
 	</div>
 
 	<div>
-		<label>Onderaanneming</label>
+		<h4>Onderaanneming</h4>
 		<div class="toggle-content">
 
 			<table class="table table-striped">
@@ -106,7 +106,7 @@ use \Calctool\Calculus\LessOverview;
 	</div>
 
 	<div>
-		<label>Totalen project</label>
+		<h4>Totalen project</h4>
 		<div class="toggle-content">
 			<table class="table table-striped">
 				<thead>

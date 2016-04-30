@@ -249,9 +249,6 @@ $(function() {
 			<h2 style="margin: 10px 0 20px 0;"><strong>Welkom</strong>, {{ Auth::user()->firstname }}</h2>
 			<div class="row">
 
-				<div class="col-sm-6 col-md-1">
-				</div>
-
 				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
@@ -309,20 +306,6 @@ $(function() {
 					</div>
 				</div>
 
-			<!-- 	<div class="col-sm-6 col-md-2">
-					<div class="item-box item-box-show fixed-box">
-						<figure>
-							<a class="item-hover" href="/wholesale">
-								<span class="overlay color2"></span>
-								<span class="inner" style="top:40%;">
-									<span class="block fa fa-truck fsize60"></span>
-								</span>
-							</a>
-							<a href="/wholesale" class="btn btn-primary add_to_cart"><strong> Leveranciers</strong></a>
-						</figure>
-					</div>
-				</div> -->
-
 				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
@@ -337,9 +320,20 @@ $(function() {
 					</div>
 				</div>
 
-				<div class="col-sm-6 col-md-1">
+				<div class="col-sm-6 col-md-2">
+					<div class="item-box item-box-show fixed-box">
+						<figure>
+							<a class="item-hover" href="/">
+								<span class="overlay color2"></span>
+								<span class="inner" style="top:40%;">
+									<span class="block fa fa-gears fsize60"></span> comming soon
+								</span>
+							</a>
+							<a href="/" class="btn btn-primary add_to_cart"><strong> Apps</strong></a>
+						</figure>
+					</div>
 				</div>
-
+				
 			</div>
 
 			<div class="row">
