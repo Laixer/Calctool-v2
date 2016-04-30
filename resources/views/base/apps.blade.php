@@ -20,7 +20,9 @@ $user = Auth::user();
 
 @section('content')
 
-<script type="text/javascript" src="/js/iban.js"></script>
+<div id="wrapper">
+
+<!-- <script type="text/javascript" src="/js/iban.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	function prefixURL(field) {
@@ -165,10 +167,11 @@ $(document).ready(function() {
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	<section class="container">
-	<div id="shop">
+
+	<div id="wrapper">
 
 		<div class="col-md-12">
 
@@ -205,7 +208,6 @@ $(document).ready(function() {
 				</div>
 			</div>
 						
-
 			<div class="row">
 				<form action="relation/updatemycompany" method="post">
 				{!! csrf_field() !!}
@@ -227,106 +229,85 @@ $(document).ready(function() {
 					</div>
 				</form>
 			</div>
-
-
-
-
-
-
-
-
-			<div class="row">
-				<form action="relation/updatemycompany" method="post">
-				{!! csrf_field() !!}
-
-					<h4>Kladblok van mijn bedrijf <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok je eigen bedrijf en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
-
-					<div class="row">
-						<div class="form-group">
-							<div class="col-md-12">
-								<textarea name="note" id="summernote" rows="10" class="form-control">{{ Input::old('note') ? Input::old('note') : ($relation ? $relation->note : '') }}</textarea>
-							</div>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-12">
-							<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
-						</div>
-					</div>
-				</form>
-			</div>
-
-
-
-
-
-							<h4>Rekeningen</h4>
-							<div class="row">
-								<div class="col-md-3"><strong>Rekening</strong></div>
-								<div class="col-md-2"><strong>Saldo</strong></div>
-							</div>
-							@foreach (BankAccount::where('user_id', Auth::id())->get() as $account)
-							<div class="row">
-								<div class="col-md-3">{{ $account->account }}</div>
-								<div class="col-md-2">&euro;{{ number_format(Cashbook::where('account_id', $account->id)->sum('amount'), 2, ",",".") }}</div>
-								<div class="col-md-3"></div>
-							</div>
-							@endforeach
-							<br />
-							<h4>Af en bij</h4>
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th class="col-md-2">Rekening</th>
-										<th class="col-md-2">Bedrag</th>
-										<th class="col-md-2">Datum</th>
-										<th class="col-md-6">Omschrijving</th>
-									</tr>
-								</thead>
-
-								<tbody>
-									@foreach (BankAccount::where('user_id', Auth::id())->get() as $account)
-									@foreach (Cashbook::where('account_id', $account->id)->orderBy('payment_date','desc')->get() as $row)
-									<tr>
-										<td class="col-md-2">{{ $account->account }}</a></td>
-										<td class="col-md-2">{{ ($row->amount > 0 ? '+' : '') . number_format($row->amount, 2, ",",".") }}</td>
-										<td class="col-md-2">{{ date('d-m-Y', strtotime($row->payment_date)) }}</td>
-										<td class="col-md-6">{{ $row->description }}</td>
-									</tr>
-									@endforeach
-									@endforeach
-								</tbody>
-							</table>
-							<div class="row">
-								<div class="col-md-12">
-									<a href="#" data-toggle="modal" data-target="#cashbookModal" id="newcash" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuwe regel</a>
-									<a href="#" data-toggle="modal" data-target="#accountModal" id="newacc" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuwe rekening</a>
-								</div>
-							</div>
-						
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		
 		</div>
-		</section>
-	
-	</div> 
 
+		<div class="row">
+			<form action="relation/updatemycompany" method="post">
+			{!! csrf_field() !!}
+
+				<h4>Kladblok van mijn bedrijf <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok je eigen bedrijf en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
+
+				<div class="row">
+					<div class="form-group">
+						<div class="col-md-12">
+							<textarea name="note" id="summernote" rows="10" class="form-control">{{ Input::old('note') ? Input::old('note') : ($relation ? $relation->note : '') }}</textarea>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+
+
+
+
+		<h4>Rekeningen</h4>
+		<div class="row">
+			<div class="col-md-3"><strong>Rekening</strong></div>
+			<div class="col-md-2"><strong>Saldo</strong></div>
+		</div>
+		@foreach (BankAccount::where('user_id', Auth::id())->get() as $account)
+		<div class="row">
+			<div class="col-md-3">{{ $account->account }}</div>
+			<div class="col-md-2">&euro;{{ number_format(Cashbook::where('account_id', $account->id)->sum('amount'), 2, ",",".") }}</div>
+			<div class="col-md-3"></div>
+		</div>
+		@endforeach
+		<br />
+		<h4>Af en bij</h4>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th class="col-md-2">Rekening</th>
+					<th class="col-md-2">Bedrag</th>
+					<th class="col-md-2">Datum</th>
+					<th class="col-md-6">Omschrijving</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				@foreach (BankAccount::where('user_id', Auth::id())->get() as $account)
+				@foreach (Cashbook::where('account_id', $account->id)->orderBy('payment_date','desc')->get() as $row)
+				<tr>
+					<td class="col-md-2">{{ $account->account }}</a></td>
+					<td class="col-md-2">{{ ($row->amount > 0 ? '+' : '') . number_format($row->amount, 2, ",",".") }}</td>
+					<td class="col-md-2">{{ date('d-m-Y', strtotime($row->payment_date)) }}</td>
+					<td class="col-md-6">{{ $row->description }}</td>
+				</tr>
+				@endforeach
+				@endforeach
+			</tbody>
+		</table>
+		<div class="row">
+			<div class="col-md-12">
+				<a href="#" data-toggle="modal" data-target="#cashbookModal" id="newcash" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuwe regel</a>
+				<a href="#" data-toggle="modal" data-target="#accountModal" id="newacc" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuwe rekening</a>
+			</div>
+		</div>
+			
+	</section>
 </div>
+</div>
+</section>
+</div>
+
+</div> 
+
 
