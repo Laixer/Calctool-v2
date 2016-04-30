@@ -51,7 +51,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Er is zojuist een verzoek ingediend voor het resetten van je wachtwoord van je gebruikersaccount van de <strong>Calculatie Tool</strong>.
+														Er is zojuist een verzoek ingediend om je wachtwoord te resetten van je gebruikersaccount bij de <strong>CalculatieTool.com</strong>.
 
 														Klik hieronder op <i>wachtwoord resetten</i> om je wachtwoord te herstellen.
 													</td>
@@ -78,7 +78,7 @@
 															Met vriendelijke groet,
 														<br>
 														<br>
-															<strong>Cal</strong>, van <a href="{{ URL::to('/') }}"><strong>CalculatieTool</strong></a>
+															<strong>Cal</strong>, van <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
 														<br>
 														<br>
 													</td>

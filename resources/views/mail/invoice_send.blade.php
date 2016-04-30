@@ -87,7 +87,7 @@
 															Met vriendelijke groet,
 														<br>
 														<br>
-															<strong>Uw vakanman</strong>, {{ $user }}</strong></a>
+															<strong>Uw vakman</strong>, {{ $user }}</strong></a>
 														<br>
 														<br>
 													</td>
