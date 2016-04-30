@@ -288,11 +288,6 @@ class ProjectController extends Controller {
 			return back()->withInput($request->all());
 		}
 
-		if ($request->input('tax_reverse'))
-			$project->tax_reverse = true;
-		else
-			$project->tax_reverse = false;
-
 		if ($request->input('use_estimate'))
 			$project->use_estimate = true;
 		else

@@ -679,7 +679,7 @@ $type = ProjectType::find($project->type_id);
 									<div class="white-row">
 										<h5><strong for="type">BTW verlegd</strong></h5>
 										<div class="form-group">
-											<input name="tax_reverse" {{ ($offer_last ? 'disabled' : '') }} type="checkbox" {{ $project->tax_reverse ? 'checked' : '' }}>
+											<input name="tax_reverse" disabled type="checkbox" {{ $project->tax_reverse ? 'checked' : '' }}>
 										</div>
 										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
 									</div>
