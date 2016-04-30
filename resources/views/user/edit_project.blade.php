@@ -18,6 +18,15 @@ use \Calctool\Models\Activity;
 use \Calctool\Models\Timesheet;
 use \Calctool\Models\TimesheetKind;
 use \Calctool\Models\Purchase;
+use \Calctool\Models\EstimateLabor;
+use \Calctool\Models\EstimateMaterial;
+use \Calctool\Models\EstimateEquipment;
+use \Calctool\Models\MoreLabor;
+use \Calctool\Models\MoreMaterial;
+use \Calctool\Models\MoreEquipment;
+use \Calctool\Models\CalculationLabor;
+use \Calctool\Models\CalculationMaterial;
+use \Calctool\Models\CalculationEquipment;
 
 
 $common_access_error = false;
@@ -324,7 +333,7 @@ $type = ProjectType::find($project->type_id);
 							<a href="#calc" data-toggle="tab">Uurtarief & Winstpercentages</a>
 						</li>
 						<li id="tab-advanced">
-							<a href="#advanced" data-toggle="tab">Geavanceerd</a>
+							<a href="#advanced" data-toggle="tab">Extra opties</a>
 						</li>
 						<li id="tab-status">
 							<a href="#status" data-toggle="tab">Projectstatus</a>
@@ -676,21 +685,71 @@ $type = ProjectType::find($project->type_id);
 									</div>
 								</div>
 
+								<?php $offer_last ? $invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first() : $invoice_end = null;
+								
+								$estim_total = 0;
+								$more_total = 0;
+								$less_total = 0;
+								$disable_estim = false;
+								$disable_more = false;
+								$disable_less = false;
+								
+								foreach(Chapter::where('project_id','=', $project->id)->get() as $chap) {
+									foreach(Activity::where('chapter_id','=', $chap->id)->get() as $activity) {
+										$estim_total += EstimateLabor::where('activity_id','=', $activity->id)->count('id');
+										$estim_total += EstimateMaterial::where('activity_id','=', $activity->id)->count('id');
+										$estim_total += EstimateEquipment::where('activity_id','=', $activity->id)->count('id');
+
+										$more_total += MoreLabor::where('activity_id','=', $activity->id)->count('id');
+										$more_total += MoreMaterial::where('activity_id','=', $activity->id)->count('id');
+										$more_total += MoreEquipment::where('activity_id','=', $activity->id)->count('id');	
+
+										$less_total += CalculationLabor::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
+										$less_total += CalculationMaterial::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
+										$less_total += CalculationEquipment::where('activity_id','=', $activity->id)->where('isless',true)->count('id');	
+									}
+								}
+
+								//
+								if ($offer_last) {
+									$disable_estim = true;
+								}
+								if ($estim_total>0) {
+									$disable_estim = true;
+								}
+
+								//
+								if ($invoice_end && $invoice_end->invoice_close) {
+									$disable_more = true;
+								}
+								if ($more_total>0) {
+									$disable_more = true;
+								}
+
+								//
+								if ($invoice_end && $invoice_end->invoice_close) {
+									$disable_less = true;
+								}
+								if ($less_total>0) {
+									$disable_less = true;
+								}
+
+								?>
 								<div class="col-md-4">
 									<div class="white-row">
 										<h5><strong for="type">Stelposten</strong></h5>
 										<div class="form-group">
-											<input name="use_estimate" {{ ($offer_last ? 'disabled' : '') }} type="checkbox" {{ $project->use_estimate ? 'checked' : '' }}>
+											<input name="use_estimate" {{ ($disable_estim ? 'disabled' : '') }} type="checkbox" {{ $project->use_estimate ? 'checked' : '' }}>
 										</div>
 										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
 									</div>
 								</div>
-								<?php $offer_last ? $invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first() : $invoice_end = null; ?>
+								
 								<div class="col-md-4">
 									<div class="white-row">
 										<h5><strong for="type">Meerwerk</strong></h5>
 										<div class="form-group">
-											<input name="use_more" type="checkbox" {{ ($invoice_end ? 'disabled' : '') }} {{ $project->use_more ? 'checked' : '' }}>
+											<input name="use_more" type="checkbox" {{ ($disable_more ? 'disabled' : '') }} {{ $project->use_more ? 'checked' : '' }}>
 										</div>
 										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
 									</div>
@@ -701,7 +760,7 @@ $type = ProjectType::find($project->type_id);
 									<div class="white-row">
 										<h5><strong for="type">Minderwerk</strong></h5>
 										<div class="form-group">
-											<input name="use_less" type="checkbox" {{ ($invoice_end ? 'disabled' : '') }} {{ $project->use_less ? 'checked' : '' }}>
+											<input name="use_less" type="checkbox" {{ ($disable_less ? 'disabled' : '') }} {{ $project->use_less ? 'checked' : '' }}>
 										</div>
 										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
 									</div>
