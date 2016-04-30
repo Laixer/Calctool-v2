@@ -11,6 +11,8 @@ use \Calctool\Models\ProjectType;
 use \Calctool\Models\Resource;
 use \Calctool\Models\Relation;
 use \Calctool\Models\Contact;
+use \Calctool\Models\Chapter;
+use \Calctool\Models\Activity;
 use \Calctool\Models\ProjectShare;
 use \Calctool\Http\Controllers\InvoiceController;
 
@@ -288,20 +290,79 @@ class ProjectController extends Controller {
 			return back()->withInput($request->all());
 		}
 
-		if ($request->input('use_estimate'))
-			$project->use_estimate = true;
-		else
-			$project->use_estimate = false;
+		$invoice_end = null;
+		$offer_last = Offer::where('project_id',$project->id)->first();
+		if ($offer_last){
+			$invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose',true)->first();
+		}
+								
+		$estim_total = 0;
+		$more_total = 0;
+		$less_total = 0;
+		$disable_estim = false;
+		$disable_more = false;
+		$disable_less = false;
+		
+		foreach(Chapter::where('project_id','=', $project->id)->get() as $chap) {
+			foreach(Activity::where('chapter_id','=', $chap->id)->get() as $activity) {
+				$estim_total += EstimateLabor::where('activity_id','=', $activity->id)->count('id');
+				$estim_total += EstimateMaterial::where('activity_id','=', $activity->id)->count('id');
+				$estim_total += EstimateEquipment::where('activity_id','=', $activity->id)->count('id');
 
-		if ($request->input('use_more'))
-			$project->use_more = true;
-		else
-			$project->use_more = false;
+				$more_total += MoreLabor::where('activity_id','=', $activity->id)->count('id');
+				$more_total += MoreMaterial::where('activity_id','=', $activity->id)->count('id');
+				$more_total += MoreEquipment::where('activity_id','=', $activity->id)->count('id');	
 
-		if ($request->input('use_less'))
-			$project->use_less = true;
-		else
-			$project->use_less = false;
+				$less_total += CalculationLabor::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
+				$less_total += CalculationMaterial::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
+				$less_total += CalculationEquipment::where('activity_id','=', $activity->id)->where('isless',true)->count('id');	
+			}
+		}
+
+		//
+		if ($offer_last) {
+			$disable_estim = true;
+		}
+		if ($estim_total>0) {
+			$disable_estim = true;
+		}
+
+		//
+		if ($invoice_end && $invoice_end->invoice_close) {
+			$disable_more = true;
+		}
+		if ($more_total>0) {
+			$disable_more = true;
+		}
+
+		//
+		if ($invoice_end && $invoice_end->invoice_close) {
+			$disable_less = true;
+		}
+		if ($less_total>0) {
+			$disable_less = true;
+		}
+
+		if (!$disable_estim) {
+			if ($request->input('use_estimate'))
+				$project->use_estimate = true;
+			else
+				$project->use_estimate = false;
+		}
+
+		if (!$disable_more) {
+			if ($request->input('use_more'))
+				$project->use_more = true;
+			else
+				$project->use_more = false;
+		}
+
+		if (!$disable_less) {
+			if ($request->input('use_less'))
+				$project->use_less = true;
+			else
+				$project->use_less = false;
+		}
 
 		if ($request->input('mail_reminder'))
 			$project->pref_email_reminder = true;

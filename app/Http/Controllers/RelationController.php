@@ -284,7 +284,7 @@ class RelationController extends Controller {
 			'email_comp' => array('required_if:relationkind,1','email','max:80'),
 			/* Contact */
 			'contact_name' => array('required','max:50'),
-			// 'contact_firstname' => array('required','max:30'),
+			'contact_firstname' => array('max:30'),
 			'email' => array('required','email','max:80'),
 			'contactfunction' => array('required','numeric'),
 			/* Adress */

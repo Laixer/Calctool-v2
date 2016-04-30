@@ -106,10 +106,11 @@ return [
         ],
         'zipcode' => [
             'required' => 'Postcode is een verplicht veld',
-            'digits' => 'Postcode moet exact 6 karakters bevatten',
+            'numeric' => 'Postcode moet exact 6 karakters bevatten',
         ],
         'city' => [
             'required' => 'Plaats is een verplicht veld',
+            'max' => 'Plaats mag niet groter zijn dan 35 karakters',
         ],
         'email' => [
             'required' => 'Email is een verplicht veld',
@@ -132,6 +133,7 @@ return [
         ],
         'debtor' => [
             'required' => 'Het debiteurennummer is een verplicht veld',
+            'max' => 'Het debiteurennummer mag niet groter zijn dan 10 karakters',
         ],
         'website' => [
             'url' => 'De URL van de website is ongeldig',
