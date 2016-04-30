@@ -114,6 +114,9 @@ return [
         ],
         'company_name' => [
             'required_if' => 'Bedrijfsnaam is een verplicht veld voor deze relatiesoort',
+        ],
+        'debtor' => [
+            'required' => 'Het debiteurennummer is een verplicht veld',
         ]
     ],
 
