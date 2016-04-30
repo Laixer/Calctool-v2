@@ -155,9 +155,9 @@ $(document).ready(function() {
 						<div class="form-group">
 							<label for="relationkind">Relatiesoort*</label>
 							<select name="relationkind" id="relationkind" class="form-control pointer">
-							@foreach (RelationKind::all() as $kind)
+								@foreach (RelationKind::all() as $kind)
 								<option {{ old('relationkind') && old('relationkind') == $kind->id ? 'selected' : '' }} value="{{ $kind->id }}">{{ ucwords($kind->kind_name) }}</option>
-							@endforeach
+								@endforeach
 							</select>
 						</div>
 					</div>
@@ -186,7 +186,7 @@ $(document).ready(function() {
 							<label for="company_type">Bedrijfstype*</label>
 							<select name="company_type" id="company_type" class="form-control pointer">
 							@foreach (RelationType::all() as $type)
-								<option value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
+								<option {{ (old('company_type') == $type->id ? 'selected' : '') }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
 							@endforeach
 							</select>
 						</div>
@@ -265,7 +265,7 @@ $(document).ready(function() {
 							<label for="province">Provincie*</label>
 							<select name="province" id="province" class="form-control pointer">
 								@foreach (Calctool\Models\Province::all() as $province)
-									<option value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
+								<option  {{ (old('province') == $province->id ? 'selected' : '') }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
 								@endforeach
 							</select>
 						</div>
@@ -276,7 +276,7 @@ $(document).ready(function() {
 							<label for="country">Land*</label>
 							<select name="country" id="country" class="form-control pointer">
 								@foreach (Calctool\Models\Country::all() as $country)
-									<option {{ $country->country_name=='nederland' ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
+								<option {{ (old('country') ? (old('country') == $country->id ? 'selected' : '') : $country->country_name=='nederland' ? 'selected' : '') }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
 								@endforeach
 							</select>
 						</div>
@@ -326,7 +326,7 @@ $(document).ready(function() {
 							<label for="contactfunction">Functie*</label>
 							<select name="contactfunction" id="contactfunction" class="form-control pointer">
 							@foreach (Calctool\Models\ContactFunction::all() as $function)
-								<option {{ $function->function_name=='directeur' ? 'selected' : '' }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
+								<option {{ (old('contactfunction') ? (old('contactfunction') == $function->id ? 'selected' : '') : $function->function_name=='directeur' ? 'selected' : '') }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
 							@endforeach
 							</select>
 						</div>
@@ -336,8 +336,8 @@ $(document).ready(function() {
 							<label for="gender" style="display:block;">Geslacht</label>
 							<select name="gender" id="gender" class="form-control pointer">
 								<option value="-1">Selecteer</option>
-								<option value="M">Man</option>
-								<option value="V">Vrouw</option>
+								<option {{ (old('gender') == 'M' ? 'selected' : '') }} value="M">Man</option>
+								<option {{ (old('gender') == 'V' ? 'selected' : '') }} value="V">Vrouw</option>
 							</select>
 						</div>
 					</div>
