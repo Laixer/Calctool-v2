@@ -48,9 +48,9 @@ $(document).ready(function() {
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-body" id="introform">
-				<h4>Wallawalla <strong>CT</strong></h4>
+				<h4>Welkom bij de<strong> CalculatieTool.com</strong></h4>
 				<hr>
-				<span>Welkom bij de toolz</span>
+				<span>Voor de beste ervaring raden wij je aan de Quickstart te starten. Wij stellen dan samen binnen 1 minuut de <strong>CalculatieTool.com</strong> zo voor je in dat je daarna direct je eerste project kan gaan calculeren.</span>
 			</div>
 			</form>
 
@@ -60,7 +60,7 @@ $(document).ready(function() {
 					<p><p>
 				</div>
 				<div class="col-md-6">
-					<button class="starttour btn btn-primary"><i class="fa fa-check"></i> Begin tour</button>
+					<button class="starttour btn btn-primary"><i class="fa fa-check"></i> Begin Quickstart</button>
 				</div>
 			</div>
 

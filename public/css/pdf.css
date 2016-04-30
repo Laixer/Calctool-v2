@@ -1,7 +1,11 @@
-@font-face {
-    font-family: 'Arial';
-    src: url(/fonts/SourceSansPro-Regular.ttf);
+ @font-face {
+        font-family: Jolly;
+        src: url('../fonts/JollyLodger-Regular.ttf') format('truetype');
 }
+
+   <style type = "text/css">
+        p { font-family: 'Jolly', cursive; }
+    </style>
 
 .clearfix:after {
   content: "";
@@ -15,7 +19,7 @@ a {
 }
 
 body {
-  position: relative;
+  /*position: relative;*/
   width: 21cm;
   height: 29.7cm;
   margin: 0 auto;
@@ -318,3 +322,4 @@ footer {
   text-align: center;
 }
 
+*/
