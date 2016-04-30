@@ -100,7 +100,7 @@ return [
         ],
         'address_number' => [
             'required' => 'Huisnummer is een verplicht veld',
-            'alpha' => 'Huisnummer mag alleen letters en getallen bevatten',
+            'alpha_num' => 'Huisnummer mag alleen letters en getallen bevatten',
             'max' => 'Huisnummer mag niet groter zijn dan 5 karakters',
         ],
         'zipcode' => [
@@ -113,8 +113,12 @@ return [
             'required' => 'Email is een verplicht veld',
             'email' => 'Email is niet geldig',
         ],
+        'contact_firstname' => [
+            'max' => 'Voornaam mag niet groter zijn dan 30 karakters',
+        ],
         'contact_name' => [
             'required' => 'Achternaam contactpersoon is een verplicht veld',
+            'max' => 'Achternaam mag niet groter zijn dan 50 karakters',
         ],
         'email_comp' => [
             'required_if' => 'Email bedrijf is een verplicht veld voor deze relatiesoort',
@@ -122,6 +126,7 @@ return [
         'company_name' => [
             'required_if' => 'Bedrijfsnaam is een verplicht veld voor deze relatiesoort',
             'required' => 'Bedrijfsnaam is een verplicht veld',
+            'max' => 'Bedrijfsnaam mag niet groter zijn dan 50 karakters',
         ],
         'debtor' => [
             'required' => 'Het debiteurennummer is een verplicht veld',

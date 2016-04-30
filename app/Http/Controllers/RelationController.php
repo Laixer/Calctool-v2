@@ -170,7 +170,7 @@ class RelationController extends Controller {
 		$this->validate($request, [
 			'id' => array('required','integer'),
 			'contact_name' => array('required','max:50'),
-			// 'contact_firstname' => array('required','max:30'),
+			'contact_firstname' => array('max:30'),
 			'email' => array('required','email','max:80'),
 		]);
 
