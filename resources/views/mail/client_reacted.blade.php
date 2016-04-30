@@ -51,7 +51,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Uw opdrachtgever voor project {{ $project_name }} heeft geregeerd.<br />
+														Uw opdrachtgever voor project {{ $project_name }} heeft gereageerd.<br />
 														De reactie van uw opdrachtgever:<br />
 														{!! $note !!}
 													</td>
