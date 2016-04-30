@@ -263,6 +263,9 @@ $type = ProjectType::find($project->type_id);
             ]
         })
 	    $("[name='tax_reverse']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	    $("[name='use_estimate']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	    $("[name='use_more']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	    $("[name='use_less']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	});
 
 </script>
@@ -310,15 +313,18 @@ $type = ProjectType::find($project->type_id);
 				<div class="tabs nomargin-top">
 
 					<ul class="nav nav-tabs">
-						<li id="tab-status">
-							<a href="#status" data-toggle="tab">Projectstatus</a>
-						</li>
 						<li id="tab-project">
 							<a href="#project" data-toggle="tab">Projectgegevens</a>
 						</li>
 						@if ($type->type_name != 'snelle offerte en factuur')
 						<li id="tab-calc">
 							<a href="#calc" data-toggle="tab">Uurtarief & Winstpercentages</a>
+						</li>
+						<li id="tab-advanced">
+							<a href="#advanced" data-toggle="tab">Geavanceerd</a>
+						</li>
+						<li id="tab-status">
+							<a href="#status" data-toggle="tab">Projectstatus</a>
 						</li>
 						@endif
 						@if ($share && $share->client_note )
@@ -546,17 +552,6 @@ $type = ProjectType::find($project->type_id);
 									</div>
 
 								</div>
-								<h4>Projectinstellingen</h4>
-
-								<h5><strong>Email herinnering aanzetten </strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="De CalculatieTool.com kan bij digitaal verstuurde offertes en facturen respectievelijk na het verstrijken van geldigheid van de offerte of ingestelde betalingsconditie van de factuur auomatische herinneringen sturen naar je klant. Jij als gebruiker wordt hierover altijd geinformeerd met een bericht in je notificaties. De teskt in de te verzenden mail staat default ingesteld in je 'voorkeuren' onder 'mijn account', deze is aanpasbaar per account." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h5>
-								<div class="row">
-									<div class="col-md-2">
-										<div class="form-group">
-											<input name="toggle-mail-reminder" type="checkbox" {{ $project->pref_email_reminder ? 'checked' : '' }}>
-										</div>
-									</div>
-								</div>
-
 								<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
 								<div class="row">
 									<div class="form-group ">
@@ -660,6 +655,70 @@ $type = ProjectType::find($project->type_id);
 						</form>
 						</div>
 						@endif
+
+
+
+
+
+						<div id="advanced" class="tab-pane">
+							
+							<form method="POST" action="/project/new" accept-charset="UTF-8">
+							{!! csrf_field() !!}
+							<div class="row">
+
+								<div class="col-md-4">
+									<div class="white-row">
+										<h5><strong for="type">BTW verlegd</strong></h5>
+										<div class="form-group">
+											<input name="tax_reverse" type="checkbox">
+										</div>
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+									</div>
+								</div>
+
+								<div class="col-md-4">
+									<div class="white-row">
+										<h5><strong for="type">Stelposten</strong></h5>
+										<div class="form-group">
+											<input name="use_estimate" type="checkbox">
+										</div>
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+									</div>
+								</div>
+
+								<div class="col-md-4">
+									<div class="white-row">
+										<h5><strong for="type">Meerwerk</strong></h5>
+										<div class="form-group">
+											<input name="use_more" type="checkbox">
+										</div>
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<div class="white-row">
+										<h5><strong for="type">Minderwerk</strong></h5>
+										<div class="form-group">
+											<input name="use_less" type="checkbox">
+										</div>
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+									</div>
+								</div>
+
+								<div class="col-md-4">
+									<div class="white-row">
+										<h5><strong for="type">Email herinnering aanzetten</strong></h5>
+										<div class="form-group">
+											<input name="toggle-mail-reminder" type="checkbox" {{ $project->pref_email_reminder ? 'checked' : '' }}>
+										</div>
+										<p>De CalculatieTool.com kan bij digitaal verstuurde offertes en facturen respectievelijk na het verstrijken van geldigheid van de offerte of ingestelde betalingsconditie van de factuur auomatische herinneringen sturen naar je klant. Jij als gebruiker wordt hierover altijd geinformeerd met een bericht in je notificaties. De teskt in de te verzenden mail staat default ingesteld in je 'voorkeuren' onder 'mijn account', deze is aanpasbaar per account.</p>
+									</div>
+								</div>
+							</div>
+							</form>
+						</div>
 
 						<div id="hour" class="tab-pane">
 							<table class="table table-striped">
