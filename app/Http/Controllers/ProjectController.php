@@ -278,7 +278,44 @@ class ProjectController extends Controller {
 
 		$project->save();
 
-		return back()->with('success', 'Winstpercentages aangepast');
+		return back()->with('success', 'Uurtarief & winstpercentages aangepast');
+	}
+
+	public function doUpdateAdvanced(Request $request)
+	{
+		$project = Project::find($request->input('id'));
+		if (!$project || !$project->isOwner()) {
+			return back()->withInput($request->all());
+		}
+
+		if ($request->input('tax_reverse'))
+			$project->tax_reverse = true;
+		else
+			$project->tax_reverse = false;
+
+		if ($request->input('use_estimate'))
+			$project->use_estimate = true;
+		else
+			$project->use_estimate = false;
+
+		if ($request->input('use_more'))
+			$project->use_more = true;
+		else
+			$project->use_more = false;
+
+		if ($request->input('use_less'))
+			$project->use_less = true;
+		else
+			$project->use_less = false;
+
+		if ($request->input('mail_reminder'))
+			$project->pref_email_reminder = true;
+		else
+			$project->pref_email_reminder = false;
+
+		$project->save();
+
+		return back()->with('success', 'Geavanceerde opties opgeslagen');
 	}
 
 	public function doUpdateWorkExecution(Request $request)

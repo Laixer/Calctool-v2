@@ -11,9 +11,6 @@ if (empty($project)) {
 	<a href="/project/new" class="current">Project</a>
 	<span>Calculeren</span>
 	<span>Offerte</span>
-	<span>Stelposten stellen</span>
-	<span>Minderwerk</span>
-	<span>Meerwerk</span>
 	<span>Factuur</span>
 	<span>Resultaat</span>
 </div>

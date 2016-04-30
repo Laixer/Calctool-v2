@@ -68,6 +68,9 @@ $type = ProjectType::find($project->type_id);
 		$('#tab-hour').click(function(e){
 			sessionStorage.toggleTabProj{{Auth::id()}} = 'hour';
 		});
+		$('#tab-advanced').click(function(e){
+			sessionStorage.toggleTabProj{{Auth::id()}} = 'advanced';
+		});
 		$('#tab-purchase').click(function(e){
 			sessionStorage.toggleTabProj{{Auth::id()}} = 'purchase';
 		});
@@ -241,8 +244,7 @@ $type = ProjectType::find($project->type_id);
 				location.reload();
 			});
     	});
-    	$("[name='toggle-mail-reminder']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
-		
+    			
         $('#summernote').summernote({
             height: $(this).attr("data-height") || 200,
             toolbar: [
@@ -266,6 +268,7 @@ $type = ProjectType::find($project->type_id);
 	    $("[name='use_estimate']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	    $("[name='use_more']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	    $("[name='use_less']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	    $("[name='mail_reminder']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	});
 
 </script>
@@ -656,21 +659,18 @@ $type = ProjectType::find($project->type_id);
 						</div>
 						@endif
 
-
-
-
-
 						<div id="advanced" class="tab-pane">
 							
-							<form method="POST" action="/project/new" accept-charset="UTF-8">
+							<form method="POST" action="/project/updateadvanced" accept-charset="UTF-8">
 							{!! csrf_field() !!}
+							<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
 							<div class="row">
 
 								<div class="col-md-4">
 									<div class="white-row">
 										<h5><strong for="type">BTW verlegd</strong></h5>
 										<div class="form-group">
-											<input name="tax_reverse" type="checkbox">
+											<input name="tax_reverse" type="checkbox" {{ $project->tax_reverse ? 'checked' : '' }}>
 										</div>
 										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
 									</div>
@@ -680,7 +680,7 @@ $type = ProjectType::find($project->type_id);
 									<div class="white-row">
 										<h5><strong for="type">Stelposten</strong></h5>
 										<div class="form-group">
-											<input name="use_estimate" type="checkbox">
+											<input name="use_estimate" type="checkbox" {{ $project->use_estimate ? 'checked' : '' }}>
 										</div>
 										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
 									</div>
@@ -690,7 +690,7 @@ $type = ProjectType::find($project->type_id);
 									<div class="white-row">
 										<h5><strong for="type">Meerwerk</strong></h5>
 										<div class="form-group">
-											<input name="use_more" type="checkbox">
+											<input name="use_more" type="checkbox" {{ $project->use_more ? 'checked' : '' }}>
 										</div>
 										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
 									</div>
@@ -701,7 +701,7 @@ $type = ProjectType::find($project->type_id);
 									<div class="white-row">
 										<h5><strong for="type">Minderwerk</strong></h5>
 										<div class="form-group">
-											<input name="use_less" type="checkbox">
+											<input name="use_less" type="checkbox" {{ $project->use_less ? 'checked' : '' }}>
 										</div>
 										<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
 									</div>
@@ -711,10 +711,16 @@ $type = ProjectType::find($project->type_id);
 									<div class="white-row">
 										<h5><strong for="type">Email herinnering aanzetten</strong></h5>
 										<div class="form-group">
-											<input name="toggle-mail-reminder" type="checkbox" {{ $project->pref_email_reminder ? 'checked' : '' }}>
+											<input name="mail_reminder" type="checkbox" {{ $project->pref_email_reminder ? 'checked' : '' }}>
 										</div>
 										<p>De CalculatieTool.com kan bij digitaal verstuurde offertes en facturen respectievelijk na het verstrijken van geldigheid van de offerte of ingestelde betalingsconditie van de factuur auomatische herinneringen sturen naar je klant. Jij als gebruiker wordt hierover altijd geinformeerd met een bericht in je notificaties. De teskt in de te verzenden mail staat default ingesteld in je 'voorkeuren' onder 'mijn account', deze is aanpasbaar per account.</p>
 									</div>
+								</div>
+							</div>
+							<br/>
+							<div class="row">
+								<div class="col-md-12">
+									<button class="btn btn-primary {{ ($cntinv ? 'disabled' : '') }}"><i class="fa fa-check"></i> Opslaan</button>
 								</div>
 							</div>
 							</form>
