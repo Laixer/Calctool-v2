@@ -105,7 +105,7 @@ use \Calctool\Calculus\MoreOverview;
 	</div>
 
 	<div>
-		<h4>Totalen project</h4>
+		<h4>Totalen project</h4s>
 		<div class="toggle-content">
 			<table class="table table-striped">
 				<thead>
