@@ -48,12 +48,29 @@ $(document).ready(function() {
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-body" id="introform">
-				<h4>Welkom bij de<strong> CalculatieTool.com</strong></h4>
+				<div class="row">
+					<div class="col-md-8">
+						<h4>Welkom bij de<strong> CalculatieTool.com</strong></h4>
+					</div>
+					<div class="col-md-4">
+						<a class="logo" href="/">
+						<img src="/images/logo2.png" width="229px" alt="Calctool">
+						</a>
+					</div>
+				</div>
 				<hr>
-				<span>Voor de beste ervaring raden wij je aan de Quickstart te starten. Wij stellen dan samen binnen 1 minuut de <strong>CalculatieTool.com</strong> zo voor je in dat je daarna direct je eerste project kan gaan calculeren.</span>
+				<div class="row">
+					<div class="col-md-8">
+						<span>Voor de beste ervaring raden wij je aan de Quickstart te starten. Wij stellen dan samen binnen 1 minuut de <strong>CalculatieTool.com</strong> zo voor je in dat je daarna direct je eerste project kan gaan calculeren.</span>
+					</div>
+					<div class="col-md-4">
+						<a class="logo2" href="/">
+							<img src="/images/cal_bouwen.png" width="229px" alt="Calctool">
+						</a>
+					</div>
+				</div>
 			</div>
 			</form>
-
 			<div class="modal-footer">
 				<div class="col-md-6">
 					<!--<p>Scherm 1/2<p>-->
@@ -63,7 +80,6 @@ $(document).ready(function() {
 					<button class="starttour btn btn-primary"><i class="fa fa-check"></i> Begin Quickstart</button>
 				</div>
 			</div>
-
 		</div>
 	</div>
 </div>
