@@ -99,7 +99,8 @@ class RelationController extends Controller {
 
 		$relation->save();
 
-		return back()->with('success', 'Uw bedrijfsgegevens zijn aangepast');
+		//return back()->with('success', 'Uw bedrijfsgegevens zijn aangepast');
+		return redirect('/mycompany/?multipage=true')->with('success', 'Uw bedrijfsgegevens zijn aangepast');
 	}
 
 	public function doUpdate(Request $request)

@@ -166,19 +166,29 @@ $(document).ready(function() {
 	    })
 
 	if (sessionStorage.introDemo) {
+		// sessionStorage.clear();
+		// sessionStorage.introDemo = true;
 		var demo = introJs().
 			setOption('nextLabel', 'Volgende').
 			setOption('prevLabel', 'Vorige').
 			setOption('skipLabel', 'Overslaan').
-			setOption('doneLabel', 'Volgende pagina').
+			setOption('doneLabel', 'Klaar').
+			// setOption('disableInteraction', true).
 			//oncomplete(function(){
-			//	window.location.href = '/?intro=true';
+			//	window.location.href = '/';
 			//	sessionStorage.introDemo = 0;
-			//})
+			//}).
 			onexit(function(){
 				sessionStorage.removeItem('introDemo');
-			}).onchange(function(){
-				sessionStorage.introDemo = this._currentStep;
+			}).onbeforechange(function(){
+				console.log('Step ' + this._currentStep);
+				if (this._currentStep == 3) {
+					$('#tab-contact').addClass('active');
+					$('#contact').addClass('active');
+
+					$('#tab-company').removeClass('active');
+					$('#company').removeClass('active');
+				}
 			});
 
 		if (sessionStorage.introDemo == 0) {
@@ -260,7 +270,7 @@ $(document).ready(function() {
 					<div class="tab-content">
 						<div id="company" class="tab-pane">
 
-							{!! $relation ? '<form action="relation/updatemycompany" method="post">' : '<form action="relation/newmycompany" method="post">' !!}
+							{!! $relation ? '<form action="relation/updatemycompany?multipage=true" method="post">' : '<form action="relation/newmycompany" method="post">' !!}
 							{!! csrf_field() !!}
 
 <div data-step="1" data-intro="Stap 1: Vul jouw bedrijfgegevens in. Alleen de velden meteen (*) zijn verplicht.">

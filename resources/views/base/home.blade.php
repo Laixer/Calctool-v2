@@ -23,24 +23,52 @@ $relation = Relation::find(Auth::user()->self_id);
 
 <script type="text/javascript">
 $(document).ready(function() {
-	$('#starttour').click(function(){
+	$('.starttour').click(function(){
+		$('#introModal').modal('hide')
+
 		introJs().
 		setOption('nextLabel', 'Volgende').
 		setOption('prevLabel', 'Vorige').
 		setOption('skipLabel', 'Overslaan').
 		setOption('doneLabel', 'Volgende pagina').
 		start().oncomplete(function(){
-			window.location.href = '/mycompany?intro=true';
+			window.location.href = '/mycompany';
 			sessionStorage.introDemo = 0;
 		}).onexit(function(){
-			sessionStorage.removeItem('introDemo');
+			sessionStorage.introDemo = 0;
 		}).onchange(function(){
 			sessionStorage.introDemo = this._currentStep;
 		});
 		sessionStorage.introDemo = 1;
 	});
+	$('#introModal').modal('toggle');
 });
 </script>
+<div class="modal fade" id="introModal" tabindex="-1" role="dialog" aria-labelledby="introModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-body" id="introform">
+				<h4>Wallawalla <strong>CT</strong></h4>
+				<hr>
+				<span>Welkom bij de toolz</span>
+			</div>
+			</form>
+
+			<div class="modal-footer">
+				<div class="col-md-6">
+					<!--<p>Scherm 1/2<p>-->
+					<p><p>
+				</div>
+				<div class="col-md-6">
+					<button class="starttour btn btn-primary"><i class="fa fa-check"></i> Begin tour</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
 
 @if ($next_step && $next_step=='intro_'.Auth::id())
 <script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
@@ -414,7 +442,7 @@ $(document).ready(function() {
 						@else
 						<h2><strong>Je eerste</strong> stap</h2>
 						<div class="bs-callout text-center whiteBg">
-							<h3><button id="starttour" class="btn btn-primary btn-lg">Take the Tour</button> <strong>OF</strong> <a href="/project/new" class="btn btn-primary btn-lg" kaas-intro="Stap 9: Maak nu je eerste prject aan.">Start nieuw project</a></h3>
+							<h3><button class="starttour btn btn-primary btn-lg">Take the Tour</button> <strong>OF</strong> <a href="/project/new" class="btn btn-primary btn-lg" kaas-intro="Stap 9: Maak nu je eerste prject aan.">Start nieuw project</a></h3>
 						</div>
 						@endif
 					</div>
@@ -454,14 +482,6 @@ $(document).ready(function() {
 
 				});
 				</script>
-    <script type="text/javascript">
-      document.getElementById('startButton').onclick = function() {
-        introJs().setOption('doneLabel', 'Next page').start().oncomplete(function() {
-          window.location.href = '/?multipage=true';
-        });
-      };
-    </script>
-
 			</div>
 		</div>
 	</div> 
