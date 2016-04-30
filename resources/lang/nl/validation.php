@@ -97,6 +97,7 @@ return [
         ],
         'street' => [
             'required' => 'Straat is een verplicht veld',
+            'max' => 'Straat mag niet groter zijn dan 60 karakters',
         ],
         'address_number' => [
             'required' => 'Huisnummer is een verplicht veld',
@@ -105,6 +106,7 @@ return [
         ],
         'zipcode' => [
             'required' => 'Postcode is een verplicht veld',
+            'digits' => 'Postcode moet exact 6 karakters bevatten',
         ],
         'city' => [
             'required' => 'Plaats is een verplicht veld',
@@ -145,6 +147,12 @@ return [
         'secret_confirmation' => [
             'min' => 'Bevestig het wachtwoord',
             'required' => 'Bevestig het wachtwoord',
+        ],
+        'iban_name' => [
+            'required' => 'Naam rekeninghouder is verplicht',
+        ],
+        'image' => [
+            'mimes' => 'Het logo een van de volgende bestandstypes zijn: jpeg, bmp, png, gif',
         ],
         
     ],
