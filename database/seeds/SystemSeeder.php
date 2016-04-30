@@ -5,6 +5,8 @@ use Illuminate\Database\Eloquent\Model;
 
 use \Calctool\Models\UserType;
 use \Calctool\Models\User;
+use \Calctool\Models\Relation;
+use \Calctool\Models\Contact;
 use \Calctool\Models\MessageBox;
 
 /*
@@ -36,6 +38,41 @@ class SystemSeeder extends Seeder {
 		$system_user->email = 'info@calculatietool.com';
 		$system_user->user_type = $system_user_type->id;
 		$system_user->save();
+
+		$relation = new Relation;
+		$relation->user_id = $system_user->id;
+		$relation->kind_id = 1;
+		$relation->debtor_code = '12345';
+		$relation->company_name = 'CalculatieTool.com';
+		$relation->type_id = 28;
+		$relation->kvk = '54565243';
+		$relation->btw = 'NL851353423B01';
+		$relation->phone = '0612345678';
+		$relation->email = 'info@calculatietool.com';
+		$relation->website = 'http://www.calculatietool.com';
+		$relation->address_street = 'Odinholm';
+		$relation->address_number = '25';
+		$relation->address_postal = '3124SC';
+		$relation->address_city = 'Schiedam';
+		$relation->province_id = 9;
+		$relation->country_id = 34;
+		$relation->iban = 'NL29INGB0006863509';
+		$relation->iban_name = 'CalculatieTool.com';
+		$relation->save();
+
+		$system_user->self_id = $relation->id;
+		$system_user->save();
+
+		$contact = new Contact;
+		$contact->firstname = 'Cal';
+		$contact->lastname = 'CT';
+		$contact->mobile = '0612345678';
+		$contact->phone = '01012345763';
+		$contact->email = 'info@calculatietool.com';
+		$contact->relation_id = $relation->id;
+		$contact->function_id = 7;
+		$contact->gender = 'M';
+		$contact->save();
 
 		$guest_user = new User;
 		$guest_user->username = 'guest';

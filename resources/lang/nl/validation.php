@@ -100,6 +100,8 @@ return [
         ],
         'address_number' => [
             'required' => 'Huisnummer is een verplicht veld',
+            'alpha' => 'Huisnummer mag alleen letters en getallen bevatten',
+            'max' => 'Huisnummer mag niet groter zijn dan 5 karakters',
         ],
         'zipcode' => [
             'required' => 'Postcode is een verplicht veld',
@@ -132,7 +134,7 @@ return [
         ],
         'secret' => [
             'confirmed' => 'Wachtwoorden komen niet overeen',
-            'min' => 'Nieuwe wachtwoord moet minimaal 5 characters bevatten',
+            'min' => 'Nieuwe wachtwoord moet minimaal 5 karakters bevatten',
             'required' => 'Geef een wachtwoord op',
         ],
         'secret_confirmation' => [
