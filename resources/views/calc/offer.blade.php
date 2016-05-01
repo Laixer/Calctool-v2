@@ -368,10 +368,10 @@ $type = ProjectType::find($project->type_id);
 		<button class="btn btn-primary osave">Voorbeeld</button>
 		<?php } ?>
 		<?php } else { ?>
-		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
+		<a href="#" data-step="1" data-intro="Stap 8: Bepaal offerte optie" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
 		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
 		@if (CalculationEndresult::totalProject($project))
-		<button class="btn btn-primary osave">Voorbeeld</button>
+		<button data-step="2" data-intro="Stap 9: Maak een voorbeeld (PDF in concept-versie)" class="btn btn-primary osave">Voorbeeld</button>
 		@endif
 		<?php } ?>
 		<?php } ?>
