@@ -552,4 +552,10 @@ class UserController extends Controller {
 
 		return response()->json(['success' => 1, 'amount' => $promo->amount, 'famount' => number_format($promo->amount, 0,",",".")]);
 	}
+
+	public function doLoadDemoProject() {
+		\DemoProjectTemplate::setup(Auth::id());
+
+		return back()->with('success', 'Demoproject geladen');
+	}
 }

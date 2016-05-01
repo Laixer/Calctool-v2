@@ -33,6 +33,9 @@ $(document).ready(function() {
 	$('#tab-contact').click(function(e){
 		sessionStorage.toggleTabMyAcc{{Auth::id()}} = 'contact';
 	});
+	$('#tab-other').click(function(e){
+		sessionStorage.toggleTabMyAcc{{Auth::id()}} = 'other';
+	});
 	if (sessionStorage.toggleTabMyAcc{{Auth::id()}}){
 		$toggleOpenTab = sessionStorage.toggleTabMyAcc{{Auth::id()}};
 		$('#tab-'+$toggleOpenTab).addClass('active');
@@ -173,6 +176,9 @@ $(document).ready(function() {
 						</li>
 						<li id="tab-contact">
 							<a href="#contact" data-toggle="tab">Wachtwoord</a>
+						</li>
+						<li id="tab-other">
+							<a href="#other" data-toggle="tab">Overig</a>
 						</li>
 					</ul>
 
@@ -364,6 +370,21 @@ $(document).ready(function() {
 								</div>
 							</div>
 						</form>
+
+						</div>
+						
+						<div id="other" class="tab-pane">
+
+							<!--<form method="POST" action="myaccount/security/update" accept-charset="UTF-8">-->
+                            {{-- !! csrf_field() !! --}}
+
+							<h4 class="company">Demoproject</h4>
+							<div class="row">
+								<div class="col-md-12">
+									<a href="/myaccount/loaddemo" class="btn btn-primary"><i class="fa fa-check"></i> Laad demoproject</a>
+								</div>
+							</div>
+						<!--</form>-->
 
 						</div>
 					</div>

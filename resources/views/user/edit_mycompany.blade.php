@@ -166,22 +166,17 @@ $(document).ready(function() {
 	    })
 
 	if (sessionStorage.introDemo) {
-		// sessionStorage.clear();
-		// sessionStorage.introDemo = true;
+
 		var demo = introJs().
 			setOption('nextLabel', 'Volgende').
 			setOption('prevLabel', 'Vorige').
 			setOption('skipLabel', 'Overslaan').
 			setOption('doneLabel', 'Klaar').
-			// setOption('disableInteraction', true).
-			//oncomplete(function(){
-			//	window.location.href = '/';
-			//	sessionStorage.introDemo = 0;
-			//}).
+			setOption('showBullets', false).
 			onexit(function(){
 				sessionStorage.removeItem('introDemo');
 			}).onbeforechange(function(){
-				console.log('Step ' + this._currentStep);
+				sessionStorage.introDemo = this._currentStep;
 				if (this._currentStep == 3) {
 					$('#tab-contact').addClass('active');
 					$('#contact').addClass('active');
@@ -189,9 +184,19 @@ $(document).ready(function() {
 					$('#tab-company').removeClass('active');
 					$('#company').removeClass('active');
 				}
+			}).onafterchange(function(){
+				var done = this._currentStep;
+				$('.introjs-skipbutton').click(function(){
+					if (done == 3) {
+						sessionStorage.introDemo = 999;
+						window.location.href = '/';
+					}
+				});
 			});
 
 		if (sessionStorage.introDemo == 0) {
+			sessionStorage.clear();
+			sessionStorage.introDemo = 0;
 			demo.start();
 		} else {
 			demo.goToStep(sessionStorage.introDemo).start();
@@ -203,6 +208,7 @@ $(document).ready(function() {
 </script>
 <style>
 .datepicker{z-index:1151 !important;}
+.introjs-helperNumberLayer{visibility:hidden;}
 </style>
 <div id="wrapper">
 
@@ -260,7 +266,7 @@ $(document).ready(function() {
 							<a href="#payment" data-toggle="tab">Betalingsgegevens</a>
 						</li>
 						<li id="tab-logo">
-							<a href="#logo" data-toggle="tab" data-step="5" data-intro="Stap 5: Je kan eventueel ook al je logo toevoegen voor weergave op de offerte. Dit kan eventueel later ook.">Logo</a>
+							<a href="#logo" data-toggle="tab">Logo</a>
 						</li>
 						<li id="tab-prefs">
 							<a href="#prefs" data-toggle="tab">Voorkeuren</a>
@@ -273,7 +279,7 @@ $(document).ready(function() {
 							{!! $relation ? '<form action="relation/updatemycompany?multipage=true" method="post">' : '<form action="relation/newmycompany" method="post">' !!}
 							{!! csrf_field() !!}
 
-<div data-step="1" data-intro="Stap 1: Vul jouw bedrijfgegevens in. Alleen de velden meteen (*) zijn verplicht.">
+							<div data-step="1" data-intro="Stap 1: Vul jouw bedrijfgegevens in. Alleen de velden meteen (*) zijn verplicht.">
 							<h4 class="company" >Bedrijfsgegevens</h4>
 							<input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
 							<div class="row">
@@ -387,9 +393,7 @@ $(document).ready(function() {
 									</div>
 								</div>
 							</div>
-</div>
-
-
+						</div>
 
 							<div class="row">
 								<div class="col-md-12">

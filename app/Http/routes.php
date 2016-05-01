@@ -95,6 +95,7 @@ Route::group(['middleware' => 'auth'], function()
 	});
 	Route::get('myaccount/telegram/unchain', 'UserController@getMyAccountTelegramUnchain');
 	Route::get('myaccount/deactivate', 'UserController@getMyAccountDeactivate');
+	Route::get('myaccount/loaddemo', 'UserController@doLoadDemoProject');
 	Route::post('myaccount/telegram/update', 'UserController@doMyAccountTelegramUpdate');
 	Route::post('myaccount/updateuser', 'UserController@doMyAccountUser');
 	Route::post('myaccount/iban/new', 'UserController@doNewIban');
