@@ -14,6 +14,7 @@ use \Calctool\Models\Wholesale;
 use \Calctool\Models\Relation;
 use \Calctool\Models\RelationKind;
 use \Calctool\Models\Contact;
+use \Calctool\Models\MoreLabor;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller {
