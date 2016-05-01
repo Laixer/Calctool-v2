@@ -116,11 +116,11 @@ class ProjectController extends Controller {
 		else
 			$project->use_less = false;
 
-		$project->save();
-
-		if (!$project->type_id) {
+		if (!$request->input('type')) {
 			$project->type_id = 2;
 		}
+
+		$project->save();
 
 		$type = ProjectType::find($project->type_id);
 		if ($type->type_name == 'regie') {
