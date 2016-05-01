@@ -246,7 +246,7 @@ $(document).ready(function() {
 				<div class="tab-content">
 					<div id="supplier" class="tab-pane">
 
-						<p>De materialen lijst van de Bouwmaat bevindt zich nog BETA fase.</p>
+						<p class="alert alert-warning">De materialen lijst van de Bouwmaat bevindt zich nog in BETA fase.</p>
 
 						<div class="form-group input-group input-group-lg">
 							<input type="text" id="search" value="" class="form-control" placeholder="Zoek materiaal">
