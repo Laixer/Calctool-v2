@@ -21,72 +21,11 @@ $relation = Relation::find(Auth::user()->self_id);
 
 @section('content')
 
-<script type="text/javascript">
-$(document).ready(function() {
-	$('.starttour').click(function(){
-		$('#introModal').modal('hide')
-
-		introJs().
-		setOption('nextLabel', 'Volgende').
-		setOption('prevLabel', 'Vorige').
-		setOption('skipLabel', 'Overslaan').
-		setOption('doneLabel', 'Volgende pagina').
-		start().oncomplete(function(){
-			window.location.href = '/mycompany';
-			sessionStorage.introDemo = 0;
-		}).onexit(function(){
-			sessionStorage.introDemo = 0;
-		});
-	});
-	if (!sessionStorage.introDemo) {
-		$('#introModal').modal('toggle');
-	}
-});
-</script>
-<div class="modal fade" id="introModal" tabindex="-1" role="dialog" aria-labelledby="introModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-body" id="introform">
-				<div class="row">
-					<div class="col-md-8">
-						<h4>Welkom bij de<strong> CalculatieTool.com</strong></h4>
-					</div>
-					<div class="col-md-4">
-						<a class="logo" href="/">
-						<img src="/images/logo2.png" width="229px" alt="Calctool">
-						</a>
-					</div>
-				</div>
-				<hr>
-				<div class="row">
-					<div class="col-md-8">
-						<span>Voor de beste ervaring raden wij je aan de Quickstart te starten. Wij stellen dan samen binnen 1 minuut de <strong>CalculatieTool.com</strong> zo voor je in dat je daarna direct je eerste project kan gaan calculeren.</span>
-					</div>
-					<div class="col-md-4">
-						<a class="logo2" href="/">
-							<img src="/images/cal_bouwen.png" width="229px" alt="Calctool">
-						</a>
-					</div>
-				</div>
-			</div>
-			</form>
-			<div class="modal-footer">
-				<div class="col-md-6"></div>
-				<div class="col-md-6">
-					<button class="starttour btn btn-primary"><i class="fa fa-check"></i> Begin Quickstart</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-
 @if ($next_step && $next_step=='intro_'.Auth::id())
 <script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
 <link media="all" type="text/css" rel="stylesheet" href="/plugins/jquery-ui/jquery-ui.css" />
 <script type="text/javascript">
-$(document).ready(function() {
+/*$(document).ready(function() {
 	var myPlayer = videojs('intro_vid');
 	$('#tutModal').modal('toggle');
 	$('button[data-action="hide"]').click(function(){
@@ -144,9 +83,29 @@ $(document).ready(function() {
 	$('#tutModal').on('hidden.bs.modal', function () {
 		myPlayer.pause();
 	});
+});*/
+$(document).ready(function() {
+	$('.starttour').click(function(){
+		$('#introModal').modal('hide')
+
+		introJs().
+		setOption('nextLabel', 'Volgende').
+		setOption('prevLabel', 'Vorige').
+		setOption('skipLabel', 'Overslaan').
+		setOption('doneLabel', 'Volgende pagina').
+		start().oncomplete(function(){
+			window.location.href = '/mycompany';
+			sessionStorage.introDemo = 0;
+		}).onexit(function(){
+			sessionStorage.introDemo = 0;
+		});
+	});
+	if (!sessionStorage.introDemo) {
+		$('#introModal').modal('toggle');
+	}
 });
 </script>
-<div class="modal fade" id="tutModal" tabindex="-1" role="dialog" aria-labelledby="tutModalLabel" aria-hidden="true">
+<!--<div class="modal fade" id="tutModal" tabindex="-1" role="dialog" aria-labelledby="tutModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-body" id="introform">
@@ -284,6 +243,42 @@ $(document).ready(function() {
 				</div>
 			</div>
 
+		</div>
+	</div>
+</div>-->
+<div class="modal fade" id="introModal" tabindex="-1" role="dialog" aria-labelledby="introModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-body" id="introform">
+				<div class="row">
+					<div class="col-md-8">
+						<h4>Welkom bij de<strong> CalculatieTool.com</strong></h4>
+					</div>
+					<div class="col-md-4">
+						<a class="logo" href="/">
+						<img src="/images/logo2.png" width="229px" alt="Calctool">
+						</a>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-md-8">
+						<span>Voor de beste ervaring raden wij je aan de Quickstart te starten. Wij stellen dan samen binnen 1 minuut de <strong>CalculatieTool.com</strong> zo voor je in dat je daarna direct je eerste project kan gaan calculeren.</span>
+					</div>
+					<div class="col-md-4">
+						<a class="logo2" href="/">
+							<img src="/images/cal_bouwen.png" width="229px" alt="Calctool">
+						</a>
+					</div>
+				</div>
+			</div>
+			</form>
+			<div class="modal-footer">
+				<div class="col-md-6"></div>
+				<div class="col-md-6">
+					<button class="starttour btn btn-primary"><i class="fa fa-check"></i> Begin Quickstart</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

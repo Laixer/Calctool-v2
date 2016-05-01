@@ -208,7 +208,6 @@ $(document).ready(function() {
 </script>
 <style>
 .datepicker{z-index:1151 !important;}
-.introjs-helperNumberLayer{visibility:hidden;}
 </style>
 <div id="wrapper">
 
