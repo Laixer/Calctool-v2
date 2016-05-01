@@ -213,6 +213,7 @@ $(document).ready(function() {
 
 	<section class="container">
 
+
 		<div class="col-md-12">
 
 			<div>
@@ -229,21 +230,23 @@ $(document).ready(function() {
 
 				<ul class="nav nav-tabs">
 					<li id="tab-supplier">
-						<a href="#supplier" data-toggle="tab"><i class="fa fa-cart-arrow-down"></i> Alle leverancies</a>
+						<a href="#supplier" data-toggle="tab"><i class="fa fa-cart-arrow-down"></i> Bouwmaat</a>
 					</li>
 					<li id="tab-material">
 						<a href="#material" data-toggle="tab"><i class="fa fa-wrench"></i> Mijn materiaal</a>
 					</li>
-					<li id="tab-element">
+<!-- 					<li id="tab-element">
 						<a href="#element" data-toggle="tab"><i class="fa fa-th-list"></i> Elementen</a>
-					</li>
+					</li> -->
 					<li id="tab-favorite">
 						<a href="#favorite" data-toggle="tab"><i class="fa fa-star"></i> Favorieten</a>
 					</li>
 				</ul>
 
 				<div class="tab-content">
-					<div id="supplier" class="tab-pane">data
+					<div id="supplier" class="tab-pane">
+
+						<p>De materialen lijst van de Bouwmaat bevindt zich nog BETA fase.</p>
 
 						<div class="form-group input-group input-group-lg">
 							<input type="text" id="search" value="" class="form-control" placeholder="Zoek materiaal">
