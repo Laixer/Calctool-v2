@@ -230,7 +230,7 @@ html { height: 100%;}
 
 .hamburger {
   position: fixed;
-  top: 20px;  
+  /* top: 20px;  */	
   z-index: 999;
   display: block;
   width: 32px;
@@ -356,7 +356,6 @@ html { height: 100%;}
 }
 </style>
 <div id="wrapper">
-	<div class="overlay"></div>
 
 		<!-- Sidebar -->
         <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">

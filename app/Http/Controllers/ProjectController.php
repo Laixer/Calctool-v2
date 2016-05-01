@@ -16,6 +16,16 @@ use \Calctool\Models\Activity;
 use \Calctool\Models\ProjectShare;
 use \Calctool\Http\Controllers\InvoiceController;
 
+use \Calctool\Models\EstimateLabor;
+use \Calctool\Models\EstimateMaterial;
+use \Calctool\Models\EstimateEquipment;
+use \Calctool\Models\MoreLabor;
+use \Calctool\Models\MoreMaterial;
+use \Calctool\Models\MoreEquipment;
+use \Calctool\Models\CalculationLabor;
+use \Calctool\Models\CalculationMaterial;
+use \Calctool\Models\CalculationEquipment;
+
 use \Auth;
 
 class ProjectController extends Controller {

@@ -583,8 +583,8 @@ $type = ProjectType::find($project->type_id);
 							</div>
 
 						@if ($type->type_name != 'snelle offerte en factuur')
-						<div id="calc" class="tab-pane">
-						<form method="post" action="/project/updatecalc" data-toggle="tab" data-step="2" data-intro="Stap 2: Geef je  uurtarief en winstpercentages op waarmee je wilt gaan calculeren.">
+						<div id="calc" class="tab-pane" data-step="2" data-intro="Stap 2: Geef je  uurtarief en winstpercentages op waarmee je wilt gaan calculeren.">
+						<form method="post" action="/project/updatecalc">
                         {!! csrf_field() !!}
 						<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
 							<div class="row">
@@ -660,17 +660,17 @@ $type = ProjectType::find($project->type_id);
 								</div>
 							</div><br/>
 								<div class="row">
-								<div class="col-md-12">
-									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
-								</div>
+									<div class="col-md-12">
+										<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+									</div>
 								</div>
 						</form>
 						</div>
 						@endif
 
-						<div id="advanced" class="tab-pane">
+						<div id="advanced" class="tab-pane" data-step="4" data-intro="Stap 4: Laad eventueel aanvullende onderdelen.">
 							
-							<form method="POST" action="/project/updateadvanced" accept-charset="UTF-8" data-toggle="tab" data-step="4" data-intro="Stap 4: Laad eventueel aanvullende onderdelen.">
+							<form method="POST" action="/project/updateadvanced">
 							{!! csrf_field() !!}
 							<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
 							
