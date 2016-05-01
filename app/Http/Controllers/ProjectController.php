@@ -56,17 +56,7 @@ class ProjectController extends Controller {
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric'),
 			'contractor' => array('required','numeric'),
-			'type' => array('required'),
-			//'hour_rate' => array('required','regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
-			//'more_hour_rate' => array('required','regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
-			//'profit_material_1' => array('required','numeric','between:0,200'),
-			//'profit_equipment_1' => array('required','numeric','between:0,200'),
-			//'profit_material_2' => array('required','numeric','between:0,200'),
-			//'profit_equipment_2' => array('required','numeric','between:0,200'),
-			//'more_profit_material_1' => array('required','numeric','between:0,200'),
-			//'more_profit_equipment_1' => array('required','numeric','between:0,200'),
-			//'more_profit_material_2' => array('required','numeric','between:0,200'),
-			//'more_profit_equipment_2' => array('required','numeric','between:0,200')
+			// 'type' => array('required'),
 		]);
 
 		$hour_rate = str_replace(',', '.', str_replace('.', '', $request->input('hour_rate')));
@@ -127,6 +117,11 @@ class ProjectController extends Controller {
 			$project->use_less = false;
 
 		$project->save();
+
+		if (Auth::user()->isAdmin()) {
+			$project->type_id = 2;
+		}
+
 
 		$type = ProjectType::find($project->type_id);
 		if ($type->type_name == 'regie') {

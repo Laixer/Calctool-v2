@@ -33,9 +33,60 @@ $(document).ready(function() {
 </script>
 
 <div id="wrapper">
+	<!--<div class="overlay"></div>-->
+
+		<!-- Sidebar -->
+        <!--<nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+            <ul class="nav sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                       Brand
+                    </a>
+                </li>
+                <li>
+                    <a href="#">Home</a>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                </li>
+                <li>
+                    <a href="#">Events</a>
+                </li>
+                <li>
+                    <a href="#">Team</a>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Works <span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li class="dropdown-header">Dropdown heading</li>
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">One more separated link</a></li>
+                  </ul>
+                </li>
+                <li>
+                    <a href="#">Services</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+                <li>
+                    <a href="https://twitter.com/maridlcrmn">Follow me</a>
+                </li>
+            </ul>
+        </nav>-->
+        <!-- /#sidebar-wrapper -->
 
 	<div id="shop">
 	<section class="container">
+
+		<button type="button" class="hamburger is-closed" data-toggle="offcanvas">
+			<span class="hamb-top"></span>
+			<span class="hamb-middle"></span>
+			<span class="hamb-bottom"></span>
+		</button>
 
 		<div class="col-md-12">
 
@@ -45,13 +96,13 @@ $(document).ready(function() {
 				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
-							<a class="item-hover" href="/apps/notepad">
-								<span class="overlay color2"></span>
+							<a class="item-hover" href="javascript:void(0);" ui-href="/apps/notepad">
+								<span style="background-color: rgba(0,0,0, 0.2) !important;" class="overlay color2"></span>
 								<span class="inner" style="top:40%;">
 									<span class="block fa fa-home fsize60"></span>
 								</span>
 							</a>
-							<a href="/apps/notepad" class="btn btn-primary add_to_cart"><strong> Kladblok</strong></a>
+							<a style="opacity: 0.4;" href="javascript:void(0);" class="btn btn-primary add_to_cart"><strong> Kladblok</strong></a>
 
 						</figure>
 					</div>
@@ -60,13 +111,13 @@ $(document).ready(function() {
 				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
-							<a class="item-hover" href="/apps/cashbook">
-								<span class="overlay color2"></span>
+							<a class="item-hover" href="javascript:void(0);" ui-href="/apps/cashbook">
+								<span style="background-color: rgba(0,0,0, 0.2) !important;" class="overlay color2"></span>
 								<span class="inner" style="top:40%;">
 									<span class="block fa fa-wrench fsize60"></span>
 								</span>
 							</a>
-							<a href="/apps/cashbook" class="btn btn-primary add_to_cart"><strong> Kasboek</strong></a>
+							<a style="opacity: 0.4;" href="javascript:void(0);" ui-href="/apps/cashbook" class="btn btn-primary add_to_cart"><strong> Kasboek</strong></a>
 						</figure>
 					</div>
 				</div>

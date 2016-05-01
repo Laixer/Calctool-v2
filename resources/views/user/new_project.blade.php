@@ -341,6 +341,7 @@ $(document).ready(function() {
 										<a href="#" data-toggle="modal" data-target="#tutModal">+ Nieuwe opdrachtgever toevoegen</a>
 									</div>
 								</div>
+								@if (Auth::user()->isAdmin())
 								<div class="col-md-2">
 									<div class="form-group">
 										<label for="type">Soort project</label>
@@ -349,14 +350,10 @@ $(document).ready(function() {
 											@foreach (Calctool\Models\ProjectType::all() as $type)
 											<option {{ $type->type_name=='calculatie' ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
 											@endforeach
-										</select>
-										@else
-										<select name="type" id="type" disabled class="form-control pointer">
-											<option value="2">Calculatie</option>
-										</select>
-										@endif
+										</select>										
 									</div>
 								</div>
+								@endif
 								<div class="col-md-2">
 								<label for="tax_reverse">BTW verlegd</label>
 									<div data-step="4" data-intro="Stap 4: Geef aan of je het project iwlt starten als BTW-verlegd (0% BTW) of  incl. BTW. Later in kan je dan de BTW-tarieven opgeven en nog bepalen of je incl. of excl. BTW wilt offreren en factureren. Zie voor meer informatie over BTW-verlegd XXX." class="form-group">
