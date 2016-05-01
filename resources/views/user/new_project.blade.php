@@ -105,6 +105,47 @@ $(document).ready(function() {
 			});
 		}
 	});
+
+	if (sessionStorage.introDemo) {
+		var demo = introJs().
+			setOption('nextLabel', 'Volgende').
+			setOption('prevLabel', 'Vorige').
+			setOption('skipLabel', 'Overslaan').
+			setOption('doneLabel', 'Klaar').
+			setOption('showBullets', false).
+			onexit(function(){
+				sessionStorage.removeItem('introDemo');
+			}).onbeforechange(function(){
+				sessionStorage.introDemo = this._currentStep;
+				/*if (this._currentStep == 3) {
+					$('#tab-contact').addClass('active');
+					$('#contact').addClass('active');
+
+					$('#tab-company').removeClass('active');
+					$('#company').removeClass('active');
+				}*/
+			}).onafterchange(function(){
+				var done = this._currentStep;
+				if (this._currentStep == 6) {
+					sessionStorage.introDemo = 999
+				}
+				/*$('.introjs-skipbutton').click(function(){
+					if (done == 3) {
+						sessionStorage.introDemo = 999;
+						window.location.href = '/';
+					}
+				});*/
+			});
+
+		if (sessionStorage.introDemo == 999) {
+			sessionStorage.clear();
+			sessionStorage.introDemo = 0;
+			demo.start();
+		} else {
+			demo.goToStep(sessionStorage.introDemo).start();
+		}
+
+	}	
 });
 </script>
 <div class="modal fade" id="tutModal" tabindex="-1" role="dialog" aria-labelledby="tutModalLabel" aria-hidden="true">

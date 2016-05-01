@@ -42,16 +42,16 @@ if (!$project || !$project->isOwner())
 
 @section('content')
 <script type="text/javascript">
-Number.prototype.formatMoney = function(c, d, t){
-var n = this,
-    c = isNaN(c = Math.abs(c)) ? 2 : c,
-    d = d == undefined ? "." : d,
-    t = t == undefined ? "," : t,
-    s = n < 0 ? "-" : "",
-    i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
-    j = (j = i.length) > 3 ? j % 3 : 0;
-   return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
-};
+	Number.prototype.formatMoney = function(c, d, t){
+	var n = this,
+	    c = isNaN(c = Math.abs(c)) ? 2 : c,
+	    d = d == undefined ? "." : d,
+	    t = t == undefined ? "," : t,
+	    s = n < 0 ? "-" : "",
+	    i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+	    j = (j = i.length) > 3 ? j % 3 : 0;
+	   return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+	};
 	$(document).ready(function() {
 
         $("body").on("change", ".form-control-sm-number", function(){
@@ -926,7 +926,46 @@ var n = this,
                 ["para", ["ul", "ol", "paragraph"]],
                 ["media", ["link", "picture"]],
             ]
-        })
+        });
+
+		if (sessionStorage.introDemo) {
+			var demo = introJs().
+				setOption('nextLabel', 'Volgende').
+				setOption('prevLabel', 'Vorige').
+				setOption('skipLabel', 'Overslaan').
+				setOption('doneLabel', 'Klaar').
+				setOption('showBullets', false).
+				onexit(function(){
+					sessionStorage.removeItem('introDemo');
+				}).onbeforechange(function(){
+					sessionStorage.introDemo = this._currentStep;
+					if (this._currentStep == 12) {
+						$('#tab-summary').addClass('active');
+						$('#summary').addClass('active');
+
+						$('#tab-calculate').removeClass('active');
+						$('#calculate').removeClass('active');
+					}
+				}).onafterchange(function(){
+					var done = this._currentStep;
+					$('.introjs-skipbutton').click(function(){
+						if (done == 13) {
+							sessionStorage.introDemo = 999;
+							window.location.href = '/offerversions/project-{{ $project->id }}';
+						}
+					});
+				});
+
+			if (sessionStorage.introDemo == 999 || sessionStorage.introDemo == 0) {
+				sessionStorage.clear();
+				sessionStorage.introDemo = 0;
+				demo.start();
+			} else {
+				demo.goToStep(sessionStorage.introDemo).start();
+			}
+
+		}
+
 	});
 
 </script>

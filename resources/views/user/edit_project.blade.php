@@ -92,8 +92,8 @@ $type = ProjectType::find($project->type_id);
 			$('#'+$toggleOpenTab).addClass('active');
 		} else {
 			sessionStorage.toggleTabProj{{Auth::id()}} = 'status';
-			$('#tab-status').addClass('active');
-			$('#status').addClass('active');
+			$('#tab-project').addClass('active');
+			$('#project').addClass('active');
 		}
 		$('#addnew').click(function(e) {
 			$curThis = $(this);
@@ -278,8 +278,53 @@ $type = ProjectType::find($project->type_id);
 	    $("[name='use_more']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	    $("[name='use_less']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	    $("[name='mail_reminder']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
-	});
 
+	if (sessionStorage.introDemo) {
+		var demo = introJs().
+			setOption('nextLabel', 'Volgende').
+			setOption('prevLabel', 'Vorige').
+			setOption('skipLabel', 'Overslaan').
+			setOption('doneLabel', 'Klaar').
+			setOption('showBullets', false).
+			onexit(function(){
+				sessionStorage.removeItem('introDemo');
+			}).onbeforechange(function(){
+				sessionStorage.introDemo = this._currentStep;
+				if (this._currentStep == 1) {
+					$('#tab-calc').addClass('active');
+					$('#calc').addClass('active');
+
+					$('#tab-project').removeClass('active');
+					$('#project').removeClass('active');
+				}
+				if (this._currentStep == 3) {
+					$('#tab-advanced').addClass('active');
+					$('#advanced').addClass('active');
+
+					$('#tab-calc').removeClass('active');
+					$('#calc').removeClass('active');
+				}
+			}).onafterchange(function(){
+				var done = this._currentStep;
+				$('.introjs-skipbutton').click(function(){
+					if (done == 3) {
+						sessionStorage.introDemo = 999;
+						window.location.href = '/calculation/project-{{ $project->id }}';
+					}
+				});
+			});
+
+		if (sessionStorage.introDemo == 999) {
+			sessionStorage.clear();
+			sessionStorage.introDemo = 0;
+			demo.start();
+		} else {
+			demo.goToStep(sessionStorage.introDemo).start();
+		}
+
+	}
+
+});
 </script>
 <div id="wrapper">
 
