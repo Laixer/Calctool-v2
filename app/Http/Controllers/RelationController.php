@@ -354,8 +354,12 @@ class RelationController extends Controller {
 		if ($request->get('redirect'))
 			return redirect('/'.$request->get('redirect'));
 
-		if ($request->ajax())
-			return response()->json(['success' => true, 'id' => $relation->id, 'name' => $relation->company_name]);
+		if ($request->ajax()) {
+			if ($relation_kind->kind_name == "zakelijk")
+				return response()->json(['success' => true, 'id' => $relation->id, 'name' => $relation->company_name]);
+			else
+				return response()->json(['success' => true, 'id' => $relation->id, 'name' => $contact->firstname . ' ' . $contact->lastname]);
+		}
 
 		return redirect('/relation-'.$relation->id.'/edit')->with('success', 1);
 	}

@@ -56,15 +56,16 @@ $(document).ready(function() {
 			company_name: $('#company_name').val(),
 			company_type: $('#company_type').val(),
 			email_comp: $('#email_comp').val(),
-			address_number: $('#address_number').val(),
-			zipcode: $('#zipcode').val(),
-			street: $('#street').val(),
-			city: $('#city').val(),
-			province: $('#province').val(),
-			country: $('#country').val(),
+			address_number: $('#address_number2').val(),
+			zipcode: $('#zipcode2').val(),
+			street: $('#street2').val(),
+			city: $('#city2').val(),
+			province: $('#province2').val(),
+			country: $('#country2').val(),
 			contact_name: $('#contact_name').val(),
 			email: $('#email').val(),
 			contactfunction: $('#contactfunction').val(),
+			gender: $('#gender').val(),
 		}, function(data) {
 			console.log(data);
 			if (data) {
@@ -101,6 +102,30 @@ $(document).ready(function() {
 					$('#city').val(json.city);
 					$("#province").find('option:selected').removeAttr("selected");
 					$('#province option[value=' + json.province_id + ']').attr('selected','selected');
+				}
+			});
+		}
+	});
+
+	var zipcode = $('#zipcode2').val();
+	var number = $('#address_number2').val();
+	$('.autoappend2').blur(function(e){
+		if (number == $('#address_number2').val() && zipcode == $('#zipcode2').val())
+			return;
+		zipcode = $('#zipcode2').val();
+		number = $('#address_number2').val();
+		if (number && zipcode) {
+
+			$.post("/mycompany/quickstart/address", {
+				zipcode: zipcode,
+				number: number,
+			}, function(data) {
+				if (data) {
+					var json = $.parseJSON(data);
+					$('#street2').val(json.street);
+					$('#city2').val(json.city);
+					$("#province2").find('option:selected').removeAttr("selected");
+					$('#province2 option[value=' + json.province_id + ']').attr('selected','selected');
 				}
 			});
 		}
@@ -164,7 +189,6 @@ $(document).ready(function() {
 					<lu id="introerrlist"></lu>
 				</div>
 
-				<form method="POST" id="frm-new-relation" action="/relation/new" accept-charset="UTF-8">
 				{!! csrf_field() !!}
 				<div class="row">
 
@@ -224,35 +248,35 @@ $(document).ready(function() {
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="address_number">Huis nr.*</label>
-							<input name="address_number" id="address_number" type="text" value="{{ old('address_number') }}" class="form-control autoappend"/>
+							<input name="address_number" id="address_number2" type="text" value="{{ old('address_number') }}" class="form-control autoappend2"/>
 						</div>
 					</div>
 
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="zipcode">Postcode*</label>
-							<input name="zipcode" id="zipcode" maxlength="6" type="text" value="{{ old('zipcode') }}" class="form-control autoappend"/>
+							<input name="zipcode" id="zipcode2" maxlength="6" type="text" value="{{ old('zipcode') }}" class="form-control autoappend2"/>
 						</div>
 					</div>
 
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="street">Straat*</label>
-							<input name="street" id="street" type="text" value="{{ Input::old('street') }}" class="form-control"/>
+							<input name="street" id="street2" type="text" value="{{ Input::old('street') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="city">Plaats*</label>
-							<input name="city" id="city" type="text" value="{{ Input::old('city') }}" class="form-control"/>
+							<input name="city" id="city2" type="text" value="{{ Input::old('city') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="province">Provincie*</label>
-							<select name="province" id="province" class="form-control pointer">
+							<select name="province" id="province2" class="form-control pointer">
 								@foreach (Calctool\Models\Province::all() as $province)
 								<option  {{ (old('province') == $province->id ? 'selected' : '') }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
 								@endforeach
@@ -263,7 +287,7 @@ $(document).ready(function() {
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="country">Land*</label>
-							<select name="country" id="country" class="form-control pointer">
+							<select name="country" id="country2" class="form-control pointer">
 								@foreach (Calctool\Models\Country::all() as $country)
 								<option {{ (old('country') ? (old('country') == $country->id ? 'selected' : '') : $country->country_name=='nederland' ? 'selected' : '') }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
 								@endforeach
@@ -313,7 +337,6 @@ $(document).ready(function() {
 
 				</div>
 
-				</form>
 			</div>
 
 			<div class="modal-footer">
