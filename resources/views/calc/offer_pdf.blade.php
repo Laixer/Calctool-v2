@@ -65,6 +65,7 @@ function invoice_condition($offer) {
 
 	<header class="clearfix">
 	  	<div id="heading" class="clearfix">
+
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tbody>
 					<tr>
@@ -73,54 +74,104 @@ function invoice_condition($offer) {
 								<?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
 							</div>
 						</td>
-						<td style="width: 100px">
-							<div><h3 class="name">{{ $relation_self->company_name }}</h3></div>
-							<div><strong>Adres:</strong></div>
-							<div><strong>&nbsp;</strong></div>
-							<div><strong>Telefoon:</strong></div>
-							<div><strong>E-mail:</strong></div>
-							<div><strong>KVK:</strong></div>
-						</td>
-						<td style="width: 150px">
-							<div>&nbsp;</div>
-							<div>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</div>
-							<div>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</div>
-							<div>{{ $relation_self->phone }}</div>
-							<div>{{ $relation_self->email }}</div>
-							<div>{{ $relation_self->kvk }}</div>
+
+						<td style="width: 300px">
+						
+							<table border="0" cellspacing="0" cellpadding="0">
+								<tbody>
+									<tr>
+										<td style="width: 300 px">
+											<div><h1 class="name">{{ $relation_self->company_name }}</h1></div>
+
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							
+							<table border="0" cellspacing="0" cellpadding="0">
+								<tbody>
+									<tr>
+										<td style="width: 100 px">
+											<div><strong>Adres:</strong></div>
+											<div><strong>&nbsp;</strong></div>
+											<div><strong>Telefoon:</strong></div>
+											<div><strong>E-mail:</strong></div>
+											<div><strong>KVK:</strong></div>
+										</td>
+										<td style="width: 200px">
+											<div>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</div>
+											<div>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</div>
+											<div>{{ $relation_self->phone }}</div>
+											<div>{{ $relation_self->email }}</div>
+											<div>{{ $relation_self->kvk }}</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
 						</td>
 					</tr>
 				</tbody>
 			</table>
+
 		</div>
 	</header>
 	
 	<main>
 	   	<div id="heading" class="clearfix">
-		<table border="0" cellspacing="0" cellpadding="0">
-			<tbody>
-				<tr>
-					<td style="width: 345px">{{ $relation->company_name }}</td>
-					<td style="width: 100px"><strong>Nummer:</strong></td>
-					<td style="width: 150px">{{ OfferController::getOfferCode($project->id) }}</td>
-				</tr>
-				<tr>
-					<td style="width: 345px">T.a.v. {{ Contact::find($offer->to_contact_id)->getFormalName() }}</td>
-					<td style="width: 100px"><strong>Projectnaam:</strong></td>
-					<td style="width: 150px">{{ $project->project_name }}</td>
-				</tr>
-				<tr>
-					<td style="width: 345px">{{ $relation->address_street . ' ' . $relation->address_number }}</td>
-					<td style="width: 100px"><strong>Datum:</strong></td>
-					<td style="width: 150px">{{ date("j M Y", strtotime($offer->offer_make)) }}</td>
-				</tr>
-				<tr>
-					<td style="width: 345px">{{ $relation->address_postal . ', ' . $relation->address_city }}</td>
-					<td style="width: 100px"><strong>Versie:</strong></td>
-					<td style="width: 150px">{{ Offer::where('project_id', $project->id)->count() }}</td>
-				</tr>
-			</tbody>
-		</table>
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tbody>
+					<tr>
+						<td style="width: 345px">
+							<table border="0" cellspacing="0" cellpadding="0">
+								<tbody>
+									<tr>
+										<td>{{ $relation->company_name }}</td>
+									</tr>
+									<tr>
+										<td>T.a.v. {{ Contact::find($offer->to_contact_id)->getFormalName() }}</td>
+									</tr>
+									<tr>
+										<td>{{ $relation->address_street . ' ' . $relation->address_number }}</td>
+									</tr>
+									<tr>
+										<td>{{ $relation->address_postal . ', ' . $relation->address_city }}</td>
+
+									</tr>
+								</tbody>
+							</table>
+						</td>
+						<td style="width: 300px">
+							<table border="0" cellspacing="0" cellpadding="0">
+								<tbody>
+									<tr>
+										<td style="width: 100 px">
+											<div><strong>Nummer:</strong></div>
+											<div><strong>Projectnaam:</strong></div>
+											<div><strong>Datum:</strong></div>
+											<div><strong>Versie:</strong></div>
+										</td>
+										<td style="width: 200px">
+											<div>{{ OfferController::getOfferCode($project->id) }}</div>
+											<div>{{ $project->project_name }}</div>
+											<div>{{ $project->project_name }}</div>
+											<div>{{ Offer::where('project_id', $project->id)->count() }}</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+
+
+
+
+
+
+
 		</div>
 		<div id="spacing"></div>
 
