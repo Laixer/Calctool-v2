@@ -1037,12 +1037,12 @@ var n = this,
 						</a>
 					</li>
 					@endif
-					<li id="tab-summary">
+					<li data-step="13" data-intro="Stap 13: Bekijk na het invullen van al je onderdelen & werkzaamheden de uittrekstaat van al je werkzaamheden." id="tab-summary">
 						<a href="#summary" data-toggle="tab">
 							<i class="fa fa-sort-amount-asc"></i> Uittrekstaat Calculeren
 						</a>
 					</li>
-					<li id="tab-endresult">
+					<li data-step="14" data-intro="Stap 14: Bekijk het eindresultaat." id="tab-endresult">
 						<a href="#endresult" data-toggle="tab">
 							<i class="fa fa-check-circle-o"></i> Eindresultaat Calculeren
 						</a>
@@ -1053,7 +1053,7 @@ var n = this,
 					<div id="calculate" class="tab-pane">
 						<div class="toogle">
 							@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
-							<div id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
+							<div data-step="2" data-intro="Stap 2: Open het onderdeel." id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
 								<label>{{ $chapter->chapter_name }}</label>
 								<div class="toggle-content">
 
@@ -1068,12 +1068,12 @@ var n = this,
 												$profit_equip = $project->profit_calc_subcontr_equip;
 											}
 										?>
-										<div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
+										<div data-step="3" data-intro="Stap 3: Open het onderdeel." id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
 											<label>{{ $activity->activity_name }}</label>
 											<div class="toggle-content">
 												<div class="row">
 													<div class="col-md-5"></div>
-													<div class="col-md-4">
+													<div class="col-md-4" data-step="4" data-intro="Stap 4: Voeg een werkzaamheid toe.">
 														<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','contracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='contracting' ? 'checked' : '') }}/>Aanneming</label>
 	    												<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming</label>
 													</div>
@@ -1123,7 +1123,7 @@ var n = this,
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1"><span class="rate">{!! Part::find($activity->part_id)->part_name=='subcontracting' ? '<input name="rate" type="text" value="'.number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['rate'], 2,",",".").'" class="form-control-sm-number labor-amount lsave">' : number_format($project->hour_rate, 2,",",".") !!}</span></td>
-															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
+															<td class="col-md-1"><input data-step="5" data-intro="Stap 5: Geef het aantal uur voor de werkzamheid op." data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal(Part::find($activity->part_id)->part_name=='subcontracting' ? CalculationLabor::where('activity_id','=', $activity->id)->first()['rate'] : $project->hour_rate, CalculationLabor::where('activity_id','=', $activity->id)->first()['amount']), 2, ",",".") }}</span></td>
 															<td class="col-md-1 text-right"><button class="btn btn-danger ldeleterow btn-xs fa fa-times"></button></td>
@@ -1182,14 +1182,14 @@ var n = this,
 														</tr>
 														@endforeach
 														<tr>
-															<td class="col-md-5"><input name="name" id="name" type="text" class="form-control-sm-text dsave newrow" /></td>
-															<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text dsave" /></td>
-															<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number dsave" /></td>
-															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsave" /></td>
-															<td class="col-md-1"><span class="total-ex-tax"></span></td>
-															<td class="col-md-1"><span class="total-incl-tax"></span></td>
+															<td class="col-md-5"><input data-step="6" data-intro="Stap 6: Geef een omschrijving." name="name" id="name" type="text" class="form-control-sm-text dsave newrow" /></td>
+															<td class="col-md-1"><input data-step="7" data-intro="Stap 7: Geef de eenheid van dit materiaal op." name="unit" id="name" type="text" class="form-control-sm-text dsave" /></td>
+															<td class="col-md-1"><input data-step="8" data-intro="Stap 8: Geef de prijs per eenheid op" name="rate" id="name" type="text" class="form-control-sm-number dsave" /></td>
+															<td class="col-md-1"><input data-step="9" data-intro="Stap 9: Geef het aantal op hoeveel van deze regel je wilt opnemen." name="amount" id="name" type="text" class="form-control-sm-number dsave" /></td>
+															<td class="col-md-1"><span data-step="10" data-intro="Stap 10: De kostprijs wordt brekend." class="total-ex-tax"></span></td>
+															<td class="col-md-1"><span data-step="11" data-intro="Stap 11: De prijs incl. winst% wordt berekend. Dit is wat je calculeert. Het verschil is directe winst voor jou." class="total-incl-tax"></span></td>
 															<td class="col-md-1 text-right" data-profit="{{ $profit_mat }}">
-																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+																<button data-step="12" data-intro="Stap 12: Je kan eventueel ook een materiaal laden uit de Materialenlijst (icon boekje)" class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
 															</td>
 														</tr>
@@ -1315,7 +1315,7 @@ var n = this,
 						<div><hr></div>
 						<div class="row">
 							<div class="col-md-6">
-								<div class="input-group">
+								<div class="input-group" data-step="1" data-intro="Stap 1: Voeg een onderdeel toe. Een soort hoofdstuk waar je werkzaamheden onder vallen.">
 									<input type="text" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw onderdeel">
 									<span class="input-group-btn">
 										<button class="btn btn-primary btn-primary-chapter">Voeg toe</button>
@@ -1359,7 +1359,7 @@ var n = this,
 		    											<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soorte{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming
 		    											</label>
 		    										</div>
-													<div class="col-md-3 text-right">
+		    										<div class="col-md-3 text-right">
 														<button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving
 														</button>
 
