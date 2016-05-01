@@ -95,11 +95,13 @@ use \Calctool\Models\MoreLabor;
 							<i class="fa fa-calendar"></i> Urenregistratie
 						</a>
 					</li>
+					@if (0)
 					<li id="tab-summary">
 						<a href="#summary" data-toggle="tab">
 							<i class="fa fa-sort-amount-desc"></i> Uittrekstaat
 						</a>
 					</li>
+					@endif
 				</ul>
 
 				<div class="tab-content">
@@ -154,6 +156,7 @@ use \Calctool\Models\MoreLabor;
 						</table>
 					</div>
 
+					@if (0)
 					<div id="summary" class="tab-pane">
 
 							<div class="toogle">
@@ -278,6 +281,7 @@ use \Calctool\Models\MoreLabor;
 
 							</div>
 					</div>
+					@endif
 
 				</div>
 			</div>

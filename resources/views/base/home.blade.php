@@ -71,10 +71,7 @@ $(document).ready(function() {
 			</div>
 			</form>
 			<div class="modal-footer">
-				<div class="col-md-6">
-					<!--<p>Scherm 1/2<p>-->
-					<p><p>
-				</div>
+				<div class="col-md-6"></div>
 				<div class="col-md-6">
 					<button class="starttour btn btn-primary"><i class="fa fa-check"></i> Begin Quickstart</button>
 				</div>
@@ -389,13 +386,13 @@ $(document).ready(function() {
 				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
-							<a class="item-hover" href="/apps">
-								<span class="overlay color2"></span>
+							<a class="item-hover" href="javascript:void(0);" ui-href="/apps">
+								<span class="overlay color2" style="background-color: rgba(0,0,0, 0.2) !important;"></span>
 								<span class="inner" style="top:40%;">
 									<span class="block fa fa-gears fsize60"></span> comming soon
 								</span>
 							</a>
-							<a href="/apps" class="btn btn-primary add_to_cart"><strong> Apps</strong></a>
+							<a style="opacity: 0.4;" href="javascript:void(0);" ui-href="/apps" class="btn btn-primary add_to_cart"><strong> Apps</strong></a>
 						</figure>
 					</div>
 				</div>
