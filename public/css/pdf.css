@@ -1,12 +1,7 @@
- @font-face {
-        font-family: Jolly;
-        src: url('../fonts/JollyLodger-Regular.ttf') format('truetype');
+@font-face {
+    font-family: 'Helvetica';
+    src: url(data:font/truetype;charset=utf-8;base64);
 }
-
-   <style type = "text/css">
-        p { font-family: 'Jolly', cursive; }
-    </style>
-
 .clearfix:after {
   content: "";
   display: table;
@@ -19,38 +14,38 @@ a {
 }
 
 body {
-  /*position: relative;*/
+  position: relative;
   width: 21cm;
   height: 29.7cm;
   margin: 0 auto;
   color: #000000;
   background: #FFFFFF;
   font-size: 12px;
-    /*font-family: 'Arial';*/
+  font-family: 'Helvetica';
 }
 
 header {
   padding: 10px 0;
   margin-bottom: 40px;
   border-bottom: 1px solid #AAAAAA;
-  /*font-family: 'Arial';*/
+  font-family: 'Helvetica';
 }
 
 h1.name {
   font-size: 12px;
   font-weight: bold;
-  /*margin: 5px;*/
+  margin: 5px;
   padding-left: 5px;
-/*  border-style: solid;
+  border-style: solid;
   border-width: 0px;
-  border-color: #AAAAAA;*/
+  border-color: #AAAAAA;
 }
 
 h3.name {
   font-size: 12px;
   font-weight: normal;
-  /*margin: 0;*/
-  /*padding-left: 10px;*/
+  margin: 0;
+  padding-left: 10px;
   /*DZA*/
 }
 
@@ -67,28 +62,28 @@ h3.name {
 /*Opende vrije tekst*/
 .openingtext {
   font-size: 10px;
-  /*margin: 12px  0 12px 0;*/
+  margin: 12px  0 12px 0;
   padding-left: 10px;
 }
 
 /*Afsluitende vrije tekst*/
 .closingtext {
   font-size: 10px;
-  /*margin: 12px  0 12px 0;*/
+  margin: 12px  0 12px 0;
   padding-left: 10px;
 }
 
 /*Bepalingen*/
 .terms {
   font-size: 10px;
-  /*margin: 0  0 10px 0;*/
+  margin: 0  0 10px 0;
   padding-left:10px;
 }
 
 /*Afsluiting van het document*/
 .from {
   font-size: 10px;
-  /*margin: 0  0 10px 0;*/
+  margin: 0  0 10px 0;
   padding-left:10px;
 }
 
@@ -322,4 +317,3 @@ footer {
   text-align: center;
 }
 
-*/

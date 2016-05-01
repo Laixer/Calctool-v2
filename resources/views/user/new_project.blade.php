@@ -258,13 +258,13 @@ $(document).ready(function() {
 								<div class="col-md-5">
 									<div class="form-group">
 										<label for="name">Projectnaam*</label>
-										<input name="name" id="name" type="text" value="{{ Input::old('name') }}" class="form-control" />
+										<input data-step="1" data-intro="Stap 1: Geef projectnaam." name="name" id="name" type="text" value="{{ Input::old('name') }}" class="form-control" />
 									</div>
 								</div>
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="contractor">Opdrachtgever*</label>
-										<select name="contractor" id="contractor" class="form-control pointer">
+										<select data-step="2" data-intro="Stap 2: Selecteer j eopdrachtegver." name="contractor" id="contractor" class="form-control pointer">
 											@foreach (Calctool\Models\Relation::where('user_id', Auth::user()->id)->where('active',true)  ->get() as $relation)
 											<option value="{{ $relation->id }}">{!! Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); !!}</option>
 											@endforeach
@@ -276,7 +276,7 @@ $(document).ready(function() {
 								<div class="col-md-2">
 									<div class="form-group">
 										<label for="type">Soort project</label>
-										<select name="type" id="type" class="form-control pointer">
+										<select data-step="3" data-intro="Stap 3: Geef het soort project aan. Zie XX voor meer uitleg." name="type" id="type" class="form-control pointer">
 											@foreach (Calctool\Models\ProjectType::all() as $type)
 											<option {{ $type->type_name=='calculatie' ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
 											@endforeach
@@ -285,7 +285,7 @@ $(document).ready(function() {
 								</div>
 								<div class="col-md-2">
 								<label for="tax_reverse">BTW verlegd</label>
-									<div class="form-group">
+									<div data-step="4" data-intro="Stap 4: Geef aan of je het project iwlt starten als BTW-verlegd (0% BTW) of  incl. BTW. Later in kan je dan de BTW-tarieven opgeven en nog bepalen of je incl. of excl. BTW wilt offreren en factureren. Zie voor meer informatie over BTW-verlegd XXX." class="form-group">
 										<input name="tax_reverse" type="checkbox">
 									</div>
 								</div>
@@ -293,7 +293,7 @@ $(document).ready(function() {
 							</div>
 
 							<h5><strong>Adresgegevens</strong></h5>
-							<div class="row">
+							<div data-step="5" data-intro="Stap 5: Geef de projectadres gegevens op."class="row">
 
 								<div class="col-md-1">
 									<div class="form-group">
@@ -346,6 +346,7 @@ $(document).ready(function() {
 								</div>
 							</div>		
 
+<div data-step="6" data-intro="Stap 6: Noteer eventueel aantekenen van het project. Dit wordt anders weergegeven.">
 							<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
 					        <div class="row">
 					          <div class="form-group">
@@ -354,10 +355,11 @@ $(document).ready(function() {
 					            </div>
 					          </div>
 					        </div>
+</div>
 
 							<div class="row">
 								<div class="col-md-12">
-									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+									<button data-step="7" data-intro="Stap 7: Sla je project op." class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 								</div>
 							</div>
 

@@ -330,10 +330,10 @@ $type = ProjectType::find($project->type_id);
 						</li>
 						@if ($type->type_name != 'snelle offerte en factuur')
 						<li id="tab-calc">
-							<a href="#calc" data-toggle="tab">Uurtarief & Winstpercentages</a>
+							<a href="#calc" data-toggle="tab" data-step="1" data-intro="Stap 1: Geef je  uurtarief en winstpercentages op waarmee je wilt gaan calculeren.">Uurtarief & Winstpercentages</a>
 						</li>
 						<li id="tab-advanced">
-							<a href="#advanced" data-toggle="tab">Extra opties</a>
+							<a href="#advanced" data-toggle="tab" data-toggle="tab" data-step="3" data-intro="Stap 3: Geef aan of je andere module wilt laden in je project. Dit kan later ook nog.">Extra opties</a>
 						</li>
 						<li id="tab-status">
 							<a href="#status" data-toggle="tab">Projectstatus</a>
@@ -584,7 +584,7 @@ $type = ProjectType::find($project->type_id);
 
 						@if ($type->type_name != 'snelle offerte en factuur')
 						<div id="calc" class="tab-pane">
-						<form method="post" action="/project/updatecalc">
+						<form method="post" action="/project/updatecalc" data-toggle="tab" data-step="2" data-intro="Stap 2: Geef je  uurtarief en winstpercentages op waarmee je wilt gaan calculeren.">
                         {!! csrf_field() !!}
 						<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
 							<div class="row">
@@ -670,7 +670,7 @@ $type = ProjectType::find($project->type_id);
 
 						<div id="advanced" class="tab-pane">
 							
-							<form method="POST" action="/project/updateadvanced" accept-charset="UTF-8">
+							<form method="POST" action="/project/updateadvanced" accept-charset="UTF-8" data-toggle="tab" data-step="4" data-intro="Stap 4: Laad eventueel aanvullende onderdelen.">
 							{!! csrf_field() !!}
 							<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
 							
