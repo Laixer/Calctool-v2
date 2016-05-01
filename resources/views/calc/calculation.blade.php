@@ -1107,12 +1107,12 @@ if (!$project || !$project->isOwner())
 												$profit_equip = $project->profit_calc_subcontr_equip;
 											}
 										?>
-										<div data-step="3" data-intro="Stap 3: Open het onderdeel." id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
+										<div data-step="3" data-intro="Stap 3: Maak werkzaamheid aan." id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
 											<label>{{ $activity->activity_name }}</label>
-											<div class="toggle-content">
+											<div data-step="4" data-intro="Stap 4: Calculeer de werkzaaheid toe." class="toggle-content">
 												<div class="row">
 													<div class="col-md-5"></div>
-													<div class="col-md-4" data-step="4" data-intro="Stap 4: Voeg een werkzaamheid toe.">
+													<div class="col-md-4">
 														<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','contracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='contracting' ? 'checked' : '') }}/>Aanneming</label>
 	    												<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming</label>
 													</div>
@@ -1162,7 +1162,7 @@ if (!$project || !$project->isOwner())
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1"><span class="rate">{!! Part::find($activity->part_id)->part_name=='subcontracting' ? '<input name="rate" type="text" value="'.number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['rate'], 2,",",".").'" class="form-control-sm-number labor-amount lsave">' : number_format($project->hour_rate, 2,",",".") !!}</span></td>
-															<td class="col-md-1"><input data-step="5" data-intro="Stap 5: Geef het aantal uur voor de werkzamheid op." data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
+															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal(Part::find($activity->part_id)->part_name=='subcontracting' ? CalculationLabor::where('activity_id','=', $activity->id)->first()['rate'] : $project->hour_rate, CalculationLabor::where('activity_id','=', $activity->id)->first()['amount']), 2, ",",".") }}</span></td>
 															<td class="col-md-1 text-right"><button class="btn btn-danger ldeleterow btn-xs fa fa-times"></button></td>
@@ -1221,14 +1221,14 @@ if (!$project || !$project->isOwner())
 														</tr>
 														@endforeach
 														<tr>
-															<td class="col-md-5"><input data-step="6" data-intro="Stap 6: Geef een omschrijving." name="name" id="name" type="text" class="form-control-sm-text dsave newrow" /></td>
-															<td class="col-md-1"><input data-step="7" data-intro="Stap 7: Geef de eenheid van dit materiaal op." name="unit" id="name" type="text" class="form-control-sm-text dsave" /></td>
-															<td class="col-md-1"><input data-step="8" data-intro="Stap 8: Geef de prijs per eenheid op" name="rate" id="name" type="text" class="form-control-sm-number dsave" /></td>
-															<td class="col-md-1"><input data-step="9" data-intro="Stap 9: Geef het aantal op hoeveel van deze regel je wilt opnemen." name="amount" id="name" type="text" class="form-control-sm-number dsave" /></td>
-															<td class="col-md-1"><span data-step="10" data-intro="Stap 10: De kostprijs wordt brekend." class="total-ex-tax"></span></td>
-															<td class="col-md-1"><span data-step="11" data-intro="Stap 11: De prijs incl. winst% wordt berekend. Dit is wat je calculeert. Het verschil is directe winst voor jou." class="total-incl-tax"></span></td>
+															<td class="col-md-5"><input name="name" id="name" type="text" class="form-control-sm-text dsave newrow" /></td>
+															<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text dsave" /></td>
+															<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number dsave" /></td>
+															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsave" /></td>
+															<td class="col-md-1"><span class="total-ex-tax"></span></td>
+															<td class="col-md-1"><span class="total-incl-tax"></span></td>
 															<td class="col-md-1 text-right" data-profit="{{ $profit_mat }}">
-																<button data-step="12" data-intro="Stap 12: Je kan eventueel ook een materiaal laden uit de Materialenlijst (icon boekje)" class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
 															</td>
 														</tr>
