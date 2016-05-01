@@ -17,6 +17,28 @@ $contact = Contact::where('relation_id','=',$relation->id)->first();
 
 @section('content')
 
+<script type="text/javascript">
+$(document).ready(function() {
+	if (sessionStorage.introDemo) {
+		introJs().
+			setOption('nextLabel', 'Volgende').
+			setOption('prevLabel', 'Vorige').
+			setOption('skipLabel', 'Overslaan').
+			setOption('doneLabel', 'Klaar').
+			setOption('showBullets', false).
+			onexit(function(){
+				sessionStorage.removeItem('introDemo');
+			}).onafterchange(function(){
+				var done = this._currentStep;
+				$('.introjs-skipbutton').click(function(){
+					if (done == 1) {
+						window.location.href = '/mycompany';
+					}
+				});
+			}).start();
+	}
+});
+</script>
 <div id="wrapper">
 
 	<section class="container">

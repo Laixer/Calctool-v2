@@ -939,17 +939,17 @@ if (!$project || !$project->isOwner())
 					sessionStorage.removeItem('introDemo');
 				}).onbeforechange(function(){
 					sessionStorage.introDemo = this._currentStep;
-					if (this._currentStep == 12) {
+					/*if (this._currentStep == 12) {
 						$('#tab-summary').addClass('active');
 						$('#summary').addClass('active');
 
 						$('#tab-calculate').removeClass('active');
 						$('#calculate').removeClass('active');
-					}
+					}*/
 				}).onafterchange(function(){
 					var done = this._currentStep;
 					$('.introjs-skipbutton').click(function(){
-						if (done == 13) {
+						if (done == 5) {
 							sessionStorage.introDemo = 999;
 							window.location.href = '/offerversions/project-{{ $project->id }}';
 						}
