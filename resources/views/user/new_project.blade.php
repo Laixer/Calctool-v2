@@ -345,7 +345,6 @@ $(document).ready(function() {
 								<div class="col-md-2">
 									<div class="form-group">
 										<label for="type">Soort project</label>
-										@if (Auth::user()->isAdmin())
 										<select data-step="3" data-intro="Stap 3: Geef het soort project aan. Zie XX voor meer uitleg." name="type" id="type" class="form-control pointer">
 											@foreach (Calctool\Models\ProjectType::all() as $type)
 											<option {{ $type->type_name=='calculatie' ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
