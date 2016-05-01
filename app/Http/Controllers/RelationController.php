@@ -276,19 +276,15 @@ class RelationController extends Controller {
 	public function doNew(Request $request)
 	{
 		$rules = array(
-			/* General */
 			'relationkind' => array('required','numeric'),
 			'debtor' => array('required','alpha_num','max:10'),
-			/* Company */
 			'company_type' => array('required_if:relationkind,1','numeric'),
 			'company_name' => array('required_if:relationkind,1','max:50'),
 			'email_comp' => array('required_if:relationkind,1','email','max:80'),
-			/* Contact */
 			'contact_name' => array('required','max:50'),
 			'contact_firstname' => array('max:30'),
 			'email' => array('required','email','max:80'),
 			'contactfunction' => array('required','numeric'),
-			/* Adress */
 			'street' => array('required','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
@@ -357,6 +353,9 @@ class RelationController extends Controller {
 
 		if ($request->get('redirect'))
 			return redirect('/'.$request->get('redirect'));
+
+		if ($request->ajax())
+			return response()->json(['success' => true, 'id' => $relation->id, 'name' => $relation->company_name]);
 
 		return redirect('/relation-'.$relation->id.'/edit')->with('success', 1);
 	}

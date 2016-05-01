@@ -2,7 +2,12 @@
 
 use \Calctool\Models\Contact;
 use \Calctool\Models\Project;
+use \Calctool\Models\RelationKind;
+use \Calctool\Models\RelationType;
 
+function getNewDebtorCode() {
+	return mt_rand(1000000, 9999999);
+}
 ?>
 
 @extends('layout.master')
@@ -37,6 +42,45 @@ $(document).ready(function() {
     	}
     })
 
+	$('#relationkind').change(function(e) {
+		if ($(this).val() == 2)
+			$('.company').hide('slow');
+		else
+			$('.company').show('slow');
+	});
+
+	$('#btn-new-relation').click(function(){
+		$.post("/relation/new", {
+			relationkind: $('#relationkind').val(),
+			debtor: $('#debtor').val(),
+			company_name: $('#company_name').val(),
+			company_type: $('#company_type').val(),
+			email_comp: $('#email_comp').val(),
+			address_number: $('#address_number').val(),
+			zipcode: $('#zipcode').val(),
+			street: $('#street').val(),
+			city: $('#city').val(),
+			province: $('#province').val(),
+			country: $('#country').val(),
+			contact_name: $('#contact_name').val(),
+			email: $('#email').val(),
+			contactfunction: $('#contactfunction').val(),
+		}, function(data) {
+			console.log(data);
+			if (data) {
+				$('#tutModal').modal('toggle');
+     			$('#contractor')
+     				.append($("<option selected></option>")
+                    .attr("value", data.id)
+                    .text(data.name));
+			}
+		}).error(function(data) {
+			$('#introerr').show();
+			$.each(data.responseJSON, function(i, val) {
+				$('#introerrlist').append("<li>" + val + "</li>")
+			});
+		});
+	});
 
 	var zipcode = $('#zipcode').val();
 	var number = $('#address_number').val();
@@ -66,139 +110,164 @@ $(document).ready(function() {
 <div class="modal fade" id="tutModal" tabindex="-1" role="dialog" aria-labelledby="tutModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
-			<div class="modal-body" id="introform">
-				<h4>Na de <strong>QuickStart</strong> kan je direct starten met je eerste calculatie & offerte.</h4>
-				<hr>
 
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel2">Nieuwe relatie</h4>
+			</div>
+
+			<div class="modal-body" id="introform">
 				<div id="introerr" style="display:none;" class="alert alert-danger">
 					<i class="fa fa-frown-o"></i>
 					<strong>Fout</strong>
 					<lu id="introerrlist"></lu>
 				</div>
 
-				<form id="frm-quick" action="/mycompany/quickstart" method="post">
+				<form method="POST" id="frm-new-relation" action="/relation/new" accept-charset="UTF-8">
 				{!! csrf_field() !!}
-
-				<h4 class="company">Jouw Bedrijfsgegevens</h4>
-				<input type="hidden" name="id" id="id" value=""/>
 				<div class="row">
-					<div class="col-md-7">
+
+					<div class="col-md-2">
 						<div class="form-group">
-							<label for="company_name">Bedrijfsnaam</label>
-							<input name="company_name" id="company_name" type="text" value="" class="form-control" />
-						</div>
-					</div>
-					<div class="col-md-5">
-						<div class="form-group">
-							<label for="company_type">Bedrijfstype</label>
-							<select name="company_type" id="company_type" class="form-control pointer">
-							@if (0)
-							@foreach (RelationType::all() as $type)
-								<option {{ $relation ? ($relation->type_id==$type->id ? 'selected' : '') : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
-							@endforeach
-							@endif
+							<label for="relationkind">Relatiesoort*</label>
+							<select name="relationkind" id="relationkind" class="form-control pointer">
+								@foreach (RelationKind::all() as $kind)
+								<option {{ old('relationkind') && old('relationkind') == $kind->id ? 'selected' : '' }} value="{{ $kind->id }}">{{ ucwords($kind->kind_name) }}</option>
+								@endforeach
 							</select>
 						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-2">
+
+					<div class="col-md-4">
 						<div class="form-group">
-							<label for="address_number">Huis nr.</label>
-							<input name="address_number" id="address_number" type="text" value="" class="form-control autoappend"/>
+							<label for="debtor">Debiteurennummer*</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit nummer is gegenereerd door de CalculatieTool.com. Je kunt dit vervangen door je eigen boekhoudkundige nummering." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
+							<input name="debtor" id="debtor" type="text" value="{{ Input::old('debtor') ? Input::old('debtor') : getNewDebtorCode() }}" class="form-control"/>
+						</div>
+					</div>
+
+				</div>
+
+				<h4 class="company">Bedrijfsgegevens</h4>
+				<div class="row company">
+
+					<div class="col-md-5">
+						<div class="form-group">
+							<label for="company_name">Bedrijfsnaam*</label>
+							<input name="company_name" id="company_name" type="text" value="{{ Input::old('company_name') }}" class="form-control" />
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="zipcode">Postcode</label>
-							<input name="zipcode" id="zipcode" maxlength="6" type="text" value="" class="form-control autoappend"/>
-						</div>
-					</div>
-
-					<div class="col-md-7">
-						<div class="form-group">
-							<label for="street">Straat</label>
-							<input name="street" id="street" type="text" value="" class="form-control"/>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4">
-						<div class="form-group">
-							<label for="city">Plaats</label>
-							<input name="city" id="city" type="text" value="" class="form-control"/>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<label for="province">Provincie*</label>
-							<select name="province" id="province" class="form-control pointer">
-								@if (0)
-								@foreach (Province::all() as $province)
-									<option {{ $relation ? ($relation->province_id==$province->id ? 'selected' : '') : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
+							<label for="company_type">Bedrijfstype*</label>
+							<select name="company_type" id="company_type" class="form-control pointer">
+								@foreach (RelationType::all() as $type)
+								<option {{ (old('company_type') == $type->id ? 'selected' : '') }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
 								@endforeach
-								@endif
 							</select>
 						</div>
 					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="email_comp">Email*</label>
+							<input name="email_comp" id="email_comp" type="email" value="{{ Input::old('email_comp') }}" class="form-control"/>
+						</div>
+					</div>
+
+				</div>
+
+				<h4>Adresgegevens</h4>
+				<div class="row">
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="address_number">Huis nr.*</label>
+							<input name="address_number" id="address_number" type="text" value="{{ old('address_number') }}" class="form-control autoappend"/>
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="zipcode">Postcode*</label>
+							<input name="zipcode" id="zipcode" maxlength="6" type="text" value="{{ old('zipcode') }}" class="form-control autoappend"/>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="street">Straat*</label>
+							<input name="street" id="street" type="text" value="{{ Input::old('street') }}" class="form-control"/>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="city">Plaats*</label>
+							<input name="city" id="city" type="text" value="{{ Input::old('city') }}" class="form-control"/>
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="province">Provincie*</label>
+							<select name="province" id="province" class="form-control pointer">
+								@foreach (Calctool\Models\Province::all() as $province)
+								<option  {{ (old('province') == $province->id ? 'selected' : '') }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="country">Land*</label>
 							<select name="country" id="country" class="form-control pointer">
-								@if (0)
-								@foreach (Country::all() as $country)
-									<option {{ $relation ? ($relation->country_id==$country->id ? 'selected' : '') : ($country->country_name=='nederland' ? 'selected' : '')}} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
+								@foreach (Calctool\Models\Country::all() as $country)
+								<option {{ (old('country') ? (old('country') == $country->id ? 'selected' : '') : $country->country_name=='nederland' ? 'selected' : '') }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
 								@endforeach
-								@endif
 							</select>
 						</div>
 					</div>
 				</div>
 
-				<h4>Jouw Contactgegevens</h4>
+				<h4>Contactpersoon</h4>
 				<div class="row">
+
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="contact_firstname">Voornaam</label>
-							<input name="contact_firstname" id="contact_firstname" type="text" value="{{-- Input::old('contact_firstname') ? Input::old('contact_firstname') : ($relation ? Contact::where('relation_id', $relation->id)->first()['firstname'] : '') --}}" class="form-control"/>
+							<label for="contact_name">Achternaam*</label>
+							<input name="contact_name" id="contact_name" type="text" value="{{ Input::old('contact_name') }}" class="form-control"/>
 						</div>
 					</div>
+
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="contact_name">Achternaam</label>
-							<input name="contact_name" id="contact_name" type="text" value="{{-- Input::old('contact_name') ? Input::old('contact_name') : ($relation ? Contact::where('relation_id', $relation->id)->first()['lastname'] : '') --}}" class="form-control"/>
+							<label for="email">Email*</label>
+							<input name="email" id="email" type="email" value="{{ Input::old('email') }}" class="form-control"/>
 						</div>
 					</div>
-					<div class="col-md-3">
+
+					<div class="col-md-4 company">
 						<div class="form-group">
-							<label for="email">Email</label>
-							<input name="email" id="email" type="email" value="{{-- Auth::user()->email --}}" class="form-control"/>
-						</div>
-					</div>
-					<div class="col-md-3 company">
-						<div class="form-group">
-							<label for="contactfunction">Functie</label>
+							<label for="contactfunction">Functie*</label>
 							<select name="contactfunction" id="contactfunction" class="form-control pointer">
-							@if (0)
-							@foreach (ContactFunction::all() as $function)
-								<option {{ $function->function_name=='directeur' ? 'selected' : '' }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
-							@endforeach
-							@endif
+								@foreach (Calctool\Models\ContactFunction::all() as $function)
+								<option {{ (old('contactfunction') ? (old('contactfunction') == $function->id ? 'selected' : '') : $function->function_name=='directeur' ? 'selected' : '') }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
+								@endforeach
 							</select>
 						</div>
 					</div>
+
 				</div>
-				<span>Na het invullen van de QuickStart is het mogelijk meer bedrijfsgegevens op te geven onder "Mijn bedrijf".</span>
+
+				</form>
 			</div>
-			</form>
 
 			<div class="modal-footer">
+				<div class="col-md-6"></div>
 				<div class="col-md-6">
-					<p>Scherm 1/2<p>
-				</div>
-				<div class="col-md-6">
-					<button id="intrnext" class="btn btn-primary"><i class="fa fa-check"></i> Volgende</button>
+					<button class="btn btn-primary" id="btn-new-relation"><i class="fa fa-check"></i> Opslaan</button>
 				</div>
 			</div>
 
@@ -269,18 +338,23 @@ $(document).ready(function() {
 											<option value="{{ $relation->id }}">{!! Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); !!}</option>
 											@endforeach
 										</select>
-										<!--<a href="/relation/new?redirect={{ Request::path() }}">+ Nieuwe opdrachtgever toevoegen</a>-->
 										<a href="#" data-toggle="modal" data-target="#tutModal">+ Nieuwe opdrachtgever toevoegen</a>
 									</div>
 								</div>
 								<div class="col-md-2">
 									<div class="form-group">
 										<label for="type">Soort project</label>
+										@if (Auth::user()->isAdmin())
 										<select data-step="3" data-intro="Stap 3: Geef het soort project aan. Zie XX voor meer uitleg." name="type" id="type" class="form-control pointer">
 											@foreach (Calctool\Models\ProjectType::all() as $type)
 											<option {{ $type->type_name=='calculatie' ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
 											@endforeach
 										</select>
+										@else
+										<select name="type" id="type" disabled class="form-control pointer">
+											<option value="2">Calculatie</option>
+										</select>
+										@endif
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -346,7 +420,7 @@ $(document).ready(function() {
 								</div>
 							</div>		
 
-<div data-step="6" data-intro="Stap 6: Noteer eventueel aantekenen van het project. Dit wordt anders weergegeven.">
+							<div data-step="6" data-intro="Stap 6: Noteer eventueel aantekenen van het project. Dit wordt anders weergegeven.">
 							<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
 					        <div class="row">
 					          <div class="form-group">
@@ -355,7 +429,7 @@ $(document).ready(function() {
 					            </div>
 					          </div>
 					        </div>
-</div>
+							</div>
 
 							<div class="row">
 								<div class="col-md-12">
