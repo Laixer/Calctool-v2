@@ -78,7 +78,7 @@ $(document).ready(function() {
 		<div class="white-row">
 		<form action="/mycompany/contact/new" method="post">
 		{!! csrf_field() !!}
-<div data-step="1" data-intro="Stap 6: Voeg een nieuw contact toe. Alleen de velden met (*) zijn verplicht.">
+<div data-step="1" data-intro="Stap 6: Geef de contactgevens op. Alleen de velden met (*) zijn verplicht.">
 		<h4>Contactgegevens</h4>
 		<div class="row">
 
@@ -144,7 +144,7 @@ $(document).ready(function() {
 </div>
 		<div class="white-row">
 			<div class="col-md-2">
-				<button class="btn btn-primary" data-step="2" data-intro="Stap 7: Sla je contact van je bedrijf op."><i class="fa fa-check"></i> Opslaan</button>
+				<button class="btn btn-primary" data-step="2" data-intro="Stap 7: Sla het contact op. Daarna ben je klaar met dde Quick-SetUp en wordt je teruggestuurd naar het startscherm (dashboard)."><i class="fa fa-check"></i> Opslaan</button>
 			</div>
 		</div>
 		</form>

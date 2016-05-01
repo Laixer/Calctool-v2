@@ -263,7 +263,7 @@ $(document).ready(function() {
 				<hr>
 				<div class="row">
 					<div class="col-md-8">
-						<span>Voor de beste ervaring raden wij je aan de Quickstart te starten. Wij stellen dan samen binnen 1 minuut de <strong>CalculatieTool.com</strong> zo voor je in dat je daarna direct je eerste project kan gaan calculeren.</span>
+						<span>Voor een juiste werking van de CalculatieTool.com moeten er eerst een aantal gegevens van je bedrijf bekend zijn. Deze Quick-SetUp helpt je daarbij dit binnen 1 minuut in te stellen.</span>
 					</div>
 					<div class="col-md-4">
 						<a class="logo2" href="/">
@@ -305,7 +305,7 @@ $(document).ready(function() {
 			<h2 style="margin: 10px 0 20px 0;"><strong>Welkom</strong>, {{ Auth::user()->firstname }}</h2>
 			<div class="row">
 
-				<div class="col-sm-6 col-md-2" data-step="1" data-intro="Stap 1: Voor een juiste werking van de CalculatieTool.com moeten er eerst een aantal gegevens van je bedrijf bekend zijn.">
+				<div class="col-sm-6 col-md-2" data-step="1" data-intro="Stap 1: Ga naar 'mijn bedrijf' om je bedrijfsgegevens in te stellen.">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
 							<a class="item-hover" href="/mycompany">

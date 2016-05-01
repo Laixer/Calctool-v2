@@ -256,10 +256,10 @@ $(document).ready(function() {
 
 					<ul class="nav nav-tabs">
 						<li id="tab-company">
-							<a href="#company" data-toggle="tab">Bedrijfsgegevens</a>
+							<a href="#company" data-toggle="tab">Bedrijfsgegevens></a>
 						</li>
 						<li id="tab-contact">
-							<a href="#contact" data-toggle="tab" data-step="3" data-intro="Stap 3: Je bedrijf heeft een contact nodig">Contacten</a>
+							<a href="#contact" data-toggle="tab" data-step="3" data-intro="Stap 4: Je bedrijf heeft een contact nodig, ga naar tabblad contacten.">Contacten</a>
 						</li>
 						<li id="tab-payment">
 							<a href="#payment" data-toggle="tab">Betalingsgegevens</a>
@@ -278,7 +278,7 @@ $(document).ready(function() {
 							{!! $relation ? '<form action="relation/updatemycompany?multipage=true" method="post">' : '<form action="relation/newmycompany" method="post">' !!}
 							{!! csrf_field() !!}
 
-							<div data-step="1" data-intro="Stap 1: Vul jouw bedrijfgegevens in. Alleen de velden meteen (*) zijn verplicht.">
+							<div data-step="1" data-intro="Stap 2: Vul jouw bedrijfgegevens in. Alleen de velden met een (*) zijn verplicht. Je kan je gegevsens later altijd aanpassen en aanvullen.">
 							<h4 class="company" >Bedrijfsgegevens</h4>
 							<input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
 							<div class="row">
@@ -396,7 +396,7 @@ $(document).ready(function() {
 
 							<div class="row">
 								<div class="col-md-12">
-									<button class="btn btn-primary" data-step="2" data-intro="Stap 2: Sla je bedrijfsgegevens op."><i class="fa fa-check"></i> Opslaan</button>
+									<button class="btn btn-primary" data-step="2" data-intro="Stap 3: Sla je bedrijfsgegevens op."><i class="fa fa-check"></i> Opslaan</button>
 								</div>
 							</div>
 						</form>
@@ -431,7 +431,7 @@ $(document).ready(function() {
 								</tbody>
 							</table>
 							<div class="row">
-								<div class="col-md-2" data-step="4" data-intro="Stap 4: Voeg een nieuw contact toe.">
+								<div class="col-md-2" data-step="4" data-intro="Stap 5: Voeg een nieuw contact van jouw bedrijf toe, dit kan jij zelf zijn.">
 									<a href="/mycompany/contact/new" {{ $relation ? '' : 'disabled' }} class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
 								</div>
 							</div>
