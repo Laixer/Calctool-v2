@@ -658,10 +658,10 @@ $type = ProjectType::find($project->type_id);
 								<div class="col-md-2">
 									<input name="more_profit_equipment_2" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_2') ? Input::old('more_profit_equipment_2') : $project->profit_more_subcontr_equip }}" class="form-control form-control-sm-number"/>
 								</div>
-							</div><br />
+							</div><br/>
 								<div class="row">
 								<div class="col-md-12">
-									<button class="btn btn-primary {{ ($cntinv ? 'disabled' : '') }}"><i class="fa fa-check"></i> Opslaan</button>
+									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 								</div>
 								</div>
 						</form>
