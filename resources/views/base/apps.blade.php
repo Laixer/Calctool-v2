@@ -405,14 +405,13 @@ html { height: 100%;}
 	<div id="shop">
 	<section class="container">
 
-		<div class="col-md-12">
-
 		<button type="button" class="hamburger is-closed" data-toggle="offcanvas">
 			<span class="hamb-top"></span>
 			<span class="hamb-middle"></span>
 			<span class="hamb-bottom"></span>
 		</button>
 
+		<div class="col-md-12">
 
 			<h2 style="margin: 10px 0 20px 0;"><strong>Apps</strong></h2>
 			<div class="row">

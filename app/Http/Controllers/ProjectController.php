@@ -118,10 +118,9 @@ class ProjectController extends Controller {
 
 		$project->save();
 
-		if (Auth::user()->isAdmin()) {
+		if (!$project->type_id) {
 			$project->type_id = 2;
 		}
-
 
 		$type = ProjectType::find($project->type_id);
 		if ($type->type_name == 'regie') {
