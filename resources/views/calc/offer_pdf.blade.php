@@ -161,7 +161,7 @@ function invoice_condition($offer) {
 		</tbody>
 	  </table>
 	  @else
-	  <hr>
+	<!--   <hr> -->
 	  @if ($seperate_subcon)
 	  <table border="0" cellspacing="0" cellpadding="0">
 		<thead>
