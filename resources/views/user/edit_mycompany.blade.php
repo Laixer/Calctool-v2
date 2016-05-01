@@ -627,6 +627,7 @@ $(document).ready(function() {
 										</div>
 									</div>
 								</div>
+								@if (0)
 								<div class="panel panel-default">
 									<div class="panel-heading">
 										<h4 class="panel-title">
@@ -685,6 +686,7 @@ $(document).ready(function() {
 										</div>
 									</div>
 								</div>
+								@endif
 								<div class="panel panel-default">
 									<div class="panel-heading">
 										<h4 class="panel-title">

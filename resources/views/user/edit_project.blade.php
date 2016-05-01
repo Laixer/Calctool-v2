@@ -819,6 +819,7 @@ $type = ProjectType::find($project->type_id);
 								</div>
 							</div>
 
+							@if (0)
 							<div class="row">
 								<div class="col-md-2">
 									<label for="type">Email herinnering aanzetten</label>
@@ -830,6 +831,7 @@ $type = ProjectType::find($project->type_id);
 									<p>De CalculatieTool.com kan bij digitaal verstuurde offertes en facturen respectievelijk na het verstrijken van de geldigheid van de offerte of ingestelde betalingsconditie van de factuur automatische herinneringen sturen naar je klant. Jij als gebruiker wordt hierover altijd geïnformeerd met een bericht in je notificaties. De tekst in de te verzenden mail staat default ingesteld in je 'voorkeuren' onder 'mijn account', deze is aanpasbaar per account.</p>
 								</div>
 							</div>
+							@endif
 							<br/>
 							<div class="row">
 								<div class="col-md-12">
