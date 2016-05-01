@@ -151,7 +151,7 @@ $(document).ready(function() {
 				}*/
 			}).onafterchange(function(){
 				var done = this._currentStep;
-				if (this._currentStep == 6) {
+				if (this._currentStep == 5) {
 					sessionStorage.introDemo = 999
 				}
 				/*$('.introjs-skipbutton').click(function(){
