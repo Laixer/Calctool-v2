@@ -1123,7 +1123,7 @@ var n = this,
 															<td class="col-md-1"><span class="total-incl-tax"></span></td>
 															<td class="col-md-1 text-right">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
-																<button disabled class="btn btn-xs fa btn-danger sdeleterow fa-times"></button>
+																<button class="btn btn-xs fa btn-danger sdeleterow fa-times"></button>
 															</td>
 														</tr>
 													</tbody>
@@ -1184,7 +1184,7 @@ var n = this,
 															<td class="col-md-1"><span class="total-incl-tax"></span></td>
 															<td class="col-md-1 text-right">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
-																<button disabled class="btn btn-xs fa btn-danger sdeleterow fa-times"></button>
+																<button class="btn btn-xs fa btn-danger sdeleterow fa-times"></button>
 															</td>
 														</tr>
 													</tbody>
