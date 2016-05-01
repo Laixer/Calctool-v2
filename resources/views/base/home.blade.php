@@ -21,7 +21,6 @@ $relation = Relation::find(Auth::user()->self_id);
 
 @section('content')
 
-@if ($next_step && $next_step=='intro_'.Auth::id())
 <script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
 <link media="all" type="text/css" rel="stylesheet" href="/plugins/jquery-ui/jquery-ui.css" />
 <script type="text/javascript">
@@ -86,6 +85,7 @@ $relation = Relation::find(Auth::user()->self_id);
 });*/
 $(document).ready(function() {
 	$('.starttour').click(function(){
+		sessionStorage.introDemo = 0;
 		$('#introModal').modal('hide')
 
 		introJs().
@@ -96,13 +96,11 @@ $(document).ready(function() {
 		start().oncomplete(function(){
 			window.location.href = '/mycompany';
 			sessionStorage.introDemo = 0;
-		}).onexit(function(){
-			sessionStorage.introDemo = 0;
 		});
 	});
-	if (!sessionStorage.introDemo) {
+	<?php if ($next_step && $next_step=='intro_'.Auth::id()){ ?>
 		$('#introModal').modal('toggle');
-	}
+	<?php } ?>
 });
 </script>
 <!--<div class="modal fade" id="tutModal" tabindex="-1" role="dialog" aria-labelledby="tutModalLabel" aria-hidden="true">
@@ -282,7 +280,6 @@ $(document).ready(function() {
 		</div>
 	</div>
 </div>
-@endif
 <div id="wrapper">
 
 	<div id="shop">
@@ -447,7 +444,7 @@ $(document).ready(function() {
 						@else
 						<h2><strong>Je eerste</strong> stap</h2>
 						<div class="bs-callout text-center whiteBg">
-							<h3><button class="starttour btn btn-primary btn-lg">Take the Tour</button> <strong>OF</strong> <a href="/project/new" class="btn btn-primary btn-lg" kaas-intro="Stap 9: Maak nu je eerste prject aan.">Start nieuw project</a></h3>
+							<h3><button class="starttour btn btn-primary btn-lg">Quick setup</button> <strong>OF</strong> <a href="/project/new" class="btn btn-primary btn-lg" kaas-intro="Stap 9: Maak nu je eerste prject aan.">Start nieuw project</a></h3>
 						</div>
 						@endif
 					</div>
