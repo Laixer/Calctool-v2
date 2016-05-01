@@ -461,14 +461,43 @@ $(document).ready(function() {
 											<?php $i = 0; ?>
 											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->whereNull('detail_id')->get() as $activity)
 											<?php $i++; ?>
+											<?php
+
+											$total_hours = TimesheetOverview::calcTotalAmount($activity->id);
+											$total_hours_original = TimesheetOverview::calcOrigTotalAmount($activity->id);
+											$total_hours_less = TimesheetOverview::calcLessTotalAmount($activity->id);
+											$total_registered_hours = Timesheet::where('activity_id','=',$activity->id)->sum('register_hour');
+
+											// col 2
+											$less_hours = 0;
+											if ($total_hours_less) {
+												$less_hours = $total_hours_less - $total_hours_original;
+											}
+
+											// col 3
+											$registerd_hours = $total_registered_hours;
+
+											// col 4
+											$difference = $total_hours-$total_registered_hours;
+
+											// col 5
+											$gain_loss = ($total_hours-$total_registered_hours)*$project->hour_rate;
+
+											$rs_1 += $total_hours_original;
+											$rs_2 += $less_hours;
+											$rs_3 += $registerd_hours;
+											$rs_4 += $difference;
+											$rs_5 += $gain_loss;
+
+											?>
 											<tr>
 												<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
-												<td class="col-md-2"><span class="pull-right">{{ number_format(TimesheetOverview::calcOrigTotalAmount($activity->id), 2,",",".") }}<?php //$X = TimesheetOverview::calcOrigTotalAmount($activity->id); $rs_1 += $X; echo $X ? number_format($X, 2,",",".") : '-'; ?></span></td>
-												<td class="col-md-1"><span class="pull-right"><?php $X = TimesheetOverview::calcLessTotalAmount($activity->id) ? (TimesheetOverview::calcLessTotalAmount($activity->id)-TimesheetOverview::calcOrigTotalAmount($activity->id)) : 0; $rs_2 += $X; echo $X ? number_format($X, 2,",",".") : '-'; ?></span></td>
-												<td class="col-md-1"><span class="pull-right"><?php $X = Timesheet::where('activity_id','=',$activity->id)->sum('register_hour'); $rs_3 += $X; echo $X ? number_format($X, 2,",",".") : '-'; ?></span></td>
-												<td class="col-md-1"><span class="pull-right"><?php $Y = (TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour')); if ($Y && $X){ $rs_4 += $Y; echo number_format($Y, 2,",","."); }else{ echo '-'; } ?></span></td>
-												<td class="col-md-1"><span class="pull-right"><?php $Y = (TimesheetOverview::calcTotalAmount($activity->id)-Timesheet::where('activity_id','=',$activity->id)->sum('register_hour')*$project->hour_rate); if($Y && $X){ $rs_5 += $Y; echo number_format($Y, 2,",","."); }else{ echo '-'; } ?></span></td>
+												<td class="col-md-2"><span class="pull-right">{{ number_format($total_hours_original, 2,",",".") }}</span></td>
+												<td class="col-md-1"><span class="pull-right">{{ number_format($less_hours, 2,",",".") }}</span></td>
+												<td class="col-md-1"><span class="pull-right">{{ number_format($registerd_hours, 2,",",".") }}</span></td>
+												<td class="col-md-1"><span class="pull-right">{{ number_format($difference, 2,",",".") }}</span></td>
+												<td class="col-md-1"><span class="pull-right">{{ number_format($gain_loss, 2,",",".") }}</span></td>
 											</tr>
 											@endforeach
 											@endforeach
