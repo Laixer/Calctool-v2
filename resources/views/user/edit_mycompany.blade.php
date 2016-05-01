@@ -406,7 +406,7 @@ $(document).ready(function() {
 							<table class="table table-striped">
 								<thead>
 									<tr>
-										<th class="col-md-2">Naam</th>
+										<th class="col-md-2">Achternaam</th>
 										<th class="col-md-2">Voornaam</th>
 										<th class="col-md-2">Functie</th>
 										<th class="col-md-2">Telefoon</th>

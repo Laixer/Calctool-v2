@@ -360,9 +360,9 @@ $(document).ready(function() {
 								<?# -- table head -- ?>
 								<thead>
 									<tr>
-										<th class="col-md-2">Voornaam</th>
 										<th class="col-md-2">Achternaam</th>
-										<th class="col-md-2">Functie</th>
+										<th class="col-md-2">Voornaam</th>
+																				<th class="col-md-2">Functie</th>
 										<th class="col-md-2">Telefoon</th>
 										<th class="col-md-2">Mobiel</th>
 										<th class="col-md-2">Email</th>
@@ -372,8 +372,8 @@ $(document).ready(function() {
 								<tbody>
 									@foreach (Contact::where('relation_id','=', $relation->id)->get() as $contact)
 									<tr>
-										<td class="col-md-2"><a href="/relation-{{ $relation->id }}/contact-{{ $contact->id }}/edit">{{ $contact->firstname }}</a></td>
-										<td class="col-md-2">{{ $contact->lastname }}</td>
+										<td class="col-md-2"><a href="/relation-{{ $relation->id }}/contact-{{ $contact->id }}/edit">{{ $contact->lastname }}</a>{{ $contact->lastname }}</td>
+										<td class="col-md-2">{{ $contact->firstname }}</a></td>
 										<td class="col-md-2">{{ ucfirst(ContactFunction::find($contact->function_id)->function_name) }}</td>
 										<td class="col-md-2">{{ $contact->phone }}</td>
 										<td class="col-md-2">{{ $contact->mobile }}</td>

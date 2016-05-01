@@ -289,13 +289,24 @@ $(document).ready(function() {
 						</div>
 					</div>
 
-					<div class="col-md-4 company">
+					<div class="col-md-3 company">
 						<div class="form-group">
 							<label for="contactfunction">Functie*</label>
 							<select name="contactfunction" id="contactfunction" class="form-control pointer">
 								@foreach (Calctool\Models\ContactFunction::all() as $function)
 								<option {{ (old('contactfunction') ? (old('contactfunction') == $function->id ? 'selected' : '') : $function->function_name=='directeur' ? 'selected' : '') }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
 								@endforeach
+							</select>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="gender" style="display:block;">Geslacht</label>
+							<select name="gender" id="gender" class="form-control pointer">
+								<option value="-1">Selecteer</option>
+								<option {{ (old('gender') == 'M' ? 'selected' : '') }} value="M">Man</option>
+								<option {{ (old('gender') == 'V' ? 'selected' : '') }} value="V">Vrouw</option>
 							</select>
 						</div>
 					</div>
