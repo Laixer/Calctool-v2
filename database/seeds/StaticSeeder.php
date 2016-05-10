@@ -385,6 +385,12 @@ class StaticSeeder extends Seeder {
 		SubGroup::create(array('reference_code'=>'12-21-99','group_type'=>'sanitair divers'));
 		SubGroup::create(array('reference_code'=>'12-22-5','group_type'=>'zink'));
 		SubGroup::create(array('reference_code'=>'12-27-1','group_type'=>'airco'));
+		SubGroup::create(array('reference_code'=>'12-21-61','group_type'=>'multi-fit'));
+		SubGroup::create(array('reference_code'=>'12-21-60','group_type'=>'henco mlc'));
+		SubGroup::create(array('reference_code'=>'12-25-25','group_type'=>'sanitair impuls'));
+		SubGroup::create(array('reference_code'=>'18-80-1','group_type'=>'bovenkasten wit'));
+		SubGroup::create(array('reference_code'=>'18-80-3','group_type'=>'onderkasten wit stelpoten'));
+		SubGroup::create(array('reference_code'=>'12-26-11','group_type'=>'steopkranen'));
 		SubGroup::create(array('reference_code'=>'13-36-1','group_type'=>'onbekend'));
 		$this->command->info('SubGroup created');
 
