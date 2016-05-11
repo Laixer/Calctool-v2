@@ -256,7 +256,7 @@ $(document).ready(function() {
 
 					<ul class="nav nav-tabs">
 						<li id="tab-company">
-							<a href="#company" data-toggle="tab">Bedrijfsgegevenss</a>
+							<a href="#company" data-toggle="tab">Bedrijfsgegevens</a>
 						</li>
 						<li id="tab-contact">
 							<a href="#contact" data-toggle="tab" data-step="3" data-intro="Stap 4: Je bedrijf heeft een contactpersoon nodig. Klik op het tabblad 'Contacten' en klik daarna op volgende.">Contacten</a>
@@ -431,7 +431,7 @@ $(document).ready(function() {
 								</tbody>
 							</table>
 							<div class="row">
-								<div class="col-md-2" data-step="4" data-intro="Stap 5: Klik op 'Nieuw Contact'om een contactpersoon toe te voegen.">
+								<div class="col-md-2" data-step="4" data-intro="Stap 5: Klik op 'Nieuw Contact' om een contactpersoon toe te voegen.">
 									<a href="/mycompany/contact/new" {{ $relation ? '' : 'disabled' }} class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
 								</div>
 							</div>

@@ -274,7 +274,7 @@ $(document).ready(function() {
 			<div class="modal-footer">
 				<div class="col-md-6"></div>
 				<div class="col-md-6">
-					<button class="starttour btn btn-primary"><i class="fa fa-check"></i> Begin Quickstart</button>
+					<button class="starttour btn btn-primary"><i class="fa fa-check"></i> Begin Quick-SetUp</button>
 				</div>
 			</div>
 		</div>
@@ -442,13 +442,9 @@ $(document).ready(function() {
 
 						</div>
 						@else
-						<h2><strong>Je eerste</strong> stap</h2>
+						<h2><strong>De eerste</strong> stappen...</h2>
 						<div class="bs-callout text-center whiteBg">
-<<<<<<< Updated upstream
-							<h3><button class="starttour btn btn-primary btn-lg">Quick setup</button> <strong>OF</strong> <a href="/project/new" class="btn btn-primary btn-lg" kaas-intro="Stap 9: Maak nu je eerste prject aan.">Start nieuw project</a></h3>
-=======
-							<h3><button class="starttour btn btn-primary btn-lg">Take the Tour</button> <strong>OF</strong> <a href="/project/new" class="btn btn-primary btn-lg" kaas-intro="Stap 9: Maak nu je eerste project aan.">Start nieuw project</a></h3>
->>>>>>> Stashed changes
+							<h3><button class="starttour btn btn-primary btn-lg">Quick-SetUp</button> <strong>OF</strong> <a href="/project/new" class="btn btn-primary btn-lg" kaas-intro="Stap 9: Maak nu je eerste prject aan.">Start nieuw project</a></h3>
 						</div>
 						@endif
 					</div>
