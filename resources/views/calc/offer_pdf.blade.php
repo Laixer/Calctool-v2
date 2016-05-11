@@ -60,6 +60,8 @@ function invoice_condition($offer) {
 	 <meta charset="utf-8">
 	<title>Offerte</title>
 	<link rel="stylesheet" href="{{ asset('css/pdf.css') }}" media="all" />
+	<link href='http://fonts.googleapis.com/css?family=Jolly+Lodger' rel='stylesheet' type='text/css'>
+
    </head>
   <body>
 
@@ -184,7 +186,7 @@ function invoice_condition($offer) {
 
 
 @if (!$only_totals)
-	  <h1 class="name">Specificatie offerte</h1>
+	  <p class="don">Specificatie offerte</p>
 	  <hr>
 	  @if($type->type_name == 'snelle offerte en factuur')
 	  <table border="0" cellspacing="0" cellpadding="0">

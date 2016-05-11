@@ -144,7 +144,7 @@ $(document).ready(function() {
 </div>
 		<div class="white-row">
 			<div class="col-md-2">
-				<button class="btn btn-primary" data-step="2" data-intro="Stap 7: Sla het contact op. Daarna ben je klaar met dde Quick-SetUp en wordt je teruggestuurd naar het startscherm (dashboard)."><i class="fa fa-check"></i> Opslaan</button>
+				<button class="btn btn-primary" data-step="2" data-intro="Stap 7: Klik op 'Opslaan' om de contactpersoon toe te voegen aan jouw berijf. Daarna ben je klaar met de Quick-SetUp en wordt je teruggestuurd naar het startscherm (Dashboard)."><i class="fa fa-check"></i> Opslaan</button>
 			</div>
 		</div>
 		</form>

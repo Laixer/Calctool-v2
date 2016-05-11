@@ -41,6 +41,10 @@ h1.name {
   border-color: #AAAAAA;
 }
 
+p.don { 
+    font-family: 'Jolly Lodger', cursive;
+  }
+
 h3.name {
   font-size: 12px;
   font-weight: normal;

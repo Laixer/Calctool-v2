@@ -302,7 +302,7 @@ $(document).ready(function() {
 			<h2 style="margin: 10px 0 20px 0;"><strong>Welkom</strong>, {{ Auth::user()->firstname }}</h2>
 			<div class="row">
 
-				<div class="col-sm-6 col-md-2" data-step="1" data-intro="Stap 1: Ga naar 'mijn bedrijf' om je bedrijfsgegevens in te stellen.">
+				<div class="col-sm-6 col-md-2" data-step="1" data-intro="Stap 1: Klik op 'Mijn Bedrijf' om je bedrijfsgegevens in te vullen.">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
 							<a class="item-hover" href="/mycompany">
@@ -381,7 +381,7 @@ $(document).ready(function() {
 							<a class="item-hover" href="javascript:void(0);" ui-href="/apps">
 								<span class="overlay color2" style="background-color: rgba(0,0,0, 0.2) !important;"></span>
 								<span class="inner" style="top:40%;">
-									<span class="block fa fa-gears fsize60"></span> comming soon
+									<span class="block fa fa-gears fsize60"></span> coming soon
 								</span>
 							</a>
 							<a style="opacity: 0.4;" href="javascript:void(0);" ui-href="/apps" class="btn btn-primary add_to_cart"><strong> Apps</strong></a>
@@ -444,7 +444,11 @@ $(document).ready(function() {
 						@else
 						<h2><strong>Je eerste</strong> stap</h2>
 						<div class="bs-callout text-center whiteBg">
+<<<<<<< Updated upstream
 							<h3><button class="starttour btn btn-primary btn-lg">Quick setup</button> <strong>OF</strong> <a href="/project/new" class="btn btn-primary btn-lg" kaas-intro="Stap 9: Maak nu je eerste prject aan.">Start nieuw project</a></h3>
+=======
+							<h3><button class="starttour btn btn-primary btn-lg">Take the Tour</button> <strong>OF</strong> <a href="/project/new" class="btn btn-primary btn-lg" kaas-intro="Stap 9: Maak nu je eerste project aan.">Start nieuw project</a></h3>
+>>>>>>> Stashed changes
 						</div>
 						@endif
 					</div>
