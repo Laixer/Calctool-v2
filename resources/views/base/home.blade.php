@@ -261,7 +261,7 @@ $(document).ready(function() {
 				<hr>
 				<div class="row">
 					<div class="col-md-8">
-						<span>Voor een juiste werking van de CalculatieTool.com moeten er eerst een aantal gegevens van je bedrijf bekend zijn. Deze Quick-SetUp helpt je daarbij dit binnen 1 minuut in te stellen.</span>
+						<h4>Voor een juiste werking van de CalculatieTool.com moeten er eerst een aantal gegevens van je bedrijf bekend zijn. Deze Quick-SetUp helpt je daarbij dit binnen 1 minuut in te stellen.</h4>
 					</div>
 					<div class="col-md-4">
 						<a class="logo2" href="/">
