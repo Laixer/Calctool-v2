@@ -170,9 +170,10 @@ $(document).ready(function() {
 		var demo = introJs().
 			setOption('nextLabel', 'Volgende').
 			setOption('prevLabel', 'Vorige').
-			setOption('skipLabel', 'Overslaan').
+			setOption('skipLabel', '').
 			setOption('doneLabel', 'Klaar').
 			setOption('showBullets', false).
+			setOption('exitOnOverlayClick', false).
 			onexit(function(){
 				sessionStorage.removeItem('introDemo');
 			}).onbeforechange(function(){
@@ -192,11 +193,24 @@ $(document).ready(function() {
 						window.location.href = '/';
 					}
 				});
+				if (done == 1) {
+					$('.introjs-prevbutton').css("visibility","initial");
+				} else {
+					$('.introjs-prevbutton').css("visibility","hidden");
+				}
+				if (done == 3) {
+					$('.introjs-skipbutton').css("visibility","initial");
+				} else {
+					$('.introjs-skipbutton').css("visibility","hidden");
+				}
 			});
 
 		if (sessionStorage.introDemo == 0) {
 			sessionStorage.clear();
 			sessionStorage.introDemo = 0;
+			sessionStorage.toggleTabMyComp{{Auth::id()}} = 'company';
+			$('#tab-company').addClass('active');
+			$('#company').addClass('active');
 			demo.start();
 		} else {
 			demo.goToStep(sessionStorage.introDemo).start();
@@ -278,7 +292,7 @@ $(document).ready(function() {
 							{!! $relation ? '<form action="relation/updatemycompany?multipage=true" method="post">' : '<form action="relation/newmycompany" method="post">' !!}
 							{!! csrf_field() !!}
 
-							<div data-step="1" data-intro="Stap 2: Vul hier jouw bedrijfgegevens in. Alleen de velden met een (*) zijn verplicht. Je kan je gegevens later altijd aanpassen en aanvullen.">
+							<div data-step="1" data-position="left" data-intro="Stap 2: Vul hier jouw bedrijfgegevens in. Alleen de velden met een (*) zijn verplicht. Je kan je gegevens later altijd aanpassen en aanvullen.">
 							<h4 class="company" >Bedrijfsgegevens</h4>
 							<input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
 							<div class="row">
@@ -396,7 +410,7 @@ $(document).ready(function() {
 
 							<div class="row">
 								<div class="col-md-12">
-									<button class="btn btn-primary" data-step="2" data-intro="Stap 3: Sla je bedrijfsgegevens op en klik daarna op volgende."><i class="fa fa-check"></i> Opslaan</button>
+									<button class="btn btn-primary" data-position="top" data-step="2" data-intro="Stap 3: Sla je bedrijfsgegevens op en klik daarna op volgende."><i class="fa fa-check"></i> Opslaan</button>
 								</div>
 							</div>
 						</form>

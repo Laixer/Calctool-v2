@@ -26,6 +26,7 @@ $(document).ready(function() {
 			setOption('skipLabel', 'Overslaan').
 			setOption('doneLabel', 'Klaar').
 			setOption('showBullets', false).
+			setOption('exitOnOverlayClick', false).
 			onexit(function(){
 				sessionStorage.removeItem('introDemo');
 			}).onafterchange(function(){
@@ -35,6 +36,11 @@ $(document).ready(function() {
 						window.location.href = '/mycompany';
 					}
 				});
+				if (done == 1) {
+					$('.introjs-prevbutton').css("visibility","initial");
+				} else {
+					$('.introjs-prevbutton').css("visibility","hidden");
+				}
 			}).start();
 	}
 });
@@ -78,7 +84,7 @@ $(document).ready(function() {
 		<div class="white-row">
 		<form action="/mycompany/contact/new" method="post">
 		{!! csrf_field() !!}
-<div data-step="1" data-intro="Stap 6: Geef de contactgevens op. Alleen de velden met (*) zijn verplicht.">
+		<div data-step="1" data-intro="Stap 6: Geef de contactgevens op. Alleen de velden met (*) zijn verplicht.">
 		<h4>Contactgegevens</h4>
 		<div class="row">
 

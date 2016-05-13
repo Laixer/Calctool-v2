@@ -230,7 +230,8 @@ class AuthController extends Controller {
 		$log->save();
 
 		Auth::login($user);
-		return redirect('/')->withCookie(cookie('nstep', 'intro_'.$user->id, 60*24*3))->withCookie(cookie('_xintr'.$user->id, '1', 60*24*7));
+		// return redirect('/')->withCookie(cookie('nstep', 'intro_'.$user->id, 60*24*3))->withCookie(cookie('_xintr'.$user->id, '1', 60*24*7));
+		return redirect('/?nstep=intro')->withCookie(cookie('_xintr'.$user->id, '1', 60*24*7));
 	}
 
 	/**

@@ -93,6 +93,8 @@ $(document).ready(function() {
 		setOption('prevLabel', 'Vorige').
 		setOption('skipLabel', 'Overslaan').
 		setOption('doneLabel', 'Volgende pagina').
+		setOption('showBullets', false).
+		setOption('exitOnOverlayClick', false).
 		start().oncomplete(function(){
 			window.location.href = '/mycompany';
 			sessionStorage.introDemo = 0;
