@@ -615,8 +615,8 @@ var n = this,
 		$("body").on("blur", ".lsave", function(){
 			var flag = true;
 			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				return false;
+			/*if($curThis.closest("tr").attr("data-id"))
+				return false;*/
 			$curThis.closest("tr").find("input").each(function(){
 				if(!$(this).val())
 					flag = false;
@@ -1057,7 +1057,7 @@ var n = this,
 														@endforeach
 														<tr>
 															<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text lsave"/></td>
-															<td class="col-md-1"><input type="number" min="0" name="hour" id="hour" class="form-control-sm-text lsave"/></td>
+															<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text lsave"/></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-8"><input type="text" name="note" id="note" class="form-control-sm-text lsave" placeholder="Verplicht"/></td>
 															<td class="col-md-1">&nbsp;</td>
