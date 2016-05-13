@@ -27,6 +27,17 @@ $(function() {
 			$('#btn-submit').prop('disabled', true);
 		}
 	});
+	$('#passtoggle').click(function(){
+		if ($('#secret').attr('type') == 'password') {
+			$('#secret').attr('type', 'text');
+			$('#passtoggle i').remove();
+			$('<i class="glyphicon icon-eye-close glyphicon-eye-close"></i>').appendTo('#passtoggle');
+		} else {
+			$('#secret').attr('type', 'password');
+			$('#passtoggle i').remove();
+			$('<i class="glyphicon icon-eye-open glyphicon-eye-open"></i>').appendTo('#passtoggle');
+		}
+	});
 });
 </script>
 <div id="wrapper">
@@ -83,11 +94,17 @@ $(function() {
 							<div class="form-group">
 								<div class="col-md-6">
 									<label for="secret">Wachtwoord</label>
-									<input class="form-control" name="secret" type="password" value="" id="secret">
+									<div class="input-append input-group">
+										<input id="secret" name="secret" class="form-control" type="password" autocomplete="off">
+										<input type="text" class="form-control" placeholder="password" style="display: none;">
+										<span tabindex="100" id="passtoggle" title="Klik om wachtwoord te tonen/verbergen" class="add-on input-group-addon" style="cursor: pointer;">
+											<i class="icon-eye-open glyphicon glyphicon-eye-open"></i>
+										</span>
+									</div>
 								</div>
 								<div class="col-md-6">
 									<label for="secret_confirmation">Herhaal wachtwoord</label>
-									<input class="form-control" name="secret_confirmation" type="password" value="" id="secret_confirmation">
+									<input class="form-control" name="secret_confirmation" type="password" value="" id="secret_confirmation" autocomplete="off">
 								</div>
 							</div>
 						</div>

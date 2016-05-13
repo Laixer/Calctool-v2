@@ -315,7 +315,7 @@ $(document).ready(function() {
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="curr_secret">Huidig wachtwoord</label>
-										<input name="curr_secret" id="curr_secret" type="password" class="form-control" />
+										<input name="curr_secret" id="curr_secret" type="password" class="form-control" autocomplete="off"/>
 									</div>
 								</div>
 
@@ -325,14 +325,14 @@ $(document).ready(function() {
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="secret">Wachtwoord</label>
-										<input name="secret" id="secret" type="password" class="form-control" />
+										<input name="secret" id="secret" type="password" class="form-control" autocomplete="off"/>
 									</div>
 								</div>
 
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="secret_confirmation">Herhaal wachtwoord</label>
-										<input name="secret_confirmation" id="secret_confirmation" type="password" class="form-control"/>
+										<input name="secret_confirmation" id="secret_confirmation" type="password" class="form-control" autocomplete="off"/>
 									</div>
 								</div>
 
