@@ -737,7 +737,7 @@ var n = this,
 															<td class="col-md-1">{{ number_format($labor->amount, 2,",",".") }}</td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(MoreRegister::laborTotal($labor->rate, $labor->amount), 2, ",",".") }}</span></td>
 															<td class="col-md-8">{{ Timesheet::find($labor->hour_id)->note }}</td>
-															<td class="col-md-1 text-right"><button class="btn btn-xs fa btn-danger fa-times xdeleterow"></button></td>
+															<td class="col-md-1 text-right"><!--<button class="btn btn-xs fa btn-danger fa-times xdeleterow"></button>--></td>
 														</tr>
 														@endforeach
 														<tr>
@@ -868,7 +868,7 @@ var n = this,
 												</table>
 
 												<div class="row">
-													<div class="col-md-2"><h4>Materieel</h4></div>
+													<div class="col-md-2"><h4>Overig</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
 													<div class="col-md-2">
 													@if ($project->tax_reverse)
@@ -985,7 +985,7 @@ var n = this,
 										</div>
 										@if ($chapter->more)
 										<div class="col-md-6 text-right">
-											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Hoofdstuk verwijderen</button>
+											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Onderdeel verwijderen</button>
 										</div>
 										@endif
 									</div>
@@ -997,10 +997,11 @@ var n = this,
 
 						<form action="/more/newchapter/{{ $project->id }}" method="post">
 						{!! csrf_field() !!}
+						<div><hr></div>
 						<div class="row">
 							<div class="col-md-6">
 								<div class="input-group">
-									<input type="text" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw Hoofdstuk">
+									<input type="text" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw Onderdeel">
 									<input type="hidden" name="project" value="{{ $project->id }}">
 									<span class="input-group-btn">
 										<button class="btn btn-primary btn-primary-chapter">Voeg toe</button>

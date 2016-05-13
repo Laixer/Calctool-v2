@@ -9,18 +9,18 @@ use \Calctool\Calculus\MoreOverview;
 <div>
 
 	<div>
-		<label>Aanneming</label>
+		<h4>Aanneming</h4>
 		<div class="toggle-content">
 
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
-						<th class="col-md-1"><span class="pull-right">Materieel</th>
+						<th class="col-md-1"><span class="pull-right">Overig</th>
 						<th class="col-md-1"><span class="pull-right">Totaal</th>
 					</tr>
 				</thead>
@@ -57,18 +57,18 @@ use \Calctool\Calculus\MoreOverview;
 	</div>
 
 	<div>
-		<label>Onderaanneming</label>
+		<h4>Onderaanneming</h4>
 		<div class="toggle-content">
 
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
-						<th class="col-md-1"><span class="pull-right">Materieel</th>
+						<th class="col-md-1"><span class="pull-right">Overig</th>
 						<th class="col-md-1"><span class="pull-right">Totaal</th>
 					</tr>
 				</thead>
@@ -105,7 +105,7 @@ use \Calctool\Calculus\MoreOverview;
 	</div>
 
 	<div>
-		<label>Totalen project</label>
+		<h4>Totalen project</h4>
 		<div class="toggle-content">
 			<table class="table table-striped">
 				<thead>
@@ -115,7 +115,7 @@ use \Calctool\Calculus\MoreOverview;
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
-						<th class="col-md-1"><span class="pull-right">Materieel</span></th>
+						<th class="col-md-1"><span class="pull-right">Overig</span></th>
 						<th class="col-md-1"><span class="pull-right">Totaal</span></th>
 					</tr>
 				</thead>

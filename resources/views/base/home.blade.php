@@ -21,11 +21,10 @@ $relation = Relation::find(Auth::user()->self_id);
 
 @section('content')
 
-@if ($next_step && $next_step=='intro_'.Auth::id())
 <script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
-<link media="all" type="text/css" rel="stylesheet" href="/plugins/jquery-ui/jquery-ui.css">
+<link media="all" type="text/css" rel="stylesheet" href="/plugins/jquery-ui/jquery-ui.css" />
 <script type="text/javascript">
-$(function() {
+/*$(document).ready(function() {
 	var myPlayer = videojs('intro_vid');
 	$('#tutModal').modal('toggle');
 	$('button[data-action="hide"]').click(function(){
@@ -83,9 +82,30 @@ $(function() {
 	$('#tutModal').on('hidden.bs.modal', function () {
 		myPlayer.pause();
 	});
+});*/
+$(document).ready(function() {
+	$('.starttour').click(function(){
+		sessionStorage.introDemo = 0;
+		$('#introModal').modal('hide')
+
+		introJs().
+		setOption('nextLabel', 'Volgende').
+		setOption('prevLabel', 'Vorige').
+		setOption('skipLabel', 'Overslaan').
+		setOption('doneLabel', 'Volgende pagina').
+		setOption('showBullets', false).
+		setOption('exitOnOverlayClick', false).
+		start().oncomplete(function(){
+			window.location.href = '/mycompany';
+			sessionStorage.introDemo = 0;
+		});
+	});
+	<?php if ($next_step && $next_step=='intro_'.Auth::id()){ ?>
+		$('#introModal').modal('toggle');
+	<?php } ?>
 });
 </script>
-<div class="modal fade" id="tutModal" tabindex="-1" role="dialog" aria-labelledby="tutModalLabel" aria-hidden="true">
+<!--<div class="modal fade" id="tutModal" tabindex="-1" role="dialog" aria-labelledby="tutModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-body" id="introform">
@@ -225,8 +245,43 @@ $(function() {
 
 		</div>
 	</div>
+</div>-->
+<div class="modal fade" id="introModal" tabindex="-1" role="dialog" aria-labelledby="introModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-body" id="introform">
+				<div class="row">
+					<div class="col-md-8">
+						<h4>Welkom bij de<strong> CalculatieTool.com</strong></h4>
+					</div>
+					<div class="col-md-4">
+						<a class="logo" href="/">
+						<img src="/images/logo2.png" width="229px" alt="Calctool">
+						</a>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-md-8">
+						<h4>Voor een juiste werking van de CalculatieTool.com moeten er eerst een aantal gegevens van je bedrijf bekend zijn. Deze Quick-SetUp helpt je daarbij dit binnen 1 minuut in te stellen.</h4>
+					</div>
+					<div class="col-md-4">
+						<a class="logo2" href="/">
+							<img src="/images/cal_bouwen.png" width="229px" alt="Calctool">
+						</a>
+					</div>
+				</div>
+			</div>
+			</form>
+			<div class="modal-footer">
+				<div class="col-md-6"></div>
+				<div class="col-md-6">
+					<button class="starttour btn btn-primary"><i class="fa fa-check"></i> Begin Quick-SetUp</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-@endif
 <div id="wrapper">
 
 	<div id="shop">
@@ -249,10 +304,7 @@ $(function() {
 			<h2 style="margin: 10px 0 20px 0;"><strong>Welkom</strong>, {{ Auth::user()->firstname }}</h2>
 			<div class="row">
 
-				<div class="col-sm-6 col-md-1">
-				</div>
-
-				<div class="col-sm-6 col-md-2">
+				<div class="col-sm-6 col-md-2" data-step="1" data-intro="Stap 1: Klik op 'Mijn Bedrijf' om je bedrijfsgegevens in te vullen.">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
 							<a class="item-hover" href="/mycompany">
@@ -266,6 +318,8 @@ $(function() {
 						</figure>
 					</div>
 				</div>
+
+
 
 				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
@@ -309,20 +363,6 @@ $(function() {
 					</div>
 				</div>
 
-			<!-- 	<div class="col-sm-6 col-md-2">
-					<div class="item-box item-box-show fixed-box">
-						<figure>
-							<a class="item-hover" href="/wholesale">
-								<span class="overlay color2"></span>
-								<span class="inner" style="top:40%;">
-									<span class="block fa fa-truck fsize60"></span>
-								</span>
-							</a>
-							<a href="/wholesale" class="btn btn-primary add_to_cart"><strong> Leveranciers</strong></a>
-						</figure>
-					</div>
-				</div> -->
-
 				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
@@ -337,9 +377,20 @@ $(function() {
 					</div>
 				</div>
 
-				<div class="col-sm-6 col-md-1">
+				<div class="col-sm-6 col-md-2">
+					<div class="item-box item-box-show fixed-box">
+						<figure>
+							<a class="item-hover" href="javascript:void(0);" ui-href="/apps">
+								<span class="overlay color2" style="background-color: rgba(0,0,0, 0.2) !important;"></span>
+								<span class="inner" style="top:40%;">
+									<span class="block fa fa-gears fsize60"></span> coming soon
+								</span>
+							</a>
+							<a style="opacity: 0.4;" href="javascript:void(0);" ui-href="/apps" class="btn btn-primary add_to_cart"><strong> Apps</strong></a>
+						</figure>
+					</div>
 				</div>
-
+				
 			</div>
 
 			<div class="row">
@@ -348,6 +399,7 @@ $(function() {
 
 					<div class="col-md-12">
 						<br>
+						@if (Project::where('user_id','=', Auth::user()->id)->count('id')>0)
 						<h2><strong>Jouw</strong> Projecten</h2>
 						<div class="white-row" ng-controller="projectController">
 							<div class="row">
@@ -362,22 +414,18 @@ $(function() {
 							<table class="table table-striped">
 								<thead>
 									<tr>
-										<th class="col-md-4" ng-click="orderByField='project_name'; reverseSort = !reverseSort">Projectnaam</th>
-										<th class="col-md-2" ng-click="orderByField='relation'; reverseSort = !reverseSort">Opdrachtgever</th>
-										<th class="col-md-1" ng-click="orderByField='type_name'; reverseSort = !reverseSort">Type</th>
-										<th class="col-md-3" ng-click="orderByField='address_street'; reverseSort = !reverseSort">Adres</th>
+										<th class="col-md-5" ng-click="orderByField='project_name'; reverseSort = !reverseSort">Projectnaam</th>
+										<th class="col-md-3" ng-click="orderByField='relation'; reverseSort = !reverseSort">Opdrachtgever</th>
+										<th class="col-md-2" ng-click="orderByField='type_name'; reverseSort = !reverseSort">Type</th>
 										<th class="col-md-2" ng-click="orderByField='address_city'; reverseSort = !reverseSort">Plaats</th>
-										<!-- <th class="col-md-1">Status</th> -->
 									</tr>
 								</thead>
 								<tbody>
 									<tr ng-repeat="project in projects | filter: query | orderBy: orderByField:reverseSort as results">
-										<td class="col-md-4"><a href="/project-@{{ project.id }}/edit">@{{ project.project_name }}</a></td>
-										<td class="col-md-2">@{{ project.relation }}</td>
-										<td class="col-md-1">@{{ project.type.type_name }}</td>
-										<td class="col-md-3">@{{ project.address_street }} @{{ project.address_number }}</td>
+										<td class="col-md-5"><a href="/project-@{{ project.id }}/edit">@{{ project.project_name }}</a></td>
+										<td class="col-md-3">@{{ project.relation }}</td>
+										<td class="col-md-2">@{{ project.type.type_name }}</td>
 										<td class="col-md-2">@{{ project.address_city }}</td>
-										<!-- <td class="col-md-1">@{{ project.project_close ? 'Gesloten' : 'Open' }}</td> -->
 									</tr>
 									<tr ng-show="results == 0">
 										<td colspan="6" style="text-align: center;">Geen projecten beschikbaar</td>
@@ -395,6 +443,12 @@ $(function() {
 							</div>
 
 						</div>
+						@else
+						<h2><strong>De eerste</strong> stappen...</h2>
+						<div class="bs-callout text-center whiteBg">
+							<h3><button class="starttour btn btn-primary btn-lg">Quick-SetUp</button> <strong>OF</strong> <a href="/project/new" class="btn btn-primary btn-lg" kaas-intro="Stap 9: Maak nu je eerste prject aan.">Start nieuw project</a></h3>
+						</div>
+						@endif
 					</div>
 
 				</div>
@@ -432,7 +486,6 @@ $(function() {
 
 				});
 				</script>
-
 			</div>
 		</div>
 	</div> 

@@ -51,11 +51,16 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Uw opdrachtgever voor project {{ $project_name }} heeft geregeerd.<br />
+														Uw opdrachtgever voor project {{ $project_name }} heeft gereageerd.<br />
 														De reactie van uw opdrachtgever:<br />
 														{!! $note !!}
 													</td>
 												</tr>
+													<td width="100%" style="text-align:center;">
+														<a href="{{ URL::to('/') }}" style="text-decoration:none; font-family: helvetica, Arial, sans-serif; font-size: 12px; letter-spacing: 0px; text-align: center; text-transform: uppercase; padding:10px; color:#ffffff; background-color:#79BB00; border-radius:6px;">
+															<strong>Reageren</strong>
+														</a>
+													</td>
 												<tr><!-- spacer after the line -->
 													<td width="100%" height="20"></td>
 												</tr>

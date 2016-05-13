@@ -34,7 +34,7 @@ $include_tax = $offer->include_tax; //BTW bedragen weergeven
 $only_totals = $offer->only_totals; //Alleen het totale offertebedrag weergeven
 $seperate_subcon = !$offer->seperate_subcon; //Onderaanneming apart weergeven
 $display_worktotals = $offer->display_worktotals; //Kosten werkzaamheden weergeven
-$display_specification = $offer->display_specification; //Hoofdstukken en werkzaamheden weergeven
+$display_specification = $offer->display_specification; //Onderdeelken en werkzaamheden weergeven
 $display_description = $offer->display_description;  //Omschrijving werkzaamheden weergeven
 
 $type = ProjectType::find($project->type_id);
@@ -60,11 +60,14 @@ function invoice_condition($offer) {
 	 <meta charset="utf-8">
 	<title>Offerte</title>
 	<link rel="stylesheet" href="{{ asset('css/pdf.css') }}" media="all" />
+	<link href='http://fonts.googleapis.com/css?family=Jolly+Lodger' rel='stylesheet' type='text/css'>
+
    </head>
   <body>
 
 	<header class="clearfix">
 	  	<div id="heading" class="clearfix">
+
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tbody>
 					<tr>
@@ -73,54 +76,104 @@ function invoice_condition($offer) {
 								<?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
 							</div>
 						</td>
-						<td style="width: 100px">
-							<div><h3 class="name">{{ $relation_self->company_name }}</h3></div>
-							<div><strong>Adres:</strong></div>
-							<div><strong>&nbsp;</strong></div>
-							<div><strong>Telefoon:</strong></div>
-							<div><strong>E-mail:</strong></div>
-							<div><strong>KVK:</strong></div>
-						</td>
-						<td style="width: 150px">
-							<div>&nbsp;</div>
-							<div>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</div>
-							<div>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</div>
-							<div>{{ $relation_self->phone }}</div>
-							<div>{{ $relation_self->email }}</div>
-							<div>{{ $relation_self->kvk }}</div>
+
+						<td style="width: 300px">
+						
+							<table border="0" cellspacing="0" cellpadding="0">
+								<tbody>
+									<tr>
+										<td style="width: 300 px">
+											<div><h1 class="name">{{ $relation_self->company_name }}</h1></div>
+
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							
+							<table border="0" cellspacing="0" cellpadding="0">
+								<tbody>
+									<tr>
+										<td style="width: 100 px">
+											<div><strong>Adres:</strong></div>
+											<div><strong>&nbsp;</strong></div>
+											<div><strong>Telefoon:</strong></div>
+											<div><strong>E-mail:</strong></div>
+											<div><strong>KVK:</strong></div>
+										</td>
+										<td style="width: 200px">
+											<div>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</div>
+											<div>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</div>
+											<div>{{ $relation_self->phone }}</div>
+											<div>{{ $relation_self->email }}</div>
+											<div>{{ $relation_self->kvk }}</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
 						</td>
 					</tr>
 				</tbody>
 			</table>
+
 		</div>
 	</header>
 	
 	<main>
 	   	<div id="heading" class="clearfix">
-		<table border="0" cellspacing="0" cellpadding="0">
-			<tbody>
-				<tr>
-					<td style="width: 345px">{{ $relation->company_name }}</td>
-					<td style="width: 100px"><strong>Nummer:</strong></td>
-					<td style="width: 150px">{{ OfferController::getOfferCode($project->id) }}</td>
-				</tr>
-				<tr>
-					<td style="width: 345px">T.a.v. {{ Contact::find($offer->to_contact_id)->getFormalName() }}</td>
-					<td style="width: 100px"><strong>Projectnaam:</strong></td>
-					<td style="width: 150px">{{ $project->project_name }}</td>
-				</tr>
-				<tr>
-					<td style="width: 345px">{{ $relation->address_street . ' ' . $relation->address_number }}</td>
-					<td style="width: 100px"><strong>Datum:</strong></td>
-					<td style="width: 150px">{{ date("j M Y", strtotime($offer->offer_make)) }}</td>
-				</tr>
-				<tr>
-					<td style="width: 345px">{{ $relation->address_postal . ', ' . $relation->address_city }}</td>
-					<td style="width: 100px"><strong>Versie:</strong></td>
-					<td style="width: 150px">{{ Offer::where('project_id', $project->id)->count() }}</td>
-				</tr>
-			</tbody>
-		</table>
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tbody>
+					<tr>
+						<td style="width: 345px">
+							<table border="0" cellspacing="0" cellpadding="0">
+								<tbody>
+									<tr>
+										<td>{{ $relation->company_name }}</td>
+									</tr>
+									<tr>
+										<td>T.a.v. {{ Contact::find($offer->to_contact_id)->getFormalName() }}</td>
+									</tr>
+									<tr>
+										<td>{{ $relation->address_street . ' ' . $relation->address_number }}</td>
+									</tr>
+									<tr>
+										<td>{{ $relation->address_postal . ', ' . $relation->address_city }}</td>
+
+									</tr>
+								</tbody>
+							</table>
+						</td>
+						<td style="width: 300px">
+							<table border="0" cellspacing="0" cellpadding="0">
+								<tbody>
+									<tr>
+										<td style="width: 100 px">
+											<div><strong>Nummer:</strong></div>
+											<div><strong>Projectnaam:</strong></div>
+											<div><strong>Datum:</strong></div>
+											<div><strong>Versie:</strong></div>
+										</td>
+										<td style="width: 200px">
+											<div>{{ OfferController::getOfferCode($project->id) }}</div>
+											<div>{{ $project->project_name }}</div>
+											<div>{{ $project->project_name }}</div>
+											<div>{{ Offer::where('project_id', $project->id)->count() }}</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+
+
+
+
+
+
+
 		</div>
 		<div id="spacing"></div>
 
@@ -133,9 +186,9 @@ function invoice_condition($offer) {
 
 
 @if (!$only_totals)
-	  <h1 class="name">Specificatie offerte</h1>
+	  <p class="don">Specificatie offerte</p>
 	  <hr>
-	  @if($type->type_name == 'blanco offerte & factuur')
+	  @if($type->type_name == 'snelle offerte en factuur')
 	  <table border="0" cellspacing="0" cellpadding="0">
 		<thead>
 		  <tr style="page-break-after: always;">
@@ -161,7 +214,7 @@ function invoice_condition($offer) {
 		</tbody>
 	  </table>
 	  @else
-	  <hr>
+	<!--   <hr> -->
 	  @if ($seperate_subcon)
 	  <table border="0" cellspacing="0" cellpadding="0">
 		<thead>
@@ -227,7 +280,7 @@ function invoice_condition($offer) {
 
 		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
-			<td class="qty">Materieelkosten</td>
+			<td class="qty">Overige kosten</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax1Amount($project)+CalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="qty">21%</td>
@@ -242,7 +295,7 @@ function invoice_condition($offer) {
 		  </tr>
 		  @else
 		  <tr style="page-break-after: always;">
-			<td class="qty">strong>Materieelkosten</strong></td>
+			<td class="qty">strong>Overige kosten</strong></td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax3Amount($project)+CalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 			<td class="qty">0%</td>
@@ -325,7 +378,7 @@ function invoice_condition($offer) {
 
 		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
-			<td class="qty">Materieelkosten</td>
+			<td class="qty">Overige kosten</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="qty">21%</td>
@@ -342,7 +395,7 @@ function invoice_condition($offer) {
 		  </tr>
 		  @else
 		  <tr style="page-break-after: always;">
-			<td class="qty">Materieelkosten</td>
+			<td class="qty">Overige kosten</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 			<td class="qty">0%</td>
@@ -433,7 +486,7 @@ function invoice_condition($offer) {
 
 		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
-			<td class="qty">Materieelkosten</td>
+			<td class="qty">Overige kosten</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="qty">21%</td>
@@ -450,7 +503,7 @@ function invoice_condition($offer) {
 		  </tr>
 		  @else
 		  <tr style="page-break-after: always;">
-			<td class="qty">Materieelkosten</td>
+			<td class="qty">Overige kosten</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 			<td class="qty">0%</td>
@@ -629,7 +682,7 @@ function invoice_condition($offer) {
 
 		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
-			<td class="qty"><strong>Materieelkosten</strong></td>
+			<td class="qty"><strong>Overige kosten</strong></td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="qty">21%</td>
@@ -646,7 +699,7 @@ function invoice_condition($offer) {
 		  </tr>
 		  @else
 		  <tr style="page-break-after: always;">
-			<td class="qty"><strong>Materieelkosten</strong></td>
+			<td class="qty"><strong>Overige kosten</strong></td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 			<td class="qty">0%</td>
@@ -738,7 +791,7 @@ function invoice_condition($offer) {
 
 		  @if (!$project->tax_reverse)
 		  <tr style="page-break-after: always;">
-			<td class="qty"><strong>Materieelkosten</strong></td>
+			<td class="qty"><strong>Overige kosten</strong></td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="qty">21%</td>
@@ -755,7 +808,7 @@ function invoice_condition($offer) {
 		  </tr>
 		  @else
 		  <tr style="page-break-after: always;">
-			<td class="qty"><strong>Materieelkosten</strong></td>
+			<td class="qty"><strong>Overige kosten</strong></td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 			<td class="qty">0%</td>
@@ -972,14 +1025,16 @@ function invoice_condition($offer) {
 	 <table border="0" cellspacing="0" cellpadding="0">
 		<thead>
 		  <tr style="page-break-after: always;">
-			<th style="width: 130px" class="qty">Hoofdstuk</th>
+			<th style="width: 130px" class="qty">Onderdeel</th>
 			<th style="width: 170px" class="qty">Werkzaamheid</th>
 			<th style="width: 40px" class="qty">@if ($display_specification) Uren @endif</th>
 			<th style="width: 51px" class="qty">@if ($display_specification) Arbeid @endif</th>
 			<th style="width: 51px" class="qty">@if ($display_specification) Materiaal @endif</th>
-			<th style="width: 51px" class="qty">@if ($display_specification) Materieel @endif</th>
+			<th style="width: 51px" class="qty">@if ($display_specification) Overig @endif</th>
 			<th style="width: 51px" class="qty">Totaal</th>
+			@if ($project->use_estimate)
 			<th style="width: 51px" class="qty">Stelpost</th>
+			@endif
 		  </tr>
 		</thead>
 		<tbody>
@@ -993,6 +1048,7 @@ function invoice_condition($offer) {
 			<td class="qty">@if ($display_specification) <span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span>@endif</td>
 			<td class="qty">@if ($display_specification) <span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span>@endif</td>
 			<td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
+			@if ($project->use_estimate)
 			<td class="qty text-center">
 			<?php
 			  if (PartType::find($activity->part_type_id)->type_name=='estimate') {
@@ -1000,6 +1056,7 @@ function invoice_condition($offer) {
 			  }
 			?>
 			</td>
+			@endif
 		  </tr>
 		  @endforeach
 		  @endforeach
@@ -1013,6 +1070,7 @@ function invoice_condition($offer) {
 			<td class="qty">@if ($display_specification) <span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span>@endif</td>
 			<td class="qty">@if ($display_specification) <span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span>@endif</td>
 			<td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
+			@if ($project->use_estimate)
 			<td class="qty text-center">
 			<?php
 			  if (PartType::find($activity->part_type_id)->type_name=='estimate') {
@@ -1020,6 +1078,7 @@ function invoice_condition($offer) {
 			  }
 			?>
 			</td>
+			@endif
 		  </tr>
 		  @endforeach
 		  @endforeach
@@ -1035,7 +1094,7 @@ function invoice_condition($offer) {
 			<th style="width: 40px" class="qty">@if ($display_specification) Uren @endif</th>
 			<th style="width: 51px" class="qty">@if ($display_specification) Arbeid @endif</th>
 			<th style="width: 51px" class="qty">@if ($display_specification) Materiaal @endif</th>
-			<th style="width: 51px" class="qty">@if ($display_specification) Materieel @endif</th>
+			<th style="width: 51px" class="qty">@if ($display_specification) Overig @endif</th>
 			<th style="width: 51px" class="qty">@if ($display_specification)Totaal @endif</th>
 			<th style="width: 51px" class="qty">&nbsp;</th>
 		  </tr>
@@ -1072,14 +1131,16 @@ function invoice_condition($offer) {
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <thead>
 		<tr style="page-break-after: always;">
-		  <th style="width: 130px" class="qty">Hoofdstuk</th>
+		  <th style="width: 130px" class="qty">Onderdeel</th>
 		  <th style="width: 170px" class="qty">Werkzaamheid</th>
 		  <th style="width: 40px" class="qty">@if ($display_specification) Uren @endif</th>
 		  <th style="width: 51px" class="qty">@if ($display_specification) Arbeid @endif</th>
 		  <th style="width: 51px" class="qty">@if ($display_specification) Materiaal @endif</th>
-		  <th style="width: 51px" class="qty">@if ($display_specification) Materieel @endif</th>
+		  <th style="width: 51px" class="qty">@if ($display_specification) Overig @endif</th>
 		  <th style="width: 51px" class="qty">Totaal</th>
+		  @if ($project->use_estimate)
 		  <th style="width: 51px" class="qty">Stelpost</th>
+		  @endif
 		 </tr>
 	  </thead>
 	  <tbody>
@@ -1093,6 +1154,7 @@ function invoice_condition($offer) {
 		  <td class="qty">@if ($display_specification)<span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span>@endif</td>
 		  <td class="qty">@if ($display_specification)<span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span>@endif</td>
 		  <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }}</td>
+		  @if ($project->use_estimate)
 		  <td class="qty text-center">
 		  <?php
 			if (PartType::find($activity->part_type_id)->type_name=='estimate') {
@@ -1100,6 +1162,7 @@ function invoice_condition($offer) {
 		   }
 		  ?>
 		  </td>
+		  @endif
 		</tr>
 		@endforeach
 		@endforeach
@@ -1111,7 +1174,9 @@ function invoice_condition($offer) {
 		  <td class="qty">@if ($display_specification)<strong><span>{{ '&euro; '.number_format(CalculationOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong>@endif</td>
 		  <td class="qty">@if ($display_specification)<strong><span>{{ '&euro; '.number_format(CalculationOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong>@endif</td>
 		  <td class="qty"><strong><span>{{ '&euro; '.number_format(CalculationOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
+		  @if ($project->use_estimate)
 		  <td class="qty">&nbsp;</td>
+		  @endif
 		</tr>
 	  </tbody>
 	</table>
@@ -1120,14 +1185,16 @@ function invoice_condition($offer) {
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <thead>
 		<tr style="page-break-after: always;">
-		  <th style="width: 130px" class="qty">Hoofdstuk</th>
+		  <th style="width: 130px" class="qty">Onderdeel</th>
 		  <th style="width: 170px" class="qty">Werkzaamheid</th>
 		  <th style="width: 40px" class="qty">@if ($display_specification) Uren @endif</th>
 		  <th style="width: 51px" class="qty">@if ($display_specification) Arbeid @endif</th>
 		  <th style="width: 51px" class="qty">@if ($display_specification) Materiaal @endif</th>
-		  <th style="width: 51px" class="qty">@if ($display_specification) Materieel @endif</th>
+		  <th style="width: 51px" class="qty">@if ($display_specification) Overig @endif</th>
 		  <th style="width: 51px" class="qty">Totaal</th>
+		  @if ($project->use_estimate)
 		  <th style="width: 51px" class="qty">Stelpost</th>
+		  @endif
 		 </tr>
 	  </thead>
 	  <tbody>
@@ -1141,6 +1208,7 @@ function invoice_condition($offer) {
 		  <td class="qty">@if ($display_specification)<span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span>@endif</td>
 		  <td class="qty">@if ($display_specification)<span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span>@endif</td>
 		  <td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
+		  @if ($project->use_estimate)
 		  <td class="qty text-center">
 		  <?php
 			if (PartType::find($activity->part_type_id)->type_name=='estimate') {
@@ -1148,6 +1216,7 @@ function invoice_condition($offer) {
 			}
 		  ?>
 		  </td>
+		  @endif
 		</tr>
 		@endforeach
 		@endforeach
@@ -1159,7 +1228,9 @@ function invoice_condition($offer) {
 		  <td class="qty">@if ($display_specification)<strong><span>{{ '&euro; '.number_format(CalculationOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong>@endif</td>
 		  <td class="qty">@if ($display_specification)<strong><span>{{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong>@endif</td>
 		  <td class="qty"><strong><span>{{ '&euro; '.number_format(CalculationOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
+		  @if ($project->use_estimate)
 		  <td class="qty">&nbsp;</td>
+		  @endif
 		</tr>
 	  </tbody>
 	</table>
@@ -1173,7 +1244,7 @@ function invoice_condition($offer) {
 			<th style="width: 40px" class="qty"class="qty">@if ($display_specification) Uren @endif</th>
 			<th style="width: 51px" class="qty"class="qty">@if ($display_specification) Arbeid @endif</th>
 			<th style="width: 51px" class="qty"class="qty">@if ($display_specification) Materiaal @endif</th>
-			<th style="width: 51px" class="qty"class="qty">@if ($display_specification) Materieel @endif</th>
+			<th style="width: 51px" class="qty"class="qty">@if ($display_specification) Overig @endif</th>
 			<th style="width: 51px" class="qty"class="qty">Totaal</th>
 			<th style="width: 51px" class="qty"class="qty">&nbsp;</th>
 		  </tr>
@@ -1215,7 +1286,7 @@ function invoice_condition($offer) {
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <thead>
 		<tr>
-		  <th style="width: 130px" class="qty">Hoofdstuk</th>
+		  <th style="width: 130px" class="qty">Onderdeel</th>
 		  <th style="width: 170px" class="qty">Werkzaamheid</th>
 		  <th class="qty">Omschrijving</th>
 		</tr>
@@ -1254,7 +1325,7 @@ function invoice_condition($offer) {
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <thead>
 		<tr>
-		  <th style="width: 130px"class="qty">Hoofdstuk</th>
+		  <th style="width: 130px"class="qty">Onderdeel</th>
 		  <th style="width: 170px"class="qty">Werkzaamheid</th>
 		  <th class="qty">Omschrijving</th>
 		</tr>
@@ -1276,7 +1347,7 @@ function invoice_condition($offer) {
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <thead>
 		<tr>
-		  <th style="width: 130px" class="qty">Hoofdstuk</th>
+		  <th style="width: 130px" class="qty">Onderdeel</th>
 		  <th style="width: 170px" class="qty">Werkzaamheid</th>
 		  <th class="qty">Omschrijving</th>
 		</tr>

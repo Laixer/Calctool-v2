@@ -615,8 +615,8 @@ var n = this,
 		$("body").on("blur", ".lsave", function(){
 			var flag = true;
 			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				return false;
+			/*if($curThis.closest("tr").attr("data-id"))
+				return false;*/
 			$curThis.closest("tr").find("input").each(function(){
 				if(!$(this).val())
 					flag = false;
@@ -1012,9 +1012,7 @@ var n = this,
 												</div>
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>
-													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2"><strong>{{ Tax::find($activity->tax_labor_id)->tax_rate }}%</strong></div>
-													<div class="col-md-6"></div>
+													<div class="col-md-1 text-right label label-info"><strong>BTW {{ Tax::find($activity->tax_labor_id)->tax_rate }}%</strong></div>
 												</div>
 												<table class="table table-striped" data-id="{{ $activity->id }}">
 													<?php
@@ -1054,12 +1052,12 @@ var n = this,
 															<td class="col-md-1">{{ number_format($labor->set_amount, 2,",",".") }}</td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(EstimateRegister::estimLaborTotal($labor->original ? ($labor->isset ? $labor->set_rate : $labor->rate) : $labor->set_rate, $labor->original ? ($labor->isset ? $labor->set_amount : $labor->amount) : $labor->set_amount), 2, ",",".") }}</span></td>
 															<td class="col-md-8">{{ Timesheet::find($labor->hour_id)->note }}</td>
-															<td class="col-md-1 text-right"><button class="btn btn-xs fa btn-danger fa-times xdeleterow"></button></td>
+															<td class="col-md-1 text-right"><!--<button class="btn btn-xs fa btn-danger fa-times xdeleterow"></button>--></td>
 														</tr>
 														@endforeach
 														<tr>
 															<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text lsave"/></td>
-															<td class="col-md-1"><input type="number" min="0" name="hour" id="hour" class="form-control-sm-text lsave"/></td>
+															<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text lsave"/></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-8"><input type="text" name="note" id="note" class="form-control-sm-text lsave" placeholder="Verplicht"/></td>
 															<td class="col-md-1">&nbsp;</td>
@@ -1084,9 +1082,7 @@ var n = this,
 
 												<div class="row">
 													<div class="col-md-2"><h4>Materiaal</h4></div>
-													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2"><strong>{{ Tax::find($activity->tax_material_id)->tax_rate }}%</strong></div>
-													<div class="col-md-2"></div>
+													<div class="col-md-1 text-right label label-info"><strong>BTW {{ Tax::find($activity->tax_material_id)->tax_rate }}%</strong></div>
 												</div>
 
 												<table class="table table-striped" data-id="{{ $activity->id }}">
@@ -1127,7 +1123,7 @@ var n = this,
 															<td class="col-md-1"><span class="total-incl-tax"></span></td>
 															<td class="col-md-1 text-right">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
-																<button disabled class="btn btn-xs fa btn-danger sdeleterow fa-times"></button>
+																<button class="btn btn-xs fa btn-danger sdeleterow fa-times"></button>
 															</td>
 														</tr>
 													</tbody>
@@ -1145,10 +1141,8 @@ var n = this,
 												</table>
 
 												<div class="row">
-													<div class="col-md-2"><h4>Materieel</h4></div>
-													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2"><strong>{{ Tax::find($activity->tax_equipment_id)->tax_rate }}%</strong></div>
-													<div class="col-md-8"></div>
+													<div class="col-md-2"><h4>Overig</h4></div>
+													<div class="col-md-1 text-right label label-info"><strong>BTW {{ Tax::find($activity->tax_equipment_id)->tax_rate }}%</strong></div>
 												</div>
 
 												<table class="table table-striped" data-id="{{ $activity->id }}">
@@ -1190,7 +1184,7 @@ var n = this,
 															<td class="col-md-1"><span class="total-incl-tax"></span></td>
 															<td class="col-md-1 text-right">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
-																<button disabled class="btn btn-xs fa btn-danger sdeleterow fa-times"></button>
+																<button class="btn btn-xs fa btn-danger sdeleterow fa-times"></button>
 															</td>
 														</tr>
 													</tbody>

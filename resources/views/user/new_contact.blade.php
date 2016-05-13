@@ -41,10 +41,12 @@ if (!$relation || !$relation->isOwner()) {
 			@if($errors->has())
 			<div class="alert alert-danger">
 				<i class="fa fa-frown-o"></i>
-				<strong>Fout</strong>
-				@foreach ($errors->all() as $error)
-					{{ $error }}
-				@endforeach
+				<strong>Fouten in de invoer</strong>
+				<ul>
+					@foreach ($errors->all() as $error)
+					<li><h5 class="nomargin">{{ $error }}</h5></li>
+					@endforeach
+				</ul>
 			</div>
 			@endif
 
@@ -66,18 +68,18 @@ if (!$relation || !$relation->isOwner()) {
 				<h4>Contactgegevens</h4>
 				<div class="row">
 
-					<div class="col-md-2">
-						<div class="form-group">
-							<label for="contact_firstname">Voornaam</label>
-							<input name="contact_firstname" id="contact_firstname" type="text" value="{{ Input::old('contact_firstname') }}" class="form-control"/>
-						</div>
-					</div>
-
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="contact_name">Achternaam*</label>
 							<input name="contact_name" id="contact_name" type="text" value="{{ Input::old('contact_name') }}" class="form-control"/>
 							<input type="hidden" name="id" id="id" value="{{ $relation->id }}"/>
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="contact_firstname">Voornaam</label>
+							<input name="contact_firstname" id="contact_firstname" type="text" value="{{ Input::old('contact_firstname') }}" class="form-control"/>
 						</div>
 					</div>
 
@@ -107,9 +109,9 @@ if (!$relation || !$relation->isOwner()) {
 						<div class="form-group">
 							<label for="contactfunction">Functie*</label>
 							<select name="contactfunction" id="contactfunction" class="form-control pointer">
-							@foreach (\Calctool\Models\ContactFunction::all() as $function)
-								<option {{ $function->function_name=='directeur' ? 'selected' : '' }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
-							@endforeach
+								@foreach (\Calctool\Models\ContactFunction::all() as $function)
+								<option {{ (old('contactfunction') ? (old('contactfunction') == $function->id ? 'selected' : '') : $function->function_name=='directeur' ? 'selected' : '') }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
+								@endforeach
 							</select>
 						</div>
 					</div>
@@ -119,12 +121,12 @@ if (!$relation || !$relation->isOwner()) {
 							<label for="gender" style="display:block;">Geslacht</label>
 							<select name="gender" id="gender" class="form-control pointer">
 								<option value="-1">Selecteer</option>
-								<option value="M">Man</option>
-								<option value="V">Vrouw</option>
+								<option {{ (old('gender') == 'M' ? 'selected' : '') }} value="M">Man</option>
+								<option {{ (old('gender') == 'V' ? 'selected' : '') }} value="V">Vrouw</option>
 							</select>
 						</div>
 					</div>
-					<div class="col-md-12">
+					<div class="col-md-2">
 						<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 					</div>
 

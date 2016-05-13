@@ -140,7 +140,7 @@ $(document).ready(function() {
 						<div class="col-md-3">
 							<div class="form-group">
 								<label for="secret">Wachtwoord</label>
-								<input name="secret" type="password" id="secret" class="form-control">
+								<input name="secret" type="password" id="secret" class="form-control" autocomplete="off">
 							</div>
 						</div>
 

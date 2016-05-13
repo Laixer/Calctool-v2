@@ -35,7 +35,45 @@ if (!$project || !$project->isOwner()) {
 
 @section('content')
 <script type="text/javascript">
+$(document).ready(function() {
+	if (sessionStorage.introDemo) {
+		var demo = introJs().
+			setOption('nextLabel', 'Volgende').
+			setOption('prevLabel', 'Vorige').
+			setOption('skipLabel', 'Overslaan').
+			setOption('doneLabel', 'Klaar').
+			setOption('showBullets', false).
+			onexit(function(){
+				sessionStorage.removeItem('introDemo');
+			}).onbeforechange(function(){
+				sessionStorage.introDemo = this._currentStep;
+				/*if (this._currentStep == 12) {
+					$('#tab-summary').addClass('active');
+					$('#summary').addClass('active');
 
+					$('#tab-calculate').removeClass('active');
+					$('#calculate').removeClass('active');
+				}*/
+			}).onafterchange(function(){
+				var done = this._currentStep;
+				$('.introjs-skipbutton').click(function(){
+					if (done == 13) {
+						sessionStorage.introDemo = 999;
+						window.location.href = '/offerversions/project-{{ $project->id }}';
+					}
+				});
+			});
+
+		if (sessionStorage.introDemo == 999 || sessionStorage.introDemo == 0) {
+			sessionStorage.clear();
+			sessionStorage.introDemo = 0;
+			demo.start();
+		} else {
+			demo.goToStep(sessionStorage.introDemo).start();
+		}
+
+	}
+});
 </script>
 <div id="wrapper">
 
@@ -80,8 +118,9 @@ if (!$project || !$project->isOwner()) {
 					</tr>
 				</thead>
 				<tbody>
-					<?php $i = Offer::where('project_id', '=', $project->id)->count(); ?>
+					<?php $i = 0; ?>
 					@foreach(Offer::where('project_id', '=', $project->id)->orderBy('created_at')->get() as $offer)
+					<?php $i++; ?>
 					<tr>
 						<td class="col-md-2"><a href="/offer/project-{{ $project->id }}/offer-{{ $offer->id }}">{{ $offer->offer_code }}</a></td>
 						<td class="col-md-2"><?php echo date('d-m-Y', strtotime($offer->offer_make)); ?></td>
@@ -89,12 +128,11 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-3">{{ '&euro; '.number_format($offer->offer_total, 2, ",",".") }}</td>
 						<td class="col-md-3"><a href="/res-{{ ($offer_last->resource_id) }}/download" class="btn btn-primary btn-xs"><i class="fa fa-cloud-download fa-fw"></i> Downloaden</a></td>
 					</tr>
-					<?php $i--; ?>
 					@endforeach
 				</tbody>
 			</table>
 			@if (!($offer_last && $offer_last->offer_finish))
-			<a href="/offer/project-{{ $project->id }}" class="btn btn-primary btn"><i class="fa fa-pencil"></i>
+			<a href="/offer/project-{{ $project->id }}" data-step="1" data-intro="Stap 7: Maak nieuwe offerte." class="btn btn-primary btn"><i class="fa fa-pencil"></i>
 				<?php
 					if(Offer::where('project_id', '=', $project->id)->count('id')>0) {
 						echo "Laatste versie bewerken";

@@ -1,7 +1,13 @@
 <?php
 
 use \Calctool\Models\Contact;
+use \Calctool\Models\Project;
+use \Calctool\Models\RelationKind;
+use \Calctool\Models\RelationType;
 
+function getNewDebtorCode() {
+	return mt_rand(1000000, 9999999);
+}
 ?>
 
 @extends('layout.master')
@@ -22,33 +28,332 @@ $(document).ready(function() {
         ]
     });
     $("[name='tax_reverse']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+    $("[name='use_estimate']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+    $("[name='use_more']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+    $("[name='use_less']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
     $('#type').change(function(){
-		if (this.value==1) {
+		if (this.value==1) { // regie
     		$('.hide-regie2').hide();
-    	}else if (this.value==3) {
+    	}else if (this.value==3) { // blanco 
     		$('.hide-regie').hide();
     	} else {
     		$('.hide-regie').show();
     		$('.hide-regie2').show();
     	}
     })
-});
 
+	$('#relationkind').change(function(e) {
+		if ($(this).val() == 2)
+			$('.company').hide('slow');
+		else
+			$('.company').show('slow');
+	});
+
+	$('#btn-new-relation').click(function(){
+		$.post("/relation/new", {
+			relationkind: $('#relationkind').val(),
+			debtor: $('#debtor').val(),
+			company_name: $('#company_name').val(),
+			company_type: $('#company_type').val(),
+			email_comp: $('#email_comp').val(),
+			address_number: $('#address_number2').val(),
+			zipcode: $('#zipcode2').val(),
+			street: $('#street2').val(),
+			city: $('#city2').val(),
+			province: $('#province2').val(),
+			country: $('#country2').val(),
+			contact_name: $('#contact_name').val(),
+			email: $('#email').val(),
+			contactfunction: $('#contactfunction').val(),
+			gender: $('#gender').val(),
+		}, function(data) {
+			console.log(data);
+			if (data) {
+				$('#tutModal').modal('toggle');
+     			$('#contractor')
+     				.append($("<option selected></option>")
+                    .attr("value", data.id)
+                    .text(data.name));
+			}
+		}).error(function(data) {
+			$('#introerr').show();
+			$.each(data.responseJSON, function(i, val) {
+				$('#introerrlist').append("<li>" + val + "</li>")
+			});
+		});
+	});
+
+	var zipcode = $('#zipcode').val();
+	var number = $('#address_number').val();
+	$('.autoappend').blur(function(e){
+		if (number == $('#address_number').val() && zipcode == $('#zipcode').val())
+			return;
+		zipcode = $('#zipcode').val();
+		number = $('#address_number').val();
+		if (number && zipcode) {
+
+			$.post("/mycompany/quickstart/address", {
+				zipcode: zipcode,
+				number: number,
+			}, function(data) {
+				if (data) {
+					var json = $.parseJSON(data);
+					$('#street').val(json.street);
+					$('#city').val(json.city);
+					$("#province").find('option:selected').removeAttr("selected");
+					$('#province option[value=' + json.province_id + ']').attr('selected','selected');
+				}
+			});
+		}
+	});
+
+	var zipcode = $('#zipcode2').val();
+	var number = $('#address_number2').val();
+	$('.autoappend2').blur(function(e){
+		if (number == $('#address_number2').val() && zipcode == $('#zipcode2').val())
+			return;
+		zipcode = $('#zipcode2').val();
+		number = $('#address_number2').val();
+		if (number && zipcode) {
+
+			$.post("/mycompany/quickstart/address", {
+				zipcode: zipcode,
+				number: number,
+			}, function(data) {
+				if (data) {
+					var json = $.parseJSON(data);
+					$('#street2').val(json.street);
+					$('#city2').val(json.city);
+					$("#province2").find('option:selected').removeAttr("selected");
+					$('#province2 option[value=' + json.province_id + ']').attr('selected','selected');
+				}
+			});
+		}
+	});
+
+	if (sessionStorage.introDemo) {
+		var demo = introJs().
+			setOption('nextLabel', 'Volgende').
+			setOption('prevLabel', 'Vorige').
+			setOption('skipLabel', 'Overslaan').
+			setOption('doneLabel', 'Klaar').
+			setOption('showBullets', false).
+			onexit(function(){
+				sessionStorage.removeItem('introDemo');
+			}).onbeforechange(function(){
+				sessionStorage.introDemo = this._currentStep;
+				/*if (this._currentStep == 3) {
+					$('#tab-contact').addClass('active');
+					$('#contact').addClass('active');
+
+					$('#tab-company').removeClass('active');
+					$('#company').removeClass('active');
+				}*/
+			}).onafterchange(function(){
+				var done = this._currentStep;
+				if (this._currentStep == 5) {
+					sessionStorage.introDemo = 999
+				}
+				/*$('.introjs-skipbutton').click(function(){
+					if (done == 3) {
+						sessionStorage.introDemo = 999;
+						window.location.href = '/';
+					}
+				});*/
+			});
+
+		if (sessionStorage.introDemo == 999) {
+			sessionStorage.clear();
+			sessionStorage.introDemo = 0;
+			demo.start();
+		} else {
+			demo.goToStep(sessionStorage.introDemo).start();
+		}
+
+	}	
+});
 </script>
+<div class="modal fade" id="tutModal" tabindex="-1" role="dialog" aria-labelledby="tutModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel2">Nieuwe relatie</h4>
+			</div>
+
+			<div class="modal-body" id="introform">
+				<div id="introerr" style="display:none;" class="alert alert-danger">
+					<i class="fa fa-frown-o"></i>
+					<strong>Fout</strong>
+					<lu id="introerrlist"></lu>
+				</div>
+
+				{!! csrf_field() !!}
+				<div class="row">
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="relationkind">Relatiesoort*</label>
+							<select name="relationkind" id="relationkind" class="form-control pointer">
+								@foreach (RelationKind::all() as $kind)
+								<option {{ old('relationkind') && old('relationkind') == $kind->id ? 'selected' : '' }} value="{{ $kind->id }}">{{ ucwords($kind->kind_name) }}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="debtor">Debiteurennummer*</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit nummer is gegenereerd door de CalculatieTool.com. Je kunt dit vervangen door je eigen boekhoudkundige nummering." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
+							<input name="debtor" id="debtor" type="text" value="{{ Input::old('debtor') ? Input::old('debtor') : getNewDebtorCode() }}" class="form-control"/>
+						</div>
+					</div>
+
+				</div>
+
+				<h4 class="company">Bedrijfsgegevens</h4>
+				<div class="row company">
+
+					<div class="col-md-5">
+						<div class="form-group">
+							<label for="company_name">Bedrijfsnaam*</label>
+							<input name="company_name" id="company_name" type="text" value="{{ Input::old('company_name') }}" class="form-control" />
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="company_type">Bedrijfstype*</label>
+							<select name="company_type" id="company_type" class="form-control pointer">
+								@foreach (RelationType::all() as $type)
+								<option {{ (old('company_type') == $type->id ? 'selected' : '') }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="email_comp">Email*</label>
+							<input name="email_comp" id="email_comp" type="email" value="{{ Input::old('email_comp') }}" class="form-control"/>
+						</div>
+					</div>
+
+				</div>
+
+				<h4>Adresgegevens</h4>
+				<div class="row">
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="address_number">Huis nr.*</label>
+							<input name="address_number" id="address_number2" type="text" value="{{ old('address_number') }}" class="form-control autoappend2"/>
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="zipcode">Postcode*</label>
+							<input name="zipcode" id="zipcode2" maxlength="6" type="text" value="{{ old('zipcode') }}" class="form-control autoappend2"/>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="street">Straat*</label>
+							<input name="street" id="street2" type="text" value="{{ Input::old('street') }}" class="form-control"/>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="city">Plaats*</label>
+							<input name="city" id="city2" type="text" value="{{ Input::old('city') }}" class="form-control"/>
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="province">Provincie*</label>
+							<select name="province" id="province2" class="form-control pointer">
+								@foreach (Calctool\Models\Province::all() as $province)
+								<option  {{ (old('province') == $province->id ? 'selected' : '') }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="country">Land*</label>
+							<select name="country" id="country2" class="form-control pointer">
+								@foreach (Calctool\Models\Country::all() as $country)
+								<option {{ (old('country') ? (old('country') == $country->id ? 'selected' : '') : $country->country_name=='nederland' ? 'selected' : '') }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<h4>Contactpersoon</h4>
+				<div class="row">
+
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="contact_name">Achternaam*</label>
+							<input name="contact_name" id="contact_name" type="text" value="{{ Input::old('contact_name') }}" class="form-control"/>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="email">Email*</label>
+							<input name="email" id="email" type="email" value="{{ Input::old('email') }}" class="form-control"/>
+						</div>
+					</div>
+
+					<div class="col-md-3 company">
+						<div class="form-group">
+							<label for="contactfunction">Functie*</label>
+							<select name="contactfunction" id="contactfunction" class="form-control pointer">
+								@foreach (Calctool\Models\ContactFunction::all() as $function)
+								<option {{ (old('contactfunction') ? (old('contactfunction') == $function->id ? 'selected' : '') : $function->function_name=='directeur' ? 'selected' : '') }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
+							<label for="gender" style="display:block;">Geslacht</label>
+							<select name="gender" id="gender" class="form-control pointer">
+								<option value="-1">Selecteer</option>
+								<option {{ (old('gender') == 'M' ? 'selected' : '') }} value="M">Man</option>
+								<option {{ (old('gender') == 'V' ? 'selected' : '') }} value="V">Vrouw</option>
+							</select>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="modal-footer">
+				<div class="col-md-6"></div>
+				<div class="col-md-6">
+					<button class="btn btn-primary" id="btn-new-relation"><i class="fa fa-check"></i> Opslaan</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
 <div id="wrapper">
 
 	<section class="container">
 
-		<div class="col-md-12">
-
-			<div>
-				<ol class="breadcrumb">
-				  <li><a href="/">Home</a></li>
-				  <li><a href="/project">Projecten</a></li>
-				  <li>Nieuw Project</li>
-				</ol>
-			<div>
-			<br>
+		@include('calc.wizard', array('page' => 'calculation'))
 
 			@if(Session::get('success'))
 			<div class="alert alert-success">
@@ -60,10 +365,12 @@ $(document).ready(function() {
 			@if($errors->has())
 			<div class="alert alert-danger">
 				<i class="fa fa-frown-o"></i>
-				<strong>Fout</strong>
-				@foreach ($errors->all() as $error)
-					{{ $error }}
-				@endforeach
+				<strong>Fouten in de invoer</strong>
+				<ul>
+					@foreach ($errors->all() as $error)
+					<li><h5 class="nomargin">{{ $error }}</h5></li>
+					@endforeach
+				</ul>
 			</div>
 			@endif
 
@@ -76,185 +383,138 @@ $(document).ready(function() {
 			</div>
 			@endif
 
-			<div class="white-row">
+			<div class="tabs nomargin-top">
 
-			<form method="POST" action="/project/new" accept-charset="UTF-8">
-			{!! csrf_field() !!}
-				<h4>Projectgegevens</h4>
-				<div class="row">
+				<ul class="nav nav-tabs">
+					<li id="tab-project" class="active">
+						<a href="#project" data-toggle="tab">Projectgegevens</a>
+					</li>
+				</ul>
 
-					<div class="col-md-6">
-						<div class="form-group">
-							<label for="name">Projectnaam*</label>
-							<input name="name" id="name" type="text" value="{{ Input::old('name') }}" class="form-control" />
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<label for="contractor">Opdrachtgever*</label>
-							<select name="contractor" id="contractor" class="form-control pointer">
-							@foreach (Calctool\Models\Relation::where('user_id', Auth::user()->id)->where('active',true)  ->get() as $relation)
-								<option value="{{ $relation->id }}">{!! Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); !!}</option>
-							@endforeach
-							</select>
-							<a href="/relation/new?redirect={{ Request::path() }}">+ Nieuwe opdrachtgever toevoegen</a>
-						</div>
-					</div>
-					<div class="col-md-2">
-						<div class="form-group">
-							<label for="type">Type</label>
-							<select name="type" id="type" class="form-control pointer">
-								@foreach (Calctool\Models\ProjectType::all() as $type)
-									<option {{ $type->type_name=='calculatie' ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
-								@endforeach
-							</select>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<label for="type">BTW verlegd</label>
-						<div class="form-group">
-							<input name="tax_reverse" type="checkbox">
-						</div>
+				<div class="tab-content">
+
+					<div id="project" class="tab-pane active">
+						<form method="POST" action="/project/new" accept-charset="UTF-8">
+						{!! csrf_field() !!}
+							<h4>Projectgegevens</h4>
+							<h5><strong>Gegevens</strong></h5>
+							<div class="row">
+				<div data-step="1" data-intro="Stap 1: Geef de projectnaam op en selecteer de opdrachtgever.">
+								<div class="col-md-5">
+									<div class="form-group">
+										<label for="name">Projectnaam*</label>
+										<input name="name" id="name" type="text" value="{{ Input::old('name') }}" class="form-control" />
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label for="contractor">Opdrachtgever*</label>
+										<select name="contractor" id="contractor" class="form-control pointer">
+											@foreach (Calctool\Models\Relation::where('user_id', Auth::user()->id)->where('active',true)  ->get() as $relation)
+											<option value="{{ $relation->id }}">{!! Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); !!}</option>
+											@endforeach
+										</select>
+										<a href="#" data-toggle="modal" data-target="#tutModal">+ Nieuwe opdrachtgever toevoegen</a>
+									</div>
+								</div>
+				</div>
+								@if (Auth::user()->isAdmin())
+								<div class="col-md-2">
+									<div class="form-group">
+										<label for="type">Soort project</label>
+										<select name="type" id="type" class="form-control pointer">
+											@foreach (Calctool\Models\ProjectType::all() as $type)
+											<option {{ $type->type_name=='calculatie' ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
+											@endforeach
+										</select>										
+									</div>
+								</div>
+								@endif
+								<div class="col-md-2">
+								<label for="tax_reverse">BTW verlegd</label>
+									<div data-step="2" data-intro="Stap 2: Geef aan of je het project wilt calculeren zonder BTW (BTW-verlegd)" class="form-group">
+										<input name="tax_reverse" type="checkbox">
+									</div>
+								</div>
+
+							</div>
+
+							<h5><strong>Adresgegevens</strong></h5>
+							<div data-step="3" data-intro="Stap 3: Geef de adresgegevens van het project op."class="row">
+
+								<div class="col-md-1">
+									<div class="form-group">
+										<label for="address_number">Huis nr.*</label>
+										<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') }}" class="form-control autoappend"/>
+									</div>
+								</div>
+
+								<div class="col-md-2">
+									<div class="form-group">
+										<label for="zipcode">Postcode*</label>
+										<input name="zipcode" id="zipcode" type="text" maxlength="6" value="{{ Input::old('zipcode') }}" class="form-control autoappend"/>
+									</div>
+								</div>
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="street">Straat*</label>
+										<input name="street" id="street" type="text" value="{{ Input::old('street') }}" class="form-control"/>
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<div class="form-group">
+										<label for="city">Plaats*</label>
+										<input name="city" id="city" type="text" value="{{ Input::old('city') }}" class="form-control"/>
+									</div>
+								</div>
+
+								<div class="col-md-2">
+									<div class="form-group">
+										<label for="province">Provincie*</label>
+										<select name="province" id="province" class="form-control pointer">
+											@foreach (Calctool\Models\Province::all() as $province)
+											<option {{ (old('province') == $province->id ? 'selected' : '') }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
+											@endforeach
+										</select>
+									</div>
+								</div>
+
+								<div class="col-md-4">
+									<div class="form-group">
+										<label for="country">Land*</label>
+										<select name="country" id="country" class="form-control pointer">
+											@foreach (Calctool\Models\Country::all() as $country)
+											<option {{ (old('country') ? (old('country') == $country->id ? 'selected' : '') : $country->country_name=='nederland' ? 'selected' : '') }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
+											@endforeach
+										</select>
+									</div>
+								</div>
+							</div>		
+
+							<div data-step="6" data-intro="Stap 6: Noteer eventueel aantekenen bestemd voor het project. (Dit is alleen zichtbaar voor jou)">
+							<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
+					        <div class="row">
+					          <div class="form-group">
+					            <div class="col-md-12">
+					              <textarea name="note" id="note" rows="5" class="form-control">{{ Input::old('note') }}</textarea>
+					            </div>
+					          </div>
+					        </div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12">
+									<button data-step="7" data-intro="Stap 7: Sla je project op." class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+								</div>
+							</div>
+
+						</form>
 					</div>
 
 				</div>
-
-				<h4>Adres project</h4>
-				<div class="row">
-
-					<div class="col-md-4">
-						<div class="form-group">
-							<label for="street">Straat*</label>
-							<input name="street" id="street" type="text" value="{{ Input::old('street') }}" class="form-control"/>
-						</div>
-					</div>
-					<div class="col-md-1">
-						<div class="form-group">
-							<label for="address_number">Huis nr.*</label>
-							<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-2">
-						<div class="form-group">
-							<label for="zipcode">Postcode*</label>
-							<input name="zipcode" id="zipcode" type="text" maxlength="6" value="{{ Input::old('zipcode') }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-3">
-						<div class="form-group">
-							<label for="city">Plaats*</label>
-							<input name="city" id="city" type="text" value="{{ Input::old('city') }}" class="form-control"/>
-						</div>
-					</div>
-
-					<div class="col-md-2">
-						<div class="form-group">
-							<label for="province">Provincie*</label>
-							<select name="province" id="province" class="form-control pointer">
-								@foreach (Calctool\Models\Province::all() as $province)
-									<option value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
-								@endforeach
-							</select>
-						</div>
-					</div>
-
-					<div class="col-md-4">
-						<div class="form-group">
-							<label for="country">Land*</label>
-							<select name="country" id="country" class="form-control pointer">
-								@foreach (Calctool\Models\Country::all() as $country)
-									<option {{ $country->country_name=='nederland' ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
-								@endforeach
-							</select>
-						</div>
-					</div>
-				</div>
-
-				<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
-				<div class="row">
-					<div class="form-group">
-						<div class="col-md-12">
-							<textarea name="note" id="note" rows="5" class="form-control">{{ Input::old('note') }}</textarea>
-						</div>
-					</div>
-				</div>
-
-				<h4 class="hide-regie">Financieel</h4>
-				<div class="tabs nomargin-top hide-regie">
-
-							<div class="row">
-								<div class="col-md-3"><h5><strong>Eigen uurtarief*</strong></h5></div>
-								<div class="col-md-1"></div>
-								<div class="col-md-2 hide-regie2"><h5><strong>Calculatie</strong></h5></div>
-								<div class="col-md-2 hide-regie2"><h5><strong>Meerwerk</strong></h5></div>
-							</div>
-							<div class="row">
-								<div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
-								<div class="col-md-1"><div class="pull-right">&euro;</div></div>
-								<div class="col-md-2 hide-regie2">
-									<input name="hour_rate" id="hour_rate" type="text" maxlength="6" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : number_format(Auth::user()->pref_hourrate_calc, 2,",",".") }}" class="form-control-sm-number"/>
-								</div>
-								<div class="col-md-2">
-									<input name="more_hour_rate" id="more_hour_rate" type="text" maxlength="6" value="{{ Input::old('more_hour_rate') ? Input::old('more_hour_rate') : number_format(Auth::user()->pref_hourrate_more, 2,",",".") }}" class="form-control-sm-number"/>
-								</div>
-							</div>
-							<h5><strong>Aanneming</strong></h5>
-							<div class="row">
-								<div class="col-md-3"><label for="profit_material_1">Winstpercentage materiaal</label></div>
-								<div class="col-md-1"><div class="pull-right">%</div></div>
-								<div class="col-md-2 hide-regie2">
-									<input name="profit_material_1" id="profit_material_1" type="text" min="0" max="200" maxlength="3" value="{{ Input::old('profit_material_1') ? Input::old('profit_material_1') : Auth::user()->pref_profit_calc_contr_mat }}" class="form-control-sm-number"/>
-								</div>
-								<div class="col-md-2">
-									<input name="more_profit_material_1" id="more_profit_material_1" type="text" min="0" max="200" maxlength="3" value="{{ Input::old('more_profit_material_1') ? Input::old('more_profit_material_1') : Auth::user()->pref_profit_more_contr_mat }}" class="form-control-sm-number"/>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage materieel</label></div>
-								<div class="col-md-1"><div class="pull-right">%</div></div>
-								<div class="col-md-2 hide-regie2">
-									<input name="profit_equipment_1" id="profit_equipment_1" type="text" min="0" max="200" maxlength="3" value="{{ Input::old('profit_equipment_1') ? Input::old('profit_equipment_1') : Auth::user()->pref_profit_calc_contr_equip }}" class="form-control-sm-number"/>
-								</div>
-								<div class="col-md-2">
-									<input name="more_profit_equipment_1" id="more_profit_equipment_1" type="text" min="0" max="200" maxlength="3" value="{{ Input::old('more_profit_equipment_1') ? Input::old('more_profit_equipment_1') : Auth::user()->pref_profit_more_contr_equip }}" class="form-control-sm-number"/>
-								</div>
-							</div>
-							<h5><strong>Onderaanneming</strong></h5>
-							<div class="row">
-								<div class="col-md-3"><label for="profit_material_2">Winstpercentage materiaal</label></div>
-								<div class="col-md-1"><div class="pull-right">%</div></div>
-								<div class="col-md-2 hide-regie2">
-									<input name="profit_material_2" id="profit_material_2" type="text" min="0" max="200" maxlength="3" value="{{ Input::old('profit_material_2') ? Input::old('profit_material_2') : Auth::user()->pref_profit_calc_subcontr_mat }}" class="form-control-sm-number"/>
-								</div>
-								<div class="col-md-2">
-									<input name="more_profit_material_2" id="more_profit_material_2" type="text" min="0" max="200" maxlength="3" value="{{ Input::old('more_profit_material_2') ? Input::old('more_profit_material_2') : Auth::user()->pref_profit_more_subcontr_mat }}" class="form-control-sm-number"/>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage materieel</label></div>
-								<div class="col-md-1"><div class="pull-right">%</div></div>
-								<div class="col-md-2 hide-regie2">
-									<input name="profit_equipment_2" id="profit_equipment_2" type="text" min="0" max="200" maxlength="3" value="{{ Input::old('profit_equipment_2') ? Input::old('profit_equipment_2') : Auth::user()->pref_profit_calc_subcontr_equip }}" class="form-control-sm-number"/>
-								</div>
-								<div class="col-md-2">
-									<input name="more_profit_equipment_2" id="more_profit_equipment_2" type="text" min="0" max="200" maxlength="3" value="{{ Input::old('more_profit_equipment_2') ? Input::old('more_profit_equipment_2') : Auth::user()->pref_profit_more_subcontr_equip }}" class="form-control-sm-number"/>
-								</div>
-							</div>
-
-						</div>
-
-					<div class="row">
-						<div class="col-md-12">
-							<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
-						</div>
-					</div>
-
-				</form>
 			</div>
-
-		</div>
 
 	</section>
 

@@ -213,30 +213,31 @@ $(document).ready(function() {
 
 	<section class="container">
 
+
 		<div class="col-md-12">
 
 			<div>
 				<ol class="breadcrumb">
 				  <li><a href="/">Home</a></li>
-				  <li class="active">Materialendatabase</li>
+				  <li class="active">Materialen</li>
 				</ol>
 			<div>
 			<br>
 
-			<h2><strong>Materialendatabase</strong></h2>
+			<h2><strong>Materialen</strong></h2>
 
 			<div class="tabs nomargin-top">
 
 				<ul class="nav nav-tabs">
 					<li id="tab-supplier">
-						<a href="#supplier" data-toggle="tab"><i class="fa fa-cart-arrow-down"></i> Alle leverancies</a>
+						<a href="#supplier" data-toggle="tab"><i class="fa fa-cart-arrow-down"></i> Bouwmaat</a>
 					</li>
 					<li id="tab-material">
 						<a href="#material" data-toggle="tab"><i class="fa fa-wrench"></i> Mijn materiaal</a>
 					</li>
-					<li id="tab-element">
+<!-- 					<li id="tab-element">
 						<a href="#element" data-toggle="tab"><i class="fa fa-th-list"></i> Elementen</a>
-					</li>
+					</li> -->
 					<li id="tab-favorite">
 						<a href="#favorite" data-toggle="tab"><i class="fa fa-star"></i> Favorieten</a>
 					</li>
@@ -244,6 +245,8 @@ $(document).ready(function() {
 
 				<div class="tab-content">
 					<div id="supplier" class="tab-pane">
+
+						<p class="alert alert-warning">De materialen lijst van de Bouwmaat bevindt zich nog in BETA fase.</p>
 
 						<div class="form-group input-group input-group-lg">
 							<input type="text" id="search" value="" class="form-control" placeholder="Zoek materiaal">

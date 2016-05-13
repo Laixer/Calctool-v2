@@ -47,26 +47,26 @@ class EstimController extends Controller {
 		]);
 
 			$activity = Activity::find($request->get('activity'));
-			if (!$activity)
-				return json_encode(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
-			}
+		if (!$activity)
+			return json_encode(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
 
-			$material = EstimateMaterial::create(array(
-				"set_material_name" => $request->get('name'),
-				"set_unit" => $request->get('unit'),
-				"set_rate" => str_replace(',', '.', str_replace('.', '' , $request->get('rate'))),
-				"set_amount" => str_replace(',', '.', str_replace('.', '' , $request->get('amount'))),
-				"activity_id" => $activity->id,
-				"original" => false,
-				"isset" => true
-			));
+		$material = EstimateMaterial::create(array(
+			"set_material_name" => $request->get('name'),
+			"set_unit" => $request->get('unit'),
+			"set_rate" => str_replace(',', '.', str_replace('.', '' , $request->get('rate'))),
+			"set_amount" => str_replace(',', '.', str_replace('.', '' , $request->get('amount'))),
+			"activity_id" => $activity->id,
+			"original" => false,
+			"isset" => true
+		));
 
-			$this->updateEstimateStatus($request->get('project'));
+		$this->updateEstimateStatus($request->get('project'));
 
-			return json_encode(['success' => 1, 'id' => $material->id]);
+		return json_encode(['success' => 1, 'id' => $material->id]);
 	}
 
 	public function doNewEstimateEquipment(Request $request)
@@ -80,27 +80,27 @@ class EstimController extends Controller {
 			'project' => array('required','integer'),
 		]);
 
-			$activity = Activity::find($request->get('activity'));
-			if (!$activity)
-				return json_encode(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
-			}
+		$activity = Activity::find($request->get('activity'));
+		if (!$activity)
+			return json_encode(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
 
-			$equipment = EstimateEquipment::create(array(
-				"set_equipment_name" => $request->get('name'),
-				"set_unit" => $request->get('unit'),
-				"set_rate" => str_replace(',', '.', str_replace('.', '' , $request->get('rate'))),
-				"set_amount" => str_replace(',', '.', str_replace('.', '' , $request->get('amount'))),
-				"activity_id" => $activity->id,
-				"original" => false,
-				"isset" => true
-			));
+		$equipment = EstimateEquipment::create(array(
+			"set_equipment_name" => $request->get('name'),
+			"set_unit" => $request->get('unit'),
+			"set_rate" => str_replace(',', '.', str_replace('.', '' , $request->get('rate'))),
+			"set_amount" => str_replace(',', '.', str_replace('.', '' , $request->get('amount'))),
+			"activity_id" => $activity->id,
+			"original" => false,
+			"isset" => true
+		));
 
-			$this->updateEstimateStatus($request->get('project'));
+		$this->updateEstimateStatus($request->get('project'));
 
-			return json_encode(['success' => 1, 'id' => $equipment->id]);
+		return json_encode(['success' => 1, 'id' => $equipment->id]);
 	}
 
 	public function doNewEstimateLabor(Request $request)
@@ -111,29 +111,29 @@ class EstimController extends Controller {
 			'project' => array('required','integer'),
 		]);
 
-			$activity = Activity::find($request->get('activity'));
-			if (!$activity)
-				return json_encode(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
-			}
+		$activity = Activity::find($request->get('activity'));
+		if (!$activity)
+			return json_encode(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
 
-			$_activity = Activity::find($request->get('activity'));
-			$_chapter = Chapter::find($_activity->chapter_id);
-			$_project = Project::find($_chapter->project_id);
+		$_activity = Activity::find($request->get('activity'));
+		$_chapter = Chapter::find($_activity->chapter_id);
+		$_project = Project::find($_chapter->project_id);
 
-			$labor = EstimateLabor::create(array(
-				"set_rate" => $_project->hour_rate,
-				"set_amount" => str_replace(',', '.', str_replace('.', '' , $request->get('amount'))),
-				"activity_id" => $activity->id,
-				"original" => false,
-				"isset" => true
-			));
+		$labor = EstimateLabor::create(array(
+			"set_rate" => $_project->hour_rate,
+			"set_amount" => str_replace(',', '.', str_replace('.', '' , $request->get('amount'))),
+			"activity_id" => $activity->id,
+			"original" => false,
+			"isset" => true
+		));
 
-			$this->updateEstimateStatus($request->get('project'));
+		$this->updateEstimateStatus($request->get('project'));
 
-			return json_encode(['success' => 1, 'id' => $labor->id]);
+		return json_encode(['success' => 1, 'id' => $labor->id]);
 	}
 
 	public function doUpdateEstimateMaterial(Request $request)
@@ -147,28 +147,28 @@ class EstimController extends Controller {
 			'project' => array('required','integer'),
 		]);
 
-			$material = EstimateMaterial::find($request->get('id'));
-			if (!$material)
-				return json_encode(['success' => 0]);
-			$activity = Activity::find($material->activity_id);
-			if (!$activity)
-				return json_encode(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
-			}
+		$material = EstimateMaterial::find($request->get('id'));
+		if (!$material)
+			return json_encode(['success' => 0]);
+		$activity = Activity::find($material->activity_id);
+		if (!$activity)
+			return json_encode(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
 
-			$material->set_material_name = $request->get('name');
-			$material->set_unit = $request->get('unit');
-			$material->set_rate = str_replace(',', '.', str_replace('.', '' , $request->get('rate')));
-			$material->set_amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
-			$material->isset = true;
+		$material->set_material_name = $request->get('name');
+		$material->set_unit = $request->get('unit');
+		$material->set_rate = str_replace(',', '.', str_replace('.', '' , $request->get('rate')));
+		$material->set_amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
+		$material->isset = true;
 
-			$material->save();
+		$material->save();
 
-			$this->updateEstimateStatus($request->get('project'));
+		$this->updateEstimateStatus($request->get('project'));
 
-			return json_encode(['success' => 1]);
+		return json_encode(['success' => 1]);
 	}
 
 	public function doUpdateEstimateEquipment(Request $request)
@@ -215,37 +215,37 @@ class EstimController extends Controller {
 			'project' => array('required','integer'),
 		]);
 
-			$labor = EstimateLabor::find($request->get('id'));
-			if (!$labor)
-				return json_encode(['success' => 0]);
-			$activity = Activity::find($labor->activity_id);
-			if (!$activity)
-				return json_encode(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
-			}
+		$labor = EstimateLabor::find($request->get('id'));
+		if (!$labor)
+			return json_encode(['success' => 0]);
+		$activity = Activity::find($labor->activity_id);
+		if (!$activity)
+			return json_encode(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return json_encode(['success' => 0]);
+		}
 
-			$rate = $request->get('rate');
-			if (empty($rate)) {
-				$_labor = EstimateLabor::find($request->get('id'));
-				$_activity = Activity::find($_labor->activity_id);
-				$_chapter = Chapter::find($_activity->chapter_id);
-				$_project = Project::find($_chapter->project_id);
-				$rate = $_project->hour_rate;
-			} else {
-				$rate = str_replace(',', '.', str_replace('.', '' , $rate));
-			}
+		$rate = $request->get('rate');
+		if (empty($rate)) {
+			$_labor = EstimateLabor::find($request->get('id'));
+			$_activity = Activity::find($_labor->activity_id);
+			$_chapter = Chapter::find($_activity->chapter_id);
+			$_project = Project::find($_chapter->project_id);
+			$rate = $_project->hour_rate;
+		} else {
+			$rate = str_replace(',', '.', str_replace('.', '' , $rate));
+		}
 
-			$labor->set_rate = $rate;
-			$labor->set_amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
-			$labor->isset = true;
+		$labor->set_rate = $rate;
+		$labor->set_amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
+		$labor->isset = true;
 
-			$labor->save();
+		$labor->save();
 
-			$this->updateEstimateStatus($request->get('project'));
+		$this->updateEstimateStatus($request->get('project'));
 
-			return back()->with('success', 1);
+		return json_encode(['success' => 1]);
 	}
 
 	public function doResetEstimateMaterial(Request $request)

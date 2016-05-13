@@ -372,7 +372,7 @@ $type = ProjectType::find($project->type_id);
 						      </div>
 						    </div>
 						  </div>
-						  @if($type->type_name != 'blanco offerte & factuur')
+						  @if($type->type_name != 'snelle offerte en factuur')
 						   <div class="form-group">
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
@@ -388,7 +388,7 @@ $type = ProjectType::find($project->type_id);
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="display-specification" type="checkbox" checked> Hoofdstukken en werkzaamheden weergeven
+						          <input name="display-specification" type="checkbox" checked> Onderdelen en werkzaamheden weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -592,7 +592,7 @@ $type = ProjectType::find($project->type_id);
 
 					@if (!$project->tax_reverse)
 					<tr>
-						<td class="col-md-5">Materieelkosten</td>
+						<td class="col-md-5">Overige kosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -611,7 +611,7 @@ $type = ProjectType::find($project->type_id);
 					</tr>
 					@else
 					<tr>
-						<td class="col-md-5">Materieelkosten</td>
+						<td class="col-md-5">Overige kosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -711,7 +711,7 @@ $type = ProjectType::find($project->type_id);
 
 					@if (!$project->tax_reverse)
 					<tr>
-						<td class="col-md-5">Materieelkosten</td>
+						<td class="col-md-5">Overige kosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -730,7 +730,7 @@ $type = ProjectType::find($project->type_id);
 					</tr>
 					@else
 					<tr>
-						<td class="col-md-5">Materieelkosten</td>
+						<td class="col-md-5">Overige kosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -815,7 +815,7 @@ $type = ProjectType::find($project->type_id);
 		<?#--CONTENT, TOTAL START--?>
 		<div class="show-totals">
 			<h4 class="only-total">Specificatie factuur</h4>
-			@if($type->type_name != 'blanco offerte & factuur')
+			@if($type->type_name != 'snelle offerte en factuur')
 			<table class="table table-striped hide-btw1">
 				<thead>
 					<tr>
@@ -893,7 +893,7 @@ $type = ProjectType::find($project->type_id);
 
 					@if (!$project->tax_reverse)
 					<tr>
-						<td class="col-md-5">Materieelkosten</td>
+						<td class="col-md-5">Overige kosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcEquipmentActivityTax1Amount($project)+SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax1Amount($project)+MoreEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax1Amount($project)+LessEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -912,7 +912,7 @@ $type = ProjectType::find($project->type_id);
 					</tr>
 					@else
 					<tr>
-						<td class="col-md-5">Materieelkosten</td>
+						<td class="col-md-5">Overige kosten</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcEquipmentActivityTax3Amount($project)+SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax3Amount($project)+MoreEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax3Amount($project)+LessEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -1204,12 +1204,12 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
-						<th class="col-md-1"><span class="pull-right">Materieel</th>
+						<th class="col-md-1"><span class="pull-right">Overig</th>
 						<th class="col-md-1"><span class="pull-right">Totaal</th>
 					</tr>
 				</thead>
@@ -1245,12 +1245,12 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
-						<th class="col-md-1"><span class="pull-right">Materieel</th>
+						<th class="col-md-1"><span class="pull-right">Overig</th>
 						<th class="col-md-1"><span class="pull-right">Totaal</th>
 					</tr>
 				</thead>
@@ -1291,7 +1291,7 @@ $type = ProjectType::find($project->type_id);
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
-						<th class="col-md-1"><span class="pull-right">Materieel</span></th>
+						<th class="col-md-1"><span class="pull-right">Overig</span></th>
 						<th class="col-md-1"><span class="pull-right">Totaal</span></th>
 					</tr>
 				</thead>
@@ -1316,12 +1316,12 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstukken</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
-						<th class="col-md-1"><span class="pull-right">Materieel</th>
+						<th class="col-md-1"><span class="pull-right">Overig</th>
 						<th class="col-md-1"><span class="pull-right">Totaal</th>
 					</tr>
 				</thead>
@@ -1364,7 +1364,7 @@ $type = ProjectType::find($project->type_id);
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
-						<th class="col-md-1"><span class="pull-right">Materieel</span></th>
+						<th class="col-md-1"><span class="pull-right">Overig</span></th>
 						<th class="col-md-1"><span class="pull-right">Totaal</span></th>
 					</tr>
 				</thead>
@@ -1412,12 +1412,12 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
-						<th class="col-md-1"><span class="pull-right">Materieel</th>
+						<th class="col-md-1"><span class="pull-right">Overig</th>
 						<th class="col-md-1"><span class="pull-right">Totaal</th>
 					</tr>
 				</thead>
@@ -1457,12 +1457,12 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
-						<th class="col-md-1"><span class="pull-right">Materieel</th>
+						<th class="col-md-1"><span class="pull-right">Overig</th>
 						<th class="col-md-1"><span class="pull-right">Totaal</th>
 					</tr>
 				</thead>
@@ -1507,7 +1507,7 @@ $type = ProjectType::find($project->type_id);
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
-						<th class="col-md-1"><span class="pull-right">Materieel</span></th>
+						<th class="col-md-1"><span class="pull-right">Overig</span></th>
 						<th class="col-md-1"><span class="pull-right">Totaal</span></th>
 					</tr>
 				</thead>
@@ -1532,12 +1532,12 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
-						<th class="col-md-1"><span class="pull-right">Materieel</th>
+						<th class="col-md-1"><span class="pull-right">Overig</th>
 						<th class="col-md-1"><span class="pull-right">Totaal</th>
 					</tr>
 				</thead>
@@ -1582,7 +1582,7 @@ $type = ProjectType::find($project->type_id);
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
-						<th class="col-md-1"><span class="pull-right">Materieel</span></th>
+						<th class="col-md-1"><span class="pull-right">Overig</span></th>
 						<th class="col-md-1"><span class="pull-right">Totaal</span></th>
 					</tr>
 				</thead>
@@ -1630,12 +1630,12 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
-						<th class="col-md-1"><span class="pull-right">Materieel</th>
+						<th class="col-md-1"><span class="pull-right">Overig</th>
 						<th class="col-md-1"><span class="pull-right">Totaal</th>
 					</tr>
 				</thead>
@@ -1675,12 +1675,12 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
-						<th class="col-md-1"><span class="pull-right">Materieel</th>
+						<th class="col-md-1"><span class="pull-right">Overig</th>
 						<th class="col-md-1"><span class="pull-right">Totaal</th>
 					</tr>
 				</thead>
@@ -1725,7 +1725,7 @@ $type = ProjectType::find($project->type_id);
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
-						<th class="col-md-1"><span class="pull-right">Materieel</span></th>
+						<th class="col-md-1"><span class="pull-right">Overig</span></th>
 						<th class="col-md-1"><span class="pull-right">Totaal</span></th>
 					</tr>
 				</thead>
@@ -1750,12 +1750,12 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
-						<th class="col-md-1"><span class="pull-right">Materieel</th>
+						<th class="col-md-1"><span class="pull-right">Overig</th>
 						<th class="col-md-1"><span class="pull-right">Totaal</th>
 					</tr>
 				</thead>
@@ -1800,7 +1800,7 @@ $type = ProjectType::find($project->type_id);
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
-						<th class="col-md-1"><span class="pull-right">Materieel</span></th>
+						<th class="col-md-1"><span class="pull-right">Overig</span></th>
 						<th class="col-md-1"><span class="pull-right">Totaal</span></th>
 					</tr>
 				</thead>
@@ -1846,12 +1846,12 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
-						<th class="col-md-1"><span class="pull-right">Materieel</th>
+						<th class="col-md-1"><span class="pull-right">Overig</th>
 						<th class="col-md-1"><span class="pull-right">Totaal</th>
 					</tr>
 				</thead>
@@ -1887,12 +1887,12 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
-						<th class="col-md-1"><span class="pull-right">Materieel</th>
+						<th class="col-md-1"><span class="pull-right">Overig</th>
 						<th class="col-md-1"><span class="pull-right">Totaal</th>
 					</tr>
 				</thead>
@@ -1933,7 +1933,7 @@ $type = ProjectType::find($project->type_id);
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
-						<th class="col-md-1"><span class="pull-right">Materieel</span></th>
+						<th class="col-md-1"><span class="pull-right">Overig</span></th>
 						<th class="col-md-1"><span class="pull-right">Totaal</span></th>
 					</tr>
 				</thead>
@@ -1958,12 +1958,12 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped only-end-total">
 				<thead>
 					<tr>
-						<th class="col-md-3">Hoofdstuk</th>
+						<th class="col-md-3">Onderdeel</th>
 						<th class="col-md-4">Werkzaamheden</th>
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
-						<th class="col-md-1"><span class="pull-right">Materieel</th>
+						<th class="col-md-1"><span class="pull-right">Overig</th>
 						<th class="col-md-1"><span class="pull-right">Totaal</th>
 					</tr>
 				</thead>
@@ -2006,7 +2006,7 @@ $type = ProjectType::find($project->type_id);
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
-						<th class="col-md-1"><span class="pull-right">Materieel</span></th>
+						<th class="col-md-1"><span class="pull-right">Overig</span></th>
 						<th class="col-md-1"><span class="pull-right">Totaal</span></th>
 					</tr>
 				</thead>
@@ -2052,7 +2052,7 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th class="col-md-2">Hoofdstuk</th>
+						<th class="col-md-2">Onderdeel</th>
 						<th class="col-md-3">Werkzaamheden</th>
 						<th class="col-md-7"><span>Omschrijving</th>
 					</tr>
@@ -2076,7 +2076,7 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th class="col-md-2">Hoofdstuk</th>
+						<th class="col-md-2">Onderdeel</th>
 						<th class="col-md-3">Werkzaamheden</th>
 						<th class="col-md-7"><span>Omschrijving</th>
 					</tr>
@@ -2104,7 +2104,7 @@ $type = ProjectType::find($project->type_id);
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th class="col-md-2">Hoofdstuk</th>
+						<th class="col-md-2">Onderdeel</th>
 						<th class="col-md-3">Werkzaamheden</th>
 						<th class="col-md-7"><span>Omschrijving</th>
 					</tr>

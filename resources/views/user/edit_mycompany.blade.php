@@ -12,6 +12,7 @@ use \Calctool\Models\BankAccount;
 use \Calctool\Models\Cashbook;
 
 $relation = Relation::find(Auth::user()->self_id);
+$user = Auth::user();
 ?>
 
 @extends('layout.master')
@@ -45,12 +46,13 @@ $(document).ready(function() {
 	$('#tab-contact').click(function(e){
 		sessionStorage.toggleTabMyComp{{Auth::id()}} = 'contact';
 	});
-	$('#tab-cashbook').click(function(e){
-		sessionStorage.toggleTabMyComp{{Auth::id()}} = 'cashbook';
-	});
 	$('#tab-logo').click(function(e){
 		sessionStorage.toggleTabMyComp{{Auth::id()}} = 'logo';
 	});
+	$('#tab-prefs').click(function(e){
+		sessionStorage.toggleTabMyComp{{Auth::id()}} = 'prefs';
+	});
+
 	if (sessionStorage.toggleTabMyComp{{Auth::id()}}){
 		$toggleOpenTab = sessionStorage.toggleTabMyComp{{Auth::id()}};
 		$('#tab-'+$toggleOpenTab).addClass('active');
@@ -125,16 +127,7 @@ $(document).ready(function() {
         }
 
     });
-	$('#accountModal').on('hidden.bs.modal', function() {
-		$.post("/mycompany/cashbook/account/new", {account: $('#account').val(), account_name: $('#account_name').val(), amount: $('#amount').val()}, function(data) {
-			location.reload();
-		});
-	});
-	$('#cashbookModal').on('hidden.bs.modal', function() {
-		$.post("/mycompany/cashbook/new", {account: $('#account2').val(), amount: $('#amount2').val(), date: $('#date').val(), desc: $('#desc').val()}, function(data) {
-			location.reload();
-		});
-	});
+	
     $('#dateRangePicker').datepicker();
 
 	var zipcode = $('#zipcode').val();
@@ -171,6 +164,60 @@ $(document).ready(function() {
 	            ["misc", ["codeview"]]
 	        ]
 	    })
+
+	if (sessionStorage.introDemo) {
+
+		var demo = introJs().
+			setOption('nextLabel', 'Volgende').
+			setOption('prevLabel', 'Vorige').
+			setOption('skipLabel', '').
+			setOption('doneLabel', 'Klaar').
+			setOption('showBullets', false).
+			setOption('exitOnOverlayClick', false).
+			onexit(function(){
+				sessionStorage.removeItem('introDemo');
+			}).onbeforechange(function(){
+				sessionStorage.introDemo = this._currentStep;
+				if (this._currentStep == 3) {
+					$('#tab-contact').addClass('active');
+					$('#contact').addClass('active');
+
+					$('#tab-company').removeClass('active');
+					$('#company').removeClass('active');
+				}
+			}).onafterchange(function(){
+				var done = this._currentStep;
+				$('.introjs-skipbutton').click(function(){
+					if (done == 3) {
+						sessionStorage.introDemo = 999;
+						window.location.href = '/';
+					}
+				});
+				if (done == 1) {
+					$('.introjs-prevbutton').css("visibility","initial");
+				} else {
+					$('.introjs-prevbutton').css("visibility","hidden");
+				}
+				if (done == 3) {
+					$('.introjs-skipbutton').css("visibility","initial");
+				} else {
+					$('.introjs-skipbutton').css("visibility","hidden");
+				}
+			});
+
+		if (sessionStorage.introDemo == 0) {
+			sessionStorage.clear();
+			sessionStorage.introDemo = 0;
+			sessionStorage.toggleTabMyComp{{Auth::id()}} = 'company';
+			$('#tab-company').addClass('active');
+			$('#company').addClass('active');
+			demo.start();
+		} else {
+			demo.goToStep(sessionStorage.introDemo).start();
+		}
+
+	}
+
 });
 </script>
 <style>
@@ -178,107 +225,7 @@ $(document).ready(function() {
 </style>
 <div id="wrapper">
 
-	<div class="modal fade" id="accountModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel2">Nieuwe rekening</h4>
-				</div>
-
-				<div class="modal-body">
-					<div class="form-horizontal">
-						<div class="form-group">
-							<div class="col-md-4">
-								<label>Rekening</label>
-							</div>
-							<div class="col-md-8">
-								<input name="account" id="account" type="text" class="form-control" />
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-md-4">
-								<label>Naam</label>
-							</div>
-							<div class="col-md-8">
-								<input name="account_name" id="account_name" type="text" class="form-control" />
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-md-4">
-								<label>Startbedrag</label>
-							</div>
-							<div class="col-md-8">
-								<input name="amount" id="amount" type="text" class="form-control" />
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button class="btn btn-default" data-dismiss="modal">Opslaan</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="modal fade" id="cashbookModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel2">Nieuwe regel</h4>
-				</div>
-
-				<div class="modal-body">
-					<div class="form-horizontal">
-						<div class="form-group">
-							<div class="col-md-4">
-								<label>Rekening</label>
-							</div>
-							<div class="col-md-8">
-								<select name="account2" id="account2" class="form-control pointer">
-								@foreach (BankAccount::where('user_id', Auth::id())->get() as $account)
-									<option value="{{ $account->id }}">{{ $account->account }}</option>
-								@endforeach
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-md-4">
-								<label>Bedrag</label>
-							</div>
-							<div class="col-md-8">
-								<input name="amount2" id="amount2" type="text" class="form-control" />
-							</div>
-						</div>
-					    <div class="form-group">
-					        <label class="col-md-4">Datum</label>
-					        <div class="col-md-8 date">
-					            <div class="input-group input-append date" id="dateRangePicker">
-					                <input type="text" class="form-control" name="date" id="date" />
-					                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-					            </div>
-					        </div>
-					    </div>
-						<div class="form-group">
-							<div class="col-md-4">
-								<label>Omschrijving</label>
-							</div>
-							<div class="col-md-8">
-								<input name="desc" id="desc" type="text" class="form-control" />
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button class="btn btn-default" data-dismiss="modal">Opslaan</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
+	
 	<section class="container">
 
 		<div class="col-md-12">
@@ -301,10 +248,12 @@ $(document).ready(function() {
 			@if($errors->has())
 			<div class="alert alert-danger">
 				<i class="fa fa-frown-o"></i>
-				<strong>Fout</strong>
-				@foreach ($errors->all() as $error)
-					{{ $error }}
-				@endforeach
+				<strong>Fouten in de invoer</strong>
+				<ul>
+					@foreach ($errors->all() as $error)
+					<li><h5 class="nomargin">{{ $error }}</h5></li>
+					@endforeach
+				</ul>
 			</div>
 			@endif
 
@@ -324,7 +273,7 @@ $(document).ready(function() {
 							<a href="#company" data-toggle="tab">Bedrijfsgegevens</a>
 						</li>
 						<li id="tab-contact">
-							<a href="#contact" data-toggle="tab">Contacten</a>
+							<a href="#contact" data-toggle="tab" data-step="3" data-intro="Stap 4: Je bedrijf heeft een contactpersoon nodig. Klik op het tabblad 'Contacten' en klik daarna op volgende.">Contacten</a>
 						</li>
 						<li id="tab-payment">
 							<a href="#payment" data-toggle="tab">Betalingsgegevens</a>
@@ -332,18 +281,19 @@ $(document).ready(function() {
 						<li id="tab-logo">
 							<a href="#logo" data-toggle="tab">Logo</a>
 						</li>
-						<li id="tab-cashbook">
-							<a href="#cashbook" data-toggle="tab">Kasboek</a>
+						<li id="tab-prefs">
+							<a href="#prefs" data-toggle="tab">Voorkeuren</a>
 						</li>
 					</ul>
 
 					<div class="tab-content">
 						<div id="company" class="tab-pane">
 
-							{!! $relation ? '<form action="relation/updatemycompany" method="post">' : '<form action="relation/newmycompany" method="post">' !!}
+							{!! $relation ? '<form action="relation/updatemycompany?multipage=true" method="post">' : '<form action="relation/newmycompany" method="post">' !!}
 							{!! csrf_field() !!}
 
-							<h4 class="company">Bedrijfsgegevens</h4>
+							<div data-step="1" data-position="left" data-intro="Stap 2: Vul hier jouw bedrijfgegevens in. Alleen de velden met een (*) zijn verplicht. Je kan je gegevens later altijd aanpassen en aanvullen.">
+							<h4 class="company" >Bedrijfsgegevens</h4>
 							<input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
 							<div class="row">
 								<div class="col-md-5">
@@ -357,9 +307,9 @@ $(document).ready(function() {
 									<div class="form-group">
 										<label for="company_type">Bedrijfstype*</label>
 										<select name="company_type" id="company_type" class="form-control pointer">
-										@foreach (RelationType::all() as $type)
-											<option {{ $relation ? ($relation->type_id==$type->id ? 'selected' : '') : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
-										@endforeach
+											@foreach (RelationType::all() as $type)
+											<option {{ $relation ? ($relation->type_id==$type->id ? 'selected' : '') : (old('company_type') == $type->id ? 'selected' : '') }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
+											@endforeach
 										</select>
 									</div>
 								</div>
@@ -437,7 +387,7 @@ $(document).ready(function() {
 										<label for="province">Provincie*</label>
 										<select name="province" id="province" class="form-control pointer">
 											@foreach (Province::all() as $province)
-												<option {{ $relation ? ($relation->province_id==$province->id ? 'selected' : '') : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
+												<option {{ $relation ? ($relation->province_id==$province->id ? 'selected' : '') : (old('province') == $province->id ? 'selected' : '') }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
 											@endforeach
 										</select>
 									</div>
@@ -456,18 +406,11 @@ $(document).ready(function() {
 									</div>
 								</div>
 							</div>
+						</div>
 
-							<h4>Kladblok van mijn bedrijf <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok je eigen bedrijf en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
-							<div class="row">
-								<div class="form-group">
-									<div class="col-md-12">
-										<textarea name="note" id="summernote" rows="10" class="form-control">{{ Input::old('note') ? Input::old('note') : ($relation ? $relation->note : '') }}</textarea>
-									</div>
-								</div>
-							</div>
 							<div class="row">
 								<div class="col-md-12">
-									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+									<button class="btn btn-primary" data-position="top" data-step="2" data-intro="Stap 3: Sla je bedrijfsgegevens op en klik daarna op volgende."><i class="fa fa-check"></i> Opslaan</button>
 								</div>
 							</div>
 						</form>
@@ -477,7 +420,7 @@ $(document).ready(function() {
 							<table class="table table-striped">
 								<thead>
 									<tr>
-										<th class="col-md-2">Naam</th>
+										<th class="col-md-2">Achternaam</th>
 										<th class="col-md-2">Voornaam</th>
 										<th class="col-md-2">Functie</th>
 										<th class="col-md-2">Telefoon</th>
@@ -502,7 +445,7 @@ $(document).ready(function() {
 								</tbody>
 							</table>
 							<div class="row">
-								<div class="col-md-12">
+								<div class="col-md-2" data-step="4" data-intro="Stap 5: Klik op 'Nieuw Contact' om een contactpersoon toe te voegen.">
 									<a href="/mycompany/contact/new" {{ $relation ? '' : 'disabled' }} class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
 								</div>
 							</div>
@@ -563,51 +506,253 @@ $(document).ready(function() {
 
 							</form>
 						</div>
-						<div id="cashbook" class="tab-pane">
-							<h4>Rekeningen</h4>
-							<div class="row">
-								<div class="col-md-3"><strong>Rekening</strong></div>
-								<div class="col-md-2"><strong>Saldo</strong></div>
-							</div>
-							@foreach (BankAccount::where('user_id', Auth::id())->get() as $account)
-							<div class="row">
-								<div class="col-md-3">{{ $account->account }}</div>
-								<div class="col-md-2">&euro;{{ number_format(Cashbook::where('account_id', $account->id)->sum('amount'), 2, ",",".") }}</div>
-								<div class="col-md-3"></div>
-							</div>
-							@endforeach
-							<br />
-							<h4>Af en bij</h4>
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th class="col-md-2">Rekening</th>
-										<th class="col-md-2">Bedrag</th>
-										<th class="col-md-2">Datum</th>
-										<th class="col-md-6">Omschrijving</th>
-									</tr>
-								</thead>
+						
+						<div id="prefs" class="tab-pane">
 
-								<tbody>
-									@foreach (BankAccount::where('user_id', Auth::id())->get() as $account)
-									@foreach (Cashbook::where('account_id', $account->id)->orderBy('payment_date','desc')->get() as $row)
-									<tr>
-										<td class="col-md-2">{{ $account->account }}</a></td>
-										<td class="col-md-2">{{ ($row->amount > 0 ? '+' : '') . number_format($row->amount, 2, ",",".") }}</td>
-										<td class="col-md-2">{{ date('d-m-Y', strtotime($row->payment_date)) }}</td>
-										<td class="col-md-6">{{ $row->description }}</td>
-									</tr>
-									@endforeach
-									@endforeach
-								</tbody>
-							</table>
-							<div class="row">
-								<div class="col-md-12">
-									<a href="#" data-toggle="modal" data-target="#cashbookModal" id="newcash" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuwe regel</a>
-									<a href="#" data-toggle="modal" data-target="#accountModal" id="newacc" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuwe rekening</a>
+							<form method="POST" action="myaccount/preferences/update" accept-charset="UTF-8">
+                            {!! csrf_field() !!}
+
+							<h4 class="company">Voorkeuren</h4>
+
+							<div class="panel-group" id="accordion">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="#accordion" href="#acordion1">
+												<i class="fa fa-check"></i>
+												Uurtarief en Winspercentages
+											</a>
+										</h4>
+									</div>
+									<div id="acordion1" class="collapse in">
+										<div class="panel-body">
+
+											<div class="row">
+												<div class="col-md-3"><h5><strong>Eigen uurtarief*</strong></h5></div>
+												<div class="col-md-1"></div>
+												<div class="col-md-2"><h5><strong>Calculatie</strong></h5></div>
+												<div class="col-md-2"><h5><strong>Meerwerk</strong></h5></div>
+											</div>
+											<div class="row">
+												<div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
+												<div class="col-md-1"><div class="pull-right">&euro;</div></div>
+												<div class="col-md-2">
+													<input name="pref_hourrate_calc" id="pref_hourrate_calc" type="text" class="form-control" value="{{ number_format($user->pref_hourrate_calc, 2, ",",".") }}" />
+												</div>
+												<div class="col-md-2">
+													<input name="pref_hourrate_more" id="pref_hourrate_more" type="text" class="form-control" value="{{ number_format($user->pref_hourrate_more, 2, ",",".") }}" />
+												</div>
+											</div>
+
+											<h5><strong>Aanneming</strong></h5>
+											<div class="row">
+												<div class="col-md-3"><label for="profit_material_1">Winstpercentage materiaal</label></div>
+												<div class="col-md-1"><div class="pull-right">%</div></div>
+												<div class="col-md-2">
+														<input name="pref_profit_calc_contr_mat" id="pref_profit_calc_contr_mat" type="text" class="form-control" value="{{ $user->pref_profit_calc_contr_mat }}" />
+												</div>
+												<div class="col-md-2">
+														<input name="pref_profit_more_contr_mat" id="pref_profit_more_contr_mat" type="text" class="form-control" value="{{ $user->pref_profit_more_contr_mat }}" />
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage overig</label></div>
+												<div class="col-md-1"><div class="pull-right">%</div></div>
+												<div class="col-md-2">
+														<input name="pref_profit_calc_contr_equip" id="pref_profit_calc_contr_equip" type="text" class="form-control" value="{{ $user->pref_profit_calc_contr_equip }}" />
+												</div>
+												<div class="col-md-2">
+														<input name="pref_profit_more_contr_equip" id="pref_profit_more_contr_equip" type="text" class="form-control" value="{{ $user->pref_profit_more_contr_equip }}" />
+												</div>
+											</div>
+
+											<h5><strong>Onderaanneming</strong></h5>
+											<div class="row">
+												<div class="col-md-3"><label for="profit_material_2">Winstpercentage materiaal</label></div>
+												<div class="col-md-1"><div class="pull-right">%</div></div>
+												<div class="col-md-2">
+														<input name="pref_profit_calc_subcontr_mat" id="pref_profit_calc_subcontr_mat" type="text" class="form-control" value="{{ $user->pref_profit_calc_subcontr_mat }}" />
+												</div>
+												<div class="col-md-2">
+														<input name="pref_profit_more_subcontr_mat" id="pref_profit_more_subcontr_mat" type="text" class="form-control" value="{{ $user->pref_profit_more_subcontr_mat }}" />
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage overig</label></div>
+												<div class="col-md-1"><div class="pull-right">%</div></div>
+												<div class="col-md-2">
+														<input name="pref_profit_calc_subcontr_equip" id="pref_profit_calc_subcontr_equip" type="text" class="form-control" value="{{ $user->pref_profit_calc_subcontr_equip }}" />
+												</div>
+												<div class="col-md-2">
+														<input name="pref_profit_more_subcontr_equip" id="pref_profit_more_subcontr_equip" type="text" class="form-control" value="{{ $user->pref_profit_more_subcontr_equip }}" />
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="#accordion" href="#acordion2">
+												<i class="fa fa-check"></i>
+												Omschrijvingen voor op offerte en factuur
+											</a>
+										</h4>
+									</div>
+									<div id="acordion2" class="collapse">
+										<div class="panel-body">
+											<h4>Offerte</h4>
+											<h5><strong>Omschrijving voor op de offerte</strong></h5>
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<textarea name="pref_offer_description" id="pref_offer_description" rows="5" class="form-control">{{ $user->pref_offer_description }}</textarea>
+													</div>
+												</div>
+											</div>
+											<h5><strong>Sluitingstekst voor op de offerte</strong></h5>
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<textarea name="pref_closure_offer" id="pref_closure_offer" rows="5" class="form-control">{{ $user->pref_closure_offer }}</textarea>
+													</div>
+												</div>
+											</div>
+											<h4>Factuur</h4>
+											<h5><strong>Omschrijving voor op de factuur</strong></h5>
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<textarea name="pref_invoice_description" id="pref_invoice_description" rows="5" class="form-control">{{ $user->pref_invoice_description }}</textarea>
+													</div>
+												</div>
+											</div>
+											<h5><strong>Sluitingstekst voor op de factuur</strong></h5>
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<textarea name="pref_invoice_closure" id="pref_invoice_closure" rows="5" class="form-control">{{ $user->pref_invoice_closure }}</textarea>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								@if (0)
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="#accordion" href="#acordion3">
+												<i class="fa fa-check"></i>
+												Omschrijvingen voor in de emails
+											</a>
+										</h4>
+									</div>
+									<div id="acordion3" class="collapse">
+										<div class="panel-body">
+
+											<h4>Offerte</h4>
+											<h5><strong>Beschrijving voor in de email bij verzending van de offerte</strong></h5>
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<textarea name="pref_email_offer" id="pref_email_offer" rows="5" class="form-control">{{ $user->pref_email_offer }}</textarea>
+													</div>
+												</div>
+											</div>
+											<h4>Factuur</h4>
+											<h5><strong>Beschrijving voor in de email bij verzending van de factuur</strong></h5>
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<textarea name="pref_email_invoice" id="pref_email_invoice" rows="5" class="form-control">{{ $user->pref_email_invoice }}</textarea>
+													</div>
+												</div>
+											</div>
+											<h5><strong>1e betalingsherinnering van de factuur (direct na verstrijken van de ingestelde betalingsconditie van de factuur)</strong></h5>
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<textarea name="pref_email_invoice_first_reminder" id="pref_email_invoice_first_reminder" rows="5" class="form-control">{{ $user->pref_email_invoice_first_reminder }}</textarea>
+													</div>
+												</div>
+											</div>
+											<h5><strong>Laatste betalingsherinnering van de factuur (14 dagen na de 1e betalingsherinnering)</strong></h5>
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<textarea name="pref_email_invoice_demand" id="pref_email_invoice_last_reminder" rows="5" class="form-control">{{ $user->pref_email_invoice_last_reminder }}</textarea>
+													</div>
+												</div>
+											</div>
+											<h5><strong>Vorderingswaaeschuwing van de factuur (7 dagen na de laatste (2e) betalingsherinnering)</strong></h5>
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<textarea name="pref_email_invoice_demand" id="pref_email_invoice_demand" rows="5" class="form-control">{{ $user->pref_email_invoice_demand }}</textarea>
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								@endif
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="#accordion" href="#acordion4">
+												<i class="fa fa-check"></i>
+												Offerte en factuurnummering
+											</a>
+										</h4>
+									</div>
+									<div id="acordion4" class="collapse">
+										<div class="panel-body">
+
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="pref_use_ct_numbering" style="display:block;">Gebruik CalculatieTool nummering</label>
+														<input name="pref_use_ct_numbering" type="checkbox" {{ $user->pref_use_ct_numbering ? 'checked' : '' }}>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="offernumber_prefix"><strong>Tekst voor offertenummer</strong></label>
+														<input name="offernumber_prefix" id="offernumber_prefix" type="text" class="form-control" value="{{ $user->offernumber_prefix }}" />
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="invoicenumber_prefix"><strong>Tekst voor factuurnummer</strong></label>
+														<input name="invoicenumber_prefix" id="invoicenumber_prefix" type="text" class="form-control" value="{{ $user->invoicenumber_prefix }}" />
+													</div>
+												</div>
+											</div>
+
+										</div>
+									</div>
 								</div>
 							</div>
+							<div class="row">
+									<div class="col-md-12">
+										<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+									</div>
+								</div>
+							</form>
 						</div>
+
+
+
+
+
+
+
+
+
 					</div>
 				</div>
 

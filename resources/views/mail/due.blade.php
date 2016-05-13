@@ -51,7 +51,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Je CalculatieTool account verloopt bijna. Indien je het account wilt blijven gebruiken dien je eze te verlegnen onder "mijn Account".
+														Je CalculatieTool.com account verloopt bijna. Indien je jouw account wilt blijven gebruiken dien je deze te verlegnen onder "Mijn Account".
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->
@@ -64,7 +64,7 @@
 															Met vriendelijke groet,
 														<br>
 														<br>
-															<strong>Cal</strong>, van <a href="{{ URL::to('/') }}"><strong>CalculatieTool</strong></a>
+															<strong>Cal</strong>, van <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
 														<br>
 														<br>
 													</td>

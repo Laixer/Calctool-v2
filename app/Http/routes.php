@@ -86,6 +86,7 @@ Route::group(['middleware' => 'auth'], function()
 		return view('calc.result');
 	})->where('project_id', '[0-9]+')->middleware('payzone');
 	Route::get('res-{resource_id}/download', 'ProjectController@downloadResource')->where('resource_id', '[0-9]+');
+	Route::get('apps', 'AppsController@getAppsDashboard');
 	Route::get('myaccount', function() {
 		return view('user.myaccount');
 	});
@@ -94,6 +95,7 @@ Route::group(['middleware' => 'auth'], function()
 	});
 	Route::get('myaccount/telegram/unchain', 'UserController@getMyAccountTelegramUnchain');
 	Route::get('myaccount/deactivate', 'UserController@getMyAccountDeactivate');
+	Route::get('myaccount/loaddemo', 'UserController@doLoadDemoProject');
 	Route::post('myaccount/telegram/update', 'UserController@doMyAccountTelegramUpdate');
 	Route::post('myaccount/updateuser', 'UserController@doMyAccountUser');
 	Route::post('myaccount/iban/new', 'UserController@doNewIban');
@@ -298,6 +300,7 @@ Route::group(['middleware' => 'auth'], function()
 	Route::post('project/update/note', array('as' => 'project.update', 'uses' => 'ProjectController@doUpdateNote'));
 	Route::post('project/update/communication', array('as' => 'project.update', 'uses' => 'ProjectController@doCommunication'));
 	Route::post('project/updatecalc', array('as' => 'project.update', 'uses' => 'ProjectController@doUpdateProfit'));
+	Route::post('project/updateadvanced', array('as' => 'project.update', 'uses' => 'ProjectController@doUpdateAdvanced'));
 	Route::get('project', array('as' => 'project', 'uses' => 'ProjectController@getAll'))->middleware('payzone');
 	Route::get('project-{project_id}/edit', array('as' => 'project.edit', 'uses' => 'ProjectController@getEdit'))->where('project_id', '[0-9]+')->middleware('payzone');
 	Route::post('project/updateworkexecution', array('as' => 'project.edit', 'uses' => 'ProjectController@doUpdateWorkExecution'));

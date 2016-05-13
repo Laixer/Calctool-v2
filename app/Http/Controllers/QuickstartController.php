@@ -96,7 +96,7 @@ class QuickstartController extends Controller {
 	public function getExternalAddress(Request $request)
 	{
 		$headers = array();
-		$headers[] = 'X-Api-Key: ' . env('POSTCODE_API');
+		$headers[] = 'X-Api-Key: ' . config('services.postcode.key');
 
 		$url = 'https://postcode-api.apiwise.nl/v2/addresses/?postcode=' . $request->get('zipcode') . '&number=' . $request->get('number');
  
@@ -108,6 +108,10 @@ class QuickstartController extends Controller {
 		$data = json_decode($response);
 
 		curl_close($curl);
+
+		if (empty($data)) {
+			return;
+		}
 
 		if (count($data->_embedded->addresses) == 1) {
 			$address['postcode'] = $data->_embedded->addresses[0]->postcode;

@@ -37,7 +37,7 @@
 							<div class="form-group">
 								<div class="col-md-12">
 									<label for="secret">Wachtwoord</label>
-									<input class="form-control" name="secret" type="password" id="secret">
+									<input class="form-control" name="secret" type="password" id="secret" autocomplete="off">
 								</div>
 							</div>
 						</div>
@@ -45,7 +45,7 @@
 							<div class="form-group">
 								<div class="col-md-12">
 									<label for="secret_confirmation">Herhaal wachtwoord</label>
-									<input class="form-control" name="secret_confirmation" type="password" id="secret_confirmation">
+									<input class="form-control" name="secret_confirmation" type="password" id="secret_confirmation" autocomplete="off">
 								</div>
 							</div>
 						</div>

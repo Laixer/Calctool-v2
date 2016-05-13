@@ -35,4 +35,12 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'postcode' => [
+        'key'    => env('POSTCODE_API'),
+    ],
+
+    'mollie' => [
+        'key'    => env('MOLLIE_API'),
+    ],
+
 ];

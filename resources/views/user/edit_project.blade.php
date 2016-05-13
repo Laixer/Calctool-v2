@@ -18,6 +18,15 @@ use \Calctool\Models\Activity;
 use \Calctool\Models\Timesheet;
 use \Calctool\Models\TimesheetKind;
 use \Calctool\Models\Purchase;
+use \Calctool\Models\EstimateLabor;
+use \Calctool\Models\EstimateMaterial;
+use \Calctool\Models\EstimateEquipment;
+use \Calctool\Models\MoreLabor;
+use \Calctool\Models\MoreMaterial;
+use \Calctool\Models\MoreEquipment;
+use \Calctool\Models\CalculationLabor;
+use \Calctool\Models\CalculationMaterial;
+use \Calctool\Models\CalculationEquipment;
 
 
 $common_access_error = false;
@@ -68,6 +77,9 @@ $type = ProjectType::find($project->type_id);
 		$('#tab-hour').click(function(e){
 			sessionStorage.toggleTabProj{{Auth::id()}} = 'hour';
 		});
+		$('#tab-advanced').click(function(e){
+			sessionStorage.toggleTabProj{{Auth::id()}} = 'advanced';
+		});
 		$('#tab-purchase').click(function(e){
 			sessionStorage.toggleTabProj{{Auth::id()}} = 'purchase';
 		});
@@ -80,8 +92,8 @@ $type = ProjectType::find($project->type_id);
 			$('#'+$toggleOpenTab).addClass('active');
 		} else {
 			sessionStorage.toggleTabProj{{Auth::id()}} = 'status';
-			$('#tab-status').addClass('active');
-			$('#status').addClass('active');
+			$('#tab-project').addClass('active');
+			$('#project').addClass('active');
 		}
 		$('#addnew').click(function(e) {
 			$curThis = $(this);
@@ -241,8 +253,7 @@ $type = ProjectType::find($project->type_id);
 				location.reload();
 			});
     	});
-    	$("[name='toggle-mail-reminder']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
-		
+    			
         $('#summernote').summernote({
             height: $(this).attr("data-height") || 200,
             toolbar: [
@@ -263,8 +274,57 @@ $type = ProjectType::find($project->type_id);
             ]
         })
 	    $("[name='tax_reverse']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
-	});
+	    $("[name='use_estimate']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	    $("[name='use_more']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	    $("[name='use_less']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	    $("[name='mail_reminder']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 
+	if (sessionStorage.introDemo) {
+		var demo = introJs().
+			setOption('nextLabel', 'Volgende').
+			setOption('prevLabel', 'Vorige').
+			setOption('skipLabel', 'Overslaan').
+			setOption('doneLabel', 'Klaar').
+			setOption('showBullets', false).
+			onexit(function(){
+				sessionStorage.removeItem('introDemo');
+			}).onbeforechange(function(){
+				sessionStorage.introDemo = this._currentStep;
+				if (this._currentStep == 1) {
+					$('#tab-calc').addClass('active');
+					$('#calc').addClass('active');
+
+					$('#tab-project').removeClass('active');
+					$('#project').removeClass('active');
+				}
+				if (this._currentStep == 3) {
+					$('#tab-advanced').addClass('active');
+					$('#advanced').addClass('active');
+
+					$('#tab-calc').removeClass('active');
+					$('#calc').removeClass('active');
+				}
+			}).onafterchange(function(){
+				var done = this._currentStep;
+				$('.introjs-skipbutton').click(function(){
+					if (done == 3) {
+						sessionStorage.introDemo = 999;
+						window.location.href = '/calculation/project-{{ $project->id }}';
+					}
+				});
+			});
+
+		if (sessionStorage.introDemo == 999) {
+			sessionStorage.clear();
+			sessionStorage.introDemo = 0;
+			demo.start();
+		} else {
+			demo.goToStep(sessionStorage.introDemo).start();
+		}
+
+	}
+
+});
 </script>
 <div id="wrapper">
 
@@ -310,15 +370,18 @@ $type = ProjectType::find($project->type_id);
 				<div class="tabs nomargin-top">
 
 					<ul class="nav nav-tabs">
-						<li id="tab-status">
-							<a href="#status" data-toggle="tab">Projectstatus</a>
-						</li>
 						<li id="tab-project">
 							<a href="#project" data-toggle="tab">Projectgegevens</a>
 						</li>
-						@if ($type->type_name != 'blanco offerte & factuur')
+						@if ($type->type_name != 'snelle offerte en factuur')
 						<li id="tab-calc">
-							<a href="#calc" data-toggle="tab">Uurtarief & Winstpercentages</a>
+							<a href="#calc" data-toggle="tab" data-step="1" data-intro="Stap 1: Geef je  uurtarief en winstpercentages op waarmee je wilt gaan calculeren.">Uurtarief & Winstpercentages</a>
+						</li>
+						<li id="tab-advanced">
+							<a href="#advanced" data-toggle="tab" data-toggle="tab" data-step="3" data-intro="Stap 3: Geef aan of je andere module wilt laden in je project. Dit kan later ook nog.">Extra opties</a>
+						</li>
+						<li id="tab-status">
+							<a href="#status" data-toggle="tab">Projectstatus</a>
 						</li>
 						@endif
 						@if ($share && $share->client_note )
@@ -546,17 +609,6 @@ $type = ProjectType::find($project->type_id);
 									</div>
 
 								</div>
-								<h4>Projectinstellingen</h4>
-
-								<h5><strong>Email herinnering aanzetten </strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="De CalculatieTool.com kan bij digitaal verstuurde offertes en facturen respectievelijk na het verstrijken van geldigheid van de offerte of ingestelde betalingsconditie van de factuur auomatische herinneringen sturen naar je klant. Jij als gebruiker wordt hierover altijd geinformeerd met een bericht in je notificaties. De teskt in de te verzenden mail staat default ingesteld in je 'voorkeuren' onder 'mijn account', deze is aanpasbaar per account." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h5>
-								<div class="row">
-									<div class="col-md-2">
-										<div class="form-group">
-											<input name="toggle-mail-reminder" type="checkbox" {{ $project->pref_email_reminder ? 'checked' : '' }}>
-										</div>
-									</div>
-								</div>
-
 								<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
 								<div class="row">
 									<div class="form-group ">
@@ -575,8 +627,8 @@ $type = ProjectType::find($project->type_id);
 								</form>
 							</div>
 
-						@if ($type->type_name != 'blanco offerte & factuur')
-						<div id="calc" class="tab-pane">
+						@if ($type->type_name != 'snelle offerte en factuur')
+						<div id="calc" class="tab-pane" data-step="2" data-intro="Stap 2: Geef je  uurtarief en winstpercentages op waarmee je wilt gaan calculeren.">
 						<form method="post" action="/project/updatecalc">
                         {!! csrf_field() !!}
 						<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
@@ -601,7 +653,7 @@ $type = ProjectType::find($project->type_id);
 								</div>
 							</div>
 
-							<h5><strong>Aanneming <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier uw winstpercentage op wat u over uw materiaal en materieel wilt gaan rekenen. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></strong></h5>
+							<h5><strong>Aanneming <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier uw winstpercentage op wat u over uw materiaal en overig wilt gaan rekenen. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></strong></h5>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_material_1">Winstpercentage materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
@@ -615,7 +667,7 @@ $type = ProjectType::find($project->type_id);
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage materieel</label></div>
+								<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage overig</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								@if ($type->type_name != 'regie')
 								<div class="col-md-2">
@@ -627,7 +679,7 @@ $type = ProjectType::find($project->type_id);
 								</div>
 							</div>
 
-							<h5><strong>Onderaanneming <a data-toggle="tooltip" data-placement="bottom" data-original-title="Onderaanneming: Geef hier uw winstpercentage op wat u over het materiaal en materieel van uw onderaanneming wilt gaan rekenen. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></strong></h5>
+							<h5><strong>Onderaanneming <a data-toggle="tooltip" data-placement="bottom" data-original-title="Onderaanneming: Geef hier uw winstpercentage op wat u over het materiaal en overig van uw onderaanneming wilt gaan rekenen. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></strong></h5>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_material_2">Winstpercentage materiaal</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
@@ -641,7 +693,7 @@ $type = ProjectType::find($project->type_id);
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage materieel</label></div>
+								<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage overig</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
 								@if ($type->type_name != 'regie')
 								<div class="col-md-2">
@@ -651,138 +703,144 @@ $type = ProjectType::find($project->type_id);
 								<div class="col-md-2">
 									<input name="more_profit_equipment_2" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_2') ? Input::old('more_profit_equipment_2') : $project->profit_more_subcontr_equip }}" class="form-control form-control-sm-number"/>
 								</div>
-							</div><br />
+							</div><br/>
 								<div class="row">
-								<div class="col-md-12">
-									<button class="btn btn-primary {{ ($cntinv ? 'disabled' : '') }}"><i class="fa fa-check"></i> Opslaan</button>
-								</div>
+									<div class="col-md-12">
+										<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+									</div>
 								</div>
 						</form>
 						</div>
 						@endif
 
-						<div id="hour" class="tab-pane">
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th class="col-md-1">Datum</th>
-										<th class="col-md-1">Uren</th>
-										<th class="col-md-3">Soort <a data-toggle="tooltip" data-placement="bottom" data-original-title="Het is niet mogelijk een urenregistratie bij te houden van onderaanneming." href="#"><i class="fa fa-info-circle"></i></a></th>
-										<th class="col-md-1">Werkzaamheid</th>
-										<th class="col-md-3">Omschrijving</th>
-										<th class="col-md-1">&nbsp;</th>
-										<th class="col-md-1">&nbsp;</th>
-										<th class="col-md-1">&nbsp;</th>
-										<th class="col-md-1">&nbsp;</th>
-									</tr>
-								</thead>
+						<div id="advanced" class="tab-pane" data-step="4" data-intro="Stap 4: Laad eventueel aanvullende onderdelen.">
+							
+							<form method="POST" action="/project/updateadvanced">
+							{!! csrf_field() !!}
+							<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
+							
+							<div class="row">
+								<div class="col-md-2">
+									<label for="type">BTW verlegd</label>
+									<div class="form-group">
+										<input name="tax_reverse" disabled type="checkbox" {{ $project->tax_reverse ? 'checked' : '' }}>
+									</div>
+								</div>
+								<div class="col-md-10">
+									<p>Een project zonder btw bedrag invoeren.</p>
+								</div>
+							</div>
 
-								<tbody>
-									@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
-									@foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
-									@foreach (Timesheet::where('activity_id','=', $activity->id)->orderBy('register_date','desc')->get() as $timesheet)
-									<tr data-id="{{ $timesheet->id }}">
-										<td class="col-md-1">{{ date('d-m-Y', strtotime($timesheet->register_date)) }}</td>
-										<td class="col-md-1">{{ number_format($timesheet->register_hour, 2,",",".") }}</td>
-										<td class="col-md-3">{{ ucwords(\Calctool\Models\TimesheetKind::find($timesheet->timesheet_kind_id)->kind_name) }}</td>
-										<td class="col-md-3">{{ $activity->activity_name }}</td>
-										<td class="col-md-1">{{ $timesheet->note }}</td>
-										<td class="col-md-1">&nbsp;</td>
-										<td class="col-md-1">&nbsp;</td>
-										<td class="col-md-1">@if (!$project->project_close)<button class="btn btn-danger btn-xs fa fa-times deleterow"></button>@endif</td>
-									</tr>
-									@endforeach
-									@endforeach
-									@endforeach
-									@if (!$project->project_close)
-									<tr>
-										<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text"/></td>
-										<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
-										<td class="col-md-2">
-											<select name="typename" id="typename" class="form-control-sm-text">
-												<option selected="selected" >Selecteer</option>
-												@foreach (TimesheetKind::all() as $typename)
-												<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
-												@endforeach
-											</select>
-										</td>
-										<td class="col-md-4">
-											<select disabled="disabled" name="activity" id="activity" class="form-control-sm-text"></select>
-										</td>
-										<td class="col-md-1"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
-										<td class="col-md-1">&nbsp;</td>
-										<td class="col-md-1">&nbsp;</td>
-										<td class="col-md-1"><button id="addnew" class="btn btn-primary btn-xs"> Toevoegen</button></td>
-									</tr>
-									@endif
-								</tbody>
-							</table>
+								<?php $offer_last ? $invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first() : $invoice_end = null;
+								
+								$estim_total = 0;
+								$more_total = 0;
+								$less_total = 0;
+								$disable_estim = false;
+								$disable_more = false;
+								$disable_less = false;
+								
+								foreach(Chapter::where('project_id','=', $project->id)->get() as $chap) {
+									foreach(Activity::where('chapter_id','=', $chap->id)->get() as $activity) {
+										$estim_total += EstimateLabor::where('activity_id','=', $activity->id)->count('id');
+										$estim_total += EstimateMaterial::where('activity_id','=', $activity->id)->count('id');
+										$estim_total += EstimateEquipment::where('activity_id','=', $activity->id)->count('id');
+
+										$more_total += MoreLabor::where('activity_id','=', $activity->id)->count('id');
+										$more_total += MoreMaterial::where('activity_id','=', $activity->id)->count('id');
+										$more_total += MoreEquipment::where('activity_id','=', $activity->id)->count('id');	
+
+										$less_total += CalculationLabor::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
+										$less_total += CalculationMaterial::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
+										$less_total += CalculationEquipment::where('activity_id','=', $activity->id)->where('isless',true)->count('id');	
+									}
+								}
+
+								//
+								if ($offer_last) {
+									$disable_estim = true;
+								}
+								if ($estim_total>0) {
+									$disable_estim = true;
+								}
+
+								//
+								if ($invoice_end && $invoice_end->invoice_close) {
+									$disable_more = true;
+								}
+								if ($more_total>0) {
+									$disable_more = true;
+								}
+
+								//
+								if ($invoice_end && $invoice_end->invoice_close) {
+									$disable_less = true;
+								}
+								if ($less_total>0) {
+									$disable_less = true;
+								}
+
+								?>
+								
+							<div class="row">
+								<div class="col-md-2">
+									<label for="type">Stelposten</label>
+									<div class="form-group">
+										<input name="use_estimate" {{ ($disable_estim ? 'disabled' : '') }} type="checkbox" {{ $project->use_estimate ? 'checked' : '' }}>
+									</div>
+								</div>
+								<div class="col-md-10">		
+									<p>Voeg de module stelposten toe aan je calculatie. Je kan nu stelposten toe gaan voegen aan je offerte en deze later definitief maken/stellen voor op de factuur.</p>
+								</div>
+							</div>
+
+								
+							<div class="row">
+								<div class="col-md-2">
+								<label for="type">Meerwerk</label>
+									<div class="form-group">
+										<input name="use_more" type="checkbox" {{ ($disable_more ? 'disabled' : '') }} {{ $project->use_more ? 'checked' : '' }}>
+									</div>
+								</div>
+								<div class="col-md-10">
+									<p>Voeg de module meerwerk toe aan je calculatie. Je kan nu extra kosten op gaan voeren op je facturen.</p>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-2">
+									<label for="type">Minderwerk</label>
+									<div class="form-group">
+										<input name="use_less" type="checkbox" {{ ($disable_less ? 'disabled' : '') }} {{ $project->use_less ? 'checked' : '' }}>
+									</div>
+								</div>
+								<div class="col-md-10">
+									<p>Voeg de module minderwerk toe aan je calculatie. Je kan nu bedragen in mindering gaan brengen op je facturen.</p>
+								</div>
+							</div>
+
+							@if (0)
+							<div class="row">
+								<div class="col-md-2">
+									<label for="type">Email herinnering aanzetten</label>
+									<div class="form-group">
+										<input name="mail_reminder" type="checkbox" {{ $project->pref_email_reminder ? 'checked' : '' }}>
+									</div>
+								</div>
+								<div class="col-md-10">
+									<p>De CalculatieTool.com kan bij digitaal verstuurde offertes en facturen respectievelijk na het verstrijken van de geldigheid van de offerte of ingestelde betalingsconditie van de factuur automatische herinneringen sturen naar je klant. Jij als gebruiker wordt hierover altijd geïnformeerd met een bericht in je notificaties. De tekst in de te verzenden mail staat default ingesteld in je 'voorkeuren' onder 'mijn account', deze is aanpasbaar per account.</p>
+								</div>
+							</div>
+							@endif
+							<br/>
+							<div class="row">
+								<div class="col-md-12">
+									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+								</div>
+							</div>
+							</form>
 						</div>
 
-						<div id="purchase" class="tab-pane">
-
-							<!--<div class="toggle">
-								<label>Deze week</label>
-								<div class="toggle-content">-->
-									<table class="table table-striped">
-										<thead>
-											<tr>
-												<th class="col-md-1">Datum</th>
-												<th class="col-md-2">Relatie <a data-toggle="tooltip" data-placement="bottom" data-original-title="Kies hier uw relatie waar de inkoopfactuur betrekking op heeft. Staat uw relatie er nog niet bij, maak dan eerst een nieuwe relatie aan." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
-												<th class="col-md-2">Bedrag (Excl. BTW) <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier plaatst u alle facturen van uw project (facturen materiaal, materieel en onderaannemers). Deze worden gebruikt voor uw winst en verlies berekening." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
-
-												<th class="col-md-2">Soort <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier aan waar de inkoopfactuur betrekking op heeft." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
-												<th class="col-md-4">Omschrijving</th>
-												<th class="col-md-1">&nbsp;</th>
-											</tr>
-										</thead>
-
-										<tbody>
-											@foreach (Purchase::where('project_id','=', $project->id)->get() as $purchase)
-											<tr data-id="{{ $purchase->id }}">
-												<td class="col-md-1">{{ date('d-m-Y', strtotime($purchase->register_date)) }}</td>
-												<td class="col-md-2">{{ $purchase->relation_id ? Relation::find($purchase->relation_id)->company_name : Wholesale::find($purchase->wholesale_id)->company_name }}</td>
-												<td class="col-md-1">{{ '&euro; '.number_format($purchase->amount, 2,",",".") }}</td>
-												<td class="col-md-2">{{ ucwords(PurchaseKind::find($purchase->kind_id)->kind_name) }}</td>
-												<td class="col-md-4">{{ $purchase->note }}</td>
-												<td class="col-md-1">@if (!$project->project_close)<button class="btn btn-danger btn-xs fa fa-times deleterowp"></button>@endif</td>
-											</tr>
-											@endforeach
-											@if (!$project->project_close)
-											<tr>
-												<td class="col-md-1">
-													<input type="date" name="date" id="date" class="form-control-sm-text"/>
-												</td>
-												<td class="col-md-2">
-													<select name="relation" id="relation" class="form-control-sm-text">
-													@foreach (Relation::where('user_id','=', Auth::id())->where('active',true)->get() as $relation)
-														<option value="rel-{{ $relation->id }}">{{ ucwords($relation->company_name) }}</option>
-													@endforeach
-													@foreach (Wholesale::where('user_id','=', Auth::id())->where('active',true)->get() as $wholesale)
-														<option value="whl-{{ $wholesale->id }}">{{ ucwords($wholesale->company_name) }}</option>
-													@endforeach
-													@foreach (Wholesale::whereNull('user_id')->get() as $wholesale)
-														<option value="whl-{{ $wholesale->id }}">{{ ucwords($wholesale->company_name) }}</option>
-													@endforeach
-													</select>
-												</td>
-												<td class="col-md-2"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
-												<td class="col-md-2">
-													<select name="typename" id="typename" class="form-control-sm-text">
-													@foreach (PurchaseKind::all() as $typename)
-														<option value="{{ $typename->id }}">{{ ucwords($typename->kind_name) }}</option>
-													@endforeach
-													</select>
-												</td>
-												<td class="col-md-4"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
-												<td class="col-md-1"><button id="addnewpurchase" class="btn btn-primary btn-xs"> Toevoegen</button></td>
-											</tr>
-											@endif
-										</tbody>
-									</table>
-								<!--</div>
-							</div>-->
-						</div>
 						<div id="communication" class="tab-pane">
 							<div class="form-group">
 								<div class="col-md-9">
@@ -810,7 +868,7 @@ $type = ProjectType::find($project->type_id);
 									</div>
 									<div class="row">
 											<div class="col-md-12">
-												<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+												<button class="btn btn-primary"><i class="fa fa-check"></i> Verzenden</button>
 											</div>
 										</div>
 									</form>
@@ -840,17 +898,22 @@ $type = ProjectType::find($project->type_id);
 										<label for="name">Plaats</label>
 										<span>{{ $relation->address_city }}</span>
 									</div>
+
+									<?php
+										$contact=Contact::where('relation_id',$relation->id)->first();
+									?>
 									<div class="row">
 										<label for="name">Contactpersoon</label>
-										<span>{{ $relation->address_city }}</span>
+										<span>{{ $contact->getFormalName() }}</span>
 									</div>
 									<div class="row">
 										<label for="name">Telefoon</label>
-										<span>{{ $relation->address_city }}</span>
-									</div>									
-								</div>
+										<span>{{ $contact->mobile }}</span>
+									</div>		
+								</div>									
 							</div>
 						</div>
+					</div>
 				</div>
 
 		</div>

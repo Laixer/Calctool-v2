@@ -42,16 +42,16 @@ if (!$project || !$project->isOwner())
 
 @section('content')
 <script type="text/javascript">
-Number.prototype.formatMoney = function(c, d, t){
-var n = this,
-    c = isNaN(c = Math.abs(c)) ? 2 : c,
-    d = d == undefined ? "." : d,
-    t = t == undefined ? "," : t,
-    s = n < 0 ? "-" : "",
-    i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
-    j = (j = i.length) > 3 ? j % 3 : 0;
-   return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
-};
+	Number.prototype.formatMoney = function(c, d, t){
+	var n = this,
+	    c = isNaN(c = Math.abs(c)) ? 2 : c,
+	    d = d == undefined ? "." : d,
+	    t = t == undefined ? "," : t,
+	    s = n < 0 ? "-" : "",
+	    i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+	    j = (j = i.length) > 3 ? j % 3 : 0;
+	   return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+	};
 	$(document).ready(function() {
 
         $("body").on("change", ".form-control-sm-number", function(){
@@ -926,7 +926,46 @@ var n = this,
                 ["para", ["ul", "ol", "paragraph"]],
                 ["media", ["link", "picture"]],
             ]
-        })
+        });
+
+		if (sessionStorage.introDemo) {
+			var demo = introJs().
+				setOption('nextLabel', 'Volgende').
+				setOption('prevLabel', 'Vorige').
+				setOption('skipLabel', 'Overslaan').
+				setOption('doneLabel', 'Klaar').
+				setOption('showBullets', false).
+				onexit(function(){
+					sessionStorage.removeItem('introDemo');
+				}).onbeforechange(function(){
+					sessionStorage.introDemo = this._currentStep;
+					/*if (this._currentStep == 12) {
+						$('#tab-summary').addClass('active');
+						$('#summary').addClass('active');
+
+						$('#tab-calculate').removeClass('active');
+						$('#calculate').removeClass('active');
+					}*/
+				}).onafterchange(function(){
+					var done = this._currentStep;
+					$('.introjs-skipbutton').click(function(){
+						if (done == 5) {
+							sessionStorage.introDemo = 999;
+							window.location.href = '/offerversions/project-{{ $project->id }}';
+						}
+					});
+				});
+
+			if (sessionStorage.introDemo == 999 || sessionStorage.introDemo == 0) {
+				sessionStorage.clear();
+				sessionStorage.introDemo = 0;
+				demo.start();
+			} else {
+				demo.goToStep(sessionStorage.introDemo).start();
+			}
+
+		}
+
 	});
 
 </script>
@@ -997,7 +1036,8 @@ var n = this,
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="demoModal" tabindex="-1" role="dialog" aria-labelledby="DemoModalLabel" aria-hidden="true">
+<!-- start demo filmpje -->
+<!-- <div class="modal fade" id="demoModal" tabindex="-1" role="dialog" aria-labelledby="DemoModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 			<div class="modal-body">
 			  <video id="calculatie_demo" class="video-js vjs-sublime-skin" controls preload="none" width="960" height="540" poster="/images/video_leader.png" data-setup="{}">
@@ -1005,16 +1045,19 @@ var n = this,
 			  </video>
 			</div>
 	</div>
-</div>
+</div> -->
+<!-- eind demo filmpje -->
 <div id="wrapper">
 
 	<section class="container fix-footer-bottom">
 
 		@include('calc.wizard', array('page' => 'calculation'))
 
-			<div class="pull-right">
+			<!-- start aanroepen demo filmpje -->
+			<!-- <div class="pull-right">
 				<h2><a href="javascript:void(0);" data-toggle="modal" data-target="#demoModal"><span class="glyphicon glyphicon-expand" aria-hidden="true"></span></a></h2>
-			</div>
+			</div> -->
+			<!-- eind aanroepen demo filmpje -->
 
 			<h2><strong>Calculeren</strong></h2>
 
@@ -1026,17 +1069,19 @@ var n = this,
 							<i class="fa fa-list"></i> Calculatie
 						</a>
 					</li>
+					@if ($project->use_estimate)
 					<li id="tab-estimate">
 						<a href="#estimate" data-toggle="tab">
 							<i class="fa fa-align-justify"></i> Stelposten
 						</a>
 					</li>
-					<li id="tab-summary">
+					@endif
+					<li data-step="13" data-intro="Stap 13: Bekijk na het invullen van al je onderdelen & werkzaamheden de uittrekstaat van al je werkzaamheden." id="tab-summary">
 						<a href="#summary" data-toggle="tab">
 							<i class="fa fa-sort-amount-asc"></i> Uittrekstaat Calculeren
 						</a>
 					</li>
-					<li id="tab-endresult">
+					<li data-step="14" data-intro="Stap 14: Bekijk het eindresultaat." id="tab-endresult">
 						<a href="#endresult" data-toggle="tab">
 							<i class="fa fa-check-circle-o"></i> Eindresultaat Calculeren
 						</a>
@@ -1047,7 +1092,7 @@ var n = this,
 					<div id="calculate" class="tab-pane">
 						<div class="toogle">
 							@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
-							<div id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
+							<div data-step="2" data-intro="Stap 2: Open het onderdeel." id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
 								<label>{{ $chapter->chapter_name }}</label>
 								<div class="toggle-content">
 
@@ -1062,9 +1107,9 @@ var n = this,
 												$profit_equip = $project->profit_calc_subcontr_equip;
 											}
 										?>
-										<div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
+										<div data-step="3" data-intro="Stap 3: Maak werkzaamheid aan." id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
 											<label>{{ $activity->activity_name }}</label>
-											<div class="toggle-content">
+											<div data-step="4" data-intro="Stap 4: Calculeer de werkzaaheid toe." class="toggle-content">
 												<div class="row">
 													<div class="col-md-5"></div>
 													<div class="col-md-4">
@@ -1076,13 +1121,15 @@ var n = this,
 														<button data-id="{{ $activity->id }}" class="btn btn-danger btn-xs deleteact">Verwijderen</button>
 													</div>
 												</div>
+
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>
-													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2">
 													@if ($project->tax_reverse)
-														<span>0%</span>
+													<div class="col-md-1 text-right label label-info"><strong>BTW 0%</strong></div>
+													<div class="col-md-2"></div>
 													@else
+													<div class="col-md-1 text-right"><strong>BTW</strong></div>	
+													<div class="col-md-2">
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-labor" id="type" class="form-control-sm-text pointer select-tax">
 															@foreach (Tax::all() as $tax)
 															<?php
@@ -1092,10 +1139,11 @@ var n = this,
 															<option value="{{ $tax->id }}" {{ ($activity->tax_labor_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
 															@endforeach
 														</select>
-													@endif
 													</div>
+													@endif
 													<div class="col-md-6"></div>
 												</div>
+
 												<table class="table table-striped" data-id="{{ $activity->id }}">
 													<thead>
 														<tr>
@@ -1124,11 +1172,12 @@ var n = this,
 
 												<div class="row">
 													<div class="col-md-2"><h4>Materiaal</h4></div>
-													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2">
 													@if ($project->tax_reverse)
-														<span>0%</span>
+													<div class="col-md-1 text-right label label-info"><strong>BTW 0%</strong></div>
+													<div class="col-md-2"></div>
 													@else
+													<div class="col-md-1 text-right"><strong>BTW</strong></div>	
+													<div class="col-md-2">
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-material" id="type" class="form-control-sm-text pointer select-tax">
 															@foreach (Tax::all() as $tax)
 															<?php
@@ -1138,9 +1187,9 @@ var n = this,
 															<option value="{{ $tax->id }}" {{ ($activity->tax_material_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
 															@endforeach
 														</select>
-													@endif
 													</div>
-													<div class="col-md-2"></div>
+													@endif
+													<div class="col-md-6"></div>
 												</div>
 
 												<table class="table table-striped" data-id="{{ $activity->id }}">
@@ -1196,14 +1245,15 @@ var n = this,
 														</tr>
 													</tbody>
 												</table>
-
+												
 												<div class="row">
-													<div class="col-md-2"><h4>Materieel</h4></div>
-													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2">
+													<div class="col-md-2"><h4>Overig</h4></div>
 													@if ($project->tax_reverse)
-														<span>0%</span>
+													<div class="col-md-1 text-right label label-info"><strong>BTW 0%</strong></div>
+													<div class="col-md-2"></div>
 													@else
+													<div class="col-md-1 text-right"><strong>BTW</strong></div>	
+													<div class="col-md-2">
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-equipment" id="type" class="form-control-sm-text pointer select-tax">
 															@foreach (Tax::all() as $tax)
 															<?php
@@ -1213,13 +1263,12 @@ var n = this,
 															<option value="{{ $tax->id }}" {{ ($activity->tax_equipment_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
 															@endforeach
 														</select>
-													@endif
 													</div>
-													<div class="col-md-8"></div>
+													@endif
+													<div class="col-md-6"></div>
 												</div>
 
 												<table class="table table-striped" data-id="{{ $activity->id }}">
-
 													<thead>
 														<tr>
 															<th class="col-md-5">Omschrijving</th>
@@ -1291,7 +1340,7 @@ var n = this,
 											</div>
 										</div>
 										<div class="col-md-6 text-right">
-											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Hoofdstuk verwijderen</button>
+											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Onderdeel verwijderen</button>
 										</div>
 									</div>
 									</form>
@@ -1302,10 +1351,11 @@ var n = this,
 
 						<form method="POST" action="/calculation/newchapter/{{ $project->id }}" accept-charset="UTF-8">
                             {!! csrf_field() !!}
+						<div><hr></div>
 						<div class="row">
 							<div class="col-md-6">
-								<div class="input-group">
-									<input type="text" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw Hoofdstuk">
+								<div class="input-group" data-step="1" data-intro="Stap 1: Voeg een onderdeel toe. Een soort hoofdstuk waar je werkzaamheden onder vallen.">
+									<input type="text" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw onderdeel">
 									<span class="input-group-btn">
 										<button class="btn btn-primary btn-primary-chapter">Voeg toe</button>
 									</span>
@@ -1315,6 +1365,7 @@ var n = this,
 						</form>
 					</div>
 
+					@if ($project->use_estimate)
 					<div id="estimate" class="tab-pane">
 						<div class="toogle">
 
@@ -1347,7 +1398,7 @@ var n = this,
 		    											<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soorte{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming
 		    											</label>
 		    										</div>
-													<div class="col-md-3 text-right">
+		    										<div class="col-md-3 text-right">
 														<button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving
 														</button>
 
@@ -1357,11 +1408,12 @@ var n = this,
 
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>
-													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2">
 													@if ($project->tax_reverse)
-														<span>0%</span>
+													<div class="col-md-1 text-right label label-info"><strong>BTW 0%</strong></div>
+													<div class="col-md-2"></div>
 													@else
+													<div class="col-md-1 text-right"><strong>BTW</strong></div>	
+													<div class="col-md-2">
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-labor" id="type" class="form-control-sm-text pointer select-estim-tax">
 															@foreach (Tax::all() as $tax)
 															<?php
@@ -1371,10 +1423,11 @@ var n = this,
 															<option value="{{ $tax->id }}" {{ ($activity->tax_labor_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
 															@endforeach
 														</select>
-													@endif
 													</div>
+													@endif
 													<div class="col-md-6"></div>
 												</div>
+
 												<table class="table table-striped" data-id="{{ $activity->id }}">
 
 													<thead>
@@ -1405,11 +1458,12 @@ var n = this,
 
 												<div class="row">
 													<div class="col-md-2"><h4>Materiaal</h4></div>
-													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2">
 													@if ($project->tax_reverse)
-														<span>0%</span>
+													<div class="col-md-1 text-right label label-info"><strong>BTW 0%</strong></div>
+													<div class="col-md-2"></div>
 													@else
+													<div class="col-md-1 text-right"><strong>BTW</strong></div>	
+													<div class="col-md-2">
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-material" id="type" class="form-control-sm-text pointer select-estim-tax">
 														@foreach (Tax::all() as $tax)
 															<?php
@@ -1419,9 +1473,9 @@ var n = this,
 															<option value="{{ $tax->id }}" {{ ($activity->tax_material_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
 														@endforeach
 														</select>
-													@endif
 													</div>
-													<div class="col-md-2"></div>
+													@endif
+													<div class="col-md-6"></div>
 												</div>
 
 												<table class="table table-striped" data-id="{{ $activity->id }}">
@@ -1480,12 +1534,13 @@ var n = this,
 												</table>
 
 												<div class="row">
-													<div class="col-md-2"><h4>Materieel</h4></div>
-													<div class="col-md-1 text-right"><strong>BTW</strong></div>
-													<div class="col-md-2">
+													<div class="col-md-2"><h4>Overig</h4></div>
 													@if ($project->tax_reverse)
-														<span>0%</span>
+													<div class="col-md-1 text-right label label-info"><strong>BTW 0%</strong></div>
+													<div class="col-md-2"></div>
 													@else
+													<div class="col-md-1 text-right"><strong>BTW</strong></div>	
+													<div class="col-md-2">
 														<select name="btw" data-id="{{ $activity->id }}" data-type="calc-equipment" id="type" class="form-control-sm-text pointer select-estim-tax">
 														@foreach (Tax::all() as $tax)
 															<?php
@@ -1495,9 +1550,9 @@ var n = this,
 															<option value="{{ $tax->id }}" {{ ($activity->tax_equipment_id==$tax->id ? 'selected="selected"' : '') }}>{{ $tax->tax_rate }}%</option>
 														@endforeach
 														</select>
-													@endif
 													</div>
-													<div class="col-md-8"></div>
+													@endif
+													<div class="col-md-6"></div>
 												</div>
 
 												<table class="table table-striped" data-id="{{ $activity->id }}">
@@ -1571,7 +1626,7 @@ var n = this,
 											</div>
 										</div>
 										<div class="col-md-6 text-right">
-											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Hoofdstuk verwijderen</button>
+											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Onderdeel verwijderen</button>
 										</div>
 									</div>
 									</form>
@@ -1581,19 +1636,21 @@ var n = this,
 						</div>
 
 						<form method="POST" action="/calculation/newchapter/{{ $project->id }}" accept-charset="UTF-8">
-                           {!! csrf_field() !!}
-						<div class="row">
-							<div class="col-md-6">
-								<div class="input-group">
-									<input type="text" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw Hoofdstuk">
-									<span class="input-group-btn">
-										<button class="btn btn-primary btn-primary-chapter">Voeg toe</button>
-									</span>
+						{!! csrf_field() !!}
+							<div><hr></div>
+							<div class="row">
+								<div class="col-md-6">
+									<div class="input-group">
+										<input type="text" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw Onderdeel">
+										<span class="input-group-btn">
+											<button class="btn btn-primary btn-primary-chapter">Voeg toe</button>
+										</span>
+									</div>
 								</div>
 							</div>
-						</div>
 						</form>
 					</div>
+					@endif
 
 					<div id="summary" class="tab-pane">
 						<div class="row text-center">

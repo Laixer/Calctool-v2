@@ -107,7 +107,7 @@ class UserController extends Controller {
 		}
 
 		$mollie = new \Mollie_API_Client;
-		$mollie->setApiKey(env('MOLLIE_API'));
+		$mollie->setApiKey(config('services.mollie.key'));
 
 		$token = sha1(mt_rand().time());
 
@@ -152,7 +152,7 @@ class UserController extends Controller {
 		}
 
 		$mollie = new \Mollie_API_Client;
-		$mollie->setApiKey(env('MOLLIE_API'));
+		$mollie->setApiKey(config('services.mollie.key'));
 
 		$payment = $mollie->payments->get($order->transaction);
 		if ($payment->metadata->token != $order->token)
@@ -219,7 +219,7 @@ class UserController extends Controller {
 		}
 
 		$mollie = new \Mollie_API_Client;
-		$mollie->setApiKey(env('MOLLIE_API'));
+		$mollie->setApiKey(config('services.mollie.key'));
 
 		$payment = $mollie->payments->get($order->transaction);
 		if ($payment->isPaid()) {
@@ -244,7 +244,7 @@ class UserController extends Controller {
 	public function doUpdateSecurity(Request $request)
 	{
 		$this->validate($request, [
-			'curr_secret' => array('required'),
+			'curr_secret' => array('required','bail'),
 			'secret' => array('confirmed','min:5'),
 			'secret_confirmation' => array('min:5'),
 		]);
@@ -320,7 +320,7 @@ class UserController extends Controller {
 	public function doMyAccountUser(Request $request)
 	{
 		$this->validate($request, [
-			// 'firstname' => array('required','max:30'),
+			'firstname' => array('max:30'),
 			'mobile' => array('numeric','max:14'),
 			'phone' => array('numeric','max:14'),
 			'email' => array('required','email','max:80'),
@@ -551,5 +551,11 @@ class UserController extends Controller {
 		Redis::expire('promo:'.Auth::user()->username, 600);
 
 		return response()->json(['success' => 1, 'amount' => $promo->amount, 'famount' => number_format($promo->amount, 0,",",".")]);
+	}
+
+	public function doLoadDemoProject() {
+		\DemoProjectTemplate::setup(Auth::id());
+
+		return back()->with('success', 'Demoproject geladen');
 	}
 }

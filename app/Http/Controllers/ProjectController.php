@@ -11,8 +11,20 @@ use \Calctool\Models\ProjectType;
 use \Calctool\Models\Resource;
 use \Calctool\Models\Relation;
 use \Calctool\Models\Contact;
+use \Calctool\Models\Chapter;
+use \Calctool\Models\Activity;
 use \Calctool\Models\ProjectShare;
 use \Calctool\Http\Controllers\InvoiceController;
+
+use \Calctool\Models\EstimateLabor;
+use \Calctool\Models\EstimateMaterial;
+use \Calctool\Models\EstimateEquipment;
+use \Calctool\Models\MoreLabor;
+use \Calctool\Models\MoreMaterial;
+use \Calctool\Models\MoreEquipment;
+use \Calctool\Models\CalculationLabor;
+use \Calctool\Models\CalculationMaterial;
+use \Calctool\Models\CalculationEquipment;
 
 use \Auth;
 
@@ -50,21 +62,11 @@ class ProjectController extends Controller {
 			'street' => array('required','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
-			'city' => array('required','alpha_num','max:35'),
+			'city' => array('required','max:35'),
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric'),
 			'contractor' => array('required','numeric'),
-			'type' => array('required'),
-			'hour_rate' => array('required','regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
-			'more_hour_rate' => array('required','regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
-			'profit_material_1' => array('required','numeric','between:0,200'),
-			'profit_equipment_1' => array('required','numeric','between:0,200'),
-			'profit_material_2' => array('required','numeric','between:0,200'),
-			'profit_equipment_2' => array('required','numeric','between:0,200'),
-			'more_profit_material_1' => array('required','numeric','between:0,200'),
-			'more_profit_equipment_1' => array('required','numeric','between:0,200'),
-			'more_profit_material_2' => array('required','numeric','between:0,200'),
-			'more_profit_equipment_2' => array('required','numeric','between:0,200')
+			// 'type' => array('required'),
 		]);
 
 		$hour_rate = str_replace(',', '.', str_replace('.', '', $request->input('hour_rate')));
@@ -88,16 +90,16 @@ class ProjectController extends Controller {
 		$project->address_postal = $request->input('zipcode');
 		$project->address_city = $request->input('city');
 		$project->note = $request->input('note');
-		$project->hour_rate = $hour_rate;
-		$project->hour_rate_more = $hour_rate_more;
-		$project->profit_calc_contr_mat = $request->input('profit_material_1');
-		$project->profit_calc_contr_equip = $request->input('profit_equipment_1');
-		$project->profit_calc_subcontr_mat = $request->input('profit_material_2');
-		$project->profit_calc_subcontr_equip = $request->input('profit_equipment_2');
-		$project->profit_more_contr_mat = $request->input('more_profit_material_1');
-		$project->profit_more_contr_equip = $request->input('more_profit_equipment_1');
-		$project->profit_more_subcontr_mat = $request->input('more_profit_material_2');
-		$project->profit_more_subcontr_equip = $request->input('more_profit_equipment_2');
+		$project->hour_rate = $hour_rate || 0;
+		$project->hour_rate_more = $hour_rate_more || 0;
+		$project->profit_calc_contr_mat = $request->input('profit_material_1') || 0;
+		$project->profit_calc_contr_equip = $request->input('profit_equipment_1') || 0;
+		$project->profit_calc_subcontr_mat = $request->input('profit_material_2') || 0;
+		$project->profit_calc_subcontr_equip = $request->input('profit_equipment_2') || 0;
+		$project->profit_more_contr_mat = $request->input('more_profit_material_1') || 0;
+		$project->profit_more_contr_equip = $request->input('more_profit_equipment_1') || 0;
+		$project->profit_more_subcontr_mat = $request->input('more_profit_material_2') || 0;
+		$project->profit_more_subcontr_equip = $request->input('more_profit_equipment_2') || 0;
 		$project->user_id = Auth::id();
 		$project->province_id = $request->input('province');
 		$project->country_id = $request->input('country');
@@ -108,6 +110,25 @@ class ProjectController extends Controller {
 			$project->tax_reverse = true;
 		else
 			$project->tax_reverse = false;
+
+		if ($request->input('use_estimate'))
+			$project->use_estimate = true;
+		else
+			$project->use_estimate = false;
+
+		if ($request->input('use_more'))
+			$project->use_more = true;
+		else
+			$project->use_more = false;
+
+		if ($request->input('use_less'))
+			$project->use_less = true;
+		else
+			$project->use_less = false;
+
+		if (!$request->input('type')) {
+			$project->type_id = 2;
+		}
 
 		$project->save();
 
@@ -160,10 +181,10 @@ class ProjectController extends Controller {
 		$this->validate($request, [
 			'id' => array('required','integer'),
 			'name' => array('required','max:50'),
-			'street' => array('required','alpha_num','max:60'),
+			'street' => array('required','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
-			'city' => array('required','alpha_num','max:35'),
+			'city' => array('required','max:35'),
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric'),
 		]);
@@ -263,7 +284,98 @@ class ProjectController extends Controller {
 
 		$project->save();
 
-		return back()->with('success', 'Winstpercentages aangepast');
+		return back()->with('success', 'Uurtarief & winstpercentages aangepast');
+	}
+
+	public function doUpdateAdvanced(Request $request)
+	{
+		$project = Project::find($request->input('id'));
+		if (!$project || !$project->isOwner()) {
+			return back()->withInput($request->all());
+		}
+
+		$invoice_end = null;
+		$offer_last = Offer::where('project_id',$project->id)->first();
+		if ($offer_last){
+			$invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose',true)->first();
+		}
+								
+		$estim_total = 0;
+		$more_total = 0;
+		$less_total = 0;
+		$disable_estim = false;
+		$disable_more = false;
+		$disable_less = false;
+		
+		foreach(Chapter::where('project_id','=', $project->id)->get() as $chap) {
+			foreach(Activity::where('chapter_id','=', $chap->id)->get() as $activity) {
+				$estim_total += EstimateLabor::where('activity_id','=', $activity->id)->count('id');
+				$estim_total += EstimateMaterial::where('activity_id','=', $activity->id)->count('id');
+				$estim_total += EstimateEquipment::where('activity_id','=', $activity->id)->count('id');
+
+				$more_total += MoreLabor::where('activity_id','=', $activity->id)->count('id');
+				$more_total += MoreMaterial::where('activity_id','=', $activity->id)->count('id');
+				$more_total += MoreEquipment::where('activity_id','=', $activity->id)->count('id');	
+
+				$less_total += CalculationLabor::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
+				$less_total += CalculationMaterial::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
+				$less_total += CalculationEquipment::where('activity_id','=', $activity->id)->where('isless',true)->count('id');	
+			}
+		}
+
+		//
+		if ($offer_last) {
+			$disable_estim = true;
+		}
+		if ($estim_total>0) {
+			$disable_estim = true;
+		}
+
+		//
+		if ($invoice_end && $invoice_end->invoice_close) {
+			$disable_more = true;
+		}
+		if ($more_total>0) {
+			$disable_more = true;
+		}
+
+		//
+		if ($invoice_end && $invoice_end->invoice_close) {
+			$disable_less = true;
+		}
+		if ($less_total>0) {
+			$disable_less = true;
+		}
+
+		if (!$disable_estim) {
+			if ($request->input('use_estimate'))
+				$project->use_estimate = true;
+			else
+				$project->use_estimate = false;
+		}
+
+		if (!$disable_more) {
+			if ($request->input('use_more'))
+				$project->use_more = true;
+			else
+				$project->use_more = false;
+		}
+
+		if (!$disable_less) {
+			if ($request->input('use_less'))
+				$project->use_less = true;
+			else
+				$project->use_less = false;
+		}
+
+		if ($request->input('mail_reminder'))
+			$project->pref_email_reminder = true;
+		else
+			$project->pref_email_reminder = false;
+
+		$project->save();
+
+		return back()->with('success', 'Geavanceerde opties opgeslagen');
 	}
 
 	public function doUpdateWorkExecution(Request $request)

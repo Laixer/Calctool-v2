@@ -8,7 +8,8 @@
     "font-awesome": "fontawesome#^4.5.0",
     "bootstrap-editable": "*",
     "x-editable": "^1.5.1",
-    "clippyjs": "*"
+    "clippyjs": "*",
+    "intro.js": "intro-js#^2.1.0"
   },
   "private": true
 }

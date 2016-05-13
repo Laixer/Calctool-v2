@@ -110,7 +110,7 @@ if ($cnt>1)
     <?#--TOTAL START--?>
 
     <h1 class="name">Specificatie factuur</h1>
-    @if($type->type_name == 'blanco offerte & factuur')
+    @if($type->type_name == 'snelle offerte en factuur')
     <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
@@ -213,7 +213,7 @@ if ($cnt>1)
 
         @if (!$project->tax_reverse)
         <tr style="page-break-after: always;">
-          <td class="qty">Materieelkosten</td>
+          <td class="qty">Overige kosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax1Amount($project)+EstimateEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax1Amount($project)+MoreEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax1Amount($project)+LessEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -232,7 +232,7 @@ if ($cnt>1)
         </tr>
         @else
         <tr style="page-break-after: always;">
-          <td class="qty">Materieelkosten</td>
+          <td class="qty">Overige kosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax3Amount($project)+EstimateEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax3Amount($project)+MoreEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax3Amount($project)+LessEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -549,7 +549,7 @@ if ($cnt>1)
 
         @if (!$project->tax_reverse)
         <tr style="page-break-after: always;">
-          <td class="qty">Materieelkosten</td>
+          <td class="qty">Overige kosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -568,7 +568,7 @@ if ($cnt>1)
         </tr>
         @else
         <tr style="page-break-after: always;">
-          <td class="qty">Materieelkosten</td>
+          <td class="qty">Overige kosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -666,7 +666,7 @@ if ($cnt>1)
 
         @if (!$project->tax_reverse)
         <tr style="page-break-after: always;">
-          <td class="qty">Materieelkosten</td>
+          <td class="qty">Overige kosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -685,7 +685,7 @@ if ($cnt>1)
         </tr>
         @else
         <tr style="page-break-after: always;">
-          <td class="qty">Materieelkosten</td>
+          <td class="qty">Overige kosten</td>
           <td class="qty">{{ '&euro; '.number_format(EstimateEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
           <td class="qty">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
@@ -954,12 +954,12 @@ if ($cnt>1)
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-        <th class="no">Hoofdstuk</th>
+        <th class="no">Onderdeel</th>
         <th class="desc">Werkzaamheid</th>
         <th class="no">Arbeidsuren</th>
         <th class="desc">Arbeid</th>
         <th class="unit">Materiaal</th>
-        <th class="qty">Materieel</th>
+        <th class="qty">Overig</th>
         <th class="qty">total</th>
       </tr>
     </thead>
@@ -1002,7 +1002,7 @@ if ($cnt>1)
         <th class="qty">Arbeidsuren</th>
         <th class="qty">Arbeid</th>
         <th class="qty">Materiaal</th>
-        <th class="qty">Materieel</th>
+        <th class="qty">Overig</th>
         <th class="qty">total</th>
       </tr>
     </thead>
@@ -1037,12 +1037,12 @@ if ($cnt>1)
    <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-        <th class="qty">Hoofdstuk</th>
+        <th class="qty">Onderdeel</th>
         <th class="qty">Werkzaamheid</th>
         <th class="qty">Arbeidsuren</th>
         <th class="qty">Arbeid</th>
         <th class="qty">Materiaal</th>
-        <th class="qty">Materieel</th>
+        <th class="qty">Overig</th>
         <th class="qty">total</th>
       </tr>
     </thead>
@@ -1092,7 +1092,7 @@ if ($cnt>1)
           <th class="qty">Arbeidsuren</th>
           <th class="qty">Arbeid</th>
           <th class="qty">Materiaal</th>
-          <th class="qty">Materieel</th>
+          <th class="qty">Overig</th>
           <th class="qty">total</th>
         </tr>
       </thead>
@@ -1127,12 +1127,12 @@ if ($cnt>1)
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-        <th class="no">Hoofdstuk</th>
+        <th class="no">Onderdeel</th>
         <th class="desc">Werkzaamheid</th>
         <th class="no">Arbeidsuren</th>
         <th class="desc">Arbeid</th>
         <th class="unit">Materiaal</th>
-        <th class="qty">Materieel</th>
+        <th class="qty">Overig</th>
         <th class="qty">total</th>
       </tr>
     </thead>
@@ -1182,7 +1182,7 @@ if ($cnt>1)
           <th class="no">Arbeidsuren</th>
           <th class="desc">Arbeid</th>
           <th class="unit">Materiaal</th>
-          <th class="qty">Materieel</th>
+          <th class="qty">Overig</th>
           <th class="qty">total</th>
         </tr>
       </thead>
@@ -1217,12 +1217,12 @@ if ($cnt>1)
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-        <th class="no">Hoofdstuk</th>
+        <th class="no">Onderdeel</th>
         <th class="desc">Werkzaamheid</th>
         <th class="no">Arbeidsuren</th>
         <th class="desc">Arbeid</th>
         <th class="unit">Materiaal</th>
-        <th class="qty">Materieel</th>
+        <th class="qty">Overig</th>
         <th class="qty">Totaal</th>
       </tr>
     </thead>
@@ -1264,7 +1264,7 @@ if ($cnt>1)
           <th class="no">Arbeidsuren</th>
           <th class="desc">Arbeid</th>
           <th class="unit">Materiaal</th>
-          <th class="qty">Materieel</th>
+          <th class="qty">Overig</th>
           <th class="qty">total</th>
         </tr>
       </thead>
@@ -1304,12 +1304,12 @@ if ($cnt>1)
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-          <th style="width: 181px" class="qty">Hoofdstuk</th>
+          <th style="width: 181px" class="qty">Onderdeel</th>
           <th style="width: 170px" class="qty">Werkzaamheid</th>
           <th style="width: 40px" class="qty">@if (!$onlyactivity) Arbeidsuren @endif</th>
           <th style="width: 51px" class="qty">@if (!$onlyactivity) Arbeid @endif</th>
           <th style="width: 51px" class="qty">@if (!$onlyactivity) Materiaal @endif</th>
-          <th style="width: 51px" class="qty">@if (!$onlyactivity) Materieel @endif</th>
+          <th style="width: 51px" class="qty">@if (!$onlyactivity) Overig @endif</th>
           <th style="width: 51px" class="qty">Totaal</th>
       </tr>
     </thead>
@@ -1341,12 +1341,12 @@ if ($cnt>1)
    <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
-          <th style="width: 181px" class="qty">Hoofdstuk</th>
+          <th style="width: 181px" class="qty">Onderdeel</th>
           <th style="width: 170px" class="qty">Werkzaamheid</th>
           <th style="width: 40px" class="qty">@if (!$onlyactivity) Arbeidsuren @endif</th>
           <th style="width: 51px" class="qty">@if (!$onlyactivity) Arbeid @endif</th>
           <th style="width: 51px" class="qty">@if (!$onlyactivity) Materiaal @endif</th>
-          <th style="width: 51px" class="qty">@if (!$onlyactivity) Materieel @endif</th>
+          <th style="width: 51px" class="qty">@if (!$onlyactivity) Overig @endif</th>
           <th style="width: 51px" class="qty">Totaal</th>
         </tr>
       </thead>
@@ -1384,7 +1384,7 @@ if ($cnt>1)
           <th style="width: 40px" class="qty">@if (!$onlyactivity) Arbeidsuren @endif</th>
           <th style="width: 51px" class="qty">@if (!$onlyactivity) Arbeid @endif</th>
           <th style="width: 51px" class="qty">@if (!$onlyactivity) Materiaal @endif</th>
-          <th style="width: 51px" class="qty">@if (!$onlyactivity) Materieel @endif</th>
+          <th style="width: 51px" class="qty">@if (!$onlyactivity) Overig @endif</th>
           <th style="width: 51px" class="qty">Totaal</th>
         </tr>
       </thead>
@@ -1421,12 +1421,12 @@ if ($cnt>1)
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
-          <th class="no">Hoofdstuk</th>
+          <th class="no">Onderdeel</th>
           <th class="desc">Werkzaamheid</th>
           <th class="no">Arbeidsuren</th>
           <th class="desc">Arbeid</th>
           <th class="unit">Materiaal</th>
-          <th class="qty">Materieel</th>
+          <th class="qty">Overig</th>
           <th class="qty">total</th>
         </tr>
       </thead>
@@ -1463,12 +1463,12 @@ if ($cnt>1)
    <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
-          <th class="no">Hoofdstuk</th>
+          <th class="no">Onderdeel</th>
           <th class="desc">Werkzaamheid</th>
           <th class="no">Arbeidsuren</th>
           <th class="desc">Arbeid</th>
           <th class="unit">Materiaal</th>
-          <th class="qty">Materieel</th>
+          <th class="qty">Overig</th>
           <th class="qty">total</th>
         </tr>
       </thead>
@@ -1509,7 +1509,7 @@ if ($cnt>1)
           <th class="no">Arbeidsuren</th>
           <th class="desc">Arbeid</th>
           <th class="unit">Materiaal</th>
-          <th class="qty">Materieel</th>
+          <th class="qty">Overig</th>
           <th class="qty">total</th>
         </tr>
       </thead>
@@ -1546,12 +1546,12 @@ if ($cnt>1)
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
-          <th class="no">Hoofdstuk</th>
+          <th class="no">Onderdeel</th>
           <th class="desc">Werkzaamheid</th>
           <th class="no">Arbeidsuren</th>
           <th class="desc">Arbeid</th>
           <th class="unit">Materiaal</th>
-          <th class="qty">Materieel</th>
+          <th class="qty">Overig</th>
           <th class="qty">total</th>
         </tr>
       </thead>
@@ -1588,12 +1588,12 @@ if ($cnt>1)
    <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
-          <th class="no">Hoofdstuk</th>
+          <th class="no">Onderdeel</th>
           <th class="desc">Werkzaamheid</th>
           <th class="no">Arbeidsuren</th>
           <th class="desc">Arbeid</th>
           <th class="unit">Materiaal</th>
-          <th class="qty">Materieel</th>
+          <th class="qty">Overig</th>
           <th class="qty">total</th>
         </tr>
       </thead>
@@ -1634,7 +1634,7 @@ if ($cnt>1)
           <th class="no">Arbeidsuren</th>
           <th class="desc">Arbeid</th>
           <th class="unit">Materiaal</th>
-          <th class="qty">Materieel</th>
+          <th class="qty">Overig</th>
           <th class="qty">total</th>
         </tr>
       </thead>
@@ -1671,12 +1671,12 @@ if ($cnt>1)
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
-          <th class="no">Hoofdstuk</th>
+          <th class="no">Onderdeel</th>
           <th class="desc">Werkzaamheid</th>
           <th class="no">Arbeidsuren</th>
           <th class="desc">Arbeid</th>
           <th class="unit">Materiaal</th>
-          <th class="qty">Materieel</th>
+          <th class="qty">Overig</th>
           <th class="qty">total</th>
         </tr>
       </thead>
@@ -1709,12 +1709,12 @@ if ($cnt>1)
    <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
-          <th class="no">Hoofdstuk</th>
+          <th class="no">Onderdeel</th>
           <th class="desc">Werkzaamheid</th>
           <th class="no">Arbeidsuren</th>
           <th class="desc">Arbeid</th>
           <th class="unit">Materiaal</th>
-          <th class="qty">Materieel</th>
+          <th class="qty">Overig</th>
           <th class="qty">total</th>
         </tr>
       </thead>
@@ -1751,7 +1751,7 @@ if ($cnt>1)
           <th class="no">Arbeidsuren</th>
           <th class="desc">Arbeid</th>
           <th class="unit">Materiaal</th>
-          <th class="qty">Materieel</th>
+          <th class="qty">Overig</th>
           <th class="qty">total</th>
         </tr>
       </thead>
@@ -1795,7 +1795,7 @@ if ($cnt>1)
     <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-        <th class="no">Hoofdstuk</th>
+        <th class="no">Onderdeel</th>
         <th class="desc">Werkzaamheid</th>
         <th class="no">Omschrijving</th>
       </tr>
@@ -1837,7 +1837,7 @@ if ($cnt>1)
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-        <th class="no">Hoofdstuk</th>
+        <th class="no">Onderdeel</th>
         <th class="desc">Werkzaamheid</th>
         <th class="no">Omschrijving</th>
       </tr>
@@ -1859,7 +1859,7 @@ if ($cnt>1)
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-        <th class="no">Hoofdstuk</th>
+        <th class="no">Onderdeel</th>
         <th class="desc">Werkzaamheid</th>
         <th class="no">Omschrijving</th>
       </tr>

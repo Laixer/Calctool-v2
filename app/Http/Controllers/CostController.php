@@ -18,6 +18,7 @@ use \Calctool\Models\TimesheetKind;
 use \Calctool\Models\EstimateLabor;
 use \Calctool\Models\Wholesale;
 use \Calctool\Models\MoreLabor;
+use \Calctool\Models\ProjectType;
 
 class CostController extends Controller {
 
