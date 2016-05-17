@@ -321,8 +321,6 @@ class UserController extends Controller {
 	{
 		$this->validate($request, [
 			'firstname' => array('max:30'),
-			'mobile' => array('numeric','max:14'),
-			'phone' => array('numeric','max:14'),
 			'email' => array('required','email','max:80'),
 			'website' => array('url','max:180'),
 		]);
