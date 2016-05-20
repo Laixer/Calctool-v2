@@ -320,335 +320,6 @@ var n = this,
 				});
 			}
 		});
-		// $("body").on("blur", ".dsave", function(){
-		// 	var flag = true;
-		// 	var $curThis = $(this);
-		// 	if($curThis.closest("tr").attr("data-id"))
-		// 		return false;
-		// 	$curThis.closest("tr").find("input").each(function(){
-		// 		if(!$(this).val())
-		// 			flag = false;
-		// 	});
-		// 	if(flag){
-		// 		$.post("/calculation/calc/newmaterial", {
-		// 			name: $curThis.closest("tr").find("input[name='name']").val(),
-		// 			unit: $curThis.closest("tr").find("input[name='unit']").val(),
-		// 			rate: $curThis.closest("tr").find("input[name='rate']").val(),
-		// 			amount: $curThis.closest("tr").find("input[name='amount']").val(),
-		// 			activity: $curThis.closest("table").attr("data-id"),
-		// 			project: {{ $project->id }},
-		// 		}, function(data){
-		// 			var json = $.parseJSON(data);
-		// 			$curThis.closest("tr").find("input").removeClass("error-input");
-		// 			if (json.success) {
-		// 				$curThis.closest("tr").attr("data-id", json.id);
-		// 				var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
-		// 				var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-		// 				var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
-		// 				$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-		// 				$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
-		// 			} else {
-		// 				$.each(json.message, function(i, item) {
-		// 					if(json.message['name'])
-		// 						$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-		// 					if(json.message['unit'])
-		// 						$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-		// 					if(json.message['rate'])
-		// 						$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-		// 					if(json.message['amount'])
-		// 						$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-		// 				});
-		// 			}
-		// 		}).fail(function(e){
-		// 			console.log(e);
-		// 		});
-		// 	}
-		// });
-		// $("body").on("blur", ".esave", function(){
-		// 	var flag = true;
-		// 	var $curThis = $(this);
-		// 	if($curThis.closest("tr").attr("data-id"))
-		// 		return false;
-		// 	$curThis.closest("tr").find("input").each(function(){
-		// 		if(!$(this).val())
-		// 			flag = false;
-		// 	});
-		// 	if(flag){
-		// 		$.post("/calculation/calc/newequipment", {
-		// 			name: $curThis.closest("tr").find("input[name='name']").val(),
-		// 			unit: $curThis.closest("tr").find("input[name='unit']").val(),
-		// 			rate: $curThis.closest("tr").find("input[name='rate']").val(),
-		// 			amount: $curThis.closest("tr").find("input[name='amount']").val(),
-		// 			activity: $curThis.closest("table").attr("data-id"),
-		// 			project: {{ $project->id }},
-		// 		}, function(data){
-		// 			var json = $.parseJSON(data);
-		// 			$curThis.closest("tr").find("input").removeClass("error-input");
-		// 			if (json.success) {
-		// 				$curThis.closest("tr").attr("data-id", json.id);
-		// 				var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
-		// 				var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-		// 				var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
-		// 				$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-		// 				$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
-		// 			} else {
-		// 				$.each(json.message, function(i, item) {
-		// 					if(json.message['name'])
-		// 						$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-		// 					if(json.message['unit'])
-		// 						$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-		// 					if(json.message['rate'])
-		// 						$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-		// 					if(json.message['amount'])
-		// 						$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-		// 				});
-		// 			}
-		// 		}).fail(function(e){
-		// 			console.log(e);
-		// 		});
-		// 	}
-		// });
-		// $("body").on("change", ".dsavee", function(){
-		// 	var $curThis = $(this);
-		// 	if($curThis.closest("tr").attr("data-id")){
-		// 		$.post("/calculation/estim/updatematerial", {
-		// 			id: $curThis.closest("tr").attr("data-id"),
-		// 			name: $curThis.closest("tr").find("input[name='name']").val(),
-		// 			unit: $curThis.closest("tr").find("input[name='unit']").val(),
-		// 			rate: $curThis.closest("tr").find("input[name='rate']").val(),
-		// 			amount: $curThis.closest("tr").find("input[name='amount']").val(),
-		// 			project: {{ $project->id }},
-		// 		}, function(data){
-		// 			var json = $.parseJSON(data);
-		// 			$curThis.closest("tr").find("input").removeClass("error-input");
-		// 			if (json.success) {
-		// 				$curThis.closest("tr").attr("data-id", json.id);
-		// 				var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
-		// 				var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-		// 				var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
-		// 				$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-		// 				$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
-		// 			} else {
-		// 				$.each(json.message, function(i, item) {
-		// 					if(json.message['name'])
-		// 						$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-		// 					if(json.message['unit'])
-		// 						$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-		// 					if(json.message['rate'])
-		// 						$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-		// 					if(json.message['amount'])
-		// 						$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-		// 				});
-		// 			}
-		// 		}).fail(function(e){
-		// 			console.log(e);
-		// 		});
-		// 	}
-		// });
-		// $("body").on("change", ".esavee", function(){
-		// 	var $curThis = $(this);
-		// 	if($curThis.closest("tr").attr("data-id")){
-		// 		$.post("/calculation/estim/updateequipment", {
-		// 			id: $curThis.closest("tr").attr("data-id"),
-		// 			name: $curThis.closest("tr").find("input[name='name']").val(),
-		// 			unit: $curThis.closest("tr").find("input[name='unit']").val(),
-		// 			rate: $curThis.closest("tr").find("input[name='rate']").val(),
-		// 			amount: $curThis.closest("tr").find("input[name='amount']").val(),
-		// 			project: {{ $project->id }},
-		// 		}, function(data){
-		// 			var json = $.parseJSON(data);
-		// 			$curThis.closest("tr").find("input").removeClass("error-input");
-		// 			if (json.success) {
-		// 				$curThis.closest("tr").attr("data-id", json.id);
-		// 				var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
-		// 				var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-		// 				var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
-		// 				$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-		// 				$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
-		// 			} else {
-		// 				$.each(json.message, function(i, item) {
-		// 					if(json.message['name'])
-		// 						$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-		// 					if(json.message['unit'])
-		// 						$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-		// 					if(json.message['rate'])
-		// 						$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-		// 					if(json.message['amount'])
-		// 						$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-		// 				});
-		// 			}
-		// 		}).fail(function(e){
-		// 			console.log(e);
-		// 		});
-		// 	}
-		// });
-		// $("body").on("change", ".lsavee", function(){
-		// 	var $curThis = $(this);
-		// 	if($curThis.closest("tr").attr("data-id")){
-		// 		$.post("/calculation/estim/updatelabor", {
-		// 			id: $curThis.closest("tr").attr("data-id"),
-		// 			rate: $curThis.closest("tr").find("input[name='rate']").val(),
-		// 			amount: $curThis.closest("tr").find("input[name='amount']").val(),
-		// 			project: {{ $project->id }},
-		// 		}, function(data){
-		// 			var json = $.parseJSON(data);
-		// 			$curThis.closest("tr").find("input").removeClass("error-input");
-		// 			if (json.success) {
-		// 				$curThis.closest("tr").attr("data-id", json.id);
-		// 				var rate = $curThis.closest("tr").find("input[name='rate']").val()
-		// 				if (rate) {
-		// 					rate.toString().split('.').join('').replace(',', '.');
-		// 				} else {
-		// 					rate = {{$project->hour_rate}};
-		// 				}
-		// 				var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-		// 				$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-		// 			} else {
-		// 				$.each(json.message, function(i, item) {
-		// 					if(json.message['name'])
-		// 						$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-		// 					if(json.message['unit'])
-		// 						$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-		// 					if(json.message['rate'])
-		// 						$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-		// 					if(json.message['amount'])
-		// 						$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-		// 				});
-		// 			}
-		// 		}).fail(function(e){
-		// 			console.log(e);
-		// 		});
-		// 	}
-		// });
-		// $("body").on("blur", ".lsavee", function(){
-		// 	var flag = true;
-		// 	var $curThis = $(this);
-		// 	if($curThis.closest("tr").attr("data-id"))
-		// 		return false;
-		// 	$curThis.closest("tr").find("input").each(function(){
-		// 		if(!$(this).val())
-		// 			flag = false;
-		// 	});
-		// 	if(flag){
-		// 		$.post("/calculation/estim/newlabor", {
-		// 			rate: $curThis.closest("tr").find("input[name='rate']").val(),
-		// 			amount: $curThis.closest("tr").find("input[name='amount']").val(),
-		// 			activity: $curThis.closest("table").attr("data-id"),
-		// 			project: {{ $project->id }},
-		// 		}, function(data){
-		// 			var json = $.parseJSON(data);
-		// 			$curThis.closest("tr").find("input").removeClass("error-input");
-		// 			if (json.success) {
-		// 				$curThis.closest("tr").attr("data-id", json.id);
-		// 				var rate = $curThis.closest("tr").find("input[name='rate']").val()
-		// 				if (rate) {
-		// 					rate.toString().split('.').join('').replace(',', '.');
-		// 				} else {
-		// 					rate = {{$project->hour_rate}};
-		// 				}
-		// 				var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-		// 				$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-		// 			} else {
-		// 				$.each(json.message, function(i, item) {
-		// 					if(json.message['rate'])
-		// 						$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-		// 					if(json.message['amount'])
-		// 						$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-		// 				});
-		// 			}
-		// 		}).fail(function(e){
-		// 			console.log(e);
-		// 		});
-		// 	}
-		// });
-		// $("body").on("blur", ".dsavee", function(){
-		// 	var flag = true;
-		// 	var $curThis = $(this);
-		// 	if($curThis.closest("tr").attr("data-id"))
-		// 		return false;
-		// 	$curThis.closest("tr").find("input").each(function(){
-		// 		if(!$(this).val())
-		// 			flag = false;
-		// 	});
-		// 	if(flag){
-		// 		$.post("/calculation/estim/newmaterial", {
-		// 			name: $curThis.closest("tr").find("input[name='name']").val(),
-		// 			unit: $curThis.closest("tr").find("input[name='unit']").val(),
-		// 			rate: $curThis.closest("tr").find("input[name='rate']").val(),
-		// 			amount: $curThis.closest("tr").find("input[name='amount']").val(),
-		// 			activity: $curThis.closest("table").attr("data-id"),
-		// 			project: {{ $project->id }},
-		// 		}, function(data){
-		// 			var json = $.parseJSON(data);
-		// 			$curThis.closest("tr").find("input").removeClass("error-input");
-		// 			if (json.success) {
-		// 				$curThis.closest("tr").attr("data-id", json.id);
-		// 				var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
-		// 				var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-		// 				var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
-		// 				$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-		// 				$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
-		// 			} else {
-		// 				$.each(json.message, function(i, item) {
-		// 					if(json.message['name'])
-		// 						$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-		// 					if(json.message['unit'])
-		// 						$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-		// 					if(json.message['rate'])
-		// 						$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-		// 					if(json.message['amount'])
-		// 						$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-		// 				});
-		// 			}
-		// 		}).fail(function(e){
-		// 			console.log(e);
-		// 		});
-		// 	}
-		// });
-		// $("body").on("blur", ".esavee", function(){
-		// 	var flag = true;
-		// 	var $curThis = $(this);
-		// 	if($curThis.closest("tr").attr("data-id"))
-		// 		return false;
-		// 	$curThis.closest("tr").find("input").each(function(){
-		// 		if(!$(this).val())
-		// 			flag = false;
-		// 	});
-		// 	if(flag){
-		// 		$.post("/calculation/estim/newequipment", {
-		// 			name: $curThis.closest("tr").find("input[name='name']").val(),
-		// 			unit: $curThis.closest("tr").find("input[name='unit']").val(),
-		// 			rate: $curThis.closest("tr").find("input[name='rate']").val(),
-		// 			amount: $curThis.closest("tr").find("input[name='amount']").val(),
-		// 			activity: $curThis.closest("table").attr("data-id"),
-		// 			project: {{ $project->id }},
-		// 		}, function(data){
-		// 			var json = $.parseJSON(data);
-		// 			$curThis.closest("tr").find("input").removeClass("error-input");
-		// 			if (json.success) {
-		// 				$curThis.closest("tr").attr("data-id", json.id);
-		// 				var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
-		// 				var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
-		// 				var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
-		// 				$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-		// 				$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
-		// 			} else {
-		// 				$.each(json.message, function(i, item) {
-		// 					if(json.message['name'])
-		// 						$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-		// 					if(json.message['unit'])
-		// 						$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-		// 					if(json.message['rate'])
-		// 						$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-		// 					if(json.message['amount'])
-		// 						$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
-		// 				});
-		// 			}
-		// 		}).fail(function(e){
-		// 			console.log(e);
-		// 		});
-		// 	}
-		// });
 		$("body").on("click", ".sresetrow", function(){
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
@@ -669,6 +340,11 @@ var n = this,
 						if (_cal)
 							sub_total_profit += _cal;
 					});
+					var rate = json.rate.replace(',', '.');
+					var amount = json.amount.replace(',', '.');
+					var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
+					$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+					$curThis.closest("tr").find(".total-less").text('€ '+$.number(0 ,2,',','.'));
 					$curThis.closest("table").find('.mat_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
 				}).fail(function(e) { console.log(e); });
 		});
@@ -692,6 +368,11 @@ var n = this,
 						if (_cal)
 							sub_total_profit += _cal;
 					});
+					var rate = json.rate.replace(',', '.');
+					var amount = json.amount.replace(',', '.');
+					var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
+					$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+					$curThis.closest("tr").find(".total-less").text('€ '+$.number(0 ,2,',','.'));
 					$curThis.closest("table").find('.equip_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
 				}).fail(function(e) { console.log(e); });
 		});
@@ -700,6 +381,15 @@ var n = this,
 			if($curThis.closest("tr").attr("data-id"))
 				$.post("/less/resetlabor", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(data){
 					var json = $.parseJSON(data);
+					var amount = json.amount.qsreplace(',', '.');
+					var rate = $curThis.closest("tr").find("input[name='rate']").val()
+					if (rate) {
+						rate.toString().split('.').join('').replace(',', '.');
+					} else {
+						rate = {{$project->hour_rate}};
+					}
+					$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount ,2,',','.'));
+					$curThis.closest("tr").find(".total-less").text('€ '+$.number(0 ,2,',','.'));
 					$curThis.closest("tr").find("input[name='amount']").val(json.amount);
 				}).fail(function(e) { console.log(e); });
 		});
@@ -901,6 +591,7 @@ var n = this,
 														</tr>
 														@endforeach
 													</tbody>
+													@if (0)
 													<tbody>
 														<tr>
 															<td class="col-md-5"><strong>Totaal</strong></td>
@@ -921,6 +612,7 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
+													@endif
 												</table>
 
 												<div class="row">
@@ -979,6 +671,7 @@ var n = this,
 														</tr>
 														@endforeach
 													</tbody>
+													@if (0)
 													<tbody>
 														<tr>
 															<td class="col-md-5"><strong>Totaal</strong></td>
@@ -998,6 +691,7 @@ var n = this,
 															<td class="col-md-1">&nbsp;</td>
 														</tr>
 													</tbody>
+													@endif
 												</table>
 											</div>
 										</div>
