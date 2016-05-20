@@ -506,7 +506,7 @@ $(document).ready(function() {
 
 							<div class="row">
 								<div class="col-md-12">
-									<button data-step="7" data-intro="Stap 7: Sla je project op." class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+									<button data-step="7" data-intro="Stap 7: Klik op opslaan om je project op te slaan." class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 								</div>
 							</div>
 

@@ -273,7 +273,7 @@ $(document).ready(function() {
 							<a href="#company" data-toggle="tab">Bedrijfsgegevens</a>
 						</li>
 						<li id="tab-contact">
-							<a href="#contact" data-toggle="tab" data-step="3" data-intro="Stap 4: Je bedrijf heeft een contactpersoon nodig. Klik op het tabblad 'Contacten' en klik daarna op volgende.">Contacten</a>
+							<a href="#contact" data-toggle="tab" data-step="3" data-position="botom" data-intro="Je bedrijf heeft een contactpersoon nodig. Klik op het tabblad 'Contacten' en klik daarna op volgende.">Contacten</a>
 						</li>
 						<li id="tab-payment">
 							<a href="#payment" data-toggle="tab">Betalingsgegevens</a>
@@ -292,7 +292,7 @@ $(document).ready(function() {
 							{!! $relation ? '<form action="relation/updatemycompany?multipage=true" method="post">' : '<form action="relation/newmycompany" method="post">' !!}
 							{!! csrf_field() !!}
 
-							<div data-step="1" data-position="left" data-intro="Stap 2: Vul hier jouw bedrijfgegevens in. Alleen de velden met een (*) zijn verplicht. Je kan je gegevens later altijd aanpassen en aanvullen.">
+							<div data-step="1" data-intro="Vul hier jouw bedrijfgegevens in. Alleen de velden met een (*) zijn verplicht. Je kan je gegevens later altijd aanpassen en aanvullen.">
 							<h4 class="company" >Bedrijfsgegevens</h4>
 							<input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
 							<div class="row">
@@ -410,7 +410,7 @@ $(document).ready(function() {
 
 							<div class="row">
 								<div class="col-md-12">
-									<button class="btn btn-primary" data-position="top" data-step="2" data-intro="Stap 3: Sla je bedrijfsgegevens op en klik daarna op volgende."><i class="fa fa-check"></i> Opslaan</button>
+									<button class="btn btn-primary" data-position="top" data-step="2" data-position="top" data-intro="Sla je bedrijfsgegevens op en klik daarna op volgende."><i class="fa fa-check"></i> Opslaan</button>
 								</div>
 							</div>
 						</form>
@@ -445,7 +445,7 @@ $(document).ready(function() {
 								</tbody>
 							</table>
 							<div class="row">
-								<div class="col-md-2" data-step="4" data-intro="Stap 5: Klik op 'Nieuw Contact' om een contactpersoon toe te voegen.">
+								<div class="col-md-2" data-step="4" data-intro="Klik op 'Nieuw Contact' om een contactpersoon toe te voegen of op 'klaar' wanneer je dit al hebt gedaan of later wilt doen.">
 									<a href="/mycompany/contact/new" {{ $relation ? '' : 'disabled' }} class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
 								</div>
 							</div>
