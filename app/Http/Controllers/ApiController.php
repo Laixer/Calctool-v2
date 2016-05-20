@@ -16,6 +16,8 @@ use \Calctool\Models\RelationKind;
 use \Calctool\Models\Contact;
 use \Calctool\Models\MoreLabor;
 use Illuminate\Http\Request;
+use \Calctool\Models\EstimateLabor;
+
 
 class ApiController extends Controller {
 
