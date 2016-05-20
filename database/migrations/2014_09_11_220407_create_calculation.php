@@ -95,7 +95,7 @@ class CreateCalculation extends Migration {
 			$table->increments('id');
 			$table->decimal('rate', 6, 3)->unsigned()->nullable()->index();
 			$table->decimal('amount', 9, 3)->unsigned()->nullable()->index();
-			$table->decimal('set_rate', 5, 3)->unsigned()->nullable()->index();
+			$table->decimal('set_rate', 6, 3)->unsigned()->nullable()->index();
 			$table->decimal('set_amount', 9, 3)->unsigned()->nullable()->index();
 			$table->boolean('original');
 			$table->boolean('isset');
