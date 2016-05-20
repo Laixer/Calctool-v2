@@ -84,6 +84,7 @@ class ValidationProjectTemplate {
 		$project->profit_more_contr_equip 		= 15;
 		$project->profit_more_subcontr_mat 		= 16;
 		$project->profit_more_subcontr_equip	= 17;
+		$project->tax_reverse		= 'Y';
 		$project->use_estimate		= 'Y';
 		$project->use_more			= 'Y';
 		$project->use_less			= 'Y';
