@@ -413,7 +413,7 @@ var n = this,
 					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = {{ $project->hour_rate }};
+						var rate = {{ $project->hour_rate_more }};
 						var amount = $curThis.closest("tr").find("input[name='hour']").val().toString().split('.').join('').replace(',', '.');
 						var $curTable = $curThis.closest("table");
 						var json = $.parseJSON(data);
@@ -731,11 +731,11 @@ var n = this,
 														<?php
 														if ($activity->use_timesheet) {
 														?>
-														@foreach (MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->get() as $labor)
+														@foreach (MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->orderBy('hour_id', 'desc')->get() as $labor)
 														<tr data-id="{{ Timesheet::find($labor->hour_id)->id }}">
 															<td class="col-md-1">{{ Timesheet::find($labor->hour_id)->register_date }}</td>
 															<td class="col-md-1">{{ number_format($labor->amount, 2,",",".") }}</td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(MoreRegister::laborTotal($labor->rate, $labor->amount), 2, ",",".") }}</span></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(MoreRegister::laborTotal($project->hour_rate_more, $labor->amount), 2, ",",".") }}</span></td>
 															<td class="col-md-8">{{ Timesheet::find($labor->hour_id)->note }}</td>
 															<td class="col-md-1 text-right"><!--<button class="btn btn-xs fa btn-danger fa-times xdeleterow"></button>--></td>
 														</tr>

@@ -85,7 +85,8 @@ class CostController extends Controller {
 		{
 			$type = 'Meerwerk';
 			$labor = MoreLabor::create(array(
-				"rate" => $_project->hour_rate_more,
+				"rate" => 0,
+				//"rate" => $_project->hour_rate_more,
 				"amount" => str_replace(',', '.', str_replace('.', '' , $request->get('hour'))),
 				"activity_id" => $activity->id,
 				"hour_id" => $timesheet->id
