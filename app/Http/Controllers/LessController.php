@@ -4,12 +4,14 @@ namespace Calctool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use \Calctool\Models\Part;
 use \Calctool\Models\Project;
 use \Calctool\Models\Chapter;
 use \Calctool\Models\Activity;
 use \Calctool\Models\CalculationEquipment;
 use \Calctool\Models\CalculationLabor;
 use \Calctool\Models\CalculationMaterial;
+use \Calctool\Calculus\LessRegister;
 
 class LessController extends Controller {
 
@@ -72,7 +74,25 @@ class LessController extends Controller {
 
 		$this->updateLessStatus($request->get('project'));
 
-		return json_encode(['success' => 1, 'less_rate' => number_format($material->less_rate, 2,",","."), 'less_amount' => number_format($material->less_amount, 2,",",".")]);
+		$project = Project::find($chapter->project_id);
+		if (Part::find($activity->part_id)->part_name=='contracting') {
+			$profit = $project->profit_calc_contr_mat;
+		} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+			$profit = $project->profit_calc_subcontr_mat;
+		}
+
+		if ($material->isless) {
+			$total = ($material->rate * $material->amount) * ((100+$profit)/100);
+			$less_total = ($material->less_rate * $material->less_amount) * ((100+$profit)/100);
+			if($less_total-$total <0)
+				$total_less = "<font color=red>&euro; ".number_format($less_total-$total, 2, ",",".")."</font>";
+			else
+				$total_less = '&euro; '.number_format($less_total-$total, 2, ",",".");
+		} else {
+			$total_less = '&euro; 0,00';
+		}
+
+		return json_encode(['success' => 1, 'less_rate' => number_format($material->less_rate, 2,",","."), 'less_amount' => number_format($material->less_amount, 2,",","."), 'less_total' => $total_less]);
 	}
 
 	public function doUpdateEquipment(Request $request)
@@ -112,7 +132,25 @@ class LessController extends Controller {
 
 		$this->updateLessStatus($request->get('project'));
 
-		return json_encode(['success' => 1, 'less_rate' => number_format($equipment->less_rate, 2,",","."), 'less_amount' => number_format($equipment->less_amount, 2,",",".")]);
+		$project = Project::find($chapter->project_id);
+		if (Part::find($activity->part_id)->part_name=='contracting') {
+			$profit = $project->profit_calc_contr_equip;
+		} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+			$profit = $project->profit_calc_subcontr_equip;
+		}
+
+		if ($equipment->isless) {
+			$total = ($equipment->rate * $equipment->amount) * ((100+$profit)/100);
+			$less_total = ($equipment->less_rate * $equipment->less_amount) * ((100+$profit)/100);
+			if($less_total-$total <0)
+				$total_less = "<font color=red>&euro; ".number_format($less_total-$total, 2, ",",".")."</font>";
+			else
+				$total_less = '&euro; '.number_format($less_total-$total, 2, ",",".");
+		} else {
+			$total_less = '&euro; 0,00';
+		}
+
+		return json_encode(['success' => 1, 'less_rate' => number_format($equipment->less_rate, 2,",","."), 'less_amount' => number_format($equipment->less_amount, 2,",","."), 'less_total' => $total_less]);
 	}
 
 	public function doUpdateLabor(Request $request)
@@ -145,7 +183,14 @@ class LessController extends Controller {
 
 		$this->updateLessStatus($request->get('project'));
 
-		return json_encode(['success' => 1, 'less_amount' => number_format($labor->less_amount, 2,",",".")]);
+		$total_less = LessRegister::lessLaborDeltaTotal($labor);
+		if($total_less <0) {
+			$total_less = "<font color=red>&euro; ".number_format($total_less, 2, ",",".")."</font>";
+		} else {
+			$total_less = '&euro; '.number_format($total_less, 2, ",",".");
+		}
+
+		return json_encode(['success' => 1, 'less_amount' => number_format($labor->less_amount, 2,",","."), 'less_total' => $total_less]);
 	}
 
 	public function doResetMaterial(Request $request)
