@@ -398,8 +398,8 @@ $(document).ready(function() {
 						{!! csrf_field() !!}
 							<h4>Projectgegevens</h4>
 							<h5><strong>Gegevens</strong></h5>
-							<div class="row">
-				<div data-step="1" data-intro="Stap 1: Geef de projectnaam op en selecteer de opdrachtgever.">
+							<div class="row" data-step="1" data-intro="Geef de projectnaam op, selecteer de opdrachtgever en geef aan of je wilt calculeren zonder BTW (BTW-verlegd).">
+				
 								<div class="col-md-5">
 									<div class="form-group">
 										<label for="name">Projectnaam*</label>
@@ -417,7 +417,6 @@ $(document).ready(function() {
 										<a href="#" data-toggle="modal" data-target="#tutModal">+ Nieuwe opdrachtgever toevoegen</a>
 									</div>
 								</div>
-				</div>
 								@if (Auth::user()->isAdmin())
 								<div class="col-md-2">
 									<div class="form-group">
@@ -432,7 +431,7 @@ $(document).ready(function() {
 								@endif
 								<div class="col-md-2">
 								<label for="tax_reverse">BTW verlegd</label>
-									<div data-step="2" data-intro="Stap 2: Geef aan of je het project wilt calculeren zonder BTW (BTW-verlegd)" class="form-group">
+									<div class="form-group">
 										<input name="tax_reverse" type="checkbox">
 									</div>
 								</div>
@@ -440,7 +439,7 @@ $(document).ready(function() {
 							</div>
 
 							<h5><strong>Adresgegevens</strong></h5>
-							<div data-step="3" data-intro="Stap 3: Geef de adresgegevens van het project op."class="row">
+							<div data-step="2" data-intro="Geef de adresgegevens van het project op."class="row">
 
 								<div class="col-md-1">
 									<div class="form-group">
@@ -493,7 +492,7 @@ $(document).ready(function() {
 								</div>
 							</div>		
 
-							<div data-step="6" data-intro="Stap 6: Noteer eventueel aantekenen bestemd voor het project. (Dit is alleen zichtbaar voor jou)">
+							<div data-step="3" data-intro="Noteer eventueel aantekenen bestemd voor het project. (Dit is alleen zichtbaar voor jou)">
 							<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
 					        <div class="row">
 					          <div class="form-group">
