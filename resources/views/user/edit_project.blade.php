@@ -425,10 +425,10 @@ if ($less_total>0) {
 						</li>
 						@if ($type->type_name != 'snelle offerte en factuur')
 						<li id="tab-calc">
-							<a href="#calc" data-toggle="tab" data-step="1" data-intro="Stap 1: Geef je  uurtarief en winstpercentages op waarmee je wilt gaan calculeren.">Uurtarief & Winstpercentages</a>
+							<a href="#calc" data-toggle="tab" data-step="1" data-intro="Geef je uurtarief en winstpercentages op waarmee je wilt gaan calculeren.">Uurtarief & Winstpercentages</a>
 						</li>
 						<li id="tab-advanced">
-							<a href="#advanced" data-toggle="tab" data-toggle="tab" data-step="3" data-intro="Stap 3: Geef aan of je andere module wilt laden in je project. Dit kan later ook nog.">Extra opties</a>
+							<a href="#advanced" data-toggle="tab" data-toggle="tab" data-step="3" data-intro="Geef aan of je andere modules wilt laden in je project. Dit kan later ook nog.">Extra opties</a>
 						</li>
 						<li id="tab-status">
 							<a href="#status" data-toggle="tab">Projectstatus</a>
@@ -684,7 +684,7 @@ if ($less_total>0) {
 							</div>
 
 						@if ($type->type_name != 'snelle offerte en factuur')
-						<div id="calc" class="tab-pane" data-step="2" data-intro="Stap 2: Geef je  uurtarief en winstpercentages op waarmee je wilt gaan calculeren.">
+						<div id="calc" class="tab-pane" data-step="2" data-intro="Geef je uurtarief en winstpercentages op waarmee je wilt gaan calculeren.">
 						<form method="post" action="/project/updatecalc">
                         {!! csrf_field() !!}
 						<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
@@ -769,7 +769,7 @@ if ($less_total>0) {
 						</div>
 						@endif
 
-						<div id="advanced" class="tab-pane" data-step="4" data-intro="Stap 4: Laad eventueel aanvullende onderdelen.">
+						<div id="advanced" class="tab-pane" data-step="4" data-intro="Geef aan of je andere modules wilt laden in je project. Dit kan later ook nog.">
 							
 							<form method="POST" action="/project/updateadvanced">
 							{!! csrf_field() !!}

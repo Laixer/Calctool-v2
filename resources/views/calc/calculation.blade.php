@@ -1076,12 +1076,12 @@ if (!$project || !$project->isOwner())
 						</a>
 					</li>
 					@endif
-					<li data-step="13" data-intro="Stap 13: Bekijk na het invullen van al je onderdelen & werkzaamheden de uittrekstaat van al je werkzaamheden." id="tab-summary">
+					<li data-step="5" data-intro="Bekijk na het invullen van al je onderdelen & werkzaamheden de uittrekstaat van al je werkzaamheden." id="tab-summary">
 						<a href="#summary" data-toggle="tab">
 							<i class="fa fa-sort-amount-asc"></i> Uittrekstaat Calculeren
 						</a>
 					</li>
-					<li data-step="14" data-intro="Stap 14: Bekijk het eindresultaat." id="tab-endresult">
+					<li data-step="6" data-intro="Bekijk het eindresultaat." id="tab-endresult">
 						<a href="#endresult" data-toggle="tab">
 							<i class="fa fa-check-circle-o"></i> Eindresultaat Calculeren
 						</a>
@@ -1092,7 +1092,7 @@ if (!$project || !$project->isOwner())
 					<div id="calculate" class="tab-pane">
 						<div class="toogle">
 							@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
-							<div data-step="2" data-intro="Stap 2: Open het onderdeel." id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
+							<div data-step="2" data-intro="Open het onderdeel." id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
 								<label>{{ $chapter->chapter_name }}</label>
 								<div class="toggle-content">
 
@@ -1107,9 +1107,9 @@ if (!$project || !$project->isOwner())
 												$profit_equip = $project->profit_calc_subcontr_equip;
 											}
 										?>
-										<div data-step="3" data-intro="Stap 3: Maak werkzaamheid aan." id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
+										<div data-step="3" data-intro="Maak werkzaamheid aan." id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
 											<label>{{ $activity->activity_name }}</label>
-											<div data-step="4" data-intro="Stap 4: Calculeer de werkzaaheid toe." class="toggle-content">
+											<div data-step="4" data-intro="Calculeer de werkzaaheid" class="toggle-content">
 												<div class="row">
 													<div class="col-md-5"></div>
 													<div class="col-md-4">
@@ -1354,7 +1354,7 @@ if (!$project || !$project->isOwner())
 						<div><hr></div>
 						<div class="row">
 							<div class="col-md-6">
-								<div class="input-group" data-step="1" data-intro="Stap 1: Voeg een onderdeel toe. Een soort hoofdstuk waar je werkzaamheden onder vallen.">
+								<div class="input-group" data-step="1" data-intro="Voeg een onderdeel toe. Een soort hoofdstuk waar je werkzaamheden onder vallen.">
 									<input type="text" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw onderdeel">
 									<span class="input-group-btn">
 										<button class="btn btn-primary btn-primary-chapter">Voeg toe</button>
