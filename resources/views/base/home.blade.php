@@ -304,7 +304,7 @@ $(document).ready(function() {
 			<h2 style="margin: 10px 0 20px 0;"><strong>Welkom</strong>, {{ Auth::user()->firstname }}</h2>
 			<div class="row">
 
-				<div class="col-sm-6 col-md-2" data-step="1" data-intro="Stap 1: Klik op 'Mijn Bedrijf' om je bedrijfsgegevens in te vullen.">
+				<div class="col-sm-6 col-md-2" data-step="1" data-intro="Klik op 'Mijn Bedrijf' om je bedrijfsgegevens in te vullen.">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
 							<a class="item-hover" href="/mycompany">

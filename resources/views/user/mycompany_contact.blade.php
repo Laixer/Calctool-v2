@@ -84,7 +84,7 @@ $(document).ready(function() {
 		<div class="white-row">
 		<form action="/mycompany/contact/new" method="post">
 		{!! csrf_field() !!}
-		<div data-step="1" data-intro="Stap 6: Geef de contactgevens op. Alleen de velden met (*) zijn verplicht.">
+		<div data-step="1" data-intro="Geef de contactgevens op. Alleen de velden met (*) zijn verplicht.">
 		<h4>Contactgegevens</h4>
 		<div class="row">
 
@@ -150,7 +150,7 @@ $(document).ready(function() {
 </div>
 		<div class="white-row">
 			<div class="col-md-2">
-				<button class="btn btn-primary" data-step="2" data-intro="Stap 7: Klik op 'Opslaan' om de contactpersoon toe te voegen aan jouw berijf. Daarna ben je klaar met de Quick-SetUp en wordt je teruggestuurd naar het startscherm (Dashboard). Daar kan je jouw eerste project starten."><i class="fa fa-check"></i> Opslaan</button>
+				<button class="btn btn-primary" data-step="2" data-intro="Klik op 'Opslaan' om de contactpersoon toe te voegen aan jouw berijf."><i class="fa fa-check"></i> Opslaan</button>
 			</div>
 		</div>
 		</form>

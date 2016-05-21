@@ -43,6 +43,56 @@ else {
 }
 
 $type = ProjectType::find($project->type_id);
+
+$offer_last ? $invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first() : $invoice_end = null;
+								
+$estim_total = 0;
+$more_total = 0;
+$less_total = 0;
+$disable_estim = false;
+$disable_more = false;
+$disable_less = false;
+
+foreach(Chapter::where('project_id','=', $project->id)->get() as $chap) {
+	foreach(Activity::where('chapter_id','=', $chap->id)->get() as $activity) {
+		$estim_total += EstimateLabor::where('activity_id','=', $activity->id)->count('id');
+		$estim_total += EstimateMaterial::where('activity_id','=', $activity->id)->count('id');
+		$estim_total += EstimateEquipment::where('activity_id','=', $activity->id)->count('id');
+
+		$more_total += MoreLabor::where('activity_id','=', $activity->id)->count('id');
+		$more_total += MoreMaterial::where('activity_id','=', $activity->id)->count('id');
+		$more_total += MoreEquipment::where('activity_id','=', $activity->id)->count('id');	
+
+		$less_total += CalculationLabor::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
+		$less_total += CalculationMaterial::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
+		$less_total += CalculationEquipment::where('activity_id','=', $activity->id)->where('isless',true)->count('id');	
+	}
+}
+
+//
+if ($offer_last) {
+	$disable_estim = true;
+}
+if ($estim_total>0) {
+	$disable_estim = true;
+}
+
+//
+if ($invoice_end && $invoice_end->invoice_close) {
+	$disable_more = true;
+}
+if ($more_total>0) {
+	$disable_more = true;
+}
+
+//
+if ($invoice_end && $invoice_end->invoice_close) {
+	$disable_less = true;
+}
+if ($less_total>0) {
+	$disable_less = true;
+}
+
 ?>
 
 @extends('layout.master')
@@ -427,21 +477,27 @@ $type = ProjectType::find($project->type_id);
 								<div class="col-md-2"><?php if ($project->project_close) { echo $project->work_completion ? date('d-m-Y', strtotime($project->work_completion)) : ''; }else{ if ($project->work_completion){ echo date('d-m-Y', strtotime($project->work_completion)); }else{ ?><a href="#" id="wordcompl">Bewerk</a><?php } } ?></div>
 								<div class="col-md-3"></div>
 							</div>
+							@if ($project->use_estim)
 							<div class="row">
 								<div class="col-md-3">Stelposten gesteld</div>
 								<div class="col-md-2"><i>{{ $project->start_estimate ? date('d-m-Y', strtotime($project->start_estimate)) : '' }}</i></div>
 								<div class="col-md-3"><i>{{ $project->update_estimate ? 'Laatste wijziging: '.date('d-m-Y', strtotime($project->update_estimate)) : '' }}</i></div>
 							</div>
+							@endif
+							@if ($project->use_more)
 							<div class="row">
 								<div class="col-md-3">Meerwerk toegevoegd</div>
 								<div class="col-md-2">{{ $project->start_more ? date('d-m-Y', strtotime($project->start_more)) : '' }}</div>
 								<div class="col-md-3"><i>{{ $project->update_more ? 'Laatste wijziging: '.date('d-m-Y', strtotime($project->update_more)) : '' }}</i></div>
 							</div>
+							@endif
+							@if ($project->use_less)
 							<div class="row">
 								<div class="col-md-3">Minderwerk verwerkt</div>
 								<div class="col-md-2">{{ $project->start_less ? date('d-m-Y', strtotime($project->start_less)) : '' }}</div>
 								<div class="col-md-3"><i>{{ $project->update_less ? 'Laatste wijziging: '.date('d-m-Y', strtotime($project->update_less)) : '' }}</i></div>
 							</div>
+							@endif
 								<br>
 							@if (0)
 							<div class="row">
@@ -730,57 +786,6 @@ $type = ProjectType::find($project->type_id);
 									<p>Een project zonder btw bedrag invoeren.</p>
 								</div>
 							</div>
-
-								<?php $offer_last ? $invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first() : $invoice_end = null;
-								
-								$estim_total = 0;
-								$more_total = 0;
-								$less_total = 0;
-								$disable_estim = false;
-								$disable_more = false;
-								$disable_less = false;
-								
-								foreach(Chapter::where('project_id','=', $project->id)->get() as $chap) {
-									foreach(Activity::where('chapter_id','=', $chap->id)->get() as $activity) {
-										$estim_total += EstimateLabor::where('activity_id','=', $activity->id)->count('id');
-										$estim_total += EstimateMaterial::where('activity_id','=', $activity->id)->count('id');
-										$estim_total += EstimateEquipment::where('activity_id','=', $activity->id)->count('id');
-
-										$more_total += MoreLabor::where('activity_id','=', $activity->id)->count('id');
-										$more_total += MoreMaterial::where('activity_id','=', $activity->id)->count('id');
-										$more_total += MoreEquipment::where('activity_id','=', $activity->id)->count('id');	
-
-										$less_total += CalculationLabor::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
-										$less_total += CalculationMaterial::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
-										$less_total += CalculationEquipment::where('activity_id','=', $activity->id)->where('isless',true)->count('id');	
-									}
-								}
-
-								//
-								if ($offer_last) {
-									$disable_estim = true;
-								}
-								if ($estim_total>0) {
-									$disable_estim = true;
-								}
-
-								//
-								if ($invoice_end && $invoice_end->invoice_close) {
-									$disable_more = true;
-								}
-								if ($more_total>0) {
-									$disable_more = true;
-								}
-
-								//
-								if ($invoice_end && $invoice_end->invoice_close) {
-									$disable_less = true;
-								}
-								if ($less_total>0) {
-									$disable_less = true;
-								}
-
-								?>
 								
 							<div class="row">
 								<div class="col-md-2">
