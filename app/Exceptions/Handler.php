@@ -24,6 +24,7 @@ class Handler extends ExceptionHandler
         ModelNotFoundException::class,
         AuthorizationException::class,
         ValidationException::class,
+        TokenMismatchException::class,
     ];
 
     /**

@@ -33,7 +33,6 @@ if (File::exists('../.revision')) {
 
 
 ?>
-<?# -- WRAPPER -- ?>
 <div id="wrapper">
 
 	<section class="container">
@@ -97,20 +96,9 @@ if (File::exists('../.revision')) {
 				</div>
 			</div>
 
-			<div class="white-row">
-				<h4>Omgevingsvariabelen</h4>
-				@foreach ($envvars[0] as $envkey => $envval)
-				<?php if (strpos($envkey,'PASSWORD') !== false) continue; ?>
-				<div class="row">
-					<div class="col-md-2">{{ $envkey }}</div>
-					<div class="col-md-10">{{ $envval }}</div>
-				</div>
-				@endforeach
-			</div>
-
 		</div>
 
 	</section>
 
 </div>
-s@stop
+@stop
