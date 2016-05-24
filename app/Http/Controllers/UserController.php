@@ -469,16 +469,35 @@ class UserController extends Controller {
 
 	public function doUpdatePreferences(Request $request)
 	{
+		$this->validate($request, [
+			'pref_hourrate_calc' => array('regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
+			'pref_hourrate_more' => array('regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
+		]);
+
 		$user = Auth::user();
 		if ($request->get('pref_use_ct_numbering'))
 			$user->pref_use_ct_numbering = true;
 		else
 			$user->pref_use_ct_numbering = false;
 
-		if ($request->get('pref_hourrate_calc') != "")
-			$user->pref_hourrate_calc = str_replace(',', '.', str_replace('.', '' , $request->get('pref_hourrate_calc')));
-		if ($request->get('pref_hourrate_more') != "")
-			$user->pref_hourrate_more = str_replace(',', '.', str_replace('.', '' , $request->get('pref_hourrate_more')));
+		if ($request->get('pref_hourrate_calc') != "") {
+			$hour_rate = str_replace(',', '.', str_replace('.', '', $request->get('pref_hourrate_calc')));
+			if ($hour_rate<0 || $hour_rate>999) {
+				return back()->withInput($request->all());
+			}
+
+			$user->pref_hourrate_calc = $hour_rate;
+		}
+
+		if ($request->get('pref_hourrate_more') != "") {
+			$hour_rate_more = str_replace(',', '.', str_replace('.', '', $request->get('pref_hourrate_more')));
+			if ($hour_rate_more<0 || $hour_rate_more>999) {
+				return back()->withInput($request->all());
+			}
+
+			$user->pref_hourrate_more = $hour_rate_more;
+		}
+
 		if ($request->get('pref_profit_calc_contr_mat') != "")
 			$user->pref_profit_calc_contr_mat = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_calc_contr_mat')));
 		if ($request->get('pref_profit_calc_contr_equip') != "")

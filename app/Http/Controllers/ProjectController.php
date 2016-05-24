@@ -258,12 +258,12 @@ class ProjectController extends Controller {
 
 		$hour_rate = str_replace(',', '.', str_replace('.', '', $request->input('hour_rate')));
 		if ($hour_rate<0 || $hour_rate>999) {
-			return back()->withErrors($validator)->withInput($request->all());
+			return back()->withInput($request->all());
 		}
 
 		$hour_rate_more = str_replace(',', '.', str_replace('.', '', $request->input('more_hour_rate')));
 		if ($hour_rate_more<0 || $hour_rate_more>999) {
-			return back()->withErrors($validator)->withInput($request->all());
+			return back()->withInput($request->all());
 		}
 
 		if ($hour_rate)
