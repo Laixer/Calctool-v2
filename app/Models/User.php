@@ -38,6 +38,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 		return in_array(UserType::find($this->user_type)->user_type, array('admin', 'system'));
 	}
 
+	public function isSystem() {
+		return UserType::find($this->user_type)->user_type == 'system';
+	}
+
 	public function hasPayed() {
 		return (strtotime($this->expiration_date) >= time());
 	}

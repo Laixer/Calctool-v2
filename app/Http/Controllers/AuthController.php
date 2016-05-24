@@ -65,6 +65,10 @@ class AuthController extends Controller {
 			$log = new Audit('[LOGIN] [SUCCESS] ' . \Calctool::remoteAgent());
 			$log->setUserId(Auth::id())->save();
 
+			if (Auth::user()->isSystem()) {
+				return redirect('/admin');
+			}
+
 			/* Redirect to dashboard*/
 			return redirect('/');
 		} else {
