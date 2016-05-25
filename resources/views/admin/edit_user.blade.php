@@ -299,7 +299,7 @@ $(document).ready(function() {
 							<tr>
 								<td class="col-md-2">{{ date('d-m-Y H:i:s', strtotime(DB::table('audit')->select('created_at')->where('id',$rec->id)->get()[0]->created_at)) }}</td>
 								<td class="col-md-2">{{ $rec->ip }}</td>
-								<td class="col-md-8">{{ $rec->event }}</td>
+								<td class="col-md-8">{!! nl2br($rec->event) !!}</td>
 							</tr>
 						@endforeach
 						</tbody>

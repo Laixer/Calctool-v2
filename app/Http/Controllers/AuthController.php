@@ -62,8 +62,7 @@ class AuthController extends Controller {
 
 			Redis::del('auth:'.$username.':fail', 'auth:'.$username.':block');
 
-			$log = new Audit('[LOGIN] [SUCCESS] ' . \Calctool::remoteAgent());
-			$log->setUserId(Auth::id())->save();
+			Audit::CreateEvent('auth.login.succces', 'Login with: ' . \Calctool::remoteAgent());
 
 			if (Auth::user()->isSystem()) {
 				return redirect('/admin');
@@ -87,11 +86,7 @@ class AuthController extends Controller {
 
 			$failuser = \Calctool\Models\User::where('username', $username)->first();
 			if ($failuser) {
-				$log = new \Calctool\Models\Audit;
-				$log->ip = \Calctool::remoteAddr();
-				$log->event = '[LOGIN] [FAILED] '.$failcount;
-				$log->user_id = $failuser->id;
-				$log->save();
+				Audit::CreateEvent('auth.login.failed', 'Failed tries: ' . $failcount, $failuser->id);
 			}
 
 			return back()->withErrors($errors)->withInput($request->except('secret'))->withCookie(cookie()->forget('swpsess'));
@@ -138,6 +133,8 @@ class AuthController extends Controller {
 
 		$user->save();
 
+		Audit::CreateEvent('account.new.success', 'Created new account from template', $user->id);
+
 		return back()->with('success', 'Account aangemaakt, er is een bevestingsmail verstuurd');
 	}
 
@@ -163,10 +160,7 @@ class AuthController extends Controller {
 		$user->token = sha1($user->secret);
 		$user->save();
 
-		$log = new Audit;
-		$log->event = '[NEWPASS] [SUCCESS]'  . \Calctool::remoteAgent();
-		$log->user_id = $user->id;
-		$log->save();
+		Audit::CreateEvent('auth.update.password.success', 'Updated with: ' . \Calctool::remoteAgent(), $user->id);
 
 		Auth::login($user);
 		return redirect('/');
@@ -227,14 +221,10 @@ class AuthController extends Controller {
 
 		$message->save();
 
-		$log = new Audit;
-		$log->ip = \Calctool::remoteAddr();
-		$log->event = '[ACTIVATE] [SUCCESS]' . \Calctool::remoteAgent();
-		$log->user_id = $user->id;
-		$log->save();
+		Audit::CreateEvent('auth.activate.success', 'Activated with: ' . \Calctool::remoteAgent(), $user->id);
 
 		Auth::login($user);
-		// return redirect('/')->withCookie(cookie('nstep', 'intro_'.$user->id, 60*24*3))->withCookie(cookie('_xintr'.$user->id, '1', 60*24*7));
+
 		return redirect('/?nstep=intro')->withCookie(cookie('_xintr'.$user->id, '1', 60*24*7));
 	}
 
@@ -266,11 +256,7 @@ class AuthController extends Controller {
 
 		$user->save();
 
-		$log = new Audit;
-		$log->ip = \Calctool::remoteAddr();
-		$log->event = '[BLOCKPASS] [SUCCESS]';
-		$log->user_id = $user->id;
-		$log->save();
+		Audit::CreateEvent('auth.reset.password.mail.success', 'Reset with: ' . \Calctool::remoteAgent(), $user->id);
 
 		return redirect('login')->with('success', 'Wachtwoord geblokkeerd');
 	}
@@ -286,4 +272,11 @@ class AuthController extends Controller {
 		return Response::make(json_encode(['success' => 1]))->withCookie(cookie()->forget('nstep'));
 	}
 
+
+	public function doLogout()
+	{
+		Audit::CreateEvent('auth.logout.success', 'User destroyed current session');
+		Auth::logout();
+		return redirect('/login');
+	}
 }

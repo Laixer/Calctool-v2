@@ -75,13 +75,14 @@ Route::group(['middleware' => 'auth'], function()
 {
 	/* Generic pages */
 	Route::get('/', ['middleware' => 'payzone', function() {
+		if (Auth::user()->isSystem()) {
+			return redirect('/admin');
+		}
+		
 		return view('base.home');
 	}]);
 	Route::get('admin/switch/back', 'AdminController@getSwitchSessionBack');
-	Route::get('logout', function() {
-		Auth::logout();
-		return redirect('login');
-	});
+	Route::get('logout', 'AuthController@doLogout');
 	Route::get('result/project-{project_id}', function(){
 		return view('calc.result');
 	})->where('project_id', '[0-9]+')->middleware('payzone');

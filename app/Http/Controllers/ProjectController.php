@@ -12,6 +12,7 @@ use \Calctool\Models\Resource;
 use \Calctool\Models\Relation;
 use \Calctool\Models\Contact;
 use \Calctool\Models\Chapter;
+use \Calctool\Models\Audit;
 use \Calctool\Models\Activity;
 use \Calctool\Models\ProjectShare;
 use \Calctool\Http\Controllers\InvoiceController;
@@ -162,11 +163,7 @@ class ProjectController extends Controller {
 			$invoice->save();
 		}
 
-		$log = new \Calctool\Models\Audit;
-		$log->ip = \Calctool::remoteAddr();
-		$log->event = '[NEWPROJECT] [SUCCESS] ' . $request->input('name');
-		$log->user_id = Auth::id();
-		$log->save();
+		Audit::CreateEvent('project.new.success', 'Created project: ' . $project->project_name);
 
 		return redirect('project-'.$project->id.'/edit')->with('success', 'Opgeslagen');
 	}

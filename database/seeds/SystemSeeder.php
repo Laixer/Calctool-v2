@@ -81,7 +81,7 @@ class SystemSeeder extends Seeder {
 		$guest_user->api = md5(mt_rand());
 		$guest_user->token = sha1(Hash::make('ABC@123'));
 		$guest_user->ip = '::1';
-		$guest_user->active = 'Y';
+		$guest_user->active = 'N';
 		$guest_user->confirmed_mail = date('Y-m-d');
 		$guest_user->registration_date = date('Y-m-d');
 		$guest_user->expiration_date = date('Y-m-d', strtotime("+1 month", time()));

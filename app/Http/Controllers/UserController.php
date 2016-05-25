@@ -65,11 +65,7 @@ class UserController extends Controller {
 			}
 		}
 
-		$log = new Audit;
-		$log->ip = \Calctool::remoteAddr();
-		$log->event = '[DEACTIVATE] [SUCCESS]';
-		$log->user_id = $user->id;
-		$log->save();
+		Audit::CreateEvent('account.deactivate.success', 'Account deactivated by user');
 
 		return redirect('/login');
 	}
@@ -85,6 +81,8 @@ class UserController extends Controller {
 
 			$tgram->save();
 		}
+
+		Audit::CreateEvent('account.telegram.update.success', 'Telegram settings updated');
 
 		return back()->with('success', 'Instellingen opgeslagen');
 	}
@@ -112,15 +110,15 @@ class UserController extends Controller {
 		$token = sha1(mt_rand().time());
 
 		$payment = $mollie->payments->create(array(
-			"amount"      => $amount,
-			"description" => $description,
-			"webhookUrl" => url('payment/webhook/'),
-			"redirectUrl" => url('payment/order/'.$token),
-			"metadata"    => array(
-				"token" => $token,
-				"uid" => Auth::id(),
-				"incr" => $increment_months,
-				"promo" => $promo_id,
+			"amount"		=> $amount,
+			"description"	=> $description,
+			"webhookUrl"	=> url('payment/webhook/'),
+			"redirectUrl"	=> url('payment/order/'.$token),
+			"metadata"		=> array(
+				"token"		=> $token,
+				"uid"		=> Auth::id(),
+				"incr"		=> $increment_months,
+				"promo"		=> $promo_id,
 			),
 		));
 
@@ -135,11 +133,7 @@ class UserController extends Controller {
 		$order->user_id = Auth::id();
 		$order->save();
 
-		$log = new Audit;
-		$log->ip = \Calctool::remoteAddr();
-		$log->event = '[PAYMENT] [REQUESTED]';
-		$log->user_id = Auth::id();
-		$log->save();
+		Audit::CreateEvent('account.payment.initiated.success', 'Create payment ' . $payment->id . ' for ' . $amount);
 
 		return redirect($payment->links->paymentUrl)->withCookie(cookie()->forget('_dccod'.Auth::id()));
 	}
@@ -200,11 +194,7 @@ class UserController extends Controller {
 				}
 			}
 
-			$log = new Audit;
-			$log->ip = \Calctool::remoteAddr();
-			$log->event = '[PAYMENT] [SUCCESS]';
-			$log->user_id = $user->id();
-			$log->save();
+			Audit::CreateEvent('account.payment.callback.success', 'Payment ' . $payment->id . ' succeeded');
 
 		}
 		return json_encode(['success' => 1]);
@@ -297,11 +287,7 @@ class UserController extends Controller {
 			}
 		}
 
-		$log = new Audit;
-		$log->ip = \Calctool::remoteAddr();
-		$log->event = '[SECURITY_UPDATE] [SUCCESS]';
-		$log->user_id = Auth::id();
-		$log->save();
+		Audit::CreateEvent('account.security.update.success', 'Password and/or confidential information updated');
 
 		return back()->with('success', 'Instellingen opgeslagen');
 	}
@@ -313,6 +299,8 @@ class UserController extends Controller {
 			$user->notepad = $request->get('notepad');
 			$user->save();
 		}
+
+		Audit::CreateEvent('account.notepad.update.success', 'Notepad updated');
 
 		return back()->with('success', 'Opgeslagen');
 	}
@@ -359,9 +347,12 @@ class UserController extends Controller {
 
 		$user->save();
 
+		Audit::CreateEvent('account.update.success', 'Account information updated');
+
 		return back()->with('success', 'Gegevens opgeslagen');
 	}
 
+	//TODO is this still used?
 	public function doNew(Request $request)
 	{
 		$this->validate($request, [
@@ -458,11 +449,7 @@ class UserController extends Controller {
 			}
 		}
 
-		$log = new Audit;
-		$log->ip = $_SERVER['REMOTE_ADDR'];
-		$log->event = '[IBAN_UPDATE] [SUCCESS]';
-		$log->user_id = Auth::id();
-		$log->save();
+		Audit::CreateEvent('account.iban.update.success', 'IBAN and/or account name updated');
 
 		return back()->with('success', 'Betalingsgegevens zijn aangepast');
 	}
@@ -544,11 +531,7 @@ class UserController extends Controller {
 
 		$user->save();
 
-		$log = new Audit;
-		$log->ip = \Calctool::remoteAddr();
-		$log->event = '[PREFSUPDATE] [SUCCESS]';
-		$log->user_id = $user->id;
-		$log->save();
+		Audit::CreateEvent('account.preference.update.success', 'Account preferences updated');
 
 		return back()->with('success', 'Voorkeuren opgeslagen');
 	}
@@ -572,6 +555,8 @@ class UserController extends Controller {
 
 	public function doLoadDemoProject() {
 		\DemoProjectTemplate::setup(Auth::id());
+
+		Audit::CreateEvent('account.demoproject.success', 'Demoproject loaded for user');
 
 		return back()->with('success', 'Demoproject geladen');
 	}

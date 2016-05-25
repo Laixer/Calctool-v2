@@ -196,11 +196,8 @@ class AdminController extends Controller {
 
 		$user->save();
 
-		$log = new Audit;
-		$log->ip = \Calctool::remoteAddr();
-		$log->event = '[ADMIN] [CREATE] [SUCCESS] ' . Auth::user()->username;
-		$log->user_id = $user->id;
-		$log->save();
+		Audit::CreateEvent('admin.user.new.succces', 'Created user: ' . $user->username);
+		Audit::CreateEvent('admin.user.new.succces', 'Created user: ' . $user->username, $user->id);
 
 		return back()->with('success', 'Nieuwe gebruiker aangemaakt');
 	}
@@ -285,11 +282,8 @@ class AdminController extends Controller {
 
 		$user->save();
 
-		$log = new Audit;
-		$log->ip = \Calctool::remoteAddr();
-		$log->event = '[ADMIN] [UPDATE_PROFILE] [SUCCESS] ' . Auth::user()->username;
-		$log->user_id = $user->id;
-		$log->save();
+		Audit::CreateEvent('admin.user.update.succces', 'Updated user: ' . $user->username);
+		Audit::CreateEvent('admin.user.update.succces', 'Updated user: ' . $user->username, $user->id);
 
 		return back()->with('success', 'Gegevens gebruiker aangepast');
 	}
