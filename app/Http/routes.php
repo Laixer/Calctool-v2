@@ -336,22 +336,30 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 	Route::get('user/new', function() {
 		return view('admin.new_user');
 	});
-	Route::post('user/new', array('as' => 'user', 'uses' => 'AdminController@doNewUser'));
+	Route::post('user/new', 'AdminController@doNewUser');
 	Route::get('user', function() {
 		return view('admin.user');
 	});
 	Route::get('user-{user_id}/edit', function() {
 		return view('admin.edit_user');
 	});
-	Route::get('user-{user_id}/switch', array('as' => 'user', 'uses' => 'AdminController@getSwitchSession'));
-	Route::get('user-{user_id}/demo', array('as' => 'user', 'uses' => 'AdminController@getDemoProject'));
-	Route::get('user-{user_id}/validation', array('as' => 'user', 'uses' => 'AdminController@getValidationProject'));
-	Route::get('user-{user_id}/stabu', array('as' => 'user', 'uses' => 'AdminController@getStabuProject'));
-	Route::get('user-{user_id}/deblock', array('as' => 'user', 'uses' => 'AdminController@getSessionDeblock'));
-	Route::post('user-{user_id}/edit', array('as' => 'user', 'uses' => 'AdminController@doUpdateUser'));
+	Route::get('user-{user_id}/switch', 'AdminController@getSwitchSession');
+	Route::get('user-{user_id}/demo', 'AdminController@getDemoProject');
+	Route::get('user-{user_id}/validation', 'AdminController@getValidationProject');
+	Route::get('user-{user_id}/stabu', 'AdminController@getStabuProject');
+	Route::get('user-{user_id}/deblock', 'AdminController@getSessionDeblock');
+	Route::post('user-{user_id}/edit', 'AdminController@doUpdateUser');
 	Route::get('group', function() {
 		return view('admin.group');
 	});
+	Route::get('group-{group_id}/edit', function() {
+		return view('admin.edit_group');
+	});
+	Route::post('group-{group_id}/edit', 'AdminController@doUpdateGroup');
+	Route::get('group/new', function() {
+		return view('admin.new_group');
+	});
+	Route::post('group/new', 'AdminController@doNewGroup');
 	Route::get('alert', function() {
 		return view('admin.alert');
 	});

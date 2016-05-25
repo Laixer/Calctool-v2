@@ -121,6 +121,7 @@ class AuthController extends Controller {
 		$user->email = $request->get('email');
 		$user->expiration_date = date('Y-m-d', strtotime("+1 month", time()));
 		$user->user_type = UserType::where('user_type','=','user')->first()->id;
+		$user->user_group = 100;
 
 		$data = array('email' => $user->email, 'api' => $user->api, 'token' => $user->token, 'username' => $user->username);
 		Mailgun::send('mail.confirm', $data, function($message) use ($data) {

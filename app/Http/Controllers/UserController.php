@@ -375,6 +375,7 @@ class UserController extends Controller {
 		$user->username = $request->get('username');
 		$user->secret = Hash::make($request->get('secret'));
 		$user->user_type = 1;//$request->get('user_type');
+		$user->user_group = 100;
 
 		/* Contact */
 		$user->firstname = $request->get('firstname');

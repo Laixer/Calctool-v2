@@ -29,6 +29,7 @@ class CreateUsersTable extends Migration {
 			$table->string('name', 50)->unique();
 			$table->decimal('subscription_amount', 9, 3);
 			$table->char('token', 32)->unique();
+			$table->boolean('active')->default('Y');
 			$table->text('note')->nullable();
 		});
 

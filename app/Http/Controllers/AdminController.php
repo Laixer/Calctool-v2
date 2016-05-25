@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use \Calctool\Models\SysMessage;
 use \Calctool\Models\Payment;
 use \Calctool\Models\User;
+use \Calctool\Models\UserGroup;
 use \Calctool\Models\OfferPost;
 use \Calctool\Models\Offer;
 use \Calctool\Models\Invoice;
@@ -319,6 +320,67 @@ class AdminController extends Controller {
 
 		return redirect('/')->withCookie(cookie()->forget('swpsess'));
 
+	}
+
+	public function doNewGroup(Request $request)
+	{
+		$request->merge(array('name' => strtolower(trim($request->input('name')))));
+
+		$this->validate($request, [
+			'name' => array('required','unique:user_group'),
+			'subscription_amount' => array('required'),
+		]);
+
+		/* General */
+		$group = new UserGroup;
+		$group->name = $request->input('name');;
+		$group->subscription_amount = $request->input('subscription_amount');
+
+		if ($request->input('note'))
+			$group->note = $request->input('note');	
+		if ($request->input('toggle-active'))
+			$group->active = true;
+		else
+			$group->active = false;
+
+		$group->token = md5(mt_rand());
+		$group->save();
+
+		return back()->with('success', 'Groep aangemaakt');
+	}
+
+	public function doUpdateGroup(Request $request, $group_id)
+	{
+		$this->validate($request, [
+			'name' => array('required'),
+		]);
+
+		/* General */
+		$group = UserGroup::find($group_id);
+		if ($request->input('name')) {
+			if ($group->name != $request->get('name')) {
+				$name = strtolower(trim($request->input('name')));
+
+				if (UserGroup::where('name',$name)->count()>0) {
+					$errors = new MessageBag(['status' => ['Groepnaam wordt al gebruikt']]);
+					return back()->withErrors($errors);
+				}
+
+				$group->name = $name;
+			}
+		}
+		if ($request->input('subscription_amount'))
+			$group->subscription_amount = $request->input('subscription_amount');
+		if ($request->input('note'))
+			$group->note = $request->input('note');	
+		if ($request->input('toggle-active'))
+			$group->active = true;
+		else
+			$group->active = false;
+
+		$group->save();
+
+		return back()->with('success', 'Groep opgeslagen');
 	}
 
 	public function doDeleteResource(Request $request)
