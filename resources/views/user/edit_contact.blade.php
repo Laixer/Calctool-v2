@@ -73,7 +73,7 @@ if (!$contact) {
 			  <li><a href="/mycompany">Mijn bedrijf</a></li>
 			 <li class="active">contact bewerken</li>
 			</ol>
-			<div>
+			</div>
 			<br>
 			@else
 			<div>
@@ -83,7 +83,7 @@ if (!$contact) {
 			  <li><a href="/relation-{{ $relation->id }}/edit">{{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</a></li>
 			  <li class="active">contact bewerken</li>
 			</ol>
-			<div>
+			</div>
 			<br>
 			@endif
 
@@ -95,7 +95,7 @@ if (!$contact) {
 
 			<div class="white-row">
 				<form method="POST" action="/relation/contact/update" accept-charset="UTF-8">
-                                {!! csrf_field() !!}
+                {!! csrf_field() !!}
 
 				<h4>Contactgegevens</h4>
 				<div class="row">

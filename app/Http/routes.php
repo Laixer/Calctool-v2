@@ -349,6 +349,9 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 	Route::get('user-{user_id}/stabu', array('as' => 'user', 'uses' => 'AdminController@getStabuProject'));
 	Route::get('user-{user_id}/deblock', array('as' => 'user', 'uses' => 'AdminController@getSessionDeblock'));
 	Route::post('user-{user_id}/edit', array('as' => 'user', 'uses' => 'AdminController@doUpdateUser'));
+	Route::get('group', function() {
+		return view('admin.group');
+	});
 	Route::get('alert', function() {
 		return view('admin.alert');
 	});

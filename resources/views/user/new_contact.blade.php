@@ -57,14 +57,14 @@ if (!$relation || !$relation->isOwner()) {
 			  <li><a href="/relation-{{ $relation->id }}/edit">{{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</a></li>
 			 <li class="active" /relation-{{ $relation->id }}/contact/new">nieuw contact</li>
 			</ol>
-			<div>
+			</div>
 			<br>
 
 			<h2><strong>Nieuw</strong> contact</h2>
 
 			<div class="white-row">
 				<form method="POST" action="/relation/contact/new" accept-charset="UTF-8">
-	                        {!! csrf_field() !!}
+	            {!! csrf_field() !!}
 				<h4>Contactgegevens</h4>
 				<div class="row">
 

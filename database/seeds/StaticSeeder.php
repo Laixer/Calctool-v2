@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use \Calctool\Models\SubGroup;
 use \Calctool\Models\Supplier;
 use \Calctool\Models\UserType;
+use \Calctool\Models\UserGroup;
 use \Calctool\Models\Province;
 use \Calctool\Models\Country;
 use \Calctool\Models\ProjectType;
@@ -401,6 +402,10 @@ class StaticSeeder extends Seeder {
 		UserType::create(array('user_type' => 'tester'));
 		UserType::create(array('user_type' => 'demo'));
 		$this->command->info('UserType created');
+
+		UserGroup::create(array('name' => 'Standaard groep', 'subscription_amount' => 7.95, 'note' => 'Stdandaard groep voor nieuwe gebruikers', 'token' => md5(mt_rand())));
+		UserGroup::create(array('name' => 'Beta groep', 'subscription_amount' => 0, 'token' => md5(mt_rand())));
+		$this->command->info('UserGroup created');
 
 		Province::create(array('province_name' => 'groningen'));
 		Province::create(array('province_name' => 'friesland'));

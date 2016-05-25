@@ -45,6 +45,25 @@ $(document).ready(function() {
 						<div class="col-sm-12 col-md-2">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
+									<a class="item-hover" href="/admin/group">
+										<span class="overlay color2"></span>
+										<span class="inner">
+											<span class="block fa fa-users fsize60"></span>
+											<strong>Groepen</strong>
+										</span>
+									</a>
+									<a href="/admin/group" class="btn btn-primary add_to_cart"><i class="fa fa-users"></i> Groepen</a>
+								</figure>
+								<div class="item-box-desc">
+									<a href="/admin/group" ><h4>Groepen</h4></a>
+									<small class="styleColor">{{ \Calctool\Models\UserGroup::count() }} groepen</small>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-12 col-md-2">
+							<div class="item-box item-box-show fixed-box">
+								<figure>
 									<a class="item-hover" href="/admin/alert">
 										<span class="overlay color2"></span>
 										<span class="inner">

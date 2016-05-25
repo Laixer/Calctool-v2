@@ -126,6 +126,7 @@ class AdminController extends Controller {
 			'username' => array('required','unique:user_account'),
 			'secret' => array('required'),
 			'type' => array('required'),
+			'group' => array('required'),
 
 			/* Contact */
 			'lastname' => array('max:50'),
@@ -149,6 +150,7 @@ class AdminController extends Controller {
 		$user->username = $request->input('username');
 		$user->secret = Hash::make($request->input('secret'));
 		$user->user_type = $request->input('type');
+		$user->user_group = $request->input('group');		
 
 		/* Server */
 		$user->api = md5(mt_rand());
@@ -227,6 +229,8 @@ class AdminController extends Controller {
 			$user->secret = Hash::make($request->input('secret'));
 		if ($request->input('type'))
 			$user->user_type = $request->input('type');
+		if ($request->input('group'))
+			$user->user_group = $request->input('group');
 
 		/* Contact */
 		if ($request->input('firstname'))
@@ -276,7 +280,7 @@ class AdminController extends Controller {
 		else
 			$user->api_access = false;
 		if (!$request->input('gender') || $request->input('gender') == '-1')
-			$user->gender = NULL;
+			$user->gender = null;
 		else
 			$user->gender = $request->input('gender');
 

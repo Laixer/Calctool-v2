@@ -190,6 +190,16 @@ $(document).ready(function() {
 							<input name="bandate" id="bandate" type="date" value="{{ Input::old('bandate') ? Input::old('bandate') : '' }}" class="form-control"/>
 						</div>
 					</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label for="gender" style="display:block;">Gebruikersgroep</label>
+								<select name="group" id="group" class="form-control pointer">
+									@foreach (\Calctool\Models\UserGroup::all() as $group)
+										<option value="{{ $group->id }}">{{ ucwords($group->name) }}</option>
+									@endforeach
+								</select>
+							</div>
+						</div>
 				</div>
 				<div class="row">
 

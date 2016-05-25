@@ -23,6 +23,15 @@ class CreateUsersTable extends Migration {
 			$table->string('user_type', 50)->unique();
 		});
 
+		Schema::create('user_group', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('name', 50)->unique();
+			$table->decimal('subscription_amount', 9, 3);
+			$table->char('token', 32)->unique();
+			$table->text('note')->nullable();
+		});
+
 		Schema::create('province', function(Blueprint $table)
 		{
 			$table->increments('id');
@@ -88,6 +97,8 @@ class CreateUsersTable extends Migration {
 			$table->nullableTimestamps();
 			$table->integer('user_type')->unsigned();
 			$table->foreign('user_type')->references('id')->on('user_type')->onUpdate('cascade')->onDelete('restrict');
+			$table->integer('user_group')->unsigned();
+			$table->foreign('user_group')->references('id')->on('user_group')->onUpdate('cascade')->onDelete('restrict')->default(1);
 		});
 
 		Schema::create('project_type', function(Blueprint $table)
@@ -229,11 +240,13 @@ class CreateUsersTable extends Migration {
 		});
 
 		$seq_user_account = "ALTER SEQUENCE user_account_id_seq RESTART WITH 1000";
+		$seq_user_group = "ALTER SEQUENCE user_group_id_seq RESTART WITH 100";
 		$seq_project = "ALTER SEQUENCE project_id_seq RESTART WITH 10000";
 		$seq_order = "ALTER SEQUENCE project_id_seq RESTART WITH 1000";
 		$seq_order = "ALTER SEQUENCE messagebox_id_seq RESTART WITH 10000";
 
 		DB::unprepared($seq_user_account);
+		DB::unprepared($seq_user_group);
 		DB::unprepared($seq_project);
 		DB::unprepared($seq_order);
 	}
@@ -288,10 +301,6 @@ class CreateUsersTable extends Migration {
 		{
 			Schema::dropIfExists('user_account');
 		});
-		Schema::table('user_type', function(Blueprint $table)
-		{
-			Schema::dropIfExists('user_type');
-		});
 		Schema::table('country', function(Blueprint $table)
 		{
 			Schema::dropIfExists('country');
@@ -299,6 +308,14 @@ class CreateUsersTable extends Migration {
 		Schema::table('province', function(Blueprint $table)
 		{
 			Schema::dropIfExists('province');
+		});
+		Schema::table('user_group', function(Blueprint $table)
+		{
+			Schema::dropIfExists('user_group');
+		});
+		Schema::table('user_type', function(Blueprint $table)
+		{
+			Schema::dropIfExists('user_type');
 		});
 	}
 
