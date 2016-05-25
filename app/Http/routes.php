@@ -116,30 +116,30 @@ Route::group(['middleware' => 'auth'], function()
 	Route::post('payment/promocode', 'UserController@doCheckPromotionCode');
 
 	/* Actions by calculation */
-	Route::post('calculation/newchapter/{project_id}', array('as' => 'calculation', 'uses' => 'CalcController@doNewChapter'))->where('project_id', '[0-9]+');
-	Route::post('calculation/calc/newactivity/{chapter_id}', array('as' => 'calculation', 'uses' => 'CalcController@doNewCalculationActivity'))->where('chapter_id', '[0-9]+');
-	Route::post('calculation/estim/newactivity/{chapter_id}', array('as' => 'calculation', 'uses' => 'CalcController@doNewEstimateActivity'))->where('chapter_id', '[0-9]+');
-	Route::post('calculation/updatepart', array('as' => 'calculation', 'uses' => 'CalcController@doUpdatePart'));
-	Route::post('calculation/updatetax', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateTax'));
-	Route::post('calculation/updateestimatetax', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateEstimateTax'));
-	Route::post('calculation/noteactivity', array('as' => 'calculation', 'uses' => 'CalcController@doUpdateNote'));
-	Route::post('calculation/deleteactivity', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteActivity'));
-	Route::post('calculation/deletechapter', array('as' => 'calculation', 'uses' => 'CalcController@doDeleteChapter'));
+	Route::post('calculation/newchapter/{project_id}', 'CalcController@doNewChapter')->where('project_id', '[0-9]+');
+	Route::post('calculation/calc/newactivity/{chapter_id}', 'CalcController@doNewCalculationActivity')->where('chapter_id', '[0-9]+');
+	Route::post('calculation/estim/newactivity/{chapter_id}', 'CalcController@doNewEstimateActivity')->where('chapter_id', '[0-9]+');
+	Route::post('calculation/updatepart', 'CalcController@doUpdatePart');
+	Route::post('calculation/updatetax', 'CalcController@doUpdateTax');
+	Route::post('calculation/updateestimatetax', 'CalcController@doUpdateEstimateTax');
+	Route::post('calculation/noteactivity', 'CalcController@doUpdateNote');
+	Route::post('calculation/deleteactivity', 'CalcController@doDeleteActivity');
+	Route::post('calculation/deletechapter', 'CalcController@doDeleteChapter');
 	Route::post('calculation/activity/usetimesheet', 'CalcController@doUpdateUseTimesheet');
 
-	Route::post('invoice/updatecondition', array('as' => 'invoice', 'uses' => 'InvoiceController@doUpdateCondition'));
-	Route::post('invoice/updatecode', array('as' => 'invoice', 'uses' => 'InvoiceController@doUpdateCode'));
-	Route::post('invoice/updatedesc', array('as' => 'invoice', 'uses' => 'InvoiceController@doUpdateDescription'));
-	Route::post('invoice/updateamount', array('as' => 'invoice', 'uses' => 'InvoiceController@doUpdateAmount'));
-	Route::get('invoice/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoiceAll'))->where('project_id', '[0-9]+')->middleware('payzone');
-	Route::get('invoice/project-{project_id}/invoice-{invoice_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoice'))->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
-	Route::get('invoice/project-{project_id}/term-invoice-{invoice_id}', array('as' => 'invoice', 'uses' => 'CalcController@getTermInvoice'))->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
+	Route::post('invoice/updatecondition', 'InvoiceController@doUpdateCondition');
+	Route::post('invoice/updatecode', 'InvoiceController@doUpdateCode');
+	Route::post('invoice/updatedesc', 'InvoiceController@doUpdateDescription');
+	Route::post('invoice/updateamount', 'InvoiceController@doUpdateAmount');
+	Route::get('invoice/project-{project_id}', 'CalcController@getInvoiceAll')->where('project_id', '[0-9]+')->middleware('payzone');
+	Route::get('invoice/project-{project_id}/invoice-{invoice_id}', 'CalcController@getInvoice')->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
+	Route::get('invoice/project-{project_id}/term-invoice-{invoice_id}', 'CalcController@getTermInvoice')->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
 	Route::post('invoice/save', 'InvoiceController@doInvoiceVersionNew');
 	Route::post('invoice/close', 'InvoiceController@doInvoiceClose');
-	Route::post('invoice/pay', array('as' => 'invoice', 'uses' => 'InvoiceController@doInvoicePay'));
-	Route::post('invoice/invclose', array('as' => 'invoice', 'uses' => 'InvoiceController@doInvoiceCloseAjax'));
-	Route::post('invoice/term/add', array('as' => 'invoice', 'uses' => 'InvoiceController@doInvoiceNewTerm'));
-	Route::post('invoice/term/delete', array('as' => 'invoice', 'uses' => 'InvoiceController@doInvoiceDeleteTerm'));
+	Route::post('invoice/pay', 'InvoiceController@doInvoicePay');
+	Route::post('invoice/invclose', 'InvoiceController@doInvoiceCloseAjax');
+	Route::post('invoice/term/add', 'InvoiceController@doInvoiceNewTerm');
+	Route::post('invoice/term/delete', 'InvoiceController@doInvoiceDeleteTerm');
 	Route::get('invoice/project-{project_id}/invoice-version-{invoice_id}', function() {
 		return View::make('calc.invoice_show_pdf');
 	})->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+');
@@ -154,9 +154,9 @@ Route::group(['middleware' => 'auth'], function()
 		return View::make('calc.invoice_version');
 	})->where('project_id', '[0-9]+')->where('invoice_id', '[0-9]+')->middleware('payzone');
 
-	Route::get('offerversions/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOfferAll'))->where('project_id', '[0-9]+')->middleware('payzone');
-	Route::get('offer/project-{project_id}', array('as' => 'invoice', 'uses' => 'CalcController@getOffer'))->where('project_id', '[0-9]+')->middleware('payzone');
-	Route::post('offer/project-{project_id}', array('as' => 'invoice', 'uses' => 'OfferController@doNewOffer'));
+	Route::get('offerversions/project-{project_id}', 'CalcController@getOfferAll')->where('project_id', '[0-9]+')->middleware('payzone');
+	Route::get('offer/project-{project_id}', 'CalcController@getOffer')->where('project_id', '[0-9]+')->middleware('payzone');
+	Route::post('offer/project-{project_id}', 'OfferController@doNewOffer');
 	Route::get('offer/project-{project_id}/offer-{offer_id}', function() {
 		return View::make('calc.offer_show_pdf');
 	})->where('project_id', '[0-9]+')->where('offer_id', '[0-9]+')->middleware('payzone');
@@ -165,9 +165,9 @@ Route::group(['middleware' => 'auth'], function()
 	Route::post('offer/sendmail', 'OfferController@doSendOffer');
 	Route::post('offer/sendpost', 'OfferController@doSendPostOffer');
 
-	Route::get('invoice/pdf/project-{project_id}/invoice-{invoice_id}', array('as' => 'invoice', 'uses' => 'CalcController@getInvoicePDF'))->where('project_id', '[0-9]+')->middleware('payzone');
-	Route::get('invoice/pdf/project-{project_id}/invoice-{invoice_id}/download', array('as' => 'invoice', 'uses' => 'CalcController@getInvoiceDownloadPDF'))->where('project_id', '[0-9]+')->middleware('payzone');
-	Route::get('invoice/pdf/project-{project_id}/term-invoice-{invoice_id}/download', array('as' => 'invoice', 'uses' => 'CalcController@getTermInvoiceDownloadPDF'))->where('project_id', '[0-9]+')->middleware('payzone');
+	Route::get('invoice/pdf/project-{project_id}/invoice-{invoice_id}', 'CalcController@getInvoicePDF')->where('project_id', '[0-9]+')->middleware('payzone');
+	Route::get('invoice/pdf/project-{project_id}/invoice-{invoice_id}/download', 'CalcController@getInvoiceDownloadPDF')->where('project_id', '[0-9]+')->middleware('payzone');
+	Route::get('invoice/pdf/project-{project_id}/term-invoice-{invoice_id}/download', 'CalcController@getTermInvoiceDownloadPDF')->where('project_id', '[0-9]+')->middleware('payzone');
 
 	/* Calculation acions by calculation */
 	Route::post('calculation/calc/newmaterial', 'CalcController@doNewCalculationMaterial');
@@ -205,36 +205,36 @@ Route::group(['middleware' => 'auth'], function()
 	Route::get('estimate/endresult/project-{project_id}', 'CalcController@getEstimateEndresult')->where('project_id', '[0-9]+')->middleware('payzone');
 
 	/* Estimate acions by estimate */
-	Route::post('estimate/newlabor', array('as' => 'calculation', 'uses' => 'EstimController@doNewEstimateLabor'));
-	Route::post('estimate/newmaterial', array('as' => 'calculation', 'uses' => 'EstimController@doNewEstimateMaterial'));
-	Route::post('estimate/updatematerial', array('as' => 'calculation', 'uses' => 'EstimController@doUpdateEstimateMaterial'));
-	Route::post('estimate/deletematerial', array('as' => 'calculation', 'uses' => 'EstimController@doDeleteEstimateMaterial'));
-	Route::post('estimate/resetmaterial', array('as' => 'calculation', 'uses' => 'EstimController@doResetEstimateMaterial'));
-	Route::post('estimate/newequipment', array('as' => 'calculation', 'uses' => 'EstimController@doNewEstimateEquipment'));
-	Route::post('estimate/updateequipment', array('as' => 'calculation', 'uses' => 'EstimController@doUpdateEstimateEquipment'));
-	Route::post('estimate/deleteequipment', array('as' => 'calculation', 'uses' => 'EstimController@doDeleteEstimateEquipment'));
-	Route::post('estimate/resetequipment', array('as' => 'calculation', 'uses' => 'EstimController@doResetEstimateEquipment'));
-	Route::post('estimate/updatelabor', array('as' => 'calculation', 'uses' => 'EstimController@doUpdateEstimateLabor'));
-	Route::post('estimate/resetlabor', array('as' => 'calculation', 'uses' => 'EstimController@doResetEstimateLabor'));
-	Route::post('estimate/deletelabor', array('as' => 'calculation', 'uses' => 'EstimController@doDeleteEstimateLabor'));
+	Route::post('estimate/newlabor', 'EstimController@doNewEstimateLabor');
+	Route::post('estimate/newmaterial', 'EstimController@doNewEstimateMaterial');
+	Route::post('estimate/updatematerial', 'EstimController@doUpdateEstimateMaterial');
+	Route::post('estimate/deletematerial', 'EstimController@doDeleteEstimateMaterial');
+	Route::post('estimate/resetmaterial', 'EstimController@doResetEstimateMaterial');
+	Route::post('estimate/newequipment', 'EstimController@doNewEstimateEquipment');
+	Route::post('estimate/updateequipment', 'EstimController@doUpdateEstimateEquipment');
+	Route::post('estimate/deleteequipment', 'EstimController@doDeleteEstimateEquipment');
+	Route::post('estimate/resetequipment', 'EstimController@doResetEstimateEquipment');
+	Route::post('estimate/updatelabor', 'EstimController@doUpdateEstimateLabor');
+	Route::post('estimate/resetlabor', 'EstimController@doResetEstimateLabor');
+	Route::post('estimate/deletelabor', 'EstimController@doDeleteEstimateLabor');
 
 	/* Less pages */
-	Route::get('less/project-{project_id}', array('as' => 'less', 'uses' => 'CalcController@getLess'))->where('project_id', '[0-9]+')->middleware('payzone');
+	Route::get('less/project-{project_id}', 'CalcController@getLess')->where('project_id', '[0-9]+')->middleware('payzone');
 	Route::get('less/summary/project-{project_id}', 'CalcController@getLessSummary')->where('project_id', '[0-9]+')->middleware('payzone');
 	Route::get('less/endresult/project-{project_id}', 'CalcController@getLessEndresult')->where('project_id', '[0-9]+')->middleware('payzone');
-	Route::post('less/updatelabor', array('as' => 'less', 'uses' => 'LessController@doUpdateLabor'));
-	Route::post('less/updateequipment', array('as' => 'less', 'uses' => 'LessController@doUpdateEquipment'));
-	Route::post('less/updatematerial', array('as' => 'less', 'uses' => 'LessController@doUpdateMaterial'));
-	Route::post('less/resetlabor', array('as' => 'less', 'uses' => 'LessController@doResetLabor'));
-	Route::post('less/resetmaterial', array('as' => 'less', 'uses' => 'LessController@doResetMaterial'));
-	Route::post('less/resetequipment', array('as' => 'less', 'uses' => 'LessController@doResetEquipment'));
+	Route::post('less/updatelabor', 'LessController@doUpdateLabor');
+	Route::post('less/updateequipment', 'LessController@doUpdateEquipment');
+	Route::post('less/updatematerial', 'LessController@doUpdateMaterial');
+	Route::post('less/resetlabor', 'LessController@doResetLabor');
+	Route::post('less/resetmaterial', 'LessController@doResetMaterial');
+	Route::post('less/resetequipment', 'LessController@doResetEquipment');
 
 	/* More pages */
-	Route::get('more/project-{project_id}', array('as' => 'more', 'uses' => 'CalcController@getMore'))->middleware('payzone');
+	Route::get('more/project-{project_id}', 'CalcController@getMore')->middleware('payzone');
 	Route::get('more/summary/project-{project_id}', 'CalcController@getMoreSummary')->where('project_id', '[0-9]+')->middleware('payzone');
 	Route::get('more/endresult/project-{project_id}', 'CalcController@getMoreEndresult')->where('project_id', '[0-9]+')->middleware('payzone');
-	Route::post('more/newmaterial', array('as' => 'more', 'uses' => 'MoreController@doNewMaterial'));
-	Route::post('more/newequipment', array('as' => 'more', 'uses' => 'MoreController@doNewEquipment'));
+	Route::post('more/newmaterial', 'MoreController@doNewMaterial');
+	Route::post('more/newequipment', 'MoreController@doNewEquipment');
 	Route::post('more/newlabor', array('as' => 'more', 'uses' => 'MoreController@doNewLabor'));
 	Route::post('more/updatematerial', array('as' => 'more', 'uses' => 'MoreController@doUpdateMaterial'));
 	Route::post('more/updateequipment', array('as' => 'more', 'uses' => 'MoreController@doUpdateEquipment'));
