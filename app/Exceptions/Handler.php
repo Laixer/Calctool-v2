@@ -61,6 +61,10 @@ class Handler extends ExceptionHandler
             abort(404);
         }
 
+        if (app()->environment() != 'local' && app()->environment() != 'dev') {
+            return response()->view('errors.5xx', [], 200);
+        }
+
         return parent::render($request, $e);
     }
 }
