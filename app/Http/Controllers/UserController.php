@@ -482,7 +482,7 @@ class UserController extends Controller {
 			$user->pref_use_ct_numbering = false;
 
 		if ($request->get('pref_hourrate_calc') != "") {
-			$hour_rate = str_replace(',', '.', str_replace('.', '', $request->get('pref_hourrate_calc')));
+			$hour_rate = floatval(str_replace(',', '.', str_replace('.', '', $request->get('pref_hourrate_calc'))));
 			if ($hour_rate<0 || $hour_rate>999) {
 				return back()->withInput($request->all());
 			}
@@ -491,7 +491,7 @@ class UserController extends Controller {
 		}
 
 		if ($request->get('pref_hourrate_more') != "") {
-			$hour_rate_more = str_replace(',', '.', str_replace('.', '', $request->get('pref_hourrate_more')));
+			$hour_rate_more = floatval(str_replace(',', '.', str_replace('.', '', $request->get('pref_hourrate_more'))));
 			if ($hour_rate_more<0 || $hour_rate_more>999) {
 				return back()->withInput($request->all());
 			}

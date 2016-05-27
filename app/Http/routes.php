@@ -61,8 +61,12 @@ Route::get('terms-and-conditions', function() {
 Route::get('privacy-policy', function() {
 	return view('generic.privacy');
 });
+Route::get('support', function() {
+	return view('generic.contact');
+});
 
 Route::post('feedback', 'FeedbackController@send');
+Route::post('support', 'FeedbackController@sendSupport');
 
 Route::post('payment/webhook/', 'UserController@doPaymentUpdate');
 Route::get('hidenextstep', 'AuthController@doHideNextStep');
