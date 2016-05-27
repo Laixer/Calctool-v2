@@ -1,5 +1,13 @@
 <?php
+use \Calctool\Models\UserGroup;
+
 $user = Auth::user();
+
+function translateDate($date) {
+	$en_months = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+	$nl_months = array("Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December");
+	return str_replace($en_months, $nl_months, $date);
+}
 ?>
 
 @extends('layout.master')
@@ -100,7 +108,7 @@ $(document).ready(function() {
 				@endif
 
 				<div class="bs-callout text-center styleBackground nomargin-top">
-					<h2>Verleng met een maand voor &euro; <strong id="currprice">27</strong>,-</h2>
+					<h2>Verleng met een maand voor &euro; <strong id="currprice">{{ number_format(UserGroup::find($user->user_group)->subscription_amount, 2,",",".") }}</strong></h2>
 				</div>
 				<div class="row">
 					<div class="col-md-6">
@@ -275,7 +283,7 @@ $(document).ready(function() {
 							<h4>Abonnementsduur</h4>
 							<div class="row">
 								<div class="col-md-3"><strong>Abonnement actief tot:</strong></div>
-								<div class="col-md-2">{{ date('j F Y', strtotime($user->expiration_date)) }}</div>
+								<div class="col-md-2">{{ translateDate(strftime('%e %B %Y', strtotime($user->expiration_date))) }}</div>
 								<div class="col-md-7">&nbsp;</div>
 							</div>
 							<br />

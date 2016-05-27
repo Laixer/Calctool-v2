@@ -224,6 +224,8 @@ $(document).ready(function() {
 			<div>
 			<br>
 
+			<p class="alert alert-warning">De materialen lijst van de Bouwmaat bevindt zich nog in BETA fase.</p>
+
 			<h2><strong>Materialen</strong></h2>
 
 			<div class="tabs nomargin-top">
@@ -246,12 +248,10 @@ $(document).ready(function() {
 				<div class="tab-content">
 					<div id="supplier" class="tab-pane">
 
-						<p class="alert alert-warning">De materialen lijst van de Bouwmaat bevindt zich nog in BETA fase.</p>
-
 						<div class="form-group input-group input-group-lg">
 							<input type="text" id="search" value="" class="form-control" placeholder="Zoek materiaal">
 						      <span class="input-group-btn">
-						        <select id="group" class="btn">
+						        <select id="group" class="btn" style="background-color: #E5E7E9; color:#000">
 						        <option value="0" selected>Alles</option>
 						        @foreach (SubGroup::all() as $group)
 						          <option value="{{ $group->id }}">{{ $group->group_type }}</option>

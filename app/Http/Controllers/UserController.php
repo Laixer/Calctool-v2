@@ -11,6 +11,7 @@ use \Calctool\Models\User;
 use \Calctool\Models\Telegram;
 use \Calctool\Models\Audit;
 use \Calctool\Models\Promotion;
+use \Calctool\Models\UserGroup;
 use \Calctool\Models\BankAccount;
 
 use \Auth;
@@ -89,7 +90,12 @@ class UserController extends Controller {
 
 	public function getPayment(Request $request)
 	{
-		$amount = 27;
+		if (\App::environment('local')) {
+			$errors = new MessageBag(['status' => ['Callback niet mogelijk op local dev']]);
+			return redirect('myaccount')->withErrors($errors);
+		}
+
+		$amount = UserGroup::find(Auth::user()->user_group)->subscription_amount;
 		$description = 'Verleng met een maand';
 		$increment_months = 1;
 		$promo_id = -1;
