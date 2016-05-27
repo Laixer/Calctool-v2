@@ -36,7 +36,7 @@ use \Calctool\Models\MessageBox;
 					</li>
 					@else
 					<li>
-						<a href="/admin">Support</a>
+						<a href="/support">Support</a>
 					</li>
 					@endif
 					<li class="active">

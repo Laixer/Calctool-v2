@@ -222,6 +222,15 @@ class AuthController extends Controller {
 
 		$message->save();
 
+		$data = array('email' => $user->email, 'username' => $user->username);
+		Mailgun::send('mail.letushelp', $data, function($message) use ($data) {
+			$message->to($data['email'], strtolower(trim($data['username'])));
+			$message->subject('CalculatieTool.com - Bedankt');
+			// $message->bcc('info@calculatietool.com', 'CalculatieTool.com');
+			$message->from('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+		});
+
 		Audit::CreateEvent('auth.activate.success', 'Activated with: ' . \Calctool::remoteAgent(), $user->id);
 
 		Auth::login($user);
