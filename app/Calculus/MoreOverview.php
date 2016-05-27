@@ -24,7 +24,7 @@ class MoreOverview {
 			$amount = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->sum('amount');
 			$rate = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->first()['rate'];
 		} else {
-			$row = MoreLabor::where('activity_id', '=', $activity->id)->first();
+			$row = MoreLabor::where('activity_id', '=', $activity->id)->whereNull('hour_id')->first();
 			$amount = $row['amount'];
 			$rate = $row['rate'];
 		}
@@ -43,7 +43,7 @@ class MoreOverview {
 		// if ($count)
 		if ($activity->use_timesheet)
 			return MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->sum('amount');
-		return MoreLabor::where('activity_id', '=', $activity->id)->first()['amount'];
+		return MoreLabor::where('activity_id', '=', $activity->id)->whereNull('hour_id')->first()['amount'];
 	}
 
 /*Material activity total*/

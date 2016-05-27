@@ -743,7 +743,7 @@ var n = this,
 														</tr>
 														<?php
 														}else {
-															$labor = MoreLabor::where('activity_id','=', $activity->id)->first();
+															$labor = MoreLabor::where('activity_id','=', $activity->id)->whereNull("hour_id")->first();
 															if (Part::find($activity->part_id)->part_name=='subcontracting')
 																$rate = $labor['rate'];
 															else
