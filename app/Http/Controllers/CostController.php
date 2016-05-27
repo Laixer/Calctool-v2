@@ -48,7 +48,8 @@ class CostController extends Controller {
 	public function doNewTimesheet(Request $request)
 	{
 		$this->validate($request, [
-			'date' => array('required','regex:/^20[0-9][0-9]-[0-9]{2}-[0-9]{2}$/'),
+			//'date' => array('required','regex:/^20[0-9][0-9]-[0-9]{2}-[0-9]{2}$/'),
+			'date' => array('required'),
 			'type' => array('required','integer'),
 			'hour' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
 			'activity' => array('required','integer')
@@ -72,7 +73,7 @@ class CostController extends Controller {
 		}
 
 		$timesheet = Timesheet::create(array(
-			'register_date' => $request->get('date'),
+			'register_date' => date('Y-m-d', strtotime($request->get('date'))),
 			'register_hour' => str_replace(',', '.', str_replace('.', '' , $request->get('hour'))),
 			'activity_id' => $activity->id,
 			'note' => $request->get('note'),
@@ -86,7 +87,6 @@ class CostController extends Controller {
 			$type = 'Meerwerk';
 			$labor = MoreLabor::create(array(
 				"rate" => 0,
-				//"rate" => $_project->hour_rate_more,
 				"amount" => str_replace(',', '.', str_replace('.', '' , $request->get('hour'))),
 				"activity_id" => $activity->id,
 				"hour_id" => $timesheet->id

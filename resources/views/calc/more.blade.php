@@ -388,13 +388,9 @@ var n = this,
 				});
 			}
 		});
-		$("body").on("blur", ".tsave", function(){
+		$("#tsave-save").click(function(){
 			var flag = true;
 			var $curThis = $(this);
-			$curThis.closest("tr").find("input").each(function(){
-				if(!$(this).val())
-					flag = false;
-			});
 			if(flag){
 				$date = $curThis.closest("tr").find("input[name='date']").val();
 				$hour = $curThis.closest("tr").find("input[name='hour']").val();
@@ -418,7 +414,7 @@ var n = this,
 						var $curTable = $curThis.closest("table");
 						var json = $.parseJSON(data);
 						$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
-						.find("td:eq(0)").text($date).end()
+						.find("td:eq(0)").text(json.date).end()
 						.find("td:eq(1)").text(json.hour).end()
 						.find("td:eq(2)").text('€ '+$.number(rate*amount,2,',','.')).end()
 						.find("td:eq(3)").text($note).end()
@@ -536,6 +532,8 @@ var n = this,
 				location.reload();
 			}).fail(function(e) { console.log(e); });
 		});
+
+		$('.datepick').datepicker();
 
 		$('#summernote').summernote({
             height: $(this).attr("data-height") || 200,
@@ -702,14 +700,10 @@ var n = this,
 													?>
 													<thead>
 														<tr>
-															<th class="col-md-1">Datum</th>
+															<th class="col-md-2">Datum</th>
 															<th class="col-md-1">Uren</th>
 															<th class="col-md-1">Prijs</th>
-															<th class="col-md-5">Omschrijving</th>
-															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
-															<th class="col-md-1">&nbsp;</th>
+															<th class="col-md-7">Omschrijving</th>
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
@@ -733,19 +727,19 @@ var n = this,
 														?>
 														@foreach (MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->orderBy('hour_id', 'desc')->get() as $labor)
 														<tr data-id="{{ Timesheet::find($labor->hour_id)->id }}">
-															<td class="col-md-1">{{ Timesheet::find($labor->hour_id)->register_date }}</td>
+															<td class="col-md-2">{{ date('d-m-Y', strtotime(Timesheet::find($labor->hour_id)->register_date)) }}</td>
 															<td class="col-md-1">{{ number_format($labor->amount, 2,",",".") }}</td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(MoreRegister::laborTotal($project->hour_rate_more, $labor->amount), 2, ",",".") }}</span></td>
-															<td class="col-md-8">{{ Timesheet::find($labor->hour_id)->note }}</td>
+															<td class="col-md-7">{{ Timesheet::find($labor->hour_id)->note }}</td>
 															<td class="col-md-1 text-right"><!--<button class="btn btn-xs fa btn-danger fa-times xdeleterow"></button>--></td>
 														</tr>
 														@endforeach
 														<tr>
-															<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text tsave"/></td>
-															<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text tsave"/></td>
+															<td class="col-md-2"><input type="text" class="form-control-sm-text datepick" name="date" /></td>
+															<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
-															<td class="col-md-8"><input type="text" name="note" id="note" class="form-control-sm-text tsave" placeholder="Verplicht"/></td>
-															<td class="col-md-1">&nbsp;</td>
+															<td class="col-md-7"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
+															<td class="col-md-1"><button id="tsave-save" class="btn btn-primary btn-xs"> Toevoegen</button></td>
 														</tr>
 														<?php
 														}else {
