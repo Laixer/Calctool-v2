@@ -34,6 +34,10 @@ use \Calctool\Models\MessageBox;
 					<li>
 						<a href="/admin">Admin CP</a>
 					</li>
+					@else
+					<li>
+						<a href="/admin">Support</a>
+					</li>
 					@endif
 					<li class="active">
 					<?php

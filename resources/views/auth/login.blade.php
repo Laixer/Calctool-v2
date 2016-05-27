@@ -100,11 +100,11 @@ $(function() {
 						@endif
 
 						<label class="nobold">Vul uw e-mailadres hier in</label>
-						<form method="post" action="password/reset">
+						<form id="passforgot" method="post" action="password/reset">
 							<div class="input-group">
 							<input type="text" class="form-control" name="email" id="email" placeholder="E-mail adres" />
 							<span class="input-group-btn">
-								<button class="btn btn-primary" type="button">Verzenden</button>
+								<button class="btn btn-primary" onclick="$('#passforgot').submit();" type="button">Verzenden</button>
 							</span>
 							</div>
 						{!! csrf_field() !!}
