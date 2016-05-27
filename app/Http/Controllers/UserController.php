@@ -128,10 +128,11 @@ class UserController extends Controller {
 					"promo"		=> $promo_id,
 				),
 			));
-		} catch (Mollie_API_Exception $e) {
+		} catch (\Mollie_API_Exception $e) {
 			Audit::CreateEvent('account.payment.initiated.failed', 'Create payment failed with ' . $e->getMessage());
 
-			return redirect('myaccount');
+			$errors = new MessageBag(['status' => ['Aanmaken van een betaling is mislukt']]);
+			return redirect('myaccount')->withErrors($errors);
 		}
 
 		$order = new Payment;

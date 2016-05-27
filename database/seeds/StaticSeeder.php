@@ -404,7 +404,7 @@ class StaticSeeder extends Seeder {
 		$this->command->info('UserType created');
 
 		UserGroup::create(array('name' => 'Standaard groep', 'subscription_amount' => 7.95, 'note' => 'Stdandaard groep voor nieuwe gebruikers', 'token' => md5(mt_rand())));
-		UserGroup::create(array('name' => 'Beta groep', 'subscription_amount' => 0, 'token' => md5(mt_rand())));
+		UserGroup::create(array('name' => 'Beta groep', 'subscription_amount' => 1, 'token' => md5(mt_rand())));
 		$this->command->info('UserGroup created');
 
 		Province::create(array('province_name' => 'groningen'));

@@ -70,7 +70,7 @@ $(document).ready(function() {
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="subscription_amount">Maandbedrag</label>
-							<input name="subscription_amount" id="subscription_amount" type="text" value="{{ Input::old('subscription_amount') ? Input::old('subscription_amount') : '' }}" class="form-control"/>
+							<input name="subscription_amount" type="number" min="1" step="any" id="subscription_amount" value="{{ Input::old('subscription_amount') ? Input::old('subscription_amount') : '1.000' }}" class="form-control"/>
 						</div>
 					</div>
 
