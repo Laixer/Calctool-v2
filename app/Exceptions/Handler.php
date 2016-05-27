@@ -24,6 +24,7 @@ class Handler extends ExceptionHandler
         ModelNotFoundException::class,
         AuthorizationException::class,
         ValidationException::class,
+        TokenMismatchException::class,
     ];
 
     /**
@@ -58,6 +59,10 @@ class Handler extends ExceptionHandler
 
         if ($e instanceof MethodNotAllowedHttpException) {
             abort(404);
+        }
+
+        if (app()->environment() != 'local' && app()->environment() != 'dev') {
+            return response()->view('errors.5xx', [], 200);
         }
 
         return parent::render($request, $e);

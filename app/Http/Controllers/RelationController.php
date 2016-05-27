@@ -8,6 +8,7 @@ use JeroenDesloovere\VCard\VCard;
 use \Calctool\Models\Relation;
 use \Calctool\Models\RelationKind;
 use \Calctool\Models\Contact;
+use \Calctool\Models\Audit;
 use \Calctool\Models\ContactFunction;
 use \Calctool\Models\Resource;
 
@@ -99,7 +100,8 @@ class RelationController extends Controller {
 
 		$relation->save();
 
-		//return back()->with('success', 'Uw bedrijfsgegevens zijn aangepast');
+		Audit::CreateEvent('mycompany.update.success', 'Settings for my corporation updated');
+		
 		return redirect('/mycompany/?multipage=true')->with('success', 'Uw bedrijfsgegevens zijn aangepast');
 	}
 
@@ -269,6 +271,8 @@ class RelationController extends Controller {
 		$user = Auth::user();
 		$user->self_id = $relation->id;
 		$user->save();
+
+		Audit::CreateEvent('mycompany.new.success', 'Settings for my corporation created');
 
 		return back()->with('success', 'Uw bedrijfsgegevens zijn opgeslagen');
 	}

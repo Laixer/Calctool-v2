@@ -226,6 +226,17 @@ $(document).ready(function() {
 								<input name="bandate" id="bandate" type="date" value="{{ ($user->banned ? date('Y-m-d', strtotime($user->banned)) : '') }}" class="form-control"/>
 							</div>
 						</div>
+
+						<div class="col-md-3">
+							<div class="form-group">
+								<label for="gender" style="display:block;">Gebruikersgroep</label>
+								<select name="group" id="group" class="form-control pointer">
+									@foreach (\Calctool\Models\UserGroup::all() as $group)
+										<option {{ $user->user_group==$group->id ? 'selected' : '' }} value="{{ $group->id }}">{{ ucwords($group->name) }}</option>
+									@endforeach
+								</select>
+							</div>
+						</div>
 					</div>
 					<div class="row">
 
@@ -299,7 +310,7 @@ $(document).ready(function() {
 							<tr>
 								<td class="col-md-2">{{ date('d-m-Y H:i:s', strtotime(DB::table('audit')->select('created_at')->where('id',$rec->id)->get()[0]->created_at)) }}</td>
 								<td class="col-md-2">{{ $rec->ip }}</td>
-								<td class="col-md-8">{{ $rec->event }}</td>
+								<td class="col-md-8">{!! nl2br($rec->event) !!}</td>
 							</tr>
 						@endforeach
 						</tbody>

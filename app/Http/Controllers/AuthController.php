@@ -62,8 +62,11 @@ class AuthController extends Controller {
 
 			Redis::del('auth:'.$username.':fail', 'auth:'.$username.':block');
 
-			$log = new Audit('[LOGIN] [SUCCESS] ' . \Calctool::remoteAgent());
-			$log->setUserId(Auth::id())->save();
+			Audit::CreateEvent('auth.login.succces', 'Login with: ' . \Calctool::remoteAgent());
+
+			if (Auth::user()->isSystem()) {
+				return redirect('/admin');
+			}
 
 			/* Redirect to dashboard*/
 			return redirect('/');
@@ -83,11 +86,7 @@ class AuthController extends Controller {
 
 			$failuser = \Calctool\Models\User::where('username', $username)->first();
 			if ($failuser) {
-				$log = new \Calctool\Models\Audit;
-				$log->ip = \Calctool::remoteAddr();
-				$log->event = '[LOGIN] [FAILED] '.$failcount;
-				$log->user_id = $failuser->id;
-				$log->save();
+				Audit::CreateEvent('auth.login.failed', 'Failed tries: ' . $failcount, $failuser->id);
 			}
 
 			return back()->withErrors($errors)->withInput($request->except('secret'))->withCookie(cookie()->forget('swpsess'));
@@ -122,6 +121,7 @@ class AuthController extends Controller {
 		$user->email = $request->get('email');
 		$user->expiration_date = date('Y-m-d', strtotime("+1 month", time()));
 		$user->user_type = UserType::where('user_type','=','user')->first()->id;
+		$user->user_group = 100;
 
 		$data = array('email' => $user->email, 'api' => $user->api, 'token' => $user->token, 'username' => $user->username);
 		Mailgun::send('mail.confirm', $data, function($message) use ($data) {
@@ -133,6 +133,8 @@ class AuthController extends Controller {
 		});
 
 		$user->save();
+
+		Audit::CreateEvent('account.new.success', 'Created new account from template', $user->id);
 
 		return back()->with('success', 'Account aangemaakt, er is een bevestingsmail verstuurd');
 	}
@@ -159,10 +161,7 @@ class AuthController extends Controller {
 		$user->token = sha1($user->secret);
 		$user->save();
 
-		$log = new Audit;
-		$log->event = '[NEWPASS] [SUCCESS]'  . \Calctool::remoteAgent();
-		$log->user_id = $user->id;
-		$log->save();
+		Audit::CreateEvent('auth.update.password.success', 'Updated with: ' . \Calctool::remoteAgent(), $user->id);
 
 		Auth::login($user);
 		return redirect('/');
@@ -217,20 +216,46 @@ class AuthController extends Controller {
 
 		$message = new MessageBox;
 		$message->subject = 'Welkom ' . $user->username;
-		$message->message = 'Beste ' . $user->username . ',<br /><br />Welkom bij de CalculatieTool.com,<br /><br />Je account is aangemaakt met alles dat de CalculatieTool.com te bieden heeft. Geen verborgen of afgeschermde delen en alles is beschikbaar. Hieronder valt ook onze GRATIS service jouw offertes en facturen door ons te laten versturen met de post. Jouw persoonlijke account is dus klaar voor gebruik, succes met het Calculeren, Offreren, Registreren, Facturen en Administreren met deze al-in-one-tool!<br />Wanneer de Quickstart pop-up of de pagina <a href="/mycompany">mijn bedrijf</a> wordt ingevuld kan je direct aan de slag met je eerste project.<br /><br />Groet, Maikel van de CalculatieTool.com';
+		$message->message = 'Beste ' . $user->username . ',<br /><br />Welkom bij de CalculatieTool.com,<br /><br />
+
+		Je account is aangemaakt met alles dat de CalculatieTool.com te bieden heeft. Geen verborgen of afgeschermde delen en alles is beschikbaar. Hieronder valt ook onze GRATIS service jouw offertes en facturen door ons te laten versturen met de post. Jouw persoonlijke account is dus klaar voor gebruik, succes met het Calculeren, Offreren, Registreren, Facturen en Administreren met deze al-in-one-tool!
+			<br>
+			<br>
+		Graag willen we nog even een paar dingen uitleggen voordat je aan de slag gaat. Het programma is iets anders van opzet dan de doorsnee calculatie apps. Het grootste verschil zit hem in de module calculeren. Deze is opgezet volgens het <i>biervilt principe</i>. Dit houdt in dat je geen normeringen kunt toe passen. 
+			<br>
+			<br>
+		Je geeft gewoon letterlijk op wat je nodig hebt voor de arbeid, het materiaal en het materieel. Wij richten ons echt op de ZZP markt en daar kwam deze wens van calculeren uit naar voren. Het programma is heel duidelijk van opzet en je hebt het echt zo onder knie, desalniettemin kunnen er altijd vagen zijn. Stel deze gerust, dan proberen wij deze zo snel mogelijk te beantwoorden.
+			<br>
+			<br>
+		Probeer het programma echt even te doorgronden. Er wordt je echt een hoop werk uit handen genomen als je het onder de knie hebt en je zal er net als andere gebruikers een hoop plezier aan beleven.
+			<br>
+			<br>
+		Er zijn diverse filmpjes die de modules duidelijk maken. 
+			<br>
+			<br>
+		De prijs die wij na de 30 dagen proefperiode hanteren is blijvend laag en je kan altijd  alle functionaliteiten gebruiken die het programma biedt.
+			<br>
+			<br>
+			<br />Wanneer de Quickstart pop-up of de pagina <a href="/mycompany">mijn bedrijf</a> wordt ingevuld kan je direct aan de slag met je eerste project.<br /><br />Groet, Maikel van de CalculatieTool.com';
+
 		$message->from_user = User::where('username', 'system')->first()['id'];
 		$message->user_id =	$user->id;
 
 		$message->save();
 
-		$log = new Audit;
-		$log->ip = \Calctool::remoteAddr();
-		$log->event = '[ACTIVATE] [SUCCESS]' . \Calctool::remoteAgent();
-		$log->user_id = $user->id;
-		$log->save();
+		$data = array('email' => $user->email, 'username' => $user->username);
+		Mailgun::send('mail.letushelp', $data, function($message) use ($data) {
+			$message->to($data['email'], strtolower(trim($data['username'])));
+			$message->subject('CalculatieTool.com - Bedankt');
+			// $message->bcc('info@calculatietool.com', 'CalculatieTool.com');
+			$message->from('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+		});
+
+		Audit::CreateEvent('auth.activate.success', 'Activated with: ' . \Calctool::remoteAgent(), $user->id);
 
 		Auth::login($user);
-		// return redirect('/')->withCookie(cookie('nstep', 'intro_'.$user->id, 60*24*3))->withCookie(cookie('_xintr'.$user->id, '1', 60*24*7));
+
 		return redirect('/?nstep=intro')->withCookie(cookie('_xintr'.$user->id, '1', 60*24*7));
 	}
 
@@ -262,11 +287,7 @@ class AuthController extends Controller {
 
 		$user->save();
 
-		$log = new Audit;
-		$log->ip = \Calctool::remoteAddr();
-		$log->event = '[BLOCKPASS] [SUCCESS]';
-		$log->user_id = $user->id;
-		$log->save();
+		Audit::CreateEvent('auth.reset.password.mail.success', 'Reset with: ' . \Calctool::remoteAgent(), $user->id);
 
 		return redirect('login')->with('success', 'Wachtwoord geblokkeerd');
 	}
@@ -282,4 +303,11 @@ class AuthController extends Controller {
 		return Response::make(json_encode(['success' => 1]))->withCookie(cookie()->forget('nstep'));
 	}
 
+
+	public function doLogout()
+	{
+		Audit::CreateEvent('auth.logout.success', 'User destroyed current session');
+		Auth::logout();
+		return redirect('/login');
+	}
 }

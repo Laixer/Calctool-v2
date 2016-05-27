@@ -58,8 +58,8 @@ if (Input::get('all') == 1) {
 				<thead>
 					<tr>
 						<th class="col-md-1">ID</th>
-						<th class="col-md-2">Actief</th>
 						<th class="col-md-3">Gebruikersnaam</th>
+						<th class="col-md-2">Actief</th>
 						<th class="col-md-3">Email</th>
 						<th class="col-md-1">Status</th>
 						<th class="col-md-1">Type</th>
@@ -69,21 +69,21 @@ if (Input::get('all') == 1) {
 				<tbody>
 				<?php
 				if ($all) {
-					$selection = \Calctool\Models\User::orderBy('created_at')->get();
+					$selection = \Calctool\Models\User::orderBy('updated_at','desc')->get();
 				} else {
-					$selection = \Calctool\Models\User::where('active','=','true')->orderBy('created_at')->get();
+					$selection = \Calctool\Models\User::where('active','=','true')->orderBy('updated_at','desc')->get();
 				}
 				?>
 				@foreach ($selection as $users)
 					<tr>
 						<td class="col-md-1"><a href="{{ '/admin/user-'.$users->id.'/edit' }}">{{ $users->id }}</a></td>
-						<td class="col-md-2">{{ userActive($users) }}</td>
-						<td class="col-md-3"><?php
+						<td class="col-md-3"><a href="{{ '/admin/user-'.$users->id.'/edit' }}"><?php
 							echo $users->username;
 							if ($users->firstname != $users->username) {
 								echo ' (' . $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '') . ')';
 							}
-						?></td>
+						?></a></td>
+						<td class="col-md-2">{{ userActive($users) }}</td>
 						<td class="col-md-3">{{ $users->email }}</td>
 						<td class="col-md-1">{{ userStatus($users) }}</td>
 						<td class="col-md-1">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>

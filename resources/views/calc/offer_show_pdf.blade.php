@@ -84,12 +84,6 @@ $(document).ready(function() {
 			}
 		});
 	});
-    // $( "#dateRangePicker" ).datepicker({
-    // 	beforeShow: function() {
-    // 		$("#ui-datepicker-div").css("z-index", "9999");  
-    // 	},
-    // });
-    // $("#ui-datepicker-div").css("z-index", "9999");   
     $('#dateRangePicker').datepicker().on('changeDate', function(e){
 		$.post("/offer/close", {
 			date: e.date.toLocaleString(),

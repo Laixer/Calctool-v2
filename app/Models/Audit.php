@@ -4,6 +4,8 @@ namespace Calctool\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use \Auth;
+
 class Audit extends Model {
 
 	protected $table = 'audit';
@@ -13,10 +15,17 @@ class Audit extends Model {
 		return $this->hasOne('User');
 	}
 
-	public function __construct($event = null)
+	public static function CreateEvent($module, $event, $user = null)
 	{
-		if (!empty($event)) {
-			$this->event = $event;
+		$log = new Audit($module, $event);
+		$log->setUserId($user ? $user : Auth::id());
+		$log->save();
+	}
+
+	public function __construct($module = null, $event = null)
+	{
+		if (!empty($module) && !empty($event)) {
+			$this->event = $module . "\n" . $event;
 		}
 
 		$this->ip = \Calctool::remoteAddr();

@@ -438,7 +438,7 @@ $(document).ready(function() {
 										<td class="col-md-2">{{ ContactFunction::find($contact->function_id)->function_name }}</td>
 										<td class="col-md-2">{{ $contact->phone }}</td>
 										<td class="col-md-2">{{ $contact->mobile }}</td>
-										<td class="col-md-2">{{ $contact->email }}</td>
+										<td class="col-md-2"><a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a></td>
 									</tr>
 									@endforeach
 									<?php } ?>

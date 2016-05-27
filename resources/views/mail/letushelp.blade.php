@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<title><strong>CalculatieTool.com</strong> - Uw opdrachtgever heeft gereageerd.</title>
+		<title><strong>CalculatieTool.com</strong> - Bedankt</title>
 	</head>
 
 	<body style="margin:0; margin-top:30px; margin-bottom:30px; padding:0; width:100%; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; background-color: #F4F5F7;">
@@ -21,7 +21,7 @@
 								<tr>
 									<td style="border-collapse:collapse; vertical-align:middle; text-align center; padding:20px;">
 
-																			<!-- Headline Header -->
+										<!-- Headline Header -->
 										<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
 											<tbody>
 
@@ -42,7 +42,7 @@
 													<td width="100%" height="30"></td>
 												</tr>
 												<tr>
-													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; line-height: 24px; color:#8E8E8E;">
+													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
 														Goededag <strong>{{ ucfirst($username) }}</strong>,
 													</td>
 												</tr>
@@ -51,27 +51,48 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Uw opdrachtgever voor project {{ $project_name }} heeft gereageerd.<br />
-														De reactie van uw opdrachtgever:<br />
-														{!! $note !!}
-													</td>
-												</tr>
-													<td width="100%" style="text-align:center;">
-														<a href="{{ URL::to('/') }}" style="text-decoration:none; font-family: helvetica, Arial, sans-serif; font-size: 12px; letter-spacing: 0px; text-align: center; text-transform: uppercase; padding:10px; color:#ffffff; background-color:#79BB00; border-radius:6px;">
-															<strong>Reageren</strong>
-														</a>
-													</td>
-												<tr><!-- spacer after the line -->
-													<td width="100%" height="20"></td>
-												</tr>
-												<tr>
-													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
 														<br>
 														<br>
-															Met vriendelijke groet,
+														Allereerst leuk dat je jezelf geregistreerd hebt voor de <strong>CalculatieTool.com</strong>.
 														<br>
 														<br>
-															<strong>Cal</strong>, van <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
+														Graag willen we nog even een paar dingen uitleggen voordat je aan de slag gaat.
+														Het programma is iets anders van opzet dan de doorsnee calculatie apps.
+														<br>
+														<br>
+														Het grootste verschil zit hem in de module calculeren. Deze is opgezet volgens
+														het "biervilt principe". Dit houdt in dat je geen normeringen kunt toe passen. 
+														<br>
+														<br>
+														Je geeft gewoon letterlijk op wat je nodig hebt voor de arbeid, het materiaal en het materieel.
+														Wij richten ons echt op de ZZP markt en daar kwam deze wens van calculeren uit naar voren.
+														<br>
+														<br>
+														Het programma is heel duidelijk van opzet en je hebt het echt zo onder knie, desalniettemin kunnen er 
+														altijd vragen zijn. Stel deze gerust, dan proberen wij deze zo snel mogelijk te beantwoorden.
+														<br>
+														<br>
+														Probeer het programma echt even te doorgronden. Er wordt je echt een hoop werk uit handen genomen
+														als je het onder de knie hebt en je zal er net als andere gebruikers een hoop plezier aan beleven.
+														<br>
+														<br>
+														Er zijn diverse filmpjes die de modules duidelijk maken. 
+														<br>
+														<br>
+														Offertes opstellen was echt nog nooit zo makkelijk!
+														<br>
+														<br>
+														De prijs die wij na de 30 dagen proefperiode hanteren is blijvend laag en je kan altijd 
+														alle functionaliteiten gebruiken die het programma biedt.
+														<br>
+														<br>
+														Leuk om je bij ons programma te mogen verwelkomen!
+														<br>
+														<br>
+															Heel veel succes en goede zaken gewenst!
+														<br>
+														<br>
+															Maikel Benner en Don Zandbergen van de <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
 														<br>
 														<br>
 													</td>
@@ -120,6 +141,7 @@
 							</tbody>
 						</table>
 						<!-- /ROW FOOTER -->
+
 
 					</td>
 				</tr>

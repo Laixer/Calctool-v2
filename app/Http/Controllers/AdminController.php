@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use \Calctool\Models\SysMessage;
 use \Calctool\Models\Payment;
 use \Calctool\Models\User;
+use \Calctool\Models\UserGroup;
 use \Calctool\Models\OfferPost;
 use \Calctool\Models\Offer;
 use \Calctool\Models\Invoice;
@@ -126,6 +127,7 @@ class AdminController extends Controller {
 			'username' => array('required','unique:user_account'),
 			'secret' => array('required'),
 			'type' => array('required'),
+			'group' => array('required'),
 
 			/* Contact */
 			'lastname' => array('max:50'),
@@ -149,6 +151,7 @@ class AdminController extends Controller {
 		$user->username = $request->input('username');
 		$user->secret = Hash::make($request->input('secret'));
 		$user->user_type = $request->input('type');
+		$user->user_group = $request->input('group');		
 
 		/* Server */
 		$user->api = md5(mt_rand());
@@ -196,11 +199,8 @@ class AdminController extends Controller {
 
 		$user->save();
 
-		$log = new Audit;
-		$log->ip = \Calctool::remoteAddr();
-		$log->event = '[ADMIN] [CREATE] [SUCCESS] ' . Auth::user()->username;
-		$log->user_id = $user->id;
-		$log->save();
+		Audit::CreateEvent('admin.user.new.succces', 'Created user: ' . $user->username);
+		Audit::CreateEvent('admin.user.new.succces', 'Created user: ' . $user->username, $user->id);
 
 		return back()->with('success', 'Nieuwe gebruiker aangemaakt');
 	}
@@ -230,6 +230,8 @@ class AdminController extends Controller {
 			$user->secret = Hash::make($request->input('secret'));
 		if ($request->input('type'))
 			$user->user_type = $request->input('type');
+		if ($request->input('group'))
+			$user->user_group = $request->input('group');
 
 		/* Contact */
 		if ($request->input('firstname'))
@@ -279,17 +281,14 @@ class AdminController extends Controller {
 		else
 			$user->api_access = false;
 		if (!$request->input('gender') || $request->input('gender') == '-1')
-			$user->gender = NULL;
+			$user->gender = null;
 		else
 			$user->gender = $request->input('gender');
 
 		$user->save();
 
-		$log = new Audit;
-		$log->ip = \Calctool::remoteAddr();
-		$log->event = '[ADMIN] [UPDATE_PROFILE] [SUCCESS] ' . Auth::user()->username;
-		$log->user_id = $user->id;
-		$log->save();
+		Audit::CreateEvent('admin.user.update.succces', 'Updated user: ' . $user->username);
+		Audit::CreateEvent('admin.user.update.succces', 'Updated user: ' . $user->username, $user->id);
 
 		return back()->with('success', 'Gegevens gebruiker aangepast');
 	}
@@ -321,6 +320,78 @@ class AdminController extends Controller {
 
 		return redirect('/')->withCookie(cookie()->forget('swpsess'));
 
+	}
+
+	public function doNewGroup(Request $request)
+	{
+		$request->merge(array('name' => strtolower(trim($request->input('name')))));
+
+		$this->validate($request, [
+			'name' => array('required','unique:user_group'),
+			'subscription_amount' => array('required','min:1'),
+		]);
+
+		$amount = floatval($request->input('subscription_amount'));
+		if ($amount < 1) {
+			return back();
+		}
+
+		/* General */
+		$group = new UserGroup;
+		$group->name = $request->input('name');;
+		$group->subscription_amount = $amount;
+
+		if ($request->input('note'))
+			$group->note = $request->input('note');	
+		if ($request->input('toggle-active'))
+			$group->active = true;
+		else
+			$group->active = false;
+
+		$group->token = md5(mt_rand());
+		$group->save();
+
+		return back()->with('success', 'Groep aangemaakt');
+	}
+
+	public function doUpdateGroup(Request $request, $group_id)
+	{
+		$this->validate($request, [
+			'name' => array('required'),
+		]);
+
+		/* General */
+		$group = UserGroup::find($group_id);
+		if ($request->input('name')) {
+			if ($group->name != $request->get('name')) {
+				$name = strtolower(trim($request->input('name')));
+
+				if (UserGroup::where('name',$name)->count()>0) {
+					$errors = new MessageBag(['status' => ['Groepnaam wordt al gebruikt']]);
+					return back()->withErrors($errors);
+				}
+
+				$group->name = $name;
+			}
+		}
+		if ($request->input('subscription_amount')) {
+			$amount = floatval($request->input('subscription_amount'));
+			if ($amount < 1) {
+				return back();
+			}
+
+			$group->subscription_amount = $amount;
+		}
+		if ($request->input('note'))
+			$group->note = $request->input('note');	
+		if ($request->input('toggle-active'))
+			$group->active = true;
+		else
+			$group->active = false;
+
+		$group->save();
+
+		return back()->with('success', 'Groep opgeslagen');
 	}
 
 	public function doDeleteResource(Request $request)

@@ -37,6 +37,7 @@ class SystemSeeder extends Seeder {
 		$system_user->referral_key = md5(mt_rand());
 		$system_user->email = 'info@calculatietool.com';
 		$system_user->user_type = $system_user_type->id;
+		$system_user->user_group = 100;
 		$system_user->save();
 
 		$relation = new Relation;
@@ -81,13 +82,14 @@ class SystemSeeder extends Seeder {
 		$guest_user->api = md5(mt_rand());
 		$guest_user->token = sha1(Hash::make('ABC@123'));
 		$guest_user->ip = '::1';
-		$guest_user->active = 'Y';
+		$guest_user->active = 'N';
 		$guest_user->confirmed_mail = date('Y-m-d');
 		$guest_user->registration_date = date('Y-m-d');
 		$guest_user->expiration_date = date('Y-m-d', strtotime("+1 month", time()));
 		$guest_user->referral_key = md5(mt_rand());
 		$guest_user->email = 'guest@calctool.nl';
 		$guest_user->user_type = $guest_user_type->id;
+		$guest_user->user_group = 100;
 		$guest_user->save();
 
 		$message = new MessageBox;

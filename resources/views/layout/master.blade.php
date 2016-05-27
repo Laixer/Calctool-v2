@@ -40,8 +40,6 @@
 		<link media="all" type="text/css" rel="stylesheet" href="/components/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css">
 		<link media="all" type="text/css" rel="stylesheet" href="/components/clippyjs/build/clippy.css">
 		<link media="all" type="text/css" rel="stylesheet" href="/components/intro.js/introjs.css">
-		<!-- <link media="all" type="text/css" rel="stylesheet" href="/plugins/owl-carousel/owl.theme.css"> -->
-		<!-- <link media="all" type="text/css" rel="stylesheet" href="/plugins/owl-carousel/owl.transitions.css"> -->
 		<link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
 		<link type="text/css" rel="stylesheet" href="/plugins/videojs/videojs-sublime-skin.css">
 
@@ -111,9 +109,6 @@
 		@show
 
 		<?php // -- JAVASCRIPT FILES -- ?>
-		<!--<script src="/plugins/jquery.easing.1.3.js"></script>-->
-		<!--<script src="/plugins/jquery.cookie.js"></script>-->
-		<!--<script src="/plugins/jquery.appear.js"></script>-->
 		<script src="/components/intro.js/intro.js"></script>
 		<script src="/components/clippyjs/build/clippy.min.js"></script>
 		<script src="/plugins/jquery.number.min.js"></script>
@@ -121,7 +116,6 @@
 
 		<script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script src="/components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-		<!--<script src="/plugins/owl-carousel/owl.carousel.min.js"></script>-->
 		<script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 		<script src="/plugins/summernote/summernote.min.js"></script>
 		<script src="/plugins/videojs/video.min.js"></script>

@@ -7,12 +7,13 @@ use \Calctool\Models\Province;
 use \Calctool\Models\Country;
 use \Calctool\Models\Contact;
 use \Calctool\Models\ContactFunction;
+use \Calctool\Models\SysMessage;
 ?>
 
 @extends('layout.master')
 
 <?php
-$next_step = Cookie::get('nstep');
+$next_step = null;
 if (Input::get('nstep') == 'intro')
 	$next_step = 'intro_'.Auth::id();
 
@@ -24,6 +25,7 @@ $relation = Relation::find(Auth::user()->self_id);
 <script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
 <link media="all" type="text/css" rel="stylesheet" href="/plugins/jquery-ui/jquery-ui.css" />
 <script type="text/javascript">
+@if (0)
 /*$(document).ready(function() {
 	var myPlayer = videojs('intro_vid');
 	$('#tutModal').modal('toggle');
@@ -83,6 +85,7 @@ $relation = Relation::find(Auth::user()->self_id);
 		myPlayer.pause();
 	});
 });*/
+@endif
 $(document).ready(function() {
 	$('.starttour').click(function(){
 		sessionStorage.introDemo = 0;
@@ -105,6 +108,7 @@ $(document).ready(function() {
 	<?php } ?>
 });
 </script>
+@if (0)
 <!--<div class="modal fade" id="tutModal" tabindex="-1" role="dialog" aria-labelledby="tutModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -246,6 +250,7 @@ $(document).ready(function() {
 		</div>
 	</div>
 </div>-->
+@endif
 <div class="modal fade" id="introModal" tabindex="-1" role="dialog" aria-labelledby="introModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -287,16 +292,16 @@ $(document).ready(function() {
 	<div id="shop">
 		<section class="container">
 
-			@if (Calctool\Models\SysMessage::where('active','=',true)->count()>0)
-			@if (Calctool\Models\SysMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->level==1)
+			@if (SysMessage::where('active','=',true)->count()>0)
+			@if (SysMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->level==1)
 			<div class="alert alert-warning">
 				<i class="fa fa-fa fa-info-circle"></i>
-				{{ Calctool\Models\SysMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->content }}
+				{{ SysMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->content }}
 			</div>
 			@else
 			<div class="alert alert-danger">
 				<i class="fa fa-warning"></i>
-				<strong>{{ Calctool\Models\SysMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->content }}</strong>
+				<strong>{{ SysMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->content }}</strong>
 			</div>
 			@endif
 			@endif

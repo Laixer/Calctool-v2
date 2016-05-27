@@ -28,7 +28,7 @@
 												<tr><!-- logo -->
 													<td width="100%" style="font-family: helvetica, Arial, sans-serif; font-size: 18px; letter-spacing: 0px;">
 														<a href="{{ URL::to('/') }}" style="text-decoration: none;">
-															<img src="{{ URL::to('/') }}/images/logo2.png" alt="Calctool" border="0" width="166" height="auto" style="with: 166px; height: auto; border: 5px solid #ffffff;" />
+															<img src="{{ URL::to('/') }}/images/logo2.png" alt="CalculatieTool.com" border="0" width="166" height="auto" style="with: 166px; height: auto; border: 5px solid #ffffff;" />
 														</a>
 													</td>
 												</tr>
@@ -59,7 +59,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
-														Indien je geen wijzigingen hebt doorgevoerd in je betalingsgegevens adviseren wij dit te controleren of contact op te nemen met de<a href="https://calctool.nl/about">helpdesk</strong></a>.
+														Indien je geen wijzigingen hebt doorgevoerd in je betalingsgegevens adviseren wij dit te controleren of contact op te nemen met de<a href="http://www.calculatietool.com/over-ons/">helpdesk</strong></a>.
 														<br>
 														<br>
 															Met vriendelijke groet,

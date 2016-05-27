@@ -12,6 +12,7 @@ use \Calctool\Models\Resource;
 use \Calctool\Models\Relation;
 use \Calctool\Models\Contact;
 use \Calctool\Models\Chapter;
+use \Calctool\Models\Audit;
 use \Calctool\Models\Activity;
 use \Calctool\Models\ProjectShare;
 use \Calctool\Http\Controllers\InvoiceController;
@@ -66,15 +67,14 @@ class ProjectController extends Controller {
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric'),
 			'contractor' => array('required','numeric'),
-			// 'type' => array('required'),
 		]);
 
-		$hour_rate = str_replace(',', '.', str_replace('.', '', $request->input('hour_rate')));
+		$hour_rate = floatval(str_replace(',', '.', str_replace('.', '', $request->input('hour_rate'))));
 		if ($hour_rate<0 || $hour_rate>999) {
 			return back()->withErrors($validator)->withInput($request->all());
 		}
 
-		$hour_rate_more = str_replace(',', '.', str_replace('.', '', $request->input('more_hour_rate')));
+		$hour_rate_more = floatval(str_replace(',', '.', str_replace('.', '', $request->input('more_hour_rate'))));
 		if ($hour_rate_more<0 || $hour_rate_more>999) {
 			return back()->withErrors($validator)->withInput($request->all());
 		}
@@ -162,11 +162,7 @@ class ProjectController extends Controller {
 			$invoice->save();
 		}
 
-		$log = new \Calctool\Models\Audit;
-		$log->ip = \Calctool::remoteAddr();
-		$log->event = '[NEWPROJECT] [SUCCESS] ' . $request->input('name');
-		$log->user_id = Auth::id();
-		$log->save();
+		Audit::CreateEvent('project.new.success', 'Created project: ' . $project->project_name);
 
 		return redirect('project-'.$project->id.'/edit')->with('success', 'Opgeslagen');
 	}
@@ -207,11 +203,6 @@ class ProjectController extends Controller {
 		} else {
 			$project->pref_email_reminder = false;
 		}
-
-		// if ($request->input('tax_reverse'))
-		// 	$project->tax_reverse = true;
-		// else
-		// 	$project->tax_reverse = false;
 
 		$project->save();
 
@@ -256,14 +247,15 @@ class ProjectController extends Controller {
 			return back()->withInput($request->all());
 		}
 
-		$hour_rate = str_replace(',', '.', str_replace('.', '', $request->input('hour_rate')));
+		$hour_rate = floatval(str_replace(',', '.', str_replace('.', '', $request->input('hour_rate'))));
 		if ($hour_rate<0 || $hour_rate>999) {
-			return back()->withErrors($validator)->withInput($request->all());
+			return back()->withInput($request->all());
 		}
 
-		$hour_rate_more = str_replace(',', '.', str_replace('.', '', $request->input('more_hour_rate')));
+
+		$hour_rate_more = floatval(str_replace(',', '.', str_replace('.', '', $request->input('more_hour_rate'))));
 		if ($hour_rate_more<0 || $hour_rate_more>999) {
-			return back()->withErrors($validator)->withInput($request->all());
+			return back()->withInput($request->all());
 		}
 
 		if ($hour_rate)

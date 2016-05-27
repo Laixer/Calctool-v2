@@ -33,6 +33,8 @@ use \Calctool\Models\MoreLabor;
 		}
 		$('.getact').change(function(e){
 			var $type = $('#projname option:selected').attr('data-type');
+			if (isNaN($('#typename').val()))
+				return;
 			if ($type == 1) {
 				$('#typename').prop('disabled', true);
 			} else {
@@ -69,6 +71,8 @@ use \Calctool\Models\MoreLabor;
 				});
 			});
 		});
+
+		$('.datepick').datepicker();
 	});
 </script>
 <div id="wrapper">
@@ -89,20 +93,21 @@ use \Calctool\Models\MoreLabor;
 
 			<div class="tabs nomargin">
 
+				@if (0)
 				<ul class="nav nav-tabs">
 					<li id="tab-hour">
 						<a href="#hour" data-toggle="tab">
 							<i class="fa fa-calendar"></i> Urenregistratie
 						</a>
 					</li>
-					@if (0)
+					
 					<li id="tab-summary">
 						<a href="#summary" data-toggle="tab">
 							<i class="fa fa-sort-amount-desc"></i> Uittrekstaat
 						</a>
 					</li>
-					@endif
 				</ul>
+				@endif
 
 				<div class="tab-content">
 					<div id="hour" class="tab-pane active">
@@ -130,7 +135,7 @@ use \Calctool\Models\MoreLabor;
 									<td class="col-md-1 text-right"><button ng-click="deleteRow($index)" class="btn btn-danger btn-xs fa fa-times"></button></td>
 								</tr>
 								<tr>
-									<td class="col-md-1"><input type="date" name="date" id="date" class="form-control-sm-text" ng-model="date"/></td>
+									<td class="col-md-1"><input type="text" name="date" id="date" class="form-control-sm-text datepick"/></td>
 									<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text" ng-model="hour"/></td>
 									<td class="col-md-2">
 										<select name="projname" id="projname" class="getact form-control-sm-text" ng-model="projname">
@@ -309,7 +314,7 @@ angular.module('timesheetApp', []).controller('timesheetController', function($s
 
 	$scope.addRow = function() {
 		var data = {
-			date: $scope.date,
+			date: $('#date').val(),
 			hour: $scope.hour,
 			type: $scope.typename,
 			activity: $('#activity').val(),

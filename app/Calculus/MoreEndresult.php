@@ -9,6 +9,8 @@ use \Calctool\Models\Tax;
 use \Calctool\Models\MoreLabor;
 use \Calctool\Models\MoreMaterial;
 use \Calctool\Models\MoreEquipment;
+use \Calctool\Models\Timesheet;
+
 /*
  * Eindresultaat
  */
@@ -90,11 +92,16 @@ class MoreEndresult {
 				// if (!$count)
 				if (!$activity->use_timesheet)
 					 $rows = MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->get();
-				 else
-				  $rows = MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->get();
+				 else {
+				  foreach(MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->get() as $labor){
+				  	$total += Timesheet::find($labor->hour_id)->register_hour * $project->hour_rate_more;
+				  }
+				continue;
+				 }
 				foreach ($rows as $row)
 				{
 					$total += $row->rate * $row->amount;
+				
 				}
 			}
 		}
@@ -115,11 +122,16 @@ class MoreEndresult {
 				// if (!$count)
 				if (!$activity->use_timesheet)
 					 $rows = MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->get();
-				 else
-				  $rows = MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->get();
+				 else {
+				  foreach(MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->get() as $labor){
+				  	$total += Timesheet::find($labor->hour_id)->register_hour * $project->hour_rate_more;
+				  }
+				continue;
+				 }
 				foreach ($rows as $row)
 				{
 					$total += $row->rate * $row->amount;
+				
 				}
 			}
 		}
@@ -131,20 +143,25 @@ class MoreEndresult {
 		$total = 0;
 		$part_id = Part::where('part_name','=','contracting')->first()->id;
 		$tax_id = Tax::where('tax_rate','=','0')->first()->id;
-
+		
 		foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
-				//$count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
-				//if (!$count)
+				// $count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
+				// if (!$count)
 				if (!$activity->use_timesheet)
 					 $rows = MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->get();
-				 else
-				  $rows = MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->get();
+				 else {
+				  foreach(MoreLabor::where('activity_id','=',$activity->id)->whereNotNull('hour_id')->get() as $labor){
+				  	$total += Timesheet::find($labor->hour_id)->register_hour * $project->hour_rate_more;
+				  }
+				continue;
+				 }
 				foreach ($rows as $row)
 				{
 					$total += $row->rate * $row->amount;
+				
 				}
 			}
 		}

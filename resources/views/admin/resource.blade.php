@@ -53,7 +53,7 @@ use \Calctool\Models\User;
 				<tbody>
 				@foreach (Resource::where('unlinked','=',false)->orderBy('created_at')->get() as $resource)
 					<tr data-id="{{ $resource->id}}">
-						<td class="col-md-3"><a target="blank" href="/{{ $resource->file_location }}">{{ $resource->description }}</a></td>
+						<td class="col-md-3"><a target="blank" href="/{{ $resource->file_location }}">{{ $resource->description }} <i class="fa fa-external-link" aria-hidden="true"></i></a></td>
 						<td class="col-md-2">{{ $resource->file_size }}</td>
 						<td class="col-md-2">{{ ucfirst(User::find($resource->user_id)->username) }}</td>
 						<td class="col-md-2">{{ $resource->project_id ? Project::find($resource->project_id)->project_name : 'Geen' }}</td>

@@ -29,7 +29,7 @@ html {
 }
 
 html, body {
-	min-height: 100%;
+	height: 100%;
 }
 
 body {
@@ -47,7 +47,7 @@ body {
 	position:relative !important;;
 	background-color:rgba(244,245,247,0.9); /* if background image used */
 	overflow:hidden;
-	min-height:550px;
+	min-height:100%;
 }
 
 	html.overflow-hidden,

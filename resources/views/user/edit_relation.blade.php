@@ -357,7 +357,6 @@ $(document).ready(function() {
 						<div id="contact" class="tab-pane">
 							<h4>Contactpersonen {{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</h4>
 							<table class="table table-striped">
-								<?# -- table head -- ?>
 								<thead>
 									<tr>
 										<th class="col-md-2">Achternaam</th>
@@ -377,7 +376,7 @@ $(document).ready(function() {
 										<td class="col-md-2">{{ ucfirst(ContactFunction::find($contact->function_id)->function_name) }}</td>
 										<td class="col-md-2">{{ $contact->phone }}</td>
 										<td class="col-md-2">{{ $contact->mobile }}</td>
-										<td class="col-md-2">{{ $contact->email }}</td>
+										<td class="col-md-2"><a href="mailto:{{ $contact->email }}">{{ $contact->email }}</a></td>
 									</tr>
 									@endforeach
 								</tbody>

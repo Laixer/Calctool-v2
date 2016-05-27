@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<title><strong>CalculatieTool.com</strong> - Feedback</title>
+		<title><strong>CalculatieTool.com</strong> - Feedback/Vraag/Suggestie</title>
 	</head>
 
 	<body style="margin:0; margin-top:30px; margin-bottom:30px; padding:0; width:100%; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; background-color: #F4F5F7;">
@@ -28,7 +28,7 @@
 												<tr><!-- logo -->
 													<td width="100%" style="font-family: helvetica, Arial, sans-serif; font-size: 18px; letter-spacing: 0px;">
 														<a href="{{ URL::to('/') }}" style="text-decoration: none;">
-															<img src="{{ URL::to('/') }}/images/logo2.png" alt="Calctool" border="0" width="166" height="auto" style="with: 166px; height: auto; border: 5px solid #ffffff;" />
+															<img src="{{ URL::to('/') }}/images/logo2.png" alt="CalculatieTool.com" border="0" width="166" height="auto" style="with: 166px; height: auto; border: 5px solid #ffffff;" />
 														</a>
 													</td>
 												</tr>
@@ -51,7 +51,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Er is feedback binnengekomen van een gebruiker <strong>{{ $name }} ({{ $user }})</strong>
+														Er is feedback/vraag/suggestie binnengekomen van een gebruiker <strong>{{ $name }} ({{ $user }})</strong>
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->
@@ -59,7 +59,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														{{ $feedback_message }}
+														{!! $feedback_message !!}
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->

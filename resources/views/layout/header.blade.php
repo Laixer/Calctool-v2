@@ -17,7 +17,7 @@ use \Calctool\Models\MessageBox;
 		<div class="navbar-collapse nav-main-collapse collapse pull-right">
 			<nav class="nav-main mega-menu">
 				<ul class="nav nav-pills nav-main scroll-menu" id="topMain">
-					@if (Auth::check())
+					@if (Auth::check() && !Auth::user()->isSystem())
 					<li>
 						<a href="/">Dashboard</a>
 					</li>
@@ -33,6 +33,10 @@ use \Calctool\Models\MessageBox;
 					@if (Auth::check() && Auth::user()->isAdmin())
 					<li>
 						<a href="/admin">Admin CP</a>
+					</li>
+					@else
+					<li>
+						<a href="/support">Support</a>
 					</li>
 					@endif
 					<li class="active">

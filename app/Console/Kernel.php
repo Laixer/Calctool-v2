@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
         \Calctool\Console\Commands\DropHard::class,
         \Calctool\Console\Commands\MaterialImport::class,
         \Calctool\Console\Commands\StorageClear::class,
+        \Calctool\Console\Commands\SessionClear::class,
         \Calctool\Console\Commands\Snapshot::class,
     ];
 

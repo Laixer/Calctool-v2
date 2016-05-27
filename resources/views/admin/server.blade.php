@@ -32,8 +32,9 @@ if (File::exists('../.revision')) {
 }
 
 
+$redis_info = Redis::command('info');
+
 ?>
-<?# -- WRAPPER -- ?>
 <div id="wrapper">
 
 	<section class="container">
@@ -92,20 +93,17 @@ if (File::exists('../.revision')) {
 					<div class="col-md-10">{{ $version }}</div>
 				</div>
 				<div class="row">
+					<div class="col-md-2">PHP</div>
+					<div class="col-md-10">{{ phpversion() }}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">Cache</div>
+					<div class="col-md-10">{{ $redis_info['Server']['redis_version'] }}</div>
+				</div>
+				<div class="row">
 					<div class="col-md-2">Database</div>
 					<div class="col-md-10">{{ $db_version }}</div>
 				</div>
-			</div>
-
-			<div class="white-row">
-				<h4>Omgevingsvariabelen</h4>
-				@foreach ($envvars[0] as $envkey => $envval)
-				<?php if (strpos($envkey,'PASSWORD') !== false) continue; ?>
-				<div class="row">
-					<div class="col-md-2">{{ $envkey }}</div>
-					<div class="col-md-10">{{ $envval }}</div>
-				</div>
-				@endforeach
 			</div>
 
 		</div>
@@ -113,4 +111,4 @@ if (File::exists('../.revision')) {
 	</section>
 
 </div>
-s@stop
+@stop

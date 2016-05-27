@@ -116,6 +116,19 @@ return [
             'required' => 'Email is een verplicht veld',
             'email' => 'Email is niet geldig',
         ],
+        'more_hour_rate' => [
+            'regex' => 'Ongeldig uurtarief',
+            'required' => 'Meerwerk uurtarief is een verplicht veld',
+        ],
+        'hour_rate' => [
+            'regex' => 'Ongeldig uurtarief',
+        ],
+        'pref_hourrate_calc' => [
+            'regex' => 'Ongeldig uurtarief',
+        ],
+        'pref_hourrate_more' => [
+            'regex' => 'Ongeldig uurtarief',
+        ],
         'contact_firstname' => [
             'max' => 'Voornaam mag niet groter zijn dan 30 karakters',
         ],

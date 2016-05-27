@@ -52,6 +52,8 @@ use \Calctool\Models\Wholesale;
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
 		});
+
+		$('.datepick').datepicker();
 	});
 </script>
 <div id="wrapper">
@@ -96,7 +98,7 @@ use \Calctool\Models\Wholesale;
 						</tr>
 						<tr>
 							<td class="col-md-1">
-								<input type="date" ng-model="date" name="date" id="date" class="form-control-sm-text"/>
+								<input type="text" ng-model="date" name="date" id="date" class="form-control-sm-text datepick"/>
 							</td>
 							<td class="col-md-2">
 								<select name="relation" id="relation" class="form-control-sm-text" ng-model="relation">
@@ -167,7 +169,7 @@ angular.module('purchaseApp', []).controller('purchaseController', function($sco
 
 	$scope.addRow = function() {
 		var data = {
-			date: $scope.date,
+			date: $('#date').val(),
 			amount: $scope.amount,
 			type: $scope.typename,
 			relation: $scope.relation,
@@ -186,7 +188,6 @@ angular.module('purchaseApp', []).controller('purchaseController', function($sco
 			};
 
 			$scope.purchases.push(data);
-			console.log(response.data);
 		});
 	};
 });
