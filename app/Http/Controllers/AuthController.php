@@ -216,7 +216,39 @@ class AuthController extends Controller {
 
 		$message = new MessageBox;
 		$message->subject = 'Welkom ' . $user->username;
-		$message->message = 'Beste ' . $user->username . ',<br /><br />Welkom bij de CalculatieTool.com,<br /><br />Je account is aangemaakt met alles dat de CalculatieTool.com te bieden heeft. Geen verborgen of afgeschermde delen en alles is beschikbaar. Hieronder valt ook onze GRATIS service jouw offertes en facturen door ons te laten versturen met de post. Jouw persoonlijke account is dus klaar voor gebruik, succes met het Calculeren, Offreren, Registreren, Facturen en Administreren met deze al-in-one-tool!<br />Wanneer de Quickstart pop-up of de pagina <a href="/mycompany">mijn bedrijf</a> wordt ingevuld kan je direct aan de slag met je eerste project.<br /><br />Groet, Maikel van de CalculatieTool.com';
+		$message->message = 'Beste ' . $user->username . ',<br /><br />Welkom bij de CalculatieTool.com,<br /><br />Je account is aangemaakt met alles dat de CalculatieTool.com te bieden heeft. Geen verborgen of afgeschermde delen en alles is beschikbaar. Hieronder valt ook onze GRATIS service jouw offertes en facturen door ons te laten versturen met de post. Jouw persoonlijke account is dus klaar voor gebruik, succes met het Calculeren, Offreren, Registreren, Facturen en Administreren met deze al-in-one-tool!
+			<br>
+
+			Allereerst leuk dat je jezelf geregistreerd hebt voor de Calculatietool.com.
+			<br>
+			Graag willen we nog even een paar dingen uitleggen voordat je aan de slag gaat.
+			<br>
+			Het programma is iets anders van opzet dan de doorsnee calculatie apps.
+			<br>
+			Het grootste verschil zit hem in de module calculeren. Deze is opgezet volgens
+			het <i>biervilt principe</i>. Dit houdt in dat je geen normeringen kunt toe passen. 
+			<br>
+			Je geeft gewoon letterlijk op wat je nodig hebt voor de arbeid, het materiaal en het materieel.
+			Wij richten ons echt op de ZZP markt en daar kwam deze wens van calculeren uit naar voren.
+			<br>
+			Het programma is heel duidelijk van opzet en je hebt het echt zo onder knie, desalniettemin kunnen er 
+			altijd vagen zijn. Stel deze gerust, dan proberen wij deze zo snel mogelijk te beantwoorden.
+			<br>
+			Probeer het programma echt even te doorgronden. Er wordt je echt een hoop werk uit handen genomen
+			als je het onder de knie hebt en je zal er net als andere gebruikers een hoop plezier aan beleven.
+			<br>
+			Er zijn diverse filmpjes die de modules duidelijk maken. 
+			<br>
+			Offertes opstellen was echt nog nooit zo makkelijk!
+			<br>
+			De prijs die wij na de 30 dagen proefperiode hanteren is blijvend laag en je kan altijd 
+			alle functionaliteiten gebruiken die het programma biedt.
+			<br>
+			Leuk om je bij ons programma te mogen verwelkomen!
+			<br>
+
+			<br />Wanneer de Quickstart pop-up of de pagina <a href="/mycompany">mijn bedrijf</a> wordt ingevuld kan je direct aan de slag met je eerste project.<br /><br />Groet, Maikel van de CalculatieTool.com';
+
 		$message->from_user = User::where('username', 'system')->first()['id'];
 		$message->user_id =	$user->id;
 
