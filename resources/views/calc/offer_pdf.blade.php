@@ -186,7 +186,7 @@ function invoice_condition($offer) {
 
 
 @if (!$only_totals)
-	  <p class="don">Specificatie offerte</p>
+	  <p>Specificatie offerte</p>
 	  <hr>
 	  @if($type->type_name == 'snelle offerte en factuur')
 	  <table border="0" cellspacing="0" cellpadding="0">

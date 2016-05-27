@@ -1,5 +1,5 @@
 @font-face {
-    font-family: 'Helvetica';
+    font-family: 'Jolly lodger  ';
     src: url(data:font/truetype;charset=utf-8;base64);
 }
 .clearfix:after {
@@ -34,16 +34,12 @@ header {
 h1.name {
   font-size: 14px;
   font-weight: bold;
-  margin: 5px;
+/*  margin: 5px;
   padding-left: 5px;
   border-style: solid;
   border-width: 0px;
-  border-color: #AAAAAA;
+  border-color: #AAAAAA;*/
 }
-
-p.don { 
-    font-family: 'Jolly Lodger', cursive;
-  }
 
 h3.name {
   font-size: 12px;

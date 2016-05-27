@@ -52,29 +52,39 @@
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
 														<br>
+														<br>
 														Allereerst leuk dat je jezelf geregistreerd hebt voor de <strong>CalculatieTool.com</strong>.
+														<br>
 														<br>
 														Graag willen we nog even een paar dingen uitleggen voordat je aan de slag gaat.
 														Het programma is iets anders van opzet dan de doorsnee calculatie apps.
 														<br>
+														<br>
 														Het grootste verschil zit hem in de module calculeren. Deze is opgezet volgens
 														het "biervilt principe". Dit houdt in dat je geen normeringen kunt toe passen. 
+														<br>
 														<br>
 														Je geeft gewoon letterlijk op wat je nodig hebt voor de arbeid, het materiaal en het materieel.
 														Wij richten ons echt op de ZZP markt en daar kwam deze wens van calculeren uit naar voren.
 														<br>
+														<br>
 														Het programma is heel duidelijk van opzet en je hebt het echt zo onder knie, desalniettemin kunnen er 
-														altijd vagen zijn. Stel deze gerust, dan proberen wij deze zo snel mogelijk te beantwoorden.
+														altijd vragen zijn. Stel deze gerust, dan proberen wij deze zo snel mogelijk te beantwoorden.
+														<br>
 														<br>
 														Probeer het programma echt even te doorgronden. Er wordt je echt een hoop werk uit handen genomen
 														als je het onder de knie hebt en je zal er net als andere gebruikers een hoop plezier aan beleven.
 														<br>
+														<br>
 														Er zijn diverse filmpjes die de modules duidelijk maken. 
+														<br>
 														<br>
 														Offertes opstellen was echt nog nooit zo makkelijk!
 														<br>
+														<br>
 														De prijs die wij na de 30 dagen proefperiode hanteren is blijvend laag en je kan altijd 
 														alle functionaliteiten gebruiken die het programma biedt.
+														<br>
 														<br>
 														Leuk om je bij ons programma te mogen verwelkomen!
 														<br>
