@@ -32,6 +32,8 @@ if (File::exists('../.revision')) {
 }
 
 
+$redis_info = Redis::command('info');
+
 ?>
 <div id="wrapper">
 
@@ -89,6 +91,14 @@ if (File::exists('../.revision')) {
 				<div class="row">
 					<div class="col-md-2">Framework</div>
 					<div class="col-md-10">{{ $version }}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">PHP</div>
+					<div class="col-md-10">{{ phpversion() }}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">Cache</div>
+					<div class="col-md-10">{{ $redis_info['Server']['redis_version'] }}</div>
 				</div>
 				<div class="row">
 					<div class="col-md-2">Database</div>
