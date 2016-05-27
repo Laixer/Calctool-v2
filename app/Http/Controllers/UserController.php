@@ -115,18 +115,24 @@ class UserController extends Controller {
 
 		$token = sha1(mt_rand().time());
 
-		$payment = $mollie->payments->create(array(
-			"amount"		=> $amount,
-			"description"	=> $description,
-			"webhookUrl"	=> url('payment/webhook/'),
-			"redirectUrl"	=> url('payment/order/'.$token),
-			"metadata"		=> array(
-				"token"		=> $token,
-				"uid"		=> Auth::id(),
-				"incr"		=> $increment_months,
-				"promo"		=> $promo_id,
-			),
-		));
+		try {
+			$payment = $mollie->payments->create(array(
+				"amount"		=> $amount,
+				"description"	=> $description,
+				"webhookUrl"	=> url('payment/webhook/'),
+				"redirectUrl"	=> url('payment/order/'.$token),
+				"metadata"		=> array(
+					"token"		=> $token,
+					"uid"		=> Auth::id(),
+					"incr"		=> $increment_months,
+					"promo"		=> $promo_id,
+				),
+			));
+		} catch (Mollie_API_Exception $e) {
+			Audit::CreateEvent('account.payment.initiated.failed', 'Create payment failed with ' . $e->getMessage());
+
+			return redirect('myaccount');
+		}
 
 		$order = new Payment;
 		$order->transaction = $payment->id;
