@@ -118,6 +118,7 @@ return [
         ],
         'more_hour_rate' => [
             'regex' => 'Ongeldig uurtarief',
+            'required' => 'Meerwerk uurtarief is een verplicht veld',
         ],
         'hour_rate' => [
             'regex' => 'Ongeldig uurtarief',
