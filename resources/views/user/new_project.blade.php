@@ -154,6 +154,11 @@ $(document).ready(function() {
 				if (this._currentStep == 5) {
 					sessionStorage.introDemo = 999
 				}
+				if (done == 1 || done == 2 || done == 3) {
+					$('.introjs-prevbutton').css("visibility","initial");
+				} else {
+					$('.introjs-prevbutton').css("visibility","hidden");
+				}
 				/*$('.introjs-skipbutton').click(function(){
 					if (done == 3) {
 						sessionStorage.introDemo = 999;

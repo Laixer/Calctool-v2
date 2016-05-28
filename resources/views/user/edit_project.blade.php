@@ -372,6 +372,14 @@ if ($less_total>0) {
 		if (sessionStorage.introDemo == 999) {
 			sessionStorage.clear();
 			sessionStorage.introDemo = 0;
+			sessionStorage.toggleTabProj{{Auth::id()}} = 'calc';
+
+			$('#tab-calc').addClass('active');
+			$('#calc').addClass('active');
+
+			$('#tab-project').removeClass('active');
+			$('#project').removeClass('active');
+			
 			demo.start();
 		} else {
 			demo.goToStep(sessionStorage.introDemo).start();
