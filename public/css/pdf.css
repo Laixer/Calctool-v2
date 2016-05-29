@@ -1,5 +1,5 @@
 @font-face {
-    font-family: 'Jolly lodger';
+    /*font-family: 'Montserrat';*/
     src: url(data:font/truetype;charset=utf-8;base64);
 }
 .clearfix:after {
@@ -20,20 +20,21 @@ body {
   margin: 0 auto;
   color: #000000;
   background: #FFFFFF;
-  font-size: 12px;
-  font-family: 'Helvetica';
+  font-size: 10px;
+  font-family: 'Montserrat';
 }
 
 header {
   padding: 10px 0;
   margin-bottom: 40px;
   border-bottom: 1px solid #AAAAAA;
-  font-family: 'Helvetica';
+  font-family: 'Montserrat';
 }
 
 h1.name {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
+  font-family: 'Montserrat';
 /*  margin: 5px;
   padding-left: 5px;
   border-style: solid;
@@ -46,6 +47,7 @@ h3.name {
   font-weight: normal;
   margin: 0;
   padding-left: 10px;
+  font-family: 'Montserrat';
   /*DZA*/
 }
 
@@ -64,6 +66,7 @@ h3.name {
   font-size: 10px;
   margin: 12px  0 12px 0;
   padding-left: 10px;
+  font-family: 'Montserrat';
 }
 
 /*Afsluitende vrije tekst*/
@@ -71,6 +74,7 @@ h3.name {
   font-size: 10px;
   margin: 12px  0 12px 0;
   padding-left: 10px;
+  font-family: 'Montserrat';
 }
 
 /*Bepalingen*/
@@ -78,6 +82,7 @@ h3.name {
   font-size: 10px;
   margin: 0  0 10px 0;
   padding-left:10px;
+  font-family: 'Montserrat';
 }
 
 /*Afsluiting van het document*/
@@ -85,6 +90,7 @@ h3.name {
   font-size: 10px;
   margin: 0  0 10px 0;
   padding-left:10px;
+  font-family: 'Montserrat';
 }
 
 
@@ -155,6 +161,7 @@ h2.name {
   text-decoration: underline;
   margin: 5px;
   padding-left: 5px;
+  font-family: 'Montserrat';
 }
 
 
@@ -164,22 +171,26 @@ h4.name {
   margin: 5px;
   padding-left: 5px;
   padding-top: 10px;
+  font-family: 'Montserrat';
 }
 
 #client {
   padding-left: 10px;
-  font-size: 12px;
+  font-size: 10px;
   float: left;
+  font-family: 'Montserrat';
 }
 
 .name {
-  font-size: 12px;
+  font-size: 10px;
+  font-family: 'Montserrat';
 }
 
 .signing {
-  font-size: 12px;
+  font-size: 10px;
   margin: 20px  0 20px 0;
   padding-left: 10px;
+  font-family: 'Montserrat';
 }
 
 
@@ -189,6 +200,7 @@ table {
   width: 100%;
   border-spacing: 0;
   margin-bottom: 4px;
+    font-family: 'Montserrat';
   /*padding: 0 0 0 10px;*/
   /*overflow: visible !important;*/
 }
@@ -197,16 +209,18 @@ table td {
   padding: 0 0 0 4px;
   background: transparent;
   text-align: left;
+    font-family: 'Montserrat';
   /*border-bottom: 1px solid;*/
 }
 
 table th {
- white-space: nowrap;
- font-weight: bold;
+/* white-space: nowrap;
+*/ font-weight: bold;
  padding: 0 0 0 1px;
  background: transparent;
  text-align: left;
  border-bottom: 2px solid transparent;
+   font-family: 'Montserrat';
 /* display: table-header-group;*/
 /*border-bottom: 1px solid;*/
 }
@@ -237,12 +251,14 @@ table .qty {
   background: transparent;
   margin: 4px;
   padding-left: 10px;
+    font-family: 'Montserrat';
 }
 /*DZA aagepast naar onderstande */
 table .qty {
   background: transparent;
   margin: 4px;
   padding-left: 10px;
+    font-family: 'Montserrat';
 }
 /*DZA eine*/
 
@@ -273,8 +289,9 @@ table tfoot td {
   background: transparent;
   border-bottom: none;
   font-size: 10px;
-  white-space: nowrap;
+  /*white-space: nowrap;*/
   border-top: 1px solid #AAAAAA;
+   font-family: 'Montserrat';
 }
 
 table tfoot tr:first-child td {
@@ -285,6 +302,7 @@ table tfoot tr:last-child td {
  /* color: #57B223;*/
   font-size: 10px;
   border-top: 1px solid #57B223;
+    font-family: 'Montserrat';
 
 }
 

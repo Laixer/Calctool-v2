@@ -171,8 +171,8 @@ function invoice_condition($offer) {
 
 
 
-
-
+		<br>
+		<br>
 
 		</div>
 		<div id="spacing"></div>
@@ -180,7 +180,7 @@ function invoice_condition($offer) {
 		<div class="openingtext">Geachte {{ Contact::find($offer->to_contact_id)->getFormalName() }},</div>
 		<div class="openingtext">{{ ($offer ? $offer->description : '') }}</div>
 
-
+		<br>
 
 
 
