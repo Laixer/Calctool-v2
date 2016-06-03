@@ -356,6 +356,11 @@ if ($less_total>0) {
 				}
 			}).onafterchange(function(){
 				var done = this._currentStep;
+				if (done == 3) {
+					$('.introjs-skipbutton').css("visibility","initial");
+				} else {
+					$('.introjs-skipbutton').css("visibility","hidden");
+				}
 				$('.introjs-skipbutton').click(function(){
 					if (done == 3) {
 						sessionStorage.introDemo = 999;
