@@ -489,7 +489,7 @@ $(document).ready(function() {
 							</div>
 						</div>		
 
-						<div data-step="3" data-intro="Noteer eventueel aantekenen bestemd voor het project. (Dit is alleen zichtbaar voor jou)">
+						<div data-step="3" data-intro="Noteer eventueel aantekeningen bestemd voor het project. (Dit is alleen zichtbaar voor jou)">
 						<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
 				        <div class="row">
 				          <div class="form-group">

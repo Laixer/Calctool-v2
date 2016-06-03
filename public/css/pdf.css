@@ -36,14 +36,23 @@ hr {
 }
 
 h1.name {
-  font-size: 12px;
-  font-weight: bold;
+/*  font-size: 12px;
+*/  font-weight: bold;
   font-family: 'Arial'; 
 /*  margin: 5px;
   padding-left: 5px;
   border-style: solid;
   border-width: 0px;
   border-color: #AAAAAA;*/
+}
+
+h2.name {
+  font-size: 14px;
+  font-weight: bold;
+/*  text-decoration: underline;
+*//*  margin: 5px;
+  padding-left: 5px;*/
+  font-family: 'Arial';
 }
 
 h3.name {
@@ -76,8 +85,8 @@ h3.name {
 /*Afsluitende vrije tekst*/
 .closingtext {
   font-size: 12px;
-/*  margin: 12px  0 12px 0;
-    padding-left: 12px;
+  margin: 20px  0 20px 0;
+/*    padding-left: 12px;
 */  font-family: 'Arial';
 }
 
@@ -156,16 +165,6 @@ h3.name {
 
 #invoice .date {
   font-size: 1.1em;
-}
-
-
-h2.name {
-  font-size: 12px;
-  font-weight: bold;
-  text-decoration: underline;
-/*  margin: 5px;
-  padding-left: 5px;*/
-  font-family: 'Arial';
 }
 
 

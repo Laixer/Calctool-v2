@@ -83,7 +83,7 @@ function invoice_condition($offer) {
 								<tbody>
 									<tr>
 										<td style="width: 300 px">
-											<div class="name"><h1>{{ $relation_self->company_name }}</h1></div>
+											<div class="name"><h2>{{ $relation_self->company_name }}</h2></div>
 
 										</td>
 									</tr>
@@ -126,7 +126,7 @@ function invoice_condition($offer) {
 						<td style="width: 345px">
 						</td>
 						<td style="width: 300px">
-							<div class="name"><h1>Offerte</h1></div>
+							<div class="name"><h2>Offerte</h2></div>
 						</td>
 					</tr>
 				</tbody>
@@ -196,7 +196,7 @@ function invoice_condition($offer) {
 
 
 @if (!$only_totals)
-	  <h1 class="name">Specificatie offerte</h1>
+	  <h2 class="name">Specificatie offerte</h2>
 	  <hr color="#000" size="1">
 	  @if($type->type_name == 'snelle offerte en factuur')
 	  <table border="0" cellspacing="0" cellpadding="0">
@@ -541,7 +541,7 @@ function invoice_condition($offer) {
 @endif
 @endif
 
-	  <h1 class="name">Totalen offerte</h1>
+	  <h2 class="name">Totalen offerte</h2>
 	  <hr color="#000" size="1">
 	  <table border="0" cellspacing="0" cellpadding="0">
 		<thead>
@@ -589,7 +589,7 @@ function invoice_condition($offer) {
 		</tbody>
 	  </table>
 	  <br>
-	  <h1 class="name">Bepalingen</h1>
+	  <h2 class="name">Bepalingen</h2>
 	  <hr color="#000" size="1">
 	  <div class="terms">
 		<li>
@@ -843,7 +843,7 @@ function invoice_condition($offer) {
 		</tbody>
 	  </table>
 
-	  <h1 class="name">Totalen offerte</h1>
+	  <h2 class="name">Totalen offerte</h2>
 	  <hr color="#000" size="1">
 	  <table border="0" cellspacing="0" cellpadding="0">
 		<thead>
@@ -892,7 +892,7 @@ function invoice_condition($offer) {
 	  </table>
 @else
 
-	  <h1 class="name">Totalen offerte</h1>
+	  <h2 class="name">Totalen offerte</h2>
 	  <hr color="#000" size="1">
 	  <table border="0" cellspacing="0" cellpadding="0">
 		<thead>
@@ -942,7 +942,7 @@ function invoice_condition($offer) {
 
 	   <div class="closingtext">{{ ($offer ? $offer->closure : '') }}</div>
 
-	  <h1 class="name">Bepalingen</h1>
+	  <h2 class="name">Bepalingen</h2>
 	  <hr color="#000" size="1">
 	  <div class="terms">
 		<li>
@@ -986,7 +986,7 @@ function invoice_condition($offer) {
 
 	  <div class="closingtext">{{ ($offer ? $offer->closure : '') }}</div>
 
-	  <h1 class="name">Bepalingen</h1>
+	  <h2 class="name">Bepalingen</h2>
 	  <hr color="#000" size="1">
 	  <div class="terms">
 	  <li>
@@ -1031,7 +1031,7 @@ function invoice_condition($offer) {
 	  </header>
 	  <?#--PAGE HEADER SECOND END--?>
 
-	 <h1 class="name">Totaalkosten per werkzaamheid</h1>
+	 <h2 class="name">Totaalkosten per werkzaamheid</h2>
 	 <table border="0" cellspacing="0" cellpadding="0">
 		<thead>
 		  <tr style="page-break-after: always;">
@@ -1096,7 +1096,8 @@ function invoice_condition($offer) {
 
 	 </table>
 
-	 <h1 class="name">Totalen project</h1>
+	 <h2 class="name">Totalen project</h2>
+	 <hr color="#000" size="1">
 	 <table border="0" cellspacing="0" cellpadding="0">
 		<thead>
 		  <tr style="page-break-after: always;">
@@ -1136,7 +1137,8 @@ function invoice_condition($offer) {
 	  </header>
 	  <?#--PAGE HEADER SECOND END--?>
 
-	<h1 class="name">Totalen project</h1>
+	<h2 class="name">Totalen project</h2>
+	<hr color="#000" size="1">
 	<h4 class="name">Aanneming</h4>
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <thead>
@@ -1245,7 +1247,7 @@ function invoice_condition($offer) {
 	  </tbody>
 	</table>
 
-	 <h1 class="name">Totalen project</h1>
+	 <h2 class="name">Totalen project</h2>
 	 <table border="0" cellspacing="0" cellnpadding="0">
 		<thead>
 		  <tr style="page-break-after: always;">
@@ -1292,7 +1294,8 @@ function invoice_condition($offer) {
 	  </header>
 	  <?#--PAGE HEADER SECOND END--?>
 
-	<h1 class="name">Omschrijving werkzaamheden</h1>
+	<h2 class="name">Omschrijving werkzaamheden</h2>
+	<hr color="#000" size="1">
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <thead>
 		<tr>
@@ -1330,7 +1333,8 @@ function invoice_condition($offer) {
 	  </header>
 	  <?#--PAGE HEADER SECOND END--?>
 
-	<h1 class="name">Omschrijving werkzaamheden</h1>
+	<h2 class="name">Omschrijving werkzaamheden</h2>
+	<hr color="#000" size="1">
 	<h4 class="name">Aanneming</h4>
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <thead>
