@@ -101,6 +101,7 @@ h3.name {
 /*Afsluiting van het document*/
 .from {
   font-size: 12px;
+  margin: 10px  0 10px 0;
 /*  margin: 0  0 12px 0;
   padding-left:12px;*/
   font-family: 'Arial';
