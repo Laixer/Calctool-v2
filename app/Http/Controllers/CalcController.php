@@ -181,9 +181,9 @@ class CalcController extends Controller {
 
 	public function getOfferPDF(Request $request)
 	{
-		/*$pdf = PDF::loadView('calc.offer_pdf');
+		$pdf = PDF::loadView('calc.offer_pdf');
 		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
-		return $pdf->stream();*/
+		return $pdf->stream();
 	}
 
 	public function getOfferDownloadPDF(Request $request)

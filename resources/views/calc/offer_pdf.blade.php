@@ -83,13 +83,13 @@ function invoice_condition($offer) {
 								<tbody>
 									<tr>
 										<td style="width: 300 px">
-											<div><h1 class="name">{{ $relation_self->company_name }}</h1></div>
+											<div class="name"><h1>{{ $relation_self->company_name }}</h1></div>
 
 										</td>
 									</tr>
 								</tbody>
 							</table>
-							
+				
 							<table border="0" cellspacing="0" cellpadding="0">
 								<tbody>
 									<tr>
@@ -118,9 +118,19 @@ function invoice_condition($offer) {
 
 		</div>
 	</header>
-	
 	<main>
 	   	<div id="heading" class="clearfix">
+	   	   	<table border="0" cellspacing="0" cellpadding="0">
+				<tbody>
+					<tr>
+						<td style="width: 345px">
+						</td>
+						<td style="width: 300px">
+							<div class="name"><h1>Offerte</h1></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tbody>
 					<tr>
@@ -153,7 +163,7 @@ function invoice_condition($offer) {
 											<div><strong>Datum:</strong></div>
 											<div><strong>Versie:</strong></div>
 										</td>
-										<td style="width: 200px">
+										<td style="width: 200px"
 											<div>{{ OfferController::getOfferCode($project->id) }}</div>
 											<div>{{ $project->project_name }}</div>
 											<div>{{ $project->project_name }}</div>
@@ -186,8 +196,8 @@ function invoice_condition($offer) {
 
 
 @if (!$only_totals)
-	  <p>Specificatie offerte</p>
-	  <hr>
+	  <h1 class="name">Specificatie offerte</h1>
+	  <hr color="#000" size="1">
 	  @if($type->type_name == 'snelle offerte en factuur')
 	  <table border="0" cellspacing="0" cellpadding="0">
 		<thead>
@@ -532,7 +542,7 @@ function invoice_condition($offer) {
 @endif
 
 	  <h1 class="name">Totalen offerte</h1>
-	  <hr>
+	  <hr color="#000" size="1">
 	  <table border="0" cellspacing="0" cellpadding="0">
 		<thead>
 		  <tr style="page-break-after: always;">
@@ -580,7 +590,7 @@ function invoice_condition($offer) {
 	  </table>
 	  <br>
 	  <h1 class="name">Bepalingen</h1>
-	  <hr>
+	  <hr color="#000" size="1">
 	  <div class="terms">
 		<li>
 			{{ invoice_condition($offer) }}
@@ -834,7 +844,7 @@ function invoice_condition($offer) {
 	  </table>
 
 	  <h1 class="name">Totalen offerte</h1>
-	  <hr>
+	  <hr color="#000" size="1">
 	  <table border="0" cellspacing="0" cellpadding="0">
 		<thead>
 		  <tr style="page-break-after: always;">
@@ -883,7 +893,7 @@ function invoice_condition($offer) {
 @else
 
 	  <h1 class="name">Totalen offerte</h1>
-	  <hr>
+	  <hr color="#000" size="1">
 	  <table border="0" cellspacing="0" cellpadding="0">
 		<thead>
 		  <tr style="page-break-after: always;">
@@ -933,7 +943,7 @@ function invoice_condition($offer) {
 	   <div class="closingtext">{{ ($offer ? $offer->closure : '') }}</div>
 
 	  <h1 class="name">Bepalingen</h1>
-	  <hr>
+	  <hr color="#000" size="1">
 	  <div class="terms">
 		<li>
 			{{ invoice_condition($offer) }}
@@ -977,7 +987,7 @@ function invoice_condition($offer) {
 	  <div class="closingtext">{{ ($offer ? $offer->closure : '') }}</div>
 
 	  <h1 class="name">Bepalingen</h1>
-	  <hr>
+	  <hr color="#000" size="1">
 	  <div class="terms">
 	  <li>
 			{{ invoice_condition($offer) }}
