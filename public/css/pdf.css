@@ -1,7 +1,11 @@
 @font-face {
-    /*font-family: 'Arial';*/
-    src: url(data:font/truetype;charset=utf-8;base64);
-}
+    font-family:arial,helvetica,sans-serif
+ 
+  }
+
+
+
+
 .clearfix:after {
   content: "";
   display: table;
@@ -20,7 +24,7 @@ body {
   margin: 0 auto;
   color: #000;
   background: #FFFFFF;
-  font-size: 12px;
+  font-size: 13px;
   font-family: 'Arial';
 }
 
@@ -36,7 +40,7 @@ hr {
 }
 
 h1.name {
-/*  font-size: 12px;
+/*  font-size: 13px;
 */  font-weight: bold;
   font-family: 'Arial'; 
 /*  margin: 5px;
@@ -56,54 +60,54 @@ h2.name {
 }
 
 h3.name {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: normal;
 /*  margin: 0;
-  padding-left: 12px;*/
+  padding-left: 13px;*/
   font-family: 'Arial';
   /*DZA*/
 }
 
 /*Spacing onder header*/
 #heading {
-  margin-bottom: 12px;
+  margin-bottom: 13px;
 }
 
 /*Aanvullende spacing onde rheader*/
 #spacing {
-  margin-bottom: 12px;
+  margin-bottom: 13px;
 }
 
 /*Opende vrije tekst*/
 .openingtext {
-  font-size: 12px;
-  /*margin*/: 12px  0 12px 0;
-/*  padding-left: 12px;
+  font-size: 13px;
+  /*margin*/: 13px  0 13px 0;
+/*  padding-left: 13px;
 */  font-family: 'Arial';
 }
 
 /*Afsluitende vrije tekst*/
 .closingtext {
-  font-size: 12px;
+  font-size: 13px;
   margin: 20px  0 20px 0;
-/*    padding-left: 12px;
+/*    padding-left: 13px;
 */  font-family: 'Arial';
 }
 
 /*Bepalingen*/
 .terms {
-  font-size: 12px;
-/*  margin: 0  0 12px 0;
-  padding-left:12px;*/
+  font-size: 13px;
+/*  margin: 0  0 13px 0;
+  padding-left:13px;*/
   font-family: 'Arial';
 }
 
 /*Afsluiting van het document*/
 .from {
-  font-size: 12px;
-  margin: 10px  0 10px 0;
-/*  margin: 0  0 12px 0;
-  padding-left:12px;*/
+  font-size: 13px;
+  margin: 11px  0 11px 0;
+/*  margin: 0  0 13px 0;
+  padding-left:13px;*/
   font-family: 'Arial';
 }
 
@@ -161,7 +165,7 @@ h3.name {
   font-size: 1.6em;
   line-height: 1em;
   font-weight: normal;
-  /*  margin: 0  0 12px 0;
+  /*  margin: 0  0 13px 0;
 */}
 
 #invoice .date {
@@ -170,30 +174,30 @@ h3.name {
 
 
 h4.name {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: bold;
 /*  margin: 5px;
   padding-left: 5px;*/
-  padding-top: 12px;
+  padding-top: 13px;
   font-family: 'Arial';
 }
 
 #client {
-/*  padding-left: 12px;*/
-  font-size: 12px;
+/*  padding-left: 13px;*/
+  font-size: 13px;
   float: left;
   font-family: 'Arial';
 }
 
 .name {
-  font-size: 12px;
+  font-size: 13px;
   font-family: 'Arial';
 }
 
 .signing {
-  font-size: 12px;
+  font-size: 13px;
   /*  margin: 20px  0 20px 0;
-    padding-left: 12px;*/
+    padding-left: 13px;*/
   font-family: 'Arial';
 }
 
@@ -205,7 +209,7 @@ table {
   border-spacing: 0;
   margin-bottom: 4px;
     font-family: 'Arial';
-  /*padding: 0 0 0 12px;*/
+  /*padding: 0 0 0 13px;*/
   /*overflow: visible !important;*/
 }
 
@@ -254,14 +258,14 @@ table .unit {
 table .qty {
   background: transparent;
 /*  margin: 4px;
-  padding-left: 12px;*/
+  padding-left: 13px;*/
     font-family: 'Arial';
 }
 /*DZA aagepast naar onderstande */
 table .qty {
   background: transparent;
 /*  margin: 4px;
-  padding-left: 12px;*/
+  padding-left: 13px;*/
     font-family: 'Arial';
 }
 /*DZA eine*/
@@ -281,7 +285,7 @@ table td.desc,
 table td.unit,
 table td.qty,
 table td.total {
-  font-size: 12px;
+  font-size: 13px;
 }
 
 table tbody tr:last-child td {
@@ -292,7 +296,7 @@ table tfoot td {
 /*  padding: 4px 4px;*/
   background: transparent;
   border-bottom: none;
-  font-size: 12px;
+  font-size: 13px;
   /*white-space: nowrap;*/
   border-top: 1px solid #AAAAAA;
    font-family: 'Arial';
@@ -304,7 +308,7 @@ table tfoot tr:first-child td {
 
 table tfoot tr:last-child td {
  /* color: #57B223;*/
-  font-size: 12px;
+  font-size: 13px;
   border-top: 1px solid #57B223;
     font-family: 'Arial';
 
@@ -325,13 +329,13 @@ table tfoot tr td:first-child {
 }
 
 #notices .notice {
-  font-size: 12px;
+  font-size: 13px;
 }
 
 footer {
   color: #777777;
   width: 100%;
-  height: 12px;
+  height: 13px;
 
   bottom: 0;
   border-top: 1px solid #AAAAAA;

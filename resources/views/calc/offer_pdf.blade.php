@@ -96,16 +96,16 @@ function invoice_condition($offer) {
 										<td style="width: 100 px">
 											<div><strong>Adres:</strong></div>
 											<div><strong>&nbsp;</strong></div>
-											<div><strong>Telefoon:</strong></div>
-											<div><strong>E-mail:</strong></div>
-											<div><strong>KVK:</strong></div>
+											@if ($relation_self->phone)<div><strong>Telefoon:</strong></div>@endif
+											@if ($relation_self->email)<div><strong>E-mail:</strong></div>@endif	
+											@if ($relation_self->kvk)<div><strong>KVK:</strong></div>@endif	
 										</td>
 										<td style="width: 200px">
-											<div>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</div>
+											<div>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</div>	
 											<div>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</div>
-											<div>{{ $relation_self->phone }}</div>
-											<div>{{ $relation_self->email }}</div>
-											<div>{{ $relation_self->kvk }}</div>
+											@if ($relation_self->phone)<div>{{ $relation_self->phone }} </div>@endif	
+											@if ($relation_self->email)<div>{{ $relation_self->email }}</div>@endif	
+											@if ($relation_self->kvk)<div>{{ $relation_self->kvk }}</div>@endif	
 										</td>
 									</tr>
 								</tbody>
@@ -188,14 +188,12 @@ function invoice_condition($offer) {
 		<div id="spacing"></div>
 
 		<div class="openingtext">Geachte {{ Contact::find($offer->to_contact_id)->getFormalName() }},</div>
+		<br>
 		<div class="openingtext">{{ ($offer ? $offer->description : '') }}</div>
 
 		<br>
 
-
-
-
-@if (!$only_totals)
+	  @if (!$only_totals)
 	  <h2 class="name">Specificatie offerte</h2>
 	  <hr color="#000" size="1">
 	  @if($type->type_name == 'snelle offerte en factuur')
