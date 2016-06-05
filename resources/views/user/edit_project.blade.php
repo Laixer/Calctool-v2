@@ -356,6 +356,11 @@ if ($less_total>0) {
 				}
 			}).onafterchange(function(){
 				var done = this._currentStep;
+				if (done == 3) {
+					$('.introjs-skipbutton').css("visibility","initial");
+				} else {
+					$('.introjs-skipbutton').css("visibility","hidden");
+				}
 				$('.introjs-skipbutton').click(function(){
 					if (done == 3) {
 						sessionStorage.introDemo = 999;
@@ -367,6 +372,14 @@ if ($less_total>0) {
 		if (sessionStorage.introDemo == 999) {
 			sessionStorage.clear();
 			sessionStorage.introDemo = 0;
+			sessionStorage.toggleTabProj{{Auth::id()}} = 'calc';
+
+			$('#tab-calc').addClass('active');
+			$('#calc').addClass('active');
+
+			$('#tab-project').removeClass('active');
+			$('#project').removeClass('active');
+			
 			demo.start();
 		} else {
 			demo.goToStep(sessionStorage.introDemo).start();
@@ -762,7 +775,7 @@ if ($less_total>0) {
 						</div>
 						@endif
 
-						<div id="advanced" class="tab-pane" data-step="4" data-intro="Geef aan of je andere modules wilt laden in je project. Dit kan later ook nog.">
+						<div id="advanced" class="tab-pane" data-step="4" data-intro="Geef aan of je andere modules wilt laden in je project. Dit kan later ook nog. Klik daarna op opslaan &  'klaar'.">
 							
 							<form method="POST" action="/project/updateadvanced">
 							{!! csrf_field() !!}

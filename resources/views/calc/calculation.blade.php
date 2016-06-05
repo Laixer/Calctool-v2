@@ -948,6 +948,11 @@ if (!$project || !$project->isOwner())
 					}*/
 				}).onafterchange(function(){
 					var done = this._currentStep;
+					if (done == 5) {
+						$('.introjs-skipbutton').css("visibility","initial");
+					} else {
+						$('.introjs-skipbutton').css("visibility","hidden");
+					}
 					$('.introjs-skipbutton').click(function(){
 						if (done == 5) {
 							sessionStorage.introDemo = 999;
@@ -1075,9 +1080,9 @@ if (!$project || !$project->isOwner())
 					<div id="calculate" class="tab-pane">
 						<div class="toogle">
 							@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
-							<div data-step="2" data-intro="Open het onderdeel." id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
+							<div data-step="2" data-intro="Open het onderdeel door op de regel te klikken." id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
 								<label>{{ $chapter->chapter_name }}</label>
-								<div class="toggle-content">
+								<div data-step="3" data-intro="Maak een werkzaamheid aan, open deze door op de regel te klikken en druk daarna op volgende." class="toggle-content">
 
 									<div class="toogle">
 										<?php
@@ -1090,9 +1095,9 @@ if (!$project || !$project->isOwner())
 												$profit_equip = $project->profit_calc_subcontr_equip;
 											}
 										?>
-										<div data-step="3" data-intro="Maak werkzaamheid aan." id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
+										<div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
 											<label>{{ $activity->activity_name }}</label>
-											<div data-step="4" data-intro="Calculeer de werkzaaheid" class="toggle-content">
+											<div data-step="4" data-intro="Calculeer de werkzaaheid door de regel die jij nodig hebt in te vullen" class="toggle-content">
 												<div class="row">
 													<div class="col-md-5"></div>
 													<div class="col-md-4">

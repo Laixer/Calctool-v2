@@ -154,6 +154,11 @@ $(document).ready(function() {
 				if (this._currentStep == 5) {
 					sessionStorage.introDemo = 999
 				}
+				if (done == 1 || done == 2 || done == 3) {
+					$('.introjs-prevbutton').css("visibility","initial");
+				} else {
+					$('.introjs-prevbutton').css("visibility","hidden");
+				}
 				/*$('.introjs-skipbutton').click(function(){
 					if (done == 3) {
 						sessionStorage.introDemo = 999;
@@ -484,7 +489,7 @@ $(document).ready(function() {
 							</div>
 						</div>		
 
-						<div data-step="3" data-intro="Noteer eventueel aantekenen bestemd voor het project. (Dit is alleen zichtbaar voor jou)">
+						<div data-step="3" data-intro="Noteer eventueel aantekeningen bestemd voor het project. (Dit is alleen zichtbaar voor jou)">
 						<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
 				        <div class="row">
 				          <div class="form-group">
@@ -497,7 +502,7 @@ $(document).ready(function() {
 
 						<div class="row">
 							<div class="col-md-12">
-								<button data-step="7" data-intro="Stap 7: Klik op opslaan om je project op te slaan." class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+								<button data-step="4" data-intro="Klik op opslaan om je project op te slaan." class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 							</div>
 						</div>
 
