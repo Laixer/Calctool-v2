@@ -775,7 +775,7 @@ if ($less_total>0) {
 						</div>
 						@endif
 
-						<div id="advanced" class="tab-pane" data-step="4" data-intro="Geef aan of je andere modules wilt laden in je project. Dit kan later ook nog. Klik daarna op opslaan & 'klaar'.>
+						<div id="advanced" class="tab-pane" data-step="4" data-intro="Geef aan of je andere modules wilt laden in je project. Dit kan later ook nog. Klik daarna op opslaan &  'klaar'.">
 							
 							<form method="POST" action="/project/updateadvanced">
 							{!! csrf_field() !!}
