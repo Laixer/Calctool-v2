@@ -126,7 +126,7 @@ function invoice_condition($offer) {
 						<td style="width: 345px">
 						</td>
 						<td style="width: 300px">
-							<div class="name"><h2>Offerte</h2></div>
+							<div class="name"><h2>OFFERTE</h2></div>
 						</td>
 					</tr>
 				</tbody>
