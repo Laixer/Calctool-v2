@@ -75,7 +75,6 @@ class ValidationProjectTemplate {
 		$project->country_id 		= $country->id;
 		$project->type_id 			= $projecttype->id;
 		$project->client_id 		= $relation->id;
-		$project->tax_reverse 		= $relation->id;
 		$project->profit_calc_contr_mat			= 10;
 		$project->profit_calc_contr_equip 		= 11;
 		$project->profit_calc_subcontr_mat 		= 12;
@@ -84,7 +83,7 @@ class ValidationProjectTemplate {
 		$project->profit_more_contr_equip 		= 15;
 		$project->profit_more_subcontr_mat 		= 16;
 		$project->profit_more_subcontr_equip	= 17;
-		$project->tax_reverse		= 'Y';
+		$project->tax_reverse		= 'N';
 		$project->use_estimate		= 'Y';
 		$project->use_more			= 'Y';
 		$project->use_less			= 'Y';

@@ -411,11 +411,11 @@ function invoice_condition($offer) {
 			<td class="qty">&nbsp;</td>
 		  </tr>
 		  @endif
-		  <tr>
+		  <!-- <tr>
 			<td class="qty">&nbsp;</td>
-		  </tr>
+		  </tr> -->
 		  <tr style="page-break-after: always;">
-			<td class="qty"><strong>Totaal Aanneming </strong></td>
+			<td class="qty"><strong>TOTAAL AANNEMING</strong></td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
 			<td class="qty">&nbsp;</td>
@@ -519,11 +519,11 @@ function invoice_condition($offer) {
 			<td class="qty">&nbsp;</td>
 		  </tr>
 		  @endif
-		  <tr>
+<!-- 		  <tr>
 			<td class="qty">&nbsp;</td>
-		  </tr>
+		  </tr> -->
 		  <tr style="page-break-after: always;">
-			<td class="qty"><strong>Totaal Onderaanneming </strong></td>
+			<td class="qty"><strong>TOTAAL AANNEMING</strong></td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
 			<td class="qty">&nbsp;</td>
@@ -620,7 +620,7 @@ function invoice_condition($offer) {
 @if (!$only_totals)
 	 <table border="0" cellspacing="0" cellpadding="0">
 		<thead>
-		  <h4 class="name">Aanneming</h4>
+		  <h3 class="name">AANNEMING</h3>
 		  <tr style="page-break-after: always;">
 			<th style="width: 147px" align="left" class="qty">&nbsp;</th>
 			<th style="width: 60px" align="left" class="qty">Uren</th>
@@ -719,7 +719,7 @@ function invoice_condition($offer) {
 			<td class="qty">&nbsp;</td>
 		  </tr>
 		  <tr style="page-break-after: always;">
-			<td class="qty"><strong>Totaal Aanneming </strong></td>
+			<td class="qty"><strong>TOTAAL AANNEMING</strong></td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
 			<td class="qty">&nbsp;</td>
@@ -730,7 +730,7 @@ function invoice_condition($offer) {
 	 <br>
 	 <table border="0" cellspacing="0" cellpadding="0">
 		<thead>
-		  <h4 class="name">Onderaanneming</h4>
+		  <h3 class="name">ONDERAANNEMING</h3>
 		  <tr style="page-break-after: always;">
 			<th style="width: 147px" align="left" class="qty">&nbsp;</th>
 			<th style="width: 60px" align="left" class="qty">Uren</th>
@@ -828,7 +828,7 @@ function invoice_condition($offer) {
 			<td class="qty">&nbsp;</td>
 		  </tr>
 		  <tr style="page-break-after: always;">
-			<td class="qty"><strong>Totaal Onderaanneming </strong></td>
+			<td class="qty"><strong>TOTAAL ONDERAANNEMING</strong></td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
 			<td class="qty">&nbsp;</td>
@@ -975,9 +975,9 @@ function invoice_condition($offer) {
 		<?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
 		</div>
 		  <div id="invoice">
-		  <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
-		  <div class="date">{{ $project->project_name }}</div>
-		  <div class="date">{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
+		  <span>{{ OfferController::getOfferCode($project->id) }}</span>
+		  <span>{{ $project->project_name }}</span>
+		  <span>{{ date("j M Y", strtotime($offer->offer_make)) }}</span>
 		</div>
 	  </header>
 	  <?#--PAGE HEADER SECOND END--?>
@@ -1022,14 +1022,15 @@ function invoice_condition($offer) {
 		<?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
 		</div>
 		  <div id="invoice">
-		  <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
-		  <div class="date">{{ $project->project_name }}</div>
-		  <div class="date">{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
+		  <div>{{ OfferController::getOfferCode($project->id) }}</div>
+		  <div>{{ $project->project_name }}</div>
+		  <div>{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
 		</div>
 	  </header>
 	  <?#--PAGE HEADER SECOND END--?>
 
 	 <h2 class="name">Totaalkosten per werkzaamheid</h2>
+	<hr color="#000" size="1">
 	 <table border="0" cellspacing="0" cellpadding="0">
 		<thead>
 		  <tr style="page-break-after: always;">
@@ -1060,7 +1061,7 @@ function invoice_condition($offer) {
 			<td class="qty text-center">
 			<?php
 			  if (PartType::find($activity->part_type_id)->type_name=='estimate') {
-				echo "<strong>Ja</strong>";
+				echo "Ja";
 			  }
 			?>
 			</td>
@@ -1082,7 +1083,7 @@ function invoice_condition($offer) {
 			<td class="qty text-center">
 			<?php
 			  if (PartType::find($activity->part_type_id)->type_name=='estimate') {
-				echo "<strong>Ja</strong>";
+				echo "Ja";
 			  }
 			?>
 			</td>
@@ -1093,9 +1094,7 @@ function invoice_condition($offer) {
 		</tbody>
 
 	 </table>
-
-	 <h2 class="name">Totalen project</h2>
-	 <hr color="#000" size="1">
+	 <br>
 	 <table border="0" cellspacing="0" cellpadding="0">
 		<thead>
 		  <tr style="page-break-after: always;">
@@ -1109,7 +1108,7 @@ function invoice_condition($offer) {
 		  </tr>
 		</thead>
 		<tbody>
-		  <td class="qty"><strong>&nbsp;</td>
+		  <td class="qty"><strong>TOTAAL</strong></td>
 		  <td class="qty"><strong>@if ($display_specification) <span>{{ number_format(CalculationOverview::laborSuperTotalAmount($project), 2, ",",".") }}</span>@endif</strong></td>
 		  <td class="qty"><strong>@if ($display_specification) <span>{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span>@endif</strong></td>
 		  <td class="qty"><strong>@if ($display_specification) <span>{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span>@endif</strong></td>
@@ -1118,7 +1117,7 @@ function invoice_condition($offer) {
 		  <td class="qty">&nbsp;</td>
 		</tbody>
 	  </table>
-	  <strong>Weergegeven bedragen zijn exclusief BTW</strong>
+	  <span><i>Weergegeven bedragen zijn exclusief BTW</i></span>
 	  @else
 
 	  <?#--PAGE HEADER SECOND START--?>
@@ -1128,16 +1127,16 @@ function invoice_condition($offer) {
 		<?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
 		</div>
 		  <div id="invoice">
-		  <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
-		  <div class="date">{{ $project->project_name }}</div>
-		  <div class="date">{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
+		  <div>{{ OfferController::getOfferCode($project->id) }}</div>
+		  <div>{{ $project->project_name }}</div>
+		  <div>{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
 		</div>
 	  </header>
 	  <?#--PAGE HEADER SECOND END--?>
 
 	<h2 class="name">Totalen project</h2>
 	<hr color="#000" size="1">
-	<h4 class="name">Aanneming</h4>
+	<h3 class="name">AANNEMING</h3>
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <thead>
 		<tr style="page-break-after: always;">
@@ -1168,7 +1167,7 @@ function invoice_condition($offer) {
 		  <td class="qty text-center">
 		  <?php
 			if (PartType::find($activity->part_type_id)->type_name=='estimate') {
-			 echo "<strong>Ja</strong>";
+			 echo "Ja";
 		   }
 		  ?>
 		  </td>
@@ -1191,7 +1190,7 @@ function invoice_condition($offer) {
 	  </tbody>
 	</table>
 
-	<h4 class="name">Onderaanneming</h4>
+	<h3 class="name">ONDERAANNEMING</h3>
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <thead>
 		<tr style="page-break-after: always;">
@@ -1222,7 +1221,7 @@ function invoice_condition($offer) {
 		  <td class="qty text-center">
 		  <?php
 			if (PartType::find($activity->part_type_id)->type_name=='estimate') {
-			  echo "<strong>Ja</strong>";
+			  echo "Ja";
 			}
 		  ?>
 		  </td>
@@ -1244,9 +1243,8 @@ function invoice_condition($offer) {
 		</tr>
 	  </tbody>
 	</table>
-
-	 <h2 class="name">Totalen project</h2>
-	 <table border="0" cellspacing="0" cellnpadding="0">
+   <br>
+    <table border="0" cellspacing="0" cellnpadding="0">
 		<thead>
 		  <tr style="page-break-after: always;">
 			<th style="width: 130px" class="qty"class="qty">&nbsp;</th>
@@ -1261,17 +1259,17 @@ function invoice_condition($offer) {
 		</thead>
 		<tbody>
 		  <tr style="page-break-after: always;">
+			<td class="qty"><strong>TOTAAL<strong></td>
 			<td class="qty">&nbsp;</td>
-			<td class="qty">&nbsp;</td>
-			<td class="qty">@if ($display_specification)<span>{{ number_format(CalculationOverview::laborSuperTotalAmount($project), 2, ",",".") }}</span>@endif</td>
-			<td class="qty">@if ($display_specification)<span>{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span>@endif</td>
-			<td class="qty">@if ($display_specification)<span>{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span>@endif</td>
-			<td class="qty">@if ($display_specification)<span>{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span>@endif</td>
-			<td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
+			<td class="qty">@if ($display_specification)<span><strong>{{ number_format(CalculationOverview::laborSuperTotalAmount($project), 2, ",",".") }}</strong></span>@endif</td>
+			<td class="qty">@if ($display_specification)<span><strong>{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</strong></span>@endif</td>
+			<td class="qty">@if ($display_specification)<span><strong>{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</strong></span>@endif</td>
+			<td class="qty">@if ($display_specification)<span><strong>{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</strong></span>@endif</td>
+			<td class="qty"><span><strong>{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</strong></span></td>
 			<td class="qty">&nbsp;</td>
 		  </tr>
 	  </table>
-	 <strong>Weergegeven bedragen zijn exclusief BTW</strong>
+	 <span><i>Weergegeven bedragen zijn exclusief BTW</i></span>
 	  @endif
 	  @endif
 
@@ -1285,9 +1283,9 @@ function invoice_condition($offer) {
 		<?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
 		</div>
 		  <div id="invoice">
-		  <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
-		  <div class="date">{{ $project->project_name }}</div>
-		  <div class="date">{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
+		  <div>{{ OfferController::getOfferCode($project->id) }}</div>
+		  <div>{{ $project->project_name }}</div>
+		  <div>{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
 		</div>
 	  </header>
 	  <?#--PAGE HEADER SECOND END--?>
@@ -1324,16 +1322,16 @@ function invoice_condition($offer) {
 		<?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
 		</div>
 		  <div id="invoice">
-		  <h3 class="name">{{ OfferController::getOfferCode($project->id) }}</h3>
-		  <div class="date">{{ $project->project_name }}</div>
-		  <div class="date">{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
+		  <div>{{ OfferController::getOfferCode($project->id) }}</div>
+		  <div>{{ $project->project_name }}</div>
+		  <div>{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
 		</div>
 	  </header>
 	  <?#--PAGE HEADER SECOND END--?>
 
 	<h2 class="name">Omschrijving werkzaamheden</h2>
 	<hr color="#000" size="1">
-	<h4 class="name">Aanneming</h4>
+	<h3 class="name">AANNEMING</h3>
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <thead>
 		<tr>
@@ -1355,7 +1353,7 @@ function invoice_condition($offer) {
 		@endforeach
 	  </tbody>
 	</table>
-	 <h4 class="name">Onderaanneming</h4>
+	<h3 class="name">ONDERAANNEMING</h3>
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <thead>
 		<tr>
