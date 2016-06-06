@@ -523,7 +523,7 @@ function invoice_condition($offer) {
 			<td class="qty">&nbsp;</td>
 		  </tr> -->
 		  <tr style="page-break-after: always;">
-			<td class="qty"><strong>TOTAAL AANNEMING</strong></td>
+			<td class="qty"><strong>TOTAAL ONDERAANNEMING</strong></td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
 			<td class="qty">&nbsp;</td>
