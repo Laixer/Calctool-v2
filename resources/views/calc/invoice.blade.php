@@ -39,8 +39,9 @@ if (!$project || !$project->isOwner()) {
 	$contact_self = Contact::where('relation_id','=',$relation_self->id);
 	$invoice = Invoice::find(Route::Input('invoice_id'));
 	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
-	$invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
-	$invoice_version_cnt = InvoiceVersion::where('invoice_id', $invoice->id)->count();
+	// $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+	// $invoice_version_cnt = InvoiceVersion::where('invoice_id', $invoice->id)->count();
+	$invoice_last = InvoiceVersion::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 }
 
 $type = ProjectType::find($project->type_id);
@@ -248,41 +249,33 @@ $type = ProjectType::find($project->type_id);
 		$('.invdate').text("{{ date('d-m-Y', strtotime($offer_last->invoice_make)) }}");
 		@endif
 
-
-
-
-		@if ($offer_last && $offer_last->offer_make)
+		@if ($invoice_last && $invoice_last->invoice_make)
 		$('.offdate').text("{{ date('d-m-Y', strtotime($offer_last->offer_make)) }}");
 
-			@if (!$offer_last->include_tax)
+			@if (!$invoice_last->include_tax)
 				$("[name='include-tax']").bootstrapSwitch('toggleState');
 			@endif
 
-			@if (!$offer_last->only_totals)
+			@if (!$invoice_last->only_totals)
 				$("[name='only-totals']").bootstrapSwitch('toggleState');
 			@endif
 
-			@if ($offer_last->seperate_subcon)
+			@if ($invoice_last->seperate_subcon)
 				$("[name='seperate-subcon']").bootstrapSwitch('toggleState');
 			@endif
 
-			@if ($offer_last->display_worktotals)
+			@if ($invoice_last->display_worktotals)
 				$("[name='display-worktotals']").bootstrapSwitch('toggleState');
 			@endif
 
-			@if ($offer_last->display_specification)
+			@if ($invoice_last->display_specification)
 				$("[name='display-specification']").bootstrapSwitch('toggleState');
 			@endif
 
-			@if ($offer_last->display_description)
+			@if ($invoice_last->display_description)
 				$("[name='display-description']").bootstrapSwitch('toggleState');
 			@endif
 		@endif
-
-
-
-
-
 
 	});
 </script>
