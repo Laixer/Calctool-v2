@@ -381,7 +381,7 @@ var n = this,
 			if($curThis.closest("tr").attr("data-id"))
 				$.post("/less/resetlabor", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(data){
 					var json = $.parseJSON(data);
-					var amount = json.amount.qsreplace(',', '.');
+					var amount = json.amount.replace(',', '.');
 					var rate = $curThis.closest("tr").find("input[name='rate']").val()
 					if (rate) {
 						rate.toString().split('.').join('').replace(',', '.');
