@@ -104,16 +104,12 @@ class AuthController extends Controller {
 		$request->merge(array('username' => strtolower(trim($request->input('username')))));
 		$request->merge(array('email' => strtolower(trim($request->input('email')))));
 		
-		try {
-			$this->validate($request, [
-				'username' => array('required','max:30','unique:user_account'),
-				'email' => array('required','max:80','email','unique:user_account'),
-				'secret' => array('required','confirmed','min:5'),
-				'secret_confirmation' => array('required','min:5'),
-			]);
-		} catch (ValidationException $e) {
-			return back();
-		}
+		$this->validate($request, [
+			'username' => array('required','max:30','unique:user_account'),
+			'email' => array('required','max:80','email','unique:user_account'),
+			'secret' => array('required','confirmed','min:5'),
+			'secret_confirmation' => array('required','min:5'),
+		]);
 
 		$user = new User;
 		$user->username = $request->get('username');
@@ -151,14 +147,10 @@ class AuthController extends Controller {
 	 */
 	public function doNewPassword(Request $request, $api, $token)
 	{
-		try {
-			$this->validate($request, [
-				'secret' => array('required','confirmed','min:5'),
-				'secret_confirmation' => array('required','min:5'),
-			]);
-		} catch (ValidationException $e) {
-			return back();
-		}
+		$this->validate($request, [
+			'secret' => array('required','confirmed','min:5'),
+			'secret_confirmation' => array('required','min:5'),
+		]);
 
 		$user = User::where('token','=',$token)->where('api','=',$api)->first();
 		if (!$user) {
@@ -275,13 +267,9 @@ class AuthController extends Controller {
 	 */
 	public function doBlockPassword(Request $request)
 	{
-		try {
-			$this->validate($request, [
-				'email' => array('required','max:80','email')
-			]);
-		} catch (ValidationException $e) {
-			return back();
-		}
+		$this->validate($request, [
+			'email' => array('required','max:80','email')
+		]);
 
 		$user = User::where('email','=',$request->get('email'))->first();
 		if (!$user)

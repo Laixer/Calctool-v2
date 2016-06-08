@@ -41,6 +41,26 @@ class Handler extends ExceptionHandler
     }
 
     /**
+     * Render the given HttpException.
+     *
+     * @param  \Symfony\Component\HttpKernel\Exception\HttpException  $e
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function renderHttpException(HttpException $e)
+    {
+        $status = $e->getStatusCode();
+
+        if (config('app.debug')) {
+            return $this->convertExceptionToResponse($e);
+        }
+
+        if (view()->exists("errors.{$status}")) {
+            return response()->view("errors.{$status}", ['exception' => $e], $status, $e->getHeaders());
+        } else {
+            return $this->convertExceptionToResponse($e);
+        }
+    }
+    /**
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -59,10 +79,6 @@ class Handler extends ExceptionHandler
 
         if ($e instanceof MethodNotAllowedHttpException) {
             abort(404);
-        }
-
-        if (app()->environment() != 'local' && app()->environment() != 'dev') {
-            return response()->view('errors.5xx', [], 200);
         }
 
         return parent::render($request, $e);
