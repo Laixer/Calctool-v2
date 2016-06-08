@@ -61,63 +61,57 @@ function invoice_condition($offer) {
 	<title>Offerte</title>
 	<link rel="stylesheet" href="{{ asset('css/pdf.css') }}" media="all" />
 	<link href='http://fonts.googleapis.com/css?family=Jolly+Lodger' rel='stylesheet' type='text/css'>
-
    </head>
+ 
   <body>
-
 	<header class="clearfix">
 	  	<div id="heading" class="clearfix">
-
-			<table border="0" cellspacing="0" cellpadding="0">
-				<tbody>
-					<tr>
-						<td style="width: 345px">
-							<div id="logo">
-								<?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
-							</div>
-						</td>
-
-						<td style="width: 300px">
-						
-							<table border="0" cellspacing="0" cellpadding="0">
-								<tbody>
-									<tr>
-										<td style="width: 300 px">
-											<div class="name"><h2>{{ $relation_self->company_name }}</h2></div>
-
-										</td>
-									</tr>
-								</tbody>
-							</table>
-				
-							<table border="0" cellspacing="0" cellpadding="0">
-								<tbody>
-									<tr>
-										<td style="width: 100 px">
-											<div><strong>Adres:</strong></div>
-											<div><strong>&nbsp;</strong></div>
-											@if ($relation_self->phone)<div><strong>Telefoon:</strong></div>@endif
-											@if ($relation_self->email)<div><strong>E-mail:</strong></div>@endif	
-											@if ($relation_self->kvk)<div><strong>KVK:</strong></div>@endif	
-										</td>
-										<td style="width: 200px">
-											<div>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</div>	
-											<div>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</div>
-											@if ($relation_self->phone)<div>{{ $relation_self->phone }} </div>@endif	
-											@if ($relation_self->email)<div>{{ $relation_self->email }}</div>@endif	
-											@if ($relation_self->kvk)<div>{{ $relation_self->kvk }}</div>@endif	
-										</td>
-									</tr>
-								</tbody>
-							</table>
-
-						</td>
-					</tr>
-				</tbody>
-			</table>
-
+		<table border="0" cellspacing="0" cellpadding="0">
+			<tbody>
+				<tr>
+					<td style="width: 345px">
+						<div id="logo">
+							<?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"
+								; ?>
+						</div>
+					</td>
+					<td style="width: 300px">
+						<table border="0" cellspacing="0" cellpadding="0">
+							<tbody>
+								<tr>
+									<td style="width: 300 px">
+										<div class="name"><h2>{{ $relation_self->company_name }}</h2></div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<table border="0" cellspacing="0" cellpadding="0">
+							<tbody>
+								<tr>
+									<td style="width: 100px">
+										<div><strong>Adres:</strong></div>
+										<div><strong>&nbsp;</strong></div>
+										@if ($relation_self->phone)<div><strong>Telefoon:</strong></div>@endif
+										@if ($relation_self->email)<div><strong>E-mail:</strong></div>@endif	
+										@if ($relation_self->kvk)<div><strong>KVK:</strong></div>@endif	
+									</td>
+									<td style="width: 200px">
+										<div>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</div>	
+										<div>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</div>
+										@if ($relation_self->phone)<div>{{ $relation_self->phone }} </div>@endif	
+										@if ($relation_self->email)<div>{{ $relation_self->email }}</div>@endif	
+										@if ($relation_self->kvk)<div>{{ $relation_self->kvk }}</div>@endif	
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 		</div>
 	</header>
+
 	<main>
 	   	<div id="heading" class="clearfix">
 	   	   	<table border="0" cellspacing="0" cellpadding="0">
@@ -176,22 +170,29 @@ function invoice_condition($offer) {
 					</tr>
 				</tbody>
 			</table>
-
-
-
-
-
 		<br>
 		<br>
-
 		</div>
 		<div id="spacing"></div>
-
 		<div class="openingtext">Geachte {{ Contact::find($offer->to_contact_id)->getFormalName() }},</div>
 		<br>
 		<div class="openingtext">{{ ($offer ? $offer->description : '') }}</div>
-
 		<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	  @if (!$only_totals)
 	  <h2 class="name">Specificatie offerte</h2>
@@ -938,8 +939,6 @@ function invoice_condition($offer) {
 		</tbody>
 	  </table>
 
-	   <div class="closingtext">{{ ($offer ? $offer->closure : '') }}</div>
-
 	  <h2 class="name">Bepalingen</h2>
 	  <hr color="#000" size="1">
 	  <div class="terms">
@@ -982,9 +981,7 @@ function invoice_condition($offer) {
 	  </header>
 	  <?#--PAGE HEADER SECOND END--?>
 
-	  <div class="closingtext">{{ ($offer ? $offer->closure : '') }}</div>
-
-	  <h2 class="name">Bepalingen</h2>
+		  <h2 class="name">Bepalingen</h2>
 	  <hr color="#000" size="1">
 	  <div class="terms">
 	  <li>
@@ -1005,6 +1002,9 @@ function invoice_condition($offer) {
 		<li>{{ $offer->extracondition }}</li>
 		@endif
 	  </div>
+
+	  <div class="closingtext">{{ ($offer ? $offer->closure : '') }}</div>
+
 	  <div class="from">Met vriendelijke groet,</div>
 	  <div class="from">{{ Contact::find($offer->from_contact_id)->firstname ." ". Contact::find($offer->from_contact_id)->lastname }}</div>
 	</main>
