@@ -163,10 +163,10 @@ function invoice_condition($offer) {
 											<div><strong>Datum:</strong></div>
 											<div><strong>Versie:</strong></div>
 										</td>
-										<td style="width: 200px"
+										<td style="width: 200px">
 											<div>{{ OfferController::getOfferCode($project->id) }}</div>
 											<div>{{ $project->project_name }}</div>
-											<div>{{ $project->project_name }}</div>
+											<div>{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
 											<div>{{ Offer::where('project_id', $project->id)->count() }}</div>
 										</td>
 									</tr>
@@ -523,7 +523,7 @@ function invoice_condition($offer) {
 			<td class="qty">&nbsp;</td>
 		  </tr> -->
 		  <tr style="page-break-after: always;">
-			<td class="qty"><strong>TOTAAL AANNEMING</strong></td>
+			<td class="qty"><strong>TOTAAL ONDERAANNEMING</strong></td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
 			<td class="qty">&nbsp;</td>
