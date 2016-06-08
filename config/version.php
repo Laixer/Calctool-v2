@@ -13,6 +13,6 @@ return [
     |
     */
 
-    'describe' => '3.2.2-68-g34967f9',
+    'describe' => '3.2.2-69-g2b3dd0c',
 
 ];

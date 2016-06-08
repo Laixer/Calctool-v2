@@ -409,15 +409,15 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 	Route::get('log/truncate', 'AdminController@doTruncateLog');
 });
 
-Route::any('telegram', function(){
-	if (env('TELEGRAM_ENABLED')) {
-		try {
-			// create Telegram API object
-			$telegram = new Longman\TelegramBot\Telegram(env('TELEGRAM_API'), env('TELEGRAM_NAME'));
+// Route::any('telegram', function(){
+// 	if (env('TELEGRAM_ENABLED')) {
+// 		try {
+// 			// create Telegram API object
+// 			$telegram = new Longman\TelegramBot\Telegram(env('TELEGRAM_API'), env('TELEGRAM_NAME'));
 
-			$telegram->handle();
-		} catch (Longman\TelegramBot\Exception\TelegramException $e) {
-			Log::error($e->getMessage());
-		}
-	}
-});
+// 			$telegram->handle();
+// 		} catch (Longman\TelegramBot\Exception\TelegramException $e) {
+// 			Log::error($e->getMessage());
+// 		}
+// 	}
+// });
