@@ -126,7 +126,7 @@ function invoice_condition($offer) {
 						<td style="width: 345px">
 						</td>
 						<td style="width: 300px">
-							<div class="name"><h2>OFFERTE</h2></div>
+							<div><h2 class="type">OFFERTE</h2></div>
 						</td>
 					</tr>
 				</tbody>
@@ -135,7 +135,7 @@ function invoice_condition($offer) {
 				<tbody>
 					<tr>
 						<td style="width: 345px">
-							<table border="0" cellspacing="0" cellpadding="0">
+							<table border="0" cellspacing="0" cellpadding="0" class="to">
 								<tbody>
 									<tr>
 										<td>{{ $relation->company_name }}</td>

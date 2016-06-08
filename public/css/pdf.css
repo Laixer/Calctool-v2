@@ -60,6 +60,16 @@ h2.name {
   font-family: 'Arial';
 }
 
+h2.type {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 0px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-family: 'Arial';
+}
+
+
 h3.name {
   font-size: 13px;
   font-weight: bold;
@@ -68,6 +78,15 @@ h3.name {
   margin: 0px 0px 0px 0px;
   font-family: 'Arial';
 }
+
+.name {
+  font-size: 13px;
+  font-family: 'Arial';
+}
+
+gin-bottom: 5px;
+}
+
 
 /*Spacing onder header*/
 #heading {
@@ -82,9 +101,7 @@ h3.name {
 /*Opende vrije tekst*/
 .openingtext {
   font-size: 13px;
-  /*margin*/: 13px  0 13px 0;
-/*  padding-left: 13px;
-*/  font-family: 'Arial';
+  margin*/: 13px  0 13px 0;
 }
 
 /*Afsluitende vrije tekst*/
@@ -112,7 +129,13 @@ h3.name {
   font-family: 'Arial';
 }
 
-
+.to {
+  font-size: 13px;
+  margin: 11px  0 11px 0;
+/*  margin: 0  0 13px 0;
+*/  padding-left:13px;
+  font-family: 'Arial';
+}
 
 
 
