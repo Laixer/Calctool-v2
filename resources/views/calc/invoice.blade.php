@@ -39,9 +39,11 @@ if (!$project || !$project->isOwner()) {
 	$contact_self = Contact::where('relation_id','=',$relation_self->id);
 	$invoice = Invoice::find(Route::Input('invoice_id'));
 	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
-	// $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+	// $_invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 	// $invoice_version_cnt = InvoiceVersion::where('invoice_id', $invoice->id)->count();
-	$invoice_last = InvoiceVersion::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+	$invoice_last = InvoiceVersion::where('invoice_id','=', $invoice->id)->orderBy('created_at', 'desc')->first();
+	// print_r($invoice_last);
+	// die();
 }
 
 $type = ProjectType::find($project->type_id);
@@ -125,15 +127,26 @@ $type = ProjectType::find($project->type_id);
 		        });
 		  }
 		});
-		$("[name='display-specification']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='display-worktotals']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
+		  	$("[name='display-specification']").bootstrapSwitch('toggleDisabled');
 		  	$('.show-activity').show();
-		  	$("[name='display-worktotals']").bootstrapSwitch('toggleDisabled');
 		  } else {
-		 	$("[name='display-worktotals']").bootstrapSwitch('toggleDisabled');
+		 	$("[name='display-specification']").bootstrapSwitch('toggleDisabled');
 			$('.show-activity').hide();
 		  }
 		});
+
+		$("[name='only-totals']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
+		  if (state) {
+		  	$('.show-activity').show();
+		  	$("[name='seperate-subcon']").bootstrapSwitch('toggleDisabled');
+		  } else {
+		  	$("[name='seperate-subcon']").bootstrapSwitch('toggleDisabled');
+			$('.show-activity').hide();
+		  }
+		});
+
 		$("[name='seperate-subcon']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-all').show();
@@ -187,7 +200,7 @@ $type = ProjectType::find($project->type_id);
 	        });
 		  }
 		});
-		$("[name='display-worktotals']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='display-specification']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 	        $('.only-end-total tr').each(function() {
                 $(this).find("td").eq(2).show();
@@ -245,12 +258,8 @@ $type = ProjectType::find($project->type_id);
 			$('#invdateval').val(e.date.toLocaleString());
 			$('.invdate').text(e.date.getDate() + "-" + (e.date.getMonth() + 1)  + "-" + e.date.getFullYear());
 		});
-		@if ($invoice_last && $invoice_last->invoice_make)
-		$('.invdate').text("{{ date('d-m-Y', strtotime($offer_last->invoice_make)) }}");
-		@endif
-
-		@if ($invoice_last && $invoice_last->invoice_make)
-		$('.offdate').text("{{ date('d-m-Y', strtotime($offer_last->offer_make)) }}");
+		@if ($invoice_last)
+		$('.offdate').text("{{ date('d-m-Y', strtotime($invoice_last->offer_make)) }}");
 
 			@if (!$invoice_last->include_tax)
 				$("[name='include-tax']").bootstrapSwitch('toggleState');
@@ -360,7 +369,7 @@ $type = ProjectType::find($project->type_id);
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="only-totals" type="checkbox"> Alleen het totale factuurbedrag weergeven<br>
+						          <input name="only-totals" type="checkbox" checked> Alleen het totale factuurbedrag weergeven<br>
 						        </label>
 						      </div>
 						    </div>
@@ -370,18 +379,20 @@ $type = ProjectType::find($project->type_id);
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="seperate-subcon" type="checkbox"> Kosten onderaanneming apart weergeven
+						          <input name="seperate-subcon" type="checkbox" disabled> Kosten onderaanneming apart weergeven
 						        </label>
 						      </div>
 						    </div>
 						  </div>
 						  <br>
-						  <strong>De volgende opties worden als bijlage bijgesloten bij de faxctuur</strong>
+						  <strong>De volgende opties worden als bijlage bijgesloten bij de factuur</strong>
+						  <br>
+						  <br>
 						  <div class="form-group">
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="display-specification" type="checkbox" checked> Onderdelen en werkzaamheden weergeven
+						          <input name="display-worktotals" type="checkbox"> Totaalkosten per werkzaamheid specificeren
 						        </label>
 						      </div>
 						    </div>
@@ -390,7 +401,7 @@ $type = ProjectType::find($project->type_id);
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="display-worktotals" type="checkbox"> Kosten werkzaamheden weergeven<br>
+						          <input name="display-specification" type="checkbox" disabled> Aanvullend specificeren op arbeid, materiaal en overig
 						        </label>
 						      </div>
 						    </div>
@@ -399,7 +410,7 @@ $type = ProjectType::find($project->type_id);
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="display-description" type="checkbox" checked> Omschrijving werkzaamheden weergeven
+						          <input name="display-description" type="checkbox"> Omschrijving werkzaamheden weergeven
 						        </label>
 						      </div>
 						    </div>
