@@ -32,48 +32,130 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
     <title>Termijnfactuur</title>
     <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" media="all" />
   </head>
-  <body>
+   <body style="background-image: url(http://localhost/images/concept.png);">
+     <header class="clearfix">
+        <div id="heading" class="clearfix">
+        <table border="0" cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td style="width: 345px">
+                <div id="logo">
+                  <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+                </div>
+              </td>
 
-  <?#--PAGE HEADER MASTER START--?>
-  <header class="clearfix">
-    <div id="logo">
-    <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
-    </div>
-    <div id="company">
-      <h3 class="name">{{ $relation_self->company_name }}</h3>
-      <div>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</div>
-      <div>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</div>
-      <div>{{ $relation_self->phone }}&nbsp;|&nbsp{{ $relation_self->email }}</div>
-      <div>KVK:{{ $relation_self->kvk }}&nbsp;|&nbsp;BTW: {{ $relation_self->btw }}</div>
-      <div>Rekeningnummer: {{ $relation_self->iban }}&nbsp;|&nbsp;tnv.: {{ $relation_self->iban_name }}</div>
+              <td style="width: 300px">
+              
+                <table border="0" cellspacing="0" cellpadding="0">
+                  <tbody>
+                    <tr>
+                      <td style="width: 300 px">
+                        <div class="name"><h2>{{ $relation_self->company_name }}</h2></div>
 
-  </header>
-  <?#--PAGE HEADER MASTER END--?>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+          
+                <table border="0" cellspacing="0" cellpadding="0">
+                  <tbody>
+                    <tr>
+                      <td style="width: 100px">
+                        <div><strong>Adres:</strong></div>
+                        <div><strong>&nbsp;</strong></div>
+                        @if ($relation_self->phone)<div><strong>Telefoon:</strong></div>@endif
+                        @if ($relation_self->email)<div><strong>E-mail:</strong></div>@endif  
+                        @if ($relation_self->kvk)<div><strong>KVK:</strong></div>@endif 
+                        <div><strong>Rekening:</strong></div>
+                      </td>
+                      <td style="width: 200px">
+                        <div>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</div>  
+                        <div>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</div>
+                        @if ($relation_self->phone)<div>{{ $relation_self->phone }} </div>@endif  
+                        @if ($relation_self->email)<div>{{ $relation_self->email }}</div>@endif 
+                        @if ($relation_self->kvk)<div>{{ $relation_self->kvk }}</div>@endif 
+                        <div>{{ $relation_self->iban }}</div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+    </header>
+    <main>
+    <div id="heading" class="clearfix">
+        <table border="0" cellspacing="0" cellpadding="0">
+      <tbody>
+        <tr>
+          <td style="width: 345px">
+          </td>
+          <td style="width: 300px">
+            <div><h2 class="type">TERMIJNFACTUUR</h2></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table border="0" cellspacing="0" cellpadding="0">
+      <tbody>
+        <tr>
+          <td style="width: 345px">
+            <table border="0" cellspacing="0" cellpadding="0" class="to">
+              <tbody>
+                <tr>
+                  <td>{{ $relation->company_name }}</td>
+                </tr>
+                <tr>
+                  <td>T.a.v. {{ Contact::find($invoice->to_contact_id)->getFormalName() }}</td>
+                </tr>
+                <tr>
+                  <td>{{ $relation->address_street . ' ' . $relation->address_number }}</td>
+                </tr>
+                <tr>
+                  <td>{{ $relation->address_postal . ', ' . $relation->address_city }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+          <td style="width: 300px">
+            <table border="0" cellspacing="0" cellpadding="0">
+              <tbody>
+                <tr>
+                  <td style="width: 100 px">
+                    <div><strong>Factuurnummer:</strong></div>
+                    <div><strong>Projectnaam:</strong></div>
+                    @if ($invoice->reference)<div><strong>Uw referentie:</strong></div>@endif
+                    @if ($invoice->book_code)<div><strong>Boekhoudknummer:</strong></div>@endif
+                    <div><strong>Factuurdatum:</strong></div>
+                  </td>
+                  <td style="width: 200px">
+                    <div>{{ $invoice->invoice_code }}</div>
+                    <div>{{ $project->project_name }}</div>
+                    @if ($invoice->reference)<div>{{ $invoice->reference }}</div>@endif
+                    @if ($invoice->book_code) <div>{{ $invoice->book_code }}</div>@endif
+                    <div>{{ date("j M Y") }}</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  <br>
+  <br>
+  </div>
+  <div id="spacing"></div>
+  <div class="openingtext">Geachte {{ Contact::find($invoice->to_contact_id)->getFormalName() }},</div>
+  <br>
+  <div class="openingtext">{{ ($invoice ? $invoice->description : '') }}</div>
+  <br>
 
-  <?#--ADRESSING START--?>
-  <main>
-    <div id="details" class="clearfix">
-      <div id="client">
-        <div>{{ $relation->company_name }}</div>
-        <div>T.a.v. {{ Contact::find($invoice->to_contact_id)->getFormalName() }}</div>
-        <div>{{ $relation->address_street . ' ' . $relation->address_number }}</div>
-        <div>{{ $relation->address_postal . ', ' . $relation->address_city }}</div>
-      </div>
-      <div id="invoice">
-        <h3 class="name">TERMIJNFACTUUR</h3>
-        <div class="date">Projectnaam: {{ $project->project_name }}</div>
-        <div class="date">Factuurnummer: {{ $invoice->invoice_code }}</div>
-        <div class="date">Uw referentie: {{ $invoice->reference }}</div>
-        <div class="date">Boekhoudkundignummer: {{ $invoice->book_code }}</div>
-        <div class="date">Factuurdatum: {{ date("j M Y") }}</div>
-      </div>
-    </div>
-    <?#--ADRESSING END--?>
+    <h2 class="name">Specificatie termijnfactuur</h2>
+    <hr color="#000" size="1">
 
-    <div class="openingtext">Geachte {{ Contact::find($invoice->to_contact_id)->getFormalName() }},</div>
-    <div class="openingtext">{{ ($invoice ? $invoice->description : '') }}</div>
-
-    <h1 class="name">Specificatie termijnfactuur</h1>
     <table class="table table-striped hide-btw2">
       <thead>
         <tr>
@@ -138,19 +220,18 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
       @endif
     </table>
 
-    <div class="closingtext">{{ ($invoice ? $invoice->closure : '') }}</div>
-
-    <h1 class="name">Bepalingen</h1>
-    <div class="statements">
+    <h2 class="name">Bepalingen</h2>
+    <hr color="#000" size="1">
+    <div class="terms">
       <li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
     </div>
+
+    <div class="closingtext">{{ ($invoice ? $invoice->closure : '') }}</div>
+
     <div class="signing">Met vriendelijke groet,</div>
     <div class="signing">{{ Contact::find($invoice->from_contact_id)->firstname ." ". Contact::find($invoice->from_contact_id)->lastname }}</div>
-  </main>
 
-  <footer>
-    Deze factuur is op de computer gegenereerd en is geldig zonder handtekening.
-  </footer>
+  </main>
 
   </body>
 </html>

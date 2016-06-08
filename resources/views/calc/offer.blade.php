@@ -77,8 +77,12 @@ $type = ProjectType::find($project->type_id);
 	                $(this).find("th").eq(2).show();
 	                $(this).find("td").eq(3).show();
 	                $(this).find("th").eq(3).show();
+	                $(this).find("td").eq(4).show();
 	                $(this).find("th").eq(4).show();
+	                $(this).find("td").eq(5).show();
 	                $(this).find("th").eq(5).show();
+	                $(this).find("td").eq(6).show();
+	                $(this).find("th").eq(6).show();
 		        });
 		        $('.hide-btw2').each(function() {
 		        	$(this).find("tr").eq(2).show();
@@ -102,8 +106,12 @@ $type = ProjectType::find($project->type_id);
 	                $(this).find("th").eq(2).hide();
 	                $(this).find("td").eq(3).hide();
 	                $(this).find("th").eq(3).hide();
+	                $(this).find("td").eq(4).hide();
 	                $(this).find("th").eq(4).hide();
+	                $(this).find("td").eq(5).hide();
 	                $(this).find("th").eq(5).hide();
+	                $(this).find("td").eq(6).hide();
+	                $(this).find("th").eq(6).hide();
 		        });
 		        $('.hide-btw2').each(function() {
 		        	$(this).find("tr").eq(2).hide();

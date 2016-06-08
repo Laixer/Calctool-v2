@@ -41,25 +41,22 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * Render the given HttpException.
+     * Create a Symfony response for the given exception.
      *
-     * @param  \Symfony\Component\HttpKernel\Exception\HttpException  $e
+     * In production we ignore this and return common blade error
+     *
+     * @param  \Exception  $e
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function renderHttpException(HttpException $e)
+    protected function convertExceptionToResponse(Exception $e)
     {
-        $status = $e->getStatusCode();
-
         if (config('app.debug')) {
-            return $this->convertExceptionToResponse($e);
+            return parent::convertExceptionToResponse($e);
         }
 
-        if (view()->exists("errors.{$status}")) {
-            return response()->view("errors.{$status}", ['exception' => $e], $status, $e->getHeaders());
-        } else {
-            return $this->convertExceptionToResponse($e);
-        }
+        return response()->view("errors.common", ['exception' => $e]);
     }
+
     /**
      * Render an exception into an HTTP response.
      *
