@@ -6,6 +6,7 @@ use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
 use Longman\TelegramBot\Telegram as TTelegram;
 use Longman\TelegramBot\Request as TRequest;
+use Illuminate\Validation\ValidationException;
 
 use \Calctool\Models\User;
 use \Calctool\Models\UserType;
@@ -103,12 +104,16 @@ class AuthController extends Controller {
 		$request->merge(array('username' => strtolower(trim($request->input('username')))));
 		$request->merge(array('email' => strtolower(trim($request->input('email')))));
 		
-		$this->validate($request, [
-			'username' => array('required','max:30','unique:user_account'),
-			'email' => array('required','max:80','email','unique:user_account'),
-			'secret' => array('required','confirmed','min:5'),
-			'secret_confirmation' => array('required','min:5'),
-		]);
+		try {
+			$this->validate($request, [
+				'username' => array('required','max:30','unique:user_account'),
+				'email' => array('required','max:80','email','unique:user_account'),
+				'secret' => array('required','confirmed','min:5'),
+				'secret_confirmation' => array('required','min:5'),
+			]);
+		} catch (ValidationException $e) {
+			return back();
+		}
 
 		$user = new User;
 		$user->username = $request->get('username');
@@ -146,10 +151,14 @@ class AuthController extends Controller {
 	 */
 	public function doNewPassword(Request $request, $api, $token)
 	{
-		$this->validate($request, [
-			'secret' => array('required','confirmed','min:5'),
-			'secret_confirmation' => array('required','min:5'),
-		]);
+		try {
+			$this->validate($request, [
+				'secret' => array('required','confirmed','min:5'),
+				'secret_confirmation' => array('required','min:5'),
+			]);
+		} catch (ValidationException $e) {
+			return back();
+		}
 
 		$user = User::where('token','=',$token)->where('api','=',$api)->first();
 		if (!$user) {
@@ -266,9 +275,13 @@ class AuthController extends Controller {
 	 */
 	public function doBlockPassword(Request $request)
 	{
-		$this->validate($request, [
-			'email' => array('required','max:80','email')
-		]);
+		try {
+			$this->validate($request, [
+				'email' => array('required','max:80','email')
+			]);
+		} catch (ValidationException $e) {
+			return back();
+		}
 
 		$user = User::where('email','=',$request->get('email'))->first();
 		if (!$user)
