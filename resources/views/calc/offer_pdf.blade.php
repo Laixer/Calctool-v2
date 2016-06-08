@@ -1071,9 +1071,10 @@ function invoice_condition($offer) {
 		  @endforeach
 		  @endforeach
 		  @foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
+		  <?php $i = true; ?>
 		  @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('created_at')->get() as $activity)
 		  <tr><?#-- item --?>
-			<td class="qty">{{ $chapter->chapter_name }}</td>
+			<td class="qty"><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
 			<td class="qty">{{ $activity->activity_name }}</td>
 			<td class="qty">@if ($display_specification) <span>{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
 			<td class="qty">@if ($display_specification) <span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span>@endif</td>
