@@ -385,12 +385,14 @@ $type = ProjectType::find($project->type_id);
 						    </div>
 						  </div>
 						  <br>
-						  <strong>De volgende opties worden als bijlage bijgesloten bij de faxctuur</strong>
+						  <strong>De volgende opties worden als bijlage bijgesloten bij de factuur</strong>
+						  <br>
+						  <br>
 						  <div class="form-group">
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="display-specification" type="checkbox"> Onderdelen en werkzaamheden weergeven
+						          <input name="display-worktotals" type="checkbox"> Totaalkosten per werkzaamheid specificeren
 						        </label>
 						      </div>
 						    </div>
@@ -399,7 +401,7 @@ $type = ProjectType::find($project->type_id);
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="display-worktotals" type="checkbox" disabled> Kosten werkzaamheden weergeven<br>
+						          <input name="display-specification" type="checkbox" disabled> Aanvullend specificeren op arbeid, materiaal en overig
 						        </label>
 						      </div>
 						    </div>
