@@ -127,15 +127,26 @@ $type = ProjectType::find($project->type_id);
 		        });
 		  }
 		});
-		$("[name='display-specification']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
+		$("[name='display-worktotals']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
+		  	$("[name='display-specification']").bootstrapSwitch('toggleDisabled');
 		  	$('.show-activity').show();
-		  	$("[name='display-worktotals']").bootstrapSwitch('toggleDisabled');
 		  } else {
-		 	$("[name='display-worktotals']").bootstrapSwitch('toggleDisabled');
+		 	$("[name='display-specification']").bootstrapSwitch('toggleDisabled');
 			$('.show-activity').hide();
 		  }
 		});
+
+		$("[name='only-totals']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
+		  if (state) {
+		  	$('.show-activity').show();
+		  	$("[name='seperate-subcon']").bootstrapSwitch('toggleDisabled');
+		  } else {
+		  	$("[name='seperate-subcon']").bootstrapSwitch('toggleDisabled');
+			$('.show-activity').hide();
+		  }
+		});
+
 		$("[name='seperate-subcon']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-all').show();
