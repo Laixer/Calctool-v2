@@ -39,9 +39,11 @@ if (!$project || !$project->isOwner()) {
 	$contact_self = Contact::where('relation_id','=',$relation_self->id);
 	$invoice = Invoice::find(Route::Input('invoice_id'));
 	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
-	// $invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+	// $_invoice_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 	// $invoice_version_cnt = InvoiceVersion::where('invoice_id', $invoice->id)->count();
-	$invoice_last = InvoiceVersion::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+	$invoice_last = InvoiceVersion::where('invoice_id','=', $invoice->id)->orderBy('created_at', 'desc')->first();
+	// print_r($invoice_last);
+	// die();
 }
 
 $type = ProjectType::find($project->type_id);
@@ -245,12 +247,8 @@ $type = ProjectType::find($project->type_id);
 			$('#invdateval').val(e.date.toLocaleString());
 			$('.invdate').text(e.date.getDate() + "-" + (e.date.getMonth() + 1)  + "-" + e.date.getFullYear());
 		});
-		@if ($invoice_last && $invoice_last->invoice_make)
-		$('.invdate').text("{{ date('d-m-Y', strtotime($offer_last->invoice_make)) }}");
-		@endif
-
-		@if ($invoice_last && $invoice_last->invoice_make)
-		$('.offdate').text("{{ date('d-m-Y', strtotime($offer_last->offer_make)) }}");
+		@if ($invoice_last)
+		$('.offdate').text("{{ date('d-m-Y', strtotime($invoice_last->offer_make)) }}");
 
 			@if (!$invoice_last->include_tax)
 				$("[name='include-tax']").bootstrapSwitch('toggleState');
@@ -360,7 +358,7 @@ $type = ProjectType::find($project->type_id);
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="only-totals" type="checkbox"> Alleen het totale factuurbedrag weergeven<br>
+						          <input name="only-totals" type="checkbox" checked> Alleen het totale factuurbedrag weergeven<br>
 						        </label>
 						      </div>
 						    </div>
@@ -370,7 +368,7 @@ $type = ProjectType::find($project->type_id);
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="seperate-subcon" type="checkbox"> Kosten onderaanneming apart weergeven
+						          <input name="seperate-subcon" type="checkbox" disabled> Kosten onderaanneming apart weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -381,7 +379,7 @@ $type = ProjectType::find($project->type_id);
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="display-specification" type="checkbox" checked> Onderdelen en werkzaamheden weergeven
+						          <input name="display-specification" type="checkbox"> Onderdelen en werkzaamheden weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -390,7 +388,7 @@ $type = ProjectType::find($project->type_id);
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="display-worktotals" type="checkbox"> Kosten werkzaamheden weergeven<br>
+						          <input name="display-worktotals" type="checkbox" disabled> Kosten werkzaamheden weergeven<br>
 						        </label>
 						      </div>
 						    </div>
@@ -399,7 +397,7 @@ $type = ProjectType::find($project->type_id);
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="display-description" type="checkbox" checked> Omschrijving werkzaamheden weergeven
+						          <input name="display-description" type="checkbox"> Omschrijving werkzaamheden weergeven
 						        </label>
 						      </div>
 						    </div>
