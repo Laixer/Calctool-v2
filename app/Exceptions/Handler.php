@@ -12,6 +12,8 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 
+use \Mailgun;
+
 class Handler extends ExceptionHandler
 {
     /**
@@ -37,7 +39,19 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $e)
     {
-        return parent::report($e);
+        if ($this->shouldReport($e)) {
+            $this->log->error($e);
+
+            if (!config('app.debug')) {
+                $data = array('email' => 'y.dewid@calculatietool.com', 'content' => nl2br($e), 'username' => 'Yorick de Wid');
+                Mailgun::send('mail.raw', $data, function($message) use ($data) {
+                    $message->to($data['email'], strtolower(trim($data['username'])));
+                    $message->subject('CalculatieTool.com - Exception report');
+                    $message->from('info@calculatietool.com', 'CalculatieTool.com');
+                    $message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+                });
+            }
+        }
     }
 
     /**

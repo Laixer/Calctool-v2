@@ -39,6 +39,6 @@ class SessionClear extends Command
      */
     public function handle()
     {
-        Redis::flushall();
+        Redis::flushdb();
     }
 }
