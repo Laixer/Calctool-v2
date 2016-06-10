@@ -142,13 +142,6 @@ $(document).ready(function() {
 				sessionStorage.removeItem('introDemo');
 			}).onbeforechange(function(){
 				sessionStorage.introDemo = this._currentStep;
-				/*if (this._currentStep == 3) {
-					$('#tab-contact').addClass('active');
-					$('#contact').addClass('active');
-
-					$('#tab-company').removeClass('active');
-					$('#company').removeClass('active');
-				}*/
 			}).onafterchange(function(){
 				var done = this._currentStep;
 				if (this._currentStep == 5) {
@@ -159,17 +152,14 @@ $(document).ready(function() {
 				} else {
 					$('.introjs-prevbutton').css("visibility","hidden");
 				}
-				/*$('.introjs-skipbutton').click(function(){
-					if (done == 3) {
-						sessionStorage.introDemo = 999;
-						window.location.href = '/';
-					}
-				});*/
 			});
 
 		if (sessionStorage.introDemo == 999) {
 			sessionStorage.clear();
 			sessionStorage.introDemo = 0;
+
+			sessionStorage.toggleTabProj{{Auth::id()}} = 'calc';
+
 			demo.start();
 		} else {
 			demo.goToStep(sessionStorage.introDemo).start();

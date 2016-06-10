@@ -141,7 +141,7 @@ if ($less_total>0) {
 			$('#tab-'+$toggleOpenTab).addClass('active');
 			$('#'+$toggleOpenTab).addClass('active');
 		} else {
-			sessionStorage.toggleTabProj{{Auth::id()}} = 'status';
+			sessionStorage.toggleTabProj{{Auth::id()}} = 'project';
 			$('#tab-project').addClass('active');
 			$('#project').addClass('active');
 		}
@@ -370,16 +370,8 @@ if ($less_total>0) {
 			});
 
 		if (sessionStorage.introDemo == 999) {
-			sessionStorage.clear();
 			sessionStorage.introDemo = 0;
-			sessionStorage.toggleTabProj{{Auth::id()}} = 'calc';
 
-			$('#tab-calc').addClass('active');
-			$('#calc').addClass('active');
-
-			$('#tab-project').removeClass('active');
-			$('#project').removeClass('active');
-			
 			demo.start();
 		} else {
 			demo.goToStep(sessionStorage.introDemo).start();
