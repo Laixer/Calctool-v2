@@ -17,6 +17,14 @@ if (!$project || !$project->isOwner()) {
 
 @extends('layout.master')
 
+@push('style')
+<link media="all" type="text/css" rel="stylesheet" href="/components/intro.js/introjs.css">
+@endpush
+
+@push('scripts')
+<script src="/components/intro.js/intro.js"></script>
+@endpush
+
 @section('title', 'Offertebeheer')
 
 <?php if($common_access_error){ ?>

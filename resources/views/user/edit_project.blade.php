@@ -28,7 +28,6 @@ use \Calctool\Models\CalculationLabor;
 use \Calctool\Models\CalculationMaterial;
 use \Calctool\Models\CalculationEquipment;
 
-
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner())
@@ -102,12 +101,14 @@ if ($less_total>0) {
 @push('style')
 <link media="all" type="text/css" rel="stylesheet" href="/components/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css">
 <link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
+<link media="all" type="text/css" rel="stylesheet" href="/components/intro.js/introjs.css">
 @endpush
 
 @push('scripts')
 <script src="/components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 <script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 <script src="/plugins/summernote/summernote.min.js"></script>
+<script src="/components/intro.js/intro.js"></script>
 @endpush
 
 <?php if($common_access_error){ ?>
@@ -125,7 +126,6 @@ if ($less_total>0) {
 <?php }else{ ?>
 
 @section('content')
-
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#tab-status').click(function(e){

@@ -17,8 +17,15 @@ $contact = Contact::where('relation_id','=',$relation->id)->first();
 
 @section('title', 'Nieuw contact')
 
-@section('content')
+@push('style')
+<link media="all" type="text/css" rel="stylesheet" href="/components/intro.js/introjs.css">
+@endpush
 
+@push('scripts')
+<script src="/components/intro.js/intro.js"></script>
+@endpush
+
+@section('content')
 <script type="text/javascript">
 $(document).ready(function() {
 	if (sessionStorage.introDemo) {

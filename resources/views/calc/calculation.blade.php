@@ -29,11 +29,13 @@ if (!$project || !$project->isOwner())
 @section('title', 'Calculeren')
 
 @push('style')
+<link media="all" type="text/css" rel="stylesheet" href="/components/intro.js/introjs.css">
 @endpush
 
 @push('scripts')
 <script src="/plugins/summernote/summernote.min.js"></script>
 <script src="/plugins/jquery.number.min.js"></script>
+<script src="/components/intro.js/intro.js"></script>
 @endpush
 
 <?php if($common_access_error){ ?>

@@ -40,6 +40,7 @@ $type = ProjectType::find($project->type_id);
 <script src="/components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 <script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 <script src="/plugins/summernote/summernote.min.js"></script>
+<script src="/plugins/jquery.number.min.js"></script>
 @endpush
 
 <?php if($common_access_error){ ?>
