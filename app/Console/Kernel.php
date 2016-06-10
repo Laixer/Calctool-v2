@@ -22,11 +22,11 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \Calctool\Console\Commands\Inspire::class,
         \Calctool\Console\Commands\DropHard::class,
         \Calctool\Console\Commands\MaterialImport::class,
         \Calctool\Console\Commands\StorageClear::class,
         \Calctool\Console\Commands\SessionClear::class,
+        \Calctool\Console\Commands\AdminReset::class,
         \Calctool\Console\Commands\Snapshot::class,
     ];
 
