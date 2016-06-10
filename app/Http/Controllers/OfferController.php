@@ -257,6 +257,7 @@ class OfferController extends Controller {
 			$user_logo = Resource::find($relation_self->logo_id)->file_location;
 
 		$data = array(
+			'email' => $contact_client->email,
 			'preview' => true,
 			'offer_id' => $offer->id,
 			'client'=> $contact_client->getFormalName(),
