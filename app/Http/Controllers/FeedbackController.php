@@ -46,6 +46,11 @@ class FeedbackController extends Controller
      */
     public function sendSupport(Request $request)
     {
+        $this->validate($request, [
+            'name' => array('required','max:100'),
+            'email' => array('required','email'),
+        ]);
+
         $data = array(
             'name' => $request->get('name'),
             'email' => $request->get('email'),
@@ -63,6 +68,7 @@ class FeedbackController extends Controller
         Mailgun::send('mail.feedback', $data, function($message) use ($data) {
             $message->to('info@calculatietool.com', 'CalculatieTool.com');
             $message->subject('CalculatieTool.com - Contact form');
+            $message->replyTo($data['email']);
         });
 
         return back()->with('success', 'Bericht verstuurd');
