@@ -89,10 +89,10 @@ $type = ProjectType::find($project->type_id);
 		$("[name='include-tax']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		        $('.hide-btw1 tr').each(function() {
-	                $(this).find("td").eq(4).show();
-	                $(this).find("th").eq(4).show();
-	                $(this).find("td").eq(5).show();
-	                $(this).find("th").eq(5).show();
+	                // $(this).find("td").eq(4).show();
+	                // $(this).find("th").eq(4).show();
+	                // $(this).find("td").eq(5).show();
+	                // $(this).find("th").eq(5).show();
 	                $(this).find("td").eq(6).show();
 	                $(this).find("th").eq(6).show();
 		        });
@@ -112,10 +112,10 @@ $type = ProjectType::find($project->type_id);
 		        });
 		  } else {
 		        $('.hide-btw1 tr').each(function() {
-	                $(this).find("td").eq(4).hide();
-	                $(this).find("th").eq(4).hide();
-	                $(this).find("td").eq(5).hide();
-	                $(this).find("th").eq(5).hide();
+	                // $(this).find("td").eq(4).hide();
+	                // $(this).find("th").eq(4).hide();
+	                // $(this).find("td").eq(5).hide();
+	                // $(this).find("th").eq(5).hide();
 	                $(this).find("td").eq(6).hide();
 	                $(this).find("th").eq(6).hide();
 		        });
