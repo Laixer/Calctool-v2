@@ -69,16 +69,6 @@ class ProjectController extends Controller {
 			'contractor' => array('required','numeric'),
 		]);
 
-		$hour_rate = floatval(str_replace(',', '.', str_replace('.', '', $request->input('hour_rate'))));
-		if ($hour_rate<0 || $hour_rate>999) {
-			return back()->withErrors($validator)->withInput($request->all());
-		}
-
-		$hour_rate_more = floatval(str_replace(',', '.', str_replace('.', '', $request->input('more_hour_rate'))));
-		if ($hour_rate_more<0 || $hour_rate_more>999) {
-			return back()->withErrors($validator)->withInput($request->all());
-		}
-
 		if (!Relation::find(Auth::user()->self_id)) {
 			return back()->withErrors(['error' => 'Mijn bedrijf bestaat niet'])->withInput($request->all());
 		}
@@ -90,41 +80,30 @@ class ProjectController extends Controller {
 		$project->address_postal = $request->input('zipcode');
 		$project->address_city = $request->input('city');
 		$project->note = $request->input('note');
-		$project->hour_rate = $hour_rate || 0;
-		$project->hour_rate_more = $hour_rate_more || 0;
-		$project->profit_calc_contr_mat = $request->input('profit_material_1') || 0;
-		$project->profit_calc_contr_equip = $request->input('profit_equipment_1') || 0;
-		$project->profit_calc_subcontr_mat = $request->input('profit_material_2') || 0;
-		$project->profit_calc_subcontr_equip = $request->input('profit_equipment_2') || 0;
-		$project->profit_more_contr_mat = $request->input('more_profit_material_1') || 0;
-		$project->profit_more_contr_equip = $request->input('more_profit_equipment_1') || 0;
-		$project->profit_more_subcontr_mat = $request->input('more_profit_material_2') || 0;
-		$project->profit_more_subcontr_equip = $request->input('more_profit_equipment_2') || 0;
+		$project->hour_rate = Auth::user()->pref_hourrate_calc;
+		$project->hour_rate_more = Auth::user()->pref_hourrate_more;
+		$project->profit_calc_contr_mat = Auth::user()->pref_profit_calc_contr_mat;
+		$project->profit_calc_contr_equip = Auth::user()->pref_profit_calc_contr_equip;
+		$project->profit_calc_subcontr_mat = Auth::user()->pref_profit_calc_subcontr_mat;
+		$project->profit_calc_subcontr_equip = Auth::user()->pref_profit_calc_subcontr_equip;
+		$project->profit_more_contr_mat = Auth::user()->pref_profit_more_contr_mat;
+		$project->profit_more_contr_equip = Auth::user()->pref_profit_more_contr_equip;
+		$project->profit_more_subcontr_mat = Auth::user()->pref_profit_more_subcontr_mat;
+		$project->profit_more_subcontr_equip = Auth::user()->pref_profit_more_subcontr_equip;
 		$project->user_id = Auth::id();
 		$project->province_id = $request->input('province');
 		$project->country_id = $request->input('country');
 		$project->type_id = $request->input('type');
 		$project->client_id = $request->input('contractor');
 
+		if (!$project->hour_rate) {
+			$project->hour_rate = 0;
+		}
+
 		if ($request->input('tax_reverse'))
 			$project->tax_reverse = true;
 		else
 			$project->tax_reverse = false;
-
-		if ($request->input('use_estimate'))
-			$project->use_estimate = true;
-		else
-			$project->use_estimate = false;
-
-		if ($request->input('use_more'))
-			$project->use_more = true;
-		else
-			$project->use_more = false;
-
-		if ($request->input('use_less'))
-			$project->use_less = true;
-		else
-			$project->use_less = false;
 
 		if (!$request->input('type')) {
 			$project->type_id = 2;
@@ -189,6 +168,7 @@ class ProjectController extends Controller {
 		if (!$project || !$project->isOwner()) {
 			return back()->withInput($request->all());
 		}
+
 		$project->project_name = $request->input('name');
 		$project->address_street = $request->input('street');
 		$project->address_number = $request->input('address_number');
@@ -198,6 +178,7 @@ class ProjectController extends Controller {
 		$project->province_id = $request->input('province');
 		$project->country_id = $request->input('country');
 		$project->client_id = $request->input('contractor');
+
 		if ($request->input('toggle-mail-reminder')) {
 			$project->pref_email_reminder = true;
 		} else {
