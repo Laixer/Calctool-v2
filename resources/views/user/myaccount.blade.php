@@ -12,9 +12,19 @@ function translateDate($date) {
 
 @extends('layout.master')
 
+@section('title', 'Mijn account')
+
+@push('style')
+<link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
+@endpush
+
+@push('scripts')
+<script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script type="text/javascript" src="/js/iban.js"></script>
+@endpush
+
 @section('content')
 
-<script type="text/javascript" src="/js/iban.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	function prefixURL(field) {

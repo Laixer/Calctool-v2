@@ -28,6 +28,13 @@ if (!$project || !$project->isOwner())
 
 @extends('layout.master')
 
+@section('title', 'Minderwerk')
+
+@push('scripts')
+<script src="/plugins/summernote/summernote.min.js"></script>
+<script src="/plugins/jquery.number.min.js"></script>
+@endpush
+
 <?php if($common_access_error){ ?>
 @section('content')
 <div id="wrapper">

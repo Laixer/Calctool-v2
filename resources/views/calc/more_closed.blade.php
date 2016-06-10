@@ -24,6 +24,8 @@ if (!$project || !$project->isOwner())
 
 @extends('layout.master')
 
+@section('title', 'Meerwerk')
+
 <?php if($common_access_error){ ?>
 @section('content')
 <div id="wrapper">

@@ -11,8 +11,9 @@ use \Calctool\Models\Invoice;
 
 @extends('layout.master')
 
-@section('content')
+@section('title', 'Opdrachtbeheer')
 
+@section('content')
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#offer-send").click(function(e){

@@ -1,7 +1,8 @@
 @extends('layout.master')
 
-@section('content')
+@section('title', 'Groepen')
 
+@section('content')
 <div id="wrapper">
 
 	<section class="container">

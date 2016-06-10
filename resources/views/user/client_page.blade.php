@@ -33,6 +33,12 @@ else {
 
 @extends('layout.master')
 
+@section('title', 'Projectoverzicht')
+
+@push('scripts')
+<script src="/plugins/summernote/summernote.min.js"></script>
+@endpush
+
 <?php if($common_access_error){ ?>
 @section('content')
 <div id="wrapper">

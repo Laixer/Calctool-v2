@@ -6,8 +6,9 @@ use \Calctool\Models\Promotion;
 
 @extends('layout.master')
 
-@section('content')
+@section('title', 'Promoties')
 
+@section('content')
 <div id="wrapper">
 
 	<section class="container">

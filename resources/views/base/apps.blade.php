@@ -13,9 +13,9 @@ use \Calctool\Models\BankAccount;
 
 @extends('layout.master')
 
-@section('content')
+@section('title', 'Apps')
 
-<script type="text/javascript" src="/js/iban.js"></script>
+@section('content')
 <script type="text/javascript">
 $(document).ready(function() {
 	$('#summernote').summernote({

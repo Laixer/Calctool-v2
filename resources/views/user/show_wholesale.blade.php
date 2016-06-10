@@ -14,6 +14,8 @@ if (!$wholesale || $wholesale->user_id) {
 
 @extends('layout.master')
 
+@section('title', 'Leverancierdetails')
+
 <?php if($common_access_error){ ?>
 @section('content')
 <div id="wrapper">

@@ -7,6 +7,8 @@ use \Calctool\Models\Element;
 
 @extends('layout.master')
 
+@section('title', 'Materialen')
+
 @section('content')
 <script type="text/javascript">
 $(document).ready(function() {

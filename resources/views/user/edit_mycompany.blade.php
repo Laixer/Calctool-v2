@@ -17,9 +17,18 @@ $user = Auth::user();
 
 @extends('layout.master')
 
-@section('content')
+@section('title', 'Mijn bedrijf')
 
+@push('style')
+<link media="all" type="text/css" rel="stylesheet" href="/components/intro.js/introjs.css">
+@endpush
+
+@push('scripts')
+<script src="/components/intro.js/intro.js"></script>
 <script type="text/javascript" src="/js/iban.js"></script>
+@endpush
+
+@section('content')
 <script type="text/javascript">
 $(document).ready(function() {
 	function prefixURL(field) {
@@ -128,8 +137,6 @@ $(document).ready(function() {
 
     });
 	
-    $('#dateRangePicker').datepicker();
-
 	var zipcode = $('#zipcode').val();
 	var number = $('#address_number').val();
 	$('.autoappend').blur(function(e){
@@ -153,17 +160,6 @@ $(document).ready(function() {
 			});
 		}
 	});
-
-	 $('#summernote').summernote({
-	        height: $(this).attr("data-height") || 200,
-	        toolbar: [
-	            ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
-	            ["para", ["ul", "ol", "paragraph"]],
-	            ["table", ["table"]],
-	            ["media", ["link", "picture", "video"]],
-	            ["misc", ["codeview"]]
-	        ]
-	    })
 
 	if (sessionStorage.introDemo) {
 
@@ -770,7 +766,6 @@ $(document).ready(function() {
 	}
 	$('#relationkind').change(function() {
 		$('.company').toggle('slow');
-		console.log('check');
 	});
 });
 </script>

@@ -1,5 +1,7 @@
 @extends('layout.master')
 
+@section('title', 'Omgeving')
+
 @section('content')
 
 <?php

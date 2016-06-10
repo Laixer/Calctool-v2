@@ -1,7 +1,17 @@
 @extends('layout.master')
 
-@section('content')
+@section('title', 'Nieuwe groep')
 
+@push('style')
+<link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
+@endpush
+
+@push('scripts')
+<script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script src="/plugins/summernote/summernote.min.js"></script>
+@endpush
+
+@section('content')
 <script type="text/javascript">
 $(document).ready(function() {
 	$("[name='toggle-active']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});

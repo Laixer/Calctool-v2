@@ -7,6 +7,12 @@ use \Calctool\Models\RelationType;
 
 @extends('layout.master')
 
+@section('title', 'Nieuwe relatie')
+
+@push('scripts')
+<script src="/plugins/summernote/summernote.min.js"></script>
+@endpush
+
 @section('content')
 
 <?php
@@ -109,6 +115,17 @@ $(document).ready(function() {
 			});
 		}
 	});
+
+    $('#summernote').summernote({
+        height: $(this).attr("data-height") || 200,
+        toolbar: [
+            ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+            ["para", ["ul", "ol", "paragraph"]],
+            ["table", ["table"]],
+            ["media", ["link", "picture", "video"]],
+        ]
+    })
+
 });
 </script>
 
@@ -350,7 +367,7 @@ $(document).ready(function() {
 				<div class="row">
 					<div class="form-group">
 						<div class="col-md-12">
-							<textarea name="note" id="note" rows="10" class="form-control">{{ Input::old('note') }}</textarea>
+							<textarea name="note" id="summernote" rows="10" class="form-control">{{ Input::old('note') }}</textarea>
 						</div>
 					</div>
 				</div>

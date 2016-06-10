@@ -156,7 +156,7 @@
 
 						@if ($preview)
 						<div class="modal-footer">
-							<a class="btn btn-primary pull-right" id="sendmail" class="close" data-dismiss="modal" aria-hidden="true">Verstuur definitief</a>
+							<a class="btn btn-primary pull-right" id="sendmail" class="close" data-dismiss="modal" aria-hidden="true">Verstuur definitief naar {{ $email }}</a>
 						</div>
 						@endif
 

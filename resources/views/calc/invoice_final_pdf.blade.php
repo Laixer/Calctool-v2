@@ -1,4 +1,4 @@
-<?php
+  <?php
 
 use \Calctool\Models\Project;
 use \Calctool\Models\Relation;

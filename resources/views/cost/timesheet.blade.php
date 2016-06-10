@@ -12,6 +12,16 @@ use \Calctool\Models\MoreLabor;
 
 @extends('layout.master')
 
+@section('title', 'Urenregistratie')
+
+@push('style')
+<script src="/components/angular/angular.min.js"></script>
+@endpush
+
+@push('scripts')
+<script src="/components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+@endpush
+
 @section('content')
 
 <script type="text/javascript">
@@ -132,7 +142,7 @@ use \Calctool\Models\MoreLabor;
 									<td class="col-md-2">@{{ timesheet.timesheet_kind }}</td>
 									<td class="col-md-3">@{{ timesheet.activity_name }}</td>
 									<td class="col-md-2">@{{ timesheet.note }}</td>
-									<td class="col-md-1 text-right"><button ng-click="deleteRow($index)" class="btn btn-danger btn-xs fa fa-times"></button></td>
+									<td class="col-md-1 text-right"><button ng-click="deleteRow(timesheet.id)" class="btn btn-danger btn-xs fa fa-times"></button></td>
 								</tr>
 								<tr>
 									<td class="col-md-1"><input type="text" name="date" id="date" class="form-control-sm-text datepick"/></td>
@@ -305,10 +315,12 @@ angular.module('timesheetApp', []).controller('timesheetController', function($s
 	$scope.reverseSort = false;
 
 	$scope.deleteRow = function(id) {
-		var row = $scope.timesheets[id];
-
-		$http.post('/api/v1/timesheet/delete', {id: row.id}).then(function(response){
-			$scope.timesheets.splice(id, 1);
+		$http.post('/api/v1/timesheet/delete', {id: id}).then(function(response){
+			angular.forEach($scope.timesheets, function(value, key) {
+				if (value.id == id) {
+					$scope.timesheets.splice(key, 1);
+				}
+			});
 		});
 	};
 
@@ -332,6 +344,12 @@ angular.module('timesheetApp', []).controller('timesheetController', function($s
 			};
 
 			$scope.timesheets.push(data);
+
+			$('#date').val('');
+			$scope.hour = '';
+			$scope.typename = '';
+			$('#activity').val('');
+			$scope.note = '';
 		});
 	};
 });

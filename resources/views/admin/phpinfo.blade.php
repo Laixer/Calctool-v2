@@ -1,8 +1,8 @@
 @extends('layout.master')
 
-@section('content')
-<?# -- WRAPPER -- ?>
+@section('title', 'PHP Info')
 
+@section('content')
 <div id="wrapper">
 
 	<section class="container">

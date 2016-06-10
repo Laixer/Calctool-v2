@@ -8,6 +8,16 @@ use \Calctool\Models\Wholesale;
 
 @extends('layout.master')
 
+@section('title', 'Inkoopfacturen')
+
+@push('style')
+<script src="/components/angular/angular.min.js"></script>
+@endpush
+
+@push('scripts')
+<script src="/components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+@endpush
+
 @section('content')
 <script type="text/javascript">
 	$(document).ready(function() {

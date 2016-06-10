@@ -6,6 +6,8 @@ use \Calctool\Models\WholesaleType;
 
 @extends('layout.master')
 
+@section('title', 'Leveranciers')
+
 @section('content')
 <div id="wrapper">
 

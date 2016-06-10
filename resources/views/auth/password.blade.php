@@ -1,5 +1,7 @@
 @extends('layout.master')
 
+@section('title', 'Nieuw wachtwoord')
+
 @section('content')
 
 <div id="wrapper">

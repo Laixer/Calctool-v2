@@ -23,6 +23,13 @@ if (!$relation || !$relation->isOwner() || !$relation->isActive()) {
 
 @extends('layout.master')
 
+@section('title', 'Relatiedetails')
+
+@push('scripts')
+<script src="/plugins/summernote/summernote.min.js"></script>
+<script type="text/javascript" src="/js/iban.js"></script>
+@endpush
+
 <?php if($common_access_error){ ?>
 @section('content')
 <div id="wrapper">
@@ -38,7 +45,6 @@ if (!$relation || !$relation->isOwner() || !$relation->isActive()) {
 <?php }else{ ?>
 
 @section('content')
-<script type="text/javascript" src="/js/iban.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	function prefixURL(field) {
@@ -466,7 +472,6 @@ $(document).ready(function() {
 	}
 	$('#relationkind').change(function() {
 		$('.company').toggle('slow');
-		console.log('check');
 	});
 });
 </script>

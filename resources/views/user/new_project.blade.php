@@ -12,6 +12,19 @@ function getNewDebtorCode() {
 
 @extends('layout.master')
 
+@section('title', 'Nieuw project')
+
+@push('style')
+<link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
+<link media="all" type="text/css" rel="stylesheet" href="/components/intro.js/introjs.css">
+@endpush
+
+@push('scripts')
+<script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script src="/plugins/summernote/summernote.min.js"></script>
+<script src="/components/intro.js/intro.js"></script>
+@endpush
+
 @section('content')
 <script type="text/javascript" src="/plugins/summernote/summernote.min.js"></script>
 <script type="text/javascript">
@@ -67,7 +80,6 @@ $(document).ready(function() {
 			contactfunction: $('#contactfunction').val(),
 			gender: $('#gender').val(),
 		}, function(data) {
-			console.log(data);
 			if (data) {
 				$('#tutModal').modal('toggle');
      			$('#contractor')
@@ -142,13 +154,6 @@ $(document).ready(function() {
 				sessionStorage.removeItem('introDemo');
 			}).onbeforechange(function(){
 				sessionStorage.introDemo = this._currentStep;
-				/*if (this._currentStep == 3) {
-					$('#tab-contact').addClass('active');
-					$('#contact').addClass('active');
-
-					$('#tab-company').removeClass('active');
-					$('#company').removeClass('active');
-				}*/
 			}).onafterchange(function(){
 				var done = this._currentStep;
 				if (this._currentStep == 5) {
@@ -159,17 +164,14 @@ $(document).ready(function() {
 				} else {
 					$('.introjs-prevbutton').css("visibility","hidden");
 				}
-				/*$('.introjs-skipbutton').click(function(){
-					if (done == 3) {
-						sessionStorage.introDemo = 999;
-						window.location.href = '/';
-					}
-				});*/
 			});
 
 		if (sessionStorage.introDemo == 999) {
 			sessionStorage.clear();
 			sessionStorage.introDemo = 0;
+
+			sessionStorage.toggleTabProj{{Auth::id()}} = 'calc';
+
 			demo.start();
 		} else {
 			demo.goToStep(sessionStorage.introDemo).start();
@@ -436,7 +438,7 @@ $(document).ready(function() {
 						</div>
 
 						<h5><strong>Adresgegevens</strong></h5>
-						<div data-step="2" data-intro="Geef de adresgegevens van het project op."class="row">
+						<div data-step="2" data-intro="Geef de adresgegevens van het project op." class="row">
 
 							<div class="col-md-1">
 								<div class="form-group">
@@ -490,11 +492,11 @@ $(document).ready(function() {
 						</div>		
 
 						<div data-step="3" data-intro="Noteer eventueel aantekeningen bestemd voor het project. (Dit is alleen zichtbaar voor jou)">
-						<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
+						<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);" ><i class="fa fa-info-circle"></i></a></h4>
 				        <div class="row">
 				          <div class="form-group">
 				            <div class="col-md-12">
-				              <textarea name="note" id="note" rows="5" class="form-control">{{ Input::old('note') }}</textarea>
+				              <textarea name="note" id="note" rows="5" class="form-control summernote">{{ Input::old('note') }}</textarea>
 				            </div>
 				          </div>
 				        </div>

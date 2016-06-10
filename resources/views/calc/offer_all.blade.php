@@ -13,11 +13,19 @@ if (!$project || !$project->isOwner()) {
 } else {
 	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 }
-
-// $type = ProjectType::find($project->type_id);
 ?>
 
 @extends('layout.master')
+
+@push('style')
+<link media="all" type="text/css" rel="stylesheet" href="/components/intro.js/introjs.css">
+@endpush
+
+@push('scripts')
+<script src="/components/intro.js/intro.js"></script>
+@endpush
+
+@section('title', 'Offertebeheer')
 
 <?php if($common_access_error){ ?>
 @section('content')

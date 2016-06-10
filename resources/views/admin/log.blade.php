@@ -1,7 +1,8 @@
 @extends('layout.master')
 
-@section('content')
+@section('title', 'Logviewer')
 
+@section('content')
 <script type="text/javascript">
 	$(document).ready(function() {
 		$(document).ready(function(){

@@ -50,10 +50,7 @@ function invoice_condition($offer) {
 		echo "Indien opdracht gegund wordt, ontvangt u één eindfactuur.";
 	}
 } 
-
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>

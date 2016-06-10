@@ -40,8 +40,25 @@ class SystemSeeder extends Seeder {
 		$system_user->user_group = 100;
 		$system_user->save();
 
+		$guest_user = new User;
+		$guest_user->username = 'guest';
+		$guest_user->secret = Hash::make('ABC@123');
+		$guest_user->firstname = 'Guest';
+		$guest_user->api = md5(mt_rand());
+		$guest_user->token = sha1(Hash::make('ABC@123'));
+		$guest_user->ip = '::1';
+		$guest_user->active = 'N';
+		$guest_user->confirmed_mail = date('Y-m-d');
+		$guest_user->registration_date = date('Y-m-d');
+		$guest_user->expiration_date = date('Y-m-d', strtotime("+1 month", time()));
+		$guest_user->referral_key = md5(mt_rand());
+		$guest_user->email = 'guest@calctool.nl';
+		$guest_user->user_type = $guest_user_type->id;
+		$guest_user->user_group = 100;
+		$guest_user->save();
+
 		$relation = new Relation;
-		$relation->user_id = $system_user->id;
+		$relation->user_id = $guest_user->id;
 		$relation->kind_id = 1;
 		$relation->debtor_code = '12345';
 		$relation->company_name = 'CalculatieTool.com';
@@ -61,8 +78,8 @@ class SystemSeeder extends Seeder {
 		$relation->iban_name = 'CalculatieTool.com';
 		$relation->save();
 
-		$system_user->self_id = $relation->id;
-		$system_user->save();
+		$guest_user->self_id = $relation->id;
+		$guest_user->save();
 
 		$contact = new Contact;
 		$contact->firstname = 'Cal';
@@ -74,23 +91,6 @@ class SystemSeeder extends Seeder {
 		$contact->function_id = 7;
 		$contact->gender = 'M';
 		$contact->save();
-
-		$guest_user = new User;
-		$guest_user->username = 'guest';
-		$guest_user->secret = Hash::make('ABC@123');
-		$guest_user->firstname = 'Guest';
-		$guest_user->api = md5(mt_rand());
-		$guest_user->token = sha1(Hash::make('ABC@123'));
-		$guest_user->ip = '::1';
-		$guest_user->active = 'N';
-		$guest_user->confirmed_mail = date('Y-m-d');
-		$guest_user->registration_date = date('Y-m-d');
-		$guest_user->expiration_date = date('Y-m-d', strtotime("+1 month", time()));
-		$guest_user->referral_key = md5(mt_rand());
-		$guest_user->email = 'guest@calctool.nl';
-		$guest_user->user_type = $guest_user_type->id;
-		$guest_user->user_group = 100;
-		$guest_user->save();
 
 		$message = new MessageBox;
 		$message->subject = 'Standaard notificatie';

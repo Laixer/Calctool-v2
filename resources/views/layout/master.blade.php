@@ -3,10 +3,9 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>CalculatieTool.com - Online calculeren & offreren</title>
-		<meta name="keywords" content="Calculeren" />
-		<meta name="description" content="" />
-		<meta name="Author" content="CalculatieTool.com" />
+		<meta http-equiv="x-ua-compatible" content="ie=edge" />
+		<title>CalculatieTool.com - @yield('title', 'Online calculeren & offreren')</title>
+		<meta name="application-name" content="CalculatieTool.com">
 
 		<?php // -- favicon -- ?>
 		<link rel="apple-touch-icon" sizes="57x57" href="/images/apple-touch-icon-57x57.png">
@@ -27,21 +26,14 @@
 		<meta name="msapplication-TileImage" content="/images/mstile-144x144.png">
 		<meta name="theme-color" content="#4e4e4e">
 		<meta name="csrf-token" content="{{ csrf_token() }}" />
-
-		<?php // -- mobile settings -- ?>
 		<meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
 
-		<?php // -- WEB FONTS -- ?>
-		<link media="all" type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800">
-
 		<?php // -- CORE CSS -- ?>
+		<link media="all" type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800">
 		<link media="all" type="text/css" rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.min.css">
 		<link media="all" type="text/css" rel="stylesheet" href="/components/font-awesome/css/font-awesome.css">
-		<link media="all" type="text/css" rel="stylesheet" href="/components/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css">
-		<link media="all" type="text/css" rel="stylesheet" href="/components/clippyjs/build/clippy.css">
-		<link media="all" type="text/css" rel="stylesheet" href="/components/intro.js/introjs.css">
-		<link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
-		<link type="text/css" rel="stylesheet" href="/plugins/videojs/videojs-sublime-skin.css">
+		<!-- <link media="all" type="text/css" rel="stylesheet" href="/components/intro.js/introjs.css"> -->
+		@stack('style')
 
 		<?php // -- SHOP CSS -- ?>
 		<link media="all" type="text/css" rel="stylesheet" href="/css/shop.css">
@@ -55,9 +47,6 @@
 		<?php // -- CUSTOM CSS -- ?>
 		<link media="all" type="text/css" rel="stylesheet" href="/css/custom.css">
 		<link media="all" type="text/css" rel="stylesheet" href="/plugins/feedback/css/jquery.feedback_me.css">
-
-		<?php // -- Angular -- ?>
-		<script src="/components/angular/angular.min.js"></script>
 
 		<?php // -- JQuery -- ?>
 		<script src="/components/jquery/dist/jquery.min.js"></script>
@@ -88,9 +77,9 @@
 	</head>
 	<body>
 		<?php // -- ONLY DEV -- ?>
-		@if(App::environment('dev'))
+		@if(App()->environment('dev'))
 		<div style="color:#fff;background-color:red;z-index:200;position:fixed;top:0px;left:45%;width: 150px;text-align: center;"><a href="https://bitbucket.org/calctool/calctool-v2/commits/{{ File::get('../.revision') }}" style="color: black;">{{ 'REV: ' . substr(File::get('../.revision'), 0, 7) }}</a></div>
-		@elseif(App::environment('local'))
+		@elseif(App()->environment('local'))
 		<div style="color:#fff;background-color:green;z-index:200;position:fixed;top:0px;left:45%;width: 150px;text-align: center;">{{ exec('git describe --always') }}</div>
 		@endif
 
@@ -109,17 +98,12 @@
 		@show
 
 		<?php // -- JAVASCRIPT FILES -- ?>
-		<script src="/components/intro.js/intro.js"></script>
-		<script src="/components/clippyjs/build/clippy.min.js"></script>
-		<script src="/plugins/jquery.number.min.js"></script>
+		<!-- <script src="/components/intro.js/intro.js"></script> -->
 		<script src="/plugins/masonry.js"></script>
 
 		<script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
-		<script src="/components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-		<script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-		<script src="/plugins/summernote/summernote.min.js"></script>
-		<script src="/plugins/videojs/video.min.js"></script>
 		<script src="/plugins/feedback/js/jquery.feedback_me.js"></script>
+		@stack('scripts')
 
 		<script src="/js/scripts.js"></script>
 	</body>
