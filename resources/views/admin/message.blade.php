@@ -6,8 +6,13 @@ use \Calctool\Models\MessageBox;
 
 @extends('layout.master')
 
-@section('content')
+@section('title', 'Nieuw bericht')
 
+@push('scripts')
+<script src="/plugins/summernote/summernote.min.js"></script>
+@endpush
+
+@section('content')
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -46,7 +51,7 @@ $(document).ready(function() {
 			</div>
 			@endif
 
-			<h2><strong>Nieuw bericht</strong></h2>
+			<h2><strong>Nieuw</strong> bericht</h2>
 			<div class="white-row">
 
 			<h4>Bericht aan gebruiker</h4>

@@ -1,7 +1,8 @@
 @extends('layout.master')
 
-@section('content')
+@section('title', 'Transactiedetails')
 
+@section('content')
 <?php
 $mollie = new Mollie_API_Client;
 $mollie->setApiKey($_ENV['MOLLIE_API']);

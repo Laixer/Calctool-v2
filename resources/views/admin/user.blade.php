@@ -2,6 +2,8 @@
 
 @section('content')
 
+@section('title', 'Actieve gebruikers')
+
 <?php
 function userStatus($user)
 {

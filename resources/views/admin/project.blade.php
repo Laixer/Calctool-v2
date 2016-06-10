@@ -8,8 +8,9 @@ use \Calctool\Models\Contact;
 
 @extends('layout.master')
 
-@section('content')
+@section('title', 'Projectbeheer')
 
+@section('content')
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("body").on("click", ".delete", function(e){

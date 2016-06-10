@@ -5,8 +5,9 @@ use \Calctool\Models\User;
 
 @extends('layout.master')
 
-@section('content')
+@section('title', 'Bestandsbeheer')
 
+@section('content')
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("body").on("click", ".delete", function(e){

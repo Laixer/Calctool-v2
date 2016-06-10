@@ -6,8 +6,9 @@ use \Calctool\Models\User;
 
 @extends('layout.master')
 
-@section('content')
+@section('title', 'Transacties')
 
+@section('content')
 <div id="wrapper">
 
 	<section class="container">

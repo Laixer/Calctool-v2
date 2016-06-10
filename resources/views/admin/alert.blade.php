@@ -1,7 +1,8 @@
 @extends('layout.master')
 
-@section('content')
+@section('title', 'Meldingen')
 
+@section('content')
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('.arm').click(function(e) {
