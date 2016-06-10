@@ -12,6 +12,16 @@ use \Calctool\Models\MoreLabor;
 
 @extends('layout.master')
 
+@section('title', 'Urenregistratie')
+
+@push('style')
+<script src="/components/angular/angular.min.js"></script>
+@endpush
+
+@push('scripts')
+<script src="/components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+@endpush
+
 @section('content')
 
 <script type="text/javascript">

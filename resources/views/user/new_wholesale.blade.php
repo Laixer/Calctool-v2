@@ -5,6 +5,8 @@ use \Calctool\Models\WholesaleType;
 
 @extends('layout.master')
 
+@section('title', 'Nieuwe leverancier')
+
 @section('content')
 
 <?php

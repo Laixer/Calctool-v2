@@ -10,7 +10,6 @@ use \Calctool\Models\Detail;
 use \Calctool\Models\TimesheetKind;
 use \Calctool\Models\MoreLabor;
 use \Calctool\Models\ProjectType;
-//use \Calctool\Calculus\CalculationEndresult;
 use \Calctool\Calculus\SetEstimateCalculationEndresult;
 use \Calctool\Calculus\MoreEndresult;
 use \Calctool\Calculus\LessEndresult;
@@ -26,6 +25,8 @@ if (!$project || !$project->isOwner())
 ?>
 
 @extends('layout.master')
+
+@section('title', 'Projectresultaat')
 
 <?php if($common_access_error){ ?>
 @section('content')

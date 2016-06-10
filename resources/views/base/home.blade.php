@@ -12,6 +12,19 @@ use \Calctool\Models\SysMessage;
 
 @extends('layout.master')
 
+@section('title', 'Dashboard')
+
+@push('style')
+<link media="all" type="text/css" rel="stylesheet" href="/components/intro.js/introjs.css">
+<link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
+<script src="/components/angular/angular.min.js"></script>
+@endpush
+
+@push('scripts')
+<script src="/components/intro.js/intro.js"></script>
+<script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+@endpush
+
 <?php
 $next_step = null;
 if (Input::get('nstep') == 'intro')

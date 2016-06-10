@@ -27,6 +27,12 @@ if (!$project || !$project->isOwner())
 
 @extends('layout.master')
 
+@section('title', 'Offerteregels')
+
+@push('scripts')
+<script src="/plugins/jquery.number.min.js"></script>
+@endpush
+
 <?php if($common_access_error){ ?>
 @section('content')
 <div id="wrapper">
@@ -134,7 +140,6 @@ var n = this,
 						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
 						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
 						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
-						console.log(profit);
 						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
 						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
 					} else {

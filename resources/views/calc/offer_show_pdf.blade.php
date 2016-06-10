@@ -21,6 +21,16 @@ if (!$offer) {
 ?>
 @extends('layout.master')
 
+@section('title', 'Offerte')
+
+@push('style')
+<link media="all" type="text/css" rel="stylesheet" href="/components/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css">
+@endpush
+
+@push('scripts')
+<script src="/components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+@endpush
+
 <?php if($common_access_error){ ?>	Route::post('offer/sendmail', 'OfferController@doSendOffer');
 @section('content')
 <div id="wrapper">

@@ -19,6 +19,12 @@ if (!$project || !$project->isOwner()) {
 
 @extends('layout.master')
 
+@section('title', 'Factuurbeheer')
+
+@push('scripts')
+<script src="/plugins/jquery.number.min.js"></script>
+@endpush
+
 <?php if($common_access_error){ ?>
 @section('content')
 <div id="wrapper">

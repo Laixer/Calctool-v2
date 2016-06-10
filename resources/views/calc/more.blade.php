@@ -29,6 +29,19 @@ $type = ProjectType::find($project->type_id);
 
 @extends('layout.master')
 
+@section('title', 'Meerwerk')
+
+@push('style')
+<link media="all" type="text/css" rel="stylesheet" href="/components/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css">
+<link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
+@endpush
+
+@push('scripts')
+<script src="/components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+<script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script src="/plugins/summernote/summernote.min.js"></script>
+@endpush
+
 <?php if($common_access_error){ ?>
 @section('content')
 <div id="wrapper">
@@ -238,7 +251,7 @@ var n = this,
 						if (rate) {
 							rate = rate.toString().split('.').join('').replace(',', '.');
 						} else {
-							rate = {{$project->hour_rate_more}};
+							rate = {{ $project->hour_rate_more ? $project->hour_rate_more : 0 }};
 						}
 						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
 						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
@@ -283,7 +296,7 @@ var n = this,
 						if (rate) {
 							rate.toString().split('.').join('').replace(',', '.');
 						} else {
-							rate = {{$project->hour_rate_more}};
+							rate = {{ $project->hour_rate_more ? $project->hour_rate_more : 0 }};
 						}
 						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
 						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
@@ -409,7 +422,7 @@ var n = this,
 					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);
-						var rate = {{ $project->hour_rate_more }};
+						var rate = {{ $project->hour_rate_more ? $project->hour_rate_more : 0 }};
 						var amount = $curThis.closest("tr").find("input[name='hour']").val().toString().split('.').join('').replace(',', '.');
 						var $curTable = $curThis.closest("table");
 						var json = $.parseJSON(data);

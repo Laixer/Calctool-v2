@@ -5,6 +5,8 @@ use \Calctool\Models\MessageBox;
 
 @extends('layout.master')
 
+@section('title', 'Notificaties')
+
 @section('content')
 
 <div id="wrapper">

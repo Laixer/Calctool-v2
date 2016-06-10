@@ -26,6 +26,16 @@ if (!$project || !$project->isOwner())
 
 @extends('layout.master')
 
+@section('title', 'Calculeren')
+
+@push('style')
+@endpush
+
+@push('scripts')
+<script src="/plugins/summernote/summernote.min.js"></script>
+<script src="/plugins/jquery.number.min.js"></script>
+@endpush
+
 <?php if($common_access_error){ ?>
 @section('content')
 <div id="wrapper">
@@ -175,7 +185,6 @@ if (!$project || !$project->isOwner())
 						var sub_total = 0;
 						$curThis.closest("tbody").find(".total-ex-tax").each(function(index){
 							var _cal = parseFloat($(this).text().substring(2).split('.').join('').replace(',', '.'));
-							console.log($(this).text().substring(2));
 							if (_cal)
 								sub_total += _cal;
 						});
@@ -908,7 +917,6 @@ if (!$project || !$project->isOwner())
 			$notecurr = $(this);
 			$curval = $(this).attr('data-note');
 			$curid = $(this).attr('data-id');
-			console.log($curval);
 			$('.summernote').code($curval);
 			$('#noteact').val($curid);
 		});

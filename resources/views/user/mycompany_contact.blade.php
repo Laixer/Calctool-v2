@@ -15,6 +15,8 @@ $contact = Contact::where('relation_id','=',$relation->id)->first();
 
 @extends('layout.master')
 
+@section('title', 'Nieuw contact')
+
 @section('content')
 
 <script type="text/javascript">

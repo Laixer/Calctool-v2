@@ -24,6 +24,8 @@ if (!$invoice) {
 ?>
 @extends('layout.master')
 
+@section('title', 'Eindfactuur')
+
 <?php if($common_access_error){ ?>
 @section('content')
 <div id="wrapper">

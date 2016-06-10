@@ -33,6 +33,8 @@ else {
 
 @extends('layout.master')
 
+@section('title', 'Projectoverzicht')
+
 <?php if($common_access_error){ ?>
 @section('content')
 <div id="wrapper">

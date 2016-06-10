@@ -1,5 +1,7 @@
 @extends('layout.master')
 
+@section('title', 'Over ons')
+
 @section('content')
 <?# -- WRAPPER -- ?>
 <div id="wrapper">

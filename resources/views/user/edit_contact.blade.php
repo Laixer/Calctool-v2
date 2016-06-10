@@ -19,6 +19,8 @@ if (!$contact) {
 ?>
 @extends('layout.master')
 
+@section('title', 'Contactdetails')
+
 <?php if($common_access_error){ ?>
 @section('content')
 <div id="wrapper">

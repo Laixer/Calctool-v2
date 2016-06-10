@@ -97,6 +97,19 @@ if ($less_total>0) {
 
 @extends('layout.master')
 
+@section('title', 'Projectdetails')
+
+@push('style')
+<link media="all" type="text/css" rel="stylesheet" href="/components/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css">
+<link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
+@endpush
+
+@push('scripts')
+<script src="/components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+<script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script src="/plugins/summernote/summernote.min.js"></script>
+@endpush
+
 <?php if($common_access_error){ ?>
 @section('content')
 <div id="wrapper">

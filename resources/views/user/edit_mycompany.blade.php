@@ -17,6 +17,8 @@ $user = Auth::user();
 
 @extends('layout.master')
 
+@section('title', 'Mijn bedrijf')
+
 @section('content')
 
 <script type="text/javascript" src="/js/iban.js"></script>
@@ -128,8 +130,6 @@ $(document).ready(function() {
 
     });
 	
-    $('#dateRangePicker').datepicker();
-
 	var zipcode = $('#zipcode').val();
 	var number = $('#address_number').val();
 	$('.autoappend').blur(function(e){
@@ -153,17 +153,6 @@ $(document).ready(function() {
 			});
 		}
 	});
-
-	 $('#summernote').summernote({
-	        height: $(this).attr("data-height") || 200,
-	        toolbar: [
-	            ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
-	            ["para", ["ul", "ol", "paragraph"]],
-	            ["table", ["table"]],
-	            ["media", ["link", "picture", "video"]],
-	            ["misc", ["codeview"]]
-	        ]
-	    })
 
 	if (sessionStorage.introDemo) {
 
@@ -770,7 +759,6 @@ $(document).ready(function() {
 	}
 	$('#relationkind').change(function() {
 		$('.company').toggle('slow');
-		console.log('check');
 	});
 });
 </script>

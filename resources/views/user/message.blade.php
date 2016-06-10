@@ -10,6 +10,8 @@ if (!$message || !$message->isOwner()) {
 ?>
 @extends('layout.master')
 
+@section('title', 'Notificatie')
+
 <?php if($common_access_error){ ?>
 @section('content')
 <div id="wrapper">

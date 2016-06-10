@@ -1,5 +1,7 @@
 @extends('layout.master')
 
+@section('title', 'Relaties')
+
 @section('content')
 <div id="wrapper">
 

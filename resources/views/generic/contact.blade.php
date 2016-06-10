@@ -8,6 +8,12 @@ if (Auth::check()) {
 
 @extends('layout.master')
 
+@section('title', 'Support')
+
+@push('scripts')
+<script src="/plugins/summernote/summernote.min.js"></script>
+@endpush
+
 @section('content')
 
 <script type="text/javascript">
