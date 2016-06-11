@@ -210,7 +210,7 @@ class UserController extends Controller {
 			Audit::CreateEvent('account.payment.callback.success', 'Payment ' . $payment->id . ' succeeded');
 
 		}
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function getPaymentFinish(Request $request, $token)
@@ -554,11 +554,11 @@ class UserController extends Controller {
 
 		$promo = Promotion::where('code', strtoupper($request->get('code')))->where('active', true)->where('valid', '>=', date('Y-m-d H:i:s'))->first();
 		if (!$promo)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 
 		$order = Payment::where('user_id',Auth::id())->where('promotion_id',$promo->id)->first();
 		if ($order)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 
 		Redis::del('promo:'.Auth::user()->username);
 		Redis::set('promo:'.Auth::user()->username, $promo->id);

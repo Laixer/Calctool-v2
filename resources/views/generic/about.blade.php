@@ -3,7 +3,6 @@
 @section('title', 'Over ons')
 
 @section('content')
-<?# -- WRAPPER -- ?>
 <div id="wrapper">
 
 	<section class="container">

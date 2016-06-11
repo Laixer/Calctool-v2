@@ -39,7 +39,7 @@ use \Calctool\Models\Wholesale;
 				project: $project
 			}, function(data){
 				var $curTable = $curThis.closest("table");
-				var json = $.parseJSON(data);
+				var json = data;
 				if (json.success) {
 					$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
 					.find("td:eq(0)").text(json.date).end()

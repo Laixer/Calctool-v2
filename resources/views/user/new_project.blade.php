@@ -26,7 +26,6 @@ function getNewDebtorCode() {
 @endpush
 
 @section('content')
-<script type="text/javascript" src="/plugins/summernote/summernote.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 	$('.summernote').summernote({
@@ -109,7 +108,7 @@ $(document).ready(function() {
 				number: number,
 			}, function(data) {
 				if (data) {
-					var json = $.parseJSON(data);
+					var json = data;
 					$('#street').val(json.street);
 					$('#city').val(json.city);
 					$("#province").find('option:selected').removeAttr("selected");
@@ -133,7 +132,7 @@ $(document).ready(function() {
 				number: number,
 			}, function(data) {
 				if (data) {
-					var json = $.parseJSON(data);
+					var json = data;
 					$('#street2').val(json.street);
 					$('#city2').val(json.city);
 					$("#province2").find('option:selected').removeAttr("selected");

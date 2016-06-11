@@ -90,7 +90,7 @@ var n = this,
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
 					project: {{ $project->id }},
 				}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);
@@ -133,7 +133,7 @@ var n = this,
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
 					project: {{ $project->id }},
 				}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);

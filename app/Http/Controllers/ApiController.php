@@ -91,10 +91,10 @@ class ApiController extends Controller {
 
 		$activity = Activity::find($request->get('activity'));
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$timesheet = Timesheet::create(array(
@@ -174,7 +174,7 @@ class ApiController extends Controller {
 
 		$project = Project::find($request->get('project'));
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$relation_id = null;

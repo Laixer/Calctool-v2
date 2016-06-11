@@ -61,7 +61,7 @@ $(document).ready(function() {
 		$curr = $(this);
 		$matid = $curr.closest('tr').attr('data-id');
 		$.post("/material/favorite", {matid:$matid}, function(data) {
-			var json = $.parseJSON(data);
+			var json = data;
 			if (json.success) {
 				$curr.find('i').toggleClass('fa-star-o fa-star');
 				if ($curr.find('i').css('color') == 'rgb(0, 0, 0)') {
@@ -97,7 +97,7 @@ $(document).ready(function() {
 				rate: $curThis.closest("tr").find("input[name='rate']").val(),
 				group: $curThis.closest("tr").find("select[name='ngroup']").val()
 			}, function(data){
-				var json = $.parseJSON(data);
+				var json = data;
 				$curThis.closest("tr").find("input").removeClass("error-input");
 				if (json.success) {
 					$curThis.closest("tr").attr("data-id", json.id);
@@ -138,7 +138,7 @@ $(document).ready(function() {
 				rate: $curThis.closest("tr").find("input[name='rate']").val(),
 				group: $curThis.closest("tr").find("select[name='ngroup']").val()
 			}, function(data){
-				var json = $.parseJSON(data);
+				var json = data;
 				$curThis.closest("tr").find("input").removeClass("error-input");
 				if (json.success) {
 					$curThis.closest("tr").attr("data-id", json.id);

@@ -24,7 +24,6 @@ class AppsController extends Controller {
 	public function getAppsDashboard()
 	{
 		return view('base.apps');
-
 	}
 
 }

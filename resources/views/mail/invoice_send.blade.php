@@ -15,7 +15,7 @@
 				$.post("/invoice/sendmail", {
 					invoice: {{ $invoice_id }}
 				}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					if (json.success) {
 						$('#mailsent').show();
 					}

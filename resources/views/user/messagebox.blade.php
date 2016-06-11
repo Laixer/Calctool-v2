@@ -8,7 +8,6 @@ use \Calctool\Models\MessageBox;
 @section('title', 'Notificaties')
 
 @section('content')
-
 <div id="wrapper">
 
 	<section class="container">

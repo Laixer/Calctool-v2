@@ -109,7 +109,7 @@ class MaterialController extends Controller {
 			));
 		}
 
-		return json_encode($rtn_products);
+		return response()->json($rtn_products);
 	}
 
 	public function doNew(Request $request)
@@ -136,7 +136,7 @@ class MaterialController extends Controller {
 			'supplier_id' => $mysupplier->id
 		));
 
-		return json_encode(['success' => 1, 'id' => $material->id]);
+		return response()->json(['success' => 1, 'id' => $material->id]);
 	}
 
 	public function doUpdate(Request $request)
@@ -151,10 +151,10 @@ class MaterialController extends Controller {
 
 		$product = Product::find($request->get('id'));
 		if (!$product)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$supplier = Supplier::find($product->supplier_id);
 		if (!$supplier || !$supplier->isOwner()) {
-			return json_encode(['success' => 3]);
+			return response()->json(['success' => 3]);
 		}
 
 		$product->description = $request->get('name');
@@ -164,7 +164,7 @@ class MaterialController extends Controller {
 
 		$product->save();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doDelete(Request $request)
@@ -175,15 +175,15 @@ class MaterialController extends Controller {
 
 		$product = Product::find($request->get('id'));
 		if (!$product)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$supplier = Supplier::find($product->supplier_id);
 		if (!$supplier || !$supplier->isOwner()) {
-			return json_encode(['success' => 3]);
+			return response()->json(['success' => 3]);
 		}
 
 		$product->delete();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doFavorite(Request $request)
@@ -195,13 +195,13 @@ class MaterialController extends Controller {
 		$exist_product = Auth::user()->productFavorite()->where('product_id','=',$request->get('matid'))->first();
 		if ($exist_product) {
 			Auth::user()->productFavorite()->detach($exist_product);
-			return json_encode(['success' => 1]);
+			return response()->json(['success' => 1]);
 		}
 
 		$product = Product::find($request->get('matid'));
 		Auth::user()->productFavorite()->attach($product);
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doNewElement(Request $request)
@@ -217,6 +217,6 @@ class MaterialController extends Controller {
 
 		$element->save();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 }

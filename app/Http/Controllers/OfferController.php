@@ -143,15 +143,15 @@ class OfferController extends Controller {
 
 		$offer = Offer::find($request->get('offer'));
 		if (!$offer)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$project = Project::find($offer->project_id);
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$project = Project::find($request->get('project'));
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$offer->offer_finish = date('Y-m-d', strtotime($request->get('date')));
@@ -177,17 +177,17 @@ class OfferController extends Controller {
 			$invoice->save();
 		}
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doSendOffer(Request $request)
 	{
 		$offer = Offer::find($request->input('offer'));
 		if (!$offer)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$project = Project::find($offer->project_id);
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$share = ProjectShare::where('project_id', $project->id)->first();
@@ -227,17 +227,17 @@ class OfferController extends Controller {
 			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function getSendOfferPreview(Request $request, $project_id, $offer_id)
 	{
 		$offer = Offer::find($offer_id);
 		if (!$offer)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$project = Project::find($project_id);
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$share = ProjectShare::where('project_id', $project->id)->first();
@@ -274,14 +274,14 @@ class OfferController extends Controller {
 	{
 		$offer = Offer::find($request->input('offer'));
 		if (!$offer)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$project = Project::find($offer->project_id);
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		if (OfferPost::where('offer_id', $offer->id)->count()>0) {
-			return json_encode(['success' => 0,'message' => 'Offerte al aangeboden']);
+			return response()->json(['success' => 0,'message' => 'Offerte al aangeboden']);
 		}
 		$post = new OfferPost;
 		$post->offer_id = $offer->id;
@@ -309,7 +309,7 @@ class OfferController extends Controller {
 	        $message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 	    });
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	/* id = $project->id */

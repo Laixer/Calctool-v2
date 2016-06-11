@@ -48,10 +48,10 @@ class EstimController extends Controller {
 
 			$activity = Activity::find($request->get('activity'));
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$material = EstimateMaterial::create(array(
@@ -66,7 +66,7 @@ class EstimController extends Controller {
 
 		$this->updateEstimateStatus($request->get('project'));
 
-		return json_encode(['success' => 1, 'id' => $material->id]);
+		return response()->json(['success' => 1, 'id' => $material->id]);
 	}
 
 	public function doNewEstimateEquipment(Request $request)
@@ -82,10 +82,10 @@ class EstimController extends Controller {
 
 		$activity = Activity::find($request->get('activity'));
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$equipment = EstimateEquipment::create(array(
@@ -100,7 +100,7 @@ class EstimController extends Controller {
 
 		$this->updateEstimateStatus($request->get('project'));
 
-		return json_encode(['success' => 1, 'id' => $equipment->id]);
+		return response()->json(['success' => 1, 'id' => $equipment->id]);
 	}
 
 	public function doNewEstimateLabor(Request $request)
@@ -113,10 +113,10 @@ class EstimController extends Controller {
 
 		$activity = Activity::find($request->get('activity'));
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$_activity = Activity::find($request->get('activity'));
@@ -133,7 +133,7 @@ class EstimController extends Controller {
 
 		$this->updateEstimateStatus($request->get('project'));
 
-		return json_encode(['success' => 1, 'id' => $labor->id]);
+		return response()->json(['success' => 1, 'id' => $labor->id]);
 	}
 
 	public function doUpdateEstimateMaterial(Request $request)
@@ -149,13 +149,13 @@ class EstimController extends Controller {
 
 		$material = EstimateMaterial::find($request->get('id'));
 		if (!$material)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$activity = Activity::find($material->activity_id);
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$material->set_material_name = $request->get('name');
@@ -168,7 +168,7 @@ class EstimController extends Controller {
 
 		$this->updateEstimateStatus($request->get('project'));
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doUpdateEstimateEquipment(Request $request)
@@ -184,13 +184,13 @@ class EstimController extends Controller {
 
 			$equipment = EstimateEquipment::find($request->get('id'));
 			if (!$equipment)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$activity = Activity::find($equipment->activity_id);
 			if (!$activity)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
 			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			}
 
 			$equipment->set_equipment_name = $request->get('name');
@@ -203,7 +203,7 @@ class EstimController extends Controller {
 
 			$this->updateEstimateStatus($request->get('project'));
 
-			return json_encode(['success' => 1]);
+			return response()->json(['success' => 1]);
 	}
 
 	public function doUpdateEstimateLabor(Request $request)
@@ -217,13 +217,13 @@ class EstimController extends Controller {
 
 		$labor = EstimateLabor::find($request->get('id'));
 		if (!$labor)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$activity = Activity::find($labor->activity_id);
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$rate = $request->get('rate');
@@ -245,7 +245,7 @@ class EstimController extends Controller {
 
 		$this->updateEstimateStatus($request->get('project'));
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doResetEstimateMaterial(Request $request)
@@ -257,13 +257,13 @@ class EstimController extends Controller {
 
 			$material = EstimateMaterial::find($request->get('id'));
 			if (!$material)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$activity = Activity::find($material->activity_id);
 			if (!$activity)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
 			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			}
 
 			$material->set_material_name = NULL;
@@ -276,7 +276,7 @@ class EstimController extends Controller {
 
 			$this->updateEstimateStatus($request->get('project'));
 
-			return json_encode(['success' => 1, 'name' => $material->material_name, 'unit' => $material->unit, 'rate' => number_format($material->rate, 2,",","."), 'amount' => number_format($material->amount, 2,",",".")]);
+			return response()->json(['success' => 1, 'name' => $material->material_name, 'unit' => $material->unit, 'rate' => number_format($material->rate, 2,",","."), 'amount' => number_format($material->amount, 2,",",".")]);
 	}
 
 	public function doResetEstimateEquipment(Request $request)
@@ -288,13 +288,13 @@ class EstimController extends Controller {
 
 			$equipment = EstimateEquipment::find($request->get('id'));
 			if (!$equipment)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$activity = Activity::find($equipment->activity_id);
 			if (!$activity)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
 			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			}
 
 			$equipment->set_equipment_name = NULL;
@@ -307,7 +307,7 @@ class EstimController extends Controller {
 
 			$this->updateEstimateStatus($request->get('project'));
 
-			return json_encode(['success' => 1, 'name' => $equipment->equipment_name, 'unit' => $equipment->unit, 'rate' => number_format($equipment->rate, 2,",","."), 'amount' => number_format($equipment->amount, 2,",",".")]);
+			return response()->json(['success' => 1, 'name' => $equipment->equipment_name, 'unit' => $equipment->unit, 'rate' => number_format($equipment->rate, 2,",","."), 'amount' => number_format($equipment->amount, 2,",",".")]);
 	}
 
 	public function doResetEstimateLabor(Request $request)
@@ -319,13 +319,13 @@ class EstimController extends Controller {
 
 			$labor = EstimateLabor::find($request->get('id'));
 			if (!$labor)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$activity = Activity::find($labor->activity_id);
 			if (!$activity)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
 			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			}
 
 			$labor->set_rate =  NULL;
@@ -336,7 +336,7 @@ class EstimController extends Controller {
 
 			$this->updateEstimateStatus($request->get('project'));
 
-			return json_encode(['success' => 1, 'rate' => number_format($labor->rate, 2,",","."), 'amount' => number_format($labor->amount, 2,",",".")]);
+			return response()->json(['success' => 1, 'rate' => number_format($labor->rate, 2,",","."), 'amount' => number_format($labor->amount, 2,",",".")]);
 	}
 
 	public function doDeleteEstimateMaterial(Request $request)
@@ -348,20 +348,20 @@ class EstimController extends Controller {
 
 			$rec = EstimateMaterial::find($request->get('id'));
 			if (!$rec)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$activity = Activity::find($rec->activity_id);
 			if (!$activity)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
 			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			}
 
 			$rec->delete();
 
 			$this->updateEstimateStatus($request->get('project'));
 
-			return json_encode(['success' => 1]);
+			return response()->json(['success' => 1]);
 	}
 
 	public function doDeleteEstimateEquipment(Request $request)
@@ -373,20 +373,20 @@ class EstimController extends Controller {
 
 			$rec = EstimateEquipment::find($request->get('id'));
 			if (!$rec)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$activity = Activity::find($rec->activity_id);
 			if (!$activity)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
 			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			}
 
 			$rec->delete();
 
 			$this->updateEstimateStatus($request->get('project'));
 
-			return json_encode(['success' => 1]);
+			return response()->json(['success' => 1]);
 	}
 
 	public function doDeleteEstimateLabor(Request $request)
@@ -398,20 +398,20 @@ class EstimController extends Controller {
 
 			$rec = EstimateLabor::find($request->get('id'));
 			if (!$rec)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$activity = Activity::find($rec->activity_id);
 			if (!$activity)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
 			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			}
 
 			$rec->delete();
 
 			$this->updateEstimateStatus($request->get('project'));
 
-			return json_encode(['success' => 1]);
+			return response()->json(['success' => 1]);
 	}
 
 }

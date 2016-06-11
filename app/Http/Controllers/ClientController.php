@@ -22,7 +22,17 @@ class ClientController extends Controller {
 	 *
 	 * @return Response
 	 */
+	public function getClientPage(Request $request)
+	{
+		return view('user.client_page');
+	}
 
+	/**
+	 * Display a listing of the resource.
+	 * GET /relation
+	 *
+	 * @return Response
+	 */
 	public function doUpdateCommunication(Request $request, $token)
 	{
 

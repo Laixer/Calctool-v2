@@ -111,15 +111,15 @@ class MoreController extends Controller {
 
 		$chapter = Chapter::find($request->input('chapter'));
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		if (!$chapter->more)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 
 		$chapter->delete();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doNewMaterial(Request $request)
@@ -135,10 +135,10 @@ class MoreController extends Controller {
 
 		$activity = Activity::find($request->get('activity'));
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$material = MoreMaterial::create(array(
@@ -151,7 +151,7 @@ class MoreController extends Controller {
 
 		$this->updateMoreStatus($request->get('project'));
 
-		return json_encode(['success' => 1, 'id' => $material->id]);
+		return response()->json(['success' => 1, 'id' => $material->id]);
 	}
 
 	public function doNewEquipment(Request $request)
@@ -167,10 +167,10 @@ class MoreController extends Controller {
 
 		$activity = Activity::find($request->get('activity'));
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$equipment = MoreEquipment::create(array(
@@ -183,7 +183,7 @@ class MoreController extends Controller {
 
 		$this->updateMoreStatus($request->get('project'));
 
-		return json_encode(['success' => 1, 'id' => $equipment->id]);
+		return response()->json(['success' => 1, 'id' => $equipment->id]);
 	}
 
 	public function doNewLabor(Request $request)
@@ -197,10 +197,10 @@ class MoreController extends Controller {
 
 		$activity = Activity::find($request->get('activity'));
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$rate = $request->get('rate');
@@ -220,7 +220,7 @@ class MoreController extends Controller {
 
 		$this->updateMoreStatus($request->get('project'));
 
-		return json_encode(['success' => 1, 'id' => $labor->id]);
+		return response()->json(['success' => 1, 'id' => $labor->id]);
 	}
 
 	public function doDeleteMaterial(Request $request)
@@ -232,20 +232,20 @@ class MoreController extends Controller {
 
 		$rec = MoreMaterial::find($request->get('id'));
 		if (!$rec)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$activity = Activity::find($rec->activity_id);
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$rec->delete();
 
 		$this->updateMoreStatus($request->get('project'));
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doDeleteEquipment(Request $request)
@@ -257,20 +257,20 @@ class MoreController extends Controller {
 
 		$rec = MoreEquipment::find($request->get('id'));
 		if (!$rec)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$activity = Activity::find($rec->activity_id);
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$rec->delete();
 
 		$this->updateMoreStatus($request->get('project'));
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doDeleteLabor(Request $request)
@@ -282,20 +282,20 @@ class MoreController extends Controller {
 
 		$rec = MoreLabor::find($request->get('id'));
 		if (!$rec)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$activity = Activity::find($rec->activity_id);
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$rec->delete();
 
 		$this->updateMoreStatus($request->get('project'));
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doUpdateMaterial(Request $request)
@@ -311,13 +311,13 @@ class MoreController extends Controller {
 
 		$material = MoreMaterial::find($request->get('id'));
 		if (!$material)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$activity = Activity::find($material->activity_id);
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$material->material_name = $request->get('name');
@@ -329,7 +329,7 @@ class MoreController extends Controller {
 
 		$this->updateMoreStatus($request->get('project'));
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doUpdateEquipment(Request $request)
@@ -345,13 +345,13 @@ class MoreController extends Controller {
 
 		$equipment = MoreEquipment::find($request->get('id'));
 		if (!$equipment)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$activity = Activity::find($equipment->activity_id);
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$equipment->equipment_name = $request->get('name');
@@ -363,7 +363,7 @@ class MoreController extends Controller {
 
 		$this->updateMoreStatus($request->get('project'));
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doUpdateLabor(Request $request)
@@ -377,13 +377,13 @@ class MoreController extends Controller {
 
 		$labor = MoreLabor::find($request->get('id'));
 		if (!$labor)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$activity = Activity::find($labor->activity_id);
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$rate = $request->get('rate');
@@ -404,6 +404,6 @@ class MoreController extends Controller {
 
 		$this->updateMoreStatus($request->get('project'));
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 }
