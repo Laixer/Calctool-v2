@@ -30,6 +30,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application Debug Mode
+    |--------------------------------------------------------------------------
+    |
+    | When your application is in debug mode, detailed error messages with
+    | stack traces will be shown on every error that occurs within your
+    | application. If disabled, a simple generic error page is shown.
+    |
+    */
+
+    'profiler' => env('APP_PROFILER', false),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application URL
     |--------------------------------------------------------------------------
     |
@@ -127,7 +140,6 @@ return [
          * Laravel Framework Service Providers...
          */
         Illuminate\Auth\AuthServiceProvider::class,
-        Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
         Illuminate\Cache\CacheServiceProvider::class,
         Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
@@ -162,7 +174,6 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Bogardo\Mailgun\MailgunServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
-        // Barryvdh\Debugbar\ServiceProvider::class,
         Nathanmac\Utilities\Parser\ParserServiceProvider::class,
 
     ],
@@ -217,7 +228,6 @@ return [
         'Calctool'  => Calctool\Facades\Calctool::class,
         'Image'     => Intervention\Image\Facades\Image::class,
         'Mailgun'   => Bogardo\Mailgun\Facades\Mailgun::class,
-        // 'Debugbar'  => Barryvdh\Debugbar\Facade::class,
         'PDF'       => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'Parser'    => Nathanmac\Utilities\Parser\Facades\Parser::class,
 
