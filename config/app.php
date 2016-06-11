@@ -162,6 +162,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Bogardo\Mailgun\MailgunServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
         Nathanmac\Utilities\Parser\ParserServiceProvider::class,
 
     ],
@@ -216,6 +217,7 @@ return [
         'Calctool'  => Calctool\Facades\Calctool::class,
         'Image'     => Intervention\Image\Facades\Image::class,
         'Mailgun'   => Bogardo\Mailgun\Facades\Mailgun::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'PDF'       => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'Parser'    => Nathanmac\Utilities\Parser\Facades\Parser::class,
 
