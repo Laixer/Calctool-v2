@@ -1,5 +1,7 @@
 <?php
 
+ini_set('memory_limit', '2048M');
+
 use \Calctool\Models\Project;
 use \Calctool\Models\Relation;
 use \Calctool\Models\Chapter;
@@ -2147,9 +2149,9 @@ if ($cnt>1)
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-        <th class="no">Onderdeel</th>
-        <th class="desc">Werkzaamheid</th>
-        <th class="no">Omschrijving</th>
+        <th class="qty">Onderdeel</th>
+        <th class="qty">Werkzaamheid</th>
+        <th class="qty">Omschrijving</th>
       </tr>
     </thead>
     <tbody>
@@ -2157,9 +2159,9 @@ if ($cnt>1)
       <?php $i = true; ?>
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
       <tr>
-        <td class="col-md-2" valign="top"><br/><strong><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></strong></td>
-        <td class="col-md-3" valign="top"><br/>{{ $activity->activity_name }}</td>
-        <td class="col-md-7" valign="top"><br/><span>{!! $activity->note !!}</td>
+        <td class="qty" valign="top"><br/><strong><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></strong></td>
+        <td class="qty" valign="top"><br/>{{ $activity->activity_name }}</td>
+        <td class="qty" valign="top"><br/><span>{!! $activity->note !!}</td>
       </tr>
       @endforeach
       @endforeach
@@ -2169,9 +2171,9 @@ if ($cnt>1)
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-        <th class="no">Onderdeel</th>
-        <th class="desc">Werkzaamheid</th>
-        <th class="no">Omschrijving</th>
+        <th class="qty">Onderdeel</th>
+        <th class="qty">Werkzaamheid</th>
+        <th class="qty">Omschrijving</th>
       </tr>
     </thead>
     <tbody>
@@ -2179,9 +2181,9 @@ if ($cnt>1)
       <?php $i = true; ?>
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
       <tr>
-        <td class="col-md-2" valign="top"><br/><strong><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></strong></td>
-        <td class="col-md-3" valign="top"><br/>{{ $activity->activity_name }}</td>
-        <td class="col-md-7" valign="top"><br/><span>{!! $activity->note !!}</td>
+        <td class="qty" valign="top"><br/><strong><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></strong></td>
+        <td class="qty" valign="top"><br/>{{ $activity->activity_name }}</td>
+        <td class="qty" valign="top"><br/><span>{!! $activity->note !!}</td>
       </tr>
       @endforeach
       @endforeach
