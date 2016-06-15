@@ -175,7 +175,7 @@ if (!$project || !$project->isOwner())
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
 					project: {{ $project->id }},
 				}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);
@@ -226,7 +226,7 @@ if (!$project || !$project->isOwner())
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
 					project: {{ $project->id }},
 				}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);
@@ -275,7 +275,7 @@ if (!$project || !$project->isOwner())
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
 					project: {{ $project->id }},
 				}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);
@@ -320,7 +320,7 @@ if (!$project || !$project->isOwner())
 					activity: $curThis.closest("table").attr("data-id"),
 					project: {{ $project->id }},
 				}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);
@@ -363,7 +363,7 @@ if (!$project || !$project->isOwner())
 					activity: $curThis.closest("table").attr("data-id"),
 					project: {{ $project->id }},
 				}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);
@@ -421,7 +421,7 @@ if (!$project || !$project->isOwner())
 					activity: $curThis.closest("table").attr("data-id"),
 					project: {{ $project->id }},
 				}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);
@@ -472,7 +472,7 @@ if (!$project || !$project->isOwner())
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
 					project: {{ $project->id }},
 				}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);
@@ -523,7 +523,7 @@ if (!$project || !$project->isOwner())
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
 					project: {{ $project->id }},
 				}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);
@@ -572,7 +572,7 @@ if (!$project || !$project->isOwner())
 					amount: $curThis.closest("tr").find("input[name='amount']").val(),
 					project: {{ $project->id }},
 				}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);
@@ -617,7 +617,7 @@ if (!$project || !$project->isOwner())
 					activity: $curThis.closest("table").attr("data-id"),
 					project: {{ $project->id }},
 				}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);
@@ -660,7 +660,7 @@ if (!$project || !$project->isOwner())
 					activity: $curThis.closest("table").attr("data-id"),
 					project: {{ $project->id }},
 				}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);
@@ -718,7 +718,7 @@ if (!$project || !$project->isOwner())
 					activity: $curThis.closest("table").attr("data-id"),
 					project: {{ $project->id }},
 				}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);

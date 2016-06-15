@@ -175,7 +175,7 @@ if ($less_total>0) {
 				project: {{ $project->id }},
 			}, function(data){
 				var $curTable = $curThis.closest("table");
-				var json = $.parseJSON(data);
+				var json = data;
 				if (json.success) {
 					$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
 					.find("td:eq(0)").text($date).end()
@@ -207,7 +207,7 @@ if ($less_total>0) {
 				project: {{ $project->id }}
 			}, function(data){
 				var $curTable = $curThis.closest("table");
-				var json = $.parseJSON(data);
+				var json = data;
 				$curTable.find("tr:eq(1)").clone().removeAttr("data-id")
 				.find("td:eq(0)").text($date).end()
 				.find("td:eq(1)").text(json.relation).end()
@@ -242,7 +242,7 @@ if ($less_total>0) {
 				$curproj = $(this).attr('data-project');
 				$curinv = $(this).attr('data-invoice');
 				$.post("/invoice/pay", {project: {{ $project->id }}, id: $curinv, projectid: $curproj}, function(data){
-					$rs = jQuery.parseJSON(data);
+					$rs = data;
 					$curThis.replaceWith('Betaald op ' +$rs.payment);
 				}).fail(function(e) { console.log(e); });
 			}
@@ -252,7 +252,7 @@ if ($less_total>0) {
 			$curproj = $(this).attr('data-project');
 			$curinv = $(this).attr('data-invoice');
 			$.post("/invoice/invclose", {project: {{ $project->id }}, id: $curinv, projectid: $curproj}, function(data){
-				$rs = jQuery.parseJSON(data);
+				$rs = data;
 				$curThis.replaceWith($rs.billing);
 			}).fail(function(e) { console.log(e); });
 		});

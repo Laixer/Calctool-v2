@@ -16,21 +16,15 @@ Route::get('login', function(){
 });
 
 Route::group(['middleware' => 'guest'], function() {
-	Route::get('register', function(){
-		return view('auth.registration');
-	});
+	Route::get('register', 'AuthController@getRegister');
 	Route::post('login', 'AuthController@doLogin');
 	Route::post('register', 'AuthController@doRegister');
 	Route::get('confirm/{api}/{token}', 'AuthController@doActivate')->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
 	Route::post('password/reset', 'AuthController@doBlockPassword');
-	Route::get('password/{api}/{token}', function() {
-		return view('auth.password');
-	})->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
+	Route::get('password/{api}/{token}', 'AuthController@getPasswordReset')->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
 	Route::post('password/{api}/{token}', 'AuthController@doNewPassword')->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
-
-	Route::get('ex-project-overview/{token}', function() {
-		return view('user.client_page');
-	})->where('token', '[0-9a-z]{40}');
+	
+	Route::get('ex-project-overview/{token}', 'ClientController@getClientPage')->where('token', '[0-9a-z]{40}');
 	Route::post('ex-project-overview/{token}/update', 'ClientController@doUpdateCommunication')->where('token', '[0-9a-z]{40}');
 	Route::get('ex-project-overview/{token}/done', 'ClientController@doOfferAccept')->where('token', '[0-9a-z]{40}');
 });
@@ -281,20 +275,12 @@ Route::group(['middleware' => 'auth'], function()
 	Route::post('relation/logo/save', 'RelationController@doNewLogo');
 
 	/* Wholesale */
-	Route::get('wholesale', function() {
-		return view('user.wholesale');
-	})->middleware('payzone');
-	Route::get('wholesale/new', function() {
-		return view('user.new_wholesale');
-	})->middleware('payzone');
+	Route::get('wholesale', 'WholesaleController@getAll')->middleware('payzone');
+	Route::get('wholesale/new', 'WholesaleController@getNew')->middleware('payzone');
 	Route::post('wholesale/new', 'WholesaleController@doNew');
 	Route::post('wholesale/update', 'WholesaleController@doUpdate');
-	Route::get('wholesale-{wholesale_id}/edit', function() {
-		return view('user.edit_wholesale');
-	})->where('wholesale_id', '[0-9]+')->middleware('payzone');
-	Route::get('wholesale-{wholesale_id}/show', function() {
-		return view('user.show_wholesale');
-	})->where('wholesale_id', '[0-9]+')->middleware('payzone');
+	Route::get('wholesale-{wholesale_id}/edit', 'WholesaleController@getEdit')->where('wholesale_id', '[0-9]+')->middleware('payzone');
+	Route::get('wholesale-{wholesale_id}/show')->where('wholesale_id', '[0-9]+')->middleware('payzone');
 	Route::post('wholesale/iban/update', 'WholesaleController@doUpdateIban');
 	Route::get('wholesale-{wholesale_id}/delete', 'WholesaleController@getDelete')->where('wholesale_id', '[0-9]+')->middleware('payzone');
 

@@ -15,7 +15,7 @@
 				$.post("/offer/sendmail", {
 					offer: {{ $offer_id }}
 				}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					if (json.success) {
 						$('#mailsent').show();
 					}

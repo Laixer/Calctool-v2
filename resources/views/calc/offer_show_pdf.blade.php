@@ -78,7 +78,7 @@ $(document).ready(function() {
 		$.post("/offer/sendmail", {
 			offer: {{ $offer->id }}
 		}, function(data){
-			var json = $.parseJSON(data);
+			var json = data;
 			if (json.success) {
 				$('#mailsent').show();
 			}
@@ -88,7 +88,7 @@ $(document).ready(function() {
 		$.post("/offer/sendpost", {
 			offer: {{ $offer->id }}
 		}, function(data){
-			var json = $.parseJSON(data);
+			var json = data;
 			if (json.success) {
 				$('#postsent').show();
 			}

@@ -71,7 +71,7 @@ $(document).ready(function() {
 		$.post("/invoice/sendmail", {
 			invoice: {{ $invoice->id }}
 		}, function(data){
-			var json = $.parseJSON(data);
+			var json = data;
 			if (json.success) {
 				$('#mailsent').show();
 			}
@@ -81,7 +81,7 @@ $(document).ready(function() {
 		$.post("/invoice/sendpost", {
 			invoice: {{ $invoice->id }}
 		}, function(data){
-			var json = $.parseJSON(data);
+			var json = data;
 			if (json.success) {
 				$('#postsent').show();
 			}

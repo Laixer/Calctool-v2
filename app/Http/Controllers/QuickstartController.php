@@ -120,7 +120,7 @@ class QuickstartController extends Controller {
 			$address['province'] = $data->_embedded->addresses[0]->province->label;
 			$address['province_id'] = Province::where('province_name', strtolower($data->_embedded->addresses[0]->province->label))->first()['id'];
 			$address['city'] = $data->_embedded->addresses[0]->city->label;
-			return json_encode($address);
+			return response()->json($address);
 		}
 
 		return;

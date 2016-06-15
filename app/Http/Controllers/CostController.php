@@ -57,10 +57,10 @@ class CostController extends Controller {
 
 		$activity = Activity::find($request->get('activity'));
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$_activity = Activity::find($request->get('activity'));
@@ -106,7 +106,7 @@ class CostController extends Controller {
 			));
 		}
 
-		return json_encode(['success' => 1, 'type' => $type, 'activity' => Activity::find($timesheet->activity_id)->activity_name, 'hour' => number_format($timesheet->register_hour, 2,",","."), 'date' => date('d-m-Y', strtotime($request->get('date'))), 'project' => $_project->project_name, 'id' => $timesheet->id]);
+		return response()->json(['success' => 1, 'type' => $type, 'activity' => Activity::find($timesheet->activity_id)->activity_name, 'hour' => number_format($timesheet->register_hour, 2,",","."), 'date' => date('d-m-Y', strtotime($request->get('date'))), 'project' => $_project->project_name, 'id' => $timesheet->id]);
 	}
 
 	public function doDeleteTimesheet(Request $request)
@@ -117,18 +117,18 @@ class CostController extends Controller {
 
 		$timesheet = Timesheet::find($request->get('id'));
 		if (!$timesheet)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$activity = Activity::find($timesheet->activity_id);
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$timesheet->delete();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doNewPurchase(Request $request)
@@ -143,7 +143,7 @@ class CostController extends Controller {
 
 		$project = Project::find($request->get('project'));
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$relation_id = null;
@@ -172,7 +172,7 @@ class CostController extends Controller {
 		else if ($wholesale_id)
 			$relname = Wholesale::find($wholesale_id)->company_name;
 
-		return json_encode(['success' => 1,'relation' => $relname, 'type' => ucfirst(PurchaseKind::find($request->get('type'))->kind_name), 'date' => date('d-m-Y', strtotime($request->get('date'))), 'amount' => '&euro; '.number_format($purchase->amount, 2,",","."), 'id' => $purchase->id]);
+		return response()->json(['success' => 1,'relation' => $relname, 'type' => ucfirst(PurchaseKind::find($request->get('type'))->kind_name), 'date' => date('d-m-Y', strtotime($request->get('date'))), 'amount' => '&euro; '.number_format($purchase->amount, 2,",","."), 'id' => $purchase->id]);
 	}
 
 	public function doDeletePurchase(Request $request)
@@ -183,12 +183,12 @@ class CostController extends Controller {
 
 		$purchase = Purchase::find($request->get('id'));
 		if (!$purchase || !Project::find($purchase->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$purchase->delete();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function getActivityByType(Request $request, $projectid, $typeid)
@@ -196,7 +196,7 @@ class CostController extends Controller {
 
 		$project = Project::find($projectid);
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		switch ($typeid) {
@@ -229,6 +229,6 @@ class CostController extends Controller {
 				break;
 		}
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 }

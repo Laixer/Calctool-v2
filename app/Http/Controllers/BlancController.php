@@ -65,7 +65,7 @@ class BlancController extends Controller {
 
 		$project = Project::find($request->input('project'));
 		if (!$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		if ($project->tax_reverse) {
@@ -82,7 +82,7 @@ class BlancController extends Controller {
 			"project_id" => $request->input('project'),
 		));
 
-		return json_encode(['success' => 1, 'id' => $row->id]);
+		return response()->json(['success' => 1, 'id' => $row->id]);
 	}
 
 	public function doDeleteCalculationLabor(Request $request)
@@ -93,18 +93,18 @@ class BlancController extends Controller {
 
 		$rec = CalculationLabor::find($request->input('id'));
 		if (!$rec)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$activity = Activity::find($rec->activity_id);
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$rec->delete();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doDeleteCalculationMaterial(Request $request)
@@ -115,18 +115,18 @@ class BlancController extends Controller {
 
 		$rec = CalculationMaterial::find($request->input('id'));
 		if (!$rec)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$activity = Activity::find($rec->activity_id);
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$rec->delete();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doDeleteCalculationEquipment(Request $request)
@@ -137,18 +137,18 @@ class BlancController extends Controller {
 
 		$rec = CalculationEquipment::find($request->input('id'));
 		if (!$rec)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$activity = Activity::find($rec->activity_id);
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$rec->delete();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doUpdateRow(Request $request)
@@ -162,14 +162,14 @@ class BlancController extends Controller {
 
 		$project = Project::find($request->input('project'));
 		if (!$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$row = BlancRow::find($request->input('id'));
 		if (!$row)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		if (!$row || !Project::find($row->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		if ($project->tax_reverse) {
@@ -185,7 +185,7 @@ class BlancController extends Controller {
 
 		$row->save();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doUpdateCalculationEquipment(Request $request)
@@ -200,13 +200,13 @@ class BlancController extends Controller {
 
 		$equipment = CalculationEquipment::find($request->input('id'));
 		if (!$equipment)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$activity = Activity::find($equipment->activity_id);
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$equipment->equipment_name = $request->get('name');
@@ -216,7 +216,7 @@ class BlancController extends Controller {
 
 		$equipment->save();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doUpdateCalculationLabor(Request $request)
@@ -229,13 +229,13 @@ class BlancController extends Controller {
 
 			$labor = CalculationLabor::find($request->input('id'));
 			if (!$labor)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$activity = Activity::find($labor->activity_id);
 			if (!$activity)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
 			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			}
 
 			$rate = $request->get('rate');
@@ -254,7 +254,7 @@ class BlancController extends Controller {
 
 			$labor->save();
 
-			return json_encode(['success' => 1]);
+			return response()->json(['success' => 1]);
 	}
 
 	public function doNewEstimateMaterial(Request $request)
@@ -269,10 +269,10 @@ class BlancController extends Controller {
 
 		$activity = Activity::find($request->input('activity'));
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$material = EstimateMaterial::create(array(
@@ -285,7 +285,7 @@ class BlancController extends Controller {
 			"isset" => false
 		));
 
-		return json_encode(['success' => 1, 'id' => $material->id]);
+		return response()->json(['success' => 1, 'id' => $material->id]);
 	}
 
 	public function doNewEstimateEquipment(Request $request)
@@ -300,10 +300,10 @@ class BlancController extends Controller {
 
 		$activity = Activity::find($request->input('activity'));
 		if (!$activity)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$chapter = Chapter::find($activity->chapter_id);
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$equipment = EstimateEquipment::create(array(
@@ -316,7 +316,7 @@ class BlancController extends Controller {
 			"isset" => false
 		));
 
-		return json_encode(['success' => 1, 'id' => $equipment->id]);
+		return response()->json(['success' => 1, 'id' => $equipment->id]);
 	}
 
 	public function doNewEstimateLabor(Request $request)
@@ -329,10 +329,10 @@ class BlancController extends Controller {
 
 			$activity = Activity::find($request->input('activity'));
 			if (!$activity)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
 			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			}
 
 			$rate = $request->get('rate');
@@ -352,7 +352,7 @@ class BlancController extends Controller {
 				"isset" => false
 			));
 
-			return json_encode(['success' => 1, 'id' => $labor->id]);
+			return response()->json(['success' => 1, 'id' => $labor->id]);
 	}
 
 	public function doDeleteEstimateLabor(Request $request)
@@ -363,18 +363,18 @@ class BlancController extends Controller {
 
 			$rec = EstimateLabor::find($request->input('id'));
 			if (!$rec)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$activity = Activity::find($rec->activity_id);
 			if (!$activity)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
 			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			}
 
 			$rec->delete();
 
-			return json_encode(['success' => 1]);
+			return response()->json(['success' => 1]);
 	}
 
 	public function doDeleteEstimateMaterial(Request $request)
@@ -385,18 +385,18 @@ class BlancController extends Controller {
 
 			$rec = EstimateMaterial::find($request->input('id'));
 			if (!$rec)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$activity = Activity::find($rec->activity_id);
 			if (!$activity)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
 			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			}
 
 			$rec->delete();
 
-			return json_encode(['success' => 1]);
+			return response()->json(['success' => 1]);
 	}
 
 	public function doDeleteEstimateEquipment(Request $request)
@@ -407,18 +407,18 @@ class BlancController extends Controller {
 
 			$rec = EstimateEquipment::find($request->input('id'));
 			if (!$rec)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$activity = Activity::find($rec->activity_id);
 			if (!$activity)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
 			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			}
 
 			$rec->delete();
 
-			return json_encode(['success' => 1]);
+			return response()->json(['success' => 1]);
 	}
 
 	public function doUpdateEstimateMaterial(Request $request)
@@ -433,13 +433,13 @@ class BlancController extends Controller {
 
 			$material = EstimateMaterial::find($request->input('id'));
 			if (!$material)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$activity = Activity::find($material->activity_id);
 			if (!$activity)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
 			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			}
 
 			$material->material_name = $request->get('name');
@@ -449,7 +449,7 @@ class BlancController extends Controller {
 
 			$material->save();
 
-			return json_encode(['success' => 1]);
+			return response()->json(['success' => 1]);
 	}
 
 	public function doUpdateEstimateEquipment(Request $request)
@@ -464,13 +464,13 @@ class BlancController extends Controller {
 
 			$equipment = EstimateEquipment::find($request->input('id'));
 			if (!$equipment)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$activity = Activity::find($equipment->activity_id);
 			if (!$activity)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
 			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			}
 
 			$equipment->equipment_name = $request->get('name');
@@ -480,7 +480,7 @@ class BlancController extends Controller {
 
 			$equipment->save();
 
-			return json_encode(['success' => 1]);
+			return response()->json(['success' => 1]);
 	}
 
 	public function doUpdateEstimateLabor(Request $request)
@@ -493,13 +493,13 @@ class BlancController extends Controller {
 
 			$labor = EstimateLabor::find($request->input('id'));
 			if (!$labor)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$activity = Activity::find($labor->activity_id);
 			if (!$activity)
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			$chapter = Chapter::find($activity->chapter_id);
 			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return json_encode(['success' => 0]);
+				return response()->json(['success' => 0]);
 			}
 
 			$rate = $request->get('rate');
@@ -518,6 +518,6 @@ class BlancController extends Controller {
 
 			$labor->save();
 
-			return json_encode(['success' => 1]);
+			return response()->json(['success' => 1]);
 	}
 }

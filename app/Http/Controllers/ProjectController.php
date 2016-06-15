@@ -366,7 +366,7 @@ class ProjectController extends Controller {
 
 		$project->save();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doUpdateWorkCompletion(Request $request)
@@ -384,7 +384,7 @@ class ProjectController extends Controller {
 
 		$project->save();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doUpdateProjectClose(Request $request)
@@ -402,7 +402,7 @@ class ProjectController extends Controller {
 
 		$project->save();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doCommunication(Request $request)

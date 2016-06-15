@@ -18,6 +18,26 @@ class WholesaleController extends Controller {
 	 * @return Response
 	 */
 
+	public function getAll(Request $request)
+	{
+		return view('user.wholesale');
+	}
+
+	public function getNew(Request $request)
+	{
+		return view('user.new_wholesale');
+	}
+
+	public function getEdit(Request $request)
+	{
+		return view('user.edit_wholesale');
+	}
+
+	public function getShow(Request $request)
+	{
+		return view('user.show_wholesale');
+	}
+
 	public function doUpdateIban(Request $request)
 	{
 		$this->validate($request, [

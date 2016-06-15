@@ -3,7 +3,6 @@
 @section('title', 'FAQ')
 
 @section('content')
-<?# -- WRAPPER -- ?>
 <div id="wrapper">
 
 	<section class="container">
@@ -12,7 +11,7 @@
 
 		<p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pellentesque neque eget diam posuere porta. Quisque ut nulla at nunc vehicula lacinia. Proin adipiscing porta tellus, ut feugiat nibh adipiscing sit amet.</p>
 
-		<div class="divider"><!-- divider -->
+		<div class="divider">
 			<i class="fa fa-star"></i>
 		</div>
 

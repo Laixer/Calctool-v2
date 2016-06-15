@@ -151,7 +151,7 @@ $(document).ready(function() {
 				number: number,
 			}, function(data) {
 				if (data) {
-					var json = $.parseJSON(data);
+					var json = data;
 					$('#street').val(json.street);
 					$('#city').val(json.city);
 					$("#province").find('option:selected').removeAttr("selected");

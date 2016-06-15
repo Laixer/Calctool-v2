@@ -71,7 +71,7 @@ class AdminController extends Controller {
 
 		$alert->save();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 
 	}
 
@@ -407,7 +407,7 @@ class AdminController extends Controller {
 
 		$resource->save();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doOfferPostDone(Request $request)
@@ -432,7 +432,7 @@ class AdminController extends Controller {
 
 		$message->save();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doInvoicePostDone(Request $request)
@@ -458,7 +458,7 @@ class AdminController extends Controller {
 
 		$message->save();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doSendNotification(Request $request)

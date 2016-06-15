@@ -27,5 +27,9 @@ class AppServiceProvider extends ServiceProvider
         {
             return new \Calctool\Other\Calctool;
         });
+
+        if (config('app.profiler') && config('app.debug')) {
+            $this->app->register('Barryvdh\Debugbar\ServiceProvider');
+        }
     }
 }

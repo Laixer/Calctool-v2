@@ -44,13 +44,13 @@ class InvoiceController extends Controller {
 
 		$invoice = Invoice::find($request->get('id'));
 		if (!$invoice)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$offer = Offer::find($invoice->offer_id);
 		if (!$offer)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$project = Project::find($offer->project_id);
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$invoice->reference = $request->get('reference');
@@ -58,7 +58,7 @@ class InvoiceController extends Controller {
 
 		$invoice->save();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doUpdateDescription(Request $request)
@@ -69,13 +69,13 @@ class InvoiceController extends Controller {
 
 		$invoice = Invoice::find($request->get('id'));
 		if (!$invoice)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$offer = Offer::find($invoice->offer_id);
 		if (!$offer)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$project = Project::find($offer->project_id);
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$invoice->description = $request->get('description');
@@ -83,7 +83,7 @@ class InvoiceController extends Controller {
 
 		$invoice->save();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doUpdateCondition(Request $request)
@@ -95,20 +95,20 @@ class InvoiceController extends Controller {
 
 		$invoice = Invoice::find($request->get('id'));
 		if (!$invoice)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$offer = Offer::find($invoice->offer_id);
 		if (!$offer)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$project = Project::find($offer->project_id);
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$invoice->payment_condition = $request->get('condition');
 
 		$invoice->save();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doInvoiceVersionNew(Request $request)
@@ -120,18 +120,18 @@ class InvoiceController extends Controller {
 
 		$invoice = Invoice::find($request->get('id'));
 		if (!$invoice)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$offer = Offer::find($invoice->offer_id);
 		if (!$offer)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$project = Project::find($offer->project_id);
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$project = Project::find($request->get('projectid'));
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$invoice_version = new InvoiceVersion;
@@ -215,7 +215,7 @@ class InvoiceController extends Controller {
 
 		$project = Project::find($request->get('projectid'));
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
@@ -255,13 +255,13 @@ class InvoiceController extends Controller {
 
 		$invoice = Invoice::find($request->get('id'));
 		if (!$invoice)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$offer = Offer::find($invoice->offer_id);
 		if (!$offer)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$project = Project::find($offer->project_id);
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$invoice->delete();
@@ -278,17 +278,17 @@ class InvoiceController extends Controller {
 
 		$invoice = Invoice::find($request->get('id'));
 		if (!$invoice)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$offer = Offer::find($invoice->offer_id);
 		if (!$offer)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$project = Project::find($offer->project_id);
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 		$project = Project::find($request->get('project'));
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
@@ -300,7 +300,7 @@ class InvoiceController extends Controller {
 		$invoice->rest_0 = InvoiceTerm::partTax3($project, $invoice)*$amount;
 		$invoice->save();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doInvoiceClose(Request $request)
@@ -312,18 +312,18 @@ class InvoiceController extends Controller {
 
 		$invoice = Invoice::find($request->get('id'));
 		if (!$invoice)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$offer = Offer::find($invoice->offer_id);
 		if (!$offer)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$project = Project::find($offer->project_id);
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$project = Project::find($request->get('projectid'));
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$invoice_version = InvoiceVersion::where('invoice_id',$invoice->id)->orderBy('created_at','desc')->first();
@@ -381,20 +381,20 @@ class InvoiceController extends Controller {
 
 		$invoice = Invoice::find($request->get('id'));
 		if (!$invoice)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$offer = Offer::find($invoice->offer_id);
 		if (!$offer)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$project = Project::find($offer->project_id);
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$invoice->payment_date = date('Y-m-d');
 
 		$invoice->save();
 
-		return json_encode(['success' => 1, 'payment' => date('d-m-Y')]);
+		return response()->json(['success' => 1, 'payment' => date('d-m-Y')]);
 	}
 
 	public function doInvoiceCloseAjax(Request $request)
@@ -406,18 +406,18 @@ class InvoiceController extends Controller {
 
 		$invoice = Invoice::find($request->get('id'));
 		if (!$invoice)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$offer = Offer::find($invoice->offer_id);
 		if (!$offer)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$project = Project::find($offer->project_id);
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$project = Project::find($request->get('projectid'));
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$invoice->invoice_close = true;
@@ -428,20 +428,20 @@ class InvoiceController extends Controller {
 		Auth::user()->invoice_counter++;
 		Auth::user()->save();
 
-		return json_encode(['success' => 1, 'billing' => date('d-m-Y')]);
+		return response()->json(['success' => 1, 'billing' => date('d-m-Y')]);
 	}
 
 	public function doSendOffer(Request $request)
 	{
 		$invoice = Invoice::find($request->input('invoice'));
 		if (!$invoice)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$offer = Offer::find($invoice->offer_id);
 		if (!$offer)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$project = Project::find($offer->project_id);
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$res = Resource::find($invoice->resource_id);
@@ -472,20 +472,20 @@ class InvoiceController extends Controller {
 			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function getSendOfferPreview(Request $request, $project_id, $invoice_id)
 	{
 		$invoice = Invoice::find($invoice_id);
 		if (!$invoice)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$offer = Offer::find($invoice->offer_id);
 		if (!$offer)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$project = Project::find($offer->project_id);
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$contact_client = Contact::find($invoice->to_contact_id);
@@ -512,17 +512,17 @@ class InvoiceController extends Controller {
 	{
 		$invoice = Invoice::find($request->get('invoice'));
 		if (!$invoice)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$offer = Offer::find($invoice->offer_id);
 		if (!$offer)
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		$project = Project::find($offer->project_id);
 		if (!$project || !$project->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		if (InvoicePost::where('invoice_id', $invoice->id)->count()>0) {
-			return json_encode(['success' => 0,'message' => 'Factuur al aangeboden']);
+			return response()->json(['success' => 0,'message' => 'Factuur al aangeboden']);
 		}
 		$post = new InvoicePost;
 		$post->invoice_id = $invoice->id;
@@ -550,7 +550,7 @@ class InvoiceController extends Controller {
 	        $message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 	    });
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	/* id = $project->id */

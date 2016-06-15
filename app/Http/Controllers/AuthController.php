@@ -26,6 +26,26 @@ class AuthController extends Controller {
 	 *
 	 * @return Route
 	 */
+	public function getRegister()
+	{
+		return view('auth.registration');
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function getPasswordReset()
+	{
+		return view('auth.password');
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
 	public function doLogin(Request $request)
 	{
 		$errors = new MessageBag;
@@ -293,17 +313,15 @@ class AuthController extends Controller {
 		return redirect('login')->with('success', 'Wachtwoord geblokkeerd');
 	}
 
-
 	/**
 	 * Show the form for creating a new resource.
 	 *
 	 * @return Route
 	 */
-	public function doHideNextStep()
+	/*public function doHideNextStep()
 	{
 		return Response::make(json_encode(['success' => 1]))->withCookie(cookie()->forget('nstep'));
-	}
-
+	}*/
 
 	public function doLogout()
 	{

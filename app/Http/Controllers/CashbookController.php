@@ -43,7 +43,7 @@ class CashbookController extends Controller {
 			$book->save();
 		}
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doNewCashRow(Request $request)
@@ -56,7 +56,7 @@ class CashbookController extends Controller {
 
 		$account = BankAccount::find($request->get('account'));
 		if (!$account || !$account->isOwner()) {
-			return json_encode(['success' => 0]);
+			return response()->json(['success' => 0]);
 		}
 
 		$book = new Cashbook;
@@ -67,7 +67,7 @@ class CashbookController extends Controller {
 
 		$book->save();
 
-		return json_encode(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 }

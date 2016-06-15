@@ -32,7 +32,6 @@
 		<link media="all" type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800">
 		<link media="all" type="text/css" rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.min.css">
 		<link media="all" type="text/css" rel="stylesheet" href="/components/font-awesome/css/font-awesome.css">
-		<!-- <link media="all" type="text/css" rel="stylesheet" href="/components/intro.js/introjs.css"> -->
 		@stack('style')
 
 		<?php // -- SHOP CSS -- ?>
@@ -98,7 +97,6 @@
 		@show
 
 		<?php // -- JAVASCRIPT FILES -- ?>
-		<!-- <script src="/components/intro.js/intro.js"></script> -->
 		<script src="/plugins/masonry.js"></script>
 
 		<script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>

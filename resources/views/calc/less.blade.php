@@ -140,7 +140,7 @@ var n = this,
 					activity: $curThis.closest("table").attr("data-id"),
 					project: {{ $project->id }},
 				}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					if (!json.success) {
 						$curThis.closest("tr").find("input[name='rate']").val($.number(json.rate,2,',','.')),
 						$curThis.closest("tr").find("input[name='amount']").val($.number(json.amount,2,',','.'))
@@ -196,7 +196,7 @@ var n = this,
 					activity: $curThis.closest("table").attr("data-id"),
 					project: {{ $project->id }},
 				}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					if (!json.success) {
 						$curThis.closest("tr").find("input[name='rate']").val($.number(json.rate,2,',','.')),
 						$curThis.closest("tr").find("input[name='amount']").val($.number(json.amount,2,',','.'))
@@ -252,7 +252,7 @@ var n = this,
 					activity: $curThis.closest("table").attr("data-id"),
 					project: {{ $project->id }},
 				}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					if (!json.success) {
 						$curThis.closest("tr").find("input[name='amount']").val($.number(json.amount,2,',','.'))
 					} else {
@@ -302,7 +302,7 @@ var n = this,
 					activity: $curThis.closest("table").attr("data-id"),
 					project: {{ $project->id }},
 				}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					$curThis.closest("tr").find("input").removeClass("error-input");
 					if (json.success) {
 						$curThis.closest("tr").attr("data-id", json.id);
@@ -331,7 +331,7 @@ var n = this,
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
 				$.post("/less/resetmaterial", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					$curThis.closest("tr").find("input[name='rate']").val(json.rate);
 					$curThis.closest("tr").find("input[name='amount']").val(json.amount);
 					var sub_total = 0;
@@ -359,7 +359,7 @@ var n = this,
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
 				$.post("/less/resetequipment", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					$curThis.closest("tr").find("input[name='rate']").val(json.rate);
 					$curThis.closest("tr").find("input[name='amount']").val(json.amount);
 					var sub_total = 0;
@@ -387,7 +387,7 @@ var n = this,
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
 				$.post("/less/resetlabor", {project: {{ $project->id }}, id: $curThis.closest("tr").attr("data-id")}, function(data){
-					var json = $.parseJSON(data);
+					var json = data;
 					var amount = json.amount.replace(',', '.');
 					var rate = $curThis.closest("tr").find("input[name='rate']").val()
 					if (rate) {
