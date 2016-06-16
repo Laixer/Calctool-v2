@@ -52,7 +52,7 @@ $(document).ready(function() {
 			sessionStorage.introDemo = 0;
 		});
 	});
-	<?php if ($next_step && $next_step=='intro_'.Auth::id()){ ?>
+	<?php if ($next_step && $next_step=='intro_' . Auth::id()){ ?>
 		$('#introModal').modal('toggle');
 	<?php } ?>
 });

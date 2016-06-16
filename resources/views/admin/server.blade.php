@@ -33,9 +33,7 @@ if (File::exists('../.revision')) {
 	$rev = substr(File::get('../.revision'), 0, 7);
 }
 
-
 $redis_info = Redis::command('info');
-
 ?>
 <div id="wrapper">
 
