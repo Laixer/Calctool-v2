@@ -60,15 +60,18 @@ class MaterialImport extends Command {
 			$groupcode = explode(" ", $value['AdditionalDescriptions']['SupplierProductGroupDescription']);
 			$subgroup = SubGroup::where('reference_code','=',$groupcode[0])->first();
 			if (!$subgroup) {
-				print_r($value['AdditionalDescriptions']['SupplierProductGroupDescription']."\n");
-				continue;
+				$subgroup = SubGroup::where('group_type','=', $value['AdditionalDescriptions']['SupplierProductGroupDescription'])->first();
+				if (!$subgroup) {
+					$subgroup = SubGroup::create(['group_type'=>$value['AdditionalDescriptions']['SupplierProductGroupDescription']]);
+					echo "Adding " . $value['AdditionalDescriptions']['SupplierProductGroupDescription'] . "\n";
+				}
 			}
-			$price = $value['PriceInformation']['NetUnitPrice']['Price'];
+			$price = $value['PriceInformation']['GrossUnitPrice']['Price'];
 			$quant = $value['ArticleData']['SmallestUnitQuantity']['Quantity'];
 			$price_total = ($price/$quant);
 			Product::create(array(
 				'article_code' => $value['TradeItemId']['TradeItemNumber'],
-				'unit' => $value['PriceInformation']['NetUnitPrice']['MeasureUnitQualifier'],
+				'unit' => $value['PriceInformation']['GrossUnitPrice']['MeasureUnitQualifier'],
 				'price' => $price_total,
 				'total_price' => $price,
 				'description' => strtolower($value['ArticleData']['SuppliersDescription']['Description']),

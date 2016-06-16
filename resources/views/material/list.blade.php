@@ -49,7 +49,7 @@ $(document).ready(function() {
 			$.post("/material/search", {query:$val,group:$group}, function(data) {
 				if (data) {
 					$('#alllist tbody tr').remove();
-					$.each(JSON.parse(data), function(i, item) {
+					$.each(data, function(i, item) {
 						$('#alllist tbody').append('<tr data-id="'+item.id+'"><td>'+item.description+'</td><td>'+item.unit+'</td><td>'+item.price+'</td><td>'+item.tprice+'</td><td><a href="javascript:void(0);" class="toggle-fav"><i style="color:'+(item.favorite ? '#FFD600' : '#000')+';" class="fa '+(item.favorite ? 'fa-star' : 'fa-star-o')+'"></i></a></td></tr>');
 					});
 					$req = false;
@@ -225,7 +225,7 @@ $(document).ready(function() {
 			<div>
 			<br>
 
-			<p class="alert alert-warning">De prijslijsten bevinden zich nog in BETA fase.</p>
+			<!-- <p class="alert alert-warning">De prijslijsten bevinden zich nog in BETA fase.</p> -->
 
 			<h2><strong>Prijslijsten</strong></h2>
 
@@ -233,7 +233,7 @@ $(document).ready(function() {
 
 				<ul class="nav nav-tabs">
 					<li id="tab-supplier">
-						<a href="#supplier" data-toggle="tab"><i class="fa fa-cart-arrow-down"></i> Bouwmaat</a>
+						<a href="#supplier" data-toggle="tab"><i class="fa fa-cart-arrow-down"></i> Producten</a>
 					</li>
 					<li id="tab-material">
 						<a href="#material" data-toggle="tab"><i class="fa fa-wrench"></i> Mijn producten</a>
