@@ -215,20 +215,19 @@ $(document).ready(function() {
 
 	<section class="container">
 
-
 		<div class="col-md-12">
 
 			<div>
 				<ol class="breadcrumb">
 				  <li><a href="/">Home</a></li>
-				  <li class="active">Materialen</li>
+				  <li class="active">Producten</li>
 				</ol>
 			<div>
 			<br>
 
-			<p class="alert alert-warning">De materialen lijst van de Bouwmaat bevindt zich nog in BETA fase.</p>
+			<p class="alert alert-warning">De prijslijsten bevinden zich nog in BETA fase.</p>
 
-			<h2><strong>Materialen</strong></h2>
+			<h2><strong>Prijslijsten</strong></h2>
 
 			<div class="tabs nomargin-top">
 
@@ -237,7 +236,7 @@ $(document).ready(function() {
 						<a href="#supplier" data-toggle="tab"><i class="fa fa-cart-arrow-down"></i> Bouwmaat</a>
 					</li>
 					<li id="tab-material">
-						<a href="#material" data-toggle="tab"><i class="fa fa-wrench"></i> Mijn materiaal</a>
+						<a href="#material" data-toggle="tab"><i class="fa fa-wrench"></i> Mijn producten</a>
 					</li>
 <!-- 					<li id="tab-element">
 						<a href="#element" data-toggle="tab"><i class="fa fa-th-list"></i> Elementen</a>
@@ -251,7 +250,7 @@ $(document).ready(function() {
 					<div id="supplier" class="tab-pane">
 
 						<div class="form-group input-group input-group-lg">
-							<input type="text" id="search" value="" class="form-control" placeholder="Zoek materiaal">
+							<input type="text" id="search" value="" class="form-control" placeholder="Zoek producten">
 						      <span class="input-group-btn">
 						        <select id="group" class="btn" style="background-color: #E5E7E9; color:#000">
 						        <option value="0" selected>Alles</option>
@@ -281,7 +280,7 @@ $(document).ready(function() {
 
 					<div id="material" class="tab-pane">
 						<div class="row">
-							<div class="col-md-2"><h4>Mijn materiaal</h4></div>
+							<div class="col-md-2"><h4>Mijn producten</h4></div>
 						</div>
 
 						<table class="table table-striped">

@@ -266,6 +266,4 @@ $(document).ready(function() {
 
 		</div>
 
-<?# -- /WRAPPER -- ?>
-
 @stop
