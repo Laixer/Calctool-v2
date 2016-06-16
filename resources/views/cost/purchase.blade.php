@@ -12,6 +12,7 @@ use \Calctool\Models\Wholesale;
 
 @push('style')
 <script src="/components/angular/angular.min.js"></script>
+<link media="all" type="text/css" rel="stylesheet" href="/components/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css">
 @endpush
 
 @push('scripts')
