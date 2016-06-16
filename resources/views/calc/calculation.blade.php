@@ -989,12 +989,12 @@ if (!$project || !$project->isOwner())
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h4 class="modal-title" id="myModalLabel">Materialen</h4>
+				<h4 class="modal-title" id="myModalLabel">Producten</h4>
 			</div>
 
 			<div class="modal-body">
 					<div class="form-group input-group input-group-lg">
-						<input type="text" id="search" value="" class="form-control" placeholder="Zoek materiaal">
+						<input type="text" id="search" value="" class="form-control" placeholder="Zoek producten">
 					      <span class="input-group-btn">
 					        <select id="group" class="btn">
 					        <option value="0" selected>Alles</option>

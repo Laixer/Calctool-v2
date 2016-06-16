@@ -37,7 +37,7 @@ class CreateMaterialStorage extends Migration {
 		{
 			$table->increments('id');
 			$table->string('unit', 30)->nullable();
-			$table->integer('article_code')->nullable()->unique()->unsigned();
+			$table->string('article_code', 40)->nullable()->unique();
 			$table->decimal('price', 9, 3)->index()->unsigned();
 			$table->decimal('total_price', 9, 3)->nullable()->unsigned();
 			$table->string('description');

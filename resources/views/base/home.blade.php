@@ -52,7 +52,7 @@ $(document).ready(function() {
 			sessionStorage.introDemo = 0;
 		});
 	});
-	<?php if ($next_step && $next_step=='intro_'.Auth::id()){ ?>
+	<?php if ($next_step && $next_step=='intro_' . Auth::id()){ ?>
 		$('#introModal').modal('toggle');
 	<?php } ?>
 });
@@ -141,7 +141,7 @@ $(document).ready(function() {
 									<span class="block fa fa-wrench fsize60"></span>
 								</span>
 							</a>
-							<a href="/material" class="btn btn-primary add_to_cart"><strong> Materialen</strong></a>
+							<a href="/material" class="btn btn-primary add_to_cart"><strong> Prijslijsten</strong></a>
 						</figure>
 					</div>
 				</div>

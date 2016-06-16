@@ -13,6 +13,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 
 use \Mailgun;
+use \Auth;
 
 class Handler extends ExceptionHandler
 {
@@ -43,10 +44,24 @@ class Handler extends ExceptionHandler
             $this->log->error($e);
 
             if (!config('app.debug')) {
-                $data = array('email' => 'y.dewid@calculatietool.com', 'content' => nl2br($e), 'username' => 'Yorick de Wid');
+                $content = "<b>Timestamp: " . date('c') . "</b><br />";
+                $content .= "<b>Environment: " . app()->environment() . "</b><br />";
+
+                $rev = '-';
+                if (\File::exists('../.revision')) {
+                    $rev = \File::get('../.revision');
+                }
+
+                $content .= "<b>Revision: " . $rev . "</b><br />";
+
+                if (Auth::check())
+                    $content .= "<b>User: " . Auth::user()->username . "</b><br />";
+                
+                $content .= "<br />" . nl2br($e);
+                $data = array('email' => 'info@calculatietool.com', 'content' => $content, 'username' => 'CalculatieTool', 'env' => app()->environment());
                 Mailgun::send('mail.raw', $data, function($message) use ($data) {
                     $message->to($data['email'], strtolower(trim($data['username'])));
-                    $message->subject('CalculatieTool.com - Exception report');
+                    $message->subject('CalculatieTool.com - Exception report ' . $data['env']);
                     $message->from('info@calculatietool.com', 'CalculatieTool.com');
                     $message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
                 });
