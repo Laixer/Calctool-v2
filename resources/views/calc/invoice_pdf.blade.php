@@ -92,7 +92,6 @@ if ($cnt>1)
               </td>
 
               <td style="width: 300px">
-              
                 <table border="0" cellspacing="0" cellpadding="0">
                   <tbody>
                     <tr>

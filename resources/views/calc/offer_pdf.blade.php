@@ -85,14 +85,14 @@ function invoice_condition($offer) {
 						<table border="0" cellspacing="0" cellpadding="0">
 							<tbody>
 								<tr>
-									<td style="width: 75px">
+									<td style="width: 100px">
 										<div><strong>Adres:</strong></div>
 										<div><strong>&nbsp;</strong></div>
 										@if ($relation_self->phone)<div><strong>Telefoon:</strong></div>@endif
 										@if ($relation_self->email)<div><strong>E-mail:</strong></div>@endif	
 										@if ($relation_self->kvk)<div><strong>KVK:</strong></div>@endif	
 									</td>
-									<td style="width: 225px">
+									<td style="width: 300px">
 										<div>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</div>	
 										<div>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</div>
 										@if ($relation_self->phone)<div>{{ $relation_self->phone }} </div>@endif	
@@ -111,7 +111,7 @@ function invoice_condition($offer) {
 
 	<main>
 	   	<div id="heading" class="clearfix">
-	   	   	<table border="0" cellspacing="0" cellpadding="0">
+	   	<table border="0" cellspacing="0" cellpadding="0">
 				<tbody>
 					<tr>
 						<td style="width: 345px">
@@ -145,24 +145,24 @@ function invoice_condition($offer) {
 							</table>
 						</td>
 						<td style="width: 300px">
-							<table border="0" cellspacing="0" cellpadding="0">
-								<tbody>
-									<tr>
-										<td style="width: 75 px">
+						<table border="0" cellspacing="0" cellpadding="0">
+							<tbody>
+								<tr>
+									<td style="width: 100px">
 											<div><strong>Nummer:</strong></div>
 											<div><strong>Projectnaam:</strong></div>
 											<div><strong>Datum:</strong></div>
 											<div><strong>Versie:</strong></div>
-										</td>
-										<td style="width: 225px">
+									</td>
+									<td style="width: 300px">
 											<div>{{ OfferController::getOfferCode($project->id) }}</div>
 											<div>{{ $project->project_name }}</div>
 											<div>{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
 											<div>{{ Offer::where('project_id', $project->id)->count() }}</div>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 						</td>
 					</tr>
 				</tbody>
