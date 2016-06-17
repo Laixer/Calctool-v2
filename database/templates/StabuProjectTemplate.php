@@ -77,7 +77,18 @@ class StabuProjectTemplate {
 		$project->profit_more_subcontr_equip	= 17;
 		$project->save();
 
-		        $part_contract = Part::where('part_name','=','contracting')->first();
+		$contact = new Contact;
+		$contact->firstname 		= 'STA';
+		$contact->lastname 			= 'BU';
+		$contact->email 			= 'STABU-relatie@calculatietool.com';
+		$contact->mobile 			= '0101111111';
+		$contact->phone 			= '0101111111';
+		$contact->relation_id 		= $relation->id;
+		$contact->function_id 		= $contact_function->id;
+		$contact->gender	 		= 'M';
+		$contact->save();
+
+		$part_contract = Part::where('part_name','=','contracting')->first();
 		$part_type_calc = PartType::where('type_name','=','calculation')->first();
 		$part_subcontract = Part::where('part_name','=','subcontracting')->first();
 		$part_type_est = PartType::where('type_name','=','estimate')->first();
