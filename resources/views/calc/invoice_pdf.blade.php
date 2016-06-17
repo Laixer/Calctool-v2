@@ -1372,7 +1372,7 @@ if ($cnt>1)
       @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
       <?php
-        if (!LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip))
+        if (!LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip, $project))
           continue;
       ?>
       <tr>
@@ -1382,14 +1382,14 @@ if ($cnt>1)
         <td class="qty"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::laborActivity($activity), 2, ",",".") }} @endif</span></td>
         <td class="qty"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }} @endif</span></td>
         <td class="qty"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }} @endif</span></td>
-        <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
+        <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip, $project), 2, ",",".") }} </td>
       </tr>
       @endforeach
       @endforeach
       @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
       <?php
-        if (!LessOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip))
+        if (!LessOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip, $project))
           continue;
       ?>
       <tr>
@@ -1399,7 +1399,7 @@ if ($cnt>1)
         <td class="qty"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::laborActivity($activity), 2, ",",".") }} @endif</span></td>
         <td class="qty"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }} @endif</span></td>
         <td class="qty"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }} @endif</span></td>
-        <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
+        <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip, $project), 2, ",",".") }} </td>
       </tr>
       @endforeach
       @endforeach
@@ -1851,7 +1851,7 @@ if ($cnt>1)
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
         @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
         <?php
-          if (!LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip))
+          if (!LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip, $project))
             continue;
         ?>
         <tr>
@@ -1861,7 +1861,7 @@ if ($cnt>1)
           <td class="qty"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::laborActivity($activity), 2, ",",".") }} @endif</span></td>
           <td class="qty"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }} @endif</span></td>
           <td class="qty"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }} @endif</span></td>
-          <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
+          <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip, $project), 2, ",",".") }} </td>
         </tr>
         @endforeach
         @endforeach
@@ -1893,7 +1893,7 @@ if ($cnt>1)
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
         @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
         <?php
-          if (!LessOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip))
+          if (!LessOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip, $project))
             continue;
         ?>
         <tr>
@@ -1903,7 +1903,7 @@ if ($cnt>1)
           <td class="qty"><span class="pull-right total-ex-tax">@if ($display_specification){{ '&euro; '.number_format(LessOverview::laborActivity($activity), 2, ",",".") }} @endif</span></td>
           <td class="qty"><span class="pull-right total-ex-tax">@if ($display_specification){{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }} @endif</span></td>
           <td class="qty"><span class="pull-right">@if ($display_specification){{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }} @endif</span></td>
-          <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
+          <td class="qty"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip, $project), 2, ",",".") }} </td>
         </tr>
         @endforeach
         @endforeach
