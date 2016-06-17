@@ -169,14 +169,14 @@ if ($cnt>1)
             <table border="0" cellspacing="0" cellpadding="0">
               <tbody>
                 <tr>
-                  <td style="width: 100px">
+                  <td style="width: 90px">
                     <div><strong>Factuurnummer:</strong></div>
                     <div><strong>Projectnaam:</strong></div>
                     @if ($invoice->reference)<div><strong>Uw referentie:</strong></div>@endif
                     @if ($invoice->book_code)<div><strong>Boekhoudnummer:</strong></div>@endif
                     <div><strong>Factuurdatum:</strong></div>
                   </td>
-                  <td style="width: 200px">
+                  <td style="width: 210px">
                     <div>{{ $invoice->invoice_code }}</div>
                     <div>{{ $project->project_name }}</div>
                     @if ($invoice->reference)<div>{{ $invoice->reference }}</div>@endif
