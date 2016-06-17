@@ -11,6 +11,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
 use \Mailgun;
 use \Auth;
@@ -28,6 +29,7 @@ class Handler extends ExceptionHandler
         AuthorizationException::class,
         ValidationException::class,
         TokenMismatchException::class,
+        FileNotFoundException::class,
     ];
 
     /**

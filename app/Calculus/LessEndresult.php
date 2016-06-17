@@ -94,7 +94,7 @@ class LessEndresult {
 				foreach ($rows as $row)
 				{
 					if ($row->isless) {
-						$total += $row->rate * ($row->less_amount - $row->amount);
+						$total += $project->hour_rate * ($row->less_amount - $row->amount);
 					}
 				}
 			}
@@ -116,7 +116,7 @@ class LessEndresult {
 				foreach ($rows as $row)
 				{
 					if ($row->isless) {
-						$total += $row->rate * ($row->less_amount - $row->amount);
+						$total += $project->hour_rate * ($row->less_amount - $row->amount);
 					}
 				}
 			}
@@ -138,7 +138,7 @@ class LessEndresult {
 				foreach ($rows as $row)
 				{
 					if ($row->isless) {
-						$total += $row->rate * ($row->less_amount - $row->amount);
+						$total += $project->hour_rate * ($row->less_amount - $row->amount);
 					}
 				}
 			}
