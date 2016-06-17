@@ -57,8 +57,8 @@ use \Calctool\Models\MessageBox;
 							      <span class="caret"></span>
 							    </button>
 							    <ul class="dropdown-menu">
-							      <li><a href="/messagebox/message-{{ $message->id }}/read">Gelezen</a></li>
-							      <li><a href="/messagebox/message-{{ $message->id }}/delete">Verwijderen</a></li>
+<!-- 							      <li><a href="/messagebox/message-{{ $message->id }}/read">Gelezen</a></li>
+ -->							      <li><a href="/messagebox/message-{{ $message->id }}/delete">Verwijderen</a></li>
 							    </ul>
 						 	 </div>
 
@@ -78,8 +78,8 @@ use \Calctool\Models\MessageBox;
 							      <span class="caret"></span>
 							    </button>
 							    <ul class="dropdown-menu">
-							      <li><a href="/messagebox/message-{{ $message->id }}/read">Gelezen</a></li>
-							      <li><a href="/messagebox/message-{{ $message->id }}/delete">Verwijderen</a></li>
+<!-- 							      <li><a href="/messagebox/message-{{ $message->id }}/read">Gelezen</a></li>
+ -->							      <li><a href="/messagebox/message-{{ $message->id }}/delete">Verwijderen</a></li>
 							    </ul>
 						 	 </div>
 
