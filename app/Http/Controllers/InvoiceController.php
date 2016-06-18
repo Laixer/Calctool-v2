@@ -179,7 +179,7 @@ class InvoiceController extends Controller {
 
 
 // Geeft pagina PDF in HTML
-			return view('calc.invoice_pdf', ['invoice' => $invoice_version]);
+			// return view('calc.invoice_pdf', ['invoice' => $invoice_version]);
 
 		$page = 0;
 		$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.$invoice_version->invoice_code.'-invoice.pdf';
