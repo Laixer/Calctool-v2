@@ -32,7 +32,7 @@ use \Calctool\Models\MessageBox;
 							<th class="col-md-2">Van</th>
 							<th class="col-md-5">Betreft</th>
 							<th class="col-md-2"></th>
-							<th class="col-md-1">Acties</th>
+							<th class="col-md-1">&nbsp;</th>
 						</tr>
 					</thead>
 
@@ -49,19 +49,8 @@ use \Calctool\Models\MessageBox;
 							<td class="col-md-2"><strong>{{ User::find($message->from_user)->username }}</strong></td>
 							<td class="col-md-5"><strong>{{ $message->subject }}</strong></td>
 							<td class="col-md-2"></td>
-							<td class="col-md-1">
-
-							  <div class="btn-group" role="group">
-							    <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							      Opties
-							      <span class="caret"></span>
-							    </button>
-							    <ul class="dropdown-menu">
-<!-- 							      <li><a href="/messagebox/message-{{ $message->id }}/read">Gelezen</a></li>
- -->							      <li><a href="/messagebox/message-{{ $message->id }}/delete">Verwijderen</a></li>
-							    </ul>
-						 	 </div>
-
+							<td class="col-md-1 text-right">
+								<a href="/messagebox/message-{{ $message->id }}/delete" class="btn btn-danger btn-xs fa fa-times" role="button"></a>
 							</td>
 						</tr>
 						@else
@@ -70,17 +59,8 @@ use \Calctool\Models\MessageBox;
 							<td class="col-md-2">{{ User::find($message->from_user)->username }}</td>
 							<td class="col-md-5">{{ $message->subject }}</td>
 							<td class="col-md-2"></td>
-							<td class="col-md-1">
-
-							  <div class="btn-group" role="group">
-							    <button type="button" class="btn btn-primary btn-xs" a href="/messagebox/message-{{ $message->id }}/delete">
-							      Verwijderen
-							      <span class="caret"></span>
-							    </button>
-							   
-
-						 	 </div>
-
+							<td class="col-md-1 text-right">
+							    <a href="/messagebox/message-{{ $message->id }}/delete" class="btn btn-danger btn-xs fa fa-times" role="button"></a>
 							</td>
 						</tr>						
 						@endif
