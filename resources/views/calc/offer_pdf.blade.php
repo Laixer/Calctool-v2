@@ -1048,15 +1048,15 @@ function invoice_condition($offer) {
 		  <?php $i = true; ?>
 		  @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('created_at')->get() as $activity)
 		  <tr>
-		  <td class="qty"><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
-			<td class="qty">{{ $activity->activity_name }}</td>
-			<td class="qty">@if ($display_specification) <span>{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
-			<td class="qty">@if ($display_specification) <span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span>@endif</td>
-			<td class="qty">@if ($display_specification) <span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span>@endif</td>
-			<td class="qty">@if ($display_specification) <span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span>@endif</td>
-			<td class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
+		  	<td style="width: 130px" class="qty"><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
+			<td style="width: 170px" class="qty">{{ $activity->activity_name }}</td>
+			<td style="width: 40px" class="qty">@if ($display_specification) <span>{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
+			<td style="width: 51px" class="qty">@if ($display_specification) <span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span>@endif</td>
+			<td style="width: 51px" class="qty">@if ($display_specification) <span class="total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span>@endif</td>
+			<td style="width: 51px" class="qty">@if ($display_specification) <span>{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span>@endif</td>
+			<td style="width: 51px" class="qty"><span>{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
 			@if ($project->use_estimate)
-			<td class="qty text-center">
+			<td style="width: 51px" class="qty text-center">
 			<?php
 			  if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 				echo "Ja";
@@ -1260,14 +1260,14 @@ function invoice_condition($offer) {
 		</thead>
 		<tbody>
 		  <tr style="page-break-after: always;">
-			<td class="qty"><strong>TOTAAL<strong></td>
-			<td class="qty">&nbsp;</td>
-			<td class="qty">@if ($display_specification)<span><strong>{{ number_format(CalculationOverview::laborSuperTotalAmount($project), 2, ",",".") }}</strong></span>@endif</td>
-			<td class="qty">@if ($display_specification)<span><strong>{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</strong></span>@endif</td>
-			<td class="qty">@if ($display_specification)<span><strong>{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</strong></span>@endif</td>
-			<td class="qty">@if ($display_specification)<span><strong>{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</strong></span>@endif</td>
-			<td class="qty"><span><strong>{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</strong></span></td>
-			<td class="qty">&nbsp;</td>
+			<td style="width: 130px" class="qty"><strong>TOTAAL<strong></td>
+			<td style="width: 170px" class="qty">&nbsp;</td>
+			<td style="width: 40px" class="qty">@if ($display_specification)<span><strong>{{ number_format(CalculationOverview::laborSuperTotalAmount($project), 2, ",",".") }}</strong></span>@endif</td>
+			<td style="width: 51px" class="qty">@if ($display_specification)<span><strong>{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</strong></span>@endif</td>
+			<td style="width: 51px" class="qty">@if ($display_specification)<span><strong>{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</strong></span>@endif</td>
+			<td style="width: 51px" lass="qty">@if ($display_specification)<span><strong>{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</strong></span>@endif</td>
+			<td style="width: 51px" class="qty"><span><strong>{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</strong></span></td>
+			<td style="width: 51px" lass="qty">&nbsp;</td>
 		  </tr>
 	  </table>
 	 <span><i>Weergegeven bedragen zijn exclusief BTW</i></span>
@@ -1306,8 +1306,8 @@ function invoice_condition($offer) {
 		<?php $i = true; ?>
 		@foreach (Activity::where('chapter_id','=', $chapter->id)->orderBy('created_at')->get() as $activity)
 		<tr>
-		  <td class="qty" valign="top"><br><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
-		  <td class="qty" valign="top"><br>{{ $activity->activity_name }}</td>
+		  <td style="width: 130px" class="qty" valign="top"><br><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
+		  <td style="width: 170px" class="qty" valign="top"><br>{{ $activity->activity_name }}</td>
 		  <td class="qty" valign="top"><br><span>{!! $activity->note !!}</td>
 		</tr>
 		@endforeach
@@ -1346,8 +1346,8 @@ function invoice_condition($offer) {
 		<?php $i = true; ?>
 		@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('created_at')->get() as $activity)
 		<tr>
-		  <td class="qty" valign="top"><br><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
-		  <td class="qty" valign="top"><br>{{ $activity->activity_name }}</td>
+		  <td style="width: 130px" class="qty" valign="top"><br><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
+		  <td style="width: 170px" class="qty" valign="top"><br>{{ $activity->activity_name }}</td>
 		  <td class="qty" valign="top"><br><span>{{ $activity->note }}</td>
 		</tr>
 		@endforeach
@@ -1368,8 +1368,8 @@ function invoice_condition($offer) {
 		<?php $i = true; ?>
 		@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('created_at')->get() as $activity)
 		<tr>
-		  <td class="qty"><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
-		  <td class="qty">{{ $activity->activity_name }}</td>
+		  <td style="width: 130px" class="qty"><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
+		  <td style="width: 170px" class="qty">{{ $activity->activity_name }}</td>
 		  <td class="qty"><br><span>{{ $activity->note }}</td>
 		</tr>
 		@endforeach
