@@ -183,7 +183,7 @@ class LessController extends Controller {
 
 		$this->updateLessStatus($request->get('project'));
 
-		$total_less = LessRegister::lessLaborDeltaTotal($labor);
+		$total_less = LessRegister::lessLaborDeltaTotal($labor, $activity, Project::find($request->get('project')));
 		if($total_less <0) {
 			$total_less = "<font color=red>&euro; ".number_format($total_less, 2, ",",".")."</font>";
 		} else {

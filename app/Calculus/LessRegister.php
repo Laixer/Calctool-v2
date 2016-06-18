@@ -4,12 +4,18 @@ namespace Calctool\Calculus;
 
 use \Calctool\Models\CalculationMaterial;
 use \Calctool\Models\CalculationEquipment;
+use \Calctool\Models\Part;
 
 class LessRegister {
 
-	public static function lessLaborDeltaTotal($labor) {
+	public static function lessLaborDeltaTotal($labor, $activity, $project) {
+		$rate = $labor->rate;
+		if (Part::find($activity->part_id)->part_name == 'contracting') {
+			$rate = $project->hour_rate;
+		}
+
 		if ($labor->isless)
-			return ($labor->less_amount - $labor->amount) * $labor->rate;
+			return ($labor->less_amount - $labor->amount) * $rate;
 		return 0;
 	}
 

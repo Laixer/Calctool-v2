@@ -57,8 +57,8 @@ use \Calctool\Models\MessageBox;
 							      <span class="caret"></span>
 							    </button>
 							    <ul class="dropdown-menu">
-							      <li><a href="/messagebox/message-{{ $message->id }}/read">Gelezen</a></li>
-							      <li><a href="/messagebox/message-{{ $message->id }}/delete">Verwijderen</a></li>
+<!-- 							      <li><a href="/messagebox/message-{{ $message->id }}/read">Gelezen</a></li>
+ -->							      <li><a href="/messagebox/message-{{ $message->id }}/delete">Verwijderen</a></li>
 							    </ul>
 						 	 </div>
 
@@ -73,14 +73,12 @@ use \Calctool\Models\MessageBox;
 							<td class="col-md-1">
 
 							  <div class="btn-group" role="group">
-							    <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							      Opties
+							    <button type="button" class="btn btn-primary btn-xs" a href="/messagebox/message-{{ $message->id }}/delete">
+							      Verwijderen
 							      <span class="caret"></span>
 							    </button>
-							    <ul class="dropdown-menu">
-							      <li><a href="/messagebox/message-{{ $message->id }}/read">Gelezen</a></li>
-							      <li><a href="/messagebox/message-{{ $message->id }}/delete">Verwijderen</a></li>
-							    </ul>
+							   
+
 						 	 </div>
 
 							</td>

@@ -521,15 +521,22 @@ var n = this,
 
 													<tbody>
 														@foreach (CalculationLabor::where('activity_id','=', $activity->id)->get() as $labor)
+														<?php
+														//FUCK LELIJK, MAAR DON"T FIX IF IT AIN"T BROKEN
+														$rate = $labor->rate;
+														if (Part::find($activity->part_id)->part_name == 'contracting') {
+															$rate = $project->hour_rate;
+														}
+														?>
 														<tr data-id="{{ $labor->id }}">
 															<td class="col-md-5">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format($labor->isless ? $labor->less_amount : $labor->amount, 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($labor->rate, $labor->isless ? $labor->less_amount : $labor->amount), 2, ",",".") }}</span></td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($rate, $labor->isless ? $labor->less_amount : $labor->amount), 2, ",",".") }}</span></td>
 															<td class="col-md-1"><span class="total-less"><?php
-																$minderw=LessRegister::lessLaborDeltaTotal($labor);
-																if($minderw <0)
+																$minderw = LessRegister::lessLaborDeltaTotal($labor, $activity, $project);
+																if($minderw < 0)
 																	echo "<font color=red>&euro; ".number_format($minderw, 2, ",",".")."</font>";
 																else
 																	echo '&euro; '.number_format($minderw, 2, ",",".");

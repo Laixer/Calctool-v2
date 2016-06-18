@@ -587,9 +587,22 @@ $(document).ready(function() {
 											<tr>
 												<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 												<td class="col-md-3">{{ $activity->activity_name }}</td>
-												<td class="col-md-2"><span class="pull-right"><?php $rs_set = Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'); $x = ($activity->use_timesheet ? $rs_set : MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->sum('amount')); $rs_1 += $x; echo number_format($activity->use_timesheet ? $rs_set : MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->sum('amount'), 2,",",".") ?></span></td>
+												<td class="col-md-2"><span class="pull-right">
+												<?php
+													$rs_set = Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour');
+													$x = ($activity->use_timesheet ? $rs_set : MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->sum('amount'));
+													$rs_1 += $x;
+													echo number_format($activity->use_timesheet ? $rs_set : MoreLabor::where('activity_id','=',$activity->id)->whereNull('hour_id')->sum('amount'), 2,",",".")
+												?>													
+												</span></td>
 												<td class="col-md-1"><span class="pull-right">&nbsp;</span></td>
-												<td class="col-md-1"><span class="pull-right"><?php $rs_set = Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour'); $y = $rs_set; $rs_1 += $y; echo number_format($rs_set, 2,",",".") ?></span></td>
+												<td class="col-md-1"><span class="pull-right">
+												<?php
+													$rs_set = Timesheet::where('activity_id','=',$activity->id)->where('timesheet_kind_id','=',TimesheetKind::where('kind_name','=','meerwerk')->first()->id)->sum('register_hour');
+													$y = $rs_set;
+													$rs_2 += $y;
+													echo number_format($rs_set, 2,",",".")
+												?></span></td>
 												<td class="col-md-1"><span class="pull-right"><?php $rs_3 += ($x-$y); echo number_format($x-$y, 2,",",".") ?></span></td>
 												<td class="col-md-1"><span class="pull-right"><?php $rs_4 += ($x-$y)*$project->hour_rate_more; echo number_format(($x-$y)*$project->hour_rate_more, 2,",",".") ?></span></td>
 											</tr>
