@@ -471,12 +471,13 @@ $type = ProjectType::find($project->type_id);
 
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h4 class="modal-title" id="myModalLabel">Offerte opties</h4>
+							<h4 class="modal-title" id="myModalLabel">Offerte opties @if ($project->tax_reverse)(BTW Verlegd) @endif</h4>
 						</div>
 
 						<div class="modal-body">
 							<div class="form-horizontal">
 
+								 @if (!$project->tax_reverse)
 								 <div class="form-group">
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
@@ -486,6 +487,7 @@ $type = ProjectType::find($project->type_id);
 								      </div>
 								    </div>
 								  </div>
+								  @endif
 								  <div class="form-group">
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
@@ -668,9 +670,9 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-1">Uren</th>
 							<th class="col-md-2">Bedrag (excl. BTW)</th>
 							<th class="col-md-1">&nbsp;</th>
-							<th class="col-md-1">BTW</th>
-							<th class="col-md-2">BTW bedrag</th>
-							<th class="col-md-1">&nbsp;</th>
+							@if (!$project->tax_reverse)<th class="col-md-1">BTW</th>@endif
+							@if (!$project->tax_reverse)<th class="col-md-2">BTW bedrag</th>@endif
+							@if (!$project->tax_reverse)<th class="col-md-1">&nbsp;</th>@endif
 						</tr>
 					</thead>
 					<tbody>
@@ -699,9 +701,9 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1">{{ ''.number_format(CalculationEndresult::conCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">0%</td>
-							<td class="col-md-2">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
+							@if (!$project->tax_reverse)<td class="col-md-1">0%</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-2">&nbsp;</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-1">&nbsp;</td>@endif
 						</tr>
 						@endif
 
@@ -730,9 +732,9 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">0%</td>
-							<td class="col-md-2">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
+							@if (!$project->tax_reverse)<td class="col-md-1">0%</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-2">&nbsp;</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-1">&nbsp;</td>@endif
 						</tr>
 						@endif
 
@@ -761,9 +763,9 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">0%</td>
-							<td class="col-md-2">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
+							@if (!$project->tax_reverse)<td class="col-md-1">0%</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-2">&nbsp;</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-1">&nbsp;</td>@endif
 						</tr>
 						@endif
 
@@ -772,9 +774,9 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax($project), 2, ",",".") }}</strong></td>
-							<td class="col-md-1">&nbsp;</td>
+							@if (!$project->tax_reverse)<td class="col-md-1">&nbsp;</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax($project), 2, ",",".") }}</strong></td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-1">&nbsp;</td>@endif
 						</tr>
 					</tbody>
 				</table>
@@ -787,9 +789,9 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-1">Uren</th>
 							<th class="col-md-2">Bedrag (excl. BTW)</th>
 							<th class="col-md-1">&nbsp;</th>
-							<th class="col-md-1">BTW</th>
-							<th class="col-md-2">BTW bedrag</th>
-							<th class="col-md-1">&nbsp;</th>
+							@if (!$project->tax_reverse)<th class="col-md-1">BTW</th>@endif
+							@if (!$project->tax_reverse)<th class="col-md-2">BTW bedrag</th>@endif
+							@if (!$project->tax_reverse)<th class="col-md-1">&nbsp;</th>@endif
 						</tr>
 					</thead>
 					<tbody>
@@ -818,9 +820,9 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1">{{ ''.number_format(CalculationEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">0%</td>
-							<td class="col-md-2">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
+							@if (!$project->tax_reverse)<td class="col-md-1">0%</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-2">&nbsp;</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-1">&nbsp;</td>@endif
 						</tr>
 						@endif
 
@@ -849,9 +851,9 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">0%</td>
-							<td class="col-md-2">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
+							@if (!$project->tax_reverse)<td class="col-md-1">0%</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-2">&nbsp;</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-1">&nbsp;</td>@endif
 						</tr>
 						@endif
 
@@ -880,9 +882,9 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">0%</td>
-							<td class="col-md-2">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
+							@if (!$project->tax_reverse)<td class="col-md-1">0%</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-2">&nbsp;</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-1">&nbsp;</td>@endif
 						</tr>
 						@endif
 
@@ -891,9 +893,9 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontractingTax($project), 2, ",",".") }}</strong></td>
-							<td class="col-md-1">&nbsp;</td>
+							@if (!$project->tax_reverse)<td class="col-md-1">&nbsp;</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontractingTax($project), 2, ",",".") }}</strong></td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-1">&nbsp;</td>@endif
 						</tr>
 					</tbody>
 				</table>
@@ -905,19 +907,19 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-5">&nbsp;</th>
 							<th class="col-md-2">Bedrag (excl. BTW)</th>
 							<th class="col-md-1">&nbsp;</th>
-							<th class="col-md-1">&nbsp;</th>
-							<th class="col-md-1">BTW bedrag</th>
-							<th class="col-md-2"><span class="pull-right">Bedrag (incl. BTW)</span></th>
+							@if (!$project->tax_reverse)<th class="col-md-1">&nbsp;</th>@endif
+							@if (!$project->tax_reverse)<th class="col-md-1">BTW bedrag</th>@endif
+							@if (!$project->tax_reverse)<th class="col-md-2"><span class="pull-right">Bedrag (incl. BTW)</span></th>@endif
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td class="col-md-5"><strong>Calculatief te offreren (excl. BTW)</strong></td>
+							<td class="col-md-5"><strong>Calculatief te offreren</strong></td>
 							<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</strong></td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-2">&nbsp;</td>
+							@if (!$project->tax_reverse)<td class="col-md-1">&nbsp;</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-1">&nbsp;</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-2">&nbsp;</td>@endif
 						</tr>
 						@if (!$project->tax_reverse)
 						<tr>
@@ -936,15 +938,15 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax2($project)+CalculationEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
-						@endif
 						<tr>
-							<td class="col-md-5"><strong>Calculatief te offreren (Incl. BTW)</strong></td>
+							<td class="col-md-5"><strong>Calculatief te offreren</strong></td>
 							<td class="col-md-2">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2"><strong class="pull-right">{{ '&euro; '.number_format(CalculationEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
 						</tr>
+						@endif	
 					</tbody>
 				</table>
 			</div>
@@ -962,9 +964,9 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-1">Uren</th>
 							<th class="col-md-2">Bedrag (excl. BTW)</th>
 							<th class="col-md-1">&nbsp;</th>
-							<th class="col-md-1">BTW</th>
-							<th class="col-md-1">BTW bedrag</th>
-							<th class="col-md-2">&nbsp;</th>
+							@if (!$project->tax_reverse)<th class="col-md-1">BTW</th>@endif
+							@if (!$project->tax_reverse)<th class="col-md-1">BTW bedrag</th>@endif
+							@if (!$project->tax_reverse)<th class="col-md-2">&nbsp;</th>@endif
 						</tr>
 					</thead>
 					<tbody>
@@ -993,9 +995,9 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1">{{ ''.number_format(CalculationEndresult::conCalcLaborActivityTax3($project)+CalculationEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax3Amount($project)+CalculationEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">0%</td>
-							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-2">&nbsp;</td>
+							@if (!$project->tax_reverse)<td class="col-md-1">0%</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-1">&nbsp;</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-2">&nbsp;</td>@endif
 						</tr>
 						@endif
 
@@ -1024,9 +1026,9 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax3Amount($project)+CalculationEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">0%</td>
-							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-2">&nbsp;</td>
+							@if (!$project->tax_reverse)<td class="col-md-1">0%</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-1">&nbsp;</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-2">&nbsp;</td>@endif
 						</tr>
 						@endif
 
@@ -1055,20 +1057,20 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax3Amount($project)+CalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">0%</td>
-							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-2">&nbsp;</td>
+							@if (!$project->tax_reverse)<td class="col-md-1">0%</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-1">&nbsp;</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-2">&nbsp;</td>@endif
 						</tr>
 						@endif
 
 						<tr>
-							<td class="col-md-4"><strong>Totaal Aanneming</strong></td>
+							<td class="col-md-4"><strong>Totaal</strong></td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContracting($project)+CalculationEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax($project)+CalculationEndresult::totalSubcontractingTax($project), 2, ",",".") }}</strong></td>
-							<td class="col-md-2">&nbsp;</td>
+							@if (!$project->tax_reverse)<td class="col-md-1">&nbsp;</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-1"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax($project)+CalculationEndresult::totalSubcontractingTax($project), 2, ",",".") }}</strong></td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-2">&nbsp;</td>@endif
 						</tr>
 					</tbody>
 				</table>
@@ -1106,19 +1108,19 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-5">&nbsp;</th>
 							<th class="col-md-2">Bedrag (excl. BTW)</th>
 							<th class="col-md-1">&nbsp;</th>
-							<th class="col-md-1">&nbsp;</th>
-							<th class="col-md-1">BTW bedrag</th>
-							<th class="col-md-2"><span class="pull-right">Bedrag (incl. BTW)</span></th>
+							@if (!$project->tax_reverse)<th class="col-md-1">&nbsp;</th>@endif
+							@if (!$project->tax_reverse)<th class="col-md-1">BTW bedrag</th>@endif
+							@if (!$project->tax_reverse)<th class="col-md-2"><span class="pull-right">Bedrag (incl. BTW)</span></th>@endif
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td class="col-md-5"><strong>Calculatief te offreren (excl. BTW)</strong></td>
+							<td class="col-md-5"><strong>Calculatief te offreren</strong></td>
 							<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</strong></td>
 							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-1">&nbsp;</td>
-							<td class="col-md-2">&nbsp;</td>
+							@if (!$project->tax_reverse)<td class="col-md-1">&nbsp;</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-1">&nbsp;</td>@endif
+							@if (!$project->tax_reverse)<td class="col-md-2">&nbsp;</td>@endif
 						</tr>
 						@if (!$project->tax_reverse)
 						<tr>
@@ -1137,15 +1139,14 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1">{{ '&euro; '.number_format(CalculationEndresult::totalContractingTax2($project)+CalculationEndresult::totalSubcontractingTax2($project)+BlancRowsEndresult::rowTax2AmountTax($project), 2, ",",".") }}</td>
 							<td class="col-md-2">&nbsp;</td>
 						</tr>
-						@endif
-						<tr>
-							<td class="col-md-5"><strong>Calculatief te offreren (Incl. BTW)</strong></td>
+						<td class="col-md-5"><strong>Calculatief te offreren</strong></td>
 							<td class="col-md-2">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2"><strong class="pull-right">{{ '&euro; '.number_format(CalculationEndresult::superTotalProject($project)+BlancRowsEndresult::rowTax1AmountTax($project)+BlancRowsEndresult::rowTax2AmountTax($project), 2, ",",".") }}</strong></td>
 						</tr>
+						@endif
 					</tbody>
 				</table>
 			</div>
@@ -1153,6 +1154,7 @@ $type = ProjectType::find($project->type_id);
 
 			<?#--CLOSER START--?>
 			<br>
+			@if ($project->tax_reverse)<h2>Op deze offerte is het <strong>BTW Verlegd</strong></h2>@endif
 			<div class="row">
 				<div class="col-sm-12">
 				<h4>Bepalingen</h4>
