@@ -387,33 +387,33 @@ if ($cnt>1)
       </thead>
       <tbody>
         <tr style="page-break-after: always;">
-          <td class="qty">Calculatief te factureren (excl. BTW)</td>
-          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalProject($project), 2, ",",".") }}</td>
+          <td class="qty"><strong>Calculatief te factureren</strong></td>
+          <td class="qty"><strong>{{ '&euro; '.number_format(ResultEndresult::totalProject($project), 2, ",",".") }}</strong></td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
         @if (!$project->tax_reverse)
         <tr style="page-break-after: always;">
-          <td class="qty">BTW bedrag calculatie belast met 21%</td>
+          <td class="qty">BTW bedrag 21%</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">@if($include_tax) {{ '&euro; '.number_format(ResultEndresult::totalContractingTax1($project)+ResultEndresult::totalSubcontractingTax1($project)+BlancRowsEndresult::rowTax1AmountTax($project), 2, ",",".") }} @endif</td>
           <td class="qty">&nbsp;</td>
         </tr>
         <tr style="page-break-after: always;">
-          <td class="qty">BTW bedrag calculatie belast met 6%</td>
+          <td class="qty">BTW bedrag 6%</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">@if($include_tax) {{ '&euro; '.number_format(ResultEndresult::totalContractingTax2($project)+ResultEndresult::totalSubcontractingTax2($project)+BlancRowsEndresult::rowTax2AmountTax($project), 2, ",",".") }} @endif</td>
           <td class="qty">&nbsp;</td>
         </tr>
         @endif
-        <tr style="page-break-after: always;">
+       <!--  <tr style="page-break-after: always;">
           <td class="qty">Te factureren BTW bedrag</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">@if($include_tax) {{ '&euro; '.number_format(ResultEndresult::totalProjectTax($project)+BlancRowsEndresult::rowTax1AmountTax($project)+BlancRowsEndresult::rowTax2AmountTax($project), 2, ",",".") }} @endif</td>
-        </tr>
+        </tr> -->
         <tr style="page-break-after: always;">
-          <td class="qty"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
+          <td class="qty"><strong>Calculatief te factureren</strong></td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
           <td class="qty"><strong>@if($include_tax) {{ '&euro; '.number_format(ResultEndresult::superTotalProject($project)+BlancRowsEndresult::rowTax1AmountTax($project)+BlancRowsEndresult::rowTax2AmountTax($project), 2, ",",".") }}</strong> @endif</td>
@@ -867,45 +867,33 @@ if ($cnt>1)
       </thead>
       <tbody>
         <tr style="page-break-after: always;">
-          <td class="qty">Calculatief te factureren (excl. BTW)</td>
-          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalProject($project), 2, ",",".") }}</td>
+          <td class="qty"><strong>Calculatief te factureren</strong></td>
+          <td class="qty"><strong>{{ '&euro; '.number_format(ResultEndresult::totalProject($project), 2, ",",".") }}</strong></td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
         @if (!$project->tax_reverse)
         <tr style="page-break-after: always;">
-          <td class="qty">BTW bedrag aanneming belast met 21%</td>
+          <td class="qty">BTW bedrag 21%</td>
           <td class="qty">&nbsp;</td>
-          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax1($project), 2, ",",".") }}</td>
-          <td class="qty">&nbsp;</td>
-        </tr>
-        <tr style="page-break-after: always;">
-          <td class="qty">BTW bedrag aanneming belast met 6%</td>
-          <td class="qty">&nbsp;</td>
-          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax2($project), 2, ",",".") }}</td>
+          <td class="qty">{{ '&euro; '.number_format((ResultEndresult::totalContractingTax1($project) + ResultEndresult::totalSubcontractingTax1($project)), 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
         </tr>
         <tr style="page-break-after: always;">
-          <td class="qty">BTW bedrag onderaanneming belast met 21%</td>
+          <td class="qty">BTW bedrag 6%</td>
           <td class="qty">&nbsp;</td>
-          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
-          <td class="qty">&nbsp;</td>
-        </tr>
-        <tr style="page-break-after: always;">
-          <td class="qty">BTW bedrag onderaanneming belast met 6%</td>
-          <td class="qty">&nbsp;</td>
-          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
+          <td class="qty">{{ '&euro; '.number_format((ResultEndresult::totalContractingTax2($project) + ResultEndresult::totalSubcontractingTax2($project)), 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
         </tr>
         @endif
-        <tr style="page-break-after: always;">
+<!--         <tr style="page-break-after: always;">
           <td class="qty">Te factureren BTW bedrag</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalProjectTax($project), 2, ",",".") }}</td>
-        </tr>
+        </tr> -->
         <tr style="page-break-after: always;">
-          <td class="qty"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
+          <td class="qty"><strong>Calculatief te factureren</strong></td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
           <td class="qty"><strong>{{ '&euro; '.number_format(ResultEndresult::superTotalProject($project), 2, ",",".") }}</strong></td>
@@ -925,8 +913,8 @@ if ($cnt>1)
       </thead>
       <tbody>
         <tr style="page-break-after: always;">
-          <td class="qty">Calculatief te factureren</td>
-          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalProject($project), 2, ",",".") }}</td>
+          <td class="qty"><strong>Calculatief te factureren</strong></td>
+          <td class="qty"><strong>{{ '&euro; '.number_format(ResultEndresult::totalProject($project), 2, ",",".") }}</strong></td>
           <td class="qty">&nbsp;</td>
         </tr>
       </tbody>
@@ -952,13 +940,13 @@ if ($cnt>1)
                                       </thead>
                                       <tbody>
                                         <tr>
-                                          <td class="qty">Laatste van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} termijnen</td>
-                                          <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('amount'), 2, ",",".") }}</td>
+                                          <td class="qty"><strong>Laatste van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} termijnen</strong></td>
+                                          <td class="qty"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('amount'), 2, ",",".") }}</strong></td>
                                           <td class="qty">&nbsp;</td>
                                           <td class="qty">&nbsp;</td>
                                         </tr>
                                         @if (!$project->tax_reverse)
-                                        <tr>
+                                      <!--   <tr>
                                           <td class="qty">Factuurbedrag belast met 21% BTW</td>
                                           <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21'), 2, ",",".") }}</td>
                                           <td class="qty">&nbsp;</td>
@@ -976,18 +964,18 @@ if ($cnt>1)
                                           <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_0'), 2, ",",".") }}</td>
                                           <td class="qty">&nbsp;</td>
                                           <td class="qty">&nbsp;</td>
-                                        </tr>
+                                        </tr> -->
                                         @endif
 
                                         @if (!$project->tax_reverse)
                                         <tr>
-                                          <td class="qty">BTW bedrag belast met 21%</td>
+                                          <td class="qty">BTW bedrag 21%</td>
                                           <td class="qty">&nbsp;</td>
                                           <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21')/100)*21, 2, ",",".") }}</td>
                                           <td class="qty">&nbsp;</td>
                                         </tr>
                                         <tr>
-                                          <td class="qty">BTW bedrag belast met 6%</td>
+                                          <td class="qty">BTW bedrag 6%</td>
                                           <td class="qty">&nbsp;</td>
                                           <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6, 2, ",",".") }}</td>
                                           <td class="qty">&nbsp;</td>
@@ -995,7 +983,7 @@ if ($cnt>1)
                                         @endif
 
                                         <tr>
-                                          <td class="qty"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
+                                          <td class="qty"><strong>Calculatief te factureren</strong></td>
                                           <td class="qty">&nbsp;</td>
                                           <td class="qty">&nbsp;</td>
                                           <td class="qty"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('amount')+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21')/100)*21)+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6), 2, ",",".") }}</strong></td>
@@ -1015,13 +1003,13 @@ if ($cnt>1)
                                       </thead>
                                       <tbody>
                                         <tr>
-                                          <td class="qty">Laatste van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} termijnen</td>
-                                          <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->amount, 2, ",",".") }}</td>
+                                          <td class="qty"><strong>Laatste van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} termijnen</strong></td>
+                                          <td class="qty"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->amount, 2, ",",".") }}</strong></td>
                                           <td class="qty">&nbsp;</td>
                                           <td class="qty">&nbsp;</td>
                                         </tr>
                                         @if (!$project->tax_reverse)
-                                        <tr>
+<!--                                         <tr>
                                           <td class="qty">Factuurbedrag belast met 21% BTW</td>
                                           <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21, 2, ",",".") }}</td>
                                           <td class="qty">&nbsp;</td>
@@ -1039,25 +1027,25 @@ if ($cnt>1)
                                           <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_0, 2, ",",".") }}</td>
                                           <td class="qty">&nbsp;</td>
                                           <td class="qty">&nbsp;</td>
-                                        </tr>
+                                        </tr> -->
                                         @endif
 
                                         @if (!$project->tax_reverse)
                                         <tr>
-                                          <td class="qty">BTW bedrag belast met 21%</td>
+                                          <td class="qty">BTW bedrag 21%</td>
                                           <td class="qty">&nbsp;</td>
                                           <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21/100)*21, 2, ",",".") }}</td>
                                           <td class="qty">&nbsp;</td>
                                         </tr>
                                         <tr>
-                                          <td class="qty">BTW bedrag belast met 6%</td>
+                                          <td class="qty">BTW bedrag 6%</td>
                                           <td class="qty">&nbsp;</td>
                                           <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6, 2, ",",".") }}</td>
                                           <td class="qty">&nbsp;</td>
                                         </tr>
                                         @endif
                                         <tr>
-                                          <td class="qty"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
+                                          <td class="qty"><strong>Calculatief te factureren</strong></td>
                                           <td class="qty">&nbsp;</td>
                                           <td class="qty">&nbsp;</td>
                                           <td class="qty"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->amount+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21/100)*21)+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6), 2, ",",".") }}</strong></td>

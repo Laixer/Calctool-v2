@@ -171,14 +171,14 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
       </thead>
            <tbody>
         <tr>
-          <td class="qty">{{Invoice::where('offer_id','=', $_invoice->offer_id)->where('priority','<',$_invoice->priority)->count()}}e van in totaal {{Invoice::where('offer_id','=', $_invoice->offer_id)->count()}} betalingstermijnen.</td>
-          <td class="qty">{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</td>
+          <td class="qty"><strong>{{Invoice::where('offer_id','=', $_invoice->offer_id)->where('priority','<',$_invoice->priority)->count()}}e van in totaal {{Invoice::where('offer_id','=', $_invoice->offer_id)->count()}} betalingstermijnen</strong></td>
+          <td class="qty"><strong>{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</strong></td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
         @if ($include_tax)
         @if (!$project->tax_reverse)
-        <tr>
+<!--         <tr>
           <td class="qty">&nbsp;<i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
           <td class="qty">{{ '&euro; '.number_format($invoice->rest_21, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
@@ -189,7 +189,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
           <td class="qty">{{ '&euro; '.number_format($invoice->rest_6, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
-        </tr>
+        </tr> -->
         @else
         <tr>
           <td class="qty">&nbsp;<i>Aandeel termijnfactuur in 0% BTW categorie</i></td>

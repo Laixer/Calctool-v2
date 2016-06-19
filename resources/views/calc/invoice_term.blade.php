@@ -394,13 +394,13 @@ if (!$project || !$project->isOwner()) {
 						</thead>
 						<tbody>
 							<tr>
-								<td class="col-md-6">{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()}}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen.</td>
-								<td class="col-md-2">{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</td>
+								<td class="col-md-6"><strong>{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()}}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen</strong></td>
+								<td class="col-md-2"><strong>{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</strong></td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
 							@if (!$project->tax_reverse)
-							<tr>
+<!-- 							<tr>
 								<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
 								<td class="col-md-2">{{ '&euro; '.number_format($invoice->rest_21, 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
@@ -411,11 +411,11 @@ if (!$project || !$project->isOwner()) {
 								<td class="col-md-2">{{ '&euro; '.number_format($invoice->rest_6, 2, ",",".") }}</td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
-							</tr>
+							</tr> -->
 							@else
 							<tr>
 								<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 0% BTW categorie</i></td>
-								<td class="col-md-2">{{ '&euro; '.number_format($invoice->rest_0, 2, ",",".") }}</td>
+								<td class="col-md-2"><strong>{{ '&euro; '.number_format($invoice->rest_0, 2, ",",".") }}</strong></td>
 								<td class="col-md-2">&nbsp;</td>
 								<td class="col-md-2">&nbsp;</td>
 							</tr>
