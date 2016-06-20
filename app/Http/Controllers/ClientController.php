@@ -9,6 +9,7 @@ use \Calctool\Models\MessageBox;
 use \Calctool\Models\Project;
 use \Calctool\Models\Offer;
 use \Calctool\Models\Invoice;
+use \Calctool\Calculus\InvoiceTerm;
 use \Calctool\Models\ProjectShare;
 
 use \Auth;
