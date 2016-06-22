@@ -65,7 +65,7 @@
 												<tr><!-- spacer after the line -->
 													<td width="100%" height="30"></td>
 												</tr>
-												@if ($email)
+												@if (isset($email))
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
 														<strong>Email: {{ $email }}</strong>
