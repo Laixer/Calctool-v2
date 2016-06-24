@@ -19,6 +19,7 @@ $group = \Calctool\Models\UserGroup::find(Route::input('group_id'));
 <script type="text/javascript">
 $(document).ready(function() {
 	$("[name='toggle-active']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	$("[name='toggle-beta']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	 $('.summernote').summernote({
 	        height: $(this).attr("data-height") || 200,
 	        toolbar: [
@@ -84,7 +85,7 @@ $(document).ready(function() {
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="subscription_amount">Maandbedrag</label>
-							<input name="subscription_amount" id="subscription_amount" type="number" min="1" step="any"value="{{ Input::old('subscription_amount') ? Input::old('subscription_amount') : $group->subscription_amount }}" class="form-control"/>
+							<input name="subscription_amount" id="subscription_amount" type="number" min="0" step="any"value="{{ Input::old('subscription_amount') ? Input::old('subscription_amount') : $group->subscription_amount }}" class="form-control"/>
 						</div>
 					</div>
 
@@ -97,6 +98,13 @@ $(document).ready(function() {
 						<div class="form-group">
 							<label for="toggle-active" style="display:block;">Actief</label>
 							<input name="toggle-active" type="checkbox" {{ $group->active ? 'checked' : '' }}>
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="toggle-beta" style="display:block;">Beta</label>
+							<input name="toggle-beta" type="checkbox" {{ $group->experimental ? 'checked' : '' }}>
 						</div>
 					</div>
 
