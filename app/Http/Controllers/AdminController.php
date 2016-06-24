@@ -331,15 +331,10 @@ class AdminController extends Controller {
 			'subscription_amount' => array('required','min:1'),
 		]);
 
-		$amount = floatval($request->input('subscription_amount'));
-		if ($amount < 1) {
-			return back();
-		}
-
 		/* General */
 		$group = new UserGroup;
 		$group->name = $request->input('name');;
-		$group->subscription_amount = $amount;
+		$group->subscription_amount = floatval($request->input('subscription_amount'));
 
 		if ($request->input('note'))
 			$group->note = $request->input('note');	
@@ -347,6 +342,10 @@ class AdminController extends Controller {
 			$group->active = true;
 		else
 			$group->active = false;
+		if ($request->input('toggle-beta'))
+			$group->experimental = true;
+		else
+			$group->experimental = false;
 
 		$group->token = md5(mt_rand());
 		$group->save();
@@ -374,20 +373,18 @@ class AdminController extends Controller {
 				$group->name = $name;
 			}
 		}
-		if ($request->input('subscription_amount')) {
-			$amount = floatval($request->input('subscription_amount'));
-			if ($amount < 1) {
-				return back();
-			}
 
-			$group->subscription_amount = $amount;
-		}
+		$group->subscription_amount = floatval($request->input('subscription_amount'));
 		if ($request->input('note'))
 			$group->note = $request->input('note');	
 		if ($request->input('toggle-active'))
 			$group->active = true;
 		else
 			$group->active = false;
+		if ($request->input('toggle-beta'))
+			$group->experimental = true;
+		else
+			$group->experimental = false;
 
 		$group->save();
 

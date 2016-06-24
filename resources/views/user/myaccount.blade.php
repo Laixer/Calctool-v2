@@ -287,7 +287,11 @@ $(document).ready(function() {
 
 							<div class="pull-right">
 								<a href="javascript:void(0);" id="acc-deactive" class="btn btn-danger">Account deactiveren</a>
+								@if (UserGroup::find(Auth::user()->user_group)->subscription_amount == 0)
+								<a href="/payment/increasefree" class="btn btn-primary">Abonnement verlengen</a>
+								@else
 								<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#paymentModal">Abonnement verlengen</a>
+								@endif
 							</div>
 
 							<h4>Abonnementsduur</h4>
