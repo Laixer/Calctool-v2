@@ -405,12 +405,13 @@ var n = this,
 			$notecurr = $(this);
 			$curval = $(this).attr('data-note');
 			$curid = $(this).attr('data-id');
-			$('#note').val($curval);
+			$('.summernote').code($curval);
 			$('#noteact').val($curid);
 		});
 		$('#descModal').on('hidden.bs.modal', function() {
-			$.post("/calculation/noteactivity", {project: {{ $project->id }}, activity: $('#noteact').val(), note: $('#note').val()}, function(){
-				$notecurr.attr('data-note', $('#note').val());
+			$.post("/calculation/noteactivity", {project: {{ $project->id }}, activity: $('#noteact').val(), note: $('.summernote').code()}, function(){
+				$notecurr.attr('data-note', $('.summernote').code());
+				$('.summernote').code('');
 			}).fail(function(e) { console.log(e); });
 		});
 
