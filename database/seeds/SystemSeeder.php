@@ -24,7 +24,7 @@ class SystemSeeder extends Seeder {
 		$guest_user_type = UserType::where('user_type','=','guest')->first();
 
 		$system_user = new User;
-		$system_user->username = 'system';
+		$system_user->username = 'admin';
 		$system_user->secret = Hash::make('ABC@123');
 		$system_user->firstname = 'SYSTEM';
 		$system_user->api = md5(mt_rand());
