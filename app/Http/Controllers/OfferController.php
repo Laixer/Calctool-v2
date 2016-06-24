@@ -104,7 +104,7 @@ class OfferController extends Controller {
 		$offer->save();
 
 // Geeft pagina PDF in HTML
-			// return view('calc.offer_pdf', ['offer' => $offer]);
+			return view('calc.offer_pdf', ['offer' => $offer]);
 
 
 

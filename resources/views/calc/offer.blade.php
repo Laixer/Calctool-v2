@@ -492,7 +492,7 @@ $type = ProjectType::find($project->type_id);
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="only-totals" type="checkbox" checked> Alleen het totale offertebedrag weergeven<br>
+								          <input name="only-totals" type="checkbox"> Alleen het totale offertebedrag weergeven<br>
 								        </label>
 								      </div>
 								    </div>
