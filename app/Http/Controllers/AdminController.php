@@ -424,7 +424,7 @@ class AdminController extends Controller {
 		$message = new MessageBox;
 		$message->subject = 'Offerte ' . $project->project_name;
 		$message->message = 'De offerte voor ' . $project->project_name . ' is met de post verstuurd door de CalculatieTool.com.';
-		$message->from_user = User::where('username', 'system')->first()['id'];
+		$message->from_user = User::where('username', 'admin')->first()['id'];
 		$message->user_id =	$project->user_id;
 
 		$message->save();
@@ -450,7 +450,7 @@ class AdminController extends Controller {
 		$message = new MessageBox;
 		$message->subject = 'Factuur ' . $project->project_name;
 		$message->message = 'De factuur voor ' . $project->project_name . ' is met de post verstuurd door de CalculatieTool.com.';
-		$message->from_user = User::where('username', 'system')->first()['id'];
+		$message->from_user = User::where('username', 'admin')->first()['id'];
 		$message->user_id =	$project->user_id;
 
 		$message->save();
