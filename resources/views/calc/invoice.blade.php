@@ -425,7 +425,6 @@ $type = ProjectType::find($project->type_id);
 						    </div>
 						  </div>
 						  @endif
-
 					</div>
 				</div>
 
