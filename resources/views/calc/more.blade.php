@@ -739,13 +739,18 @@ var n = this,
 													<tbody>
 														<?php
 														if ($activity->use_timesheet) {
+
+														$collection = collect();
 														?>
 														@foreach (MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->orderBy('hour_id', 'desc')->get() as $labor)
-														<tr data-id="{{ Timesheet::find($labor->hour_id)->id }}">
-															<td class="col-md-2">{{ date('d-m-Y', strtotime(Timesheet::find($labor->hour_id)->register_date)) }}</td>
-															<td class="col-md-1">{{ number_format($labor->amount, 2,",",".") }}</td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(MoreRegister::laborTotal($project->hour_rate_more, $labor->amount), 2, ",",".") }}</span></td>
-															<td class="col-md-7">{{ Timesheet::find($labor->hour_id)->note }}</td>
+															<?php $collection->push(['date' => strtotime(Timesheet::find($labor->hour_id)->register_date), 'labor' => $labor]); ?>
+														@endforeach
+														@foreach ($collection->sortByDesc('date')->all() as $labor)
+														<tr data-id="{{ Timesheet::find($labor['labor']->hour_id)->id }}">
+															<td class="col-md-2">{{ date('d-m-Y', $labor['date']) }}</td>
+															<td class="col-md-1">{{ number_format($labor['labor']->amount, 2,",",".") }}</td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(MoreRegister::laborTotal($project->hour_rate_more, $labor['labor']->amount), 2, ",",".") }}</span></td>
+															<td class="col-md-7">{{ Timesheet::find($labor['labor']->hour_id)->note }}</td>
 															<td class="col-md-1 text-right"><!--<button class="btn btn-xs fa btn-danger fa-times xdeleterow"></button>--></td>
 														</tr>
 														@endforeach
