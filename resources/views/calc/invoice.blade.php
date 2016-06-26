@@ -881,9 +881,11 @@ $type = ProjectType::find($project->type_id);
 
 				<?#--CLOSER START--?>
 				<textarea name="closure" id="closure" rows="5" class="form-control">{{ ($invoice ? ($invoice->closure ? $invoice->closure : Auth::user()->pref_invoice_closure) : Auth::user()->pref_invoice_closure) }}</textarea>
+				@if($project->tax_reverse)
 				<br>
-				@if ($project->tax_reverse)<h2>Op deze factuur is het <strong>BTW Verlegd</strong></h2>@endif
+				<h2>Op deze factuur is het <strong>BTW Verlegd</strong></h2>
 				<br>
+				@endif
 				<div class="row">
 					<div class="col-sm-12">
 					<h4>Bepalingen</h4>

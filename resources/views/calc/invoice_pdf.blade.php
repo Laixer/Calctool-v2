@@ -586,9 +586,8 @@ $type = ProjectType::find($project->type_id);
                                 <?#--INCLUDE TERM END--?>
 
 
-      <br>
-        @if ($project->tax_reverse)<h2 class="name">Op deze factuur is het <strong>BTW Verlegd</strong></h1>@endif
-      <br>
+      @if($project->tax_reverse)<h2 class="name">Op deze factuur is het <strong>BTW Verlegd</strong></h1>@endif
+
       <h2 class="name">Bepalingen</h2>
       <hr color="#000" size="1">
 
@@ -1052,9 +1051,9 @@ $type = ProjectType::find($project->type_id);
                                     <?php } ?>
                                 <?#--INCLUDE TERM END--?>
 
-        <br>
-          @if ($project->tax_reverse)<h2 class="name">Op deze factuur is het <strong>BTW Verlegd</strong></h1>@endif
-        <br>
+
+          @if($project->tax_reverse)<h2 class="name">Op deze factuur is het <strong>BTW Verlegd</strong></h1>@endif
+
         <h2 class="name">Bepalingen</h2>
         <hr color="#000" size="1">
 

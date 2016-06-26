@@ -225,6 +225,8 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
       @endif
     </table>
 
+      @if($project->tax_reverse)<h2 class="name">Op deze factuur is het <strong>BTW Verlegd</strong></h1>@endif
+
     <h2 class="name">Bepalingen</h2>
     <hr color="#000" size="1">
     <div class="terms">
