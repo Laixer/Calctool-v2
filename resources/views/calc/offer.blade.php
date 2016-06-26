@@ -473,13 +473,13 @@ $type = ProjectType::find($project->type_id);
 
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h4 class="modal-title" id="myModalLabel">Offerte opties @if (!$project->tax_reverse)(BTW Verlegd) @endif</h4>
+							<h4 class="modal-title" id="myModalLabel">Offerte opties @if ($project->tax_reverse)(BTW Verlegd) @endif</h4>
 						</div>
 
 						<div class="modal-body">
 							<div class="form-horizontal">
 
-								 @if (!$project->tax_reverse)
+<!-- 								 @if (!$project->tax_reverse)
 								 <div class="form-group">
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
@@ -489,12 +489,12 @@ $type = ProjectType::find($project->type_id);
 								      </div>
 								    </div>
 								  </div>
-								  @endif
+								  @endif -->
 								  <div class="form-group">
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="only-totals" type="checkbox" checked> Alleen het totale offertebedrag weergeven<br>
+								          <input name="only-totals" type="checkbox"> Alleen het totale offertebedrag weergeven<br>
 								        </label>
 								      </div>
 								    </div>
