@@ -134,7 +134,7 @@ $(function() {
 
 				</div>
 
-				<div class="col-md-6">
+				<div class="col-md-6 hidden-sm hidden-xs">
 
 					<h2>Waarom <strong> Registreren</strong>?</h2>
 
@@ -163,7 +163,7 @@ $(function() {
 
 			</div>
 
-			<div class="white-row">
+			<div class="white-row hidden-sm hidden-xs">
 						<h4>Direct inloggen?</h4>
 						<p>
 							Heb je al een account?

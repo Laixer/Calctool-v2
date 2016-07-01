@@ -92,7 +92,7 @@ $(function() {
 
 				</div>
 
-				<div class="col-md-6">
+				<div class="col-md-6 hidden-sm hidden-xs">
 
 					<h2>Wachtwoord <strong>Vergeten</strong>?</h2>
 
@@ -127,7 +127,7 @@ $(function() {
 			</div>
 
 
-			<div class="white-row">
+			<div class="white-row hidden-sm hidden-xs">
 				<h4>Nog Registreren?</h4>			
 				<span>Nog geen account? <a href="/register">Maak er één aan</a>, het is <strong>gratis!</strong></span>
 			</div>
