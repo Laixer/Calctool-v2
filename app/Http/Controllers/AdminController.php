@@ -318,7 +318,7 @@ class AdminController extends Controller {
 
 		Auth::loginUsingId($user->id);
 
-		return redirect('/')->withCookie(cookie()->forget('swpsess'));
+		return redirect('/admin/user')->withCookie(cookie()->forget('swpsess'));
 
 	}
 

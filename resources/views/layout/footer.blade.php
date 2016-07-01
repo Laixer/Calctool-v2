@@ -1,4 +1,4 @@
-<footer>
+<footer class="visible-lg">
 
 	<div class="footer-bar">
 		<div class="container">
