@@ -1393,7 +1393,9 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
 							<th class="col-md-1"><span class="pull-right">Overig</span></th>
 							<th class="col-md-1"><span class="pull-right">Totaal</span></th>
-							<th class="col-md-1">&nbsp;</th>
+							@if ($project->use_estimate)
+							<td class="col-md-1">&nbsp;</td>
+							@endif
 						</tr>
 					</thead>
 					<tbody>
@@ -1405,7 +1407,9 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></strong></td>
+							@if ($project->use_estimate)
 							<td class="col-md-1">&nbsp;</td>
+							@endif
 						</tr>
 					</tbody>
 				</table>
