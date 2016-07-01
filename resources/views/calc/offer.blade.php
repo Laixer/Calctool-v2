@@ -1474,7 +1474,9 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
 							<th class="col-md-1"><span class="pull-right">Overig</span></th>
 							<th class="col-md-1"><span class="pull-right">Totaal</span></th>
-							<th class="col-md-1">&nbsp;</th>
+							@if ($project->use_estimate)
+							<th class="col-md-1"><span>&nbsp;</th>
+							@endif
 						</tr>
 					</thead>
 					<tbody>
