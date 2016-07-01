@@ -534,7 +534,7 @@ class InvoiceController extends Controller {
 			$message = new MessageBox;
 			$message->subject = 'Te printen factuur';
 			$message->message = 'Factuur ' . $invoice->invoice_code . ' staat klaar om geprint te worden';
-			$message->from_user = User::where('username', 'system')->first()['id'];
+			$message->from_user = User::where('username', 'admin')->first()['id'];
 			$message->user_id =	$admin->id;
 
 			$message->save();

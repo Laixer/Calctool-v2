@@ -318,7 +318,7 @@ class AdminController extends Controller {
 
 		Auth::loginUsingId($user->id);
 
-		return redirect('/')->withCookie(cookie()->forget('swpsess'));
+		return redirect('/admin/user')->withCookie(cookie()->forget('swpsess'));
 
 	}
 
@@ -331,15 +331,10 @@ class AdminController extends Controller {
 			'subscription_amount' => array('required','min:1'),
 		]);
 
-		$amount = floatval($request->input('subscription_amount'));
-		if ($amount < 1) {
-			return back();
-		}
-
 		/* General */
 		$group = new UserGroup;
 		$group->name = $request->input('name');;
-		$group->subscription_amount = $amount;
+		$group->subscription_amount = floatval($request->input('subscription_amount'));
 
 		if ($request->input('note'))
 			$group->note = $request->input('note');	
@@ -347,6 +342,10 @@ class AdminController extends Controller {
 			$group->active = true;
 		else
 			$group->active = false;
+		if ($request->input('toggle-beta'))
+			$group->experimental = true;
+		else
+			$group->experimental = false;
 
 		$group->token = md5(mt_rand());
 		$group->save();
@@ -374,20 +373,18 @@ class AdminController extends Controller {
 				$group->name = $name;
 			}
 		}
-		if ($request->input('subscription_amount')) {
-			$amount = floatval($request->input('subscription_amount'));
-			if ($amount < 1) {
-				return back();
-			}
 
-			$group->subscription_amount = $amount;
-		}
+		$group->subscription_amount = floatval($request->input('subscription_amount'));
 		if ($request->input('note'))
 			$group->note = $request->input('note');	
 		if ($request->input('toggle-active'))
 			$group->active = true;
 		else
 			$group->active = false;
+		if ($request->input('toggle-beta'))
+			$group->experimental = true;
+		else
+			$group->experimental = false;
 
 		$group->save();
 
@@ -427,7 +424,7 @@ class AdminController extends Controller {
 		$message = new MessageBox;
 		$message->subject = 'Offerte ' . $project->project_name;
 		$message->message = 'De offerte voor ' . $project->project_name . ' is met de post verstuurd door de CalculatieTool.com.';
-		$message->from_user = User::where('username', 'system')->first()['id'];
+		$message->from_user = User::where('username', 'admin')->first()['id'];
 		$message->user_id =	$project->user_id;
 
 		$message->save();
@@ -453,7 +450,7 @@ class AdminController extends Controller {
 		$message = new MessageBox;
 		$message->subject = 'Factuur ' . $project->project_name;
 		$message->message = 'De factuur voor ' . $project->project_name . ' is met de post verstuurd door de CalculatieTool.com.';
-		$message->from_user = User::where('username', 'system')->first()['id'];
+		$message->from_user = User::where('username', 'admin')->first()['id'];
 		$message->user_id =	$project->user_id;
 
 		$message->save();

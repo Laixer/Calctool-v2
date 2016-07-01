@@ -121,7 +121,7 @@ use \Calctool\Models\MoreLabor;
 				@endif
 
 				<div class="tab-content">
-					<div id="hour" class="tab-pane active">
+					<div id="hour" class="tab-pane active table-responsive">
 						<table class="table table-striped" ng-controller="timesheetController">
 							<thead>
 								<tr>

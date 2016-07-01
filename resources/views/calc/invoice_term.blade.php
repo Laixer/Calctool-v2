@@ -452,6 +452,13 @@ if (!$project || !$project->isOwner()) {
 				<br>
 				<div class="row">
 					<div class="col-sm-12">
+
+						@if($project->tax_reverse)
+						<br>
+						<h2>Op deze factuur is het <strong>BTW Verlegd</strong></h2>
+						<br>
+						@endif
+
 					<h4>Bepalingen</h4>
 					<ul>
 						<li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>

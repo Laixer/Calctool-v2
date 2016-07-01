@@ -151,6 +151,24 @@ class UserController extends Controller {
 		return redirect($payment->links->paymentUrl)->withCookie(cookie()->forget('_dccod'.Auth::id()));
 	}
 
+	public function getPaymentFree(Request $request)
+	{
+		if (UserGroup::find(Auth::user()->user_group)->subscription_amount > 0) {
+			$errors = new MessageBag(['status' => ['Abonnement vereist betaling']]);
+			return redirect('myaccount')->withErrors($errors);
+		}
+
+		$user = Auth::user();
+		$expdate = $user->expiration_date;
+		$user->expiration_date = date('Y-m-d', strtotime("+1 month", strtotime($expdate)));
+
+		$user->save();
+
+		Audit::CreateEvent('account.payment.free.success', 'Payment free succeeded');
+
+		return redirect('myaccount')->with('success','Bedankt voor uw betaling');
+	}
+
 	public function doPaymentUpdate(Request $request)
 	{
 		$order = Payment::where('transaction','=',$request->get('id'))->where('status','=','open')->first();
@@ -210,6 +228,7 @@ class UserController extends Controller {
 			Audit::CreateEvent('account.payment.callback.success', 'Payment ' . $payment->id . ' succeeded');
 
 		}
+
 		return response()->json(['success' => 1]);
 	}
 
@@ -240,6 +259,7 @@ class UserController extends Controller {
 			$errors = new MessageBag(['status' => ['Betaling is verlopen']]);
 			return redirect('myaccount')->withErrors($errors);
 		}
+
 		$errors = new MessageBag(['status' => ['Transactie niet afgerond ('.$payment->status.')']]);
 		return redirect('myaccount')->withErrors($errors);
 	}

@@ -533,12 +533,13 @@ var n = this,
 			$notecurr = $(this);
 			$curval = $(this).attr('data-note');
 			$curid = $(this).attr('data-id');
-			$('#note').val($curval);
+			$('.summernote').code($curval);
 			$('#noteact').val($curid);
 		});
 		$('#descModal').on('hidden.bs.modal', function() {
-			$.post("/calculation/noteactivity", {project: {{ $project->id }}, activity: $('#noteact').val(), note: $('#note').val()}, function(){
-				$notecurr.attr('data-note', $('#note').val());
+			$.post("/calculation/noteactivity", {project: {{ $project->id }}, activity: $('#noteact').val(), note: $('.summernote').code()}, function(){
+				$notecurr.attr('data-note', $('.summernote').code());
+				$('.summernote').code('');
 			}).fail(function(e) { console.log(e); });
 		});
 		$('.use-timesheet').bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
@@ -549,7 +550,7 @@ var n = this,
 
 		$('.datepick').datepicker();
 
-		$('#summernote').summernote({
+		$('.summernote').summernote({
             height: $(this).attr("data-height") || 200,
             toolbar: [
                 ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
@@ -614,7 +615,7 @@ var n = this,
 			<div class="modal-body">
 				<div class="form-group">
 					<div class="col-md-12">
-						<textarea name="note" id="summernote" rows="5" class="form-control"></textarea>
+						<textarea name="note" id="note" rows="5" class="form-control summernote"></textarea>
 						<input type="hidden" name="noteact" id="noteact" />
 					</div>
 				</div>
@@ -738,13 +739,18 @@ var n = this,
 													<tbody>
 														<?php
 														if ($activity->use_timesheet) {
+
+														$collection = collect();
 														?>
 														@foreach (MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->orderBy('hour_id', 'desc')->get() as $labor)
-														<tr data-id="{{ Timesheet::find($labor->hour_id)->id }}">
-															<td class="col-md-2">{{ date('d-m-Y', strtotime(Timesheet::find($labor->hour_id)->register_date)) }}</td>
-															<td class="col-md-1">{{ number_format($labor->amount, 2,",",".") }}</td>
-															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(MoreRegister::laborTotal($project->hour_rate_more, $labor->amount), 2, ",",".") }}</span></td>
-															<td class="col-md-7">{{ Timesheet::find($labor->hour_id)->note }}</td>
+															<?php $collection->push(['date' => strtotime(Timesheet::find($labor->hour_id)->register_date), 'labor' => $labor]); ?>
+														@endforeach
+														@foreach ($collection->sortByDesc('date')->all() as $labor)
+														<tr data-id="{{ Timesheet::find($labor['labor']->hour_id)->id }}">
+															<td class="col-md-2">{{ date('d-m-Y', $labor['date']) }}</td>
+															<td class="col-md-1">{{ number_format($labor['labor']->amount, 2,",",".") }}</td>
+															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(MoreRegister::laborTotal($project->hour_rate_more, $labor['labor']->amount), 2, ",",".") }}</span></td>
+															<td class="col-md-7">{{ Timesheet::find($labor['labor']->hour_id)->note }}</td>
 															<td class="col-md-1 text-right"><!--<button class="btn btn-xs fa btn-danger fa-times xdeleterow"></button>--></td>
 														</tr>
 														@endforeach

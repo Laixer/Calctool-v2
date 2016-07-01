@@ -15,6 +15,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$("[name='toggle-active']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	$("[name='toggle-beta']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	 $('.summernote').summernote({
 	        height: $(this).attr("data-height") || 200,
 	        toolbar: [
@@ -80,7 +81,7 @@ $(document).ready(function() {
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="subscription_amount">Maandbedrag</label>
-							<input name="subscription_amount" type="number" min="1" step="any" id="subscription_amount" value="{{ Input::old('subscription_amount') ? Input::old('subscription_amount') : '1.000' }}" class="form-control"/>
+							<input name="subscription_amount" type="number" min="0" step="any" id="subscription_amount" value="{{ Input::old('subscription_amount') ? Input::old('subscription_amount') : '1.000' }}" class="form-control"/>
 						</div>
 					</div>
 
@@ -93,6 +94,12 @@ $(document).ready(function() {
 						<div class="form-group">
 							<label for="toggle-active" style="display:block;">Actief</label>
 							<input name="toggle-active" type="checkbox" checked>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="toggle-beta" style="display:block;">Betafuncties</label>
+							<input name="toggle-beta" type="checkbox">
 						</div>
 					</div>
 

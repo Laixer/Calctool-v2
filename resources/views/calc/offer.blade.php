@@ -139,21 +139,24 @@ $type = ProjectType::find($project->type_id);
 		});
 		$("[name='display-worktotals']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
-		  	$("[name='display-specification']").bootstrapSwitch('toggleDisabled');
+		  	$("[name='display-specification']").bootstrapSwitch('disabled', false);
+		  	console.log('ik ga nu aan')
 		  	$('.show-activity').show();
 		  } else {
-		 	$("[name='display-specification']").bootstrapSwitch('toggleDisabled');
+		 	$("[name='display-specification']").bootstrapSwitch('disabled', true);
 			$('.show-activity').hide();
 		  }
 		});
 
 		$("[name='only-totals']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
-		  	$('.show-activity').show();
-		  	$("[name='seperate-subcon']").bootstrapSwitch('toggleDisabled');
+		  	// $('.show-activity').show();
+		  	// $('#ss').toggle();
+		  	$("[name='seperate-subcon']").bootstrapSwitch('disabled', true);
 		  } else {
-		  	$("[name='seperate-subcon']").bootstrapSwitch('toggleDisabled');
-			$('.show-activity').hide();
+		  	$("[name='seperate-subcon']").bootstrapSwitch('disabled', false);
+			// $('#ss').toggle();
+			// $('.show-activity').hide();
 		  }
 		});
 
@@ -477,7 +480,7 @@ $type = ProjectType::find($project->type_id);
 						<div class="modal-body">
 							<div class="form-horizontal">
 
-								 @if (!$project->tax_reverse)
+<!-- 								 @if (!$project->tax_reverse)
 								 <div class="form-group">
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
@@ -487,12 +490,12 @@ $type = ProjectType::find($project->type_id);
 								      </div>
 								    </div>
 								  </div>
-								  @endif
+								  @endif -->
 								  <div class="form-group">
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="only-totals" type="checkbox" checked> Alleen het totale offertebedrag weergeven<br>
+								          <input name="only-totals" type="checkbox"> Alleen het totale offertebedrag weergeven<br>
 								        </label>
 								      </div>
 								    </div>
@@ -502,7 +505,7 @@ $type = ProjectType::find($project->type_id);
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="seperate-subcon" type="checkbox" disabled> Onderaanneming apart weergeven
+								          <input name="seperate-subcon" type="checkbox"> Onderaanneming apart weergeven
 								        </label>
 								      </div>
 								    </div>
@@ -901,7 +904,7 @@ $type = ProjectType::find($project->type_id);
 				</table>
 
 				<h4>Totalen Offerte</h4>
-				<table class="table table-striped hide-btw2">
+				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th class="col-md-5">&nbsp;</th>
@@ -1102,7 +1105,7 @@ $type = ProjectType::find($project->type_id);
 				@endif
 
 				<h4>Totalen Offerte</h4>
-				<table class="table table-striped hide-btw2">
+				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th class="col-md-5">&nbsp;</th>
@@ -1391,7 +1394,9 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
 							<th class="col-md-1"><span class="pull-right">Overig</span></th>
 							<th class="col-md-1"><span class="pull-right">Totaal</span></th>
-							<th class="col-md-1">&nbsp;</th>
+							@if ($project->use_estimate)
+							<td class="col-md-1">&nbsp;</td>
+							@endif
 						</tr>
 					</thead>
 					<tbody>
@@ -1403,7 +1408,9 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></strong></td>
+							@if ($project->use_estimate)
 							<td class="col-md-1">&nbsp;</td>
+							@endif
 						</tr>
 					</tbody>
 				</table>
@@ -1472,7 +1479,9 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
 							<th class="col-md-1"><span class="pull-right">Overig</span></th>
 							<th class="col-md-1"><span class="pull-right">Totaal</span></th>
-							<th class="col-md-1">&nbsp;</th>
+							@if ($project->use_estimate)
+							<th class="col-md-1"><span>&nbsp;</th>
+							@endif
 						</tr>
 					</thead>
 					<tbody>
@@ -1484,7 +1493,9 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></strong></td>
-							<td class="col-md-1"><strong>&nbsp;</td>
+							@if ($project->use_estimate)
+							<th class="col-md-1"><span>&nbsp;</th>
+							@endif
 						</tr>
 					</tbody>
 				</table>

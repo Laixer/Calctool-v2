@@ -355,6 +355,29 @@ $(document).ready(function() {
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="myYouTube" tabindex="-1" role="dialog" aria-labelledby="mYouTubeLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabelYoutube"></h4>
+			</div>
+
+			<iframe width="1080" height="560" src="https://www.youtube.com/embed/7eMYvELXOnM" frameborder="0" allowfullscreen></iframe>
+
+			<div class="modal-body">
+				<div class="form-horizontal">
+
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
 <div id="wrapper">
 
 	<section class="container">
@@ -380,12 +403,12 @@ $(document).ready(function() {
 			</div>
 			@endif
 
-			<h2><strong>Nieuw</strong> project</h2>
+			<h2><strong>Nieuw</strong> project&nbsp;&nbsp;<a class="fa fa-youtube-play" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
 
 			@if(!Calctool\Models\Relation::where('user_id','=', Auth::user()->id)->count())
 			<div class="alert alert-info">
 				<i class="fa fa-info-circle"></i>
-				<strong>Let Op!</strong> Maak eerst een opdrachtgever aan onder <a href="/relation/new">nieuwe relatie</a>.
+				<strong>Let Op!</strong> Maak eerst een opdrachtgever aan onder <a href="/relation/new">nieuwe relatie</a>
 			</div>
 			@endif
 

@@ -222,27 +222,29 @@ $(document).ready(function() {
 									<input name="toggle-close" type="checkbox">
 								</div>
 							</div>
+							<!-- <div class="table-responsive"> -->
 							<table class="table table-striped">
 								<thead>
 									<tr>
 										<th class="col-md-5" ng-click="orderByField='project_name'; reverseSort = !reverseSort">Projectnaam</th>
 										<th class="col-md-3" ng-click="orderByField='relation'; reverseSort = !reverseSort">Opdrachtgever</th>
-										<th class="col-md-2" ng-click="orderByField='type_name'; reverseSort = !reverseSort">Type</th>
-										<th class="col-md-2" ng-click="orderByField='address_city'; reverseSort = !reverseSort">Plaats</th>
+										<th class="col-md-2 hidden-sm hidden-xs" ng-click="orderByField='type_name'; reverseSort = !reverseSort">Type</th>
+										<th class="col-md-2 hidden-xs" ng-click="orderByField='address_city'; reverseSort = !reverseSort">Plaats</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr ng-repeat="project in projects | filter: query | orderBy: orderByField:reverseSort as results">
 										<td class="col-md-5"><a href="/project-@{{ project.id }}/edit">@{{ project.project_name }}</a></td>
 										<td class="col-md-3">@{{ project.relation }}</td>
-										<td class="col-md-2">@{{ project.type.type_name }}</td>
-										<td class="col-md-2">@{{ project.address_city }}</td>
+										<td class="col-md-2 hidden-sm hidden-xs">@{{ project.type.type_name }}</td>
+										<td class="col-md-2 hidden-xs">@{{ project.address_city }}</td>
 									</tr>
 									<tr ng-show="results == 0">
 										<td colspan="6" style="text-align: center;">Geen projecten beschikbaar</td>
 									</tr>
 								</tbody>
 							</table>
+							<!-- </div> -->
 							<div class="row">
 								<div class="col-md-3">
 									

@@ -168,9 +168,6 @@ header#topHead {
 	}
 
 
-header#topNav.topHead {
-	/* top:40px; */
-}
 header#topNav {
 	background:#fff;
 	position:fixed;
@@ -181,9 +178,9 @@ header#topNav {
 	border-bottom:#F4F5F7 1px solid;
 	box-shadow:#eee 0 0 8px;
 }
-	header#topNav.hasTopHead {
-		top:40px !important;
-	}
+header#topNav.hasTopHead {
+	top:40px !important;
+}
 
 header#topNav .nav>li:last-child>a {
 	padding-right:0;

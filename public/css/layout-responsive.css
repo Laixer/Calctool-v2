@@ -136,7 +136,7 @@
 		BOOTSTRAP MOBILE EXTRA FIX
 		Since Atropos v1.3 
 	*/
-	@media only screen and (max-width: 1006px) {
+/*	@media only screen and (max-width: 1006px) {
 		#wrapper {
 			padding-top:90px !important;
 		}
@@ -152,7 +152,7 @@
 		header#topNav a.logo {
 			margin-top:-10px !important;
 		}
-	}
+	}*/
 
 
 	/* 
@@ -585,5 +585,9 @@
 	div.e404 {
 		font-size:1150%;
 		text-align:center;
+	}
+
+	div.feedback_trigger {
+		display: none;
 	}
 }
