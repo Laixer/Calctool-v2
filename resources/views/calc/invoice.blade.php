@@ -426,7 +426,7 @@ $type = ProjectType::find($project->type_id);
 			@if ($invoice_last && $invoice_last->invoice_close)
 			{{ $invoice_last->description }}
 			@else
-				<textarea name="description" id="description" rows="5" maxlength="500" class="form-control">{{ ($invoice ? ($invoice->description ? $invoice->description : Auth::user()->pref_invoice_description) : Auth::user()->pref_invoice_description) }}</textarea>
+				<textarea name="description" id="description" rows="5" maxlength="500" class="form-control">{{ ($invoice_last ? ($invoice_last->description ? $invoice_last->description : Auth::user()->pref_invoice_description) : Auth::user()->pref_invoice_description) }}</textarea>
 			@endif
 			</div>
 		</div>
@@ -886,7 +886,7 @@ $type = ProjectType::find($project->type_id);
 				<?#--CONTENT, TOTAL END--?>
 
 				<?#--CLOSER START--?>
-				<textarea name="closure" id="closure" rows="5" class="form-control">{{ ($invoice ? ($invoice->closure ? $invoice->closure : Auth::user()->pref_invoice_closure) : Auth::user()->pref_invoice_closure) }}</textarea>
+				<textarea name="closure" id="closure" rows="5" class="form-control">{{ ($invoice_last ? ($invoice_last->closure ? $invoice_last->closure : Auth::user()->pref_invoice_closure) : Auth::user()->pref_invoice_closure) }}</textarea>
 				@if($project->tax_reverse)
 				<br>
 				<h2>Op deze factuur is het <strong>BTW Verlegd</strong></h2>
