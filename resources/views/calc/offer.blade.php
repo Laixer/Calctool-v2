@@ -517,7 +517,7 @@ $type = ProjectType::find($project->type_id);
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="display-worktotals" type="checkbox" checked> Totaalkosten per werkzaamheid specificeren
+								          <input name="display-worktotals" type="checkbox"> Totaalkosten per werkzaamheid specificeren
 								        </label>
 								      </div>
 								    </div>
