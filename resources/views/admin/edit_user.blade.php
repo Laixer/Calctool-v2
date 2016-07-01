@@ -280,16 +280,16 @@ $(document).ready(function() {
 
 					</div>
 
-					<h4>Opmerkingen <a data-toggle="tooltip" data-placement="bottom" data-original-title="Niet zichtbaar voor de gebruiker." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
-					<div class="row">
+					<h4 class="hidden-xs">Opmerkingen <a data-toggle="tooltip" data-placement="bottom" data-original-title="Niet zichtbaar voor de gebruiker." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
+					<div class="row hidden-xs">
 						<div class="form-group">
 							<div class="col-md-12">
 								<textarea name="note" id="note" rows="10" class="summernote form-control">{{ Input::old('note') ? Input::old('note') : $user->note }}</textarea>
 							</div>
 						</div>
 					</div>
-					<h4>Kladblok van de gebruiker</h4>
-					<div class="row">
+					<h4 class="hidden-xs">Kladblok van de gebruiker</h4>
+					<div class="row hidden-xs">
 						<div class="form-group">
 							<div class="col-md-12">
 								<textarea name="notepad" id="note" rows="10" class="summernote form-control">{{ Input::old('notepad') ? Input::old('notepad') : $user->notepad }}</textarea>
@@ -309,8 +309,8 @@ $(document).ready(function() {
 					<table class="table table-striped">
 						<thead>
 							<tr>
-								<th class="col-md-2">Datum</th>
-								<th class="col-md-2">IP</th>
+								<th class="col-md-2 hidden-sm hidden-xs">Datum</th>
+								<th class="col-md-2 hidden-sm hidden-xs">IP</th>
 								<th class="col-md-8">Event</th>
 							</tr>
 						</thead>
@@ -318,8 +318,8 @@ $(document).ready(function() {
 						<tbody>
 						@foreach (\Calctool\Models\Audit::where('user_id', $user->id)->orderBy('created_at','desc')->get() as $rec)
 							<tr>
-								<td class="col-md-2">{{ date('d-m-Y H:i:s', strtotime(DB::table('audit')->select('created_at')->where('id',$rec->id)->get()[0]->created_at)) }}</td>
-								<td class="col-md-2">{{ $rec->ip }}</td>
+								<td class="col-md-2 hidden-sm hidden-xs">{{ date('d-m-Y H:i:s', strtotime(DB::table('audit')->select('created_at')->where('id',$rec->id)->get()[0]->created_at)) }}</td>
+								<td class="col-md-2 hidden-sm hidden-xs">{{ $rec->ip }}</td>
 								<td class="col-md-8">{!! nl2br($rec->event) !!}</td>
 							</tr>
 						@endforeach
