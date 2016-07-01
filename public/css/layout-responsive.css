@@ -149,9 +149,9 @@
 		header#topNav button.btn-mobile {
 			margin-top:0 !important;
 		}
-		header#topNav a.logo {
+		/*header#topNav a.logo {
 			margin-top:-10px !important;
-		}
+		}*/
 	}
 
 
@@ -585,5 +585,9 @@
 	div.e404 {
 		font-size:1150%;
 		text-align:center;
+	}
+
+	div.feedback_trigger {
+		display: none;
 	}
 }
