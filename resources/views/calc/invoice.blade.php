@@ -106,8 +106,10 @@ $type = ProjectType::find($project->type_id);
 		$("[name='only-totals']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.only-total').show();
+		  	$("[name='display-specification']").bootstrapSwitch('disabled', false);
 		  } else {
 		  	$('.only-total').hide();
+		  	$("[name='display-specification']").bootstrapSwitch('disabled', true);
 		  }
 		});
 		$("[name='display-specification']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
@@ -123,6 +125,8 @@ $type = ProjectType::find($project->type_id);
                 $(this).find("td").eq(5).show();
                 $(this).find("th").eq(5).show();
 	        });
+	        // $("[name='seperate-subcon']").bootstrapSwitch('disabled', false);
+
 		  } else {
 		  	$('.only-end-total-spec').hide();
 	        $('.only-end-total tr').each(function() {
@@ -135,6 +139,8 @@ $type = ProjectType::find($project->type_id);
                 $(this).find("td").eq(5).hide();
                 $(this).find("th").eq(5).hide();
 	        });
+	        // $("[name='seperate-subcon']").bootstrapSwitch('disabled', true);
+
 		  }
 		});
 		$("[name='display-description']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
@@ -289,7 +295,7 @@ $type = ProjectType::find($project->type_id);
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="display-specification" type="checkbox" checked> Aanvullend specificeren op Arbeid, Materiaal en overig <!-- Hiermee wordt alles weergegevn -->
+						          <input name="display-specification" type="checkbox"> Aanvullend specificeren op Arbeid, Materiaal en overig <!-- Hiermee wordt alles weergegevn -->
 						        </label>
 						      </div>
 						    </div>
