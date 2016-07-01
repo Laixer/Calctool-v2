@@ -150,11 +150,11 @@ $type = ProjectType::find($project->type_id);
 		$("[name='only-totals']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
 		  	$('.show-activity').show();
-		  	$('#ss').toggle();
+		  	// $('#ss').toggle();
 		  	$("[name='seperate-subcon']").bootstrapSwitch('toggleDisabled');
 		  } else {
 		  	$("[name='seperate-subcon']").bootstrapSwitch('toggleDisabled');
-			$('#ss').toggle();
+			// $('#ss').toggle();
 			$('.show-activity').hide();
 		  }
 		});
@@ -500,11 +500,11 @@ $type = ProjectType::find($project->type_id);
 								    </div>
 								  </div>
 								  @if($type->type_name != 'snelle offerte en factuur')
-								   <div id="ss" style="display:none" class="form-group">
+								   <div class="form-group">
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="seperate-subcon" type="checkbox" disabled> Onderaanneming apart weergeven
+								          <input name="seperate-subcon" type="checkbox"> Onderaanneming apart weergeven
 								        </label>
 								      </div>
 								    </div>
@@ -526,7 +526,7 @@ $type = ProjectType::find($project->type_id);
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="display-specification" type="checkbox" disabled> Aanvullend specificeren op arbeid, materiaal en overig
+								          <input name="display-specification" type="checkbox"> Aanvullend specificeren op arbeid, materiaal en overig
 								        </label>
 								      </div>
 								    </div>
@@ -902,8 +902,8 @@ $type = ProjectType::find($project->type_id);
 					</tbody>
 				</table>
 
-				<h4>Totalen Offerte</h4>
-				<table class="table table-striped hide-btw2">
+				<h4>Totalen Offerte 1</h4>
+				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th class="col-md-5">&nbsp;</th>
@@ -1103,8 +1103,8 @@ $type = ProjectType::find($project->type_id);
 				</table>
 				@endif
 
-				<h4>Totalen Offerte</h4>
-				<table class="table table-striped hide-btw2">
+				<h4>Totalen Offerte 2</h4>
+				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th class="col-md-5">&nbsp;</th>
