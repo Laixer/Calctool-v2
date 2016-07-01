@@ -41,6 +41,20 @@ else {
 		$cntinv = 0;
 }
 
+if($common_access_error){ ?>
+@section('content')
+<div id="wrapper">
+	<section class="container">
+		<div class="alert alert-danger">
+			<i class="fa fa-frown-o"></i>
+			<strong>Fout</strong>
+			Dit project bestaat niet
+		</div>
+	</section>
+</div>
+@stop
+<?php }else{
+
 $type = ProjectType::find($project->type_id);
 
 $offer_last ? $invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first() : $invoice_end = null;
@@ -110,20 +124,6 @@ if ($less_total>0) {
 <script src="/plugins/summernote/summernote.min.js"></script>
 <script src="/components/intro.js/intro.js"></script>
 @endpush
-
-<?php if($common_access_error){ ?>
-@section('content')
-<div id="wrapper">
-	<section class="container">
-		<div class="alert alert-danger">
-			<i class="fa fa-frown-o"></i>
-			<strong>Fout</strong>
-			Dit project bestaat niet
-		</div>
-	</section>
-</div>
-@stop
-<?php }else{ ?>
 
 @section('content')
 <script type="text/javascript">
