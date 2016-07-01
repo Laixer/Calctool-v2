@@ -137,9 +137,9 @@
 		Since Atropos v1.3 
 	*/
 	@media only screen and (max-width: 1006px) {
-		#wrapper {
+		/*#wrapper {
 			padding-top:90px !important;
-		}
+		}*/
 		header#topNav {
 			height:60px !important;
 		}
