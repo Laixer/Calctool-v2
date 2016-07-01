@@ -142,7 +142,7 @@ $type = ProjectType::find($project->type_id);
 		  	$("[name='display-specification']").bootstrapSwitch('toggleDisabled');
 		  	$('.show-activity').show();
 		  } else {
-		 	$("[name='display-specification']").bootstrapSwitch('toggleDisabled');
+		 	$("[name='display-specification']").bootstrapSwitch('toggleEnabled');
 			$('.show-activity').hide();
 		  }
 		});
