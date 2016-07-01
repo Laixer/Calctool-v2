@@ -136,10 +136,10 @@
 		BOOTSTRAP MOBILE EXTRA FIX
 		Since Atropos v1.3 
 	*/
-	@media only screen and (max-width: 1006px) {
-		/*#wrapper {
+/*	@media only screen and (max-width: 1006px) {
+		#wrapper {
 			padding-top:90px !important;
-		}*/
+		}
 		header#topNav {
 			height:60px !important;
 		}
@@ -149,10 +149,10 @@
 		header#topNav button.btn-mobile {
 			margin-top:0 !important;
 		}
-		/*header#topNav a.logo {
+		header#topNav a.logo {
 			margin-top:-10px !important;
-		}*/
-	}
+		}
+	}*/
 
 
 	/* 
