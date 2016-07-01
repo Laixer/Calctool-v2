@@ -151,9 +151,9 @@ $type = ProjectType::find($project->type_id);
 		  if (state) {
 		  	// $('.show-activity').show();
 		  	// $('#ss').toggle();
-		  	$("[name='seperate-subcon']").bootstrapSwitch('toggleEnabled');
-		  } else {
 		  	$("[name='seperate-subcon']").bootstrapSwitch('toggleDisabled');
+		  } else {
+		  	$("[name='seperate-subcon']").bootstrapSwitch('toggleEnabled');
 			// $('#ss').toggle();
 			// $('.show-activity').hide();
 		  }
