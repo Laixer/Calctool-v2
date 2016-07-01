@@ -526,7 +526,7 @@ $type = ProjectType::find($project->type_id);
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="display-specification" type="checkbox"> Aanvullend specificeren op arbeid, materiaal en overig
+								          <input name="display-specification" type="checkbox" disabled > Aanvullend specificeren op arbeid, materiaal en overig
 								        </label>
 								      </div>
 								    </div>
