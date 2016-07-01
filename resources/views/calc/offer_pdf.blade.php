@@ -228,7 +228,7 @@ function invoice_condition($offer) {
 			<th style="width: 147px" align="left" class="qty">&nbsp;</th>
 			<th style="width: 60px" align="left" class="qty">Uren</th>
 			<th style="width: 119px" align="left" class="qty">Bedrag @if($include_tax) (excl. BTW) @endif</th>
-			<th style="width: 70px" align="left" class="qty">BTW %</th>
+			<th style="width: 70px" align="left" class="qty">@if($include_tax) BTW % @endif</th>
 			<th style="width: 80px" align="left" class="qty">@if($include_tax) BTW bedrag @endif</th>
 			<th style="width: 119px" align="left" class="qty">&nbsp;</th>
 		  </tr>
@@ -254,7 +254,7 @@ function invoice_condition($offer) {
 			<td class="qty">Arbeidskosten</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax3($project)+CalculationEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax3Amount($project)+CalculationEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
-			<td class="qty">0%</td>
+			<td class="qty">@if($include_tax) 0% @endif</td>
 			<td class="qty">&nbsp;</td>
 		  </tr>
 		  @endif
@@ -279,7 +279,7 @@ function invoice_condition($offer) {
 			<td class="qty">Materiaalkosten</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax3Amount($project)+CalculationEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
-			<td class="qty">0%</td>
+			<td class="qty">@if($include_tax) 0% @endif</td>
 			<td class="qty">&nbsp;</td>
 		  </tr>
 		  @endif
@@ -301,10 +301,10 @@ function invoice_condition($offer) {
 		  </tr>
 		  @else
 		  <tr style="page-break-after: always;">
-			<td class="qty">strong>Overige kosten</strong></td>
+			<td class="qty"><strong>Overige kosten</strong></td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax3Amount($project)+CalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
-			<td class="qty">0%</td>
+			<td class="qty">@if($include_tax) 0% @endif</td>
 			<td class="qty">&nbsp;</td>
 		  </tr>
 		  @endif
@@ -319,7 +319,7 @@ function invoice_condition($offer) {
 			<th style="width: 147px" align="left" class="qty">AANNEMING</th>
 			<th style="width: 60px" align="left" class="qty">Uren</th>
 			<th style="width: 119px" align="left" class="qty">Bedrag @if($include_tax) (excl. BTW) @endif</th>
-			<th style="width: 70px" align="left" class="qty">BTW %</th>
+			<th style="width: 70px" align="left" class="qty">@if($include_tax) BTW % @endif</th>
 			<th style="width: 80px" align="left" class="qty">@if($include_tax) BTW bedrag @endif</th>
 			<th style="width: 119px" align="left" class="qty">&nbsp;</th>
 		  </tr>
@@ -348,7 +348,7 @@ function invoice_condition($offer) {
 			<td class="qty">Arbeidskosten</td>
 			<td class="qty">{{ ''.number_format(CalculationEndresult::conCalcLaborActivityTax3($project), 2, ",",".") }}</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
-			<td class="qty">0%</td>
+			<td class="qty">@if($include_tax) 0% @endif</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">&nbsp;</td>
 		  </tr>
@@ -376,7 +376,7 @@ function invoice_condition($offer) {
 			<td class="qty">Materiaalkosten</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
-			<td class="qty">0%</td>
+			<td class="qty">@if($include_tax) 0% @endif</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">&nbsp;</td>
 		  </tr>

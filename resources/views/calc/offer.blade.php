@@ -139,10 +139,11 @@ $type = ProjectType::find($project->type_id);
 		});
 		$("[name='display-worktotals']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
-		  	$("[name='display-specification']").bootstrapSwitch('toggleDisabled');
+		  	$("[name='display-specification']").bootstrapSwitch('toggleEnabled');
+		  	console.log('ik ga nu aan')
 		  	$('.show-activity').show();
 		  } else {
-		 	$("[name='display-specification']").bootstrapSwitch('toggleEnabled');
+		 	$("[name='display-specification']").bootstrapSwitch('toggleDisabled');
 			$('.show-activity').hide();
 		  }
 		});
@@ -526,7 +527,7 @@ $type = ProjectType::find($project->type_id);
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="display-specification" type="checkbox" disabled > Aanvullend specificeren op arbeid, materiaal en overig
+								          <input name="display-specification" type="checkbox" > Aanvullend specificeren op arbeid, materiaal en overig
 								        </label>
 								      </div>
 								    </div>
@@ -902,7 +903,7 @@ $type = ProjectType::find($project->type_id);
 					</tbody>
 				</table>
 
-				<h4>Totalen Offerte 1</h4>
+				<h4>Totalen Offerte</h4>
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -1103,7 +1104,7 @@ $type = ProjectType::find($project->type_id);
 				</table>
 				@endif
 
-				<h4>Totalen Offerte 2</h4>
+				<h4>Totalen Offerte</h4>
 				<table class="table table-striped">
 					<thead>
 						<tr>
