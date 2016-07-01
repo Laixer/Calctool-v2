@@ -149,13 +149,13 @@ $type = ProjectType::find($project->type_id);
 
 		$("[name='only-totals']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
-		  	$('.show-activity').show();
+		  	// $('.show-activity').show();
 		  	// $('#ss').toggle();
-		  	$("[name='seperate-subcon']").bootstrapSwitch('toggleDisabled');
+		  	$("[name='seperate-subcon']").bootstrapSwitch('toggleEnabled');
 		  } else {
 		  	$("[name='seperate-subcon']").bootstrapSwitch('toggleDisabled');
 			// $('#ss').toggle();
-			$('.show-activity').hide();
+			// $('.show-activity').hide();
 		  }
 		});
 
