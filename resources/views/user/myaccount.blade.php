@@ -262,7 +262,7 @@ $(document).ready(function() {
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="email">Email*</label>
-										<input name="email" id="email" type="email" value="{{ Input::old('email') ? Input::old('email') : $user->email }}" class="form-control"/>
+										<input {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="email" id="email" type="email" value="{{ Input::old('email') ? Input::old('email') : $user->email }}" class="form-control"/>
 									</div>
 								</div>
 

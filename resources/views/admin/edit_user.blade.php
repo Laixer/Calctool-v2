@@ -132,7 +132,7 @@ $(document).ready(function() {
 						<div class="col-md-5">
 							<div class="form-group">
 								<label for="company_name">Gebruikersnaam</label>
-								<input name="username" id="username" type="text" value="{{ Input::old('username') ? Input::old('username') : $user->username}}" class="form-control" />
+								<input name="username" {{ $user->isAdmin() ? 'disabled' : '' }} id="username" type="text" value="{{ Input::old('username') ? Input::old('username') : $user->username}}" class="form-control" />
 							</div>
 						</div>
 
@@ -150,7 +150,7 @@ $(document).ready(function() {
 						<div class="col-md-3">
 							<div class="form-group">
 								<label for="secret">Wachtwoord</label>
-								<input name="secret" type="password" id="secret" class="form-control" autocomplete="off">
+								<input name="secret" {{ $user->isAdmin() ? 'disabled' : '' }} type="password" id="secret" class="form-control" autocomplete="off">
 							</div>
 						</div>
 
@@ -190,7 +190,7 @@ $(document).ready(function() {
 						<div class="col-md-3">
 							<div class="form-group">
 								<label for="email">Email</label>
-								<input name="email" id="email" type="email" value="{{ Input::old('email') ? Input::old('email') : $user->email }}" class="form-control"/>
+								<input name="email" {{ $user->isAdmin() ? 'disabled' : '' }} id="email" type="email" value="{{ Input::old('email') ? Input::old('email') : $user->email }}" class="form-control"/>
 							</div>
 						</div>
 
@@ -253,7 +253,7 @@ $(document).ready(function() {
 						<div class="col-md-2">
 							<div class="form-group">
 								<label for="toggle-api" style="display:block;">API toegang</label>
-								<input name="toggle-api" type="checkbox" {{ $user->api_access ? 'checked' : '' }}>
+								<input {{ $user->isAdmin() ? 'disabled' : '' }} name="toggle-api" type="checkbox" {{ $user->api_access ? 'checked' : '' }}>
 							</div>
 						</div>
 

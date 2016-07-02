@@ -214,20 +214,24 @@ class AdminController extends Controller {
 
 		/* General */
 		$user = User::find($user_id);
-		if ($request->input('username')) {
-			if ($user->username != $request->get('username')) {
-				$username = strtolower(trim($request->input('username')));
+		if (!$user->isAdmin()) {
+			if ($request->input('username')) {
+				if ($user->username != $request->get('username')) {
+					$username = strtolower(trim($request->input('username')));
 
-				if (User::where('username',$username)->count()>0) {
-					$errors = new MessageBag(['status' => ['Gebruikersnaam wordt al gebruikt']]);
-					return back()->withErrors($errors);
+					if (User::where('username',$username)->count()>0) {
+						$errors = new MessageBag(['status' => ['Gebruikersnaam wordt al gebruikt']]);
+						return back()->withErrors($errors);
+					}
+
+					$user->username = $username;
 				}
-
-				$user->username = $username;
 			}
 		}
-		if ($request->input('secret'))
-			$user->secret = Hash::make($request->input('secret'));
+		if (!$user->isAdmin()) {
+			if ($request->input('secret'))
+				$user->secret = Hash::make($request->input('secret'));
+		}
 		if ($request->input('type'))
 			$user->user_type = $request->input('type');
 		if ($request->input('group'))
@@ -240,16 +244,18 @@ class AdminController extends Controller {
 			$user->firstname = $user->username;
 		if ($request->input('lastname'))
 			$user->lastname = $request->input('lastname');
-		if ($request->input('email')) {
-			if ($user->email != $request->get('email')) {
-				$email = strtolower(trim($request->input('email')));
+		if (!$user->isAdmin()) {
+			if ($request->input('email')) {
+				if ($user->email != $request->get('email')) {
+					$email = strtolower(trim($request->input('email')));
 
-				if (User::where('email',$email)->count()>0) {
-					$errors = new MessageBag(['status' => ['Email wordt al gebruikt']]);
-					return back()->withErrors($errors);
+					if (User::where('email',$email)->count()>0) {
+						$errors = new MessageBag(['status' => ['Email wordt al gebruikt']]);
+						return back()->withErrors($errors);
+					}
+
+					$user->email = $email;
 				}
-
-				$user->email = $email;
 			}
 		}
 		if ($request->input('mobile'))

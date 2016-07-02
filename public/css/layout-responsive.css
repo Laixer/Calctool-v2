@@ -133,35 +133,22 @@
 	}
 
 	/* 
-		BOOTSTRAP MOBILE EXTRA FIX
-		Since Atropos v1.3 
-	*/
-/*	@media only screen and (max-width: 1006px) {
-		#wrapper {
-			padding-top:90px !important;
-		}
-		header#topNav {
-			height:60px !important;
-		}
-		header#topNav div.nav-main-collapse {
-			margin-top:6px;
-		}
-		header#topNav button.btn-mobile {
-			margin-top:0 !important;
-		}
-		header#topNav a.logo {
-			margin-top:-10px !important;
-		}
-	}*/
-
-
-	/* 
 		BOOTSTRAP FIX
 		Since Atropos v1.3 
 	*/
 	@media (max-width: 991px) {
 		.container {
 			width:100% !important;
+		}
+
+		.clippy {
+			display: none !important;
+		}
+	}
+
+	@media (max-width: 1199px) {
+		#wrapper {
+			padding: 80px 0 0 0;
 		}
 	}
 
