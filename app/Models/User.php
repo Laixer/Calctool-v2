@@ -51,7 +51,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 	}
 
 	public function canArchive() {
-		return (strtotime($this->registration_date . "+7 days") < time());
+		return (strtotime($this->registration_date . "+2 days") < time());
 	}
 
 	public function myCompany() {
