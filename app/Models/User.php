@@ -50,6 +50,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 		return strtotime($this->expiration_date . "-5 days") == strtotime(date('Y-m-d'));
 	}
 
+	public function canArchive() {
+		return (strtotime($this->registration_date . "+7 days") < time());
+	}
+
 	public function myCompany() {
 		if ($this->self_id)
 			return Relation::find($this->self_id);
