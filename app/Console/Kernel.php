@@ -152,6 +152,6 @@ class Kernel extends ConsoleKernel
                 }
             }
 
-        })->everyMinute();
+        })->daily();
     }
 }
