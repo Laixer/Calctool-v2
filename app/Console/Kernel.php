@@ -143,5 +143,15 @@ class Kernel extends ConsoleKernel
             }
 
         })->daily();
+
+        $schedule->call(function() {
+            foreach (User::where('active',true)->whereNull('confirmed_mail')->get() as $user) {
+                if ($user->canArchive()) {
+                    $user->active = false;
+                    $user->save();
+                }
+            }
+
+        })->daily();
     }
 }

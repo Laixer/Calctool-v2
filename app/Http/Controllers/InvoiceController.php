@@ -165,8 +165,8 @@ class InvoiceController extends Controller {
 		$invoice_version->rest_21 = $invoice->rest_21;
 		$invoice_version->rest_6 = $invoice->rest_6;
 		$invoice_version->rest_0 = $invoice->rest_0;
-		$invoice_version->description = $invoice->description;
-		$invoice_version->closure = $invoice->closure;
+		$invoice_version->description = $request->get('description');
+		$invoice_version->closure = $request->get('closure');
 		$invoice_version->reference = $invoice->reference;
 		$invoice_version->book_code = $invoice->book_code;
 		$invoice_version->invoice_code = $invoice->invoice_code;

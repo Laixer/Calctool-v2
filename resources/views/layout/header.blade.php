@@ -54,6 +54,9 @@ use \Calctool\Models\MessageBox;
 						}
 					?>
 					</li>
+					<li class="visible-xs visible-sm">
+						<a href="/register">Account aanmaken</a>
+					</li>
 					@if (0)
 					<li class="search">
 						<form method="get" action="#" class="input-group pull-right">
