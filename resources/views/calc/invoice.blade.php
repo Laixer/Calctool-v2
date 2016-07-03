@@ -280,22 +280,21 @@ $type = ProjectType::find($project->type_id);
 
 				<div class="modal-body">
 					<div class="form-horizontal">
-						  <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-12">
-						      <div class="checkbox">
-						        <label>
-						          <input name="only-totals" type="checkbox" checked> Specificeren op Calculatie,Stelpost. Meerwerk en mInderwerk  <!-- Dit opent geeft kleine of grote tabel op pagina 1 -->
-						        </label>
-						      </div>
-						    </div>
-						  </div>
-						  
 
 						  <div class="form-group">
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="display-specification" type="checkbox"> Aanvullend specificeren op Arbeid, Materiaal en overig <!-- Hiermee wordt alles weergegevn -->
+						          <input name="only-totals" type="checkbox" checked> Calculatie, stelpost en meer-/minderwerk weergeven
+						        </label>
+						      </div>
+						    </div>
+						  </div>
+						  <div class="form-group">
+						    <div class="col-sm-offset-0 col-sm-12">
+						      <div class="checkbox">
+						        <label>
+						          <input name="display-specification" type="checkbox"> Specificeren in arbeid, materiaal en overig
 						        </label>
 						      </div>
 						    </div>
@@ -305,7 +304,7 @@ $type = ProjectType::find($project->type_id);
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="seperate-subcon" type="checkbox"> Kosten onderaanneming apart weergeven
+						          <input name="seperate-subcon" type="checkbox"> Oznderaanneming apart weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -313,14 +312,16 @@ $type = ProjectType::find($project->type_id);
 						  @endif
 						  @if($type->type_name != 'snelle offerte en factuur')
 						  <br>
-						  <strong>De volgende opties worden als bijlage bijgesloten bij de factuur</strong>
-						  <br>
+						  <div class="alert alert-info">
+             				<i class="fa fa-arrow-circle-down"></i>
+                            <strong>De volgende opties worden als bijlage bijgesloten bij de factuur</strong>
+                          </div>		 
 						  <br>
 						  <div class="form-group">
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="display-worktotals" type="checkbox"> Specificatie op werkzaamheid-niveau opnemen <!-- Hiermee komen de extra pagina;s -->
+						          <input name="display-worktotals" type="checkbox"> Totaalkosten specificeren per werkzaamheid
 						        </label>
 						      </div>
 						    </div>
@@ -329,7 +330,7 @@ $type = ProjectType::find($project->type_id);
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="display-description" type="checkbox"> Omschrijving werkzaamheden opnemen
+						          <input name="display-description" type="checkbox"> Omschrijving van de werkzaamheden weergeven
 						        </label>
 						      </div>
 						    </div>
