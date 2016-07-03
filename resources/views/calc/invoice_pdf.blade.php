@@ -595,42 +595,7 @@ $type = ProjectType::find($project->type_id);
     </main>
 
 <?#--TOTAL END--?>
-
 @else
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <?#--CONT & SUBCONTR START--?>
 
     <h2 class="name">Specificatie factuur</h2>
@@ -967,28 +932,6 @@ $type = ProjectType::find($project->type_id);
                                           <td class="qty">&nbsp;</td>
                                         </tr>
                                         @if (!$project->tax_reverse)
-                                      <!--   <tr>
-                                          <td class="qty">Factuurbedrag belast met 21% BTW</td>
-                                          <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21'), 2, ",",".") }}</td>
-                                          <td class="qty">&nbsp;</td>
-                                          <td class="qty">&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                          <td class="qty">Factuurbedrag belast met 6% BTW</td>
-                                          <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6'), 2, ",",".") }}</td>
-                                          <td class="qty">&nbsp;</td>
-                                          <td class="qty">&nbsp;</td>
-                                        </tr>
-                                        @else
-                                        <tr>
-                                          <td class="qty">Factuurbedrag belast met 0% BTW</td>
-                                          <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_0'), 2, ",",".") }}</td>
-                                          <td class="qty">&nbsp;</td>
-                                          <td class="qty">&nbsp;</td>
-                                        </tr> -->
-                                        @endif
-
-                                        @if (!$project->tax_reverse)
                                         <tr>
                                           <td class="qty">BTW bedrag 21%</td>
                                           <td class="qty">&nbsp;</td>
@@ -1029,28 +972,6 @@ $type = ProjectType::find($project->type_id);
                                           <td class="qty">&nbsp;</td>
                                           <td class="qty">&nbsp;</td>
                                         </tr>
-                                        @if (!$project->tax_reverse)
-<!--                                         <tr>
-                                          <td class="qty">Factuurbedrag belast met 21% BTW</td>
-                                          <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21, 2, ",",".") }}</td>
-                                          <td class="qty">&nbsp;</td>
-                                          <td class="qty">&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                          <td class="qty">Factuurbedrag belast met 6% BTW</td>
-                                          <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6, 2, ",",".") }}</td>
-                                          <td class="qty">&nbsp;</td>
-                                          <td class="qty">&nbsp;</td>
-                                        </tr>
-                                        @else
-                                        <tr>
-                                          <td class="qty">Factuurbedrag belast met 0% BTW</td>
-                                          <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_0, 2, ",",".") }}</td>
-                                          <td class="qty">&nbsp;</td>
-                                          <td class="qty">&nbsp;</td>
-                                        </tr> -->
-                                        @endif
-
                                         @if (!$project->tax_reverse)
                                         <tr>
                                           <td class="qty">BTW bedrag 21%</td>
@@ -1093,93 +1014,7 @@ $type = ProjectType::find($project->type_id);
       </main>
 
   <?#--CON & SUBCONTR END--?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  @endif
   @if ($display_worktotals)
   <?#--$display_worktotals START--?>
   @if ($seperate_subcon)
