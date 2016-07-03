@@ -126,7 +126,7 @@ $(function() {
 								</span>
 							</div>
 							<div class="col-md-12">
-								<input type="submit" id="btn-submit" disabled value="Aanmelden" class="btn btn-primary pull-right push-bottom disabled" data-loading-text="Loading...">
+								<input type="submit" id="btn-submit" disabled value="Aanmelden" class="btn btn-primary pull-right push-bottom disabled item-full" data-loading-text="Loading...">
 							</div>
 						</div>
 

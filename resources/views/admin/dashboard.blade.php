@@ -86,7 +86,7 @@ $(document).ready(function() {
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/alert" ><h4>Alerts</h4></a>
-									<small class="styleColor">{{ \Calctool\Models\SysMessage::count() }} alert(s)</small>
+									<small class="styleColor">{{ \Calctool\Models\SysMessage::where('active',true)->count() }} alert(s)</small>
 								</div>
 							</div>
 						</div>

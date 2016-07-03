@@ -513,9 +513,9 @@ $(document).ready(function() {
 							</div>
 						</div>		
 
-						<div data-step="3" data-intro="Noteer eventueel aantekeningen bestemd voor het project. (Dit is alleen zichtbaar voor jou)">
-						<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);" ><i class="fa fa-info-circle"></i></a></h4>
-				        <div class="row">
+						<div class="hidden-xs" data-step="3" data-intro="Noteer eventueel aantekeningen bestemd voor het project. (Dit is alleen zichtbaar voor jou)">
+						<h4 class="hidden-xs" >Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);" ><i class="fa fa-info-circle"></i></a></h4>
+				        <div class="row hidden-xs">
 				          <div class="form-group">
 				            <div class="col-md-12">
 				              <textarea name="note" id="note" rows="5" class="form-control summernote">{{ Input::old('note') }}</textarea>
@@ -525,8 +525,8 @@ $(document).ready(function() {
 						</div>
 
 						<div class="row">
-							<div class="col-md-12">
-								<button data-step="4" data-intro="Klik op opslaan om je project op te slaan." class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+							<div class="col-md-12 item-full">
+								<button data-step="4" data-intro="Klik op opslaan om je project op te slaan." class="btn btn-primary item-full"><i class="fa fa-check"></i> Opslaan</button>
 							</div>
 						</div>
 

@@ -474,28 +474,16 @@ $type = ProjectType::find($project->type_id);
 
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h4 class="modal-title" id="myModalLabel">Offerte opties @if ($project->tax_reverse)(BTW Verlegd) @endif</h4>
+							<h4 class="modal-title" id="myModalLabel">Offerte opties @if (!$project->tax_reverse)(BTW Verlegd) @endif</h4>
 						</div>
 
 						<div class="modal-body">
 							<div class="form-horizontal">
-
-<!-- 								 @if (!$project->tax_reverse)
-								 <div class="form-group">
-								    <div class="col-sm-offset-0 col-sm-12">
-								      <div class="checkbox">
-								        <label>
-								          <input name="include-tax" type="checkbox" checked> BTW bedragen weergeven
-								        </label>
-								      </div>
-								    </div>
-								  </div>
-								  @endif -->
 								  <div class="form-group">
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="only-totals" type="checkbox"> Alleen het totale offertebedrag weergeven<br>
+								          <input name="only-totals" type="checkbox"> Alleen totaalkosten van de offerte weergeven
 								        </label>
 								      </div>
 								    </div>
@@ -505,29 +493,22 @@ $type = ProjectType::find($project->type_id);
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="seperate-subcon" type="checkbox"> Onderaanneming apart weergeven
+								          <input name="seperate-subcon" type="checkbox"> Totaalkosten onderaanneming apart weergeven
 								        </label>
 								      </div>
 								    </div>
 								  </div>
 								  <br>
-								  <strong>De volgende opties worden als bijlage bijgesloten bij de offerte</strong>
-								  <br>
+								  <div class="alert alert-info">
+		             				<i class="fa fa-arrow-circle-down"></i>
+		                            <strong>De volgende opties worden als bijlage bijgesloten bij de offerte</strong>
+		                          </div>		 
 								  <br>
 								  <div class="form-group">
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="display-worktotals" type="checkbox"> Totaalkosten per werkzaamheid specificeren
-								        </label>
-								      </div>
-								    </div>
-								  </div>
-								  <div class="form-group">
-								    <div class="col-sm-offset-0 col-sm-12">
-								      <div class="checkbox">
-								        <label>
-								          <input name="display-specification" type="checkbox" disabled> Aanvullend specificeren op arbeid, materiaal en overig
+								          <input name="display-worktotals" type="checkbox"> Per werkzaamheid specificeren
 								        </label>
 								      </div>
 								    </div>
@@ -536,7 +517,16 @@ $type = ProjectType::find($project->type_id);
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="display-description" type="checkbox"> Omschrijving werkzaamheden weergeven
+								          <input name="display-specification" type="checkbox" disabled> Werkzaamheid specificeren op arbeid, materiaal en overig
+								        </label>
+								      </div>
+								    </div>
+								  </div>
+								  <div class="form-group">
+								    <div class="col-sm-offset-0 col-sm-12">
+								      <div class="checkbox">
+								        <label>
+								          <input name="display-description" type="checkbox"> Omschrijving van de werkzaamheden opnemen
 								        </label>
 								      </div>
 								    </div>

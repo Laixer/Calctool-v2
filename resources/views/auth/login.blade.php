@@ -84,7 +84,7 @@ $(function() {
 								</div>
 							</div>
 							<div class="col-md-6">
-								<input class="btn btn-primary pull-right" data-loading-text="Laden..." type="submit" value="Login">
+								<input class="btn btn-primary pull-right item-full" data-loading-text="Laden..." type="submit" value="Login">
 							</div>
 						</div>
 

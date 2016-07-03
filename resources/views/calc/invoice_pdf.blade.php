@@ -26,7 +26,7 @@ use \Calctool\Calculus\LessOverview;
 use \Calctool\Calculus\MoreOverview;
 use \Calctool\Calculus\BlancRowsEndresult;
 use \Calctool\Http\Controllers\OfferController;
-use \Calctool\Calculus\SetEstimateCalculationEndresult;
+use \Calctool\Calculus\SetEstimateCalculationEndresult; 
 
 $_invoice = Invoice::find($invoice->invoice_id);
 if (!$_invoice)
@@ -216,11 +216,11 @@ $type = ProjectType::find($project->type_id);
 
 <?#--TOTAL START--?>
 
-@if (!$only_totals)
-
+  @if ($only_totals)
     <h2 class="name">Specificatie factuur</h2>
     <hr color="#000" size="1">
-    @if($type->type_name == 'snelle offerte en factuur')
+
+  <!-- 'snelle offerte en factuur')
     <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
@@ -245,7 +245,8 @@ $type = ProjectType::find($project->type_id);
       @endforeach
     </tbody>
     </table>
-    @else
+     -->
+
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
@@ -254,121 +255,119 @@ $type = ProjectType::find($project->type_id);
           <th class="qty">Meerwerk</th>
           <th class="qty">Minderwerk</th>
           <th class="qty">Balans</th>
-          <th class="qty">BTW %</th>
+          <th class="qty">@if(!$project->tax_reverse) BTW % @endif</th>
           <th class="qty">@if ($include_tax) BTW bedrag @endif</th>
         </tr>
       </thead>
       <tbody>
-        @if (!$project->tax_reverse)
-        <tr style="page-break-after: always;">
-          <td class="qty">Arbeidskosten</td>
-          <td class="qty">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcLaborActivityTax1Amount($project)+SetEstimateCalculationEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax1Amount($project)+MoreEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax1Amount($project)+LessEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax1($project)+ResultEndresult::subconLaborBalanceTax1($project), 2, ",",".") }}</td>
-          <td class="qty">21%</td>
-          <td class="qty">@if(!$project->tax_reverse) {{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax1AmountTax($project)+ResultEndresult::subconLaborBalanceTax1AmountTax($project), 2, ",",".") }} @endif</td>
-        </tr>
-        <tr style="page-break-after: always;">
-          <td class="qty">&nbsp;</td>
-          <td class="qty">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcLaborActivityTax2Amount($project)+SetEstimateCalculationEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax2Amount($project)+MoreEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax2Amount($project)+LessEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax2($project)+ResultEndresult::subconLaborBalanceTax2($project), 2, ",",".") }}</td>
-          <td class="qty">6%</td>
-          <td class="qty">@if(!$project->tax_reverse) {{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax2AmountTax($project)+ResultEndresult::subconLaborBalanceTax2AmountTax($project), 2, ",",".") }} @endif</td>
-        </tr>
-        @else
-        <tr style="page-break-after: always;">
-          <td class="qty">Arbeidskosten</td>
-          <td class="qty">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcLaborActivityTax3Amount($project)+SetEstimateCalculationEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax3Amount($project)+MoreEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax3Amount($project)+LessEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax3($project)+ResultEndresult::subconLaborBalanceTax3($project), 2, ",",".") }}</td>
-          <td class="qty">0%</td>
-          <td class="qty">&nbsp;</td>
-        </tr>
-        @endif
 
-        @if (!$project->tax_reverse)
+    @if ($display_specification)
+      @if (!$project->tax_reverse)
+      <tr style="page-break-after: always;">
+        <td class="qty">Arbeidskosten</td>
+        <td class="qty">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcLaborActivityTax1Amount($project)+SetEstimateCalculationEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax1Amount($project)+MoreEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax1Amount($project)+LessEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax1($project)+ResultEndresult::subconLaborBalanceTax1($project), 2, ",",".") }}</td>
+        <td class="qty">21%</td>
+        <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax1AmountTax($project)+ResultEndresult::subconLaborBalanceTax1AmountTax($project), 2, ",",".") }}</td>
+      </tr>
+      <tr style="page-break-after: always;">
+        <td class="qty">&nbsp;</td>
+        <td class="qty">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcLaborActivityTax2Amount($project)+SetEstimateCalculationEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax2Amount($project)+MoreEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax2Amount($project)+LessEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax2($project)+ResultEndresult::subconLaborBalanceTax2($project), 2, ",",".") }}</td>
+        <td class="qty">6%</td>
+        <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax2AmountTax($project)+ResultEndresult::subconLaborBalanceTax2AmountTax($project), 2, ",",".") }}</td>
+      </tr>
+      @else
         <tr style="page-break-after: always;">
-          <td class="qty">Materiaalkosten</td>
-          <td class="qty">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcMaterialActivityTax1Amount($project)+SetEstimateCalculationEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax1Amount($project)+MoreEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax1Amount($project)+LessEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax1($project)+ResultEndresult::subconMaterialBalanceTax1($project), 2, ",",".") }}</td>
-          <td class="qty">21%</td>
-          <td class="qty">@if(!$project->tax_reverse) {{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax1AmountTax($project)+ResultEndresult::subconMaterialBalanceTax1AmountTax($project), 2, ",",".") }}@endif</td>
-        </tr>
-        <tr style="page-break-after: always;">
-          <td class="qty">&nbsp;</td>
-          <td class="qty">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcMaterialActivityTax2Amount($project)+SetEstimateCalculationEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax2Amount($project)+MoreEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax2Amount($project)+LessEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax2($project)+ResultEndresult::subconMaterialBalanceTax2($project), 2, ",",".") }}</td>
-          <td class="qty">6%</td>
-          <td class="qty">@if(!$project->tax_reverse) {{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax2AmountTax($project)+ResultEndresult::subconMaterialBalanceTax2AmountTax($project), 2, ",",".") }}@endif</td>
-        </tr>
-        @else
-        <tr style="page-break-after: always;">
-          <td class="qty">Materiaalkosten</td>
-          <td class="qty">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcMaterialActivityTax3Amount($project)+SetEstimateCalculationEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax3Amount($project)+MoreEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax3Amount($project)+LessEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax3($project)+ResultEndresult::subconMaterialBalanceTax3($project), 2, ",",".") }}</td>
-          <td class="qty">0%</td>
-          <td class="qty">&nbsp;</td>
-        </tr>
-        @endif
-
-        @if (!$project->tax_reverse)
-        <tr style="page-break-after: always;">
-          <td class="qty">Overige kosten</td>
-          <td class="qty">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcEquipmentActivityTax1Amount($project)+SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax1Amount($project)+MoreEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax1Amount($project)+LessEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax1($project)+ResultEndresult::subconEquipmentBalanceTax1($project), 2, ",",".") }}</td>
-          <td class="qty">21%</td>
-          <td class="qty">@if(!$project->tax_reverse) {{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax1AmountTax($project)+ResultEndresult::subconEquipmentBalanceTax1AmountTax($project), 2, ",",".") }}@endif</td>
-        </tr>
-        <tr style="page-break-after: always;">
-          <td class="qty">&nbsp;</td>
-          <td class="qty">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcEquipmentActivityTax2Amount($project)+SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax2Amount($project)+MoreEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax2Amount($project)+LessEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax2($project)+ResultEndresult::subconEquipmentBalanceTax2($project), 2, ",",".") }}</td>
-          <td class="qty">6%</td>
-          <td class="qty">@if(!$project->tax_reverse) {{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax2AmountTax($project)+ResultEndresult::subconEquipmentBalanceTax2AmountTax($project), 2, ",",".") }}@endif</td>
-        </tr>
-        @else
-        <tr style="page-break-after: always;">
-          <td class="qty">Overige kosten</td>
-          <td class="qty">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcEquipmentActivityTax3Amount($project)+SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax3Amount($project)+MoreEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax3Amount($project)+LessEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
-          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax3($project)+ResultEndresult::subconEquipmentBalanceTax3($project), 2, ",",".") }}</td>
-          <td class="qty">0%</td>
-          <td class="qty">&nbsp;</td>
-        </tr>
-        @endif
-        <tr style="page-break-after: always;">
-          <td class="qty"><strong>Totaal</strong></td>
-          <td class="qty"><strong>{{ '&euro; '.number_format(SetEstimateCalculationEndresult::totalSubcontracting($project)+SetEstimateCalculationEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
-          <td class="qty"><strong>{{ '&euro; '.number_format(MoreEndresult::totalContracting($project)+MoreEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
-          <td class="qty"><strong>{{ '&euro; '.number_format(LessEndresult::totalContracting($project)+LessEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
-          <td class="qty"><strong>{{ '&euro; '.number_format(ResultEndresult::totalContracting($project)+ResultEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
-          <td class="qty">&nbsp;</td>
-          <td class="qty"><strong>@if(!$project->tax_reverse) {{ '&euro; '.number_format(ResultEndresult::totalContractingTax($project)+ResultEndresult::totalSubcontractingTax($project), 2, ",",".") }}</strong>@endif</td>
-        </tr>
-      </tbody>
-    </table>
+        <td class="qty">Arbeidskosten</td>
+        <td class="qty">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcLaborActivityTax3Amount($project)+SetEstimateCalculationEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax3Amount($project)+MoreEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax3Amount($project)+LessEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax3($project)+ResultEndresult::subconLaborBalanceTax3($project), 2, ",",".") }}</td>
+        <td class="qty">0%</td>
+        <td class="qty">&nbsp;</td>
+      </tr>
+      @endif
+      @if (!$project->tax_reverse)
+      <tr style="page-break-after: always;">
+        <td class="qty">Materiaalkosten</td>
+        <td class="qty">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcMaterialActivityTax1Amount($project)+SetEstimateCalculationEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax1Amount($project)+MoreEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax1Amount($project)+LessEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax1($project)+ResultEndresult::subconMaterialBalanceTax1($project), 2, ",",".") }}</td>
+        <td class="qty">21%</td>
+        <td class="qty">@if(!$project->tax_reverse) {{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax1AmountTax($project)+ResultEndresult::subconMaterialBalanceTax1AmountTax($project), 2, ",",".") }}@endif</td>
+      </tr>
+      <tr style="page-break-after: always;">
+        <td class="qty">&nbsp;</td>
+        <td class="qty">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcMaterialActivityTax2Amount($project)+SetEstimateCalculationEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax2Amount($project)+MoreEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax2Amount($project)+LessEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax2($project)+ResultEndresult::subconMaterialBalanceTax2($project), 2, ",",".") }}</td>
+        <td class="qty">6%</td>
+        <td class="qty">@if(!$project->tax_reverse) {{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax2AmountTax($project)+ResultEndresult::subconMaterialBalanceTax2AmountTax($project), 2, ",",".") }}@endif</td>
+      </tr>
+      @else
+      <tr style="page-break-after: always;">
+        <td class="qty">Materiaalkosten</td>
+        <td class="qty">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcMaterialActivityTax3Amount($project)+SetEstimateCalculationEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax3Amount($project)+MoreEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax3Amount($project)+LessEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax3($project)+ResultEndresult::subconMaterialBalanceTax3($project), 2, ",",".") }}</td>
+        <td class="qty">0%</td>
+        <td class="qty">&nbsp;</td>
+      </tr>
+      @endif
+      @if (!$project->tax_reverse)
+      <tr style="page-break-after: always;">
+        <td class="qty">Overige kosten</td>
+        <td class="qty">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcEquipmentActivityTax1Amount($project)+SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax1Amount($project)+MoreEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax1Amount($project)+LessEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax1($project)+ResultEndresult::subconEquipmentBalanceTax1($project), 2, ",",".") }}</td>
+        <td class="qty">21%</td>
+        <td class="qty">@if(!$project->tax_reverse) {{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax1AmountTax($project)+ResultEndresult::subconEquipmentBalanceTax1AmountTax($project), 2, ",",".") }}@endif</td>
+      </tr>
+      <tr style="page-break-after: always;">
+        <td class="qty">&nbsp;</td>
+        <td class="qty">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcEquipmentActivityTax2Amount($project)+SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax2Amount($project)+MoreEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax2Amount($project)+LessEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax2($project)+ResultEndresult::subconEquipmentBalanceTax2($project), 2, ",",".") }}</td>
+        <td class="qty">6%</td>
+        <td class="qty">@if(!$project->tax_reverse) {{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax2AmountTax($project)+ResultEndresult::subconEquipmentBalanceTax2AmountTax($project), 2, ",",".") }}@endif</td>
+      </tr>
+      @else
+      <tr style="page-break-after: always;">
+        <td class="qty">Overige kosten</td>
+        <td class="qty">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcEquipmentActivityTax3Amount($project)+SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax3Amount($project)+MoreEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax3Amount($project)+LessEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
+        <td class="qty">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax3($project)+ResultEndresult::subconEquipmentBalanceTax3($project), 2, ",",".") }}</td>
+        <td class="qty">0%</td>
+        <td class="qty">&nbsp;</td>
+      </tr>
+      @endif
     @endif
-@else
-@endif
+      <tr style="page-break-after: always;">
+        <td class="qty"><strong>Totaal</strong></td>
+        <td class="qty"><strong>{{ '&euro; '.number_format(SetEstimateCalculationEndresult::totalSubcontracting($project)+SetEstimateCalculationEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
+        <td class="qty"><strong>{{ '&euro; '.number_format(MoreEndresult::totalContracting($project)+MoreEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
+        <td class="qty"><strong>{{ '&euro; '.number_format(LessEndresult::totalContracting($project)+LessEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
+        <td class="qty"><strong>{{ '&euro; '.number_format(ResultEndresult::totalContracting($project)+ResultEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
+        <td class="qty">&nbsp;</td>
+        <td class="qty"><strong>@if(!$project->tax_reverse) {{ '&euro; '.number_format(ResultEndresult::totalContractingTax($project)+ResultEndresult::totalSubcontractingTax($project), 2, ",",".") }}</strong>@endif</td>
+      </tr>
+    </tbody>
+  </table>
+  @endif
 
     <h2 class="name">Totalen Factuur</h2>
     <hr color="#000" size="1">
-
     @if(!$project->tax_reverse)
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
@@ -386,7 +385,6 @@ $type = ProjectType::find($project->type_id);
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
-        @if (!$project->tax_reverse)
         <tr style="page-break-after: always;">
           <td class="qty">BTW bedrag 21%</td>
           <td class="qty">&nbsp;</td>
@@ -399,13 +397,6 @@ $type = ProjectType::find($project->type_id);
           <td class="qty">@if(!$project->tax_reverse) {{ '&euro; '.number_format(ResultEndresult::totalContractingTax2($project)+ResultEndresult::totalSubcontractingTax2($project)+BlancRowsEndresult::rowTax2AmountTax($project), 2, ",",".") }} @endif</td>
           <td class="qty">&nbsp;</td>
         </tr>
-        @endif
-       <!--  <tr style="page-break-after: always;">
-          <td class="qty">Te factureren BTW bedrag</td>
-          <td class="qty">&nbsp;</td>
-          <td class="qty">&nbsp;</td>
-          <td class="qty">@if(!$project->tax_reverse) {{ '&euro; '.number_format(ResultEndresult::totalProjectTax($project)+BlancRowsEndresult::rowTax1AmountTax($project)+BlancRowsEndresult::rowTax2AmountTax($project), 2, ",",".") }} @endif</td>
-        </tr> -->
         <tr style="page-break-after: always;">
           <td class="qty"><strong>Calculatief te factureren</strong></td>
           <td class="qty">&nbsp;</td>
@@ -438,6 +429,8 @@ $type = ProjectType::find($project->type_id);
       </tbody>
     </table>
     @endif
+
+
 
                             <?#--INCLUDE TERM START--?>
 
@@ -602,11 +595,7 @@ $type = ProjectType::find($project->type_id);
     </main>
 
 <?#--TOTAL END--?>
-
 @else
-
-
-
 <?#--CONT & SUBCONTR START--?>
 
     <h2 class="name">Specificatie factuur</h2>
@@ -621,12 +610,13 @@ $type = ProjectType::find($project->type_id);
           <th class="qty">Meerwerk</th>
           <th class="qty">Minderwerk</th>
           <th class="qty">Balans</th>
-          <th class="qty">BTW %</th>
+          <th class="qty">@if(!$project->tax_reverse) BTW % @endif</th>
           <th class="qty">@if(!$project->tax_reverse) BTW bedrag @endif</th>
         </tr>
       </thead>
       <tbody>
-       @if (!$project->tax_reverse)
+    @if ($display_specification)
+        @if (!$project->tax_reverse)
         <tr style="page-break-after: always;">
           <td style="width: 140px" class="qty">Arbeidskosten</td>
           <td class="qty">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
@@ -656,7 +646,6 @@ $type = ProjectType::find($project->type_id);
           <td class="qty">&nbsp;</td>
         </tr>
         @endif              
-
         @if (!$project->tax_reverse)
         <tr style="page-break-after: always;">
           <td class="qty">Materiaalkosten</td>
@@ -687,7 +676,6 @@ $type = ProjectType::find($project->type_id);
           <td class="qty">&nbsp;</td>
         </tr>
         @endif
-
         @if (!$project->tax_reverse)
         <tr style="page-break-after: always;">
           <td class="qty">Overige kosten</td>
@@ -718,6 +706,7 @@ $type = ProjectType::find($project->type_id);
           <td class="qty">&nbsp;</td>
         </tr>
         @endif
+    @endif
         <tr style="page-break-after: always;">
           <td class="qty"><strong>Totaal</strong></td>
           <td class="qty"><strong>{{ '&euro; '.number_format(SetEstimateCalculationEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
@@ -725,7 +714,7 @@ $type = ProjectType::find($project->type_id);
           <td class="qty"><strong>{{ '&euro; '.number_format(LessEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
           <td class="qty"><strong>{{ '&euro; '.number_format(ResultEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
           <td class="qty">&nbsp;</td>
-          <td class="qty">@if(!$project->tax_reverse) <strong>{{ '&euro; '.number_format(ResultEndresult::totalContractingTax($project), 2, ",",".") }}</strong>< @endif</td>
+          <td class="qty">@if(!$project->tax_reverse) <strong>{{ '&euro; '.number_format(ResultEndresult::totalContractingTax($project), 2, ",",".") }}</strong>@endif</td>
         </tr>
       </tbody>
     </table>
@@ -739,11 +728,12 @@ $type = ProjectType::find($project->type_id);
           <th class="qty">Meerwerk</th>
           <th class="qty">Minderwerk</th>
           <th class="qty">Balans</th>
-          <th class="qty">BTW %</th>
+          <th class="qty">@if(!$project->tax_reverse)BTW % @endif</th>
           <th class="qty">@if(!$project->tax_reverse) BTW bedrag @endif </th>
         </tr>
       </thead>
       <tbody>
+    @if ($display_specification)
        @if (!$project->tax_reverse)
         <tr style="page-break-after: always;">
           <td class="qty">Arbeidskosten</td>
@@ -774,7 +764,6 @@ $type = ProjectType::find($project->type_id);
           <td class="qty">&nbsp;</td>
         </tr>
         @endif
-
         @if (!$project->tax_reverse)
         <tr style="page-break-after: always;">
           <td class="qty">Materiaalkosten</td>
@@ -805,7 +794,6 @@ $type = ProjectType::find($project->type_id);
           <td class="qty">&nbsp;</td>
         </tr>
         @endif
-
         @if (!$project->tax_reverse)
         <tr style="page-break-after: always;">
           <td class="qty">Overige kosten</td>
@@ -836,8 +824,9 @@ $type = ProjectType::find($project->type_id);
           <td class="qty">&nbsp;</td>
         </tr>
         @endif
+    @endif
         <tr style="page-break-after: always;">
-          <td style="width: 140px" class="qty"><strong>Totaal</strong></td>
+          <td class="qty"><strong>Totaal</strong></td>
           <td class="qty"><strong>{{ '&euro; '.number_format(SetEstimateCalculationEndresult::totalSubcontracting($project), 2, ",",".") }} </strong></td>
           <td class="qty"><strong>{{ '&euro; '.number_format(MoreEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
           <td class="qty"><strong>{{ '&euro; '.number_format(LessEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
@@ -847,6 +836,7 @@ $type = ProjectType::find($project->type_id);
         </tr>
       </tbody>
     </table>
+
 
     @if(!$project->tax_reverse)
     <h2 class="name">Totalen Factuur</h2>
@@ -882,12 +872,6 @@ $type = ProjectType::find($project->type_id);
           <td class="qty">&nbsp;</td>
         </tr>
         @endif
-<!--         <tr style="page-break-after: always;">
-          <td class="qty">Te factureren BTW bedrag</td>
-          <td class="qty">&nbsp;</td>
-          <td class="qty">&nbsp;</td>
-          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalProjectTax($project), 2, ",",".") }}</td>
-        </tr> -->
         <tr style="page-break-after: always;">
           <td class="qty"><strong>Calculatief te factureren</strong></td>
           <td class="qty">&nbsp;</td>
@@ -899,19 +883,25 @@ $type = ProjectType::find($project->type_id);
     @else
     <h2 class="name">Totalen Factuur</h2>
     <hr color="#000" size="1">
-
     <table border="0" cellspacing="0" cellpadding="0">
       <thead>
         <tr style="page-break-after: always;">
+          <th class="qty">&nbsp;</th>
+          <th class="qty">&nbsp;</th>
+          <th class="qty">&nbsp;</th>
+          <th class="qty">&nbsp;</th>
           <th class="qty">&nbsp;</th>
           <th class="qty">Bedrag</th>
         </tr>
       </thead>
       <tbody>
         <tr style="page-break-after: always;">
-          <td class="qty"><strong>Calculatief te factureren</strong></td>
-          <td class="qty"><strong>{{ '&euro; '.number_format(ResultEndresult::totalProject($project), 2, ",",".") }}</strong></td>
+          <td class="qty"><strong>Calculatief te factureren<strong></td>
           <td class="qty">&nbsp;</td>
+          <td class="qty">&nbsp;</td>
+          <td class="qty">&nbsp;</td>
+          <td class="qty">&nbsp;</td>
+          <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalProject($project), 2, ",",".") }}</td>
         </tr>
       </tbody>
     </table>
@@ -941,28 +931,6 @@ $type = ProjectType::find($project->type_id);
                                           <td class="qty">&nbsp;</td>
                                           <td class="qty">&nbsp;</td>
                                         </tr>
-                                        @if (!$project->tax_reverse)
-                                      <!--   <tr>
-                                          <td class="qty">Factuurbedrag belast met 21% BTW</td>
-                                          <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21'), 2, ",",".") }}</td>
-                                          <td class="qty">&nbsp;</td>
-                                          <td class="qty">&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                          <td class="qty">Factuurbedrag belast met 6% BTW</td>
-                                          <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6'), 2, ",",".") }}</td>
-                                          <td class="qty">&nbsp;</td>
-                                          <td class="qty">&nbsp;</td>
-                                        </tr>
-                                        @else
-                                        <tr>
-                                          <td class="qty">Factuurbedrag belast met 0% BTW</td>
-                                          <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_0'), 2, ",",".") }}</td>
-                                          <td class="qty">&nbsp;</td>
-                                          <td class="qty">&nbsp;</td>
-                                        </tr> -->
-                                        @endif
-
                                         @if (!$project->tax_reverse)
                                         <tr>
                                           <td class="qty">BTW bedrag 21%</td>
@@ -1005,28 +973,6 @@ $type = ProjectType::find($project->type_id);
                                           <td class="qty">&nbsp;</td>
                                         </tr>
                                         @if (!$project->tax_reverse)
-<!--                                         <tr>
-                                          <td class="qty">Factuurbedrag belast met 21% BTW</td>
-                                          <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21, 2, ",",".") }}</td>
-                                          <td class="qty">&nbsp;</td>
-                                          <td class="qty">&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                          <td class="qty">Factuurbedrag belast met 6% BTW</td>
-                                          <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6, 2, ",",".") }}</td>
-                                          <td class="qty">&nbsp;</td>
-                                          <td class="qty">&nbsp;</td>
-                                        </tr>
-                                        @else
-                                        <tr>
-                                          <td class="qty">Factuurbedrag belast met 0% BTW</td>
-                                          <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_0, 2, ",",".") }}</td>
-                                          <td class="qty">&nbsp;</td>
-                                          <td class="qty">&nbsp;</td>
-                                        </tr> -->
-                                        @endif
-
-                                        @if (!$project->tax_reverse)
                                         <tr>
                                           <td class="qty">BTW bedrag 21%</td>
                                           <td class="qty">&nbsp;</td>
@@ -1067,67 +1013,8 @@ $type = ProjectType::find($project->type_id);
         <div class="signing">{{ Contact::find($invoice->from_contact_id)->firstname ." ". Contact::find($invoice->from_contact_id)->lastname }}</div>
       </main>
 
-  @endif
   <?#--CON & SUBCONTR END--?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  @endif
   @if ($display_worktotals)
   <?#--$display_worktotals START--?>
   @if ($seperate_subcon)

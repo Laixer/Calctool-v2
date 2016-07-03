@@ -212,7 +212,7 @@ $(document).ready(function() {
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="username">Gebruikersnaam</label>
-										<input tname="username" id="username" ype="text" disabled="" value="{{ $user->username }}" class="form-control"/>
+										<input name="username" id="username" type="text" disabled="" value="{{ $user->username }}" class="form-control"/>
 									</div>
 								</div>
 							</div>
@@ -221,20 +221,20 @@ $(document).ready(function() {
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="firstname">Voornaam</label>
-										<input name="firstname" id="firstname" type="text" value="{{ Input::old('firstname') ? Input::old('firstname') : $user->firstname }}" class="form-control" />
+										<input {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="firstname" id="firstname" type="text" value="{{ Input::old('firstname') ? Input::old('firstname') : $user->firstname }}" class="form-control" />
 									</div>
 								</div>
 
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="lastname">Achternaam</label>
-										<input name="lastname" id="lastname" type="text" value="{{ Input::old('lastname') ? Input::old('lastname') : $user->lastname }}" class="form-control"/>
+										<input {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="lastname" id="lastname" type="text" value="{{ Input::old('lastname') ? Input::old('lastname') : $user->lastname }}" class="form-control"/>
 									</div>
 								</div>
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="gender" style="display:block;">Geslacht</label>
-										<select name="gender" id="gender" class="form-control pointer">
+										<select {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="gender" id="gender" class="form-control pointer">
 											<option value="-1">Selecteer</option>
 											<option {{ $user->gender=='M' ? 'selected' : '' }} value="M">Man</option>
 											<option {{ $user->gender=='V' ? 'selected' : '' }} value="V">Vrouw</option>
@@ -248,14 +248,14 @@ $(document).ready(function() {
 								<div class="col-md-2">
 									<div class="form-group">
 										<label for="phone">Telefoonnummer</label>
-										<input name="phone" id="phone" type="text" maxlength="12" value="{{ Input::old('phone') ? Input::old('phone') : $user->phone }}" class="form-control"/>
+										<input {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="phone" id="phone" type="text" maxlength="12" value="{{ Input::old('phone') ? Input::old('phone') : $user->phone }}" class="form-control"/>
 									</div>
 								</div>
 
 								<div class="col-md-2">
 									<div class="form-group">
 										<label for="mobile">Mobiel</label>
-										<input name="mobile" id="mobile" type="text" maxlength="12" value="{{ Input::old('mobile') ? Input::old('mobile') : $user->mobile }}" class="form-control"/>
+										<input {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="mobile" id="mobile" type="text" maxlength="12" value="{{ Input::old('mobile') ? Input::old('mobile') : $user->mobile }}" class="form-control"/>
 									</div>
 								</div>
 
@@ -269,7 +269,7 @@ $(document).ready(function() {
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="website">Website</label>
-										<input name="website" id="website" type="url" value="{{ Input::old('website') ? Input::old('website') : $user->website }}" class="form-control"/>
+										<input {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="website" id="website" type="url" value="{{ Input::old('website') ? Input::old('website') : $user->website }}" class="form-control"/>
 									</div>
 								</div>
 
@@ -277,7 +277,7 @@ $(document).ready(function() {
 
 							<div class="row">
 								<div class="col-md-12">
-									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+									<button {{ \Cookie::get('swpsess') ? 'disabled' : '' }} class="btn btn-primary {{ \Cookie::get('swpsess') ? 'disabled' : '' }}"><i class="fa fa-check"></i> Opslaan</button>
 								</div>
 							</div>
 						</form>
@@ -337,7 +337,7 @@ $(document).ready(function() {
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="curr_secret">Huidig wachtwoord</label>
-										<input name="curr_secret" id="curr_secret" type="password" class="form-control" autocomplete="off"/>
+										<input {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="curr_secret" id="curr_secret" type="password" class="form-control" autocomplete="off"/>
 									</div>
 								</div>
 
@@ -347,14 +347,14 @@ $(document).ready(function() {
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="secret">Wachtwoord</label>
-										<input name="secret" id="secret" type="password" class="form-control" autocomplete="off"/>
+										<input {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="secret" id="secret" type="password" class="form-control" autocomplete="off"/>
 									</div>
 								</div>
 
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="secret_confirmation">Herhaal wachtwoord</label>
-										<input name="secret_confirmation" id="secret_confirmation" type="password" class="form-control" autocomplete="off"/>
+										<input {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="secret_confirmation" id="secret_confirmation" type="password" class="form-control" autocomplete="off"/>
 									</div>
 								</div>
 
@@ -372,7 +372,7 @@ $(document).ready(function() {
 								<div class="col-md-2">
 									<div class="form-group">
 										<label for="toggle-api" style="display:block;">API toegang</label>
-										<input name="toggle-api" type="checkbox" {{ $user->api_access ? 'checked' : '' }}>
+										<input {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="toggle-api" type="checkbox" {{ $user->api_access ? 'checked' : '' }}>
 									</div>
 								</div>
 							</div>

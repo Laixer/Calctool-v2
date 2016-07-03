@@ -31,7 +31,7 @@ if (!$offer) {
 <script src="/components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 @endpush
 
-<?php if($common_access_error){ ?>	Route::post('offer/sendmail', 'OfferController@doSendOffer');
+<?php if($common_access_error){ ?>
 @section('content')
 <div id="wrapper">
 	<section class="container">
