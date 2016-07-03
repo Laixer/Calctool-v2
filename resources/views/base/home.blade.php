@@ -188,7 +188,7 @@ $(document).ready(function() {
 					</div>
 				</div>
 
-				<div class="col-sm-6 col-md-2">
+				<div class="col-sm-6 col-md-2 hidden-xs">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
 							<a class="item-hover" href="javascript:void(0);" ui-href="/apps">
@@ -217,7 +217,7 @@ $(document).ready(function() {
 								<div class="form-group col-md-8">
 									<input type="text" ng-model="query" class="form-control" placeholder="Zoek in projecten">
 								</div>
-								<div class="form-group col-md-4" STYLE="text-align: right;" >
+								<div class="form-group col-md-4 hidden-xs" STYLE="text-align: right;" >
 									<span><strong>Projectstatus: &nbsp;</strong></span>
 									<input name="toggle-close" type="checkbox">
 								</div>
@@ -247,9 +247,8 @@ $(document).ready(function() {
 							<!-- </div> -->
 							<div class="row">
 								<div class="col-md-3">
-									
-									<div class="btn-group">
-								  		<a href="/project/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw project</a>
+									<div class="btn-group item-full">
+								  		<a href="/project/new" class="btn btn-primary item-full"><i class="fa fa-pencil"></i> Nieuw project</a>
 								 		
 									</div>
 								</div>

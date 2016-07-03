@@ -94,7 +94,7 @@ $(document).ready(function() {
 
 					<div class="col-md-5">
 						<div class="form-group">
-							<label for="company_name">Gebruikersnaam</label>
+							<label for="company_name">Gebruikersnaam*</label>
 							<input name="username" id="username" type="text" value="{{ Input::old('username') }}" class="form-control" />
 						</div>
 					</div>
@@ -152,7 +152,7 @@ $(document).ready(function() {
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="email">Email</label>
+							<label for="email">Email*</label>
 							<input name="email" id="email" type="email" value="{{ Input::old('email') }}" class="form-control"/>
 						</div>
 					</div>

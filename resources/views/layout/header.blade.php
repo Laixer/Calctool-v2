@@ -54,9 +54,11 @@ use \Calctool\Models\MessageBox;
 						}
 					?>
 					</li>
+					@if (!Auth::check())
 					<li class="visible-xs visible-sm">
 						<a href="/register">Account aanmaken</a>
 					</li>
+					@endif
 					@if (0)
 					<li class="search">
 						<form method="get" action="#" class="input-group pull-right">

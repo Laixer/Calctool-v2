@@ -568,6 +568,10 @@
 		width:auto !important;
 	}
 
+	.item-full {
+		width:100%;
+	}
+
 	/* 404 */
 	div.e404 {
 		font-size:1150%;

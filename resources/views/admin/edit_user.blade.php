@@ -131,8 +131,8 @@ $(document).ready(function() {
 
 						<div class="col-md-5">
 							<div class="form-group">
-								<label for="company_name">Gebruikersnaam</label>
-								<input name="username" {{ $user->isAdmin() ? 'disabled' : '' }} id="username" type="text" value="{{ Input::old('username') ? Input::old('username') : $user->username}}" class="form-control" />
+								<label for="company_name">Gebruikersnaam*</label>
+								<input name="username" {{ $user->isAdmin() ? 'readonly' : '' }} id="username" type="text" value="{{ Input::old('username') ? Input::old('username') : $user->username}}" class="form-control" />
 							</div>
 						</div>
 
@@ -189,8 +189,8 @@ $(document).ready(function() {
 
 						<div class="col-md-3">
 							<div class="form-group">
-								<label for="email">Email</label>
-								<input name="email" {{ $user->isAdmin() ? 'disabled' : '' }} id="email" type="email" value="{{ Input::old('email') ? Input::old('email') : $user->email }}" class="form-control"/>
+								<label for="email">Email*</label>
+								<input name="email" {{ $user->isAdmin() ? 'readonly' : '' }} id="email" type="email" value="{{ Input::old('email') ? Input::old('email') : $user->email }}" class="form-control"/>
 							</div>
 						</div>
 
