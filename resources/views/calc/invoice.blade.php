@@ -304,7 +304,7 @@ $type = ProjectType::find($project->type_id);
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="seperate-subcon" type="checkbox"> Oznderaanneming apart weergeven
+						          <input name="seperate-subcon" type="checkbox"> Onderaanneming apart weergeven
 						        </label>
 						      </div>
 						    </div>
