@@ -520,7 +520,7 @@ $type = ProjectType::find($project->type_id);
                                     <thead>
                                       <tr>
                                         <th class="qty">&nbsp;</th>
-                                        <th class="qty">Bedrag (excl. BTW)</th>
+                                        <th class="qty">@if(!$project->tax_reverse)Bedrag (excl. BTW) @endif</th>
                                         <th class="qty">@if(!$project->tax_reverse)BTW bedrag @endif</th>
                                         <th class="qty">@if(!$project->tax_reverse)Bedrag (incl. BTW) @endif</th>
                                       </tr>
