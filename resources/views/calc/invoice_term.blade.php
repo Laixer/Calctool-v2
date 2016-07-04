@@ -221,8 +221,8 @@ if (!$project || !$project->isOwner()) {
 		@endif
 
 	<div class="pull-right">
-		@if (!$invoice->invoice_close)
-		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
+		<!-- @if (!$invoice->invoice_close)
+		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a> -->
 		<?php
 		if (!$project->project_close) {
 			$prev = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->where('priority','<',$invoice->priority)->orderBy('priority', 'desc')->first();
@@ -258,7 +258,7 @@ if (!$project || !$project->isOwner()) {
 	<form method="POST" id="frm-invoice">
 	{!! csrf_field() !!}
 
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 
@@ -288,7 +288,7 @@ if (!$project || !$project->isOwner()) {
 
 			</div>
 		</div>
-	</div>
+	</div> -->
 	
 		<input name="id" value="{{ $invoice->id }}" type="hidden"/>
 		<input name="projectid" value="{{ $project->id }}" type="hidden"/>
@@ -388,8 +388,8 @@ if (!$project || !$project->isOwner()) {
 							<tr>
 								<th class="col-md-6">&nbsp;</th>
 								<th class="col-md-2">Bedrag (excl. BTW)</th>
-								<th class="col-md-2">BTW bedrag</th>
-								<th class="col-md-2">Bedrag (incl. BTW);</th>
+								<th class="col-md-2">@if (!$project->tax_reverse) BTW bedrag @endif</th>
+								<th class="col-md-2">@if (!$project->tax_reverse) Bedrag (incl. BTW) @endif</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -489,8 +489,8 @@ if (!$project || !$project->isOwner()) {
 				<div class="col-sm-6 text-right">
 
 					<div class="padding20">
-						@if (!$invoice->invoice_close)
-						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
+						<!-- @if (!$invoice->invoice_close)
+						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a> -->
 						<?php
 						if (!$project->project_close) {
 							$prev = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->where('priority','<',$invoice->priority)->orderBy('priority', 'desc')->first();
