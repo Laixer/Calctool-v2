@@ -8,6 +8,7 @@ use \Calctool\Models\Offer;
 use \Calctool\Models\ProjectType;
 use \Calctool\Models\Resource;
 
+
 $offer = Offer::find($invoice->offer_id);
 if (!$offer)
   exit();
@@ -32,7 +33,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
     <title>Termijnfactuur</title>
     <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" media="all" />
   </head>
-   <body style="background-image: url(http://localhost/images/concept.png);">
+   <body style="background-image: url(http://localhost/images/final.png);">
      <header class="clearfix">
         <div id="heading" class="clearfix">
         <table border="0" cellspacing="0" cellpadding="0">
@@ -143,7 +144,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
           </td>
         </tr>
       </tbody>
-    </table>
+    </table>v
   <br>
   <br>
   </div>
