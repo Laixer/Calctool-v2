@@ -260,6 +260,9 @@ class AuthController extends Controller {
 			<br />Wanneer de Quickstart pop-up of de pagina <a href="/mycompany">mijn bedrijf</a> wordt ingevuld kan je direct aan de slag met je eerste project.<br /><br />Groet, Maikel van de CalculatieTool.com';
 
 		$message->from_user = User::where('username', 'admin')->first()['id'];
+		if (empty($message->from_user)) {
+			$message->from_user = User::first()['id'];
+		}
 		$message->user_id =	$user->id;
 
 		$message->save();
