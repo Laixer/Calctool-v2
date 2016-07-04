@@ -508,7 +508,7 @@ $type = ProjectType::find($project->type_id);
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
 								        <label>
-								          <input name="display-worktotals" type="checkbox"> Per werkzaamheid specificeren
+								          <input name="display-worktotals" type="checkbox"> Totaalkosten per werkzaamheid opnemen
 								        </label>
 								      </div>
 								    </div>
@@ -1147,7 +1147,7 @@ $type = ProjectType::find($project->type_id);
 
 			<?#--CLOSER START--?>
 			<br>
-			@if ($project->tax_reverse)<h2>Op deze offerte is het <strong>BTW Verlegd</strong></h2>@endif
+			@if ($project->tax_reverse)<h2>Deze offerte is <strong>BTW Verlegd</strong></h2>@endif
 			<div class="row">
 				<div class="col-sm-12">
 				<h4>Bepalingen</h4>

@@ -321,7 +321,7 @@ $type = ProjectType::find($project->type_id);
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="display-worktotals" type="checkbox"> Totaalkosten specificeren per werkzaamheid
+						          <input name="display-worktotals" type="checkbox"> Totaalkosten per werkzaamheid opnemen
 						        </label>
 						      </div>
 						    </div>
@@ -890,7 +890,7 @@ $type = ProjectType::find($project->type_id);
 				<textarea name="closure" id="closure" rows="5" class="form-control">{{ ($invoice_last ? ($invoice_last->closure ? $invoice_last->closure : Auth::user()->pref_invoice_closure) : Auth::user()->pref_invoice_closure) }}</textarea>
 				@if($project->tax_reverse)
 				<br>
-				<h2>Op deze factuur is het <strong>BTW Verlegd</strong></h2>
+				<h2>Deze factuur is <strong>BTW Verlegd</strong></h2>
 				<br>
 				@endif
 				<div class="row">

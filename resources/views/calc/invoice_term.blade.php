@@ -455,7 +455,7 @@ if (!$project || !$project->isOwner()) {
 
 						@if($project->tax_reverse)
 						<br>
-						<h2>Op deze factuur is het <strong>BTW Verlegd</strong></h2>
+						<h2>Deze factuur is <strong>BTW Verlegd</strong></h2>
 						<br>
 						@endif
 

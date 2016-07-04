@@ -585,7 +585,7 @@ function invoice_condition($offer) {
 		</tbody>
 	  </table>
 	  <br>
-	  	  @if ($project->tax_reverse)<h2 class="name">Op deze offerte is het <strong>BTW Verlegd</strong></h1>@endif
+	  	  @if ($project->tax_reverse)<h2 class="name">Deze offerte is <strong>BTW Verlegd</strong></h1>@endif
 	  <br>
 	  <h2 class="name">Bepalingen</h2>
 	  <hr color="#000" size="1">
@@ -938,7 +938,7 @@ function invoice_condition($offer) {
 		</tbody>
 	  </table>
 	  <br>
-	  		@if ($project->tax_reverse)<h2 class="name">Op deze offerte is het <strong>BTW Verlegd</strong></h1>@endif
+	  		@if ($project->tax_reverse)<h2 class="name">Deze offerte is <strong>BTW Verlegd</strong></h1>@endif
 	  <br>
 	  <h2 class="name">Bepalingen</h2>
 	  <hr color="#000" size="1">
@@ -982,7 +982,7 @@ function invoice_condition($offer) {
 	  </header>
 	  <?#--PAGE HEADER SECOND END--?>
       <br>
-		  @if ($project->tax_reverse)<h2 class="name">Op deze offerte is het <strong>BTW Verlegd</strong></h1>@endif
+		  @if ($project->tax_reverse)<h2 class="name">Deze offerte is <strong>BTW Verlegd</strong></h1>@endif
 	  <br>
 	  <h2 class="name">Bepalingen</h2>
 	  <hr color="#000" size="1">
