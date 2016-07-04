@@ -1147,8 +1147,8 @@ $type = ProjectType::find($project->type_id);
 
 			<?#--CLOSER START--?>
 			<br>
-			@if ($project->tax_reverse)<h2>Deze offerte is <strong>BTW Verlegd</strong></h2>@endif
-			<div class="row">
+<!-- 			@if ($project->tax_reverse)<h2>Deze offerte is <strong>BTW Verlegd</strong></h2>@endif
+ -->			<div class="row">
 				<div class="col-sm-12">
 				<h4>Bepalingen</h4>
 				<ul >
@@ -1490,8 +1490,8 @@ $type = ProjectType::find($project->type_id);
 					</tbody>
 				</table>
 			</div>
-			<h6><strong>Weergegeven bedragen zijn exclusief BTW</strong></h5>
-		</div>
+<!-- 			<h6><strong>Weergegeven bedragen zijn exclusief BTW</strong></h5>
+ -->		</div>
 			<?#-- SPECIFICATION TOTAL END--?>
 
 		<div class="white-row show-note" style="display:none;">
