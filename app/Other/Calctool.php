@@ -6,17 +6,20 @@ class Calctool {
 
 	public function remoteAddr()
 	{
-		if (isset($_SERVER["HTTP_CF_CONNECTING_IP"]))
+		if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
 			return $_SERVER["HTTP_CF_CONNECTING_IP"];
-		else if (isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
+		} else if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
 			return $_SERVER["HTTP_X_FORWARDED_FOR"];
-		else
+		} else {
 			return $_SERVER['REMOTE_ADDR'];
+		}
 	}
 
 	public function remoteAgent()
 	{
-		return $_SERVER['HTTP_USER_AGENT'];
+		if (isset($_SERVER['HTTP_USER_AGENT'])) {
+			return $_SERVER['HTTP_USER_AGENT'];
+		}
 	}
 
 	public function generateToken()
