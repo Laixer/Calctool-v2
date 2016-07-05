@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class ExampleTest extends TestCase
+class AuthenticationTest extends TestCase
 {
     /**
      * A basic functional test example.
@@ -14,7 +14,9 @@ class ExampleTest extends TestCase
     public function testBasicExample()
     {
         $this->visit('/')
-             ->see('Login')
-             ->see('Registreren');
+             ->type('admin', 'username')
+             ->type('ABC@123', 'secret')
+             ->press('Login')
+             ->seePageIs('/admin');
     }
 }
