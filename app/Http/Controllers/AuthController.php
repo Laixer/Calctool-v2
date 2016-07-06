@@ -151,6 +151,8 @@ class AuthController extends Controller {
 		$user->expiration_date = date('Y-m-d', strtotime("+1 month", time()));
 		$user->user_type = UserType::where('user_type','=','user')->first()->id;
 		$user->user_group = 100;
+		$user->firstname = $request->get('contact_firstname');
+		$user->lastname = $request->get('contact_name');
 
 		$user->save();
 
@@ -180,7 +182,7 @@ class AuthController extends Controller {
 
 		$contact->save();
 
-		$data = array('email' => $user->email, 'api' => $user->api, 'token' => $user->token, 'firstname' => $contact->firstname, 'lastname' => $contact->lastname);
+		$data = array('email' => $user->email, 'api' => $user->api, 'token' => $user->token, 'firstname' => $user->firstname, 'lastname' => $user->lastname);
 		Mailgun::send('mail.confirm', $data, function($message) use ($data) {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Account activatie');
