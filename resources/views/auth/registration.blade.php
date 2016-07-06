@@ -14,7 +14,7 @@
 <script type="text/javascript">
 $(function() {
 	function normalize(str) {
-		return str.toLowerCase().replace(/ |\.|\&|-|_|@|~|\\|!|>|</g,'');
+		return str.toLowerCase().replace(/ |\.|\&|-|_|@|~|\\|!|>|<|\(|\)|%/g,'');
 	}
 	$(window).keydown(function(event){
 		if(event.keyCode == 13 && !$('#tos').prop('checked')) {
