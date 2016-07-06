@@ -15,6 +15,7 @@ use \Calctool\Models\Relation;
 use \Calctool\Models\RelationKind;
 use \Calctool\Models\Contact;
 use \Calctool\Models\MoreLabor;
+use \Calctool\Models\User;
 use Illuminate\Http\Request;
 use \Calctool\Models\EstimateLabor;
 
@@ -206,4 +207,9 @@ class ApiController extends Controller {
 		return response()->json(['success' => 1, 'note' => $purchase->note, 'relation' => $relname, 'type' => ucfirst(PurchaseKind::find($request->get('type'))->kind_name), 'date' => date('d-m-Y', strtotime($request->get('date'))), 'amount' => number_format($purchase->amount, 2,",","."), 'project' => $project->project_name, 'id' => $purchase->id]);
 	}
 
+	public function doCheckUsernameEXist(Request $request)
+	{
+		$counter = User::where('username',$request->get('name'))->count();
+		return response()->json(['success' => 1, 'exist' => $counter ? true : false]);
+	}
 }

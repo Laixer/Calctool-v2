@@ -176,13 +176,13 @@ class AuthController extends Controller {
 		$contact->lastname = $request->input('contact_name');
 		$contact->email = $user->email;
 		$contact->relation_id = $relation->id;
-		$contact->function_id = ContactFunction::where('function_name','=','opdrachtgever')->first()->id;
+		$contact->function_id = ContactFunction::where('function_name','eigenaar')->first()->id;
 
 		$contact->save();
 
-		$data = array('email' => $user->email, 'api' => $user->api, 'token' => $user->token, 'username' => $user->username);
+		$data = array('email' => $user->email, 'api' => $user->api, 'token' => $user->token, 'firstname' => $contact->firstname, 'lastname' => $contact->lastname);
 		Mailgun::send('mail.confirm', $data, function($message) use ($data) {
-			$message->to($data['email'], strtolower(trim($data['username'])));
+			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Account activatie');
 			if (!config('app.debug')) {
 				$message->bcc('info@calculatietool.com', 'CalculatieTool.com');
@@ -309,7 +309,6 @@ class AuthController extends Controller {
 		Mailgun::send('mail.letushelp', $data, function($message) use ($data) {
 			$message->to($data['email'], strtolower(trim($data['username'])));
 			$message->subject('CalculatieTool.com - Bedankt');
-			// $message->bcc('info@calculatietool.com', 'CalculatieTool.com');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
 			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});

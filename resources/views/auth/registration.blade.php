@@ -54,6 +54,19 @@ $(function() {
 	$('#company_name').keyup(function() {
 		$('#username').val(normalize($('#company_name').val()));
 	});
+	$('#username').blur(function(){
+		if ($(this).val()) {
+			$.post("/api/v1/register/usernamecheck", {
+				name: $(this).val(),
+			}, function(data) {
+				if (data.exist) {
+					$('#check_username').html('<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;In gebruik');
+				} else {
+					$('#check_username').html('<i class="fa fa-check" aria-hidden="true"></i>');
+				}
+			});
+		}
+	});
 });
 </script>
 <div id="wrapper">
@@ -116,7 +129,7 @@ $(function() {
 									<label for="username">Gebruikersnaam</label>
 									<div class="input-group">
 										<input class="form-control" name="username" type="text" id="username" value="{{ old('username') }}">
-										<span class="input-group-addon" id="check-username"><i class="fa fa-check" aria-hidden="true"></i></span>
+										<span class="input-group-addon" id="check_username"><i class="fa fa-check" aria-hidden="true"></i></span>
 									</div>
 								</div>
 							</div>
