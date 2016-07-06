@@ -35,16 +35,16 @@ class DemoProjectTemplate {
 
 		$relation = new Relation;
 		$relation->company_name		= 'Voorbeeldrelatie';
-		$relation->address_street	= 'Voorbeeldstraat';
+		$relation->address_street	= 'Demostraat';
 		$relation->address_number	= '1';
-		$relation->address_postal	= '1234DE';
-		$relation->address_city		= 'Voorbeeldtad';
+		$relation->address_postal	= '1234AB';
+		$relation->address_city		= 'Demostad';
 		$relation->debtor_code 		= 'DEMO123';
 		$relation->kvk		 		= '12345678';
-		$relation->btw 				= 'NL1234567890B1';
+		$relation->btw 				= 'NL123456789B01';
 		$relation->note 			= 'Dit is een voorbeeldrelatie';
 		$relation->email 			= 'voorbeeld@calculatietool.com';
-		$relation->phone 			= '0101111111';
+		$relation->phone 			= '0101234567';
 		$relation->website 			= 'http://www.calculatietool.com';
 		$relation->user_id 			= $userid;
 		$relation->type_id 			= $relationtype->id;
@@ -53,6 +53,7 @@ class DemoProjectTemplate {
 		$relation->country_id 		= $country->id;
 		$relation->save();
 
+		/*
 		$project = new Project;
 		$project->project_name 		= 'Voorbeeldproject';
 		$project->address_street 	= 'Voorbeeldlaan';
@@ -76,13 +77,14 @@ class DemoProjectTemplate {
 		$project->profit_more_subcontr_mat 		= 16;
 		$project->profit_more_subcontr_equip	= 17;
 		$project->save();
+		*/
 
 		$contact = new Contact;
-		$contact->firstname 		= 'Voorbeeld';
-		$contact->lastname 			= 'Eigenaar';
+		$contact->firstname 		= 'Jan';
+		$contact->lastname 			= 'Janssen';
 		$contact->email 			= 'voorbeeld@calculatietool.com';
 		$contact->mobile 			= '0622222222';
-		$contact->phone 			= '0102222222';
+		$contact->phone 			= '0103333333';
 		$contact->note 				= 'Voorbeeld contactpersoon van relatie';
 		$contact->relation_id 		= $relation->id;
 		$contact->function_id 		= $contact_function->id;
