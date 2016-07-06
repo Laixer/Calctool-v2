@@ -269,7 +269,7 @@ class AuthController extends Controller {
 		$user->confirmed_mail = date('Y-m-d H:i:s');
 		$user->save();
 
-		// \DemoProjectTemplate::setup($user->id);
+		\VoorbeeldRelatieTemplate::setup($user->id);
 
 		$this->informAdmin($user);
 
