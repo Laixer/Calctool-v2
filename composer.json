@@ -14,7 +14,8 @@
 		"mollie/mollie-api-php": "1.2.x",
 		"bogardo/mailgun": "4.0.*",
 		"longman/telegram-bot": "*",
-		"jeroendesloovere/vcard": "1.2.*"
+		"jeroendesloovere/vcard": "1.2.*",
+		"doctrine/dbal": "v2.5.4"
 	},
 	"require-dev": {
 		"fzaninotto/faker": "~1.4",

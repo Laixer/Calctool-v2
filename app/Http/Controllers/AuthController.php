@@ -13,6 +13,11 @@ use \Calctool\Models\UserType;
 use \Calctool\Models\Audit;
 use \Calctool\Models\Telegram;
 use \Calctool\Models\MessageBox;
+use \Calctool\Models\Relation;
+use \Calctool\Models\RelationType;
+use \Calctool\Models\RelationKind;
+use \Calctool\Models\Contact;
+use \Calctool\Models\ContactFunction;
 
 use \Auth;
 use \Redis;
@@ -129,6 +134,9 @@ class AuthController extends Controller {
 			'email' => array('required','max:80','email','unique:user_account'),
 			'secret' => array('required','confirmed','min:5'),
 			'secret_confirmation' => array('required','min:5'),
+			'contact_name' => array('required','max:50'),
+			'contact_firstname' => array('max:30'),
+			'company_name' => array('required','max:50'),
 		]);
 
 		$user = new User;
@@ -144,11 +152,41 @@ class AuthController extends Controller {
 		$user->user_type = UserType::where('user_type','=','user')->first()->id;
 		$user->user_group = 100;
 
+		$user->save();
+
+		/* General relation */
+		$relation = new Relation;
+		$relation->user_id = $user->id;
+		$relation->debtor_code = mt_rand(1000000, 9999999);
+
+		/* My company */
+		$relation->kind_id = RelationKind::where('kind_name','zakelijk')->first()->id;
+		$relation->company_name = $request->input('company_name');
+		$relation->type_id = RelationType::where('type_name', 'aannemer')->first()->id;
+		$relation->email = $user->email;
+
+		$relation->save();
+
+		$user->self_id = $relation->id;
+		$user->save();
+
+		/* Contact */
+		$contact = new Contact;
+		$contact->firstname = $request->input('contact_firstname');
+		$contact->lastname = $request->input('contact_name');
+		$contact->email = $user->email;
+		$contact->relation_id = $relation->id;
+		$contact->function_id = ContactFunction::where('function_name','=','opdrachtgever')->first()->id;
+
+		$contact->save();
+
 		$data = array('email' => $user->email, 'api' => $user->api, 'token' => $user->token, 'username' => $user->username);
 		Mailgun::send('mail.confirm', $data, function($message) use ($data) {
 			$message->to($data['email'], strtolower(trim($data['username'])));
 			$message->subject('CalculatieTool.com - Account activatie');
-			$message->bcc('info@calculatietool.com', 'CalculatieTool.com');
+			if (!config('app.debug')) {
+				$message->bcc('info@calculatietool.com', 'CalculatieTool.com');
+			}
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
 			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});

@@ -13,6 +13,9 @@
 @section('content')
 <script type="text/javascript">
 $(function() {
+	function normalize(str) {
+		return str.toLowerCase().replace(/ |\.|\&|-|_|@|~|\\|!|>|</g,'');
+	}
 	$(window).keydown(function(event){
 		if(event.keyCode == 13 && !$('#tos').prop('checked')) {
 			event.preventDefault();
@@ -47,6 +50,9 @@ $(function() {
 			$('#passtoggle i').remove();
 			$('<i class="glyphicon icon-eye-open glyphicon-eye-open"></i>').appendTo('#passtoggle');
 		}
+	});
+	$('#company_name').keyup(function() {
+		$('#username').val(normalize($('#company_name').val()));
 	});
 });
 </script>
@@ -86,9 +92,32 @@ $(function() {
 
 						<div class="row">
 							<div class="form-group">
+								<div class="col-md-6">
+									<label for="contact_firstname">Voornaam</label>
+									<input class="form-control" name="contact_firstname" type="text" id="contact_firstname" value="{{ old('contact_firstname') }}">
+								</div>
+								<div class="col-md-6">
+									<label for="contact_name">Achternaam</label>
+									<input class="form-control" name="contact_name" type="text" id="contact_name" value="{{ old('contact_name') }}">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group">
+								<div class="col-md-12">
+									<label for="company_name">Bedrijfsnaam</label>
+									<input class="form-control" name="company_name" type="text" id="company_name" value="{{ old('company_name') }}">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group">
 								<div class="col-md-12">
 									<label for="username">Gebruikersnaam</label>
-									<input class="form-control" name="username" type="text" id="username" value="{{ old('username') }}">
+									<div class="input-group">
+										<input class="form-control" name="username" type="text" id="username" value="{{ old('username') }}">
+										<span class="input-group-addon" id="check-username"><i class="fa fa-check" aria-hidden="true"></i></span>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -96,7 +125,7 @@ $(function() {
 							<div class="form-group">
 								<div class="col-md-12">
 									<label for="email">E-mail adres</label>
-									<input class="form-control" name="email" type="text" id="email" value="{{ old('email') }}">
+									<input class="form-control" name="email" type="email" id="email" value="{{ old('email') }}">
 								</div>
 							</div>
 						</div>
