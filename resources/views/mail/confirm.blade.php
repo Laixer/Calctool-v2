@@ -81,7 +81,7 @@
 															Met vriendelijke groet,
 														<br>
 														<br>
-															Het team van van <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
+															Het team van de <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
 														<br>
 														<br>
 													</td>

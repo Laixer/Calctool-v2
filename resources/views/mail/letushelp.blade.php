@@ -43,7 +43,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
-														Goededag <strong>{{ ucfirst($username) }}</strong>,
+														Goedendag <strong>{{ ucfirst($firstname) .' '. ucfirst($lastname) }}</strong>,
 													</td>
 												</tr>
 												<tr>
@@ -71,7 +71,7 @@
 														<br>
 														Heel veel succes en goede zaken gewenst!
 														<br>
-															Maikel Benner en Don Zandbergen van de <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
+															Het team van van <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
 														<br>
 														<br>
 													</td>
