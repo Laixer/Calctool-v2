@@ -74,7 +74,11 @@ $(document).ready(function() {
 				<hr>
 				<div class="row">
 					<div class="col-md-8">
-						<h4>Voor een juiste werking van de CalculatieTool.com moeten er eerst een aantal gegevens van je bedrijf bekend zijn. Deze Quick-SetUp helpt je daarbij dit binnen 1 minuut in te stellen.</h4>
+						<h4>Al je noodzakelijke gegevens zijn bekend en je kan direct beginnen met het aanmaken van een nieuw project. 
+						Je kan je gegevens controleren of later aanpassen en aanvullen onder "Mijn bedrijf".</h4>
+						<br>
+						<h4>Mocht je vragen hebben of hulp nodig hebben laat dit dan weten in de feedback knop rechts op het scherm.
+						Wij beantwoorden deze vraag dan binnen 12 uur of bellen je indien gewenst, laat hiervoro je telefoonnummer achter.</h4>
 					</div>
 					<div class="col-md-4">
 						<a class="logo2" href="/">
