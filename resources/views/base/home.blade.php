@@ -80,11 +80,6 @@ $(document).ready(function() {
 						<h4>Mocht je vragen hebben of hulp nodig hebben laat dit dan weten in de feedback knop rechts op het scherm.
 						Wij beantwoorden deze vraag dan binnen 12 uur of bellen je indien gewenst, laat hiervoro je telefoonnummer achter.</h4>
 					</div>
-					<div class="col-md-4">
-						<a class="logo2" href="/">
-							<img src="/images/cal_bouwen.png" width="229px" alt="Calctool">
-						</a>
-					</div>
 				</div>
 			</div>
 			</form>
