@@ -85,9 +85,6 @@ $(document).ready(function() {
 			</form>
 			<div class="modal-footer">
 				<div class="col-md-6"></div>
-				<div class="col-md-6">
-					<button class="starttour btn btn-primary"><i class="fa fa-check"></i> Begin Quick-SetUp</button>
-				</div>
 			</div>
 		</div>
 	</div>
