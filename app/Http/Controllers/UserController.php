@@ -350,7 +350,8 @@ class UserController extends Controller {
 		$user = Auth::user();
 
 		/* Contact */
-		$user->firstname = $request->get('firstname');$user->firstname = $request->get('firstname');
+		if ($request->get('firstname'))
+			$user->firstname = $request->get('firstname');
 		if ($request->get('lastname'))
 			$user->lastname = $request->get('lastname');
 		if ($request->get('gender')) {

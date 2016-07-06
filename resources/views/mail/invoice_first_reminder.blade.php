@@ -43,7 +43,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
-														Geachte <strong>{{ $client }}</strong>,
+														Goedendag <strong>{{ ucfirst($firstname) .' '. ucfirst($lastname) }}</strong>,
 													</td>
 												</tr>
 												<tr>

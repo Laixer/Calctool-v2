@@ -6,11 +6,13 @@
 
 @push('style')
 <link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
+<link media="all" type="text/css" rel="stylesheet" href="/components/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css">
 @endpush
 
 @push('scripts')
 <script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 <script src="/plugins/summernote/summernote.min.js"></script>
+<script src="/components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 @endpush
 
 <?php
@@ -57,6 +59,8 @@ $(document).ready(function() {
 	            ["misc", ["codeview"]]
 	        ]
 	    })
+
+	$('.datepick').datepicker();
 });
 </script>
 
@@ -115,7 +119,10 @@ $(document).ready(function() {
 							<a href="#userdata" data-toggle="tab">Gebruikersgegevens</a>
 						</li>
 						<li>
-							<a href="#audit" data-toggle="tab">Auditlog</a>
+							<a href="#admin" data-toggle="tab">Adminlog</a>
+						</li>
+						<li>
+							<a href="#audit" data-toggle="tab">Eventlog</a>
 						</li>
 					</ul>
 
@@ -123,7 +130,7 @@ $(document).ready(function() {
 						<div id="userdata" class="tab-pane active">
 
 					<form method="POST" action="" accept-charset="UTF-8">
-                                        {!! csrf_field() !!}
+					{!! csrf_field() !!}
 
 					<h4 class="company">Gebruikersgegevens</h4>
 					<div class="row company">
@@ -305,7 +312,40 @@ $(document).ready(function() {
 				</form>
 				</div>
 
+				<div id="admin" class="tab-pane">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th class="col-md-2 hidden-sm hidden-xs">Datum</th>
+								<th class="col-md-10">Actie</th>
+								<th class="col-md-1"></th>
+							</tr>
+						</thead>
+
+						<tbody>
+							@foreach (\Calctool\Models\AdminLog::where('user_id', $user->id)->orderBy('created_at','asc')->get() as $rec)
+							<tr>
+								<td class="col-md-2">{{ date('d-m-Y', strtotime(DB::table('admin_log')->select('created_at')->where('id',$rec->id)->get()[0]->created_at)) }}</td>
+								<td class="col-md-9">{{ $rec->note }}</td>
+								<td class="col-md-1"></td>
+							</tr>
+							@endforeach
+							<form method="POST" action="/admin/user-{{ $user->id }}/adminlog/new" accept-charset="UTF-8">
+							{!! csrf_field() !!}
+
+							<tr>
+								<td class="col-md-2"><input type="text" name="date" id="date" class="form-control-sm-text datepick"/></td>
+								<td class="col-md-9"><input type="text" name="note" id="note" class="form-control-sm-text" placeholder="Gebruiker geholpen met project invullen..." /></td>
+								<td class="col-md-1"><button class="btn btn-primary btn-xs"> Toevoegen</button></td>
+							</tr>
+
+							</form>
+						</tbody>
+					</table>
+				</div>
+
 				<div id="audit" class="tab-pane">
+				<h4>Meest recente event bovenaan</h4>
 					<table class="table table-striped">
 						<thead>
 							<tr>

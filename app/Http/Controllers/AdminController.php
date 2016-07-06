@@ -18,6 +18,7 @@ use \Calctool\Models\MessageBox;
 use \Calctool\Models\Audit;
 use \Calctool\Models\Project;
 use \Calctool\Models\Promotion;
+use \Calctool\Models\AdminLog;
 use \Database\Templates\DemoProjectTemplate;
 use \Database\Templates\ValidationProjectTemplate;
 
@@ -297,6 +298,24 @@ class AdminController extends Controller {
 		Audit::CreateEvent('admin.user.update.succces', 'Updated user: ' . $user->username, $user->id);
 
 		return back()->with('success', 'Gegevens gebruiker aangepast');
+	}
+
+	public function doNewAdminLog(Request $request, $user_id)
+	{
+		$this->validate($request, [
+			'date' => array('required'),
+			'note' => array('required'),
+		]);
+
+		$log = new AdminLog;
+		$log->note = $request->get('note');
+		$log->created_at = date('Y-m-d', strtotime($request->get('date')));
+		$log->user_id = $user_id;
+		
+		$log->save();
+
+		return back()->with('success', 'Item toegevoegd');
+
 	}
 
 	public function getSwitchSession(Request $request, $user_id)

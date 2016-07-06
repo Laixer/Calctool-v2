@@ -74,21 +74,17 @@ $(document).ready(function() {
 				<hr>
 				<div class="row">
 					<div class="col-md-8">
-						<h4>Voor een juiste werking van de CalculatieTool.com moeten er eerst een aantal gegevens van je bedrijf bekend zijn. Deze Quick-SetUp helpt je daarbij dit binnen 1 minuut in te stellen.</h4>
-					</div>
-					<div class="col-md-4">
-						<a class="logo2" href="/">
-							<img src="/images/cal_bouwen.png" width="229px" alt="Calctool">
-						</a>
+						<h4>Al je noodzakelijke gegevens zijn bekend en je kan direct beginnen met het aanmaken van een nieuw project. 
+						Je kan je gegevens controleren of later aanpassen en aanvullen onder "Mijn bedrijf".</h4>
+						<br>
+						<h4>Mocht je vragen hebben of hulp nodig hebben laat dit dan weten in de feedback knop rechts op het scherm.
+						Wij beantwoorden deze vraag dan binnen 12 uur of bellen je indien gewenst, laat hiervoro je telefoonnummer achter.</h4>
 					</div>
 				</div>
 			</div>
 			</form>
 			<div class="modal-footer">
 				<div class="col-md-6"></div>
-				<div class="col-md-6">
-					<button class="starttour btn btn-primary"><i class="fa fa-check"></i> Begin Quick-SetUp</button>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -258,7 +254,11 @@ $(document).ready(function() {
 						@else
 						<h2><strong>De eerste</strong> stappen...</h2>
 						<div class="bs-callout text-center whiteBg">
-							<h3><button class="starttour btn btn-primary btn-lg">Quick-SetUp</button> <strong>OF</strong> <a href="/project/new" class="btn btn-primary btn-lg" kaas-intro="Stap 9: Maak nu je eerste prject aan.">Start nieuw project</a></h3>
+							<h3>
+								<a href="/project/new" class="btn btn-primary btn-lg" kaas-intro="Stap 9: Maak nu je eerste prject aan.">Start nieuw project</a>
+								<strong>OF</strong>
+								<button class="starttour btn btn-primary btn-lg">Neem de Rondleiding</button>
+							</h3>
 						</div>
 						@endif
 					</div>
