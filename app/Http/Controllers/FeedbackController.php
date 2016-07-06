@@ -68,7 +68,6 @@ class FeedbackController extends Controller
         Mailgun::send('mail.feedback', $data, function($message) use ($data) {
             $message->to('info@calculatietool.com', 'CalculatieTool.com');
             $message->subject('CalculatieTool.com - Contact form');
-            $message->replyTo($data['email']);
         });
 
         return back()->with('success', 'Bericht verstuurd');

@@ -104,9 +104,9 @@ class AdminController extends Controller {
 			$expdate = $user->expiration_date;
 			$user->expiration_date = date('Y-m-d', strtotime("-".$order->increment." month", strtotime($expdate)));
 
-			$data = array('email' => $user->email, 'amount' => number_format($order->amount, 2,",","."), 'username' => $user->username);
+			$data = array('email' => $user->email, 'amount' => number_format($order->amount, 2,",","."), 'firstname' => $user->firstname, 'lastname' => $user->lastname);
 			Mailgun::send('mail.refund', $data, function($message) use ($data) {
-				$message->to($data['email'], strtolower(trim($data['username'])));
+				$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 				$message->subject('CalculatieTool.com - Terugstorting');
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');
 				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');

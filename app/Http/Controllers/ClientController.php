@@ -56,9 +56,9 @@ class ClientController extends Controller {
 
 		$user = User::find($project->user_id);
 
-		$data = array('email' => $user->email, 'username' => $user->username, 'project_name' => $project->project_name, 'note' => nl2br($request->input('client_note')));
+		$data = array('email' => $user->email, 'firstname' => $user->firstname, 'lastname' => $user->lastname, 'project_name' => $project->project_name, 'note' => nl2br($request->input('client_note')));
 		Mailgun::send('mail.client_reacted', $data, function($message) use ($data) {
-			$message->to($data['email'], strtolower(trim($data['username'])));
+			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Uw opdrachtgever heeft gereageerd');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
 			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
@@ -110,9 +110,9 @@ class ClientController extends Controller {
 
 		$user = User::find($project->user_id);
 
-		$data = array('email' => $user->email, 'username' => $user->username, 'project_name' => $project->project_name);
+		$data = array('email' => $user->email, 'firstname' => $user->firstname, 'lastname' => $user->lastname, 'project_name' => $project->project_name);
 		Mailgun::send('mail.offer_accepted', $data, function($message) use ($data) {
-			$message->to($data['email'], strtolower(trim($data['username'])));
+			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Offerte bevestigd');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
 			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');

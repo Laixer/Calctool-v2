@@ -307,9 +307,9 @@ class AuthController extends Controller {
 
 		$message->save();
 
-		$data = array('email' => $user->email, 'username' => $user->username);
+		$data = array('email' => $user->email, 'firstname' => $user->firstname, 'lastname' => $user->lastname);
 		Mailgun::send('mail.letushelp', $data, function($message) use ($data) {
-			$message->to($data['email'], strtolower(trim($data['username'])));
+			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Bedankt');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
 			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
@@ -340,9 +340,9 @@ class AuthController extends Controller {
 		$user->active = false;
 		$user->api = md5(mt_rand());
 
-		$data = array('email' => $user->email, 'api' => $user->api, 'token' => $user->token, 'username' => $user->username);
+		$data = array('email' => $user->email, 'api' => $user->api, 'token' => $user->token, 'firstname' => $user->firstname, 'lastname' => $user->lastname);
 		Mailgun::send('mail.password', $data, function($message) use ($data) {
-			$message->to($data['email'], strtolower(trim($data['username'])));
+			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Wachtwoord herstellen');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
 			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');

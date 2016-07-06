@@ -43,9 +43,9 @@ class UserController extends Controller {
 
 		Auth::logout();
 
-		$data = array('email' => $user->email, 'username' => $user->username);
+		$data = array('email' => $user->email, 'firstname' => $user->firstname, 'lastname' => $user->lastname);
 		Mailgun::send('mail.deactivate', $data, function($message) use ($data) {
-			$message->to($data['email'], strtolower(trim($data['username'])));
+			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Account gedeactiveerd');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
 			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
@@ -201,9 +201,9 @@ class UserController extends Controller {
 
 			$user->save();
 
-			$data = array('email' => $user->email, 'amount' => number_format($order->amount, 2,",","."), 'expdate' => date('j F Y', strtotime($user->expiration_date)), 'username' => $user->username);
+			$data = array('email' => $user->email, 'amount' => number_format($order->amount, 2,",","."), 'expdate' => date('j F Y', strtotime($user->expiration_date)), 'firstname' => $user->firstname, 'lastname' => $user->lastname);
 			Mailgun::send('mail.paid', $data, function($message) use ($data) {
-				$message->to($data['email'], strtolower(trim($data['username'])));
+				$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 				$message->subject('CalculatieTool.com - Abonnement verlengd');
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');
 				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
@@ -296,9 +296,10 @@ class UserController extends Controller {
 		$user->save();
 
 		if ($request->get('secret')) {
-			$data = array('email' => Auth::user()->email, 'username' => Auth::user()->username);
+			$user = Auth::user();
+			$data = array('email' => $user->email, 'firstname' => $user->firstname, 'lastname' => $user->lastname);
 			Mailgun::send('mail.password_update', $data, function($message) use ($data) {
-				$message->to($data['email'], strtolower(trim($data['username'])));
+				$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 				$message->subject('CalculatieTool.com - Wachtwoord aangepast');
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');
 				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
@@ -460,9 +461,11 @@ class UserController extends Controller {
 
 		$relation->save();
 
-		$data = array('email' => Auth::user()->email, 'username' => Auth::user()->username);
+		$user = Auth::user();
+
+		$data = array('email' => Auth::user()->email, 'firstname' => $user->firstname, 'lastname' => $user->lastname);
 		Mailgun::send('mail.iban_update', $data, function($message) use ($data) {
-			$message->to($data['email'], strtolower(trim($data['username'])));
+			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Betaalgegevens aangepast');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
 			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
