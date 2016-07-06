@@ -360,10 +360,10 @@ $(document).ready(function() {
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 
-			<div class="modal-header">
+<!-- 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title" id="myModalLabelYoutube"></h4>
-			</div>
+			</div> -->
 
 			<iframe width="1080" height="560" src="https://www.youtube.com/embed/7eMYvELXOnM" frameborder="0" allowfullscreen></iframe>
 

@@ -373,7 +373,7 @@ $type = ProjectType::find($project->type_id);
       <thead>
         <tr style="page-break-after: always;">
           <th class="qty">&nbsp;</th>
-          <th class="qty">Bedrag (excl. BTW)</th>
+          <th class="qty">Bedrag @if(!$project->tax_reverse)(excl. BTW) @endif</th>
           <th class="qty">@if(!$project->tax_reverse) BTW bedrag @endif</th>
           <th class="qty">@if(!$project->tax_reverse) Bedrag (incl. BTW) @endif</th>
         </tr>
@@ -444,9 +444,9 @@ $type = ProjectType::find($project->type_id);
                                   <thead>
                                     <tr>
                                       <th class="qty">&nbsp;</th>
-                                      <th class="qty">Bedrag (excl. BTW)</th>
-                                      <th class="qty">BTW bedrag</th>
-                                      <th class="qty">Bedrag (incl. BTW);</th>
+                                      <th class="qty">Bedrag @if(!$project->tax_reverse)(excl. BTW) @endif</th>
+                                      <th class="qty">@if(!$project->tax_reverse) BTW bedrag @endif</th>
+                                      <th class="qty">@if(!$project->tax_reverse) Bedrag (incl. BTW) @endif</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -520,9 +520,9 @@ $type = ProjectType::find($project->type_id);
                                     <thead>
                                       <tr>
                                         <th class="qty">&nbsp;</th>
-                                        <th class="qty">Bedrag (excl. BTW)</th>
-                                        <th class="qty">BTW bedrag</th>
-                                        <th class="qty">Bedrag (incl. BTW);</th>
+                                        <th class="qty">@if(!$project->tax_reverse)Bedrag (excl. BTW) @endif</th>
+                                        <th class="qty">@if(!$project->tax_reverse)BTW bedrag @endif</th>
+                                        <th class="qty">@if(!$project->tax_reverse)Bedrag (incl. BTW) @endif</th>
                                       </tr>
                                     </thead>
                                     <tbody>
@@ -579,7 +579,7 @@ $type = ProjectType::find($project->type_id);
                                 <?#--INCLUDE TERM END--?>
 
 
-      @if($project->tax_reverse)<h2 class="name">Op deze factuur is het <strong>BTW Verlegd</strong></h1>@endif
+      @if($project->tax_reverse)<h2 class="name">Deze factuur is <strong>BTW Verlegd</strong></h2>@endif
 
       <h2 class="name">Bepalingen</h2>
       <hr color="#000" size="1">
@@ -846,9 +846,9 @@ $type = ProjectType::find($project->type_id);
       <thead>
         <tr style="page-break-after: always;">
           <th class="qty">&nbsp;</th>
-          <th class="qty">Bedrag (excl. BTW)</th>
-          <th class="qty">BTW bedrag</th>
-          <th class="qty">Bedrag (incl. BTW)</th>
+          <th class="qty">Bedrag @if(!$project->tax_reverse)(excl. BTW) @endif</th>
+          <th class="qty">@if(!$project->tax_reverse)BTW bedrag @endif</th>
+          <th class="qty">@if(!$project->tax_reverse)Bedrag (incl. BTW) @endif</th>
         </tr>
       </thead>
       <tbody>
@@ -919,9 +919,9 @@ $type = ProjectType::find($project->type_id);
                                       <thead>
                                         <tr>
                                           <th class="qty">&nbsp;</th>
-                                          <th class="qty">Bedrag (excl. BTW)</th>
-                                          <th class="qty">BTW bedrag</th>
-                                          <th class="qty">Bedrag (incl. BTW);</th>
+                                          <th class="qty">Bedrag @if(!$project->tax_reverse) (excl. BTW) @endif</th>
+                                          <th class="qty">@if(!$project->tax_reverse) BTW bedrag @endif</th>
+                                          <th class="qty">@if(!$project->tax_reverse)Bedrag (incl. BTW) @endif</th>
                                         </tr>
                                       </thead>
                                       <tbody>
@@ -960,9 +960,9 @@ $type = ProjectType::find($project->type_id);
                                       <thead>
                                         <tr>
                                           <th class="qty">&nbsp;</th>
-                                          <th class="qty">Bedrag (excl. BTW)</th>
-                                          <th class="qty">BTW bedrag</th>
-                                          <th class="qty">Bedrag (incl. BTW);</th>
+                                          <th class="qty">Bedrag @if(!$project->tax_reverse)(excl. BTW) @endif</th>
+                                          <th class="qty">@if(!$project->tax_reverse)BTW bedrag @endif</th>
+                                          <th class="qty">@if(!$project->tax_reverse)Bedrag (incl. BTW) @endif</th>
                                         </tr>
                                       </thead>
                                       <tbody>
@@ -998,7 +998,7 @@ $type = ProjectType::find($project->type_id);
                                 <?#--INCLUDE TERM END--?>
 
 
-          @if($project->tax_reverse)<h2 class="name">Op deze factuur is het <strong>BTW Verlegd</strong></h1>@endif
+          @if($project->tax_reverse)<h2 class="name">Deze factuur is <strong>BTW Verlegd</strong></h1>@endif
 
         <h2 class="name">Bepalingen</h2>
         <hr color="#000" size="1">

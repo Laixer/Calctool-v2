@@ -14,14 +14,17 @@
 		"mollie/mollie-api-php": "1.2.x",
 		"bogardo/mailgun": "4.0.*",
 		"longman/telegram-bot": "*",
-		"jeroendesloovere/vcard": "1.2.*"
+		"jeroendesloovere/vcard": "1.2.*",
+		"doctrine/dbal": "v2.5.4"
 	},
 	"require-dev": {
 		"fzaninotto/faker": "~1.4",
 		"mockery/mockery": "0.9.*",
 		"phpunit/phpunit": "~4.0",
 		"phpspec/phpspec": "~2.1",
-		"barryvdh/laravel-debugbar": "^2.2"
+		"barryvdh/laravel-debugbar": "^2.2",
+        "symfony/css-selector": "2.8.*|3.0.*",
+        "symfony/dom-crawler": "2.8.*|3.0.*"
 	},
 	"autoload": {
 		"classmap": [

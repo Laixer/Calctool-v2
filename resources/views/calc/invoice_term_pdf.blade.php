@@ -35,8 +35,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
     <title>Termijnfactuur</title>
     <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" media="all" />
   </head>
-  
-  <body style="background-image: url(http://localhost/images/concept.png);">
+   <body style="background-image: url(http://localhost/images/concept.png);">
      <header class="clearfix">
         <div id="heading" class="clearfix">
         <table border="0" cellspacing="0" cellpadding="0">
@@ -164,9 +163,9 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
       <thead>
         <tr>
           <th class="qty">&nbsp;</th>
-          <th class="qty">Bedrag (excl. BTW)</th>
-          <th class="qty">@if ($include_tax)BTW bedrag @endif</th>
-          <th class="qty">@if ($include_tax)Bedrag (incl. BTW) @endif</th>
+          <th class="qty">Bedrag @if(!$project->tax_reverse)(excl. BTW)@endif</th>
+          <th class="qty">@if(!$project->tax_reverse)BTW bedrag @endif</th>
+          <th class="qty">@if(!$project->tax_reverse)Bedrag (incl. BTW) @endif</th>
         </tr>
       </thead>
            <tbody>
@@ -176,9 +175,9 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
-        @if ($include_tax)
+        
         @if (!$project->tax_reverse)
-<!--         <tr>
+        <tr>
           <td class="qty">&nbsp;<i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
           <td class="qty">{{ '&euro; '.number_format($invoice->rest_21, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
@@ -189,7 +188,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
           <td class="qty">{{ '&euro; '.number_format($invoice->rest_6, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
-        </tr> -->
+        </tr>
         @else
         <tr>
           <td class="qty">&nbsp;<i>Aandeel termijnfactuur in 0% BTW categorie</i></td>
@@ -199,7 +198,6 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
         </tr>
         @endif
         
-
         @if (!$project->tax_reverse)
         <tr>
           <td class="qty">BTW bedrag 21%</td>
@@ -212,9 +210,8 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
           <td class="qty">&nbsp;</td>
           <td class="qty">{{ '&euro; '.number_format(($invoice->rest_6/100)*6, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
-        </tr>
-        @endif
-       
+        </tr> 
+        @endif   
         <tr>
           <td class="qty"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
           <td class="qty">&nbsp;</td>
@@ -222,10 +219,9 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
           <td class="qty"><strong>{{ '&euro; '.number_format($invoice->amount+(($invoice->rest_21/100)*21)+(($invoice->rest_6/100)*6), 2, ",",".") }}</strong></td>
         </tr>
       </tbody>
-      @endif
     </table>
 
-      @if($project->tax_reverse)<h2 class="name">Op deze factuur is het <strong>BTW Verlegd</strong></h1>@endif
+      @if($project->tax_reverse)<h2 class="name">Deze factuur is <strong>BTW Verlegd</strong></h1>@endif
 
     <h2 class="name">Bepalingen</h2>
     <hr color="#000" size="1">

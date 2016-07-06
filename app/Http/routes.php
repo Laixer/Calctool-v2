@@ -29,6 +29,8 @@ Route::group(['middleware' => 'guest'], function() {
 	Route::get('ex-project-overview/{token}/done', 'ClientController@doOfferAccept')->where('token', '[0-9a-z]{40}');
 });
 
+Route::post('api/v1/register/usernamecheck', 'ApiController@doCheckUsernameEXist');
+
 Route::group(['prefix' => 'api/v1', 'middleware' => 'auth'], function() {
 	Route::get('/', 'ApiController@getApiRoot');
 	Route::get('/projects', 'ApiController@getProjects');
