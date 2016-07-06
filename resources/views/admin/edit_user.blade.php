@@ -122,7 +122,7 @@ $(document).ready(function() {
 							<a href="#admin" data-toggle="tab">Adminlog</a>
 						</li>
 						<li>
-							<a href="#audit" data-toggle="tab">Auditlog</a>
+							<a href="#audit" data-toggle="tab">Eventlog</a>
 						</li>
 					</ul>
 
