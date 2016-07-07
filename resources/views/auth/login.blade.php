@@ -99,7 +99,7 @@ $(function() {
 					<div class="white-row">
 
 						<p>
-							Heb je een account maar ben je het wachtwoord vergeten? Vraag dan hieronder een nieuwe wachtwoord aan. Mocht het niet lukken neem dan contact op met de <a href="#">helpdesk</a>.
+							Vraag hieronder een nieuwe wachtwoord aan. Mocht het niet lukken neem dan contact op met de <a href="/support">suppoert</a> afdeling.
 						</p>
 
 						@if(Session::get('success'))
