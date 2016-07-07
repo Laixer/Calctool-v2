@@ -67,9 +67,9 @@ return [
         'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', 'localhost'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'database' => env('DB_DATABASE', 'test'),
+            'username' => env('DB_USERNAME', env('PG_USER')),
+            'password' => env('DB_PASSWORD', env('PG_PASSWORD')),
             'charset'  => 'utf8',
             'prefix'   => '',
             'schema'   => 'public',
