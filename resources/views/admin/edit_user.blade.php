@@ -335,7 +335,7 @@ $(document).ready(function() {
 
 							<tr>
 								<td class="col-md-2"><input type="text" name="date" id="date" class="form-control-sm-text datepick"/></td>
-								<td class="col-md-9"><input type="text" name="note" id="note" class="form-control-sm-text" placeholder="Gebruiker geholpen met project invullen..." /></td>
+								<td class="col-md-9"><input type="text" name="note" id="note" class="form-control-sm-text" placeholder="Gebruiker geholpen met project opzetten..." /></td>
 								<td class="col-md-1"><button class="btn btn-primary btn-xs"> Toevoegen</button></td>
 							</tr>
 
