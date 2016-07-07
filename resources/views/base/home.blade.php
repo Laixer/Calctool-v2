@@ -73,12 +73,12 @@ $(document).ready(function() {
 				</div>
 				<hr>
 				<div class="row">
-					<div class="col-md-8">
-						<h4>Al je noodzakelijke gegevens zijn bekend en je kan direct beginnen met het aanmaken van een nieuw project. 
-						Je kan je gegevens controleren of later aanpassen en aanvullen onder "Mijn bedrijf".</h4>
+					<div class="col-md-12">
+						<h4>Al je noodzakelijke gegevens zijn bekend en je kan direct beginnen met het aanmaken van een nieuw project. </h4>
+						Je kan je gegevens controleren of later aanpassen en aanvullen onder "Mijn bedrijf".
 						<br>
-						<h4>Mocht je vragen hebben of hulp nodig hebben laat dit dan weten in de feedback knop rechts op het scherm.
-						Wij beantwoorden deze vraag dan binnen 12 uur of bellen je indien gewenst, laat hiervoro je telefoonnummer achter.</h4>
+						Mocht je vragen hebben of hulp nodig hebben laat dit dan weten in de feedback knop rechts op het scherm.
+						Wij beantwoorden deze vraag dan binnen 12 uur of bellen je indien gewenst, laat hiervoor je telefoonnummer achter.
 					</div>
 				</div>
 			</div>
