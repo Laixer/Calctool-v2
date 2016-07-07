@@ -82,9 +82,11 @@ $(document).ready(function() {
 					</div>
 				</div>
 			</div>
-			</form>
 			<div class="modal-footer">
 				<div class="col-md-6"></div>
+				<div class="col-md-6">
+					<button class="btn btn-primary" onclick="$('#introModal').modal('hide')"> Sluiten</button>
+				</div>
 			</div>
 		</div>
 	</div>
