@@ -25,6 +25,9 @@ class SignupTest extends TestCase
              ->check('tos')
              ->press('Aanmelden')
              ->see('bevestingsmail verstuurd');
+
+        $this->seeInDatabase('user_account', ['username' => 'testuser']);
+
     }
 
     /**

@@ -23,4 +23,39 @@ class HomeTest extends TestCase
              ->visit('/register')
              ->see('bericht');
     }
+
+    /**
+     * A basic functional test example.
+     *
+     * @return void
+     */
+    public function test404()
+    {
+        $this->call('GET', '/randompage');
+        $this->assertResponseStatus(404);
+    }
+
+    /**
+     * A basic functional test example.
+     *
+     * @return void
+     */
+    public function testAdminRedirect()
+    {
+        $this->call('GET', '/admin');
+        $this->assertRedirectedTo('/login');
+    }
+
+    /**
+     * A basic functional test example.
+     *
+     * @return void
+     */
+    public function testPasswordRest()
+    {
+        $this->visit('/login')
+             ->type('testuser@calculatietool.com', 'email')
+             ->press('Verzenden')
+             ->see('Instructies verzonden');
+    }
 }

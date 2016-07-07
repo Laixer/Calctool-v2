@@ -11,8 +11,12 @@ class SupportTest extends TestCase
      *
      * @return void
      */
-    public function testExample()
+    public function testSendMessage()
     {
-        $this->assertTrue(true);
+        $this->visit('/support')
+             ->type('testuser@calculatietool.com', 'email')
+             ->type('Test message', 'subject')
+             ->press('Verstuur')
+             ->see('Naam is een verplicht veld');
     }
 }
