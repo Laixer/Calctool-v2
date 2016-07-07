@@ -18,10 +18,10 @@ class HomeTest extends TestCase
              ->see('Registreren')
              ->see('Vergeten')
              ->visit('/register')
-             ->see('Inloggen')
-             ->see('Klantenservice')
-             ->visit('/register')
-             ->see('bericht');
+             ->see('Direct inloggen?')
+             ->visit('/support')
+             ->see('bericht')
+             ->see('vraag');
     }
 
     /**
