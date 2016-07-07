@@ -57,19 +57,21 @@
 														<br>
 														Graag willen we nog even een paar dingen uitleggen voordat je aan de slag gaat.
 														Het programma is iets anders van opzet dan de doorsnee calculatie apps.
-														Het grootste verschil zit hem in de module calculeren. Deze is opgezet volgens
-														het "biervilt principe". Dit houdt in dat je geen normeringen kunt toe passen. 
+														Het grootste verschil zit hem in de module calculeren. Deze is opgezet logisch maar ook makkelijker te gebruiken. Je geeft letterlijk op wat je nodig hebt voor de arbeid, het materiaal, er is zelfs een kop voor overig.
 														<br>
-														Je geeft gewoon letterlijk op wat je nodig hebt voor de arbeid, het materiaal en een kop overig.
 														<br>
 														Het programma is heel duidelijk van opzet en je hebt het echt zo onder knie, desalniettemin kunnen er altijd vragen zijn. Stel deze gerust, dan proberen wij deze zo snel mogelijk te beantwoorden.
 														<br>
+														<br>
 														Er zijn diverse filmpjes die de modules duidelijk maken. 
+														<br>
 														<br>
 														Offertes opstellen was echt nog nooit zo makkelijk!
 														Leuk om je bij ons programma te mogen verwelkomen!
 														<br>
+														<br>
 														Heel veel succes en goede zaken gewenst!
+														<br>
 														<br>
 															Het team van van <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
 														<br>
