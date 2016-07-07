@@ -20,6 +20,9 @@
 	.styleColor {
 		color:#4E4E4E;
 	}
+	h4.panel-title a:hover {
+		color:#FFF;
+	}
 	h4 {
 		color:#517A00;
 	}

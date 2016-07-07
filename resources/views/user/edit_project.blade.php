@@ -793,7 +793,7 @@ if ($less_total>0) {
 										<input name="tax_reverse" disabled type="checkbox" {{ $project->tax_reverse ? 'checked' : '' }}>
 									</div>
 								</div>
-								<div class="col-md-10">
+								<div class="col-md-10" style="padding-top:30px;">
 									<p>Een project zonder btw bedrag invoeren.</p>
 								</div>
 							</div>
@@ -805,7 +805,7 @@ if ($less_total>0) {
 										<input name="use_estimate" {{ ($disable_estim ? 'disabled' : '') }} type="checkbox" {{ $project->use_estimate ? 'checked' : '' }}>
 									</div>
 								</div>
-								<div class="col-md-10">		
+								<div class="col-md-10" style="padding-top:30px;">		
 									<p>Voeg de module stelposten toe aan je calculatie. Je kan nu stelposten toe gaan voegen aan je offerte en deze later definitief maken/stellen voor op de factuur.</p>
 								</div>
 							</div>
@@ -818,7 +818,7 @@ if ($less_total>0) {
 										<input name="use_more" type="checkbox" {{ ($disable_more ? 'disabled' : '') }} {{ $project->use_more ? 'checked' : '' }}>
 									</div>
 								</div>
-								<div class="col-md-10">
+								<div class="col-md-10" style="padding-top:30px;">
 									<p>Voeg de module meerwerk toe aan je calculatie. Je kan nu extra kosten op gaan voeren op je facturen.</p>
 								</div>
 							</div>
@@ -830,7 +830,7 @@ if ($less_total>0) {
 										<input name="use_less" type="checkbox" {{ ($disable_less ? 'disabled' : '') }} {{ $project->use_less ? 'checked' : '' }}>
 									</div>
 								</div>
-								<div class="col-md-10">
+								<div class="col-md-10" style="padding-top:30px;">
 									<p>Voeg de module minderwerk toe aan je calculatie. Je kan nu bedragen in mindering gaan brengen op je facturen.</p>
 								</div>
 							</div>
@@ -838,12 +838,24 @@ if ($less_total>0) {
 							@if (0)
 							<div class="row">
 								<div class="col-md-2">
+									<label for="type">Nulregels</label>
+									<div class="form-group">
+										<input name="X" type="checkbox" {{ ($disable_less ? 'disabled' : '') }} {{ $project->use_less ? 'checked' : '' }}>
+									</div>
+								</div>
+								<div class="col-md-10" style="padding-top:30px;">
+									<p>Lege regels verbergen op de offerte en factuur.</p>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-2">
 									<label for="type">Email herinnering aanzetten</label>
 									<div class="form-group">
 										<input name="mail_reminder" type="checkbox" {{ $project->pref_email_reminder ? 'checked' : '' }}>
 									</div>
 								</div>
-								<div class="col-md-10">
+								<div class="col-md-10" style="padding-top:30px;">
 									<p>De CalculatieTool.com kan bij digitaal verstuurde offertes en facturen respectievelijk na het verstrijken van de geldigheid van de offerte of ingestelde betalingsconditie van de factuur automatische herinneringen sturen naar je klant. Jij als gebruiker wordt hierover altijd geïnformeerd met een bericht in je notificaties. De tekst in de te verzenden mail staat default ingesteld in je 'voorkeuren' onder 'mijn account', deze is aanpasbaar per account.</p>
 								</div>
 							</div>
