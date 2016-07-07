@@ -23,8 +23,9 @@
    <p>
        <strong>Wat mijn Voorwaarden zeggen is simpel:</strong>
 		<ul>
-			<li>De CalculatieTool is geen abonnement. Je kan op ieder moment je account opzeggen.
+			<li>De CalculatieTool is geen vast abonnement. Je kan op ieder moment je account opzeggen, geen opzegtermijn of schriftelijk opzegging. Jij deactiveert simpel en snel zelf je account in bij de instellingen.
 			<li> Ik geef je de eerste 30 dagen gratis, ongeacht wat. Mocht je langer gratis toegang nodig hebben, neem even contact op en ik bekijk de mogelijkheden.</li>
+            <li> Tot eind 2016 kost de CalculatieTool.com je nu tijdelijk helemaal niets. In afwijking van het gestelde in de onderstaande voorwaarden kan je je account nu dus tijdelijk zelf kostenloos opwaarderen, iedere maand december 2016 weer</li>
 			<li>Ik geloof in eerlijkheid; bij de CalculatieTool krijg je met je account toegang tot alles, geen verborgen kosten of afgeschermde delen binnen de CalculatieTool.</li>
 			<li>Ik schrijf geen geld af van je rekening als je dat niet wilt. Jij betaald via iDeal vooruit, zoveel je wilt en voor hoelang je wilt. Het instellen van automatische incasso is natuurlijk wel mogelijk (voor je gemak).</li>
 			<li>Mocht je vooruitbetaling ten einde zijn dan sluit ik je toegang af. Ik bewaar je gegevens minstens 3 maanden. Met een nieuwe vooruitbetaling kan je direct verder waar je bent geëindigd.</li>
