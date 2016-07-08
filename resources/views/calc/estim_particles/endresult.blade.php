@@ -18,9 +18,11 @@ use \Calctool\Calculus\SetEstimateEndresult;
 
 
 	<tbody>
+		<?php $header = false; ?>
 		@if (!$project->tax_reverse)
+		@if (SetEstimateEndresult::conCalcLaborActivityTax1Amount($project))
 		<tr>
-			<td class="col-md-4">Arbeidskosten</td>
+			<td class="col-md-4"><?php echo "Arbeidskosten"; $header = true; ?></td>
 			<td class="col-md-1">{{ number_format(SetEstimateEndresult::conCalcLaborActivityTax1($project), 2, ",",".") }}</td>
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -28,8 +30,10 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcLaborActivityTax1AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
+		@endif
+		@if (SetEstimateEndresult::conCalcLaborActivityTax2Amount($project))
 		<tr>
-			<td class="col-md-4">&nbsp;</td>
+			<td class="col-md-4"><?php echo !$header ? "Arbeidskosten" : "" ?></td>
 			<td class="col-md-1">{{ number_format(SetEstimateEndresult::conCalcLaborActivityTax2($project), 2, ",",".") }}</td>
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -37,7 +41,9 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
+		@endif
 		@else
+		@if (SetEstimateEndresult::conCalcLaborActivityTax3Amount($project))
 		<tr>
 			<td class="col-md-4">Arbeidskosten</td>
 			<td class="col-md-1">{{ number_format(SetEstimateEndresult::conCalcLaborActivityTax3($project), 2, ",",".") }}</td>
@@ -48,10 +54,13 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
 		@endif
+		@endif
 
+		<?php $header = false; ?>
 		@if (!$project->tax_reverse)
+		@if (SetEstimateEndresult::conCalcMaterialActivityTax1Amount($project))
 		<tr>
-			<td class="col-md-4">Materiaalkosten</td>
+			<td class="col-md-4"><?php echo "Materiaalkosten"; $header = true; ?></td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -59,8 +68,10 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcMaterialActivityTax1AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
+		@endif
+		@if (SetEstimateEndresult::conCalcMaterialActivityTax2Amount($project))
 		<tr>
-			<td class="col-md-4">&nbsp;</td>
+			<td class="col-md-4"><?php echo !$header ? "Materiaalkosten" : "" ?></td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -68,7 +79,9 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
+		@endif
 		@else
+		@if (SetEstimateEndresult::conCalcMaterialActivityTax3Amount($project))
 		<tr>
 			<td class="col-md-4">Materiaalkosten</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -79,10 +92,13 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
 		@endif
+		@endif
 
+		<?php $header = false; ?>
 		@if (!$project->tax_reverse)
+		@if (SetEstimateEndresult::conCalcEquipmentActivityTax1Amount($project))
 		<tr>
-			<td class="col-md-4">Overige kosten</td>
+			<td class="col-md-4"><?php echo "Overige kosten"; $header = true; ?></td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -90,8 +106,10 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcEquipmentActivityTax1AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
+		@endif
+		@if (SetEstimateEndresult::conCalcEquipmentActivityTax2Amount($project))
 		<tr>
-			<td class="col-md-4">&nbsp;</td>
+			<td class="col-md-4"><?php echo !$header ? "Overige kosten" : "" ?></td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -99,7 +117,9 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::conCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
+		@endif
 		@else
+		@if (SetEstimateEndresult::conCalcEquipmentActivityTax3Amount($project))
 		<tr>
 			<td class="col-md-4">Overige kosten</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -109,6 +129,7 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-2">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
+		@endif
 		@endif
 
 		<tr>
@@ -138,11 +159,12 @@ use \Calctool\Calculus\SetEstimateEndresult;
 		</tr>
 	</thead>
 
-
 	<tbody>
+		<?php $header = false; ?>
 		@if (!$project->tax_reverse)
+		@if (SetEstimateEndresult::subconCalcLaborActivityTax1Amount($project))
 		<tr>
-			<td class="col-md-4">Arbeidskosten</td>
+			<td class="col-md-4"><?php echo "Arbeidskosten"; $header = true; ?></td>
 			<td class="col-md-1">{{ number_format(SetEstimateEndresult::subconCalcLaborActivityTax1($project), 2, ",",".") }}</td>
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -150,8 +172,10 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcLaborActivityTax1AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
+		@endif
+		@if (SetEstimateEndresult::subconCalcLaborActivityTax2Amount($project))
 		<tr>
-			<td class="col-md-4">&nbsp;</td>
+			<td class="col-md-4"><?php echo !$header ? "Arbeidskosten" : "" ?></td>
 			<td class="col-md-1">{{ number_format(SetEstimateEndresult::subconCalcLaborActivityTax2($project), 2, ",",".") }}</td>
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -159,7 +183,9 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcLaborActivityTax2AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
+		@endif
 		@else
+		@if (SetEstimateEndresult::subconCalcLaborActivityTax3Amount($project))
 		<tr>
 			<td class="col-md-4">Arbeidskosten</td>
 			<td class="col-md-1">{{ number_format(SetEstimateEndresult::subconCalcLaborActivityTax3($project), 2, ",",".") }}</td>
@@ -170,10 +196,13 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
 		@endif
+		@endif
 
+		<?php $header = false; ?>
 		@if (!$project->tax_reverse)
+		@if (SetEstimateEndresult::subconCalcMaterialActivityTax1Amount($project))
 		<tr>
-			<td class="col-md-4">Materiaalkosten</td>
+			<td class="col-md-4"><?php echo "Materiaalkosten"; $header = true; ?></td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -181,8 +210,10 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcMaterialActivityTax1AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
+		@endif
+		@if (SetEstimateEndresult::subconCalcMaterialActivityTax2Amount($project))
 		<tr>
-			<td class="col-md-4">&nbsp;</td>
+			<td class="col-md-4"><?php echo !$header ? "Materiaalkostens" : "" ?></td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -190,7 +221,9 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcMaterialActivityTax2AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
+		@endif
 		@else
+		@if (SetEstimateEndresult::subconCalcMaterialActivityTax3Amount($project))
 		<tr>
 			<td class="col-md-4">Materiaalkosten</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -201,10 +234,13 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
 		@endif
+		@endif
 
+		<?php $header = false; ?>
 		@if (!$project->tax_reverse)
+		@if (SetEstimateEndresult::subconCalcEquipmentActivityTax1Amount($project))
 		<tr>
-			<td class="col-md-4">Overige kosten</td>
+			<td class="col-md-4"><?php echo "Overige kosten"; $header = true; ?></td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -212,8 +248,10 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcEquipmentActivityTax1AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
+		@endif
+		@if (SetEstimateEndresult::subconCalcEquipmentActivityTax2Amount($project))
 		<tr>
-			<td class="col-md-4">&nbsp;</td>
+			<td class="col-md-4"><?php echo !$header ? "Overige kosten" : "" ?></td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -221,7 +259,9 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-2">{{ '&euro; '.number_format(SetEstimateEndresult::subconCalcEquipmentActivityTax2AmountTax($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
+		@endif
 		@else
+		@if (SetEstimateEndresult::subconCalcEquipmentActivityTax3Amount($project))
 		<tr>
 			<td class="col-md-4">Overige kosten</td>
 			<td class="col-md-1">&nbsp;</td>
@@ -231,6 +271,7 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-2">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
+		@endif
 		@endif
 
 		<tr>
@@ -259,7 +300,6 @@ use \Calctool\Calculus\SetEstimateEndresult;
 		</tr>
 	</thead>
 
-
 	<tbody>
 		<tr>
 			<td class="col-md-5"><strong>Calculatief te factureren (excl. BTW)<strong></td>
@@ -270,6 +310,7 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-2">&nbsp;</td>
 		</tr>
 		@if (!$project->tax_reverse)
+		@if (SetEstimateEndresult::totalContractingTax1($project))
 		<tr>
 			<td class="col-md-5">BTW bedrag aanneming 21%</td>
 			<td class="col-md-2">&nbsp;</td>
@@ -278,6 +319,8 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateEndresult::totalContractingTax1($project), 2, ",",".") }}</td>
 			<td class="col-md-2">&nbsp;</td>
 		</tr>
+		@endif
+		@if (SetEstimateEndresult::totalContractingTax2($project))
 		<tr>
 			<td class="col-md-5">BTW bedrag aanneming 6%</td>
 			<td class="col-md-2">&nbsp;</td>
@@ -286,6 +329,8 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateEndresult::totalContractingTax2($project), 2, ",",".") }}</td>
 			<td class="col-md-2">&nbsp;</td>
 		</tr>
+		@endif
+		@if (SetEstimateEndresult::totalSubcontractingTax1($project))
 		<tr>
 			<td class="col-md-5">BTW bedrag onderaanneming 21%</td>
 			<td class="col-md-2">&nbsp;</td>
@@ -294,6 +339,8 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
 			<td class="col-md-2">&nbsp;</td>
 		</tr>
+		@endif
+		@if (SetEstimateEndresult::totalSubcontractingTax2($project))
 		<tr>
 			<td class="col-md-5">BTW bedrag onderaanneming 6%</td>
 			<td class="col-md-2">&nbsp;</td>
@@ -302,6 +349,7 @@ use \Calctool\Calculus\SetEstimateEndresult;
 			<td class="col-md-1">{{ '&euro; '.number_format(SetEstimateEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
 			<td class="col-md-2">&nbsp;</td>
 		</tr>
+		@endif
 		@endif
 		<tr>
 			<td class="col-md-5"><strong>Te factureren BTW bedrag</strong></td>
