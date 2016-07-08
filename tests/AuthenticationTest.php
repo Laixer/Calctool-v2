@@ -44,4 +44,24 @@ class AuthenticationTest extends TestCase
              ->press('Login')
              ->see('verkeerd');
     }
+
+    /**
+     * A basic functional test example.
+     *
+     * @return void
+     */
+    public function testDefaultLogin()
+    {
+        $user = factory(Calctool\Models\User::class)->create();
+
+        $this->actingAs($user)
+             ->visit('/')
+             ->see('Welkom')
+             ->see($user->firstname)
+             ->see('Mijn Bedrijf')
+             ->see('Prijslijsten')
+             ->see('Urenregistratie')
+             ->see('Inkoopfacturen')
+             ->see('Relaties');
+    }
 }
