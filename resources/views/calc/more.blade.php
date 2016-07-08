@@ -402,7 +402,7 @@ var n = this,
 				});
 			}
 		});
-		$("#tsave-save").click(function(){
+		$(".tsave-save").click(function(){
 			var flag = true;
 			var $curThis = $(this);
 			if(flag){
@@ -432,6 +432,7 @@ var n = this,
 						.find("td:eq(1)").text(json.hour).end()
 						.find("td:eq(2)").text('€ '+$.number(rate*amount,2,',','.')).end()
 						.find("td:eq(3)").text($note).end()
+						.find("td:eq(4)").html('').end()
 						.prependTo($curTable);
 						$curThis.closest("tr").find("input").val("");
 					} else {
@@ -759,7 +760,7 @@ var n = this,
 															<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-7"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
-															<td class="col-md-1"><button id="tsave-save" class="btn btn-primary btn-xs"> Toevoegen</button></td>
+															<td class="col-md-1"><button class="btn btn-primary btn-xs tsave-save"> Toevoegen</button></td>
 														</tr>
 														<?php
 														}else {
