@@ -977,7 +977,7 @@ $type = ProjectType::find($project->type_id);
                                         </tr>
                                       </tbody>
                                     </table>
-                                    <?php } ?>
+                                    
 
                                     <?#--PAGE HEADER SECOND START--?>
                                     <div style="page-break-after:always;"></div>
@@ -993,6 +993,8 @@ $type = ProjectType::find($project->type_id);
                                     </header>
                                     <?#--PAGE HEADER SECOND END--?>
                                 <?#--INCLUDE TERM END--?>
+
+                                <?php } ?>
 
 
           @if($project->tax_reverse)<h2 class="name">Deze factuur is <strong>BTW Verlegd</strong></h1>@endif
