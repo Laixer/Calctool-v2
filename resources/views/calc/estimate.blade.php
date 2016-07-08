@@ -888,7 +888,7 @@ var n = this,
 															<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-7"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
-															<td class="col-md-1"><button class="btn btn-primary btn-xs lsave-sav"> Toevoegen</button></td>
+															<td class="col-md-1"><button class="btn btn-primary btn-xs lsave-save"> Toevoegen</button></td>
 														</tr>
 														<?php }else{ ?>
 														<?php
