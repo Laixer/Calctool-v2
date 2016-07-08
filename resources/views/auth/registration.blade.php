@@ -194,9 +194,9 @@ $(function() {
 
 						<hr class="half-margins">
 
-						<h4>Klantenservice</h4>
+						<h4>Support</h4>
 						<p>
-							Als u op zoek bent naar hulp of gewoon een vraag wilt stellen, neem dan <a href="about">contact</a> met ons op.
+							Als u op zoek bent naar hulp of gewoon een vraag wilt stellen, neem dan <a href="/support">contact</a> met ons op.
 						</p>
 
 					</div>

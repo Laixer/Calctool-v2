@@ -8,7 +8,6 @@ use \Calctool\Models\Offer;
 use \Calctool\Models\ProjectType;
 use \Calctool\Models\Resource;
 
-
 $offer = Offer::find($invoice->offer_id);
 if (!$offer)
   exit();
@@ -80,7 +79,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
                     </tr>
                   </tbody>
                 </table>
-              </td>
+               </td>
             </tr>
           </tbody>
         </table>
@@ -131,7 +130,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
                     @if ($invoice->book_code)<div><strong>Boekhoudknummer:</strong></div>@endif
                     <div><strong>Factuurdatum:</strong></div>
                   </td>
-                    <td style="width: 210px">
+                  <td style="width: 210px">
                     <div>{{ $invoice->invoice_code }}</div>
                     <div>{{ $project->project_name }}</div>
                     @if ($invoice->reference)<div>{{ $invoice->reference }}</div>@endif
@@ -144,7 +143,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
           </td>
         </tr>
       </tbody>
-    </table>v
+    </table>
   <br>
   <br>
   </div>
@@ -161,19 +160,19 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
       <thead>
         <tr>
           <th class="qty">&nbsp;</th>
-          <th class="qty">Bedrag (excl. BTW)</th>
-          <th class="qty">@if ($include_tax)BTW bedrag @endif</th>
-          <th class="qty">@if ($include_tax)Bedrag (incl. BTW) @endif</th>
+          <th class="qty">Bedrag @if(!$project->tax_reverse)(excl. BTW)@endif</th>
+          <th class="qty">@if(!$project->tax_reverse)BTW bedrag @endif</th>
+          <th class="qty">@if(!$project->tax_reverse)Bedrag (incl. BTW) @endif</th>
         </tr>
       </thead>
-      <tbody>
+           <tbody>
         <tr>
-          <td class="qty">{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()}}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen.</td>
-          <td class="qty">{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</td>
+          <td class="qty"><strong>{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()}}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen</strong></td>
+          <td class="qty"><strong>{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</strong></td>
           <td class="qty">&nbsp;</td>
           <td class="qty">&nbsp;</td>
         </tr>
-        @if ($include_tax)
+        
         @if (!$project->tax_reverse)
         <tr>
           <td class="qty">&nbsp;<i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
@@ -195,7 +194,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
           <td class="qty">&nbsp;</td>
         </tr>
         @endif
-
+        
         @if (!$project->tax_reverse)
         <tr>
           <td class="qty">BTW bedrag 21%</td>
@@ -208,9 +207,8 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
           <td class="qty">&nbsp;</td>
           <td class="qty">{{ '&euro; '.number_format(($invoice->rest_6/100)*6, 2, ",",".") }}</td>
           <td class="qty">&nbsp;</td>
-        </tr>
-        @endif
-
+        </tr> 
+        @endif   
         <tr>
           <td class="qty"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
           <td class="qty">&nbsp;</td>
@@ -218,8 +216,9 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
           <td class="qty"><strong>{{ '&euro; '.number_format($invoice->amount+(($invoice->rest_21/100)*21)+(($invoice->rest_6/100)*6), 2, ",",".") }}</strong></td>
         </tr>
       </tbody>
-      @endif
     </table>
+
+      @if($project->tax_reverse)<h2 class="name">Deze factuur is <strong>BTW Verlegd</strong></h1>@endif
 
     <h2 class="name">Bepalingen</h2>
     <hr color="#000" size="1">
@@ -233,6 +232,9 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
     <div class="signing">{{ Contact::find($invoice->from_contact_id)->firstname ." ". Contact::find($invoice->from_contact_id)->lastname }}</div>
 
   </main>
+
+
+
 
   </body>
 </html>

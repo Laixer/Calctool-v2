@@ -61,9 +61,9 @@ if (Input::get('all') == 1) {
 					<tr>
 						<th class="col-md-1 hidden-xs">ID</th>
 						<th class="col-md-3">Gebruikersnaam</th>
-						<th class="col-md-2 hidden-sm hidden-xs">Actief</th>
+						<th class="col-md-2">Actief</th>
 						<th class="col-md-3 hidden-xs">Email</th>
-						<th class="col-md-1">Status</th>
+						<th class="col-md-1 hidden-sm hidden-xs">Status</th>
 						<th class="col-md-1 hidden-sm hidden-xs">Type</th>
 					</tr>
 				</thead>
@@ -85,9 +85,9 @@ if (Input::get('all') == 1) {
 								echo ' (' . $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '') . ')';
 							}
 						?></a></td>
-						<td class="col-md-2 hidden-sm hidden-xs">{{ userActive($users) }}</td>
+						<td class="col-md-2">{{ userActive($users) }}</td>
 						<td class="col-md-3 hidden-xs">{{ $users->email }}</td>
-						<td class="col-md-1">{{ userStatus($users) }}</td>
+						<td class="col-md-1 hidden-sm hidden-xs">{{ userStatus($users) }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>
 					</tr>
 				@endforeach

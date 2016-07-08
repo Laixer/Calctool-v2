@@ -1096,17 +1096,23 @@ if (!$project || !$project->isOwner())
 
 									<div class="toogle">
 										<?php
+										$activity_total = 0;
 										foreach(ProjectActivity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->orderBy('created_at')->get() as $activity) {
 											if (Part::find($activity->part_id)->part_name=='contracting') {
 												$profit_mat = $project->profit_calc_contr_mat;
 												$profit_equip = $project->profit_calc_contr_equip;
+												$activity_total = CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip);
 											} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 												$profit_mat = $project->profit_calc_subcontr_mat;
 												$profit_equip = $project->profit_calc_subcontr_equip;
+												$activity_total = CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip);
 											}
 										?>
 										<div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
-											<label>{{ $activity->activity_name }}</label>
+											<label>
+												<span>{{ $activity->activity_name }}</span>
+												<span style="float: right;margin-right: 30px;">{{ '&euro; '.number_format($activity_total, 2, ",",".") }}</span>
+											</label>
 											<div data-step="4" data-intro="Calculeer de werkzaaheid door de regel die jij nodig hebt in te vullen" class="toggle-content">
 												<div class="row">
 													<div class="col-md-5"></div>
@@ -1373,20 +1379,25 @@ if (!$project || !$project->isOwner())
 								<div class="toggle-content">
 
 									<div class="toogle">
-
 										<?php
+										$activity_total = 0;
 										foreach(ProjectActivity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->orderBy('created_at')->get() as $activity) {
 											$profit_mat = 0;
 											if (Part::find($activity->part_id)->part_name=='contracting') {
 												$profit_mat = $project->profit_calc_contr_mat;
 												$profit_equip = $project->profit_calc_contr_equip;
+												$activity_total = CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip);
 											} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
 												$profit_mat = $project->profit_calc_subcontr_mat;
 												$profit_equip = $project->profit_calc_subcontr_equip;
+												$activity_total = CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip);
 											}
 										?>
 										<div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
-											<label>{{ $activity->activity_name }}</label>
+											<label>
+												<span>{{ $activity->activity_name }}</span>
+												<span style="float: right;margin-right: 30px;">{{ '&euro; '.number_format($activity_total, 2, ",",".") }}</span>
+											</label>
 											<div class="toggle-content">
 												<div class="row">
 													<div class="col-md-5"></div>

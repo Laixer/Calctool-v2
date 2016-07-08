@@ -402,7 +402,7 @@ var n = this,
 				});
 			}
 		});
-		$("#tsave-save").click(function(){
+		$(".tsave-save").click(function(){
 			var flag = true;
 			var $curThis = $(this);
 			if(flag){
@@ -432,6 +432,7 @@ var n = this,
 						.find("td:eq(1)").text(json.hour).end()
 						.find("td:eq(2)").text('€ '+$.number(rate*amount,2,',','.')).end()
 						.find("td:eq(3)").text($note).end()
+						.find("td:eq(4)").html('').end()
 						.prependTo($curTable);
 						$curThis.closest("tr").find("input").val("");
 					} else {
@@ -667,9 +668,20 @@ var n = this,
 
 									<div class="toogle">
 
-										@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->orderBy('created_at')->get() as $activity)
+										<?php
+										$activity_total = 0;
+										foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->orderBy('created_at')->get() as $activity) {
+											if (Part::find($activity->part_id)->part_name=='contracting') {
+												$activity_total = MoreOverview::activityTotalProfit($activity, $project->profit_more_contr_mat, $project->profit_more_contr_equip);
+											} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+												$activity_total = MoreOverview::activityTotalProfit($activity, $project->profit_more_subcontr_mat, $project->profit_more_subcontr_equip);
+											}
+										?>
 										<div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
-											<label>{{ $activity->activity_name }}</label>
+											<label>
+												<span>{{ $activity->activity_name }}</span>
+												<span style="float: right;margin-right: 30px;">{{ '&euro; '.number_format($activity_total, 2, ",",".") }}</span>
+											</label>
 											<div class="toggle-content">
 												<div class="row">
 													<div class="col-md-4">
@@ -759,7 +771,7 @@ var n = this,
 															<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-7"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
-															<td class="col-md-1"><button id="tsave-save" class="btn btn-primary btn-xs"> Toevoegen</button></td>
+															<td class="col-md-1"><button class="btn btn-primary btn-xs tsave-save"> Toevoegen</button></td>
 														</tr>
 														<?php
 														}else {
@@ -981,7 +993,7 @@ var n = this,
 												</table>
 											</div>
 										</div>
-										@endforeach
+										<?php } ?>
 									</div>
 
 									<form action="/more/newactivity/{{ $chapter->id }}" method="post">
