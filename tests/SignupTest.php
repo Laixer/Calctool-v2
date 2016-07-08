@@ -4,6 +4,8 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+use Faker\Factory as Faker;
+
 class SignupTest extends TestCase
 {
     use DatabaseTransactions;
@@ -15,20 +17,24 @@ class SignupTest extends TestCase
      */
     public function testCreateNewAccount()
     {
+        $faker = Faker::create();
+        $password = $faker->password;
+
+        $user = factory(Calctool\Models\User::class)->make();
+
         $this->visit('/register')
-             ->type('Voornaam', 'contact_firstname')
-             ->type('Achternaam', 'contact_name')
-             ->type('Testgebruiker', 'contact_name')
-             ->type('Firma L&B', 'company_name')
-             ->type('testuser', 'username')
-             ->type('testuser@calculatietool.com', 'email')
-             ->type('ABC@123', 'secret')
-             ->type('ABC@123', 'secret_confirmation')
+             ->type($user->firstname, 'contact_firstname')
+             ->type($user->lastname, 'contact_name')
+             ->type($faker->company, 'company_name')
+             ->type($user->username, 'username')
+             ->type($user->email, 'email')
+             ->type($password, 'secret')
+             ->type($password, 'secret_confirmation')
              ->check('tos')
              ->press('Aanmelden')
              ->see('bevestingsmail verstuurd');
 
-        $this->seeInDatabase('user_account', ['username' => 'testuser']);
+        $this->seeInDatabase('user_account', ['username' => $user->username]);
     }
 
     /**
@@ -38,15 +44,17 @@ class SignupTest extends TestCase
      */
     public function testCreateNewAccountUsernameExist()
     {
+        $faker = Faker::create();
+        $password = $faker->password;
+
         $this->visit('/register')
-             ->type('Voornaam', 'contact_firstname')
-             ->type('Achternaam', 'contact_name')
-             ->type('Testgebruiker', 'contact_name')
-             ->type('Firma L&B', 'company_name')
+             ->type($faker->firstName, 'contact_firstname')
+             ->type($faker->lastName, 'contact_name')
+             ->type($faker->company, 'company_name')
              ->type('admin', 'username')
-             ->type('otheremail@calculatietool.com', 'email')
-             ->type('ABC@123', 'secret')
-             ->type('ABC@123', 'secret_confirmation')
+             ->type($faker->email, 'email')
+             ->type($password, 'secret')
+             ->type($password, 'secret_confirmation')
              ->check('tos')
              ->press('Aanmelden')
              ->see('gebruikersnaam is al in gebruik');
@@ -59,15 +67,17 @@ class SignupTest extends TestCase
      */
     public function testCreateNewAccountEmailExist()
     {
+        $faker = Faker::create();
+        $password = $faker->password;
+
         $this->visit('/register')
-             ->type('Voornaam', 'contact_firstname')
-             ->type('Achternaam', 'contact_name')
-             ->type('Testgebruiker', 'contact_name')
-             ->type('Firma L&B', 'company_name')
+             ->type($faker->firstName, 'contact_firstname')
+             ->type($faker->lastName, 'contact_name')
+             ->type($faker->company, 'company_name')
              ->type('testuser', 'username')
              ->type('info@calculatietool.com', 'email')
-             ->type('ABC@123', 'secret')
-             ->type('ABC@123', 'secret_confirmation')
+             ->type($password, 'secret')
+             ->type($password, 'secret_confirmation')
              ->check('tos')
              ->press('Aanmelden')
              ->see('email is al bezet');
@@ -80,13 +90,15 @@ class SignupTest extends TestCase
      */
     public function testCreateNewAccountPasswordToShort()
     {
+        $faker = Faker::create();
+        $password = $faker->password;
+
         $this->visit('/register')
-             ->type('Arie', 'contact_firstname')
-             ->type('Kaas', 'contact_name')
-             ->type('Kaas', 'contact_name')
-             ->type('Firma L&B', 'company_name')
+             ->type($faker->firstName, 'contact_firstname')
+             ->type($faker->lastName, 'contact_name')
+             ->type($faker->company, 'company_name')
              ->type('testsecuser', 'username')
-             ->type('testsecuser@calculatietool.com', 'email')
+             ->type($faker->email, 'email')
              ->type('q', 'secret')
              ->type('q', 'secret_confirmation')
              ->check('tos')
@@ -101,15 +113,16 @@ class SignupTest extends TestCase
      */
     public function testCreateNewAccountPasswordNotMatch()
     {
+        $faker = Faker::create();
+
         $this->visit('/register')
-             ->type('Arie', 'contact_firstname')
-             ->type('Kaas', 'contact_name')
-             ->type('Kaas', 'contact_name')
-             ->type('Firma L&B', 'company_name')
+             ->type($faker->firstName, 'contact_firstname')
+             ->type($faker->lastName, 'contact_name')
+             ->type($faker->company, 'company_name')
              ->type('testsecuser', 'username')
-             ->type('testsecuser@calculatietool.com', 'email')
-             ->type('ABC@1235', 'secret')
-             ->type('ABC@1233', 'secret_confirmation')
+             ->type($faker->email, 'email')
+             ->type($faker->password, 'secret')
+             ->type($faker->password, 'secret_confirmation')
              ->check('tos')
              ->press('Aanmelden')
              ->see('Wachtwoorden komen niet overeen');

@@ -6,6 +6,8 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class AuthenticationTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * A basic functional test example.
      *
@@ -43,6 +45,8 @@ class AuthenticationTest extends TestCase
              ->type('ABC@123', 'secret')
              ->press('Login')
              ->see('verkeerd');
+
+        Redis::del('auth:guest:fail', 'auth:guest:block');
     }
 
     /**

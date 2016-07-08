@@ -4,6 +4,8 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+use Faker\Factory as Faker;
+
 class HomeTest extends TestCase
 {
     /**
@@ -51,10 +53,12 @@ class HomeTest extends TestCase
      *
      * @return void
      */
-    public function testPasswordRest()
+    public function testPasswordReset()
     {
+        $faker = Faker::create();
+
         $this->visit('/login')
-             ->type('testuser@calculatietool.com', 'email')
+             ->type($faker->email, 'email')
              ->press('Verzenden')
              ->see('Instructies verzonden');
     }
