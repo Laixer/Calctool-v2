@@ -42,7 +42,7 @@ if (!$project || !$project->isOwner()) {
 $relation = Relation::find($project->client_id);
 $relation_self = Relation::find(Auth::user()->self_id);
   if ($relation_self)
-  $contact_self = Contact::where('relation_id','=',$relation_self->id);
+$contact_self = Contact::where('relation_id','=',$relation_self->id);
 
 $include_tax = $invoice->include_tax; //BTW bedragen weergeven 1/6
 $only_totals = $invoice->only_totals; //Alleen het totale offertebedrag weergeven 2/6
@@ -50,12 +50,6 @@ $seperate_subcon = !$invoice->seperate_subcon; //Onderaanneming apart weergeven 
 $display_worktotals = $invoice->display_worktotals; //Kosten werkzaamheden weergeven 4/6
 $display_specification = $invoice->display_specification; //Onderdeel en werkzaamheden weergeven 5/6
 $display_description = $invoice->display_description;  //Omschrijving werkzaamheden weergeven 6/6
-
-// print_r($invoice);
-
-
-// exit();
-
 
 $type = ProjectType::find($project->type_id);
 
@@ -68,9 +62,6 @@ $type = ProjectType::find($project->type_id);
     <title>Factuur</title>
     <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" media="all" />
   </head>
-
-
-
 
 
  <body style="background-image: url(http://localhost/images/concept.png);">
@@ -256,7 +247,7 @@ $type = ProjectType::find($project->type_id);
           <th class="qty">Minderwerk</th>
           <th class="qty">Balans</th>
           <th class="qty">@if(!$project->tax_reverse) BTW % @endif</th>
-          <th class="qty">@if ($include_tax) BTW bedrag @endif</th>
+          <th class="qty">@if(!$project->tax_reverse) BTW bedrag @endif</th>
         </tr>
       </thead>
       <tbody>
@@ -439,8 +430,10 @@ $type = ProjectType::find($project->type_id);
                                 if ($cnt>1) {
                                 ?>
 
-                                <h4>Reeds betaald middels termijnfacturen</h4>
-                                <table class="table table-striped hide-btw2">
+<!--                                 <h4>Reeds betaald middels termijnfacturen</h4>
+ -->                              
+                                  <br>
+                                 <table class="table table-striped hide-btw2">
                                   <thead>
                                     <tr>
                                       <th class="qty">&nbsp;</th>
@@ -451,21 +444,23 @@ $type = ProjectType::find($project->type_id);
                                   </thead>
                                   <tbody>
                                     <tr>
-                                      <td class="qty">Laatste van in totaal {{Invoice::where('offer_id','=', $_invoice->offer_id)->count()}} termijnen</td>
+                                      <td class="qty">Totaal betaald over {{Invoice::where('offer_id','=', $_invoice->offer_id)->count() -1}} termijn(en)</td>
                                       <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',false)->sum('amount'), 2, ",",".") }}</td>
                                       <td class="qty">&nbsp;</td>
                                       <td class="qty">&nbsp;</td>
                                     </tr>
-                                    @if (!$project->tax_reverse)
+                                  <!--   @if (!$project->tax_reverse)
                                     <tr>
                                       <td class="qty">Factuurbedrag in 21% BTW tarief</td>
                                       <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',false)->sum('rest_21'), 2, ",",".") }}</td>
+                                      <td class="qty">&nbsp;</td>
                                       <td class="qty">&nbsp;</td>
                                       <td class="qty">&nbsp;</td>
                                     </tr>
                                     <tr>
                                       <td class="qty">Factuurbedrag belast met 6% BTW</td>
                                       <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',false)->sum('rest_6'), 2, ",",".") }}</td>
+                                      <td class="qty">&nbsp;</td>
                                       <td class="qty">&nbsp;</td>
                                       <td class="qty">&nbsp;</td>
                                     </tr>
@@ -475,47 +470,34 @@ $type = ProjectType::find($project->type_id);
                                       <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',false)->sum('rest_0'), 2, ",",".") }}</td>
                                       <td class="qty">&nbsp;</td>
                                       <td class="qty">&nbsp;</td>
+                                      <td class="qty">&nbsp;</td>
                                     </tr>
-                                    @endif
+                                    @endif -->
                                     @if (!$project->tax_reverse)
                                     <tr>
-                                      <td class="qty">BTW bedrag belast met 21%</td>
+                                      <td class="qty">BTW bedrag 21%</td>
                                       <td class="qty">&nbsp;</td>
                                       <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',false)->sum('rest_21')/100)*21, 2, ",",".") }}</td>
                                       <td class="qty">&nbsp;</td>
                                     </tr>
                                     <tr>
-                                      <td class="qty">BTW bedrag belast met 6%</td>
+                                      <td class="qty">BTW bedrag 6%</td>
                                       <td class="qty">&nbsp;</td>
                                       <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6, 2, ",",".") }}</td>
                                       <td class="qty">&nbsp;</td>
                                     </tr>
                                     @endif
                                     <tr>
-                                      <td class="qty"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
+                                      <td class="qty"><strong>Calculatief gefactureerd</strong></td>
                                       <td class="qty">&nbsp;</td>
                                       <td class="qty">&nbsp;</td>
                                       <td class="qty"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',false)->sum('amount')+((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',false)->sum('rest_21')/100)*21)+((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6), 2, ",",".") }}</strong></td>
                                     </tr>
                                   </tbody>
                                 </table>
-
-
-                                  <?#--PAGE HEADER SECOND START--?>
-                                  <div style="page-break-after:always;"></div>
-                                  <header class="clearfix">
-                                  <div id="logo">
-                                  <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
-                                  </div>
-                                    <div id="invoice">
-                                      <div>{{ $_invoice->invoice_code }}</div>
-                                      <div>{{ $project->project_name }}</div>
-                                      <div>{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
-                                  </div>
-                                  </header>
-                                  <?#--PAGE HEADER SECOND END--?>
-
-                                  <h4>Resterend te betalen</h4>
+                                 
+                                  <!-- <h4>Resterend te betalen</h4> -->
+                                  <br>
                                   <table class="table table-striped hide-btw2">
                                     <thead>
                                       <tr>
@@ -532,7 +514,7 @@ $type = ProjectType::find($project->type_id);
                                         <td class="qty">&nbsp;</td>
                                         <td class="qty">&nbsp;</td>
                                       </tr>
-                                      @if (!$project->tax_reverse)
+                                     <!--  @if (!$project->tax_reverse)
                                       <tr>
                                         <td class="qty">Factuurbedrag belast met 21% BTW</td>
                                         <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',true)->first()->rest_21, 2, ",",".") }}</td>
@@ -552,23 +534,23 @@ $type = ProjectType::find($project->type_id);
                                         <td class="qty">&nbsp;</td>
                                         <td class="qty">&nbsp;</td>
                                       </tr>
-                                      @endif
+                                      @endif -->
                                       @if (!$project->tax_reverse)
                                       <tr>
-                                        <td class="qty">BTW bedrag belast met 21%</td>
+                                        <td class="qty">BTW bedrag 21%</td>
                                         <td class="qty">&nbsp;</td>
                                         <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',true)->first()->rest_21/100)*21, 2, ",",".") }}</td>
                                         <td class="qty">&nbsp;</td>
                                       </tr>
                                       <tr>
-                                        <td class="qty">BTW bedrag belast met 6%</td>
+                                        <td class="qty">BTW bedrag 6%</td>
                                         <td class="qty">&nbsp;</td>
                                         <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6, 2, ",",".") }}</td>
                                         <td class="qty">&nbsp;</td>
                                       </tr>
                                       @endif
                                       <tr>
-                                        <td class="qty"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
+                                        <td class="qty"><strong>Resterend te factureren</strong></td>
                                         <td class="qty">&nbsp;</td>
                                         <td class="qty">&nbsp;</td>
                                         <td class="qty"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',true)->first()->amount+((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',true)->first()->rest_21/100)*21)+((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6), 2, ",",".") }}</strong></td>
@@ -910,12 +892,14 @@ $type = ProjectType::find($project->type_id);
                               <?#--INCLUDE TERM START--?>
                               
                                     <?php
-                                      $cnt = Invoice::where('offer_id','=', $invoice->offer_id)->count();
+                                      $cnt = Invoice::where('offer_id','=', $_invoice->offer_id)->count();
                                       if ($cnt>1) {
                                     ?>
 
-                                    <h4>Reeds betaald</h4>
-                                    <table class="table table-striped hide-btw2">
+<!--                                     <h4>Reeds betaald</h4>
+ -->                                    
+                                      <br>
+                                      <table class="table table-striped hide-btw2">
                                       <thead>
                                         <tr>
                                           <th class="qty">&nbsp;</th>
@@ -926,8 +910,8 @@ $type = ProjectType::find($project->type_id);
                                       </thead>
                                       <tbody>
                                         <tr>
-                                          <td class="qty"><strong>Laatste van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} termijnen</strong></td>
-                                          <td class="qty"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('amount'), 2, ",",".") }}</strong></td>
+                                          <td class="qty"><strong>Totaal betaald over {{Invoice::where('offer_id','=', $_invoice->offer_id)->count()}} termijn(en)</strong></td>
+                                          <td class="qty"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',false)->sum('amount'), 2, ",",".") }}</strong></td>
                                           <td class="qty">&nbsp;</td>
                                           <td class="qty">&nbsp;</td>
                                         </tr>
@@ -935,28 +919,31 @@ $type = ProjectType::find($project->type_id);
                                         <tr>
                                           <td class="qty">BTW bedrag 21%</td>
                                           <td class="qty">&nbsp;</td>
-                                          <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21')/100)*21, 2, ",",".") }}</td>
+                                          <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',false)->sum('rest_21')/100)*21, 2, ",",".") }}</td>
+                                          <td class="qty">&nbsp;</td>
                                           <td class="qty">&nbsp;</td>
                                         </tr>
                                         <tr>
                                           <td class="qty">BTW bedrag 6%</td>
                                           <td class="qty">&nbsp;</td>
-                                          <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6, 2, ",",".") }}</td>
+                                          <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6, 2, ",",".") }}</td>
                                           <td class="qty">&nbsp;</td>
                                         </tr>
                                         @endif
-
                                         <tr>
                                           <td class="qty"><strong>Calculatief te factureren</strong></td>
                                           <td class="qty">&nbsp;</td>
                                           <td class="qty">&nbsp;</td>
-                                          <td class="qty"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('amount')+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21')/100)*21)+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6), 2, ",",".") }}</strong></td>
+                                          <td class="qty"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',false)->sum('amount')+((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',false)->sum('rest_21')/100)*21)+((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6), 2, ",",".") }}</strong></td>
+
                                         </tr>
                                       </tbody>
                                     </table>
 
-                                    <h4>Resterend te betalen</h4>
-                                    <table class="table table-striped hide-btw2">
+<!--                                     <h4>Resterend te betalen</h4>
+ -->                                    
+                                      <br>
+                                      <table class="table table-striped hide-btw2">
                                       <thead>
                                         <tr>
                                           <th class="qty">&nbsp;</th>
@@ -967,8 +954,8 @@ $type = ProjectType::find($project->type_id);
                                       </thead>
                                       <tbody>
                                         <tr>
-                                          <td class="qty"><strong>Laatste van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} termijnen</strong></td>
-                                          <td class="qty"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->amount, 2, ",",".") }}</strong></td>
+                                          <td class="qty"><strong>Laatste van in totaal {{Invoice::where('offer_id','=', $_invoice->offer_id)->count()}} termijnen</strong></td>
+                                          <td class="qty"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',true)->first()->amount, 2, ",",".") }}</strong></td>
                                           <td class="qty">&nbsp;</td>
                                           <td class="qty">&nbsp;</td>
                                         </tr>
@@ -976,13 +963,13 @@ $type = ProjectType::find($project->type_id);
                                         <tr>
                                           <td class="qty">BTW bedrag 21%</td>
                                           <td class="qty">&nbsp;</td>
-                                          <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21/100)*21, 2, ",",".") }}</td>
+                                          <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',true)->first()->rest_21/100)*21, 2, ",",".") }}</td>
                                           <td class="qty">&nbsp;</td>
                                         </tr>
                                         <tr>
                                           <td class="qty">BTW bedrag 6%</td>
                                           <td class="qty">&nbsp;</td>
-                                          <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6, 2, ",",".") }}</td>
+                                          <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6, 2, ",",".") }}</td>
                                           <td class="qty">&nbsp;</td>
                                         </tr>
                                         @endif
@@ -990,11 +977,25 @@ $type = ProjectType::find($project->type_id);
                                           <td class="qty"><strong>Calculatief te factureren</strong></td>
                                           <td class="qty">&nbsp;</td>
                                           <td class="qty">&nbsp;</td>
-                                          <td class="qty"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->amount+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21/100)*21)+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6), 2, ",",".") }}</strong></td>
+                                          <td class="qty"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',true)->first()->amount+((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',true)->first()->rest_21/100)*21)+((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6), 2, ",",".") }}</strong></td>
                                         </tr>
                                       </tbody>
                                     </table>
                                     <?php } ?>
+
+                                    <?#--PAGE HEADER SECOND START--?>
+                                    <div style="page-break-after:always;"></div>
+                                    <header class="clearfix">
+                                    <div id="logo">
+                                    <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+                                    </div>
+                                      <div id="invoice">
+                                        <div>{{ $invoice->invoice_code }}</div>
+                                        <div>{{ $project->project_name }}</div>
+                                        <div>{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
+                                    </div>
+                                    </header>
+                                    <?#--PAGE HEADER SECOND END--?>
                                 <?#--INCLUDE TERM END--?>
 
 
