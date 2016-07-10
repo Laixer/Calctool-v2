@@ -2,12 +2,6 @@
 use \Calctool\Models\UserGroup;
 
 $user = Auth::user();
-
-function translateDate($date) {
-	$en_months = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-	$nl_months = array("Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December");
-	return str_replace($en_months, $nl_months, $date);
-}
 ?>
 
 @extends('layout.master')
@@ -297,7 +291,7 @@ $(document).ready(function() {
 							<h4>Abonnementsduur</h4>
 							<div class="row">
 								<div class="col-md-3"><strong>Abonnement actief tot:</strong></div>
-								<div class="col-md-2">{{ translateDate(strftime('%e %B %Y', strtotime($user->expiration_date))) }}</div>
+								<div class="col-md-2">{{ $user->dueDateHuman() }}</div>
 								<div class="col-md-7">&nbsp;</div>
 							</div>
 							<br />
@@ -388,7 +382,7 @@ $(document).ready(function() {
 
 							<div class="row">
 								<div class="col-md-12">
-									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+									<button class="btn btn-primary" name="save-password"><i class="fa fa-check"></i> Opslaan</button>
 								</div>
 							</div>
 						</form>

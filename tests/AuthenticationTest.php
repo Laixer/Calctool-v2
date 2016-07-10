@@ -4,6 +4,8 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+use Faker\Factory as Faker;
+
 class AuthenticationTest extends TestCase
 {
     use DatabaseTransactions;
@@ -67,5 +69,71 @@ class AuthenticationTest extends TestCase
              ->see('Urenregistratie')
              ->see('Inkoopfacturen')
              ->see('Relaties');
+    }
+
+    /**
+     * A basic functional test example.
+     *
+     * @return void
+     */
+    public function testPasswordChange()
+    {
+        $faker = Faker::create();
+        $password = $faker->password;
+        $new_password = $faker->password;
+
+        $user = factory(Calctool\Models\User::class)->create([
+            'secret' => Hash::make($password)
+        ]);
+
+        $this->actingAs($user)
+             ->visit('/myaccount')
+             ->see('Wachtwoord wijzigen')
+             ->type($password, 'curr_secret')
+             ->type($new_password, 'secret')
+             ->type($new_password, 'secret_confirmation')
+             ->press('save-password')
+             ->see('Instellingen opgeslagen');
+    }
+
+    /**
+     * A basic functional test example.
+     *
+     * @return void
+     */
+    public function testPasswordChangeNoMatch()
+    {
+        $faker = Faker::create();
+        $password = $faker->password;
+        $new_password = $faker->password;
+
+        $user = factory(Calctool\Models\User::class)->create();
+
+        $this->actingAs($user)
+             ->visit('/myaccount')
+             ->see('Wachtwoord wijzigen')
+             ->type($password, 'curr_secret')
+             ->type($new_password, 'secret')
+             ->type($new_password, 'secret_confirmation')
+             ->press('save-password')
+             ->see('Huidige wachtwoord klopt niet');
+    }
+
+    /**
+     * A basic functional test example.
+     *
+     * @return void
+     */
+    public function testDeactivateAccount()
+    {
+        $user = factory(Calctool\Models\User::class)->create();
+
+        $this->actingAs($user)
+             ->visit('/myaccount')
+             ->see('Abonnementsduur')
+             ->visit('/myaccount/deactivate')
+             ->seePageIs('/login');
+
+        $this->seeInDatabase('user_account', ['username' => $user->username, 'active' => false]);
     }
 }
