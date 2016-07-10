@@ -56,12 +56,72 @@ class AuthenticationTest extends TestCase
      *
      * @return void
      */
-    public function testDefaultLogin()
+    public function testAuthTrottle()
     {
+        $faker = Faker::create();
+        $password = $faker->password;
+
         $user = factory(Calctool\Models\User::class)->create();
 
-        $this->actingAs($user)
-             ->visit('/')
+        for ($i=0; $i<10; ++$i) {
+            $this->visit('/')
+                 ->type($user->username, 'username')
+                 ->type($password, 'secret')
+                 ->press('Login');
+        }
+
+        $this->see('Account geblokkeerd voor');
+
+        Redis::del('auth:' . $user->username . ':fail', 'auth:' . $user->username . ':block');
+    }
+
+    /**
+     * A basic functional test example.
+     *
+     * @return void
+     */
+    public function testDefaultLogin()
+    {
+        $faker = Faker::create();
+        $password = $faker->password;
+
+        $user = factory(Calctool\Models\User::class)->create([
+            'secret' => Hash::make($password)
+        ]);
+
+        $this->visit('/')
+             ->type($user->username, 'username')
+             ->type($password, 'secret')
+             ->press('Login')
+             ->seePageIs('/')
+             ->see('Welkom')
+             ->see($user->firstname)
+             ->see('Mijn Bedrijf')
+             ->see('Prijslijsten')
+             ->see('Urenregistratie')
+             ->see('Inkoopfacturen')
+             ->see('Relaties');
+    }
+
+    /**
+     * A basic functional test example.
+     *
+     * @return void
+     */
+    public function testDefaultEmailLogin()
+    {
+        $faker = Faker::create();
+        $password = $faker->password;
+
+        $user = factory(Calctool\Models\User::class)->create([
+            'secret' => Hash::make($password)
+        ]);
+
+        $this->visit('/')
+             ->type($user->email, 'username')
+             ->type($password, 'secret')
+             ->press('Login')
+             ->seePageIs('/')
              ->see('Welkom')
              ->see($user->firstname)
              ->see('Mijn Bedrijf')
