@@ -175,21 +175,27 @@ if (!$project || !$project->isOwner())
 
 													<tbody>
 														@foreach (CalculationLabor::where('activity_id','=', $activity->id)->get() as $labor)
+														<?php
+														//FUCK LELIJK, MAAR DON"T FIX IF IT AIN"T BROKEN
+														$rate = $labor->rate;
+														if (Part::find($activity->part_id)->part_name == 'contracting') {
+															$rate = $project->hour_rate;
+														}
+														?>
 														<tr data-id="{{ $labor->id }}">
 															<td class="col-md-6">Arbeidsuren</td>
 															<td class="col-md-1">&nbsp;</td>
 															<td class="col-md-1">{{ number_format($project->hour_rate, 2,",",".") }}</td>
 															<td class="col-md-1">{{ number_format($labor->isless ? $labor->less_amount : $labor->amount, 2, ",",".") }}</td>
-															<td class="col-md-1">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($labor->rate, $labor->isless ? $labor->less_amount : $labor->amount), 2, ",",".") }}</td>
+															<td class="col-md-1">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal($rate, $labor->isless ? $labor->less_amount : $labor->amount), 2, ",",".") }}</td>
 															<td class="col-md-1"><?php
-																$minderw=LessRegister::lessLaborDeltaTotal($labor);
-																if($minderw <0)
+																$minderw = LessRegister::lessLaborDeltaTotal($labor, $activity, $project);
+																if($minderw < 0)
 																	echo "<font color=red>&euro; ".number_format($minderw, 2, ",",".")."</font>";
 																else
 																	echo '&euro; '.number_format($minderw, 2, ",",".");
-																?>
+																?></span>
 															</td>
-															
 														</tr>
 														@endforeach
 													</tbody>
@@ -368,7 +374,7 @@ if (!$project || !$project->isOwner())
 												<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
 												<td class="col-md-4">{{ $activity->activity_name }}</td>
 												<td class="col-md-1"><span class="pull-right">{{ number_format(LessOverview::laborTotal($activity, $project), 2, ",",".") }}</td>
-												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::laborActivity($activity), 2, ",",".") }}</span></td>
+												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::laborActivity($activity, $project), 2, ",",".") }}</span></td>
 												<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
 												<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
 												<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip, $project), 2, ",",".") }} </td>

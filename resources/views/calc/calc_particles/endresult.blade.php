@@ -1,4 +1,4 @@
-  <?php
+<?php
 use \Calctool\Calculus\CalculationEndresult;
 
 ?>
@@ -110,7 +110,7 @@ use \Calctool\Calculus\CalculationEndresult;
 		@endif
 		@if (CalculationEndresult::conCalcEquipmentActivityTax2Amount($project))
 		<tr>
-			<td class="col-md-4"><?php echo !$header ? "Overige kosten" : "" ?><</td>
+			<td class="col-md-4"><?php echo !$header ? "Overige kosten" : "" ?></td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-2">{{ '&euro; '.number_format(CalculationEndresult::conCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>

@@ -65,4 +65,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 		return str_replace(' ', '_', strtolower($this->username));
 	}
 
+	public function dueDateHuman() {
+		$date =  strftime('%e %B %Y', strtotime($this->expiration_date));
+		$en_months = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+		$nl_months = array("Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December");
+		return str_replace($en_months, $nl_months, $date);
+	}
 }

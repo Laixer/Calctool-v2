@@ -66,7 +66,7 @@ class UserController extends Controller {
 			}
 		}
 
-		Audit::CreateEvent('account.deactivate.success', 'Account deactivated by user');
+		Audit::CreateEvent('account.deactivate.success', 'Account deactivated by user', $user->id);
 
 		return redirect('/login');
 	}

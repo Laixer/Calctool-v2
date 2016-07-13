@@ -331,7 +331,7 @@ $type = ProjectType::find($project->type_id);
 				$("[name='include-tax']").bootstrapSwitch('toggleState');
 			@endif
 
-			@if (!$offer_last->only_totals)
+			@if ($offer_last->only_totals)
 				$("[name='only-totals']").bootstrapSwitch('toggleState');
 			@endif
 

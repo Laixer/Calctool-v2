@@ -341,6 +341,11 @@ class ProjectController extends Controller {
 				$project->use_less = false;
 		}
 
+		if ($request->input('hide_null'))
+			$project->hide_null = true;
+		else
+			$project->hide_null = false;
+
 		if ($request->input('mail_reminder'))
 			$project->pref_email_reminder = true;
 		else
