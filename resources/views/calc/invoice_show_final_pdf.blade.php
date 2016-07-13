@@ -121,6 +121,8 @@ $(document).ready(function() {
 			    <li><a href="javascript:void(0);" id="sendpost">Door calculatieTool.com</a></li>
 			  </ul>
 			  </div>
+			<?php } else { ?>
+			<a href="/res-{{ $res->id }}/download" class="btn btn-primary">Download PDF</a>
 			<?php } ?>
 		</div>
 
@@ -141,6 +143,8 @@ $(document).ready(function() {
 					    <li><a href="javascript:void(0);" id="sendpost">Door calculatieTool.com</a></li>
 					  </ul>
 					  </div>
+					<?php } else { ?>
+					<a href="/res-{{ $res->id }}/download" class="btn btn-primary">Download PDF</a>
 					<?php } ?>
 				</div>
 			</div>

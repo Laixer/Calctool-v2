@@ -341,6 +341,7 @@ if ($less_total>0) {
 	    $("[name='use_more']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	    $("[name='use_less']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	    $("[name='mail_reminder']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	    $("[name='hide_null']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 
 	if (sessionStorage.introDemo) {
 		var demo = introJs().
@@ -835,12 +836,11 @@ if ($less_total>0) {
 								</div>
 							</div>
 
-							@if (0)
 							<div class="row">
 								<div class="col-md-2">
 									<label for="type">Nulregels</label>
 									<div class="form-group">
-										<input name="X" type="checkbox" {{ ($disable_less ? 'disabled' : '') }} {{ $project->use_less ? 'checked' : '' }}>
+										<input name="hide_null" disabled type="checkbox" {{ $project->hide_null ? 'checked' : '' }}>
 									</div>
 								</div>
 								<div class="col-md-10" style="padding-top:30px;">
@@ -848,6 +848,7 @@ if ($less_total>0) {
 								</div>
 							</div>
 
+							@if (0)
 							<div class="row">
 								<div class="col-md-2">
 									<label for="type">Email herinnering aanzetten</label>
