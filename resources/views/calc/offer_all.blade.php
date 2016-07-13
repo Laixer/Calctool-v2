@@ -19,10 +19,12 @@ if (!$project || !$project->isOwner()) {
 
 @push('style')
 <link media="all" type="text/css" rel="stylesheet" href="/components/intro.js/introjs.css">
+<link media="all" type="text/css" rel="stylesheet" href="/components/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css">
 @endpush
 
 @push('scripts')
 <script src="/components/intro.js/intro.js"></script>
+<script src="/components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 @endpush
 
 @section('title', 'Offertebeheer')
@@ -81,9 +83,52 @@ $(document).ready(function() {
 		}
 
 	}
+    $('#dateRangePicker').datepicker().on('changeDate', function(e){
+		$.post("/offer/close", {
+			date: e.date.toLocaleString(),
+			offer: {{ $offer_last->id }},
+			project: {{ $project->id }}
+		}, function(data){
+			location.reload();
+		});
+	});
 });
 </script>
+<style>
+.datepicker{z-index:1151 !important;}
+</style>
 <div id="wrapper">
+
+	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel2">Opdracht bevestiging</h4>
+				</div>
+
+				<div class="modal-body">
+					<div class="form-horizontal">
+
+					    <div class="form-group">
+					        <label class="col-xs-3 control-label">Bevestiging</label>
+					        <div class="col-xs-6 date">
+					            <div class="input-group input-append date" id="dateRangePicker">
+					                <input type="text" class="form-control" name="date" />
+					                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+					            </div>
+					        </div>
+					    </div>
+
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-default" data-dismiss="modal">Opslaan</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<section class="container">
 
@@ -134,7 +179,13 @@ $(document).ready(function() {
 						<td class="col-md-2"><?php echo date('d-m-Y', strtotime($offer->offer_make)); ?></td>
 						<td class="col-md-3">{{ $i }}</td>
 						<td class="col-md-3">{{ '&euro; '.number_format($offer->offer_total, 2, ",",".") }}</td>
-						<td class="col-md-3"><a href="/res-{{ ($offer_last->resource_id) }}/download" class="btn btn-primary btn-xs"><i class="fa fa-cloud-download fa-fw"></i> Downloaden</a></td>
+						<td class="col-md-3">
+						@if ($offer_last && $offer_last->id == $offer->id && !$offer->offer_finish)
+							<a href="#" data-toggle="modal" data-target="#confirmModal" class="btn btn-primary btn-xs">Opdracht bevestigen</a>
+						@else
+							<a href="/res-{{ ($offer_last->resource_id) }}/download" class="btn btn-primary btn-xs"><i class="fa fa-cloud-download fa-fw"></i> Downloaden</a>
+						@endif
+						</td>
 					</tr>
 					@endforeach
 				</tbody>
