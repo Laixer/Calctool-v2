@@ -263,7 +263,7 @@ function invoice_condition($offer) {
 		  <tr style="page-break-after: always;">
 			<td class="qty">Materiaalkosten</td>
 			<td class="qty">&nbsp;</td>
-			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1Amount($project)+CalculationEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
+			<td class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1Amount($project)+CalculationEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
 			<td class="qty">21%</td>
 			<td class="qty">@if(!$project->tax_reverse) {{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1AmountTax($project)+CalculationEndresult::subconCalcMaterialActivityTax1AmountTax($project), 2, ",",".") }} @endif</td>
 		  </tr>
