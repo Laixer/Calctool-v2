@@ -64,12 +64,9 @@
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
 														<br>
-														<br>
 															Met vriendelijke groet,
 														<br>
-														<br>
 															<strong>Uw vakman</strong>, {{ $user }}</strong></a>
-														<br>
 														<br>
 													</td>
 												</tr>
