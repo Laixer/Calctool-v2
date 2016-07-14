@@ -77,7 +77,9 @@
 
 															Wij geloven in simpel en transparant. De <strong>CalculatieTool.com</strong> is voor de zzp'er die snel en gemakkelijk gestructureerde offertes en facturen wilt kunnen maken.
 														<br>
+														<br>
 															Met vriendelijke groet,
+														<br>
 														<br>
 															Het team van de <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
 														<br>
