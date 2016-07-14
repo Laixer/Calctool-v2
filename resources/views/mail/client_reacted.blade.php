@@ -67,12 +67,9 @@
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
 														<br>
-														<br>
 															Met vriendelijke groet,
 														<br>
-														<br>
 															Het team van de <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
-														<br>
 														<br>
 													</td>
 												</tr>

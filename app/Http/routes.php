@@ -61,6 +61,21 @@ Route::get('support', function() {
 	return view('generic.contact');
 });
 
+Route::group(['prefix' => 'oauth2', 'middleware' => ['check-authorization-params', 'auth']], function() {
+	Route::get('authorize', 'AuthController@getOauth2Authorize');
+	Route::post('authorize', 'AuthController@doOauth2Authorize');//->middleware('csrf');
+});
+
+Route::post('oauth2/token', function() {
+	return Response::json(Authorizer::issueAccessToken());
+});
+
+Route::group(['prefix' => 'oauth2/rest', 'middleware' => 'oauth'], function() {
+	Route::get('user', 'AuthController@getRestUser');
+	Route::get('projects', 'AuthController@getRestUserProjects');
+	Route::get('relations', 'AuthController@getRestUserRelations');
+});	
+
 Route::post('feedback', 'FeedbackController@send');
 Route::post('support', 'FeedbackController@sendSupport');
 
@@ -387,6 +402,13 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 	Route::get('promo', function() {
 		return view('admin.promo');
 	});
+	Route::get('application', function() {
+		return view('admin.application');
+	});
+	Route::get('application/new', function() {
+		return view('admin.new_application');
+	});
+	Route::post('application/new', 'AdminController@doNewApplication');
 	Route::post('snailmail/offer/done', 'AdminController@doOfferPostDone');
 	Route::post('snailmail/invoice/done', 'AdminController@doInvoicePostDone');
 	Route::get('resource', function() {

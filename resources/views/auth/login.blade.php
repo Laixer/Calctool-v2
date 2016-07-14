@@ -43,7 +43,8 @@ $(function() {
 					<h2><strong>Log</strong>In</h2>
 
 					<form method="POST" action="/login" accept-charset="UTF-8" class="white-row">
-					{!! csrf_field() !!}
+						{!! csrf_field() !!}
+                        <input type="hidden" name="redirect" value="{{ Request::get('redirect') }}">
 
 						@if($errors->any())
 						<div class="alert alert-danger">

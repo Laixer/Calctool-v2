@@ -525,6 +525,35 @@ class AdminController extends Controller {
 		return back()->with('success', 'Actiecode aangemaakt');
 	}
 
+	public function doNewApplication(Request $request)
+	{
+		$this->validate($request, [
+			'appid' => array('required','size:40'),
+			'secret' => array('required','size:40'),
+			'name' => array('required'),
+			'endpoint' => array('required','url'),
+		]);
+
+		\DB::table('oauth_clients')->insert([
+			'id' => $request->input('appid'),
+			'secret' => $request->input('secret'),
+			'name' => $request->input('name'),
+			'active' => $request->input('toggle-active') ? true : false,
+			'note' => $request->input('note'),
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => date('Y-m-d H:i:s'),
+		]);
+
+		\DB::table('oauth_client_endpoints')->insert([
+			'client_id' => $request->input('appid'),
+			'redirect_uri' => $request->input('endpoint'),
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => date('Y-m-d H:i:s'),
+		]);
+
+		return back()->with('success', 'Applicatie aangemaakt');
+	}
+
 	public function doDeletePromotion(Request $request, $id)
 	{
 		$promo = Promotion::find($id);

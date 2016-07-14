@@ -69,12 +69,9 @@
 														Offertes opstellen was echt nog nooit zo makkelijk!
 														Leuk om je bij ons programma te mogen verwelkomen!
 														<br>
-														<br>
 														Heel veel succes en goede zaken gewenst!
 														<br>
-														<br>
 															Het team van van <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
-														<br>
 														<br>
 													</td>
 												</tr>
