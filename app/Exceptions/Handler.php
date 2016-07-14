@@ -60,9 +60,10 @@ class Handler extends ExceptionHandler
                     $content .= "<b>User: " . Auth::user()->username . "</b><br />";
                 
                 $content .= "<br />" . nl2br($e);
-                $data = array('email' => 'info@calculatietool.com', 'content' => $content, 'username' => 'CalculatieTool', 'env' => app()->environment());
+                $data = array('content' => $content, 'env' => app()->environment());
                 Mailgun::send('mail.raw', $data, function($message) use ($data) {
-                    $message->to($data['email'], strtolower(trim($data['username'])));
+                    $message->to('y.dewid@calculatietool.com', 'Yorick de Wid');
+                    $message->to('d.zandbergen@calculatietool.com', 'Don Zandbergen');
                     $message->subject('CalculatieTool.com - Exception report ' . $data['env']);
                     $message->from('info@calculatietool.com', 'CalculatieTool.com');
                     $message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
