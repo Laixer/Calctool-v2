@@ -405,11 +405,15 @@ class AuthController extends Controller {
 	    // If the user has allowed the client to access its data, redirect back to the client with an auth code.
 	    if ($request->has('approve')) {
 	        $redirectUri = Authorizer::issueAuthCode('user', $params['user_id'], $params);
+
+	        Audit::CreateEvent('oauth2.authorize.success', 'OUATH2 request approved ' . $params['client']->getName());
 	    }
 
 	    // If the user has denied the client to access its data, redirect back to the client with an error message.
 	    if ($request->has('deny')) {
 	        $redirectUri = Authorizer::authCodeRequestDeniedRedirectUri();
+
+	        Audit::CreateEvent('oauth2.authorize.success', 'OUATH2 request denied ' . $params['client']->getName());
 	    }
 
 	    return redirect($redirectUri);

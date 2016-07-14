@@ -83,6 +83,7 @@ $(document).ready(function() {
 		}
 
 	}
+	@if ($offer_last)
     $('#dateRangePicker').datepicker().on('changeDate', function(e){
 		$.post("/offer/close", {
 			date: e.date.toLocaleString(),
@@ -92,6 +93,7 @@ $(document).ready(function() {
 			location.reload();
 		});
 	});
+	@endif
 });
 </script>
 <style>

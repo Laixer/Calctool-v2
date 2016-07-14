@@ -26,6 +26,17 @@ class AuthenticationTest extends TestCase
      *
      * @return void
      */
+    public function testRedirectToLogin()
+    {
+        $this->visit('/mycompany')
+             ->see('Gebruikersnaam of e-mailadres');
+    }
+
+    /**
+     * A basic functional test example.
+     *
+     * @return void
+     */
     public function testAdminLogin()
     {
         $this->visit('/')
@@ -195,5 +206,26 @@ class AuthenticationTest extends TestCase
              ->seePageIs('/login');
 
         $this->seeInDatabase('user_account', ['username' => $user->username, 'active' => false]);
+    }
+
+    /**
+     * A basic functional test example.
+     *
+     * @return void
+     */
+    public function testRedirectAfterLogin()
+    {
+        $faker = Faker::create();
+        $password = $faker->password;
+
+        $user = factory(Calctool\Models\User::class)->create([
+            'secret' => Hash::make($password)
+        ]);
+
+        $this->visit('/myaccount')
+             ->type($user->username, 'username')
+             ->type($password, 'secret')
+             ->press('Login')
+             ->seePageIs('/myaccount');
     }
 }
