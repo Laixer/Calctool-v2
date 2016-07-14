@@ -15,7 +15,7 @@ Route::get('login', function(){
 	return view('auth.login');
 });
 
-Route::group(['middleware' => 'guest'], function() {
+Route::group(['middleware' => ['guest','csrf']], function() {
 	Route::get('register', 'AuthController@getRegister');
 	Route::post('login', 'AuthController@doLogin');
 	Route::post('register', 'AuthController@doRegister');
@@ -59,6 +59,20 @@ Route::get('privacy-policy', function() {
 });
 Route::get('support', function() {
 	return view('generic.contact');
+});
+
+Route::group(['prefix' => 'oauth2', 'middleware' => ['check-authorization-params', 'auth']], function() {
+	Route::get('authorize', 'AuthController@getOauth2Authorize');
+	Route::post('authorize', 'AuthController@doOauth2Authorize')->middleware('csrf');
+
+	Route::post('token', function() {
+    	return Response::json(Authorizer::issueAccessToken());
+	});
+
+	Route::get('cheese', ['middleware' => 'oauth', function() {
+		$id = Authorizer::getResourceOwnerId();
+    	return response()->json(['secret' => 'the_cheese', 'user' => $id]);
+	}]);
 });
 
 Route::post('feedback', 'FeedbackController@send');

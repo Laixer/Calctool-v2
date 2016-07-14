@@ -23,6 +23,7 @@ use \Auth;
 use \Redis;
 use \Hash;
 use \Mailgun;
+use \Authorizer;
 
 class AuthController extends Controller {
 
@@ -360,15 +361,52 @@ class AuthController extends Controller {
 	 *
 	 * @return Route
 	 */
-	/*public function doHideNextStep()
-	{
-		return Response::make(json_encode(['success' => 1]))->withCookie(cookie()->forget('nstep'));
-	}*/
-
 	public function doLogout()
 	{
 		Audit::CreateEvent('auth.logout.success', 'User destroyed current session');
 		Auth::logout();
 		return redirect('/login');
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function getOauth2Authorize() {
+		$authParams = Authorizer::getAuthCodeRequestParams();
+
+		$formParams = array_except($authParams,'client');
+
+		$formParams['client_id'] = $authParams['client']->getId();
+
+		$formParams['scope'] = implode(config('oauth2.scope_delimiter'), array_map(function($scope) {
+		   return $scope->getId();
+		}, $authParams['scopes']));
+
+		return view('auth.authorization', ['params' => $formParams, 'client' => $authParams['client']]);
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function doOauth2Authorize(Request $request) {
+	    $params = Authorizer::getAuthCodeRequestParams();
+	    $params['user_id'] = Auth::id();
+	    $redirectUri = '/';
+
+	    // If the user has allowed the client to access its data, redirect back to the client with an auth code.
+	    if ($request->has('approve')) {
+	        $redirectUri = Authorizer::issueAuthCode('user', $params['user_id'], $params);
+	    }
+
+	    // If the user has denied the client to access its data, redirect back to the client with an error message.
+	    if ($request->has('deny')) {
+	        $redirectUri = Authorizer::authCodeRequestDeniedRedirectUri();
+	    }
+
+	    return redirect($redirectUri);
 	}
 }
