@@ -356,7 +356,7 @@ $(document).ready(function() {
 
 							<h4>Codes</h4>
 
-							<div class="row">
+							<!--<div class="row">
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="api">API key</label>
@@ -369,7 +369,7 @@ $(document).ready(function() {
 										<input {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="toggle-api" type="checkbox" {{ $user->api_access ? 'checked' : '' }}>
 									</div>
 								</div>
-							</div>
+							</div>-->
 							<div class="row">
 								<div class="col-md-4">
 									<div class="form-group">

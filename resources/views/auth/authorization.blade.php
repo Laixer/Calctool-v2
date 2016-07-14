@@ -1,26 +1,5 @@
 @extends('layout.master')
 
-@section('contentx')
-    <form method="post" action="" class="form-horizontal">
-    {{ csrf_field() }}
-    <div class="form-group">
-        <dl class="dl-horizontal">
-            <dt>Client Name</dt>
-            <dd>{{$client->getName()}}</dd>
-        </dl>
-    </div>
-    <input type="hidden" name="client_id" value="{{ $params['client_id'] }}">
-    <input type="hidden" name="redirect_uri" value="{{ $params['redirect_uri'] }}">
-    <input type="hidden" name="response_type" value="{{ $params['response_type'] }}">
-    <input type="hidden" name="state" value="{{ $params['state'] }}">
-
-    <input type="submit" name="approve" value="1" class="btn btn-success">
-    <input type="submit" name="deny" value="1" class="btn bg-danger">
-</form>
-@stop
-
-@extends('layout.master')
-
 @section('title', 'Applicatie toegang')
 
 @section('content')
@@ -38,7 +17,11 @@
                     <h2>Applicatie <strong>toegang</strong></h2>
 
                     <form method="POST" action="" accept-charset="UTF-8" class="white-row">
-                    {!! csrf_field() !!}
+                        {!! csrf_field() !!}
+                        <input type="hidden" name="client_id" value="{{ $params['client_id'] }}">
+                        <input type="hidden" name="redirect_uri" value="{{ $params['redirect_uri'] }}">
+                        <input type="hidden" name="response_type" value="{{ $params['response_type'] }}">
+                        <input type="hidden" name="state" value="{{ $params['state'] }}">
 
                         @if(Session::get('success'))
                         <div class="alert alert-success">

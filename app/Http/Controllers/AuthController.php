@@ -9,6 +9,7 @@ use Longman\TelegramBot\Request as TRequest;
 use Illuminate\Validation\ValidationException;
 
 use \Calctool\Models\User;
+use \Calctool\Models\Project;
 use \Calctool\Models\UserType;
 use \Calctool\Models\Audit;
 use \Calctool\Models\Telegram;
@@ -90,6 +91,10 @@ class AuthController extends Controller {
 			Redis::del('auth:'.$username.':fail', 'auth:'.$username.':block');
 
 			Audit::CreateEvent('auth.login.succces', 'Login with: ' . \Calctool::remoteAgent());
+
+			if ($request->has('redirect')) {
+				return redirect(urldecode($request->get('redirect')));
+			}
 
 			if (Auth::user()->isSystem()) {
 				return redirect('/admin');
@@ -408,5 +413,40 @@ class AuthController extends Controller {
 	    }
 
 	    return redirect($redirectUri);
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function getRestUser(Request $request) {
+		$id = Authorizer::getResourceOwnerId();
+		$user = User::find($id);
+    	return response()->json($user);
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function getRestUserProjects(Request $request) {
+		$id = Authorizer::getResourceOwnerId();
+		$user = User::find($id);
+		$projects = Project::where('user_id',$user->id)->get();
+    	return response()->json($projects);
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function getRestUserRelations(Request $request) {
+		$id = Authorizer::getResourceOwnerId();
+		$user = User::find($id);
+		$relations = Relation::where('user_id',$user->id)->get();
+    	return response()->json($relations);
 	}
 }

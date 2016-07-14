@@ -17,7 +17,7 @@ class Kernel extends HttpKernel
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-        // \Calctool\Http\Middleware\VerifyCsrfToken::class,
+        \Calctool\Http\Middleware\VerifyCsrfToken::class,
         \LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware::class,
     ];
 
@@ -46,7 +46,6 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'csrf' => \Calctool\Http\Middleware\VerifyCsrfToken::class,
         'auth' => \Calctool\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \Calctool\Http\Middleware\RedirectIfAuthenticated::class,

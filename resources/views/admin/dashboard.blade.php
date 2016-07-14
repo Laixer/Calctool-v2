@@ -207,6 +207,24 @@ $(document).ready(function() {
 						<div class="col-sm-12 col-md-2">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
+									<a class="item-hover" href="/admin/application">
+										<span class="overlay color2"></span>
+										<span class="inner">
+											<span class="block fa fa-user-plus fsize60"></span>
+											<strong>Applicaties</strong>
+										</span>
+									</a>
+									<a href="/admin/application" class="btn btn-primary add_to_cart"><i class="fa fa-user-plus"></i> Applicaties</a>
+								</figure>
+								<div class="item-box-desc">
+									<a href="/admin/application"><h4>Applicaties</h4></a>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-12 col-md-2">
+							<div class="item-box item-box-show fixed-box">
+								<figure>
 									<a class="item-hover" href="/admin/environment">
 										<span class="overlay color2"></span>
 										<span class="inner">
