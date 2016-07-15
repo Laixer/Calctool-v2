@@ -836,6 +836,7 @@ if ($less_total>0) {
 								</div>
 							</div>
 
+							@if (0)
 							<div class="row">
 								<div class="col-md-2">
 									<label for="type">Nulregels</label>
@@ -848,7 +849,6 @@ if ($less_total>0) {
 								</div>
 							</div>
 
-							@if (0)
 							<div class="row">
 								<div class="col-md-2">
 									<label for="type">Email herinnering aanzetten</label>

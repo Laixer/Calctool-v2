@@ -207,13 +207,24 @@ class OfferController extends Controller {
 		if ($relation_self->logo_id)
 			$user_logo = Resource::find($relation_self->logo_id)->file_location;
 
+		$other_contacts = [];
+		if ($request->has('contacts')) {
+			foreach ($request->get('contacts') as $key) {
+				$contact = Contact::find($key[0]);
+				if (!in_array($contact->email, $other_contacts)) {
+					$other_contacts[$contact->email] = $contact->getFormalName();
+				}
+			}
+		}
+
 		$data = array(
 			'email' => $contact_client->email,
+			'client' => $contact_client->getFormalName(),
+			'other_contacts' => $other_contacts,
 			'pdf' => $res->file_location,
 			'preview' => false,
 			'offer_id' => $offer->id,
 			'token' => $share->token,
-			'client' => $contact_client->getFormalName(),
 			'user' => $contact_user->getFormalName(),
 			'project_name' => $project->project_name,
 			'pref_email_offer' => Auth::User()->pref_email_offer,
@@ -221,6 +232,9 @@ class OfferController extends Controller {
 		);
 		Mailgun::send('mail.offer_send', $data, function($message) use ($data) {
 			$message->to($data['email'], strtolower(trim($data['client'])));
+			foreach ($data['other_contacts'] as $email => $name) {
+				$message->to($email, strtolower(trim($name)));
+			}
 			$message->attach($data['pdf']);
 			$message->subject('Offerte ' . $data['project_name']);
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
@@ -239,6 +253,8 @@ class OfferController extends Controller {
 		if (!$project || !$project->isOwner()) {
 			return response()->json(['success' => 0]);
 		}
+		$relation = Relation::find($project->client_id);
+		$contacts = Contact::where('relation_id',$relation->id)->where('id','<>',$offer->to_contact_id)->get();
 
 		$share = ProjectShare::where('project_id', $project->id)->first();
 		if (!$share) {
@@ -258,9 +274,10 @@ class OfferController extends Controller {
 
 		$data = array(
 			'email' => $contact_client->email,
+			'client'=> $contact_client->getFormalName(),
+			'contacts' => $contacts,
 			'preview' => true,
 			'offer_id' => $offer->id,
-			'client'=> $contact_client->getFormalName(),
 			'token' => $share->token,
 			'project_name' => $project->project_name,
 			'user' => $contact_user->getFormalName(),

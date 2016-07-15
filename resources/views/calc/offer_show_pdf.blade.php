@@ -25,10 +25,12 @@ if (!$offer) {
 
 @push('style')
 <link media="all" type="text/css" rel="stylesheet" href="/components/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css">
+<link rel="stylesheet" href="/components/bootstrap-multiselect/dist/css/bootstrap-multiselect.css" type="text/css"/>
 @endpush
 
 @push('scripts')
 <script src="/components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+<script type="text/javascript" src="/components/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
 @endpush
 
 <?php if($common_access_error){ ?>
