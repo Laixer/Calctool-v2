@@ -246,10 +246,16 @@ class MaterialController extends Controller {
 					if (count($data)<4)
 						continue;
 					
+					$price = str_replace(',', '.', str_replace('.', '' , $data[2]));
+					if (!$price)
+						$price = 0;
+					if (!is_numeric($price))
+						$price = 0;
+
 					Product::create(array(
 						'description' => strtolower($data[0]),
 						'unit' => $data[1],
-						'price' => str_replace(',', '.', str_replace('.', '' , $data[2])),
+						'price' => $price,
 						'group_id' => $group->id,
 						'supplier_id' => $mysupplier->id
 					));
