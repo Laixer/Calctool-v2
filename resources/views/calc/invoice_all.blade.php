@@ -212,7 +212,7 @@ if (!$project || !$project->isOwner()) {
 						<th class="col-md-1">Administratie <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier een referentie en/of een debiteurennummer op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 						<th class="col-md-2">Omschrijving <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u een aanhef en een afsluiting opgeven voor op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 						<th class="col-md-1">Conditie <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u opgeven wat de betalingstermijn van de factuur is." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
-						<th class="col-md-2">Status <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier staat de status van uw factuur. Hij is open, te factureren of gefactureerd. Tevens is de PDF te raadplegen en te downloaden. Op de tab 'projectstatus' kunt u aangeven of de factuur betaald is. " href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+						<th class="col-md-2">Status <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier staat de status van uw factuur. Hij is open, te factureren of gefactureerd. Tevens is de PDF te raadplegen en te downloaden." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 						<th class="col-md-1"></th>
 					</tr>
 				</thead>

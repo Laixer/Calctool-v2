@@ -5,6 +5,7 @@ namespace Calctool\Http\Controllers;
 use Illuminate\Http\Request;
 
 use \Calctool\Models\Supplier;
+use \Calctool\Models\SubGroup;
 use \Calctool\Models\Product;
 use \Calctool\Models\Element;
 
@@ -157,7 +158,7 @@ class MaterialController extends Controller {
 			return response()->json(['success' => 3]);
 		}
 
-		$product->description = $request->get('name');
+		$product->description = strtolower($request->get('name'));
 		$product->unit = $request->get('unit');
 		$product->price = str_replace(',', '.', str_replace('.', '' , $request->get('rate')));
 		$product->group_id = $request->get('group');
@@ -219,4 +220,54 @@ class MaterialController extends Controller {
 
 		return response()->json(['success' => 1]);
 	}
+
+	public function doUploadCSV(Request $request)
+	{
+		$this->validate($request, [
+			'csvfile' => array('required'),
+		]);
+
+		if ($request->hasFile('csvfile')) {
+			$file = $request->file('csvfile');
+
+			$mysupplier = Supplier::where('user_id','=',Auth::id())->first();
+			if (!$mysupplier) {
+				$mysupplier = Supplier::create(array('user_id' => Auth::id()));
+			}
+
+			$group = SubGroup::where('group_type','diversen (deel 1)')->first();
+
+			$row = 0;
+			if (($handle = fopen($file->getRealPath(), "r")) !== FALSE) {
+				while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+					if ($row++ == 0)
+						continue;
+					
+					if (count($data)<4)
+						continue;
+					
+					$price = str_replace(',', '.', str_replace('.', '' , $data[2]));
+					if (!$price)
+						$price = 0;
+					if (!is_numeric($price))
+						$price = 0;
+
+					Product::create(array(
+						'description' => strtolower($data[0]),
+						'unit' => $data[1],
+						'price' => $price,
+						'group_id' => $group->id,
+						'supplier_id' => $mysupplier->id
+					));
+				}
+				fclose($handle);
+			}
+
+			return back()->with('success', 'Materialenlijst geimporteerd');
+		} else {
+			// redirect our user back to the form with the errors from the validator
+			return back()->withErrors('Geen CSV geupload');
+		}
+	}
+	
 }

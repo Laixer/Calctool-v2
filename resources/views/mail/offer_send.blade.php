@@ -9,11 +9,24 @@
 
 	@if ($preview)
 	<script lang="text/javascript">
-
 		$(document).ready(function() {
+			var selected_other_contacts = [];
+        	$('#multiple-contact').multiselect({
+        		nonSelectedText: 'Overige contacten',
+			    onChange: function(element, checked) {
+			        var brands = $('#multiple-contact option:selected');
+			        
+			        $(brands).each(function(index, brand){
+			            selected_other_contacts.push([$(this).val()]);
+			        });
+
+			        console.log(selected_other_contacts);
+			    }
+        	});
 			$('#sendmail').click(function(){
 				$.post("/offer/sendmail", {
-					offer: {{ $offer_id }}
+					offer: {{ $offer_id }},
+					contacts: selected_other_contacts
 				}, function(data){
 					var json = data;
 					if (json.success) {
@@ -65,6 +78,15 @@
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
 														Geachte <strong>{{ $client }}</strong>,
+														@if ($preview && count($contacts)>0)
+														<div style="display:inline;">
+															<select id="multiple-contact" multiple="multiple">
+																@foreach($contacts as $contact)
+																<option value="{{ $contact->id }}">{{ $contact->getFormalName() }}</option>
+																@endforeach
+															</select>
+														</div>
+														@endif
 													</td>
 												</tr>
 												<tr>

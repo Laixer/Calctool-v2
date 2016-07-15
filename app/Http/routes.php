@@ -333,6 +333,7 @@ Route::group(['middleware' => 'auth'], function()
 	Route::post('material/deletematerial', 'MaterialController@doDelete');
 	Route::post('material/favorite', 'MaterialController@doFavorite');
 	Route::post('material/element/new', 'MaterialController@doNewElement');
+	Route::post('material/upload', 'MaterialController@doUploadCSV');
 });
 
 Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'], function()
