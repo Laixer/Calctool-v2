@@ -233,7 +233,7 @@ class OfferController extends Controller {
 		Mailgun::send('mail.offer_send', $data, function($message) use ($data) {
 			$message->to($data['email'], strtolower(trim($data['client'])));
 			foreach ($data['other_contacts'] as $email => $name) {
-				$message->to($email, strtolower(trim($name)));
+				$message->cc($email, strtolower(trim($name)));
 			}
 			$message->attach($data['pdf']);
 			$message->subject('Offerte ' . $data['project_name']);
