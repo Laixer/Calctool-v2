@@ -237,8 +237,8 @@ class OfferController extends Controller {
 			}
 			$message->attach($data['pdf']);
 			$message->subject('Offerte ' . $data['project_name']);
-			$message->from('info@calculatietool.com', 'CalculatieTool.com');
-			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+			$message->from('info@calculatietool.com', $relation_self->company_name);
+			$message->replyTo('info@calculatietool.com', $relation_self->company_name);
 		});
 
 		return response()->json(['success' => 1]);
