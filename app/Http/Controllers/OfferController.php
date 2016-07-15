@@ -221,6 +221,7 @@ class OfferController extends Controller {
 			'email' => $contact_client->email,
 			'client' => $contact_client->getFormalName(),
 			'other_contacts' => $other_contacts,
+			'mycomp' => $relation_self->company_name,
 			'pdf' => $res->file_location,
 			'preview' => false,
 			'offer_id' => $offer->id,
@@ -237,8 +238,8 @@ class OfferController extends Controller {
 			}
 			$message->attach($data['pdf']);
 			$message->subject('Offerte ' . $data['project_name']);
-			$message->from('info@calculatietool.com', $relation_self->company_name);
-			$message->replyTo('info@calculatietool.com', $relation_self->company_name);
+			$message->from('info@calculatietool.com', $data['mycomp']);
+			$message->replyTo('info@calculatietool.com', $data['mycomp']);
 		});
 
 		return response()->json(['success' => 1]);

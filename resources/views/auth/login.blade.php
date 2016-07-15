@@ -100,7 +100,7 @@ $(function() {
 					<div class="white-row">
 
 						<p>
-							Vraag hieronder een nieuwe wachtwoord aan. Mocht het niet lukken neem dan contact op met de <a href="/support">suppoert</a> afdeling.
+							Vraag hieronder een nieuwe wachtwoord aan. Mocht het niet lukken neem dan contact op met de <a href="/support">support</a> afdeling.
 						</p>
 
 						@if(Session::get('success'))
