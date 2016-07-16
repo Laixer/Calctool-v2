@@ -1650,7 +1650,7 @@ if (!$project || !$project->isOwner())
 							<div class="row">
 								<div class="col-md-6">
 									<div class="input-group">
-										<input type="text" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw Onderdeel">
+										<input type="text" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw onderdeel">
 										<span class="input-group-btn">
 											<button class="btn btn-primary btn-primary-chapter">Voeg toe</button>
 										</span>
