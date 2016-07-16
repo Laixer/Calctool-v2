@@ -297,6 +297,7 @@ class OfferController extends Controller {
 		if (!$project || !$project->isOwner()) {
 			return response()->json(['success' => 0]);
 		}
+		$user = User::find($project->user_id);
 
 		if (OfferPost::where('offer_id', $offer->id)->count()>0) {
 			return response()->json(['success' => 0,'message' => 'Offerte al aangeboden']);
@@ -307,10 +308,9 @@ class OfferController extends Controller {
 		$post->save();
 
 		foreach (User::where('user_type','=',UserType::where('user_type','=','admin')->first()->id)->get() as $admin) {
-
 			$message = new MessageBox;
 			$message->subject = 'Te printen offerte';
-			$message->message = 'Offerte ' . $offer->offer_code . ' staat klaar om geprint te worden';
+			$message->message = 'Offerte ' . $offer->offer_code . ' van gebruiker ' . $user->username . ' staat klaar om geprint te worden';
 			$message->from_user = User::where('username', 'admin')->first()['id'];
 			$message->user_id =	$admin->id;
 
@@ -318,7 +318,8 @@ class OfferController extends Controller {
 		}
 
 	    $data = array(
-	        'code' => $offer->offer_code
+	        'code' => $offer->offer_code,
+	        'user' => $user->username
 	    );
 	    Mailgun::send('mail.print', $data, function($message) use ($data) {
 	        $message->to('info@calculatietool.com', 'CalculatieTool.com');

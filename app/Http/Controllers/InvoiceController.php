@@ -177,10 +177,6 @@ class InvoiceController extends Controller {
 
 		$invoice_version->save();
 
-
-// Geeft pagina PDF in HTML
-			// return view('calc.invoice_pdf', ['invoice' => $invoice_version]);
-
 		$page = 0;
 		$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.$invoice_version->invoice_code.'-invoice.pdf';
 		if ($invoice->isclose) {
@@ -538,6 +534,7 @@ class InvoiceController extends Controller {
 		if (!$project || !$project->isOwner()) {
 			return response()->json(['success' => 0]);
 		}
+		$user = User::find($project->user_id);
 
 		if (InvoicePost::where('invoice_id', $invoice->id)->count()>0) {
 			return response()->json(['success' => 0,'message' => 'Factuur al aangeboden']);
@@ -551,7 +548,7 @@ class InvoiceController extends Controller {
 
 			$message = new MessageBox;
 			$message->subject = 'Te printen factuur';
-			$message->message = 'Factuur ' . $invoice->invoice_code . ' staat klaar om geprint te worden';
+			$message->message = 'Factuur ' . $invoice->invoice_code . ' van gebruiker ' . $user->username . ' staat klaar om geprint te worden';
 			$message->from_user = User::where('username', 'admin')->first()['id'];
 			$message->user_id =	$admin->id;
 
@@ -559,7 +556,8 @@ class InvoiceController extends Controller {
 		}
 
 	    $data = array(
-	        'code' => $invoice->invoice_code
+	        'code' => $invoice->invoice_code,
+	        'user' => $user->username
 	    );
 	    Mailgun::send('mail.print', $data, function($message) use ($data) {
 	        $message->to('info@calculatietool.com', 'CalculatieTool.com');
