@@ -550,7 +550,7 @@ $type = ProjectType::find($project->type_id);
                                       </tr>
                                       @endif
                                       <tr>
-                                        <td class="qty"><strong>Resterend te factureren</strong></td>
+                                        <td class="qty"><strong>Resterend te betalen</strong></td>
                                         <td class="qty">&nbsp;</td>
                                         <td class="qty">&nbsp;</td>
                                         <td class="qty"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',true)->first()->amount+((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',true)->first()->rest_21/100)*21)+((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6), 2, ",",".") }}</strong></td>

@@ -1525,7 +1525,7 @@ $type = ProjectType::find($project->type_id);
 		 -->			<table class="table table-striped only-end-total">
 						<thead>
 							<tr>
-								<th class="col-md-3">Totalen miderwerk</th>
+								<th class="col-md-3">Totalen minderwerk</th>
 								<th class="col-md-4">&nbsp;</th>
 								<th class="col-md-1"><strong><span class="pull-right">Arbeidsuren</span></strong></th>
 								<th class="col-md-1"><strong><span class="pull-right">Arbeid</span></strong></th>
