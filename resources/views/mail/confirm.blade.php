@@ -76,6 +76,10 @@
 															Je wordt na de bevestiging direct doorgestuurd naar de <strong>CalculatieTool.com</strong> en kunt dan 30 dagen lang gebruikmaken van alles wat de <strong>CalculatieTool.com</strong> te bieden heeft. Zonder beperkingen, afgeschermde delen of verborgen kosten.
 
 															Wij geloven in simpel en transparant. De <strong>CalculatieTool.com</strong> is voor de zzp'er die snel en gemakkelijk gestructureerde offertes en facturen wilt kunnen maken.
+													</td>
+												</tr>
+												<tr>
+													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
 														<br>
 														<br>
 															Met vriendelijke groet,
