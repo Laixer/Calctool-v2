@@ -18,9 +18,10 @@ class SupportTest extends TestCase
     	$faker = Faker::create();
 
         $this->visit('/support')
+             ->type($faker->name, 'name')
              ->type($faker->email, 'email')
              ->type($faker->text, 'subject')
              ->press('Verstuur')
-             ->see('Naam is een verplicht veld');
+             ->see('Bericht verstuurd');
     }
 }

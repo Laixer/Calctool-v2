@@ -23,8 +23,8 @@ class FeedbackController extends Controller
             'name' => $request->get('name'),
             'feedback_message' => $request->get('message'),
             'user' => 'anoniem',
-            'remote' => $_SERVER['REMOTE_ADDR'],
-            'agent' => $_SERVER['HTTP_USER_AGENT'],
+            'remote' => isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'unknown',
+            'agent' => isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'unknown',
         );
 
         if (Auth::check()) {
@@ -57,8 +57,8 @@ class FeedbackController extends Controller
             'subject' => $request->get('subject'),
             'feedback_message' => $request->get('message'),
             'user' => 'anoniem',
-            'remote' => $_SERVER['REMOTE_ADDR'],
-            'agent' => $_SERVER['HTTP_USER_AGENT'],
+            'remote' => isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'unknown',
+            'agent' => isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'unknown',
         );
 
         if (Auth::check()) {
