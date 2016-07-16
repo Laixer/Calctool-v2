@@ -50,7 +50,7 @@ $redis_info = Redis::command('info');
 			<div>
 			<br />
 
-			<h2><strong>Omgeving {{ App::environment() }}</strong></h2>
+			<h2><strong>Omgeving {{ app()->environment() }}</strong></h2>
 
 			<div class="white-row">
 				<h4>Serverstatus</h4>
@@ -73,6 +73,10 @@ $redis_info = Redis::command('info');
 				<div class="row">
 					<div class="col-md-2"><strong>Date offset</strong></div>
 					<div class="col-md-10">{{ date('T') }}</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2"><strong>Debug</strong></div>
+					<div class="col-md-10">{{ config('app.debug') ? "Yes" : "No" }}</div>
 				</div>
 				<br />
 				<h4>Software</h4>

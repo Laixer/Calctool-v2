@@ -453,9 +453,21 @@ class InvoiceController extends Controller {
 		if ($relation_self->logo_id)
 			$user_logo = Resource::find($relation_self->logo_id)->file_location;
 
+		$other_contacts = [];
+		if ($request->has('contacts')) {
+			foreach ($request->get('contacts') as $key) {
+				$contact = Contact::find($key[0]);
+				if (!in_array($contact->email, $other_contacts)) {
+					$other_contacts[$contact->email] = $contact->getFormalName();
+				}
+			}
+		}
+
 		$data = array(
 			'email' => $contact_client->email,
+			'mycomp' => $relation_self->company_name,
 			'pdf' => $res->file_location,
+			'other_contacts' => $other_contacts,
 			'preview' => false,
 			'invoice_id' => $invoice->id,
 			'client'=> $contact_client->getFormalName(),
@@ -466,10 +478,13 @@ class InvoiceController extends Controller {
 		);
 		Mailgun::send('mail.invoice_send', $data, function($message) use ($data) {
 			$message->to($data['email'], strtolower(trim($data['client'])));
+			foreach ($data['other_contacts'] as $email => $name) {
+				$message->cc($email, strtolower(trim($name)));
+			}
 			$message->attach($data['pdf']);
 			$message->subject('Factuur ' . $data['project_name']);
-			$message->from('info@calculatietool.com', 'CalculatieTool.com');
-			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+			$message->from('info@calculatietool.com', $data['mycomp']);
+			$message->replyTo('info@calculatietool.com', $data['mycomp']);
 		});
 
 		return response()->json(['success' => 1]);
@@ -487,6 +502,8 @@ class InvoiceController extends Controller {
 		if (!$project || !$project->isOwner()) {
 			return response()->json(['success' => 0]);
 		}
+		$relation = Relation::find($project->client_id);
+		$contacts = Contact::where('relation_id',$relation->id)->where('id','<>',$invoice->to_contact_id)->get();		
 
 		$contact_client = Contact::find($invoice->to_contact_id);
 		$contact_user = Contact::find($invoice->from_contact_id);
@@ -499,6 +516,7 @@ class InvoiceController extends Controller {
 		$data = array(
 			'preview' => true,
 			'invoice_id' => $invoice->id,
+			'contacts' => $contacts,
 			'client'=> $contact_client->getFormalName(),
 			'project_name' => $project->project_name,
 			'user' => $contact_user->getFormalName(),

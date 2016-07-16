@@ -26,6 +26,14 @@ if (!$invoice) {
 
 @section('title', 'Eindfactuur')
 
+@push('style')
+<link rel="stylesheet" href="/components/bootstrap-multiselect/dist/css/bootstrap-multiselect.css" type="text/css"/>
+@endpush
+
+@push('scripts')
+<script type="text/javascript" src="/components/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+@endpush
+
 <?php if($common_access_error){ ?>
 @section('content')
 <div id="wrapper">

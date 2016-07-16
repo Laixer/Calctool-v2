@@ -173,6 +173,9 @@ $(document).ready(function() {
 				$curThis.closest("tr").hide("slow");
 			}).fail(function(e) { console.log(e); });
 	});
+	$('#btn-load-csv').change(function() {
+		$('#upload-csv').submit();
+	});
 });
 </script>
 <div id="wrapper">
@@ -214,6 +217,23 @@ $(document).ready(function() {
 	</div>
 
 	<section class="container">
+
+		@if(Session::get('success'))
+		<div class="alert alert-success">
+			<i class="fa fa-check-circle"></i>
+			<strong>Opgeslagen</strong>
+		</div>
+		@endif
+
+		@if($errors->has())
+		<div class="alert alert-danger">
+			<i class="fa fa-frown-o"></i>
+			<strong>Fout</strong>
+			@foreach ($errors->all() as $error)
+				{{ $error }}
+			@endforeach
+		</div>
+		@endif
 
 		<div class="col-md-12">
 
@@ -279,6 +299,15 @@ $(document).ready(function() {
 					</div>
 
 					<div id="material" class="tab-pane">
+							<div class="pull-right">
+					            <form id="upload-csv" action="material/upload" method="post" enctype="multipart/form-data">
+					            {!! csrf_field() !!}
+						            <label class="btn btn-primary btn-file">
+									    CSV laden <input type="file" name="csvfile" id="btn-load-csv" style="display: none;">
+									</label>
+								</form>
+							</div>
+
 						<div class="row">
 							<div class="col-md-2"><h4>Mijn producten</h4></div>
 						</div>
@@ -288,8 +317,10 @@ $(document).ready(function() {
 								<tr>
 									<th class="col-md-5">Omschrijving</th>
 									<th class="col-md-1">Eenheid</th>
-									<th class="col-md-2">&euro; / Eenheid</th>
-									<th class="col-md-3">Categorie</th>
+									<th class="col-md-1">&euro; / Eenheid</th>
+									<th class="col-md-2">Productgroep</th>
+									<th class="col-md-1">&nbsp;</th>
+									<th class="col-md-1">&nbsp;</th>
 									<th class="col-md-1">&nbsp;</th>
 								</tr>
 							</thead>

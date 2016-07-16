@@ -27,7 +27,7 @@ class RelationController extends Controller {
 
 	public function getNew()
 	{
-		return view('user.new_relation');
+		return view('user.new_relation', ['debtor_code' => mt_rand(1000000, 9999999)]);
 	}
 
 	public function getEdit()
@@ -295,6 +295,8 @@ class RelationController extends Controller {
 			'city' => array('required','max:35'),
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric'),
+			'telephone' => array('max:12'),
+			'mobile' => array('max:12'),
 		);
 
 		$this->validate($request, $rules);

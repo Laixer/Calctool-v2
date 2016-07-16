@@ -4,7 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class MyCompanyTest extends TestCase
+class ProjectTest extends TestCase
 {
     use DatabaseTransactions;
 
@@ -13,13 +13,13 @@ class MyCompanyTest extends TestCase
      *
      * @return void
      */
-    public function testEditMyAccount() // TODO
+    public function testNewProject() // TODO
     {
         $user = factory(Calctool\Models\User::class)->create();
 
         $this->actingAs($user)
-             ->visit('/mycompany')
-             ->see('bedrijf');
+             ->visit('/project/new')
+             ->see('Projectgegevens');
              /*->see($user->firstname)
              ->see('Mijn Bedrijf')
              ->see('Prijslijsten')
