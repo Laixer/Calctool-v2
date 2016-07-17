@@ -60,8 +60,14 @@
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
 														Indien je geen wijzigingen hebt doorgevoerd in je betalingsgegevens adviseren wij dit te controleren of contact op te nemen met de<a href="http://www.calculatietool.com/over-ons/">helpdesk</strong></a>.
+													</td>
+												</tr>
+												<tr>
+													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
+														<br>
 														<br>
 															Met vriendelijke groet,
+														<br>
 														<br>
 															Het team van de <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
 														<br>

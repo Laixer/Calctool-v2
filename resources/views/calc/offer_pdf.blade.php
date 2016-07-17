@@ -90,14 +90,14 @@ function invoice_condition($offer) {
 										<div><strong>&nbsp;</strong></div>
 										@if ($relation_self->phone)<div><strong>Telefoon:</strong></div>@endif
 										@if ($relation_self->email)<div><strong>E-mail:</strong></div>@endif	
-										@if ($relation_self->kvk)<div><strong>KVK:</strong></div>@endif	
+										@if ($relation_self->kvk)<div><strong>KVK:</strong></div>@endif
 									</td>
 									<td style="width: 300px">
-										<div>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</div>	
-										<div>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</div>
+										<div>@if ($relation_self->address_street) {{ $relation_self->address_street . ' ' . $relation_self->address_number }} @else 1 @endif</div>	
+										<div>@if ($relation_self->address_postal) {{ $relation_self->address_postal . ', ' . $relation_self->address_city }} @else 1 @endif</div>
 										@if ($relation_self->phone)<div>{{ $relation_self->phone }} </div>@endif	
-										@if ($relation_self->email)<div>{{ $relation_self->email }}</div>@endif	
-										@if ($relation_self->kvk)<div>{{ $relation_self->kvk }}</div>@endif	
+										@if ($relation_self->email)<div>{{ $relation_self->email }}</div>@endif
+										@if ($relation_self->kvk)<div>{{ $relation_self->kvk }}&nbsp;</div>@endif
 									</td>
 								</tr>
 							</tbody>
