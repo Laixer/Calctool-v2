@@ -21,6 +21,7 @@ class SupportTest extends TestCase
              ->type($faker->name, 'name')
              ->type($faker->email, 'email')
              ->type($faker->text, 'subject')
+             ->type($faker->text, 'message')
              ->press('Verstuur')
              ->see('Bericht verstuurd');
     }
