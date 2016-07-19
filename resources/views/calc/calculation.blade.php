@@ -1051,13 +1051,30 @@ if (!$project || !$project->isOwner())
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="myYouTube" tabindex="-1" role="dialog" aria-labelledby="mYouTubeLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<iframe width="1280" height="720" src="https://www.youtube.com/embed/Pm3vU0ropSE?rel=0;" frameborder="0" allowfullscreen></iframe>
+
+				<div class="form-horizontal">
+
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
 <div id="wrapper">
 
 	<section class="container fix-footer-bottom">
 
 		@include('calc.wizard', array('page' => 'calculation'))
 
-			<h2><strong>Calculeren</strong></h2>
+			<h2><strong>Calculeren</strong>&nbsp;<a class="fa fa-youtube-play" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
 
 			<div class="tabs nomargin" ng-controller="SummaryCtrl">
 

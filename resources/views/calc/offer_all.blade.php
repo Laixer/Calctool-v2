@@ -99,6 +99,24 @@ $(document).ready(function() {
 <style>
 .datepicker{z-index:1151 !important;}
 </style>
+
+<div class="modal fade" id="myYouTube" tabindex="-1" role="dialog" aria-labelledby="mYouTubeLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<iframe width="1280" height="720" src="https://www.youtube.com/embed/-VTd4kP15FA?rel=0" frameborder="0" allowfullscreen></iframe>
+
+			<div class="modal-body">
+				<div class="form-horizontal">
+
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
 <div id="wrapper">
 
 	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
@@ -159,7 +177,7 @@ $(document).ready(function() {
 		</div>
 		@endif
 
-		<h2><strong>Offertebeheer</strong></h2>
+		<h2 style="margin: 10px 0 20px 0;"><strong>Offertebeheer</strong>&nbsp;&nbsp;<a class="fa fa-youtube-play" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
 
 		<div class="white-row">
 			<table class="table table-striped">

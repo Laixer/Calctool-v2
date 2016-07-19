@@ -41,6 +41,7 @@ if (!$project || !$project->isOwner())
 
 <?php if($common_access_error){ ?>
 @section('content')
+
 <div id="wrapper">
 	<section class="container">
 		<div class="alert alert-danger">
@@ -767,13 +768,31 @@ var n = this,
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="myYouTube" tabindex="-1" role="dialog" aria-labelledby="mYouTubeLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<iframe width="1280" height="720" src="https://www.youtube.com/embed/0bA6AK187a4?rel=0" frameborder="0" allowfullscreen></iframe>
+			
+			<div class="modal-body">
+				<div class="form-horizontal">
+
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
 <div id="wrapper">
 
 	<section class="container fix-footer-bottom">
 
 		@include('calc.wizard', array('page' => 'estimate'))
 
-			<h2><strong>Stelposten</strong> stellen <strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Maak hier uw stelpost definitief voor op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h2></strong>
+			<h2 style="margin: 10px 0 20px 0;" ><strong>Stelposten</strong> stellen <strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Maak hier uw stelpost definitief voor op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>&nbsp;&nbsp;<a class="fa fa-youtube-play" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2></strong>
 
 			<div class="tabs nomargin">
 
