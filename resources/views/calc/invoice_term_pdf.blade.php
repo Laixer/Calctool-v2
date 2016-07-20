@@ -76,8 +76,8 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
                         <div>{{ $relation_self->address_postal . ', ' . $relation_self->address_city }}</div>
                         @if ($relation_self->phone)<div>{{ $relation_self->phone }} </div>@endif  
                         @if ($relation_self->email)<div>{{ $relation_self->email }}</div>@endif 
-                        @if ($relation_self->kvk)<div>{{ $relation_self->kvk }}</div>@endif 
-                        <div>{{ $relation_self->iban }}</div>
+                        @if ($relation_self->kvk)<div>{{ $relation_self->kvk }}&nbsp;</div>@endif 
+                        <div>{{ $relation_self->iban }}&nbsp;</div>
                       </td>
                     </tr>
                   </tbody>

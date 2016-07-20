@@ -51,7 +51,6 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														<br>
 														Allereerst leuk dat je jezelf geregistreerd hebt voor de <strong>CalculatieTool.com</strong>.
 														<br>
 														<br>
@@ -68,10 +67,16 @@
 														<br>
 														Offertes opstellen was echt nog nooit zo makkelijk!
 														Leuk om je bij ons programma te mogen verwelkomen!
+													</td>
+												</tr>
+												<tr>
+													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
 														<br>
-														Heel veel succes en goede zaken gewenst!
 														<br>
-															Het team van van <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
+															Met vriendelijke groet,
+														<br>
+														<br>
+															Het team van de <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
 														<br>
 													</td>
 												</tr>

@@ -105,21 +105,6 @@ $(document).ready(function() {
 
 			</div>
 
-
-			<div class="col-md-4">
-
-				<!-- <h2>Details</h2> -->
-
-				<!--<p>
-					<span class="block"><strong><i class="fa fa-envelope"></i> Email:</strong> <a href="mailto:info@calculatietool.com">info@calculatietool.com</a></span>
-					<span class="block"><strong><i class="fa fa-wrench"></i> Versie:</strong> 0.6-{{-- substr(File::get('../.revision'), 0, 7) --}}</span>
-					<span class="block"><strong><i class="fa fa-code"></i> Upstream:</strong> {{-- date('Y-m-d\TH:i:s') --}}</span>
-					<span class="block"><strong><i class="fa fa-server"></i> Server:</strong> {{-- gethostname() --}}</span>
-				</p>-->
-
-			</div>
-			<?# -- /INFO -- ?>
-
 		</div>
 
 	</section>

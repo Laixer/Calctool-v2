@@ -246,7 +246,7 @@ class MaterialController extends Controller {
 					if (count($data)<4)
 						continue;
 					
-					$price = str_replace(',', '.', str_replace('.', '' , $data[2]));
+					$price = str_replace(',', '.', str_replace('.', '' , trim($data[2])));
 					if (!$price)
 						$price = 0;
 					if (!is_numeric($price))

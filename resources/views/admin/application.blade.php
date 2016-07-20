@@ -25,7 +25,8 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th class="col-md-3">Naam</th>
+						<th class="col-md-2">Naam</th>
+						<th class="col-md-3">ID</th>
 						<th class="col-md-5">Endpoint</th>
 						<th class="col-md-1 hidden-sm hidden-xs">Sessies</th>
 						<th class="col-md-1 hidden-sm hidden-xs">Actief</th>
@@ -38,7 +39,8 @@
 				?>
 				@foreach ($clients as $client)
 					<tr>
-						<td class="col-md-3"><a href="{{ '/admin/application/'.$client->id.'/edit' }}">{{ $client->name }}</a></td>
+						<td class="col-md-2"><a href="{{ '/admin/application/'.$client->id.'/edit' }}">{{ $client->name }}</a></td>
+						<td class="col-md-3">{{ $client->id }}</td>
 						<td class="col-md-5">{{ $client->redirect_uri }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ DB::table('oauth_sessions')->where('client_id',$client->id)->count() }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ $client->active ? 'Ja' : 'Nee' }}</td>

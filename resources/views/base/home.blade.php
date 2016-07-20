@@ -91,6 +91,24 @@ $(document).ready(function() {
 		</div>
 	</div>
 </div>
+
+<div class="modal fade" id="myYouTube" tabindex="-1" role="dialog" aria-labelledby="mYouTubeLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<iframe width="1280" height="720" src="https://www.youtube.com/embed/edTyWvLUeDo?rel=0;" frameborder="0" allowfullscreen></iframe>
+
+			<div class="modal-body">
+				<div class="form-horizontal">
+
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
 <div id="wrapper">
 
 	<div id="shop">
@@ -110,7 +128,8 @@ $(document).ready(function() {
 			@endif
 			@endif
 
-			<h2 style="margin: 10px 0 20px 0;"><strong>Welkom</strong> {{ Auth::user()->firstname }}</h2>
+			<h2 style="margin: 10px 0 20px 0;"><strong>Welkom</strong> {{ Auth::user()->firstname }}&nbsp;&nbsp;<a class="fa fa-youtube-play" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
+
 			<div class="row">
 
 				<div class="col-sm-6 col-md-2" data-step="1" data-intro="Klik op 'Mijn Bedrijf' om je bedrijfsgegevens in te vullen.">
@@ -210,6 +229,7 @@ $(document).ready(function() {
 						<br>
 						@if (Project::where('user_id','=', Auth::user()->id)->count('id')>0)
 						<h2><strong>Jouw</strong> projecten</h2>
+
 						<div class="white-row" ng-controller="projectController">
 							<div class="row">
 								<div class="form-group col-md-8">
