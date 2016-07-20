@@ -2,6 +2,17 @@
 
 @section('title', 'Applicatie toegang')
 
+@section('header')
+
+<header id="topNav" class="topHead">
+    <div class="container">
+        <a class="logo" href="/">
+            <img src="/images/logo2.png" width="229px" alt="Calctool" />
+        </a>
+    </div>
+</header>
+@endsection
+
 @section('content')
 
 <div id="wrapper">
@@ -54,7 +65,7 @@
                         <hr class="half-margins">
 
                         <p>
-                            Geen idee waar dit over gaat?
+                            Onvoldoende informatie?
                             <a href="/support">Vraag hulp</a>
                         </p>
                         <div class="row">
@@ -68,35 +79,6 @@
                     </form>
 
                 </div>
-
-                <!--<div class="col-md-6">
-
-                    <h2>&nbsp;</h2>
-
-                    <div class="white-row">
-
-                        <h4>Registreren is snel, makkelijk en gratis</h4>
-
-                        <p>Als je eenmaal geregistreerd bent, kun je:</p>
-                        <ul class="list-icon check">
-                            <li>Alle opties van het programma gebruiken.</li>
-                            <li>Calculaties van A-Z opzetten.</li>
-                            <li>In één handomdraai offertes en facturen genereren.</li>
-                            <li>Een totale administratie voeren voor elk gewenst project.</li>
-                        </ul>
-
-                        <hr class="half-margins">
-
-                        <p>
-                            Heb je al een account?
-                            <a href="/login">log dan hier in</a>
-                        </p>
-                    </div>
-
-                    </div>
-
-            </div>-->
-
 
         </section>
 

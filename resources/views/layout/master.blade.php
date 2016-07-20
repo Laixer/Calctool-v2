@@ -49,6 +49,7 @@
 
 		<?php // -- JQuery -- ?>
 		<script src="/components/jquery/dist/jquery.min.js"></script>
+		@if (!app('request')->input('nofeedback'))
 		<script type="text/javascript">
 			$.ajaxSetup({headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
 			if (localStorage._prescnt) localStorage._prescnt++; else localStorage._prescnt = 1;
@@ -72,6 +73,7 @@
 			    fm.init(fm_options);
 			});
 		</script>
+		@endif
 
 	</head>
 	<body>

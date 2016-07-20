@@ -57,11 +57,6 @@ else {
 
 <header id="topNav" class="topHead">
 	<div class="container">
-
-		<button class="btn btn-mobile" data-toggle="collapse" data-target=".nav-main-collapse">
-			<i class="fa fa-bars"></i>
-		</button>
-
 		<div class="row">
 			<div class="col-md-3">
 				<a class="logo" href="/">
