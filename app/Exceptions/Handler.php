@@ -12,6 +12,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use League\OAuth2\Server\Exception\InvalidClientException;
 
 use \Mailgun;
 use \Auth;
@@ -30,6 +31,7 @@ class Handler extends ExceptionHandler
         ValidationException::class,
         TokenMismatchException::class,
         FileNotFoundException::class,
+        InvalidClientException::class,
     ];
 
     /**
