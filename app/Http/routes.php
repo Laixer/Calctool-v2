@@ -11,12 +11,9 @@
 |
 */
 
-Route::get('login', function(){
-	return view('auth.login');
-});
-
 Route::group(['middleware' => 'guest'], function() {
 	Route::get('register', 'AuthController@getRegister');
+	Route::get('login', 'AuthController@getLogin');
 	Route::post('login', 'AuthController@doLogin');
 	Route::post('register', 'AuthController@doRegister');
 	Route::get('confirm/{api}/{token}', 'AuthController@doActivate')->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
@@ -409,6 +406,10 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 	Route::get('application/new', function() {
 		return view('admin.new_application');
 	});
+	Route::get('application/{client_id}/edit', function() {
+		return view('admin.edit_application');
+	});
+	Route::post('application/{client_id}/edit', 'AdminController@doUpdateApplication');
 	Route::post('application/new', 'AdminController@doNewApplication');
 	Route::post('snailmail/offer/done', 'AdminController@doOfferPostDone');
 	Route::post('snailmail/invoice/done', 'AdminController@doInvoicePostDone');

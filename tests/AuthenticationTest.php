@@ -81,9 +81,9 @@ class AuthenticationTest extends TestCase
                  ->press('Login');
         }
 
-        $this->see('Account geblokkeerd voor');
+        $this->see('Toegang geblokkeerd voor 15 minuten. Probeer later opnieuw.');
 
-        Redis::del('auth:' . $user->username . ':fail', 'auth:' . $user->username . ':block');
+        Cache::flush();
     }
 
     /**

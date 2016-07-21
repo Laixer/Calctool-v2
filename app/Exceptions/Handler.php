@@ -50,6 +50,7 @@ class Handler extends ExceptionHandler
             if (!config('app.debug')) {
                 $content = "<b>Timestamp: " . date('c') . "</b><br />";
                 $content .= "<b>Environment: " . app()->environment() . "</b><br />";
+                $content .= "<b>Server API: " . php_sapi_name() . "</b><br />";
 
                 $rev = '-';
                 if (\File::exists('../.revision')) {
@@ -60,7 +61,7 @@ class Handler extends ExceptionHandler
 
                 if (Auth::check())
                     $content .= "<b>User: " . Auth::user()->username . "</b><br />";
-                
+
                 $content .= "<br />" . nl2br($e);
                 $data = array('content' => $content, 'env' => app()->environment());
                 Mailgun::send('mail.raw', $data, function($message) use ($data) {

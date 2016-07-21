@@ -554,6 +554,28 @@ class AdminController extends Controller {
 		return back()->with('success', 'Applicatie aangemaakt');
 	}
 
+	public function doUpdateApplication(Request $request, $client_id)
+	{
+		$this->validate($request, [
+			'name' => array('required'),
+			'endpoint' => array('required','url'),
+		]);
+
+		\DB::table('oauth_clients')->where('id', $client_id)->update([
+			'name' => $request->input('name'),
+			'active' => $request->input('toggle-active') ? true : false,
+			'note' => $request->input('note'),
+			'updated_at' => date('Y-m-d H:i:s'),
+		]);
+
+		\DB::table('oauth_client_endpoints')->where('client_id', $client_id)->update([
+			'redirect_uri' => $request->input('endpoint'),
+			'updated_at' => date('Y-m-d H:i:s'),
+		]);
+
+		return back()->with('success', 'Applicatie opgeslagen');
+	}
+
 	public function doDeletePromotion(Request $request, $id)
 	{
 		$promo = Promotion::find($id);
