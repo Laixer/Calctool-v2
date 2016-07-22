@@ -187,6 +187,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Bogardo\Mailgun\MailgunServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
+        GrahamCampbell\Markdown\MarkdownServiceProvider::class,
         Nathanmac\Utilities\Parser\ParserServiceProvider::class,
         LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class,
         LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
@@ -245,6 +246,7 @@ return [
         'Mailgun'   => Bogardo\Mailgun\Facades\Mailgun::class,
         'PDF'       => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'Parser'    => Nathanmac\Utilities\Parser\Facades\Parser::class,
+        'Markdown'  => GrahamCampbell\Markdown\Facades\Markdown::class,
         'Authorizer'=> LucaDegasperi\OAuth2Server\Facades\Authorizer::class,
 
     ],

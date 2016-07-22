@@ -26,6 +26,7 @@ use \Storage;
 use \Auth;
 use \Hash;
 use \Redis;
+use \Markdown;
 use \Mailgun;
 
 class AdminController extends Controller {
@@ -43,6 +44,31 @@ class AdminController extends Controller {
 	|
 	*/
 
+	public function getDocumentation(Request $request, $directory = null, $page = null)
+	{
+		$docdir = "../docs/";
+
+		if (!$directory)
+			$directory = "";
+
+		if (!$page)
+			$page = "index";
+
+		$dirpage = "/" . $page . ".md";
+
+		if (!file_exists(config('filesystems.docs') . "/" . $directory . $dirpage))
+			abort(404);
+
+		$mdpage = file_get_contents(config('filesystems.docs') . "/" . $directory . $dirpage);
+		if (!$mdpage)
+			abort(404);
+
+		$content = Markdown::convertToHtml($mdpage);
+
+		return view('admin.documentation',['content' => $content, 'dir' => $directory, 'page' => $page]);
+
+	}
+
 	public function doNewAlert(Request $request)
 	{
 		$this->validate($request, [
@@ -58,7 +84,6 @@ class AdminController extends Controller {
 		$alert->save();
 
 		return back()->with('success', 'Nieuwe alert is aangemaakt');
-
 	}
 
 	public function doDeleteAlert(Request $request)

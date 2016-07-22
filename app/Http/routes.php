@@ -417,6 +417,7 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 		return view('admin.resource');
 	});
 	Route::post('resource/delete', 'AdminController@doDeleteResource');
+	Route::get('documentation/{dir?}/{page?}', 'AdminController@getDocumentation');
 	Route::get('log', function() {
 		return view('admin.log');
 	});
