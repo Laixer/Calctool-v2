@@ -11,6 +11,14 @@
 <script src="/plugins/summernote/summernote.min.js"></script>
 @endpush
 
+<?php
+
+$clients = DB::table('oauth_clients')->join('oauth_client_endpoints', 'oauth_clients.id', '=', 'oauth_client_endpoints.client_id')->select('oauth_clients.*', 'oauth_client_endpoints.redirect_uri')->where('oauth_clients.id',Route::input('client_id'))->get();
+
+$client = $clients[0];
+
+?>
+
 @section('content')
 <script type="text/javascript">
 $(document).ready(function() {
@@ -62,7 +70,7 @@ $(document).ready(function() {
 			</div>
 			@endif
 
-			<h2><strong>Nieuwe</strong> Applicatie</h2>
+			<h2><strong>Applicatie</strong> {{ $client->name }}</h2>
 
 			<div class="white-row">
 
@@ -74,14 +82,14 @@ $(document).ready(function() {
 					<div class="col-md-5">
 						<div class="form-group">
 							<label for="company_name">Applicatie ID</label>
-							<input name="appid" id="appid" type="text" value="{{ sha1(mt_rand()) }}" readonly="" class="form-control" />
+							<input name="appid" id="appid" type="text" value="{{ $client->id }}" readonly="" class="form-control" />
 						</div>
 					</div>
 
 					<div class="col-md-5">
 						<div class="form-group">
 							<label for="company_name">Secret</label>
-							<input name="secret" id="secret" type="text" value="{{ sha1(mt_rand()) }}" readonly="" class="form-control" />
+							<input name="secret" id="secret" type="text" value="{{ $client->secret }}" readonly="" class="form-control" />
 						</div>
 					</div>
 
@@ -91,7 +99,7 @@ $(document).ready(function() {
 					<div class="col-md-5">
 						<div class="form-group">
 							<label for="company_name">Naam</label>
-							<input name="name" id="name" type="text" value="{{ Input::old('name') ? Input::old('name') : ''}}" class="form-control" />
+							<input name="name" id="name" type="text" value="{{ Input::old('name') ? Input::old('name') : $client->name }}" class="form-control" />
 						</div>
 					</div>
 
@@ -101,7 +109,7 @@ $(document).ready(function() {
 					<div class="col-md-5">
 						<div class="form-group">
 							<label for="company_name">Endpoint</label>
-							<input name="endpoint" id="endpoint" type="text" value="{{ Input::old('endpoint') ? Input::old('endpoint') : ''}}" class="form-control" />
+							<input name="endpoint" id="endpoint" type="text" value="{{ Input::old('endpoint') ? Input::old('endpoint') : $client->redirect_uri }}" class="form-control" />
 						</div>
 					</div>
 
@@ -113,7 +121,7 @@ $(document).ready(function() {
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="toggle-active" style="display:block;">Actief</label>
-							<input name="toggle-active" type="checkbox" checked>
+							<input name="toggle-active" type="checkbox" {{ $client->active ? 'checked' : '' }}>
 						</div>
 					</div>
 
@@ -123,7 +131,7 @@ $(document).ready(function() {
 				<div class="row">
 					<div class="form-group">
 						<div class="col-md-12">
-							<textarea name="note" id="note" rows="10" class="summernote form-control">{{ Input::old('note') ? Input::old('note') : '' }}</textarea>
+							<textarea name="note" id="note" rows="10" class="summernote form-control">{{ Input::old('note') ? Input::old('note') : $client->note }}</textarea>
 						</div>
 					</div>
 				</div>

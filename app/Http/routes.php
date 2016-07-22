@@ -11,12 +11,9 @@
 |
 */
 
-Route::get('login', function(){
-	return view('auth.login');
-});
-
 Route::group(['middleware' => 'guest'], function() {
 	Route::get('register', 'AuthController@getRegister');
+	Route::get('login', 'AuthController@getLogin');
 	Route::post('login', 'AuthController@doLogin');
 	Route::post('register', 'AuthController@doRegister');
 	Route::get('confirm/{api}/{token}', 'AuthController@doActivate')->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
@@ -45,21 +42,11 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'auth'], function() {
 
 });
 
-Route::get('about', function() {
-	return view('generic.about');
-});
-Route::get('faq', function() {
-	return view('generic.faq');
-});
-Route::get('terms-and-conditions', function() {
-	return view('generic.terms');
-});
-Route::get('privacy-policy', function() {
-	return view('generic.privacy');
-});
-Route::get('support', function() {
-	return view('generic.contact');
-});
+Route::get('about', 'GenericController@getAbout');
+Route::get('faq', 'GenericController@getFaq');
+Route::get('terms-and-conditions', 'GenericController@getTerms');
+Route::get('privacy-policy', 'GenericController@getPrivacy');
+Route::get('support', 'GenericController@getSupport');
 
 Route::group(['prefix' => 'oauth2', 'middleware' => ['check-authorization-params', 'auth']], function() {
 	Route::get('authorize', 'AuthController@getOauth2Authorize');
@@ -409,6 +396,10 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 	Route::get('application/new', function() {
 		return view('admin.new_application');
 	});
+	Route::get('application/{client_id}/edit', function() {
+		return view('admin.edit_application');
+	});
+	Route::post('application/{client_id}/edit', 'AdminController@doUpdateApplication');
 	Route::post('application/new', 'AdminController@doNewApplication');
 	Route::post('snailmail/offer/done', 'AdminController@doOfferPostDone');
 	Route::post('snailmail/invoice/done', 'AdminController@doInvoicePostDone');
@@ -416,6 +407,7 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 		return view('admin.resource');
 	});
 	Route::post('resource/delete', 'AdminController@doDeleteResource');
+	Route::get('documentation/{dir?}/{page?}', 'AdminController@getDocumentation');
 	Route::get('log', function() {
 		return view('admin.log');
 	});

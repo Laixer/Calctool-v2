@@ -2,7 +2,6 @@
 
 namespace Calctool\Http\Controllers;
 
-use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
 use Longman\TelegramBot\Telegram as TTelegram;
 use Longman\TelegramBot\Request as TRequest;
@@ -22,11 +21,36 @@ use \Calctool\Models\ContactFunction;
 
 use \Auth;
 use \Redis;
+use \Cache;
 use \Hash;
 use \Mailgun;
 use \Authorizer;
 
 class AuthController extends Controller {
+
+	private function getCacheBlockItem()
+	{
+		if (isset($_SERVER['REMOTE_ADDR']))
+			return 'blockremote' . base64_encode($_SERVER['REMOTE_ADDR']);
+
+		return 'blockremotelocal';
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function getLogin()
+	{
+		if (Cache::has($this->getCacheBlockItem())) {
+			if (Cache::get($this->getCacheBlockItem()) >=5) {
+				return view('auth.login')->withErrors(['auth' => ['Toegang geblokkeerd voor 15 minuten. Probeer later opnieuw.']]);
+			}
+		}
+
+		return view('auth.login');
+	}
 
 	/**
 	 * Show the form for creating a new resource.
@@ -55,8 +79,6 @@ class AuthController extends Controller {
 	 */
 	public function doLogin(Request $request)
 	{
-		$errors = new MessageBag;
-
 		$username = strtolower(trim($request->input('username')));
 		$userdata = array(
 			'username' 	=> $username,
@@ -74,21 +96,19 @@ class AuthController extends Controller {
 
 		$remember = $request->input('rememberme') ? true : false;
 
-		if (Redis::exists('auth:'.$username.':block')) {
-			$errors = new MessageBag(['auth' => ['Account geblokkeerd voor 15 minuten']]);
-			return back()->withErrors($errors)->withInput($request->except('secret'));
+		if (Cache::has($this->getCacheBlockItem())) {
+			if (Cache::get($this->getCacheBlockItem()) >=5) {
+				return back()->withErrors(['auth' => ['Toegang geblokkeerd voor 15 minuten. Probeer later opnieuw.']]);
+			}
 		}
 
-		if(Auth::attempt($userdata, $remember) || Auth::attempt($userdata2, $remember)){
+		if (Auth::attempt($userdata, $remember) || Auth::attempt($userdata2, $remember)) {
 
 			/* Email must be confirmed */
-			if (Auth::user()->confirmed_mail == NULL) {
+			if (!Auth::user()->confirmed_mail) {
 				Auth::logout();
-				$errors = new MessageBag(['mail' => ['Email nog niet bevestigd']]);
-				return back()->withErrors($errors)->withInput($request->except('secret'));
+				return back()->withErrors(['mail' => ['Email nog niet bevestigd']])->withInput($request->except('secret'));
 			}
-
-			Redis::del('auth:'.$username.':fail', 'auth:'.$username.':block');
 
 			Audit::CreateEvent('auth.login.succces', 'Login with: ' . \Calctool::remoteAgent());
 
@@ -104,24 +124,13 @@ class AuthController extends Controller {
 			return redirect('/');
 		} else {
 
-			// Login failed
-			$errors = new MessageBag(['password' => ['Gebruikersnaam of wachtwoord verkeerd']]);
-
-			// Count the failed logins
-			$failcount = Redis::get('auth:'.$username.':fail');
-			if ($failcount >= 4) {
-				Redis::set('auth:'.$username.':block', true);
-				Redis::expire('auth:'.$username.':block', 900);
+			if (Cache::has($this->getCacheBlockItem())) {
+				Cache::increment($this->getCacheBlockItem());
 			} else {
-				Redis::incr('auth:'.$username.':fail');
+				Cache::put($this->getCacheBlockItem(), 1, 15);
 			}
-
-			$failuser = \Calctool\Models\User::where('username', $username)->first();
-			if ($failuser) {
-				Audit::CreateEvent('auth.login.failed', 'Failed tries: ' . $failcount, $failuser->id);
-			}
-
-			return back()->withErrors($errors)->withInput($request->except('secret'))->withCookie(cookie()->forget('swpsess'));
+	
+			return back()->withErrors(['password' => ['Gebruikersnaam en/of wachtwoord verkeerd']])->withInput($request->except('secret'))->withCookie(cookie()->forget('swpsess'));
 		}
 	}
 

@@ -111,7 +111,7 @@ class RelationTest extends TestCase
              ->type($faker->numberBetween(0,999999999999), 'telephone_comp')
              ->type($faker->email, 'email_comp')
              ->type($faker->buildingNumber, 'address_number')
-             ->type($faker->randomNumber, 'zipcode')
+             ->type($faker->randomNumber(3), 'zipcode')
              ->type($faker->streetName, 'street')
              ->type($faker->city, 'city')
              ->select($faker->numberBetween(1,13), 'province')

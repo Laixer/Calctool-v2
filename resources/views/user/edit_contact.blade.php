@@ -51,14 +51,14 @@ if (!$contact) {
 
 		<div class="col-md-12">
 
-			@if(Session::get('success'))
+			@if (Session::get('success'))
 			<div class="alert alert-success">
 				<i class="fa fa-check-circle"></i>
 				<strong>Opgeslagen</strong>
 			</div>
 			@endif
 
-			@if($errors->has())
+			@if (count($errors) > 0)
 			<div class="alert alert-danger">
 				<i class="fa fa-frown-o"></i>
 				<strong>Fout</strong>

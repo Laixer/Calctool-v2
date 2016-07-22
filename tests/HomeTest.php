@@ -62,4 +62,18 @@ class HomeTest extends TestCase
              ->press('Verzenden')
              ->see('Instructies verzonden');
     }
+
+    /**
+     * A basic functional test example.
+     *
+     * @return void
+     */
+    public function testGenericPages()
+    {
+        $this->visit('/about')
+             ->visit('/faq')
+             ->visit('/terms-and-conditions')
+             ->visit('/privacy-policy')
+             ->visit('/support');
+    }
 }

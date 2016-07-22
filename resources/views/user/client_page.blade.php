@@ -57,11 +57,6 @@ else {
 
 <header id="topNav" class="topHead">
 	<div class="container">
-
-		<button class="btn btn-mobile" data-toggle="collapse" data-target=".nav-main-collapse">
-			<i class="fa fa-bars"></i>
-		</button>
-
 		<div class="row">
 			<div class="col-md-3">
 				<a class="logo" href="/">
@@ -118,7 +113,7 @@ else {
 			</div>
 			@endif
 
-			@if($errors->has())
+			@if (count($errors) > 0)
 			<div class="alert alert-danger">
 				<i class="fa fa-frown-o"></i>
 				<strong>Fout</strong>

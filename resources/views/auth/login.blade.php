@@ -46,7 +46,7 @@ $(function() {
 						{!! csrf_field() !!}
                         <input type="hidden" name="redirect" value="{{ Request::get('redirect') }}">
 
-						@if($errors->any())
+						@if (count($errors) > 0)
 						<div class="alert alert-danger">
 							<i class="fa fa-frown-o"></i>
 							@foreach ($errors->all() as $error)
