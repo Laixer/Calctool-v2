@@ -613,6 +613,7 @@ function invoice_condition($offer) {
 
 	  <div class="from">Met vriendelijke groet,</div>
 	  <div class="from">{{ Contact::find($offer->from_contact_id)->firstname ." ". Contact::find($offer->from_contact_id)->lastname }}</div>
+	  <div class="from"><i>Indien akkoord, gaarne de offerte ondertekend retour.<i></div>
 	</main>
 
 	@else
@@ -963,6 +964,7 @@ function invoice_condition($offer) {
 	  </div>
 	  <div class="from">Met vriendelijke groet,</div>
 	  <div class="from">{{ Contact::find($offer->from_contact_id)->firstname ." ". Contact::find($offer->from_contact_id)->lastname }}</div>
+	  <div class="from"><i>Indien akkoord, gaarne de offerte ondertekend retour.<i></div>
 	</main>
  
 @endif
@@ -1010,6 +1012,7 @@ function invoice_condition($offer) {
 
 	  <div class="from">Met vriendelijke groet,</div>
 	  <div class="from">{{ Contact::find($offer->from_contact_id)->firstname ." ". Contact::find($offer->from_contact_id)->lastname }}</div>
+	  <div class="from"><i>Indien akkoord, gaarne de offerte ondertekend retour.<i></div>
 	</main>
 
  @endif
