@@ -13,7 +13,7 @@
 
 
 <h4>
-        -Mumbo Jumbo-
+        TL;DR
 </h4>
 
     <p>

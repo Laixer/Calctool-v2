@@ -42,21 +42,11 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'auth'], function() {
 
 });
 
-Route::get('about', function() {
-	return view('generic.about');
-});
-Route::get('faq', function() {
-	return view('generic.faq');
-});
-Route::get('terms-and-conditions', function() {
-	return view('generic.terms');
-});
-Route::get('privacy-policy', function() {
-	return view('generic.privacy');
-});
-Route::get('support', function() {
-	return view('generic.contact');
-});
+Route::get('about', 'GenericController@getAbout');
+Route::get('faq', 'GenericController@getFaq');
+Route::get('terms-and-conditions', 'GenericController@getTerms');
+Route::get('privacy-policy', 'GenericController@getPrivacy');
+Route::get('support', 'GenericController@getSupport');
 
 Route::group(['prefix' => 'oauth2', 'middleware' => ['check-authorization-params', 'auth']], function() {
 	Route::get('authorize', 'AuthController@getOauth2Authorize');

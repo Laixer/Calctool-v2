@@ -10,6 +10,16 @@
 
 		<div class="col-md-12">
 
+			@if (count($errors) > 0)
+			<div class="alert alert-danger">
+				<i class="fa fa-frown-o"></i>
+				<strong>Fout</strong>
+				@foreach ($errors->all() as $error)
+					{{ $error }}
+				@endforeach
+			</div>
+			@endif
+
 			<div>
 			<ol class="breadcrumb">
 			  <li><a href="/">Home</a></li>

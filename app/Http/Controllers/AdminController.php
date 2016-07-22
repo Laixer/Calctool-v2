@@ -57,11 +57,11 @@ class AdminController extends Controller {
 		$dirpage = "/" . $page . ".md";
 
 		if (!file_exists(config('filesystems.docs') . "/" . $directory . $dirpage))
-			abort(404);
+			return redirect('/admin/documentation')->withErrors('Deze pagina bestaat (nog) niet');
 
 		$mdpage = file_get_contents(config('filesystems.docs') . "/" . $directory . $dirpage);
 		if (!$mdpage)
-			abort(404);
+			return redirect('/admin/documentation');
 
 		$content = Markdown::convertToHtml($mdpage);
 
