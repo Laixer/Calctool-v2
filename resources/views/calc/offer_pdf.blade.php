@@ -1112,7 +1112,7 @@ function invoice_condition($offer) {
 			<th style="width: 51px" class="qty">@if ($display_specification) Materiaal @endif</th>
 			<th style="width: 51px" class="qty">@if ($display_specification) Overig @endif</th>
 			<th style="width: 51px" class="qty">@if ($display_specification)Totaal @endif</th>
-			<th style="width: 51px" class="qty">&nbsp;</th>
+			@if ($project->use_estimate)<th style="width: 51px" class="qty">&nbsp;</th>@endif
 		  </tr>
 		</thead>
 		<tbody>
@@ -1122,7 +1122,7 @@ function invoice_condition($offer) {
 		  <td class="qty"><strong>@if ($display_specification) <span>{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span>@endif</strong></td>
 		  <td class="qty"><strong>@if ($display_specification) <span>{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span>@endif</strong></td>
 		  <td class="qty"><strong><span>{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></strong></td>
-		  <td class="qty">&nbsp;</td>
+		 @if ($project->use_estimate) <td class="qty">&nbsp;</td>@endif
 		</tbody>
 	  </table>
 	  <span><i>Weergegeven bedragen zijn exclusief BTW</i></span>
@@ -1264,7 +1264,7 @@ function invoice_condition($offer) {
 			<th style="width: 51px" class="qty"class="qty">@if ($display_specification) Materiaal @endif</th>
 			<th style="width: 51px" class="qty"class="qty">@if ($display_specification) Overig @endif</th>
 			<th style="width: 51px" class="qty"class="qty">Totaal</th>
-			<th style="width: 51px" class="qty"class="qty">&nbsp;</th>
+			@if ($project->use_estimate)<th style="width: 51px" class="qty"class="qty">&nbsp;</th>@endif
 		  </tr>
 		</thead>
 		<tbody>
@@ -1276,7 +1276,7 @@ function invoice_condition($offer) {
 			<td style="width: 51px" class="qty">@if ($display_specification)<span><strong>{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</strong></span>@endif</td>
 			<td style="width: 51px" lass="qty">@if ($display_specification)<span><strong>{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</strong></span>@endif</td>
 			<td style="width: 51px" class="qty"><span><strong>{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</strong></span></td>
-			<td style="width: 51px" lass="qty">&nbsp;</td>
+			@if ($project->use_estimate)<td style="width: 51px" lass="qty">&nbsp;</td>@endif
 		  </tr>
 	  </table>
 	 <span><i>Weergegeven bedragen zijn exclusief BTW</i></span>
