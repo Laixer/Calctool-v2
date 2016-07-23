@@ -433,4 +433,24 @@ class ProjectController extends Controller {
 
 		return back();
 	}
+
+	public function getRelationDetails(Request $request, $relation_id)
+	{
+		$relation = Relation::find($relation_id);
+		if (!$relation || !$relation->isOwner()) {
+			return response()->json(['success' => 0]);
+		}
+
+		$arr = [
+			'success' => 1,
+			'address_street' => $relation->address_street,
+			'address_number' => $relation->address_number,
+			'address_postal' => $relation->address_postal,
+			'address_city' => $relation->address_city,
+			'province_id' => $relation->province_id,
+			'country_id' => $relation->country_id,
+		];
+
+		return response()->json($arr);
+	}
 }

@@ -5,6 +5,7 @@ use \Calctool\Models\Project;
 use \Calctool\Models\RelationKind;
 use \Calctool\Models\RelationType;
 
+//TODO move to controller
 function getNewDebtorCode() {
 	return mt_rand(1000000, 9999999);
 }
@@ -141,6 +142,29 @@ $(document).ready(function() {
 			});
 		}
 	});
+
+	function isPrivateContractor(val) {
+		if (!$('#contractor :selected').data('business')) {
+
+			$.get("/project/relation/" + val.val(), function(data) {
+				if (data.success == 1) {
+					$('#street').val(data.address_street);
+					$('#address_number').val(data.address_number);
+					$('#zipcode').val(data.address_postal);
+					$('#city').val(data.address_city);
+					
+					$("#province").find('option:selected').removeAttr("selected");
+					$('#province option[value=' + data.province_id + ']').attr('selected','selected');
+				}
+			});
+		}
+	}
+
+	$('#contractor').change(function(){
+		isPrivateContractor($(this));
+	});
+
+	isPrivateContractor($('#contractor'));
 
 	if (sessionStorage.introDemo) {
 		var demo = introJs().
@@ -427,7 +451,7 @@ $(document).ready(function() {
 									<label for="contractor">Opdrachtgever*</label>
 									<select name="contractor" id="contractor" class="form-control pointer">
 										@foreach (Calctool\Models\Relation::where('user_id', Auth::user()->id)->where('active',true)  ->get() as $relation)
-										<option value="{{ $relation->id }}">{!! Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); !!}</option>
+										<option data-business="{{ $relation->isBusiness() ? 1 : 0 }}" value="{{ $relation->id }}">{{ $relation->name() }}</option>
 										@endforeach
 									</select>
 									<a href="#" data-toggle="modal" data-target="#tutModal">+ Nieuwe opdrachtgever toevoegen</a>

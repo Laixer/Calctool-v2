@@ -11,6 +11,7 @@
 |
 */
 
+/* Application guest pages */
 Route::group(['middleware' => 'guest'], function() {
 	Route::get('register', 'AuthController@getRegister');
 	Route::get('login', 'AuthController@getLogin');
@@ -26,6 +27,7 @@ Route::group(['middleware' => 'guest'], function() {
 	Route::get('ex-project-overview/{token}/done', 'ClientController@doOfferAccept')->where('token', '[0-9a-z]{40}');
 });
 
+/* Frontend API */
 Route::post('api/v1/register/usernamecheck', 'ApiController@doCheckUsernameEXist');
 
 Route::group(['prefix' => 'api/v1', 'middleware' => 'auth'], function() {
@@ -39,18 +41,19 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'auth'], function() {
 	Route::get('/purchase', 'ApiController@getPurchase');
 	Route::post('/purchase/delete', 'ApiController@doPurchaseDelete');
 	Route::post('/purchase/new', 'ApiController@doPurchaseNew');
-
 });
 
+/* Generic routes */
 Route::get('about', 'GenericController@getAbout');
 Route::get('faq', 'GenericController@getFaq');
 Route::get('terms-and-conditions', 'GenericController@getTerms');
 Route::get('privacy-policy', 'GenericController@getPrivacy');
 Route::get('support', 'GenericController@getSupport');
 
+/* Oauth2 REST API */
 Route::group(['prefix' => 'oauth2', 'middleware' => ['check-authorization-params', 'auth']], function() {
 	Route::get('authorize', 'AuthController@getOauth2Authorize');
-	Route::post('authorize', 'AuthController@doOauth2Authorize');//->middleware('csrf');
+	Route::post('authorize', 'AuthController@doOauth2Authorize');
 });
 
 Route::post('oauth2/token', function() {
@@ -63,19 +66,20 @@ Route::group(['prefix' => 'oauth2/rest', 'middleware' => 'oauth'], function() {
 	Route::get('relations', 'AuthController@getRestUserRelations');
 });	
 
+/* Feedback/Support */
 Route::post('feedback', 'FeedbackController@send');
 Route::post('support', 'FeedbackController@sendSupport');
 
+/* Payment callbacks */
 Route::post('payment/webhook/', 'UserController@doPaymentUpdate');
-Route::get('hidenextstep', 'AuthController@doHideNextStep');
+Route::get('hidenextstep', 'AuthController@doHideNextStep');//TODO remove?
 
+//TODO hack
 Route::get('c4586v34674v4&vwasrt/footer_pdf', function() {
 	return view('calc.footer_pdf');
 });
 
-Route::group(['middleware' => 'auth'], function()
-{
-	/* Generic pages */
+Route::group(['middleware' => 'auth'], function() {
 	Route::get('/', ['middleware' => 'payzone', function() {
 		if (Auth::user()->isSystem()) {
 			return redirect('/admin');
@@ -291,6 +295,7 @@ Route::group(['middleware' => 'auth'], function()
 
 	/* Project pages */
 	Route::get('project/new', 'ProjectController@getNew')->middleware('payzone'); 
+	Route::get('project/relation/{relation_id}', 'ProjectController@getRelationDetails')->middleware('payzone'); 
 	Route::post('project/new', 'ProjectController@doNew');
 	Route::post('project/update', 'ProjectController@doUpdate');
 	Route::post('project/update/note', 'ProjectController@doUpdateNote');
