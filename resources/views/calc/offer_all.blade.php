@@ -86,7 +86,7 @@ $(document).ready(function() {
 	@if ($offer_last)
     $('#dateRangePicker').datepicker().on('changeDate', function(e){
 		$.post("/offer/close", {
-			date: e.date.toLocaleString(),
+			date: e.date.toISOString(),
 			offer: {{ $offer_last->id }},
 			project: {{ $project->id }}
 		}, function(data){

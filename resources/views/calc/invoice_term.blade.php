@@ -185,7 +185,7 @@ if (!$project || !$project->isOwner()) {
 		});
 		$('#invdate').datepicker().on('changeDate', function(e){
 			$('#invdate').datepicker('hide');
-			$('#invdateval').val(e.date.toLocaleString());
+			$('#invdateval').val(e.date.toISOString());
 			$('#invdate').text(e.date.getDate() + "-" + (e.date.getMonth() + 1)  + "-" + e.date.getFullYear());
 		});
 		$('#adressing').text($('#to_contact option:selected').text());

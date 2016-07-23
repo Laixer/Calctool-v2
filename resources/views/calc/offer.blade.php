@@ -321,7 +321,7 @@ $type = ProjectType::find($project->type_id);
 		});
 		$('.offdate').datepicker().on('changeDate', function(e){
 			$('.offdate').datepicker('hide');
-			$('#offdateval').val(e.date.toLocaleString());
+			$('#offdateval').val(e.date.toISOString());
 			$('.offdate').text(e.date.getDate() + "-" + (e.date.getMonth() + 1)  + "-" + e.date.getFullYear());
 		});
 		@if ($offer_last && $offer_last->offer_make)
