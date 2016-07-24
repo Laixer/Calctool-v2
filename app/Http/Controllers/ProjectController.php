@@ -39,7 +39,7 @@ class ProjectController extends Controller {
 	 */
 	public function getNew(Request $request)
 	{
-		return view('user.new_project');
+		return view('user.new_project', ['debtor_code' => mt_rand(1000000, 9999999)]);
 	}
 
 	public function getEdit(Request $request)
