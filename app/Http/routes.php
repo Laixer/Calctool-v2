@@ -57,13 +57,17 @@ Route::group(['prefix' => 'oauth2', 'middleware' => ['check-authorization-params
 });
 
 Route::post('oauth2/access_token', function() {
-	return Response::json(Authorizer::issueAccessToken());
+	return response()->json(Authorizer::issueAccessToken());
 });
 
 Route::group(['prefix' => 'oauth2/rest', 'middleware' => 'oauth'], function() {
+	/* Owner rest functions */
 	Route::get('user', 'AuthController@getRestUser');
 	Route::get('projects', 'AuthController@getRestUserProjects');
 	Route::get('relations', 'AuthController@getRestUserRelations');
+
+	/* Internal rest functions */
+	Route::get('internal/user_all', 'AuthController@getRestAllUsers');
 });	
 
 /* Feedback/Support */

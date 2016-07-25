@@ -448,12 +448,11 @@ class AuthController extends Controller {
 	 */
 	public function doOauth2Authorize(Request $request) {
 	    $authParams = Authorizer::getAuthCodeRequestParams();
-	    $authParams['user_id'] = Auth::id();
 	    $redirectUri = '/';
 
 	    // If the user has allowed the client to access its data, redirect back to the client with an auth code.
 	    if ($request->has('approve')) {
-	        $redirectUri = Authorizer::issueAuthCode('user', $authParams['user_id'], $authParams);
+	        $redirectUri = Authorizer::issueAuthCode('user', Auth::id(), $authParams);
 
 	        Audit::CreateEvent('oauth2.authorize.success', 'OUATH2 request approved ' . $authParams['client']->getName());
 	    }
@@ -475,6 +474,12 @@ class AuthController extends Controller {
 	 */
 	public function getRestUser(Request $request) {
 		$id = Authorizer::getResourceOwnerId();
+
+		if (Authorizer::getResourceOwnerType() != "user") {
+
+			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+		}
+
 		$user = User::find($id);
     	return response()->json($user);
 	}
@@ -486,6 +491,11 @@ class AuthController extends Controller {
 	 */
 	public function getRestUserProjects(Request $request) {
 		$id = Authorizer::getResourceOwnerId();
+
+		if (Authorizer::getResourceOwnerType() != "user") {
+			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+		}
+
 		$user = User::find($id);
 		$projects = Project::where('user_id',$user->id)->get();
     	return response()->json($projects);
@@ -498,8 +508,26 @@ class AuthController extends Controller {
 	 */
 	public function getRestUserRelations(Request $request) {
 		$id = Authorizer::getResourceOwnerId();
+
+		if (Authorizer::getResourceOwnerType() != "user") {
+			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+		}
+
 		$user = User::find($id);
 		$relations = Relation::where('user_id',$user->id)->get();
     	return response()->json($relations);
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function getRestAllUsers(Request $request) {
+		if (Authorizer::getResourceOwnerType() != "client") {
+			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+		}
+
+    	return response()->json(User::all());
 	}
 }
