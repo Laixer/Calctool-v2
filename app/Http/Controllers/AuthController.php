@@ -58,8 +58,12 @@ class AuthController extends Controller {
 	 *
 	 * @return Route
 	 */
-	public function getRegister()
+	public function getRegister(Request $request)
 	{
+		if ($request->has('client_referer')) {
+			return view('auth.registration', ['client_referer' => $request->get('client_referer')]);
+		}
+
 		return view('auth.registration');
 	}
 
@@ -145,6 +149,15 @@ class AuthController extends Controller {
 		$request->merge(array('username' => strtolower(trim($request->input('username')))));
 		$request->merge(array('email' => strtolower(trim($request->input('email')))));
 		
+		$referral_user = null;
+		$expiration_date = date('Y-m-d', strtotime("+1 month", time()));
+		if ($request->has('client_referer')) {
+			$referral_user = User::where('referral_key', $request->get('client_referer'))->first();
+			if ($referral_user) {
+				$expiration_date = date('Y-m-d', strtotime("+3 month", time()));
+			}
+		}
+
 		$this->validate($request, [
 			'username' => array('required','max:30','unique:user_account'),
 			'email' => array('required','max:80','email','unique:user_account'),
@@ -164,7 +177,7 @@ class AuthController extends Controller {
 		$user->referral_key = md5(mt_rand());
 		$user->ip = \Calctool::remoteAddr();
 		$user->email = $request->get('email');
-		$user->expiration_date = date('Y-m-d', strtotime("+1 month", time()));
+		$user->expiration_date = $expiration_date;
 		$user->user_type = UserType::where('user_type','=','user')->first()->id;
 		$user->user_group = 100;
 		$user->firstname = $request->get('contact_firstname');
@@ -212,6 +225,14 @@ class AuthController extends Controller {
 		$user->save();
 
 		Audit::CreateEvent('account.new.success', 'Created new account from template', $user->id);
+
+		if ($referral_user) {
+			$referral_user->expiration_date = $expiration_date;
+
+			$referral_user->save();
+
+			Audit::CreateEvent('account.referralkey.used.success', 'Referral key used', $referral_user->id);
+		}
 
 		return back()->with('success', 'Account aangemaakt, er is een bevestingsmail verstuurd');
 	}
@@ -399,6 +420,11 @@ class AuthController extends Controller {
 									->count();
 
 		if ($isAuthenticatedBefore > 0) {
+			DB::table('oauth_sessions')
+							->where('client_id', $authParams['client']->getId())
+							->where('owner_id', Auth::id())
+							->delete();
+
 			$redirectUri = Authorizer::issueAuthCode('user', Auth::id(), $authParams);
 
 			Audit::CreateEvent('oauth2.reauthorize.success', 'OUATH2 request reauthorized for ' . $authParams['client']->getName());
