@@ -2,7 +2,6 @@
 
 namespace Calctool\Http\Controllers;
 
-use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
 use Longman\TelegramBot\Telegram as TTelegram;
 use Longman\TelegramBot\Request as TRequest;
@@ -22,19 +21,49 @@ use \Calctool\Models\ContactFunction;
 
 use \Auth;
 use \Redis;
+use \Cache;
 use \Hash;
 use \Mailgun;
 use \Authorizer;
+use \DB;
 
 class AuthController extends Controller {
+
+	private function getCacheBlockItem()
+	{
+		if (isset($_SERVER['REMOTE_ADDR']))
+			return 'blockremote' . base64_encode($_SERVER['REMOTE_ADDR']);
+
+		return 'blockremotelocal';
+	}
 
 	/**
 	 * Show the form for creating a new resource.
 	 *
 	 * @return Route
 	 */
-	public function getRegister()
+	public function getLogin()
 	{
+		if (Cache::has($this->getCacheBlockItem())) {
+			if (Cache::get($this->getCacheBlockItem()) >=5) {
+				return view('auth.login')->withErrors(['auth' => ['Toegang geblokkeerd voor 15 minuten. Probeer later opnieuw.']]);
+			}
+		}
+
+		return view('auth.login');
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function getRegister(Request $request)
+	{
+		if ($request->has('client_referer')) {
+			return view('auth.registration', ['client_referer' => $request->get('client_referer')]);
+		}
+
 		return view('auth.registration');
 	}
 
@@ -55,8 +84,6 @@ class AuthController extends Controller {
 	 */
 	public function doLogin(Request $request)
 	{
-		$errors = new MessageBag;
-
 		$username = strtolower(trim($request->input('username')));
 		$userdata = array(
 			'username' 	=> $username,
@@ -74,21 +101,19 @@ class AuthController extends Controller {
 
 		$remember = $request->input('rememberme') ? true : false;
 
-		if (Redis::exists('auth:'.$username.':block')) {
-			$errors = new MessageBag(['auth' => ['Account geblokkeerd voor 15 minuten']]);
-			return back()->withErrors($errors)->withInput($request->except('secret'));
+		if (Cache::has($this->getCacheBlockItem())) {
+			if (Cache::get($this->getCacheBlockItem()) >=5) {
+				return back()->withErrors(['auth' => ['Toegang geblokkeerd voor 15 minuten. Probeer later opnieuw.']]);
+			}
 		}
 
-		if(Auth::attempt($userdata, $remember) || Auth::attempt($userdata2, $remember)){
+		if (Auth::attempt($userdata, $remember) || Auth::attempt($userdata2, $remember)) {
 
 			/* Email must be confirmed */
-			if (Auth::user()->confirmed_mail == NULL) {
+			if (!Auth::user()->confirmed_mail) {
 				Auth::logout();
-				$errors = new MessageBag(['mail' => ['Email nog niet bevestigd']]);
-				return back()->withErrors($errors)->withInput($request->except('secret'));
+				return back()->withErrors(['mail' => ['Email nog niet bevestigd']])->withInput($request->except('secret'));
 			}
-
-			Redis::del('auth:'.$username.':fail', 'auth:'.$username.':block');
 
 			Audit::CreateEvent('auth.login.succces', 'Login with: ' . \Calctool::remoteAgent());
 
@@ -104,24 +129,13 @@ class AuthController extends Controller {
 			return redirect('/');
 		} else {
 
-			// Login failed
-			$errors = new MessageBag(['password' => ['Gebruikersnaam of wachtwoord verkeerd']]);
-
-			// Count the failed logins
-			$failcount = Redis::get('auth:'.$username.':fail');
-			if ($failcount >= 4) {
-				Redis::set('auth:'.$username.':block', true);
-				Redis::expire('auth:'.$username.':block', 900);
+			if (Cache::has($this->getCacheBlockItem())) {
+				Cache::increment($this->getCacheBlockItem());
 			} else {
-				Redis::incr('auth:'.$username.':fail');
+				Cache::put($this->getCacheBlockItem(), 1, 15);
 			}
-
-			$failuser = \Calctool\Models\User::where('username', $username)->first();
-			if ($failuser) {
-				Audit::CreateEvent('auth.login.failed', 'Failed tries: ' . $failcount, $failuser->id);
-			}
-
-			return back()->withErrors($errors)->withInput($request->except('secret'))->withCookie(cookie()->forget('swpsess'));
+	
+			return back()->withErrors(['password' => ['Gebruikersnaam en/of wachtwoord verkeerd']])->withInput($request->except('secret'))->withCookie(cookie()->forget('swpsess'));
 		}
 	}
 
@@ -135,6 +149,15 @@ class AuthController extends Controller {
 		$request->merge(array('username' => strtolower(trim($request->input('username')))));
 		$request->merge(array('email' => strtolower(trim($request->input('email')))));
 		
+		$referral_user = null;
+		$expiration_date = date('Y-m-d', strtotime("+1 month", time()));
+		if ($request->has('client_referer')) {
+			$referral_user = User::where('referral_key', $request->get('client_referer'))->first();
+			if ($referral_user) {
+				$expiration_date = date('Y-m-d', strtotime("+3 month", time()));
+			}
+		}
+
 		$this->validate($request, [
 			'username' => array('required','max:30','unique:user_account'),
 			'email' => array('required','max:80','email','unique:user_account'),
@@ -154,7 +177,7 @@ class AuthController extends Controller {
 		$user->referral_key = md5(mt_rand());
 		$user->ip = \Calctool::remoteAddr();
 		$user->email = $request->get('email');
-		$user->expiration_date = date('Y-m-d', strtotime("+1 month", time()));
+		$user->expiration_date = $expiration_date;
 		$user->user_type = UserType::where('user_type','=','user')->first()->id;
 		$user->user_group = 100;
 		$user->firstname = $request->get('contact_firstname');
@@ -202,6 +225,14 @@ class AuthController extends Controller {
 		$user->save();
 
 		Audit::CreateEvent('account.new.success', 'Created new account from template', $user->id);
+
+		if ($referral_user) {
+			$referral_user->expiration_date = $expiration_date;
+
+			$referral_user->save();
+
+			Audit::CreateEvent('account.referralkey.used.success', 'Referral key used', $referral_user->id);
+		}
 
 		return back()->with('success', 'Account aangemaakt, er is een bevestingsmail verstuurd');
 	}
@@ -380,8 +411,26 @@ class AuthController extends Controller {
 	 */
 	public function getOauth2Authorize() {
 		$authParams = Authorizer::getAuthCodeRequestParams();
-
 		$formParams = array_except($authParams,'client');
+
+		$isAuthenticatedBefore = DB::table('oauth_sessions')
+									->where('client_id', $authParams['client']->getId())
+									->where('owner_id', Auth::id())
+									->select('id')
+									->count();
+
+		if ($isAuthenticatedBefore > 0) {
+			DB::table('oauth_sessions')
+							->where('client_id', $authParams['client']->getId())
+							->where('owner_id', Auth::id())
+							->delete();
+
+			$redirectUri = Authorizer::issueAuthCode('user', Auth::id(), $authParams);
+
+			Audit::CreateEvent('oauth2.reauthorize.success', 'OUATH2 request reauthorized for ' . $authParams['client']->getName());
+
+			return redirect($redirectUri);
+		}
 
 		$formParams['client_id'] = $authParams['client']->getId();
 
@@ -398,22 +447,21 @@ class AuthController extends Controller {
 	 * @return Route
 	 */
 	public function doOauth2Authorize(Request $request) {
-	    $params = Authorizer::getAuthCodeRequestParams();
-	    $params['user_id'] = Auth::id();
+	    $authParams = Authorizer::getAuthCodeRequestParams();
 	    $redirectUri = '/';
 
 	    // If the user has allowed the client to access its data, redirect back to the client with an auth code.
 	    if ($request->has('approve')) {
-	        $redirectUri = Authorizer::issueAuthCode('user', $params['user_id'], $params);
+	        $redirectUri = Authorizer::issueAuthCode('user', Auth::id(), $authParams);
 
-	        Audit::CreateEvent('oauth2.authorize.success', 'OUATH2 request approved ' . $params['client']->getName());
+	        Audit::CreateEvent('oauth2.authorize.success', 'OUATH2 request approved ' . $authParams['client']->getName());
 	    }
 
 	    // If the user has denied the client to access its data, redirect back to the client with an error message.
 	    if ($request->has('deny')) {
 	        $redirectUri = Authorizer::authCodeRequestDeniedRedirectUri();
 
-	        Audit::CreateEvent('oauth2.authorize.success', 'OUATH2 request denied ' . $params['client']->getName());
+	        Audit::CreateEvent('oauth2.authorize.success', 'OUATH2 request denied ' . $authParams['client']->getName());
 	    }
 
 	    return redirect($redirectUri);
@@ -426,6 +474,12 @@ class AuthController extends Controller {
 	 */
 	public function getRestUser(Request $request) {
 		$id = Authorizer::getResourceOwnerId();
+
+		if (Authorizer::getResourceOwnerType() != "user") {
+
+			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+		}
+
 		$user = User::find($id);
     	return response()->json($user);
 	}
@@ -437,6 +491,11 @@ class AuthController extends Controller {
 	 */
 	public function getRestUserProjects(Request $request) {
 		$id = Authorizer::getResourceOwnerId();
+
+		if (Authorizer::getResourceOwnerType() != "user") {
+			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+		}
+
 		$user = User::find($id);
 		$projects = Project::where('user_id',$user->id)->get();
     	return response()->json($projects);
@@ -449,8 +508,26 @@ class AuthController extends Controller {
 	 */
 	public function getRestUserRelations(Request $request) {
 		$id = Authorizer::getResourceOwnerId();
+
+		if (Authorizer::getResourceOwnerType() != "user") {
+			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+		}
+
 		$user = User::find($id);
 		$relations = Relation::where('user_id',$user->id)->get();
     	return response()->json($relations);
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function getRestAllUsers(Request $request) {
+		if (Authorizer::getResourceOwnerType() != "client") {
+			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+		}
+
+    	return response()->json(User::all());
 	}
 }

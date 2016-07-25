@@ -100,6 +100,7 @@
 												<tr><!-- spacer after the line -->
 													<td width="100%" height="20"></td>
 												</tr>
+												@if (!$preview)
 												<tr>
 													<!--<td width="100%" height="15"></td>-->
 													<td width="100%" style="text-align:center;">
@@ -113,6 +114,7 @@
 														<em>{{ $project_name }}</em>					
 													</td>
 												</tr>
+												@endif
 												<tr><!-- spacer after the line -->
 													<td width="100%" height="20"></td>
 												</tr>

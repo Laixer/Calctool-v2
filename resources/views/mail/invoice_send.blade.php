@@ -73,6 +73,7 @@
 												<tr><!-- spacer after the line -->
 													<td width="100%" height="30"></td>
 												</tr>
+												@if (!$preview)
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
 														Geachte <strong>{{ $client }}</strong>,
@@ -87,6 +88,7 @@
 														@endif														
 													</td>
 												</tr>
+												@endif
 												<tr>
 													<td width="100%" height="10"></td>
 												</tr>

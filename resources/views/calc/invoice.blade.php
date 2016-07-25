@@ -180,7 +180,7 @@ $type = ProjectType::find($project->type_id);
 		});
 		$('.invdate').datepicker().on('changeDate', function(e){
 			$('.invdate').datepicker('hide');
-			$('#invdateval').val(e.date.toLocaleString());
+			$('#invdateval').val(e.date.toISOString());
 			$('.invdate').text(e.date.getDate() + "-" + (e.date.getMonth() + 1)  + "-" + e.date.getFullYear());
 		});
 		@if ($invoice_last)
@@ -226,7 +226,7 @@ $type = ProjectType::find($project->type_id);
 		</div>
 		@endif
 
-		@if($errors->has())
+		@if (count($errors) > 0)
 		<div class="alert alert-danger">
 			<i class="fa fa-frown-o"></i>
 			<strong>Fout</strong>

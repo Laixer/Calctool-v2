@@ -83,6 +83,10 @@ $(function() {
 
 					<form action="/register" method="post" class="white-row">
 					{!! csrf_field() !!}
+						
+						@if (isset($client_referer))
+						<input name="client_referer" type="hidden" value="{{ $client_referer }}" />
+						@endif
 
 						@if(Session::get('success'))
 						<div class="alert alert-success">
@@ -91,7 +95,7 @@ $(function() {
 						</div>
 						@endif
 
-						@if($errors->has())
+						@if (count($errors) > 0)
 						<div class="alert alert-danger">
 							<i class="fa fa-frown-o"></i>
 							<strong>Fouten in aanmaak nieuw account</strong>

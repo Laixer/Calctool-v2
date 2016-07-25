@@ -16,7 +16,9 @@
 		"longman/telegram-bot": "*",
 		"jeroendesloovere/vcard": "1.2.*",
 		"doctrine/dbal": "v2.5.4",
-		"lucadegasperi/oauth2-server-laravel": "5.1.*"
+		"lucadegasperi/oauth2-server-laravel": "5.1.*",
+		"graham-campbell/markdown": "^6.0",
+		"webuni/commonmark-table-extension": "^0.5.0"
 	},
 	"require-dev": {
 		"fzaninotto/faker": "~1.4",

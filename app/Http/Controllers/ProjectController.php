@@ -39,7 +39,7 @@ class ProjectController extends Controller {
 	 */
 	public function getNew(Request $request)
 	{
-		return view('user.new_project');
+		return view('user.new_project', ['debtor_code' => mt_rand(1000000, 9999999)]);
 	}
 
 	public function getEdit(Request $request)
@@ -432,5 +432,25 @@ class ProjectController extends Controller {
 		$project_share->save();
 
 		return back();
+	}
+
+	public function getRelationDetails(Request $request, $relation_id)
+	{
+		$relation = Relation::find($relation_id);
+		if (!$relation || !$relation->isOwner()) {
+			return response()->json(['success' => 0]);
+		}
+
+		$arr = [
+			'success' => 1,
+			'address_street' => $relation->address_street,
+			'address_number' => $relation->address_number,
+			'address_postal' => $relation->address_postal,
+			'address_city' => $relation->address_city,
+			'province_id' => $relation->province_id,
+			'country_id' => $relation->country_id,
+		];
+
+		return response()->json($arr);
 	}
 }

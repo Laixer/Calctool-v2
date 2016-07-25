@@ -38,7 +38,7 @@ if (!$relation || !$relation->isOwner()) {
 			</div>
 			@endif
 
-			@if($errors->has())
+			@if (count($errors) > 0)
 			<div class="alert alert-danger">
 				<i class="fa fa-frown-o"></i>
 				<strong>Fouten in de invoer</strong>

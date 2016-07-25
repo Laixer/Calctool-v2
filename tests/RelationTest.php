@@ -21,7 +21,7 @@ class RelationTest extends TestCase
 
         $user = factory(Calctool\Models\User::class)->create();
 
-        $this->actingAs($user)
+        $this->actingAs($user) //TODO replace with factory
              ->visit('/relation/new')
              ->see('Nieuwe relatie')
              ->select($faker->numberBetween(1,2), 'relationkind')
@@ -111,7 +111,7 @@ class RelationTest extends TestCase
              ->type($faker->numberBetween(0,999999999999), 'telephone_comp')
              ->type($faker->email, 'email_comp')
              ->type($faker->buildingNumber, 'address_number')
-             ->type($faker->randomNumber, 'zipcode')
+             ->type($faker->randomNumber(3), 'zipcode')
              ->type($faker->streetName, 'street')
              ->type($faker->city, 'city')
              ->select($faker->numberBetween(1,13), 'province')

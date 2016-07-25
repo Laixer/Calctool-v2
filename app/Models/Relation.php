@@ -32,7 +32,7 @@ class Relation extends Model {
 	}
 
 	public function kind() {
-		return $this->hasOne('RelationKind', 'id');
+		return $this->hasOne('Calctool\Models\RelationKind', 'id', 'kind_id')->first();
 	}
 
 	public function isOwner() {
@@ -41,5 +41,17 @@ class Relation extends Model {
 
 	public function isActive() {
 		return $this->active;
+	}
+
+	public function isBusiness() {
+		return $this->kind()->kind_name == 'zakelijk';
+	}
+
+	public function name() {
+		if ($this->isBusiness()) {
+			return $this->company_name;
+		}
+
+		return Contact::where('relation_id','=',$this->id)->first()['firstname'] . ' ' . Contact::where('relation_id','=',$this->id)->first()['lastname'];
 	}
 }

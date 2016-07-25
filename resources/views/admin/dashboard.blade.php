@@ -225,6 +225,24 @@ $(document).ready(function() {
 						<div class="col-sm-12 col-md-2">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
+									<a class="item-hover" href="/admin/documentation">
+										<span class="overlay color2"></span>
+										<span class="inner">
+											<span class="block fa fa-book fsize60"></span>
+											<strong>Documentation</strong>
+										</span>
+									</a>
+									<a href="/admin/documentation" class="btn btn-primary add_to_cart"><i class="fa fa-book-alt"></i> Documentation</a>
+								</figure>
+								<div class="item-box-desc">
+									<a href="/admin/documentation" ><h4>Documentation</h4></a>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-12 col-md-2">
+							<div class="item-box item-box-show fixed-box">
+								<figure>
 									<a class="item-hover" href="/admin/environment">
 										<span class="overlay color2"></span>
 										<span class="inner">

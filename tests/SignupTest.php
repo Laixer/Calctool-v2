@@ -127,4 +127,34 @@ class SignupTest extends TestCase
              ->press('Aanmelden')
              ->see('Wachtwoorden komen niet overeen');
     }
+
+    /**
+     * A basic functional test example.
+     *
+     * @return void
+     */
+    public function testCreateNewAccountWithReferralKey()
+    {
+        $faker = Faker::create();
+        $password = $faker->password;
+
+        $referred_user = factory(Calctool\Models\User::class)->create();
+
+        $user = factory(Calctool\Models\User::class)->make();
+
+        $this->visit('/register?client_referer=' . $referred_user->referral_key)
+             ->type($user->firstname, 'contact_firstname')
+             ->type($user->lastname, 'contact_name')
+             ->type($faker->company, 'company_name')
+             ->type($user->username, 'username')
+             ->type($user->email, 'email')
+             ->type($password, 'secret')
+             ->type($password, 'secret_confirmation')
+             ->check('tos')
+             ->press('Aanmelden')
+             ->see('bevestingsmail verstuurd');
+
+        $this->seeInDatabase('user_account', ['username' => $user->username, 'expiration_date' => date('Y-m-d', strtotime("+3 month", time()))]);
+        $this->seeInDatabase('user_account', ['username' => $referred_user->username, 'expiration_date' => date('Y-m-d', strtotime("+3 month", time()))]);
+    }
 }

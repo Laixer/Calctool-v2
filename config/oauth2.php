@@ -31,7 +31,16 @@ return [
         'authorization_code' => [
             'class' => '\League\OAuth2\Server\Grant\AuthCodeGrant',
             'access_token_ttl' => 7200,
-            'auth_token_ttl' => 360
+            'auth_token_ttl' => 120
+        ],
+        'refresh_token' => [
+            'class' => '\League\OAuth2\Server\Grant\RefreshTokenGrant',
+            'access_token_ttl' => 7200,
+            'refresh_token_ttl' => 86400
+        ],
+         'client_credentials' => [
+            'class' => '\League\OAuth2\Server\Grant\ClientCredentialsGrant',
+            'access_token_ttl' => 3600
         ]
     ],
 

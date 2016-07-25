@@ -13,6 +13,8 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use League\OAuth2\Server\Exception\InvalidClientException;
+use League\OAuth2\Server\Exception\InvalidRequestException;
+use League\OAuth2\Server\Exception\AccessDeniedException;
 
 use \Mailgun;
 use \Auth;
@@ -32,6 +34,8 @@ class Handler extends ExceptionHandler
         TokenMismatchException::class,
         FileNotFoundException::class,
         InvalidClientException::class,
+        InvalidRequestException::class,
+        AccessDeniedException::class,
     ];
 
     /**
@@ -50,6 +54,7 @@ class Handler extends ExceptionHandler
             if (!config('app.debug')) {
                 $content = "<b>Timestamp: " . date('c') . "</b><br />";
                 $content .= "<b>Environment: " . app()->environment() . "</b><br />";
+                $content .= "<b>Server API: " . php_sapi_name() . "</b><br />";
 
                 $rev = '-';
                 if (\File::exists('../.revision')) {
@@ -60,7 +65,7 @@ class Handler extends ExceptionHandler
 
                 if (Auth::check())
                     $content .= "<b>User: " . Auth::user()->username . "</b><br />";
-                
+
                 $content .= "<br />" . nl2br($e);
                 $data = array('content' => $content, 'env' => app()->environment());
                 Mailgun::send('mail.raw', $data, function($message) use ($data) {

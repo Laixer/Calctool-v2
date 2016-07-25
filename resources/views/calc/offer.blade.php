@@ -321,7 +321,7 @@ $type = ProjectType::find($project->type_id);
 		});
 		$('.offdate').datepicker().on('changeDate', function(e){
 			$('.offdate').datepicker('hide');
-			$('#offdateval').val(e.date.toLocaleString());
+			$('#offdateval').val(e.date.toISOString());
 			$('.offdate').text(e.date.getDate() + "-" + (e.date.getMonth() + 1)  + "-" + e.date.getFullYear());
 		});
 		@if ($offer_last && $offer_last->offer_make)
@@ -374,7 +374,7 @@ $type = ProjectType::find($project->type_id);
 		</div>
 		@endif
 
-		@if($errors->has())
+		@if (count($errors) > 0)
 		<div class="alert alert-danger">
 			<i class="fa fa-frown-o"></i>
 			<strong>Fout</strong>

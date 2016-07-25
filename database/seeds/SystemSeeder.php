@@ -33,7 +33,7 @@ class SystemSeeder extends Seeder {
 		$system_user->active = 'Y';
 		$system_user->confirmed_mail = date('Y-m-d');
 		$system_user->registration_date = date('Y-m-d');
-		$system_user->expiration_date = date('Y-m-d', strtotime("+1 month", time()));
+		$system_user->expiration_date = date('Y-m-d', strtotime("+100 month", time()));
 		$system_user->referral_key = md5(mt_rand());
 		$system_user->email = 'info@calculatietool.com';
 		$system_user->user_type = $system_user_type->id;

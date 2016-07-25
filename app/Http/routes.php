@@ -11,12 +11,10 @@
 |
 */
 
-Route::get('login', function(){
-	return view('auth.login');
-});
-
+/* Application guest pages */
 Route::group(['middleware' => 'guest'], function() {
 	Route::get('register', 'AuthController@getRegister');
+	Route::get('login', 'AuthController@getLogin');
 	Route::post('login', 'AuthController@doLogin');
 	Route::post('register', 'AuthController@doRegister');
 	Route::get('confirm/{api}/{token}', 'AuthController@doActivate')->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
@@ -29,6 +27,7 @@ Route::group(['middleware' => 'guest'], function() {
 	Route::get('ex-project-overview/{token}/done', 'ClientController@doOfferAccept')->where('token', '[0-9a-z]{40}');
 });
 
+/* Frontend API */
 Route::post('api/v1/register/usernamecheck', 'ApiController@doCheckUsernameEXist');
 
 Route::group(['prefix' => 'api/v1', 'middleware' => 'auth'], function() {
@@ -42,53 +41,49 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'auth'], function() {
 	Route::get('/purchase', 'ApiController@getPurchase');
 	Route::post('/purchase/delete', 'ApiController@doPurchaseDelete');
 	Route::post('/purchase/new', 'ApiController@doPurchaseNew');
-
 });
 
-Route::get('about', function() {
-	return view('generic.about');
-});
-Route::get('faq', function() {
-	return view('generic.faq');
-});
-Route::get('terms-and-conditions', function() {
-	return view('generic.terms');
-});
-Route::get('privacy-policy', function() {
-	return view('generic.privacy');
-});
-Route::get('support', function() {
-	return view('generic.contact');
-});
+/* Generic routes */
+Route::get('about', 'GenericController@getAbout');
+Route::get('faq', 'GenericController@getFaq');
+Route::get('terms-and-conditions', 'GenericController@getTerms');
+Route::get('privacy-policy', 'GenericController@getPrivacy');
+Route::get('support', 'GenericController@getSupport');
 
+/* Oauth2 REST API */
 Route::group(['prefix' => 'oauth2', 'middleware' => ['check-authorization-params', 'auth']], function() {
 	Route::get('authorize', 'AuthController@getOauth2Authorize');
-	Route::post('authorize', 'AuthController@doOauth2Authorize');//->middleware('csrf');
+	Route::post('authorize', 'AuthController@doOauth2Authorize');
 });
 
-Route::post('oauth2/token', function() {
-	return Response::json(Authorizer::issueAccessToken());
+Route::post('oauth2/access_token', function() {
+	return response()->json(Authorizer::issueAccessToken());
 });
 
 Route::group(['prefix' => 'oauth2/rest', 'middleware' => 'oauth'], function() {
+	/* Owner rest functions */
 	Route::get('user', 'AuthController@getRestUser');
 	Route::get('projects', 'AuthController@getRestUserProjects');
 	Route::get('relations', 'AuthController@getRestUserRelations');
+
+	/* Internal rest functions */
+	Route::get('internal/user_all', 'AuthController@getRestAllUsers');
 });	
 
+/* Feedback/Support */
 Route::post('feedback', 'FeedbackController@send');
 Route::post('support', 'FeedbackController@sendSupport');
 
+/* Payment callbacks */
 Route::post('payment/webhook/', 'UserController@doPaymentUpdate');
-Route::get('hidenextstep', 'AuthController@doHideNextStep');
+Route::get('hidenextstep', 'AuthController@doHideNextStep');//TODO remove?
 
+//TODO hack
 Route::get('c4586v34674v4&vwasrt/footer_pdf', function() {
 	return view('calc.footer_pdf');
 });
 
-Route::group(['middleware' => 'auth'], function()
-{
-	/* Generic pages */
+Route::group(['middleware' => 'auth'], function() {
 	Route::get('/', ['middleware' => 'payzone', function() {
 		if (Auth::user()->isSystem()) {
 			return redirect('/admin');
@@ -112,6 +107,7 @@ Route::group(['middleware' => 'auth'], function()
 	Route::get('myaccount/telegram/unchain', 'UserController@getMyAccountTelegramUnchain');
 	Route::get('myaccount/deactivate', 'UserController@getMyAccountDeactivate');
 	Route::get('myaccount/loaddemo', 'UserController@doLoadDemoProject');
+	Route::get('myaccount/oauth/session/{client_id}/revoke', 'UserController@doRevokeApp');
 	Route::post('myaccount/telegram/update', 'UserController@doMyAccountTelegramUpdate');
 	Route::post('myaccount/updateuser', 'UserController@doMyAccountUser');
 	Route::post('myaccount/iban/new', 'UserController@doNewIban');
@@ -304,6 +300,7 @@ Route::group(['middleware' => 'auth'], function()
 
 	/* Project pages */
 	Route::get('project/new', 'ProjectController@getNew')->middleware('payzone'); 
+	Route::get('project/relation/{relation_id}', 'ProjectController@getRelationDetails')->middleware('payzone'); 
 	Route::post('project/new', 'ProjectController@doNew');
 	Route::post('project/update', 'ProjectController@doUpdate');
 	Route::post('project/update/note', 'ProjectController@doUpdateNote');
@@ -409,6 +406,10 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 	Route::get('application/new', function() {
 		return view('admin.new_application');
 	});
+	Route::get('application/{client_id}/edit', function() {
+		return view('admin.edit_application');
+	});
+	Route::post('application/{client_id}/edit', 'AdminController@doUpdateApplication');
 	Route::post('application/new', 'AdminController@doNewApplication');
 	Route::post('snailmail/offer/done', 'AdminController@doOfferPostDone');
 	Route::post('snailmail/invoice/done', 'AdminController@doInvoicePostDone');
@@ -416,6 +417,7 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 		return view('admin.resource');
 	});
 	Route::post('resource/delete', 'AdminController@doDeleteResource');
+	Route::get('documentation/{dir?}/{page?}', 'AdminController@getDocumentation');
 	Route::get('log', function() {
 		return view('admin.log');
 	});

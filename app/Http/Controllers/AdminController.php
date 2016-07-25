@@ -26,6 +26,7 @@ use \Storage;
 use \Auth;
 use \Hash;
 use \Redis;
+use \Markdown;
 use \Mailgun;
 
 class AdminController extends Controller {
@@ -43,6 +44,31 @@ class AdminController extends Controller {
 	|
 	*/
 
+	public function getDocumentation(Request $request, $directory = null, $page = null)
+	{
+		$docdir = "../docs/";
+
+		if (!$directory)
+			$directory = "";
+
+		if (!$page)
+			$page = "index";
+
+		$dirpage = "/" . $page . ".md";
+
+		if (!file_exists(config('filesystems.docs') . "/" . $directory . $dirpage))
+			return redirect('/admin/documentation')->withErrors('Deze pagina bestaat (nog) niet');
+
+		$mdpage = file_get_contents(config('filesystems.docs') . "/" . $directory . $dirpage);
+		if (!$mdpage)
+			return redirect('/admin/documentation');
+
+		$content = Markdown::convertToHtml($mdpage);
+
+		return view('admin.documentation',['content' => $content, 'dir' => $directory, 'page' => $page]);
+
+	}
+
 	public function doNewAlert(Request $request)
 	{
 		$this->validate($request, [
@@ -58,7 +84,6 @@ class AdminController extends Controller {
 		$alert->save();
 
 		return back()->with('success', 'Nieuwe alert is aangemaakt');
-
 	}
 
 	public function doDeleteAlert(Request $request)
@@ -552,6 +577,28 @@ class AdminController extends Controller {
 		]);
 
 		return back()->with('success', 'Applicatie aangemaakt');
+	}
+
+	public function doUpdateApplication(Request $request, $client_id)
+	{
+		$this->validate($request, [
+			'name' => array('required'),
+			'endpoint' => array('required','url'),
+		]);
+
+		\DB::table('oauth_clients')->where('id', $client_id)->update([
+			'name' => $request->input('name'),
+			'active' => $request->input('toggle-active') ? true : false,
+			'note' => $request->input('note'),
+			'updated_at' => date('Y-m-d H:i:s'),
+		]);
+
+		\DB::table('oauth_client_endpoints')->where('client_id', $client_id)->update([
+			'redirect_uri' => $request->input('endpoint'),
+			'updated_at' => date('Y-m-d H:i:s'),
+		]);
+
+		return back()->with('success', 'Applicatie opgeslagen');
 	}
 
 	public function doDeletePromotion(Request $request, $id)

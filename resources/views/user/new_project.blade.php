@@ -5,9 +5,6 @@ use \Calctool\Models\Project;
 use \Calctool\Models\RelationKind;
 use \Calctool\Models\RelationType;
 
-function getNewDebtorCode() {
-	return mt_rand(1000000, 9999999);
-}
 ?>
 
 @extends('layout.master')
@@ -142,6 +139,29 @@ $(document).ready(function() {
 		}
 	});
 
+	function isPrivateContractor(val) {
+		if (!$('#contractor :selected').data('business')) {
+
+			$.get("/project/relation/" + val.val(), function(data) {
+				if (data.success == 1) {
+					$('#street').val(data.address_street);
+					$('#address_number').val(data.address_number);
+					$('#zipcode').val(data.address_postal);
+					$('#city').val(data.address_city);
+					
+					$("#province").find('option:selected').removeAttr("selected");
+					$('#province option[value=' + data.province_id + ']').attr('selected','selected');
+				}
+			});
+		}
+	}
+
+	$('#contractor').change(function(){
+		isPrivateContractor($(this));
+	});
+
+	isPrivateContractor($('#contractor'));
+
 	if (sessionStorage.introDemo) {
 		var demo = introJs().
 			setOption('nextLabel', 'Volgende').
@@ -212,7 +232,7 @@ $(document).ready(function() {
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="debtor">Debiteurennummer*</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit nummer is gegenereerd door de CalculatieTool.com. Je kunt dit vervangen door je eigen boekhoudkundige nummering." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
-							<input name="debtor" id="debtor" type="text" value="{{ Input::old('debtor') ? Input::old('debtor') : getNewDebtorCode() }}" class="form-control"/>
+							<input name="debtor" id="debtor" type="text" value="{{ Input::old('debtor') ? Input::old('debtor') : $debtor_code }}" class="form-control"/>
 						</div>
 					</div>
 
@@ -386,7 +406,7 @@ $(document).ready(function() {
 			</div>
 			@endif
 
-			@if($errors->has())
+			@if (count($errors) > 0)
 			<div class="alert alert-danger">
 				<i class="fa fa-frown-o"></i>
 				<strong>Fouten in de invoer</strong>
@@ -427,7 +447,7 @@ $(document).ready(function() {
 									<label for="contractor">Opdrachtgever*</label>
 									<select name="contractor" id="contractor" class="form-control pointer">
 										@foreach (Calctool\Models\Relation::where('user_id', Auth::user()->id)->where('active',true)  ->get() as $relation)
-										<option value="{{ $relation->id }}">{!! Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']); !!}</option>
+										<option data-business="{{ $relation->isBusiness() ? 1 : 0 }}" value="{{ $relation->id }}">{{ $relation->name() }}</option>
 										@endforeach
 									</select>
 									<a href="#" data-toggle="modal" data-target="#tutModal">+ Nieuwe opdrachtgever toevoegen</a>
@@ -521,7 +541,7 @@ $(document).ready(function() {
 
 						<div class="row">
 							<div class="col-md-12 item-full">
-								<button data-step="4" data-intro="Klik op opslaan om je project op te slaan." class="btn btn-primary item-full"><i class="fa fa-check"></i> Opslaan</button>
+								<button data-step="4" name="save-project" class="btn btn-primary item-full"><i class="fa fa-check"></i> Opslaan</button>
 							</div>
 						</div>
 

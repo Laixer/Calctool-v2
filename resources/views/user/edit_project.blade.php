@@ -291,7 +291,7 @@ if ($less_total>0) {
 			$('#projclose').datepicker('hide');
 			if(confirm('Project sluiten?')){
 				$.post("/project/updateprojectclose", {
-					date: e.date.toLocaleString(),
+					date: e.date.toISOString(),
 					project: {{ $project->id }}
 				}, function(data){
 					location.reload();
@@ -301,7 +301,7 @@ if ($less_total>0) {
 		$('#wordexec').datepicker().on('changeDate', function(e){
 			$('#wordexec').datepicker('hide');
 			$.post("/project/updateworkexecution", {
-				date: e.date.toLocaleString(),
+				date: e.date.toISOString(),
 				project: {{ $project->id }}
 			}, function(data){
 				location.reload();
@@ -310,7 +310,7 @@ if ($less_total>0) {
 		$('#wordcompl').datepicker().on('changeDate', function(e){
 			$('#wordcompl').datepicker('hide');
 			$.post("/project/updateworkcompletion", {
-				date: e.date.toLocaleString(),
+				date: e.date.toISOString(),
 				project: {{ $project->id }}
 			}, function(data){
 				location.reload();
@@ -408,7 +408,7 @@ if ($less_total>0) {
 			</div>
 			@endif
 
-			@if($errors->has())
+			@if (count($errors) > 0)
 			<div class="alert alert-danger">
 				<i class="fa fa-frown-o"></i>
 				<strong>Fout</strong>

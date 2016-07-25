@@ -18,6 +18,7 @@ use \Auth;
 use \Redis;
 use \Hash;
 use \Mailgun;
+use \DB;
 
 class UserController extends Controller {
 
@@ -597,5 +598,25 @@ class UserController extends Controller {
 		Audit::CreateEvent('account.demoproject.success', 'Demoproject loaded for user');
 
 		return back()->with('success', 'Demoproject geladen');
+	}
+
+	public function doRevokeApp(Request $request, $client_id) {
+		$client = DB::table('oauth_sessions')
+				->join('oauth_clients', 'oauth_sessions.client_id', '=', 'oauth_clients.id')
+                ->where('oauth_sessions.id', $client_id)
+                ->where('oauth_sessions.owner_id', Auth::id())
+                ->first();
+
+        if (!$client)
+        	return back();
+
+        DB::table('oauth_sessions')
+                ->where('id', $client_id)
+                ->where('owner_id', Auth::id())
+                ->delete();
+
+		Audit::CreateEvent('account.oauth2.app.revoke.success', 'Application access revoked for ' . $client->name);
+
+		return back()->with('success', 'Applicatie toegang ingetrokken');
 	}
 }
