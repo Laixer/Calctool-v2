@@ -45,6 +45,9 @@ $(document).ready(function() {
 	$('#tab-contact').click(function(e){
 		sessionStorage.toggleTabMyAcc{{Auth::id()}} = 'contact';
 	});
+	$('#tab-apps').click(function(e){
+		sessionStorage.toggleTabMyAcc{{Auth::id()}} = 'apps';
+	});
 	$('#tab-other').click(function(e){
 		sessionStorage.toggleTabMyAcc{{Auth::id()}} = 'other';
 	});
@@ -188,6 +191,9 @@ $(document).ready(function() {
 						</li>
 						<li id="tab-contact">
 							<a href="#contact" data-toggle="tab">Wachtwoord</a>
+						</li>
+						<li id="tab-apps">
+							<a href="#apps" data-toggle="tab">Applicaties</a>
 						</li>
 						<li id="tab-other">
 							<a href="#other" data-toggle="tab">Overig</a>
@@ -354,22 +360,6 @@ $(document).ready(function() {
 
 							</div>
 
-							<h4>Codes</h4>
-
-							<!--<div class="row">
-								<div class="col-md-4">
-									<div class="form-group">
-										<label for="api">API key</label>
-										<input name="api" id="api" type="text" readonly="readonly" value="{{ $user->api }}" class="form-control"/>
-									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="form-group">
-										<label for="toggle-api" style="display:block;">API toegang</label>
-										<input {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="toggle-api" type="checkbox" {{ $user->api_access ? 'checked' : '' }}>
-									</div>
-								</div>
-							</div>-->
 							<div class="row">
 								<div class="col-md-4">
 									<div class="form-group">
@@ -389,6 +379,42 @@ $(document).ready(function() {
 
 						</div>
 						
+						<div id="apps" class="tab-pane">
+
+							<h4>Externe applicaties</h4>
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th class="col-md-2">Applicatie</th>
+										<th class="col-md-2">Datum akkoord</th>
+										<th class="col-md-4">Laatst vernieuwd</th>
+										<th class="col-md-2">Actief</th>
+										<th class="col-md-2"></th>
+									</tr>
+								</thead>
+
+								<tbody>
+
+								<?php
+									$clients = DB::table('oauth_sessions')
+										->join('oauth_clients', 'oauth_sessions.client_id', '=', 'oauth_clients.id')
+										->leftJoin('oauth_access_tokens', 'oauth_sessions.id', '=', 'oauth_access_tokens.session_id')
+										->select('oauth_sessions.*', 'oauth_clients.name', 'oauth_clients.active', 'oauth_access_tokens.created_at as last_used')
+										->where('owner_id',Auth::id())->get();
+									?>
+									@foreach ($clients as $client)
+									<tr>
+										<td class="col-md-2"><strong>{{ $client->name }}</strong></td>
+										<td class="col-md-2">{{ date('d-m-Y H:i:s', strtotime($client->created_at)) }}</td>
+										<td class="col-md-4">{{ $client->last_used ?date('d-m-Y H:i:s', strtotime($client->last_used)) : '-' }}</td>
+										<td class="col-md-2">{{ $client->active ? 'Ja' : 'Nee' }}</td>
+										<td class="col-md-2" style="text-align:right"><a href="/myaccount/oauth/session/{{ $client->id }}/revoke" class="btn btn-danger btn-xs">Intrekken</a></td>
+									</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
+
 						<div id="other" class="tab-pane">
 
 							<!--<form method="POST" action="myaccount/security/update" accept-charset="UTF-8">-->
