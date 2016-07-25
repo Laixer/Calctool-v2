@@ -25,6 +25,7 @@ use \Cache;
 use \Hash;
 use \Mailgun;
 use \Authorizer;
+use \DB;
 
 class AuthController extends Controller {
 
@@ -389,8 +390,21 @@ class AuthController extends Controller {
 	 */
 	public function getOauth2Authorize() {
 		$authParams = Authorizer::getAuthCodeRequestParams();
-
 		$formParams = array_except($authParams,'client');
+
+		$isAuthenticatedBefore = DB::table('oauth_sessions')
+									->where('client_id', $authParams['client']->getId())
+									->where('owner_id', Auth::id())
+									->select('id')
+									->count();
+
+		if ($isAuthenticatedBefore > 0) {
+			$redirectUri = Authorizer::issueAuthCode('user', Auth::id(), $authParams);
+
+			Audit::CreateEvent('oauth2.reauthorize.success', 'OUATH2 request reauthorized for ' . $authParams['client']->getName());
+
+			return redirect($redirectUri);
+		}
 
 		$formParams['client_id'] = $authParams['client']->getId();
 
@@ -407,22 +421,22 @@ class AuthController extends Controller {
 	 * @return Route
 	 */
 	public function doOauth2Authorize(Request $request) {
-	    $params = Authorizer::getAuthCodeRequestParams();
-	    $params['user_id'] = Auth::id();
+	    $authParams = Authorizer::getAuthCodeRequestParams();
+	    $authParams['user_id'] = Auth::id();
 	    $redirectUri = '/';
 
 	    // If the user has allowed the client to access its data, redirect back to the client with an auth code.
 	    if ($request->has('approve')) {
-	        $redirectUri = Authorizer::issueAuthCode('user', $params['user_id'], $params);
+	        $redirectUri = Authorizer::issueAuthCode('user', $authParams['user_id'], $authParams);
 
-	        Audit::CreateEvent('oauth2.authorize.success', 'OUATH2 request approved ' . $params['client']->getName());
+	        Audit::CreateEvent('oauth2.authorize.success', 'OUATH2 request approved ' . $authParams['client']->getName());
 	    }
 
 	    // If the user has denied the client to access its data, redirect back to the client with an error message.
 	    if ($request->has('deny')) {
 	        $redirectUri = Authorizer::authCodeRequestDeniedRedirectUri();
 
-	        Audit::CreateEvent('oauth2.authorize.success', 'OUATH2 request denied ' . $params['client']->getName());
+	        Audit::CreateEvent('oauth2.authorize.success', 'OUATH2 request denied ' . $authParams['client']->getName());
 	    }
 
 	    return redirect($redirectUri);

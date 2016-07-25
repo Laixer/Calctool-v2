@@ -26,7 +26,7 @@
 				<thead>
 					<tr>
 						<th class="col-md-2">Naam</th>
-						<th class="col-md-3">ID</th>
+						<th class="col-md-3">Client ID</th>
 						<th class="col-md-5">Endpoint</th>
 						<th class="col-md-1 hidden-sm hidden-xs">Sessies</th>
 						<th class="col-md-1 hidden-sm hidden-xs">Actief</th>

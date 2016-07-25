@@ -56,7 +56,7 @@ Route::group(['prefix' => 'oauth2', 'middleware' => ['check-authorization-params
 	Route::post('authorize', 'AuthController@doOauth2Authorize');
 });
 
-Route::post('oauth2/token', function() {
+Route::post('oauth2/access_token', function() {
 	return Response::json(Authorizer::issueAccessToken());
 });
 

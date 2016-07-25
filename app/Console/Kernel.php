@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
         \Calctool\Console\Commands\MaterialImport::class,
         \Calctool\Console\Commands\StorageClear::class,
         \Calctool\Console\Commands\SessionClear::class,
+        \Calctool\Console\Commands\OauthClear::class,
         \Calctool\Console\Commands\AdminReset::class,
         \Calctool\Console\Commands\Snapshot::class,
     ];
@@ -41,7 +42,6 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
 
         $schedule->call(function() {
-            
             foreach(Invoice::whereNotNull('bill_date')->whereNull('payment_date')->get() as $invoice) {
                 $offer = Offer::find($invoice->offer_id);
                 $project = Project::find($offer->project_id);
@@ -154,5 +154,7 @@ class Kernel extends ConsoleKernel
             }
 
         })->daily();
+
+        $schedule->command('oauth:clear')->daily();
     }
 }

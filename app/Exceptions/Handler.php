@@ -14,6 +14,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use League\OAuth2\Server\Exception\InvalidClientException;
 use League\OAuth2\Server\Exception\InvalidRequestException;
+use League\OAuth2\Server\Exception\AccessDeniedException;
 
 use \Mailgun;
 use \Auth;
@@ -34,6 +35,7 @@ class Handler extends ExceptionHandler
         FileNotFoundException::class,
         InvalidClientException::class,
         InvalidRequestException::class,
+        AccessDeniedException::class,
     ];
 
     /**

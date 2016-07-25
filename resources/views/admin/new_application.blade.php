@@ -73,14 +73,14 @@ $(document).ready(function() {
 
 					<div class="col-md-5">
 						<div class="form-group">
-							<label for="company_name">Applicatie ID</label>
+							<label for="company_name">Client ID</label>
 							<input name="appid" id="appid" type="text" value="{{ sha1(mt_rand()) }}" readonly="" class="form-control" />
 						</div>
 					</div>
 
 					<div class="col-md-5">
 						<div class="form-group">
-							<label for="company_name">Secret</label>
+							<label for="company_name">Client Secret</label>
 							<input name="secret" id="secret" type="text" value="{{ sha1(mt_rand()) }}" readonly="" class="form-control" />
 						</div>
 					</div>
