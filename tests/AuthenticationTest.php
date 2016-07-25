@@ -228,4 +228,27 @@ class AuthenticationTest extends TestCase
              ->press('Login')
              ->seePageIs('/myaccount');
     }
+
+    /**
+     * A basic functional test example.
+     *
+     * @return void
+     */
+    public function testSubscriptionExpired()
+    {
+        $faker = Faker::create();
+        $password = $faker->password;
+
+        $user = factory(Calctool\Models\User::class)->create([
+            'expiration_date' => date('Y-m-d', strtotime("-1 days", time())),
+            'secret' => Hash::make($password)
+        ]);
+
+        $this->visit('/')
+             ->type($user->username, 'username')
+             ->type($password, 'secret')
+             ->press('Login')
+             ->seePageIs('/myaccount')
+             ->see('Account is gedeactiveerd, abonnement is verlopen.');
+    }
 }
