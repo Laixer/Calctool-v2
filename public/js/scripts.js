@@ -49,7 +49,7 @@
 		//_lightbox();
 		_scrollTo();
 		//_parallax();
-		_masonry();
+		// _masonry();
 		_toggle();
 		//_bgimage();
 		_globalSearch();
