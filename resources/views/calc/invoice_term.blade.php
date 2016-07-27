@@ -383,64 +383,50 @@ if (!$project || !$project->isOwner()) {
 			<?#--CONTENT START--?>
 				<div class="show-totals">
 					<h4>Specificatie termijnfactuur</h4>
+					<hr>
 					<table class="table table-striped hide-btw2">
-						<thead>
-							<tr>
-								<th class="col-md-6">&nbsp;</th>
-								<th class="col-md-2">Bedrag (excl. BTW)</th>
-								<th class="col-md-2">@if (!$project->tax_reverse) BTW bedrag @endif</th>
-								<th class="col-md-2">@if (!$project->tax_reverse) Bedrag (incl. BTW) @endif</th>
-							</tr>
-						</thead>
 						<tbody>
 							<tr>
-								<td class="col-md-6"><strong>{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()}}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen</strong></td>
-								<td class="col-md-2"><strong>{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</strong></td>
-								<td class="col-md-2">&nbsp;</td>
-								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-7">&nbsp;</td>
+								<td class="col-md-4"><strong>{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()}}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen</strong> @if (!$project->tax_reverse) <i>(Excl. BTW)</i> @endif</td>
+								<td class="col-md-1"><strong>{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</strong></td>
+
 							</tr>
 							@if (!$project->tax_reverse)
-<!-- 							<tr>
-								<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
-								<td class="col-md-2">{{ '&euro; '.number_format($invoice->rest_21, 2, ",",".") }}</td>
-								<td class="col-md-2">&nbsp;</td>
-								<td class="col-md-2">&nbsp;</td>
+							<tr>
+								<td class="col-md-7">&nbsp;</td>
+								<td class="col-md-4"><i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
+								<td class="col-md-1"><i>{{ '&euro; '.number_format($invoice->rest_21, 2, ",",".") }}</i></td>
 							</tr>
 							<tr>
-								<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 6% BTW categorie</i></td>
-								<td class="col-md-2">{{ '&euro; '.number_format($invoice->rest_6, 2, ",",".") }}</td>
-								<td class="col-md-2">&nbsp;</td>
-								<td class="col-md-2">&nbsp;</td>
-							</tr> -->
+								<td class="col-md-7">&nbsp;</td>
+								<td class="col-md-4"><i>Aandeel termijnfactuur in 6% BTW categorie</i></td>
+								<td class="col-md-1"><i>{{ '&euro; '.number_format($invoice->rest_6, 2, ",",".") }}</i></td>
+							</tr>
 							@else
-							<tr>
-								<td class="col-md-6">&nbsp;<i>Aandeel termijnfactuur in 0% BTW categorie</i></td>
+<!-- 							<tr>
+								<td class="col-md-6">&nbsp;</td>
+								<td class="col-md-4">&nbsp;<i>Aandeel termijnfactuur in 0% BTW categorie</i></td>
 								<td class="col-md-2"><strong>{{ '&euro; '.number_format($invoice->rest_0, 2, ",",".") }}</strong></td>
-								<td class="col-md-2">&nbsp;</td>
-								<td class="col-md-2">&nbsp;</td>
-							</tr>
+							</tr> -->
 							@endif
 
 							@if (!$project->tax_reverse)
 							<tr>
-								<td class="col-md-6">BTW bedrag 21%</td>
-								<td class="col-md-2">&nbsp;</td>
-								<td class="col-md-2">{{ '&euro; '.number_format(($invoice->rest_21/100)*21, 2, ",",".") }}</td>
-								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-7">&nbsp;</td>
+								<td class="col-md-4">BTW bedrag 21%</td>
+								<td class="col-md-1">{{ '&euro; '.number_format(($invoice->rest_21/100)*21, 2, ",",".") }}</td>
 							</tr>
 							<tr>
-								<td class="col-md-6">BTW bedrag 6%</td>
-								<td class="col-md-2">&nbsp;</td>
-								<td class="col-md-2">{{ '&euro; '.number_format(($invoice->rest_6/100)*6, 2, ",",".") }}</td>
-								<td class="col-md-2">&nbsp;</td>
+								<td class="col-md-7">&nbsp;</td>
+								<td class="col-md-4">BTW bedrag 6%</td>
+								<td class="col-md-1">{{ '&euro; '.number_format(($invoice->rest_6/100)*6, 2, ",",".") }}</td>
 							</tr>
 							@endif
-
 							<tr>
-								<td class="col-md-6"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
-								<td class="col-md-2">&nbsp;</td>
-								<td class="col-md-2">&nbsp;</td>
-								<td class="col-md-2"><strong>{{ '&euro; '.number_format($invoice->amount+(($invoice->rest_21/100)*21)+(($invoice->rest_6/100)*6), 2, ",",".") }}</strong></td>
+								<td class="col-md-7">&nbsp;</td>
+								<td class="col-md-4"><strong>Calculatief te betalen</strong> @if (!$project->tax_reverse) <i>(Incl. BTW)</i> @endif</td>
+								<td class="col-md-1"><strong>{{ '&euro; '.number_format($invoice->amount+(($invoice->rest_21/100)*21)+(($invoice->rest_6/100)*6), 2, ",",".") }}</strong></td>
 							</tr>
 						</tbody>
 					</table>

@@ -160,59 +160,49 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
       <thead>
         <tr>
           <th class="qty">&nbsp;</th>
-          <th class="qty">Bedrag @if(!$project->tax_reverse)(excl. BTW)@endif</th>
-          <th class="qty">@if(!$project->tax_reverse)BTW bedrag @endif</th>
-          <th class="qty">@if(!$project->tax_reverse)Bedrag (incl. BTW) @endif</th>
         </tr>
       </thead>
            <tbody>
         <tr>
-          <td class="qty"><strong>{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()}}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen</strong></td>
+          <td style="width: 270px" class="qty">&nbsp;</td>
+          <td style="width: 385px" class="qty"><strong>{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()}}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen</strong> @if(!$project->tax_reverse)<i>(Excl. BTW)</i> @endif</td>
           <td class="qty"><strong>{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</strong></td>
-          <td class="qty">&nbsp;</td>
-          <td class="qty">&nbsp;</td>
         </tr>
         
         @if (!$project->tax_reverse)
         <tr>
-          <td class="qty">&nbsp;<i>Aandeel termijnfactuur in 21% BTW categorie</i></td>
+          <td style="width: 270px" class="qty">&nbsp;</td>
+          <td style="width: 385px" class="qty">Aandeel termijnfactuur in 21% BTW categorie</td>
           <td class="qty">{{ '&euro; '.number_format($invoice->rest_21, 2, ",",".") }}</td>
-          <td class="qty">&nbsp;</td>
-          <td class="qty">&nbsp;</td>
         </tr>
         <tr>
-          <td class="qty">&nbsp;<i>Aandeel termijnfactuur in 6% BTW categorie</i></td>
+          <td style="width: 270px" class="qty">&nbsp;</td>
+          <td style="width: 385px" class="qty">Aandeel termijnfactuur in 6% BTW categorie</td>
           <td class="qty">{{ '&euro; '.number_format($invoice->rest_6, 2, ",",".") }}</td>
-          <td class="qty">&nbsp;</td>
-          <td class="qty">&nbsp;</td>
         </tr>
         @else
         <tr>
-          <td class="qty">&nbsp;<i>Aandeel termijnfactuur in 0% BTW categorie</i></td>
+          <td style="width: 270px" class="qty">&nbsp;</td>
+          <td style="width: 385px" class="qty">Aandeel termijnfactuur in 0% BTW categorie</td>
           <td class="qty">{{ '&euro; '.number_format($invoice->rest_0, 2, ",",".") }}</td>
-          <td class="qty">&nbsp;</td>
-          <td class="qty">&nbsp;</td>
         </tr>
         @endif
         
         @if (!$project->tax_reverse)
         <tr>
-          <td class="qty">BTW bedrag 21%</td>
-          <td class="qty">&nbsp;</td>
+          <td style="width: 270px" class="qty">&nbsp;</td>
+          <td style="width: 385px" class="qty">BTW bedrag 21%</td>
           <td class="qty">{{ '&euro; '.number_format(($invoice->rest_21/100)*21, 2, ",",".") }}</td>
-          <td class="qty">&nbsp;</td>
         </tr>
         <tr>
-          <td class="qty">BTW bedrag 6%</td>
-          <td class="qty">&nbsp;</td>
+          <td style="width: 270px" class="qty">&nbsp;</td>
+          <td style="width: 385px" class="qty">BTW bedrag 6%</td>
           <td class="qty">{{ '&euro; '.number_format(($invoice->rest_6/100)*6, 2, ",",".") }}</td>
-          <td class="qty">&nbsp;</td>
         </tr> 
         @endif   
         <tr>
-          <td class="qty"><strong>Calculatief te factureren (Incl. BTW)</strong></td>
-          <td class="qty">&nbsp;</td>
-          <td class="qty">&nbsp;</td>
+          <td style="width: 270px" class="qty">&nbsp;</td>
+          <td style="width: 385px" class="qty"><strong>Calculatief te factureren</strong> @if(!$project->tax_reverse)<i>(Incl. BTW)</i> @endif</td>
           <td class="qty"><strong>{{ '&euro; '.number_format($invoice->amount+(($invoice->rest_21/100)*21)+(($invoice->rest_6/100)*6), 2, ",",".") }}</strong></td>
         </tr>
       </tbody>
