@@ -481,6 +481,8 @@ class AuthController extends Controller {
 		}
 
 		$user = User::find($id);
+		$user['isadmin'] = $user->isAdmin();
+		$user['issuperuser'] = $user->isSuperUser();
     	return response()->json($user);
 	}
 
@@ -529,5 +531,18 @@ class AuthController extends Controller {
 		}
 
     	return response()->json(User::all());
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function getRestAllProjects(Request $request) {
+		if (Authorizer::getResourceOwnerType() != "client") {
+			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+		}
+
+    	return response()->json(Project::all());
 	}
 }
