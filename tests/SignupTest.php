@@ -138,7 +138,9 @@ class SignupTest extends TestCase
         $faker = Faker::create();
         $password = $faker->password;
 
-        $referred_user = factory(Calctool\Models\User::class)->create();
+        $referred_user = factory(Calctool\Models\User::class)->create([
+            'expiration_date' => date('Y-m-d'),
+        ]);
 
         $user = factory(Calctool\Models\User::class)->make();
 
