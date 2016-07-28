@@ -227,7 +227,7 @@ class AuthController extends Controller {
 		Audit::CreateEvent('account.new.success', 'Created new account from template', $user->id);
 
 		if ($referral_user) {
-			$referral_user->expiration_date = $expiration_date;
+			$referral_user->expiration_date = date('Y-m-d', strtotime("+3 month", strtotime($referral_user->expiration_date)));
 
 			$referral_user->save();
 
