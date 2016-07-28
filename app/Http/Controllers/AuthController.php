@@ -409,6 +409,50 @@ class AuthController extends Controller {
 	 *
 	 * @return Route
 	 */
+	public function doIssueAccessToken(Request $request)
+	{
+		$client_id = $request->get('client_id');
+		$grant_type = $request->get('grant_type');
+
+		$grants = DB::table('oauth_clients')
+							->where('id', $client_id)
+							->select('grant_authorization_code', 'grant_implicit', 'grant_password', 'grant_client_credential')
+							->first();
+
+		switch ($grant_type) {
+			case 'authorization_code':
+				if (!$grants->grant_authorization_code) {
+					return response()->json(['error' => 'invalid_request', 'error_description' => 'The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Check the "grant_type" parameter.'], 400); 
+				}
+				break;
+			case 'implicit':
+				if (!$grants->grant_implicit) {
+					return response()->json(['error' => 'invalid_request', 'error_description' => 'The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Check the "grant_type" parameter.'], 400); 
+				}
+				break;
+			case 'password':
+				if (!$grants->grant_password) {
+					return response()->json(['error' => 'invalid_request', 'error_description' => 'The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Check the "grant_type" parameter.'], 400); 
+				}
+				break;
+			case 'client_credentials':
+				if (!$grants->grant_client_credential) {
+					return response()->json(['error' => 'invalid_request', 'error_description' => 'The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Check the "grant_type" parameter.'], 400); 
+				}
+				break;
+			
+			default:
+				break;
+		}
+
+		return response()->json(Authorizer::issueAccessToken());
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
 	public function getOauth2Authorize() {
 		$authParams = Authorizer::getAuthCodeRequestParams();
 		$formParams = array_except($authParams,'client');
