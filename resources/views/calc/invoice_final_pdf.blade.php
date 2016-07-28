@@ -1877,8 +1877,8 @@ $type = ProjectType::find($project->type_id);
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-        <th style="width: 130px">Onderdeel</th>
-        <th style="width: 170px">Werkzaamheid</th>
+        <th style="width: 200px">Onderdeel</th>
+        <th style="width: 220px">Werkzaamheid</th>
         <th class="qty">Omschrijving</th>
       </tr>
     </thead>
@@ -1887,8 +1887,8 @@ $type = ProjectType::find($project->type_id);
       <?php $i = true; ?>
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
       <tr>
-        <td style="width: 130px" valign="top"><br/><strong><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></strong></td>
-        <td style="width: 170px" valign="top"><br/>{{ $activity->activity_name }}</td>
+        <td style="width: 200px" valign="top"><br/><strong><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></strong></td>
+        <td style="width: 220px" valign="top"><br/>{{ $activity->activity_name }}</td>
         <td class="qty" valign="top"><br/><span>{!! $activity->note !!}</td>
       </tr>
       @endforeach
@@ -1899,8 +1899,8 @@ $type = ProjectType::find($project->type_id);
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-        <th style="width: 130px" class="qty">Onderdeel</th>
-        <th style="width: 170px" class="qty">Werkzaamheid</th>
+        <th style="width: 200px" class="qty">Onderdeel</th>
+        <th style="width: 220px" class="qty">Werkzaamheid</th>
         <th class="qty">Omschrijving</th>
       </tr>
     </thead>
@@ -1909,8 +1909,8 @@ $type = ProjectType::find($project->type_id);
       <?php $i = true; ?>
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
       <tr>
-        <td style="width: 130px" class="qty" valign="top"><br/><strong><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></strong></td>
-        <td style="width: 170px" class="qty" valign="top"><br/>{{ $activity->activity_name }}</td>
+        <td style="width: 200px" class="qty" valign="top"><br/><strong><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></strong></td>
+        <td style="width: 220px" class="qty" valign="top"><br/>{{ $activity->activity_name }}</td>
         <td class="qty" valign="top"><br/><span>{!! $activity->note !!}</td>
       </tr>
       @endforeach
