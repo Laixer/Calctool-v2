@@ -251,8 +251,7 @@ class AuthController extends Controller {
 
 		$user = User::where('token','=',$token)->where('api','=',$api)->first();
 		if (!$user) {
-			$errors = new MessageBag(['activate' => ['Activatielink is niet geldig']]);
-			return redirect('login')->withErrors($errors);
+			return redirect('login')->withErrors(['activate' => ['Activatielink is niet geldig']]);
 		}
 		$user->secret = Hash::make($request->get('secret'));
 		$user->active = true;
@@ -298,12 +297,10 @@ class AuthController extends Controller {
 	{
 		$user = User::where('token','=',$token)->where('api','=',$api)->first();
 		if (!$user) {
-			$errors = new MessageBag(['activate' => ['Activatielink is niet geldig']]);
-			return redirect('login')->withErrors($errors);
+			return redirect(['activate' => ['Activatielink is niet geldig']])->withErrors($errors);
 		}
 		if ($user->confirmed_mail) {
-			$errors = new MessageBag(['activate' => ['Account is al geactiveerd']]);
-			return redirect('login')->withErrors($errors);
+			return redirect(['activate' => ['Account is al geactiveerd']])->withErrors($errors);
 		}
 		$user->confirmed_mail = date('Y-m-d H:i:s');
 		$user->save();
