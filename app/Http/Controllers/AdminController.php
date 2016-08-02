@@ -564,6 +564,10 @@ class AdminController extends Controller {
 			'secret' => $request->input('secret'),
 			'name' => $request->input('name'),
 			'active' => $request->input('toggle-active') ? true : false,
+            'grant_authorization_code' => $request->input('toggle-grant_authorization_code') ? true : false,
+            'grant_implicit' => $request->input('toggle-grant_implicit') ? true : false,
+            'grant_password' => $request->input('toggle-grant_password') ? true : false,
+            'grant_client_credential' => $request->input('toggle-grant_client_credential') ? true : false,
 			'note' => $request->input('note'),
 			'created_at' => date('Y-m-d H:i:s'),
 			'updated_at' => date('Y-m-d H:i:s'),
@@ -589,6 +593,10 @@ class AdminController extends Controller {
 		\DB::table('oauth_clients')->where('id', $client_id)->update([
 			'name' => $request->input('name'),
 			'active' => $request->input('toggle-active') ? true : false,
+            'grant_authorization_code' => $request->input('toggle-grant_authorization_code') ? true : false,
+            'grant_implicit' => $request->input('toggle-grant_implicit') ? true : false,
+            'grant_password' => $request->input('toggle-grant_password') ? true : false,
+            'grant_client_credential' => $request->input('toggle-grant_client_credential') ? true : false,
 			'note' => $request->input('note'),
 			'updated_at' => date('Y-m-d H:i:s'),
 		]);
@@ -599,6 +607,13 @@ class AdminController extends Controller {
 		]);
 
 		return back()->with('success', 'Applicatie opgeslagen');
+	}
+
+	public function doDeleteApplication(Request $request, $client_id)
+	{
+		\DB::table('oauth_clients')->where('id', $client_id)->delete();
+
+		return redirect('/admin/application/')->with('success', 'Applicatie verwijderd');
 	}
 
 	public function doDeletePromotion(Request $request, $id)

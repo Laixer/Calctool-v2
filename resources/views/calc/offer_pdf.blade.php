@@ -602,7 +602,7 @@ function invoice_condition($offer) {
 	  <br>
 	  <br>
 	  @endif
-	  <div class="from"><i>Indien akkoord, gaarne de offerte ondertekend retour.<i></div>
+	  <div class="from"><i>Indien akkoord, gaarne de offerte ondertekend retour.</i></div>
 	</main>
 
 	@else
@@ -955,7 +955,7 @@ function invoice_condition($offer) {
 	  <div class="from">{{ Contact::find($offer->from_contact_id)->firstname ." ". Contact::find($offer->from_contact_id)->lastname }}</div>
 	  <br>
 	  <br>
-	  <div class="from"><i>Indien akkoord, gaarne de offerte ondertekend retour.<i></div>
+	  <div class="from"><i>Indien akkoord, gaarne de offerte ondertekend retour.</i></div>
 	</main>
  
 @endif
@@ -1005,7 +1005,7 @@ function invoice_condition($offer) {
 	  <div class="from">{{ Contact::find($offer->from_contact_id)->firstname ." ". Contact::find($offer->from_contact_id)->lastname }}</div>
 	  <br>
 	  <br>
-	  <div class="from"><i>Indien akkoord, gaarne de offerte ondertekend retour.<i></div>
+	  <div class="from"><i>Indien akkoord, gaarne de offerte ondertekend retour.</i></div>
 	</main>
 
  @endif
@@ -1298,8 +1298,8 @@ function invoice_condition($offer) {
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <thead>
 		<tr>
-		  <th style="width: 130px" class="qty">Onderdeel</th>
-		  <th style="width: 170px" class="qty">Werkzaamheid</th>
+		  <th style="width: 200px" class="qty">Onderdeel</th>
+		  <th style="width: 220px" class="qty">Werkzaamheid</th>
 		  <th class="qty">Omschrijving</th>
 		</tr>
 	  </thead>
@@ -1308,8 +1308,8 @@ function invoice_condition($offer) {
 		<?php $i = true; ?>
 		@foreach (Activity::where('chapter_id','=', $chapter->id)->orderBy('created_at')->get() as $activity)
 		<tr>
-		  <td style="width: 130px" class="qty" valign="top"><br><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
-		  <td style="width: 170px" class="qty" valign="top"><br>{{ $activity->activity_name }}</td>
+		  <td style="width: 200px" class="qty" valign="top"><br><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
+		  <td style="width: 220px" class="qty" valign="top"><br>{{ $activity->activity_name }}</td>
 		  <td class="qty" valign="top"><br><span>{!! $activity->note !!}</td>
 		</tr>
 		@endforeach
@@ -1338,8 +1338,8 @@ function invoice_condition($offer) {
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <thead>
 		<tr>
-		  <th style="width: 130px"class="qty">Onderdeel</th>
-		  <th style="width: 170px"class="qty">Werkzaamheid</th>
+		  <th style="width: 200px"class="qty">Onderdeel</th>
+		  <th style="width: 220px"class="qty">Werkzaamheid</th>
 		  <th class="qty">Omschrijving</th>
 		</tr>
 	  </thead>
@@ -1348,8 +1348,8 @@ function invoice_condition($offer) {
 		<?php $i = true; ?>
 		@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('created_at')->get() as $activity)
 		<tr>
-		  <td style="width: 130px" class="qty" valign="top"><br><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
-		  <td style="width: 170px" class="qty" valign="top"><br>{{ $activity->activity_name }}</td>
+		  <td style="width: 200px" class="qty" valign="top"><br><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
+		  <td style="width: 220px" class="qty" valign="top"><br>{{ $activity->activity_name }}</td>
 		  <td class="qty" valign="top"><br><span>{{ $activity->note }}</td>
 		</tr>
 		@endforeach
@@ -1360,8 +1360,8 @@ function invoice_condition($offer) {
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <thead>
 		<tr>
-		  <th style="width: 130px" class="qty">Onderdeel</th>
-		  <th style="width: 170px" class="qty">Werkzaamheid</th>
+		  <th style="width: 200px" class="qty">Onderdeel</th>
+		  <th style="width: 220px" class="qty">Werkzaamheid</th>
 		  <th class="qty">Omschrijving</th>
 		</tr>
 	  </thead>
@@ -1370,8 +1370,8 @@ function invoice_condition($offer) {
 		<?php $i = true; ?>
 		@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('created_at')->get() as $activity)
 		<tr>
-		  <td style="width: 130px" class="qty"><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
-		  <td style="width: 170px" class="qty">{{ $activity->activity_name }}</td>
+		  <td style="width: 200px" class="qty"><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
+		  <td style="width: 220px" class="qty">{{ $activity->activity_name }}</td>
 		  <td class="qty"><br><span>{{ $activity->note }}</td>
 		</tr>
 		@endforeach

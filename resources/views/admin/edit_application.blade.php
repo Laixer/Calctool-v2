@@ -23,7 +23,10 @@ $client = $clients[0];
 <script type="text/javascript">
 $(document).ready(function() {
 	$("[name='toggle-active']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
-	$("[name='toggle-beta']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	$("[name='toggle-grant_authorization_code']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	$("[name='toggle-grant_implicit']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	$("[name='toggle-grant_password']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	$("[name='toggle-grant_client_credential']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	 $('.summernote').summernote({
 	        height: $(this).attr("data-height") || 200,
 	        toolbar: [
@@ -108,8 +111,45 @@ $(document).ready(function() {
 
 					<div class="col-md-5">
 						<div class="form-group">
-							<label for="company_name">Endpoint</label>
+							<label for="company_name">Callback</label>
 							<input name="endpoint" id="endpoint" type="text" value="{{ Input::old('endpoint') ? Input::old('endpoint') : $client->redirect_uri }}" class="form-control" />
+						</div>
+					</div>
+
+				</div>
+
+				<h4>Authorization grants</h4>
+				<div class="row">
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="toggle-grant_authorization_code" style="display:block;">Authorization code</label>
+							<input name="toggle-grant_authorization_code" type="checkbox" {{ $client->grant_authorization_code ? 'checked' : '' }}>
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="toggle-grant_implicit" style="display:block;">Implicit grant</label>
+							<input name="toggle-grant_implicit" type="checkbox" {{ $client->grant_implicit ? 'checked' : '' }}>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="row">
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="toggle-grant_password" style="display:block;">Password credentials</label>
+							<input name="toggle-grant_password" type="checkbox" {{ $client->grant_password ? 'checked' : '' }}>
+						</div>
+					</div>
+
+					<div class="col-md-2">
+						<div class="form-group">
+							<label for="toggle-grant_client_credential" style="display:block;">Client credentials</label>
+							<input name="toggle-grant_client_credential" type="checkbox" {{ $client->grant_client_credential ? 'checked' : '' }}>
 						</div>
 					</div>
 
@@ -137,6 +177,7 @@ $(document).ready(function() {
 				</div>
 				<div class="row">
 					<div class="col-md-12">
+						<a href="/admin/application/{{ $client->id }}/delete" class="btn btn-danger"> Verwijderen</a>
 						<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 					</div>
 				</div>

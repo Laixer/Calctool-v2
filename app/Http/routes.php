@@ -56,9 +56,7 @@ Route::group(['prefix' => 'oauth2', 'middleware' => ['check-authorization-params
 	Route::post('authorize', 'AuthController@doOauth2Authorize');
 });
 
-Route::post('oauth2/access_token', function() {
-	return response()->json(Authorizer::issueAccessToken());
-});
+Route::post('oauth2/access_token', 'AuthController@doIssueAccessToken');
 
 Route::group(['prefix' => 'oauth2/rest', 'middleware' => 'oauth'], function() {
 	/* Owner rest functions */
@@ -410,6 +408,7 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 	Route::get('application/{client_id}/edit', function() {
 		return view('admin.edit_application');
 	});
+	Route::get('application/{client_id}/delete', 'AdminController@doDeleteApplication');
 	Route::post('application/{client_id}/edit', 'AdminController@doUpdateApplication');
 	Route::post('application/new', 'AdminController@doNewApplication');
 	Route::post('snailmail/offer/done', 'AdminController@doOfferPostDone');

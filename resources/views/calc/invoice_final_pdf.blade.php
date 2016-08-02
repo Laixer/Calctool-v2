@@ -365,7 +365,7 @@ $type = ProjectType::find($project->type_id);
       <tbody>
         <tr style="page-break-after: always;">
           <td style="width: 270px"class="qty">&nbsp;</td>
-          <td style="width: 385px" class="qty">Calculatief te factureren @if(!$project->tax_reverse)(excl. BTW) @endif</td>
+          <td style="width: 385px" class="qty">Calculatief te factureren @if(!$project->tax_reverse)<i>(Excl. BTW)</i> @endif</td>
           <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalProject($project), 2, ",",".") }}</td>
         </tr>
         <tr style="page-break-after: always;">
@@ -380,7 +380,7 @@ $type = ProjectType::find($project->type_id);
         </tr>
         <tr style="page-break-after: always;">
           <td style="width: 270px" class="qty">&nbsp;</td>
-          <td style="width: 385px" class="qty">Calculatief te factureren @if(!$project->tax_reverse)(incl. BTW) @endif</td>
+          <td style="width: 385px" class="qty">Calculatief te factureren @if(!$project->tax_reverse)<i>(Incl. BTW)</i> @endif</td>
           <td class="qty">@if(!$project->tax_reverse) {{ '&euro; '.number_format(ResultEndresult::superTotalProject($project)+BlancRowsEndresult::rowTax1AmountTax($project)+BlancRowsEndresult::rowTax2AmountTax($project), 2, ",",".") }}@endif</td>
         </tr>
       </tbody>
@@ -415,7 +415,7 @@ $type = ProjectType::find($project->type_id);
                                   <tbody>
                                     <tr>
                                       <td style="width: 270px" class="qty">&nbsp;</td>
-                                      <td style="width: 385px" class="qty">Totaal betaald over {{Invoice::where('offer_id','=', $invoice->offer_id)->count() -1}} termijn(en) @if(!$project->tax_reverse)(excl. BTW) @endif</td>
+                                      <td style="width: 385px" class="qty">Totaal betaald over {{Invoice::where('offer_id','=', $invoice->offer_id)->count() -1}} termijn(en) @if(!$project->tax_reverse)<i>(Excl. BTW)</i> @endif</td>
                                       <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('amount'), 2, ",",".") }}</td>
                                     </tr>
                                     @if (!$project->tax_reverse)
@@ -432,7 +432,7 @@ $type = ProjectType::find($project->type_id);
                                     @endif
                                     <tr>
                                       <th style="width: 270px" class="qty">&nbsp;</th>
-                                      <td style="width: 385px" class="qty">Totaal reeds betaald @if(!$project->tax_reverse)(incl. BTW) @endif</strong></td>
+                                      <td style="width: 385px" class="qty">Totaal reeds betaald @if(!$project->tax_reverse)<i>(Incl. BTW)</i> @endif</td>
                                       <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('amount')+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21')/100)*21)+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6), 2, ",",".") }}</strong></td>
                                     </tr>
                                   </tbody>
@@ -442,7 +442,7 @@ $type = ProjectType::find($project->type_id);
                                     <tbody>
                                       <tr>
                                         <td style="width: 270px" class="qty">&nbsp;</td>
-                                        <td style="width: 385px"class="qty">Laatste van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} termijnen @if(!$project->tax_reverse)(excl. BTW) @endif</td>
+                                        <td style="width: 385px"class="qty">Laatste van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} termijnen @if(!$project->tax_reverse)<i>(Excl. BTW)</i> @endif</td>
                                         <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->amount, 2, ",",".") }}</td>
                                       </tr>
                                       @if (!$project->tax_reverse)
@@ -459,7 +459,7 @@ $type = ProjectType::find($project->type_id);
                                       @endif
                                       <tr>
                                         <td style="width: 270px" class="qty">&nbsp;</td>
-                                        <td style="width: 385px" class="qty"><strong>Resterend te betalen @if(!$project->tax_reverse)(incl. BTW) @endif</strong></td>
+                                        <td style="width: 385px" class="qty"><strong>Resterend te betalen @if(!$project->tax_reverse)<i>(Incl. BTW)</i> @endif</strong></td>
                                         <td class="qty"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->amount+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21/100)*21)+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6), 2, ",",".") }}</strong></td>
                                       </tr>
                                     </tbody>
@@ -740,7 +740,7 @@ $type = ProjectType::find($project->type_id);
       <tbody>
         <tr style="page-break-after: always;">
           <td style="width: 270px" class="qty">&nbsp;</td>
-          <td style="width: 385px" class="qty">Calculatief te factureren @if(!$project->tax_reverse)(excl. BTW) @endif</td>
+          <td style="width: 385px" class="qty">Calculatief te factureren @if(!$project->tax_reverse) <i>(Excl. BTW)</i>@endif</td>
           <td class="qty">{{ '&euro; '.number_format(ResultEndresult::totalProject($project), 2, ",",".") }}</td>
         </tr>
         @if (!$project->tax_reverse)
@@ -757,7 +757,7 @@ $type = ProjectType::find($project->type_id);
         @endif
         <tr style="page-break-after: always;">
           <td style="width: 270px" class="qty">&nbsp;</td>
-          <td style="width: 385px"class="qty">Calculatief te factureren @if(!$project->tax_reverse)(incl. BTW) @endif</td>
+          <td style="width: 385px"class="qty">Calculatief te factureren @if(!$project->tax_reverse)<i>(Incl. BTW)</i> @endif</td>
           <td class="qty">{{ '&euro; '.number_format(ResultEndresult::superTotalProject($project), 2, ",",".") }}</td>
         </tr>
       </tbody>
@@ -792,7 +792,7 @@ $type = ProjectType::find($project->type_id);
                                       <tbody>
                                         <tr>
                                           <td style="width: 270px" class="qty">&nbsp;</td>
-                                          <td style="width: 385px"class="qty">Totaal betaald over {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} termijn(en) @if(!$project->tax_reverse)(excl. BTW) @endif</td>
+                                          <td style="width: 385px"class="qty">Totaal betaald over {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} termijn(en) @if(!$project->tax_reverse)<i>(Excl. BTW)</i>@endif</td>
                                           <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('amount'), 2, ",",".") }}</td>
                                         </tr>
                                         @if (!$project->tax_reverse)
@@ -809,7 +809,7 @@ $type = ProjectType::find($project->type_id);
                                         @endif
                                         <tr>
                                           <td style="width: 270px" class="qty">&nbsp;</td>
-                                          <td style="width: 385px"class="qty">Totaal reeds betaald @if(!$project->tax_reverse)(incl. BTW) @endif</td>
+                                          <td style="width: 385px"class="qty">Totaal reeds betaald @if(!$project->tax_reverse)<i>(Incl. BTW)</i> @endif</td>
                                           <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('amount')+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21')/100)*21)+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6), 2, ",",".") }}</td>
                                         </tr>
                                       </tbody>
@@ -819,7 +819,7 @@ $type = ProjectType::find($project->type_id);
                                       <tbody>
                                         <tr>
                                           <td style="width: 270px" class="qty">&nbsp;</td>
-                                          <td style="width: 385px"class="qty">Laatste van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} termijnen @if(!$project->tax_reverse)(excl. BTW) @endif</td>
+                                          <td style="width: 385px"class="qty">Laatste van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} termijnen @if(!$project->tax_reverse)<i>(Excl. BTW)</i> @endif</td>
                                           <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->amount, 2, ",",".") }}</td>
                                         </tr>
                                         @if (!$project->tax_reverse)
@@ -837,7 +837,7 @@ $type = ProjectType::find($project->type_id);
                                         @endif
                                         <tr>
                                           <td style="width: 270px" class="qty">&nbsp;</td>
-                                          <td style="width: 385px" class="qty"><strong>Resterend te betalen @if(!$project->tax_reverse)(incl. BTW) @endif</strong></td>
+                                          <td style="width: 385px" class="qty"><strong>Resterend te betalen @if(!$project->tax_reverse)<i>(Incl. BTW)</i> @endif</strong></td>
                                           <td class="qty"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->amount+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21/100)*21)+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6), 2, ",",".") }}</strong></td>
                                         </tr>
                                       </tbody>
@@ -1877,8 +1877,8 @@ $type = ProjectType::find($project->type_id);
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-        <th style="width: 130px">Onderdeel</th>
-        <th style="width: 170px">Werkzaamheid</th>
+        <th style="width: 200px">Onderdeel</th>
+        <th style="width: 220px">Werkzaamheid</th>
         <th class="qty">Omschrijving</th>
       </tr>
     </thead>
@@ -1887,8 +1887,8 @@ $type = ProjectType::find($project->type_id);
       <?php $i = true; ?>
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
       <tr>
-        <td style="width: 130px" valign="top"><br/><strong><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></strong></td>
-        <td style="width: 170px" valign="top"><br/>{{ $activity->activity_name }}</td>
+        <td style="width: 200px" valign="top"><br/><strong><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></strong></td>
+        <td style="width: 220px" valign="top"><br/>{{ $activity->activity_name }}</td>
         <td class="qty" valign="top"><br/><span>{!! $activity->note !!}</td>
       </tr>
       @endforeach
@@ -1899,8 +1899,8 @@ $type = ProjectType::find($project->type_id);
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-        <th style="width: 130px" class="qty">Onderdeel</th>
-        <th style="width: 170px" class="qty">Werkzaamheid</th>
+        <th style="width: 200px" class="qty">Onderdeel</th>
+        <th style="width: 220px" class="qty">Werkzaamheid</th>
         <th class="qty">Omschrijving</th>
       </tr>
     </thead>
@@ -1909,8 +1909,8 @@ $type = ProjectType::find($project->type_id);
       <?php $i = true; ?>
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
       <tr>
-        <td style="width: 130px" class="qty" valign="top"><br/><strong><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></strong></td>
-        <td style="width: 170px" class="qty" valign="top"><br/>{{ $activity->activity_name }}</td>
+        <td style="width: 200px" class="qty" valign="top"><br/><strong><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></strong></td>
+        <td style="width: 220px" class="qty" valign="top"><br/>{{ $activity->activity_name }}</td>
         <td class="qty" valign="top"><br/><span>{!! $activity->note !!}</td>
       </tr>
       @endforeach

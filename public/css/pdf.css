@@ -20,7 +20,7 @@ body {
   margin: 0 auto;
   color: #000;
   background: #FFFFFF;
-  font-size: 13px;
+  font-size: 12px;
   font-family: 'Arial';
 }
 
@@ -52,7 +52,7 @@ font-family: 'Arial';
 
 
 h2.name {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
   margin-top: 0px;
   padding: 10px 0px 0px 0px;
@@ -61,7 +61,7 @@ h2.name {
 }
 
 h2.type {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: bold;
   margin-top: 0px;
   margin-top: 5px;
@@ -71,7 +71,7 @@ h2.type {
 
 
 h3.name {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: bold;
   margin-top: 0px;
   padding: 8px 0px 6px 0px;
@@ -80,11 +80,8 @@ h3.name {
 }
 
 .name {
-  font-size: 13px;
+  font-size: 12px;
   font-family: 'Arial';
-}
-
-gin-bottom: 5px;
 }
 
 
@@ -100,7 +97,7 @@ gin-bottom: 5px;
 
 /*Opende vrije tekst*/
 .openingtext {
-  font-size: 13px;
+  font-size: 12px;
   margin*/: 13px  0 13px 0;
 }
 
@@ -114,7 +111,7 @@ gin-bottom: 5px;
 
 /*Bepalingen*/
 .terms {
-  font-size: 13px;
+  font-size: 12px;
 /*  margin: 0  0 13px 0;
   padding-left:13px;*/
   font-family: 'Arial';
@@ -122,7 +119,7 @@ gin-bottom: 5px;
 
 /*Afsluiting van het document*/
 .from {
-  font-size: 13px;
+  font-size: 12px;
   margin: 11px  0 11px 0;
 /*  margin: 0  0 13px 0;
   padding-left:13px;*/
@@ -130,7 +127,7 @@ gin-bottom: 5px;
 }
 
 .to {
-  font-size: 13px;
+  font-size: 12px;
   margin: 11px  0 11px 0;
 /*  margin: 0  0 13px 0;
 */  padding-left:13px;
@@ -199,7 +196,7 @@ gin-bottom: 5px;
 
 
 h4.name {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: bold;
 /*  margin: 5px;
   padding-left: 5px;*/
@@ -209,18 +206,18 @@ h4.name {
 
 #client {
 /*  padding-left: 13px;*/
-  font-size: 13px;
+  font-size: 12px;
   float: left;
   font-family: 'Arial';
 }
 
 .name {
-  font-size: 13px;
+  font-size: 12px;
   font-family: 'Arial';
 }
 
 .signing {
-  font-size: 13px;
+  font-size: 12px;
   /*  margin: 20px  0 20px 0;
     padding-left: 13px;*/
   font-family: 'Arial';
@@ -284,14 +281,13 @@ table .qty {
   background: transparent;
 /*  margin: 4px;
   padding-left: 13px;*/
-    font-family: 'Arial';
+  font-family: 'Arial';
 }
 /*DZA aagepast naar onderstande */
-table .qty {
+table .qty-small {
   background: transparent;
-/*  margin: 4px;
-  padding-left: 13px;*/
-    font-family: 'Arial';
+  font-size: 11px;
+  font-family: 'Arial';
 }
 /*DZA eine*/
 
@@ -310,7 +306,7 @@ table td.desc,
 table td.unit,
 table td.qty,
 table td.total {
-  font-size: 13px;
+  font-size: 12px;
 }
 
 table tbody tr:last-child td {
