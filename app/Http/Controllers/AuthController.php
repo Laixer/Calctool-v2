@@ -183,6 +183,10 @@ class AuthController extends Controller {
 		$user->firstname = $request->get('contact_firstname');
 		$user->lastname = $request->get('contact_name');
 
+		if ($request->session()->has('referrer')) {
+			$user->referral_url = $request->session()->pull('referrer');
+		}
+
 		$user->save();
 
 		/* General relation */

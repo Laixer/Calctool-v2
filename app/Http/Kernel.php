@@ -46,6 +46,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
+        'utm' => \Calctool\Http\Middleware\UTMState::class,
         'auth' => \Calctool\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \Calctool\Http\Middleware\RedirectIfAuthenticated::class,

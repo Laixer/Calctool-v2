@@ -12,7 +12,7 @@
 */
 
 /* Application guest pages */
-Route::group(['middleware' => 'guest'], function() {
+Route::group(['middleware' => ['guest','utm']], function() {
 	Route::get('register', 'AuthController@getRegister');
 	Route::get('login', 'AuthController@getLogin');
 	Route::post('login', 'AuthController@doLogin');
@@ -44,11 +44,11 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'auth'], function() {
 });
 
 /* Generic routes */
-Route::get('about', 'GenericController@getAbout');
-Route::get('faq', 'GenericController@getFaq');
-Route::get('terms-and-conditions', 'GenericController@getTerms');
-Route::get('privacy-policy', 'GenericController@getPrivacy');
-Route::get('support', 'GenericController@getSupport');
+Route::get('about', 'GenericController@getAbout')->middleware('utm');
+Route::get('faq', 'GenericController@getFaq')->middleware('utm');
+Route::get('terms-and-conditions', 'GenericController@getTerms')->middleware('utm');
+Route::get('privacy-policy', 'GenericController@getPrivacy')->middleware('utm');
+Route::get('support', 'GenericController@getSupport')->middleware('utm');
 
 /* Oauth2 REST API */
 Route::group(['prefix' => 'oauth2', 'middleware' => ['check-authorization-params', 'auth']], function() {
