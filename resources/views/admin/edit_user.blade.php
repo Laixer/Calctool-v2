@@ -273,8 +273,8 @@ $(document).ready(function() {
 
 						<div class="col-md-4">
 							<div class="form-group">
-								<label for="address_city">API key</label>
-								<input type="text" value="{{ $user->api }}" disabled class="form-control"/>
+								<label for="address_city">Referral</label>
+								<input type="text" value="{{ $user->referral_url }}" disabled class="form-control"/>
 							</div>
 						</div>
 
