@@ -424,11 +424,9 @@ $type = ProjectType::find($project->type_id);
 										<input value="{{ ($offer_last ? $offer_last->invoice_quantity : '1') }}" name="terms" id="terms" min="1" max="50" type="number" class="form-control" />
 									</div>
 								</div>
-								<div class="noterms" {!! ($offer_last && $offer_last->invoice_quantity >1 ? '' : 'style="display:none;"') !!} >
+								<div class="noterms form-group" {!! ($offer_last && $offer_last->invoice_quantity >1 ? '' : 'style="display:none;"') !!} >
 									<div class="col-md-6">
-									  <div class="form-group">
 									  	<label>Aanbetaling toepassen</label>
-									  </div>
 									</div>
 									<div class="col-md-12">
 										<div class="form-group">
@@ -451,7 +449,7 @@ $type = ProjectType::find($project->type_id);
 										<tbody>
 											<tr>
 												<td>Aanbetalingsbedrag</td>
-												<td><input {{ ($offer_last ? ($offer_last->downpayment ? '' : 'disabled') : 'disabled') }} type="text" value="{{ ($offer_last ? number_format($offer_last->downpayment_amount, 2, ",",".") : '') }}" id="amount" name="amount" class="form-control-sm-number" /></td>
+												<td><input {{ ($offer_last ? ($offer_last->downpayment ? '' : 'disabled') : 'disabled') }} type="text" value="{{ ($offer_last ? number_format($offer_last->downpayment_amount, 2, ",",".") : '0,00') }}" id="amount" name="amount" class="form-control-sm-number" /></td>
 											</tr>
 										</tbody>
 										</table>
@@ -1520,9 +1518,9 @@ $type = ProjectType::find($project->type_id);
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th class="col-md-2">Onderdeel</th>
-							<th class="col-md-3">Werkzaamheid</th>
-							<th class="col-md-7"><span>Omschrijving</th>
+							<th class="col-md-3">Onderdeel</th>
+							<th class="col-md-4">Werkzaamheid</th>
+							<th class="col-md-5"><span>Omschrijving</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -1531,9 +1529,9 @@ $type = ProjectType::find($project->type_id);
 						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('created_at')->get() as $activity)
 						<?php $i++ ?>
 						<tr>
-							<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
-							<td class="col-md-3">{{ $activity->activity_name }}</td>
-							<td class="col-md-7"><span>{{ $activity->note }}</td>
+							<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
+							<td class="col-md-4">{{ $activity->activity_name }}</td>
+							<td class="col-md-5"><span>{{ $activity->note }}</td>
 						</tr>
 						@endforeach
 						@endforeach
@@ -1544,9 +1542,9 @@ $type = ProjectType::find($project->type_id);
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th class="col-md-2">Onderdeel</th>
-							<th class="col-md-3">Werkzaamheid</th>
-							<th class="col-md-7"><span>Omschrijving</th>
+							<th class="col-md-3">Onderdeel</th>
+							<th class="col-md-4">Werkzaamheid</th>
+							<th class="col-md-5"><span>Omschrijving</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -1555,9 +1553,9 @@ $type = ProjectType::find($project->type_id);
 						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('created_at')->get() as $activity)
 						<?php $i++; ?>
 						<tr>
-							<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
-							<td class="col-md-3">{{ $activity->activity_name }}</td>
-							<td class="col-md-7"><span>{{ $activity->note }}</td>
+							<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
+							<td class="col-md-4">{{ $activity->activity_name }}</td>
+							<td class="col-md-5"><span>{{ $activity->note }}</td>
 						</tr>
 						@endforeach
 						@endforeach
@@ -1572,9 +1570,9 @@ $type = ProjectType::find($project->type_id);
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th class="col-md-2">Onderdeel</th>
-							<th class="col-md-3">Werkzaamheid</th>
-							<th class="col-md-7"><span>Omschrijving</th>
+							<th class="col-md-3">Onderdeel</th>
+							<th class="col-md-4">Werkzaamheid</th>
+							<th class="col-md-5"><span>Omschrijving</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -1583,9 +1581,9 @@ $type = ProjectType::find($project->type_id);
 						@foreach (Activity::where('chapter_id','=', $chapter->id)->orderBy('created_at')->get() as $activity)
 						<?php $i++; ?>
 						<tr>
-							<td class="col-md-2">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
-							<td class="col-md-3">{{ $activity->activity_name }}</td>
-							<td class="col-md-7"><span>{!! $activity->note !!}</td>
+							<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
+							<td class="col-md-4">{{ $activity->activity_name }}</td>
+							<td class="col-md-5"><span>{!! $activity->note !!}</td>
 						</tr>
 						@endforeach
 						@endforeach

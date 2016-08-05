@@ -30,6 +30,11 @@ if (Input::get('all') == 1) {
 	$all = true;
 }
 
+$group = null;
+if (Input::has('group')) {
+	$group = Input::get('group');
+}
+
 ?>
 <div id="wrapper">
 
@@ -53,7 +58,7 @@ if (Input::get('all') == 1) {
 				@endif
 			</div>
 
-			<h2><strong>{{ ($all ? 'Alle' : 'Actieve') }} gebruikers</strong></h2>
+			<h2><strong>{{ ($all ? 'Alle' : ($group ? 'Groep' : 'Actieve')) }} gebruikers</strong></h2>
 
 			<div class="white-row">
 			<table class="table table-striped">
@@ -72,6 +77,8 @@ if (Input::get('all') == 1) {
 				<?php
 				if ($all) {
 					$selection = \Calctool\Models\User::orderBy('updated_at','desc')->get();
+				} else if (!empty($group)) {
+					$selection = \Calctool\Models\User::where('user_group',$group)->get();
 				} else {
 					$selection = \Calctool\Models\User::where('active','=','true')->orderBy('updated_at','desc')->get();
 				}

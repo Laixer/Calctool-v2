@@ -183,6 +183,10 @@ class AuthController extends Controller {
 		$user->firstname = $request->get('contact_firstname');
 		$user->lastname = $request->get('contact_name');
 
+		if ($request->session()->has('referrer')) {
+			$user->referral_url = $request->session()->pull('referrer');
+		}
+
 		$user->save();
 
 		/* General relation */
@@ -227,7 +231,7 @@ class AuthController extends Controller {
 		Audit::CreateEvent('account.new.success', 'Created new account from template', $user->id);
 
 		if ($referral_user) {
-			$referral_user->expiration_date = $expiration_date;
+			$referral_user->expiration_date = date('Y-m-d', strtotime("+3 month", strtotime($referral_user->expiration_date)));
 
 			$referral_user->save();
 
@@ -251,8 +255,7 @@ class AuthController extends Controller {
 
 		$user = User::where('token','=',$token)->where('api','=',$api)->first();
 		if (!$user) {
-			$errors = new MessageBag(['activate' => ['Activatielink is niet geldig']]);
-			return redirect('login')->withErrors($errors);
+			return redirect('login')->withErrors(['activate' => ['Activatielink is niet geldig']]);
 		}
 		$user->secret = Hash::make($request->get('secret'));
 		$user->active = true;
@@ -298,12 +301,10 @@ class AuthController extends Controller {
 	{
 		$user = User::where('token','=',$token)->where('api','=',$api)->first();
 		if (!$user) {
-			$errors = new MessageBag(['activate' => ['Activatielink is niet geldig']]);
-			return redirect('login')->withErrors($errors);
+			return redirect(['activate' => ['Activatielink is niet geldig']])->withErrors($errors);
 		}
 		if ($user->confirmed_mail) {
-			$errors = new MessageBag(['activate' => ['Account is al geactiveerd']]);
-			return redirect('login')->withErrors($errors);
+			return redirect(['activate' => ['Account is al geactiveerd']])->withErrors($errors);
 		}
 		$user->confirmed_mail = date('Y-m-d H:i:s');
 		$user->save();
@@ -402,6 +403,50 @@ class AuthController extends Controller {
 		Audit::CreateEvent('auth.logout.success', 'User destroyed current session');
 		Auth::logout();
 		return redirect('/login');
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function doIssueAccessToken(Request $request)
+	{
+		$client_id = $request->get('client_id');
+		$grant_type = $request->get('grant_type');
+
+		$grants = DB::table('oauth_clients')
+							->where('id', $client_id)
+							->select('grant_authorization_code', 'grant_implicit', 'grant_password', 'grant_client_credential')
+							->first();
+
+		switch ($grant_type) {
+			case 'authorization_code':
+				if (!$grants->grant_authorization_code) {
+					return response()->json(['error' => 'invalid_request', 'error_description' => 'The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Check the "grant_type" parameter.'], 400); 
+				}
+				break;
+			case 'implicit':
+				if (!$grants->grant_implicit) {
+					return response()->json(['error' => 'invalid_request', 'error_description' => 'The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Check the "grant_type" parameter.'], 400); 
+				}
+				break;
+			case 'password':
+				if (!$grants->grant_password) {
+					return response()->json(['error' => 'invalid_request', 'error_description' => 'The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Check the "grant_type" parameter.'], 400); 
+				}
+				break;
+			case 'client_credentials':
+				if (!$grants->grant_client_credential) {
+					return response()->json(['error' => 'invalid_request', 'error_description' => 'The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Check the "grant_type" parameter.'], 400); 
+				}
+				break;
+			
+			default:
+				break;
+		}
+
+		return response()->json(Authorizer::issueAccessToken());
 	}
 
 	/**

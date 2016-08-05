@@ -70,6 +70,11 @@ $(document).ready(function() {
 
 			<div class="white-row">
 
+
+				<div class="pull-right">
+					<a class="btn btn-primary" href="/admin/user?group={{ $group->id }}">Gebruikers</a>
+				</div>
+
 				<form method="POST" action="" accept-charset="UTF-8">
                 {!! csrf_field() !!}
 
