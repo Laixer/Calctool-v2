@@ -424,11 +424,9 @@ $type = ProjectType::find($project->type_id);
 										<input value="{{ ($offer_last ? $offer_last->invoice_quantity : '1') }}" name="terms" id="terms" min="1" max="50" type="number" class="form-control" />
 									</div>
 								</div>
-								<div class="noterms" {!! ($offer_last && $offer_last->invoice_quantity >1 ? '' : 'style="display:none;"') !!} >
+								<div class="noterms form-group" {!! ($offer_last && $offer_last->invoice_quantity >1 ? '' : 'style="display:none;"') !!} >
 									<div class="col-md-6">
-									  <div class="form-group">
 									  	<label>Aanbetaling toepassen</label>
-									  </div>
 									</div>
 									<div class="col-md-12">
 										<div class="form-group">
