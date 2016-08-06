@@ -52,26 +52,34 @@ class Handler extends ExceptionHandler
             $this->log->error($e);
 
             if (!config('app.debug')) {
-                $content = "<b>Timestamp: " . date('c') . "</b><br />";
-                $content .= "<b>Environment: " . app()->environment() . "</b><br />";
-                $content .= "<b>Server API: " . php_sapi_name() . "</b><br />";
+                $request = request();
+                $content = "<pre>Environment: " . app()->environment() . "</pre>";
+                $content .= "<pre>Timestamp: " . date('c') . "</pre>";
+                $content .= "<pre>Server API: " . php_sapi_name() . "</pre>";
+                $content .= "<pre>Workload: " . sys_getloadavg()[0] . "</pre>";
+                $content .= "<pre>Host: " . gethostname() . "</pre>";
+                $content .= "<pre>Script: " . $_SERVER['SCRIPT_NAME'] . "</pre>";
 
                 $rev = '-';
                 if (\File::exists('../.revision')) {
                     $rev = \File::get('../.revision');
                 }
 
-                $content .= "<b>Revision: " . $rev . "</b><br />";
+                $content .= "<pre>Revision: " . $rev . "</pre>";
+
+                if ($request) {
+                    $content .= "<pre>Request: " . $request->fullUrl() . "</pre>";
+                }
 
                 if (Auth::check())
-                    $content .= "<b>User: " . Auth::user()->username . "</b><br />";
+                    $content .= "<pre>User: " . Auth::user()->username . "</pre>";
 
-                $content .= "<br />" . nl2br($e);
+                $content .= "<br /><pre>Stacktrace:</pre><br />" . nl2br($e);
                 $data = array('content' => $content, 'env' => app()->environment());
                 Mailgun::send('mail.raw', $data, function($message) use ($data) {
                     $message->to('y.dewid@calculatietool.com', 'Yorick de Wid');
                     $message->to('d.zandbergen@calculatietool.com', 'Don Zandbergen');
-                    $message->subject('CalculatieTool.com - Exception report ' . $data['env']);
+                    $message->subject('CalculatieTool.com - Exception report [' . $data['env'] . ']');
                     $message->from('info@calculatietool.com', 'CalculatieTool.com');
                     $message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
                 });
