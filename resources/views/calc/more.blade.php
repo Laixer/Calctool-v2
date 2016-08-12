@@ -136,10 +136,10 @@ var n = this,
 		$(".radio-activity").change(function(){
 			if ($(this).val()==2) {
 				$(this).closest('.toggle-content').find(".rate").html('<input name="rate" type="text" value="{{ number_format($project->hour_rate_more, 2,",",".") }}" class="form-control-sm-number labor-amount lsave">');
-				$('.hide_if_subcon').hide();
+				$(this).closest('.row').find('.hide_if_subcon').hide();
 			} else {
 				$(this).closest('.toggle-content').find(".rate").text('{{ number_format($project->hour_rate_more, 2,",",".") }}');
-				$('.hide_if_subcon').show();
+				$(this).closest('.row').find('.hide_if_subcon').show();
 			}
 			$.post("/calculation/updatepart", {project: {{ $project->id }}, value: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
 		});
