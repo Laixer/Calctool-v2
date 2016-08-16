@@ -2,6 +2,7 @@
   "name": "calculatietool",
   "version": "0.0.1",
   "dependencies": {
+    "jquery": "2.2.4",
     "angular": "1.5.0",
     "jquery-ui": "^1.11.4",
     "bootstrap": "^3.3.6",
@@ -9,8 +10,7 @@
     "bootstrap-editable": "*",
     "x-editable": "^1.5.1",
     "clippyjs": "*",
-    "intro.js": "intro-js#^2.1.0",
-    "bootstrap-multiselect" : "*"
+    "bootstrap-multiselect": "*"
   },
   "private": true
 }

@@ -164,8 +164,9 @@ var n = this,
 						$curThis.closest("tr").attr("data-id", json.id);
 						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
 						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
 						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+{{$project->profit_calc_contr_mat}})/100),2,',','.'));
+						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
 						var sub_total = 0;
 						$curThis.closest("tbody").find(".total-ex-tax").each(function(index){
 							var _cal = parseFloat($(this).text().substring(2).split('.').join('').replace(',', '.'));
@@ -214,8 +215,9 @@ var n = this,
 						$curThis.closest("tr").attr("data-id", json.id);
 						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
 						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
 						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+{{$project->profit_calc_contr_equip}})/100),2,',','.'));
+						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
 						var sub_total = 0;
 						$curThis.closest("tbody").find(".total-ex-tax").each(function(index){
 							var _cal = parseFloat($(this).text().substring(2).split('.').join('').replace(',', '.'));
@@ -350,8 +352,9 @@ var n = this,
 						$curThis.closest("tr").attr("data-id", json.id);
 						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
 						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
 						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+{{$project->profit_calc_contr_mat}})/100),2,',','.'));
+						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
 						var sub_total = 0;
 						$curThis.closest("tbody").find(".total-ex-tax").each(function(index){
 							var _cal = parseFloat($(this).text().substring(2).split('.').join('').replace(',', '.'));
@@ -407,8 +410,9 @@ var n = this,
 						$curThis.closest("tr").attr("data-id", json.id);
 						var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
 						var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+						var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
 						$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
-						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+{{$project->profit_calc_contr_equip}})/100),2,',','.'));
+						$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
 						var sub_total = 0;
 						$curThis.closest("tbody").find(".total-ex-tax").each(function(index){
 							var _cal = parseFloat($(this).text().substring(2).split('.').join('').replace(',', '.'));
@@ -962,7 +966,7 @@ var n = this,
 															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->original ? ($material->isset ? $material->set_amount : $material->amount) : $material->set_amount, 2,",",".") }}" class="form-control-sm-number dsavee" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->original ? ($material->isset ? $material->set_rate * $material->set_amount : $material->rate * $material->amount) : $material->set_rate * $material->set_amount, 2,",",".") }}</span></td>
 															<td class="col-md-1"><span class="total-incl-tax">{{ '&euro; '.number_format(($material->original ? ($material->isset ? $material->set_rate * $material->set_amount : $material->rate * $material->amount) : $material->set_rate * $material->set_amount) *((100+$profit_mat)/100), 2,",",".") }}</span></td>
-															<td class="col-md-1 text-right">
+															<td class="col-md-1 text-right" data-profit="{{ $profit_mat }}">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-xs fa {{$material->original ? 'btn-warning fa-undo sresetrow' : 'btn-danger fa-times sdeleterow'}}"></button>
 															</td>
@@ -975,7 +979,7 @@ var n = this,
 															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsavee" /></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-1"><span class="total-incl-tax"></span></td>
-															<td class="col-md-1 text-right">
+															<td class="col-md-1 text-right" data-profit="{{ $profit_mat }}">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-xs fa btn-danger sdeleterow fa-times"></button>
 															</td>
@@ -1023,7 +1027,7 @@ var n = this,
 															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($equipment->original ? ($equipment->isset ? $equipment->set_amount : $equipment->amount) : $equipment->set_amount, 2,",",".") }}" class="form-control-sm-number esavee" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->original ? ($equipment->isset ? $equipment->set_rate * $equipment->set_amount : $equipment->rate * $equipment->amount) : $equipment->set_rate * $equipment->set_amount, 2,",",".") }}</span></td>
 															<td class="col-md-1"><span class="total-incl-tax">{{ '&euro; '.number_format(($equipment->original ? ($equipment->isset ? $equipment->set_rate * $equipment->set_amount : $equipment->rate * $equipment->amount) : $equipment->set_rate * $equipment->set_amount)*((100+$profit_equip)/100), 2,",",".") }}</span></td>
-															<td class="col-md-1 text-right">
+															<td class="col-md-1 text-right" data-profit="{{ $profit_equip }}">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-xs fa {{$equipment->original ? 'btn-warning fa-undo eresetrow' : 'btn-danger fa-times edeleterow'}}"></button>
 															</td>
@@ -1036,7 +1040,7 @@ var n = this,
 															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number esavee" /></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-1"><span class="total-incl-tax"></span></td>
-															<td class="col-md-1 text-right">
+															<td class="col-md-1 text-right" data-profit="{{ $profit_equip }}">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-xs fa btn-danger sdeleterow fa-times"></button>
 															</td>

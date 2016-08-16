@@ -122,7 +122,7 @@ if ($less_total>0) {
 <script src="/components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 <script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 <script src="/plugins/summernote/summernote.min.js"></script>
-<script src="/components/intro.js/intro.js"></script>
+<!--<script src="/components/intro.js/intro.js"></script>-->
 @endpush
 
 @section('content')
@@ -342,8 +342,12 @@ if ($less_total>0) {
 	    $("[name='use_less']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	    $("[name='mail_reminder']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	    $("[name='hide_null']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	    
+	    $("[name='hour_rate']").change(function() {
+	    	$("[name='more_hour_rate']").val($(this).val());
+	    });// bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 
-	if (sessionStorage.introDemo) {
+	/*if (sessionStorage.introDemo) {
 		var demo = introJs().
 			setOption('nextLabel', 'Volgende').
 			setOption('prevLabel', 'Vorige').
@@ -391,7 +395,7 @@ if ($less_total>0) {
 			demo.goToStep(sessionStorage.introDemo).start();
 		}
 
-	}
+	}*/
 
 });
 </script>
@@ -705,7 +709,7 @@ if ($less_total>0) {
 								<div class="col-md-1"></div>
 								@if ($type->type_name != 'regie')
 								<div class="col-md-2"><h5><strong>Calculatie *</strong></h5></div>
-								<div class="col-md-2"><h5><strong>Meerwerk</strong></h5></div>
+								<div class="col-md-2"><h5><strong>Meerwerk *</strong></h5></div>
 								@endif
 							</div>
 							<div class="row">

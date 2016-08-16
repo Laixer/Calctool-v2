@@ -18,6 +18,8 @@ use \Calctool\Models\RelationType;
 use \Calctool\Models\RelationKind;
 use \Calctool\Models\Contact;
 use \Calctool\Models\ContactFunction;
+use \Calctool\Models\Chapter;
+use \Calctool\Models\Activity;
 
 use \Auth;
 use \Redis;
@@ -590,4 +592,30 @@ class AuthController extends Controller {
 
     	return response()->json(Project::all());
 	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function getRestAllChapters(Request $request) {
+		if (Authorizer::getResourceOwnerType() != "client") {
+			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+		}
+
+    	return response()->json(Chapter::all());
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function getRestAllActivities(Request $request) {
+		if (Authorizer::getResourceOwnerType() != "client") {
+			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+		}
+
+    	return response()->json(Activity::all());
+	}	
 }

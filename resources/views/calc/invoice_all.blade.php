@@ -74,10 +74,10 @@ if (!$project || !$project->isOwner()) {
 		function calcend() {
 			$total = {{ ResultEndresult::totalProject($project) }};
 			$('.adata').each(function(){
-				$total -= $(this).val().toString().split('.').join('').replace(',', '.');;
+				$total -= $(this).val().toString().split('.').join('').replace(',', '.');
 			});
 			$('.sdata').each(function(){
-				var $sint = parseFloat($(this).text());
+				var $sint = parseFloat($(this).text().toString().split('.').join('').replace(',', '.'));
 				if (!isNaN($sint))
 					$total -= $sint;
 			});
