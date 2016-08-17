@@ -65,6 +65,8 @@ Route::group(['prefix' => 'oauth2/rest', 'middleware' => 'oauth'], function() {
 	Route::get('relations', 'AuthController@getRestUserRelations');
 
 	/* Internal rest functions */
+	Route::get('internal/verify', 'AuthController@getRestVerify');
+	Route::post('internal/user_signup', 'AuthController@doRestNewUser');
 	Route::get('internal/user_all', 'AuthController@getRestAllUsers');
 	Route::get('internal/project_all', 'AuthController@getRestAllProjects');
 	Route::get('internal/chapter_all', 'AuthController@getRestAllChapters');

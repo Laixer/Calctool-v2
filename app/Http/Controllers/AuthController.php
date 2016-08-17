@@ -27,6 +27,7 @@ use \Cache;
 use \Hash;
 use \Mailgun;
 use \Authorizer;
+use \Validator;
 use \DB;
 
 class AuthController extends Controller {
@@ -572,6 +573,20 @@ class AuthController extends Controller {
 	 *
 	 * @return Route
 	 */
+	public function getRestVerify(Request $request) {
+		if (Authorizer::getResourceOwnerType() != "client") {
+			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+		}
+
+    	return response()->json(['success' => 1]);
+	}
+
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
 	public function getRestAllUsers(Request $request) {
 		if (Authorizer::getResourceOwnerType() != "client") {
 			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
@@ -617,5 +632,90 @@ class AuthController extends Controller {
 		}
 
     	return response()->json(Activity::all());
-	}	
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function doRestNewUser(Request $request) {
+		if (Authorizer::getResourceOwnerType() != "client") {
+			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+		}
+
+		$request->merge(array('username' => strtolower(trim($request->input('account')))));
+		$request->merge(array('email' => strtolower(trim($request->input('email')))));
+		
+		$validator = Validator::make($request->all(), [
+			'username' => array('required','max:30','unique:user_account'),
+			'email' => array('required','max:80','email','unique:user_account'),
+			'password' => array('required','min:5'),
+			'last_name' => array('required','max:50'),
+			'first_name' => array('max:30'),
+			'company' => array('required','max:50'),
+		]);
+
+		if ($validator->fails()) {
+			return response()->json(['success' => 0, 'errors' => $validator->errors()->all()], 401);
+		}
+
+		$user = new User;
+		$user->username = $request->get('username');
+		$user->secret = Hash::make($request->get('password'));
+		$user->firstname = $user->username;
+		$user->api = md5(mt_rand());
+		$user->token = sha1($user->secret);
+		$user->referral_key = md5(mt_rand());
+		$user->ip = \Calctool::remoteAddr();
+		$user->email = $request->get('email');
+		$user->expiration_date = date('Y-m-d', strtotime("+1 month", time()));
+		$user->user_type = UserType::where('user_type','=','user')->first()->id;
+		$user->user_group = 100;
+		$user->firstname = $request->get('first_name');
+		$user->lastname = $request->get('last_name');
+		$user->save();
+
+		/* General relation */
+		$relation = new Relation;
+		$relation->user_id = $user->id;
+		$relation->debtor_code = mt_rand(1000000, 9999999);
+
+		/* My company */
+		$relation->kind_id = RelationKind::where('kind_name','zakelijk')->first()->id;
+		$relation->company_name = $request->get('company');
+		$relation->type_id = RelationType::where('type_name', 'aannemer')->first()->id;
+		$relation->email = $user->email;
+		$relation->save();
+
+		$user->self_id = $relation->id;
+		$user->save();
+
+		/* Contact */
+		$contact = new Contact;
+		$contact->firstname = $request->input('first_name');
+		$contact->lastname = $request->input('last_name');
+		$contact->email = $user->email;
+		$contact->relation_id = $relation->id;
+		$contact->function_id = ContactFunction::where('function_name','eigenaar')->first()->id;
+		$contact->save();
+
+		$data = array('email' => $user->email, 'api' => $user->api, 'token' => $user->token, 'firstname' => $user->firstname, 'lastname' => $user->lastname);
+		Mailgun::send('mail.confirm', $data, function($message) use ($data) {
+			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
+			$message->subject('CalculatieTool.com - Account activatie');
+			if (!config('app.debug')) {
+				$message->bcc('info@calculatietool.com', 'CalculatieTool.com');
+			}
+			$message->from('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+		});
+
+		$user->save();
+
+		Audit::CreateEvent('api.account.new.success', 'Created new account from template using API', $user->id);
+
+    	return response()->json(['success' => 1]);
+	}
+
 }
