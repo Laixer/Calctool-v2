@@ -209,7 +209,7 @@ class ApiController extends Controller {
 
 	public function doCheckUsernameEXist(Request $request)
 	{
-		$counter = User::where('username',strtolower($request->get('name')))->count();
+		$counter = User::where('username',strtolower(trim($request->get('name'))))->count();
 		return response()->json(['success' => 1, 'exist' => $counter ? true : false]);
 	}
 }

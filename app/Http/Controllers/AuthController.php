@@ -751,6 +751,20 @@ class AuthController extends Controller {
 	 *
 	 * @return Route
 	 */
+	public function doRestUsernameCheck(Request $request) {
+		if (Authorizer::getResourceOwnerType() != "client") {
+			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+		}
+
+		$counter = User::where('username',strtolower(trim($request->get('name'))))->count();
+		return response()->json(['success' => 1, 'exist' => $counter ? true : false]);
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
 	public function doRestNewUser(Request $request) {
 		if (Authorizer::getResourceOwnerType() != "client") {
 			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
@@ -786,6 +800,11 @@ class AuthController extends Controller {
 		$user->user_group = 100;
 		$user->firstname = $request->get('first_name');
 		$user->lastname = $request->get('last_name');
+
+		if ($request->has('phone')) {
+			$user->phone = $request->get('phone');
+		}
+
 		$user->save();
 
 		/* General relation */
@@ -798,6 +817,11 @@ class AuthController extends Controller {
 		$relation->company_name = $request->get('company');
 		$relation->type_id = RelationType::where('type_name', 'aannemer')->first()->id;
 		$relation->email = $user->email;
+
+		if ($request->has('phone')) {
+			$relation->phone = $request->get('phone');
+		}
+
 		$relation->save();
 
 		$user->self_id = $relation->id;
@@ -810,6 +834,11 @@ class AuthController extends Controller {
 		$contact->email = $user->email;
 		$contact->relation_id = $relation->id;
 		$contact->function_id = ContactFunction::where('function_name','eigenaar')->first()->id;
+
+		if ($request->has('phone')) {
+			$contact->phone = $request->get('phone');
+		}
+
 		$contact->save();
 
 		$data = array('email' => $user->email, 'api' => $user->api, 'token' => $user->token, 'firstname' => $user->firstname, 'lastname' => $user->lastname);
