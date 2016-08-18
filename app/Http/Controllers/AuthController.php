@@ -20,6 +20,8 @@ use \Calctool\Models\Contact;
 use \Calctool\Models\ContactFunction;
 use \Calctool\Models\Chapter;
 use \Calctool\Models\Activity;
+use \Calctool\Models\Offer;
+use \Calctool\Models\Invoice;
 
 use \Auth;
 use \Redis;
@@ -592,7 +594,41 @@ class AuthController extends Controller {
 			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
 		}
 
-    	return response()->json(User::all());
+		$users = User::select(
+			'id', 'username', 'gender', 'firstname', 'lastname', 'active',
+			'banned', 'confirmed_mail', 'registration_date', 'expiration_date',
+			'website', 'mobile', 'phone', 'email', 'administration_cost',
+			'referral_url', 'self_id',
+			'created_at', 'updated_at'
+			)->get();
+
+    	return response()->json($users);
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function getRestAllRelations(Request $request) {
+		if (Authorizer::getResourceOwnerType() != "client") {
+			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+		}
+
+		$relations = Relation::select(
+			'relation.id', 'company_name', 'address_street', 'address_number', 'address_postal', 'address_city',
+			'phone', 'email', 'website', 'active', 'user_id',
+			'province.province_name', 'country.country_name', 'type_name', 'kind_name',
+			'created_at', 'updated_at'
+			)
+			->join('province', 'relation.province_id', '=', 'province.id')
+			->join('country', 'relation.country_id', '=', 'country.id')
+			->join('relation_type', 'relation.type_id', '=', 'relation_type.id')
+			->join('relation_kind', 'relation.kind_id', '=', 'relation_kind.id')
+			// ->join('project_type', 'project.type_id', '=', 'project_type.id')
+			->get();
+
+    	return response()->json($relations);
 	}
 
 	/**
@@ -605,7 +641,22 @@ class AuthController extends Controller {
 			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
 		}
 
-    	return response()->json(Project::all());
+		$projects = Project::select(
+			'project.id', 'project_name', 'address_street', 'address_number', 'address_postal', 'address_city',
+			'tax_reverse', 'use_estimate', 'use_more', 'use_less', 'hour_rate', 'hour_rate_more',
+			'profit_calc_contr_mat', 'profit_calc_contr_equip', 'profit_calc_subcontr_mat', 'profit_calc_subcontr_equip',
+			'profit_more_contr_mat', 'profit_more_contr_equip', 'profit_more_subcontr_mat', 'profit_more_subcontr_equip',
+			'work_execution', 'work_completion', 'start_more', 'update_more', 'start_less', 'update_less',
+			'start_estimate', 'update_estimate', 'project_close', 'user_id',
+			'province.province_name', 'country.country_name', 'type_name',
+			'created_at', 'updated_at'
+			)
+			->join('province', 'project.province_id', '=', 'province.id')
+			->join('country', 'project.country_id', '=', 'country.id')
+			->join('project_type', 'project.type_id', '=', 'project_type.id')
+			->get();
+
+    	return response()->json($projects);
 	}
 
 	/**
@@ -618,7 +669,12 @@ class AuthController extends Controller {
 			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
 		}
 
-    	return response()->json(Chapter::all());
+		$chapters = Chapter::select(
+			'id', 'chapter_name', 'more', 'project_id',
+			'created_at', 'updated_at'
+			)->get();
+
+    	return response()->json($chapters);
 	}
 
 	/**
@@ -631,7 +687,63 @@ class AuthController extends Controller {
 			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
 		}
 
-    	return response()->json(Activity::all());
+		$activities = Activity::select(
+			'activity.id', 'activity_name', 'chapter_id', 'use_timesheet',
+			'tax_labor.tax_rate as tax_labor', 'tax_material.tax_rate as tax_material', 'tax_equipment.tax_rate as tax_equipment',
+			'part_name', 'type_name', 'detail_name',
+			'created_at', 'updated_at'
+			)
+			->join('tax as tax_labor', 'activity.tax_labor_id', '=', 'tax_labor.id') 
+			->join('tax as tax_material', 'activity.tax_material_id', '=', 'tax_material.id') 
+			->join('tax as tax_equipment', 'activity.tax_equipment_id', '=', 'tax_equipment.id') 
+			->join('part', 'activity.part_id', '=', 'part.id') 
+			->join('part_type', 'activity.part_type_id', '=', 'part_type.id') 
+			->join('detail', 'activity.detail_id', '=', 'detail.id') 
+			->get();
+
+    	return response()->json($activities);
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function getRestAllOffers(Request $request) {
+		if (Authorizer::getResourceOwnerType() != "client") {
+			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+		}
+
+		$offers = Offer::select(
+			'offer.id', 'downpayment', 'downpayment_amount', 'offer_total', 'offer_finish', 'offer_make',
+			'offer_code', 'delivertime_name', 'valid_name', 'project_id',
+			'created_at', 'updated_at'
+			)
+			->join('deliver_time', 'offer.deliver_id', '=', 'deliver_time.id') 
+			->join('valid', 'offer.valid_id', '=', 'valid.id') 
+			->get();
+
+    	return response()->json($offers);
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Route
+	 */
+	public function getRestAllInvoices(Request $request) {
+		if (Authorizer::getResourceOwnerType() != "client") {
+			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+		}
+
+		$invoices = Invoice::select(
+			'invoice.id', 'invoice_close', 'isclose', 'invoice_code', 'amount', 'payment_condition',
+			'bill_date', 'payment_date', 'invoice_make', 'offer_id',
+			'created_at', 'updated_at'
+			)
+			->get();
+
+    	return response()->json($invoices);
 	}
 
 	/**
