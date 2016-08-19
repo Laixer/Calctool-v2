@@ -224,9 +224,6 @@ class AuthController extends Controller {
 		Mailgun::send('mail.confirm', $data, function($message) use ($data) {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Account activatie');
-			if (!config('app.debug')) {
-				$message->bcc('info@calculatietool.com', 'CalculatieTool.com');
-			}
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
 			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});
@@ -241,6 +238,23 @@ class AuthController extends Controller {
 			$referral_user->save();
 
 			Audit::CreateEvent('account.referralkey.used.success', 'Referral key used', $referral_user->id);
+		}
+
+		if (!config('app.debug')) {
+			$data = array(
+				'email' => $user->email,
+				'firstname' => $user->firstname,
+				'lastname' => $user->lastname,
+				'company' => $relation->company_name,
+				'contact_first' => $contact->firstname,
+				'contact_last'=> $contact->lastname
+			);
+			Mailgun::send('mail.inform_new_user', $data, function($message) use ($data) {
+				$message->to('info@calculatietool.com', 'CalculatieTool.com');
+				$message->subject('CalculatieTool.com - Account activatie');
+				$message->from('info@calculatietool.com', 'CalculatieTool.com');
+				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+			});
 		}
 
 		return back()->with('success', 'Account aangemaakt, er is een bevestingsmail verstuurd');
