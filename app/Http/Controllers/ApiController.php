@@ -53,6 +53,15 @@ class ApiController extends Controller {
 		return response()->json($projects);
 	}
 
+	public function getUserUpdate(Request $request)
+	{
+		if ($request->has('location')) {
+			Auth::user()->current_url = $request->get('location');
+			Auth::user()->save();
+			Auth::user()->touch();
+		}
+	}
+
 	public function getTimesheet()
 	{
 		$projects = Project::where('user_id','=',Auth::id())->select('id')->get();

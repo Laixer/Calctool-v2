@@ -120,6 +120,9 @@ class AuthController extends Controller {
 				return back()->withErrors(['mail' => ['Email nog niet bevestigd']])->withInput($request->except('secret'));
 			}
 
+			Auth::user()->login_count++;
+			Auth::user()->save();
+
 			Audit::CreateEvent('auth.login.succces', 'Login with: ' . \Calctool::remoteAgent());
 
 			if ($request->has('redirect')) {
@@ -859,9 +862,6 @@ class AuthController extends Controller {
 		Mailgun::send('mail.confirm', $data, function($message) use ($data) {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Account activatie');
-			if (!config('app.debug')) {
-				$message->bcc('info@calculatietool.com', 'CalculatieTool.com');
-			}
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
 			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});
@@ -869,6 +869,23 @@ class AuthController extends Controller {
 		$user->save();
 
 		Audit::CreateEvent('api.account.new.success', 'Created new account from template using API', $user->id);
+
+		if (!config('app.debug')) {
+			$data = array(
+				'email' => $user->email,
+				'firstname' => $user->firstname,
+				'lastname' => $user->lastname,
+				'company' => $relation->company_name,
+				'contact_first' => $contact->firstname,
+				'contact_last'=> $contact->lastname
+			);
+			Mailgun::send('mail.inform_new_user', $data, function($message) use ($data) {
+				$message->to('info@calculatietool.com', 'CalculatieTool.com');
+				$message->subject('CalculatieTool.com - Account activatie');
+				$message->from('info@calculatietool.com', 'CalculatieTool.com');
+				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+			});
+		}
 
     	return response()->json(['success' => 1]);
 	}

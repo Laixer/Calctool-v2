@@ -54,7 +54,6 @@
 			$.ajaxSetup({headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
 			if (localStorage._prescnt) localStorage._prescnt++; else localStorage._prescnt = 1;
 			if (!localStorage.lastPageTag) localStorage.lastPageTag = '/';
-
 			$(document).ready(function(){
 			    fm_options = {
 			        position: "right-top",
@@ -70,7 +69,15 @@
 			            send_success : "Bedankt voor de feedback!"
 			        }
 			    };
+				@if (Auth::check())
 			    fm.init(fm_options);
+				function _lpolupdate() {
+					$.post('/api/v1/update', {location:window.location.href}, function() {
+						setTimeout(_lpolupdate, 30000);
+					});
+				}
+				_lpolupdate();
+				@endif
 			});
 		</script>
 		@endif

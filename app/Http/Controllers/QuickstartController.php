@@ -10,6 +10,8 @@ use \Calctool\Models\Contact;
 use \Calctool\Models\Province;
 
 use \Auth;
+use \Validator;
+use \Cache;
 use \Cookie;
 
 class QuickstartController extends Controller {
@@ -31,6 +33,7 @@ class QuickstartController extends Controller {
 		return view('user.edit_mycompany');
 	}
 
+	// TODO still used?
 	public function doNewMyCompanyQuickstart(Request $request)
 	{
 		$this->validate($request, [
@@ -95,6 +98,20 @@ class QuickstartController extends Controller {
 
 	public function getExternalAddress(Request $request)
 	{
+		$validator = Validator::make($request->all(), [
+			'zipcode' => array('required','size:6'),
+		]);
+
+		if ($validator->fails()) {
+			return;
+		}
+
+		if (Cache::store('file')->has($request->get('zipcode') . $request->get('number'))) {
+			$address = Cache::store('file')->get($request->get('zipcode') . $request->get('number'));
+			$address['cache'] = true;
+			return response()->json($address);
+		}
+
 		$headers = array();
 		$headers[] = 'X-Api-Key: ' . config('services.postcode.key');
 
@@ -105,13 +122,17 @@ class QuickstartController extends Controller {
 		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
 		$response = curl_exec($curl);
+		if (curl_error($curl))
+			return;
+
 		$data = json_decode($response);
-
 		curl_close($curl);
-
 		if (empty($data)) {
 			return;
 		}
+
+		if (!property_exists($data, '_embedded'))
+			return;
 
 		if (count($data->_embedded->addresses) == 1) {
 			$address['postcode'] = $data->_embedded->addresses[0]->postcode;
@@ -120,6 +141,9 @@ class QuickstartController extends Controller {
 			$address['province'] = $data->_embedded->addresses[0]->province->label;
 			$address['province_id'] = Province::where('province_name', strtolower($data->_embedded->addresses[0]->province->label))->first()['id'];
 			$address['city'] = $data->_embedded->addresses[0]->city->label;
+
+			Cache::store('file')->put($request->get('zipcode') . $request->get('number'), $address, 43800);
+
 			return response()->json($address);
 		}
 

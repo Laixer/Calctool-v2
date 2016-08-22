@@ -330,11 +330,13 @@ class AdminController extends Controller {
 		$this->validate($request, [
 			'date' => array('required'),
 			'note' => array('required'),
+			'label' => array('required'),
 		]);
 
 		$log = new AdminLog;
 		$log->note = $request->get('note');
 		$log->created_at = date('Y-m-d', strtotime($request->get('date')));
+		$log->label_id = $request->get('label');
 		$log->user_id = $user_id;
 		
 		$log->save();

@@ -15,16 +15,6 @@ function userStatus($user)
 		return "Actief";
 	return "Inactief";
 }
-function userActive($user) {
-	$time_updated = strtotime(DB::table('user_account')->select('updated_at')->where('id','=',$user->id)->get()[0]->updated_at);
-	if (time()-$time_updated < 120)
-		return 'Online';
-	if (time()-$time_updated < 3600)
-		return floor((time()-$time_updated)/60) .' minuten geleden';
-	if (time()-$time_updated < 43200)
-		return floor((time()-$time_updated)/3600) .' uur geleden';
-	return date('d-m-Y H:i:s', $time_updated);
-}
 $all = false;
 if (Input::get('all') == 1) {
 	$all = true;
@@ -92,7 +82,7 @@ if (Input::has('group')) {
 								echo ' (' . $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '') . ')';
 							}
 						?></a></td>
-						<td class="col-md-2">{{ userActive($users) }}</td>
+						<td class="col-md-2">{{ $users->currentStatus() }}</td>
 						<td class="col-md-3 hidden-xs">{{ $users->email }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ userStatus($users) }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>

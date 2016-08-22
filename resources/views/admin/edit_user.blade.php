@@ -220,6 +220,20 @@ $(document).ready(function() {
 
 					</div>
 
+					@if ($user->isOnline())
+					<h4>Online</h4>
+					<div class="row">
+
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="website">Huidige locatie</label>
+								<input name="location" id="location" disabled value="{{ $user->current_url }}" class="form-control"/>
+							</div>
+						</div>
+
+					</div>
+					@endif
+
 					<h4>Overig</h4>
 					<div class="row">
 
@@ -285,6 +299,13 @@ $(document).ready(function() {
 							</div>
 						</div>
 
+						<div class="col-md-2">
+							<div class="form-group">
+								<label for="address_city">Logins</label>
+								<input type="text" value="{{ $user->login_count }}" disabled class="form-control"/>
+							</div>
+						</div>
+
 					</div>
 
 					<h4 class="hidden-xs">Opmerkingen <a data-toggle="tooltip" data-placement="bottom" data-original-title="Niet zichtbaar voor de gebruiker." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
@@ -317,7 +338,8 @@ $(document).ready(function() {
 						<thead>
 							<tr>
 								<th class="col-md-2 hidden-sm hidden-xs">Datum</th>
-								<th class="col-md-10">Actie</th>
+								<th class="col-md-7">Actie</th>
+								<th class="col-md-2">Label</th>
 								<th class="col-md-1"></th>
 							</tr>
 						</thead>
@@ -326,7 +348,8 @@ $(document).ready(function() {
 							@foreach (\Calctool\Models\AdminLog::where('user_id', $user->id)->orderBy('created_at','asc')->get() as $rec)
 							<tr>
 								<td class="col-md-2">{{ date('d-m-Y', strtotime(DB::table('admin_log')->select('created_at')->where('id',$rec->id)->get()[0]->created_at)) }}</td>
-								<td class="col-md-9">{{ $rec->note }}</td>
+								<td class="col-md-7">{{ $rec->note }}</td>
+								<td class="col-md-2">{{ ucwords($rec->label->label_name) }}</td>
 								<td class="col-md-1"></td>
 							</tr>
 							@endforeach
@@ -335,7 +358,14 @@ $(document).ready(function() {
 
 							<tr>
 								<td class="col-md-2"><input type="text" name="date" id="date" class="form-control-sm-text datepick"/></td>
-								<td class="col-md-9"><input type="text" name="note" id="note" class="form-control-sm-text" placeholder="Gebruiker geholpen met project invullen..." /></td>
+								<td class="col-md-7"><input type="text" name="note" id="note" class="form-control-sm-text" placeholder="Gebruiker geholpen met project invullen..." /></td>
+								<td class="col-md-2">
+									<select name="label" id="label" class="getact form-control-sm-text">
+										@foreach (\Calctool\Models\AdminLogLabel::all() as $label)
+										<option value="{{ $label->id }}">{{ ucwords($label->label_name) }}</option>
+										@endforeach
+									</select>
+								</td>
 								<td class="col-md-1"><button class="btn btn-primary btn-xs"> Toevoegen</button></td>
 							</tr>
 
