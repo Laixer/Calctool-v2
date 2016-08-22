@@ -11,6 +11,7 @@ use \Calctool\Models\Province;
 
 use \Auth;
 use \Validator;
+use \Cache;
 use \Cookie;
 
 class QuickstartController extends Controller {
@@ -32,6 +33,7 @@ class QuickstartController extends Controller {
 		return view('user.edit_mycompany');
 	}
 
+	// TODO still used?
 	public function doNewMyCompanyQuickstart(Request $request)
 	{
 		$this->validate($request, [
@@ -104,6 +106,12 @@ class QuickstartController extends Controller {
 			return;
 		}
 
+		if (Cache::store('file')->has($request->get('zipcode') . $request->get('number'))) {
+			$address = Cache::store('file')->get($request->get('zipcode') . $request->get('number'));
+			$address['cache'] = true;
+			return response()->json($address);
+		}
+
 		$headers = array();
 		$headers[] = 'X-Api-Key: ' . config('services.postcode.key');
 
@@ -133,6 +141,9 @@ class QuickstartController extends Controller {
 			$address['province'] = $data->_embedded->addresses[0]->province->label;
 			$address['province_id'] = Province::where('province_name', strtolower($data->_embedded->addresses[0]->province->label))->first()['id'];
 			$address['city'] = $data->_embedded->addresses[0]->city->label;
+
+			Cache::store('file')->put($request->get('zipcode') . $request->get('number'), $address, 43800);
+
 			return response()->json($address);
 		}
 
