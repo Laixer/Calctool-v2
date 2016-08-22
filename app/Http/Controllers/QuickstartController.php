@@ -10,6 +10,7 @@ use \Calctool\Models\Contact;
 use \Calctool\Models\Province;
 
 use \Auth;
+use \Validator;
 use \Cookie;
 
 class QuickstartController extends Controller {
@@ -95,6 +96,14 @@ class QuickstartController extends Controller {
 
 	public function getExternalAddress(Request $request)
 	{
+		$validator = Validator::make($request->all(), [
+			'zipcode' => array('required','size:6'),
+		]);
+
+		if ($validator->fails()) {
+			return;
+		}
+
 		$headers = array();
 		$headers[] = 'X-Api-Key: ' . config('services.postcode.key');
 
@@ -105,13 +114,17 @@ class QuickstartController extends Controller {
 		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
 		$response = curl_exec($curl);
+		if (curl_error($curl))
+			return;
+
 		$data = json_decode($response);
-
 		curl_close($curl);
-
 		if (empty($data)) {
 			return;
 		}
+
+		if (!property_exists($data, '_embedded'))
+			return;
 
 		if (count($data->_embedded->addresses) == 1) {
 			$address['postcode'] = $data->_embedded->addresses[0]->postcode;
