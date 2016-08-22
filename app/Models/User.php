@@ -75,4 +75,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 		$nl_months = array("Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December");
 		return str_replace($en_months, $nl_months, $date);
 	}
+
+	public function isOnline() {
+		return $this->updated_at->diffInSeconds() < 60;
+	}
+
+	public function currentStatus() {
+		if ($this->updated_at->diffInSeconds() < 60)
+			return "Online";
+		return $this->updated_at->diffForHumans();
+	}
 }

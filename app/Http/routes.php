@@ -32,6 +32,7 @@ Route::post('api/v1/register/usernamecheck', 'ApiController@doCheckUsernameEXist
 
 Route::group(['prefix' => 'api/v1', 'middleware' => 'auth'], function() {
 	Route::get('/', 'ApiController@getApiRoot');
+	Route::post('/update', 'ApiController@getUserUpdate');
 	Route::get('/projects', 'ApiController@getProjects');
 
 	Route::get('/timesheet', 'ApiController@getTimesheet');

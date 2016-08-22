@@ -118,7 +118,6 @@ class ClientController extends Controller {
 			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});
 
-
 		return back()->with('success', 'Offerte is bevestigd');
 	}
 

@@ -14,4 +14,8 @@ class AdminLog extends Model {
 		return $this->hasOne('User');
 	}
 
+	public function label() {
+		return $this->hasOne('Calctool\Models\AdminLogLabel', 'id', 'label_id');
+	}
+
 }
