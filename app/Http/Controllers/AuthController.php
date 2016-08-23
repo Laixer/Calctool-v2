@@ -790,6 +790,10 @@ class AuthController extends Controller {
 		$request->merge(array('username' => strtolower(trim($request->input('account')))));
 		$request->merge(array('email' => strtolower(trim($request->input('email')))));
 		
+		if ($request->has('phone')) {
+			$request->merge(array('phone' => substr($request->input('phone'), 0, 12)));
+		}
+		
 		$validator = Validator::make($request->all(), [
 			'username' => array('required','max:30','unique:user_account'),
 			'email' => array('required','max:80','email','unique:user_account'),
@@ -817,10 +821,6 @@ class AuthController extends Controller {
 		$user->user_group = 100;
 		$user->firstname = $request->get('first_name');
 		$user->lastname = $request->get('last_name');
-
-		if ($request->has('phone')) {
-			$user->phone = $request->get('phone');
-		}
 
 		$user->save();
 
