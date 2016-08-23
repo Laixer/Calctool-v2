@@ -17,7 +17,19 @@
 
 <?php
 $user = \Calctool\Models\User::find(Route::input('user_id'));
-?>
+if (!$user){ ?>
+@section('content')
+<div id="wrapper">
+	<section class="container">
+		<div class="alert alert-danger">
+			<i class="fa fa-frown-o"></i>
+			<strong>Fout</strong>
+			Deze gebruiker bestaat niet
+		</div>
+	</section>
+</div>
+@stop
+<?php }else{ ?>
 <script type="text/javascript">
 $(document).ready(function() {
 	function prefixURL(field) {
@@ -403,5 +415,5 @@ $(document).ready(function() {
 	</section>
 
 </div>
-
 @stop
+<?php } ?>
