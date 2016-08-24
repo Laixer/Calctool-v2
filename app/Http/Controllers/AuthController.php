@@ -787,8 +787,14 @@ class AuthController extends Controller {
 			return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
 		}
 
+		$api_client = DB::table('oauth_clients')->where('id', Authorizer::getClientId())->select('name')->first();
+
 		$request->merge(array('username' => strtolower(trim($request->input('account')))));
 		$request->merge(array('email' => strtolower(trim($request->input('email')))));
+		
+		if ($request->has('phone')) {
+			$request->merge(array('phone' => substr($request->input('phone'), 0, 12)));
+		}
 		
 		$validator = Validator::make($request->all(), [
 			'username' => array('required','max:30','unique:user_account'),
@@ -797,6 +803,7 @@ class AuthController extends Controller {
 			'last_name' => array('required','max:50'),
 			'first_name' => array('max:30'),
 			'company' => array('required','max:50'),
+			'remote_addr' => array('required'),
 		]);
 
 		if ($validator->fails()) {
@@ -810,7 +817,7 @@ class AuthController extends Controller {
 		$user->api = md5(mt_rand());
 		$user->token = sha1($user->secret);
 		$user->referral_key = md5(mt_rand());
-		$user->ip = \Calctool::remoteAddr();
+		$user->ip = $request->get('remote_addr');
 		$user->email = $request->get('email');
 		$user->expiration_date = date('Y-m-d', strtotime("+1 month", time()));
 		$user->user_type = UserType::where('user_type','=','user')->first()->id;
@@ -818,8 +825,8 @@ class AuthController extends Controller {
 		$user->firstname = $request->get('first_name');
 		$user->lastname = $request->get('last_name');
 
-		if ($request->has('phone')) {
-			$user->phone = $request->get('phone');
+		if ($request->has('http_referer')) {
+			$user->referral_url = $request->get('http_referer');
 		}
 
 		$user->save();
@@ -868,7 +875,7 @@ class AuthController extends Controller {
 
 		$user->save();
 
-		Audit::CreateEvent('api.account.new.success', 'Created new account from template using API', $user->id);
+		Audit::CreateEvent('api.account.new.success', 'Created new account from template using application ' . $api_client->name, $user->id);
 
 		if (!config('app.debug')) {
 			$data = array(
