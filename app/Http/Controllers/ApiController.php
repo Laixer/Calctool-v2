@@ -56,7 +56,7 @@ class ApiController extends Controller {
 	public function getUserUpdate(Request $request)
 	{
 		if ($request->has('location')) {
-			Auth::user()->current_url = $request->get('location');
+			Auth::user()->current_url = substr($request->get('location'), 0, 180);
 			Auth::user()->save();
 			Auth::user()->touch();
 		}

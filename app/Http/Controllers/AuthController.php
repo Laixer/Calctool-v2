@@ -192,7 +192,7 @@ class AuthController extends Controller {
 		$user->lastname = $request->get('contact_name');
 
 		if ($request->session()->has('referrer')) {
-			$user->referral_url = $request->session()->pull('referrer');
+			$user->referral_url = substr($request->session()->pull('referrer'), 0, 180);
 		}
 
 		$user->save();
@@ -826,7 +826,7 @@ class AuthController extends Controller {
 		$user->lastname = $request->get('last_name');
 
 		if ($request->has('http_referer')) {
-			$user->referral_url = $request->get('http_referer');
+			$user->referral_url = substr($request->get('http_referer'), 0, 180);
 		}
 
 		$user->save();
