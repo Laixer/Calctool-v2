@@ -280,8 +280,8 @@ class ProjectController extends Controller {
 		$disable_more = false;
 		$disable_less = false;
 		
-		foreach(Chapter::where('project_id','=', $project->id)->get() as $chap) {
-			foreach(Activity::where('chapter_id','=', $chap->id)->get() as $activity) {
+		foreach (Chapter::where('project_id','=', $project->id)->get() as $chap) {
+			foreach (Activity::where('chapter_id','=', $chap->id)->get() as $activity) {
 				$estim_total += EstimateLabor::where('activity_id','=', $activity->id)->count('id');
 				$estim_total += EstimateMaterial::where('activity_id','=', $activity->id)->count('id');
 				$estim_total += EstimateEquipment::where('activity_id','=', $activity->id)->count('id');
@@ -340,6 +340,16 @@ class ProjectController extends Controller {
 			else
 				$project->use_less = false;
 		}
+
+		if ($request->input('use_subcontract'))
+			$project->use_subcontract = true;
+		else
+			$project->use_subcontract = false;
+
+		if ($request->input('use_equipment'))
+			$project->use_equipment = true;
+		else
+			$project->use_equipment = false;
 
 		if ($request->input('hide_null'))
 			$project->hide_null = true;
@@ -412,7 +422,6 @@ class ProjectController extends Controller {
 
 	public function doCommunication(Request $request)
 	{
-
 		$this->validate($request, [
 			'project' => array('required','integer'),
 		]);
@@ -428,10 +437,58 @@ class ProjectController extends Controller {
 		}
 
 		$project_share->user_note = $request->input('user_note');
-		
 		$project_share->save();
 
-		return back();
+		/*$offer = Offer::where('project_id', '=', $project->id)->orderBy('created_at','desc')->limit(1)->get();
+
+		/////
+		$user_logo = '';
+		$relation_self = Relation::find(Auth::user()->self_id);
+		if ($relation_self->logo_id)
+			$user_logo = Resource::find($relation_self->logo_id)->file_location;
+
+		$other_contacts = [];
+		if ($request->has('contacts')) {
+			foreach ($request->get('contacts') as $key) {
+				$contact = Contact::find($key[0]);
+				if (!in_array($contact->email, $other_contacts)) {
+					$other_contacts[$contact->email] = $contact->getFormalName();
+				}
+			}
+		}
+
+		$data = array(
+			'email' => $contact_client->email,
+			'client' => $contact_client->getFormalName(),
+			'other_contacts' => $other_contacts,
+			'mycomp' => $relation_self->company_name,
+			'pdf' => $res->file_location,
+			'preview' => false,
+			'offer_id' => $offer->id,
+			'token' => $share->token,
+			'user' => $contact_user->getFormalName(),
+			'project_name' => $project->project_name,
+			'pref_email_offer' => Auth::User()->pref_email_offer,
+			'user_logo' => $user_logo
+		);
+		/////
+
+		$data = array(
+			'email' => $user->email,
+			'firstname' => $user->firstname,
+			'lastname' => $user->lastname,
+			'project_name' => $project->project_name,
+			'note' => nl2br($request->input('client_note'))
+		);
+		
+		Mailgun::send('mail.user_reacted', $data, function($message) use ($data) {
+			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
+			$message->subject('CalculatieTool.com - Uw vakman heeft gereageerd');
+			$message->from('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+		});*/
+
+		return back()->with('success', 'Opmerking toegevoegd aan project');
 	}
 
 	public function getRelationDetails(Request $request, $relation_id)

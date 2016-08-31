@@ -22,7 +22,9 @@ use \Calctool\Calculus\EstimateOverview;
 						<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 						<th class="col-md-1"><span class="pull-right">Arbeid</th>
 						<th class="col-md-1"><span class="pull-right">Materiaal</th>
+						@if ($project->use_equipment)
 						<th class="col-md-1"><span class="pull-right">Overig</th>
+						@endif
 						<th class="col-md-1"><span class="pull-right">Totaal</th>
 					</tr>
 				</thead>
@@ -39,7 +41,9 @@ use \Calctool\Calculus\EstimateOverview;
 						<td class="col-md-1"><span class="pull-right">{{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }}</td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::laborActivity($activity), 2, ",",".") }}</span></td>
 						<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(EstimateOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
+						@if ($project->use_equipment)
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
+						@endif
 						<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
 					</tr>
 					@endforeach
@@ -50,7 +54,9 @@ use \Calctool\Calculus\EstimateOverview;
 						<td class="col-md-1"><strong><span class="pull-right">{{ number_format(EstimateOverview::contrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
+						@if ($project->use_equipment)
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
+						@endif
 						<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
 					</tr>
 				</tbody>

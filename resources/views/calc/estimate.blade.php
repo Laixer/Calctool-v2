@@ -998,6 +998,7 @@ var n = this,
 													</tbody>
 												</table>
 
+												@if ($project->use_equipment)
 												<div class="row">
 													<div class="col-md-2"><h4>Overig</h4></div>
 													<div class="col-md-1 text-right label label-info"><strong>BTW {{ Tax::find($activity->tax_equipment_id)->tax_rate }}%</strong></div>
@@ -1058,6 +1059,7 @@ var n = this,
 														</tr>
 													</tbody>
 												</table>
+												@endif
 											</div>
 										</div>
 										<?php } ?>

@@ -661,6 +661,7 @@ var n = this,
 													@endif
 												</table>
 
+												@if ($project->use_equipment)
 												<div class="row">
 													<div class="col-md-2"><h4>Overig</h4></div>
 													<div class="col-md-1 text-right"><strong>BTW</strong></div>
@@ -739,6 +740,7 @@ var n = this,
 													</tbody>
 													@endif
 												</table>
+												@endif
 											</div>
 										</div>
 										<?php } ?>

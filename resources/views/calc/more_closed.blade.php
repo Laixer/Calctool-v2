@@ -260,6 +260,7 @@ if (!$project || !$project->isOwner())
 													</tbody>
 												</table>
 
+												@if ($project->use_equipment)
 												<div class="row">
 													<div class="col-md-2"><h4>Overig</h4></div>
 													<div class="col-md-1 text-right label label-info"><strong>BTW {{ Tax::find($activity->tax_equipment_id)->tax_rate }}%</strong>
@@ -303,6 +304,7 @@ if (!$project || !$project->isOwner())
 														</tr>
 													</tbody>
 												</table>
+												@endif
 											</div>
 										</div>
 										<?php } ?>
@@ -330,7 +332,9 @@ if (!$project || !$project->isOwner())
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</th>
+												@if ($project->use_equipment)
 												<th class="col-md-1"><span class="pull-right">Overig</th>
+												@endif
 												<th class="col-md-1"><span class="pull-right">Totaal</th>
 											</tr>
 										</thead>
@@ -378,7 +382,9 @@ if (!$project || !$project->isOwner())
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 												<th class="col-md-1"><span class="pull-right">Arbeid</th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</th>
+												@if ($project->use_equipment)
 												<th class="col-md-1"><span class="pull-right">Overig</th>
+												@endif
 												<th class="col-md-1"><span class="pull-right">Totaal</th>
 											</tr>
 										</thead>
@@ -425,7 +431,9 @@ if (!$project || !$project->isOwner())
 												<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 												<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 												<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
+												@if ($project->use_equipment)
 												<th class="col-md-1"><span class="pull-right">Overig</span></th>
+												@endif
 												<th class="col-md-1"><span class="pull-right">Totaal</span></th>
 											</tr>
 										</thead>
