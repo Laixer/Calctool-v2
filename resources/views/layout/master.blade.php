@@ -70,6 +70,7 @@
 			        }
 			    };
 				@if (Auth::check())
+				@if (!Cookie::has('swpsess'));
 			    fm.init(fm_options);
 				function _lpolupdate() {
 					$.post('/api/v1/update', {location:window.location.href}, function() {
@@ -77,6 +78,7 @@
 					});
 				}
 				_lpolupdate();
+				@endif
 				@endif
 			});
 		</script>

@@ -344,7 +344,8 @@ if ($less_total>0) {
 	    $("[name='hide_null']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	    
 	    $("[name='hour_rate']").change(function() {
-	    	$("[name='more_hour_rate']").val($(this).val());
+	    	if ($("[name='more_hour_rate']").val() == undefined || $("[name='more_hour_rate']").val() == '0,00')
+	    		$("[name='more_hour_rate']").val($(this).val());
 	    });// bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 
 	/*if (sessionStorage.introDemo) {
