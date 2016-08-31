@@ -15,6 +15,20 @@
 
 $clients = DB::table('oauth_clients')->join('oauth_client_endpoints', 'oauth_clients.id', '=', 'oauth_client_endpoints.client_id')->select('oauth_clients.*', 'oauth_client_endpoints.redirect_uri')->where('oauth_clients.id',Route::input('client_id'))->get();
 
+if (!$clients){ ?>
+@section('content')
+<div id="wrapper">
+	<section class="container">
+		<div class="alert alert-danger">
+			<i class="fa fa-frown-o"></i>
+			<strong>Fout</strong>
+			Deze applicatie bestaat niet
+		</div>
+	</section>
+</div>
+@stop
+<?php }else{
+
 $client = $clients[0];
 
 ?>
@@ -190,5 +204,5 @@ $(document).ready(function() {
 	</section>
 
 </div>
-
 @stop
+<?php } ?>

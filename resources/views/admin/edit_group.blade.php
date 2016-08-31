@@ -15,6 +15,19 @@
 
 <?php
 $group = \Calctool\Models\UserGroup::find(Route::input('group_id'));
+if (!$group){ ?>
+@section('content')
+<div id="wrapper">
+	<section class="container">
+		<div class="alert alert-danger">
+			<i class="fa fa-frown-o"></i>
+			<strong>Fout</strong>
+			Deze groep bestaat niet
+		</div>
+	</section>
+</div>
+@stop
+<?php }else{ ?>
 ?>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -144,5 +157,5 @@ $(document).ready(function() {
 	</section>
 
 </div>
-
 @stop
+<?php } ?>
