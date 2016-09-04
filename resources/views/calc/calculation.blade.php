@@ -1134,8 +1134,10 @@ if (!$project || !$project->isOwner())
 												<div class="row">
 													<div class="col-md-5"></div>
 													<div class="col-md-4">
+														@if ($project->use_subcontract)
 														<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','contracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='contracting' ? 'checked' : '') }}/>Aanneming</label>
 	    												<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming</label>
+														@endif
 													</div>
 													<div class="col-md-3 text-right">
 														<button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving</button>
@@ -1267,6 +1269,7 @@ if (!$project || !$project->isOwner())
 													</tbody>
 												</table>
 												
+												@if ($project->use_equipment)
 												<div class="row">
 													<div class="col-md-2"><h4>Overig</h4></div>
 													@if ($project->tax_reverse)
@@ -1343,6 +1346,7 @@ if (!$project || !$project->isOwner())
 														</tr>
 													</tbody>
 												</table>
+												@endif
 											</div>
 										</div>
 										<?php } ?>
@@ -1419,10 +1423,10 @@ if (!$project || !$project->isOwner())
 												<div class="row">
 													<div class="col-md-5"></div>
 													<div class="col-md-4">
-														<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soorte{{ $activity->id }}" value="{{ Part::where('part_name','=','contracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='contracting' ? 'checked' : '') }}/>Aanneming
-															</label>
-		    											<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soorte{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming
-		    											</label>
+														@if ($project->use_subcontract)
+														<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soorte{{ $activity->id }}" value="{{ Part::where('part_name','=','contracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='contracting' ? 'checked' : '') }}/>Aanneming</label>
+		    											<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soorte{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming</label>
+		    											@endif
 		    										</div>
 		    										<div class="col-md-3 text-right">
 														<button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving
@@ -1559,6 +1563,7 @@ if (!$project || !$project->isOwner())
 													</tbody>
 												</table>
 
+												@if ($project->use_equipment)
 												<div class="row">
 													<div class="col-md-2"><h4>Overig</h4></div>
 													@if ($project->tax_reverse)
@@ -1635,6 +1640,7 @@ if (!$project || !$project->isOwner())
 														</tr>
 													</tbody>
 												</table>
+												@endif
 											</div>
 										</div>
 										<?php } ?>

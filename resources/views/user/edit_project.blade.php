@@ -337,6 +337,8 @@ if ($less_total>0) {
             ]
         })
 	    $("[name='tax_reverse']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	    $("[name='use_equipment']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	    $("[name='use_subcontract']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	    $("[name='use_estimate']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	    $("[name='use_more']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	    $("[name='use_less']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
@@ -344,7 +346,8 @@ if ($less_total>0) {
 	    $("[name='hide_null']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	    
 	    $("[name='hour_rate']").change(function() {
-	    	$("[name='more_hour_rate']").val($(this).val());
+	    	if ($("[name='more_hour_rate']").val() == undefined || $("[name='more_hour_rate']").val() == '0,00')
+	    		$("[name='more_hour_rate']").val($(this).val());
 	    });// bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 
 	/*if (sessionStorage.introDemo) {
@@ -785,7 +788,7 @@ if ($less_total>0) {
 						</div>
 						@endif
 
-						<div id="advanced" class="tab-pane" data-step="4" data-intro="Geef aan of je andere modules wilt laden in je project. Dit kan later ook nog. Klik daarna op opslaan &  'klaar'.">
+						<div id="advanced" class="tab-pane" data-step="4" data-intro="Geef aan of je andere modules wilt laden in je project. Dit kan later ook nog. Klik daarna op opslaan & 'klaar'.">
 							
 							<form method="POST" action="/project/updateadvanced">
 							{!! csrf_field() !!}
@@ -802,7 +805,31 @@ if ($less_total>0) {
 									<p>Een project zonder btw bedrag invoeren.</p>
 								</div>
 							</div>
+
+							<div class="row">
+								<div class="col-md-2">
+									<label for="type">Overige regels</label>
+									<div class="form-group">
+										<input name="use_equipment" type="checkbox" {{ $project->use_equipment ? 'disabled' : '' }} {{ $project->use_equipment ? 'checked' : '' }}>
+									</div>
+								</div>
+								<div class="col-md-10" style="padding-top:30px;">
+									<p>Een derde niveau gebruiken</p>
+								</div>
+							</div>
 								
+							<div class="row">
+								<div class="col-md-2">
+									<label for="type">Onderaanneming</label>
+									<div class="form-group">
+										<input name="use_subcontract" type="checkbox" {{ $project->use_subcontract ? 'disabled' : '' }} {{ $project->use_subcontract ? 'checked' : '' }}>
+									</div>
+								</div>
+								<div class="col-md-10" style="padding-top:30px;">
+									<p>Onderaanneming gebruiken</p>
+								</div>
+							</div>
+
 							<div class="row">
 								<div class="col-md-2">
 									<label for="type">Stelposten</label>
