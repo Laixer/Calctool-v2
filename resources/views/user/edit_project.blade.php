@@ -814,7 +814,7 @@ if ($less_total>0) {
 									</div>
 								</div>
 								<div class="col-md-10" style="padding-top:30px;">
-									<p>Voeg naast arbeid en materiaal een extra calculeerniveau toe aan je calculatie, bijv. voor materieel (kan niet onegedaan gemaakt worden).</p>
+									<p>Voeg naast arbeid en materiaal een extra calculeerniveau toe aan je calculatie, bijv. voor materieel (kan niet ongedaan gemaakt worden).</p>
 								</div>
 							</div>
 								
@@ -826,7 +826,7 @@ if ($less_total>0) {
 									</div>
 								</div>
 								<div class="col-md-10" style="padding-top:30px;">
-									<p>Voeg onderaanneming toe aan je calculatie (kan niet onegedaan gemaakt worden).</p>
+									<p>Voeg onderaanneming toe aan je calculatie (kan niet ongedaan gemaakt worden).</p>
 								</div>
 							</div>
 
