@@ -808,13 +808,13 @@ if ($less_total>0) {
 
 							<div class="row">
 								<div class="col-md-2">
-									<label for="type">Overige regels</label>
+									<label for="type">Overige</label>
 									<div class="form-group">
 										<input name="use_equipment" type="checkbox" {{ $project->use_equipment ? 'disabled' : '' }} {{ $project->use_equipment ? 'checked' : '' }}>
 									</div>
 								</div>
 								<div class="col-md-10" style="padding-top:30px;">
-									<p>Een derde niveau gebruiken</p>
+									<p>Voeg naast arbeid en materiaal een extra calculeerniveau toe aan je calculatie, bijv. voor materieel (kan niet onegedaan gemaakt worden).</p>
 								</div>
 							</div>
 								
@@ -826,7 +826,7 @@ if ($less_total>0) {
 									</div>
 								</div>
 								<div class="col-md-10" style="padding-top:30px;">
-									<p>Onderaanneming gebruiken</p>
+									<p>Voeg onderaanneming toe aan je calculatie (kan niet onegedaan gemaakt worden).</p>
 								</div>
 							</div>
 
@@ -838,7 +838,7 @@ if ($less_total>0) {
 									</div>
 								</div>
 								<div class="col-md-10" style="padding-top:30px;">		
-									<p>Voeg de module stelposten toe aan je calculatie. Je kan nu stelposten toe gaan voegen aan je offerte en deze later definitief maken/stellen voor op de factuur.</p>
+									<p>Voeg stelposten toe aan je calculatie. Je kan deze definitief maken na opdracht.</p>
 								</div>
 							</div>
 
@@ -851,7 +851,7 @@ if ($less_total>0) {
 									</div>
 								</div>
 								<div class="col-md-10" style="padding-top:30px;">
-									<p>Voeg de module meerwerk toe aan je calculatie. Je kan nu extra kosten op gaan voeren op je facturen.</p>
+									<p>Voeg meerwerk toe (pas mogelijk na opdracht).</p>
 								</div>
 							</div>
 
@@ -863,7 +863,7 @@ if ($less_total>0) {
 									</div>
 								</div>
 								<div class="col-md-10" style="padding-top:30px;">
-									<p>Voeg de module minderwerk toe aan je calculatie. Je kan nu bedragen in mindering gaan brengen op je facturen.</p>
+									<p>Voeg minderwerk toe (pas mogelijk na opdracht).</p>
 								</div>
 							</div>
 
