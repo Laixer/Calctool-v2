@@ -100,7 +100,7 @@ $(function() {
 					<div class="white-row">
 
 						<p>
-							Vraag hieronder een nieuwe wachtwoord aan. Mocht het niet lukken neem dan contact op met de <a href="/support">support</a> afdeling.
+							Vraag hieronder een nieuw wachtwoord aan. Mocht het niet lukken neem dan contact op met de <a href="/support">support</a> afdeling.
 						</p>
 
 						@if(Session::get('success'))
@@ -130,7 +130,7 @@ $(function() {
 
 			<div class="white-row hidden-sm hidden-xs">
 				<h4>Nog Registreren?</h4>			
-				<span>Nog geen account? <a href="/register">Maak er Ã©Ã©n aan</a>, het is <strong>gratis!</strong></span>
+				<span>Nog geen account? <a href="/register">Maak er één aan</a>, het is <strong>gratis!</strong></span>
 			</div>
 
 		</section>
