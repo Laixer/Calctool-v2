@@ -417,6 +417,10 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 	Route::get('application/{client_id}/edit', function() {
 		return view('admin.edit_application');
 	});
+	Route::get('product', function() {
+		return view('admin.product');
+	});
+	Route::post('product/upload', 'AdminController@doUploadCSV');
 	Route::get('application/{client_id}/delete', 'AdminController@doDeleteApplication');
 	Route::post('application/{client_id}/edit', 'AdminController@doUpdateApplication');
 	Route::post('application/new', 'AdminController@doNewApplication');
