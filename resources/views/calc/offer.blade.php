@@ -438,7 +438,7 @@ $type = ProjectType::find($project->type_id);
 										</div>
 									</div>
 
-									<div class="col-md-12 show-downpayment">
+									<div {{ ($offer_last ? ($offer_last->downpayment ? '' : 'style=display:none;') : 'style=display:none;') }} class="col-md-12 show-downpayment">
 										<table id="tbl-term" class="table table-hover">
 										<thead>
 											<tr>
@@ -460,7 +460,7 @@ $type = ProjectType::find($project->type_id);
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button class="btn btn-default" data-dismiss="modal">Sluiten</button>
+							<button class="btn btn-default" data-dismiss="modal">Opslaan</button>
 						</div>
 					</div>
 				</div>
