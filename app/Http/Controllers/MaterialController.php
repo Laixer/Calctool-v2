@@ -4,12 +4,14 @@ namespace Calctool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use \Calctool\Models\ProductSubCategory;
 use \Calctool\Models\Supplier;
 use \Calctool\Models\SubGroup;
 use \Calctool\Models\Product;
 use \Calctool\Models\Element;
 
 use \Auth;
+use \DB;
 
 class MaterialController extends Controller {
 
@@ -270,4 +272,13 @@ class MaterialController extends Controller {
 		}
 	}
 	
+	public function getListSubcat(Request $request, $type, $id) {
+		$rs = [];
+		if ($type == 'group') {
+			$rs = DB::table('product_sub_category')->select('product_sub_category.id', 'sub_category_name as name')->join('product_category', 'product_sub_category.category_id', '=', 'product_category.id')->where('group_id',$id)->get();
+		} else {
+			$rs = ProductSubCategory::select('product_sub_category.id', 'sub_category_name as name')->where('category_id',$id)->get();
+		}
+		return response()->json($rs);
+	}
 }

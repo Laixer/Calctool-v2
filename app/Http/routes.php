@@ -332,6 +332,7 @@ Route::group(['middleware' => 'auth'], function() {
 
 	/* Material database */
 	Route::get('material', 'MaterialController@getList')->middleware('payzone');
+	Route::get('material/subcat/{type}/{id}', 'MaterialController@getListSubcat');
 	Route::post('material/search', 'MaterialController@doSearch');
 	Route::post('material/newmaterial', 'MaterialController@doNew');
 	Route::post('material/updatematerial', 'MaterialController@doUpdate');

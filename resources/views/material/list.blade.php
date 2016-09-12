@@ -1,5 +1,7 @@
 <?php
-use \Calctool\Models\SubGroup;
+use \Calctool\Models\ProductGroup;
+use \Calctool\Models\ProductCategory;
+use \Calctool\Models\ProductSubCategory;
 use \Calctool\Models\Supplier;
 use \Calctool\Models\Product;
 use \Calctool\Models\Element;
@@ -176,6 +178,22 @@ $(document).ready(function() {
 	$('#btn-load-csv').change(function() {
 		$('#upload-csv').submit();
 	});
+
+	$('.getsub').change(function(e){
+		var $name = $('#group2 option:selected').attr('data-name');
+		var $value = $('#group2 option:selected').val();
+
+		$.get('/material/subcat/' + $name + '/' + $value, function(data) {
+			$('#group').find('option').remove();
+		    $.each(data, function(idx, item){
+			    $('#group').append($('<option>', {
+			        value: item.id,
+			        text: item.name
+			    }));
+		    });
+		});
+
+	});
 });
 </script>
 <div id="wrapper">
@@ -271,11 +289,22 @@ $(document).ready(function() {
 
 						<div class="form-group input-group input-group-lg">
 							<input type="text" id="search" value="" class="form-control" placeholder="Zoek producten">
+								<span class="input-group-btn">
+						        <select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000">
+							        <option value="0" selected>Alles</option>
+							        @foreach (ProductGroup::all() as $group)
+							        <option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
+							        	@foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
+							        	<option data-name="cat" value="{{ $cat->id }}"> - {{ $cat->category_name }}</option>
+							        	@endforeach
+							        @endforeach
+						        </select>
+						      </span>
 						      <span class="input-group-btn">
 						        <select id="group" class="btn" style="background-color: #E5E7E9; color:#000">
 						        <option value="0" selected>Alles</option>
-						        @foreach (SubGroup::all() as $group)
-						          <option value="{{ $group->id }}">{{ $group->group_type }}</option>
+						        @foreach (ProductSubCategory::all() as $subcat)
+						          <option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
 						        @endforeach
 						        </select>
 						      </span>
@@ -337,8 +366,8 @@ $(document).ready(function() {
 									<td class="col-md-1"><input name="rate" type="text" value="{{ number_format($product->price, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
 									<td class="col-md-1">
 										<select name="ngroup" class="form-control-sm-text pointer dsave">
-								        @foreach (SubGroup::all() as $group)
-								        	<option {{ ($product->group_id == $group->id ? 'selected' : '') }} value="{{ $group->id }}">{{ $group->group_type }}</option>
+								        @foreach (ProductSubCategory::all() as $subcat)
+								        	<option {{ ($product->group_id == $subcat->id ? 'selected' : '') }} value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
 								        @endforeach
 										</select>
 									</td>
@@ -357,8 +386,8 @@ $(document).ready(function() {
 									<td class="col-md-1">
 										<select name="ngroup" class="form-control-sm-text pointer dsave">
 										<option value="0">Selecteer</option>
-								        @foreach (SubGroup::all() as $group)
-								        	<option value="{{ $group->id }}">{{ $group->group_type }}</option>
+								        @foreach (ProductSubCategory::all() as $subcat)
+								        	<option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
 								        @endforeach
 										</select>
 									</td>
