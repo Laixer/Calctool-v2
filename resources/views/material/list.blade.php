@@ -46,9 +46,9 @@ $(document).ready(function() {
 	$("#search").keyup(function() {
 		$val = $(this).val();
 		if ($val.length > 2 && !$req) {
-			$group = $('#group').val();
+			// $group = 0;//$('#group').val();
 			$req = true;
-			$.post("/material/search", {query:$val,group:$group}, function(data) {
+			$.post("/material/search", {query:$val}, function(data) {
 				if (data) {
 					$('#alllist tbody tr').remove();
 					$.each(data, function(i, item) {
@@ -58,6 +58,18 @@ $(document).ready(function() {
 				}
 			});
 		}
+	});
+	$('#group').change(function(){
+		$val = $(this).val();
+		$.post("/material/search", {group:$val}, function(data) {
+			if (data) {
+				$('#alllist tbody tr').remove();
+				$.each(data, function(i, item) {
+					$('#alllist tbody').append('<tr data-id="'+item.id+'"><td>'+item.description+'</td><td>'+item.unit+'</td><td>'+item.price+'</td><td>'+item.tprice+'</td><td><a href="javascript:void(0);" class="toggle-fav"><i style="color:'+(item.favorite ? '#FFD600' : '#000')+';" class="fa '+(item.favorite ? 'fa-star' : 'fa-star-o')+'"></i></a></td></tr>');
+				});
+				$req = false;
+			}
+		});
 	});
 	$("body").on("click", ".toggle-fav", function(){
 		$curr = $(this);
@@ -291,7 +303,7 @@ $(document).ready(function() {
 							<input type="text" id="search" value="" class="form-control" placeholder="Zoek producten">
 								<span class="input-group-btn">
 						        <select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000">
-							        <option value="0" selected>Alles</option>
+							        <option value="0" selected>Selecteer</option>
 							        @foreach (ProductGroup::all() as $group)
 							        <option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
 							        	@foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
@@ -302,7 +314,7 @@ $(document).ready(function() {
 						      </span>
 						      <span class="input-group-btn">
 						        <select id="group" class="btn" style="background-color: #E5E7E9; color:#000">
-						        <option value="0" selected>Alles</option>
+						        <option value="0" selected>Selecteer</option>
 						        @foreach (ProductSubCategory::all() as $subcat)
 						          <option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
 						        @endforeach

@@ -73,13 +73,13 @@ class MaterialController extends Controller {
 
 	public function doSearch(Request $request)
 	{
-		$this->validate($request, [
-			'query' => array('required'),
-		]);
+		// $this->validate($request, [
+			// 'query' => array('required'),
+		// ]);
 
 		$rtn_products = array();
 
-		$query = strtolower($request->get('query'));
+		// $query = strtolower($request->get('query'));
 
 		$suppliers = array();
 		$mysupplier = Supplier::where('user_id','=',Auth::id())->first();
@@ -90,10 +90,11 @@ class MaterialController extends Controller {
 			array_push($suppliers, $supplier->id);
 		}
 
-		if ($request->get('group') != '0') {
-			$products = Product::where('description', 'LIKE', '%'.$query.'%')->whereIn('supplier_id', $suppliers)->where('group_id','=',$request->get('group'))->take(400)->get();
-		} else {
-			$products = Product::where('description', 'LIKE', '%'.$query.'%')->whereIn('supplier_id', $suppliers)->take(400)->get();
+		$products = [];
+		if ($request->has('group')) {
+			$products = Product::where('group_id',$request->get('group'))->whereIn('supplier_id', $suppliers)->take(200)->get();
+		} else if ($request->has('query')) {
+			$products = Product::where('description', 'LIKE', '%'.strtolower($request->get('query')).'%')->whereIn('supplier_id', $suppliers)->take(200)->get();
 		}
 		foreach ($products as $product) {
 			$isFav = $product->user()->where('user_id','=',Auth::id())->count('id');
