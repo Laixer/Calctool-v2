@@ -143,6 +143,31 @@ $(document).ready(function() {
 		</div>
 	</div>
 
+	<div class="modal fade" id="confirmModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel2">Verstuur bevestiging</h4>
+				</div>
+
+				<div class="modal-body">
+					<div class="form-horizontal">
+
+					    <p>Na bevestiging via onderstaande knop zullen wij de offerte definitief voor u versturen middel de post. De offerte en eventuele bijlage wordt in kleur geprint en verzonden in een 1/3 A4 venster enveloppe. Dit is vrij van print- en verzendkosten.</p>
+
+						<p>Graag verzoeken wij u de offerte goed te controleren alvorens u de definitieve opdracht geeft. Annuleren van verzending kan dezelfde dag voor 16:00 via de email (info@calculatietool.com)</p>
+
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a class="btn btn-primary pull-right" id="sendpost" data-dismiss="modal" aria-hidden="true">Definitief versturen per post</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<section class="container">
 
 		@include('calc.wizard', array('page' => 'offer'))
@@ -171,7 +196,7 @@ $(document).ready(function() {
 			  <ul class="dropdown-menu">
 				<li><a href="/offer/project-{{ $project->id }}/offer-{{ $offer->id }}/mail-preview" data-toggle="modal" data-target=".ajax_modal_container">Per email</a></li>
 			    <li><a href="/res-{{ $res->id }}/download">Per post (download PDF)</a></i>
-			    <li><a href="javascript:void(0);" id="sendpost">Door calculatieTool.com</a></li>
+			    <li><a href="#" data-toggle="modal" data-target="#confirmModal2">Door calculatieTool.com</a></li>
 			  </ul>
 			</div>
 			<a href="/offer/project-{{ $project->id }}" class="btn btn-primary">Bewerken</a>
@@ -197,7 +222,7 @@ $(document).ready(function() {
 					  <ul class="dropdown-menu">
 						<li><a href="/offer/project-{{ $project->id }}/offer-{offer_id}/mail-preview" data-toggle="modal" data-target=".ajax_modal_container">Per email</a></li>
 					    <li><a href="/res-{{ $res->id }}/download">Per post (download PDF)</a></i>
-					    <li><a href="javascript:void(0);" id="sendpost">Door calculatieTool.com</a></li>
+					    <li><a href="#" data-toggle="modal" data-target="#confirmModal2">Door calculatieTool.com</a></li>
 					  </ul>
 					 </div>
 					<a href="/offer/project-{{ $project->id }}" class="btn btn-primary">Bewerken</a>
