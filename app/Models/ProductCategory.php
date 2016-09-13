@@ -4,11 +4,10 @@ namespace Calctool\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SubGroup extends Model {
+class ProductCategory extends Model {
 
-	protected $table = 'sub_group';
+	protected $table = 'product_category';
 	protected $guarded = array('id');
 
 	public $timestamps = false;
-
 }

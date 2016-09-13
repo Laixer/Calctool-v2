@@ -343,13 +343,9 @@ class ProjectController extends Controller {
 
 		if ($request->input('use_subcontract'))
 			$project->use_subcontract = true;
-		else
-			$project->use_subcontract = false;
 
 		if ($request->input('use_equipment'))
 			$project->use_equipment = true;
-		else
-			$project->use_equipment = false;
 
 		if ($request->input('hide_null'))
 			$project->hide_null = true;

@@ -332,6 +332,7 @@ Route::group(['middleware' => 'auth'], function() {
 
 	/* Material database */
 	Route::get('material', 'MaterialController@getList')->middleware('payzone');
+	Route::get('material/subcat/{type}/{id}', 'MaterialController@getListSubcat');
 	Route::post('material/search', 'MaterialController@doSearch');
 	Route::post('material/newmaterial', 'MaterialController@doNew');
 	Route::post('material/updatematerial', 'MaterialController@doUpdate');
@@ -417,6 +418,10 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 	Route::get('application/{client_id}/edit', function() {
 		return view('admin.edit_application');
 	});
+	Route::get('product', function() {
+		return view('admin.product');
+	});
+	Route::post('product/upload', 'AdminController@doUploadCSV');
 	Route::get('application/{client_id}/delete', 'AdminController@doDeleteApplication');
 	Route::post('application/{client_id}/edit', 'AdminController@doUpdateApplication');
 	Route::post('application/new', 'AdminController@doNewApplication');

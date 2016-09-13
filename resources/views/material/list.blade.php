@@ -1,5 +1,7 @@
 <?php
-use \Calctool\Models\SubGroup;
+use \Calctool\Models\ProductGroup;
+use \Calctool\Models\ProductCategory;
+use \Calctool\Models\ProductSubCategory;
 use \Calctool\Models\Supplier;
 use \Calctool\Models\Product;
 use \Calctool\Models\Element;
@@ -44,9 +46,8 @@ $(document).ready(function() {
 	$("#search").keyup(function() {
 		$val = $(this).val();
 		if ($val.length > 2 && !$req) {
-			$group = $('#group').val();
 			$req = true;
-			$.post("/material/search", {query:$val,group:$group}, function(data) {
+			$.post("/material/search", {query:$val}, function(data) {
 				if (data) {
 					$('#alllist tbody tr').remove();
 					$.each(data, function(i, item) {
@@ -56,6 +57,18 @@ $(document).ready(function() {
 				}
 			});
 		}
+	});
+	$('#group').change(function(){
+		$val = $(this).val();
+		$.post("/material/search", {group:$val}, function(data) {
+			if (data) {
+				$('#alllist tbody tr').remove();
+				$.each(data, function(i, item) {
+					$('#alllist tbody').append('<tr data-id="'+item.id+'"><td>'+item.description+'</td><td>'+item.unit+'</td><td>'+item.price+'</td><td>'+item.tprice+'</td><td><a href="javascript:void(0);" class="toggle-fav"><i style="color:'+(item.favorite ? '#FFD600' : '#000')+';" class="fa '+(item.favorite ? 'fa-star' : 'fa-star-o')+'"></i></a></td></tr>');
+				});
+				$req = false;
+			}
+		});
 	});
 	$("body").on("click", ".toggle-fav", function(){
 		$curr = $(this);
@@ -176,6 +189,32 @@ $(document).ready(function() {
 	$('#btn-load-csv').change(function() {
 		$('#upload-csv').submit();
 	});
+
+	$('.getsub').change(function(e){
+		var $name = $('#group2 option:selected').attr('data-name');
+		var $value = $('#group2 option:selected').val();
+		$.get('/material/subcat/' + $name + '/' + $value, function(data) {
+			$('#group').find('option').remove();
+		    $.each(data, function(idx, item){
+			    $('#group').append($('<option>', {
+			        value: item.id,
+			        text: item.name
+			    }));
+		    });
+
+			$.post("/material/search", {group:data[0].id}, function(data) {
+				if (data) {
+					$('#alllist tbody tr').remove();
+					$.each(data, function(i, item) {
+						$('#alllist tbody').append('<tr data-id="'+item.id+'"><td>'+item.description+'</td><td>'+item.unit+'</td><td>'+item.price+'</td><td>'+item.tprice+'</td><td><a href="javascript:void(0);" class="toggle-fav"><i style="color:'+(item.favorite ? '#FFD600' : '#000')+';" class="fa '+(item.favorite ? 'fa-star' : 'fa-star-o')+'"></i></a></td></tr>');
+					});
+					$req = false;
+				}
+			});
+
+		});
+
+	});
 });
 </script>
 <div id="wrapper">
@@ -270,12 +309,25 @@ $(document).ready(function() {
 					<div id="supplier" class="tab-pane">
 
 						<div class="form-group input-group input-group-lg">
-							<input type="text" id="search" value="" class="form-control" placeholder="Zoek producten">
+						
+							<input type="text" id="search" value="" class="form-control" placeholder="Zoek product">
+
+							<span class="input-group-btn">
+						        <select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000">
+							        <option value="0" selected>Selecteer</option>
+							        @foreach (ProductGroup::all() as $group)
+							        <option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
+							        	@foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
+							        	<option data-name="cat" value="{{ $cat->id }}"> - {{ $cat->category_name }}</option>
+							        	@endforeach
+							        @endforeach
+						        </select>
+						      </span>
 						      <span class="input-group-btn">
 						        <select id="group" class="btn" style="background-color: #E5E7E9; color:#000">
-						        <option value="0" selected>Alles</option>
-						        @foreach (SubGroup::all() as $group)
-						          <option value="{{ $group->id }}">{{ $group->group_type }}</option>
+						        <option value="0" selected>Selecteer</option>
+						        @foreach (ProductSubCategory::all() as $subcat)
+						          <option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
 						        @endforeach
 						        </select>
 						      </span>
@@ -337,8 +389,8 @@ $(document).ready(function() {
 									<td class="col-md-1"><input name="rate" type="text" value="{{ number_format($product->price, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
 									<td class="col-md-1">
 										<select name="ngroup" class="form-control-sm-text pointer dsave">
-								        @foreach (SubGroup::all() as $group)
-								        	<option {{ ($product->group_id == $group->id ? 'selected' : '') }} value="{{ $group->id }}">{{ $group->group_type }}</option>
+								        @foreach (ProductSubCategory::all() as $subcat)
+								        	<option {{ ($product->group_id == $subcat->id ? 'selected' : '') }} value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
 								        @endforeach
 										</select>
 									</td>
@@ -357,8 +409,8 @@ $(document).ready(function() {
 									<td class="col-md-1">
 										<select name="ngroup" class="form-control-sm-text pointer dsave">
 										<option value="0">Selecteer</option>
-								        @foreach (SubGroup::all() as $group)
-								        	<option value="{{ $group->id }}">{{ $group->group_type }}</option>
+								        @foreach (ProductSubCategory::all() as $subcat)
+								        	<option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
 								        @endforeach
 										</select>
 									</td>
@@ -437,7 +489,7 @@ $(document).ready(function() {
 									<td class="col-md-5">{{ $product->description }}</td>
 									<td class="col-md-1">{{ $product->unit }}</td>
 									<td class="col-md-1">{{ number_format($product->price, 2,",",".") }}</td>
-									<td class="col-md-1">{{ SubGroup::find($product->group_id)->group_type }}</td>
+									<td class="col-md-1">{{ ProductSubCategory::find($product->group_id)->sub_category_name }}</td>
 									<td class="col-md-1"><span class="total-ex-tax"></span></td>
 									<td class="col-md-1"><span class="total-incl-tax"></span></td>
 									<td class="col-md-2 text-right">

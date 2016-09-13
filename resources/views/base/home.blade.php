@@ -276,11 +276,12 @@ $(document).ready(function() {
 						@else
 						<h2><strong>De eerste</strong> stappen...</h2>
 						<div class="bs-callout text-center whiteBg">
-							<h3>
-								<a href="/project/new" class="btn btn-primary btn-lg" kaas-intro="Stap 9: Maak nu je eerste prject aan.">Start nieuw project</a>
+							<h3>			
+								<a href="/project/new" class="btn btn-primary btn-lg">Start nieuw project</a>
 								<strong>OF</strong>
-								<button class="starttour btn btn-primary btn-lg">Neem de Rondleiding</button>
-							</h3>
+								<a href="/mycompany" class="btn btn-primary btn-lg">Maak je bedrijfsgevens compleet</a>
+<!-- 							<button class="starttour btn btn-primary btn-lg">Neem de Rondleiding</button>
+ -->							</h3>
 						</div>
 						@endif
 					</div>

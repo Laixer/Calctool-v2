@@ -46,7 +46,7 @@ class OfferController extends Controller {
 			'valid' => array('required','integer','min:0'),
 			'to_contact' => array('required'),
 			'from_contact' => array('required'),
-			'amount' => array('regex:/[\d]{2},[\d]{2}/'),
+			'amount' => array('regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
 		]);
 
 		$project = Project::find($projectid);

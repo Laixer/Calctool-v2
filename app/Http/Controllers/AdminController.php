@@ -15,10 +15,16 @@ use \Calctool\Models\Invoice;
 use \Calctool\Models\InvoicePost;
 use \Calctool\Models\Resource;
 use \Calctool\Models\MessageBox;
+use \Calctool\Models\Product;
 use \Calctool\Models\Audit;
+use \Calctool\Models\Wholesale;
+use \Calctool\Models\Supplier;
 use \Calctool\Models\Project;
 use \Calctool\Models\Promotion;
 use \Calctool\Models\AdminLog;
+use \Calctool\Models\ProductGroup;
+use \Calctool\Models\ProductCategory;
+use \Calctool\Models\ProductSubCategory;
 use \Database\Templates\DemoProjectTemplate;
 use \Database\Templates\ValidationProjectTemplate;
 
@@ -530,6 +536,102 @@ class AdminController extends Controller {
 		$message->save();
 
 		return back()->with('success', 'Bericht verstuurd');
+	}
+
+	public function doUploadCSV(Request $request)
+	{
+		$this->validate($request, [
+			'csvfile' => array('required'),
+		]);
+
+		if ($request->hasFile('csvfile')) {
+			$file = $request->file('csvfile');
+
+			// $group = SubGroup::where('group_type','diversen (deel 1)')->first();
+
+			$row = 0;
+			if (($handle = fopen($file->getRealPath(), "r")) !== FALSE) {
+				while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+					if ($row++ == 0)
+						continue;
+					
+					if (count($data)<9)
+						continue;
+					
+					$description = strtolower($data[0]);
+					$unit = $data[1];
+					$article_code = $data[2];
+
+					$price = str_replace(',', '.', str_replace('.', '' , trim($data[3])));
+					if (!$price)
+						$price = 0;
+					if (!is_numeric($price))
+						$price = 0;
+
+					$total_price = str_replace(',', '.', str_replace('.', '' , trim($data[4])));
+					if (!$total_price)
+						$total_price = 0;
+					if (!is_numeric($total_price))
+						$total_price = 0;
+
+
+					$supplier = $data[5];
+
+					$wholesale = Wholesale::where('company_name', $supplier)->first();
+					if (!$wholesale)
+						continue;
+
+					$mysupplier = Supplier::where('wholesale_id', $wholesale->id)->first();
+					if (!$mysupplier)
+						continue;
+
+					$group = $data[8];
+
+					$mygroup = ProductGroup::where('group_name', $group)->first();
+					if (!$mygroup){
+						$mygroup = ProductGroup::create(array(
+							'group_name' => $group
+						));
+					}
+
+					$cat = $data[7];
+
+					$mycat = ProductCategory::where('category_name', $cat)->first();
+					if (!$mycat){
+						$mycat = ProductCategory::create(array(
+							'category_name' => $cat,
+							'group_id' => $mygroup->id
+						));
+					}
+
+					$sub_cat = $data[6];
+
+					$mysubcat = ProductSubCategory::where('sub_category_name', $sub_cat)->first();
+					if (!$mysubcat){
+						$mysubcat = ProductSubCategory::create(array(
+							'sub_category_name' => $sub_cat,
+							'category_id' => $mycat->id
+						));
+					}
+
+					Product::create(array(
+						'description' => $description,
+						'unit' => $unit,
+						'article_code' => $article_code,
+						'price' => $price,
+						'total_price' => $total_price,
+						'group_id' => $mysubcat->id,
+						'supplier_id' => $mysupplier->id
+					));
+				}
+				fclose($handle);
+			}
+
+			return back()->with('success', 'Materialenlijst geimporteerd');
+		} else {
+			// redirect our user back to the form with the errors from the validator
+			return back()->withErrors('Geen CSV geupload');
+		}
 	}
 
 	public function doNewPromotion(Request $request)
