@@ -300,8 +300,10 @@ $(document).ready(function() {
 					<div id="supplier" class="tab-pane">
 
 						<div class="form-group input-group input-group-lg">
-							<input type="text" id="search" value="" class="form-control" placeholder="Zoek producten">
-								<span class="input-group-btn">
+						
+							<input type="text" id="search" value="" class="form-control" placeholder="Zoek product">
+
+							<span class="input-group-btn">
 						        <select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000">
 							        <option value="0" selected>Selecteer</option>
 							        @foreach (ProductGroup::all() as $group)
@@ -478,7 +480,7 @@ $(document).ready(function() {
 									<td class="col-md-5">{{ $product->description }}</td>
 									<td class="col-md-1">{{ $product->unit }}</td>
 									<td class="col-md-1">{{ number_format($product->price, 2,",",".") }}</td>
-									<td class="col-md-1">{{ SubGroup::find($product->group_id)->group_type }}</td>
+									<td class="col-md-1">{{ ProductSubCategory::find($product->group_id)->sub_category_name }}</td>
 									<td class="col-md-1"><span class="total-ex-tax"></span></td>
 									<td class="col-md-1"><span class="total-incl-tax"></span></td>
 									<td class="col-md-2 text-right">
