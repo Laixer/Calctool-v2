@@ -1,6 +1,9 @@
 <?php
 
 use \Calctool\Models\Project;
+use \Calctool\Models\ProductGroup;
+use \Calctool\Models\ProductCategory;
+use \Calctool\Models\ProductSubCategory;
 use \Calctool\Models\ProjectType;
 use \Calctool\Models\Chapter;
 use \Calctool\Models\Activity;
@@ -505,9 +508,8 @@ var n = this,
 		$("#search").keyup(function() {
 			$val = $(this).val();
 			if ($val.length > 2 && !$req) {
-				$group = $('#group').val();
 				$req = true;
-				$.post("/material/search", {project: {{ $project->id }}, query: $val, group: $group}, function(data) {
+				$.post("/material/search", {project: {{ $project->id }}, query: $val}, function(data) {
 					if (data) {
 						$('#tbl-material tbody tr').remove();
 						$.each(data, function(i, item) {
@@ -518,6 +520,36 @@ var n = this,
 					}
 				});
 			}
+		});
+
+		$('#group').change(function(){
+			$val = $(this).val();
+			$.post("/material/search", {group:$val}, function(data) {
+				if (data) {
+					$('#tbl-material tbody tr').remove();
+					$.each(data, function(i, item) {
+						$('#tbl-material tbody').append('<tr><td><a data-name="'+item.description+'" data-unit="'+item.punit+'" data-price="'+item.pricenum+'" href="javascript:void(0);">'+item.description+'</a></td><td>'+item.unit+'</td><td>'+item.price+'</td><td>'+item.tprice+'</td></tr>');
+					});
+					$('#tbl-material tbody a').on("click", onmaterialclick);
+					$req = false;
+				}
+			});
+		});
+
+		$('.getsub').change(function(e){
+			var $name = $('#group2 option:selected').attr('data-name');
+			var $value = $('#group2 option:selected').val();
+
+			$.get('/material/subcat/' + $name + '/' + $value, function(data) {
+				$('#group').find('option').remove();
+			    $.each(data, function(idx, item){
+				    $('#group').append($('<option>', {
+				        value: item.id,
+				        text: item.name
+				    }));
+			    });
+			});
+
 		});
 		$("button[data-target='#myModal']").click(function(e) {
 			$newinputtr = $(this).closest("tr");
@@ -573,11 +605,22 @@ var n = this,
 			<div class="modal-body">
 					<div class="form-group input-group input-group-lg">
 						<input type="text" id="search" value="" class="form-control" placeholder="Zoek producten">
+							<span class="input-group-btn">
+					        <select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000">
+						        <option value="0" selected>Selecteer</option>
+						        @foreach (ProductGroup::all() as $group)
+						        <option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
+						        	@foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
+						        	<option data-name="cat" value="{{ $cat->id }}"> - {{ $cat->category_name }}</option>
+						        	@endforeach
+						        @endforeach
+					        </select>
+					      </span>
 					      <span class="input-group-btn">
-					        <select id="group" class="btn">
-					        <option value="0" selected>Alles</option>
-					        @foreach (SubGroup::all() as $group)
-					          <option value="{{ $group->id }}">{{ $group->group_type }}</option>
+					        <select id="group" class="btn" style="background-color: #E5E7E9; color:#000">
+					        <option value="0" selected>Selecteer</option>
+					        @foreach (ProductSubCategory::all() as $subcat)
+					          <option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
 					        @endforeach
 					        </select>
 					      </span>
