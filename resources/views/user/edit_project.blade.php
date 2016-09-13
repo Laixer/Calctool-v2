@@ -796,48 +796,44 @@ if ($less_total>0) {
 							
 							<div class="row">
 								<div class="col-md-2">
-									<label for="type">BTW verlegd</label>
+									<label for="type"><b>BTW verlegd</b></label>
 									<div class="form-group">
 										<input name="tax_reverse" disabled type="checkbox" {{ $project->tax_reverse ? 'checked' : '' }}>
 									</div>
 								</div>
-								<div class="col-md-10" style="padding-top:30px;">
+								<div class="col-md-4" style="padding-top:30px;">
 									<p>Een project zonder btw bedrag invoeren.</p>
 								</div>
-							</div>
-
-							<div class="row">
 								<div class="col-md-2">
-									<label for="type">Overige</label>
+									<label for="type"><b>Overige</b></label>
 									<div class="form-group">
 										<input name="use_equipment" type="checkbox" {{ $project->use_equipment ? 'disabled' : '' }} {{ $project->use_equipment ? 'checked' : '' }}>
 									</div>
 								</div>
-								<div class="col-md-10" style="padding-top:30px;">
-									<p>Voeg naast arbeid en materiaal een extra calculeerniveau toe aan je calculatie, bijv. voor materieel (kan niet ongedaan gemaakt worden).</p>
+								<div class="col-md-4" style="padding-top:30px;">
+									<p>Voeg naast arbeid en materiaal een extra calculeerniveau toe aan je calculatie, bijv. voor materieel.</p>
+									<p><i>(kan niet ongedaan gemaakt worden).</i></p>
 								</div>
 							</div>
 								
 							<div class="row">
 								<div class="col-md-2">
-									<label for="type">Onderaanneming</label>
+									<label for="type"><b>Onderaanneming</b></label>
 									<div class="form-group">
 										<input name="use_subcontract" type="checkbox" {{ $project->use_subcontract ? 'disabled' : '' }} {{ $project->use_subcontract ? 'checked' : '' }}>
 									</div>
 								</div>
-								<div class="col-md-10" style="padding-top:30px;">
-									<p>Voeg onderaanneming toe aan je calculatie (kan niet ongedaan gemaakt worden).</p>
+								<div class="col-md-4" style="padding-top:30px;">
+									<p>Voeg onderaanneming toe aan je calculatie.</p>
+									<p><i>(kan niet ongedaan gemaakt worden)</i></p>
 								</div>
-							</div>
-
-							<div class="row">
 								<div class="col-md-2">
-									<label for="type">Stelposten</label>
+									<label for="type"><b>Stelposten</b></label>
 									<div class="form-group">
 										<input name="use_estimate" {{ ($disable_estim ? 'disabled' : '') }} type="checkbox" {{ $project->use_estimate ? 'checked' : '' }}>
 									</div>
 								</div>
-								<div class="col-md-10" style="padding-top:30px;">		
+								<div class="col-md-4" style="padding-top:30px;">		
 									<p>Voeg stelposten toe aan je calculatie. Je kan deze definitief maken na opdracht.</p>
 								</div>
 							</div>
@@ -845,25 +841,24 @@ if ($less_total>0) {
 								
 							<div class="row">
 								<div class="col-md-2">
-								<label for="type">Meerwerk</label>
+								<label for="type"><b>Meerwerk</b></label>
 									<div class="form-group">
 										<input name="use_more" type="checkbox" {{ ($disable_more ? 'disabled' : '') }} {{ $project->use_more ? 'checked' : '' }}>
 									</div>
 								</div>
-								<div class="col-md-10" style="padding-top:30px;">
-									<p>Voeg meerwerk toe (pas mogelijk na opdracht).</p>
+								<div class="col-md-4" style="padding-top:30px;">
+									<p>Voeg meerwerk toe.</p>
+									<p><i>(pas mogelijk na opdracht)</i></p>
 								</div>
-							</div>
-
-							<div class="row">
 								<div class="col-md-2">
-									<label for="type">Minderwerk</label>
+									<label for="type"><b>Minderwerk</b></label>
 									<div class="form-group">
 										<input name="use_less" type="checkbox" {{ ($disable_less ? 'disabled' : '') }} {{ $project->use_less ? 'checked' : '' }}>
 									</div>
 								</div>
-								<div class="col-md-10" style="padding-top:30px;">
-									<p>Voeg minderwerk toe (pas mogelijk na opdracht).</p>
+								<div class="col-md-4" style="padding-top:30px;">
+									<p>Voeg minderwerk toe.</p>
+									<p><i>(pas mogelijk na opdracht)</i></p>
 								</div>
 							</div>
 
@@ -878,9 +873,6 @@ if ($less_total>0) {
 								<div class="col-md-10" style="padding-top:30px;">
 									<p>Lege regels verbergen op de offerte en factuur.</p>
 								</div>
-							</div>
-
-							<div class="row">
 								<div class="col-md-2">
 									<label for="type">Email herinnering aanzetten</label>
 									<div class="form-group">
