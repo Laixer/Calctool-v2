@@ -689,6 +689,18 @@ var n = this,
 				        text: item.name
 				    }));
 			    });
+
+				$.post("/material/search", {group:data[0].id}, function(data) {
+					if (data) {
+						$('#tbl-material tbody tr').remove();
+						$.each(data, function(i, item) {
+							$('#tbl-material tbody').append('<tr><td><a data-name="'+item.description+'" data-unit="'+item.punit+'" data-price="'+item.pricenum+'" href="javascript:void(0);">'+item.description+'</a></td><td>'+item.unit+'</td><td>'+item.price+'</td><td>'+item.tprice+'</td></tr>');
+						});
+						$('#tbl-material tbody a').on("click", onmaterialclick);
+						$req = false;
+					}
+				});
+			    
 			});
 
 		});
