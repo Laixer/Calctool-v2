@@ -46,7 +46,6 @@ $(document).ready(function() {
 	$("#search").keyup(function() {
 		$val = $(this).val();
 		if ($val.length > 2 && !$req) {
-			// $group = 0;//$('#group').val();
 			$req = true;
 			$.post("/material/search", {query:$val}, function(data) {
 				if (data) {
@@ -194,7 +193,6 @@ $(document).ready(function() {
 	$('.getsub').change(function(e){
 		var $name = $('#group2 option:selected').attr('data-name');
 		var $value = $('#group2 option:selected').val();
-
 		$.get('/material/subcat/' + $name + '/' + $value, function(data) {
 			$('#group').find('option').remove();
 		    $.each(data, function(idx, item){
@@ -203,6 +201,17 @@ $(document).ready(function() {
 			        text: item.name
 			    }));
 		    });
+
+			$.post("/material/search", {group:data[0].id}, function(data) {
+				if (data) {
+					$('#alllist tbody tr').remove();
+					$.each(data, function(i, item) {
+						$('#alllist tbody').append('<tr data-id="'+item.id+'"><td>'+item.description+'</td><td>'+item.unit+'</td><td>'+item.price+'</td><td>'+item.tprice+'</td><td><a href="javascript:void(0);" class="toggle-fav"><i style="color:'+(item.favorite ? '#FFD600' : '#000')+';" class="fa '+(item.favorite ? 'fa-star' : 'fa-star-o')+'"></i></a></td></tr>');
+					});
+					$req = false;
+				}
+			});
+
 		});
 
 	});
