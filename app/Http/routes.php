@@ -362,6 +362,7 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 	Route::get('user-{user_id}/demo', 'AdminController@getDemoProject');
 	Route::get('user-{user_id}/validation', 'AdminController@getValidationProject');
 	Route::get('user-{user_id}/stabu', 'AdminController@getStabuProject');
+	Route::get('user-{user_id}/purge', 'AdminController@getPurgeUser');
 	Route::get('user-{user_id}/deblock', 'AdminController@getSessionDeblock');
 	Route::post('user-{user_id}/edit', 'AdminController@doUpdateUser');
 	Route::post('user-{user_id}/adminlog/new', 'AdminController@doNewAdminLog');
