@@ -8,6 +8,7 @@ use Longman\TelegramBot\Request as TRequest;
 use Illuminate\Validation\ValidationException;
 
 use \Calctool\Models\User;
+use \Calctool\Models\UserGroup;
 use \Calctool\Models\Project;
 use \Calctool\Models\UserType;
 use \Calctool\Models\Audit;
@@ -442,6 +443,10 @@ class AuthController extends Controller {
 							->select('grant_authorization_code', 'grant_implicit', 'grant_password', 'grant_client_credential')
 							->first();
 
+		if (!$grants) {
+			return response()->json(['error' => 'invalid_request', 'error_description' => 'The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Check the "grant_type" parameter.'], 400);
+		}
+
 		switch ($grant_type) {
 			case 'authorization_code':
 				if (!$grants->grant_authorization_code) {
@@ -810,6 +815,17 @@ class AuthController extends Controller {
 			return response()->json(['success' => 0, 'errors' => $validator->errors()->all()], 401);
 		}
 
+		$group_id = 100;
+		if ($request->has('tags')) {
+			foreach ($request->get('tags') as $tag) {
+				$group = UserGroup::where('name', $tag)->first();
+				if ($group) {
+					$group_id = $group->id;
+					break;
+				}
+			}
+		}
+
 		$user = new User;
 		$user->username = $request->get('username');
 		$user->secret = Hash::make($request->get('password'));
@@ -821,13 +837,19 @@ class AuthController extends Controller {
 		$user->email = $request->get('email');
 		$user->expiration_date = date('Y-m-d', strtotime("+1 month", time()));
 		$user->user_type = UserType::where('user_type','=','user')->first()->id;
-		$user->user_group = 100;
+		$user->user_group = $group_id;
 		$user->firstname = $request->get('first_name');
 		$user->lastname = $request->get('last_name');
 
 		if ($request->has('http_referer')) {
 			$user->referral_url = substr($request->get('http_referer'), 0, 180);
 		}
+
+		$user->note  = "<p><ul><li>User created via application " . $api_client->name . "<br></li>";
+		if ($request->has('tags')) {
+			$user->note .= "<li>Client tags: " . implode(", ", $request->get('tags')) . "</li>";
+		}
+		$user->note .= "</ul></p>";
 
 		$user->save();
 

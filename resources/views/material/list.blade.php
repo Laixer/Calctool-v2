@@ -351,14 +351,14 @@ $(document).ready(function() {
 					</div>
 
 					<div id="material" class="tab-pane">
-							<div class="pull-right">
+							<!-- <div class="pull-right">
 					            <form id="upload-csv" action="material/upload" method="post" enctype="multipart/form-data">
 					            {!! csrf_field() !!}
 						            <label class="btn btn-primary btn-file">
 									    CSV laden <input type="file" name="csvfile" id="btn-load-csv" style="display: none;">
 									</label>
 								</form>
-							</div>
+							</div> -->
 
 						<div class="row">
 							<div class="col-md-2"><h4>Mijn producten</h4></div>
