@@ -118,6 +118,9 @@ $(document).ready(function() {
 					  <li><a href="/admin/user-{{ $user->id }}/demo">Demo project laden</a></li>
 					  <li><a href="/admin/user-{{ $user->id }}/validation">Validatie project laden</a></li>
 					  <li><a href="/admin/user-{{ $user->id }}/stabu">STABU project laden</a></li>
+					  @if (Auth::user()->isSystem() && Auth::id() != $user->id)
+					  <li><a href="/admin/user-{{ $user->id }}/purge">Definitef verwijderen</a></li>
+					  @endif
 					</ul>
 				</div>
 			</div>

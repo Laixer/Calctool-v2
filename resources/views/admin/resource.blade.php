@@ -10,14 +10,14 @@ use \Calctool\Models\User;
 @section('content')
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("body").on("click", ".delete", function(e){
+		/*$("body").on("click", ".delete", function(e){
 			e.preventDefault();
 			var $curThis = $(this);
 			if($curThis.closest("tr").attr("data-id"))
 				$.post("/admin/resource/delete", {id: $curThis.closest("tr").attr("data-id")}, function(){
 					$curThis.closest("tr").hide("slow");
 				}).fail(function(e) { console.log(e); });
-		});
+		});*/
 	});
 </script>
 
@@ -59,7 +59,7 @@ use \Calctool\Models\User;
 						<td class="col-md-2">{{ ucfirst(User::find($resource->user_id)->username) }}</td>
 						<td class="col-md-2">{{ $resource->project_id ? Project::find($resource->project_id)->project_name : 'Geen' }}</td>
 						<td class="col-md-2">{{ date('d-m-Y H:i:s', strtotime(DB::table('resource')->select('created_at')->where('id','=',$resource->id)->get()[0]->created_at)) }}</td>
-						<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times delete"></button></td>
+						<td class="col-md-1"><!-- <button class="btn btn-danger btn-xs fa fa-times delete"></button> --></td>
 					</tr>
 				@endforeach
 				</tbody>

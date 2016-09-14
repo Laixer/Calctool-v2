@@ -35,6 +35,9 @@ use \Redis;
 use \Markdown;
 use \Mailgun;
 
+ini_set('max_execution_time', 0);
+ini_set('max_input_time', -1);
+
 class AdminController extends Controller {
 
 	/*
@@ -547,8 +550,6 @@ class AdminController extends Controller {
 		if ($request->hasFile('csvfile')) {
 			$file = $request->file('csvfile');
 
-			// $group = SubGroup::where('group_type','diversen (deel 1)')->first();
-
 			$row = 0;
 			if (($handle = fopen($file->getRealPath(), "r")) !== FALSE) {
 				while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
@@ -614,15 +615,26 @@ class AdminController extends Controller {
 						));
 					}
 
-					Product::create(array(
-						'description' => $description,
-						'unit' => $unit,
-						'article_code' => $article_code,
-						'price' => $price,
-						'total_price' => $total_price,
-						'group_id' => $mysubcat->id,
-						'supplier_id' => $mysupplier->id
-					));
+					$product = Product::where('article_code', $article_code)->limit(1)->first();
+					if ($product) {
+						$product->description = $description;
+						$product->unit = $unit;
+						$product->price = $price;
+						$product->total_price = $total_price;
+						$product->group_id = $mysubcat->id;
+						$product->supplier_id = $mysupplier->id;
+						$product->save();
+					} else {
+						Product::create(array(
+							'description' => $description,
+							'unit' => $unit,
+							'article_code' => $article_code,
+							'price' => $price,
+							'total_price' => $total_price,
+							'group_id' => $mysubcat->id,
+							'supplier_id' => $mysupplier->id
+						));
+					}
 				}
 				fclose($handle);
 			}
@@ -711,6 +723,22 @@ class AdminController extends Controller {
 		]);
 
 		return back()->with('success', 'Applicatie opgeslagen');
+	}
+
+	public function getPurgeUser(Request $request, $user_id)
+	{
+		if (!Auth::user()->isSystem()) {
+			return back();
+		}
+
+		if (Auth::id() == $user_id) {
+			return back();
+		}
+
+		$user = User::find($user_id);
+		$user->delete();
+
+		return redirect('/admin/user')->with('success', 'Gebruiker uit de database verwijderd');
 	}
 
 	public function doDeleteApplication(Request $request, $client_id)
