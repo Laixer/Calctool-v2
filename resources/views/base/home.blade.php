@@ -279,7 +279,7 @@ $(document).ready(function() {
 							<h3>			
 								<a href="/project/new" class="btn btn-primary btn-lg">Start nieuw project</a>
 								<strong>OF</strong>
-								<a href="/mycompany" class="btn btn-primary btn-lg">Maak je bedrijfsgevens compleet</a>
+								<a href="/mycompany" class="btn btn-primary btn-lg">Maak je bedrijfsgegevens compleet</a>
 <!-- 							<button class="starttour btn btn-primary btn-lg">Neem de Rondleiding</button>
  -->							</h3>
 						</div>
