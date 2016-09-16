@@ -36,7 +36,7 @@ class UserController extends Controller {
 		return redirect('/myaccount/telegram');
 	}
 
-	public function getMyAccountDeactivate()
+	public function getMyAccountDeactivate(Request $request)
 	{
 		$user = Auth::user();
 		$user->active = false;
@@ -68,6 +68,21 @@ class UserController extends Controller {
 		}
 
 		Audit::CreateEvent('account.deactivate.success', 'Account deactivated by user', $user->id);
+
+		if (!config('app.debug')) {
+			$data = array(
+				'email' => $user->email,
+				'firstname' => $user->firstname,
+				'lastname' => $user->lastname,
+				'reason' => $request->get('reason'),
+			);
+			Mailgun::send('mail.inform_deactivate_user', $data, function($message) use ($data) {
+				$message->to('info@calculatietool.com', 'CalculatieTool.com');
+				$message->subject('CalculatieTool.com - Account deactivatie');
+				$message->from('info@calculatietool.com', 'CalculatieTool.com');
+				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+			});
+		}
 
 		return redirect('/login');
 	}

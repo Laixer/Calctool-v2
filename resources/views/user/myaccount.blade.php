@@ -75,9 +75,7 @@ $(document).ready(function() {
 	$("[name='pref_use_ct_numbering']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	$('#acc-deactive').click(function(e){
 		e.preventDefault();
-		if(confirm('Weet je zeker dat je je account wilt deactiveren?')){
-			location.href = '/myaccount/deactivate'
-		}
+		location.href = '/myaccount/deactivate?reason=' + $('#reason').val();
 	});
 	$('#promocode').blur(function(e){
 		e.preventDefault();
@@ -133,6 +131,43 @@ $(document).ready(function() {
 			<div class="modal-footer">
 				<div class="col-md-12">
 					<a href="/payment" class="btn btn-primary"><i class="fa fa-check"></i> Betalen</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="deactivateModal" tabindex="-1" role="dialog" aria-labelledby="deactivateModal" aria-hidden="true">
+	<div class="modal-dialog modal-dialog">
+		<div class="modal-content">
+
+			<div class="modal-body">
+				@if (count($errors) > 0)
+				<div class="alert alert-danger">
+					<i class="fa fa-frown-o"></i>
+					<strong>Fout</strong>
+					@foreach ($errors->all() as $error)
+						{{ $error }}
+					@endforeach
+				</div>
+				@endif
+
+				<div class="bs-callout text-center styleBackground nomargin-top">
+					<h2>Definitief opzeggen? <strong>:(</strong></h2>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<label>Reden voor opzegging:</label>
+						<textarea name="reason" id="reason" rows="5" class="form-control"></textarea>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<div class="col-md-6 text-left">
+					<button class="btn btn-primary" data-dismiss="modal">Annuleren</button>
+				</div>
+				<div class="col-md-6">
+					<a href="/payment" class="btn btn-danger" id="acc-deactive">Definitief deactiveren</a>
 				</div>
 			</div>
 		</div>
@@ -286,7 +321,7 @@ $(document).ready(function() {
 						<div id="payment" class="tab-pane">
 
 							<div class="pull-right">
-								<a href="javascript:void(0);" id="acc-deactive" class="btn btn-danger">Account deactiveren</a>
+								<a href="#" data-toggle="modal" data-target="#deactivateModal" class="btn btn-danger">Account deactiveren</a>
 								@if (UserGroup::find(Auth::user()->user_group)->subscription_amount == 0)
 								<a href="/payment/increasefree" class="btn btn-primary">Abonnement verlengen</a>
 								@else
