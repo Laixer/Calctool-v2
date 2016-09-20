@@ -5,6 +5,7 @@ namespace Calctool\Http\Controllers;
 use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
 
+use \Calctool\Events\UserNotification;
 use \Calctool\Models\SysMessage;
 use \Calctool\Models\Payment;
 use \Calctool\Models\User;
@@ -490,6 +491,8 @@ class AdminController extends Controller {
 
 		$message->save();
 
+		event(new UserNotification(User::find($project->user_id), $message->subject, $message->message));
+
 		return response()->json(['success' => 1]);
 	}
 
@@ -516,6 +519,8 @@ class AdminController extends Controller {
 
 		$message->save();
 
+		event(new UserNotification(User::find($project->user_id), $message->subject, $message->message));
+
 		return response()->json(['success' => 1]);
 	}
 
@@ -537,6 +542,8 @@ class AdminController extends Controller {
 		$message->user_id =	$request->input('user');
 
 		$message->save();
+
+		event(new UserNotification(User::find($request->input('user')), $message->subject, $message->message));
 
 		return back()->with('success', 'Bericht verstuurd');
 	}

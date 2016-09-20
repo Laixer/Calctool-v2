@@ -324,10 +324,10 @@ class AuthController extends Controller {
 	{
 		$user = User::where('token','=',$token)->where('api','=',$api)->first();
 		if (!$user) {
-			return redirect(['activate' => ['Activatielink is niet geldig']])->withErrors($errors);
+			return redirect('login')->withErrors(['activate' => ['Activatielink is niet geldig']]);
 		}
 		if ($user->confirmed_mail) {
-			return redirect(['activate' => ['Account is al geactiveerd']])->withErrors($errors);
+			return redirect('login')->withErrors(['activate' => ['Account is al geactiveerd']]);
 		}
 		$user->confirmed_mail = date('Y-m-d H:i:s');
 		$user->save();

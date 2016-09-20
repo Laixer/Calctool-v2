@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'Calctool\Events\SomeEvent' => [
-            'Calctool\Listeners\EventListener',
+        'Calctool\Events\UserNotification' => [
+            'Calctool\Listeners\SendNotificationMail',
         ],
     ];
 

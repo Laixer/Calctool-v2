@@ -17,6 +17,21 @@
 @endsection
 
 @section('content')
+<script type="text/javascript">
+$(document).ready(function(){
+    function _lpolupdate() {
+        $.ajax({
+            url: "/support",
+            error: function(XMLHttpRequest, textStatus, errorThrown) {},
+            success: function() {
+                location.reload();
+            }
+        });
+        setTimeout(_lpolupdate, 1000);
+    }
+    _lpolupdate();
+});
+</script>
 <div id="wrapper">
 
     <section class="container">
