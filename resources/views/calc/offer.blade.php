@@ -472,7 +472,7 @@ $type = ProjectType::find($project->type_id);
 
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h4 class="modal-title" id="myModalLabel">Offerte opties @if (!$project->tax_reverse)(BTW Verlegd) @endif</h4>
+							<h4 class="modal-title" id="myModalLabel">Offerte opties @if ($project->tax_reverse)(BTW Verlegd) @endif</h4>
 						</div>
 
 						<div class="modal-body">
@@ -487,6 +487,7 @@ $type = ProjectType::find($project->type_id);
 								    </div>
 								  </div>
 								  @if($type->type_name != 'snelle offerte en factuur')
+								  @if ($project->use_subcontract)
 								   <div class="form-group">
 								    <div class="col-sm-offset-0 col-sm-12">
 								      <div class="checkbox">
@@ -496,6 +497,7 @@ $type = ProjectType::find($project->type_id);
 								      </div>
 								    </div>
 								  </div>
+								  @endif
 								  <br>
 								  <div class="alert alert-info">
 		             				<i class="fa fa-arrow-circle-down"></i>
