@@ -60,6 +60,7 @@ if (Input::has('group')) {
 						<th class="col-md-3 hidden-xs">Email</th>
 						<th class="col-md-1 hidden-sm hidden-xs">Status</th>
 						<th class="col-md-1 hidden-sm hidden-xs">Type</th>
+						<th class="col-md-1 hidden-sm hidden-xs">Group</th>
 					</tr>
 				</thead>
 
@@ -86,6 +87,7 @@ if (Input::has('group')) {
 						<td class="col-md-3 hidden-xs">{{ $users->email }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ userStatus($users) }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>
+						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserGroup::find($users->user_group)->name) }}</td>
 					</tr>
 				@endforeach
 				</tbody>
