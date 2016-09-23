@@ -258,38 +258,6 @@ if (!$project || !$project->isOwner()) {
 	<form method="POST" id="frm-invoice">
 	{!! csrf_field() !!}
 
-<!-- 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">Opties</h4>
-				</div>
-
-				<div class="modal-body">
-					<div class="form-horizontal">
-						 <div class="form-group">
-						    <div class="col-sm-offset-0 col-sm-10">
-						      <div class="checkbox">
-						        <label>
-						          <input name="include-tax" type="checkbox" checked> BTW bedragen weergeven
-						        </label>
-						      </div>
-						    </div>
-						  </div>
-						<br>
-					</div>
-				</div>
-
-				<div class="modal-footer">
-					<button class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-
-			</div>
-		</div>
-	</div> -->
-	
 		<input name="id" value="{{ $invoice->id }}" type="hidden"/>
 		<input name="projectid" value="{{ $project->id }}" type="hidden"/>
 
@@ -386,9 +354,12 @@ if (!$project || !$project->isOwner()) {
 					<hr>
 					<table class="table table-striped hide-btw2">
 						<tbody>
+						<?php
+						$count = Invoice::where('offer_id', $invoice->offer_id)->where('priority','<',$invoice->priority)->count();
+						?>
 							<tr>
 								<td class="col-md-7">&nbsp;</td>
-								<td class="col-md-4"><strong>{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()}}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen</strong> @if (!$project->tax_reverse) <i>(Excl. BTW)</i> @endif</td>
+								<td class="col-md-4"><strong>{{ $count+1 }}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen</strong> @if (!$project->tax_reverse) <i>(Excl. BTW)</i> @endif</td>
 								<td class="col-md-1"><strong>{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</strong></td>
 
 							</tr>

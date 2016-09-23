@@ -104,10 +104,6 @@ class OfferController extends Controller {
 		$offer->offer_total = CalculationEndresult::totalProject($project);
 		$offer->save();
 
-// Geeft pagina PDF in HTML
-			// return view('calc.offer_pdf', ['offer' => $offer]);
-
-
 
 		$page = 0;
 		$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.OfferController::getOfferCode($request->input('project_id')).'-offer.pdf';
