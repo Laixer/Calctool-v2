@@ -144,6 +144,7 @@ use \Calctool\Calculus\SetEstimateEndresult;
 	</tbody>
 </table>
 
+@if ($project->use_subcontract)
 <h4>Onderaanneming</h4>
 <table class="table table-striped">
 
@@ -285,6 +286,7 @@ use \Calctool\Calculus\SetEstimateEndresult;
 		</tr>
 	</tbody>
 </table>
+@endif
 
 <h4>Totalen Stelpost</h4>
 <table class="table table-striped">

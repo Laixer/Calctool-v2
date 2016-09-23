@@ -62,6 +62,7 @@ use \Calctool\Calculus\LessOverview;
 		</div>
 	</div>
 
+	@if ($project->use_subcontract)
 	<div>
 		<h4>Onderaanneming</h4>
 		<div class="toggle-content">
@@ -116,6 +117,7 @@ use \Calctool\Calculus\LessOverview;
 
 		</div>
 	</div>
+	@endif
 
 	<div>
 		<h4>Totalen project</h4>

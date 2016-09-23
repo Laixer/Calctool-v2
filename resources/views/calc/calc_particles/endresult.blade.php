@@ -145,6 +145,7 @@ use \Calctool\Calculus\CalculationEndresult;
 	</tbody>
 </table>
 
+@if ($project->use_subcontract)
 <h4>Onderaanneming</h4>
 <table class="table table-striped">
 	<thead>
@@ -285,6 +286,7 @@ use \Calctool\Calculus\CalculationEndresult;
 		</tr>
 	</tbody>
 </table>
+@endif
 
 <h4>Totalen Offerte</h4>
 <table class="table table-striped">

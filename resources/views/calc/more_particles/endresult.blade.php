@@ -146,6 +146,7 @@ $type = ProjectType::find($project->type_id);
 	</tbody>
 </table>
 
+@if ($project->use_subcontract)
 <h4>Onderaanneming</h4>
 <table class="table table-striped">
 	<thead>
@@ -286,6 +287,7 @@ $type = ProjectType::find($project->type_id);
 		</tr>
 	</tbody>
 </table>
+@endif
 
 <h4>Totalen {{ $type->type_name == 'regie' ? 'Project' : 'Meerwerk' }}</h4>
 <table class="table table-striped">
