@@ -220,6 +220,7 @@ class OfferController extends Controller {
 
 		$data = array(
 			'email' => $contact_client->email,
+			'email_from' => $contact_user->email,
 			'client' => $contact_client->getFormalName(),
 			'other_contacts' => $other_contacts,
 			'mycomp' => $relation_self->company_name,
@@ -240,7 +241,7 @@ class OfferController extends Controller {
 			$message->attach($data['pdf']);
 			$message->subject('Offerte ' . $data['project_name']);
 			$message->from('info@calculatietool.com', $data['mycomp']);
-			$message->replyTo('info@calculatietool.com', $data['mycomp']);
+			$message->replyTo($data['email_from'], $data['mycomp']);
 		});
 
 		return response()->json(['success' => 1]);
