@@ -132,7 +132,6 @@
 														<br>
 														<br>
 															{{ $user }}
-															<!--Het team van de <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>-->
 														<br>
 													</td>
 												</tr>

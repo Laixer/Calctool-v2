@@ -461,6 +461,7 @@ class InvoiceController extends Controller {
 
 		$data = array(
 			'email' => $contact_client->email,
+			'email_from' => $contact_user->email,
 			'mycomp' => $relation_self->company_name,
 			'pdf' => $res->file_location,
 			'other_contacts' => $other_contacts,
@@ -480,7 +481,7 @@ class InvoiceController extends Controller {
 			$message->attach($data['pdf']);
 			$message->subject('Factuur ' . $data['project_name']);
 			$message->from('info@calculatietool.com', $data['mycomp']);
-			$message->replyTo('info@calculatietool.com', $data['mycomp']);
+			$message->replyTo($data['email_from'], $data['mycomp']);
 		});
 
 		return response()->json(['success' => 1]);
