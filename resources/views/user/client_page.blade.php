@@ -15,6 +15,9 @@ use \Calctool\Models\Wholesale;
 use \Calctool\Models\ProjectShare;
 use \Calctool\Models\User;
 
+use \Calctool\Models\RelationType;
+use \Calctool\Models\ContactFunction;
+
 
 $common_access_error = false;
 $share = ProjectShare::where('token', Route::Input('token'))->first();
@@ -189,6 +192,9 @@ else {
 												<span> {{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</span>
 											@endif
 										</div>
+
+										<?php $contact = Relation::find($project->client_id); ?>
+
 										<div class="row">
 											<label for="name">Straat</label>
 											<span>{{ $relation->address_street }} {{ $relation->address_number }}</span>
@@ -203,11 +209,15 @@ else {
 										</div>
 										<div class="row">
 											<label for="name">Contactpersoon</label>
-											<span>{{ $relation->address_city }}</span>
+											<span>{{ (Contact::where('relation_id','=',$relation->id)->first()['firstname']) }}</span>
 										</div>
 										<div class="row">
 											<label for="name">Telefoon</label>
-											<span>{{ $relation->address_city }}</span>
+											<span>{{ (Contact::where('relation_id','=',$relation->id)->first()['phone']) }}</span>
+										</div>
+										<div class="row">
+											<label for="name">Mobiel</label>
+											<span>{{ (Contact::where('relation_id','=',$relation->id)->first()['mobile']) }}</span>
 										</div>									
 									</div>
 
@@ -218,19 +228,19 @@ else {
 
 										<div class="row">
 											<label for="name">Bedrijfsnaam</label>
-											<span>{{ $relation->company_name }} </span>
+											<span>{{ $relation_self->company_name }} </span>
 										</div>
 										<div class="row">
 											<label for="name">Straat</label>
-											<span>{{ $relation->address_street }} {{ $relation->address_number }}</span>
+											<span>{{ $relation_self->address_street }} {{ $relation_self->address_number }}</span>
 										</div>
 										<div class="row">
 											<label for="name">Postcode</label>
-											<span>{{ $relation->address_postal }}</span>
+											<span>{{ $relation_self->address_postal }}</span>
 										</div>
 										<div class="row">
 											<label for="name">Plaats</label>
-											<span>{{ $relation->address_city }}</span>
+											<span>{{ $relation_self->address_city }}</span>
 										</div>
 										
 										<?php
@@ -242,6 +252,10 @@ else {
 										</div>
 										<div class="row">
 											<label for="name">Telefoon</label>
+											<span>{{ $contact->phone }}</span>
+										</div>
+										<div class="row">
+											<label for="name">Mobiel</label>
 											<span>{{ $contact->mobile }}</span>
 										</div>		
 									</div>
