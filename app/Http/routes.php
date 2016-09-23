@@ -317,6 +317,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('project/updateadvanced', 'ProjectController@doUpdateAdvanced');
 	Route::get('project', 'ProjectController@getAll')->middleware('payzone');
 	Route::get('project-{project_id}/edit', 'ProjectController@getEdit')->where('project_id', '[0-9]+')->middleware('payzone');
+	Route::get('project-{project_id}/copy', 'ProjectController@getProjectCopy')->where('project_id', '[0-9]+')->middleware('payzone');
 	Route::post('project/updateworkexecution', 'ProjectController@doUpdateWorkExecution');
 	Route::post('project/updateworkcompletion', 'ProjectController@doUpdateWorkCompletion');
 	Route::post('project/updateprojectclose', 'ProjectController@doUpdateProjectClose');

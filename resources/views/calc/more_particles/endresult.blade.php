@@ -96,6 +96,7 @@ $type = ProjectType::find($project->type_id);
 		@endif
 		@endif
 
+		@if ($project->use_equipment)
 		<?php $header = false; ?>
 		@if (!$project->tax_reverse)
 		@if (MoreEndresult::conCalcEquipmentActivityTax1Amount($project))
@@ -133,6 +134,7 @@ $type = ProjectType::find($project->type_id);
 		</tr>
 		@endif
 		@endif
+		@endif
 
 		<tr>
 			<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
@@ -146,6 +148,7 @@ $type = ProjectType::find($project->type_id);
 	</tbody>
 </table>
 
+@if ($project->use_subcontract)
 <h4>Onderaanneming</h4>
 <table class="table table-striped">
 	<thead>
@@ -237,6 +240,7 @@ $type = ProjectType::find($project->type_id);
 		@endif
 		@endif
 
+		@if ($project->use_equipment)
 		<?php $header = false; ?>
 		@if (!$project->tax_reverse)
 		@if (MoreEndresult::subconCalcEquipmentActivityTax1Amount($project))
@@ -274,6 +278,7 @@ $type = ProjectType::find($project->type_id);
 		</tr>
 		@endif
 		@endif
+		@endif
 
 		<tr>
 			<td class="col-md-4"><strong>Totaal Onderaanneming </strong></td>
@@ -286,6 +291,7 @@ $type = ProjectType::find($project->type_id);
 		</tr>
 	</tbody>
 </table>
+@endif
 
 <h4>Totalen {{ $type->type_name == 'regie' ? 'Project' : 'Meerwerk' }}</h4>
 <table class="table table-striped">

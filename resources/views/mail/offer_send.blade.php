@@ -131,7 +131,7 @@
 															Met vriendelijke groet,
 														<br>
 														<br>
-															Het team van de <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
+															{{ $user }}
 														<br>
 													</td>
 												</tr>

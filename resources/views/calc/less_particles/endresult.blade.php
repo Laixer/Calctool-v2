@@ -93,6 +93,7 @@ use \Calctool\Calculus\LessEndresult;
 		@endif
 		@endif
 
+		@if ($project->use_equipment)
 		<?php $header = false; ?>
 		@if (!$project->tax_reverse)
 		@if (LessEndresult::conCalcEquipmentActivityTax1Amount($project))
@@ -130,6 +131,7 @@ use \Calctool\Calculus\LessEndresult;
 		</tr>
 		@endif
 		@endif
+		@endif
 
 		<tr>
 			<td class="col-md-4"><strong>Totaal Aanneming </strong></td>
@@ -143,6 +145,7 @@ use \Calctool\Calculus\LessEndresult;
 	</tbody>
 </table>
 
+@if ($project->use_subcontract)
 <h4>Onderaanneming</h4>
 <table class="table table-striped">
 	<thead>
@@ -234,6 +237,7 @@ use \Calctool\Calculus\LessEndresult;
 		@endif
 		@endif
 
+		@if ($project->use_equipment)
 		<?php $header = false; ?>
 		@if (!$project->tax_reverse)
 		@if (LessEndresult::subconCalcEquipmentActivityTax1Amount($project))
@@ -271,6 +275,7 @@ use \Calctool\Calculus\LessEndresult;
 		</tr>
 		@endif
 		@endif
+		@endif
 
 		<tr>
 			<td class="col-md-4"><strong>Totaal Onderaanneming </strong></td>
@@ -283,6 +288,7 @@ use \Calctool\Calculus\LessEndresult;
 		</tr>
 	</tbody>
 </table>
+@endif
 
 <h4>Totalen Minderwerk</h4>
 <table class="table table-striped">

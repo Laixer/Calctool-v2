@@ -55,11 +55,12 @@ if (Input::has('group')) {
 				<thead>
 					<tr>
 						<th class="col-md-1 hidden-xs">ID</th>
-						<th class="col-md-3">Gebruikersnaam</th>
+						<th class="col-md-2">Gebruikersnaam</th>
 						<th class="col-md-2">Actief</th>
 						<th class="col-md-3 hidden-xs">Email</th>
 						<th class="col-md-1 hidden-sm hidden-xs">Status</th>
 						<th class="col-md-1 hidden-sm hidden-xs">Type</th>
+						<th class="col-md-2 hidden-sm hidden-xs">Group</th>
 					</tr>
 				</thead>
 
@@ -76,7 +77,7 @@ if (Input::has('group')) {
 				@foreach ($selection as $users)
 					<tr>
 						<td class="col-md-1 hidden-xs"><a href="{{ '/admin/user-'.$users->id.'/edit' }}">{{ $users->id }}</a></td>
-						<td class="col-md-3"><a href="{{ '/admin/user-'.$users->id.'/edit' }}"><?php
+						<td class="col-md-2"><a href="{{ '/admin/user-'.$users->id.'/edit' }}"><?php
 							echo $users->username;
 							if ($users->firstname != $users->username) {
 								echo ' (' . $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '') . ')';
@@ -86,6 +87,7 @@ if (Input::has('group')) {
 						<td class="col-md-3 hidden-xs">{{ $users->email }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ userStatus($users) }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>
+						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserGroup::find($users->user_group)->name) }}</td>
 					</tr>
 				@endforeach
 				</tbody>

@@ -202,7 +202,7 @@ class DemoProjectTemplate {
        	$activity3->tax_labor_id = $tax2->id;
        	$activity3->tax_material_id = $tax2->id;
        	$activity3->tax_equipment_id = $tax2->id;
-       	$activity3->part_id = 1;
+       	$activity3->part_id = 2;
        	$activity3->part_type_id = 1;
        	$activity3->save();
 
@@ -257,7 +257,7 @@ class DemoProjectTemplate {
        	$activity4->tax_labor_id = $tax2->id;
        	$activity4->tax_material_id = $tax2->id;
        	$activity4->tax_equipment_id = $tax2->id;
-       	$activity4->part_id = 1;
+       	$activity4->part_id = 2;
        	$activity4->part_type_id = 1;
        	$activity4->save();
 

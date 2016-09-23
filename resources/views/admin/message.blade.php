@@ -65,7 +65,7 @@ $(document).ready(function() {
 							<select name="user" id="user" class="form-control pointer">
 								<option value="-1">Selecteer</option>
 								@foreach(User::where('active',true)->orderBy('username')->get() as $user)
-								<option value="{{ $user->id }}">{{ ucfirst($user->username) }}</option>
+								<option {{ isset($_GET['user']) ? ($_GET['user'] == $user->id ? 'selected' : '') : '' }} value="{{ $user->id }}">{{ ucfirst($user->username) }}</option>
 								@endforeach
 							</select>
 						</div>
@@ -76,13 +76,13 @@ $(document).ready(function() {
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="subject">Onderwerp</label>
-							<input name="subject" id="subject" type="text" class="form-control">
+							<input name="subject" id="subject" type="text" class="form-control" value="{{ isset($_GET['subject']) ? $_GET['subject'] : '' }}">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-md-12">
-							<textarea name="message" id="message" rows="10" class="summernote form-control"></textarea>
+							<textarea name="message" id="message" rows="10" class="summernote form-control">{{ isset($_GET['message']) ? $_GET['message'] : '' }}</textarea>
 						</div>
 					</div>
 				</div>

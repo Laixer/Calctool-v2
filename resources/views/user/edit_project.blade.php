@@ -600,6 +600,9 @@ if ($less_total>0) {
 						</div>
 
 						<div id="project" class="tab-pane">
+							<div class="pull-right">
+								<a href="/project-{{ $project->id }}/copy" class="btn btn-primary">Project kopieren</a>
+							</div>
 						<form method="post" {!! $offer_last && $offer_last->offer_finish ? 'action="/project/update/note"' : 'action="/project/update"' !!}>
    	  	                {!! csrf_field() !!}
 						<h4>Projectgegevens</h4>	

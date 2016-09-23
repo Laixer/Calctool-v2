@@ -121,6 +121,9 @@ $(document).ready(function() {
 					  @if (Auth::user()->isSystem() && Auth::id() != $user->id)
 					  <li><a href="/admin/user-{{ $user->id }}/purge">Definitef verwijderen</a></li>
 					  @endif
+					  @if ($user->active)
+					  <li><a href="/admin/message?user={{ $user->id }}">Bericht sturen</a></li>
+					  @endif
 					</ul>
 				</div>
 			</div>

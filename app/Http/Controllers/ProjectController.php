@@ -146,6 +146,144 @@ class ProjectController extends Controller {
 		return redirect('project-'.$project->id.'/edit')->with('success', 'Opgeslagen');
 	}
 
+	
+	public function getProjectCopy(Request $request, $project_id)
+	{
+		$orig_project = Project::find($project_id);
+
+		if (!$orig_project->isOwner()) {
+			return back()->withErrors(['error' => 'Project bestaat niet']);
+		}
+
+		$project = new Project;
+		$project->user_id = Auth::id();
+		$project->project_name = $orig_project->project_name . "-Kopie";
+		$project->address_street = $orig_project->address_street;
+		$project->address_number = $orig_project->address_number;
+		$project->address_postal = $orig_project->address_postal;
+		$project->address_city = $orig_project->address_city;
+		$project->note = $orig_project->note;
+		$project->hour_rate = $orig_project->hour_rate;
+		$project->hour_rate_more = $orig_project->hour_rate_more;
+		$project->profit_calc_contr_mat = $orig_project->profit_calc_contr_mat;
+		$project->profit_calc_contr_equip = $orig_project->profit_calc_contr_equip;
+		$project->profit_calc_subcontr_mat = $orig_project->profit_calc_subcontr_mat;
+		$project->profit_calc_subcontr_equip = $orig_project->profit_calc_subcontr_equip;
+		$project->profit_more_contr_mat = $orig_project->profit_more_contr_mat;
+		$project->profit_more_contr_equip = $orig_project->profit_more_contr_equip;
+		$project->profit_more_subcontr_mat = $orig_project->profit_more_subcontr_mat;
+		$project->profit_more_subcontr_equip = $orig_project->profit_more_subcontr_equip;
+		$project->province_id = $orig_project->province_id;
+		$project->country_id = $orig_project->country_id;
+		$project->type_id = $orig_project->type_id;
+		$project->client_id = $orig_project->client_id;
+		$project->tax_reverse = $orig_project->tax_reverse;
+		$project->hide_null = $orig_project->hide_null;
+		$project->use_equipment = $orig_project->use_equipment;
+		$project->use_subcontract = $orig_project->use_subcontract;
+		$project->use_subcontract = $orig_project->use_subcontract;
+		$project->use_more = $orig_project->use_more;
+		$project->use_less = $orig_project->use_less;
+		$project->use_estimate = $orig_project->use_estimate;
+
+		$project->save();
+
+		foreach (Chapter::where('project_id','=', $orig_project->id)->get() as $orig_chapter) {
+			$chapter = new Chapter;
+			$chapter->chapter_name = $orig_chapter->chapter_name;
+			$chapter->priority = $orig_chapter->priority;
+			$chapter->project_id = $project->id;
+
+			$chapter->save();
+
+			foreach (Activity::where('chapter_id','=', $orig_chapter->id)->get() as $orig_activity) {
+				$activity = new Activity;
+				$activity->chapter_id = $chapter->id;
+				$activity->activity_name = $orig_activity->activity_name;
+				$activity->priority = $orig_activity->priority;
+				$activity->part_id = $orig_activity->part_id;
+				$activity->part_type_id = $orig_activity->part_type_id;
+				$activity->tax_labor_id = $orig_activity->tax_labor_id;
+				$activity->tax_material_id = $orig_activity->tax_material_id;
+				$activity->tax_equipment_id = $orig_activity->tax_equipment_id;
+
+				$activity->save();
+
+				foreach(CalculationLabor::where('activity_id','=', $orig_activity->id)->get() as $orig_calc_labor) {
+					$calc_labor = new CalculationLabor;
+					$calc_labor->rate = $orig_calc_labor->rate;
+					$calc_labor->amount = $orig_calc_labor->amount;
+					$calc_labor->activity_id = $activity->id;
+
+					$calc_labor->save();
+				}
+				
+				foreach(CalculationMaterial::where('activity_id','=', $orig_activity->id)->get() as $orig_calc_material) {
+					$calc_material = new CalculationMaterial;
+					$calc_material->material_name = $orig_calc_material->material_name;
+					$calc_material->unit = $orig_calc_material->unit;
+					$calc_material->rate = $orig_calc_material->rate;
+					$calc_material->amount = $orig_calc_material->amount;
+					$calc_material->activity_id = $activity->id;
+
+					$calc_material->save();
+				}
+
+				foreach(CalculationEquipment::where('activity_id','=', $orig_activity->id)->get() as $orig_calc_equipment) {
+					$calc_equipment = new CalculationEquipment;
+					$calc_equipment->equipment_name = $orig_calc_equipment->equipment_name;
+					$calc_equipment->unit = $orig_calc_equipment->unit;
+					$calc_equipment->rate = $orig_calc_equipment->rate;
+					$calc_equipment->amount = $orig_calc_equipment->amount;
+					$calc_equipment->activity_id = $activity->id;
+
+					$calc_equipment->save();
+				}
+
+				foreach(EstimateLabor::where('activity_id','=', $orig_activity->id)->get() as $orig_estim_labor) {
+					$estim_labor = new EstimateLabor;
+					$estim_labor->rate = $orig_estim_labor->rate;
+					$estim_labor->amount = $orig_estim_labor->amount;
+					$estim_labor->original = $orig_estim_labor->original;
+					$estim_labor->isset = $orig_estim_labor->isset;
+					$estim_labor->activity_id = $activity->id;
+
+					$estim_labor->save();
+				}
+
+				foreach(EstimateMaterial::where('activity_id','=', $orig_activity->id)->get() as $orig_estim_material) {
+					$estim_material = new EstimateMaterial;
+					$estim_material->material_name = $orig_estim_material->material_name;
+					$estim_material->unit = $orig_estim_material->unit;
+					$estim_material->rate = $orig_estim_material->rate;
+					$estim_material->amount = $orig_estim_material->amount;
+					$estim_material->original = $orig_estim_material->original;
+					$estim_material->isset = $orig_estim_material->isset;
+					$estim_material->activity_id = $activity->id;
+
+					$estim_material->save();
+				}
+
+				foreach(EstimateEquipment::where('activity_id','=', $orig_activity->id)->get() as $orig_estim_equipment) {
+					$calc_equipment = new EstimateEquipment;
+					$calc_equipment->equipment_name = $orig_estim_equipment->equipment_name;
+					$calc_equipment->unit = $orig_estim_equipment->unit;
+					$calc_equipment->rate = $orig_estim_equipment->rate;
+					$calc_equipment->amount = $orig_estim_equipment->amount;
+					$calc_equipment->original = $orig_estim_equipment->original;
+					$calc_equipment->isset = $orig_estim_equipment->isset;
+					$calc_equipment->activity_id = $activity->id;
+
+					$calc_equipment->save();
+				}
+			}
+		}
+
+		Audit::CreateEvent('project.copy.success', 'Duplicated project: ' . $project->project_name);
+
+		return redirect('project-'.$project->id.'/edit')->with('success', 'Gekopieerd');
+	}
+
 	public function getAll(Request $request)
 	{
 		return view('user.project');

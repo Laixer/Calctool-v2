@@ -104,10 +104,6 @@ class OfferController extends Controller {
 		$offer->offer_total = CalculationEndresult::totalProject($project);
 		$offer->save();
 
-// Geeft pagina PDF in HTML
-			// return view('calc.offer_pdf', ['offer' => $offer]);
-
-
 
 		$page = 0;
 		$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.OfferController::getOfferCode($request->input('project_id')).'-offer.pdf';
@@ -220,6 +216,7 @@ class OfferController extends Controller {
 
 		$data = array(
 			'email' => $contact_client->email,
+			'email_from' => $contact_user->email,
 			'client' => $contact_client->getFormalName(),
 			'other_contacts' => $other_contacts,
 			'mycomp' => $relation_self->company_name,
@@ -240,7 +237,7 @@ class OfferController extends Controller {
 			$message->attach($data['pdf']);
 			$message->subject('Offerte ' . $data['project_name']);
 			$message->from('info@calculatietool.com', $data['mycomp']);
-			$message->replyTo('info@calculatietool.com', $data['mycomp']);
+			$message->replyTo($data['email_from'], $data['mycomp']);
 		});
 
 		return response()->json(['success' => 1]);

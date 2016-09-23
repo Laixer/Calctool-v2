@@ -95,6 +95,7 @@ use \Calctool\Calculus\CalculationEndresult;
 		@endif
 		@endif
 
+		@if ($project->use_equipment)
 		<?php $header = false; ?>
 		@if (!$project->tax_reverse)
 		@if (CalculationEndresult::conCalcEquipmentActivityTax1Amount($project))
@@ -132,6 +133,7 @@ use \Calctool\Calculus\CalculationEndresult;
 		</tr>
 		@endif
 		@endif
+		@endif
 
 		<tr>
 			<td class="col-md-4"><strong>Totaal Aanneming</strong></td>
@@ -145,6 +147,7 @@ use \Calctool\Calculus\CalculationEndresult;
 	</tbody>
 </table>
 
+@if ($project->use_subcontract)
 <h4>Onderaanneming</h4>
 <table class="table table-striped">
 	<thead>
@@ -236,6 +239,7 @@ use \Calctool\Calculus\CalculationEndresult;
 		@endif
 		@endif
 
+		@if ($project->use_equipment)
 		<?php $header = false; ?>
 		@if (!$project->tax_reverse)
 		@if (CalculationEndresult::subconCalcEquipmentActivityTax1Amount($project))
@@ -273,6 +277,7 @@ use \Calctool\Calculus\CalculationEndresult;
 		</tr>
 		@endif
 		@endif
+		@endif
 
 		<tr>
 			<td class="col-md-4"><strong>Totaal Onderaanneming </strong></td>
@@ -285,6 +290,7 @@ use \Calctool\Calculus\CalculationEndresult;
 		</tr>
 	</tbody>
 </table>
+@endif
 
 <h4>Totalen Offerte</h4>
 <table class="table table-striped">
