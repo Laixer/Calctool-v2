@@ -1081,9 +1081,9 @@ $type = ProjectType::find($project->type_id);
 			</div>
 			<?#-- DECRIPTION TOTAL END --?>
 
+			@if ($project->use_estimate)
+			<?#--PAGE HEADER START--?>
 			<div class="white-row show-activity" class="show-subcon" class="show-all" style="display:none;">
-				@if ($project->use_estimate)
-				<?#--PAGE HEADER START--?>
 				<div class="row">
 					<div class="col-sm-6">
 						{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
@@ -1318,12 +1318,12 @@ $type = ProjectType::find($project->type_id);
 				</div>
 				<h5><strong>Weergegeven bedragen zijn exclusief BTW</strong></h5>
 				<?#-- DECRIPTION ESTIM CON&SUBCON ENDT --?>
-				@endif
 			</div>
+			@endif
 
-
+			@if ($project->use_less)
+			<?#--PAGE HEADER START--?>
 			<div class="white-row show-activity" class="show-subcon" class="show-all" style="display:none;">
-				<?#--PAGE HEADER START--?>
 				<div class="row">
 					<div class="col-sm-6">
 						{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" />" : '' !!}
@@ -1563,7 +1563,9 @@ $type = ProjectType::find($project->type_id);
 				<h5><strong>Weergegeven bedragen zijn exclusief BTW</strong></h5>
 				<?#-- DECRIPTION LESS TOTAL END --?>
 			</div>
+			@endif
 
+			@if ($project->use_more)
 			<?#--PAGE HEADER START--?>
 			<div class="white-row show-activity" class="show-subcon" class="show-all" style="display:none;">
 			<div class="row">
@@ -1793,6 +1795,7 @@ $type = ProjectType::find($project->type_id);
 			<h5><strong>Weergegeven bedragen zijn exclusief BTW</strong></h5>
 			<?#-- DECRIPTION MORE TOTAL END --?>
 		</div>
+		@endif
 
 		<div class="white-row show-note" class="show-all" style="display:none;">
 			<?#--PAGE HEADER START--?>
