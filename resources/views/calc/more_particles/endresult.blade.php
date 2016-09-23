@@ -96,6 +96,7 @@ $type = ProjectType::find($project->type_id);
 		@endif
 		@endif
 
+		@if ($project->use_equipment)
 		<?php $header = false; ?>
 		@if (!$project->tax_reverse)
 		@if (MoreEndresult::conCalcEquipmentActivityTax1Amount($project))
@@ -131,6 +132,7 @@ $type = ProjectType::find($project->type_id);
 			<td class="col-md-2">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
+		@endif
 		@endif
 		@endif
 
@@ -238,6 +240,7 @@ $type = ProjectType::find($project->type_id);
 		@endif
 		@endif
 
+		@if ($project->use_equipment)
 		<?php $header = false; ?>
 		@if (!$project->tax_reverse)
 		@if (MoreEndresult::subconCalcEquipmentActivityTax1Amount($project))
@@ -273,6 +276,7 @@ $type = ProjectType::find($project->type_id);
 			<td class="col-md-2">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
 		</tr>
+		@endif
 		@endif
 		@endif
 

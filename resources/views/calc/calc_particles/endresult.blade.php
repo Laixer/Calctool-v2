@@ -95,6 +95,7 @@ use \Calctool\Calculus\CalculationEndresult;
 		@endif
 		@endif
 
+		@if ($project->use_equipment)
 		<?php $header = false; ?>
 		@if (!$project->tax_reverse)
 		@if (CalculationEndresult::conCalcEquipmentActivityTax1Amount($project))
@@ -130,6 +131,7 @@ use \Calctool\Calculus\CalculationEndresult;
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-2">&nbsp;</td>
 		</tr>
+		@endif
 		@endif
 		@endif
 
@@ -237,6 +239,7 @@ use \Calctool\Calculus\CalculationEndresult;
 		@endif
 		@endif
 
+		@if ($project->use_equipment)
 		<?php $header = false; ?>
 		@if (!$project->tax_reverse)
 		@if (CalculationEndresult::subconCalcEquipmentActivityTax1Amount($project))
@@ -272,6 +275,7 @@ use \Calctool\Calculus\CalculationEndresult;
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-2">&nbsp;</td>
 		</tr>
+		@endif
 		@endif
 		@endif
 
