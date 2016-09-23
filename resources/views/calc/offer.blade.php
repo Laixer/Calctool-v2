@@ -1217,6 +1217,7 @@ $type = ProjectType::find($project->type_id);
 						na dagtekening.
 						@endif
 					</li>
+					<li>Indien akkoord, gaarne de offerte ondertekend retour.</li>
 				</ul>
 				@if ($offer_last && $offer_last->offer_finish)
 					{{ $offer_last->extracondition }}
