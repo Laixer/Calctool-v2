@@ -592,6 +592,7 @@ function invoice_condition($offer) {
 		@if($offer->extracondition)
 		<li>{{ $offer->extracondition }}</li>
 		@endif
+		<li>Indien akkoord, gaarne de offerte ondertekend retour.</li>
 	  </div>
 	 
 	  <div class="closingtext">{{ ($offer ? $offer->closure : '') }}</div>
@@ -602,8 +603,7 @@ function invoice_condition($offer) {
 	  <br>
 	  <br>
 	  @endif
-	  <div class="from"><i>Indien akkoord, gaarne de offerte ondertekend retour.</i></div>
-	</main>
+		</main>
 
 	@else
 
