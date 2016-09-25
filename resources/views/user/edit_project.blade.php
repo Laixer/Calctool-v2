@@ -812,7 +812,7 @@ if ($less_total>0) {
 									<div class="col-md-9" style="padding-top:30px;">
 										<p>Een project zonder btw bedrag invoeren.</p>.
 										<ul>
-										  <li>Kan na aanmaken project niet ongedaan</li>
+										  <li>Kan na aanmaken project niet ongedaan gemaakt worden</li>
 										</ul>
 									</div>
 								</div>
@@ -844,7 +844,7 @@ if ($less_total>0) {
 									<div class="col-md-9"  style="padding-top:30px;">
 										<p>Voeg onderaanneming toe aan je calculatie.</p>
 										<ul>
-										  <li>Kan na toevoegen niet ongedaan</li>
+										  <li>Kan na toevoegen niet ongedaan gemaakt worden</li>
 										</ul>
 									</div>
 								</div>
@@ -859,7 +859,7 @@ if ($less_total>0) {
 										<p>Voeg naast arbeid en materiaal een extra calculeerniveau toe aan je calculatie.</p>
 										<ul>
 										  <li>Bijvoorbeeld voor <i>materieel</i></li>
-										  <li>Kan na toevoegen niet ongedaan</li>
+										  <li>Kan na toevoegen niet ongedaan gemaakt worden</li>
 										</ul>
 									</div>
 								</div>
