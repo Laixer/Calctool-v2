@@ -445,6 +445,17 @@ if ($less_total>0) {
 
 				<div class="tabs nomargin-top">
 
+												<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
+								<div class="row">
+									<div class="form-group ">
+										<div class="col-md-12">
+										<textarea name="note" id="summernote" data-height="200" class="form-control">{{ Input::old('note') ? Input::old('note') : $project->note }}</textarea>
+
+										</div>
+									</div>
+								</div>
+
+
 					<ul class="nav nav-tabs">
 						<li id="tab-project">
 							<a href="#project" data-toggle="tab">Projectgegevens</a>
