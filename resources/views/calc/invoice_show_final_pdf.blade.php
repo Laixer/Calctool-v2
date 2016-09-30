@@ -168,14 +168,7 @@ $(document).ready(function() {
 			<div class="col-sm-6">
 				<div class="padding20 pull-right">
 					<?php if (!$project->project_close && !$invoice->payment_date) { ?>
-					<div class="btn-group" role="group">
-					  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Versturen&nbsp;&nbsp;<span class="caret"></span></button>
-					  <ul class="dropdown-menu">
-						<li><a href="/invoice/project-{{ $project->id }}/invoice-{{ $invoice->id }}/mail-preview" data-toggle="modal" data-target=".ajax_modal_container">Per email</a></li>
-					    <li><a href="/res-{{ $res->id }}/download">Per post (download PDF)</a></i>
-					    <li><a href="#" data-toggle="modal" data-target="#confirmModal2">Door calculatieTool.com</a></li>
-					  </ul>
-					  </div>
+
 					<?php } else { ?>
 					<a href="/res-{{ $res->id }}/download" class="btn btn-primary">Download PDF</a>
 					<?php } ?>
