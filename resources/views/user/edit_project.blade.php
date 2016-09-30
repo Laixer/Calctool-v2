@@ -907,7 +907,7 @@ if ($less_total>0) {
 									<div class="col-md-9" style="padding-top:30px;">
 										<p>Voeg meerwerk toe aan je project.</p>
 										<ul>
-										  <li>Aanzetten is pas mogelijk na opdracht</li>
+										  <li>Pas invulbaar na opdracht</li>
 										  <li>Uit te zetten indien ongebruikt</li>
 										</ul>
 									</div>
@@ -922,7 +922,7 @@ if ($less_total>0) {
 									<div class="col-md-9" style="padding-top:30px;">
 										<p>Voeg minderwerk toe aan je prpject.</p>
 										<ul>
-										  <li>Aanzetten is pas mogelijk na opdracht</li>
+										  <li>Pas invulbaar na opdracht</li>
 										  <li>Uit te zetten indien ongebruikt</li>
 										</ul>
 									</div>
