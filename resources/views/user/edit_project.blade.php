@@ -445,19 +445,6 @@ if ($less_total>0) {
 
 				<div class="tabs nomargin-top">
 
-								@if(0) 
-								<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
-								<div class="row">
-									<div class="form-group ">
-										<div class="col-md-12">
-										<textarea name="note" id="summernote" data-height="200" class="form-control">{{ Input::old('note') ? Input::old('note') : $project->note }}</textarea>
-
-										</div>
-									</div>
-								</div>
-								@endif
-
-
 					<ul class="nav nav-tabs">
 						<li id="tab-project">
 							<a href="#project" data-toggle="tab">Projectgegevens</a>
@@ -481,12 +468,45 @@ if ($less_total>0) {
 
 						<div id="project" class="tab-pane">
 							<div class="pull-right">
+								<a href="#" href="javascript:void(0);" data-toggle="modal" data-target="#notepad" class="btn btn-primary">Kladblok</a>
 								<a href="/project-{{ $project->id }}/copy" class="btn btn-primary">Project kopieren</a>
+								<a href="#" id="projclose" class="btn btn-primary">Project sluiten</a>
 							</div>
 
 
 						<form method="post" {!! $offer_last && $offer_last->offer_finish ? 'action="/project/update/note"' : 'action="/project/update"' !!}>
    	  	                {!! csrf_field() !!}
+
+						<div class="modal fade" id="notepad" tabindex="-1" role="dialog" aria-labelledby="notepad" aria-hidden="true">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+
+									<div class="modal-body">
+										<div class="form-horizontal">
+
+											@if(1) 
+											<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
+											<div class="row">
+												<div class="form-group ">
+													<div class="col-md-12">
+													<textarea name="note" id="summernote" data-height="200" class="form-control">{{ Input::old('note') ? Input::old('note') : $project->note }}</textarea>
+
+													</div>
+												</div>
+											</div>
+											@endif
+
+										</div>
+									</div>
+
+									<div class="modal-footer">
+										<button class="btn btn-default" data-dismiss="modal">Sluiten</button>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
 						<h4>Projectgegevens</h4>	
 							<h5><strong>Gegevens</strong></h5>
 								<div class="row">
@@ -812,10 +832,6 @@ if ($less_total>0) {
 							{!! csrf_field() !!}
 							<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
 							
-							
-
-
-
 							<div class="row">
 								<div class="col-md-6">	
 									<div class="col-md-3">
