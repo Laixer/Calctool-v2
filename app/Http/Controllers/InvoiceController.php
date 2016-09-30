@@ -511,6 +511,8 @@ class InvoiceController extends Controller {
 			$user_logo = Resource::find($relation_self->logo_id)->file_location;
 
 		$data = array(
+			'email' => $contact_client->email,
+			'email_from' => $contact_user->email,
 			'preview' => true,
 			'invoice_id' => $invoice->id,
 			'contacts' => $contacts,

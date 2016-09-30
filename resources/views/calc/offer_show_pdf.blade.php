@@ -217,14 +217,6 @@ $(document).ready(function() {
 				<div class="padding20 pull-right">
 					<?php if (!$project->project_close && !$offer->offer_finish) { ?>
 					@if ($offer_last->id == $offer->id && !$offer->offer_finish)
-					<div class="btn-group" role="group">
-					  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Versturen&nbsp;&nbsp;<span class="caret"></span></button>
-					  <ul class="dropdown-menu">
-						<li><a href="/offer/project-{{ $project->id }}/offer-{offer_id}/mail-preview" data-toggle="modal" data-target=".ajax_modal_container">Per email</a></li>
-					    <li><a href="/res-{{ $res->id }}/download">Per post (download PDF)</a></i>
-					    <li><a href="#" data-toggle="modal" data-target="#confirmModal2">Door calculatieTool.com</a></li>
-					  </ul>
-					 </div>
 					<a href="/offer/project-{{ $project->id }}" class="btn btn-primary">Bewerken</a>
 					<a href="#" data-toggle="modal" data-target="#confirmModal" class="btn btn-primary">Opdracht bevestigen</a>
 					@endif

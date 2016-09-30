@@ -73,8 +73,7 @@ $type = ProjectType::find($project->type_id);
             $(this).find("th").eq(3).hide();
             $(this).find("td").eq(4).hide();
             $(this).find("th").eq(4).hide();
-            $(this).find("td").eq(5).hide();
-            $(this).find("th").eq(5).hide();
+
         });
 		$("[name='include-tax']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
@@ -222,8 +221,7 @@ $type = ProjectType::find($project->type_id);
                 $(this).find("th").eq(3).show();
                 $(this).find("td").eq(4).show();
                 $(this).find("th").eq(4).show();
-                $(this).find("td").eq(5).show();
-                $(this).find("th").eq(5).show();
+
 	        });
 		  } else {
 	        $('.only-end-total tr').each(function() {
@@ -233,8 +231,7 @@ $type = ProjectType::find($project->type_id);
                 $(this).find("th").eq(3).hide();
                 $(this).find("td").eq(4).hide();
                 $(this).find("th").eq(4).hide();
-                $(this).find("td").eq(5).hide();
-                $(this).find("th").eq(5).hide();
+
 	        });
 		  }
 		});
@@ -1431,9 +1428,9 @@ $type = ProjectType::find($project->type_id);
 			<?#-- SPECIFICATION CON&SUBCON END--?>
 
 			<?#-- SPECIFICATION TOTAL START--?>
-			<div class="show-totals">
+			<div class="show-totals only-end-total">
 				<h4>Totaalkosten per werkzaamheid</h4>
-				<table class="table table-striped only-end-total">
+				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th class="col-md-3">Onderdeel</th>

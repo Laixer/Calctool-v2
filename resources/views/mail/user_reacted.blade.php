@@ -4,39 +4,8 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<title>Factuur {{ $project_name }}</title>
+		<title><strong>CalculatieTool.com</strong> - Uw vakman heeft gereageerd.</title>
 	</head>
-
-	@if ($preview)
-	<script lang="text/javascript">
-		$(document).ready(function() {
-			var selected_other_contacts = [];
-        	$('#multiple-contact').multiselect({
-        		nonSelectedText: 'Overige contacten',
-			    onChange: function(element, checked) {
-			        var brands = $('#multiple-contact option:selected');
-			        
-			        $(brands).each(function(index, brand){
-			            selected_other_contacts.push([$(this).val()]);
-			        });
-
-			        console.log(selected_other_contacts);
-			    }
-        	});
-			$('#sendmail').click(function(){
-				$.post("/invoice/sendmail", {
-					invoice: {{ $invoice_id }},
-					contacts: selected_other_contacts
-				}, function(data){
-					var json = data;
-					if (json.success) {
-						$('#mailsent').show();
-					}
-				});
-			});
-		});
-	</script>
-	@endif
 
 	<body style="margin:0; margin-top:30px; margin-bottom:30px; padding:0; width:100%; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; background-color: #F4F5F7;">
 
@@ -52,18 +21,17 @@
 								<tr>
 									<td style="border-collapse:collapse; vertical-align:middle; text-align center; padding:20px;">
 
-										<!-- Headline Header -->
+																			<!-- Headline Header -->
 										<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
 											<tbody>
-												@if ($user_logo)
+
 												<tr><!-- logo -->
 													<td width="100%" style="font-family: helvetica, Arial, sans-serif; font-size: 18px; letter-spacing: 0px;">
 														<a href="{{ URL::to('/') }}" style="text-decoration: none;">
-															<img src="{{ URL::to('/') }}/{{ $user_logo }}" alt="CalculatieTool.com" border="0" width="166" height="auto" style="with: 166px; height: auto; border: 5px solid #ffffff;" />
+															<img src="{{ URL::to('/') }}/images/logo2.png" alt="CalculatieTool.com" border="0" width="166" height="auto" style="with: 166px; height: auto; border: 5px solid #ffffff;" />
 														</a>
 													</td>
 												</tr>
-												@endif
 												<tr><!-- spacer before the line -->
 													<td width="100%" height="20"></td>
 												</tr>
@@ -74,17 +42,8 @@
 													<td width="100%" height="30"></td>
 												</tr>
 												<tr>
-													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
-														Geachte <strong>{{ $client }}</strong>,
-														@if ($preview && count($contacts)>0)
-														<div style="display:inline;">
-															<select id="multiple-contact" multiple="multiple">
-																@foreach($contacts as $contact)
-																<option value="{{ $contact->id }}">{{ $contact->getFormalName() }}</option>
-																@endforeach
-															</select>
-														</div>
-														@endif														
+													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; line-height: 24px; color:#8E8E8E;">
+														Goedendag <strong>{{ ucfirst($firstname) .' '. ucfirst($lastname) }}</strong>,
 													</td>
 												</tr>
 												<tr>
@@ -92,8 +51,18 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														{{ $pref_email_invoice }}
+														Uw vakman voor project {{ $project_name }} heeft gereageerd.<br />
+														De reactie van uw vakman:<br />
+														{!! $note !!}
 													</td>
+												</tr>
+													<td width="100%" style="text-align:center;">
+														<a href="{{ URL::to('/') }}" style="text-decoration:none; font-family: helvetica, Arial, sans-serif; font-size: 12px; letter-spacing: 0px; text-align: center; text-transform: uppercase; padding:10px; color:#ffffff; background-color:#79BB00; border-radius:6px;">
+															<strong>Reageren</strong>
+														</a>
+													</td>
+												<tr><!-- spacer after the line -->
+													<td width="100%" height="20"></td>
 												</tr>
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
@@ -102,7 +71,7 @@
 															Met vriendelijke groet,
 														<br>
 														<br>
-															{{ $user }}
+															Het team van de <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
 														<br>
 													</td>
 												</tr>
@@ -150,12 +119,6 @@
 							</tbody>
 						</table>
 						<!-- /ROW FOOTER -->
-
-						@if ($preview)
-						<div class="modal-footer">
-							<a class="btn btn-primary pull-right" id="sendmail" class="close" data-dismiss="modal" aria-hidden="true">Verstuur definitief naar {{ $email }}</a>
-						</div>
-						@endif
 
 					</td>
 				</tr>

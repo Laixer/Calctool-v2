@@ -733,17 +733,19 @@ $(document).ready(function() {
 											<div class="row">
 												<div class="col-md-4">
 													<div class="form-group">
-														<label for="pref_use_ct_numbering" style="display:block;">Gebruik CalculatieTool nummering</label>
-														<input name="pref_use_ct_numbering" type="checkbox" {{ $user->pref_use_ct_numbering ? 'checked' : '' }}>
-													</div>
-												</div>
-												<div class="col-md-4">
-													<div class="form-group">
 														<label for="offernumber_prefix"><strong>Tekst voor offertenummer</strong></label>
 														<input name="offernumber_prefix" id="offernumber_prefix" type="text" class="form-control" value="{{ $user->offernumber_prefix }}" />
 													</div>
 												</div>
-												<div class="col-md-4">
+											</div>
+												<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="pref_use_ct_numbering" style="display:block;"><strong>Gebruik CalculatieTool nummering voor factuurnummer</strong></label>
+														<input name="pref_use_ct_numbering" type="checkbox" {{ $user->pref_use_ct_numbering ? 'checked' : '' }}>
+													</div>
+												</div>
+												<div class="col-md-6" >
 													<div class="form-group">
 														<label for="invoicenumber_prefix"><strong>Tekst voor factuurnummer</strong></label>
 														<input name="invoicenumber_prefix" id="invoicenumber_prefix" type="text" class="form-control" value="{{ $user->invoicenumber_prefix }}" />

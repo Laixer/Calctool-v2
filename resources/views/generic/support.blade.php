@@ -59,10 +59,16 @@ $(document).ready(function() {
 				</div>
 				@endif
 
-				<h2>Stuur ons een <strong>bericht</strong> of stel een <strong>vraag</strong></h2>
+				<h2>Stuur ons een <strong>bericht</strong>, stel een <strong>vraag</strong> of geef ons een <strong>belletje</strong></h2>
 
 				<form class="white-row" action="/support" method="post">
 				{!! csrf_field() !!}
+
+					<div class="row">
+						<div class="col-md-12">
+						<h2>Bericht</h2>
+						</div>
+					</div>
 
 					<div class="row">
 						<div class="form-group">
@@ -101,6 +107,18 @@ $(document).ready(function() {
 							<input type="submit" value="Verstuur" class="btn btn-primary btn-lg">
 						</div>
 					</div>
+
+					<br>
+
+
+					<div class="row">
+						<div class="col-md-12">
+							<h2>Helpdesk</h2>
+							<p>Natuurlijk begrijpen wij volledig dat je graag ook even in contact wilt komen voor wat specifieke vragen. Dat kan via via de telefoon, SMS, Telegram of WhatsApp op <strong>06 43587470</strong> of  <strong>06 43587430</strong>.</p>
+						</div>
+					</div>
+
+
 				</form>
 
 			</div>

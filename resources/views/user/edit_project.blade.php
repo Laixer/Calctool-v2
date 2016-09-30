@@ -451,13 +451,10 @@ if ($less_total>0) {
 						</li>
 						@if ($type->type_name != 'snelle offerte en factuur')
 						<li id="tab-calc">
-							<a href="#calc" data-toggle="tab" data-step="1" data-intro="Geef je uurtarief en winstpercentages op waarmee je wilt gaan calculeren.">Uurtarief & Winstpercentages</a>
+							<a href="#calc" data-toggle="tab" data-step="1" data-intro="Geef je uurtarief en winstpercentages op waarmee je wilt gaan calculeren.">Uurtarief en Winstpercentages</a>
 						</li>
 						<li id="tab-advanced">
 							<a href="#advanced" data-toggle="tab" data-toggle="tab" data-step="3" data-intro="Geef aan of je andere modules wilt laden in je project. Dit kan later ook nog.">Extra opties</a>
-						</li>
-						<li id="tab-status">
-							<a href="#status" data-toggle="tab">Projectstatus</a>
 						</li>
 						@endif
 						@if ($share && $share->client_note )
@@ -469,142 +466,47 @@ if ($less_total>0) {
 
 					<div class="tab-content">
 
-						<div id="status" class="tab-pane">
-							<h4>Project op basis van {{ ProjectType::find($project->type_id)->type_name }}</h4>
-							<div class="row">
-								<div class="col-md-3"><strong>Offerte stadium</strong></div>
-								<div class="col-md-2"><strong></strong></div>
+						<div id="project" class="tab-pane">
+							<div class="pull-right">
+								<a href="#" href="javascript:void(0);" data-toggle="modal" data-target="#notepad" class="btn btn-primary">Kladblok</a>
+								<a href="/project-{{ $project->id }}/copy" class="btn btn-primary">Project kopieren</a>
+								<a href="#" id="projclose" class="btn btn-primary">Project sluiten</a>
 							</div>
-							<div class="row">
-								<div class="col-md-3">Calculatie gestart</div>
-								<div class="col-md-2"><?php echo date('d-m-Y', strtotime(DB::table('project')->select('created_at')->where('id','=',$project->id)->get()[0]->created_at)); ?></div>
-								<div class="col-md-3"><i>Laatste wijziging: <?php echo date('d-m-Y', strtotime(DB::table('project')->select('updated_at')->where('id','=',$project->id)->get()[0]->updated_at)); ?></i></div>
-							</div>
-							<div class="row">
-								<div class="col-md-3">Offerte opgesteld</div>
-								<div class="col-md-2"><?php if ($offer_last) { echo date('d-m-Y', strtotime(DB::table('offer')->select('created_at')->where('id','=',$offer_last->id)->get()[0]->created_at)); } ?></div>
-								<div class="col-md-3"><i><?php if ($offer_last) { echo 'Laatste wijziging: '.date('d-m-Y', strtotime(DB::table('offer')->select('updated_at')->where('id','=',$offer_last->id)->get()[0]->updated_at)); } ?></i></div>
-							</div>
-							<div class="row">
-								<div class="col-md-3">Opdracht ontvangen <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je opdracht hebt gekregen op je offerte. De calculatie slaat dan definitief dicht." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></div>
-								<div class="col-md-2">{{ $offer_last && $offer_last->offer_finish ? date('d-m-Y', strtotime($offer_last->offer_finish)) : '' }}</div>
-							</div>
-								<br>
-							<div class="row">
-								<div class="col-md-3"><strong>Opdracht stadium</strong></div>
-							</div>
-							<div class="row">
-								<div class="col-md-3">Start uitvoering <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in dat je met uitvoering bent begonnen" href="#"><i class="fa fa-info-circle"></i></a></div>
-								<div class="col-md-2"><?php if ($project->project_close) { echo $project->work_execution ? date('d-m-Y', strtotime($project->work_execution)) : ''; }else{ if ($project->work_execution){ echo date('d-m-Y', strtotime($project->work_execution)); }else{ ?><a href="#" id="wordexec">Bewerk</a><?php } } ?></div>
-								<div class="col-md-3"></div>
-							</div>
-							<div class="row">
-								<div class="col-md-3">Geplande opleverdatum <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in dat je het moet/wilt/verwacht opleveren" href="#"><i class="fa fa-info-circle"></i></a></div>
-								<div class="col-md-2"><?php if ($project->project_close) { echo $project->work_completion ? date('d-m-Y', strtotime($project->work_completion)) : ''; }else{ if ($project->work_completion){ echo date('d-m-Y', strtotime($project->work_completion)); }else{ ?><a href="#" id="wordcompl">Bewerk</a><?php } } ?></div>
-								<div class="col-md-3"></div>
-							</div>
-							@if ($project->use_estim)
-							<div class="row">
-								<div class="col-md-3">Stelposten gesteld</div>
-								<div class="col-md-2"><i>{{ $project->start_estimate ? date('d-m-Y', strtotime($project->start_estimate)) : '' }}</i></div>
-								<div class="col-md-3"><i>{{ $project->update_estimate ? 'Laatste wijziging: '.date('d-m-Y', strtotime($project->update_estimate)) : '' }}</i></div>
-							</div>
-							@endif
-							@if ($project->use_more)
-							<div class="row">
-								<div class="col-md-3">Meerwerk toegevoegd</div>
-								<div class="col-md-2">{{ $project->start_more ? date('d-m-Y', strtotime($project->start_more)) : '' }}</div>
-								<div class="col-md-3"><i>{{ $project->update_more ? 'Laatste wijziging: '.date('d-m-Y', strtotime($project->update_more)) : '' }}</i></div>
-							</div>
-							@endif
-							@if ($project->use_less)
-							<div class="row">
-								<div class="col-md-3">Minderwerk verwerkt</div>
-								<div class="col-md-2">{{ $project->start_less ? date('d-m-Y', strtotime($project->start_less)) : '' }}</div>
-								<div class="col-md-3"><i>{{ $project->update_less ? 'Laatste wijziging: '.date('d-m-Y', strtotime($project->update_less)) : '' }}</i></div>
-							</div>
-							@endif
-								<br>
-							@if (0)
-							<div class="row">
-								<div class="col-md-3"><strong>Financieel</strong></div>
-								<div class="col-md-2"><strong>Gefactureerd</strong></div>
-								<div class="col-md-3"><strong>Betaalstatus</strong></div>
-								<div class="col-md-3"><strong>Bekijk factuur</strong></div>
-							</div>
-							<?php
-							if ($offer_last) {
-							$i=0;
-							$close = true;
-							$invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first();
-							?>
-							@foreach (Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority')->get() as $invoice)
-							<div class="row">
-								<div class="col-md-3">{{ ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1)) }}</div>
-								<div class="col-md-2">
-								<?php
-								if (!$invoice->bill_date && $close && !$project->project_close) {
-									echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs doinvclose">Factureren</a>';
-									$close=false;
-								} else if (!$invoice->bill_date) {
-									echo '<a href="/invoice/project-'.$project->id.'/term-invoice-'.$invoice->id . '" class="btn btn-primary btn-xxs">Bekijken</a>';
-								} else
-									echo date('d-m-Y', strtotime($invoice->bill_date));
-								?>
+
+
+						<form method="post" {!! $offer_last && $offer_last->offer_finish ? 'action="/project/update/note"' : 'action="/project/update"' !!}>
+   	  	                {!! csrf_field() !!}
+
+						<div class="modal fade" id="notepad" tabindex="-1" role="dialog" aria-labelledby="notepad" aria-hidden="true">
+							<div class="modal-dialog modal-lg">
+								<div class="modal-content">
+
+									<div class="modal-body">
+										<div class="form-horizontal">
+
+											@if(1) 
+											<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
+											<div class="row">
+												<div class="form-group ">
+													<div class="col-md-12">
+													<textarea name="note" id="summernote" data-height="200" class="form-control">{{ Input::old('note') ? Input::old('note') : $project->note }}</textarea>
+
+													</div>
+												</div>
+											</div>
+											@endif
+
+										</div>
+									</div>
+
+									<div class="modal-footer">
+										<button class="btn btn-default" data-dismiss="modal">Sluiten</button>
+									</div>
+
 								</div>
-								<div class="col-md-3"><?php
-								if ($invoice->invoice_close && !$invoice->payment_date && !$project->project_close)
-									echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs dopay">Betaald</a>';
-								elseif ($invoice->invoice_close && $invoice->payment_date)
-									echo 'Betaald op '.date('d-m-Y', strtotime($invoice->payment_date));
-								?></div>
-								<div class="col-md-3"><?php if ($invoice->bill_date){ echo '<a target="blank" href="/invoice/pdf/project-'.$project->id.'/term-invoice-'.$invoice->id . ($invoice->option_query ? '?'.$invoice->option_query : '') . '" class="btn btn-primary btn-xxs">Bekijk PDF</a>'; }?></div>
-							</div>
-							<?php $i++; ?>
-							@endforeach
-							@if ($invoice_end)
-							<div class="row">
-								<div class="col-md-3">Eindfactuur</div>
-								<div class="col-md-2">
-								<?php
-								if (!$invoice_end->bill_date && $close && !$project->project_close) {
-									echo '<a href="javascript:void(0);" data-invoice="'.$invoice_end->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs doinvclose">Factureren</a>';
-									$close=false;
-								} else if (!$invoice_end->bill_date) {
-									echo '<a href="/invoice/project-'.$project->id.'/invoice-'.$invoice_end->id.'" class="btn btn-primary btn-xxs">Bekijken</a>';
-								} else
-									echo date('d-m-Y', strtotime($invoice_end->bill_date));
-								?>
-								</div>
-								<div class="col-md-3"><?php
-								if ($invoice_end->invoice_close && !$invoice_end->payment_date && !$project->project_close)
-									echo '<a href="javascript:void(0);" data-invoice="'.$invoice_end->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs dopay">Betaald</a>';
-								elseif ($invoice_end->invoice_close && $invoice_end->payment_date)
-									echo 'Betaald op '.date('d-m-Y', strtotime($invoice_end->payment_date));
-								?></div>
-								<div class="col-md-3"><?php if ($invoice_end->bill_date){ echo '<a target="blank" href="/invoice/pdf/project-'.$project->id.'/invoice-'.$invoice_end->id . ($invoice_end->option_query ? '?'.$invoice_end->option_query : '') . '" class="btn btn-primary btn-xxs">Bekijk PDF</a>'; }?></div>
-							</div>
-							@endif
-							<?php }else{ ?>
-							<div class="row">
-								<div class="col-md-12">Geen geregistreerde uren</div>
-							</div>
-							<?php } ?>
-								<br>
-							@endif
-							<div class="row">
-								<div class="col-md-3"><strong>Project gesloten</strong> <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je project kan worden gesloten. Zijn alle facturen betaald?" href="#"><i class="fa fa-info-circle"></i></a></div>
-								<div class="col-md-2">{!! $project->project_close ? date('d-m-Y', strtotime($project->project_close)) : '<a href="#" id="projclose">Bewerk</a>' !!}</a></div>
-								<div class="col-md-3"></div>
 							</div>
 						</div>
 
-						<div id="project" class="tab-pane">
-							<div class="pull-right">
-								<a href="/project-{{ $project->id }}/copy" class="btn btn-primary">Project kopieren</a>
-							</div>
-						<form method="post" {!! $offer_last && $offer_last->offer_finish ? 'action="/project/update/note"' : 'action="/project/update"' !!}>
-   	  	                {!! csrf_field() !!}
 						<h4>Projectgegevens</h4>	
 							<h5><strong>Gegevens</strong></h5>
 								<div class="row">
@@ -685,17 +587,150 @@ if ($less_total>0) {
 											</select>
 										</div>
 									</div>
-
 								</div>
-								<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
-								<div class="row">
-									<div class="form-group ">
-										<div class="col-md-12">
-										<textarea name="note" id="summernote" data-height="200" class="form-control">{{ Input::old('note') ? Input::old('note') : $project->note }}</textarea>
+								
+								<h4>Projectstatussen</h4>
+								
+								<div class="col-md-6">
 
-										</div>
+									<div class="row">
+										<div class="col-md-4"><strong>Offerte stadium</strong></div>
+										<div class="col-md-4"><strong></strong></div>
+										<div class="col-md-4"><i>Laatste wijziging</i></div>
+									</div>
+									<div class="row">
+										<div class="col-md-4">Calculatie gestart</div>
+										<div class="col-md-4"><?php echo date('d-m-Y', strtotime(DB::table('project')->select('created_at')->where('id','=',$project->id)->get()[0]->created_at)); ?></div>
+										<div class="col-md-4"><i><?php echo date('d-m-Y', strtotime(DB::table('project')->select('updated_at')->where('id','=',$project->id)->get()[0]->updated_at)); ?></i></div>
+									</div>
+									<div class="row">
+										<div class="col-md-4">Offerte opgesteld</div>
+										<div class="col-md-4"><?php if ($offer_last) { echo date('d-m-Y', strtotime(DB::table('offer')->select('created_at')->where('id','=',$offer_last->id)->get()[0]->created_at)); } ?></div>
+										<div class="col-md-4"><i><?php if ($offer_last) { echo ''.date('d-m-Y', strtotime(DB::table('offer')->select('updated_at')->where('id','=',$offer_last->id)->get()[0]->updated_at)); } ?></i></div>
+									</div>
+									<div class="row">
+										<div class="col-md-4">Opdracht <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je opdracht hebt gekregen op je offerte. De calculatie slaat dan definitief dicht." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></div>
+										<div class="col-md-4">{{ $offer_last && $offer_last->offer_finish ? date('d-m-Y', strtotime($offer_last->offer_finish)) : '' }}</div>
 									</div>
 								</div>
+									
+								<div class="col-md-6">
+									<div class="row">
+										<div class="col-md-4"><strong>Opdracht stadium</strong></div>
+										<div class="col-md-4"><strong></strong></div>
+										<div class="col-md-4"><i>Laatste wijziging</i></div>
+									</div>
+									<div class="row">
+										<div class="col-md-4">Start uitvoering <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in dat je met uitvoering bent begonnen" href="#"><i class="fa fa-info-circle"></i></a></div>
+										<div class="col-md-4"><?php if ($project->project_close) { echo $project->work_execution ? date('d-m-Y', strtotime($project->work_execution)) : ''; }else{ if ($project->work_execution){ echo date('d-m-Y', strtotime($project->work_execution)); }else{ ?><a href="#" id="wordexec">Bewerk</a><?php } } ?></div>
+										<div class="col-md-4"></div>
+									</div>
+									<div class="row">
+										<div class="col-md-4">Ospleverdatum <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in dat je het moet/wilt/verwacht opleveren" href="#"><i class="fa fa-info-circle"></i></a></div>
+										<div class="col-md-4"><?php if ($project->project_close) { echo $project->work_completion ? date('d-m-Y', strtotime($project->work_completion)) : ''; }else{ if ($project->work_completion){ echo date('d-m-Y', strtotime($project->work_completion)); }else{ ?><a href="#" id="wordcompl">Bewerk</a><?php } } ?></div>
+										<div class="col-md-4"></div>
+									</div>
+									@if ($project->use_estim)
+									<div class="row">
+										<div class="col-md-4">Stelposten gesteld</div>
+										<div class="col-md-4"><i>{{ $project->start_estimate ? date('d-m-Y', strtotime($project->start_estimate)) : '' }}</i></div>
+										<div class="col-md-4"><i>{{ $project->update_estimate ? ''.date('d-m-Y', strtotime($project->update_estimate)) : '' }}</i></div>
+									</div>
+									@endif
+									@if ($project->use_more)
+									<div class="row">
+										<div class="col-md-4">Meerwerk toegevoegd</div>
+										<div class="col-md-4">{{ $project->start_more ? date('d-m-Y', strtotime($project->start_more)) : '' }}</div>
+										<div class="col-md-4"><i>{{ $project->update_more ? ''.date('d-m-Y', strtotime($project->update_more)) : '' }}</i></div>
+									</div>
+									@endif
+									@if ($project->use_less)
+									<div class="row">
+										<div class="col-md-4">Minderwerk verwerkt</div>
+										<div class="col-md-4">{{ $project->start_less ? date('d-m-Y', strtotime($project->start_less)) : '' }}</div>
+										<div class="col-md-4"><i>{{ $project->update_less ? ''.date('d-m-Y', strtotime($project->update_less)) : '' }}</i></div>
+									</div>
+									@endif
+										<br>
+									
+
+												@if (0)
+												<div class="row">
+													<div class="col-md-2"><strong>Financieel</strong></div>
+													<div class="col-md-2"><strong>Gefactureerd</strong></div>
+													<div class="col-md-2"><strong>Betaalstatus</strong></div>
+													<div class="col-md-2"><strong>Bekijk factuur</strong></div>
+												</div>
+												<?php
+												if ($offer_last) {
+												$i=0;
+												$close = true;
+												$invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first();
+												?>
+												@foreach (Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority')->get() as $invoice)
+												<div class="row">
+													<div class="col-md-3">{{ ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1)) }}</div>
+													<div class="col-md-2">
+													<?php
+													if (!$invoice->bill_date && $close && !$project->project_close) {
+														echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs doinvclose">Factureren</a>';
+														$close=false;
+													} else if (!$invoice->bill_date) {
+														echo '<a href="/invoice/project-'.$project->id.'/term-invoice-'.$invoice->id . '" class="btn btn-primary btn-xxs">Bekijken</a>';
+													} else
+														echo date('d-m-Y', strtotime($invoice->bill_date));
+													?>
+													</div>
+													<div class="col-md-3"><?php
+													if ($invoice->invoice_close && !$invoice->payment_date && !$project->project_close)
+														echo '<a href="javascript:void(0);" data-invoice="'.$invoice->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs dopay">Betaald</a>';
+													elseif ($invoice->invoice_close && $invoice->payment_date)
+														echo 'Betaald op '.date('d-m-Y', strtotime($invoice->payment_date));
+													?></div>
+													<div class="col-md-3"><?php if ($invoice->bill_date){ echo '<a target="blank" href="/invoice/pdf/project-'.$project->id.'/term-invoice-'.$invoice->id . ($invoice->option_query ? '?'.$invoice->option_query : '') . '" class="btn btn-primary btn-xxs">Bekijk PDF</a>'; }?></div>
+												</div>
+												<?php $i++; ?>
+												@endforeach
+												@if ($invoice_end)
+												<div class="row">
+													<div class="col-md-3">Eindfactuur</div>
+													<div class="col-md-2">
+													<?php
+													if (!$invoice_end->bill_date && $close && !$project->project_close) {
+														echo '<a href="javascript:void(0);" data-invoice="'.$invoice_end->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs doinvclose">Factureren</a>';
+														$close=false;
+													} else if (!$invoice_end->bill_date) {
+														echo '<a href="/invoice/project-'.$project->id.'/invoice-'.$invoice_end->id.'" class="btn btn-primary btn-xxs">Bekijken</a>';
+													} else
+														echo date('d-m-Y', strtotime($invoice_end->bill_date));
+													?>
+													</div>
+													<div class="col-md-3"><?php
+													if ($invoice_end->invoice_close && !$invoice_end->payment_date && !$project->project_close)
+														echo '<a href="javascript:void(0);" data-invoice="'.$invoice_end->id.'" data-project="'.$project->id.'" class="btn btn-primary btn-xxs dopay">Betaald</a>';
+													elseif ($invoice_end->invoice_close && $invoice_end->payment_date)
+														echo 'Betaald op '.date('d-m-Y', strtotime($invoice_end->payment_date));
+													?></div>
+													<div class="col-md-3"><?php if ($invoice_end->bill_date){ echo '<a target="blank" href="/invoice/pdf/project-'.$project->id.'/invoice-'.$invoice_end->id . ($invoice_end->option_query ? '?'.$invoice_end->option_query : '') . '" class="btn btn-primary btn-xxs">Bekijk PDF</a>'; }?></div>
+												</div>
+												@endif
+												<?php }else{ ?>
+												<div class="row">
+													<div class="col-md-12">Geen geregistreerde uren</div>
+												</div>
+												<?php } ?>
+													<br>
+												@endif
+
+
+									<div class="row">
+										<div class="col-md-4"><strong>Project gesloten</strong> <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je project kan worden gesloten. Zijn alle facturen betaald?" href="#"><i class="fa fa-info-circle"></i></a></div>
+										<div class="col-md-4">{!! $project->project_close ? date('d-m-Y', strtotime($project->project_close)) : '<a href="#" id="projclose">Bewerk</a>' !!}</a></div>
+									</div>
+								</div>
+						
+
+
 								<div class="row">
 								<div class="col-md-12">
 									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
@@ -797,10 +832,6 @@ if ($less_total>0) {
 							{!! csrf_field() !!}
 							<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
 							
-							
-
-
-
 							<div class="row">
 								<div class="col-md-6">	
 									<div class="col-md-3">
@@ -812,7 +843,7 @@ if ($less_total>0) {
 									<div class="col-md-9" style="padding-top:30px;">
 										<p>Een project zonder btw bedrag invoeren.</p>.
 										<ul>
-										  <li>Kan na aanmaken project niet ongedaan</li>
+										  <li>Kan na aanmaken project niet ongedaan gemaakt worden</li>
 										</ul>
 									</div>
 								</div>
@@ -844,7 +875,7 @@ if ($less_total>0) {
 									<div class="col-md-9"  style="padding-top:30px;">
 										<p>Voeg onderaanneming toe aan je calculatie.</p>
 										<ul>
-										  <li>Kan na toevoegen niet ongedaan</li>
+										  <li>Kan na toevoegen niet ongedaan gemaakt worden</li>
 										</ul>
 									</div>
 								</div>
@@ -859,7 +890,7 @@ if ($less_total>0) {
 										<p>Voeg naast arbeid en materiaal een extra calculeerniveau toe aan je calculatie.</p>
 										<ul>
 										  <li>Bijvoorbeeld voor <i>materieel</i></li>
-										  <li>Kan na toevoegen niet ongedaan</li>
+										  <li>Kan na toevoegen niet ongedaan gemaakt worden</li>
 										</ul>
 									</div>
 								</div>
@@ -876,7 +907,7 @@ if ($less_total>0) {
 									<div class="col-md-9" style="padding-top:30px;">
 										<p>Voeg meerwerk toe aan je project.</p>
 										<ul>
-										  <li>Aanzetten is pas mogelijk na opdracht</li>
+										  <li>Pas invulbaar na opdracht</li>
 										  <li>Uit te zetten indien ongebruikt</li>
 										</ul>
 									</div>
@@ -891,7 +922,7 @@ if ($less_total>0) {
 									<div class="col-md-9" style="padding-top:30px;">
 										<p>Voeg minderwerk toe aan je prpject.</p>
 										<ul>
-										  <li>Aanzetten is pas mogelijk na opdracht</li>
+										  <li>Pas invulbaar na opdracht</li>
 										  <li>Uit te zetten indien ongebruikt</li>
 										</ul>
 									</div>
