@@ -127,14 +127,18 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
                     <div><strong>Factuurnummer:</strong></div>
                     <div><strong>Projectnaam:</strong></div>
                     @if ($invoice->reference)<div><strong>Uw referentie:</strong></div>@endif
+                    @if (Auth::user()->pref_use_ct_numbering)
                     @if ($invoice->book_code)<div><strong>Boekhoudknummer:</strong></div>@endif
+                    @endif
                     <div><strong>Factuurdatum:</strong></div>
                   </td>
                   <td style="width: 210px">
-                    <div>{{ $invoice->invoice_code }}</div>
+                    <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
                     <div>{{ $project->project_name }}</div>
                     @if ($invoice->reference)<div>{{ $invoice->reference }}</div>@endif
+                    @if (Auth::user()->pref_use_ct_numbering)
                     @if ($invoice->book_code) <div>{{ $invoice->book_code }}</div>@endif
+                    @endif
                     <div>{{ date("j M Y") }}</div>
                   </td>
                 </tr>
