@@ -241,7 +241,7 @@ $(document).ready(function() {
 								</div>
 							</div>
 							<!-- <div class="table-responsive"> -->
-							<table class="table table-striped">
+							<table ng-cloak class="table table-striped">
 								<thead>
 									<tr>
 										<th class="col-md-5" ng-click="orderByField='project_name'; reverseSort = !reverseSort">Projectnaam</th>

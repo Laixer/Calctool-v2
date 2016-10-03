@@ -162,7 +162,7 @@ class ProjectController extends Controller {
 
 		$project = new Project;
 		$project->user_id = Auth::id();
-		$project->project_name = $orig_project->project_name . "-Kopie";
+		$project->project_name = substr($orig_project->project_name . "-Kopie", 0, 50);
 		$project->address_street = $orig_project->address_street;
 		$project->address_number = $orig_project->address_number;
 		$project->address_postal = $orig_project->address_postal;
