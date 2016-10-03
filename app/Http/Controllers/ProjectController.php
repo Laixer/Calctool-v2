@@ -47,6 +47,11 @@ class ProjectController extends Controller {
 		return view('user.edit_project');
 	}
 
+	public function getOfferInvoiceList(Request $request)
+	{
+		return view('user.offer_invoice');
+	}
+
 	public function downloadResource(Request $request, $resourceid)
 	{
 		$res = Resource::find($resourceid);
@@ -368,13 +373,12 @@ class ProjectController extends Controller {
 
 		$hour_rate = floatval(str_replace(',', '.', str_replace('.', '', $request->input('hour_rate'))));
 		if ($hour_rate<0 || $hour_rate>999) {
-			return back()->withInput($request->all());
+			return back()->withInput($request->all())->withErrors(['error' => "Ongeldige invoer, vervang punten door comma's"]);
 		}
-
 
 		$hour_rate_more = floatval(str_replace(',', '.', str_replace('.', '', $request->input('more_hour_rate'))));
 		if ($hour_rate_more<0 || $hour_rate_more>999) {
-			return back()->withInput($request->all());
+			return back()->withInput($request->all())->withErrors(['error' => "Ongeldige invoer, vervang punten door comma's"]);
 		}
 
 		if ($hour_rate)
