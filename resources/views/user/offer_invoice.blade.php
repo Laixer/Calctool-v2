@@ -255,7 +255,11 @@ $(document).ready(function() {
 
 								<tbody>
 									@foreach(Project::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $project)
-									<?php $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first(); ?>
+									<?php
+									$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+									if (!$offer_last)
+										continue;
+									?>
 									@foreach(Invoice::where('offer_id','=', $offer_last->id)->where('isclose', true)->where('invoice_close', true)->orderBy('priority')->get() as $invoice)
 									<tr>
 										<td class="col-md-2"><a href="/invoice/project-{{ $project->id }}/pdf-invoice-{{ $invoice->id }}">{{ Auth::user()->pref_use_ct_numbering ? $invoice->invoice_code : $invoice->book_code }}</a></td>
