@@ -482,8 +482,8 @@ if ($less_total>0) {
 								<div class="modal-content">
 
 									<div class="modal-body">
-										<div class="form-horizontal">
-
+										<div class="col-md-12">
+										
 											@if(1) 
 											<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
 											<div class="row">
@@ -497,10 +497,10 @@ if ($less_total>0) {
 											@endif
 
 										</div>
-									</div>
 
 									<div class="modal-footer">
 										<button class="btn btn-default" data-dismiss="modal">Sluiten</button>
+									</div>
 									</div>
 
 								</div>

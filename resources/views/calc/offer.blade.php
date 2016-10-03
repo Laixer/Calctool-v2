@@ -221,6 +221,8 @@ $type = ProjectType::find($project->type_id);
                 $(this).find("th").eq(3).show();
                 $(this).find("td").eq(4).show();
                 $(this).find("th").eq(4).show();
+                $(this).find("td").eq(5).show();
+                $(this).find("th").eq(5).show();
 
 	        });
 		  } else {
@@ -231,6 +233,8 @@ $type = ProjectType::find($project->type_id);
                 $(this).find("th").eq(3).hide();
                 $(this).find("td").eq(4).hide();
                 $(this).find("th").eq(4).hide();
+                $(this).find("td").eq(5).hide();
+                $(this).find("th").eq(5).hide();
 
 	        });
 		  }
