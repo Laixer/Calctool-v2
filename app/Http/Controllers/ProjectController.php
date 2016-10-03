@@ -47,6 +47,11 @@ class ProjectController extends Controller {
 		return view('user.edit_project');
 	}
 
+	public function getOfferInvoiceList(Request $request)
+	{
+		return view('user.offer_invoice');
+	}
+
 	public function downloadResource(Request $request, $resourceid)
 	{
 		$res = Resource::find($resourceid);
@@ -157,7 +162,7 @@ class ProjectController extends Controller {
 
 		$project = new Project;
 		$project->user_id = Auth::id();
-		$project->project_name = $orig_project->project_name . "-Kopie";
+		$project->project_name = substr($orig_project->project_name . "-Kopie", 0, 50);
 		$project->address_street = $orig_project->address_street;
 		$project->address_number = $orig_project->address_number;
 		$project->address_postal = $orig_project->address_postal;
@@ -349,8 +354,8 @@ class ProjectController extends Controller {
 	{
 		$this->validate($request, [
 			'id' => array('required','integer'),
-			'hour_rate' => array('regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
-			'more_hour_rate' => array('required','regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
+			'hour_rate' => array('regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9]?)?$/'),
+			'more_hour_rate' => array('required','regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9]?)?$/'),
 			'profit_material_1' => array('numeric','between:0,200'),
 			'profit_equipment_1' => array('numeric','between:0,200'),
 			'profit_material_2' => array('numeric','between:0,200'),
@@ -368,13 +373,12 @@ class ProjectController extends Controller {
 
 		$hour_rate = floatval(str_replace(',', '.', str_replace('.', '', $request->input('hour_rate'))));
 		if ($hour_rate<0 || $hour_rate>999) {
-			return back()->withInput($request->all());
+			return back()->withInput($request->all())->withErrors(['error' => "Ongeldige invoer, vervang punten door comma's"]);
 		}
-
 
 		$hour_rate_more = floatval(str_replace(',', '.', str_replace('.', '', $request->input('more_hour_rate'))));
 		if ($hour_rate_more<0 || $hour_rate_more>999) {
-			return back()->withInput($request->all());
+			return back()->withInput($request->all())->withErrors(['error' => "Ongeldige invoer, vervang punten door comma's"]);
 		}
 
 		if ($hour_rate)

@@ -470,9 +470,10 @@ if ($less_total>0) {
 							<div class="pull-right">
 								<a href="#" href="javascript:void(0);" data-toggle="modal" data-target="#notepad" class="btn btn-primary">Kladblok</a>
 								<a href="/project-{{ $project->id }}/copy" class="btn btn-primary">Project kopieren</a>
-								<a href="#" id="projclose" class="btn btn-primary">Project sluiten</a>
+								@if (!$project->project_close)
+								<a href="#" id="projclose" class="btn btn-danger">Project sluiten</a>
+								@endif
 							</div>
-
 
 						<form method="post" {!! $offer_last && $offer_last->offer_finish ? 'action="/project/update/note"' : 'action="/project/update"' !!}>
    	  	                {!! csrf_field() !!}
@@ -482,8 +483,8 @@ if ($less_total>0) {
 								<div class="modal-content">
 
 									<div class="modal-body">
-										<div class="form-horizontal">
-
+										<div class="col-md-12">
+										
 											@if(1) 
 											<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
 											<div class="row">
@@ -497,10 +498,10 @@ if ($less_total>0) {
 											@endif
 
 										</div>
-									</div>
 
 									<div class="modal-footer">
 										<button class="btn btn-default" data-dismiss="modal">Sluiten</button>
+									</div>
 									</div>
 
 								</div>
@@ -652,8 +653,6 @@ if ($less_total>0) {
 									</div>
 									@endif
 										<br>
-									
-
 												@if (0)
 												<div class="row">
 													<div class="col-md-2"><strong>Financieel</strong></div>
@@ -722,19 +721,20 @@ if ($less_total>0) {
 													<br>
 												@endif
 
-
+									@if ($project->project_close)
 									<div class="row">
-										<div class="col-md-4"><strong>Project gesloten</strong> <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in wanneer je project kan worden gesloten. Zijn alle facturen betaald?" href="#"><i class="fa fa-info-circle"></i></a></div>
-										<div class="col-md-4">{!! $project->project_close ? date('d-m-Y', strtotime($project->project_close)) : '<a href="#" id="projclose">Bewerk</a>' !!}</a></div>
+										<div class="col-md-4"><strong>Project gesloten</strong></div>
+										<div class="col-md-4">{{ date('d-m-Y', strtotime($project->project_close)) }}</a></div>
 									</div>
+									@endif
 								</div>
 						
-
-
 								<div class="row">
-								<div class="col-md-12">
-									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
-								</div>
+									<div class="col-md-12" style="margin-top: 15px;">
+										@if (!$project->project_close)
+										<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+										@endif
+									</div>
 								</div>
 
 								</form>
@@ -819,7 +819,9 @@ if ($less_total>0) {
 							</div><br/>
 								<div class="row">
 									<div class="col-md-12">
+										@if (!$project->project_close)
 										<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+										@endif
 									</div>
 								</div>
 						</form>
@@ -929,12 +931,6 @@ if ($less_total>0) {
 								</div>
 							</div>
 
-
-
-
-
-
-
 							@if (0)
 							<div class="row">
 								<div class="col-md-2">
@@ -960,7 +956,9 @@ if ($less_total>0) {
 							<br/>
 							<div class="row">
 								<div class="col-md-12">
+									@if (!$project->project_close)
 									<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+									@endif
 								</div>
 							</div>
 							</form>
