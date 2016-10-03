@@ -354,8 +354,8 @@ class ProjectController extends Controller {
 	{
 		$this->validate($request, [
 			'id' => array('required','integer'),
-			'hour_rate' => array('regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
-			'more_hour_rate' => array('required','regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
+			'hour_rate' => array('regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9]?)?$/'),
+			'more_hour_rate' => array('required','regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9]?)?$/'),
 			'profit_material_1' => array('numeric','between:0,200'),
 			'profit_equipment_1' => array('numeric','between:0,200'),
 			'profit_material_2' => array('numeric','between:0,200'),

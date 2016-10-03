@@ -208,13 +208,13 @@ $(document).ready(function() {
 				<div class="col-sm-6 col-md-2 hidden-xs">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
-							<a class="item-hover" href="javascript:void(0);" ui-href="/apps">
-								<span class="overlay color2" style="background-color: rgba(0,0,0, 0.2) !important;"></span>
+							<a class="item-hover" href="/offer_invoice">
+								<span class="overlay color2"></span>
 								<span class="inner" style="top:40%;">
-									<span class="block fa fa-gears fsize60"></span> coming soon
+									<span class="block fa fa-line-chart fsize60"></span>
 								</span>
 							</a>
-							<a style="opacity: 0.4;" href="javascript:void(0);" ui-href="/apps" class="btn btn-primary add_to_cart"><strong> Apps</strong></a>
+							<a href="/offer_invoice" class="btn btn-primary add_to_cart"><strong> Overzichten</strong></a>
 						</figure>
 					</div>
 				</div>

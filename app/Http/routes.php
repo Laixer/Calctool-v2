@@ -266,6 +266,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('more/newchapter/{project_id}', 'MoreController@doNewChapter')->where('project_id', '[0-9]+');
 	Route::post('more/deletechapter', 'MoreController@doDeleteChapter');
 
+
 	/* Relation pages */
 	Route::get('relation/new', 'RelationController@getNew')->middleware('payzone');
 	Route::post('relation/new', 'RelationController@doNew');
@@ -307,6 +308,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('wholesale-{wholesale_id}/delete', 'WholesaleController@getDelete')->where('wholesale_id', '[0-9]+')->middleware('payzone');
 
 	/* Project pages */
+	Route::get('offer_invoice', 'ProjectController@getOfferInvoiceList')->middleware('payzone');
 	Route::get('project/new', 'ProjectController@getNew')->middleware('payzone'); 
 	Route::get('project/relation/{relation_id}', 'ProjectController@getRelationDetails')->middleware('payzone'); 
 	Route::post('project/new', 'ProjectController@doNew');
