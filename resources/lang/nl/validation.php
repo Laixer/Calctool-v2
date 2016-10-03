@@ -121,13 +121,13 @@ return [
             'required' => 'Meerwerk uurtarief is een verplicht veld',
         ],
         'hour_rate' => [
-            'regex' => 'Ongeldig uurtarief',
+            'regex' => 'Ongeldig uurtarief. Gebruik een komma.',
         ],
         'pref_hourrate_calc' => [
-            'regex' => 'Ongeldig uurtarief',
+            'regex' => 'OOngeldig uurtarief. Gebruik een komma.',
         ],
         'pref_hourrate_more' => [
-            'regex' => 'Ongeldig uurtarief',
+            'regex' => 'Ongeldig uurtarief. Gebruik een komma.',
         ],
         'contact_firstname' => [
             'max' => 'Voornaam mag niet groter zijn dan 30 karakters',
