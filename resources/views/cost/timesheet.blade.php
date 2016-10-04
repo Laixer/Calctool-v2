@@ -147,7 +147,7 @@ use \Calctool\Models\MoreLabor;
 								</tr>
 								<tr>
 									<td class="col-md-1"><input type="text" name="date" id="date" class="form-control-sm-text datepick"/></td>
-									<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text" ng-model="hour"/></td>
+									<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text" maxlength="4" ng-model="hour"/></td>
 									<td class="col-md-2">
 										<select name="projname" id="projname" class="getact form-control-sm-text" ng-model="projname">
 											@foreach (Project::where('user_id','=',Auth::id())->whereNull('project_close')->get() as $projectname)
