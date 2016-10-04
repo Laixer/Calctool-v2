@@ -165,6 +165,14 @@ use \Calctool\Models\Wholesale;
 				</table>
 
 				<div class="row">
+					<div class="col-md-12">
+						<span><strong>Bedragen dienen excl. BTW te worden ingevoerd.</strong></span>
+						<br>
+						<br>
+					</div>
+				</div>
+
+				<div class="row">
 					<div class="col-md-3">
 						<div class="btn-group">
 					  		<a href="/wholesale" class="btn btn-primary"><i class="fa fa-pencil"></i> Leveranciers</a>
