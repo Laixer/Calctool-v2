@@ -779,7 +779,6 @@ if ($less_total>0) {
 									<input name="more_profit_material_1" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_profit_material_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_1') ? Input::old('more_profit_material_1') : $project->profit_more_contr_mat }}" class="form-control form-control-sm-number"/>
 								</div>
 							</div>
-							@if ($project->use_equipment)
 							<div class="row">
 								<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage overig</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
@@ -792,9 +791,7 @@ if ($less_total>0) {
 									<input name="more_profit_equipment_1" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_1') ? Input::old('more_profit_equipment_1') : $project->profit_more_contr_equip }}" class="form-control form-control-sm-number"/>
 								</div>
 							</div>
-							@endif
 
-							@if ($project->use_subcontract)
 							<h5><strong>Onderaanneming <a data-toggle="tooltip" data-placement="bottom" data-original-title="Onderaanneming: Geef hier uw winstpercentage op wat u over het materiaal en overig van uw onderaanneming wilt gaan rekenen. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></strong></h5>
 							<div class="row">
 								<div class="col-md-3"><label for="profit_material_2">Winstpercentage materiaal</label></div>
@@ -808,7 +805,6 @@ if ($less_total>0) {
 									<input name="more_profit_material_2" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_profit_material_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_2') ? Input::old('more_profit_material_2') : $project->profit_more_subcontr_mat }}" class="form-control form-control-sm-number"/>
 								</div>
 							</div>
-							@if ($project->use_equipment)
 							<div class="row">
 							<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage overig</label></div>
 								<div class="col-md-1"><div class="pull-right">%</div></div>
@@ -821,8 +817,6 @@ if ($less_total>0) {
 									<input name="more_profit_equipment_2" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_2') ? Input::old('more_profit_equipment_2') : $project->profit_more_subcontr_equip }}" class="form-control form-control-sm-number"/>
 								</div>
 							</div>
-							@endif
-							@endif
 							<br/>
 								<div class="row">
 									<div class="col-md-12">
