@@ -361,6 +361,8 @@ class UserController extends Controller {
 			'firstname' => array('max:30'),
 			'email' => array('required','email','max:80'),
 			'website' => array('url','max:180'),
+			'mobile' => array('numeric'),
+			'phone' => array('numeric'),
 		]);
 
 		/* General */

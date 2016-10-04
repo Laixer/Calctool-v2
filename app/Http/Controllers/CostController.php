@@ -51,7 +51,7 @@ class CostController extends Controller {
 			//'date' => array('required','regex:/^20[0-9][0-9]-[0-9]{2}-[0-9]{2}$/'),
 			'date' => array('required'),
 			'type' => array('required','integer'),
-			'hour' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
+			'hour' => array('required','regex:/^[0-9]{1,3}([.,][0-9]{1,2})?$/'),
 			'activity' => array('required','integer')
 		]);
 
