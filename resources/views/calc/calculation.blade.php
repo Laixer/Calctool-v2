@@ -1029,6 +1029,18 @@ if (!$project || !$project->isOwner())
 	});
 
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -1038,8 +1050,14 @@ if (!$project || !$project->isOwner())
 			</div>
 
 			<div class="modal-body">
-					<div class="form-group input-group input-group-lg">
-						<input type="text" id="search" value="" class="form-control" placeholder="Zoek producten">
+				<div class="form-group input-group input-group-lg">
+					<div class="row">
+						<div class="col-md-4">
+						<span><strong>Zoek in volledig lijst:</strong></span>
+							<input type="text" id="search" value="" class="form-control" placeholder="Zoek producten">
+						</div>	
+						<div class="col-md-4">	
+						<span><strong>of sorteer op categrie:</strong></span>
 							<span class="input-group-btn">
 					        <select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000">
 						        <option value="0" selected>Selecteer</option>
@@ -1049,17 +1067,22 @@ if (!$project || !$project->isOwner())
 						        	<option data-name="cat" value="{{ $cat->id }}"> - {{ $cat->category_name }}</option>
 						        	@endforeach
 						        @endforeach
-					        </select>
-					      </span>
-					      <span class="input-group-btn">
-					        <select id="group" class="btn" style="background-color: #E5E7E9; color:#000">
-					        <option value="0" selected>Selecteer</option>
-					        @foreach (ProductSubCategory::all() as $subcat)
-					          <option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
-					        @endforeach
-					        </select>
-					      </span>
+					   		</select>
+					    </span>
+					    </div>
+					    <div class="col-md-4">
+						    <span><strong>en subcategrie:</strong></span>
+							<span class="input-group-btn">
+						        <select id="group" class="btn" style="background-color: #E5E7E9; color:#000">
+						        <option value="0" selected>Selecteer</option>
+						        @foreach (ProductSubCategory::all() as $subcat)
+						          <option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
+						        @endforeach
+						        </select>
+							</span>
+						</div>
 					</div>
+					<br>
 					<div class="table-responsive">
 						<table id="tbl-material" class="table table-hover">
 							<thead>
@@ -1083,6 +1106,18 @@ if (!$project || !$project->isOwner())
 		</div>
 	</div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="modal fade" id="descModal" tabindex="-1" role="dialog" aria-labelledby="descModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
