@@ -215,14 +215,14 @@ class InvoiceController extends Controller {
 		}
 
 		$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
-		$cnt = Invoice::where('offer_id','=', $offer_last->id)->count();
-		if ($cnt>1) {
+		$cnt = Invoice::where('offer_id', $offer_last->id)->where('isclose',false)->count();
+		if ($cnt>0) {
 			$invoice = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority', 'desc')->first();
 
 			$ninvoice = new Invoice;
 			$ninvoice->payment_condition = $invoice->payment_condition;
 			$ninvoice->invoice_code = $invoice->invoice_code;
-			$ninvoice->priority = $invoice->priority-1;
+			$ninvoice->priority = $invoice->priority+1;
 			$ninvoice->offer_id = $invoice->offer_id;
 			$ninvoice->to_contact_id = $invoice->to_contact_id;
 			$ninvoice->from_contact_id = $invoice->from_contact_id;
@@ -233,7 +233,7 @@ class InvoiceController extends Controller {
 			$ninvoice = new Invoice;
 			$ninvoice->payment_condition = $invoice->payment_condition;
 			$ninvoice->invoice_code = $invoice->invoice_code;
-			$ninvoice->priority = $invoice->priority-1;
+			$ninvoice->priority = 0;
 			$ninvoice->offer_id = $invoice->offer_id;
 			$ninvoice->to_contact_id = $invoice->to_contact_id;
 			$ninvoice->from_contact_id = $invoice->from_contact_id;
