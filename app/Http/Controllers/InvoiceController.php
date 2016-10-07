@@ -269,7 +269,9 @@ class InvoiceController extends Controller {
 	{
 		$this->validate($request, [
 			'id' => array('required','integer'),
-			'project' => array('required','integer')
+			'project' => array('required','integer'),
+			'amount' => array('required'),
+			'totaal' => array('required'),
 		]);
 
 		$invoice = Invoice::find($request->get('id'));
