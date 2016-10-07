@@ -193,8 +193,6 @@ else {
 											@endif
 										</div>
 
-										<?php $contact = Relation::find($project->client_id); ?>
-
 										<div class="row">
 											<label for="name">Straat</label>
 											<span>{{ $relation->address_street }} {{ $relation->address_number }}</span>
