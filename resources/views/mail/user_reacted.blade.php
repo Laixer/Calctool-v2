@@ -25,13 +25,15 @@
 										<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
 											<tbody>
 
+												@if ($user_logo)
 												<tr><!-- logo -->
 													<td width="100%" style="font-family: helvetica, Arial, sans-serif; font-size: 18px; letter-spacing: 0px;">
 														<a href="{{ URL::to('/') }}" style="text-decoration: none;">
-															<img src="{{ URL::to('/') }}/images/logo2.png" alt="CalculatieTool.com" border="0" width="166" height="auto" style="with: 166px; height: auto; border: 5px solid #ffffff;" />
+															<img src="{{ URL::to('/') }}/{{ $user_logo }}" alt="CalculatieTool.com" border="0" width="166" height="auto" style="with: 166px; height: auto; border: 5px solid #ffffff;" />
 														</a>
 													</td>
 												</tr>
+												@endif
 												<tr><!-- spacer before the line -->
 													<td width="100%" height="20"></td>
 												</tr>
@@ -43,7 +45,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; line-height: 24px; color:#8E8E8E;">
-														Goedendag <strong>{{ ucfirst($firstname) .' '. ucfirst($lastname) }}</strong>,
+														Geachte <strong>{{ $client }}</strong>,
 													</td>
 												</tr>
 												<tr>
@@ -57,8 +59,8 @@
 													</td>
 												</tr>
 													<td width="100%" style="text-align:center;">
-														<a href="{{ URL::to('/') }}" style="text-decoration:none; font-family: helvetica, Arial, sans-serif; font-size: 12px; letter-spacing: 0px; text-align: center; text-transform: uppercase; padding:10px; color:#ffffff; background-color:#79BB00; border-radius:6px;">
-															<strong>Reageren</strong>
+														<a href="{{ URL::to('ex-project-overview/' . $token) }}" style="text-decoration:none; font-family: helvetica, Arial, sans-serif; font-size: 12px; letter-spacing: 0px; text-align: center; text-transform: uppercase; padding:10px; color:#ffffff; background-color:#79BB00; border-radius:6px;">
+															<strong>Bekijk project</strong>
 														</a>
 													</td>
 												<tr><!-- spacer after the line -->
@@ -71,7 +73,7 @@
 															Met vriendelijke groet,
 														<br>
 														<br>
-															Het team van de <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
+															{{ $user }}
 														<br>
 													</td>
 												</tr>

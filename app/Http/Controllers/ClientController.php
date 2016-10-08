@@ -36,7 +36,6 @@ class ClientController extends Controller {
 	 */
 	public function doUpdateCommunication(Request $request, $token)
 	{
-
 		$project_share = ProjectShare::where('token', $token)->first();
 		if (!$project_share) {
 			return back();
@@ -56,7 +55,13 @@ class ClientController extends Controller {
 
 		$user = User::find($project->user_id);
 
-		$data = array('email' => $user->email, 'firstname' => $user->firstname, 'lastname' => $user->lastname, 'project_name' => $project->project_name, 'note' => nl2br($request->input('client_note')));
+		$data = array(
+			'email' => $user->email,
+			'firstname' => $user->firstname,
+			'lastname' => $user->lastname,
+			'project_name' => $project->project_name,
+			'note' => nl2br($request->input('client_note'))
+		);
 		Mailgun::send('mail.client_reacted', $data, function($message) use ($data) {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Uw opdrachtgever heeft gereageerd');
