@@ -524,6 +524,30 @@ class AdminController extends Controller {
 		return response()->json(['success' => 1]);
 	}
 
+	public function doOfferPostDelete(Request $request)
+	{
+		$this->validate($request, [
+			'id' => array('required'),
+		]);
+
+		$post = OfferPost::find($request->input('id'));
+		$post->delete();
+
+		return response()->json(['success' => 1]);
+	}
+
+	public function doInvoicePostDelete(Request $request)
+	{
+		$this->validate($request, [
+			'id' => array('required'),
+		]);
+
+		$post = InvoicePost::find($request->input('id'));
+		$post->delete();
+
+		return response()->json(['success' => 1]);
+	}
+
 	public function doSendNotification(Request $request)
 	{
 		$this->validate($request, [
