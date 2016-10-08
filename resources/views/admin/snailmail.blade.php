@@ -16,15 +16,27 @@ use \Calctool\Models\Invoice;
 @section('content')
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#offer-send").click(function(e){
+		$(".offer-send").click(function(e){
 			var $dataid = $(this).attr('data-id');
 			$.post("/admin/snailmail/offer/done", {id: $dataid}, function(){
 				location.reload();
 			}).fail(function(e) { console.log(e); });
 		});
-		$("#invoice-send").click(function(e){
+		$(".invoice-send").click(function(e){
 			var $dataid = $(this).attr('data-id');
 			$.post("/admin/snailmail/invoice/done", {id: $dataid}, function(){
+				location.reload();
+			}).fail(function(e) { console.log(e); });
+		});
+		$(".offer-delete").click(function(e){
+			var $dataid = $(this).attr('data-id');
+			$.post("/admin/snailmail/offer/delete", {id: $dataid}, function(){
+				location.reload();
+			}).fail(function(e) { console.log(e); });
+		});
+		$(".invoice-delete").click(function(e){
+			var $dataid = $(this).attr('data-id');
+			$.post("/admin/snailmail/invoice/delete", {id: $dataid}, function(){
 				location.reload();
 			}).fail(function(e) { console.log(e); });
 		});
@@ -74,7 +86,7 @@ use \Calctool\Models\Invoice;
 							<td class="col-md-2">{{ ucfirst(User::find($project->user_id)->username) }}</td>
 							<td class="col-md-2">{{ $post->sent_date ? 'Verstuurd op '.date('d-m-Y', strtotime($post->sent_date)) : 'Open' }}</td>
 							<td class="col-md-2">{{ date('d-m-Y H:i:s', strtotime(DB::table('offer_post')->select('created_at')->where('id','=',$post->id)->get()[0]->created_at)) }}</td>
-							<td class="col-md-2">@if (!$post->sent_date)<a href="javascript:void(0);" data-id="{{ $post->id }}" id="offer-send" class="btn btn-primary btn-xs"><i class="fa fa-paper-plane fa-fw"></i> Verstuurd</a>@endif</td>
+							<td class="col-md-2">@if (!$post->sent_date)<a href="javascript:void(0);" data-id="{{ $post->id }}" class="btn btn-primary btn-xs offer-send"><i class="fa fa-paper-plane fa-fw"></i> Verstuurd</a>@endif&nbsp;<a href="javascript:void(0);" data-id="{{ $post->id }}" class="btn btn-danger btn-xs offer-delete">Delete</a></td>
 						</tr>
 					@endforeach
 					</tbody>
@@ -107,7 +119,7 @@ use \Calctool\Models\Invoice;
 							<td class="col-md-2">{{ ucfirst(User::find($project->user_id)->username) }}</td>
 							<td class="col-md-2">{{ $post->sent_date ? 'Verstuurd op '.date('d-m-Y', strtotime($post->sent_date)) : 'Open' }}</td>
 							<td class="col-md-2">{{ date('d-m-Y H:i:s', strtotime(DB::table('invoice_post')->select('created_at')->where('id','=',$post->id)->get()[0]->created_at)) }}</td>
-							<td class="col-md-2">@if (!$post->sent_date)<a href="javascript:void(0);" data-id="{{ $post->id }}" id="invoice-send" class="btn btn-primary btn-xs"><i class="fa fa-paper-plane fa-fw"></i> Verstuurd</a>@endif</td>
+							<td class="col-md-2">@if (!$post->sent_date)<a href="javascript:void(0);" data-id="{{ $post->id }}" class="btn btn-primary btn-xs invoice-send"><i class="fa fa-paper-plane fa-fw"></i> Verstuurd</a>@endif&nbsp;<a href="javascript:void(0);" data-id="{{ $post->id }}" class="btn btn-danger btn-xs invoice-delete">Delete</a></td>
 						</tr>
 					@endforeach
 					</tbody>

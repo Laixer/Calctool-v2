@@ -1,5 +1,6 @@
 <?php
 use \Calctool\Models\User;
+use \Calctool\Models\UserGroup;
 use \Calctool\Models\MessageBox;
 
 ?>
@@ -61,11 +62,26 @@ $(document).ready(function() {
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
-							<label for="gender" style="display:block;">Gebruiker</label>
+							<label for="user" style="display:block;">Gebruiker</label>
 							<select name="user" id="user" class="form-control pointer">
 								<option value="-1">Selecteer</option>
 								@foreach(User::where('active',true)->orderBy('username')->get() as $user)
-								<option {{ isset($_GET['user']) ? ($_GET['user'] == $user->id ? 'selected' : '') : '' }} value="{{ $user->id }}">{{ ucfirst($user->username) }}</option>
+								<option {{ isset($_GET['user']) ? ($_GET['user'] == $user->id ? 'selected' : '') : '' }} value="{{ $user->id }}">{{ ucfirst($user->username) }} <?php
+									if ($user->firstname != $user->username) {
+										echo ' (' . $user->firstname . ($user->lastname ? (', ' . $user->lastname) : '') . ')';
+									}
+								?></option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="group" style="display:block;">Groep</label>
+							<select name="group" id="group" class="form-control pointer">
+								<option value="-1">Selecteer</option>
+								@foreach(UserGroup::all() as $group)
+								<option {{ isset($_GET['group']) ? ($_GET['group'] == $group->id ? 'selected' : '') : '' }} value="{{ $group->id }}">{{ ucfirst($group->name) }}</option>
 								@endforeach
 							</select>
 						</div>

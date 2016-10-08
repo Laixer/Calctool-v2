@@ -524,26 +524,61 @@ class AdminController extends Controller {
 		return response()->json(['success' => 1]);
 	}
 
+	public function doOfferPostDelete(Request $request)
+	{
+		$this->validate($request, [
+			'id' => array('required'),
+		]);
+
+		$post = OfferPost::find($request->input('id'));
+		$post->delete();
+
+		return response()->json(['success' => 1]);
+	}
+
+	public function doInvoicePostDelete(Request $request)
+	{
+		$this->validate($request, [
+			'id' => array('required'),
+		]);
+
+		$post = InvoicePost::find($request->input('id'));
+		$post->delete();
+
+		return response()->json(['success' => 1]);
+	}
+
 	public function doSendNotification(Request $request)
 	{
 		$this->validate($request, [
-			'user' => array('required'),
+			// 'user' => array('required'),
 			'subject' => array('required'),
 			'message' => array('required'),
 		]);
 
-		if ($request->input('user') == -1)
+		if ($request->input('user') == -1 && $request->input('group') == -1)
 			return back();
 
-		$message = new MessageBox;
-		$message->subject = $request->input('subject');
-		$message->message = nl2br($request->input('message'));
-		$message->from_user = Auth::id();
-		$message->user_id =	$request->input('user');
+		$users = [];
+		if ($request->input('user') != -1) {
+			array_push($users, $request->input('user'));
+		} else {
+			foreach(User::where('user_group', $request->input('group'))->get() as $user) {
+				array_push($users, $user->id);
+			}
+		}
 
-		$message->save();
+		foreach ($users as $user) {
+			$message = new MessageBox;
+			$message->subject = $request->input('subject');
+			$message->message = nl2br($request->input('message'));
+			$message->from_user = Auth::id();
+			$message->user_id =	$user;
 
-		event(new UserNotification(User::find($request->input('user')), $message->subject, $message->message));
+			$message->save();
+
+			event(new UserNotification(User::find($user), $message->subject, $message->message));
+		}
 
 		return back()->with('success', 'Bericht verstuurd');
 	}

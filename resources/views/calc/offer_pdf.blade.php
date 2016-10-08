@@ -1374,8 +1374,8 @@ function invoice_condition($offer) {
 	<table border="0" cellspacing="0" cellpadding="0">
 	  <thead>
 		<tr>
-		  <th style="width: 200px"class="qty">Onderdeel</th>
-		  <th style="width: 220px"class="qty">Werkzaamheid</th>
+		  <th style="width: 200px" class="qty">Onderdeel</th>
+		  <th style="width: 220px" class="qty">Werkzaamheid</th>
 		  <th class="qty">Omschrijving</th>
 		</tr>
 	  </thead>

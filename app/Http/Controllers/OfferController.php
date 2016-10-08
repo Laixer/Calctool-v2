@@ -164,6 +164,7 @@ class OfferController extends Controller {
 			$invoice->from_contact_id = $offer->from_contact_id;
 			if (($i+1) == $offer->invoice_quantity) {
 				$invoice->isclose = true;
+				$invoice->priority = 100;
 			}
 			if ($i == 0 && $offer->downpayment) {
 				$invoice->amount = $offer->downpayment_amount;

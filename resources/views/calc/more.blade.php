@@ -727,8 +727,12 @@ var n = this,
 										$activity_total = 0;
 										foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->orderBy('created_at')->get() as $activity) {
 											if (Part::find($activity->part_id)->part_name=='contracting') {
+												$profit_mat = $project->profit_more_contr_mat;
+												$profit_equip = $project->profit_more_contr_equip;
 												$activity_total = MoreOverview::activityTotalProfit($activity, $project->profit_more_contr_mat, $project->profit_more_contr_equip);
 											} else if (Part::find($activity->part_id)->part_name=='subcontracting') {
+												$profit_mat = $project->profit_more_subcontr_mat;
+												$profit_equip = $project->profit_more_subcontr_equip;
 												$activity_total = MoreOverview::activityTotalProfit($activity, $project->profit_more_subcontr_mat, $project->profit_more_subcontr_equip);
 											}
 										?>
@@ -904,7 +908,7 @@ var n = this,
 																}
 																echo '&euro; '.number_format($material->rate*$material->amount*((100+$profit)/100), 2,",",".")
 															?></span></td>
-															<td class="col-md-1 text-right" data-profit="{{$profit}}">
+															<td class="col-md-1 text-right" data-profit="{{ $profit }}">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
 															</td>
@@ -917,7 +921,7 @@ var n = this,
 															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-1"><span class="total-incl-tax"></span></td>
-															<td class="col-md-1 text-right" data-profit="{{--$profit--}}">
+															<td class="col-md-1 text-right" data-profit="{{ $profit_mat }}">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
 															</td>
@@ -1017,7 +1021,7 @@ var n = this,
 															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number esave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-1"><span class="total-incl-tax"></span></td>
-															<td class="col-md-1 text-right" data-profit="{{--$profit--}}">
+															<td class="col-md-1 text-right" data-profit="{{ $profit_equip }}">
 																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
 																<button class="btn btn-danger btn-xs edeleterow fa fa-times"></button>
 															</td>

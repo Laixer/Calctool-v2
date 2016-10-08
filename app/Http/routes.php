@@ -431,6 +431,8 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 	Route::post('application/new', 'AdminController@doNewApplication');
 	Route::post('snailmail/offer/done', 'AdminController@doOfferPostDone');
 	Route::post('snailmail/invoice/done', 'AdminController@doInvoicePostDone');
+	Route::post('snailmail/offer/delete', 'AdminController@doOfferPostDelete');
+	Route::post('snailmail/invoice/delete', 'AdminController@doInvoicePostDelete');
 	Route::get('resource', function() {
 		return view('admin.resource');
 	});

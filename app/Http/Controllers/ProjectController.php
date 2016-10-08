@@ -28,6 +28,7 @@ use \Calctool\Models\CalculationMaterial;
 use \Calctool\Models\CalculationEquipment;
 
 use \Auth;
+use \Mailgun;
 
 class ProjectController extends Controller {
 
@@ -569,62 +570,41 @@ class ProjectController extends Controller {
 			return back()->withInput($request->all());
 		}
 
-		$project_share = ProjectShare::where('project_id', $project->id)->first();
-		if (! $project_share) {
+		$share = ProjectShare::where('project_id', $project->id)->first();
+		if (!$share) {
 			return back()->withInput($request->all());
 		}
 
-		$project_share->user_note = $request->input('user_note');
-		$project_share->save();
+		$share->user_note = $request->input('user_note');
+		$share->save();
 
-		/*$offer = Offer::where('project_id', '=', $project->id)->orderBy('created_at','desc')->limit(1)->get();
+		$offer = Offer::where('project_id', $project->id)->orderBy('created_at','desc')->first();
+		
+		$contact_client = Contact::find($offer->to_contact_id);
+		$contact_user = Contact::find($offer->from_contact_id);
 
-		/////
 		$user_logo = '';
 		$relation_self = Relation::find(Auth::user()->self_id);
 		if ($relation_self->logo_id)
 			$user_logo = Resource::find($relation_self->logo_id)->file_location;
 
-		$other_contacts = [];
-		if ($request->has('contacts')) {
-			foreach ($request->get('contacts') as $key) {
-				$contact = Contact::find($key[0]);
-				if (!in_array($contact->email, $other_contacts)) {
-					$other_contacts[$contact->email] = $contact->getFormalName();
-				}
-			}
-		}
-
 		$data = array(
 			'email' => $contact_client->email,
+			'email_from' => $contact_user->email,
 			'client' => $contact_client->getFormalName(),
-			'other_contacts' => $other_contacts,
 			'mycomp' => $relation_self->company_name,
-			'pdf' => $res->file_location,
-			'preview' => false,
-			'offer_id' => $offer->id,
 			'token' => $share->token,
 			'user' => $contact_user->getFormalName(),
 			'project_name' => $project->project_name,
-			'pref_email_offer' => Auth::User()->pref_email_offer,
-			'user_logo' => $user_logo
+			'user_logo' => $user_logo,
+			'note' => nl2br($request->input('user_note'))
 		);
-		/////
-
-		$data = array(
-			'email' => $user->email,
-			'firstname' => $user->firstname,
-			'lastname' => $user->lastname,
-			'project_name' => $project->project_name,
-			'note' => nl2br($request->input('client_note'))
-		);
-		
 		Mailgun::send('mail.user_reacted', $data, function($message) use ($data) {
-			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
+			$message->to($data['email'], strtolower(trim($data['client'])));
 			$message->subject('CalculatieTool.com - Uw vakman heeft gereageerd');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
-			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
-		});*/
+			$message->replyTo($data['email_from'], $data['mycomp']);
+		});
 
 		return back()->with('success', 'Opmerking toegevoegd aan project');
 	}
