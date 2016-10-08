@@ -65,7 +65,11 @@ $(document).ready(function() {
 							<select name="user" id="user" class="form-control pointer">
 								<option value="-1">Selecteer</option>
 								@foreach(User::where('active',true)->orderBy('username')->get() as $user)
-								<option {{ isset($_GET['user']) ? ($_GET['user'] == $user->id ? 'selected' : '') : '' }} value="{{ $user->id }}">{{ ucfirst($user->username) }}</option>
+								<option {{ isset($_GET['user']) ? ($_GET['user'] == $user->id ? 'selected' : '') : '' }} value="{{ $user->id }}">{{ ucfirst($user->username) }} <?php
+									if ($user->firstname != $user->username) {
+										echo ' (' . $user->firstname . ($user->lastname ? (', ' . $user->lastname) : '') . ')';
+									}
+								?></option>
 								@endforeach
 							</select>
 						</div>
