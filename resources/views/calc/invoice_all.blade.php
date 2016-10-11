@@ -56,6 +56,7 @@ if (!$project || !$project->isOwner()) {
 			$lastthis2.attr('data-closure', $('#closure').val());
 		});
 		$('.changecode').click(function(){
+			$termid = $(this).attr('data-id');
 			$curreference = $(this).attr('data-reference');
 			$('#reference').val($curreference);
 			$curbookcode = $(this).attr('data-bookcode');
@@ -231,7 +232,7 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-2"><?php if (!$invoice->invoice_close && !$project->project_close) { if ($invoice_version){ echo '<a href="/invoice/project-' . $project->id . '/invoice-version-'.$invoice_version->id.'">'; } else { echo '<a href="/invoice/project-' . $project->id . '/term-invoice-' . $invoice->id . '">'; } } else { echo '<a href="/invoice/project-' . $project->id . '/pdf-invoice-'.$invoice->id.'">'; } ?>{{ ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1)) }}<?php if ($invoice->invoice_close) { echo '</a>'; }?></td>
 						<td class="col-md-2"><?php if ($invoice->invoice_close || $project->project_close){ echo "<span class='sdata'>".number_format($invoice->amount, 2, ",",".")."</span>"; } else  { ?><input data-id="{{ $invoice->id }}" class="form-control-sm-text adata" name="amount" type="text" value="{{ number_format($invoice->amount, 2, ",",".") }}" /><?php } ?></td>
 						<td class="col-md-2">{{ Auth::user()->pref_use_ct_numbering ? $invoice->invoice_code : $invoice->book_code }}</td>
-						<td class="col-md-1"><?php if (!$invoice->invoice_close && !$project->project_close) { ?><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice->reference }}" data-bookcode="{{ $invoice->book_code }}" data-id="{{ $invoice->id }}" data-target="#codeModal">bewerk</a><?php } ?></td>
+						<td class="col-md-1"><?php if (!$invoice->invoice_close && !$project->project_close) { ?><a href="#" data-toggle="modal" class="changecode adata" data-reference="{{ $invoice->reference }}" data-bookcode="{{ $invoice->book_code }}" data-id="{{ $invoice->id }}" data-target="#codeModal">bewerk</a><?php } ?></td>
 						<td class="col-md-1"><?php if (!$invoice->invoice_close && !$project->project_close) { ?><a href="#" data-toggle="modal" class="changedesc" data-desc="{{ $invoice->description ? $invoice->description : Auth::user()->pref_invoice_description }}" data-closure="{{ $invoice->closure ? $invoice->closure : Auth::user()->pref_invoice_closure }}" data-id="{{ $invoice->id }}" data-target="#textModal">bewerk</a><?php } ?></td>
 						<td class="col-md-2"><input {{ $project->project_close || $invoice->invoice_close ? 'disabled' : '' }} type="number" name="condition" data-id="{{ $invoice->id }}" value="{{ $invoice->payment_condition }}" class="condition form-control form-control-sm-number" /></td>
 						<td class="col-md-1">
