@@ -56,6 +56,7 @@ if (!$project || !$project->isOwner()) {
 			$lastthis2.attr('data-closure', $('#closure').val());
 		});
 		$('.changecode').click(function(){
+			$termid = $(this).attr('data-id');
 			$curreference = $(this).attr('data-reference');
 			$('#reference').val($curreference);
 			$curbookcode = $(this).attr('data-bookcode');
@@ -134,7 +135,7 @@ if (!$project || !$project->isOwner()) {
 
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h4 class="modal-title" id="myModalLabel2">Administratienummers</h4>
+							<h4 class="modal-title" id="myModalLabel2">@if (Auth::user()->pref_use_ct_numbering)Referentie opdrachtgever @else Referentie en factuurnummer @endif</h4>
 						</div>
 
 						<div class="modal-body">
@@ -144,10 +145,12 @@ if (!$project || !$project->isOwner()) {
 										<label>Referentie van opdrachtgever</label> <a data-toggle="tooltip" data-placement="bottom" data-original-title="Als je van de opdrachtgever een referentie(nummer) hebt gekregen kan je deze hier invullen." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
 										<input {{ $project->project_close ? 'disabled' : '' }} value="" name="reference" id="reference" min="2" max="50" type="text" value="" class="form-control" />
 									</div>
+									@if (!Auth::user()->pref_use_ct_numbering)
 									<div class="col-md-6">
 										<label>Eigen factuurnummer gebruiken</label> <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit is een uniek en opvolgend factuurnummer. Eigen factuurnummering is ook mogelijk. Let op: Factuurnummers moeten opvolgend zijn, gebruik dus het een of het ander." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
 										<input {{ $project->project_close ? 'disabled' : '' }} value="" name="bookcode" id="bookcode" min="2" max="50" type="text" value="" class="form-control" />
 									</div>
+									@endif
 								</div>
 							</div>
 						</div>
@@ -207,7 +210,7 @@ if (!$project || !$project->isOwner()) {
 						<th class="col-md-2">Onderdeel</th>
 						<th class="col-md-2">Bedrag (Excl. BTW) <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier een termijnbedrag of eindbedrag op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 						<th class="col-md-2">Factuurnummer <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier uw factuurnummer op dat behoort bij uw boekhouding." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
-						<th class="col-md-1">Administratie <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier een referentie en/of een debiteurennummer op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
+						<th class="col-md-1">Referentie <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier een referentie en/of een debiteurennummer op." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 						<th class="col-md-2">Omschrijving <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u een aanhef en een afsluiting opgeven voor op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 						<th class="col-md-1">Conditie <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u opgeven wat de betalingstermijn van de factuur is." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
 						<th class="col-md-2">Status <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier staat de status van uw factuur. Hij is open, te factureren of gefactureerd. Tevens is de PDF te raadplegen en te downloaden." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></th>
@@ -229,7 +232,7 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-2"><?php if (!$invoice->invoice_close && !$project->project_close) { if ($invoice_version){ echo '<a href="/invoice/project-' . $project->id . '/invoice-version-'.$invoice_version->id.'">'; } else { echo '<a href="/invoice/project-' . $project->id . '/term-invoice-' . $invoice->id . '">'; } } else { echo '<a href="/invoice/project-' . $project->id . '/pdf-invoice-'.$invoice->id.'">'; } ?>{{ ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1)) }}<?php if ($invoice->invoice_close) { echo '</a>'; }?></td>
 						<td class="col-md-2"><?php if ($invoice->invoice_close || $project->project_close){ echo "<span class='sdata'>".number_format($invoice->amount, 2, ",",".")."</span>"; } else  { ?><input data-id="{{ $invoice->id }}" class="form-control-sm-text adata" name="amount" type="text" value="{{ number_format($invoice->amount, 2, ",",".") }}" /><?php } ?></td>
 						<td class="col-md-2">{{ Auth::user()->pref_use_ct_numbering ? $invoice->invoice_code : $invoice->book_code }}</td>
-						<td class="col-md-1"><?php if (!$invoice->invoice_close && !$project->project_close) { ?><a href="#" data-toggle="modal" class="changecode" data-reference="{{ $invoice->reference }}" data-bookcode="{{ $invoice->book_code }}" data-id="{{ $invoice->id }}" data-target="#codeModal">bewerk</a><?php } ?></td>
+						<td class="col-md-1"><?php if (!$invoice->invoice_close && !$project->project_close) { ?><a href="#" data-toggle="modal" class="changecode adata" data-reference="{{ $invoice->reference }}" data-bookcode="{{ $invoice->book_code }}" data-id="{{ $invoice->id }}" data-target="#codeModal">bewerk</a><?php } ?></td>
 						<td class="col-md-1"><?php if (!$invoice->invoice_close && !$project->project_close) { ?><a href="#" data-toggle="modal" class="changedesc" data-desc="{{ $invoice->description ? $invoice->description : Auth::user()->pref_invoice_description }}" data-closure="{{ $invoice->closure ? $invoice->closure : Auth::user()->pref_invoice_closure }}" data-id="{{ $invoice->id }}" data-target="#textModal">bewerk</a><?php } ?></td>
 						<td class="col-md-2"><input {{ $project->project_close || $invoice->invoice_close ? 'disabled' : '' }} type="number" name="condition" data-id="{{ $invoice->id }}" value="{{ $invoice->payment_condition }}" class="condition form-control form-control-sm-number" /></td>
 						<td class="col-md-1">

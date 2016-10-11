@@ -195,7 +195,7 @@ $(document).ready(function() {
 			  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Versturen&nbsp;&nbsp;<span class="caret"></span></button>
 			  <ul class="dropdown-menu">
 				<li><a href="/offer/project-{{ $project->id }}/offer-{{ $offer->id }}/mail-preview" data-toggle="modal" data-target=".ajax_modal_container">Per email</a></li>
-			    <li><a href="/res-{{ $res->id }}/download">Per post (download PDF)</a></i>
+			    <li><a href="/res-{{ $res->id }}/download">Download PDF</a></i>
 			    <li><a href="#" data-toggle="modal" data-target="#confirmModal2">Door calculatieTool.com</a></li>
 			  </ul>
 			</div>

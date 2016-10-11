@@ -304,7 +304,7 @@ $(document).ready(function() {
 							<label for="province">Provincie*</label>
 							<select name="province" id="province2" class="form-control pointer">
 								@foreach (Calctool\Models\Province::all() as $province)
-								<option  {{ (old('province') == $province->id ? 'selected' : '') }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
+								<option  {{ (old('province') ? (old('province') == $province->id ? 'selected' : '') : $province->province_name=='overig' ? 'selected' : '') }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
 								@endforeach
 							</select>
 						</div>
@@ -510,7 +510,7 @@ $(document).ready(function() {
 									<label for="province">Provincie*</label>
 									<select name="province" id="province" class="form-control pointer">
 										@foreach (Calctool\Models\Province::all() as $province)
-										<option {{ (old('province') == $province->id ? 'selected' : '') }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
+										<option {{ (old('province') ? (old('province') == $province->id ? 'selected' : '') : $province->province_name=='overig'  ? 'selected' : '') }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
 										@endforeach
 									</select>
 								</div>

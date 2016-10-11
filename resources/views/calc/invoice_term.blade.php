@@ -312,15 +312,10 @@ if (!$project || !$project->isOwner()) {
 				<div class="col-sm-4 text-left">
 					<h4><strong>TERMIJNFACTUUR</strong></h4>
 					<ul class="list-unstyled">
-						<li><strong>Projectnaam:</strong>{{ $project->project_name }}</li>
-						<li><strong>Factuurdatum:</strong> <a href="#" id="invdate">Bewerk</a> {{-- date("j M Y") --}}</li>
-						@if (Auth::user()->pref_use_ct_numbering)
-						<li><strong>Factuurnummer:</strong> {{ $invoice->invoice_code }}</li>
-						<li><strong>Administratiefnummer:</strong> {{ $invoice->book_code }}</li>
-						@else
-						<li><strong>Factuurnummer:</strong> {{ $invoice->book_code }}</li>
-						@endif
-						<li><strong>Uw referentie:</strong> {{ $invoice->reference }}</li>
+						<li><strong>Factuurnummer: </strong><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></li>
+						<li><strong>Projectnaam: </strong>{{ $project->project_name }}</li>
+						<li><strong>Uw referentie: </strong> {{ $invoice->reference }}</li>
+						<li><strong>Factuurdatum: </strong> <a href="#" id="invdate">Bewerk</a> {{-- date("j M Y") --}}</li>
 						<input type="hidden" id="invdateval" name="invdateval" />
 				</div>
 			</div>
