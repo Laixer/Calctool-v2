@@ -157,21 +157,15 @@ $type = ProjectType::find($project->type_id);
               <tbody>
                 <tr>
                   <td style="width: 90px">
-                    <div><strong>Factuurnummer:</strong></div>
-                    <div><strong>Projectnaam:</strong></div>
-                    @if ($invoice->reference)<div><strong>Uw referentie:</strong></div>@endif
-                    @if (Auth::user()->pref_use_ct_numbering)
-                    @if ($invoice->book_code)<div><strong>Boekhoudnummer:</strong></div>@endif
-                    @endif
-                    <div><strong>Factuurdatum:</strong></div>
+                    <div><strong>Factuurnummer: </strong></div>
+                    <div><strong>Projectnaam: </strong></div>
+                    @if ($invoice->reference)<div><strong>Uw referentie: </strong></div>@endif
+                    <div><strong>Factuurdatum: </strong></div>
                   </td>
                   <td style="width: 210px">
                     <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
                     <div>{{ $project->project_name }}</div>
                     @if ($invoice->reference)<div>{{ $invoice->reference }}</div>@endif
-                    @if (Auth::user()->pref_use_ct_numbering)
-                    @if ($invoice->book_code) <div>{{ $invoice->book_code }}</div>@endif
-                    @endif
                     <div>{{ date("j M Y") }}</div>
                   </td>
                 </tr>
