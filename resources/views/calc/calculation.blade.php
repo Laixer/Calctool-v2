@@ -1748,9 +1748,9 @@ if (!$project || !$project->isOwner())
 												</span>
 											</div>
 										</div>
-										<div class="col-md-6 text-right">
+										<!--<div class="col-md-6 text-right">
 											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Onderdeel verwijderen</button>
-										</div>
+										</div>-->
 									</div>
 									</form>
 								</div>
