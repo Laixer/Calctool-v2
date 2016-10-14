@@ -146,6 +146,12 @@ $(document).ready(function() {
 		}
 	});
 
+	$('#acc-deactive').on('click', function(e){
+		if (confirm('Relatie verwijderen?')){
+			window.location.href = '/relation-{{ $relation->id }}/delete';
+		}
+	});
+
     $('#summernote').summernote({
         height: $(this).attr("data-height") || 200,
         toolbar: [
@@ -213,7 +219,7 @@ $(document).ready(function() {
 					<div class="tab-content">
 						<div id="company" class="tab-pane">
 							<div class="pull-right">
-								<a href="/relation-{{ $relation->id }}/delete" id="acc-deactive" class="btn btn-danger">Verwijderen</a>
+								<a href="#" id="acc-deactive" class="btn btn-danger">Verwijderen</a>
 							</div>
 
 							<form method="POST" action="/relation/update" accept-charset="UTF-8">
