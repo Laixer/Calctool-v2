@@ -880,7 +880,7 @@ if (!$project || !$project->isOwner())
 		});
 		$("body").on("click", ".deletechap", function(e){
 			e.preventDefault();
-			if(confirm('Weet je het zeker?')){
+			if(confirm('Het verwijderen van een onderdeel verwijderd al je werkzaamheden onder het onderdeel, zowel onder Calculatie als onder Stelposten (indien gebruikt).\n\nWilt u het onderdeel toch verwijderen?')){
 				var $curThis = $(this);
 				if($curThis.attr("data-id"))
 					$.post("/calculation/deletechapter", {project: {{ $project->id }}, chapter: $curThis.attr("data-id")}, function(){
