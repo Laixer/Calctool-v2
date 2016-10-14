@@ -63,7 +63,7 @@ else {
 		<div class="row">
 			<div class="col-md-3">
 				<a class="logo" href="/">
-				{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" width=\"200px\" />" : '' !!}
+				{!! ($relation_self && $relation_self->logo_id) ? "<img src=\"/".Resource::find($relation_self->logo_id)->file_location."\" class=\"img-responsive\" style=\"height: 65px;\" />" : '' !!}
 				</a>
 			</div>
 		</div>
