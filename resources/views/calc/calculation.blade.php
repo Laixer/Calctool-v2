@@ -1050,53 +1050,43 @@ if (!$project || !$project->isOwner())
 			</div>
 
 			<div class="modal-body">
-				<div class="form-group input-group input-group-lg">
-					<div class="row">
-						<div class="col-md-4">
-						<span><strong>Zoek in volledig lijst:</strong></span>
-							<input type="text" id="search" value="" class="form-control" placeholder="Zoek producten">
-						</div>	
-						<div class="col-md-4">	
-						<span><strong>of sorteer op categrie:</strong></span>
-							<span class="input-group-btn">
-					        <select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000">
-						        <option value="0" selected>Selecteer</option>
-						        @foreach (ProductGroup::all() as $group)
-						        <option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
-						        	@foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
-						        	<option data-name="cat" value="{{ $cat->id }}"> - {{ $cat->category_name }}</option>
-						        	@endforeach
-						        @endforeach
-					   		</select>
-					    </span>
-					    </div>
-					    <div class="col-md-4">
-						    <span><strong>en subcategrie:</strong></span>
-							<span class="input-group-btn">
-						        <select id="group" class="btn" style="background-color: #E5E7E9; color:#000">
-						        <option value="0" selected>Selecteer</option>
-						        @foreach (ProductSubCategory::all() as $subcat)
-						          <option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
-						        @endforeach
-						        </select>
-							</span>
-						</div>
-					</div>
-					<br>
-					<div class="table-responsive">
-						<table id="tbl-material" class="table table-hover">
-							<thead>
-								<tr>
-									<th>Omschrijving</th>
-									<th>Eenheid</th>
-									<th>Prijs per eenheid</th>
-									<th>Totaalprijs</th>
-								</tr>
-							</thead>
-							<tbody>
-							</tbody>
-						</table>
-					</div>
+				
+			          <div class="form-group input-group input-group-lg">
+			            <input type="text" id="search" value="" class="form-control" placeholder="Zoek in volledig lijst">
+			              <span class="input-group-btn">
+			                  <select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000">
+			                    <option value="0" selected>of sorteer op categrie</option>
+			                    @foreach (ProductGroup::all() as $group)
+			                    <option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
+			                      @foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
+			                      <option data-name="cat" value="{{ $cat->id }}"> - {{ $cat->category_name }}</option>
+			                      @endforeach
+			                    @endforeach
+			                  </select>
+			                </span>
+			                <span class="input-group-btn">
+			                  <select id="group" class="btn" style="background-color: #E5E7E9; color:#000">
+			                  <option value="0" selected>en subcategrie</option>
+			                  @foreach (ProductSubCategory::all() as $subcat)
+			                    <option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
+			                  @endforeach
+			                  </select>
+			                </span>
+			          </div>
+			          <div class="table-responsive">
+			            <table id="tbl-material" class="table table-hover">
+			              <thead>
+			                <tr>
+			                  <th>Omschrijving</th>
+			                  <th>Eenheid</th>
+			                  <th>Prijs per eenheid</th>
+			                  <th>Totaalprijs</th>
+			                </tr>
+			              </thead>
+			              <tbody>
+						</tbody>
+					</table>
+				</div>
 			</div>
 
 			<div class="modal-footer">
