@@ -94,11 +94,12 @@ $type = ProjectType::find($project->type_id);
                       <td style="width: 100px">
                         <div><strong>Adres:</strong></div>
                         <div><strong>&nbsp;</strong></div>
-                        @if ($relation_self->phone)<div><strong>Telefoon:</strong></div>@endif
-                        @if ($relation_self->email)<div><strong>E-mail:</strong></div>@endif  
-                        @if ($relation_self->kvk)<div><strong>KVK:</strong></div>@endif 
-                        <div><strong>Rekening:</strong></div>
-                        <div><strong>Naam:</strong></div>
+                        @if ($relation_self->phone)<div><strong>Telefoon: </strong></div>@endif
+                        @if ($relation_self->email)<div><strong>E-mail: </strong></div>@endif  
+                        @if ($relation_self->kvk)<div><strong>KVK: </strong></div>@endif 
+                        @if ($relation_self->btw)<div><strong>BTW: </strong></div>@endif 
+                        @if ($relation_self->iban)<div><strong>IBAN: </strong></div>@endif 
+                        @if ($relation_self->iban_name)<div><strong>T.n.v.: </strong></div>@endif 
                       </td>
                       <td style="width: 200px">
                         <div>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</div>  
@@ -106,8 +107,9 @@ $type = ProjectType::find($project->type_id);
                         @if ($relation_self->phone)<div>{{ $relation_self->phone }} </div>@endif  
                         @if ($relation_self->email)<div>{{ $relation_self->email }}</div>@endif 
                         @if ($relation_self->kvk)<div>{{ $relation_self->kvk }}&nbsp;</div>@endif 
-                        <div>{{ $relation_self->iban }}&nbsp;</div>
-                        <div>{{ $relation_self->iban_name }}&nbsp;</div>
+                        @if ($relation_self->btw)<div>{{ $relation_self->btw }}</div>@endif 
+                        @if ($relation_self->iban)<div>{{ $relation_self->iban }}&nbsp;</div>@endif 
+                        @if ($relation_self->iban_name) <div>{{ $relation_self->iban_name }}&nbsp;</div>@endif 
                       </td>
                     </tr>
                   </tbody>

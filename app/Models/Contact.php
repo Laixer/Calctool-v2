@@ -22,7 +22,7 @@ class Contact extends Model {
 	public function getFormalName() {
 		if ($this->gender) {
 			if ($this->gender == 'M')
-				return 'de heer ' . $this->lastname;
+				return 'heer ' . $this->lastname;
 			else
 				return 'mevrouw ' . $this->lastname;
 		} else {
