@@ -392,9 +392,9 @@ class UserController extends Controller {
 		}
 
 		if ($request->get('mobile'))
-			$user->mobile = $request->get('mobile');
+			$user->mobile = substr($request->get('mobile'), 0, 9);
 		if ($request->get('phone'))
-			$user->phone = $request->get('phone');
+			$user->phone = substr($request->get('phone'), 0, 9);
 		if ($request->get('website'))
 			$user->website = $request->get('website');
 
