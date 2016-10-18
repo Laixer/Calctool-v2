@@ -977,7 +977,7 @@ $type = ProjectType::find($project->type_id);
   </table>
   <?#--CALCULATION TOTAL END --?>
   
-
+  @if ($project->use_estim)
     <?#--PAGE HEADER SECOND START--?>
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
@@ -1073,7 +1073,9 @@ $type = ProjectType::find($project->type_id);
       </tbody>
     </table>
   <?#--ESTIMATE TOTAL END--?>
+  @endif
 
+  @if ($project->use_less)
     <?#--PAGE HEADER SECOND START--?>
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
@@ -1169,6 +1171,9 @@ $type = ProjectType::find($project->type_id);
       </tbody>
     </table>
   <?#--LESS TOTAL END--?>
+  @endif
+
+  @if ($project->use_more)
     <?#--PAGE HEADER SECOND START--?>
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
@@ -1256,30 +1261,9 @@ $type = ProjectType::find($project->type_id);
       </tbody>
     </table>
   <?#--MORE TOTAL END--?>
+  @endif
 
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1416,7 +1400,7 @@ $type = ProjectType::find($project->type_id);
     </table>
     <?#--CALCULATION CONT & SUBCONT END--?>
 
-
+    @if ($project->use_estim)
     <?#--PAGE HEADER SECOND START--?>
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
@@ -1547,7 +1531,9 @@ $type = ProjectType::find($project->type_id);
         </tr>
     </table>
     <?#--ESTIMATE CONT & SUBCOINT END--?>
+    @endif
 
+    @if ($project->use_less)
     <?#--PAGE HEADER SECOND START--?>
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
@@ -1677,7 +1663,9 @@ $type = ProjectType::find($project->type_id);
         </tr>
     </table>
     <?#--LESS CONT & SUBCOINT END--?>
+    @endif
 
+    @if ($project->use_more)
     <?#--PAGE HEADER SECOND START--?>
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
@@ -1800,6 +1788,7 @@ $type = ProjectType::find($project->type_id);
         </tr>
     </table>
     <?#--LESS CONT & SUBCOINT END--?>
+    @endif
     @endif
     @endif
     <?#--TOTAL END--?>

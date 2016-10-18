@@ -1059,7 +1059,7 @@ $type = ProjectType::find($project->type_id);
   </table>
   <?#--CALCULATION TOTAL END --?>
   
-
+   @if ($project->use_estim)
     <?#--PAGE HEADER SECOND START--?>
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
@@ -1155,8 +1155,10 @@ $type = ProjectType::find($project->type_id);
       </tbody>
     </table>
   <?#--ESTIMATE TOTAL END--?>
+  @endif
 
-    <?#--PAGE HEADER SECOND START--?>
+  @if ($project->use_less)
+  <?#--PAGE HEADER SECOND START--?>
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
       <div id="logo">
@@ -1170,7 +1172,7 @@ $type = ProjectType::find($project->type_id);
       </header>
       <?#--PAGE HEADER SECOND END--?>
 
-  <?#--LESS TOTAL START--?>
+    <?#--LESS TOTAL START--?>
 
    <h2 class="name">Minderwerk per werkzaamheid</h2>
    <hr color="#000" size="1">
@@ -1251,7 +1253,10 @@ $type = ProjectType::find($project->type_id);
       </tbody>
     </table>
   <?#--LESS TOTAL END--?>
-    <?#--PAGE HEADER SECOND START--?>
+  @endif
+
+  @if ($project->use_more)
+  <?#--PAGE HEADER SECOND START--?>
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
       <div id="logo">
@@ -1338,36 +1343,9 @@ $type = ProjectType::find($project->type_id);
       </tbody>
     </table>
   <?#--MORE TOTAL END--?>
+  @endif
 
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   <?#--TOTAL END--?>
@@ -1499,6 +1477,7 @@ $type = ProjectType::find($project->type_id);
     <?#--CALCULATION CONT & SUBCONT END--?>
 
 
+   @if ($project->use_estim)
     <?#--PAGE HEADER SECOND START--?>
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
@@ -1629,7 +1608,9 @@ $type = ProjectType::find($project->type_id);
         </tr>
     </table>
     <?#--ESTIMATE CONT & SUBCOINT END--?>
+    @endif
 
+    @if ($project->use_less)
     <?#--PAGE HEADER SECOND START--?>
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
@@ -1644,6 +1625,7 @@ $type = ProjectType::find($project->type_id);
       </header>
       <?#--PAGE HEADER SECOND END--?>
 
+    
     <?#--LESS CONT & SUBCOINT START--?>
 
     <h2 class="name">Totalen minderwerk</h2>
@@ -1759,7 +1741,9 @@ $type = ProjectType::find($project->type_id);
         </tr>
     </table>
     <?#--LESS CONT & SUBCOINT END--?>
+    @endif
 
+    @if ($project->use_more)
     <?#--PAGE HEADER SECOND START--?>
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
@@ -1882,6 +1866,7 @@ $type = ProjectType::find($project->type_id);
         </tr>
     </table>
     <?#--LESS CONT & SUBCOINT END--?>
+    @endif
     @endif
     @endif
     <?#--TOTAL END--?>
