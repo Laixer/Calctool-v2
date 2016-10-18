@@ -240,6 +240,7 @@ class RelationController extends Controller {
 			'city' => array('required','max:35'),
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric'),
+			'website' => array('max:180'),
 		]);
 
 		/* General */
@@ -297,6 +298,7 @@ class RelationController extends Controller {
 			'country' => array('required','numeric'),
 			'telephone' => array('max:12'),
 			'mobile' => array('max:12'),
+			'website' => array('max:180'),
 		);
 
 		$this->validate($request, $rules);

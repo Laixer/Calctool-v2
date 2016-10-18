@@ -386,17 +386,17 @@ class ProjectController extends Controller {
 			$project->hour_rate = $hour_rate;
 			$project->hour_rate_more = $hour_rate_more;
 		if ($request->input('profit_material_1') != "")
-			$project->profit_calc_contr_mat = $request->input('profit_material_1');
+			$project->profit_calc_contr_mat = round($request->input('profit_material_1'));
 		if ($request->input('profit_equipment_1') != "")
-			$project->profit_calc_contr_equip = $request->input('profit_equipment_1');
+			$project->profit_calc_contr_equip = round($request->input('profit_equipment_1'));
 		if ($request->input('profit_material_2') != "")
-			$project->profit_calc_subcontr_mat = $request->input('profit_material_2');
+			$project->profit_calc_subcontr_mat = round($request->input('profit_material_2'));
 		if ($request->input('profit_equipment_2') != "")
-			$project->profit_calc_subcontr_equip = $request->input('profit_equipment_2');
-		$project->profit_more_contr_mat = $request->input('more_profit_material_1');
-		$project->profit_more_contr_equip = $request->input('more_profit_equipment_1');
-		$project->profit_more_subcontr_mat = $request->input('more_profit_material_2');
-		$project->profit_more_subcontr_equip = $request->input('more_profit_equipment_2');
+			$project->profit_calc_subcontr_equip = round($request->input('profit_equipment_2'));
+		$project->profit_more_contr_mat = round($request->input('more_profit_material_1'));
+		$project->profit_more_contr_equip = round($request->input('more_profit_equipment_1'));
+		$project->profit_more_subcontr_mat = round($request->input('more_profit_material_2'));
+		$project->profit_more_subcontr_equip = round($request->input('more_profit_equipment_2'));
 
 		$project->save();
 

@@ -285,7 +285,7 @@ $type = ProjectType::find($project->type_id);
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="only-totals" type="checkbox" checked> Calculatie, stelpost en meer-/minderwerk weergeven
+						          <input name="only-totals" type="checkbox" checked> Calculatie @if ($project->use_estim),stelpost @endif @if ($project->use_more), meerwerk @endif @if ($project->use_less), minderwerk @endif weergeven
 						        </label>
 						      </div>
 						    </div>
@@ -294,7 +294,7 @@ $type = ProjectType::find($project->type_id);
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
 						        <label>
-						          <input name="display-specification" type="checkbox" checked> Specificeren in arbeid, materiaal en overig
+						          <input name="display-specification" type="checkbox" checked> Specificeren in arbeid en materiaal @if ($project->use_equipment) en overig @endif
 						        </label>
 						      </div>
 						    </div>
@@ -549,7 +549,7 @@ $type = ProjectType::find($project->type_id);
 						<td class="only-end-total-spec col-md-1">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax2($project), 2, ",",".") }}</td>
 						@endif
 						<td class="only-end-total-spec col-md-1">@if (!$project->tax_reverse) 6% @endif</td>
-						<td class="only-end-total-spec col-md-2">@if (!$project->tax_reverse) {{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax2AmountTax($project), 2, ",",".") }} @endif</td>
+						<td class="only-end-total-spec col-md-1">@if (!$project->tax_reverse) {{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax2AmountTax($project), 2, ",",".") }} @endif</td>
 					</tr>
 					@endif
 					<tr>
@@ -1023,8 +1023,9 @@ $type = ProjectType::find($project->type_id);
 				<hr class="margin-top10 margin-bottom10">
 				<?#--PAGE HEADER END--?>
 
+				@if ($project->use_subcontract)
 				<?#-- DECRIPTION CON&SUBCON START --?>
-				<div class="show-all">
+				<div class="show-all" style="display:none">
 					<h4>Calculatie Aanneming</h4>
 					<table class="table table-striped">
 						<thead>
@@ -1148,9 +1149,9 @@ $type = ProjectType::find($project->type_id);
 					</table>
 				</div>
 				<?#-- DECRIPTION CON&SUBCON END --?>
-
+				
 				<?#-- DECRIPTION TOTAL START --?>
-				<div class="show-subcon" style="display:none;">
+				<div class="show-subcon" style="display">
 					<h4>Calculatie</h4>
 					<table class="table table-striped">
 						<thead>
@@ -1224,9 +1225,89 @@ $type = ProjectType::find($project->type_id);
 						</tbody>
 					</table>
 				</div>
+				
+				@else
+
+				<?#-- DECRIPTION TOTAL START --?>
+				<div class="show-subcon">
+					<h4>Calculatie</h4>
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th class="col-md-3">Onderdeel</th>
+								<th class="col-md-4">Werkzaamheden</th>
+								<th class="only-end-total-spec col-md-1"><span class="pull-right">Arbeidsuren</th>
+								<th class="only-end-total-spec col-md-1"><span class="pull-right">Arbeid</th>
+								<th class="only-end-total-spec col-md-1"><span class="pull-right">Materiaal</th>
+								@if ($project->use_equipment)
+								<th class="only-end-total-spec col-md-1"><span class="pull-right">Overig</th>
+								@endif
+								<th class="col-md-1"><span class="pull-right">Totaal</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
+							<?php $i = 0; ?>
+							@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->whereNull('detail_id')->get() as $activity)
+							<?php
+							$i++;
+							$mat_profit = 0;
+							$equip_profit = 0;
+							if ($activity->part_id == Part::where('part_name','=','contracting')->first()->id) {
+								$mat_profit = $project->profit_calc_contr_mat;
+								$equip_profit = $project->profit_calc_contr_equip;
+							} else {
+								$mat_profit = $project->profit_calc_subcontr_mat;
+								$equip_profit = $project->profit_calc_subcontr_equip;
+							}
+							?>
+							<tr>
+								<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
+								<td class="col-md-4">{{ $activity->activity_name }}</td>
+								<td class="only-end-total-spec col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
+								<td class="only-end-total-spec col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
+								<td class="only-end-total-spec col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $mat_profit), 2, ",",".") }}</span></td>
+								@if ($project->use_equipment)
+								<td class="only-end-total-spec col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $equip_profit), 2, ",",".") }}</span></td>
+								@endif
+								<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $mat_profit, $equip_profit), 2, ",",".") }} </td>
+							</tr>
+							@endforeach
+							@endforeach
+						</tbody>
+					</table>
+					<table class="table table-striped only-end-total">
+						<thead>
+							<tr>
+								<th class="col-md-7">&nbsp;</th>
+								<th class="only-end-total-spec col-md-1"><span class="pull-right">Arbeidsuren</span></th>
+								<th class="only-end-total-spec col-md-1"><span class="pull-right">Arbeid</span></th>
+								<th class="only-end-total-spec col-md-1"><span class="pull-right">Materiaal</span></th>
+								@if ($project->use_equipment)
+								<th class="only-end-total-spec col-md-1"><span class="pull-right">Overig</span></th>
+								@endif
+								<th class="col-md-1"><span class="pull-right">Totaal</span></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="col-md-7"><strong>Totalen calculatie</strong></td>
+								<td class="only-end-total-spec col-md-1"><strong><span class="pull-right">{{ number_format(CalculationOverview::laborSuperTotalAmount($project), 2, ",",".") }}</span></strong></td>
+								<td class="only-end-total-spec col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></strong></td>
+								<td class="only-end-total-spec col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></strong></td>
+								@if ($project->use_equipment)
+								<td class="only-end-total-spec col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></strong></td>
+								@endif
+								<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></strong></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				@endif
 				<h5><strong>Weergegeven bedragen zijn exclusief BTW</strong></h5>
 			</div>
 			<?#-- DECRIPTION TOTAL END --?>
+
 
 			@if ($project->use_estimate)
 			<?#--PAGE HEADER START--?>
