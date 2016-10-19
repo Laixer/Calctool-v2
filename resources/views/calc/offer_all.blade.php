@@ -183,9 +183,9 @@ $(document).ready(function() {
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th class="col-md-2">Offertenummer</th>
-						<th class="col-md-2">Datum</th>
-						<th class="col-md-3">Versie</th>
+						<th class="col-md-4">Offertenummer</th>
+						<th class="col-md-3">Datum</th>
+						@if(0) <th class="col-md-3">Versie</th> @endif
 						<th class="col-md-3">Offertebedrag (excl. BTW)</th>
 						<th class="col-md-3">Acties</th>
 					</tr>
@@ -195,9 +195,9 @@ $(document).ready(function() {
 					@foreach(Offer::where('project_id', '=', $project->id)->orderBy('created_at')->get() as $offer)
 					<?php $i++; ?>
 					<tr>
-						<td class="col-md-2"><a href="/offer/project-{{ $project->id }}/offer-{{ $offer->id }}">{{ $offer->offer_code }}</a></td>
-						<td class="col-md-2"><?php echo date('d-m-Y', strtotime($offer->offer_make)); ?></td>
-						<td class="col-md-3">{{ $i }}</td>
+						<td class="col-md-4"><a href="/offer/project-{{ $project->id }}/offer-{{ $offer->id }}">{{ $offer->offer_code }}</a></td>
+						<td class="col-md-3"><?php echo date('d-m-Y', strtotime($offer->offer_make)); ?></td>
+						@if(0) <td class="col-md-3">{{ $i }}</td> @endif
 						<td class="col-md-3">{{ '&euro; '.number_format($offer->offer_total, 2, ",",".") }}</td>
 						<td class="col-md-3">
 						@if ($offer_last && $offer_last->id == $offer->id && !$offer->offer_finish)
