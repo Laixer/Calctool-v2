@@ -627,13 +627,22 @@ class CalcController extends Controller {
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
 			return response()->json(['success' => 0]);
 		}
+		$project = Project::find($chapter->project_id);
 
 		$fav_activity = new FavoriteActivity;
 		$fav_activity->activity_name = $activity->activity_name;
 		$fav_activity->user_id = Auth::id();
-		$fav_activity->tax_labor_id = $activity->tax_labor_id;
-		$fav_activity->tax_material_id = $activity->tax_material_id;
-		$fav_activity->tax_equipment_id = $activity->tax_equipment_id;
+
+		if ($project->tax_reverse) {
+			$tax = Tax::where('tax_rate',21)->first();
+			$fav_activity->tax_labor_id = $tax->id;
+			$fav_activity->tax_material_id = $tax->id;
+			$fav_activity->tax_equipment_id = $tax->id;
+		} else {
+			$fav_activity->tax_labor_id = $activity->tax_labor_id;
+			$fav_activity->tax_material_id = $activity->tax_material_id;
+			$fav_activity->tax_equipment_id = $activity->tax_equipment_id;
+		}
 
 		$fav_activity->save();
 
@@ -684,13 +693,22 @@ class CalcController extends Controller {
 		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
 			return response()->json(['success' => 0]);
 		}
+		$project = Project::find($chapter->project_id);
 
 		$fav_activity = new FavoriteActivity;
 		$fav_activity->activity_name = $activity->activity_name;
 		$fav_activity->user_id = Auth::id();
-		$fav_activity->tax_labor_id = $activity->tax_labor_id;
-		$fav_activity->tax_material_id = $activity->tax_material_id;
-		$fav_activity->tax_equipment_id = $activity->tax_equipment_id;
+
+		if ($project->tax_reverse) {
+			$tax = Tax::where('tax_rate',21)->first();
+			$fav_activity->tax_labor_id = $tax->id;
+			$fav_activity->tax_material_id = $tax->id;
+			$fav_activity->tax_equipment_id = $tax->id;
+		} else {
+			$fav_activity->tax_labor_id = $activity->tax_labor_id;
+			$fav_activity->tax_material_id = $activity->tax_material_id;
+			$fav_activity->tax_equipment_id = $activity->tax_equipment_id;
+		}
 
 		$fav_activity->save();
 
