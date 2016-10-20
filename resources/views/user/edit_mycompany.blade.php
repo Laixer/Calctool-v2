@@ -228,13 +228,6 @@ $(document).ready(function() {
 
 			<iframe width="1280" height="720" src="https://www.youtube.com/embed/jlCQ3nWO9T0?rel=0" frameborder="0" allowfullscreen></iframe>
 
-			<div class="modal-body">
-				<div class="form-horizontal">
-
-
-				</div>
-			</div>
-
 		</div>
 	</div>
 </div>
