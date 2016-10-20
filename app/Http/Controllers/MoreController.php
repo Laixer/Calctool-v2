@@ -61,10 +61,17 @@ class MoreController extends Controller {
 		$activity->part_id = $part->id;
 		$activity->part_type_id = $part_type->id;
 		$activity->detail_id = $detail->id;
-		$activity->tax_labor_id = $favact->tax_labor_id;
-		$activity->tax_material_id = $favact->tax_material_id;
-		$activity->tax_equipment_id = $favact->tax_equipment_id;
 
+		if ($project->tax_reverse) {
+			$tax_id = Tax::where('tax_rate','0')->first()['id'];
+			$activity->tax_labor_id = $tax_id;
+			$activity->tax_material_id = $tax_id;
+			$activity->tax_equipment_id = $tax_id;
+		} else {
+			$activity->tax_labor_id = $favact->tax_labor_id;
+			$activity->tax_material_id = $favact->tax_material_id;
+			$activity->tax_equipment_id = $favact->tax_equipment_id;
+		}
 		$activity->save();
 
 		$this->updateMoreStatus($projectid);
