@@ -16,14 +16,11 @@ $user = Auth::user();
 @section('title', 'Mijn bedrijf')
 
 @push('style')
-<link media="all" type="text/css" rel="stylesheet" href="/components/intro.js/introjs.css">
 <link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
 @endpush
 
 @push('scripts')
 <script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-<script src="/components/intro.js/intro.js"></script>
-<script type="text/javascript" src="/js/iban.js"></script>
 @endpush
 
 @section('content')

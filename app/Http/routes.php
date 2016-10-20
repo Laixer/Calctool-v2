@@ -199,6 +199,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('calculation/calc/updatematerial', 'CalcController@doUpdateCalculationMaterial');
 	Route::post('calculation/calc/updateequipment', 'CalcController@doUpdateCalculationEquipment');
 	Route::post('calculation/calc/updatelabor', 'CalcController@doUpdateCalculationLabor');
+	Route::post('calculation/calc/savefav', 'CalcController@doNewCalculationFavorite');
 
 	/* Estimate acions by calculation */
 	Route::post('calculation/estim/newmaterial', 'CalcController@doNewEstimateMaterial');
@@ -210,6 +211,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('calculation/estim/updatematerial', 'CalcController@doUpdateEstimateMaterial');
 	Route::post('calculation/estim/updateequipment', 'CalcController@doUpdateEstimateEquipment');
 	Route::post('calculation/estim/updatelabor', 'CalcController@doUpdateEstimateLabor');
+	Route::post('calculation/estim/savefav', 'CalcController@doNewEstimateFavorite');
 
 	/* Blancrow acions by calculation */
 	Route::post('blancrow/newrow', 'BlancController@doNewRow');
@@ -217,10 +219,12 @@ Route::group(['middleware' => 'auth'], function() {
 
 	/* Calculation pages */
 	Route::get('calculation/project-{project_id}', 'CalcController@getCalculation')->where('project_id', '[0-9]+')->middleware('payzone');
+	Route::get('calculation/project-{project_id}/chapter-{chapter_id}/fav-{fav_id}', 'CalcController@getCalculationWithFavorite')->where('project_id', '[0-9]+')->middleware('payzone');
 	Route::get('calculation/summary/project-{project_id}', 'CalcController@getCalculationSummary')->where('project_id', '[0-9]+')->middleware('payzone');
 	Route::get('calculation/endresult/project-{project_id}', 'CalcController@getCalculationEndresult')->where('project_id', '[0-9]+')->middleware('payzone');
 	Route::get('blancrow/project-{project_id}', 'BlancController@getBlanc')->where('project_id', '[0-9]+')->middleware('payzone');
 	Route::get('estimate/project-{project_id}', 'CalcController@getEstimate')->where('project_id', '[0-9]+')->middleware('payzone');
+	Route::get('estimate/project-{project_id}/chapter-{chapter_id}/fav-{fav_id}', 'CalcController@getEstimateWithFavorite')->where('project_id', '[0-9]+')->middleware('payzone');
 	Route::get('estimate/summary/project-{project_id}', 'CalcController@getEstimateSummary')->where('project_id', '[0-9]+')->middleware('payzone');
 	Route::get('estimate/endresult/project-{project_id}', 'CalcController@getEstimateEndresult')->where('project_id', '[0-9]+')->middleware('payzone');
 
