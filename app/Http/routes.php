@@ -105,6 +105,7 @@ Route::group(['middleware' => 'auth'], function() {
 		return view('calc.result');
 	})->where('project_id', '[0-9]+')->middleware('payzone');
 	Route::get('res-{resource_id}/download', 'ProjectController@downloadResource')->where('resource_id', '[0-9]+');
+	Route::post('resource/upload', 'ProjectController@doUploadProjectDocument');
 	Route::get('apps', 'AppsController@getAppsDashboard');
 	Route::get('myaccount', function() {
 		return view('user.myaccount');

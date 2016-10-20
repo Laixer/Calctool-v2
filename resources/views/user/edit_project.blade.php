@@ -16,6 +16,7 @@ use \Calctool\Models\Country;
 use \Calctool\Models\Chapter;
 use \Calctool\Models\Activity;
 use \Calctool\Models\Timesheet;
+use \Calctool\Models\Resource;
 use \Calctool\Models\TimesheetKind;
 use \Calctool\Models\Purchase;
 use \Calctool\Models\EstimateLabor;
@@ -137,14 +138,11 @@ if ($less_total>0) {
 		$('#tab-calc').click(function(e){
 			sessionStorage.toggleTabProj{{Auth::id()}} = 'calc';
 		});
-		$('#tab-hour').click(function(e){
-			sessionStorage.toggleTabProj{{Auth::id()}} = 'hour';
+		$('#tab-doc').click(function(e){
+			sessionStorage.toggleTabProj{{Auth::id()}} = 'doc';
 		});
 		$('#tab-advanced').click(function(e){
 			sessionStorage.toggleTabProj{{Auth::id()}} = 'advanced';
-		});
-		$('#tab-purchase').click(function(e){
-			sessionStorage.toggleTabProj{{Auth::id()}} = 'purchase';
 		});
 		$('#tab-communication').click(function(e){
 			sessionStorage.toggleTabProj{{Auth::id()}} = 'communication';
@@ -350,55 +348,9 @@ if ($less_total>0) {
 	    		$("[name='more_hour_rate']").val($(this).val());
 	    });// bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 
-	/*if (sessionStorage.introDemo) {
-		var demo = introJs().
-			setOption('nextLabel', 'Volgende').
-			setOption('prevLabel', 'Vorige').
-			setOption('skipLabel', 'Overslaan').
-			setOption('doneLabel', 'Klaar').
-			setOption('showBullets', false).
-			onexit(function(){
-				sessionStorage.removeItem('introDemo');
-			}).onbeforechange(function(){
-				sessionStorage.introDemo = this._currentStep;
-				if (this._currentStep == 1) {
-					$('#tab-calc').addClass('active');
-					$('#calc').addClass('active');
-
-					$('#tab-project').removeClass('active');
-					$('#project').removeClass('active');
-				}
-				if (this._currentStep == 3) {
-					$('#tab-advanced').addClass('active');
-					$('#advanced').addClass('active');
-
-					$('#tab-calc').removeClass('active');
-					$('#calc').removeClass('active');
-				}
-			}).onafterchange(function(){
-				var done = this._currentStep;
-				if (done == 3) {
-					$('.introjs-skipbutton').css("visibility","initial");
-				} else {
-					$('.introjs-skipbutton').css("visibility","hidden");
-				}
-				$('.introjs-skipbutton').click(function(){
-					if (done == 3) {
-						sessionStorage.introDemo = 999;
-						window.location.href = '/calculation/project-{{ $project->id }}';
-					}
-				});
-			});
-
-		if (sessionStorage.introDemo == 999) {
-			sessionStorage.introDemo = 0;
-
-			demo.start();
-		} else {
-			demo.goToStep(sessionStorage.introDemo).start();
-		}
-
-	}*/
+	$('#btn-load-file').change(function() {
+		$('#upload-file').submit();
+	});
 
 });
 </script>
@@ -455,6 +407,9 @@ if ($less_total>0) {
 						</li>
 						<li id="tab-calc">
 							<a href="#calc" data-toggle="tab" data-step="1" data-intro="Geef je uurtarief en winstpercentages op waarmee je wilt gaan calculeren.">Uurtarief en Winstpercentages</a>
+						</li>
+						<li id="tab-doc">
+							<a href="#doc" data-toggle="tab" data-step="1" data-intro="Geef je uurtarief en winstpercentages op waarmee je wilt gaan calculeren.">Documenten</a>
 						</li>
 						@endif
 						@if ($share && $share->client_note )
@@ -1042,6 +997,38 @@ if ($less_total>0) {
 									</div>		
 								</div>									
 							</div>
+						</div>
+						<div id="doc" class="tab-pane">
+
+							<div class="pull-right">
+
+					            <form id="upload-file" action="/resource/upload" method="post" enctype="multipart/form-data">
+					            {!! csrf_field() !!}
+						            <label class="btn btn-primary btn-file">
+									    Upload document <input type="file" name="projectfile" id="btn-load-file" style="display: none;">
+									</label>
+									<input type="hidden" value="{{ $project->id }}" name="project" />
+								</form>
+							</div>
+							<h4>Projectdocumenten</h4><br />
+
+							<!-- FEATURED BOXES 3 -->
+							<section class="container" style="width:1100px">
+								<div class="row">
+									@foreach(Resource::where('project_id', $project->id)->get() as $file)
+									<div class="col-md-3">
+										<div class="featured-box nobg border-only">
+											<a href="/res-{{ $file->id }}/download">
+												<i class="fa fa-file-pdf-o"></i>
+												<h4>{{ $file->resource_name }}</h4>
+											</a>
+										</div>
+									</div>
+									@endforeach
+								</div>
+							</section>
+							<!-- /FEATURED BOXES 3 -->
+
 						</div>
 					</div>
 				</div>

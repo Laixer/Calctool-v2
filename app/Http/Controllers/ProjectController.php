@@ -646,4 +646,39 @@ class ProjectController extends Controller {
 
 		return response()->json($arr);
 	}
+
+	public function doUploadProjectDocument(Request $request)
+	{
+		$this->validate($request, [
+			'projectfile' => array('required', 'mimes:jpeg,jpg,bmp,png,gif,pdf,doc,xls,docx,xlsx,csv,txt,ppt,pptx,xml'),
+			'project' => array('required'),
+		]);
+
+		$project = Project::find($request->input('project'));
+		if (!$project || !$project->isOwner()) {
+			return back()->withInput($request->all());
+		}
+
+		if ($request->hasFile('projectfile')) {
+			$file = $request->file('projectfile');
+
+			$newname = Auth::id().'-'.md5(mt_rand()).'.'.$file->getClientOriginalExtension();
+			$file->move('user-content', $newname);
+
+			$resource = new Resource;
+			$resource->resource_name = $file->getClientOriginalName();
+			$resource->file_location = 'user-content/' . $newname;
+			$resource->file_size = $file->getClientSize();
+			$resource->user_id = Auth::id();
+			$resource->project_id = $project->id;
+			$resource->description = 'Project document';
+
+			$resource->save();
+
+			return back()->with('success', 'Document aan project toegevoegd');
+		} else {
+			// redirect our user back to the form with the errors from the validator
+			return back()->withErrors('Geen CSV geupload');
+		}
+	}
 }
