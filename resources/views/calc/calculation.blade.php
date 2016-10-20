@@ -1226,10 +1226,16 @@ if (!$project || !$project->isOwner())
 	    												<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming</label>
 														@endif
 													</div>
+													
 													<div class="col-md-6 text-right">
-														<button data-id="{{ $activity->id }}" class="btn btn-info btn-xs lsavefav">Opslaan als favoriete werkzaaheid</button>
 														<button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving</button>
-														<button data-id="{{ $activity->id }}" class="btn btn-danger btn-xs deleteact">Verwijderen</button>
+														<div class="btn-group" role="group">
+														  <button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acties&nbsp;&nbsp;<span class="caret"></span></button>
+														  <ul class="dropdown-menu">
+														    <li><a href="#" data-id="{{ $activity->id }}" class="lsavefav">Opslaan als favoriet</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" class="deleteact">Verwijderen</a></li>
+														  </ul>
+														</div>
 													</div>
 												</div>
 
