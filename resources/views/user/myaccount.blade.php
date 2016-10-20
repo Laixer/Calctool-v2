@@ -213,6 +213,14 @@ $(document).ready(function() {
 			</div>
 			@endif
 
+			<?php
+				$clients = DB::table('oauth_sessions')
+							->join('oauth_clients', 'oauth_sessions.client_id', '=', 'oauth_clients.id')
+							->leftJoin('oauth_access_tokens', 'oauth_sessions.id', '=', 'oauth_access_tokens.session_id')
+							->select('oauth_sessions.*', 'oauth_clients.name', 'oauth_clients.active', 'oauth_access_tokens.created_at as last_used')
+							->where('owner_id',Auth::id())->get();
+			?>
+
 			<h2><strong>Mijn</strong> account</h2>
 
 				<div class="tabs nomargin-top">
@@ -227,9 +235,11 @@ $(document).ready(function() {
 						<li id="tab-contact">
 							<a href="#contact" data-toggle="tab">Wachtwoord</a>
 						</li>
+						@if (count($clients))
 						<li id="tab-apps">
 							<a href="#apps" data-toggle="tab">Applicaties</a>
 						</li>
+						@endif
 						<li id="tab-other">
 							<a href="#other" data-toggle="tab">Overig</a>
 						</li>
@@ -414,6 +424,7 @@ $(document).ready(function() {
 
 						</div>
 						
+						@if (count($clients))
 						<div id="apps" class="tab-pane">
 
 							<h4>Externe applicaties</h4>
@@ -431,11 +442,6 @@ $(document).ready(function() {
 								<tbody>
 
 								<?php
-									$clients = DB::table('oauth_sessions')
-										->join('oauth_clients', 'oauth_sessions.client_id', '=', 'oauth_clients.id')
-										->leftJoin('oauth_access_tokens', 'oauth_sessions.id', '=', 'oauth_access_tokens.session_id')
-										->select('oauth_sessions.*', 'oauth_clients.name', 'oauth_clients.active', 'oauth_access_tokens.created_at as last_used')
-										->where('owner_id',Auth::id())->get();
 									?>
 									@foreach ($clients as $client)
 									<tr>
@@ -449,6 +455,7 @@ $(document).ready(function() {
 								</tbody>
 							</table>
 						</div>
+						@endif
 
 						<div id="other" class="tab-pane">
 
