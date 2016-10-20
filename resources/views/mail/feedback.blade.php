@@ -57,9 +57,23 @@
 												<tr><!-- spacer after the line -->
 													<td width="100%" height="30"></td>
 												</tr>
+												@if(isset($category))
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														{!! $feedback_message !!}
+														<strong>Categorie: </strong>{{ $category }}
+													</td>
+												</tr>
+												@endif
+												@if(isset($subject))
+												<tr>
+													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
+														<strong>Onderwerp: </strong>{{ $subject }}
+													</td>
+												</tr>
+												@endif
+												<tr>
+													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
+														<strong>Bericht: </strong><br />{!! $feedback_message !!}
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->

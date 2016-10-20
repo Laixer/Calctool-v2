@@ -36,6 +36,27 @@ $(document).ready(function() {
 
 	<section id="contact" class="container">
 
+		<h2>Stuur ons een <strong>bericht</strong>, stel een <strong>vraag</strong> of geef ons een <strong>belletje</strong></h2>
+
+		@if(Session::get('success'))
+		<div class="alert alert-success">
+			<i class="fa fa-check-circle"></i>
+			<strong>{{ Session::get('success') }}</strong>
+		</div>
+		@endif
+
+		@if (count($errors) > 0)
+		<div class="alert alert-danger">
+			<i class="fa fa-frown-o"></i>
+			<strong>Fouten in de invoer</strong>
+			<ul>
+				@foreach ($errors->all() as $error)
+				<li><h5 class="nomargin">{{ $error }}</h5></li>
+				@endforeach
+			</ul>
+		</div>
+		@endif
+
 		<div class="row">
 
 			<div class="col-md-12">
@@ -54,27 +75,6 @@ $(document).ready(function() {
 		<div class="row">
 
 			<div class="col-md-12">
-
-				@if(Session::get('success'))
-				<div class="alert alert-success">
-					<i class="fa fa-check-circle"></i>
-					<strong>{{ Session::get('success') }}</strong>
-				</div>
-				@endif
-
-				@if (count($errors) > 0)
-				<div class="alert alert-danger">
-					<i class="fa fa-frown-o"></i>
-					<strong>Fouten in de invoer</strong>
-					<ul>
-						@foreach ($errors->all() as $error)
-						<li><h5 class="nomargin">{{ $error }}</h5></li>
-						@endforeach
-					</ul>
-				</div>
-				@endif
-
-				<h2>Stuur ons een <strong>bericht</strong>, stel een <strong>vraag</strong> of geef ons een <strong>belletje</strong></h2>
 
 				<form class="white-row" action="/support" method="post">
 				{!! csrf_field() !!}
@@ -99,8 +99,20 @@ $(document).ready(function() {
 					</div>
 					<div class="row">
 						<div class="form-group">
-							<div class="col-md-12">
-								<label>Onderwerp</label>
+							<div class="col-md-4">
+								<label for="category">Categorie (optioneel)</label>
+								<select name="category" id="company_type" class="form-control pointer">
+									<option>Hulp / Demo gewenst</option>
+									<option>Account gerelateerd</option>
+									<option>Betaling gerelateerd</option>
+									<option>Vraag / Suggestie</option>
+									<option>Applicatieprobleem</option>
+									<option>Wachtwoord vergeten</option>
+									<option selected="selected">Overig</option>
+								</select>
+							</div>
+							<div class="col-md-8">
+								<label>Onderwerp (optioneel)</label>
 								<input type="text" value="" data-msg-required="Please enter the subject." maxlength="100" class="form-control" name="subject" id="subject">
 							</div>
 						</div>
@@ -114,8 +126,6 @@ $(document).ready(function() {
 						</div>
 
 					</div>
-
-					<br />
 
 					<div class="row">
 						<div class="col-md-12">
