@@ -482,7 +482,7 @@ class InvoiceController extends Controller {
 			}
 			$message->attach($data['pdf']);
 			$message->subject('Factuur ' . $data['project_name']);
-			$message->from('info@calculatietool.com', $data['mycomp']);
+			$message->from('noreply@calculatietool.com', $data['mycomp']);
 			$message->replyTo($data['email_from'], $data['mycomp']);
 		});
 

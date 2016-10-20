@@ -237,7 +237,7 @@ class OfferController extends Controller {
 			}
 			$message->attach($data['pdf']);
 			$message->subject('Offerte ' . $data['project_name']);
-			$message->from('info@calculatietool.com', $data['mycomp']);
+			$message->from('noreply@calculatietool.com', $data['mycomp']);
 			$message->replyTo($data['email_from'], $data['mycomp']);
 		});
 
