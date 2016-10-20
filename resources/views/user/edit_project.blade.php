@@ -467,17 +467,6 @@ if ($less_total>0) {
 					<div class="tab-content">
 
 						<div id="project" class="tab-pane">
-							
-
-
-
-
-
-
-
-
-
-
 							<div class="pull-right">
 								<a href="#" href="javascript:void(0);" data-toggle="modal" data-target="#notepad" class="btn btn-primary">Kladblok</a>
 								<div class="btn-group" role="group">
@@ -492,24 +481,6 @@ if ($less_total>0) {
 								  </ul>
 								</div>
 							</div>
-
-
-
-
-							
-
-
-
-
-
-
-
-
-
-
-
-
-
 						<form method="post" {!! $offer_last && $offer_last->offer_finish ? 'action="/project/update/note"' : 'action="/project/update"' !!}>
    	  	                {!! csrf_field() !!}
 
