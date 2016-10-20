@@ -151,8 +151,8 @@ if (!$project || !$project->isOwner())
 											<label>{{ $activity->activity_name }}</label>
 											<div class="toggle-content">
 												<div class="row">
+													<div class="col-md-1 text-right label label-info"><strong>{{ Part::find($activity->part_id)->part_name=='subcontracting' ? 'Onderaanneming' : 'Aanneming' }}</strong></div>
 													<div class="col-md-10"></div>
-													<div class="col-md-2 text-right label label-info"><strong>{{ Part::find($activity->part_id)->part_name=='subcontracting' ? 'Onderaanneming' : 'Aanneming' }}</strong></div>
 												</div>
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>

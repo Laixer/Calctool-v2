@@ -23,6 +23,6 @@ class SupportTest extends TestCase
              ->type($faker->text, 'subject')
              ->type($faker->text, 'message')
              ->press('Verstuur')
-             ->see('Bericht verstuurd');
+             ->see('Bericht en kopie verstuurd');
     }
 }

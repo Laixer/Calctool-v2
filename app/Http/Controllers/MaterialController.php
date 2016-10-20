@@ -8,7 +8,7 @@ use \Calctool\Models\ProductSubCategory;
 use \Calctool\Models\Supplier;
 use \Calctool\Models\SubGroup;
 use \Calctool\Models\Product;
-use \Calctool\Models\Element;
+// use \Calctool\Models\Element;
 
 use \Auth;
 use \DB;
@@ -208,7 +208,7 @@ class MaterialController extends Controller {
 		return response()->json(['success' => 1]);
 	}
 
-	public function doNewElement(Request $request)
+	/*public function doNewElement(Request $request)
 	{
 		$this->validate($request, [
 			'name' => array('required'),
@@ -222,7 +222,7 @@ class MaterialController extends Controller {
 		$element->save();
 
 		return response()->json(['success' => 1]);
-	}
+	}*/
 
 	public function doUploadCSV(Request $request)
 	{

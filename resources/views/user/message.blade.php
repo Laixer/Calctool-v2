@@ -49,7 +49,7 @@ if (!$message || !$message->isOwner()) {
 
 			<h2><strong>{{ $message->subject }}</strong></h2>
 			<div class="white-row">
-				<div><strong>Datum:</strong> {{ $message->created_at }}</div>
+				<div><strong>Datum:</strong> {{ $message->created_at->toDateString() }}</div>
 				<div><strong>Van:</strong> {{ User::find($message->from_user)->username }}</div>
 				<br />
 				{!! $message->message !!}

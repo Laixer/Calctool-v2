@@ -152,13 +152,13 @@ function invoice_condition($offer) {
 											<div><strong>Nummer:</strong></div>
 											<div><strong>Projectnaam:</strong></div>
 											<div><strong>Datum:</strong></div>
-											<div><strong>Versie:</strong></div>
+											<!-- <div><strong>Versie:</strong></div> -->
 									</td>
 									<td style="width: 300px">
 											<div>{{ OfferController::getOfferCode($project->id) }}</div>
 											<div>{{ $project->project_name }}</div>
 											<div>{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
-											<div>{{ Offer::where('project_id', $project->id)->count() }}</div>
+											<!-- <div>{{ Offer::where('project_id', $project->id)->count() }}</div> -->
 									</td>
 								</tr>
 							</tbody>

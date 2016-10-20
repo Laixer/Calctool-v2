@@ -15,13 +15,11 @@ use \Calctool\Models\SysMessage;
 @section('title', 'Dashboard')
 
 @push('style')
-<link media="all" type="text/css" rel="stylesheet" href="/components/intro.js/introjs.css">
 <link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
 <script src="/components/angular/angular.min.js"></script>
 @endpush
 
 @push('scripts')
-<script src="/components/intro.js/intro.js"></script>
 <script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 @endpush
 
@@ -97,13 +95,6 @@ $(document).ready(function() {
 		<div class="modal-content">
 
 			<iframe width="1280" height="720" src="https://www.youtube.com/embed/edTyWvLUeDo?rel=0;" frameborder="0" allowfullscreen></iframe>
-
-			<div class="modal-body">
-				<div class="form-horizontal">
-
-
-				</div>
-			</div>
 
 		</div>
 	</div>
@@ -191,6 +182,20 @@ $(document).ready(function() {
 					</div>
 				</div>
 
+				<div class="col-sm-6 col-md-2 hidden-xs">
+					<div class="item-box item-box-show fixed-box">
+						<figure>
+							<a class="item-hover" href="/favorite">
+								<span class="overlay color2"></span>
+								<span class="inner" style="top:40%;">
+									<span class="block fa fa-star fsize60"></span>
+								</span>
+							</a>
+							<a href="/favorite" class="btn btn-primary add_to_cart"><strong> Favorieten</strong></a>
+						</figure>
+					</div>
+				</div>
+
 				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
@@ -201,20 +206,6 @@ $(document).ready(function() {
 								</span>
 							</a>
 							<a href="/relation" class="btn btn-primary add_to_cart"><strong> Relaties</strong></a>
-						</figure>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-md-2 hidden-xs">
-					<div class="item-box item-box-show fixed-box">
-						<figure>
-							<a class="item-hover" href="/offer_invoice">
-								<span class="overlay color2"></span>
-								<span class="inner" style="top:40%;">
-									<span class="block fa fa-line-chart fsize60"></span>
-								</span>
-							</a>
-							<a href="/offer_invoice" class="btn btn-primary add_to_cart"><strong> Overzichten</strong></a>
 						</figure>
 					</div>
 				</div>

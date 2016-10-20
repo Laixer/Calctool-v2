@@ -297,11 +297,11 @@ $(document).ready(function() {
 					<li id="tab-material">
 						<a href="#material" data-toggle="tab"><i class="fa fa-wrench"></i> Mijn producten</a>
 					</li>
-<!-- 					<li id="tab-element">
+					<!-- <li id="tab-element">
 						<a href="#element" data-toggle="tab"><i class="fa fa-th-list"></i> Elementen</a>
 					</li> -->
 					<li id="tab-favorite">
-						<a href="#favorite" data-toggle="tab"><i class="fa fa-star"></i> Favorieten</a>
+						<a href="#favorite" data-toggle="tab"><i class="fa fa-star"></i> Favorieten producten</a>
 					</li>
 				</ul>
 
@@ -429,6 +429,7 @@ $(document).ready(function() {
 
 					</div>
 
+					@if(0)
 					<div id="element" class="tab-pane">
 						<h4>Elementen</h4>
 						<table class="table table-striped">
@@ -466,6 +467,7 @@ $(document).ready(function() {
 						</div>
 
 					</div>
+					@endif
 
 					<div id="favorite" class="tab-pane">
 						<div class="row">

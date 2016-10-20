@@ -122,7 +122,7 @@ use \Calctool\Models\MoreLabor;
 
 				<div class="tab-content">
 					<div id="hour" class="tab-pane active table-responsive">
-						<table class="table table-striped" ng-controller="timesheetController">
+						<table class="ng-cloak table table-striped" ng-controller="timesheetController">
 							<thead>
 								<tr>
 									<th class="col-md-1" ng-click="orderByField='register_date'; reverseSort = !reverseSort">Datum</th>

@@ -911,18 +911,18 @@ var n = this,
 											</label>
 											<div class="toggle-content">
 												<div class="row">
+													<div class="col-md-1 text-right label label-info"><strong>{{ Part::find($activity->part_id)->part_name=='subcontracting' ? 'Onderaanneming' : 'Aanneming' }}</strong></div>
 													<div class="col-md-2"></div>
 													<div class="col-md-2"></div>
 	    											<div class="col-md-4 text-right">
 	    												@if (Part::find($activity->part_id)->part_name=='contracting')
 	    												<div class="form-group">
-															<label for="use_timesheet">Urenregistratie gebruiken</label>
-															<input name="use_timesheet" class="use-timesheet btn-xs" data-id="{{ $activity->id }}" type="checkbox" {{ $activity->use_timesheet ? 'checked' : '' }}>
+															<label for="use_timesheet">Urenregistratie gebruiken&nbsp;</label>
+															<input name="use_timesheet" class="use-timesheet btn-xs" data-id="{{ $activity->id }}" type="checkbox" data-size="small" {{ $activity->use_timesheet ? 'checked' : '' }}>
 														</div>
 														@endif
 													</div>
-													<div class="col-md-1 text-right"><strong>{{ Part::find($activity->part_id)->part_name=='subcontracting' ? 'Onderaanneming' : 'Aanneming' }}</strong></div>
-													<div class="col-md-3 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving toevoegen</button></div>
+													<div class="col-md-3 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving aanpassen</button></div>
 												</div>
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use \Calctool\Models\Project;
 use \Calctool\Models\Chapter;
 use \Calctool\Models\Activity;
+use \Calctool\Models\FavoriteActivity;
 use \Calctool\Models\Detail;
 use \Calctool\Models\PartType;
 use \Calctool\Models\Part;
@@ -15,6 +16,9 @@ use \Calctool\Models\Tax;
 use \Calctool\Models\MoreEquipment;
 use \Calctool\Models\MoreLabor;
 use \Calctool\Models\MoreMaterial;
+use \Calctool\Models\FavoriteLabor;
+use \Calctool\Models\FavoriteMaterial;
+use \Calctool\Models\FavoriteEquipment;
 
 use \Auth;
 
@@ -32,6 +36,76 @@ class MoreController extends Controller {
 	|	Route::get('/', 'HomeController@showWelcome');
 	|
 	*/
+
+	public function getMoreWithFavorite(Request $request, $projectid, $chapterid, $favid)
+	{
+		$chapter = Chapter::find($chapterid);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return back();
+		}
+
+		$favact = FavoriteActivity::find($favid);
+		if (!$favact || !$favact->isOwner()) {
+			return back();
+		}
+
+		$part = Part::where('part_name','=','contracting')->first();
+		$part_type = PartType::where('type_name','=','calculation')->first();
+		$detail = Detail::where('detail_name','=','more')->first();
+		$project = Project::find($chapter->project_id);
+
+		$activity = new Activity;
+		$activity->activity_name = $favact->activity_name;
+		$activity->priority = 0;
+		$activity->chapter_id = $chapter->id;
+		$activity->part_id = $part->id;
+		$activity->part_type_id = $part_type->id;
+		$activity->detail_id = $detail->id;
+
+		if ($project->tax_reverse) {
+			$tax_id = Tax::where('tax_rate','0')->first()['id'];
+			$activity->tax_labor_id = $tax_id;
+			$activity->tax_material_id = $tax_id;
+			$activity->tax_equipment_id = $tax_id;
+		} else {
+			$activity->tax_labor_id = $favact->tax_labor_id;
+			$activity->tax_material_id = $favact->tax_material_id;
+			$activity->tax_equipment_id = $favact->tax_equipment_id;
+		}
+		$activity->save();
+
+		$this->updateMoreStatus($projectid);
+
+		foreach (FavoriteLabor::where('activity_id', $favact->id)->get() as $fav_calc_labor) {
+			MoreLabor::create(array(
+				"rate" => $fav_calc_labor->rate,
+				"amount" => $fav_calc_labor->amount,
+				"activity_id" => $activity->id,
+			));
+		}
+
+		foreach (FavoriteMaterial::where('activity_id', $favact->id)->get() as $fav_calc_material) {
+			MoreMaterial::create(array(
+				"material_name" => $fav_calc_material->material_name,
+				"unit" => $fav_calc_material->unit,
+				"rate" => $fav_calc_material->rate,
+				"amount" => $fav_calc_material->amount,
+				"activity_id" => $activity->id,
+			));
+		}
+
+		foreach (FavoriteEquipment::where('activity_id', $favact->id)->get() as $fav_calc_equipment) {
+			MoreEquipment::create(array(
+				"equipment_name" => $fav_calc_equipment->equipment_name,
+				"unit" => $fav_calc_equipment->unit,
+				"rate" => $fav_calc_equipment->rate,
+				"amount" => $fav_calc_equipment->amount,
+				"activity_id" => $activity->id,
+			));
+		}
+
+		return back();
+	}
 
 	public function updateMoreStatus($id)
 	{
