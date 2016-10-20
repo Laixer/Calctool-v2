@@ -255,6 +255,7 @@ Route::group(['middleware' => 'auth'], function() {
 
 	/* More pages */
 	Route::get('more/project-{project_id}', 'CalcController@getMore')->middleware('payzone');
+	Route::get('more/project-{project_id}/chapter-{chapter_id}/fav-{fav_id}', 'MoreController@getMoreWithFavorite')->where('project_id', '[0-9]+')->middleware('payzone');
 	Route::get('more/summary/project-{project_id}', 'CalcController@getMoreSummary')->where('project_id', '[0-9]+')->middleware('payzone');
 	Route::get('more/endresult/project-{project_id}', 'CalcController@getMoreEndresult')->where('project_id', '[0-9]+')->middleware('payzone');
 	Route::post('more/newmaterial', 'MoreController@doNewMaterial');
