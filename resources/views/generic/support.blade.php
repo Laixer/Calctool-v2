@@ -36,30 +36,45 @@ $(document).ready(function() {
 
 	<section id="contact" class="container">
 
+		<h2>Stuur ons een <strong>bericht</strong>, stel een <strong>vraag</strong> of geef ons een <strong>belletje</strong></h2>
+
+		@if(Session::get('success'))
+		<div class="alert alert-success">
+			<i class="fa fa-check-circle"></i>
+			<strong>{{ Session::get('success') }}</strong>
+		</div>
+		@endif
+
+		@if (count($errors) > 0)
+		<div class="alert alert-danger">
+			<i class="fa fa-frown-o"></i>
+			<strong>Fouten in de invoer</strong>
+			<ul>
+				@foreach ($errors->all() as $error)
+				<li><h5 class="nomargin">{{ $error }}</h5></li>
+				@endforeach
+			</ul>
+		</div>
+		@endif
+
 		<div class="row">
 
 			<div class="col-md-12">
 
-				@if(Session::get('success'))
-				<div class="alert alert-success">
-					<i class="fa fa-check-circle"></i>
-					<strong>{{ Session::get('success') }}</strong>
+				<div class="white-row">
+				<h2>Helpdesk</h2>
+				Telefoon: <a href="tel:+643587470">06 435 87470</a> of <a href="tel:+643587430">06 435 87430</a><br />
+				Email: <a href="mailto:info@calculatietool.com">info@calculatietool.com</a><br />
+				Stuur SMS, WhatsApp, Telegram naar bovenstaande telefoonnummers
 				</div>
-				@endif
 
-				@if (count($errors) > 0)
-				<div class="alert alert-danger">
-					<i class="fa fa-frown-o"></i>
-					<strong>Fouten in de invoer</strong>
-					<ul>
-						@foreach ($errors->all() as $error)
-						<li><h5 class="nomargin">{{ $error }}</h5></li>
-						@endforeach
-					</ul>
-				</div>
-				@endif
+			</div>
 
-				<h2>Stuur ons een <strong>bericht</strong>, stel een <strong>vraag</strong> of geef ons een <strong>belletje</strong></h2>
+		</div>
+
+		<div class="row">
+
+			<div class="col-md-12">
 
 				<form class="white-row" action="/support" method="post">
 				{!! csrf_field() !!}
@@ -84,8 +99,20 @@ $(document).ready(function() {
 					</div>
 					<div class="row">
 						<div class="form-group">
-							<div class="col-md-12">
-								<label>Onderwerp</label>
+							<div class="col-md-4">
+								<label for="category">Categorie (optioneel)</label>
+								<select name="category" id="company_type" class="form-control pointer">
+									<option>Hulp / Demo gewenst</option>
+									<option>Account gerelateerd</option>
+									<option>Betaling gerelateerd</option>
+									<option>Vraag / Suggestie</option>
+									<option>Applicatieprobleem</option>
+									<option>Wachtwoord vergeten</option>
+									<option selected="selected">Overig</option>
+								</select>
+							</div>
+							<div class="col-md-8">
+								<label>Onderwerp (optioneel)</label>
 								<input type="text" value="" data-msg-required="Please enter the subject." maxlength="100" class="form-control" name="subject" id="subject">
 							</div>
 						</div>
@@ -100,8 +127,6 @@ $(document).ready(function() {
 
 					</div>
 
-					<br />
-
 					<div class="row">
 						<div class="col-md-12">
 							<input type="submit" value="Verstuur" class="btn btn-primary btn-lg">
@@ -110,19 +135,9 @@ $(document).ready(function() {
 
 					<br>
 
-
-					<div class="row">
-						<div class="col-md-12">
-							<h2>Helpdesk</h2>
-							<p>Natuurlijk begrijpen wij volledig dat je graag ook even in contact wilt komen voor wat specifieke vragen. Dat kan via via de telefoon, SMS, Telegram of WhatsApp op <strong>06 43587470</strong> of  <strong>06 43587430</strong>.</p>
-						</div>
-					</div>
-
-
 				</form>
 
 			</div>
-
 		</div>
 
 	</section>

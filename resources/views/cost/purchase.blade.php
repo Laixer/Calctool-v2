@@ -103,7 +103,7 @@ use \Calctool\Models\Wholesale;
 
 
 			<div class="white-row">
-				<table class="table table-striped" ng-controller="purchaseController">
+				<table class="ng-cloak table table-striped" ng-controller="purchaseController">
 					<thead>
 						<tr>
 							<th class="col-md-1" ng-click="orderByField='register_date'; reverseSort = !reverseSort">Datum</th>

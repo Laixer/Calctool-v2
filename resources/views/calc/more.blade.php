@@ -7,6 +7,7 @@ use \Calctool\Models\ProductSubCategory;
 use \Calctool\Models\ProjectType;
 use \Calctool\Models\Chapter;
 use \Calctool\Models\Activity;
+use \Calctool\Models\FavoriteActivity;
 use \Calctool\Models\TimesheetKind;
 use \Calctool\Models\SubGroup;
 use \Calctool\Models\PartType;
@@ -504,6 +505,20 @@ var n = this,
 					}).fail(function(e) { console.log(e); });
 			}
 		});
+
+		var $favchapid;
+		$('.favselect').click(function(e) {
+			$favchapid = $(this).attr('data-id');
+		});
+
+		$('.favselect').click(function(e) {
+			$favchapid = $(this).attr('data-id');
+		});
+
+		$('.favlink').click(function(e) {
+			window.location.href = '/more/project-{{ $project->id }}/chapter-' + $favchapid + '/fav-' + $(this).attr('data-id');
+		});
+
 		$req = false;
 		$("#search").keyup(function() {
 			$val = $(this).val();
@@ -651,6 +666,44 @@ var n = this,
 							</tbody>
 						</table>
 					</div>
+			</div>
+
+			<div class="modal-footer">
+				<button class="btn btn-default" data-dismiss="modal">Sluiten</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="myFavAct" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel">Favoriete werkzaamheden</h4>
+			</div>
+
+			<div class="modal-body">
+				
+			          <div class="table-responsive">
+			            <table class="table table-hover">
+			              <thead>
+			                <tr>
+			                  <th>Omschrijving</th>
+			                  <th class="text-right">Aangemaakt</th>
+			                </tr>
+			              </thead>
+			              <tbody>
+			              	@foreach (FavoriteActivity::where('user_id', Auth::id())->orderBy('created_at')->get() as $favact)	
+			              	<tr>
+			              		<td><a class="favlink" href="#" data-id="{{ $favact->id }}">{{ $favact->activity_name }}</a></td>
+			              		<td class="text-right">{{ $favact->created_at->toDateString() }}</td>
+			              	</tr>
+			              	@endforeach
+						  </tbody>
+					</table>
+					<!--<input type="hidden" name="noteact" id="favact" />-->
+				</div>
 			</div>
 
 			<div class="modal-footer">
@@ -1074,11 +1127,12 @@ var n = this,
 												</span>
 											</div>
 										</div>
-										@if ($chapter->more)
 										<div class="col-md-6 text-right">
+											<button type="button" class="btn btn-primary favselect" data-id="{{ $chapter->id }}" data-toggle="modal" data-target="#myFavAct">Favoriet selecteren</button>
+											@if ($chapter->more)
 											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Onderdeel verwijderen</button>
+											@endif
 										</div>
-										@endif
 									</div>
 									</form>
 								</div>

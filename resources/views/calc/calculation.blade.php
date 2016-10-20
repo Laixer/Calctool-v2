@@ -8,6 +8,7 @@ use \Calctool\Models\Chapter;
 use \Calctool\Calculus\CalculationOverview;
 use \Calctool\Models\ProjectType;
 use \Calctool\Models\Activity as ProjectActivity;
+use \Calctool\Models\FavoriteActivity;
 use \Calctool\Models\PartType;
 use \Calctool\Models\Part;
 use \Calctool\Calculus\CalculationEndresult;
@@ -31,13 +32,11 @@ if (!$project || !$project->isOwner())
 @section('title', 'Calculeren')
 
 @push('style')
-<link media="all" type="text/css" rel="stylesheet" href="/components/intro.js/introjs.css">
 @endpush
 
 @push('scripts')
 <script src="/plugins/summernote/summernote.min.js"></script>
 <script src="/plugins/jquery.number.min.js"></script>
-<script src="/components/intro.js/intro.js"></script>
 @endpush
 
 <?php if($common_access_error){ ?>
@@ -888,6 +887,44 @@ if (!$project || !$project->isOwner())
 					}).fail(function(e) { console.log(e); });
 			}
 		});
+		$("body").on("click", ".lsavefav", function(e){
+			e.preventDefault();
+			var $curThis = $(this);
+			if ($curThis.attr("data-id")) {
+				$.post("/calculation/calc/savefav", {project: {{ $project->id }}, activity: $curThis.attr("data-id")}, function(){
+					$curThis.text('Opgeslagen');
+				}).fail(function(e) { console.log(e); });
+			}
+		});
+
+		$("body").on("click", ".esavefav", function(e){
+			e.preventDefault();
+			var $curThis = $(this);
+			if ($curThis.attr("data-id")) {
+				$.post("/calculation/estim/savefav", {project: {{ $project->id }}, activity: $curThis.attr("data-id")}, function(){
+					$curThis.text('Opgeslagen');
+				}).fail(function(e) { console.log(e); });
+			}
+		});
+
+		var $favchapid;
+		var $faviscalc;
+		$('.lfavselect').click(function(e) {
+			$favchapid = $(this).attr('data-id');
+			$faviscalc = true;
+		});
+
+		$('.efavselect').click(function(e) {
+			$favchapid = $(this).attr('data-id');
+			$faviscalc = false;
+		});
+
+		$('.favlink').click(function(e) {
+			if ($faviscalc)
+				window.location.href = '/calculation/project-{{ $project->id }}/chapter-' + $favchapid + '/fav-' + $(this).attr('data-id');
+			else
+				window.location.href = '/estimate/project-{{ $project->id }}/chapter-' + $favchapid + '/fav-' + $(this).attr('data-id');
+		});
 
 		$req = false;
 		$("#search").keyup(function() {
@@ -982,65 +1019,9 @@ if (!$project || !$project->isOwner())
                 ["media", ["link", "picture"]],
             ]
         });
-
-		if (sessionStorage.introDemo) {
-			var demo = introJs().
-				setOption('nextLabel', 'Volgende').
-				setOption('prevLabel', 'Vorige').
-				setOption('skipLabel', 'Overslaan').
-				setOption('doneLabel', 'Klaar').
-				setOption('showBullets', false).
-				onexit(function(){
-					sessionStorage.removeItem('introDemo');
-				}).onbeforechange(function(){
-					sessionStorage.introDemo = this._currentStep;
-					/*if (this._currentStep == 12) {
-						$('#tab-summary').addClass('active');
-						$('#summary').addClass('active');
-
-						$('#tab-calculate').removeClass('active');
-						$('#calculate').removeClass('active');
-					}*/
-				}).onafterchange(function(){
-					var done = this._currentStep;
-					if (done == 5) {
-						$('.introjs-skipbutton').css("visibility","initial");
-					} else {
-						$('.introjs-skipbutton').css("visibility","hidden");
-					}
-					$('.introjs-skipbutton').click(function(){
-						if (done == 5) {
-							sessionStorage.introDemo = 999;
-							window.location.href = '/offerversions/project-{{ $project->id }}';
-						}
-					});
-				});
-
-			if (sessionStorage.introDemo == 999 || sessionStorage.introDemo == 0) {
-				sessionStorage.clear();
-				sessionStorage.introDemo = 0;
-				demo.start();
-			} else {
-				demo.goToStep(sessionStorage.introDemo).start();
-			}
-
-		}
-
 	});
 
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -1096,18 +1077,44 @@ if (!$project || !$project->isOwner())
 		</div>
 	</div>
 </div>
+<div class="modal fade" id="myFavAct" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel">Favoriete werkzaamheden</h4>
+			</div>
 
+			<div class="modal-body">
+				
+			          <div class="table-responsive">
+			            <table class="table table-hover">
+			              <thead>
+			                <tr>
+			                  <th>Omschrijving</th>
+			                  <th class="text-right">Aangemaakt</th>
+			                </tr>
+			              </thead>
+			              <tbody>
+			              	@foreach (FavoriteActivity::where('user_id', Auth::id())->orderBy('created_at')->get() as $favact)	
+			              	<tr>
+			              		<td><a class="favlink" href="#" data-id="{{ $favact->id }}">{{ $favact->activity_name }}</a></td>
+			              		<td class="text-right">{{ $favact->created_at->toDateString() }}</td>
+			              	</tr>
+			              	@endforeach
+						  </tbody>
+					</table>
+					<!--<input type="hidden" name="noteact" id="favact" />-->
+				</div>
+			</div>
 
+			<div class="modal-footer">
+				<button class="btn btn-default" data-dismiss="modal">Sluiten</button>
+			</div>
 
-
-
-
-
-
-
-
-
-
+		</div>
+	</div>
+</div>
 <div class="modal fade" id="descModal" tabindex="-1" role="dialog" aria-labelledby="descModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -1115,7 +1122,7 @@ if (!$project || !$project->isOwner())
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				<h4 class="modal-title" id="myModalLabel">Omschrijving werkzaamheid</h4>
 			</div>
-
+			
 			<div class="modal-body">
 				<div class="form-group">
 					<div class="col-md-12">
@@ -1213,14 +1220,14 @@ if (!$project || !$project->isOwner())
 											</label>
 											<div data-step="4" data-intro="Calculeer de werkzaaheid door de regel die jij nodig hebt in te vullen" class="toggle-content">
 												<div class="row">
-													<div class="col-md-5"></div>
-													<div class="col-md-4">
+													<div class="col-md-6">
 														@if ($project->use_subcontract)
 														<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','contracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='contracting' ? 'checked' : '') }}/>Aanneming</label>
 	    												<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming</label>
 														@endif
 													</div>
-													<div class="col-md-3 text-right">
+													<div class="col-md-6 text-right">
+														<button data-id="{{ $activity->id }}" class="btn btn-info btn-xs lsavefav">Opslaan als favoriete werkzaaheid</button>
 														<button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving</button>
 														<button data-id="{{ $activity->id }}" class="btn btn-danger btn-xs deleteact">Verwijderen</button>
 													</div>
@@ -1385,8 +1392,6 @@ if (!$project || !$project->isOwner())
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
-
-
 													<tbody>
 														@foreach (CalculationEquipment::where('activity_id','=', $activity->id)->get() as $equipment)
 														<tr data-id="{{ $equipment->id }}">
@@ -1446,6 +1451,7 @@ if (!$project || !$project->isOwner())
 											</div>
 										</div>
 										<div class="col-md-6 text-right">
+											<button type="button" class="btn btn-primary lfavselect" data-id="{{ $chapter->id }}" data-toggle="modal" data-target="#myFavAct">Favoriet selecteren</button>
 											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Onderdeel verwijderen</button>
 										</div>
 									</div>
@@ -1502,18 +1508,16 @@ if (!$project || !$project->isOwner())
 											</label>
 											<div class="toggle-content">
 												<div class="row">
-													<div class="col-md-5"></div>
-													<div class="col-md-4">
+													<div class="col-md-6">
 														@if ($project->use_subcontract)
 														<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soorte{{ $activity->id }}" value="{{ Part::where('part_name','=','contracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='contracting' ? 'checked' : '') }}/>Aanneming</label>
 		    											<label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soorte{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming</label>
 		    											@endif
 		    										</div>
-		    										<div class="col-md-3 text-right">
-														<button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving
-														</button>
-
-													<button data-id="{{ $activity->id }}" class="btn btn-danger btn-xs deleteact">Verwijderen</button>
+		    										<div class="col-md-6 text-right">
+		    											<button data-id="{{ $activity->id }}" class="btn btn-info btn-xs esavefav">Opslaan als favoriete werkzaaheid</button>
+														<button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving</button>
+														<button data-id="{{ $activity->id }}" class="btn btn-danger btn-xs deleteact">Verwijderen</button>
 													</div>
 												</div>
 
@@ -1738,9 +1742,10 @@ if (!$project || !$project->isOwner())
 												</span>
 											</div>
 										</div>
-										<!--<div class="col-md-6 text-right">
+										<div class="col-md-6 text-right">
+											<button type="button" class="btn btn-primary efavselect" data-id="{{ $chapter->id }}" data-toggle="modal" data-target="#myFavAct">Favoriet selecteren</button>
 											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Onderdeel verwijderen</button>
-										</div>-->
+										</div>
 									</div>
 									</form>
 								</div>

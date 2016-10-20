@@ -20,13 +20,11 @@ $user = Auth::user();
 @section('title', 'Mijn bedrijf')
 
 @push('style')
-<link media="all" type="text/css" rel="stylesheet" href="/components/intro.js/introjs.css">
 <link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
 @endpush
 
 @push('scripts')
 <script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-<script src="/components/intro.js/intro.js"></script>
 <script type="text/javascript" src="/js/iban.js"></script>
 @endpush
 
@@ -281,6 +279,10 @@ $(document).ready(function() {
 					Er moet minimaal 1 contactpersoon bestaan
 				</div>
 			@endif
+
+			<div class="pull-right">
+				<a href="/offer_invoice" class="btn btn-primary">Overzichten</a>
+			</div>
 
 			<h2 style="margin: 10px 0 20px 0;"><strong>Mijn</strong> bedrijf &nbsp;&nbsp;<a class="fa fa-youtube-play" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
 

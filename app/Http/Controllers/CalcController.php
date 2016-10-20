@@ -10,12 +10,16 @@ use \Calctool\Models\PartType;
 use \Calctool\Models\ProjectType;
 use \Calctool\Models\Tax;
 use \Calctool\Models\Activity;
+use \Calctool\Models\FavoriteActivity;
 use \Calctool\Calculus\InvoiceTerm;
 use \Calctool\Calculus\ResultEndresult;
 use \Calctool\Calculus\CalculationRegister;
 use \Calctool\Models\CalculationMaterial;
 use \Calctool\Models\CalculationEquipment;
 use \Calctool\Models\CalculationLabor;
+use \Calctool\Models\FavoriteLabor;
+use \Calctool\Models\FavoriteMaterial;
+use \Calctool\Models\FavoriteEquipment;
 use \Calctool\Models\EstimateLabor;
 use \Calctool\Models\EstimateMaterial;
 use \Calctool\Models\EstimateEquipment;
@@ -51,6 +55,130 @@ class CalcController extends Controller {
 				return response()->view('calc.calculation_closed');
 		}
 		return view('calc.calculation');
+	}
+
+	public function getCalculationWithFavorite(Request $request, $projectid, $chapterid, $favid)
+	{
+		$chapter = Chapter::find($chapterid);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return back();
+		}
+
+		$favact = FavoriteActivity::find($favid);
+		if (!$favact || !$favact->isOwner()) {
+			return back();
+		}
+
+		$part = Part::where('part_name','=','contracting')->first();
+		$part_type = PartType::where('type_name','=','calculation')->first();
+		$project = Project::find($chapter->project_id);
+
+		$activity = new Activity;
+		$activity->activity_name = $favact->activity_name;
+		$activity->priority = 0;
+		$activity->chapter_id = $chapter->id;
+		$activity->part_id = $part->id;
+		$activity->part_type_id = $part_type->id;
+		$activity->tax_labor_id = $favact->tax_labor_id;
+		$activity->tax_material_id = $favact->tax_material_id;
+		$activity->tax_equipment_id = $favact->tax_equipment_id;
+
+		$activity->save();
+
+		foreach (FavoriteLabor::where('activity_id', $favact->id)->get() as $fav_calc_labor) {
+			CalculationLabor::create(array(
+				"rate" => $fav_calc_labor->rate,
+				"amount" => $fav_calc_labor->amount,
+				"activity_id" => $activity->id,
+			));
+		}
+
+		foreach (FavoriteMaterial::where('activity_id', $favact->id)->get() as $fav_calc_material) {
+			CalculationMaterial::create(array(
+				"material_name" => $fav_calc_material->material_name,
+				"unit" => $fav_calc_material->unit,
+				"rate" => $fav_calc_material->rate,
+				"amount" => $fav_calc_material->amount,
+				"activity_id" => $activity->id,
+			));
+		}
+
+		foreach (FavoriteEquipment::where('activity_id', $favact->id)->get() as $fav_calc_equipment) {
+			CalculationEquipment::create(array(
+				"equipment_name" => $fav_calc_equipment->equipment_name,
+				"unit" => $fav_calc_equipment->unit,
+				"rate" => $fav_calc_equipment->rate,
+				"amount" => $fav_calc_equipment->amount,
+				"activity_id" => $activity->id,
+			));
+		}
+
+		return back();
+	}
+
+	public function getEstimateWithFavorite(Request $request, $projectid, $chapterid, $favid)
+	{
+		$chapter = Chapter::find($chapterid);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return back();
+		}
+
+		$favact = FavoriteActivity::find($favid);
+		if (!$favact || !$favact->isOwner()) {
+			return back();
+		}
+
+		$part = Part::where('part_name','=','contracting')->first();
+		$part_type = PartType::where('type_name','=','estimate')->first();
+		$project = Project::find($chapter->project_id);
+
+		$activity = new Activity;
+		$activity->activity_name = $favact->activity_name;
+		$activity->priority = 0;
+		$activity->chapter_id = $chapter->id;
+		$activity->part_id = $part->id;
+		$activity->part_type_id = $part_type->id;
+		$activity->tax_labor_id = $favact->tax_labor_id;
+		$activity->tax_material_id = $favact->tax_material_id;
+		$activity->tax_equipment_id = $favact->tax_equipment_id;
+
+		$activity->save();
+
+		foreach (FavoriteLabor::where('activity_id', $favact->id)->get() as $fav_calc_labor) {
+			EstimateLabor::create(array(
+				"rate" => $fav_calc_labor->rate,
+				"amount" => $fav_calc_labor->amount,
+				"activity_id" => $activity->id,
+				"original" => true,
+				"isset" => false,
+			));
+		}
+
+		foreach (FavoriteMaterial::where('activity_id', $favact->id)->get() as $fav_calc_material) {
+			EstimateMaterial::create(array(
+				"material_name" => $fav_calc_material->material_name,
+				"unit" => $fav_calc_material->unit,
+				"rate" => $fav_calc_material->rate,
+				"amount" => $fav_calc_material->amount,
+				"activity_id" => $activity->id,
+				"original" => true,
+				"isset" => false,
+			));
+		}
+
+		foreach (FavoriteEquipment::where('activity_id', $favact->id)->get() as $fav_calc_equipment) {
+			EstimateEquipment::create(array(
+				"equipment_name" => $fav_calc_equipment->equipment_name,
+				"unit" => $fav_calc_equipment->unit,
+				"rate" => $fav_calc_equipment->rate,
+				"amount" => $fav_calc_equipment->amount,
+				"activity_id" => $activity->id,
+				"original" => true,
+				"isset" => false,
+			));
+		}
+
+		return back();
 	}
 
 	public function getCalculationSummary(Request $request, $projectid)
@@ -186,47 +314,9 @@ class CalcController extends Controller {
 		return $pdf->stream();
 	}
 
-	public function getOfferDownloadPDF(Request $request)
-	{
-		/*$pdf = PDF::loadView('calc.offer_pdf');
-		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
-		return $pdf->download($request->get('file'));*/
-	}
-
 	public function getInvoiceAll(Request $request)
 	{
 		return response()->view('calc.invoice_all');
-	}
-
-	public function getInvoicePDF(Request $request)
-	{
-		/*$page = 0;
-		$pdf = PDF::loadView('calc.invoice_pdf');
-		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
-		return $pdf->stream();*/
-	}
-
-	public function getInvoiceDownloadPDF(Request $request)
-	{
-		/*$page = 0;
-		$pdf = PDF::loadView('calc.invoice_pdf');
-		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
-		return $pdf->download($request->get('file'));?*/
-	}
-
-	public function getTermInvoicePDF(Request $request)
-	{
-		//return view('calc.invoice_term_pdf');
-		/*$page = 0;	
-		$pdf = PDF::loadView('calc.invoice_term_pdf');
-		$pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
-		return $pdf->stream();*/
-	}
-
-	public function getTermInvoiceDownloadPDF(Request $request)
-	{
-		/*$pdf = PDF::loadView('calc.invoice_term_pdf');
-		return $pdf->download($request->get('file'));*/
 	}
 
 	public function doNewChapter(Request $request, $project_id)
@@ -477,6 +567,120 @@ class CalcController extends Controller {
 		return response()->json(['success' => 1]);
 	}
 
+	public function doNewCalculationFavorite(Request $request)
+	{
+		$this->validate($request, [
+			'activity' => array('required','integer','min:0')
+		]);
+
+		$activity = Activity::find($request->input('activity'));
+		if (!$activity)
+			return response()->json(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return response()->json(['success' => 0]);
+		}
+
+		$fav_activity = new FavoriteActivity;
+		$fav_activity->activity_name = $activity->activity_name;
+		$fav_activity->user_id = Auth::id();
+		$fav_activity->tax_labor_id = $activity->tax_labor_id;
+		$fav_activity->tax_material_id = $activity->tax_material_id;
+		$fav_activity->tax_equipment_id = $activity->tax_equipment_id;
+
+		$fav_activity->save();
+
+		foreach (CalculationLabor::where('activity_id', $activity->id)->get() as $orig_calc_labor) {
+			$calc_labor = new FavoriteLabor;
+			$calc_labor->rate = $orig_calc_labor->rate;
+			$calc_labor->amount = $orig_calc_labor->amount;
+			$calc_labor->activity_id = $fav_activity->id;
+
+			$calc_labor->save();
+		}
+		
+		foreach (CalculationMaterial::where('activity_id', $activity->id)->get() as $orig_calc_material) {
+			$calc_material = new FavoriteMaterial;
+			$calc_material->material_name = $orig_calc_material->material_name;
+			$calc_material->unit = $orig_calc_material->unit;
+			$calc_material->rate = $orig_calc_material->rate;
+			$calc_material->amount = $orig_calc_material->amount;
+			$calc_material->activity_id = $fav_activity->id;
+
+			$calc_material->save();
+		}
+
+		foreach (CalculationEquipment::where('activity_id', $activity->id)->get() as $orig_calc_equipment) {
+			$calc_equipment = new FavoriteEquipment;
+			$calc_equipment->equipment_name = $orig_calc_equipment->equipment_name;
+			$calc_equipment->unit = $orig_calc_equipment->unit;
+			$calc_equipment->rate = $orig_calc_equipment->rate;
+			$calc_equipment->amount = $orig_calc_equipment->amount;
+			$calc_equipment->activity_id = $fav_activity->id;
+
+			$calc_equipment->save();
+		}
+
+		return response()->json(['success' => 1]);
+	}
+
+	public function doNewEstimateFavorite(Request $request)
+	{
+		$this->validate($request, [
+			'activity' => array('required','integer','min:0')
+		]);
+
+		$activity = Activity::find($request->input('activity'));
+		if (!$activity)
+			return response()->json(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return response()->json(['success' => 0]);
+		}
+
+		$fav_activity = new FavoriteActivity;
+		$fav_activity->activity_name = $activity->activity_name;
+		$fav_activity->user_id = Auth::id();
+		$fav_activity->tax_labor_id = $activity->tax_labor_id;
+		$fav_activity->tax_material_id = $activity->tax_material_id;
+		$fav_activity->tax_equipment_id = $activity->tax_equipment_id;
+
+		$fav_activity->save();
+
+		foreach (EstimateLabor::where('activity_id', $activity->id)->get() as $orig_calc_labor) {
+			$calc_labor = new FavoriteLabor;
+			$calc_labor->rate = $orig_calc_labor->rate;
+			$calc_labor->amount = $orig_calc_labor->amount;
+			$calc_labor->activity_id = $fav_activity->id;
+
+			$calc_labor->save();
+		}
+		
+		foreach (EstimateMaterial::where('activity_id', $activity->id)->get() as $orig_calc_material) {
+			$calc_material = new FavoriteMaterial;
+			$calc_material->material_name = $orig_calc_material->material_name;
+			$calc_material->unit = $orig_calc_material->unit;
+			$calc_material->rate = $orig_calc_material->rate;
+			$calc_material->amount = $orig_calc_material->amount;
+			$calc_material->activity_id = $fav_activity->id;
+
+			$calc_material->save();
+		}
+
+		foreach (EstimateEquipment::where('activity_id', $activity->id)->get() as $orig_calc_equipment) {
+			$calc_equipment = new FavoriteEquipment;
+			$calc_equipment->equipment_name = $orig_calc_equipment->equipment_name;
+			$calc_equipment->unit = $orig_calc_equipment->unit;
+			$calc_equipment->rate = $orig_calc_equipment->rate;
+			$calc_equipment->amount = $orig_calc_equipment->amount;
+			$calc_equipment->activity_id = $fav_activity->id;
+
+			$calc_equipment->save();
+		}
+
+		return response()->json(['success' => 1]);
+	}
+
 	public function doNewCalculationMaterial(Request $request)
 	{
 		$this->validate($request, [
@@ -597,20 +801,20 @@ class CalcController extends Controller {
 			'id' => array('required','integer','min:0'),
 		]);
 
-			$rec = CalculationMaterial::find($request->input('id'));
-			if (!$rec)
-				return response()->json(['success' => 0]);
-			$activity = Activity::find($rec->activity_id);
-			if (!$activity)
-				return response()->json(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return response()->json(['success' => 0]);
-			}
+		$rec = CalculationMaterial::find($request->input('id'));
+		if (!$rec)
+			return response()->json(['success' => 0]);
+		$activity = Activity::find($rec->activity_id);
+		if (!$activity)
+			return response()->json(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return response()->json(['success' => 0]);
+		}
 
-			$rec->delete();
+		$rec->delete();
 
-			return response()->json(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doDeleteCalculationEquipment(Request $request)
@@ -619,20 +823,20 @@ class CalcController extends Controller {
 			'id' => array('required','integer','min:0'),
 		]);
 
-			$rec = CalculationEquipment::find($request->input('id'));
-			if (!$rec)
-				return response()->json(['success' => 0]);
-			$activity = Activity::find($rec->activity_id);
-			if (!$activity)
-				return response()->json(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return response()->json(['success' => 0]);
-			}
+		$rec = CalculationEquipment::find($request->input('id'));
+		if (!$rec)
+			return response()->json(['success' => 0]);
+		$activity = Activity::find($rec->activity_id);
+		if (!$activity)
+			return response()->json(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return response()->json(['success' => 0]);
+		}
 
-			$rec->delete();
+		$rec->delete();
 
-			return response()->json(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doUpdateCalculationMaterial(Request $request)
@@ -645,25 +849,25 @@ class CalcController extends Controller {
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
 		]);
 
-			$material = CalculationMaterial::find($request->input('id'));
-			if (!$material)
-				return response()->json(['success' => 0]);
-			$activity = Activity::find($material->activity_id);
-			if (!$activity)
-				return response()->json(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return response()->json(['success' => 0]);
-			}
+		$material = CalculationMaterial::find($request->input('id'));
+		if (!$material)
+			return response()->json(['success' => 0]);
+		$activity = Activity::find($material->activity_id);
+		if (!$activity)
+			return response()->json(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return response()->json(['success' => 0]);
+		}
 
-			$material->material_name = $request->get('name');
-			$material->unit = $request->get('unit');
-			$material->rate = str_replace(',', '.', str_replace('.', '' , $request->get('rate')));
-			$material->amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
+		$material->material_name = $request->get('name');
+		$material->unit = $request->get('unit');
+		$material->rate = str_replace(',', '.', str_replace('.', '' , $request->get('rate')));
+		$material->amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
 
-			$material->save();
+		$material->save();
 
-			return response()->json(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doUpdateCalculationEquipment(Request $request)
@@ -676,25 +880,25 @@ class CalcController extends Controller {
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
 		]);
 
-			$equipment = CalculationEquipment::find($request->input('id'));
-			if (!$equipment)
-				return response()->json(['success' => 0]);
-			$activity = Activity::find($equipment->activity_id);
-			if (!$activity)
-				return response()->json(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return response()->json(['success' => 0]);
-			}
+		$equipment = CalculationEquipment::find($request->input('id'));
+		if (!$equipment)
+			return response()->json(['success' => 0]);
+		$activity = Activity::find($equipment->activity_id);
+		if (!$activity)
+			return response()->json(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return response()->json(['success' => 0]);
+		}
 
-			$equipment->equipment_name = $request->get('name');
-			$equipment->unit = $request->get('unit');
-			$equipment->rate = str_replace(',', '.', str_replace('.', '' , $request->get('rate')));
-			$equipment->amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
+		$equipment->equipment_name = $request->get('name');
+		$equipment->unit = $request->get('unit');
+		$equipment->rate = str_replace(',', '.', str_replace('.', '' , $request->get('rate')));
+		$equipment->amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
 
-			$equipment->save();
+		$equipment->save();
 
-			return response()->json(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doUpdateCalculationLabor(Request $request)
@@ -705,34 +909,34 @@ class CalcController extends Controller {
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
 		]);
 
-			$labor = CalculationLabor::find($request->input('id'));
-			if (!$labor)
-				return response()->json(['success' => 0]);
-			$activity = Activity::find($labor->activity_id);
-			if (!$activity)
-				return response()->json(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return response()->json(['success' => 0]);
-			}
+		$labor = CalculationLabor::find($request->input('id'));
+		if (!$labor)
+			return response()->json(['success' => 0]);
+		$activity = Activity::find($labor->activity_id);
+		if (!$activity)
+			return response()->json(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return response()->json(['success' => 0]);
+		}
 
-			$rate = $request->get('rate');
-			if (empty($rate)) {
-				$_labor = CalculationLabor::find($request->input('id'));
-				$_activity = Activity::find($_labor->activity_id);
-				$_chapter = Chapter::find($_activity->chapter_id);
-				$_project = Project::find($_chapter->project_id);
-				$rate = $_project->hour_rate;
-			} else {
-				$rate = str_replace(',', '.', str_replace('.', '' , $rate));
-			}
+		$rate = $request->get('rate');
+		if (empty($rate)) {
+			$_labor = CalculationLabor::find($request->input('id'));
+			$_activity = Activity::find($_labor->activity_id);
+			$_chapter = Chapter::find($_activity->chapter_id);
+			$_project = Project::find($_chapter->project_id);
+			$rate = $_project->hour_rate;
+		} else {
+			$rate = str_replace(',', '.', str_replace('.', '' , $rate));
+		}
 
-			$labor->rate = $rate;
-			$labor->amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
+		$labor->rate = $rate;
+		$labor->amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
 
-			$labor->save();
+		$labor->save();
 
-			return response()->json(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doNewEstimateMaterial(Request $request)
@@ -805,32 +1009,32 @@ class CalcController extends Controller {
 			'activity' => array('required','integer','min:0')
 		]);
 
-			$activity = Activity::find($request->input('activity'));
-			if (!$activity)
-				return response()->json(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return response()->json(['success' => 0]);
-			}
+		$activity = Activity::find($request->input('activity'));
+		if (!$activity)
+			return response()->json(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return response()->json(['success' => 0]);
+		}
 
-			$rate = $request->get('rate');
-			if (empty($rate)) {
-				$_activity = Activity::find($request->input('activity'));
-				$_chapter = Chapter::find($_activity->chapter_id);
-				$_project = Project::find($_chapter->project_id);
-				$rate = $_project->hour_rate;
-			} else {
-				$rate = str_replace(',', '.', str_replace('.', '' , $rate));
-			}
-			$labor = EstimateLabor::create(array(
-				"rate" => $rate,
-				"amount" => str_replace(',', '.', str_replace('.', '' , $request->get('amount'))),
-				"activity_id" => $activity->id,
-				"original" => true,
-				"isset" => false
-			));
+		$rate = $request->get('rate');
+		if (empty($rate)) {
+			$_activity = Activity::find($request->input('activity'));
+			$_chapter = Chapter::find($_activity->chapter_id);
+			$_project = Project::find($_chapter->project_id);
+			$rate = $_project->hour_rate;
+		} else {
+			$rate = str_replace(',', '.', str_replace('.', '' , $rate));
+		}
+		$labor = EstimateLabor::create(array(
+			"rate" => $rate,
+			"amount" => str_replace(',', '.', str_replace('.', '' , $request->get('amount'))),
+			"activity_id" => $activity->id,
+			"original" => true,
+			"isset" => false
+		));
 
-			return response()->json(['success' => 1, 'id' => $labor->id]);
+		return response()->json(['success' => 1, 'id' => $labor->id]);
 	}
 
 	public function doDeleteEstimateLabor(Request $request)
@@ -839,20 +1043,20 @@ class CalcController extends Controller {
 			'id' => array('required','integer','min:0'),
 		]);
 
-			$rec = EstimateLabor::find($request->input('id'));
-			if (!$rec)
-				return response()->json(['success' => 0]);
-			$activity = Activity::find($rec->activity_id);
-			if (!$activity)
-				return response()->json(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return response()->json(['success' => 0]);
-			}
+		$rec = EstimateLabor::find($request->input('id'));
+		if (!$rec)
+			return response()->json(['success' => 0]);
+		$activity = Activity::find($rec->activity_id);
+		if (!$activity)
+			return response()->json(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return response()->json(['success' => 0]);
+		}
 
-			$rec->delete();
+		$rec->delete();
 
-			return response()->json(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doDeleteEstimateMaterial(Request $request)
@@ -861,20 +1065,20 @@ class CalcController extends Controller {
 			'id' => array('required','integer','min:0'),
 		]);
 
-			$rec = EstimateMaterial::find($request->input('id'));
-			if (!$rec)
-				return response()->json(['success' => 0]);
-			$activity = Activity::find($rec->activity_id);
-			if (!$activity)
-				return response()->json(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return response()->json(['success' => 0]);
-			}
+		$rec = EstimateMaterial::find($request->input('id'));
+		if (!$rec)
+			return response()->json(['success' => 0]);
+		$activity = Activity::find($rec->activity_id);
+		if (!$activity)
+			return response()->json(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return response()->json(['success' => 0]);
+		}
 
-			$rec->delete();
+		$rec->delete();
 
-			return response()->json(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doDeleteEstimateEquipment(Request $request)
@@ -883,20 +1087,20 @@ class CalcController extends Controller {
 			'id' => array('required','integer','min:0'),
 		]);
 
-			$rec = EstimateEquipment::find($request->input('id'));
-			if (!$rec)
-				return response()->json(['success' => 0]);
-			$activity = Activity::find($rec->activity_id);
-			if (!$activity)
-				return response()->json(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return response()->json(['success' => 0]);
-			}
+		$rec = EstimateEquipment::find($request->input('id'));
+		if (!$rec)
+			return response()->json(['success' => 0]);
+		$activity = Activity::find($rec->activity_id);
+		if (!$activity)
+			return response()->json(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return response()->json(['success' => 0]);
+		}
 
-			$rec->delete();
+		$rec->delete();
 
-			return response()->json(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doUpdateEstimateMaterial(Request $request)
@@ -909,25 +1113,25 @@ class CalcController extends Controller {
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
 		]);
 
-			$material = EstimateMaterial::find($request->input('id'));
-			if (!$material)
-				return response()->json(['success' => 0]);
-			$activity = Activity::find($material->activity_id);
-			if (!$activity)
-				return response()->json(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return response()->json(['success' => 0]);
-			}
+		$material = EstimateMaterial::find($request->input('id'));
+		if (!$material)
+			return response()->json(['success' => 0]);
+		$activity = Activity::find($material->activity_id);
+		if (!$activity)
+			return response()->json(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return response()->json(['success' => 0]);
+		}
 
-			$material->material_name = $request->get('name');
-			$material->unit = $request->get('unit');
-			$material->rate = str_replace(',', '.', str_replace('.', '' , $request->get('rate')));
-			$material->amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
+		$material->material_name = $request->get('name');
+		$material->unit = $request->get('unit');
+		$material->rate = str_replace(',', '.', str_replace('.', '' , $request->get('rate')));
+		$material->amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
 
-			$material->save();
+		$material->save();
 
-			return response()->json(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doUpdateEstimateEquipment(Request $request)
@@ -940,25 +1144,25 @@ class CalcController extends Controller {
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
 		]);
 
-			$equipment = EstimateEquipment::find($request->input('id'));
-			if (!$equipment)
-				return response()->json(['success' => 0]);
-			$activity = Activity::find($equipment->activity_id);
-			if (!$activity)
-				return response()->json(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return response()->json(['success' => 0]);
-			}
+		$equipment = EstimateEquipment::find($request->input('id'));
+		if (!$equipment)
+			return response()->json(['success' => 0]);
+		$activity = Activity::find($equipment->activity_id);
+		if (!$activity)
+			return response()->json(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return response()->json(['success' => 0]);
+		}
 
-			$equipment->equipment_name = $request->get('name');
-			$equipment->unit = $request->get('unit');
-			$equipment->rate = str_replace(',', '.', str_replace('.', '' , $request->get('rate')));
-			$equipment->amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
+		$equipment->equipment_name = $request->get('name');
+		$equipment->unit = $request->get('unit');
+		$equipment->rate = str_replace(',', '.', str_replace('.', '' , $request->get('rate')));
+		$equipment->amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
 
-			$equipment->save();
+		$equipment->save();
 
-			return response()->json(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doUpdateEstimateLabor(Request $request)
@@ -969,33 +1173,33 @@ class CalcController extends Controller {
 			'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/')
 		]);
 
-			$labor = EstimateLabor::find($request->input('id'));
-			if (!$labor)
-				return response()->json(['success' => 0]);
-			$activity = Activity::find($labor->activity_id);
-			if (!$activity)
-				return response()->json(['success' => 0]);
-			$chapter = Chapter::find($activity->chapter_id);
-			if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-				return response()->json(['success' => 0]);
-			}
+		$labor = EstimateLabor::find($request->input('id'));
+		if (!$labor)
+			return response()->json(['success' => 0]);
+		$activity = Activity::find($labor->activity_id);
+		if (!$activity)
+			return response()->json(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return response()->json(['success' => 0]);
+		}
 
-			$rate = $request->get('rate');
-			if (empty($rate)) {
-				$_labor = EstimateLabor::find($request->input('id'));
-				$_activity = Activity::find($_labor->activity_id);
-				$_chapter = Chapter::find($_activity->chapter_id);
-				$_project = Project::find($_chapter->project_id);
-				$rate = $_project->hour_rate;
-			} else {
-				$rate = str_replace(',', '.', str_replace('.', '' , $rate));
-			}
+		$rate = $request->get('rate');
+		if (empty($rate)) {
+			$_labor = EstimateLabor::find($request->input('id'));
+			$_activity = Activity::find($_labor->activity_id);
+			$_chapter = Chapter::find($_activity->chapter_id);
+			$_project = Project::find($_chapter->project_id);
+			$rate = $_project->hour_rate;
+		} else {
+			$rate = str_replace(',', '.', str_replace('.', '' , $rate));
+		}
 
-			$labor->rate = $rate;
-			$labor->amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
+		$labor->rate = $rate;
+		$labor->amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
 
-			$labor->save();
+		$labor->save();
 
-			return response()->json(['success' => 1]);
+		return response()->json(['success' => 1]);
 	}
 }

@@ -14,9 +14,9 @@ use \Calctool\Models\Contact;
 use \Calctool\Models\Chapter;
 use \Calctool\Models\Audit;
 use \Calctool\Models\Activity;
+use \Calctool\Models\FavoriteActivity;
 use \Calctool\Models\ProjectShare;
 use \Calctool\Http\Controllers\InvoiceController;
-
 use \Calctool\Models\EstimateLabor;
 use \Calctool\Models\EstimateMaterial;
 use \Calctool\Models\EstimateEquipment;
@@ -48,10 +48,28 @@ class ProjectController extends Controller {
 		return view('user.edit_project');
 	}
 
+	public function getFavoriteManagement()
+	{
+		return view('user.favorite');
+	}
+
 	public function getOfferInvoiceList(Request $request)
 	{
 		return view('user.offer_invoice');
 	}
+
+	public function getFavoriteDelete(Request $request, $favid)
+	{
+		$fav = FavoriteActivity::find($favid);
+		if (!$fav || !$fav->isOwner()) {
+			return back();
+		}
+
+		$fav->delete();
+
+		return back();
+	}
+
 
 	public function downloadResource(Request $request, $resourceid)
 	{
