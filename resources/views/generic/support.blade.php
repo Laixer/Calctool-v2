@@ -104,7 +104,7 @@ $(document).ready(function() {
 								<select name="category" id="company_type" class="form-control pointer">
 									<option>Hulp / Demo gewenst</option>
 									<option>Account gerelateerd</option>
-									<option>Betaling gerelateerd</option>
+									<option>Abonnement gerelateerd</option>
 									<option>Vraag / Suggestie</option>
 									<option>Applicatieprobleem</option>
 									<option>Wachtwoord vergeten</option>
