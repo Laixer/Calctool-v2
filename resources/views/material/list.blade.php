@@ -301,7 +301,7 @@ $(document).ready(function() {
 						<a href="#element" data-toggle="tab"><i class="fa fa-th-list"></i> Elementen</a>
 					</li> -->
 					<li id="tab-favorite">
-						<a href="#favorite" data-toggle="tab"><i class="fa fa-star"></i> Favorieten</a>
+						<a href="#favorite" data-toggle="tab"><i class="fa fa-star"></i> Favorieten materialen</a>
 					</li>
 				</ul>
 
