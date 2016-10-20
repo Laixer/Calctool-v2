@@ -892,7 +892,7 @@ if (!$project || !$project->isOwner())
 			var $curThis = $(this);
 			if ($curThis.attr("data-id")) {
 				$.post("/calculation/calc/savefav", {project: {{ $project->id }}, activity: $curThis.attr("data-id")}, function(){
-					$curThis.text('Opgeslagen');
+					$curThis.text('Opgeslagen als favoriet');
 				}).fail(function(e) { console.log(e); });
 			}
 		});
@@ -902,7 +902,7 @@ if (!$project || !$project->isOwner())
 			var $curThis = $(this);
 			if ($curThis.attr("data-id")) {
 				$.post("/calculation/estim/savefav", {project: {{ $project->id }}, activity: $curThis.attr("data-id")}, function(){
-					$curThis.text('Opgeslagen');
+					$curThis.text('Opgeslagen als favoriet');
 				}).fail(function(e) { console.log(e); });
 			}
 		});
@@ -1268,11 +1268,11 @@ if (!$project || !$project->isOwner())
 													<div class="col-md-6 text-right">
 														<button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving</button>
 														<div class="btn-group" role="group">
-														  <button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acties&nbsp;&nbsp;<span class="caret"></span></button>
+														  <button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Werkzaamheid&nbsp;&nbsp;<span class="caret"></span></button>
 														  <ul class="dropdown-menu">
-														    <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename">Naam wijzigen</a></li>
-														    <li><a href="#" data-id="{{ $activity->id }}" class="lsavefav">Opslaan als favoriet</a></li>
-														    <li><a href="#" data-id="{{ $activity->id }}" class="deleteact">Verwijderen</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" class="lsavefav">opslaan als favoriet</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename">naam wijzigen</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" class="deleteact">verwijderen</a></li>
 														  </ul>
 														</div>
 													</div>
@@ -1560,9 +1560,15 @@ if (!$project || !$project->isOwner())
 		    											@endif
 		    										</div>
 		    										<div class="col-md-6 text-right">
-		    											<button data-id="{{ $activity->id }}" class="btn btn-info btn-xs esavefav">Opslaan als favoriete werkzaaheid</button>
 														<button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving</button>
-														<button data-id="{{ $activity->id }}" class="btn btn-danger btn-xs deleteact">Verwijderen</button>
+														<div class="btn-group" role="group">
+														  <button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Werkzaamheid&nbsp;&nbsp;<span class="caret"></span></button>
+														  <ul class="dropdown-menu">
+														    <li><a href="#" data-id="{{ $activity->id }}" class="esavefav">Opslaan als favoriet</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename">naam wijzigen</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" class="deleteact">verwijderen</a></li>
+														  </ul>
+														</div>
 													</div>
 												</div>
 
