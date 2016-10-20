@@ -40,6 +40,21 @@ $(document).ready(function() {
 
 			<div class="col-md-12">
 
+				<div class="white-row">
+				<h2>Helpdesk</h2>
+				Telefoon: <a href="tel:+643587470">06 435 87470</a> of <a href="tel:+643587430">06 435 87430</a><br />
+				Email: <a href="mailto:info@calculatietool.com">info@calculatietool.com</a><br />
+				Stuur SMS, WhatsApp, Telegram naar bovenstaande telefoonnummers
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="row">
+
+			<div class="col-md-12">
+
 				@if(Session::get('success'))
 				<div class="alert alert-success">
 					<i class="fa fa-check-circle"></i>
@@ -110,19 +125,9 @@ $(document).ready(function() {
 
 					<br>
 
-
-					<div class="row">
-						<div class="col-md-12">
-							<h2>Helpdesk</h2>
-							<p>Natuurlijk begrijpen wij volledig dat je graag ook even in contact wilt komen voor wat specifieke vragen. Dat kan via via de telefoon, SMS, Telegram of WhatsApp op <strong>06 43587470</strong> of  <strong>06 43587430</strong>.</p>
-						</div>
-					</div>
-
-
 				</form>
 
 			</div>
-
 		</div>
 
 	</section>

@@ -151,8 +151,8 @@ $(document).ready(function() {
 				</div>
 				@endif
 
-				<div class="bs-callout text-center styleBackground nomargin-top">
-					<h2>Definitief opzeggen? <strong>:(</strong></h2>
+				<div class="bs-callout text-center styleBackground nomargin">
+					<h2><strong><i class="fa fa-frown-o fsize40" aria-hidden="true"></i></strong> Definitief opzeggen?</h2>
 				</div>
 				<div class="row">
 					<div class="col-md-12">
@@ -163,10 +163,10 @@ $(document).ready(function() {
 			</div>
 
 			<div class="modal-footer">
-				<div class="col-md-6 text-left">
+				<div class="col-md-6 text-left" style="padding: 0;">
 					<button class="btn btn-primary" data-dismiss="modal">Annuleren</button>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-6" style="padding: 0;">
 					<a href="/payment" class="btn btn-danger" id="acc-deactive">Definitief deactiveren</a>
 				</div>
 			</div>
