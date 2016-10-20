@@ -467,13 +467,48 @@ if ($less_total>0) {
 					<div class="tab-content">
 
 						<div id="project" class="tab-pane">
+							
+
+
+
+
+
+
+
+
+
+
 							<div class="pull-right">
 								<a href="#" href="javascript:void(0);" data-toggle="modal" data-target="#notepad" class="btn btn-primary">Kladblok</a>
-								<a href="/project-{{ $project->id }}/copy" class="btn btn-primary">Project kopieren</a>
-								@if (!$project->project_close)
-								<a href="#" id="projclose" class="btn btn-danger">Project sluiten</a>
-								@endif
+								<div class="btn-group" role="group">
+								  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acties&nbsp;&nbsp;<span class="caret"></span></button>
+								  <ul class="dropdown-menu">
+								    <li><a href="/project-{{ $project->id }}/copy">Project kopieren</a></i>
+								    <li>
+								    @if (!$project->project_close)
+										<a href="#" id="projclose">Project sluiten</a>
+									@endif
+								    </li>
+								  </ul>
+								</div>
 							</div>
+
+
+
+
+							
+
+
+
+
+
+
+
+
+
+
+
+
 
 						<form method="post" {!! $offer_last && $offer_last->offer_finish ? 'action="/project/update/note"' : 'action="/project/update"' !!}>
    	  	                {!! csrf_field() !!}
