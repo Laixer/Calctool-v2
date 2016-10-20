@@ -200,6 +200,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('calculation/calc/updateequipment', 'CalcController@doUpdateCalculationEquipment');
 	Route::post('calculation/calc/updatelabor', 'CalcController@doUpdateCalculationLabor');
 	Route::post('calculation/calc/savefav', 'CalcController@doNewCalculationFavorite');
+	Route::post('calculation/calc/rename_activity', 'CalcController@doRenameCalculationActivity');
 
 	/* Estimate acions by calculation */
 	Route::post('calculation/estim/newmaterial', 'CalcController@doNewEstimateMaterial');
@@ -270,7 +271,6 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('more/newactivity/{chapter_id}', 'MoreController@doNewActivity')->where('chapter_id', '[0-9]+');
 	Route::post('more/newchapter/{project_id}', 'MoreController@doNewChapter')->where('project_id', '[0-9]+');
 	Route::post('more/deletechapter', 'MoreController@doDeleteChapter');
-
 
 	/* Relation pages */
 	Route::get('relation/new', 'RelationController@getNew')->middleware('payzone');

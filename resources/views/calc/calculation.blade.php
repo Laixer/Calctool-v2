@@ -926,6 +926,13 @@ if (!$project || !$project->isOwner())
 				window.location.href = '/estimate/project-{{ $project->id }}/chapter-' + $favchapid + '/fav-' + $(this).attr('data-id');
 		});
 
+		$('.changename').click(function(e) {
+			$activityid = $(this).attr('data-id');
+			$activity_name = $(this).attr('data-name');
+			$('#nc_activity').val($activityid);
+			$('#nc_activity_name').val($activity_name);
+		});
+
 		$req = false;
 		$("#search").keyup(function() {
 			$val = $(this).val();
@@ -1022,6 +1029,37 @@ if (!$project || !$project->isOwner())
 	});
 
 </script>
+<div class="modal fade" id="nameChangeModal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+		<form method="POST" action="/calculation/calc/rename_activity" accept-charset="UTF-8">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel2">Naam werkzaamheid</h4>
+			</div>
+
+			<div class="modal-body">
+				<div class="form-horizontal">
+					{!! csrf_field() !!}
+					<div class="form-group">
+						<div class="col-md-4">
+							<label>Naam</label>
+						</div>
+						<div class="col-md-12">
+							<input value="" name="activity_name" id="nc_activity_name" class="form-control" />
+							<input value="" name="activity" id="nc_activity" type="hidden" class="form-control" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default">Opslaan</button>
+			</div>
+		</div>
+		</form>
+	</div>
+</div>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -1232,6 +1270,7 @@ if (!$project || !$project->isOwner())
 														<div class="btn-group" role="group">
 														  <button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acties&nbsp;&nbsp;<span class="caret"></span></button>
 														  <ul class="dropdown-menu">
+														    <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename">Naam wijzigen</a></li>
 														    <li><a href="#" data-id="{{ $activity->id }}" class="lsavefav">Opslaan als favoriet</a></li>
 														    <li><a href="#" data-id="{{ $activity->id }}" class="deleteact">Verwijderen</a></li>
 														  </ul>

@@ -391,6 +391,37 @@ class CalcController extends Controller {
 		return back()->with('success', 'Werkzaamheid aangemaakt');
 	}
 
+	public function doRenameCalculationActivity(Request $request)
+	{
+		$this->validate($request, [
+			'activity_name' => array('required','max:100'),
+			'activity' => array('required','max:100'),
+		]);
+
+		$activity = Activity::find($request->input('activity'));
+		if (!$activity)
+			return back();
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return back();
+		}
+
+		$part = Part::where('part_name','=','contracting')->first();
+		$part_type = PartType::where('type_name','=','calculation')->first();
+		$project = Project::find($chapter->project_id);
+
+		if ($project->tax_reverse)
+			$tax = Tax::where('tax_rate','=',0)->first();
+		else
+			$tax = Tax::where('tax_rate','=',21)->first();
+
+		$activity->activity_name = $request->get('activity_name');
+
+		$activity->save();
+
+		return back()->with('success', 'Werkzaamheid aangepast');
+	}
+
 	public function doNewEstimateActivity(Request $request, $chapter_id)
 	{
 		$this->validate($request, [
