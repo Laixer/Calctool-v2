@@ -69,6 +69,7 @@ $(document).ready(function() {
 			<div>
 				<ol class="breadcrumb">
 				  <li><a href="/">Home</a></li>
+				  <li><a href="/mycompany">Mijn bedrijf</a></li>
 				  <li class="active">Overzichten</li>
 				</ol>
 			<div>
@@ -112,7 +113,7 @@ $(document).ready(function() {
 								<thead>
 									<tr>
 										<th class="col-md-2">Offertenummer</th>
-										<th class="col-md-2">Datum</th>
+										<th class="col-md-3">Datum</th>
 										<th class="col-md-3">Aanbetalingsbedrag</th>
 										<th class="col-md-3">Offertebedrag (excl. BTW)</th>
 										<th class="col-md-3">Acties</th>
@@ -124,7 +125,7 @@ $(document).ready(function() {
 									@foreach(Offer::where('project_id', $project->id)->whereNotNull('offer_finish')->orderBy('created_at')->get() as $offer)
 									<tr>
 										<td class="col-md-2"><a href="/offer/project-{{ $project->id }}/offer-{{ $offer->id }}">{{ $offer->offer_code }}</a></td>
-										<td class="col-md-2"><?php echo date('d-m-Y', strtotime($offer->offer_make)); ?></td>
+										<td class="col-md-3"><?php echo date('d-m-Y', strtotime($offer->offer_make)); ?></td>
 										<td class="col-md-3">{{ $offer->downpayment_amount ? number_format($offer->downpayment_amount, 2,",",".") : '-' }}</td>
 										<td class="col-md-3">{{ '&euro; '.number_format($offer->offer_total, 2, ",",".") }}</td>
 										<td class="col-md-3"><a href="/res-{{ ($offer->resource_id) }}/download" class="btn btn-primary btn-xs"><i class="fa fa-cloud-download fa-fw"></i> Downloaden</a></td>

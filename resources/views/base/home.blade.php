@@ -189,6 +189,20 @@ $(document).ready(function() {
 					</div>
 				</div>
 
+				<div class="col-sm-6 col-md-2 hidden-xs">
+					<div class="item-box item-box-show fixed-box">
+						<figure>
+							<a class="item-hover" href="/favorite">
+								<span class="overlay color2"></span>
+								<span class="inner" style="top:40%;">
+									<span class="block fa fa-star fsize60"></span>
+								</span>
+							</a>
+							<a href="/favorite" class="btn btn-primary add_to_cart"><strong> Favorieten</strong></a>
+						</figure>
+					</div>
+				</div>
+
 				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
@@ -199,20 +213,6 @@ $(document).ready(function() {
 								</span>
 							</a>
 							<a href="/relation" class="btn btn-primary add_to_cart"><strong> Relaties</strong></a>
-						</figure>
-					</div>
-				</div>
-
-				<div class="col-sm-6 col-md-2 hidden-xs">
-					<div class="item-box item-box-show fixed-box">
-						<figure>
-							<a class="item-hover" href="/offer_invoice">
-								<span class="overlay color2"></span>
-								<span class="inner" style="top:40%;">
-									<span class="block fa fa-line-chart fsize60"></span>
-								</span>
-							</a>
-							<a href="/offer_invoice" class="btn btn-primary add_to_cart"><strong> Overzichten</strong></a>
 						</figure>
 					</div>
 				</div>

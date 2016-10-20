@@ -314,6 +314,8 @@ Route::group(['middleware' => 'auth'], function() {
 
 	/* Project pages */
 	Route::get('offer_invoice', 'ProjectController@getOfferInvoiceList')->middleware('payzone');
+	Route::get('favorite', 'ProjectController@getFavoriteManagement')->middleware('payzone');
+	Route::get('favorite/{fav_id}/delete', 'ProjectController@getFavoriteDelete')->middleware('payzone');
 	Route::get('project/new', 'ProjectController@getNew')->middleware('payzone'); 
 	Route::get('project/relation/{relation_id}', 'ProjectController@getRelationDetails')->middleware('payzone'); 
 	Route::post('project/new', 'ProjectController@doNew');
