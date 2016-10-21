@@ -662,7 +662,7 @@ class ProjectController extends Controller {
 	public function doUploadProjectDocument(Request $request)
 	{
 		$this->validate($request, [
-			'projectfile' => array('required', 'mimes:jpeg,jpg,bmp,png,gif,pdf,doc,xls,docx,xlsx,csv,txt,ppt,pptx,xml'),
+			'projectfile' => array('required', 'mimes:jpeg,jpg,bmp,png,gif,pdf,doc,xls,docx,xlsx,csv,txt,ppt,pptx,xml', 'file'),
 			'project' => array('required'),
 		]);
 
