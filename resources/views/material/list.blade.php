@@ -314,7 +314,7 @@ $(document).ready(function() {
 
 							<span class="input-group-btn">
 						        <select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000">
-							        <option value="0" selected>Selecteer</option>
+							        <option value="0" selected>Selecteer categorie</option>
 							        @foreach (ProductGroup::all() as $group)
 							        <option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
 							        	@foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
@@ -325,7 +325,7 @@ $(document).ready(function() {
 						      </span>
 						      <span class="input-group-btn">
 						        <select id="group" class="btn" style="background-color: #E5E7E9; color:#000">
-						        <option value="0" selected>Selecteer</option>
+						        <option value="0" selected>Selecteer subcategorie</option>
 						        @foreach (ProductSubCategory::all() as $subcat)
 						          <option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
 						        @endforeach
