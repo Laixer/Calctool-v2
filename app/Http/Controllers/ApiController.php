@@ -55,11 +55,18 @@ class ApiController extends Controller {
 
 	public function getUserUpdate(Request $request)
 	{
+		$update_user = Auth::user();
+		if (session()->has('swap_session')) {
+			$swapinfo = session()->get('swap_session');
+
+			$update_user = User::find($swapinfo['admin_id']);
+		}
+
 		if ($request->has('location')) {
 			$currloc = substr($request->get('location'), 0, 160);
-			Auth::user()->current_url = $currloc . '#p' . $request->get('prescount');
-			Auth::user()->save();
-			Auth::user()->touch();
+			$update_user->current_url = $currloc . '#p' . $request->get('prescount');
+			$update_user->save();
+			$update_user->touch();
 		}
 
 		return response(null, 204);

@@ -361,28 +361,32 @@ class AdminController extends Controller {
 		if (!Auth::user()->isAdmin())
 			return back();
 
-		$cookie = cookie('swpsess', Auth::id(), 180);
+		$swapinfo = [
+			'user_id' => $user_id,
+			'admin_id' => Auth::id(),
+		];
+
+		session()->put('swap_session', $swapinfo);
 
 		Auth::loginUsingId($user_id);
 
-		return redirect('/')->withCookie($cookie);
-
+		return redirect('/');
 	}
 
 	public function getSwitchSessionBack(Request $request)
 	{
-		$swap_session = $request->cookie('swpsess');
-		if (!$swap_session)
+        if (!session()->has('swap_session'))
 			return back();
 
-		$user = User::find($swap_session);
+		$swapinfo = session()->get('swap_session');
+
+		$user = User::find($swapinfo['admin_id']);
 		if (!$user->isAdmin())
 			return back();
 
 		Auth::loginUsingId($user->id);
 
-		return redirect('/admin/user')->withCookie(cookie()->forget('swpsess'));
-
+		return redirect('/admin/user');
 	}
 
 	public function doNewGroup(Request $request)

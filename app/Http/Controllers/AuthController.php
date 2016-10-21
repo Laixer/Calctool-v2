@@ -136,7 +136,7 @@ class AuthController extends Controller {
 				Cache::put($this->getCacheBlockItem(), 1, 15);
 			}
 	
-			return back()->withErrors(['password' => ['Gebruikersnaam en/of wachtwoord verkeerd']])->withInput($request->except('secret'))->withCookie(cookie()->forget('swpsess'));
+			return back()->withErrors(['password' => ['Gebruikersnaam en/of wachtwoord verkeerd']])->withInput($request->except('secret'));
 		}
 	}
 

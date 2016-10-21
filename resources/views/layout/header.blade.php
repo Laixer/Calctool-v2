@@ -42,8 +42,7 @@ use \Calctool\Models\MessageBox;
 					<li class="active">
 					<?php
 						if (Auth::check()) {
-							$swap_session = Cookie::get('swpsess');
-							if ($swap_session) {
+							if (session()->has('swap_session')) {
 								echo '<a href="/admin/switch/back">Terugkeren</a>';
 							} else {
 								echo '<a href="/logout">Uitloggen</a>';

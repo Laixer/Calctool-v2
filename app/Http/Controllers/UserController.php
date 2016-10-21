@@ -495,6 +495,10 @@ class UserController extends Controller {
 		if ($request->get('administration_cost') != "")
 			$user->administration_cost = str_replace(',', '.', str_replace('.', '' , $request->get('administration_cost')));
 
+		if (session()->has('swap_session')) {
+			$user->timestamps = false;
+		}
+
 		$user->save();
 
 		Audit::CreateEvent('account.preference.update.success', 'Account preferences updated');

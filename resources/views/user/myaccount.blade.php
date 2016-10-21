@@ -266,20 +266,20 @@ $(document).ready(function() {
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="firstname">Voornaam</label>
-										<input {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="firstname" id="firstname" type="text" value="{{ Input::old('firstname') ? Input::old('firstname') : $user->firstname }}" class="form-control" />
+										<input {{ session()->has('swap_session') ? 'disabled' : '' }} name="firstname" id="firstname" type="text" value="{{ Input::old('firstname') ? Input::old('firstname') : $user->firstname }}" class="form-control" />
 									</div>
 								</div>
 
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="lastname">Achternaam</label>
-										<input {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="lastname" id="lastname" type="text" value="{{ Input::old('lastname') ? Input::old('lastname') : $user->lastname }}" class="form-control"/>
+										<input {{ session()->has('swap_session') ? 'disabled' : '' }} name="lastname" id="lastname" type="text" value="{{ Input::old('lastname') ? Input::old('lastname') : $user->lastname }}" class="form-control"/>
 									</div>
 								</div>
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="gender" style="display:block;">Geslacht</label>
-										<select {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="gender" id="gender" class="form-control pointer">
+										<select {{ session()->has('swap_session') ? 'disabled' : '' }} name="gender" id="gender" class="form-control pointer">
 											<option value="-1">Selecteer</option>
 											<option {{ $user->gender=='M' ? 'selected' : '' }} value="M">Man</option>
 											<option {{ $user->gender=='V' ? 'selected' : '' }} value="V">Vrouw</option>
@@ -293,28 +293,28 @@ $(document).ready(function() {
 								<div class="col-md-2">
 									<div class="form-group">
 										<label for="phone">Telefoonnummer</label>
-										<input {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="phone" id="phone" type="text" maxlength="12" value="{{ Input::old('phone') ? Input::old('phone') : $user->phone }}" class="form-control"/>
+										<input {{ session()->has('swap_session') ? 'disabled' : '' }} name="phone" id="phone" type="text" maxlength="12" value="{{ Input::old('phone') ? Input::old('phone') : $user->phone }}" class="form-control"/>
 									</div>
 								</div>
 
 								<div class="col-md-2">
 									<div class="form-group">
 										<label for="mobile">Mobiel</label>
-										<input {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="mobile" id="mobile" type="text" maxlength="12" value="{{ Input::old('mobile') ? Input::old('mobile') : $user->mobile }}" class="form-control"/>
+										<input {{ session()->has('swap_session') ? 'disabled' : '' }} name="mobile" id="mobile" type="text" maxlength="12" value="{{ Input::old('mobile') ? Input::old('mobile') : $user->mobile }}" class="form-control"/>
 									</div>
 								</div>
 
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="email">Email*</label>
-										<input {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="email" id="email" type="email" value="{{ Input::old('email') ? Input::old('email') : $user->email }}" class="form-control"/>
+										<input {{ session()->has('swap_session') ? 'disabled' : '' }} name="email" id="email" type="email" value="{{ Input::old('email') ? Input::old('email') : $user->email }}" class="form-control"/>
 									</div>
 								</div>
 
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="website">Website</label>
-										<input {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="website" id="website" type="url" value="{{ Input::old('website') ? Input::old('website') : $user->website }}" class="form-control"/>
+										<input {{ session()->has('swap_session') ? 'disabled' : '' }} name="website" id="website" type="url" value="{{ Input::old('website') ? Input::old('website') : $user->website }}" class="form-control"/>
 									</div>
 								</div>
 
@@ -322,7 +322,7 @@ $(document).ready(function() {
 
 							<div class="row">
 								<div class="col-md-12">
-									<button {{ \Cookie::get('swpsess') ? 'disabled' : '' }} class="btn btn-primary {{ \Cookie::get('swpsess') ? 'disabled' : '' }}"><i class="fa fa-check"></i> Opslaan</button>
+									<button {{ session()->has('swap_session') ? 'disabled' : '' }} class="btn btn-primary {{ session()->has('swap_session') ? 'disabled' : '' }}"><i class="fa fa-check"></i> Opslaan</button>
 								</div>
 							</div>
 						</form>
@@ -330,6 +330,7 @@ $(document).ready(function() {
 						</div>
 						<div id="payment" class="tab-pane">
 
+							@if(!session()->has('swap_session'))
 							<div class="pull-right">
 								<a href="#" data-toggle="modal" data-target="#deactivateModal" class="btn btn-danger">Account deactiveren</a>
 								@if (UserGroup::find(Auth::user()->user_group)->subscription_amount == 0)
@@ -338,6 +339,7 @@ $(document).ready(function() {
 								<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#paymentModal">Abonnement verlengen</a>
 								@endif
 							</div>
+							@endif
 
 							<h4>Abonnementsduur</h4>
 							<div class="row">
@@ -382,7 +384,7 @@ $(document).ready(function() {
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="curr_secret">Huidig wachtwoord</label>
-										<input {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="curr_secret" id="curr_secret" type="password" class="form-control" autocomplete="off"/>
+										<input {{ session()->has('swap_session') ? 'disabled' : '' }} name="curr_secret" id="curr_secret" type="password" class="form-control" autocomplete="off"/>
 									</div>
 								</div>
 
@@ -392,14 +394,14 @@ $(document).ready(function() {
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="secret">Wachtwoord</label>
-										<input {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="secret" id="secret" type="password" class="form-control" autocomplete="off"/>
+										<input {{ session()->has('swap_session') ? 'disabled' : '' }} name="secret" id="secret" type="password" class="form-control" autocomplete="off"/>
 									</div>
 								</div>
 
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="secret_confirmation">Herhaal wachtwoord</label>
-										<input {{ \Cookie::get('swpsess') ? 'disabled' : '' }} name="secret_confirmation" id="secret_confirmation" type="password" class="form-control" autocomplete="off"/>
+										<input {{ session()->has('swap_session') ? 'disabled' : '' }} name="secret_confirmation" id="secret_confirmation" type="password" class="form-control" autocomplete="off"/>
 									</div>
 								</div>
 
@@ -417,7 +419,7 @@ $(document).ready(function() {
 
 							<div class="row">
 								<div class="col-md-12">
-									<button class="btn btn-primary" name="save-password"><i class="fa fa-check"></i> Opslaan</button>
+									<button {{ session()->has('swap_session') ? 'disabled' : '' }} class="btn btn-primary {{ session()->has('swap_session') ? 'disabled' : '' }}" name="save-password"><i class="fa fa-check"></i> Opslaan</button>
 								</div>
 							</div>
 						</form>
