@@ -18,42 +18,12 @@ $contact = Contact::where('relation_id','=',$relation->id)->first();
 @section('title', 'Nieuw contact')
 
 @push('style')
-<link media="all" type="text/css" rel="stylesheet" href="/components/intro.js/introjs.css">
 @endpush
 
 @push('scripts')
-<script src="/components/intro.js/intro.js"></script>
 @endpush
 
 @section('content')
-<script type="text/javascript">
-$(document).ready(function() {
-	if (sessionStorage.introDemo) {
-		introJs().
-			setOption('nextLabel', 'Volgende').
-			setOption('prevLabel', 'Vorige').
-			setOption('skipLabel', 'Overslaan').
-			setOption('doneLabel', 'Klaar').
-			setOption('showBullets', false).
-			setOption('exitOnOverlayClick', false).
-			onexit(function(){
-				sessionStorage.removeItem('introDemo');
-			}).onafterchange(function(){
-				var done = this._currentStep;
-				$('.introjs-skipbutton').click(function(){
-					if (done == 1) {
-						window.location.href = '/mycompany';
-					}
-				});
-				if (done == 1) {
-					$('.introjs-prevbutton').css("visibility","initial");
-				} else {
-					$('.introjs-prevbutton').css("visibility","hidden");
-				}
-			}).start();
-	}
-});
-</script>
 <div id="wrapper">
 
 	<section class="container">

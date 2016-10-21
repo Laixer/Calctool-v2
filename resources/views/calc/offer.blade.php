@@ -272,48 +272,11 @@ $type = ProjectType::find($project->type_id);
 
 		});
 
-		if (sessionStorage.introDemo) {
-			var demo = introJs().
-				setOption('nextLabel', 'Volgende').
-				setOption('prevLabel', 'Vorige').
-				setOption('skipLabel', 'Overslaan').
-				setOption('doneLabel', 'Klaar').
-				setOption('showBullets', false).
-				onexit(function(){
-					sessionStorage.removeItem('introDemo');
-				}).onbeforechange(function(){
-					sessionStorage.introDemo = this._currentStep;
-					/*if (this._currentStep == 12) {
-						$('#tab-summary').addClass('active');
-						$('#summary').addClass('active');
-
-						$('#tab-calculate').removeClass('active');
-						$('#calculate').removeClass('active');
-					}*/
-				}).onafterchange(function(){
-					var done = this._currentStep;
-					$('.introjs-skipbutton').click(function(){
-						if (done == 13) {
-							sessionStorage.introDemo = 999;
-							window.location.href = '/offerversions/project-{{ $project->id }}';
-						}
-					});
-				});
-
-			if (sessionStorage.introDemo == 999 || sessionStorage.introDemo == 0) {
-				sessionStorage.clear();
-				sessionStorage.introDemo = 0;
-				demo.start();
-			} else {
-				demo.goToStep(sessionStorage.introDemo).start();
-			}
-
-		}
-
 		$('.osave').click(function(e){
 			e.preventDefault();
 			$('#frm-offer').submit();
 		});
+
 		$('#adressing').text($('#to_contact option:selected').text());
 		$('#to_contact').change(function(e){
 			$('#adressing').text($('#to_contact option:selected').text());

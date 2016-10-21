@@ -342,14 +342,7 @@ input[readonly] {
   cursor: text !important;
 }
 
-.introjs-helperNumberLayer {
-	visibility: hidden;
-}
-
-.introjs-skipbutton {
-	visibility: hidden;
-}
-
-.introjs-prevbutton {
-	visibility: hidden;
+.yt-vid, .yt-vid:hover, .yt-vid:focus, .yt-vid:active, .yt-vid:visited {
+	color: #e52d27;
+	text-decoration: none;
 }

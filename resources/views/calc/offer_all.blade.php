@@ -128,7 +128,7 @@ $(document).ready(function() {
 		</div>
 		@endif
 
-		<h2 style="margin: 10px 0 20px 0;"><strong>Offertebeheer</strong>&nbsp;&nbsp;<a class="fa fa-youtube-play" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
+		<h2 style="margin: 10px 0 20px 0;"><strong>Offertebeheer</strong>&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
 
 		<div class="white-row">
 			<table class="table table-striped">

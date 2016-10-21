@@ -32,29 +32,6 @@ $relation = Relation::find(Auth::user()->self_id);
 ?>
 
 @section('content')
-<script type="text/javascript">
-$(document).ready(function() {
-	$('.starttour').click(function(){
-		sessionStorage.introDemo = 0;
-		$('#introModal').modal('hide')
-
-		introJs().
-		setOption('nextLabel', 'Volgende').
-		setOption('prevLabel', 'Vorige').
-		setOption('skipLabel', 'Overslaan').
-		setOption('doneLabel', 'Volgende pagina').
-		setOption('showBullets', false).
-		setOption('exitOnOverlayClick', false).
-		start().oncomplete(function(){
-			window.location.href = '/mycompany';
-			sessionStorage.introDemo = 0;
-		});
-	});
-	<?php if ($next_step && $next_step=='intro_' . Auth::id()){ ?>
-		$('#introModal').modal('toggle');
-	<?php } ?>
-});
-</script>
 <div class="modal fade" id="introModal" tabindex="-1" role="dialog" aria-labelledby="introModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -119,7 +96,7 @@ $(document).ready(function() {
 			@endif
 			@endif
 
-			<h2 style="margin: 10px 0 20px 0;"><strong>Welkom</strong> {{ Auth::user()->firstname }}&nbsp;&nbsp;<a class="fa fa-youtube-play" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
+			<h2 style="margin: 10px 0 20px 0;"><strong>Welkom</strong> {{ Auth::user()->firstname }}&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
 
 			<div class="row">
 

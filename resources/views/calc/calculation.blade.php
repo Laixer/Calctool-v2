@@ -1200,7 +1200,7 @@ if (!$project || !$project->isOwner())
 
 		@include('calc.wizard', array('page' => 'calculation'))
 
-			<h2><strong>Calculeren</strong>&nbsp;<a class="fa fa-youtube-play" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
+			<h2><strong>Calculeren</strong>&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
 
 			<div class="tabs nomargin" ng-controller="SummaryCtrl">
 

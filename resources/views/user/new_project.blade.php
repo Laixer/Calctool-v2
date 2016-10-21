@@ -380,7 +380,7 @@ $(document).ready(function() {
 		</div>
 		@endif
 
-		<h2><strong>Nieuw</strong> project&nbsp;&nbsp;<a class="fa fa-youtube-play" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
+		<h2><strong>Nieuw</strong> project&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
 
 		@if(!Calctool\Models\Relation::where('user_id','=', Auth::user()->id)->count())
 		<div class="alert alert-info">

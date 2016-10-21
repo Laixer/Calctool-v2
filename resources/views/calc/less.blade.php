@@ -478,7 +478,7 @@ var n = this,
 
 		@include('calc.wizard', array('page' => 'less'))
 
-			<h2 style="margin: 10px 0 20px 0;"><strong>Minderwerk </strong><strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u hoeveelheden in mindering brengen op de bestaande calculatie bedoeld als minderwerk op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>&nbsp;&nbsp;<a class="fa fa-youtube-play" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></strong></h2>
+			<h2 style="margin: 10px 0 20px 0;"><strong>Minderwerk </strong><strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u hoeveelheden in mindering brengen op de bestaande calculatie bedoeld als minderwerk op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></strong></h2>
 
 			<div class="tabs nomargin">
 
