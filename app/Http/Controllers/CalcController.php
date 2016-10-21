@@ -76,6 +76,7 @@ class CalcController extends Controller {
 		$activity = new Activity;
 		$activity->activity_name = $favact->activity_name;
 		$activity->priority = 0;
+		$activity->note = $favact->note;
 		$activity->chapter_id = $chapter->id;
 		$activity->part_id = $part->id;
 		$activity->part_type_id = $part_type->id;
@@ -143,6 +144,7 @@ class CalcController extends Controller {
 		$activity = new Activity;
 		$activity->activity_name = $favact->activity_name;
 		$activity->priority = 0;
+		$activity->note = $favact->note;
 		$activity->chapter_id = $chapter->id;
 		$activity->part_id = $part->id;
 		$activity->part_type_id = $part_type->id;
@@ -641,6 +643,7 @@ class CalcController extends Controller {
 
 		$fav_activity = new FavoriteActivity;
 		$fav_activity->activity_name = $activity->activity_name;
+		$fav_activity->note = $activity->note;
 		$fav_activity->user_id = Auth::id();
 
 		if ($project->tax_reverse) {
@@ -707,6 +710,7 @@ class CalcController extends Controller {
 
 		$fav_activity = new FavoriteActivity;
 		$fav_activity->activity_name = $activity->activity_name;
+		$fav_activity->note = $activity->note;
 		$fav_activity->user_id = Auth::id();
 
 		if ($project->tax_reverse) {
