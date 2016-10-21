@@ -110,14 +110,9 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('myaccount', function() {
 		return view('user.myaccount');
 	});
-	Route::get('myaccount/telegram', function() {
-		return view('user.myaccount_telegram');
-	});
-	Route::get('myaccount/telegram/unchain', 'UserController@getMyAccountTelegramUnchain');
 	Route::get('myaccount/deactivate', 'UserController@getMyAccountDeactivate');
 	Route::get('myaccount/loaddemo', 'UserController@doLoadDemoProject');
 	Route::get('myaccount/oauth/session/{client_id}/revoke', 'UserController@doRevokeApp');
-	Route::post('myaccount/telegram/update', 'UserController@doMyAccountTelegramUpdate');
 	Route::post('myaccount/updateuser', 'UserController@doMyAccountUser');
 	Route::post('myaccount/iban/new', 'UserController@doNewIban');
 	Route::post('myaccount/security/update', 'UserController@doUpdateSecurity');
@@ -370,11 +365,9 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 		return view('admin.edit_user');
 	});
 	Route::get('user-{user_id}/switch', 'AdminController@getSwitchSession');
-	Route::get('user-{user_id}/demo', 'AdminController@getDemoProject');
 	Route::get('user-{user_id}/validation', 'AdminController@getValidationProject');
 	Route::get('user-{user_id}/stabu', 'AdminController@getStabuProject');
 	Route::get('user-{user_id}/purge', 'AdminController@getPurgeUser');
-	Route::get('user-{user_id}/deblock', 'AdminController@getSessionDeblock');
 	Route::post('user-{user_id}/edit', 'AdminController@doUpdateUser');
 	Route::post('user-{user_id}/adminlog/new', 'AdminController@doNewAdminLog');
 	Route::get('group', function() {
@@ -451,16 +444,3 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 	});
 	Route::get('log/truncate', 'AdminController@doTruncateLog');
 });
-
-// Route::any('telegram', function(){
-// 	if (env('TELEGRAM_ENABLED')) {
-// 		try {
-// 			// create Telegram API object
-// 			$telegram = new Longman\TelegramBot\Telegram(env('TELEGRAM_API'), env('TELEGRAM_NAME'));
-
-// 			$telegram->handle();
-// 		} catch (Longman\TelegramBot\Exception\TelegramException $e) {
-// 			Log::error($e->getMessage());
-// 		}
-// 	}
-// });

@@ -810,13 +810,6 @@ class AdminController extends Controller {
 		return back()->with('success', 'Getruncate');
 	}
 
-	public function getDemoProject(Request $request, $user_id)
-	{
-		\DemoProjectTemplate::setup($user_id);
-
-		return back()->with('success', 'Demo-project ingevoegd');
-	}
-
 	public function getValidationProject(Request $request, $user_id)
 	{
 		\ValidationProjectTemplate::setup($user_id);
@@ -829,13 +822,5 @@ class AdminController extends Controller {
 		\StabuProjectTemplate::setup($user_id);
 
 		return back()->with('success', 'STABU-project ingevoegd');
-	}
-
-	public function getSessionDeblock(Request $request, $user_id)
-	{
-		$username = User::find($user_id)->username;
-		Redis::del('auth:'.$username.':fail', 'auth:'.$username.':block');
-
-		return back()->with('success', 'sessie met succes gedeblokkeerd, de user kan weer inloggen.');
 	}
 }

@@ -3,19 +3,14 @@
 @section('title', 'Admin Dashboard')
 
 @push('style')
-<link media="all" type="text/css" rel="stylesheet" href="/components/clippyjs/build/clippy.css">
 @endpush
 
 @push('scripts')
-<script src="/components/clippyjs/build/clippy.min.js"></script>
 @endpush
 
 @section('content')
 <script type="text/javascript">
 $(document).ready(function() {
-	clippy.load('Clippy', function(agent) {
-		agent.show();
-	});
 });
 </script>
 		<div id="wrapper">

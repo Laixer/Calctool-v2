@@ -86,7 +86,7 @@ $redis_info = Redis::command('info');
 				</div>
 				<div class="row">
 					<div class="col-md-2">Versie</div>
-					<div class="col-md-10">{{ config('version.describe') }}</div>
+					<div class="col-md-10">{{ config('app.version') }}</div>
 				</div>
 				<div class="row">
 					<div class="col-md-2">Revisie</div>
