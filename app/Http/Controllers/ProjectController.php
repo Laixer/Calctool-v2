@@ -170,7 +170,6 @@ class ProjectController extends Controller {
 		return redirect('project-'.$project->id.'/edit')->with('success', 'Opgeslagen');
 	}
 
-	
 	public function getProjectCopy(Request $request, $project_id)
 	{
 		$orig_project = Project::find($project_id);
@@ -212,7 +211,7 @@ class ProjectController extends Controller {
 
 		$project->save();
 
-		foreach (Chapter::where('project_id','=', $orig_project->id)->get() as $orig_chapter) {
+		foreach (Chapter::where('project_id', $orig_project->id)->where('more', false)->get() as $orig_chapter) {
 			$chapter = new Chapter;
 			$chapter->chapter_name = $orig_chapter->chapter_name;
 			$chapter->priority = $orig_chapter->priority;
@@ -220,20 +219,23 @@ class ProjectController extends Controller {
 
 			$chapter->save();
 
-			foreach (Activity::where('chapter_id','=', $orig_chapter->id)->get() as $orig_activity) {
+			foreach (Activity::where('chapter_id', $orig_chapter->id)->get() as $orig_activity) {
 				$activity = new Activity;
 				$activity->chapter_id = $chapter->id;
 				$activity->activity_name = $orig_activity->activity_name;
 				$activity->priority = $orig_activity->priority;
+				$activity->note = $orig_activity->note;
+				$activity->use_timesheet = $orig_activity->use_timesheet;
 				$activity->part_id = $orig_activity->part_id;
 				$activity->part_type_id = $orig_activity->part_type_id;
+				$activity->detail_id = $orig_activity->detail_id;
 				$activity->tax_labor_id = $orig_activity->tax_labor_id;
 				$activity->tax_material_id = $orig_activity->tax_material_id;
 				$activity->tax_equipment_id = $orig_activity->tax_equipment_id;
 
 				$activity->save();
 
-				foreach(CalculationLabor::where('activity_id','=', $orig_activity->id)->get() as $orig_calc_labor) {
+				foreach(CalculationLabor::where('activity_id', $orig_activity->id)->get() as $orig_calc_labor) {
 					$calc_labor = new CalculationLabor;
 					$calc_labor->rate = $orig_calc_labor->rate;
 					$calc_labor->amount = $orig_calc_labor->amount;
@@ -242,7 +244,7 @@ class ProjectController extends Controller {
 					$calc_labor->save();
 				}
 				
-				foreach(CalculationMaterial::where('activity_id','=', $orig_activity->id)->get() as $orig_calc_material) {
+				foreach(CalculationMaterial::where('activity_id', $orig_activity->id)->get() as $orig_calc_material) {
 					$calc_material = new CalculationMaterial;
 					$calc_material->material_name = $orig_calc_material->material_name;
 					$calc_material->unit = $orig_calc_material->unit;
@@ -253,7 +255,7 @@ class ProjectController extends Controller {
 					$calc_material->save();
 				}
 
-				foreach(CalculationEquipment::where('activity_id','=', $orig_activity->id)->get() as $orig_calc_equipment) {
+				foreach(CalculationEquipment::where('activity_id', $orig_activity->id)->get() as $orig_calc_equipment) {
 					$calc_equipment = new CalculationEquipment;
 					$calc_equipment->equipment_name = $orig_calc_equipment->equipment_name;
 					$calc_equipment->unit = $orig_calc_equipment->unit;
@@ -264,7 +266,7 @@ class ProjectController extends Controller {
 					$calc_equipment->save();
 				}
 
-				foreach(EstimateLabor::where('activity_id','=', $orig_activity->id)->get() as $orig_estim_labor) {
+				foreach(EstimateLabor::where('activity_id', $orig_activity->id)->get() as $orig_estim_labor) {
 					$estim_labor = new EstimateLabor;
 					$estim_labor->rate = $orig_estim_labor->rate;
 					$estim_labor->amount = $orig_estim_labor->amount;
@@ -275,7 +277,7 @@ class ProjectController extends Controller {
 					$estim_labor->save();
 				}
 
-				foreach(EstimateMaterial::where('activity_id','=', $orig_activity->id)->get() as $orig_estim_material) {
+				foreach(EstimateMaterial::where('activity_id', $orig_activity->id)->get() as $orig_estim_material) {
 					$estim_material = new EstimateMaterial;
 					$estim_material->material_name = $orig_estim_material->material_name;
 					$estim_material->unit = $orig_estim_material->unit;
@@ -288,7 +290,7 @@ class ProjectController extends Controller {
 					$estim_material->save();
 				}
 
-				foreach(EstimateEquipment::where('activity_id','=', $orig_activity->id)->get() as $orig_estim_equipment) {
+				foreach(EstimateEquipment::where('activity_id', $orig_activity->id)->get() as $orig_estim_equipment) {
 					$calc_equipment = new EstimateEquipment;
 					$calc_equipment->equipment_name = $orig_estim_equipment->equipment_name;
 					$calc_equipment->unit = $orig_estim_equipment->unit;
@@ -349,6 +351,8 @@ class ProjectController extends Controller {
 
 		$project->save();
 
+		Audit::CreateEvent('project.update.success', 'Settings by project ' . $project->project_name . ' updated');
+
 		return back()->with('success', 'Projectgegevens aangepast');
 	}
 
@@ -365,6 +369,8 @@ class ProjectController extends Controller {
 		$project->note = $request->input('note');
 
 		$project->save();
+
+		Audit::CreateEvent('project.update.note.success', 'Note by project ' . $project->project_name . ' updated');
 
 		return back()->with('success', 'Projectomschrijving aangepast');
 	}
@@ -417,6 +423,8 @@ class ProjectController extends Controller {
 		$project->profit_more_subcontr_equip = round($request->input('more_profit_equipment_2'));
 
 		$project->save();
+
+		Audit::CreateEvent('project.update.profit.success', 'Profits by project ' . $project->project_name . ' updated');
 
 		return back()->with('success', 'Uurtarief & winstpercentages aangepast');
 	}
@@ -520,6 +528,8 @@ class ProjectController extends Controller {
 
 		$project->save();
 
+		Audit::CreateEvent('project.update.advanced.success', 'Advanced options by project ' . $project->project_name . ' updated');
+
 		return back()->with('success', 'Geavanceerde opties opgeslagen');
 	}
 
@@ -573,6 +583,8 @@ class ProjectController extends Controller {
 		$project->project_close = date('Y-m-d', strtotime($request->input('date')));
 
 		$project->save();
+
+		Audit::CreateEvent('project.close.success', 'Project ' . $project->project_name . ' closed');
 
 		return response()->json(['success' => 1]);
 	}
@@ -675,10 +687,12 @@ class ProjectController extends Controller {
 
 			$resource->save();
 
+			Audit::CreateEvent('project.new.document.upload.success', 'Document ' . $resource->resource_name . ' attached to project ' . $project->project_name);
+
 			return back()->with('success', 'Document aan project toegevoegd');
 		} else {
 			// redirect our user back to the form with the errors from the validator
-			return back()->withErrors('Geen CSV geupload');
+			return back()->withErrors('Geen bestand geupload');
 		}
 	}
 }
