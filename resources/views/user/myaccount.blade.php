@@ -451,7 +451,11 @@ $(document).ready(function() {
 										<td class="col-md-2">{{ date('d-m-Y H:i:s', strtotime($client->created_at)) }}</td>
 										<td class="col-md-4">{{ $client->last_used ?date('d-m-Y H:i:s', strtotime($client->last_used)) : '-' }}</td>
 										<td class="col-md-2">{{ $client->active ? 'Ja' : 'Nee' }}</td>
-										<td class="col-md-2" style="text-align:right"><a href="/myaccount/oauth/session/{{ $client->id }}/revoke" class="btn btn-danger btn-xs">Intrekken</a></td>
+										<td class="col-md-2" style="text-align:right">
+										@if(!session()->has('swap_session'))
+											<a href="/myaccount/oauth/session/{{ $client->id }}/revoke" class="btn btn-danger btn-xs">Intrekken</a>
+										@endif
+										</td>
 									</tr>
 									@endforeach
 								</tbody>

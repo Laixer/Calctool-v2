@@ -57,6 +57,7 @@ class MoreController extends Controller {
 		$activity = new Activity;
 		$activity->activity_name = $favact->activity_name;
 		$activity->priority = 0;
+		$activity->note = $favact->note;
 		$activity->chapter_id = $chapter->id;
 		$activity->part_id = $part->id;
 		$activity->part_type_id = $part_type->id;

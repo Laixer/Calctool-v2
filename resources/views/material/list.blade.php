@@ -429,46 +429,6 @@ $(document).ready(function() {
 
 					</div>
 
-					@if(0)
-					<div id="element" class="tab-pane">
-						<h4>Elementen</h4>
-						<table class="table table-striped">
-							<thead>	
-								<tr>
-									<th class="col-md-3">Naam</th>
-									<th class="col-md-2">Onderdelen</th>
-									<th class="col-md-4">Omschrijving</th>
-									<th class="col-md-1"></th>
-									<th class="col-md-2"></th>
-								</tr>
-							</thead>
-
-							<tbody>
-							@if (!Element::where('user_id','=', Auth::id())->count('id'))
-							<tr>
-								<td colspan="6" style="text-align: center;">Er zijn geen elementen</td>
-							</tr>
-							@endif
-							@foreach (Element::where('user_id','=', Auth::id())->get() as $element)
-								<tr>
-									<td class="col-md-3"><a href="/material/element-{{ $element->id }}">{{ $element->name }}</a></td>
-									<td class="col-md-2">{{--  --}}</td>
-									<td class="col-md-4">{{ $element->description }}</td>
-									<td class="col-md-1"></td>
-									<td class="col-md-2 text-right"><button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button></td>
-								</tr>
-							@endforeach
-							</tbody>
-						</table>
-						<div class="row">
-							<div class="col-md-12">
-								<a href="#" data-toggle="modal" data-target="#elmModal" id="newelm" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw element</a>
-							</div>
-						</div>
-
-					</div>
-					@endif
-
 					<div id="favorite" class="tab-pane">
 						<div class="row">
 							<div class="col-md-2"><h4>Favorieten</h4></div>

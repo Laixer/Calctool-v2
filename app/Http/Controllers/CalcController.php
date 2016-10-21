@@ -76,6 +76,7 @@ class CalcController extends Controller {
 		$activity = new Activity;
 		$activity->activity_name = $favact->activity_name;
 		$activity->priority = 0;
+		$activity->note = $favact->note;
 		$activity->chapter_id = $chapter->id;
 		$activity->part_id = $part->id;
 		$activity->part_type_id = $part_type->id;
@@ -143,6 +144,7 @@ class CalcController extends Controller {
 		$activity = new Activity;
 		$activity->activity_name = $favact->activity_name;
 		$activity->priority = 0;
+		$activity->note = $favact->note;
 		$activity->chapter_id = $chapter->id;
 		$activity->part_id = $part->id;
 		$activity->part_type_id = $part_type->id;
@@ -406,20 +408,30 @@ class CalcController extends Controller {
 			return back();
 		}
 
-		$part = Part::where('part_name','=','contracting')->first();
-		$part_type = PartType::where('type_name','=','calculation')->first();
-		$project = Project::find($chapter->project_id);
-
-		if ($project->tax_reverse)
-			$tax = Tax::where('tax_rate','=',0)->first();
-		else
-			$tax = Tax::where('tax_rate','=',21)->first();
-
 		$activity->activity_name = $request->get('activity_name');
 
 		$activity->save();
 
 		return back()->with('success', 'Werkzaamheid aangepast');
+	}
+
+	public function doRenameCalculationChapter(Request $request)
+	{
+		$this->validate($request, [
+			'chapter_name' => array('required','max:100'),
+			'chapter' => array('required','max:100'),
+		]);
+
+		$chapter = Chapter::find($request->input('chapter'));
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return back();
+		}
+
+		$chapter->chapter_name = $request->get('chapter_name');
+
+		$chapter->save();
+
+		return back()->with('success', 'Onderdeel aangepast');
 	}
 
 	public function doNewEstimateActivity(Request $request, $chapter_id)
@@ -631,6 +643,7 @@ class CalcController extends Controller {
 
 		$fav_activity = new FavoriteActivity;
 		$fav_activity->activity_name = $activity->activity_name;
+		$fav_activity->note = $activity->note;
 		$fav_activity->user_id = Auth::id();
 
 		if ($project->tax_reverse) {
@@ -697,6 +710,7 @@ class CalcController extends Controller {
 
 		$fav_activity = new FavoriteActivity;
 		$fav_activity->activity_name = $activity->activity_name;
+		$fav_activity->note = $activity->note;
 		$fav_activity->user_id = Auth::id();
 
 		if ($project->tax_reverse) {

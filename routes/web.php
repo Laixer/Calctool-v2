@@ -194,6 +194,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('calculation/calc/updatelabor', 'CalcController@doUpdateCalculationLabor');
 	Route::post('calculation/calc/savefav', 'CalcController@doNewCalculationFavorite');
 	Route::post('calculation/calc/rename_activity', 'CalcController@doRenameCalculationActivity');
+	Route::post('calculation/calc/rename_chapter', 'CalcController@doRenameCalculationChapter');
 
 	/* Estimate acions by calculation */
 	Route::post('calculation/estim/newmaterial', 'CalcController@doNewEstimateMaterial');
