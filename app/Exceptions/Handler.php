@@ -3,18 +3,10 @@
 namespace Calctool\Exceptions;
 
 use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Session\TokenMismatchException;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use League\OAuth2\Server\Exception\InvalidClientException;
-use League\OAuth2\Server\Exception\InvalidRequestException;
-use League\OAuth2\Server\Exception\AccessDeniedException;
 
 use \Mailgun;
 use \Auth;
@@ -27,15 +19,18 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        HttpException::class,
-        ModelNotFoundException::class,
-        AuthorizationException::class,
-        ValidationException::class,
-        TokenMismatchException::class,
-        FileNotFoundException::class,
-        InvalidClientException::class,
-        InvalidRequestException::class,
-        AccessDeniedException::class,
+        \Illuminate\Contracts\Filesystem\FileNotFoundException::class,
+        
+        \League\OAuth2\Server\Exception\InvalidClientException::class,
+        \League\OAuth2\Server\Exception\InvalidRequestException::class,
+        \League\OAuth2\Server\Exception\AccessDeniedException::class,
+
+        \Illuminate\Auth\AuthenticationException::class,
+        \Illuminate\Auth\Access\AuthorizationException::class,
+        \Symfony\Component\HttpKernel\Exception\HttpException::class,
+        \Illuminate\Database\Eloquent\ModelNotFoundException::class,
+        \Illuminate\Session\TokenMismatchException::class,
+        \Illuminate\Validation\ValidationException::class,
     ];
 
     /**
