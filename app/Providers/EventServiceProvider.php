@@ -16,18 +16,19 @@ class EventServiceProvider extends ServiceProvider
         'Calctool\Events\UserNotification' => [
             'Calctool\Listeners\SendNotificationMail',
         ],
+        'Illuminate\Auth\Events\Login' => [
+            'Calctool\Listeners\LogAuthenticated',
+        ],
     ];
 
     /**
-     * Register any other events for your application.
+     * Register any events for your application.
      *
-     * @param  \Illuminate\Contracts\Events\Dispatcher  $events
      * @return void
      */
-    public function boot(DispatcherContract $events)
+    public function boot()
     {
-        parent::boot($events);
-
+        parent::boot();
         //
     }
 }

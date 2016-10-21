@@ -45,44 +45,44 @@
                         <div class="alert alert-danger">
                             <i class="fa fa-frown-o"></i>
                             @foreach ($errors->all() as $error)
-                                {{ $error }}
+                            {{ $error }}
                             @endforeach
                         </div>
                         @endif
 
-                    <div class="white-row nopadding-bottom">
+                        <div class="white-row nopadding-bottom">
 
-                        <h4>Applicatie {{ $client->getName() }}</h4>
+                            <h4>Applicatie {{ $client->getName() }}</h4>
 
-                        <p>Deze applicatie vraagt toegang tot:</p>
-                        <ul class="list-icon check">
-                            <li>Account gegevens</li>
-                            <li>Bedrijfsgegevens</li>
-                            <li>Offertes en factren</li>
-                            <li>Relaties en persoonlijke instellingen</li>
-                        </ul>
+                            <p>Deze applicatie vraagt toegang tot:</p>
+                            <ul class="list-icon check">
+                                <li>Account gegevens</li>
+                                <li>Bedrijfsgegevens</li>
+                                <li>Offertes en factren</li>
+                                <li>Relaties en persoonlijke instellingen</li>
+                            </ul>
 
-                        <hr class="half-margins">
+                            <hr class="half-margins">
 
-                        <p>
-                            Onvoldoende informatie?
-                            <a href="/support">Vraag hulp</a>
-                        </p>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <input type="submit" name="approve" value="Toestaan" class="btn btn-primary">
-                                <input type="submit" name="deny" value="Afwijzen" class="btn btn-danger">
+                            <p>
+                                Onvoldoende informatie?
+                                <a href="/support">Vraag hulp</a>
+                            </p>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="submit" name="approve" value="Toestaan" class="btn btn-primary">
+                                    <input type="submit" name="deny" value="Afwijzen" class="btn btn-danger">
+                                </div>
                             </div>
                         </div>
-                    </div>
 
                     </form>
 
                 </div>
 
-        </section>
+            </section>
 
+        </div>
     </div>
-</div>
 @stop
 

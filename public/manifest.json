@@ -1,5 +1,18 @@
 {
-	"name": "CalculatieTool.com",
+	"manifest_version": 2,
+	"version": "stable-3",
+	"default_locale": "nl",
+	"description": "Calculeren, Offreren, Registreren en Administreren in een handomdraai",
+	"name": "CalculatieTool",
+	"short_name": "CT",
+	"homepage_url": "/",
+	"start_url": "/",
+	"orientation": "any",
+	"display":"browser",
+	"theme_color": "#517a00",
+	"background_color": "#ccc",
+	"author": "CalculatieTool.com",
+	"dir": "ltr",
 	"icons": [
 		{
 			"src": "\/android-chrome-36x36.png",

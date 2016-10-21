@@ -40,13 +40,11 @@ $type = ProjectType::find($project->type_id);
 @push('style')
 <link media="all" type="text/css" rel="stylesheet" href="/components/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css">
 <link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
-<link media="all" type="text/css" rel="stylesheet" href="/components/intro.js/introjs.css">
 @endpush
 
 @push('scripts')
 <script src="/components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 <script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-<script src="/components/intro.js/intro.js"></script>
 @endpush
 
 <?php if($common_access_error){ ?>
@@ -274,48 +272,11 @@ $type = ProjectType::find($project->type_id);
 
 		});
 
-		if (sessionStorage.introDemo) {
-			var demo = introJs().
-				setOption('nextLabel', 'Volgende').
-				setOption('prevLabel', 'Vorige').
-				setOption('skipLabel', 'Overslaan').
-				setOption('doneLabel', 'Klaar').
-				setOption('showBullets', false).
-				onexit(function(){
-					sessionStorage.removeItem('introDemo');
-				}).onbeforechange(function(){
-					sessionStorage.introDemo = this._currentStep;
-					/*if (this._currentStep == 12) {
-						$('#tab-summary').addClass('active');
-						$('#summary').addClass('active');
-
-						$('#tab-calculate').removeClass('active');
-						$('#calculate').removeClass('active');
-					}*/
-				}).onafterchange(function(){
-					var done = this._currentStep;
-					$('.introjs-skipbutton').click(function(){
-						if (done == 13) {
-							sessionStorage.introDemo = 999;
-							window.location.href = '/offerversions/project-{{ $project->id }}';
-						}
-					});
-				});
-
-			if (sessionStorage.introDemo == 999 || sessionStorage.introDemo == 0) {
-				sessionStorage.clear();
-				sessionStorage.introDemo = 0;
-				demo.start();
-			} else {
-				demo.goToStep(sessionStorage.introDemo).start();
-			}
-
-		}
-
 		$('.osave').click(function(e){
 			e.preventDefault();
 			$('#frm-offer').submit();
 		});
+
 		$('#adressing').text($('#to_contact option:selected').text());
 		$('#to_contact').change(function(e){
 			$('#adressing').text($('#to_contact option:selected').text());

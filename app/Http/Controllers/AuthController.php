@@ -3,8 +3,6 @@
 namespace Calctool\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Longman\TelegramBot\Telegram as TTelegram;
-use Longman\TelegramBot\Request as TRequest;
 use Illuminate\Validation\ValidationException;
 
 use \Calctool\Models\User;
@@ -12,7 +10,6 @@ use \Calctool\Models\UserGroup;
 use \Calctool\Models\Project;
 use \Calctool\Models\UserType;
 use \Calctool\Models\Audit;
-use \Calctool\Models\Telegram;
 use \Calctool\Models\MessageBox;
 use \Calctool\Models\Relation;
 use \Calctool\Models\RelationType;
@@ -121,11 +118,6 @@ class AuthController extends Controller {
 				return back()->withErrors(['mail' => ['Email nog niet bevestigd']])->withInput($request->except('secret'));
 			}
 
-			Auth::user()->login_count++;
-			Auth::user()->save();
-
-			Audit::CreateEvent('auth.login.succces', 'Login with: ' . \Calctool::remoteAgent());
-
 			if ($request->has('redirect')) {
 				return redirect(urldecode($request->get('redirect')));
 			}
@@ -144,7 +136,7 @@ class AuthController extends Controller {
 				Cache::put($this->getCacheBlockItem(), 1, 15);
 			}
 	
-			return back()->withErrors(['password' => ['Gebruikersnaam en/of wachtwoord verkeerd']])->withInput($request->except('secret'))->withCookie(cookie()->forget('swpsess'));
+			return back()->withErrors(['password' => ['Gebruikersnaam en/of wachtwoord verkeerd']])->withInput($request->except('secret'));
 		}
 	}
 
@@ -291,30 +283,6 @@ class AuthController extends Controller {
 		return redirect('/');
 	}
 
-	private function informAdmin(User $newuser)
-	{
-		if (env('TELEGRAM_ENABLED') && env('TELEGRAM_ENABLED') == "true") {
-			$telegram = new TTelegram(env('TELEGRAM_API'), env('TELEGRAM_NAME'));
-			TRequest::initialize($telegram);
-
-			foreach (User::where('user_type','=',UserType::where('user_type','=','admin')->first()->id)->get() as $admin) {
-				$tgram = Telegram::where('user_id','=',$admin->id)->first();
-				if ($tgram && $tgram->alert) {
-
-					$text  = "Nieuwe gebruiker aangemeld\n";
-					$text .= "Gebruikersnaam: " . $newuser->username . "\n";
-					$text .= "Email: " . $newuser->email . "\n";
-
-					$data = array();
-					$data['chat_id'] = $tgram->uid;
-					$data['text'] = $text;
-
-					$result = TRequest::sendMessage($data);
-				}
-			}
-		}
-	}
-
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -333,8 +301,6 @@ class AuthController extends Controller {
 		$user->save();
 
 		\VoorbeeldRelatieTemplate::setup($user->id);
-
-		$this->informAdmin($user);
 
 		$message = new MessageBox;
 		$message->subject = 'Welkom ' . $user->username;

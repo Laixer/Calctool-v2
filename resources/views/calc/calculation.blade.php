@@ -1074,7 +1074,7 @@ if (!$project || !$project->isOwner())
 			            <input type="text" id="search" value="" class="form-control" placeholder="Zoek in volledig lijst">
 			              <span class="input-group-btn">
 			                  <select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000">
-			                    <option value="0" selected>of sorteer op categrie</option>
+			                    <option value="0" selected>of sorteer op categorie</option>
 			                    @foreach (ProductGroup::all() as $group)
 			                    <option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
 			                      @foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
@@ -1085,7 +1085,7 @@ if (!$project || !$project->isOwner())
 			                </span>
 			                <span class="input-group-btn">
 			                  <select id="group" class="btn" style="background-color: #E5E7E9; color:#000">
-			                  <option value="0" selected>en subcategrie</option>
+			                  <option value="0" selected>en subcategorie</option>
 			                  @foreach (ProductSubCategory::all() as $subcat)
 			                    <option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
 			                  @endforeach
@@ -1200,7 +1200,7 @@ if (!$project || !$project->isOwner())
 
 		@include('calc.wizard', array('page' => 'calculation'))
 
-			<h2><strong>Calculeren</strong>&nbsp;<a class="fa fa-youtube-play" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
+			<h2><strong>Calculeren</strong>&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
 
 			<div class="tabs nomargin" ng-controller="SummaryCtrl">
 
@@ -1217,12 +1217,12 @@ if (!$project || !$project->isOwner())
 						</a>
 					</li>
 					@endif
-					<li data-step="5" data-intro="Bekijk na het invullen van al je onderdelen & werkzaamheden de uittrekstaat van al je werkzaamheden." id="tab-summary">
+					<li id="tab-summary">
 						<a href="#summary" data-toggle="tab">
 							<i class="fa fa-sort-amount-asc"></i> Uittrekstaat Calculeren
 						</a>
 					</li>
-					<li data-step="6" data-intro="Bekijk het eindresultaat." id="tab-endresult">
+					<li id="tab-endresult">
 						<a href="#endresult" data-toggle="tab">
 							<i class="fa fa-check-circle-o"></i> Eindresultaat Calculeren
 						</a>

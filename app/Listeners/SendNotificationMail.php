@@ -2,10 +2,9 @@
 
 namespace Calctool\Listeners;
 
-use Calctool\Events\SomeEvent;
+use Calctool\Events\UserNotification;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Calctool\Events\UserNotification;
 
 use \Mailgun;
 

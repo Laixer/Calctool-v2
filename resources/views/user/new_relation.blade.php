@@ -174,7 +174,7 @@ $(document).ready(function() {
 			</div>
 			@endif
 
-			<h2 style="margin: 10px 0 20px 0;"><strong>Nieuwe</strong> relatie &nbsp;&nbsp;<a class="fa fa-youtube-play" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
+			<h2 style="margin: 10px 0 20px 0;"><strong>Nieuwe</strong> relatie &nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
 
 			<div class="white-row">
 				<form method="POST" action="/relation/new{{ Input::get('redirect') ? '?redirect='.Input::get('redirect') : '' }}" accept-charset="UTF-8">

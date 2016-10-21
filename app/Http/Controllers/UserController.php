@@ -4,11 +4,9 @@ namespace Calctool\Http\Controllers;
 
 use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
-use Longman\TelegramBot\Request as TRequest;
 
 use \Calctool\Models\Payment;
 use \Calctool\Models\User;
-use \Calctool\Models\Telegram;
 use \Calctool\Models\Audit;
 use \Calctool\Models\Promotion;
 use \Calctool\Models\UserGroup;
@@ -28,14 +26,6 @@ class UserController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function getMyAccountTelegramUnchain()
-	{
-		$tgram = Telegram::where('user_id','=',Auth::id())->first();
-		if ($tgram)
-			$tgram->delete();
-		return redirect('/myaccount/telegram');
-	}
-
 	public function getMyAccountDeactivate(Request $request)
 	{
 		$user = Auth::user();
@@ -51,21 +41,6 @@ class UserController extends Controller {
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
 			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});
-
-		if (env('TELEGRAM_ENABLED')) {
-			$tgram = Telegram::where('user_id','=',$user->id)->first();
-			if ($tgram && $tgram->alert) {
-
-				$telegram = new Longman\TelegramBot\Telegram(env('TELEGRAM_API'), env('TELEGRAM_NAME'));
-				TRequest::initialize($telegram);
-
-				$data = array();
-				$data['chat_id'] = $tgram->uid;
-				$data['text'] = "Je CalculatieTool account was zojuist gedeactiveerd. Mocht dit niet bedoeling zijn geweest neem dan contact met ons op.";
-
-				$result = TRequest::sendMessage($data);
-			}
-		}
 
 		Audit::CreateEvent('account.deactivate.success', 'Account deactivated by user', $user->id);
 
@@ -85,23 +60,6 @@ class UserController extends Controller {
 		}
 
 		return redirect('/login');
-	}
-
-	public function doMyAccountTelegramUpdate(Request $request)
-	{
-		$tgram = Telegram::where('user_id','=',Auth::id())->first();
-		if ($tgram) {
-			if ($request->get('toggle-alert'))
-				$tgram->alert = true;
-			else
-				$tgram->alert = false;
-
-			$tgram->save();
-		}
-
-		Audit::CreateEvent('account.telegram.update.success', 'Telegram settings updated');
-
-		return back()->with('success', 'Instellingen opgeslagen');
 	}
 
 	public function getPayment(Request $request)
@@ -225,24 +183,7 @@ class UserController extends Controller {
 				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 			});
 
-			if (env('TELEGRAM_ENABLED')) {
-				$tgram = Telegram::where('user_id','=',$user->id)->first();
-				if ($tgram && $tgram->alert) {
-
-					// create Telegram API object
-					$telegram = new Longman\TelegramBot\Telegram(env('TELEGRAM_API'), env('TELEGRAM_NAME'));
-					TRequest::initialize($telegram);
-
-					$data = array();
-					$data['chat_id'] = $tgram->uid;
-					$data['text'] = "De betaling van " . number_format($order->amount, 2,",",".") . " is in goede orde ontvangen en je account is verlengt tot " . date('j F Y', strtotime($user->expiration_date));
-
-					$result = TRequest::sendMessage($data);
-				}
-			}
-
 			Audit::CreateEvent('account.payment.callback.success', 'Payment ' . $payment->id . ' succeeded');
-
 		}
 
 		return response()->json(['success' => 1]);
@@ -320,21 +261,6 @@ class UserController extends Controller {
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');
 				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 			});
-
-			if (env('TELEGRAM_ENABLED')) {
-				$tgram = Telegram::where('user_id','=',$user->id)->first();
-				if ($tgram && $tgram->alert) {
-
-					$telegram = new Longman\TelegramBot\Telegram(env('TELEGRAM_API'), env('TELEGRAM_NAME'));
-					TRequest::initialize($telegram);
-
-					$data = array();
-					$data['chat_id'] = $tgram->uid;
-					$data['text'] = "Het wachtwoord van je account voor de Calculatie Tool is aangepast";
-
-					$result = TRequest::sendMessage($data);
-				}
-			}
 		}
 
 		Audit::CreateEvent('account.security.update.success', 'Password and/or confidential information updated');
@@ -489,22 +415,6 @@ class UserController extends Controller {
 			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});
 
-		if (env('TELEGRAM_ENABLED')) {
-			$tgram = Telegram::where('user_id','=',Auth::id())->first();
-			if ($tgram && $tgram->alert) {
-
-				// create Telegram API object
-				$telegram = new Longman\TelegramBot\Telegram(env('TELEGRAM_API'), env('TELEGRAM_NAME'));
-				TRequest::initialize($telegram);
-
-				$data = array();
-				$data['chat_id'] = $tgram->uid;
-				$data['text'] = "Het IBAN rekeningnummer en/of de tenaamstelling is aangepast op Calculatie Tool";
-
-				$result = TRequest::sendMessage($data);
-			}
-		}
-
 		Audit::CreateEvent('account.iban.update.success', 'IBAN and/or account name updated');
 
 		return back()->with('success', 'Betalingsgegevens zijn aangepast');
@@ -584,6 +494,10 @@ class UserController extends Controller {
 			$user->invoicenumber_prefix = $request->get('invoicenumber_prefix');
 		if ($request->get('administration_cost') != "")
 			$user->administration_cost = str_replace(',', '.', str_replace('.', '' , $request->get('administration_cost')));
+
+		if (session()->has('swap_session')) {
+			$user->timestamps = false;
+		}
 
 		$user->save();
 

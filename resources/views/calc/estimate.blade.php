@@ -851,7 +851,7 @@ var n = this,
 
 		@include('calc.wizard', array('page' => 'estimate'))
 
-			<h2 style="margin: 10px 0 20px 0;" ><strong>Stelposten</strong> stellen <strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Maak hier uw stelpost definitief voor op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>&nbsp;&nbsp;<a class="fa fa-youtube-play" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2></strong>
+			<h2 style="margin: 10px 0 20px 0;" ><strong>Stelposten</strong> stellen <strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Maak hier uw stelpost definitief voor op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2></strong>
 
 			<div class="tabs nomargin">
 

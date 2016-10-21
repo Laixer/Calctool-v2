@@ -35,6 +35,7 @@ use \Hash;
 use \Redis;
 use \Markdown;
 use \Mailgun;
+use \Artisan;
 
 ini_set('max_execution_time', 0);
 ini_set('max_input_time', -1);
@@ -360,28 +361,32 @@ class AdminController extends Controller {
 		if (!Auth::user()->isAdmin())
 			return back();
 
-		$cookie = cookie('swpsess', Auth::id(), 180);
+		$swapinfo = [
+			'user_id' => $user_id,
+			'admin_id' => Auth::id(),
+		];
+
+		session()->put('swap_session', $swapinfo);
 
 		Auth::loginUsingId($user_id);
 
-		return redirect('/')->withCookie($cookie);
-
+		return redirect('/');
 	}
 
 	public function getSwitchSessionBack(Request $request)
 	{
-		$swap_session = $request->cookie('swpsess');
-		if (!$swap_session)
+        if (!session()->has('swap_session'))
 			return back();
 
-		$user = User::find($swap_session);
+		$swapinfo = session()->get('swap_session');
+
+		$user = User::find($swapinfo['admin_id']);
 		if (!$user->isAdmin())
 			return back();
 
 		Auth::loginUsingId($user->id);
 
-		return redirect('/admin/user')->withCookie(cookie()->forget('swpsess'));
-
+		return redirect('/admin/user');
 	}
 
 	public function doNewGroup(Request $request)
@@ -810,13 +815,6 @@ class AdminController extends Controller {
 		return back()->with('success', 'Getruncate');
 	}
 
-	public function getDemoProject(Request $request, $user_id)
-	{
-		\DemoProjectTemplate::setup($user_id);
-
-		return back()->with('success', 'Demo-project ingevoegd');
-	}
-
 	public function getValidationProject(Request $request, $user_id)
 	{
 		\ValidationProjectTemplate::setup($user_id);
@@ -831,11 +829,16 @@ class AdminController extends Controller {
 		return back()->with('success', 'STABU-project ingevoegd');
 	}
 
-	public function getSessionDeblock(Request $request, $user_id)
+	public function doApplicationClearCache(Request $request)
 	{
-		$username = User::find($user_id)->username;
-		Redis::del('auth:'.$username.':fail', 'auth:'.$username.':block');
+		Artisan::call('clear-compiled');
+		Artisan::call('cache:clear');
+		Artisan::call('config:clear');
+		Artisan::call('oauth:clear');
+		Artisan::call('view:clear');
+		Artisan::call('route:clear');
+		Artisan::call('session:clear');
 
-		return back()->with('success', 'sessie met succes gedeblokkeerd, de user kan weer inloggen.');
-	}
+		return back()->with('success', 'Applicatie caches verwijderd');
+	}	
 }

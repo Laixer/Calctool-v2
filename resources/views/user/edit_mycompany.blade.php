@@ -162,60 +162,6 @@ $(document).ready(function() {
 			});
 		}
 	});
-
-	if (sessionStorage.introDemo) {
-
-		var demo = introJs().
-			setOption('nextLabel', 'Volgende').
-			setOption('prevLabel', 'Vorige').
-			setOption('skipLabel', '').
-			setOption('doneLabel', 'Klaar').
-			setOption('showBullets', false).
-			setOption('exitOnOverlayClick', false).
-			onexit(function(){
-				sessionStorage.removeItem('introDemo');
-			}).onbeforechange(function(){
-				sessionStorage.introDemo = this._currentStep;
-				if (this._currentStep == 3) {
-					$('#tab-contact').addClass('active');
-					$('#contact').addClass('active');
-
-					$('#tab-company').removeClass('active');
-					$('#company').removeClass('active');
-				}
-			}).onafterchange(function(){
-				var done = this._currentStep;
-				$('.introjs-skipbutton').click(function(){
-					if (done == 3) {
-						sessionStorage.introDemo = 999;
-						window.location.href = '/';
-					}
-				});
-				if (done == 1) {
-					$('.introjs-prevbutton').css("visibility","initial");
-				} else {
-					$('.introjs-prevbutton').css("visibility","hidden");
-				}
-				if (done == 3) {
-					$('.introjs-skipbutton').css("visibility","initial");
-				} else {
-					$('.introjs-skipbutton').css("visibility","hidden");
-				}
-			});
-
-		if (sessionStorage.introDemo == 0) {
-			sessionStorage.clear();
-			sessionStorage.introDemo = 0;
-			sessionStorage.toggleTabMyComp{{Auth::id()}} = 'company';
-			$('#tab-company').addClass('active');
-			$('#company').addClass('active');
-			demo.start();
-		} else {
-			demo.goToStep(sessionStorage.introDemo).start();
-		}
-
-	}
-
 });
 </script>
 <style>
@@ -277,7 +223,7 @@ $(document).ready(function() {
 				<a href="/offer_invoice" class="btn btn-primary">Overzichten</a>
 			</div>
 
-			<h2 style="margin: 10px 0 20px 0;"><strong>Mijn</strong> bedrijf &nbsp;&nbsp;<a class="fa fa-youtube-play" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
+			<h2 style="margin: 10px 0 20px 0;"><strong>Mijn</strong> bedrijf &nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
 
 				<div class="tabs nomargin-top">
 

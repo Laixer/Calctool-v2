@@ -120,9 +120,13 @@ $(document).ready(function() {
 									</tr>
 								</thead>
 								<tbody>
-									<?php $i = 0; ?>
+									<?php $offer_paid_total = 0; $offer_total = 0; ?>
 									@foreach(Project::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $project)
 									@foreach(Offer::where('project_id', $project->id)->whereNotNull('offer_finish')->orderBy('created_at')->get() as $offer)
+									<?php
+									$offer_paid_total += $offer->downpayment_amount;
+									$offer_total += $offer->offer_total;
+									?>
 									<tr>
 										<td class="col-md-2"><a href="/offer/project-{{ $project->id }}/offer-{{ $offer->id }}">{{ $offer->offer_code }}</a></td>
 										<td class="col-md-3"><?php echo date('d-m-Y', strtotime($offer->offer_make)); ?></td>
@@ -133,6 +137,15 @@ $(document).ready(function() {
 									@endforeach
 									@endforeach
 								</tbody>
+								<tfooter>
+									<tr>
+										<th class="col-md-2">Totaal</th>
+										<th class="col-md-3"></th>
+										<th class="col-md-3">{{ '&euro; '.number_format($offer_paid_total, 2, ",",".") }}</th>
+										<th class="col-md-3">{{ '&euro; '.number_format($offer_total, 2, ",",".") }}</th>
+										<th class="col-md-3"></th>
+									</tr>
+								</tfooter>
 							</table>
 						</div>
 						<div id="invoice" class="tab-pane">
@@ -149,8 +162,8 @@ $(document).ready(function() {
 										<th class="col-md-1"></th>
 									</tr>
 								</thead>
-
 								<tbody>
+									<?php $invoice_total = 0; ?>
 									@foreach(Project::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $project)
 									<?php
 									$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
@@ -158,6 +171,9 @@ $(document).ready(function() {
 										continue;
 									?>
 									@foreach(Invoice::where('offer_id','=', $offer_last->id)->where('isclose', true)->where('invoice_close', true)->orderBy('priority')->get() as $invoice)
+									<?php
+									$invoice_total += $invoice->amount;
+									?>
 									<tr>
 										<td class="col-md-2"><a href="/invoice/project-{{ $project->id }}/pdf-invoice-{{ $invoice->id }}">{{ Auth::user()->pref_use_ct_numbering ? $invoice->invoice_code : $invoice->book_code }}</a></td>
 										<td class="col-md-2">{{ number_format($invoice->amount, 2,",",".") }}</td>
@@ -171,6 +187,18 @@ $(document).ready(function() {
 									@endforeach
 									@endforeach
 								</tbody>
+								<tfooter>
+									<tr>
+										<th class="col-md-2">Totaal</th>
+										<th class="col-md-2">{{ '&euro; '.number_format($invoice_total, 2, ",",".") }}</th>
+										<th class="col-md-1"></th>
+										<th class="col-md-2"></th>
+										<th class="col-md-2"></th>
+										<th class="col-md-1"></th>
+										<th class="col-md-2"></th>
+										<th class="col-md-1"></th>
+									</tr>
+								</tfooter>
 							</table>
 						</div>
 						

@@ -32,29 +32,6 @@ $relation = Relation::find(Auth::user()->self_id);
 ?>
 
 @section('content')
-<script type="text/javascript">
-$(document).ready(function() {
-	$('.starttour').click(function(){
-		sessionStorage.introDemo = 0;
-		$('#introModal').modal('hide')
-
-		introJs().
-		setOption('nextLabel', 'Volgende').
-		setOption('prevLabel', 'Vorige').
-		setOption('skipLabel', 'Overslaan').
-		setOption('doneLabel', 'Volgende pagina').
-		setOption('showBullets', false).
-		setOption('exitOnOverlayClick', false).
-		start().oncomplete(function(){
-			window.location.href = '/mycompany';
-			sessionStorage.introDemo = 0;
-		});
-	});
-	<?php if ($next_step && $next_step=='intro_' . Auth::id()){ ?>
-		$('#introModal').modal('toggle');
-	<?php } ?>
-});
-</script>
 <div class="modal fade" id="introModal" tabindex="-1" role="dialog" aria-labelledby="introModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -119,7 +96,7 @@ $(document).ready(function() {
 			@endif
 			@endif
 
-			<h2 style="margin: 10px 0 20px 0;"><strong>Welkom</strong> {{ Auth::user()->firstname }}&nbsp;&nbsp;<a class="fa fa-youtube-play" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
+			<h2 style="margin: 10px 0 20px 0;"><strong>Welkom</strong> {{ Auth::user()->firstname }}&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
 
 			<div class="row">
 
@@ -218,7 +195,7 @@ $(document).ready(function() {
 
 					<div class="col-md-12">
 						<br>
-						@if (Project::where('user_id','=', Auth::user()->id)->count('id')>0)
+						@if (Project::where('user_id', Auth::user()->id)->count('id')>0)
 						<h2><strong>Jouw</strong> projecten</h2>
 
 						<div class="white-row" ng-controller="projectController">
@@ -231,7 +208,7 @@ $(document).ready(function() {
 									<input name="toggle-close" type="checkbox">
 								</div>
 							</div>
-							<!-- <div class="table-responsive"> -->
+
 							<table ng-cloak class="table table-striped">
 								<thead>
 									<tr>
@@ -242,6 +219,9 @@ $(document).ready(function() {
 									</tr>
 								</thead>
 								<tbody>
+									<div ng-show="show" class="row text-center">
+										<img src="/images/loading_icon.gif" height="100" />
+									</div>
 									<tr ng-repeat="project in projects | filter: query | orderBy: orderByField:reverseSort as results">
 										<td class="col-md-5"><a href="/project-@{{ project.id }}/edit">@{{ project.project_name }}</a></td>
 										<td class="col-md-3">@{{ project.relation }}</td>
@@ -253,7 +233,7 @@ $(document).ready(function() {
 									</tr>
 								</tbody>
 							</table>
-							<!-- </div> -->
+
 							<div class="row">
 								<div class="col-md-3">
 									<div class="btn-group item-full">
@@ -271,8 +251,7 @@ $(document).ready(function() {
 								<a href="/project/new" class="btn btn-primary btn-lg">Start nieuw project</a>
 								<strong>OF</strong>
 								<a href="/mycompany" class="btn btn-primary btn-lg">Maak je bedrijfsgegevens compleet</a>
-<!-- 							<button class="starttour btn btn-primary btn-lg">Neem de Rondleiding</button>
- -->							</h3>
+							</h3>
 						</div>
 						@endif
 					</div>

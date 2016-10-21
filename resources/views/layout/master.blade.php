@@ -45,7 +45,6 @@
 
 		<?php // -- CUSTOM CSS -- ?>
 		<link media="all" type="text/css" rel="stylesheet" href="/css/custom.css">
-		<!-- <link media="all" type="text/css" rel="stylesheet" href="/plugins/feedback/css/jquery.feedback_me.css"> -->
 
 		<?php // -- JQuery -- ?>
 		<script src="/components/jquery/dist/jquery.min.js"></script>
@@ -55,30 +54,15 @@
 			if (localStorage._prescnt) localStorage._prescnt++; else localStorage._prescnt = 1;
 			if (!localStorage.lastPageTag) localStorage.lastPageTag = '/';
 			$(document).ready(function(){
-			    /*fm_options = {
-			        position: "right-top",
-			        name_required: true,
-			        message_placeholder: "Opmerkingen, vragen en suggesties zijn welkom",
-			        message_required: true,
-					name_label: "Naam",
-					message_label: "Bericht",
-			        show_asterisk_for_required: true,
-			        feedback_url: "/feedback",
-			        delayed_options: {
-			            send_fail : "Sending failed :(.",
-			            send_success : "Bedankt voor de feedback!"
-			        }
-			    };*/
 				@if (Auth::check())
-				@if (!Cookie::has('swpsess'));
-			//     fm.init(fm_options);
 				function _lpolupdate() {
-					$.post('/api/v1/update', {location:window.location.href}, function() {
+					$.post('/api/v1/update', {location:window.location.href,prescount:localStorage._prescnt}, function() {
 						setTimeout(_lpolupdate, 30000);
-					});
+					}).fail(function(e) {
+						if (e.status == 503) location.reload();
+					})
 				}
 				_lpolupdate();
-				@endif
 				@endif
 			});
 		</script>
@@ -111,7 +95,6 @@
 		<script src="/plugins/masonry.js"></script>
 
 		<script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
-		<!-- <script src="/plugins/feedback/js/jquery.feedback_me.js"></script> -->
 		@stack('scripts')
 
 		<script src="/js/scripts.js"></script>
