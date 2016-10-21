@@ -1677,8 +1677,8 @@ if (!$project || !$project->isOwner())
 														  <button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Werkzaamheid&nbsp;&nbsp;<span class="caret"></span></button>
 														  <ul class="dropdown-menu">
 														    <li><a href="#" data-id="{{ $activity->id }}" class="esavefav">Opslaan als favoriet</a></li>
-														    <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename">naam wijzigen</a></li>
-														    <li><a href="#" data-id="{{ $activity->id }}" class="deleteact">verwijderen</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename">Naam wijzigen</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" class="deleteact">Verwijderen</a></li>
 														  </ul>
 														</div>
 													</div>
