@@ -926,6 +926,13 @@ if (!$project || !$project->isOwner())
 				window.location.href = '/estimate/project-{{ $project->id }}/chapter-' + $favchapid + '/fav-' + $(this).attr('data-id');
 		});
 
+		$('.changenamechap').click(function(e) {
+			$chapterid = $(this).attr('data-id');
+			$chapter_name = $(this).attr('data-name');
+			$('#nc_chapter').val($chapterid);
+			$('#nc_chapter_name').val($chapter_name);
+		});
+
 		$('.changename').click(function(e) {
 			$activityid = $(this).attr('data-id');
 			$activity_name = $(this).attr('data-name');
@@ -1029,6 +1036,37 @@ if (!$project || !$project->isOwner())
 	});
 
 </script>
+<div class="modal fade" id="nameChangeChapModal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+		<form method="POST" action="/calculation/calc/rename_chapter" accept-charset="UTF-8">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel2">Naam onderdeel</h4>
+			</div>
+
+			<div class="modal-body">
+				<div class="form-horizontal">
+					{!! csrf_field() !!}
+					<div class="form-group">
+						<div class="col-md-4">
+							<label>Naam</label>
+						</div>
+						<div class="col-md-12">
+							<input value="" name="chapter_name" id="nc_chapter_name" class="form-control" />
+							<input value="" name="chapter" id="nc_chapter" type="hidden" class="form-control" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default">Opslaan</button>
+			</div>
+		</div>
+		</form>
+	</div>
+</div>
 <div class="modal fade" id="nameChangeModal" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -1492,12 +1530,25 @@ if (!$project || !$project->isOwner())
 												<input type="text" class="form-control" name="activity" id="activity" value="" placeholder="Nieuwe Werkzaamheid">
 												<span class="input-group-btn">
 													<button class="btn btn-primary btn-primary-activity">Voeg toe</button>
+													<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+														<span class="caret"></span>
+													</button>
+													  <ul class="dropdown-menu" role="menu">
+													    <li><a href="#" class="lfavselect" data-id="{{ $chapter->id }}" data-toggle="modal" data-target="#myFavAct">Favoriet selecteren</a></li>
+													  </ul>
 												</span>
 											</div>
 										</div>
 										<div class="col-md-6 text-right">
-											<button type="button" class="btn btn-primary lfavselect" data-id="{{ $chapter->id }}" data-toggle="modal" data-target="#myFavAct">Favoriet selecteren</button>
-											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Onderdeel verwijderen</button>
+											<!--<button type="button" class="btn btn-primary lfavselect" data-id="{{ $chapter->id }}" data-toggle="modal" data-target="#myFavAct">Favoriet selecteren</button>-->
+
+											<div class="btn-group" role="group">
+											  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Onderdeel&nbsp;&nbsp;<span class="caret"></span></button>
+											  <ul class="dropdown-menu">
+											    <li><a href="#" data-id="{{ $chapter->id }}" data-name="{{ $chapter->chapter_name }}" data-toggle="modal" data-target="#nameChangeChapModal" class="changenamechap">Naam wijzigen</a></li>
+											    <li><a href="#" data-id="{{ $chapter->id }}" class="deletechap">Verwijderen</a></li>
+											  </ul>
+											</div>
 										</div>
 									</div>
 									</form>
@@ -1509,6 +1560,7 @@ if (!$project || !$project->isOwner())
 						<form method="POST" action="/calculation/newchapter/{{ $project->id }}" accept-charset="UTF-8">
                             {!! csrf_field() !!}
 						<div><hr></div>
+
 						<div class="row">
 							<div class="col-md-6">
 								<div class="input-group" data-step="1" data-intro="Voeg een onderdeel toe. Een soort hoofdstuk waar je werkzaamheden onder vallen.">
@@ -1656,8 +1708,6 @@ if (!$project || !$project->isOwner())
 															<th class="col-md-1">&nbsp;</th>
 														</tr>
 													</thead>
-
-
 													<tbody>
 														@foreach (EstimateMaterial::where('activity_id','=', $activity->id)->get() as $material)
 														<tr data-id="{{ $material->id }}">
