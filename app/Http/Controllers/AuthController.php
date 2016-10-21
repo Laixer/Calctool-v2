@@ -118,11 +118,6 @@ class AuthController extends Controller {
 				return back()->withErrors(['mail' => ['Email nog niet bevestigd']])->withInput($request->except('secret'));
 			}
 
-			Auth::user()->login_count++;
-			Auth::user()->save();
-
-			Audit::CreateEvent('auth.login.succces', 'Login with: ' . \Calctool::remoteAgent());
-
 			if ($request->has('redirect')) {
 				return redirect(urldecode($request->get('redirect')));
 			}

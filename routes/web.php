@@ -96,7 +96,6 @@ Route::group(['middleware' => 'auth'], function() {
 		if (Auth::user()->isSystem()) {
 			return redirect('/admin');
 		}
-		
 		return view('base.home');
 	}]);
 	Route::get('admin/switch/back', 'AdminController@getSwitchSessionBack');

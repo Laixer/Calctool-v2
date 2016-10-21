@@ -3,6 +3,7 @@
 namespace Calctool\Exceptions;
 
 use Exception;
+use Psr\Log\LoggerInterface;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -36,50 +37,58 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
-     *
      * @param  \Exception  $e
      * @return void
+     *
+     * @throws \Exception
      */
     public function report(Exception $e)
     {
-        if ($this->shouldReport($e)) {
-            $this->log->error($e);
-
-            if (!config('app.debug')) {
-                $request = request();
-                $content = "<pre>Environment: " . app()->environment() . "</pre>";
-                $content .= "<pre>Timestamp: " . date('c') . "</pre>";
-                $content .= "<pre>Server API: " . php_sapi_name() . "</pre>";
-                $content .= "<pre>Workload: " . sys_getloadavg()[0] . "</pre>";
-                $content .= "<pre>Host: " . gethostname() . "</pre>";
-                $content .= "<pre>Script: " . $_SERVER['SCRIPT_NAME'] . "</pre>";
-
-                $rev = '-';
-                if (\File::exists('../.revision')) {
-                    $rev = \File::get('../.revision');
-                }
-
-                $content .= "<pre>Revision: " . $rev . "</pre>";
-
-                if ($request) {
-                    $content .= "<pre>Request: " . $request->fullUrl() . "</pre>";
-                }
-
-                if (Auth::check())
-                    $content .= "<pre>User: " . Auth::user()->username . "</pre>";
-
-                $content .= "<br /><pre>Stacktrace:</pre><br />" . nl2br($e);
-                $data = array('content' => $content, 'env' => app()->environment());
-                Mailgun::send('mail.raw', $data, function($message) use ($data) {
-                    $message->to('y.dewid@calculatietool.com', 'Yorick de Wid');
-                    $message->to('d.zandbergen@calculatietool.com', 'Don Zandbergen');
-                    $message->subject('CalculatieTool.com - Exception report [' . $data['env'] . ']');
-                    $message->from('info@calculatietool.com', 'CalculatieTool.com');
-                    $message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
-                });
-            }
+        if ($this->shouldntReport($e)) {
+            return;
         }
+
+        if (!config('app.debug')) {
+            $request = request();
+            $content = "<pre>Environment: " . app()->environment() . "</pre>";
+            $content .= "<pre>Timestamp: " . date('c') . "</pre>";
+            $content .= "<pre>Server API: " . php_sapi_name() . "</pre>";
+            $content .= "<pre>Workload: " . sys_getloadavg()[0] . "</pre>";
+            $content .= "<pre>Host: " . gethostname() . "</pre>";
+            $content .= "<pre>Script: " . $_SERVER['SCRIPT_NAME'] . "</pre>";
+
+            $rev = '-';
+            if (\File::exists('../.revision')) {
+                $rev = \File::get('../.revision');
+            }
+
+            $content .= "<pre>Revision: " . $rev . "</pre>";
+
+            if ($request) {
+                $content .= "<pre>Request: " . $request->fullUrl() . "</pre>";
+            }
+
+            if (Auth::check())
+                $content .= "<pre>User: " . Auth::user()->username . "</pre>";
+
+            $content .= "<br /><pre>Stacktrace:</pre><br />" . nl2br($e);
+            $data = array('content' => $content, 'env' => app()->environment());
+            Mailgun::send('mail.raw', $data, function($message) use ($data) {
+                $message->to('y.dewid@calculatietool.com', 'Yorick de Wid');
+                $message->to('d.zandbergen@calculatietool.com', 'Don Zandbergen');
+                $message->subject('CalculatieTool.com - Exception report [' . $data['env'] . ']');
+                $message->from('info@calculatietool.com', 'CalculatieTool.com');
+                $message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+            });
+        }
+
+        try {
+            $logger = $this->container->make(LoggerInterface::class);
+        } catch (Exception $ex) {
+            throw $e; // throw the original exception
+        }
+
+        $logger->error($e);
     }
 
     /**
