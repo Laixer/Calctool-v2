@@ -44,13 +44,13 @@ $(function() {
 
 					<form method="POST" action="/login" accept-charset="UTF-8" class="white-row">
 						{!! csrf_field() !!}
-                        <input type="hidden" name="redirect" value="{{ Request::get('redirect') }}">
+						<input type="hidden" name="redirect" value="{{ Request::get('redirect') }}">
 
 						@if (count($errors) > 0)
 						<div class="alert alert-danger">
 							<i class="fa fa-frown-o"></i>
 							@foreach ($errors->all() as $error)
-								{{ $error }}
+							{{ $error }}
 							@endforeach
 						</div>
 						@endif
@@ -80,7 +80,7 @@ $(function() {
 						<div class="row">
 							<div class="col-md-6">
 								<div class="form-group">
-									<input name="rememberme" class="left-label" type="checkbox">
+									<input name="rememberme" checked="checked" class="left-label" type="checkbox">
 									<label for="rememberme" style="margin-left:10px;">Onthoud gegevens</label>
 								</div>
 							</div>
@@ -113,12 +113,12 @@ $(function() {
 						<label class="nobold">Vul uw e-mailadres hier in</label>
 						<form id="passforgot" method="post" action="password/reset">
 							<div class="input-group">
-							<input type="text" class="form-control" name="email" id="email" placeholder="E-mail adres" />
-							<span class="input-group-btn">
-								<button class="btn btn-primary" onclick="$('#passforgot').submit();" type="button">Verzenden</button>
-							</span>
+								<input type="text" class="form-control" name="email" id="email" placeholder="E-mail adres" />
+								<span class="input-group-btn">
+									<button class="btn btn-primary" onclick="$('#passforgot').submit();" type="button">Verzenden</button>
+								</span>
 							</div>
-						{!! csrf_field() !!}
+							{!! csrf_field() !!}
 						</form>
 
 					</div>

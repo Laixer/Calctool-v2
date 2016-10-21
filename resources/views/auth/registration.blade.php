@@ -82,7 +82,7 @@ $(function() {
 					<h2>Maak een <strong>Account</strong> aan</h2>
 
 					<form action="/register" method="post" class="white-row">
-					{!! csrf_field() !!}
+						{!! csrf_field() !!}
 						
 						@if (isset($client_referer))
 						<input name="client_referer" type="hidden" value="{{ $client_referer }}" />
@@ -186,7 +186,7 @@ $(function() {
 
 					<div class="white-row">
 
-					<h4>Registreren is snel, makkelijk en gratis</h4>
+						<h4>Registreren is snel, makkelijk en gratis</h4>
 
 						<p>Als je eenmaal geregistreerd bent, kun je:</p>
 						<ul class="list-icon check">
@@ -205,19 +205,19 @@ $(function() {
 
 					</div>
 
-					</div>
+				</div>
 
 			</div>
 
 			<div class="white-row hidden-sm hidden-xs">
-						<h4>Direct inloggen?</h4>
-						<p>
-							Heb je al een account?
-							<a href="/login">log dan hier in</a>
-						</p>
+				<h4>Direct inloggen?</h4>
+				<p>
+					Heb je al een account?
+					<a href="/login">log dan hier in</a>
+				</p>
 
-		</section>
+			</section>
 
+		</div>
 	</div>
-</div>
 @stop

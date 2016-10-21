@@ -218,7 +218,7 @@ $(document).ready(function() {
 
 					<div class="col-md-12">
 						<br>
-						@if (Project::where('user_id','=', Auth::user()->id)->count('id')>0)
+						@if (Project::where('user_id', Auth::user()->id)->count('id')>0)
 						<h2><strong>Jouw</strong> projecten</h2>
 
 						<div class="white-row" ng-controller="projectController">
@@ -271,8 +271,7 @@ $(document).ready(function() {
 								<a href="/project/new" class="btn btn-primary btn-lg">Start nieuw project</a>
 								<strong>OF</strong>
 								<a href="/mycompany" class="btn btn-primary btn-lg">Maak je bedrijfsgegevens compleet</a>
-<!-- 							<button class="starttour btn btn-primary btn-lg">Neem de Rondleiding</button>
- -->							</h3>
+							</h3>
 						</div>
 						@endif
 					</div>
