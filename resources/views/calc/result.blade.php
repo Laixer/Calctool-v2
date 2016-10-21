@@ -260,6 +260,7 @@ $(document).ready(function() {
 							</tbody>
 						</table>
 
+						@if ($project->use_subcontract)
 						<h4>Onderaanneming</h4>
 						<table class="table table-striped">
 							<thead>
@@ -411,6 +412,7 @@ $(document).ready(function() {
 								</tr>
 							</tbody>
 						</table>
+						@endif
 
 						<h4>Totalen</h4>
 						<table class="table table-striped">
