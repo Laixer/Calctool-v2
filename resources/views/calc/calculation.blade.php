@@ -1074,7 +1074,7 @@ if (!$project || !$project->isOwner())
 			            <input type="text" id="search" value="" class="form-control" placeholder="Zoek in volledig lijst">
 			              <span class="input-group-btn">
 			                  <select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000">
-			                    <option value="0" selected>of sorteer op categrie</option>
+			                    <option value="0" selected>of sorteer op categorie</option>
 			                    @foreach (ProductGroup::all() as $group)
 			                    <option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
 			                      @foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
@@ -1085,7 +1085,7 @@ if (!$project || !$project->isOwner())
 			                </span>
 			                <span class="input-group-btn">
 			                  <select id="group" class="btn" style="background-color: #E5E7E9; color:#000">
-			                  <option value="0" selected>en subcategrie</option>
+			                  <option value="0" selected>en subcategorie</option>
 			                  @foreach (ProductSubCategory::all() as $subcat)
 			                    <option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
 			                  @endforeach
