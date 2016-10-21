@@ -72,6 +72,7 @@ if (!$project || !$project->isOwner())
         });
 
 		var $newinputtr;
+		var $newinputtr2;
 		$('.toggle').click(function(e){
 			$id = $(this).attr('id');
 			if ($(this).hasClass('active')) {
@@ -160,6 +161,7 @@ if (!$project || !$project->isOwner())
 					}).end().find(".total-ex-tax, .total-incl-tax").text("").end().appendTo($curTable);
 					$("button[data-target='#myModal']").on("click", function() {
 						$newinputtr = $(this).closest("tr");
+						$newinputtr2 = $(this).closest("tr");
 					});
 					i++;
 				}
@@ -1010,6 +1012,20 @@ if (!$project || !$project->isOwner())
 			$newinputtr.find(".newrow").change();
 			$('#myModal').modal('toggle');
 		}
+
+		$("button[data-target='#myModal2']").click(function(e) {
+			$newinputtr2 = $(this).closest("tr");
+			console.log($newinputtr2);
+		});
+		function onmaterialclick2(e) {
+			$newinputtr2.find("input[name='name']").val($(this).attr('data-name'));
+			$newinputtr2.find("input[name='unit']").val($(this).attr('data-unit'));
+			$newinputtr2.find("input[name='rate']").val($(this).attr('data-price'));
+			$newinputtr2.find(".newrow").change();
+			$('#myModal2').modal('toggle');
+		}
+		$('#tbl-material2 tbody a').on("click", onmaterialclick2);
+
 		var $notecurr;
 		$('.notemod').click(function(e) {
 			$notecurr = $(this);
@@ -1108,39 +1124,80 @@ if (!$project || !$project->isOwner())
 
 			<div class="modal-body">
 				
-			          <div class="form-group input-group input-group-lg">
-			            <input type="text" id="search" value="" class="form-control" placeholder="Zoek in volledig lijst">
-			              <span class="input-group-btn">
-			                  <select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000">
-			                    <option value="0" selected>of sorteer op categorie</option>
-			                    @foreach (ProductGroup::all() as $group)
-			                    <option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
-			                      @foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
-			                      <option data-name="cat" value="{{ $cat->id }}"> - {{ $cat->category_name }}</option>
-			                      @endforeach
-			                    @endforeach
-			                  </select>
-			                </span>
-			                <span class="input-group-btn">
-			                  <select id="group" class="btn" style="background-color: #E5E7E9; color:#000">
-			                  <option value="0" selected>en subcategorie</option>
-			                  @foreach (ProductSubCategory::all() as $subcat)
-			                    <option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
-			                  @endforeach
-			                  </select>
-			                </span>
-			          </div>
-			          <div class="table-responsive">
-			            <table id="tbl-material" class="table table-hover">
-			              <thead>
-			                <tr>
-			                  <th>Omschrijving</th>
-			                  <th>Eenheid</th>
-			                  <th>Prijs per eenheid</th>
-			                  <th>Totaalprijs</th>
-			                </tr>
-			              </thead>
-			              <tbody>
+				<div class="form-group input-group input-group-lg">
+					<input type="text" id="search" value="" class="form-control" placeholder="Zoek in volledig lijst">
+					<span class="input-group-btn">
+						<select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000">
+							<option value="0" selected>of sorteer op categorie</option>
+							@foreach (ProductGroup::all() as $group)
+							<option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
+							@foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
+							<option data-name="cat" value="{{ $cat->id }}"> - {{ $cat->category_name }}</option>
+							@endforeach
+							@endforeach
+						</select>
+					</span>
+					<span class="input-group-btn">
+						<select id="group" class="btn" style="background-color: #E5E7E9; color:#000">
+							<option value="0" selected>en subcategorie</option>
+							@foreach (ProductSubCategory::all() as $subcat)
+							<option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
+							@endforeach
+						</select>
+					</span>
+				</div>
+				<div class="table-responsive">
+					<table id="tbl-material" class="table table-hover">
+						<thead>
+							<tr>
+								<th>Omschrijving</th>
+								<th>Eenheid</th>
+								<th>Prijs per eenheid</th>
+								<th>Totaalprijs</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<button class="btn btn-default" data-dismiss="modal">Sluiten</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel">Favorieten producten</h4>
+			</div>
+
+			<div class="modal-body">
+				
+				<div class="table-responsive">
+					<table id="tbl-material2" class="table table-hover">
+						<thead>
+							<tr>
+								<th>Omschrijving</th>
+								<th>Eenheid</th>
+								<th>Prijs per eenheid</th>
+								<th>Totaalprijs</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (Auth::user()->productFavorite()->get() as $product)
+							<tr>
+								<td><a data-name="{{ $product->description }}" data-unit="{{ $product->unit }}" data-price="{{ number_format($product->price, 2,",",".") }}" href="javascript:void(0);">{{ $product->description }}</a></td>
+								<td>{{ $product->unit }}</td>
+								<td>{{ number_format($product->price, 2,",",".") }}</td>
+								<td>&euro;&nbsp;{{ number_format($product->total_price, 2,",",".") }}</td>
+							</tr>
+							@endforeach
 						</tbody>
 					</table>
 				</div>
@@ -1163,24 +1220,23 @@ if (!$project || !$project->isOwner())
 
 			<div class="modal-body">
 				
-			          <div class="table-responsive">
-			            <table class="table table-hover">
-			              <thead>
-			                <tr>
-			                  <th>Omschrijving</th>
-			                  <th class="text-right">Aangemaakt</th>
-			                </tr>
-			              </thead>
-			              <tbody>
-			              	@foreach (FavoriteActivity::where('user_id', Auth::id())->orderBy('created_at')->get() as $favact)	
-			              	<tr>
-			              		<td><a class="favlink" href="#" data-id="{{ $favact->id }}">{{ $favact->activity_name }}</a></td>
-			              		<td class="text-right">{{ $favact->created_at->toDateString() }}</td>
-			              	</tr>
-			              	@endforeach
-						  </tbody>
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Omschrijving</th>
+								<th class="text-right">Aangemaakt</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (FavoriteActivity::where('user_id', Auth::id())->orderBy('created_at')->get() as $favact)	
+							<tr>
+								<td><a class="favlink" href="#" data-id="{{ $favact->id }}">{{ $favact->activity_name }}</a></td>
+								<td class="text-right">{{ $favact->created_at->toDateString() }}</td>
+							</tr>
+							@endforeach
+						</tbody>
 					</table>
-					<!--<input type="hidden" name="noteact" id="favact" />-->
 				</div>
 			</div>
 
@@ -1409,7 +1465,8 @@ if (!$project || !$project->isOwner())
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</span></td>
 															<td class="col-md-1"><span class="total-incl-tax">{{ '&euro; '.number_format($material->rate*$material->amount*((100+$profit_mat)/100), 2,",",".") }}</span></td>
 															<td class="col-md-1 text-right" data-profit="{{ $profit_mat }}">
-																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+																<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+																<button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
 																<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
 															</td>
 														</tr>
@@ -1422,7 +1479,8 @@ if (!$project || !$project->isOwner())
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-1"><span class="total-incl-tax"></span></td>
 															<td class="col-md-1 text-right" data-profit="{{ $profit_mat }}">
-																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+																<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+																<button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
 																<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
 															</td>
 														</tr>
@@ -1485,7 +1543,8 @@ if (!$project || !$project->isOwner())
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->rate*$equipment->amount, 2,",",".") }}</span></td>
 															<td class="col-md-1"><span class="total-incl-tax">{{ '&euro; '.number_format($equipment->rate*$equipment->amount*((100+$profit_equip)/100), 2,",",".") }}</span></td>
 															<td class="col-md-1 text-right" data-profit="{{ $profit_equip }}">
-																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+																<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+																<button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
 																<button class="btn btn-danger btn-xs edeleterow fa fa-times"></button>
 															</td>
 														</tr>
@@ -1498,7 +1557,8 @@ if (!$project || !$project->isOwner())
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-1"><span class="total-incl-tax"></span></td>
 															<td class="col-md-1 text-right" data-profit="{{ $profit_equip }}">
-																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+																<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+																<button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
 																<button class="btn btn-danger btn-xs edeleterow fa fa-times"></button>
 															</td>
 														</tr>
@@ -1718,7 +1778,8 @@ if (!$project || !$project->isOwner())
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</span></td>
 															<td class="col-md-1"><span class="total-incl-tax">{{ '&euro; '.number_format($material->rate*$material->amount*((100+$profit_mat)/100), 2,",",".") }}</span></td>
 															<td class="col-md-1 text-right" data-profit="{{ $profit_mat }}">
-																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+																<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+																<button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
 																<button class="btn btn-danger btn-xs sdeleterowe fa fa-times"></button>
 															</td>
 														</tr>
@@ -1731,7 +1792,8 @@ if (!$project || !$project->isOwner())
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-1"><span class="total-incl-tax"></span></td>
 															<td class="col-md-1 text-right" data-profit="{{ $profit_mat }}">
-																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+																<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+																<button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
 																<button class="btn btn-danger btn-xs sdeleterowe fa fa-times"></button>
 															</td>
 														</tr>
@@ -1796,7 +1858,8 @@ if (!$project || !$project->isOwner())
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->rate*$equipment->amount, 2,",",".") }}</span></td>
 															<td class="col-md-1"><span class="total-incl-tax">{{ '&euro; '.number_format($equipment->rate*$equipment->amount*((100+$profit_equip)/100), 2,",",".") }}</span></td>
 															<td class="col-md-1 text-right" data-profit="{{ $profit_equip }}">
-																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+																<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+																<button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
 																<button class="btn btn-danger btn-xs edeleterowe fa fa-times"></button>
 															</td>
 														</tr>
@@ -1809,7 +1872,8 @@ if (!$project || !$project->isOwner())
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-1"><span class="total-incl-tax"></span></td>
 															<td class="col-md-1 text-right" data-profit="{{ $profit_equip }}">
-																<button class="btn-xs fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+																<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+																<button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
 																<button class="btn btn-danger btn-xs edeleterowe fa fa-times"></button>
 															</td>
 														</tr>
