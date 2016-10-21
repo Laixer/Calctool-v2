@@ -42,8 +42,8 @@ $(document).ready(function(){
                 <div class="e404">
                 <i class="fa fa-refresh fa-spin"></i></div>
                 <h2>
-                    De applicatie wordt geüpdatet...
-                    <span class="subtitle">Onze excuses, probeer het over een paar minuten nogmaals.</span>
+                    De applicatie wordt bijgewerkt...
+                    <span class="subtitle">Dit is een automatisch process, u hoeft niets te doen.</span>
                 </h2>
             </div>
 

@@ -78,13 +78,11 @@ Route::group(['prefix' => 'oauth2/rest', 'middleware' => 'oauth'], function() {
 	Route::get('internal/invoice_all', 'AuthController@getRestAllInvoices');
 });	
 
-/* Feedback/Support */
-Route::post('feedback', 'FeedbackController@send');
-Route::post('support', 'FeedbackController@sendSupport');
+/* Support */
+Route::post('support', 'SupportController@sendSupport');
 
 /* Payment callbacks */
 Route::post('payment/webhook/', 'UserController@doPaymentUpdate');
-Route::get('hidenextstep', 'AuthController@doHideNextStep');//TODO remove?
 
 //TODO hack
 Route::get('c4586v34674v4&vwasrt/footer_pdf', function() {
@@ -287,10 +285,9 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('mycompany/contact/new', function() {
 		return view('user.mycompany_contact');
 	});
-	Route::post('mycompany/quickstart', 'QuickstartController@doNewMyCompanyQuickstart');
 	Route::post('mycompany/cashbook/account/new', 'CashbookController@doNewAccount');
 	Route::post('mycompany/cashbook/new', 'CashbookController@doNewCashRow');
-	Route::post('mycompany/quickstart/address', 'QuickstartController@getExternalAddress');
+	Route::post('mycompany/quickstart/address', 'ZipcodeController@getExternalAddress');
 
 	Route::get('relation-{relation_id}/contact-{contact_id}/vcard', 'RelationController@downloadVCard')->where('relation_id', '[0-9]+')->where('contact_id', '[0-9]+');
 	Route::post('relation/updatemycompany', 'RelationController@doUpdateMyCompany');

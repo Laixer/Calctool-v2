@@ -22,7 +22,7 @@ use \Calctool\Models\CalculationEquipment;
  * Static Models Only
  * Template for demoproject
  */
-class DemoProjectTemplate {
+class DemoProjectAdvancedTemplate {
 
 	public static function setup($userid)
 	{

@@ -58,7 +58,9 @@
 				function _lpolupdate() {
 					$.post('/api/v1/update', {location:window.location.href,prescount:localStorage._prescnt}, function() {
 						setTimeout(_lpolupdate, 30000);
-					});
+					}).fail(function(e) {
+						if (e.status == 503) location.reload();
+					})
 				}
 				_lpolupdate();
 				@endif
