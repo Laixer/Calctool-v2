@@ -1897,21 +1897,34 @@ if (!$project || !$project->isOwner())
 									</div>
 									<form method="POST" action="/calculation/estim/newactivity/{{ $chapter->id }}" accept-charset="UTF-8">
 			                           {!! csrf_field() !!}
-									<div class="row">
-										<div class="col-md-6">
+										<div class="row">
+											<div class="col-md-6">
 
-											<div class="input-group">
-												<input type="text" class="form-control" name="activity" id="activity" value="" placeholder="Nieuwe Werkzaamheid">
-												<span class="input-group-btn">
-													<button class="btn btn-primary btn-primary-activity">Voeg toe</button>
-												</span>
+												<div class="input-group">
+													<input type="text" class="form-control" name="activity" id="activity" value="" placeholder="Nieuwe Werkzaamheid">
+													<span class="input-group-btn">
+														<button class="btn btn-primary btn-primary-activity">Voeg toe</button>
+														<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+															<span class="caret"></span>
+														</button>
+														  <ul class="dropdown-menu" role="menu">
+														    <li><a href="#" class="efavselect" data-id="{{ $chapter->id }}" data-toggle="modal" data-target="#myFavAct">Favoriet selecteren</a></li>
+														  </ul>
+													</span>
+												</div>
+											</div>
+											<div class="col-md-6 text-right">
+												<!--<button type="button" class="btn btn-primary lfavselect" data-id="{{ $chapter->id }}" data-toggle="modal" data-target="#myFavAct">Favoriet selecteren</button>-->
+
+												<div class="btn-group" role="group">
+												  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Onderdeel&nbsp;&nbsp;<span class="caret"></span></button>
+												  <ul class="dropdown-menu">
+												    <li><a href="#" data-id="{{ $chapter->id }}" data-name="{{ $chapter->chapter_name }}" data-toggle="modal" data-target="#nameChangeChapModal" class="changenamechap">Naam wijzigen</a></li>
+												    <li><a href="#" data-id="{{ $chapter->id }}" class="deletechap">Verwijderen</a></li>
+												  </ul>
+												</div>
 											</div>
 										</div>
-										<div class="col-md-6 text-right">
-											<button type="button" class="btn btn-primary efavselect" data-id="{{ $chapter->id }}" data-toggle="modal" data-target="#myFavAct">Favoriet selecteren</button>
-											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Onderdeel verwijderen</button>
-										</div>
-									</div>
 									</form>
 								</div>
 							</div>
