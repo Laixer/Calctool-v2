@@ -1217,12 +1217,12 @@ if (!$project || !$project->isOwner())
 						</a>
 					</li>
 					@endif
-					<li data-step="5" data-intro="Bekijk na het invullen van al je onderdelen & werkzaamheden de uittrekstaat van al je werkzaamheden." id="tab-summary">
+					<li id="tab-summary">
 						<a href="#summary" data-toggle="tab">
 							<i class="fa fa-sort-amount-asc"></i> Uittrekstaat Calculeren
 						</a>
 					</li>
-					<li data-step="6" data-intro="Bekijk het eindresultaat." id="tab-endresult">
+					<li id="tab-endresult">
 						<a href="#endresult" data-toggle="tab">
 							<i class="fa fa-check-circle-o"></i> Eindresultaat Calculeren
 						</a>

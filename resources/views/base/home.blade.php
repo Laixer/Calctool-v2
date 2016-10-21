@@ -208,7 +208,7 @@ $relation = Relation::find(Auth::user()->self_id);
 									<input name="toggle-close" type="checkbox">
 								</div>
 							</div>
-							<!-- <div class="table-responsive"> -->
+
 							<table ng-cloak class="table table-striped">
 								<thead>
 									<tr>
@@ -219,6 +219,9 @@ $relation = Relation::find(Auth::user()->self_id);
 									</tr>
 								</thead>
 								<tbody>
+									<div ng-show="show" class="row text-center">
+										<img src="/images/loading_icon.gif" height="100" />
+									</div>
 									<tr ng-repeat="project in projects | filter: query | orderBy: orderByField:reverseSort as results">
 										<td class="col-md-5"><a href="/project-@{{ project.id }}/edit">@{{ project.project_name }}</a></td>
 										<td class="col-md-3">@{{ project.relation }}</td>
@@ -230,7 +233,7 @@ $relation = Relation::find(Auth::user()->self_id);
 									</tr>
 								</tbody>
 							</table>
-							<!-- </div> -->
+
 							<div class="row">
 								<div class="col-md-3">
 									<div class="btn-group item-full">

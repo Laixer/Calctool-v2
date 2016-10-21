@@ -81,7 +81,7 @@ $(function() {
 							<div class="col-md-6">
 								<div class="form-group">
 									<input name="rememberme" checked="checked" class="left-label" type="checkbox">
-									<label for="rememberme" style="margin-left:10px;">Onthoud gegevens</label>
+									<label for="rememberme" style="margin-left:10px;">Ingelogd blijven</label>
 								</div>
 							</div>
 							<div class="col-md-6">
