@@ -35,6 +35,7 @@ use \Hash;
 use \Redis;
 use \Markdown;
 use \Mailgun;
+use \Artisan;
 
 ini_set('max_execution_time', 0);
 ini_set('max_input_time', -1);
@@ -823,4 +824,17 @@ class AdminController extends Controller {
 
 		return back()->with('success', 'STABU-project ingevoegd');
 	}
+
+	public function doApplicationClearCache(Request $request)
+	{
+		Artisan::call('clear-compiled');
+		Artisan::call('cache:clear');
+		Artisan::call('config:clear');
+		Artisan::call('oauth:clear');
+		Artisan::call('view:clear');
+		Artisan::call('route:clear');
+		Artisan::call('session:clear');
+
+		return back()->with('success', 'Applicatie caches verwijderd');
+	}	
 }

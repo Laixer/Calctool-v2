@@ -50,9 +50,21 @@ $redis_info = Redis::command('info');
 			<div>
 			<br />
 
+			@if(Session::get('success'))
+			<div class="alert alert-success">
+				<i class="fa fa-check-circle"></i>
+				<strong>{{ Session::get('success') }}</strong>
+			</div>
+			@endif
+
 			<h2><strong>Omgeving {{ app()->environment() }}</strong></h2>
 
 			<div class="white-row">
+
+				<div class="pull-right">
+					<a href="/admin/environment/clearcaches" class="btn btn-primary">Clear cache</a>
+				</div>
+
 				<h4>Serverstatus</h4>
 				<div class="row">
 					<div class="col-md-2"><strong>Servernaam</strong></div>

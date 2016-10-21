@@ -56,10 +56,13 @@ class ApiController extends Controller {
 	public function getUserUpdate(Request $request)
 	{
 		if ($request->has('location')) {
-			Auth::user()->current_url = substr($request->get('location'), 0, 180);
+			$currloc = substr($request->get('location'), 0, 160);
+			Auth::user()->current_url = $currloc . '#p' . $request->get('prescount');
 			Auth::user()->save();
 			Auth::user()->touch();
 		}
+
+		return response(null, 204);
 	}
 
 	public function getTimesheet()

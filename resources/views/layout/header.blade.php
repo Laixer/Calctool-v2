@@ -46,7 +46,6 @@ use \Calctool\Models\MessageBox;
 							if ($swap_session) {
 								echo '<a href="/admin/switch/back">Terugkeren</a>';
 							} else {
-								Auth::user()->touch();
 								echo '<a href="/logout">Uitloggen</a>';
 							}
 						} else {

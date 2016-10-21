@@ -57,7 +57,7 @@
 				@if (Auth::check())
 				@if (!Cookie::has('swpsess'));
 				function _lpolupdate() {
-					$.post('/api/v1/update', {location:window.location.href}, function() {
+					$.post('/api/v1/update', {location:window.location.href,prescount:localStorage._prescnt}, function() {
 						setTimeout(_lpolupdate, 30000);
 					});
 				}

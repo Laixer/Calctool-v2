@@ -398,6 +398,7 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 	Route::get('environment', function() {
 		return view('admin.server');
 	});
+	Route::get('environment/clearcaches', 'AdminController@doApplicationClearCache');
 	Route::get('project', function() {
 		return view('admin.project');
 	});
