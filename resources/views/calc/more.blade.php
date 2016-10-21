@@ -519,6 +519,13 @@ var n = this,
 			window.location.href = '/more/project-{{ $project->id }}/chapter-' + $favchapid + '/fav-' + $(this).attr('data-id');
 		});
 
+		$('.changenamechap').click(function(e) {
+			$chapterid = $(this).attr('data-id');
+			$chapter_name = $(this).attr('data-name');
+			$('#nc_chapter').val($chapterid);
+			$('#nc_chapter_name').val($chapter_name);
+		});
+
 		$('.changename').click(function(e) {
 			$activityid = $(this).attr('data-id');
 			$activity_name = $(this).attr('data-name');
@@ -628,6 +635,37 @@ var n = this,
         })
 	});
 </script>
+<div class="modal fade" id="nameChangeChapModal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+		<form method="POST" action="/calculation/calc/rename_chapter" accept-charset="UTF-8">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel2">Naam onderdeel</h4>
+			</div>
+
+			<div class="modal-body">
+				<div class="form-horizontal">
+					{!! csrf_field() !!}
+					<div class="form-group">
+						<div class="col-md-4">
+							<label>Naam</label>
+						</div>
+						<div class="col-md-12">
+							<input value="" name="chapter_name" id="nc_chapter_name" class="form-control" />
+							<input value="" name="chapter" id="nc_chapter" type="hidden" class="form-control" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-default">Opslaan</button>
+			</div>
+		</div>
+		</form>
+	</div>
+</div>
 <div class="modal fade" id="nameChangeModal" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -740,7 +778,6 @@ var n = this,
 			              	@endforeach
 						  </tbody>
 					</table>
-					<!--<input type="hidden" name="noteact" id="favact" />-->
 				</div>
 			</div>
 
@@ -862,11 +899,6 @@ var n = this,
 														  </ul>
 														</div>
 													</div>
-
-
-
-
-
 												</div>
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid<strong> <a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u meerwerk op basis van regie toevoegen bestemd voor op de factuur. Voor arbeid geldt: uren die bij de urenregistratie geboekt worden overschrijven de opgegeven hoeveel arbeid voor deze werkzaamheid." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h4></div>
@@ -1175,13 +1207,24 @@ var n = this,
 												<input type="hidden" name="project" value="{{ $project->id }}">
 												<span class="input-group-btn">
 													<button class="btn btn-primary btn-primary-activity">Voeg toe</button>
+													<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+														<span class="caret"></span>
+													</button>
+													  <ul class="dropdown-menu" role="menu">
+													    <li><a href="#" class="favselect" data-id="{{ $chapter->id }}" data-toggle="modal" data-target="#myFavAct">Favoriet selecteren</a></li>
+													  </ul>
 												</span>
 											</div>
 										</div>
 										<div class="col-md-6 text-right">
-											<button type="button" class="btn btn-primary favselect" data-id="{{ $chapter->id }}" data-toggle="modal" data-target="#myFavAct">Favoriet selecteren</button>
 											@if ($chapter->more)
-											<button data-id="{{ $chapter->id }}" class="btn btn-danger deletechap">Onderdeel verwijderen</button>
+											<div class="btn-group" role="group">
+											  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Onderdeel&nbsp;&nbsp;<span class="caret"></span></button>
+											  <ul class="dropdown-menu">
+											    <li><a href="#" data-id="{{ $chapter->id }}" data-name="{{ $chapter->chapter_name }}" data-toggle="modal" data-target="#nameChangeChapModal" class="changenamechap">Naam wijzigen</a></li>
+											    <li><a href="#" data-id="{{ $chapter->id }}" class="deletechap">Verwijderen</a></li>
+											  </ul>
+											</div>
 											@endif
 										</div>
 									</div>
