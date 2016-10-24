@@ -882,13 +882,14 @@ var n = this,
 		    											@else
 		    											<div class="col-md-4"></div>
 		    											@endif
+		    										<?php } ?>
 													<div class="col-md-4 text-right">
 	    												<div class="form-group hide_if_subcon" {!! ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'style="display:none;"' : '') !!}>
 	    													<label for="use_timesheet">Urenregistratie gebruiken&nbsp;</label>
 															<input name="use_timesheet" class="use-timesheet" data-id="{{ $activity->id }}" type="checkbox" data-size="small" {{ $activity->use_timesheet ? 'checked' : '' }}>
 														</div>
 													</div>
-	    											<?php } ?>
+	    											
 													<div class="col-md-4 text-right">
 														<button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving</button>
 														<div class="btn-group" role="group">
