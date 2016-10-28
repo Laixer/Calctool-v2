@@ -128,7 +128,7 @@ $(function() {
 			</div>
 
 			<div class="white-row hidden-sm hidden-xs">
-				<h4>Nog Registreren?</h4>			
+				<h4>Nog Registreren?</h4>
 				<span>Nog geen account? <a href="/register">Maak er &eacute;&eacute;n aan</a>, het is <strong>gratis!</strong></span>
 			</div>
 

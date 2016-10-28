@@ -17,10 +17,10 @@ Route::group(['middleware' => ['guest','utm']], function() {
 	Route::get('login', 'AuthController@getLogin');
 	Route::post('login', 'AuthController@doLogin');
 	Route::post('register', 'AuthController@doRegister');
-	Route::get('confirm/{api}/{token}', 'AuthController@doActivate')->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
+	Route::get('confirm/{token}', 'AuthController@doActivate')->where('token', '[0-9a-z]{40}');
 	Route::post('password/reset', 'AuthController@doBlockPassword');
-	Route::get('password/{api}/{token}', 'AuthController@getPasswordReset')->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
-	Route::post('password/{api}/{token}', 'AuthController@doNewPassword')->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
+	Route::get('password/{token}', 'AuthController@getPasswordReset')->where('token', '[0-9a-z]{40}');
+	Route::post('password/{token}', 'AuthController@doNewPassword')->where('token', '[0-9a-z]{40}');
 	
 	Route::get('ex-project-overview/{token}', 'ClientController@getClientPage')->where('token', '[0-9a-z]{40}');
 	Route::post('ex-project-overview/{token}/update', 'ClientController@doUpdateCommunication')->where('token', '[0-9a-z]{40}');

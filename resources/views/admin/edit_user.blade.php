@@ -414,7 +414,7 @@ $(document).ready(function() {
 							<div id="audit" class="tab-pane">
 
 								<div class="pull-right">
-									<a class="btn btn-primary" href="/admin/user-1003/edit?allevents=1" >Alle events</a>
+									<a class="btn btn-primary" href="/admin/user-{{ $user->id }}/edit?allevents=1" >Alle events</a>
 								</div>
 
 								<h4>Meest recente event bovenaan</h4>

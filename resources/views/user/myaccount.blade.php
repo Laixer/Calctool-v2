@@ -71,7 +71,6 @@ $(document).ready(function() {
 		}
 	});
 
-	$("[name='toggle-api']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	$("[name='pref_use_ct_numbering']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
 	$('#acc-deactive').click(function(e){
 		e.preventDefault();
@@ -408,10 +407,10 @@ $(document).ready(function() {
 							</div>
 
 							<div class="row">
-								<div class="col-md-4">
+								<div class="col-md-8">
 									<div class="form-group">
-										<label for="api">Referral key</label>
-										<input name="api" id="api" type="text" readonly="readonly" value="{{ $user->referral_key }}" class="form-control"/>
+										<label for="api">Referral link</label>
+										<input name="api" id="api" type="text" readonly="readonly" value="{{ URL::to('/') }}/register?client_referer={{ $user->referral_key }}" class="form-control"/>
 									</div>
 								</div>
 							</div>
