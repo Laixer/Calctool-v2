@@ -415,7 +415,6 @@ $(document).ready(function() {
 								</div>
 							</div>
 
-
 							<div class="row">
 								<div class="col-md-12">
 									<button {{ session()->has('swap_session') ? 'disabled' : '' }} class="btn btn-primary {{ session()->has('swap_session') ? 'disabled' : '' }}" name="save-password"><i class="fa fa-check"></i> Opslaan</button>

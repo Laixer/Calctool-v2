@@ -386,7 +386,7 @@ class AuthController extends Controller {
 
 		Audit::CreateEvent('auth.reset.password.mail.success', 'Reset with: ' . \Calctool::remoteAgent(), $user->id);
 
-		return redirect('login')->with('success', 'Wachtwoord geblokkeerd');
+		return redirect('login')->with('success', 1);
 	}
 
 	/**

@@ -148,6 +148,7 @@ class AdminController extends Controller {
 				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 			});
 
+			$user->timestamps = false;
 			$user->save();
 		}
 
@@ -328,6 +329,7 @@ class AdminController extends Controller {
 		else
 			$user->gender = $request->input('gender');
 
+		$user->timestamps = false;
 		$user->save();
 
 		Audit::CreateEvent('admin.user.update.succces', 'Updated user: ' . $user->username);
@@ -556,7 +558,6 @@ class AdminController extends Controller {
 	public function doSendNotification(Request $request)
 	{
 		$this->validate($request, [
-			// 'user' => array('required'),
 			'subject' => array('required'),
 			'message' => array('required'),
 		]);
@@ -770,6 +771,40 @@ class AdminController extends Controller {
 		]);
 
 		return back()->with('success', 'Applicatie opgeslagen');
+	}
+
+	public function getPasswordResetUser(Request $request, $user_id)
+	{
+		if (!Auth::user()->isSystem()) {
+			return back();
+		}
+
+		if (Auth::id() == $user_id) {
+			return back();
+		}
+
+		$user = User::find($user_id);
+		$user->reset_token = sha1(mt_rand());
+
+		$data = array(
+			'email' => $user->email,
+			'token' => $user->reset_token,
+			'firstname' => $user->firstname,
+			'lastname' => $user->lastname
+		);
+		Mailgun::send('mail.password', $data, function($message) use ($data) {
+			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
+			$message->subject('CalculatieTool.com - Wachtwoord herstellen');
+			$message->from('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+		});
+
+		$user->timestamps = false;
+		$user->save();
+
+		Audit::CreateEvent('admin.auth.reset.password.succces', 'Admin send password reset email', $user->id);
+
+		return back()->with('success', 'Reset email verstuurd');
 	}
 
 	public function getPurgeUser(Request $request, $user_id)
