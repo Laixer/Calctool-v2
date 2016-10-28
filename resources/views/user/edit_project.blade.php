@@ -911,7 +911,7 @@ $(document).ready(function() {
 							</form>
 						</div>
 
-						<h4>Projectdocumenten</h4><br />
+						<h4>Projectdocumenten</h4>
 
 						<div class="white-row">
 
