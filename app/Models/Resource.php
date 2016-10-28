@@ -4,6 +4,8 @@ namespace Calctool\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use \Auth;
+
 class Resource extends Model {
 
 	protected $table = 'resource';
