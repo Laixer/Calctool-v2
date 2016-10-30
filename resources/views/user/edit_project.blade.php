@@ -911,24 +911,35 @@ $(document).ready(function() {
 							</form>
 						</div>
 
-						<h4>Projectdocumenten</h4><br />
+						<h4>Projectdocumenten</h4>
 
-						<!-- FEATURED BOXES 3 -->
-						<section class="container" style="width:1100px">
-							<div class="row">
+						<div class="white-row">
+
+							<!-- cart content -->
+							<div id="cartContent">
+								<!-- cart header -->
+								<div class="item head">
+									<span class="cart_img" style="width:45px;"></span>
+									<span class="product_name fsize13 bold">Filename</span>
+									<span class="remove_item fsize13 bold" style="width: 120px;"></span>
+									<span class="total_price fsize13 bold">Grootte</span>
+									<span class="qty fsize13 bold">Geupload</span>
+									<div class="clearfix"></div>
+								</div>
 								@foreach(Resource::where('project_id', $project->id)->get() as $file)
-								<div class="col-md-3">
-									<div class="featured-box nobg border-only">
-										<a href="/res-{{ $file->id }}/download">
-											<i class="fa fa-file-pdf-o"></i>
-											<h4>{{ $file->resource_name }}</h4>
-										</a>
-									</div>
+								<div class="item">
+									<div class="cart_img" style="width:45px;"><a href="/res-{{ $file->id }}/download"><i class="fa fa-file-pdf-o fsize20"></i></a></div>
+									<a href="/res-{{ $file->id }}/download" class="product_name">{{ $file->resource_name }}</a>
+									<a href="/res-{{ $file->id }}/delete" class="btn btn-danger btn-xs" style="float: right;margin: 10px;">Verwijderen</a>
+									<div class="total_price"><span>{{ round($file->file_size/1024) }}</span> Kb</div>
+									<div class="qty">{{ $file->created_at->format("d-m-Y") }}</div>
+									<div class="clearfix"></div>
 								</div>
 								@endforeach
+
+								<div class="clearfix"></div>
 							</div>
-						</section>
-						<!-- /FEATURED BOXES 3 -->
+						</div>
 
 					</div>
 				</div>

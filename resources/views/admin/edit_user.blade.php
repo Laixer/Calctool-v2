@@ -137,11 +137,12 @@ $(document).ready(function() {
 								<li><a href="/admin/user-{{ $user->id }}/switch">Gebruiker overnemen</a></li>
 								<li><a href="/admin/user-{{ $user->id }}/validation">Validatie project laden</a></li>
 								<li><a href="/admin/user-{{ $user->id }}/stabu">STABU project laden</a></li>
-								@if (Auth::user()->isSystem() && Auth::id() != $user->id)
-								<li><a href="/admin/user-{{ $user->id }}/purge">Definitef verwijderen</a></li>
-								@endif
 								@if ($user->active)
 								<li><a href="/admin/message?user={{ $user->id }}">Bericht sturen</a></li>
+								<li><a href="/admin/user-{{ $user->id }}/passreset">Stuur wachtwoord reset link</a></li>
+								@endif
+								@if (Auth::user()->isSystem() && Auth::id() != $user->id)
+								<li><a href="/admin/user-{{ $user->id }}/purge">Definitef verwijderen</a></li>
 								@endif
 							</ul>
 						</div>
@@ -191,12 +192,14 @@ $(document).ready(function() {
 											</div>
 										</div>
 
+										@if (0)
 										<div class="col-md-3">
 											<div class="form-group">
 												<label for="secret">Wachtwoord</label>
 												<input name="secret" {{ $user->isAdmin() ? 'disabled' : '' }} type="password" id="secret" class="form-control" autocomplete="off">
 											</div>
 										</div>
+										@endif
 
 									</div>
 
@@ -258,13 +261,53 @@ $(document).ready(function() {
 									</div>
 
 									@if ($user->isOnline())
-									<h4>Online</h4>
+									<h4>Huidige sessie</h4>
 									<div class="row">
 
 										<div class="col-md-6">
 											<div class="form-group">
 												<label for="website">Huidige locatie</label>
 												<input name="location" id="location" disabled value="{{ $user->current_url }}" class="form-control"/>
+											</div>
+										</div>
+
+										<div class="col-md-2">
+											<div class="form-group">
+												<label for="address_city">Logins</label>
+												<input type="text" value="{{ $user->login_count }}" disabled class="form-control"/>
+											</div>
+										</div>
+
+										<div class="col-md-4">
+											<div class="form-group">
+												<label for="address_city">Actief</label>
+												<input type="text" value="Online" disabled class="form-control"/>
+											</div>
+										</div>
+
+									</div>
+									@else
+									<h4>Laatste sessie</h4>
+									<div class="row">
+
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="website">Laatste locatie</label>
+												<input name="location" id="location" disabled value="{{ $user->current_url }}" class="form-control"/>
+											</div>
+										</div>
+
+										<div class="col-md-2">
+											<div class="form-group">
+												<label for="address_city">Logins</label>
+												<input type="text" value="{{ $user->login_count }}" disabled class="form-control"/>
+											</div>
+										</div>
+
+										<div class="col-md-4">
+											<div class="form-group">
+												<label for="address_city">Actief</label>
+												<input type="text" value="{{ $user->currentStatus() }}" disabled class="form-control"/>
 											</div>
 										</div>
 
@@ -336,10 +379,10 @@ $(document).ready(function() {
 											</div>
 										</div>
 
-										<div class="col-md-2">
+										<div class="col-md-8">
 											<div class="form-group">
-												<label for="address_city">Logins</label>
-												<input type="text" value="{{ $user->login_count }}" disabled class="form-control"/>
+												<label for="api">Referral link</label>
+												<input name="api" id="api" type="text" readonly="readonly" value="{{ URL::to('/') }}/register?client_referer={{ $user->referral_key }}" class="form-control"/>
 											</div>
 										</div>
 
@@ -414,7 +457,11 @@ $(document).ready(function() {
 							<div id="audit" class="tab-pane">
 
 								<div class="pull-right">
-									<a class="btn btn-primary" href="/admin/user-1003/edit?allevents=1" >Alle events</a>
+									@if ($allevents)
+									<a class="btn btn-primary" href="/admin/user-{{ $user->id }}/edit" >Laatste events</a>
+									@else
+									<a class="btn btn-primary" href="/admin/user-{{ $user->id }}/edit?allevents=1" >Alle events</a>
+									@endif
 								</div>
 
 								<h4>Meest recente event bovenaan</h4>

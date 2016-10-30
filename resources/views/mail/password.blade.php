@@ -60,9 +60,8 @@
 													<td width="100%" height="20"></td>
 												</tr>
 												<tr>
-													<!--<td width="100%" height="15"></td>-->
 													<td width="100%" style="text-align:center;">
-														<a href="{{ URL::to('password/' . $api . '/' . $token) }}" style="text-decoration:none; font-family: helvetica, Arial, sans-serif; font-size: 12px; letter-spacing: 0px; text-align: center; text-transform: uppercase; padding:10px; color:#ffffff; background-color:#79BB00; border-radius:6px;">
+														<a href="{{ URL::to('password/' . $token) }}" style="text-decoration:none; font-family: helvetica, Arial, sans-serif; font-size: 12px; letter-spacing: 0px; text-align: center; text-transform: uppercase; padding:10px; color:#ffffff; background-color:#79BB00; border-radius:6px;">
 															Wachtwoord resetten
 														</a>
 													</td>

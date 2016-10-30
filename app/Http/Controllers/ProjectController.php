@@ -70,14 +70,14 @@ class ProjectController extends Controller {
 		return back();
 	}
 
-
 	public function downloadResource(Request $request, $resourceid)
 	{
 		$res = Resource::find($resourceid);
-		if ($res) {
-			return response()->download($res->file_location);
+		if (!$res || !$res->isOwner()) {
+			return back();
 		}
-		return;
+
+		return response()->download($res->file_location);
 	}
 
 	public function doNew(Request $request)
@@ -313,6 +313,18 @@ class ProjectController extends Controller {
 	public function getAll(Request $request)
 	{
 		return view('user.project');
+	}
+
+	public function doDeleteResource(Request $request, $resourceid)
+	{
+		$res = Resource::find($resourceid);
+		if (!$res || !$res->isOwner()) {
+			return back();
+		}
+
+		$res->delete();
+
+		return back();
 	}
 
 	public function doUpdate(Request $request)

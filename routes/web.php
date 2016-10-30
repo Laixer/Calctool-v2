@@ -17,10 +17,10 @@ Route::group(['middleware' => ['guest','utm']], function() {
 	Route::get('login', 'AuthController@getLogin');
 	Route::post('login', 'AuthController@doLogin');
 	Route::post('register', 'AuthController@doRegister');
-	Route::get('confirm/{api}/{token}', 'AuthController@doActivate')->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
+	Route::get('confirm/{token}', 'AuthController@doActivate')->where('token', '[0-9a-z]{40}');
 	Route::post('password/reset', 'AuthController@doBlockPassword');
-	Route::get('password/{api}/{token}', 'AuthController@getPasswordReset')->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
-	Route::post('password/{api}/{token}', 'AuthController@doNewPassword')->where('api', '[0-9a-z]{32}')->where('token', '[0-9a-z]{40}');
+	Route::get('password/{token}', 'AuthController@getPasswordReset')->where('token', '[0-9a-z]{40}');
+	Route::post('password/{token}', 'AuthController@doNewPassword')->where('token', '[0-9a-z]{40}');
 	
 	Route::get('ex-project-overview/{token}', 'ClientController@getClientPage')->where('token', '[0-9a-z]{40}');
 	Route::post('ex-project-overview/{token}/update', 'ClientController@doUpdateCommunication')->where('token', '[0-9a-z]{40}');
@@ -102,6 +102,7 @@ Route::group(['middleware' => 'auth'], function() {
 		return view('calc.result');
 	})->where('project_id', '[0-9]+')->middleware('payzone');
 	Route::get('res-{resource_id}/download', 'ProjectController@downloadResource')->where('resource_id', '[0-9]+');
+	Route::get('res-{resource_id}/delete', 'ProjectController@doDeleteResource')->where('resource_id', '[0-9]+');
 	Route::post('resource/upload', 'ProjectController@doUploadProjectDocument');
 	Route::get('apps', 'AppsController@getAppsDashboard');
 	Route::get('myaccount', function() {
@@ -364,6 +365,7 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 	Route::get('user-{user_id}/switch', 'AdminController@getSwitchSession');
 	Route::get('user-{user_id}/validation', 'AdminController@getValidationProject');
 	Route::get('user-{user_id}/stabu', 'AdminController@getStabuProject');
+	Route::get('user-{user_id}/passreset', 'AdminController@getPasswordResetUser');
 	Route::get('user-{user_id}/purge', 'AdminController@getPurgeUser');
 	Route::post('user-{user_id}/edit', 'AdminController@doUpdateUser');
 	Route::post('user-{user_id}/adminlog/new', 'AdminController@doNewAdminLog');
