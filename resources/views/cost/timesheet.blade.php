@@ -8,6 +8,7 @@ use \Calctool\Models\Detail;
 use \Calctool\Models\TimesheetKind;
 use \Calctool\Calculus\TimesheetOverview;
 use \Calctool\Models\MoreLabor;
+use \Calctool\Models\Offer;
 ?>
 
 @extends('layout.master')
@@ -150,7 +151,12 @@ use \Calctool\Models\MoreLabor;
 									<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text" maxlength="4" ng-model="hour"/></td>
 									<td class="col-md-2">
 										<select name="projname" id="projname" class="getact form-control-sm-text" ng-model="projname">
-											@foreach (Project::where('user_id','=',Auth::id())->whereNull('project_close')->get() as $projectname)
+											@foreach (Project::where('user_id',Auth::id())->whereNull('project_close')->get() as $projectname)
+											<?php
+												$offer_last = Offer::where('project_id',$projectname->id)->orderBy('created_at', 'desc')->first();
+												if (!$offer_last || !$offer_last->offer_finish)
+													continue;
+											?>
 											<option data-type="{{ $projectname->type_id }}" value="{{ $projectname->id }}">{{ ucwords($projectname->project_name) }}</option>
 											@endforeach
 										</select>
@@ -342,6 +348,7 @@ angular.module('timesheetApp', []).controller('timesheetController', function($s
 				timesheet_kind: response.data.type,
 				activity_name: response.data.activity,
 				note: response.data.note,
+				id: response.data.id,
 			};
 
 			$scope.timesheets.push(data);
