@@ -173,13 +173,12 @@ class AuthController extends Controller {
 		$user->username = $request->get('username');
 		$user->secret = Hash::make($request->get('secret'));
 		$user->firstname = $user->username;
-		$user->api = md5(mt_rand());
-		$user->token = sha1($user->secret);
+		$user->reset_token = sha1(mt_rand());
 		$user->referral_key = md5(mt_rand());
 		$user->ip = \Calctool::remoteAddr();
 		$user->email = $request->get('email');
 		$user->expiration_date = $expiration_date;
-		$user->user_type = UserType::where('user_type','=','user')->first()->id;
+		$user->user_type = UserType::where('user_type', 'user')->first()->id;
 		$user->user_group = 100;
 		$user->firstname = $request->get('contact_firstname');
 		$user->lastname = $request->get('contact_name');
@@ -196,7 +195,7 @@ class AuthController extends Controller {
 		$relation->debtor_code = mt_rand(1000000, 9999999);
 
 		/* My company */
-		$relation->kind_id = RelationKind::where('kind_name','zakelijk')->first()->id;
+		$relation->kind_id = RelationKind::where('kind_name', 'zakelijk')->first()->id;
 		$relation->company_name = $request->input('company_name');
 		$relation->type_id = RelationType::where('type_name', 'aannemer')->first()->id;
 		$relation->email = $user->email;
@@ -216,7 +215,12 @@ class AuthController extends Controller {
 
 		$contact->save();
 
-		$data = array('email' => $user->email, 'api' => $user->api, 'token' => $user->token, 'firstname' => $user->firstname, 'lastname' => $user->lastname);
+		$data = array(
+			'email' => $user->email,
+			'token' => $user->reset_token,
+			'firstname' => $user->firstname,
+			'lastname' => $user->lastname
+		);
 		Mailgun::send('mail.confirm', $data, function($message) use ($data) {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Account activatie');
@@ -261,20 +265,19 @@ class AuthController extends Controller {
 	 *
 	 * @return Route
 	 */
-	public function doNewPassword(Request $request, $api, $token)
+	public function doNewPassword(Request $request, $token)
 	{
 		$this->validate($request, [
 			'secret' => array('required','confirmed','min:5'),
 			'secret_confirmation' => array('required','min:5'),
 		]);
 
-		$user = User::where('token','=',$token)->where('api','=',$api)->first();
+		$user = User::where('reset_token', $token)->first();
 		if (!$user) {
 			return redirect('login')->withErrors(['activate' => ['Activatielink is niet geldig']]);
 		}
 		$user->secret = Hash::make($request->get('secret'));
-		$user->active = true;
-		$user->token = sha1($user->secret);
+		$user->reset_token = null;
 		$user->save();
 
 		Audit::CreateEvent('auth.update.password.success', 'Updated with: ' . \Calctool::remoteAgent(), $user->id);
@@ -288,9 +291,9 @@ class AuthController extends Controller {
 	 *
 	 * @return Route
 	 */
-	public function doActivate(Request $request, $api, $token)
+	public function doActivate(Request $request, $token)
 	{
-		$user = User::where('token','=',$token)->where('api','=',$api)->first();
+		$user = User::where('reset_token', $token)->first();
 		if (!$user) {
 			return redirect('login')->withErrors(['activate' => ['Activatielink is niet geldig']]);
 		}
@@ -298,6 +301,7 @@ class AuthController extends Controller {
 			return redirect('login')->withErrors(['activate' => ['Account is al geactiveerd']]);
 		}
 		$user->confirmed_mail = date('Y-m-d H:i:s');
+		$user->reset_token = null;
 		$user->save();
 
 		\VoorbeeldRelatieTemplate::setup($user->id);
@@ -360,14 +364,17 @@ class AuthController extends Controller {
 			'email' => array('required','max:80','email')
 		]);
 
-		$user = User::where('email','=',$request->get('email'))->first();
+		$user = User::where('email', $request->get('email'))->first();
 		if (!$user)
 			return redirect('login')->with('success', 1);
-		$user->secret = Hash::make(mt_rand());
-		$user->active = false;
-		$user->api = md5(mt_rand());
+		$user->reset_token = sha1(mt_rand());
 
-		$data = array('email' => $user->email, 'api' => $user->api, 'token' => $user->token, 'firstname' => $user->firstname, 'lastname' => $user->lastname);
+		$data = array(
+			'email' => $user->email,
+			'token' => $user->reset_token,
+			'firstname' => $user->firstname,
+			'lastname' => $user->lastname
+		);
 		Mailgun::send('mail.password', $data, function($message) use ($data) {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Wachtwoord herstellen');
@@ -379,7 +386,7 @@ class AuthController extends Controller {
 
 		Audit::CreateEvent('auth.reset.password.mail.success', 'Reset with: ' . \Calctool::remoteAgent(), $user->id);
 
-		return redirect('login')->with('success', 'Wachtwoord geblokkeerd');
+		return redirect('login')->with('success', 1);
 	}
 
 	/**
@@ -796,8 +803,7 @@ class AuthController extends Controller {
 		$user->username = $request->get('username');
 		$user->secret = Hash::make($request->get('password'));
 		$user->firstname = $user->username;
-		$user->api = md5(mt_rand());
-		$user->token = sha1($user->secret);
+		$user->reset_token = sha1(mt_rand());
 		$user->referral_key = md5(mt_rand());
 		$user->ip = $request->get('remote_addr');
 		$user->email = $request->get('email');
@@ -853,7 +859,12 @@ class AuthController extends Controller {
 
 		$contact->save();
 
-		$data = array('email' => $user->email, 'api' => $user->api, 'token' => $user->token, 'firstname' => $user->firstname, 'lastname' => $user->lastname);
+		$data = array(
+			'email' => $user->email,
+			'token' => $user->reset_token,
+			'firstname' => $user->firstname,
+			'lastname' => $user->lastname
+		);
 		Mailgun::send('mail.confirm', $data, function($message) use ($data) {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Account activatie');

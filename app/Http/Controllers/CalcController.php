@@ -264,8 +264,8 @@ class CalcController extends Controller {
 	public function getMore(Request $request, $projectid)
 	{
 		$project = Project::find($projectid);
-		$type = ProjectType::find($project->type_id);
 		if ($project) {
+			$type = ProjectType::find($project->type_id);
 			if ($project->project_close)
 				return response()->view('calc.more_closed');
 			if ($type->type_name != 'regie') {

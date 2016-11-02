@@ -48,7 +48,17 @@ if (Input::has('group')) {
 				@endif
 			</div>
 
-			<h2><strong>{{ ($all ? 'Alle' : ($group ? 'Groep' : 'Actieve')) }} gebruikers</strong></h2>
+			<?php
+			if ($all) {
+				$selection = \Calctool\Models\User::orderBy('updated_at','desc')->get();
+			} else if (!empty($group)) {
+				$selection = \Calctool\Models\User::where('user_group',$group)->get();
+			} else {
+				$selection = \Calctool\Models\User::where('active','=','true')->orderBy('updated_at','desc')->get();
+			}
+			?>
+
+			<h2><strong>{{ ($all ? 'Alle' : ($group ? 'Groep' : 'Actieve')) }} gebruikers ({{ count($selection) }})</strong></h2>
 
 			<div class="white-row">
 			<table class="table table-striped">
@@ -65,15 +75,6 @@ if (Input::has('group')) {
 				</thead>
 
 				<tbody>
-				<?php
-				if ($all) {
-					$selection = \Calctool\Models\User::orderBy('updated_at','desc')->get();
-				} else if (!empty($group)) {
-					$selection = \Calctool\Models\User::where('user_group',$group)->get();
-				} else {
-					$selection = \Calctool\Models\User::where('active','=','true')->orderBy('updated_at','desc')->get();
-				}
-				?>
 				@foreach ($selection as $users)
 					<tr>
 						<td class="col-md-1 hidden-xs"><a href="{{ '/admin/user-'.$users->id.'/edit' }}">{{ $users->id }}</a></td>

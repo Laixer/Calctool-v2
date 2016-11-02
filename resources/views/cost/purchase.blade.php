@@ -93,11 +93,10 @@ use \Calctool\Models\Wholesale;
 
 			<div>
 				<ol class="breadcrumb">
-				  <li><a href="/">Dashboard</a></li>
+				  <li><a href="/">Home</a></li>
 				  <li class="active">Inkoopfacturen</li>
 				</ol>
 			<div>
-			<br>
 
 			<h2 style="margin: 10px 0 20px 0;"><strong>Inkoopfacturen</strong>&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
 
