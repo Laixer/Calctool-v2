@@ -382,7 +382,7 @@ $(document).ready(function() {
 									$mysupplier = Supplier::where('user_id','=',Auth::id())->first();
 									if ($mysupplier) {
 								?>
-								@foreach (Product::where('supplier_id','=', $mysupplier->id)->get() as $product)
+								@foreach (Product::where('supplier_id','=', $mysupplier->id)->limit(50)->get() as $product)
 								<tr data-id="{{ $product->id }}">
 									<td class="col-md-5"><input name="name" type="text" value="{{ $product->description }}" class="form-control-sm-text dsave newrow" /></td>
 									<td class="col-md-1"><input name="unit" type="text" value="{{ $product->unit }}" class="form-control-sm-text dsave" /></td>
