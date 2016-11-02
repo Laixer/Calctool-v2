@@ -451,7 +451,7 @@ $(document).ready(function() {
 											</div>
 
 											<div class="modal-footer">
-												<button class="btn btn-default" data-dismiss="modal">Sluiten</button>
+												<button class="btn btn-default">Opslaan</button>
 											</div>
 										</div>
 
