@@ -342,6 +342,7 @@ angular.module('timesheetApp', []).controller('timesheetController', function($s
 				timesheet_kind: response.data.type,
 				activity_name: response.data.activity,
 				note: response.data.note,
+				id: response.data.id,
 			};
 
 			$scope.timesheets.push(data);

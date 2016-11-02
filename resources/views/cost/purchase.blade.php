@@ -214,7 +214,7 @@ angular.module('purchaseApp', []).controller('purchaseController', function($sco
 			note: $scope.note,
 			project: $scope.projname,
 		};
-		
+
 		$http.post('/api/v1/purchase/new', data).then(function(response){
 			var data = {
 				register_date: response.data.date,
@@ -223,6 +223,7 @@ angular.module('purchaseApp', []).controller('purchaseController', function($sco
 				project_name: response.data.project,
 				purchase_kind: response.data.type,
 				note: response.data.note,
+				id: response.data.id,
 			};
 
 			$scope.purchases.push(data);

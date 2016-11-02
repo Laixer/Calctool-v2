@@ -154,7 +154,16 @@ class ApiController extends Controller {
 			));
 		}
 
-		return response()->json(['success' => 1, 'note' => $timesheet->note, 'type' => $type, 'activity' => Activity::find($timesheet->activity_id)->activity_name, 'hour' => number_format($timesheet->register_hour, 2,",","."), 'date' => date('d-m-Y', strtotime($request->get('date'))), 'project' => $_project->project_name, 'id' => $timesheet->id]);
+		return response()->json([
+			'success' => 1,
+			'note' => $timesheet->note,
+			'type' => $type,
+			'activity' => Activity::find($timesheet->activity_id)->activity_name,
+			'hour' => number_format($timesheet->register_hour, 2,",","."),
+			'date' => date('d-m-Y', strtotime($request->get('date'))),
+			'project' => $_project->project_name,
+			'id' => $timesheet->id]
+		);
 	}
 
 	public function getPurchase()
@@ -223,7 +232,16 @@ class ApiController extends Controller {
 		else if ($wholesale_id)
 			$relname = Wholesale::find($wholesale_id)->company_name;
 
-		return response()->json(['success' => 1, 'note' => $purchase->note, 'relation' => $relname, 'type' => ucfirst(PurchaseKind::find($request->get('type'))->kind_name), 'date' => date('d-m-Y', strtotime($request->get('date'))), 'amount' => number_format($purchase->amount, 2,",","."), 'project' => $project->project_name, 'id' => $purchase->id]);
+		return response()->json([
+			'success' => 1,
+			'note' => $purchase->note,
+			'relation' => $relname,
+			'type' => ucfirst(PurchaseKind::find($request->get('type'))->kind_name),
+			'date' => date('d-m-Y', strtotime($request->get('date'))),
+			'amount' => number_format($purchase->amount, 2,",","."),
+			'project' => $project->project_name,
+			'id' => $purchase->id
+		]);
 	}
 
 	public function doCheckUsernameEXist(Request $request)
