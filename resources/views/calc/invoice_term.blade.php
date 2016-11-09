@@ -419,6 +419,7 @@ if (!$project || !$project->isOwner()) {
 					<h4>Bepalingen</h4>
 					<ul>
 						<li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
+						<li>Gaarne bij betaling factuurnummer vermelden.</li>
 					</ul>
 					<br>
 					<p>Met vriendelijke groet,

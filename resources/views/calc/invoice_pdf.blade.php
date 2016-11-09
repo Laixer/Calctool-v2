@@ -552,6 +552,7 @@ $type = ProjectType::find($project->type_id);
 
       <div class="terms">
         <li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
+        <li>Gaarne bij betaling factuurnummer vermelden.</li>
       </div>
 
       <div class="closingtext">{{ ($invoice ? $invoice->closure : '') }}</div>
@@ -928,9 +929,9 @@ $type = ProjectType::find($project->type_id);
                                     <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
                                     </div>
                                       <div id="invoice">
-                                        <div>{{ $invoice->invoice_code }}</div>
+                                        <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
                                         <div>{{ $project->project_name }}</div>
-                                        <div>{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
+                                        <div>{{ date("j M Y") }}</div>
                                     </div>
                                     </header>
                                     <?#--PAGE HEADER SECOND END--?>
@@ -946,6 +947,7 @@ $type = ProjectType::find($project->type_id);
 
         <div class="terms">
           <li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
+          <li>Gaarne bij betaling factuurnummer vermelden.</li>
         </div>
 
         <div class="closingtext">{{ ($invoice ? $invoice->closure : '') }}</div>
@@ -975,11 +977,12 @@ $type = ProjectType::find($project->type_id);
       <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
       </div>
         <div id="invoice">
-          <div>{{ $invoice->invoice_code }}</div>
+          <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
           <div>{{ $project->project_name }}</div>
-          <div>{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
+          <div>{{ date("j M Y") }}</div>
       </div>
       </header>
+
       <?#--PAGE HEADER SECOND END--?>
 
     <?#--PAGE HEADER SECOND START--?>
@@ -1005,7 +1008,7 @@ $type = ProjectType::find($project->type_id);
       @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->whereNull('detail_id')->get() as $activity)
       <tr><?#-- item --?>
-        <td class="qty-small"><strong>{{ $chapter->chapter_name }}</strong></td>
+        <td class="qty-small">{{ $chapter->chapter_name }}</td>
         <td class="qty-small">{{ $activity->activity_name }}</td>
         <td class="qty-small"><span class="pull-right">@if ($display_specification) {{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
         <td class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }} @endif</span></td>
@@ -1067,9 +1070,9 @@ $type = ProjectType::find($project->type_id);
       <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
       </div>
         <div id="invoice">
-          <div>{{ $invoice->invoice_code }}</div>
+          <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
           <div>{{ $project->project_name }}</div>
-          <div>{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
+          <div>{{ date("j M Y") }}</div>
       </div>
       </header>
       <?#--PAGE HEADER SECOND END--?>
@@ -1099,7 +1102,7 @@ $type = ProjectType::find($project->type_id);
           continue;
       ?>
       <tr>
-        <td class="qty-small"><strong>{{ $chapter->chapter_name }}</strong></td>
+        <td class="qty-small">{{ $chapter->chapter_name }}</td>
         <td class="qty-small">{{ $activity->activity_name }}</td>
         <td class="qty-small"><span class="pull-right">@if ($display_specification) {{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
         <td class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(EstimateOverview::laborActivity($activity), 2, ",",".") }} @endif</span></td>
@@ -1165,9 +1168,9 @@ $type = ProjectType::find($project->type_id);
       <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
       </div>
         <div id="invoice">
-          <div>{{ $invoice->invoice_code }}</div>
+          <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
           <div>{{ $project->project_name }}</div>
-          <div>{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
+          <div>{{ date("j M Y") }}</div>
       </div>
       </header>
       <?#--PAGE HEADER SECOND END--?>
@@ -1197,7 +1200,7 @@ $type = ProjectType::find($project->type_id);
           continue;
       ?>
       <tr>
-        <td class="qty-small"><strong>{{ $chapter->chapter_name }}</strong></td>
+        <td class="qty-small">{{ $chapter->chapter_name }}</td>
         <td class="qty-small">{{ $activity->activity_name }}</td>
         <td class="qty-small"><span class="pull-right">@if ($display_specification) {{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
         <td class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::laborActivity($activity, $project), 2, ",",".") }} @endif</span></td>
@@ -1263,9 +1266,9 @@ $type = ProjectType::find($project->type_id);
       <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
       </div>
         <div id="invoice">
-          <div>{{ $invoice->invoice_code }}</div>
+          <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
           <div>{{ $project->project_name }}</div>
-          <div>{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
+          <div>{{ date("j M Y") }}</div>
       </div>
       </header>
       <?#--PAGE HEADER SECOND END--?>
@@ -1291,7 +1294,7 @@ $type = ProjectType::find($project->type_id);
       @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
       <tr>
-        <td class="qty-small"><strong>{{ $chapter->chapter_name }}</strong></td>
+        <td class="qty-small">{{ $chapter->chapter_name }}</td>
         <td class="qty-small">{{ $activity->activity_name }}</td>
         <td class="qty-small"><span class="pull-right">@if ($display_specification) {{ number_format(MoreOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
         <td class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::laborActivity($activity), 2, ",",".") }} @endif</span></td>
@@ -1360,9 +1363,9 @@ $type = ProjectType::find($project->type_id);
       <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
       </div>
         <div id="invoice">
-          <div>{{ $invoice->invoice_code }}</div>
+          <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
           <div>{{ $project->project_name }}</div>
-          <div>{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
+          <div>{{ date("j M Y") }}</div>
       </div>
       </header>
       <?#--PAGE HEADER SECOND END--?>
@@ -1389,7 +1392,7 @@ $type = ProjectType::find($project->type_id);
       @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->whereNull('detail_id')->get() as $activity)
       <tr>
-        <td class="qty-small"><strong>{{ $chapter->chapter_name }}</strong></td>
+        <td class="qty-small">{{ $chapter->chapter_name }}</td>
         <td class="qty-small">{{ $activity->activity_name }}</td>
         <td class="qty-small"><span class="pull-right">@if ($display_specification)  {{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
         <td class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification)  {{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }} @endif</span></td>
@@ -1426,7 +1429,7 @@ $type = ProjectType::find($project->type_id);
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
         @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->whereNull('detail_id')->get() as $activity)
         <tr>
-          <td class="qty-small"><strong>{{ $chapter->chapter_name }}</strong></td>
+          <td class="qty-small">{{ $chapter->chapter_name }}</td>
           <td class="qty-small">{{ $activity->activity_name }}</td>
           <td class="qty-small"><span class="pull-right">@if ($display_specification) {{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
           <td class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }} @endif</span></td>
@@ -1485,9 +1488,9 @@ $type = ProjectType::find($project->type_id);
       <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
       </div>
         <div id="invoice">
-          <div>{{ $invoice->invoice_code }}</div>
+          <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
           <div>{{ $project->project_name }}</div>
-          <div>{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
+          <div>{{ date("j M Y") }}</div>
       </div>
       </header>
       <?#--PAGE HEADER SECOND END--?>
@@ -1518,7 +1521,7 @@ $type = ProjectType::find($project->type_id);
             continue;
         ?>
         <tr>
-          <td class="qty-small"><strong>{{ $chapter->chapter_name }}</strong></td>
+          <td class="qty-small">{{ $chapter->chapter_name }}</td>
           <td class="qty-small">{{ $activity->activity_name }}</td>
           <td class="qty-small"><span class="pull-right">@if ($display_specification)  {{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
           <td class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification)  {{ '&euro; '.number_format(EstimateOverview::laborActivity($activity), 2, ",",".") }} @endif</span></td>
@@ -1560,7 +1563,7 @@ $type = ProjectType::find($project->type_id);
             continue;
         ?>
         <tr>
-          <td class="qty-small"><strong>{{ $chapter->chapter_name }}</strong></td>
+          <td class="qty-small">{{ $chapter->chapter_name }}</td>
           <td class="qty-small">{{ $activity->activity_name }}</td>
           <td class="qty-small"><span class="pull-right">@if ($display_specification) {{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
           <td class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(EstimateOverview::laborActivity($activity), 2, ",",".") }} @endif</span></td>
@@ -1618,9 +1621,9 @@ $type = ProjectType::find($project->type_id);
       <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
       </div>
         <div id="invoice">
-          <div>{{ $invoice->invoice_code }}</div>
+          <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
           <div>{{ $project->project_name }}</div>
-          <div>{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
+          <div>{{ date("j M Y") }}</div>
       </div>
       </header>
       <?#--PAGE HEADER SECOND END--?>
@@ -1652,7 +1655,7 @@ $type = ProjectType::find($project->type_id);
             continue;
         ?>
         <tr>
-          <td class="qty-small"><strong>{{ $chapter->chapter_name }}</strong></td>
+          <td class="qty-small">{{ $chapter->chapter_name }}</td>
           <td class="qty-small">{{ $activity->activity_name }}</td>
           <td class="qty-small"><span class="pull-right">@if ($display_specification) {{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
           <td class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::laborActivity($activity, $project), 2, ",",".") }} @endif</span></td>
@@ -1694,7 +1697,7 @@ $type = ProjectType::find($project->type_id);
             continue;
         ?>
         <tr>
-          <td class="qty-small"><strong>{{ $chapter->chapter_name }}</strong></td>
+          <td class="qty-small">{{ $chapter->chapter_name }}</td>
           <td class="qty-small">{{ $activity->activity_name }}</td>
           <td class="qty-small"><span class="pull-right">@if ($display_specification){{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
           <td class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification){{ '&euro; '.number_format(LessOverview::laborActivity($activity, $project), 2, ",",".") }} @endif</span></td>
@@ -1751,9 +1754,9 @@ $type = ProjectType::find($project->type_id);
       <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
       </div>
         <div id="invoice">
-          <div>{{ $invoice->invoice_code }}</div>
+          <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
           <div>{{ $project->project_name }}</div>
-          <div>{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
+          <div>{{ date("j M Y") }}</div>
       </div>
       </header>
       <?#--PAGE HEADER SECOND END--?>
@@ -1780,7 +1783,7 @@ $type = ProjectType::find($project->type_id);
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
         @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
         <tr>
-          <td class="qty-small"><strong>{{ $chapter->chapter_name }}</strong></td>
+          <td class="qty-small">{{ $chapter->chapter_name }}</td>
           <td class="qty-small">{{ $activity->activity_name }}</td>
           <td class="qty-small"><span class="pull-right">@if ($display_specification) {{ number_format(MoreOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
           <td class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::laborActivity($activity), 2, ",",".") }} @endif</span></td>
@@ -1818,7 +1821,7 @@ $type = ProjectType::find($project->type_id);
         @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
         @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
         <tr>
-          <td class="qty-small"><strong>{{ $chapter->chapter_name }}</strong></td>
+          <td class="qty-small">{{ $chapter->chapter_name }}</td>
           <td class="qty-small">{{ $activity->activity_name }}</td>
           <td class="qty-small"><span class="pull-right">@if ($display_specification) {{ number_format(MoreOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
           <td class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::laborActivity($activity), 2, ",",".") }} @endif</span></td>
@@ -1885,9 +1888,9 @@ $type = ProjectType::find($project->type_id);
       <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
       </div>
         <div id="invoice">
-          <div>{{ $invoice->invoice_code }}</div>
+          <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
           <div>{{ $project->project_name }}</div>
-          <div>{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
+          <div>{{ date("j M Y") }}</div>
       </div>
       </header>
       <?#--PAGE HEADER SECOND END--?>
@@ -1899,8 +1902,8 @@ $type = ProjectType::find($project->type_id);
     <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr style="page-break-after: always;">
-        <th class="qty-small" style="width: 130px">Onderdeel</th>
-        <th class="qty-small" style="width: 170px">Werkzaamheid</th>
+        <th class="qty-small" style="width: 200px">Onderdeel</th>
+        <th class="qty-small" style="width: 220px">Werkzaamheid</th>
         <th class="qty-small">Omschrijving</th>
       </tr>
     </thead>
@@ -1909,8 +1912,8 @@ $type = ProjectType::find($project->type_id);
       <?php $i = true; ?>
       @foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
       <tr>
-        <td class="qty-small" style="width: 130px" valign="top"><br/><strong><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></strong></td>
-        <td class="qty-small" style="width: 170px" valign="top"><br/>{{ $activity->activity_name }}</td>
+        <td class="qty-small" style="width: 200px" valign="top"><br/><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
+        <td class="qty-small" style="width: 220px" valign="top"><br/>{{ $activity->activity_name }}</td>
         <td class="qty-small" valign="top"><br/><span>{!! $activity->note !!}</td>
       </tr>
       @endforeach
@@ -1929,9 +1932,9 @@ $type = ProjectType::find($project->type_id);
       <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
       </div>
         <div id="invoice">
-        <div>{{ $invoice->invoice_code }}</div>
-        <div>{{ $project->project_name }}</div>
-        <div>{{ date("j M Y", strtotime($offer->offer_make)) }}</div>
+          <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
+          <div>{{ $project->project_name }}</div>
+          <div>{{ date("j M Y") }}</div>
       </div>
     </header>
   <?#--PAGE HEADER SECOND END--?>
@@ -1956,7 +1959,7 @@ $type = ProjectType::find($project->type_id);
       <?php $i = true; ?>
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
       <tr>
-        <td style="width: 200px" valign="top"><br/><strong><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></strong></td>
+        <td style="width: 200px" valign="top"><br/><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
         <td style="width: 220px" valign="top"><br/>{{ $activity->activity_name }}</td>
         <td class="qty-small" valign="top"><br/><span>{!! $activity->note !!}</td>
       </tr>
@@ -1978,7 +1981,7 @@ $type = ProjectType::find($project->type_id);
       <?php $i = true; ?>
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
       <tr>
-        <td style="width: 200px" class="qty-small" valign="top"><br/><strong><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></strong></td>
+        <td style="width: 200px" class="qty-small" valign="top"><br/><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
         <td style="width: 220px" class="qty-small" valign="top"><br/>{{ $activity->activity_name }}</td>
         <td class="qty-small" valign="top"><br/><span>{!! $activity->note !!}</td>
       </tr>

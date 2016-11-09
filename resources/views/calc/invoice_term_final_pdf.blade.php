@@ -167,7 +167,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
            <tbody>
         <tr>
           <td style="width: 270px" class="qty">&nbsp;</td>
-          <td style="width: 385px" class="qty"><strong>{{Invoice::where('offer_id','=', $invoice->offer_id)->where('priority','<',$invoice->priority)->count()}}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen</strong> @if(!$project->tax_reverse)<i>(Excl. BTW)</i> @endif</td>
+          <td style="width: 385px" class="qty"><strong>{{ $count+1 }}e van in totaal {{Invoice::where('offer_id','=', $_invoice->offer_id)->count()}} betalingstermijnen</strong> @if(!$project->tax_reverse)<i>(Excl. BTW)</i> @endif</td>
           <td class="qty"><strong>{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</strong></td>
         </tr>
         
@@ -216,6 +216,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
     <hr color="#000" size="1">
     <div class="terms">
       <li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
+      <li>Gaarne bij betaling factuurnummer vermelden.</li>
     </div>
 
     <div class="closingtext">{{ ($invoice ? $invoice->closure : '') }}</div>

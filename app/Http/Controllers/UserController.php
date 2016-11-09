@@ -528,7 +528,7 @@ class UserController extends Controller {
 
 		Audit::CreateEvent('account.demoproject.success', 'Demoproject loaded for user');
 
-		return back()->with('success', 'Demoproject geladen');
+		return back()->with('success', 'Demoproject is geladen in je projectenoverzicht op het dashboard');
 	}
 
 	public function doRevokeApp(Request $request, $client_id) {
