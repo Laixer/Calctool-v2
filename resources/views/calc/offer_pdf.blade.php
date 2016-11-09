@@ -596,7 +596,12 @@ function invoice_condition($offer) {
 		@endif</li>
 		<li>Deze offerte is geldig tot {{ Valid::find($offer->valid_id)->valid_name }} na dagtekening.</li>
 		@if($offer->extracondition)
-		<li>{{ $offer->extracondition }}</li>
+		<?php
+		$conditions = explode("\n", $offer->extracondition);
+		foreach ($conditions as $condition) {
+		?>
+		<li>{{ $condition }}</li>
+		<?php } ?>
 		@endif
 		<li>Indien akkoord, gaarne de offerte ondertekend retour.</li>
 	  </div>
@@ -958,7 +963,12 @@ function invoice_condition($offer) {
 		@endif</li>
 		<li>Deze offerte is geldig tot {{ Valid::find($offer->valid_id)->valid_name }} na dagtekening.</li>
 		@if($offer->extracondition)
-		<li>{{ $offer->extracondition }}</li>
+		<?php
+		$conditions = explode("\n", $offer->extracondition);
+		foreach ($conditions as $condition) {
+		?>
+		<li>{{ $condition }}</li>
+		<?php } ?>
 		@endif
 	  </div>
 	  <div class="from">Met vriendelijke groet,</div>
@@ -1005,7 +1015,12 @@ function invoice_condition($offer) {
 		@endif</li>
 		<li>Deze offerte is geldig tot {{ Valid::find($offer->valid_id)->valid_name }} na dagtekening.</li>
 		@if($offer->extracondition)
-		<li>{{ $offer->extracondition }}</li>
+		<?php
+		$conditions = explode("\n", $offer->extracondition);
+		foreach ($conditions as $condition) {
+		?>
+		<li>{{ $condition }}</li>
+		<?php } ?>
 		@endif
 	  </div>
 
