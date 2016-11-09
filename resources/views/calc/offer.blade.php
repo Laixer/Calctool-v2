@@ -71,6 +71,9 @@ $type = ProjectType::find($project->type_id);
             $(this).find("th").eq(3).hide();
             $(this).find("td").eq(4).hide();
             $(this).find("th").eq(4).hide();
+            $(this).find("td").eq(5).hide();
+            $(this).find("th").eq(5).hide();
+
 
         });
 		$("[name='include-tax']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'}).on('switchChange.bootstrapSwitch', function(event, state) {
@@ -182,8 +185,7 @@ $type = ProjectType::find($project->type_id);
                 $(this).find("th").eq(2).hide();
                 $(this).find("td").eq(3).hide();
                 $(this).find("th").eq(3).hide();
-                $(this).find("td").eq(4).hide();
-                $(this).find("th").eq(4).hide();
+
 	        });
 	        $('.hide-btw2').each(function() {
 	        	$(this).find("tr").eq(2).hide();
@@ -201,8 +203,7 @@ $type = ProjectType::find($project->type_id);
                 $(this).find("th").eq(2).show();
                 $(this).find("td").eq(3).show();
                 $(this).find("th").eq(3).show();
-                $(this).find("td").eq(4).show();
-                $(this).find("th").eq(4).show();
+
 	        });
 	        $('.hide-btw2').each(function() {
 	        	$(this).find("tr").eq(2).show();
@@ -1255,9 +1256,7 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</th>
 							<th class="col-md-1"><span class="pull-right">Materiaal</th>
-							@if ($project->use_equipment)
-							<th class="col-md-1"><span class="pull-right">Overig</th>
-							@endif
+							<th class="col-md-1">@if ($project->use_equipment)<span class="pull-right">Overig</span> @endif</th>
 							<th class="col-md-1"><span class="pull-right">Totaal</th>
 							@if ($project->use_estimate)
 							<th class="col-md-1"><span>&nbsp;&nbsp;&nbsp;Stelpost</th>
@@ -1275,9 +1274,7 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
 							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
 							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
-							@if ($project->use_equipment)
-							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
-							@endif
+							<td class="col-md-1">@if ($project->use_equipment)<span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span> @endif</td>
 							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
 							@if ($project->use_estimate)
 							<td class="col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
@@ -1291,9 +1288,7 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1"><strong><span class="pull-right">{{ number_format(CalculationOverview::contrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
-							@if ($project->use_equipment)
-							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
-							@endif
+							<td class="col-md-1"><strong>@if ($project->use_equipment)<span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrEquipmentTotal($project), 2, ",",".") }}</span> @endif</strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
 							@if ($project->use_estimate)
 							<td class="col-md-1">&nbsp;</td>
@@ -1311,9 +1306,7 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</th>
 							<th class="col-md-1"><span class="pull-right">Materiaal</th>
-							@if ($project->use_equipment)
-							<th class="col-md-1"><span class="pull-right">Overig</th>
-							@endif
+							<th class="col-md-1">@if ($project->use_equipment)<span class="pull-right">Overig</span> @endif</th>
 							<th class="col-md-1"><span class="pull-right">Totaal</th>
 							@if ($project->use_estimate)
 							<th class="col-md-1"><span>&nbsp;&nbsp;&nbsp;Stelpost</th>
@@ -1331,9 +1324,7 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
 							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
 							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
-							@if ($project->use_equipment)
-							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
-							@endif
+							<td class="col-md-1">@if ($project->use_equipment)<span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span> @endif</td>
 							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
 							@if ($project->use_estimate)
 							<td class="col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
@@ -1347,9 +1338,7 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1"><strong><span class="pull-right">{{ number_format(CalculationOverview::subcontrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
-							@if ($project->use_equipment)
-							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
-							@endif
+							<td class="col-md-1"><strong>@if ($project->use_equipment)<span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span> @endif</strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
 							@if ($project->use_estimate)
 							<td class="col-md-1">&nbsp;</td>
@@ -1367,9 +1356,7 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 							<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
-							@if ($project->use_equipment)
-							<th class="col-md-1"><span class="pull-right">Overig</span></th>
-							@endif
+							<th class="col-md-1">@if ($project->use_equipment)<span class="pull-right">Overig</span> @endif</th>
 							<th class="col-md-1"><span class="pull-right">Totaal</span></th>
 							@if ($project->use_estimate)
 							<td class="col-md-1">&nbsp;</td>
@@ -1383,9 +1370,7 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1"><strong><span class="pull-right">{{ number_format(CalculationOverview::laborSuperTotalAmount($project), 2, ",",".") }}</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></strong></td>
-							@if ($project->use_equipment)
-							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></strong></td>
-							@endif
+							<td class="col-md-1"><strong>@if ($project->use_equipment)<span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span> @endif</strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></strong></td>
 							@if ($project->use_estimate)
 							<td class="col-md-1">&nbsp;</td>
@@ -1407,9 +1392,7 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</th>
 							<th class="col-md-1"><span class="pull-right">Materiaal</th>
-							@if ($project->use_equipment)
-							<th class="col-md-1"><span class="pull-right">Overig</th>
-							@endif
+							<th class="col-md-1">@if ($project->use_equipment)<span class="pull-right">Overig</span> @endif</th>
 							<th class="col-md-1"><span class="pull-right">Totaal</th>
 							@if ($project->use_estimate)
 							<th class="col-md-1"><span>&nbsp;&nbsp;&nbsp;Stelpost</th>
@@ -1438,9 +1421,7 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
 							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
 							<td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $mat_profit), 2, ",",".") }}</span></td>
-							@if ($project->use_equipment)
-							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $equip_profit), 2, ",",".") }}</span></td>
-							@endif
+							<td class="col-md-1">@if ($project->use_equipment)<span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $equip_profit), 2, ",",".") }}</span> @endif</td>
 							<td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $mat_profit, $equip_profit), 2, ",",".") }} </td>
 							@if ($project->use_estimate)
 							<td class="col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
@@ -1460,9 +1441,7 @@ $type = ProjectType::find($project->type_id);
 							<th class="col-md-1"><span class="pull-right">Arbeidsuren</span></th>
 							<th class="col-md-1"><span class="pull-right">Arbeid</span></th>
 							<th class="col-md-1"><span class="pull-right">Materiaal</span></th>
-							@if ($project->use_equipment)
-							<th class="col-md-1"><span class="pull-right">Overig</span></th>
-							@endif
+							<th class="col-md-1">@if ($project->use_equipment)<span class="pull-right">Overig</span> @endif</th>
 							<th class="col-md-1"><span class="pull-right">Totaal</span></th>
 							@if ($project->use_estimate)
 							<th class="col-md-1"><span>&nbsp;</th>
@@ -1476,9 +1455,7 @@ $type = ProjectType::find($project->type_id);
 							<td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></strong></td>
-							@if ($project->use_equipment)
-							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></strong></td>
-							@endif
+							<td class="col-md-1"><strong>@if ($project->use_equipment)<span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span> @endif</strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></strong></td>
 							@if ($project->use_estimate)
 							<th class="col-md-1"><span>&nbsp;</th>
