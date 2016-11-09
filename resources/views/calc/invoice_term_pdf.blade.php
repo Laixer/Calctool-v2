@@ -224,6 +224,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
     <hr color="#000" size="1">
     <div class="terms">
       <li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
+      <li>Gaarne bij betaling factuurnummer vermelden.</li>
     </div>
 
     <div class="closingtext">{{ ($invoice ? $invoice->closure : '') }}</div>

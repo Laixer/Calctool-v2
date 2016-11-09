@@ -282,6 +282,8 @@ table .qty {
 /*  margin: 4px;
   padding-left: 13px;*/
   font-family: 'Arial';
+  left: 0px;
+  vertical-align: top;
 }
 /*DZA aagepast naar onderstande */
 table .qty-small {

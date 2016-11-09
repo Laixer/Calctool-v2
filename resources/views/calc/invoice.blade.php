@@ -979,6 +979,7 @@ $type = ProjectType::find($project->type_id);
 					<h4>Bepalingen</h4>
 					<ul>
 						<li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
+						<li>Gaarne bij betaling factuurnummer vermelden.</li>
 					</ul>
 					<br>
 					<p>Met vriendelijke groet,
@@ -1011,7 +1012,6 @@ $type = ProjectType::find($project->type_id);
 								<li><strong>Factuurdatum:</strong> <a href="#" class="invdate">Bewerk</a></li>
 								@if (Auth::user()->pref_use_ct_numbering)
 								<li><strong>Factuurnummer:</strong> {{ $invoice->invoice_code }}</li>
-								<li><strong>Administratiefnummer:</strong> {{ $invoice->book_code }}</li>
 								@else
 								<li><strong>Factuurnummer:</strong> {{ $invoice->book_code }}</li>
 								@endif
@@ -1323,7 +1323,6 @@ $type = ProjectType::find($project->type_id);
 								<li><strong>Factuurdatum:</strong> <a href="#" class="invdate">Bewerk</a></li>
 								@if (Auth::user()->pref_use_ct_numbering)
 								<li><strong>Factuurnummer:</strong> {{ $invoice->invoice_code }}</li>
-								<li><strong>Administratiefnummer:</strong> {{ $invoice->book_code }}</li>
 								@else
 								<li><strong>Factuurnummer:</strong> {{ $invoice->book_code }}</li>
 								@endif
@@ -1567,7 +1566,6 @@ $type = ProjectType::find($project->type_id);
 								<li><strong>Factuurdatum:</strong> <a href="#" class="invdate">Bewerk</a></li>
 								@if (Auth::user()->pref_use_ct_numbering)
 								<li><strong>Factuurnummer:</strong> {{ $invoice->invoice_code }}</li>
-								<li><strong>Administratiefnummer:</strong> {{ $invoice->book_code }}</li>
 								@else
 								<li><strong>Factuurnummer:</strong> {{ $invoice->book_code }}</li>
 								@endif
@@ -1812,13 +1810,13 @@ $type = ProjectType::find($project->type_id);
 					<p>
 						<h4><strong>{{ $project->project_name }}</strong></h4>
 						<ul class="list-unstyled">
-							<li><strong>Factuurdatum:</strong> {{ date("j M Y") }}</li>
+							<li><strong>Factuurdatum:</strong> <a href="#" class="invdate">Bewerk</a></li>
 							@if (Auth::user()->pref_use_ct_numbering)
 							<li><strong>Factuurnummer:</strong> {{ $invoice->invoice_code }}</li>
-							<li><strong>Administratiefnummer:</strong> {{ $invoice->book_code }}</li>
 							@else
 							<li><strong>Factuurnummer:</strong> {{ $invoice->book_code }}</li>
 							@endif
+							<li><strong>Uw referentie:</strong> {{ $invoice->reference }}</li>
 						</ul>
 					</p>
 					</div>
@@ -2048,13 +2046,13 @@ $type = ProjectType::find($project->type_id);
 					<p>
 						<h4><strong>{{ $project->project_name }}</strong></h4>
 						<ul class="list-unstyled">
-							<li><strong>Factuurdatum:</strong> {{ date("j M Y") }}</li>
+							<li><strong>Factuurdatum:</strong> <a href="#" class="invdate">Bewerk</a></li>
 							@if (Auth::user()->pref_use_ct_numbering)
 							<li><strong>Factuurnummer:</strong> {{ $invoice->invoice_code }}</li>
-							<li><strong>Administratiefnummer:</strong> {{ $invoice->book_code }}</li>
 							@else
 							<li><strong>Factuurnummer:</strong> {{ $invoice->book_code }}</li>
 							@endif
+							<li><strong>Uw referentie:</strong> {{ $invoice->reference }}</li>
 						</ul>
 					</p>
 					</div>

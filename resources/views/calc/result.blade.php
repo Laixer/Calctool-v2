@@ -401,7 +401,7 @@ $(document).ready(function() {
 								@endif	
 
 								<tr>
-									<td class="col-md-4"><strong>Totaal Onderaanneming </strong></td>
+									<td class="col-md-4"><strong>Totaal Onderaanneming</strong></td>
 									<td class="col-md-1"><strong>{{ '&euro; '.number_format(SetEstimateCalculationEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-1"><strong>{{ '&euro; '.number_format(LessEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
 									<td class="col-md-1"><strong>{{ '&euro; '.number_format(MoreEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
@@ -494,8 +494,8 @@ $(document).ready(function() {
 
 						<div id="hour_overview" class="tab-pane">
 							<div class="toogle">
-								<div class="toggle active">
-									<label>Calculatie</label>
+								@if(0)<div class="toggle active">@endif
+									<label><h4>Calculatie</h4></label>
 									<div class="toggle-content">
 									<table class="table table-striped">
 										<thead>
@@ -568,10 +568,11 @@ $(document).ready(function() {
 										</tbody>
 									</table>
 									</div>
-								</div>
+								@if(0)</div>@endif
 
-								<div class="toggle active">
-									<label>Stelposten</label>
+								@if ($project->use_estimate)
+								@if(0)<div class="toggle active">@endif
+									<label><h4>Stelposten</h4></label>
 									<div class="toggle-content">
 									<table class="table table-striped">
 										<thead>
@@ -615,9 +616,12 @@ $(document).ready(function() {
 										</tbody>
 									</table>
 									</div>
-								</div>
-								<div class="toggle active">
-									<label>Meerwerk</label>
+								@if(0)</div>@endif
+								@endif
+
+								@if ($project->use_more)
+								@if(0)<div class="toggle active">@endif
+									<label><h4>Meerwerk</h4></label>
 									<div class="toggle-content">
 									<table class="table table-striped">
 										<thead>
@@ -674,7 +678,9 @@ $(document).ready(function() {
 										</tbody>
 									</table>
 									</div>
-								</div>
+								@if(0)</div>@endif
+								@endif
+
 								<span><strong>Het is voor onderaanneming niet mogelijk een urenregistratie bij te houden.</strong></span>
 
 							</div>
@@ -701,6 +707,7 @@ $(document).ready(function() {
 										<td class="col-md-3">{{ '&euro; '.number_format(ResultEndresult::totalContractingPurchase($project), 2, ",",".") }}</td>
 										<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalContractingBudget($project), 2, ",",".") }}</td>
 									</tr>
+									@if ($project->use_subcontract)
 									<tr>
 										<td class="col-md-2"><strong>Onderaanneming</strong></td>
 										<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalSubcontracting($project), 2, ",",".") }}</td>
@@ -708,6 +715,7 @@ $(document).ready(function() {
 										<td class="col-md-3">{{ '&euro; '.number_format(ResultEndresult::totalSubcontractingPurchase($project), 2, ",",".") }}</td>
 										<td class="col-md-2">{{ '&euro; '.number_format(ResultEndresult::totalSubcontractingBudget($project), 2, ",",".") }}</td>
 									</tr>
+									@endif
 								</tbody>
 							</table>
 								<strong>Weergegeven bedragen zijn exclusief BTW</strong>

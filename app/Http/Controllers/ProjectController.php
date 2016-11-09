@@ -307,7 +307,7 @@ class ProjectController extends Controller {
 
 		Audit::CreateEvent('project.copy.success', 'Duplicated project: ' . $project->project_name);
 
-		return redirect('project-'.$project->id.'/edit')->with('success', 'Gekopieerd');
+		return redirect('project-'.$project->id.'/edit')->with('success', 'Project is gekopieerd en toegevoegd aan je projectenoverzicht op het dashboard');
 	}
 
 	public function getAll(Request $request)
