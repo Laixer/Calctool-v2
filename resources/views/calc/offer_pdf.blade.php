@@ -402,7 +402,7 @@ function invoice_condition($offer) {
 			<td class="qty">&nbsp;</td>
 		  </tr> -->
 		  <tr style="page-break-after: always;">
-			<td style="width: 147px" class="qty"><strong>Totaal aanneming</strong></td>
+			<td style="width: 147px" class="qty"><strong>Totaal</strong></td>
 			<td style="width: 60px" class="qty">&nbsp;</td>
 			<td style="width: 119px" class="qty"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
 			<td style="width: 70px" class="qty">&nbsp;</td>
@@ -512,7 +512,7 @@ function invoice_condition($offer) {
 			<td class="qty">&nbsp;</td>
 		  </tr> -->
 		  <tr style="page-break-after: always;">
-			<td style="width: 147px" class="qty"><strong>Totaal onderaanneming</strong></td>
+			<td style="width: 147px" class="qty"><strong>Totaal</strong></td>
 			<td style="width: 60px" class="qty">&nbsp;</td>
 			<td style="width: 119px" class="qty"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
 			<td style="width: 70px" class="qty">&nbsp;</td>
@@ -722,7 +722,7 @@ function invoice_condition($offer) {
 			<td class="qty">&nbsp;</td>
 		  </tr>
 		  <tr style="page-break-after: always;">
-			<td class="qty"><strong>Totaal aanneming</strong></td>
+			<td class="qty"><strong>Totaal</strong></td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
 			<td class="qty">&nbsp;</td>
@@ -1226,7 +1226,7 @@ function invoice_condition($offer) {
 		@endforeach
 		@endforeach
 		<tr style="page-break-after: always;">
-		  <td style="width: 130px" class="qty"><strong>Totaal aanneming</strong></td>
+		  <td style="width: 130px" class="qty"><strong>Totaal</strong></td>
 		  <td style="width: 170px" class="qty">&nbsp;</td>
 		  <td style="width: 40px" class="qty">@if ($display_specification)<strong><span>@if(0) {{ number_format(CalculationOverview::contrLaborTotalAmount($project), 2, ",",".") }} @endif</span></strong>@endif</td>
 		  <td style="width: 51px" class="qty">@if ($display_specification)<strong><span>{{ '&euro; '.number_format(CalculationOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong>@endif</td>
@@ -1287,7 +1287,7 @@ function invoice_condition($offer) {
 		@endforeach
 		@endforeach
 		<tr style="page-break-after: always;">
-		  <td style="width: 130px" class="qty"><strong>Totaal onderaanneming</strong></td>
+		  <td style="width: 130px" class="qty"><strong>Totaal</strong></td>
 		  <td style="width: 170px" class="qty">&nbsp;</td>
 		  <td style="width: 40px" class="qty">@if ($display_specification)<strong><span>@if(0) {{ number_format(CalculationOverview::subcontrLaborTotalAmount($project), 2, ",",".") }} @endif</span></strong>@endif</td>
 		  <td style="width: 51px" class="qty">@if ($display_specification)<strong><span>{{ '&euro; '.number_format(CalculationOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong>@endif</td>

@@ -732,7 +732,7 @@ $type = ProjectType::find($project->type_id);
 						@endif
 
 						<tr>
-							<td class="col-md-4"><strong>Totaal aanneming</strong></td>
+							<td class="col-md-4"><strong>Totaal</strong></td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
 							<td class="col-md-1">&nbsp;</td>
@@ -853,7 +853,7 @@ $type = ProjectType::find($project->type_id);
 						@endif
 
 						<tr>
-							<td class="col-md-4"><strong>Totaal onderaanneming</strong></td>
+							<td class="col-md-4"><strong>Totaal</strong></td>
 							<td class="col-md-1">&nbsp;</td>
 							<td class="col-md-2"><strong>{{ '&euro; '.number_format(CalculationEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
 							<td class="col-md-1">&nbsp;</td>
@@ -1283,7 +1283,7 @@ $type = ProjectType::find($project->type_id);
 						@endforeach
 						@endforeach
 						<tr>
-							<td class="col-md-3"><strong>Totaal aanneming</strong></td>
+							<td class="col-md-3"><strong>Totaal</strong></td>
 							<td class="col-md-3">&nbsp;</td>
 							<td class="col-md-1"><strong><span class="pull-right">@if(0) {{ number_format(CalculationOverview::contrLaborTotalAmount($project), 2, ",",".") }} @endif &nbsp;</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
@@ -1333,7 +1333,7 @@ $type = ProjectType::find($project->type_id);
 						@endforeach
 						@endforeach
 						<tr>
-							<td class="col-md-3"><strong>Totaal onderaanneming</strong></td>
+							<td class="col-md-3"><strong>Totaal</strong></td>
 							<td class="col-md-3">&nbsp;</td>
 							<td class="col-md-1"><strong><span class="pull-right">@if(0) {{ number_format(CalculationOverview::subcontrLaborTotalAmount($project), 2, ",",".") }} @endif &nbsp;</span></strong></td>
 							<td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
