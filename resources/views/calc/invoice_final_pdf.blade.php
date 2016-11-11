@@ -462,7 +462,7 @@ $type = ProjectType::find($project->type_id);
                             <?#--INCLUDE TERM START--?>
 
                                 <?php
-                                $cnt = Invoice::where('offer_id','=', $_invoice->offer_id)->count();
+                                $cnt = Invoice::where('offer_id','=', $invoice->offer_id)->count();
                                 if ($cnt>1) {
                                 ?>
                                   <br>
@@ -470,25 +470,25 @@ $type = ProjectType::find($project->type_id);
                                   <tbody>
                                     <tr>
                                       <td style="width: 270px" class="qty">&nbsp;</td>
-                                      <td style="width: 385px" class="qty">Totaal betaald over {{Invoice::where('offer_id','=', $_invoice->offer_id)->count() -1}} termijn(en) @if(!$project->tax_reverse)<i>(Excl. BTW)</i> @endif</td>
-                                      <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',false)->sum('amount'), 2, ",",".") }}</td>
+                                      <td style="width: 385px" class="qty">Totaal betaald over {{Invoice::where('offer_id','=', $invoice->offer_id)->count() -1}} termijn(en) @if(!$project->tax_reverse)<i>(Excl. BTW)</i> @endif</td>
+                                      <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('amount'), 2, ",",".") }}</td>
                                     </tr>
                                     @if (!$project->tax_reverse)
                                     <tr>
                                       <th style="width: 270px" class="qty">&nbsp;</th>
                                       <td style="width: 385px" class="qty">BTW bedrag 21%</td>
-                                      <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',false)->sum('rest_21')/100)*21, 2, ",",".") }}</td>
+                                      <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21')/100)*21, 2, ",",".") }}</td>
                                     </tr>
                                     <tr>
                                       <th style="width: 270px" class="qty">&nbsp;</th>
                                       <td style="width: 385px" class="qty">BTW bedrag 6%</td>
-                                      <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6, 2, ",",".") }}</td>
+                                      <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6, 2, ",",".") }}</td>
                                     </tr>
                                     @endif
                                     <tr>
                                       <th style="width: 270px" class="qty">&nbsp;</th>
                                       <td style="width: 385px" class="qty">Totaal reeds betaald @if(!$project->tax_reverse) <i>(Incl. BTW)</i> @endif</strong></td>
-                                      <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',false)->sum('amount')+((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',false)->sum('rest_21')/100)*21)+((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6), 2, ",",".") }}</strong></td>
+                                      <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('amount')+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_21')/100)*21)+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',false)->sum('rest_6')/100)*6), 2, ",",".") }}</strong></td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -497,25 +497,25 @@ $type = ProjectType::find($project->type_id);
                                     <tbody>
                                       <tr>
                                         <td style="width: 270px" class="qty">&nbsp;</td>
-                                        <td style="width: 385px"class="qty">Laatste van in totaal {{Invoice::where('offer_id','=', $_invoice->offer_id)->count()}} termijnen @if(!$project->tax_reverse) <i>(Excl. BTW)</i> @endif</td>
-                                        <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',true)->first()->amount, 2, ",",".") }}</td>
+                                        <td style="width: 385px"class="qty">Laatste van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} termijnen @if(!$project->tax_reverse) <i>(Excl. BTW)</i> @endif</td>
+                                        <td class="qty">{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->amount, 2, ",",".") }}</td>
                                       </tr>
                                       @if (!$project->tax_reverse)
                                       <tr>
                                         <td style="width: 270px" class="qty">&nbsp;</td>
                                         <td style="width: 385px"class="qty">BTW bedrag 21%</td>
-                                        <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',true)->first()->rest_21/100)*21, 2, ",",".") }}</td>
+                                        <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21/100)*21, 2, ",",".") }}</td>
                                       </tr>
                                       <tr>
                                         <td style="width: 270px" class="qty">&nbsp;</td>
                                         <td style="width: 385px"class="qty">BTW bedrag 6%</td>
-                                        <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6, 2, ",",".") }}</td>
+                                        <td class="qty">{{ '&euro; '.number_format((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6, 2, ",",".") }}</td>
                                       </tr>
                                       @endif
                                       <tr>
                                         <td style="width: 270px" class="qty">&nbsp;</td>
                                         <td style="width: 385px" class="qty"><strong>Resterend te betalen @if(!$project->tax_reverse)<i>(Incl. BTW)</i> @endif</strong></td>
-                                        <td class="qty"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',true)->first()->amount+((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',true)->first()->rest_21/100)*21)+((Invoice::where('offer_id','=',$_invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6), 2, ",",".") }}</strong></td>
+                                        <td class="qty"><strong>{{ '&euro; '.number_format(Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->amount+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_21/100)*21)+((Invoice::where('offer_id','=',$invoice->offer_id)->where('isclose','=',true)->first()->rest_6/100)*6), 2, ",",".") }}</strong></td>
                                       </tr>
                                     </tbody>
                                   </table>
