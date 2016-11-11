@@ -165,12 +165,16 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
         </tr>
       </thead>
            <tbody>
+           <?php
+            $count = Invoice::where('offer_id', $_invoice->offer_id)->where('priority','<',$_invoice->priority)->count();
+            ?>
         <tr>
           <td style="width: 270px" class="qty">&nbsp;</td>
           <td style="width: 385px" class="qty"><strong>{{ $count+1 }}e van in totaal {{Invoice::where('offer_id','=', $_invoice->offer_id)->count()}} betalingstermijnen</strong> @if(!$project->tax_reverse)<i>(Excl. BTW)</i> @endif</td>
           <td class="qty"><strong>{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</strong></td>
         </tr>
-        
+
+
         @if (!$project->tax_reverse)
         <tr>
           <td style="width: 270px" class="qty">&nbsp;</td>
