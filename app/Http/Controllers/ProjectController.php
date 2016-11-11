@@ -219,7 +219,7 @@ class ProjectController extends Controller {
 
 			$chapter->save();
 
-			foreach (Activity::where('chapter_id', $orig_chapter->id)->get() as $orig_activity) {
+			foreach (Activity::where('chapter_id', $orig_chapter->id)->whereNull('detail_id')->get() as $orig_activity) {
 				$activity = new Activity;
 				$activity->chapter_id = $chapter->id;
 				$activity->activity_name = $orig_activity->activity_name;
