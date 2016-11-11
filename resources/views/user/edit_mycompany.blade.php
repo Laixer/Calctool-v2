@@ -219,9 +219,11 @@ $(document).ready(function() {
 				</div>
 			@endif
 
+			@if(0)
 			<div class="pull-right">
 				<a href="/offer_invoice" class="btn btn-primary">Overzichten</a>
 			</div>
+			@endif
 
 			<h2 style="margin: 10px 0 20px 0;"><strong>Mijn</strong> bedrijf &nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
 

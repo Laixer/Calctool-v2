@@ -186,25 +186,6 @@ $type = ProjectType::find($project->type_id);
   <div class="openingtext">{{ ($invoice ? $invoice->description : '') }}</div>
   <br>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @if ($seperate_subcon)
 
 <?#--TOTAL START--?>
@@ -554,10 +535,11 @@ $type = ProjectType::find($project->type_id);
         <li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
         <li>Gaarne bij betaling factuurnummer vermelden.</li>
       </div>
-
-      <div class="closingtext">{{ ($invoice ? $invoice->closure : '') }}</div>
-
+      <br>
+      <div class="signing">{{ ($invoice ? $invoice->closure : '') }}</div>
+      <br>
       <div class="signing">Met vriendelijke groet,</div>
+      <br>
       <div class="signing">{{ Contact::find($invoice->from_contact_id)->firstname ." ". Contact::find($invoice->from_contact_id)->lastname }}</div>
     </main>
 
@@ -643,6 +625,7 @@ $type = ProjectType::find($project->type_id);
           <td class="qty">&nbsp;</td>
         </tr>
         @endif
+        @if ($project->use_equipment)
         @if (!$project->tax_reverse)
         <tr style="page-break-after: always;">
           <td class="qty">Overige kosten</td>
@@ -672,6 +655,7 @@ $type = ProjectType::find($project->type_id);
           <td class="qty">0%</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @endif
         @endif
     @endif
         <tr style="page-break-after: always;">
@@ -761,6 +745,7 @@ $type = ProjectType::find($project->type_id);
           <td class="qty">&nbsp;</td>
         </tr>
         @endif
+        @if ($project->use_equipment)
         @if (!$project->tax_reverse)
         <tr style="page-break-after: always;">
           <td class="qty">Overige kosten</td>
@@ -790,6 +775,7 @@ $type = ProjectType::find($project->type_id);
           <td class="qty">0%</td>
           <td class="qty">&nbsp;</td>
         </tr>
+        @endif
         @endif
     @endif
         <tr style="page-break-after: always;">
@@ -949,18 +935,13 @@ $type = ProjectType::find($project->type_id);
           <li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
           <li>Gaarne bij betaling factuurnummer vermelden.</li>
         </div>
-
-        <div class="closingtext">{{ ($invoice ? $invoice->closure : '') }}</div>
-
+        <br>
+        <div class="signing">{{ ($invoice ? $invoice->closure : '') }}</div>
+        <br>
         <div class="signing">Met vriendelijke groet,</div>
+        <br>
         <div class="signing">{{ Contact::find($invoice->from_contact_id)->firstname ." ". Contact::find($invoice->from_contact_id)->lastname }}</div>
       </main>
-
-
-
-
-
-
 
 
   <?#--CON & SUBCONTR END--?>
@@ -997,10 +978,10 @@ $type = ProjectType::find($project->type_id);
       <tr style="page-break-after: always;">
         <th style="width: 181px" class="qty-small">Onderdeel</th>
         <th style="width: 170px" class="qty-small">Werkzaamheid</th>
-        <th style="width: 40px" class="qty-small">@if ($display_specification) Arbeidsuren @endif</th>
+        <th style="width: 40px" class="qty-small">@if ($display_specification) @if(0) Arbeidsuren @endif &nbsp; @endif</th>
         <th style="width: 51px" class="qty-small">@if ($display_specification) Arbeid @endif</th>
         <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaal @endif</th>
-        <th style="width: 51px" class="qty-small">@if ($display_specification) Overig @endif</th>
+        <th style="width: 51px" class="qty-small">@if ($display_specification) @if ($project->use_equipment) Overig @endif &nbsp; @endif</th>
         <th style="width: 51px"class="qty-small">Totaal</th>
       </tr>
     </thead>
@@ -1008,26 +989,26 @@ $type = ProjectType::find($project->type_id);
       @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->whereNull('detail_id')->get() as $activity)
       <tr><?#-- item --?>
-        <td class="qty-small">{{ $chapter->chapter_name }}</td>
-        <td class="qty-small">{{ $activity->activity_name }}</td>
-        <td class="qty-small"><span class="pull-right">@if ($display_specification) {{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
-        <td class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }} @endif</span></td>
-        <td class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }} @endif</span></td>
-        <td class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }} @endif</span></td>
-        <td class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
+        <td style="width: 181px" class="qty-small">{{ $chapter->chapter_name }}</td>
+        <td style="width: 170px" class="qty-small">{{ $activity->activity_name }}</td>
+        <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) @if(0) {{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif &nbsp; @endif</td>
+        <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }} @endif</span></td>
+        <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }} @endif</span></td>
+        <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }} @endif &nbsp; @endif</span></td>
+        <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
       </tr>
       @endforeach
       @endforeach
       @foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
       @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->whereNull('detail_id')->get() as $activity)
       <tr>
-        <td class="qty-small"><strong>{{ $chapter->chapter_name }}</strong></td>
-        <td class="qty-small">{{ $activity->activity_name }}</td>
-        <td class="qty-small"><span class="pull-right">@if ($display_specification) {{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
-        <td class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }} @endif</span></td>
-        <td class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }} @endif</span></td>
-        <td class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }} @endif</span></td>
-        <td class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
+        <td style="width: 181px" class="qty-small"><strong>{{ $chapter->chapter_name }}</strong></td>
+        <td style="width: 170px" class="qty-small">{{ $activity->activity_name }}</td>
+        <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
+        <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }} @endif</span></td>
+        <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }} @endif</span></td>
+        <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }} @endif</span></td>
+        <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
         </td>
       </tr>
       @endforeach
@@ -1043,20 +1024,20 @@ $type = ProjectType::find($project->type_id);
       <tr style="page-break-after: always;">
         <th style="width: 181px" class="qty-small">&nbsp;</th>
         <th style="width: 170px" class="qty-small">&nbsp;</th>
-        <th style="width: 40px" class="qty-small">@if ($display_specification) Arbeidsuren @endif</th>
+        <th style="width: 40px" class="qty-small">@if ($display_specification) @if(0) Arbeidsuren @endif &nbsp;  @endif</th>
         <th style="width: 51px" class="qty-small">@if ($display_specification) Arbeid @endif</th>
         <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaal @endif</th>
-        <th style="width: 51px" class="qty-small">@if ($display_specification) Overig @endif</th>
+        <th style="width: 51px" class="qty-small">@if ($display_specification) @if ($project->use_equipment) Overig @endif &nbsp; @endif</th>
         <th style="width: 51px" class="qty-small">Totaal</th>
       </tr>
     </thead>
     <tbody>
       <td style="width: 181px" class="qty-small">&nbsp;</td>
       <td style="width: 170px" class="qty-small">&nbsp;</td>
-      <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ CalculationOverview::laborSuperTotalAmount($project) }} @endif</span></td>
+      <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) @if(0) {{ CalculationOverview::laborSuperTotalAmount($project) }} @endif &nbsp; @endif</span></td>
       <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }} @endif</span></td>
       <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }} @endif</span></td>
-      <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }} @endif</span></td>
+      <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }} @endif &nbsp; @endif</span></td>
       <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
     </tbody>
   </table>
@@ -1087,10 +1068,10 @@ $type = ProjectType::find($project->type_id);
       <tr style="page-break-after: always;">
         <th style="width: 181px" class="qty-small">Onderdeel</th>
         <th style="width: 170px" class="qty-small">Werkzaamheid</th>
-        <th style="width: 40px" class="qty-small">@if ($display_specification) Arbeidsuren @endif</th>
+        <th style="width: 40px" class="qty-small">@if ($display_specification) @if(0) Arbeidsuren @endif &nbsp;  @endif</th>
         <th style="width: 51px" class="qty-small">@if ($display_specification) Arbeid @endif</th>
         <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaal @endif</th>
-        <th style="width: 51px" class="qty-small">@if ($display_specification) Overig @endif</th>
+        <th style="width: 51px" class="qty-small">@if ($display_specification) @if ($project->use_equipment) Overig @endif &nbsp; @endif</th>
         <th style="width: 51px" class="qty-small">Totaal</th>
       </tr>
     </thead>
@@ -1104,10 +1085,10 @@ $type = ProjectType::find($project->type_id);
       <tr>
         <td style="width: 181px" class="qty-small">{{ $chapter->chapter_name }}</td>
         <td style="width: 170px" class="qty-small">{{ $activity->activity_name }}</td>
-        <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
+        <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) @if(0)  {{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }} @endif &nbsp; @endif</td>
         <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(EstimateOverview::laborActivity($activity), 2, ",",".") }} @endif</span></td>
         <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(EstimateOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }} @endif</span></td>
-        <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(EstimateOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }} @endif</span></td>
+        <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(EstimateOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }} @endif &nbsp; @endif</span></td>
         <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
       </tr>
       @endforeach
@@ -1140,20 +1121,20 @@ $type = ProjectType::find($project->type_id);
         <tr style="page-break-after: always;">
           <th style="width: 181px" class="qty-small">&nbsp;</th>
           <th style="width: 170px" class="qty-small">&nbsp;</th>
-          <th style="width: 40px" class="qty-small">@if ($display_specification) Arbeidsuren @endif</th>
+          <th style="width: 40px" class="qty-small">@if ($display_specification) @if(0) Arbeidsuren @endif &nbsp;  @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Arbeid @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaal @endif</th>
-          <th style="width: 51px" class="qty-small">@if ($display_specification) Overig @endif</th>
+          <th style="width: 51px" class="qty-small">@if ($display_specification) @if ($project->use_equipment) Overig @endif &nbsp; @endif</th>
           <th style="width: 51px" class="qty-small">Totaal</th>
         </tr>
       </thead>
       <tbody>
           <td style="width: 181px" class="qty-small">&nbsp;</td>
           <td style="width: 170px" class="qty-small">&nbsp;</td>
-          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ EstimateOverview::laborSuperTotalAmount($project) }} @endif</span></td>
+          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) @if(0) {{ EstimateOverview::laborSuperTotalAmount($project) }} @endif &nbsp; @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(EstimateOverview::laborSuperTotal($project), 2, ",",".") }} @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(EstimateOverview::materialSuperTotal($project), 2, ",",".") }} @endif</span></td>
-          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(EstimateOverview::equipmentSuperTotal($project), 2, ",",".") }} @endif</span></td>
+          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(EstimateOverview::equipmentSuperTotal($project), 2, ",",".") }} @endif &nbsp; @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::superTotal($project), 2, ",",".") }}</span></td>
       </tbody>
     </table>
@@ -1185,10 +1166,10 @@ $type = ProjectType::find($project->type_id);
       <tr style="page-break-after: always;">
         <th style="width: 181px" class="qty-small">Onderdeel</th>
         <th style="width: 170px" class="qty-small">Werkzaamheid</th>
-        <th style="width: 40px" class="qty-small">@if ($display_specification) Arbeidsuren @endif</th>
+        <th style="width: 40px" class="qty-small">@if ($display_specification) @if(0) Arbeidsuren @endif &nbsp;  @endif</th>
         <th style="width: 51px" class="qty-small">@if ($display_specification) Arbeid @endif</th>
         <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaal @endif</th>
-        <th style="width: 51px" class="qty-small">@if ($display_specification) Overig @endif</th>
+        <th style="width: 51px" class="qty-small">@if ($display_specification) @if ($project->use_equipment) Overig @endif &nbsp; @endif</th>
         <th style="width: 51px" class="qty-small">Totaal</th>
       </tr>
     </thead>
@@ -1202,10 +1183,10 @@ $type = ProjectType::find($project->type_id);
       <tr>
         <td style="width: 181px" class="qty-small">{{ $chapter->chapter_name }}</td>
         <td style="width: 170px" class="qty-small">{{ $activity->activity_name }}</td>
-        <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
+        <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) @if(0) {{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }} @endif &nbsp; @endif</td>
         <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::laborActivity($activity, $project), 2, ",",".") }} @endif</span></td>
         <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }} @endif</span></td>
-        <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }} @endif</span></td>
+        <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }} @endif &nbsp; @endif</span></td>
         <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip, $project), 2, ",",".") }} </td>
       </tr>
       @endforeach
@@ -1238,20 +1219,20 @@ $type = ProjectType::find($project->type_id);
         <tr style="page-break-after: always;">
           <th style="width: 181px" class="qty-small">&nbsp;</th>
           <th style="width: 170px" class="qty-small">&nbsp;</th>
-          <th style="width: 40px" class="qty-small">@if ($display_specification) Arbeidsuren @endif</th>
+          <th style="width: 40px" class="qty-small">@if ($display_specification) @if(0) Arbeidsuren @endif &nbsp;  @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Arbeid @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaa @endif</th>
-          <th style="width: 51px" class="qty-small">@if ($display_specification) Overig @endif</th>
+          <th style="width: 51px" class="qty-small">@if ($display_specification) @if ($project->use_equipment) Overig @endif &nbsp; @endif</th>
           <th style="width: 51px" class="qty-small">Totaal</th>
         </tr>
       </thead>
       <tbody>
           <td style="width: 181px" class="qty-small">&nbsp;</td>
           <td style="width: 170px" class="qty-small">&nbsp;</td>
-          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ LessOverview::laborSuperTotalAmount($project) }} @endif</span></td>
+          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) @if(0) {{ LessOverview::laborSuperTotalAmount($project) }} @endif &nbsp; @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::laborSuperTotal($project), 2, ",",".") }} @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::materialSuperTotal($project), 2, ",",".") }} @endif</span></td>
-          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::equipmentSuperTotal($project), 2, ",",".") }} @endif</span></td>
+          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(LessOverview::equipmentSuperTotal($project), 2, ",",".") }} @endif &nbsp; @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::superTotal($project), 2, ",",".") }}</span></td>
       </tbody>
     </table>
@@ -1283,10 +1264,10 @@ $type = ProjectType::find($project->type_id);
       <tr style="page-break-after: always;">
         <th style="width: 181px" class="qty-small">Onderdeel</th>
         <th style="width: 170px" class="qty-small">Werkzaamheid</th>
-        <th style="width: 40px" class="qty-small">@if ($display_specification) Arbeidsuren @endif</th>
+        <th style="width: 40px" class="qty-small">@if ($display_specification) @if(0) Arbeidsuren @endif &nbsp;  @endif</th>
         <th style="width: 51px" class="qty-small">@if ($display_specification) Arbeid @endif</th>
         <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaal @endif</th>
-        <th style="width: 51px" class="qty-small">@if ($display_specification) Overig @endif</th>
+        <th style="width: 51px" class="qty-small">@if ($display_specification) @if ($project->use_equipment) Overig @endif &nbsp; @endif</th>
         <th style="width: 51px" class="qty-small">Totaal</th>
       </tr>
     </thead>
@@ -1296,10 +1277,10 @@ $type = ProjectType::find($project->type_id);
       <tr>
         <td style="width: 181px" class="qty-small">{{ $chapter->chapter_name }}</td>
         <td style="width: 170px" class="qty-small">{{ $activity->activity_name }}</td>
-        <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ number_format(MoreOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
+        <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) @if(0) {{ number_format(MoreOverview::laborTotal($activity), 2, ",",".") }} @endif &nbsp; @endif</td>
         <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::laborActivity($activity), 2, ",",".") }} @endif</span></td>
         <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::materialActivityProfit($activity, $project->profit_more_contr_mat), 2, ",",".") }} @endif</span></td>
-        <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::equipmentActivityProfit($activity, $project->profit_more_contr_equip), 2, ",",".") }} @endif</span></td>
+        <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(MoreOverview::equipmentActivityProfit($activity, $project->profit_more_contr_equip), 2, ",",".") }} @endif &nbsp; @endif</span></td>
         <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::activityTotalProfit($activity, $project->profit_more_contr_mat, $project->profit_more_contr_equip), 2, ",",".") }} </td>
       </tr>
       @endforeach
@@ -1312,7 +1293,7 @@ $type = ProjectType::find($project->type_id);
         <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ number_format(MoreOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
         <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::laborActivity($activity), 2, ",",".") }} @endif</span></td>
         <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::materialActivityProfit($activity, $project->profit_more_subcontr_mat), 2, ",",".") }} @endif</span></td>
-        <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::equipmentActivityProfit($activity, $project->profit_more_subcontr_equip), 2, ",",".") }} @endif</span></td>
+        <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(MoreOverview::equipmentActivityProfit($activity, $project->profit_more_subcontr_equip), 2, ",",".") }} @endif &nbsp;  @endif</span></td>
         <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::activityTotalProfit($activity, $project->profit_more_subcontr_mat, $project->profit_more_subcontr_equip), 2, ",",".") }} </td>
       </tr>
       @endforeach
@@ -1328,20 +1309,20 @@ $type = ProjectType::find($project->type_id);
         <tr style="page-break-after: always;">
           <th style="width: 181px" class="qty-small">&nbsp;</th>
           <th style="width: 170px" class="qty-small">&nbsp;</th>
-          <th style="width: 40px" class="qty-small">@if ($display_specification) Arbeidsuren @endif</th>
+          <th style="width: 40px" class="qty-small">@if ($display_specification) @if(0) Arbeidsuren @endif &nbsp;  @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Arbeid @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaal @endif</th>
-          <th style="width: 51px" class="qty-small">@if ($display_specification) Overig @endif</th>
+          <th style="width: 51px" class="qty-small">@if ($display_specification) @if ($project->use_equipment) Overig @endif &nbsp; @endif</th>
           <th style="width: 51px" class="qty-small">Totaal</th>
         </tr>
       </thead>
       <tbody>
           <td style="width: 181px" class="qty-small">&nbsp;</td>
           <td style="width: 170px" class="qty-small">&nbsp;</td>
-          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ MoreOverview::laborSuperTotalAmount($project) }} @endif</span></td>
+          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) @if(0) {{ MoreOverview::laborSuperTotalAmount($project) }} @endif &nbsp; @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::laborSuperTotal($project), 2, ",",".") }} @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::materialSuperTotal($project), 2, ",",".") }} @endif</span></td>
-          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::equipmentSuperTotal($project), 2, ",",".") }} @endif</span></td>
+          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(MoreOverview::equipmentSuperTotal($project), 2, ",",".") }} @endif &nbsp; @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::superTotal($project), 2, ",",".") }}</span></td>
       </tbody>
     </table>
@@ -1381,10 +1362,10 @@ $type = ProjectType::find($project->type_id);
       <tr style="page-break-after: always;">
           <th style="width: 181px" class="qty-small">Onderdeel</th>
           <th style="width: 170px" class="qty-small">Werkzaamheid</th>
-          <th style="width: 40px" class="qty-small">@if ($display_specification) Arbeidsuren @endif</th>
+          <th style="width: 40px" class="qty-small">@if ($display_specification) @if(0) Arbeidsuren @endif &nbsp;  @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Arbeid @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaal @endif</th>
-          <th style="width: 51px" class="qty-small">@if ($display_specification) Overig @endif</th>
+          <th style="width: 51px" class="qty-small">@if ($display_specification) @if ($project->use_equipment) Overig @endif &nbsp; @endif</th>
           <th style="width: 51px" class="qty-small">Totaal</th>
       </tr>
     </thead>
@@ -1394,21 +1375,21 @@ $type = ProjectType::find($project->type_id);
       <tr>
         <td style="width: 181px" class="qty-small">{{ $chapter->chapter_name }}</td>
         <td style="width: 170px" class="qty-small">{{ $activity->activity_name }}</td>
-        <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification)  {{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
+        <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) @if(0) {{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif &nbsp; @endif</td>
         <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification)  {{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }} @endif</span></td>
         <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification)  {{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }} @endif</span></td>
-        <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }} @endif</span></td>
+        <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }} @endif &nbsp; @endif</span></td>
         <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }}</td>
       </tr>
       @endforeach
       @endforeach
       <tr style="page-break-after: always;">
-        <th style="width: 181px" class="qty-small"><strong>Totaal aanneming</strong></th>
+        <th style="width: 181px" class="qty-small"><strong>Totaal</strong></th>
         <th style="width: 170px" class="qty-small">&nbsp;</th>
-        <td style="width: 40px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ CalculationOverview::contrLaborTotalAmount($project) }} @endif</span></strong></td>
+        <td style="width: 40px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) @if(0) {{ CalculationOverview::contrLaborTotalAmount($project) }} @endif &nbsp; @endif</span></strong></td>
         <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::contrLaborTotal($project), 2, ",",".") }} @endif</span></strong></td>
         <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::contrMaterialTotal($project), 2, ",",".") }} @endif</span></strong></td>
-        <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::contrEquipmentTotal($project), 2, ",",".") }} @endif</span></strong></td>
+        <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(CalculationOverview::contrEquipmentTotal($project), 2, ",",".") }} @endif &nbsp; @endif</span></strong></td>
         <td style="width: 51px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
       </tr>
     </table>
@@ -1418,10 +1399,10 @@ $type = ProjectType::find($project->type_id);
         <tr style="page-break-after: always;">
           <th style="width: 181px" class="qty-small">Onderdeel</th>
           <th style="width: 170px" class="qty-small">Werkzaamheid</th>
-          <th style="width: 40px" class="qty-small">@if ($display_specification) Arbeidsuren @endif</th>
+          <th style="width: 40px" class="qty-small">@if ($display_specification) @if(0) Arbeidsuren @endif &nbsp;  @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Arbeid @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaal @endif</th>
-          <th style="width: 51px" class="qty-small">@if ($display_specification) Overig @endif</th>
+          <th style="width: 51px" class="qty-small">@if ($display_specification) @if ($project->use_equipment) Overig @endif &nbsp; @endif</th>
           <th style="width: 51px" class="qty-small">Totaal</th>
         </tr>
       </thead>
@@ -1431,21 +1412,21 @@ $type = ProjectType::find($project->type_id);
         <tr>
           <td style="width: 181px" class="qty-small">{{ $chapter->chapter_name }}</td>
           <td style="width: 170px" class="qty-small">{{ $activity->activity_name }}</td>
-          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
+          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) @if(0) {{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }} @endif &nbsp; @endif</td>
           <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }} @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }} @endif</span></td>
-          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }} @endif</span></td>
+          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }} @endif &nbsp; @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
         </tr>
         @endforeach
         @endforeach
          <tr style="page-break-after: always;">
-          <th style="width: 181px" class="qty-small"><strong>Totaal onderaanneming</strong></th>
+          <th style="width: 181px" class="qty-small"><strong>Totaal</strong></th>
           <th style="width: 170px" class="qty-small">&nbsp;</th>
-          <td style="width: 40px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ CalculationOverview::subcontrLaborTotalAmount($project) }} @endif</span></strong></td>
+          <td style="width: 40px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) @if(0) {{ CalculationOverview::subcontrLaborTotalAmount($project) }} @endif &nbsp; @endif</span></strong></td>
           <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::subcontrLaborTotal($project), 2, ",",".") }} @endif</span></strong></td>
           <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::subcontrMaterialTotal($project), 2, ",",".") }} @endif</span></strong></td>
-          <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, ",",".") }} @endif</span></strong></td>
+          <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, ",",".") }} @endif &nbsp; @endif</span></strong></td>
           <td style="width: 51px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
         </tr>
       </tbody>
@@ -1459,10 +1440,10 @@ $type = ProjectType::find($project->type_id);
         <tr style="page-break-after: always;">
           <th style="width: 181px" class="qty-small">&nbsp;</th>
           <th style="width: 170px" class="qty-small">&nbsp;</th>
-          <th style="width: 40px" class="qty-small">@if ($display_specification) Arbeidsuren @endif</th>
+          <th style="width: 40px" class="qty-small">@if ($display_specification) @if(0) Arbeidsuren @endif &nbsp;  @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Arbeid @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaal @endif</th>
-          <th style="width: 51px" class="qty-small">@if ($display_specification) Overig @endif</th>
+          <th style="width: 51px" class="qty-small">@if ($display_specification) @if ($project->use_equipment) Overig @endif &nbsp; @endif</th>
           <th style="width: 51px" class="qty-small">Totaal</th>
         </tr>
       </thead>
@@ -1470,10 +1451,10 @@ $type = ProjectType::find($project->type_id);
         <tr style="page-break-after: always;">
           <td style="width: 181px" class="qty-small">&nbsp;</td>
           <td style="width: 170px" class="qty-small">&nbsp;</td>
-          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ CalculationOverview::laborSuperTotalAmount($project) }} @endif</span></td>
+          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) @if(0) {{ CalculationOverview::laborSuperTotalAmount($project) }} @endif &nbsp; @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }} @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }} @endif</span></td>
-          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }} @endif</span></td>
+          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }} @endif &nbsp; @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></td>
         </tr>
     </table>
@@ -1506,10 +1487,10 @@ $type = ProjectType::find($project->type_id);
         <tr style="page-break-after: always;">
           <th style="width: 181px" class="qty-small">Onderdeel</th>
           <th style="width: 170px" class="qty-small">Werkzaamheid</th>
-          <th style="width: 40px" class="qty-small">@if ($display_specification) Arbeidsuren @endif</th>
+          <th style="width: 40px" class="qty-small">@if ($display_specification) @if(0) Arbeidsuren @endif &nbsp;  @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Arbeid @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaal @endif</th>
-          <th style="width: 51px" class="qty-small">@if ($display_specification) Overig @endif</th>
+          <th style="width: 51px" class="qty-small">@if ($display_specification) @if ($project->use_equipment) Overig @endif &nbsp; @endif</th>
           <th style="width: 51px" class="qty-small">Totaal</th>
         </tr>
       </thead>
@@ -1523,21 +1504,21 @@ $type = ProjectType::find($project->type_id);
         <tr>
           <td style="width: 181px" class="qty-small">{{ $chapter->chapter_name }}</td>
           <td style="width: 170px" class="qty-small">{{ $activity->activity_name }}</td>
-          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification)  {{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
+          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification)  @if(0) {{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }} @endif &nbsp; @endif</td>
           <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification)  {{ '&euro; '.number_format(EstimateOverview::laborActivity($activity), 2, ",",".") }} @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification)  {{ '&euro; '.number_format(EstimateOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }} @endif</span></td>
-          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification)  {{ '&euro; '.number_format(EstimateOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }} @endif</span></td>
+          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(EstimateOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }} @endif &nbsp; @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
         </tr>
         @endforeach
         @endforeach
         <tr style="page-break-after: always;">
-          <th style="width: 181px" class="qty-small"><strong>Totaal aanneming</strong></th>
+          <th style="width: 181px" class="qty-small"><strong>Totaal</strong></th>
           <th style="width: 170px" class="qty-small">&nbsp;</th>
-          <td style="width: 40px" class="qty-small"><strong><span class="pull-right">@if ($display_specification)  {{ EstimateOverview::contrLaborTotalAmount($project) }} @endif</span></strong></td>
+          <td style="width: 40px" class="qty-small"><strong><span class="pull-right">@if ($display_specification)  @if(0) {{ EstimateOverview::contrLaborTotalAmount($project) }} @endif &nbsp; @endif</span></strong></td>
           <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification)  {{ '&euro; '.number_format(EstimateOverview::contrLaborTotal($project), 2, ",",".") }} @endif</span></strong></td>
           <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification)  {{ '&euro; '.number_format(EstimateOverview::contrMaterialTotal($project), 2, ",",".") }} @endif</span></strong></td>
-          <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification)  {{ '&euro; '.number_format(EstimateOverview::contrEquipmentTotal($project), 2, ",",".") }} @endif</span></strong></td>
+          <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification)  @if ($project->use_equipment) {{ '&euro; '.number_format(EstimateOverview::contrEquipmentTotal($project), 2, ",",".") }} @endif &nbsp; @endif</span></strong></td>
           <td style="width: 51px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
         </tr>
       </tbody>
@@ -1548,10 +1529,10 @@ $type = ProjectType::find($project->type_id);
         <tr style="page-break-after: always;">
           <th style="width: 181px" class="qty-small">Onderdeel</th>
           <th style="width: 170px" class="qty-small">Werkzaamheid</th>
-          <th style="width: 40px" class="qty-small">@if ($display_specification) Arbeidsuren @endif</th>
+          <th style="width: 40px" class="qty-small">@if ($display_specification) @if(0) Arbeidsuren @endif &nbsp;  @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Arbeid @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaal @endif</th>
-          <th style="width: 51px" class="qty-small">@if ($display_specification) Overig @endif</th>
+          <th style="width: 51px" class="qty-small">@if ($display_specification) @if ($project->use_equipment) Overig @endif &nbsp; @endif</th>
           <th style="width: 51px" class="qty-small">Totaal</th>
         </tr>
       </thead>
@@ -1565,20 +1546,20 @@ $type = ProjectType::find($project->type_id);
         <tr>
           <td style="width: 181px" class="qty-small">{{ $chapter->chapter_name }}</td>
           <td style="width: 170px" class="qty-small">{{ $activity->activity_name }}</td>
-          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
+          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) @if(0) {{ number_format(EstimateOverview::laborTotal($activity), 2, ",",".") }} @endif &nbsp; @endif</td>
           <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(EstimateOverview::laborActivity($activity), 2, ",",".") }} @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(EstimateOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }} @endif</span></td>
-          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(EstimateOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }} @endif</span></td>
+          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(EstimateOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }} @endif &nbsp; @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
         </tr>
         @endforeach
         @endforeach
-          <th style="width: 181px" class="qty-small"><strong>Totaal onderaanneming</strong></th>
+          <th style="width: 181px" class="qty-small"><strong>Totaal</strong></th>
           <th style="width: 170px" class="qty-small">&nbsp;</th>
-          <td style="width: 40px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ EstimateOverview::subcontrLaborTotalAmount($project) }} @endif</span></strong></td>
+          <td style="width: 40px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) @if(0) {{ EstimateOverview::subcontrLaborTotalAmount($project) }} @endif &nbsp; @endif</span></strong></td>
           <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(EstimateOverview::subcontrLaborTotal($project), 2, ",",".") }} @endif</span></strong></td>
           <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(EstimateOverview::subcontrMaterialTotal($project), 2, ",",".") }} @endif</span></strong></td>
-          <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(EstimateOverview::subcontrEquipmentTotal($project), 2, ",",".") }} @endif</span></strong></td>
+          <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) @if ($project->use_equipment)  {{ '&euro; '.number_format(EstimateOverview::subcontrEquipmentTotal($project), 2, ",",".") }} @endif &nbsp; @endif</span></strong></td>
           <td style="width: 51px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
         </tr>
       </tbody>
@@ -1592,10 +1573,10 @@ $type = ProjectType::find($project->type_id);
         <tr style="page-break-after: always;">
           <th style="width: 181px" class="qty-small">&nbsp;</th>
           <th style="width: 170px" class="qty-small">&nbsp;</th>
-          <th style="width: 40px" class="qty-small">@if ($display_specification) Arbeidsuren @endif</th>
+          <th style="width: 40px" class="qty-small">@if ($display_specification) @if(0) Arbeidsuren @endif &nbsp;  @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Arbeid @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaal @endif</th>
-          <th style="width: 51px" class="qty-small">@if ($display_specification) Overig @endif</th>
+          <th style="width: 51px" class="qty-small">@if ($display_specification) @if ($project->use_equipment) Overig @endif &nbsp; @endif</th>
           <th style="width: 51px" class="qty-small">Totaal</th>
         </tr>
       </thead>
@@ -1603,10 +1584,10 @@ $type = ProjectType::find($project->type_id);
         <tr style="page-break-after: always;">
           <td style="width: 181px" class="qty-small">&nbsp;</td>
           <td style="width: 170px" class="qty-small">&nbsp;</td>
-          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ EstimateOverview::laborSuperTotalAmount($project) }} @endif</span></td>
+          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) @if(0) {{ EstimateOverview::laborSuperTotalAmount($project) }} @endif &nbsp; @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(EstimateOverview::laborSuperTotal($project), 2, ",",".") }} @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(EstimateOverview::materialSuperTotal($project), 2, ",",".") }} @endif</span></td>
-          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(EstimateOverview::equipmentSuperTotal($project), 2, ",",".") }} @endif</span></td>
+          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(EstimateOverview::equipmentSuperTotal($project), 2, ",",".") }} @endif &nbsp; @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(EstimateOverview::superTotal($project), 2, ",",".") }}</span></td>
         </tr>
     </table>
@@ -1640,10 +1621,10 @@ $type = ProjectType::find($project->type_id);
         <tr style="page-break-after: always;">
           <th style="width: 181px" class="qty-small">Onderdeel</th>
           <th style="width: 170px" class="qty-small">Werkzaamheid</th>
-          <th style="width: 40px" class="qty-small">@if ($display_specification) Arbeidsuren @endif</th>
+          <th style="width: 40px" class="qty-small">@if ($display_specification) @if(0) Arbeidsuren @endif &nbsp;  @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Arbeid @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaal @endif</th>
-          <th style="width: 51px" class="qty-small">@if ($display_specification) Overig @endif</th>
+          <th style="width: 51px" class="qty-small">@if ($display_specification) @if ($project->use_equipment) Overig @endif &nbsp; @endif</th>
           <th style="width: 51px" class="qty-small">Totaal</th>
         </tr>
       </thead>
@@ -1657,21 +1638,21 @@ $type = ProjectType::find($project->type_id);
         <tr>
           <td style="width: 181px" class="qty-small">{{ $chapter->chapter_name }}</td>
           <td style="width: 170px" class="qty-small">{{ $activity->activity_name }}</td>
-          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
+          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) @if(0) {{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }} @endif &nbsp; @endif</td>
           <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::laborActivity($activity, $project), 2, ",",".") }} @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }} @endif</span></td>
-          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }} @endif</span></td>
+          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }} @endif &nbsp; @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip, $project), 2, ",",".") }} </td>
         </tr>
         @endforeach
         @endforeach
         <tr style="page-break-after: always;">
-          <td style="width: 181px" class="qty-small"><strong>Totaal aanneming</strong></td>
+          <td style="width: 181px" class="qty-small"><strong>Totaal</strong></td>
           <td style="width: 170px" class="qty-small">&nbsp;</td>
-          <td style="width: 40px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ LessOverview::contrLaborTotalAmount($project) }} @endif</span></strong></td>
+          <td style="width: 40px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) @if(0) {{ LessOverview::contrLaborTotalAmount($project) }} @endif &nbsp; @endif</span></strong></td>
           <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::contrLaborTotal($project), 2, ",",".") }} @endif</span></strong></td>
           <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::contrMaterialTotal($project), 2, ",",".") }} @endif</span></strong></td>
-          <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::contrEquipmentTotal($project), 2, ",",".") }} @endif</span></strong></td>
+          <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(LessOverview::contrEquipmentTotal($project), 2, ",",".") }} @endif &nbsp; @endif</span></strong></td>
           <td style="width: 51px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
         </tr>
       </tbody>
@@ -1682,10 +1663,10 @@ $type = ProjectType::find($project->type_id);
         <tr style="page-break-after: always;">
           <th style="width: 181px" class="qty-small">Onderdeel</th>
           <th style="width: 170px" class="qty-small">Werkzaamheid</th>
-          <th style="width: 40px" class="qty-small">@if ($display_specification) Arbeidsuren @endif</th>
+          <th style="width: 40px" class="qty-small">@if ($display_specification) @if(0) Arbeidsuren @endif &nbsp;  @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Arbeid @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaal @endif</th>
-          <th style="width: 51px" class="qty-small">@if ($display_specification) Overig @endif</th>
+          <th style="width: 51px" class="qty-small">@if ($display_specification) @if ($project->use_equipment) Overig @endif &nbsp; @endif</th>
           <th style="width: 51px" class="qty-small">Totaal</th>
         </tr>
       </thead>
@@ -1699,20 +1680,20 @@ $type = ProjectType::find($project->type_id);
         <tr>
           <td style="width: 181px" class="qty-small">{{ $chapter->chapter_name }}</td>
           <td style="width: 170px" class="qty-small">{{ $activity->activity_name }}</td>
-          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification){{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
+          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) @if(0) {{ number_format(LessOverview::laborTotal($activity), 2, ",",".") }} @endif &nbsp; @endif</td>
           <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification){{ '&euro; '.number_format(LessOverview::laborActivity($activity, $project), 2, ",",".") }} @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification){{ '&euro; '.number_format(LessOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }} @endif</span></td>
-          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification){{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }} @endif</span></td>
+          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(LessOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }} @endif &nbsp; @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip, $project), 2, ",",".") }} </td>
         </tr>
         @endforeach
         @endforeach
-          <td style="width: 181px" class="qty-small"><strong>Totaal onderaanneming</strong></td>
+          <td style="width: 181px" class="qty-small"><strong>Totaal</strong></td>
           <td style="width: 170px" class="qty-small">&nbsp;</td>
-          <td style="width: 40px" class="qty-small"><strong><span class="pull-right">@if ($display_specification){{ LessOverview::subcontrLaborTotalAmount($project) }} @endif</span></strong></td>
-          <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification){{ '&euro; '.number_format(LessOverview::subcontrLaborTotal($project), 2, ",",".") }} @endif</span></strong></td>
-          <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification){{ '&euro; '.number_format(LessOverview::subcontrMaterialTotal($project), 2, ",",".") }} @endif</span></strong></td>
-          <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification){{ '&euro; '.number_format(LessOverview::subcontrEquipmentTotal($project), 2, ",",".") }} @endif</span></strong></td>
+          <td style="width: 40px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) @if(0) {{ LessOverview::subcontrLaborTotalAmount($project) }} @endif &nbsp; @endif</span></strong></td>
+          <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::subcontrLaborTotal($project), 2, ",",".") }} @endif</span></strong></td>
+          <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::subcontrMaterialTotal($project), 2, ",",".") }} @endif</span></strong></td>
+          <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) @if ($project->use_equipment){{ '&euro; '.number_format(LessOverview::subcontrEquipmentTotal($project), 2, ",",".") }} @endif &nbsp; @endif</span></strong></td>
           <td style="width: 51px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(LessOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
         </tr>
       </tbody>
@@ -1725,10 +1706,10 @@ $type = ProjectType::find($project->type_id);
         <tr style="page-break-after: always;">
           <th style="width: 181px" class="qty-small">&nbsp;</th>
           <th style="width: 170px" class="qty-small">&nbsp;</th>
-          <th style="width: 40px" class="qty-small">@if ($display_specification)Arbeidsuren @endif</th>
-          <th style="width: 51px" class="qty-small">@if ($display_specification)Arbeid @endif</th>
-          <th style="width: 51px" class="qty-small">@if ($display_specification)Materiaal @endif</th>
-          <th style="width: 51px" class="qty-small">@if ($display_specification)Overig @endif</th>
+          <th style="width: 40px" class="qty-small">@if ($display_specification) @if(0) Arbeidsuren @endif &nbsp;  @endif</th>
+          <th style="width: 51px" class="qty-small">@if ($display_specification) Arbeid @endif</th>
+          <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaal @endif</th>
+          <th style="width: 51px" class="qty-small">@if ($display_specification) @if ($project->use_equipment)Overig @endif &nbsp; @endif</th>
           <th style="width: 51px" class="qty-small">Totaal</th>
         </tr>
       </thead>
@@ -1736,10 +1717,10 @@ $type = ProjectType::find($project->type_id);
         <tr style="page-break-after: always;">
           <td style="width: 181px" class="qty-small">&nbsp;</td>
           <td style="width: 170px" class="qty-small">&nbsp;</td>
-          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ LessOverview::laborSuperTotalAmount($project) }} @endif</span></td>
+          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) @if(0) {{ LessOverview::laborSuperTotalAmount($project) }} @endif &nbsp; @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::laborSuperTotal($project), 2, ",",".") }} @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::materialSuperTotal($project), 2, ",",".") }} @endif</span></td>
-          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(LessOverview::equipmentSuperTotal($project), 2, ",",".") }} @endif</span></td>
+          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(LessOverview::equipmentSuperTotal($project), 2, ",",".") }} @endif &nbsp; @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(LessOverview::superTotal($project), 2, ",",".") }}</span></td>
         </tr>
     </table>
@@ -1772,10 +1753,10 @@ $type = ProjectType::find($project->type_id);
         <tr style="page-break-after: always;">
           <th style="width: 181px" class="qty-small">Onderdeel</th>
           <th style="width: 170px" class="qty-small">Werkzaamheid</th>
-          <th style="width: 40px" class="qty-small">@if ($display_specification) Arbeidsuren @endif</th>
+          <th style="width: 40px" class="qty-small">@if ($display_specification) @if(0) Arbeidsuren @endif &nbsp;  @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Arbeid @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaal @endif</th>
-          <th style="width: 51px" class="qty-small">@if ($display_specification) Overig @endif</th>
+          <th style="width: 51px" class="qty-small">@if ($display_specification) @if ($project->use_equipment) Overig @endif &nbsp; @endif</th>
           <th style="width: 51px" class="qty-small">Totaal</th>
         </tr>
       </thead>
@@ -1785,21 +1766,21 @@ $type = ProjectType::find($project->type_id);
         <tr>
           <td style="width: 181px" class="qty-small">{{ $chapter->chapter_name }}</td>
           <td style="width: 170px" class="qty-small">{{ $activity->activity_name }}</td>
-          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ number_format(MoreOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
+          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) @if(0) {{ number_format(MoreOverview::laborTotal($activity), 2, ",",".") }} @endif &nbsp; @endif</td>
           <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::laborActivity($activity), 2, ",",".") }} @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::materialActivityProfit($activity, $project->profit_more_contr_mat), 2, ",",".") }} @endif</span></td>
-          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::equipmentActivityProfit($activity, $project->profit_more_contr_equip), 2, ",",".") }} @endif</span></td>
+          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(MoreOverview::equipmentActivityProfit($activity, $project->profit_more_contr_equip), 2, ",",".") }} @endif &nbsp; @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::activityTotalProfit($activity, $project->profit_more_contr_mat, $project->profit_more_contr_equip), 2, ",",".") }} </td>
         </tr>
         @endforeach
         @endforeach
         <tr style="page-break-after: always;">
-          <th style="width: 181px" class="qty-small"><strong>Totaal aanneming</strong></th>
+          <th style="width: 181px" class="qty-small"><strong>Totaal</strong></th>
           <th style="width: 170px" class="qty-small">&nbsp;</th>
-          <td style="width: 40px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ MoreOverview::contrLaborTotalAmount($project) }} @endif</span></strong></td>
+          <td style="width: 40px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) @if(0) {{ MoreOverview::contrLaborTotalAmount($project) }} @endif &nbsp; @endif</span></strong></td>
           <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::contrLaborTotal($project), 2, ",",".") }} @endif</span></strong></td>
           <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::contrMaterialTotal($project), 2, ",",".") }} @endif</span></strong></td>
-          <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::contrEquipmentTotal($project), 2, ",",".") }} @endif</span></strong></td>
+          <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(MoreOverview::contrEquipmentTotal($project), 2, ",",".") }} @endif &nbsp; @endif</span></strong></td>
           <td style="width: 51px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
         </tr>
       </tbody>
@@ -1810,10 +1791,10 @@ $type = ProjectType::find($project->type_id);
         <tr style="page-break-after: always;">
           <th style="width: 181px" class="qty-small">Onderdeel</th>
           <th style="width: 170px" class="qty-small">Werkzaamheid</th>
-          <th style="width: 40px" class="qty-small">@if ($display_specification) Arbeidsuren @endif</th>
+          <th style="width: 40px" class="qty-small">@if ($display_specification) @if(0) Arbeidsuren @endif &nbsp;  @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Arbeid @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaal @endif</th>
-          <th style="width: 51px" class="qty-small">@if ($display_specification) Overig @endif</th>
+          <th style="width: 51px" class="qty-small">@if ($display_specification) @if ($project->use_equipment) Overig @endif &nbsp; @endif</th>
           <th style="width: 51px" class="qty-small">Totaal</th>
         </tr>
       </thead>
@@ -1823,20 +1804,20 @@ $type = ProjectType::find($project->type_id);
         <tr>
           <td style="width: 181px" class="qty-small">{{ $chapter->chapter_name }}</td>
           <td style="width: 170px" class="qty-small">{{ $activity->activity_name }}</td>
-          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ number_format(MoreOverview::laborTotal($activity), 2, ",",".") }} @endif</td>
+          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) @if(0) {{ number_format(MoreOverview::laborTotal($activity), 2, ",",".") }} @endif &nbsp; @endif</td>
           <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::laborActivity($activity), 2, ",",".") }} @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right total-ex-tax">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::materialActivityProfit($activity, $project->profit_more_subcontr_mat), 2, ",",".") }} @endif</span></td>
-          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::equipmentActivityProfit($activity, $project->profit_more_subcontr_equip), 2, ",",".") }} @endif</span></td>
+          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(MoreOverview::equipmentActivityProfit($activity, $project->profit_more_subcontr_equip), 2, ",",".") }} @endif &nbsp; @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::activityTotalProfit($activity, $project->profit_more_subcontr_mat, $project->profit_more_subcontr_equip), 2, ",",".") }} </td>
         </tr>
         @endforeach
         @endforeach
-          <td style="width: 181px" class="qty-small"><strong>Totaal onderaanneming</strong></td>
+          <td style="width: 181px" class="qty-small"><strong>Totaal</strong></td>
           <td style="width: 170px" class="qty-small">&nbsp;</td>
-          <td style="width: 40px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ MoreOverview::subcontrLaborTotalAmount($project) }} @endif</span></strong></td>
+          <td style="width: 40px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) @if(0) {{ MoreOverview::subcontrLaborTotalAmount($project) }} @endif &nbsp; @endif</span></strong></td>
           <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::subcontrLaborTotal($project), 2, ",",".") }} @endif</span></strong></td>
           <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::subcontrMaterialTotal($project), 2, ",",".") }} @endif</span></strong></td>
-          <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::subcontrEquipmentTotal($project), 2, ",",".") }} @endif</span></strong></td>
+          <td style="width: 51px" class="qty-small"><strong><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(MoreOverview::subcontrEquipmentTotal($project), 2, ",",".") }} @endif &nbsp; @endif</span></strong></td>
           <td style="width: 51px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
         </tr>
       </tbody>
@@ -1850,10 +1831,10 @@ $type = ProjectType::find($project->type_id);
         <tr style="page-break-after: always;">
           <th style="width: 181px" class="qty-small">&nbsp;</th>
           <th style="width: 170px" class="qty-small">&nbsp;</th>
-          <th style="width: 40px" class="qty-small">@if ($display_specification) Arbeidsuren @endif</th>
+          <th style="width: 40px" class="qty-small">@if ($display_specification) @if(0) Arbeidsuren @endif &nbsp; @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Arbeid @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaal @endif</th>
-          <th style="width: 51px" class="qty-small">@if ($display_specification) Overig @endif</th>
+          <th style="width: 51px" class="qty-small">@if ($display_specification) @if ($project->use_equipment) Overig @endif &nbsp; @endif</th>
           <th style="width: 51px" class="qty-small">Totaal</th>
         </tr>
       </thead>
@@ -1861,10 +1842,10 @@ $type = ProjectType::find($project->type_id);
         <tr style="page-break-after: always;">
           <td style="width: 181px" class="qty-small">&nbsp;</td>
           <td style="width: 170px" class="qty-small">&nbsp;</td>
-          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ MoreOverview::laborSuperTotalAmount($project) }} @endif</span></td>
+          <td style="width: 40px" class="qty-small"><span class="pull-right">@if ($display_specification) @if(0) {{ MoreOverview::laborSuperTotalAmount($project) }} @endif &nbsp; @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::laborSuperTotal($project), 2, ",",".") }} @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::materialSuperTotal($project), 2, ",",".") }} @endif</span></td>
-          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) {{ '&euro; '.number_format(MoreOverview::equipmentSuperTotal($project), 2, ",",".") }} @endif</span></td>
+          <td style="width: 51px" class="qty-small"><span class="pull-right">@if ($display_specification) @if ($project->use_equipment) {{ '&euro; '.number_format(MoreOverview::equipmentSuperTotal($project), 2, ",",".") }} @endif &nbsp; @endif</span></td>
           <td style="width: 51px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::superTotal($project), 2, ",",".") }}</span></td>
         </tr>
     </table>
