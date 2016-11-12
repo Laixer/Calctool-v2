@@ -807,6 +807,27 @@ class AdminController extends Controller {
 		return back()->with('success', 'Reset email verstuurd');
 	}
 
+	public function getPasswordDefault(Request $request, $user_id)
+	{
+		if (!Auth::user()->isSystem()) {
+			return back();
+		}
+
+		if (Auth::id() == $user_id) {
+			return back();
+		}
+
+		$user = User::find($user_id);
+		$user->reset_token = sha1(mt_rand());
+		$user->secret = Hash::make('ABC@123');
+		$user->timestamps = false;
+		$user->save();
+
+		Audit::CreateEvent('admin.auth.reset.password.succces', 'Admin set default password', $user->id);
+
+		return back()->with('success', 'Reset email verstuurd');
+	}
+
 	public function getPurgeUser(Request $request, $user_id)
 	{
 		if (!Auth::user()->isSystem()) {
