@@ -775,7 +775,7 @@ class AdminController extends Controller {
 
 	public function getPasswordResetUser(Request $request, $user_id)
 	{
-		if (!Auth::user()->isSystem()) {
+		if (!Auth::user()->isAdmin()) {
 			return back();
 		}
 
@@ -809,7 +809,7 @@ class AdminController extends Controller {
 
 	public function getPasswordDefault(Request $request, $user_id)
 	{
-		if (!Auth::user()->isSystem()) {
+		if (!Auth::user()->isAdmin()) {
 			return back();
 		}
 
