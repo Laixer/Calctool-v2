@@ -677,7 +677,7 @@ $(document).ready(function() {
 												<div class="col-md-4">
 													<div class="form-group">
 														<label for="offernumber_prefix"><strong>Tekst voor offertenummer</strong></label>
-														<input name="offernumber_prefix" id="offernumber_prefix" type="text" class="form-control" value="{{ $user->offernumber_prefix }}" />
+														<input name="offernumber_prefix" id="offernumber_prefix" maxlength="10" type="text" class="form-control" value="{{ $user->offernumber_prefix }}" />
 													</div>
 												</div>
 											</div>

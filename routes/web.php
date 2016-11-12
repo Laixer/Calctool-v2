@@ -366,6 +366,7 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 	Route::get('user-{user_id}/validation', 'AdminController@getValidationProject');
 	Route::get('user-{user_id}/stabu', 'AdminController@getStabuProject');
 	Route::get('user-{user_id}/passreset', 'AdminController@getPasswordResetUser');
+	Route::get('user-{user_id}/passdefault', 'AdminController@getPasswordDefault');
 	Route::get('user-{user_id}/purge', 'AdminController@getPurgeUser');
 	Route::post('user-{user_id}/edit', 'AdminController@doUpdateUser');
 	Route::post('user-{user_id}/adminlog/new', 'AdminController@doNewAdminLog');

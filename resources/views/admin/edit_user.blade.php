@@ -140,6 +140,7 @@ $(document).ready(function() {
 								@if ($user->active)
 								<li><a href="/admin/message?user={{ $user->id }}">Bericht sturen</a></li>
 								<li><a href="/admin/user-{{ $user->id }}/passreset">Stuur wachtwoord reset link</a></li>
+								<li><a href="/admin/user-{{ $user->id }}/passdefault">Standaard wachtwoord</a></li>
 								@endif
 								@if (Auth::user()->isSystem() && Auth::id() != $user->id)
 								<li><a href="/admin/user-{{ $user->id }}/purge">Definitef verwijderen</a></li>
