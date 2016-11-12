@@ -10,6 +10,7 @@ use \Calctool\Models\ProjectType;
 use \Calctool\Models\InvoiceTerm;
 use \Calctool\Models\InvoiceVersion;
 use \Calctool\Models\Resource;
+use \Calctool\Http\Controllers\InvoiceController;
 
 $displaytax=Input::get("displaytax");
 $common_access_error = false;
