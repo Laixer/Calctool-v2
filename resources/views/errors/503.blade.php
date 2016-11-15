@@ -42,7 +42,7 @@ $(document).ready(function(){
                 <div class="e404">
                 <i class="fa fa-refresh fa-spin"></i></div>
                 <h2>
-                    De applicatie wordt bijgewerkt...
+                    De applicatie wordt bijgewerkt. Dit kan enkele minuten duren.
                     <span class="subtitle">Dit is een automatisch process, u hoeft niets te doen.</span>
                 </h2>
             </div>
