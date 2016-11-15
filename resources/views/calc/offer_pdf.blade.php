@@ -970,7 +970,7 @@ function invoice_condition($offer) {
 		<li>{{ $condition }}</li>
 		<?php } ?>
 		@endif
-	  	<div class="from"><i>Indien akkoord, gaarne de offerte ondertekend retour.</i></div>
+	  	<li>Indien akkoord, gaarne de offerte ondertekend retour.</li>
 	  </div>
 
 	  <div class="from">{{ ($offer ? $offer->closure : '') }}</div>
@@ -1025,7 +1025,7 @@ function invoice_condition($offer) {
 		<li>{{ $condition }}</li>
 		<?php } ?>
 		@endif
-		<div class="from"><i>Indien akkoord, gaarne de offerte ondertekend retour.</i></div>
+		<li>Indien akkoord, gaarne de offerte ondertekend retour.</li>
 	  </div>
 
 	  <div class="from">{{ ($offer ? $offer->closure : '') }}</div>
