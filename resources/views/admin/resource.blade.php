@@ -1,6 +1,7 @@
 <?php
 use \Calctool\Models\Resource;
 use \Calctool\Models\User;
+use \Calctool\Models\Project;
 ?>
 
 @extends('layout.master')

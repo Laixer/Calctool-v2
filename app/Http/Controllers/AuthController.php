@@ -34,8 +34,9 @@ class AuthController extends Controller {
 
 	private function getCacheBlockItem()
 	{
-		if (isset($_SERVER['REMOTE_ADDR']))
-			return 'blockremote' . base64_encode($_SERVER['REMOTE_ADDR']);
+		$remote = \Calctool::remoteAddr();
+		if ($remote)
+			return 'blockremote' . base64_encode($remote);
 
 		return 'blockremotelocal';
 	}
