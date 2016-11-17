@@ -47,7 +47,8 @@ class ClientController extends Controller {
 
 		$message = new MessageBox;
 		$message->subject = 'Opdrachtgever heeft gereageerd';
-		$message->message = 'De opdrachtgever heeft de volgende opmerking geplaatst bij project <a href="/project-' . $project->id . '/edit">' . $project->project_name . '</a>:<br /><br />' . nl2br($request->input('client_note') . '<br />Voor het geven van een reactie gaat u naar uw projectgegevens. Daar is een tabblad <b><i>communicatie opdrachgever</i></b> bijgekomen.');
+		$message->message = 'De opdrachtgever heeft een opmerking geplaatst bij project <a href="/project-' . $project->id . '/edit">' . $project->project_name . '</a>.
+			<br />Voor het geven van een reactie gaat u naar uw projectgegevens. Daar staat een tabblad <b><i>communicatie opdrachgever</i></b>.';
 		$message->from_user = User::where('username', 'admin')->first()['id'];
 		$message->user_id =	$project->user_id;
 
