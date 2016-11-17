@@ -1197,7 +1197,7 @@ $type = ProjectType::find($project->type_id);
 				@if ($offer_last && $offer_last->offer_finish)
 					{{ $offer_last->extracondition }}
 				@else
-					<textarea name="extracondition" id="extracondition" rows="3" class="form-control">{{ ($offer_last ? $offer_last->extracondition : Auth::user()->pref_closure_invoice) }}</textarea>
+					<textarea name="extracondition" id="extracondition" rows="3" class="form-control">{{ ($offer_last ? $offer_last->extracondition : Auth::user()->pref_extracondition_offer) }}</textarea>
 				@endif
 				<br>
 				@if ($offer_last && $offer_last->offer_finish)

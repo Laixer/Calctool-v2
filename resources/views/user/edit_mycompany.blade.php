@@ -572,6 +572,14 @@ $(document).ready(function() {
 													</div>
 												</div>
 											</div>
+											<h5><strong>Aanvullende bepalingen voor op de offerte</strong></h5>
+											<div class="row">
+												<div class="form-group">
+													<div class="col-md-12">
+														<textarea name="pref_extracondition_offer" id="pref_extracondition_offer" rows="5" class="form-control">{{ $user->pref_extracondition_offer }}</textarea>
+													</div>
+												</div>
+											</div>
 											<h5><strong>Sluitingstekst voor op de offerte</strong></h5>
 											<div class="row">
 												<div class="form-group">
