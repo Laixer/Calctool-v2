@@ -601,7 +601,6 @@ $(document).ready(function() {
 										</div>
 									</div>
 								</div>
-								@if (0)
 								<div class="panel panel-default">
 									<div class="panel-heading">
 										<h4 class="panel-title">
@@ -632,6 +631,7 @@ $(document).ready(function() {
 													</div>
 												</div>
 											</div>
+											@if (0)
 											<h5><strong>1e betalingsherinnering van de factuur (direct na verstrijken van de ingestelde betalingsconditie van de factuur)</strong></h5>
 											<div class="row">
 												<div class="form-group">
@@ -656,11 +656,11 @@ $(document).ready(function() {
 													</div>
 												</div>
 											</div>
+											@endif
 
 										</div>
 									</div>
 								</div>
-								@endif
 								<div class="panel panel-default">
 									<div class="panel-heading">
 										<h4 class="panel-title">
