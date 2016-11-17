@@ -128,9 +128,11 @@ class MoreController extends Controller {
 			return back()->withInput($request->all());
 		}
 
+		$last_chaper = Chapter::where('project_id', $project->id)->orderBy('priority','desc')->first();
+
 		$chapter = new Chapter;
 		$chapter->chapter_name = $request->get('chapter');
-		$chapter->priority = 0;
+		$chapter->priority = $last_chaper->priority + 1;
 		$chapter->project_id = $project->id;
 		$chapter->more = true;
 

@@ -139,6 +139,8 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('calculation/noteactivity', 'CalcController@doUpdateNote');
 	Route::post('calculation/deleteactivity', 'CalcController@doDeleteActivity');
 	Route::post('calculation/deletechapter', 'CalcController@doDeleteChapter');
+	Route::post('calculation/moveactivity', 'CalcController@doMoveActivity');
+	Route::post('calculation/movechapter', 'CalcController@doMoveChapter');
 	Route::post('calculation/activity/usetimesheet', 'CalcController@doUpdateUseTimesheet');
 
 	Route::post('invoice/updatecondition', 'InvoiceController@doUpdateCondition');
