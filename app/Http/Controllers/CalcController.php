@@ -69,13 +69,15 @@ class CalcController extends Controller {
 			return back();
 		}
 
-		$part = Part::where('part_name','=','contracting')->first();
-		$part_type = PartType::where('type_name','=','calculation')->first();
+		$part = Part::where('part_name','contracting')->first();
+		$part_type = PartType::where('type_name','calculation')->first();
 		$project = Project::find($chapter->project_id);
+
+		$last_activity = Activity::where('chapter_id', $chapter->id)->where('part_type_id',$part_type->id)->orderBy('priority','desc')->first();
 
 		$activity = new Activity;
 		$activity->activity_name = $favact->activity_name;
-		$activity->priority = 0;
+		$activity->priority = $last_activity ? $last_activity->priority + 1 : 0;
 		$activity->note = $favact->note;
 		$activity->chapter_id = $chapter->id;
 		$activity->part_id = $part->id;
@@ -141,9 +143,11 @@ class CalcController extends Controller {
 		$part_type = PartType::where('type_name','=','estimate')->first();
 		$project = Project::find($chapter->project_id);
 
+		$last_activity = Activity::where('chapter_id', $chapter->id)->where('part_type_id',$part_type->id)->orderBy('priority','desc')->first();
+
 		$activity = new Activity;
 		$activity->activity_name = $favact->activity_name;
-		$activity->priority = 0;
+		$activity->priority = $last_activity ? $last_activity->priority : 0;
 		$activity->note = $favact->note;
 		$activity->chapter_id = $chapter->id;
 		$activity->part_id = $part->id;
@@ -348,9 +352,11 @@ class CalcController extends Controller {
 			return back()->withInput($request->all());
 		}
 
+		$last_chaper = Chapter::where('project_id', $project->id)->orderBy('priority','desc')->first();
+
 		$chapter = new Chapter;
 		$chapter->chapter_name = $request->get('chapter');
-		$chapter->priority = 0;
+		$chapter->priority = $last_chaper ? $last_chaper->priority + 1 : 0;
 		$chapter->project_id = $project->id;
 
 		$chapter->save();
@@ -369,8 +375,8 @@ class CalcController extends Controller {
 			return back()->withInput($request->all());
 		}
 
-		$part = Part::where('part_name','=','contracting')->first();
-		$part_type = PartType::where('type_name','=','calculation')->first();
+		$part = Part::where('part_name','contracting')->first();
+		$part_type = PartType::where('type_name','calculation')->first();
 		$project = Project::find($chapter->project_id);
 
 		if ($project->tax_reverse)
@@ -378,9 +384,11 @@ class CalcController extends Controller {
 		else
 			$tax = Tax::where('tax_rate','=',21)->first();
 
+		$last_activity = Activity::where('chapter_id', $chapter->id)->where('part_type_id',$part_type->id)->orderBy('priority','desc')->first();
+
 		$activity = new Activity;
 		$activity->activity_name = $request->get('activity');
-		$activity->priority = 0;
+		$activity->priority = $last_activity ? $last_activity->priority + 1 : 0;
 		$activity->chapter_id = $chapter->id;
 		$activity->part_id = $part->id;
 		$activity->part_type_id = $part_type->id;
@@ -445,17 +453,19 @@ class CalcController extends Controller {
 			return back()->withInput($request->all());
 		}
 
-		$part = Part::where('part_name','=','contracting')->first();
-		$part_type = PartType::where('type_name','=','estimate')->first();
+		$part = Part::where('part_name','contracting')->first();
+		$part_type = PartType::where('type_name','estimate')->first();
 		$project = Project::find($chapter->project_id);
 		if ($project->tax_reverse)
 			$tax = Tax::where('tax_rate','=',0)->first();
 		else
 			$tax = Tax::where('tax_rate','=',21)->first();
 
+		$last_activity = Activity::where('chapter_id', $chapter->id)->where('part_type_id',$part_type->id)->orderBy('priority','desc')->first();
+
 		$activity = new Activity;
 		$activity->activity_name = $request->get('activity');
-		$activity->priority = 0;
+		$activity->priority = $last_activity ? $last_activity->priority + 1 : 0;
 		$activity->chapter_id = $chapter->id;
 		$activity->part_id = $part->id;
 		$activity->part_type_id = $part_type->id;
@@ -610,6 +620,46 @@ class CalcController extends Controller {
 		return response()->json(['success' => 1]);
 	}
 
+	public function doMoveActivity(Request $request)
+	{
+		$this->validate($request, [
+			'activity' => array('required','integer','min:0'),
+			'direction' => array('required')
+		]);
+
+		$activity = Activity::find($request->input('activity'));
+		if (!$activity)
+			return response()->json(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return response()->json(['success' => 0]);
+		}
+
+		if ($request->input('direction') == 'up') {
+			$switch_activity = Activity::where('chapter_id', $chapter->id)->where('priority','<',$activity->priority)->orderBy('priority','desc')->first();
+			if ($switch_activity) {
+				$old_priority = $activity->priority;
+				$activity->priority = $switch_activity->priority;
+				$switch_activity->priority = $old_priority;
+
+				$switch_activity->save();
+			}
+		} else if ($request->input('direction') == 'down') {
+			$switch_activity = Activity::where('chapter_id', $chapter->id)->where('priority','>',$activity->priority)->orderBy('priority')->first();
+			if ($switch_activity) {
+				$old_priority = $activity->priority;
+				$activity->priority = $switch_activity->priority;
+				$switch_activity->priority = $old_priority;
+
+				$switch_activity->save();
+			}
+		}
+
+		$activity->save();
+
+		return response()->json(['success' => 1]);
+	}
+
 	public function doDeleteChapter(Request $request)
 	{
 		$this->validate($request, [
@@ -622,6 +672,43 @@ class CalcController extends Controller {
 		}
 
 		$chapter->delete();
+
+		return response()->json(['success' => 1]);
+	}
+
+	public function doMoveChapter(Request $request)
+	{
+		$this->validate($request, [
+			'chapter' => array('required','integer','min:0'),
+			'direction' => array('required')
+		]);
+
+		$chapter = Chapter::find($request->input('chapter'));
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return response()->json(['success' => 0]);
+		}
+
+		if ($request->input('direction') == 'up') {
+			$switch_chapter = Chapter::where('project_id', $chapter->project_id)->where('priority','<',$chapter->priority)->orderBy('priority','desc')->first();
+			if ($switch_chapter) {
+				$old_priority = $chapter->priority;
+				$chapter->priority = $switch_chapter->priority;
+				$switch_chapter->priority = $old_priority;
+
+				$switch_chapter->save();
+			}
+		} else if ($request->input('direction') == 'down') {
+			$switch_chapter = Chapter::where('project_id', $chapter->project_id)->where('priority','>',$chapter->priority)->orderBy('priority')->first();
+			if ($switch_chapter) {
+				$old_priority = $chapter->priority;
+				$chapter->priority = $switch_chapter->priority;
+				$switch_chapter->priority = $old_priority;
+
+				$switch_chapter->save();
+			}
+		}
+
+		$chapter->save();
 
 		return response()->json(['success' => 1]);
 	}
