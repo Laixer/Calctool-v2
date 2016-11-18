@@ -899,6 +899,42 @@ if (!$project || !$project->isOwner())
 			}
 		});
 
+		$("body").on("click", ".moveupchap", function(e){
+			e.preventDefault();
+			var $curThis = $(this);
+			if($curThis.attr("data-id"))
+				$.post("/calculation/movechapter", {project: {{ $project->id }}, chapter: $curThis.attr("data-id"), direction: 'up'}, function(){
+					location.reload();
+				}).fail(function(e) { console.log(e); });
+		});
+
+		$("body").on("click", ".movedownchap", function(e){
+			e.preventDefault();
+			var $curThis = $(this);
+			if($curThis.attr("data-id"))
+				$.post("/calculation/movechapter", {project: {{ $project->id }}, chapter: $curThis.attr("data-id"), direction: 'down'}, function(){
+					location.reload();
+				}).fail(function(e) { console.log(e); });
+		});
+
+		$("body").on("click", ".moveupactivity", function(e){
+			e.preventDefault();
+			var $curThis = $(this);
+			if($curThis.attr("data-id"))
+				$.post("/calculation/moveactivity", {project: {{ $project->id }}, activity: $curThis.attr("data-id"), direction: 'up'}, function(){
+					location.reload();
+				}).fail(function(e) { console.log(e); });
+		});
+
+		$("body").on("click", ".movedownactivity", function(e){
+			e.preventDefault();
+			var $curThis = $(this);
+			if($curThis.attr("data-id"))
+				$.post("/calculation/moveactivity", {project: {{ $project->id }}, activity: $curThis.attr("data-id"), direction: 'down'}, function(){
+					location.reload();
+				}).fail(function(e) { console.log(e); });
+		});
+
 		$("body").on("click", ".esavefav", function(e){
 			e.preventDefault();
 			var $curThis = $(this);
@@ -1326,7 +1362,7 @@ if (!$project || !$project->isOwner())
 				<div class="tab-content">
 					<div id="calculate" class="tab-pane">
 						<div class="toogle">
-							@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
+							@foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
 							<div data-step="2" data-intro="Open het onderdeel door op de regel te klikken." id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
 								<label>{{ $chapter->chapter_name }}</label>
 								<div data-step="3" data-intro="Maak een werkzaamheid aan, open deze door op de regel te klikken en druk daarna op volgende." class="toggle-content">
@@ -1334,7 +1370,7 @@ if (!$project || !$project->isOwner())
 									<div class="toogle">
 										<?php
 										$activity_total = 0;
-										foreach(ProjectActivity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->orderBy('created_at')->get() as $activity) {
+										foreach(ProjectActivity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->orderBy('priority')->get() as $activity) {
 											if (Part::find($activity->part_id)->part_name=='contracting') {
 												$profit_mat = $project->profit_calc_contr_mat;
 												$profit_equip = $project->profit_calc_contr_equip;
@@ -1366,6 +1402,8 @@ if (!$project || !$project->isOwner())
 														  <ul class="dropdown-menu">
 														    <li><a href="#" data-id="{{ $activity->id }}" class="lsavefav">Opslaan als favoriet</a></li>
 														    <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename">Naam wijzigen</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" class="moveupactivity">Verplaats omhoog</a></li>
+											    			<li><a href="#" data-id="{{ $activity->id }}" class="movedownactivity">Verplaats omlaag</a></li>
 														    <li><a href="#" data-id="{{ $activity->id }}" class="deleteact">Verwijderen</a></li>
 														  </ul>
 														</div>
@@ -1604,6 +1642,8 @@ if (!$project || !$project->isOwner())
 											  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Onderdeel&nbsp;&nbsp;<span class="caret"></span></button>
 											  <ul class="dropdown-menu">
 											    <li><a href="#" data-id="{{ $chapter->id }}" data-name="{{ $chapter->chapter_name }}" data-toggle="modal" data-target="#nameChangeChapModal" class="changenamechap">Naam wijzigen</a></li>
+											    <li><a href="#" data-id="{{ $chapter->id }}" class="moveupchap">Verplaats omhoog</a></li>
+											    <li><a href="#" data-id="{{ $chapter->id }}" class="movedownchap">Verplaats omlaag</a></li>
 											    <li><a href="#" data-id="{{ $chapter->id }}" class="deletechap">Verwijderen</a></li>
 											  </ul>
 											</div>
@@ -1636,7 +1676,7 @@ if (!$project || !$project->isOwner())
 					<div id="estimate" class="tab-pane">
 						<div class="toogle">
 
-							@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
+							@foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
 							<div id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
 								<label>{{ $chapter->chapter_name }}</label>
 								<div class="toggle-content">
@@ -1644,7 +1684,7 @@ if (!$project || !$project->isOwner())
 									<div class="toogle">
 										<?php
 										$activity_total = 0;
-										foreach(ProjectActivity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->orderBy('created_at')->get() as $activity) {
+										foreach(ProjectActivity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->orderBy('priority')->get() as $activity) {
 											$profit_mat = 0;
 											if (Part::find($activity->part_id)->part_name=='contracting') {
 												$profit_mat = $project->profit_calc_contr_mat;
@@ -1676,6 +1716,8 @@ if (!$project || !$project->isOwner())
 														  <ul class="dropdown-menu">
 														    <li><a href="#" data-id="{{ $activity->id }}" class="esavefav">Opslaan als favoriet</a></li>
 														    <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename">Naam wijzigen</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" class="moveupactivity">Verplaats omhoog</a></li>
+											    			<li><a href="#" data-id="{{ $activity->id }}" class="movedownactivity">Verplaats omlaag</a></li>
 														    <li><a href="#" data-id="{{ $activity->id }}" class="deleteact">Verwijderen</a></li>
 														  </ul>
 														</div>
@@ -1918,6 +1960,8 @@ if (!$project || !$project->isOwner())
 												  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Onderdeel&nbsp;&nbsp;<span class="caret"></span></button>
 												  <ul class="dropdown-menu">
 												    <li><a href="#" data-id="{{ $chapter->id }}" data-name="{{ $chapter->chapter_name }}" data-toggle="modal" data-target="#nameChangeChapModal" class="changenamechap">Naam wijzigen</a></li>
+												    <li><a href="#" data-id="{{ $chapter->id }}" class="moveupchap">Verplaats omhoog</a></li>
+											    	<li><a href="#" data-id="{{ $chapter->id }}" class="movedownchap">Verplaats omlaag</a></li>
 												    <li><a href="#" data-id="{{ $chapter->id }}" class="deletechap">Verwijderen</a></li>
 												  </ul>
 												</div>

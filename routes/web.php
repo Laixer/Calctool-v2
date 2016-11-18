@@ -139,6 +139,8 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('calculation/noteactivity', 'CalcController@doUpdateNote');
 	Route::post('calculation/deleteactivity', 'CalcController@doDeleteActivity');
 	Route::post('calculation/deletechapter', 'CalcController@doDeleteChapter');
+	Route::post('calculation/moveactivity', 'CalcController@doMoveActivity');
+	Route::post('calculation/movechapter', 'CalcController@doMoveChapter');
 	Route::post('calculation/activity/usetimesheet', 'CalcController@doUpdateUseTimesheet');
 
 	Route::post('invoice/updatecondition', 'InvoiceController@doUpdateCondition');
@@ -266,6 +268,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('more/newactivity/{chapter_id}', 'MoreController@doNewActivity')->where('chapter_id', '[0-9]+');
 	Route::post('more/newchapter/{project_id}', 'MoreController@doNewChapter')->where('project_id', '[0-9]+');
 	Route::post('more/deletechapter', 'MoreController@doDeleteChapter');
+	Route::post('more/moveactivity', 'MoreController@doMoveActivity');
 
 	/* Relation pages */
 	Route::get('relation/new', 'RelationController@getNew')->middleware('payzone');

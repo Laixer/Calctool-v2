@@ -31,9 +31,9 @@ use \Calctool\Calculus\EstimateOverview;
 
 
 				<tbody>
-					@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
+					@foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
 					<?php $i = 0; ?>
-					@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->orderBy('created_at')->get() as $activity)
+					@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->orderBy('priority')->get() as $activity)
 					<?php $i++; ?>
 					<tr>
 						<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
@@ -85,9 +85,9 @@ use \Calctool\Calculus\EstimateOverview;
 
 
 				<tbody>
-					@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
+					@foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
 					<?php $i = 0; ?>
-					@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->orderBy('created_at')->get() as $activity)
+					@foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->orderBy('priority')->get() as $activity)
 					<?php $i++; ?>
 					<tr>
 						<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>

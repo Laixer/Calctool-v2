@@ -1197,7 +1197,7 @@ $type = ProjectType::find($project->type_id);
 				@if ($offer_last && $offer_last->offer_finish)
 					{{ $offer_last->extracondition }}
 				@else
-					<textarea name="extracondition" id="extracondition" rows="3" class="form-control">{{ ($offer_last ? $offer_last->extracondition : Auth::user()->pref_closure_invoice) }}</textarea>
+					<textarea name="extracondition" id="extracondition" rows="3" class="form-control">{{ ($offer_last ? $offer_last->extracondition : Auth::user()->pref_extracondition_offer) }}</textarea>
 				@endif
 				<br>
 				@if ($offer_last && $offer_last->offer_finish)
@@ -1264,9 +1264,9 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 					</thead>
 					<tbody>
-						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
+						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
 						<?php $i = 0; ?>
-						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('created_at')->get() as $activity)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('priority')->get() as $activity)
 						<?php $i++; ?>
 						<tr>
 							<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
@@ -1314,9 +1314,9 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 					</thead>
 					<tbody>
-						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
+						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
 						<?php $i = 0; ?>
-						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('created_at')->get() as $activity)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('priority')->get() as $activity)
 						<?php $i++; ?>
 						<tr>
 							<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
@@ -1400,9 +1400,9 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 					</thead>
 					<tbody>
-						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
+						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
 						<?php $i = 0; ?>
-						@foreach (Activity::where('chapter_id','=', $chapter->id)->orderBy('created_at')->get() as $activity)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->orderBy('priority')->get() as $activity)
 						<?php
 							$i++;
 							$mat_profit = 0;
@@ -1500,9 +1500,9 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 					</thead>
 					<tbody>
-						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
+						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
 						<?php $i = 0; ?>
-						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('created_at')->get() as $activity)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('priority')->get() as $activity)
 						<?php $i++ ?>
 						<tr>
 							<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
@@ -1524,9 +1524,9 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 					</thead>
 					<tbody>
-						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
+						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
 						<?php $i = 0; ?>
-						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('created_at')->get() as $activity)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('priority')->get() as $activity)
 						<?php $i++; ?>
 						<tr>
 							<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
@@ -1552,9 +1552,9 @@ $type = ProjectType::find($project->type_id);
 						</tr>
 					</thead>
 					<tbody>
-						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
+						@foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
 						<?php $i = 0; ?>
-						@foreach (Activity::where('chapter_id','=', $chapter->id)->orderBy('created_at')->get() as $activity)
+						@foreach (Activity::where('chapter_id','=', $chapter->id)->orderBy('priority')->get() as $activity)
 						<?php $i++; ?>
 						<tr>
 							<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>

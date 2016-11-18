@@ -54,9 +54,11 @@ class MoreController extends Controller {
 		$detail = Detail::where('detail_name','=','more')->first();
 		$project = Project::find($chapter->project_id);
 
+		$last_activity = Activity::where('chapter_id', $chapter->id)->where('part_type_id',$part_type->id)->where('detail_id',$detail->id)->orderBy('priority','desc')->first();
+
 		$activity = new Activity;
 		$activity->activity_name = $favact->activity_name;
-		$activity->priority = 0;
+		$activity->priority = $last_activity ? $last_activity->priority + 1 : 0;
 		$activity->note = $favact->note;
 		$activity->chapter_id = $chapter->id;
 		$activity->part_id = $part->id;
@@ -128,9 +130,11 @@ class MoreController extends Controller {
 			return back()->withInput($request->all());
 		}
 
+		$last_chaper = Chapter::where('project_id', $project->id)->orderBy('priority','desc')->first();
+
 		$chapter = new Chapter;
 		$chapter->chapter_name = $request->get('chapter');
-		$chapter->priority = 0;
+		$chapter->priority = $last_chaper->priority + 1;
 		$chapter->project_id = $project->id;
 		$chapter->more = true;
 
@@ -160,9 +164,11 @@ class MoreController extends Controller {
 		else
 			$tax = Tax::where('tax_rate','=',21)->first();
 
+		$last_activity = Activity::where('chapter_id', $chapter->id)->where('part_type_id',$part_type->id)->where('detail_id',$detail->id)->orderBy('priority','desc')->first();
+
 		$activity = new Activity;
 		$activity->activity_name = $request->get('activity');
-		$activity->priority = 0;
+		$activity->priority = $last_activity ? $last_activity->priority + 1 : 0;
 		$activity->chapter_id = $chapter->id;
 		$activity->part_id = $part->id;
 		$activity->part_type_id = $part_type->id;
@@ -176,6 +182,46 @@ class MoreController extends Controller {
 		$this->updateMoreStatus($request->get('project'));
 
 		return back()->with('success', 'Nieuwe werkzaamheid aangemaakt');
+	}
+
+	public function doMoveActivity(Request $request)
+	{
+		$this->validate($request, [
+			'activity' => array('required','integer','min:0'),
+			'direction' => array('required')
+		]);
+
+		$activity = Activity::find($request->input('activity'));
+		if (!$activity)
+			return response()->json(['success' => 0]);
+		$chapter = Chapter::find($activity->chapter_id);
+		if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+			return response()->json(['success' => 0]);
+		}
+
+		if ($request->input('direction') == 'up') {
+			$switch_activity = Activity::where('chapter_id', $chapter->id)->where('priority','<',$activity->priority)->where('detail_id', $activity->detail_id)->orderBy('priority','desc')->first();
+			if ($switch_activity) {
+				$old_priority = $activity->priority;
+				$activity->priority = $switch_activity->priority;
+				$switch_activity->priority = $old_priority;
+
+				$switch_activity->save();
+			}
+		} else if ($request->input('direction') == 'down') {
+			$switch_activity = Activity::where('chapter_id', $chapter->id)->where('priority','>',$activity->priority)->where('detail_id', $activity->detail_id)->orderBy('priority')->first();
+			if ($switch_activity) {
+				$old_priority = $activity->priority;
+				$activity->priority = $switch_activity->priority;
+				$switch_activity->priority = $old_priority;
+
+				$switch_activity->save();
+			}
+		}
+
+		$activity->save();
+
+		return response()->json(['success' => 1]);
 	}
 
 	public function doDeleteChapter(Request $request)

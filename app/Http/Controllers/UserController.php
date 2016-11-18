@@ -472,6 +472,8 @@ class UserController extends Controller {
 			$user->pref_email_offer = $request->get('pref_email_offer');
 		if ($request->get('pref_offer_description'))
 			$user->pref_offer_description = $request->get('pref_offer_description');
+		if ($request->get('pref_extracondition_offer'))
+			$user->pref_extracondition_offer = $request->get('pref_extracondition_offer');
 		if ($request->get('pref_closure_offer'))
 			$user->pref_closure_offer = $request->get('pref_closure_offer');
 		if ($request->get('pref_email_invoice'))

@@ -121,7 +121,7 @@
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
 															U wordt na het klikken op de link naar een beveiligde omgeving van de <strong>CalculatieTool.com</strong> doorgestuurd. 
-															Hier kunt u mijn offerte bekijken, opmerkingen achterlaten en eventueel direct de offerte goedkeuren en opdracht verstrekken.
+															Hier kunt u opmerkingen achterlaten en eventueel direct de offerte goedkeuren en opdracht verstrekken.
 													</td>
 												</tr>
 												<tr>
@@ -132,6 +132,7 @@
 														<br>
 														<br>
 															{{ $user }}
+															{{ $company_name }}
 														<br>
 													</td>
 												</tr>
