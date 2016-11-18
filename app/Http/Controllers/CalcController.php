@@ -636,7 +636,7 @@ class CalcController extends Controller {
 		}
 
 		if ($request->input('direction') == 'up') {
-			$switch_activity = Activity::where('chapter_id', $chapter->id)->where('priority','<',$activity->priority)->orderBy('priority','desc')->first();
+			$switch_activity = Activity::where('chapter_id', $chapter->id)->where('priority','<',$activity->priority)->whereNull('detail_id')->orderBy('priority','desc')->first();
 			if ($switch_activity) {
 				$old_priority = $activity->priority;
 				$activity->priority = $switch_activity->priority;
@@ -645,7 +645,7 @@ class CalcController extends Controller {
 				$switch_activity->save();
 			}
 		} else if ($request->input('direction') == 'down') {
-			$switch_activity = Activity::where('chapter_id', $chapter->id)->where('priority','>',$activity->priority)->orderBy('priority')->first();
+			$switch_activity = Activity::where('chapter_id', $chapter->id)->where('priority','>',$activity->priority)->whereNull('detail_id')->orderBy('priority')->first();
 			if ($switch_activity) {
 				$old_priority = $activity->priority;
 				$activity->priority = $switch_activity->priority;

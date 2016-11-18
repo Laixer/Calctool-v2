@@ -506,6 +506,42 @@ var n = this,
 			}
 		});
 
+		$("body").on("click", ".moveupchap", function(e){
+			e.preventDefault();
+			var $curThis = $(this);
+			if($curThis.attr("data-id"))
+				$.post("/calculation/movechapter", {project: {{ $project->id }}, chapter: $curThis.attr("data-id"), direction: 'up'}, function(){
+					location.reload();
+				}).fail(function(e) { console.log(e); });
+		});
+
+		$("body").on("click", ".movedownchap", function(e){
+			e.preventDefault();
+			var $curThis = $(this);
+			if($curThis.attr("data-id"))
+				$.post("/calculation/movechapter", {project: {{ $project->id }}, chapter: $curThis.attr("data-id"), direction: 'down'}, function(){
+					location.reload();
+				}).fail(function(e) { console.log(e); });
+		});
+
+		$("body").on("click", ".moveupactivity", function(e){
+			e.preventDefault();
+			var $curThis = $(this);
+			if($curThis.attr("data-id"))
+				$.post("/more/moveactivity", {project: {{ $project->id }}, activity: $curThis.attr("data-id"), direction: 'up'}, function(){
+					location.reload();
+				}).fail(function(e) { console.log(e); });
+		});
+
+		$("body").on("click", ".movedownactivity", function(e){
+			e.preventDefault();
+			var $curThis = $(this);
+			if($curThis.attr("data-id"))
+				$.post("/more/moveactivity", {project: {{ $project->id }}, activity: $curThis.attr("data-id"), direction: 'down'}, function(){
+					location.reload();
+				}).fail(function(e) { console.log(e); });
+		});
+
 		var $favchapid;
 		$('.favselect').click(function(e) {
 			$favchapid = $(this).attr('data-id');
@@ -896,6 +932,8 @@ var n = this,
 														  <button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Werkzaamheid&nbsp;&nbsp;<span class="caret"></span></button>
 														  <ul class="dropdown-menu">
 														    <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename">Naam wijzigen</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" class="moveupactivity">Verplaats omhoog</a></li>
+											    			<li><a href="#" data-id="{{ $activity->id }}" class="movedownactivity">Verplaats omlaag</a></li>
 														    <li><a href="#" data-id="{{ $activity->id }}" class="deleteact">Verwijderen</a></li>
 														  </ul>
 														</div>
@@ -1223,6 +1261,8 @@ var n = this,
 											  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Onderdeel&nbsp;&nbsp;<span class="caret"></span></button>
 											  <ul class="dropdown-menu">
 											    <li><a href="#" data-id="{{ $chapter->id }}" data-name="{{ $chapter->chapter_name }}" data-toggle="modal" data-target="#nameChangeChapModal" class="changenamechap">Naam wijzigen</a></li>
+											    <li><a href="#" data-id="{{ $chapter->id }}" class="moveupchap">Verplaats omhoog</a></li>
+											    <li><a href="#" data-id="{{ $chapter->id }}" class="movedownchap">Verplaats omlaag</a></li>
 											    <li><a href="#" data-id="{{ $chapter->id }}" class="deletechap">Verwijderen</a></li>
 											  </ul>
 											</div>

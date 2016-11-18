@@ -49,7 +49,7 @@ class AuthController extends Controller {
 	public function getLogin()
 	{
 		if (Cache::has($this->getCacheBlockItem())) {
-			if (Cache::get($this->getCacheBlockItem()) >=5) {
+			if (Cache::get($this->getCacheBlockItem()) >= 10) {
 				return view('auth.login')->withErrors(['auth' => ['Toegang geblokkeerd voor 15 minuten. Probeer later opnieuw.']]);
 			}
 		}

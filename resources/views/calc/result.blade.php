@@ -514,7 +514,7 @@ $(document).ready(function() {
 											<?php $rs_1 = 0; $rs_2 = 0; $rs_3 = 0; $rs_4 = 0; $rs_5 = 0; ?>
 											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 											<?php $i = 0; ?>
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->whereNull('detail_id')->get() as $activity)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','calculation')->first()->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->whereNull('detail_id')->orderBy('priority')->get() as $activity)
 											<?php $i++; ?>
 											<?php
 
@@ -591,7 +591,7 @@ $(document).ready(function() {
 											<?php $rs_1 = 0; $rs_2 = 0; $rs_3 = 0; $rs_4 = 0; $rs_5 = 0; ?>
 											@foreach (Chapter::where('project_id','=', $project->id)->get() as $chapter)
 											<?php $i = 0; ?>
-											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
+											@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_type_id','=',PartType::where('type_name','=','estimate')->first()->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('priority')->get() as $activity)
 											<?php $i++; ?>
 											<tr>
 												<td class="col-md-3">{{ $i==1 ? $chapter->chapter_name : '' }}</td>

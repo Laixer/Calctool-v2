@@ -268,6 +268,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('more/newactivity/{chapter_id}', 'MoreController@doNewActivity')->where('chapter_id', '[0-9]+');
 	Route::post('more/newchapter/{project_id}', 'MoreController@doNewChapter')->where('project_id', '[0-9]+');
 	Route::post('more/deletechapter', 'MoreController@doDeleteChapter');
+	Route::post('more/moveactivity', 'MoreController@doMoveActivity');
 
 	/* Relation pages */
 	Route::get('relation/new', 'RelationController@getNew')->middleware('payzone');

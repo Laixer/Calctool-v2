@@ -1076,9 +1076,9 @@ function invoice_condition($offer) {
 		  </tr>
 		</thead>
 		<tbody>
-		  @foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
+		  @foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
 		  <?php $i = true; ?>
-		  @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('created_at')->get() as $activity)
+		  @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('priority')->get() as $activity)
 		  <tr>
 		  	<td style="width: 130px" class="qty"><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
 			<td style="width: 170px" class="qty">{{ $activity->activity_name }}</td>
@@ -1101,9 +1101,9 @@ function invoice_condition($offer) {
 		  </tr>
 		  @endforeach
 		  @endforeach
-		  @foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
+		  @foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
 		  <?php $i = true; ?>
-		  @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('created_at')->get() as $activity)
+		  @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('priority')->get() as $activity)
 		  <tr><?#-- item --?>
 			<td style="width: 130px"class="qty"><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
 			<td style="width: 170px" class="qty">{{ $activity->activity_name }}</td>
@@ -1200,9 +1200,9 @@ function invoice_condition($offer) {
 		 </tr>
 	  </thead>
 	  <tbody>
-	  @foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
+	  @foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
 	  <?php $i = true; ?>
-	  @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('created_at')->get() as $activity)
+	  @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('priority')->get() as $activity)
 		<tr style="page-break-after: always;">
 		  <td style="width: 130px" class="qty"><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
 		  <td style="width: 170px" class="qty">{{ $activity->activity_name }}</td>
@@ -1261,9 +1261,9 @@ function invoice_condition($offer) {
 		 </tr>
 	  </thead>
 	  <tbody>
-		@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
+		@foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
 		<?php $i = true; ?>
-		@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('created_at')->get() as $activity)
+		@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('priority')->get() as $activity)
 		<tr style="page-break-after: always;">
 		  <td style="width: 130px" class="qty"><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
 		  <td style="width: 170px" class="qty">{{ $activity->activity_name }}</td>
@@ -1364,9 +1364,9 @@ function invoice_condition($offer) {
 		</tr>
 	  </thead>
 	  <tbody>
-		@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
+		@foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
 		<?php $i = true; ?>
-		@foreach (Activity::where('chapter_id','=', $chapter->id)->orderBy('created_at')->get() as $activity)
+		@foreach (Activity::where('chapter_id','=', $chapter->id)->orderBy('priority')->get() as $activity)
 		<tr>
 		  <td style="width: 200px" class="qty" valign="top"><br><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
 		  <td style="width: 220px" class="qty" valign="top"><br>{{ $activity->activity_name }}</td>
@@ -1404,9 +1404,9 @@ function invoice_condition($offer) {
 		</tr>
 	  </thead>
 	  <tbody>
-		@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
+		@foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
 		<?php $i = true; ?>
-		@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('created_at')->get() as $activity)
+		@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('priority')->get() as $activity)
 		<tr>
 		  <td style="width: 200px" class="qty" valign="top"><br><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
 		  <td style="width: 220px" class="qty" valign="top"><br>{{ $activity->activity_name }}</td>
@@ -1426,9 +1426,9 @@ function invoice_condition($offer) {
 		</tr>
 	  </thead>
 	  <tbody>
-		@foreach (Chapter::where('project_id','=', $project->id)->orderBy('created_at')->get() as $chapter)
+		@foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
 		<?php $i = true; ?>
-		@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('created_at')->get() as $activity)
+		@foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('priority')->get() as $activity)
 		<tr>
 		  <td style="width: 200px" class="qty"><?php echo ($i ? $chapter->chapter_name : ''); $i = false; ?></td>
 		  <td style="width: 220px" class="qty">{{ $activity->activity_name }}</td>
