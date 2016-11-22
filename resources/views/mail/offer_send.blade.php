@@ -132,7 +132,6 @@
 														<br>
 														<br>
 															{{ $user }}
-															{{ $company_name }}
 														<br>
 													</td>
 												</tr>

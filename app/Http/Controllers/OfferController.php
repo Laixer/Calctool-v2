@@ -225,7 +225,7 @@ class OfferController extends Controller {
 			'preview' => false,
 			'offer_id' => $offer->id,
 			'token' => $share->token,
-			'user' => $contact_user->getFormalName(),
+			'user' => $contact_user->firstname . ' ' . $contact_user->lastname,
 			'project_name' => $project->project_name,
 			'pref_email_offer' => Auth::User()->pref_email_offer,
 			'user_logo' => $user_logo
@@ -280,7 +280,7 @@ class OfferController extends Controller {
 			'offer_id' => $offer->id,
 			'token' => $share->token,
 			'project_name' => $project->project_name,
-			'user' => $contact_user->getFormalName(),
+			'user' => $contact_user->firstname . ' ' . $contact_user->lastname,
 			'pref_email_offer' => Auth::User()->pref_email_offer,
 			'user_logo' => $user_logo
 		);
