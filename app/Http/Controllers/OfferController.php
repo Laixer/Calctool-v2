@@ -201,9 +201,12 @@ class OfferController extends Controller {
 		$contact_user = Contact::find($offer->from_contact_id);
 
 		$user_logo = '';
+		$user_agreement = null;
 		$relation_self = Relation::find(Auth::user()->self_id);
 		if ($relation_self->logo_id)
 			$user_logo = Resource::find($relation_self->logo_id)->file_location;
+		if ($relation_self->agreement_id)
+			$user_agreement = Resource::find($relation_self->agreement_id)->file_location;
 
 		$other_contacts = [];
 		if ($request->has('contacts')) {
@@ -222,6 +225,7 @@ class OfferController extends Controller {
 			'other_contacts' => $other_contacts,
 			'mycomp' => $relation_self->company_name,
 			'pdf' => $res->file_location,
+			'agreement' => $user_agreement,
 			'preview' => false,
 			'offer_id' => $offer->id,
 			'token' => $share->token,
@@ -236,6 +240,8 @@ class OfferController extends Controller {
 				$message->cc($email, strtolower(trim($name)));
 			}
 			$message->attach($data['pdf']);
+			if (!empty($data['agreement']))
+				$message->attach($data['agreement']);
 			$message->subject('Offerte ' . $data['project_name']);
 			$message->from('noreply@calculatietool.com', $data['mycomp']);
 			$message->replyTo($data['email_from'], $data['mycomp']);
