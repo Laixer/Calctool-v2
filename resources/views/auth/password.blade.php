@@ -19,7 +19,7 @@
 					<form method="POST" action="" accept-charset="UTF-8" class="white-row">
 					{!! csrf_field() !!}
 
-						@if(Session::get('success'))
+						@if (Session::has('success'))
 						<div class="alert alert-success">
 							<i class="fa fa-check-circle"></i>
 							<strong>{{ Session::get('success') }}</strong>

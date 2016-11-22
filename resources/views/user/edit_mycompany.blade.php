@@ -179,7 +179,6 @@ $(document).ready(function() {
 </div>
 
 <div id="wrapper">
-
 	
 	<section class="container">
 
@@ -193,10 +192,10 @@ $(document).ready(function() {
 			<div>
 			<br>
 
-			@if(Session::get('success'))
+			@if (Session::has('success'))
 			<div class="alert alert-success">
 				<i class="fa fa-check-circle"></i>
-				<strong>Opgeslagen</strong>
+				<strong>{{ Session::get('success') }}</strong>
 			</div>
 			@endif
 
@@ -240,7 +239,7 @@ $(document).ready(function() {
 							<a href="#payment" data-toggle="tab">Betalingsgegevens</a>
 						</li>
 						<li id="tab-logo">
-							<a href="#logo" data-toggle="tab">Logo</a>
+							<a href="#logo" data-toggle="tab">Logo & Voorwaarden</a>
 						</li>
 						<li id="tab-prefs">
 							<a href="#prefs" data-toggle="tab">Voorkeuren</a>
@@ -440,32 +439,71 @@ $(document).ready(function() {
 							</form>
 						</div>
 						<div id="logo" class="tab-pane">
-							<h4>Logo</h4>
-							<form action="relation/logo/save" method="post" enctype="multipart/form-data">
-							{!! csrf_field() !!}
-							<input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
-
-							{!! ($relation && $relation->logo_id) ? "<div><h5>Huidige logo</h5><img src=\"/".Resource::find($relation->logo_id)->file_location."\"/></div>" : '' !!}
-
-							<div class="form-group">
-								<label for="image">Afbeelding Uploaden</label>
-								<div class="input-group col-md-4">
-					                <span class="input-group-btn">
-					                    <span class="btn btn-primary btn-file {{ $relation ? '' : 'disabled' }}">
-					                        Browse&hellip; <input {{ $relation ? '' : 'disabled' }} name="image" type="file" multiple>
-					                    </span>
-					                </span>
-					                <input type="text" class="form-control" readonly>
-					            </div>
-				            </div>
-
 							<div class="row">
-								<div class="col-md-12">
-									<button class="btn btn-primary {{ $relation ? '' : 'disabled' }}"><i class="fa fa-check"></i> Opslaan</button>
+								<div class="col-md-6">
+									<h4>Logo</h4>
+									<form action="relation/logo/save" method="post" enctype="multipart/form-data">
+									{!! csrf_field() !!}
+									<input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
+
+									{!! ($relation && $relation->logo_id) ? "<div><h5>Huidige logo</h5><img src=\"/".Resource::find($relation->logo_id)->file_location."\"/></div>" : '' !!}
+
+									<br />
+									<div class="form-group">
+										<label for="image">Afbeelding Uploaden</label>
+										<div class="input-group col-md-4">
+							                <span class="input-group-btn">
+							                    <span class="btn btn-primary btn-file {{ $relation ? '' : 'disabled' }}">
+							                        Browse&hellip; <input {{ $relation ? '' : 'disabled' }} name="image" type="file" multiple>
+							                    </span>
+							                </span>
+							                <input type="text" class="form-control" readonly>
+							            </div>
+						            </div>
+
+									<div class="row">
+										<div class="col-md-12">
+											<button class="btn btn-primary {{ $relation ? '' : 'disabled' }}"><i class="fa fa-check"></i> Opslaan</button>
+										</div>
+									</div>
+
+									</form>
+								</div>
+								<div class="col-md-6">
+									<h4>Voorwaarden</h4>
+									<form action="relation/agreement/save" method="post" enctype="multipart/form-data">
+									{!! csrf_field() !!}
+									<input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
+
+									@if ($relation && $relation->agreement_id)
+									<div class="item">
+										<span class="cart_img" style="width:45px;"><a href="/res-{{ $relation->agreement_id }}/download"><i class="fa fa-file-pdf-o fsize60"></i></a></span>
+										<a href="/res-{{ $relation->agreement_id }}/download" class="product_name">{{ Resource::find($relation->agreement_id)->resource_name }}</a>
+									</div>
+									@endif
+
+									<br />
+									<div class="form-group">
+										<label for="image">PDF Uploaden</label>
+										<div class="input-group col-md-4">
+							                <span class="input-group-btn">
+							                    <span class="btn btn-primary btn-file {{ $relation ? '' : 'disabled' }}">
+							                        Browse&hellip; <input {{ $relation ? '' : 'disabled' }} name="doc" type="file" multiple>
+							                    </span>
+							                </span>
+							                <input type="text" class="form-control" readonly>
+							            </div>
+						            </div>
+
+									<div class="row">
+										<div class="col-md-12">
+											<button class="btn btn-primary {{ $relation ? '' : 'disabled' }}"><i class="fa fa-check"></i> Opslaan</button>
+										</div>
+									</div>
+
+									</form>
 								</div>
 							</div>
-
-							</form>
 						</div>
 						
 						<div id="prefs" class="tab-pane">

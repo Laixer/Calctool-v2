@@ -525,6 +525,47 @@ class RelationController extends Controller {
 
 	}
 
+	public function doNewAgreement(Request $request)
+	{
+		$this->validate($request, [
+			'id' => array('required','integer'),
+			'doc' => array('required', 'mimes:pdf'),
+		]);
+
+		if ($request->hasFile('doc')) {
+			$file = $request->file('doc');
+			Storage::put(Auth::user()->encodedName() . '/agreement.' . $file->getClientOriginalExtension(), file_get_contents($file->getRealPath()));
+			$newname = Auth::id().'-'.md5(mt_rand()).'.'.$file->getClientOriginalExtension();
+			$file->move('user-content', $newname);
+
+			$resource = new Resource;
+			$resource->resource_name = $file->getClientOriginalName();
+			$resource->file_location = 'user-content/' . $newname;
+			$resource->file_size = $file->getClientSize();
+			$resource->user_id = Auth::id();
+			$resource->description = 'Algemene Voorwaarden';
+
+			$resource->save();
+
+			$relation = Relation::find($request->input('id'));
+			if (!$relation || !$relation->isOwner()) {
+				return back()->withInput($request->all());
+			}
+			$relation->agreement_id = $resource->id;
+
+			$relation->save();
+
+			return back()->with('success', 'Uw algemene voorwaarden zijn geupload');
+		} else {
+
+			$messages->add('file', 'Geen dpcument geupload');
+
+			// redirect our user back to the form with the errors from the validator
+			return back()->withErrors($messages);
+		}
+
+	}
+
 	public function downloadVCard(Request $request, $relation_id, $contact_id)
 	{
 		$contact = \Calctool\Models\Contact::find($contact_id);

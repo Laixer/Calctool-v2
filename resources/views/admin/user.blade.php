@@ -24,8 +24,15 @@ $group = null;
 if (Input::has('group')) {
 	$group = Input::get('group');
 }
-
 ?>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		setInterval(function() {
+			location.reload();
+		}, 30000);
+	})
+</script>
 <div id="wrapper">
 
 	<section class="container">

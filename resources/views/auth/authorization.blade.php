@@ -34,7 +34,7 @@
                         <input type="hidden" name="response_type" value="{{ $params['response_type'] }}">
                         <input type="hidden" name="state" value="{{ $params['state'] }}">
 
-                        @if(Session::get('success'))
+                        @if (Session::has('success'))
                         <div class="alert alert-success">
                             <i class="fa fa-check-circle"></i>
                             <strong>{{ Session::get('success') }}</strong>

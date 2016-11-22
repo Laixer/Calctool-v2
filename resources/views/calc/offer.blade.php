@@ -334,10 +334,10 @@ $type = ProjectType::find($project->type_id);
 		</div>
 		@else
 
-		@if(Session::get('success'))
+		@if (Session::has('success'))
 		<div class="alert alert-success">
 			<i class="fa fa-check-circle"></i>
-			<strong>Opgeslagen</strong>
+			<strong>{{ Session::get('success') }}</strong>
 		</div>
 		@endif
 

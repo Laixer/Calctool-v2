@@ -298,6 +298,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('relation/updatemycompany', 'RelationController@doUpdateMyCompany');
 	Route::post('relation/newmycompany', 'RelationController@doNewMyCompany');
 	Route::post('relation/logo/save', 'RelationController@doNewLogo');
+	Route::post('relation/agreement/save', 'RelationController@doNewAgreement');
 
 	/* Wholesale */
 	Route::get('wholesale', 'WholesaleController@getAll')->middleware('payzone');

@@ -30,7 +30,7 @@ use \Calctool\Models\MessageBox;
 						<a href="/about">Over ons</a>
 					</li>
 					@endif
-					@if (Auth::check() && Auth::user()->isAdmin())
+					@if (Auth::check() && Auth::user()->isAdmin() && !session()->has('swap_session'))
 					<li>
 						<a href="/admin">Admin CP</a>
 					</li>
