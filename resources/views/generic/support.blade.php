@@ -38,10 +38,10 @@ $(document).ready(function() {
 
 		<h2>Stuur ons een <strong>bericht</strong>, stel een <strong>vraag</strong> of geef ons een <strong>belletje</strong></h2>
 
-		@if(Session::get('success'))
+		@if (Session::has('success'))
 		<div class="alert alert-success">
 			<i class="fa fa-check-circle"></i>
-			<strong>{{ Session::get('success') }}</strong>
+			<strong>@if (Session::get('success'))</strong>
 		</div>
 		@endif
 

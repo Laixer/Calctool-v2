@@ -350,7 +350,7 @@ $(document).ready(function() {
 
 		@include('calc.wizard', array('page' => 'project'))
 
-		@if(Session::get('success'))
+		@if (Session::has('success'))
 		<div class="alert alert-success">
 			<i class="fa fa-check-circle"></i>
 			<strong>{{ Session::get('success') }}</strong>

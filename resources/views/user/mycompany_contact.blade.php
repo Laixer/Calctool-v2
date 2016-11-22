@@ -30,10 +30,10 @@ $contact = Contact::where('relation_id','=',$relation->id)->first();
 
 		<div class="col-md-12">
 
-			@if(Session::get('success'))
+			@if (Session::has('success'))
 			<div class="alert alert-success">
 				<i class="fa fa-check-circle"></i>
-				<strong>Contact toegevoegd aan relatie</strong>
+				<strong>@if (Session::get('success'))</strong>
 			</div>
 			@endif
 

@@ -50,10 +50,10 @@ $redis_info = Redis::command('info');
 			<div>
 			<br />
 
-			@if(Session::get('success'))
+			@if (Session::has('success'))
 			<div class="alert alert-success">
 				<i class="fa fa-check-circle"></i>
-				<strong>{{ Session::get('success') }}</strong>
+				<strong>@if (Session::get('success'))</strong>
 			</div>
 			@endif
 

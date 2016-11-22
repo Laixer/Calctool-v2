@@ -103,10 +103,10 @@ $(function() {
 							Vraag hieronder een nieuw wachtwoord aan. Mocht het niet lukken neem dan contact op met de <a href="/support">support</a> afdeling.
 						</p>
 
-						@if(Session::get('success'))
+						@if (Session::has('success'))
 						<div class="alert alert-success">
 							<i class="fa fa-check-circle"></i>
-							<strong>Instructies verzonden.</strong> Check je e-mail!
+							<strong>@if (Session::get('success'))</strong>
 						</div>
 						@endif
 
