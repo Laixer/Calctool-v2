@@ -33,7 +33,7 @@ $contact = Contact::where('relation_id','=',$relation->id)->first();
 			@if (Session::has('success'))
 			<div class="alert alert-success">
 				<i class="fa fa-check-circle"></i>
-				<strong>@if (Session::get('success'))</strong>
+				<strong>{{ Session::get('success') }}</strong>
 			</div>
 			@endif
 
