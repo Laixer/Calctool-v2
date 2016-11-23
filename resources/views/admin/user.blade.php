@@ -30,7 +30,7 @@ if (Input::has('group')) {
 	$(document).ready(function() {
 		setInterval(function() {
 			location.reload();
-		}, 30000);
+		}, 60000);
 	})
 </script>
 <div id="wrapper">

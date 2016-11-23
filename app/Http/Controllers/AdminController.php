@@ -363,14 +363,17 @@ class AdminController extends Controller {
 		if (!Auth::user()->isAdmin())
 			return back();
 
+		if (session()->has('swap_session'))
+			return back();
+
 		$swapinfo = [
 			'user_id' => $user_id,
 			'admin_id' => Auth::id(),
 		];
 
-		session()->put('swap_session', $swapinfo);
-
 		Auth::loginUsingId($user_id);
+
+		session()->put('swap_session', $swapinfo);
 
 		return redirect('/');
 	}
@@ -387,6 +390,8 @@ class AdminController extends Controller {
 			return back();
 
 		Auth::loginUsingId($user->id);
+
+		session()->forget('swap_session');
 
 		return redirect('/admin/user');
 	}
