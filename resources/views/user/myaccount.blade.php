@@ -364,9 +364,9 @@ $(document).ready(function() {
 									<tr>
 										<td class="col-md-2"><strong>{{ date('d-m-Y H:i:s', strtotime(DB::table('payment')->select('created_at')->where('id','=',$order->id)->get()[0]->created_at)) }}</strong></td>
 										<td class="col-md-2">{{ '&euro; '.number_format($order->amount, 2,",",".") }}</td>
-										<td class="col-md-2">{{ $order->status }}</td>
+										<td class="col-md-2">{{ $order->getStatusName() }}</td>
 										<td class="col-md-4">{{ $order->description }}</td>
-										<td class="col-md-2">{{ $order->method }}</td>
+										<td class="col-md-2">{{ $order->method ? $order->method : '-' }}</td>
 									</tr>
 									@endforeach
 								</tbody>
