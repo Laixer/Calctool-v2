@@ -12,4 +12,16 @@ class Payment extends Model {
 	public function isOwner() {
 		return Auth::id() == $this->user_id;
 	}
+
+	public function getStatusName() {
+		switch ($this->status) {
+			case 'paid':
+				return 'Betaald';
+			case 'cancelled':
+				return 'Afgebroken';
+			
+			default:
+				return $this->status;
+		}
+	}
 }

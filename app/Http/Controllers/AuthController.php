@@ -46,11 +46,15 @@ class AuthController extends Controller {
 	 *
 	 * @return Route
 	 */
-	public function getLogin()
+	public function getLogin(Request $request)
 	{
+		if ($request->has('delblock')) {
+			Cache::forget($this->getCacheBlockItem());
+		}
+
 		if (Cache::has($this->getCacheBlockItem())) {
 			if (Cache::get($this->getCacheBlockItem()) >= 10) {
-				return view('auth.login')->withErrors(['auth' => ['Toegang geblokkeerd voor 15 minuten. Probeer later opnieuw.']]);
+				return view('auth.login', ['isblock' => true])->withErrors(['auth' => ['Toegang geblokkeerd voor 15 minuten. Probeer later opnieuw.']]);
 			}
 		}
 
@@ -106,7 +110,7 @@ class AuthController extends Controller {
 		$remember = $request->input('rememberme') ? true : false;
 
 		if (Cache::has($this->getCacheBlockItem())) {
-			if (Cache::get($this->getCacheBlockItem()) >=5) {
+			if (Cache::get($this->getCacheBlockItem()) >= 10) {
 				return back()->withErrors(['auth' => ['Toegang geblokkeerd voor 15 minuten. Probeer later opnieuw.']]);
 			}
 		}

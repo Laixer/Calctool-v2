@@ -93,6 +93,7 @@ class UserController extends Controller {
 			$payment = $mollie->payments->create(array(
 				"amount"		=> $amount,
 				"description"	=> $description,
+				"locale"		=> 'nl',
 				"webhookUrl"	=> url('payment/webhook/'),
 				"redirectUrl"	=> url('payment/order/'.$token),
 				"metadata"		=> array(
@@ -137,6 +138,17 @@ class UserController extends Controller {
 		$user->expiration_date = date('Y-m-d', strtotime("+1 month", strtotime($expdate)));
 
 		$user->save();
+
+		$order = new Payment;
+		$order->transaction = 'CT_FREE';
+		$order->token = sha1(mt_rand().time());
+		$order->amount = 0;
+		$order->status = 'paid';
+		$order->increment = 1;
+		$order->description = 'Verleng gratis met een maand';
+		$order->method = '';
+		$order->user_id = Auth::id();
+		$order->save();
 
 		Audit::CreateEvent('account.payment.free.success', 'Payment free succeeded');
 
