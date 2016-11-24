@@ -75,7 +75,7 @@ $(document).ready(function() {
 			<h2><strong>{{ ($all ? 'Alle' : ($group ? 'Groep' : 'Actieve')) }} gebruikers ({{ count($selection_today) + count($selection_week) + count($selection_other) }})</strong></h2>
 
 			<div class="white-row">
-			<h4>Vandaag</h4>
+			<h4>Vandaag ({{ count($selection_today) }})</h4>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -108,7 +108,7 @@ $(document).ready(function() {
 				@endforeach
 				</tbody>
 			</table>
-			<h4>Deze week</h4>
+			<h4>Deze week ({{ count($selection_week) }})</h4>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -141,7 +141,7 @@ $(document).ready(function() {
 				@endforeach
 				</tbody>
 			</table>
-			<h4>Eerder</h4>
+			<h4>Eerder ({{ count($selection_other) }})</h4>
 			<table class="table table-striped">
 				<thead>
 					<tr>

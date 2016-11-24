@@ -39,7 +39,9 @@ class InvoiceController extends Controller {
 	public function doUpdateCode(Request $request)
 	{
 		$this->validate($request, [
-			'id' => array('required','integer')
+			'id' => array('required','integer'),
+			'reference' => array('max:30'),
+			'bookcode' => array('max:30'),
 		]);
 
 		$invoice = Invoice::find($request->get('id'));

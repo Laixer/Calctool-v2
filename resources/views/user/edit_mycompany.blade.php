@@ -737,7 +737,7 @@ $(document).ready(function() {
 												<div class="col-md-6" >
 													<div class="form-group">
 														<label for="invoicenumber_prefix"><strong>Tekst voor factuurnummer</strong></label>
-														<input name="invoicenumber_prefix" id="invoicenumber_prefix" type="text" class="form-control" value="{{ $user->invoicenumber_prefix }}" />
+														<input name="invoicenumber_prefix" id="invoicenumber_prefix" type="text" maxlength="10" class="form-control" value="{{ $user->invoicenumber_prefix }}" />
 													</div>
 												</div>
 											</div>
@@ -753,15 +753,6 @@ $(document).ready(function() {
 								</div>
 							</form>
 						</div>
-
-
-
-
-
-
-
-
-
 					</div>
 				</div>
 

@@ -437,6 +437,8 @@ class UserController extends Controller {
 		$this->validate($request, [
 			'pref_hourrate_calc' => array('regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
 			'pref_hourrate_more' => array('regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
+			'offernumber_prefix' => array('max:10'),
+			'invoicenumber_prefix' => array('max:10'),
 		]);
 
 		$user = Auth::user();
