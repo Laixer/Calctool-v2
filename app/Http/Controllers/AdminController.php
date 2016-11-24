@@ -628,7 +628,6 @@ class AdminController extends Controller {
 					if (!is_numeric($total_price))
 						$total_price = 0;
 
-
 					$supplier = $data[5];
 
 					$wholesale = Wholesale::where('company_name', $supplier)->first();

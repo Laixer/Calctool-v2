@@ -134,7 +134,7 @@ class MoreController extends Controller {
 
 		$chapter = new Chapter;
 		$chapter->chapter_name = $request->get('chapter');
-		$chapter->priority = $last_chaper->priority + 1;
+		$chapter->priority = $last_chaper->priority ? $last_chaper->priority + 1 : 0;
 		$chapter->project_id = $project->id;
 		$chapter->more = true;
 

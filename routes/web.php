@@ -108,6 +108,10 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('myaccount', function() {
 		return view('user.myaccount');
 	});
+	Route::get('import', function() {
+		return view('base.import');
+	});
+	Route::post('import/save', 'AppsController@doImportRelation');
 	Route::get('myaccount/deactivate', 'UserController@getMyAccountDeactivate');
 	Route::get('myaccount/loaddemo', 'UserController@doLoadDemoProject');
 	Route::get('myaccount/oauth/session/{client_id}/revoke', 'UserController@doRevokeApp');
