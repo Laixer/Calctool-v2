@@ -27,11 +27,11 @@ if (Input::has('group')) {
 ?>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		setInterval(function() {
-			location.reload();
-		}, 60000);
-	})
+$(document).ready(function() {
+	setInterval(function() {
+		location.reload();
+	}, 60000);
+})
 </script>
 <div id="wrapper">
 

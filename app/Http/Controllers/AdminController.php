@@ -407,7 +407,7 @@ class AdminController extends Controller {
 
 		/* General */
 		$group = new UserGroup;
-		$group->name = $request->input('name');;
+		$group->name = strtolower($request->input('name'));
 		$group->subscription_amount = floatval($request->input('subscription_amount'));
 
 		if ($request->input('note'))
@@ -439,7 +439,7 @@ class AdminController extends Controller {
 			if ($group->name != $request->get('name')) {
 				$name = strtolower(trim($request->input('name')));
 
-				if (UserGroup::where('name',$name)->count()>0) {
+				if (UserGroup::where('name',$name)->where('id','!=',$group->id)->count()>0) {
 					$errors = new MessageBag(['status' => ['Groepnaam wordt al gebruikt']]);
 					return back()->withErrors($errors);
 				}

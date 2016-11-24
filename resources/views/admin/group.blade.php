@@ -31,10 +31,10 @@
 				</thead>
 
 				<tbody>
-				@foreach ($selection = \Calctool\Models\UserGroup::all() as $group)
+				@foreach ($selection = \Calctool\Models\UserGroup::orderBy('id')->get() as $group)
 					<tr>
 						<td class="col-md-1 hidden-sm hidden-xs"><a href="{{ '/admin/group-'.$group->id.'/edit' }}">{{ $group->id }}</a></td>
-						<td class="col-md-3"><a href="{{ '/admin/group-'.$group->id.'/edit' }}">{{ $group->name }}</a></td>
+						<td class="col-md-3"><a href="{{ '/admin/group-'.$group->id.'/edit' }}">{{ ucfirst($group->name) }}</a></td>
 						<td class="col-md-2">{{ '&euro; '.number_format($group->subscription_amount, 2,",",".") }}</td>
 						<td class="col-md-2">{{ \Calctool\Models\User::where('user_group', $group->id)->where('active','=','true')->count() }}</td>
 					</tr>
