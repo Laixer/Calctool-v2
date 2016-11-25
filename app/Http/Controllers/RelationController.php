@@ -172,6 +172,7 @@ class RelationController extends Controller {
 	{
 		$this->validate($request, [
 			'id' => array('required','integer'),
+			'contact_salutation' => array('max:16'),
 			'contact_name' => array('required','max:50'),
 			'contact_firstname' => array('max:30'),
 			'email' => array('required','email','max:80'),
@@ -186,6 +187,9 @@ class RelationController extends Controller {
 			return back()->withInput($request->all());
 		}
 
+		if ($request->input('contact_salutation')) {
+			$contact->salutation = $request->input('contact_salutation');
+		}
 		if ($request->input('contact_firstname')) {
 			$contact->firstname = $request->input('contact_firstname');
 		}
@@ -286,6 +290,7 @@ class RelationController extends Controller {
 			'company_type' => array('required_if:relationkind,1','numeric'),
 			'company_name' => array('required_if:relationkind,1','max:50'),
 			'email_comp' => array('required_if:relationkind,1','email','max:80'),
+			'contact_salutation' => array('max:16'),
 			'contact_name' => array('required','max:50'),
 			'contact_firstname' => array('max:30'),
 			'email' => array('required','email','max:80'),
@@ -339,6 +344,7 @@ class RelationController extends Controller {
 
 		/* Contact */
 		$contact = new \Calctool\Models\Contact;
+		$contact->salutation = $request->input('contact_salutation');
 		$contact->firstname = $request->input('contact_firstname');
 		$contact->lastname = $request->input('contact_name');
 		$contact->mobile = $request->input('mobile');
@@ -369,13 +375,14 @@ class RelationController extends Controller {
 				return response()->json(['success' => true, 'id' => $relation->id, 'name' => $contact->firstname . ' ' . $contact->lastname]);
 		}
 
-		return redirect('/relation-'.$relation->id.'/edit')->with('success', 1);
+		return redirect('/relation-'.$relation->id.'/edit')->with('success', 'Relatie opgeslagen');
 	}
 
 	public function doNewContact(Request $request)
 	{
 		$this->validate($request, [
 			'id' => array('required','integer'),
+			'contact_salutation' => array('max:16'),
 			'contact_firstname' => array('required','max:50'),
 			'contact_name' => array('required','max:50'),
 			'email' => array('required','email','max:80'),
@@ -387,6 +394,7 @@ class RelationController extends Controller {
 		}
 
 		$contact = new \Calctool\Models\Contact;
+		$contact->salutation = $request->input('contact_salutation');
 		$contact->firstname = $request->input('contact_firstname');
 		$contact->lastname = $request->input('contact_name');
 		$contact->mobile = $request->input('mobile');
@@ -407,7 +415,7 @@ class RelationController extends Controller {
 
 		$contact->save();
 
-		return redirect('/relation-'.$request->input('id').'/edit')->with('success', 1);
+		return redirect('/relation-'.$request->input('id').'/edit')->with('success','Contact opgeslagen');
 	}
 
 	public function doMyCompanyNewContact(Request $request)
@@ -415,6 +423,7 @@ class RelationController extends Controller {
 		$this->validate($request, [
 			/* Contact */
 			'id' => array('required','integer'),
+			'contact_salutation' => array('max:16'),
 			'contact_name' => array('required','max:50'),
 			'email' => array('required','email','max:80'),
 			'contactfunction' => array('required','numeric'),
@@ -426,6 +435,7 @@ class RelationController extends Controller {
 		}
 
 		$contact = new Contact;
+		$contact->salutation = $request->input('contact_salutation');
 		$contact->firstname = $request->input('contact_firstname');
 		$contact->lastname = $request->input('contact_name');
 		$contact->mobile = $request->input('mobile');

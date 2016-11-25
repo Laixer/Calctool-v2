@@ -20,7 +20,9 @@ class Contact extends Model {
 	}
 
 	public function getFormalName() {
-		if ($this->gender) {
+		if ($this->salutation) {
+			return $this->salutation  . " " . $this->lastname;
+		} else if ($this->gender) {
 			if ($this->gender == 'M')
 				return 'heer ' . $this->lastname;
 			else
