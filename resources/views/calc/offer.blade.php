@@ -560,7 +560,7 @@ $type = ProjectType::find($project->type_id);
 						{{ Contact::find($offer_last->to_contact_id)->getFormalName() }}
 						@else
 					<select name="to_contact" id="to_contact">
-						@foreach (Contact::where('relation_id','=',$relation->id)->get() as $contact)
+						@foreach (Contact::where('relation_id',$relation->id)->get() as $contact)
 						<option {{ $offer_last ? ($offer_last->to_contact_id==$contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ Contact::find($contact->id)->getFormalName() }}</option>
 						@endforeach
 					</select>

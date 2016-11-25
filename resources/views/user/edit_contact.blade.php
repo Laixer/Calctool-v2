@@ -104,9 +104,16 @@ if (!$contact) {
 
 					<div class="col-md-3">
 						<div class="form-group">
+							<label for="contact_salutation">Aanhef</label>
+							<input name="contact_salutation" id="contact_salutation" type="text" value="{{ Input::old('contact_salutation') ? Input::old('contact_salutation') : $contact->salutation }}" class="form-control"/>
+							<input type="hidden" name="id" id="id" value="{{ $contact->id }}"/>
+						</div>
+					</div>
+
+					<div class="col-md-3">
+						<div class="form-group">
 							<label for="contact_name">Achternaam*</label>
 							<input name="contact_name" id="contact_name" type="text" value="{{ Input::old('contact_name') ? Input::old('contact_name') : $contact->lastname }}" class="form-control"/>
-							<input type="hidden" name="id" id="id" value="{{ $contact->id }}"/>
 						</div>
 					</div>
 

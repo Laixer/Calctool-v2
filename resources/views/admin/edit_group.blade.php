@@ -57,7 +57,7 @@ $(document).ready(function() {
 			  <li><a href="/">Home</a></li>
 			  <li><a href="/admin">Admin CP</a></li>
 			  <li><a href="/admin/group">Groep</a></li>
-			  <li class="active">{{ $group->name }}</li>
+			  <li class="active">{{ ucfirst($group->name) }}</li>
 			</ol>
 			<div>
 			<br />
@@ -79,7 +79,7 @@ $(document).ready(function() {
 			</div>
 			@endif
 
-			<h2><strong>Groep</strong> {{ $group->name }}</h2>
+			<h2><strong>Groep</strong> {{ ucfirst($group->name) }}</h2>
 
 			<div class="white-row">
 

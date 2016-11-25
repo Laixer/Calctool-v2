@@ -10,6 +10,7 @@ use \Calctool\Models\Contact;
 use \Calctool\Models\Offer;
 use \Calctool\Models\Invoice;
 use \Calctool\Models\User;
+use \Calctool\Models\UserGroup;
 use \Calctool\Models\MessageBox;
 
 use \Mailgun;
@@ -39,8 +40,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
-
         $schedule->call(function() {
             foreach(Invoice::whereNotNull('bill_date')->whereNull('payment_date')->get() as $invoice) {
                 $offer = Offer::find($invoice->offer_id);
@@ -129,11 +128,15 @@ class Kernel extends ConsoleKernel
         $schedule->call(function() {
             foreach (User::where('active',true)->whereNotNull('confirmed_mail')->whereNull('banned')->get() as $user) {
                 if ($user->isAlmostDue()) {
+                    if (UserGroup::find($user->user_group)->subscription_amount == 0)
+                        continue;
+
                     $data = array(
                         'email' => $user->email,
                         'firstname' => $user->firstname,
                         'lastname' => $user->lastname
                     );
+
                     Mailgun::send('mail.due', $data, function($message) use ($data) {
                         $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
                         $message->subject('CalculatieTool.com - Account verlengen');

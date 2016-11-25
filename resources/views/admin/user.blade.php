@@ -27,11 +27,11 @@ if (Input::has('group')) {
 ?>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		setInterval(function() {
-			location.reload();
-		}, 60000);
-	})
+$(document).ready(function() {
+	setInterval(function() {
+		location.reload();
+	}, 60000);
+})
 </script>
 <div id="wrapper">
 
@@ -53,21 +53,29 @@ if (Input::has('group')) {
 				@else
 					<a class="btn btn-primary" href="?all=1">Alle gebruikers</a>
 				@endif
+				<a href="/admin/user/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuwe gebruiker</a>
 			</div>
 
 			<?php
 			if ($all) {
-				$selection = \Calctool\Models\User::orderBy('updated_at','desc')->get();
+				$selection_today = \Calctool\Models\User::whereRaw("\"updated_at\" > NOW() - '1 day'::INTERVAL")->orderBy('updated_at','desc')->get();
+				$selection_week = \Calctool\Models\User::whereRaw("\"updated_at\" < NOW() - '1 day'::INTERVAL")->whereRaw("\"updated_at\" > NOW() - '1 week'::INTERVAL")->orderBy('updated_at','desc')->get();
+				$selection_other = \Calctool\Models\User::whereRaw("\"updated_at\" < NOW() - '1 week'::INTERVAL")->orderBy('updated_at','desc')->get();
 			} else if (!empty($group)) {
-				$selection = \Calctool\Models\User::where('user_group',$group)->get();
+				$selection_today = \Calctool\Models\User::where('user_group', $group)->whereRaw("\"updated_at\" > NOW() - '1 day'::INTERVAL")->orderBy('updated_at','desc')->get();
+				$selection_week = \Calctool\Models\User::where('user_group', $group)->whereRaw("\"updated_at\" < NOW() - '1 day'::INTERVAL")->whereRaw("\"updated_at\" > NOW() - '1 week'::INTERVAL")->orderBy('updated_at','desc')->get();
+				$selection_other = \Calctool\Models\User::where('user_group', $group)->whereRaw("\"updated_at\" < NOW() - '1 week'::INTERVAL")->orderBy('updated_at','desc')->get();
 			} else {
-				$selection = \Calctool\Models\User::where('active','=','true')->orderBy('updated_at','desc')->get();
+				$selection_today = \Calctool\Models\User::where('active','true')->whereRaw("\"updated_at\" > NOW() - '1 day'::INTERVAL")->orderBy('updated_at','desc')->get();
+				$selection_week = \Calctool\Models\User::where('active','true')->whereRaw("\"updated_at\" < NOW() - '1 day'::INTERVAL")->whereRaw("\"updated_at\" > NOW() - '1 week'::INTERVAL")->orderBy('updated_at','desc')->get();
+				$selection_other = \Calctool\Models\User::where('active','true')->whereRaw("\"updated_at\" < NOW() - '1 week'::INTERVAL")->orderBy('updated_at','desc')->get();
 			}
 			?>
 
-			<h2><strong>{{ ($all ? 'Alle' : ($group ? 'Groep' : 'Actieve')) }} gebruikers ({{ count($selection) }})</strong></h2>
+			<h2><strong>{{ ($all ? 'Alle' : ($group ? 'Groep' : 'Actieve')) }} gebruikers ({{ count($selection_today) + count($selection_week) + count($selection_other) }})</strong></h2>
 
 			<div class="white-row">
+			<h4>Vandaag ({{ count($selection_today) }})</h4>
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -82,7 +90,7 @@ if (Input::has('group')) {
 				</thead>
 
 				<tbody>
-				@foreach ($selection as $users)
+				@foreach ($selection_today as $users)
 					<tr>
 						<td class="col-md-1 hidden-xs"><a href="{{ '/admin/user-'.$users->id.'/edit' }}">{{ $users->id }}</a></td>
 						<td class="col-md-2"><a href="{{ '/admin/user-'.$users->id.'/edit' }}"><?php
@@ -100,11 +108,72 @@ if (Input::has('group')) {
 				@endforeach
 				</tbody>
 			</table>
-			<div class="row">
-				<div class="col-md-12">
-					<a href="/admin/user/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuwe gebruiker</a>
-				</div>
-			</div>
+			<h4>Deze week ({{ count($selection_week) }})</h4>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th class="col-md-1 hidden-xs">ID</th>
+						<th class="col-md-2">Gebruikersnaam</th>
+						<th class="col-md-2">Actief</th>
+						<th class="col-md-3 hidden-xs">Email</th>
+						<th class="col-md-1 hidden-sm hidden-xs">Status</th>
+						<th class="col-md-1 hidden-sm hidden-xs">Type</th>
+						<th class="col-md-2 hidden-sm hidden-xs">Group</th>
+					</tr>
+				</thead>
+
+				<tbody>
+				@foreach ($selection_week as $users)
+					<tr>
+						<td class="col-md-1 hidden-xs"><a href="{{ '/admin/user-'.$users->id.'/edit' }}">{{ $users->id }}</a></td>
+						<td class="col-md-2"><a href="{{ '/admin/user-'.$users->id.'/edit' }}"><?php
+							echo $users->username;
+							if ($users->firstname != $users->username) {
+								echo ' (' . $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '') . ')';
+							}
+						?></a></td>
+						<td class="col-md-2">{{ $users->currentStatus() }}</td>
+						<td class="col-md-3 hidden-xs">{{ $users->email }}</td>
+						<td class="col-md-1 hidden-sm hidden-xs">{{ userStatus($users) }}</td>
+						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>
+						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserGroup::find($users->user_group)->name) }}</td>
+					</tr>
+				@endforeach
+				</tbody>
+			</table>
+			<h4>Eerder ({{ count($selection_other) }})</h4>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th class="col-md-1 hidden-xs">ID</th>
+						<th class="col-md-2">Gebruikersnaam</th>
+						<th class="col-md-2">Actief</th>
+						<th class="col-md-3 hidden-xs">Email</th>
+						<th class="col-md-1 hidden-sm hidden-xs">Status</th>
+						<th class="col-md-1 hidden-sm hidden-xs">Type</th>
+						<th class="col-md-2 hidden-sm hidden-xs">Group</th>
+					</tr>
+				</thead>
+
+				<tbody>
+				@foreach ($selection_other as $users)
+					<tr>
+						<td class="col-md-1 hidden-xs"><a href="{{ '/admin/user-'.$users->id.'/edit' }}">{{ $users->id }}</a></td>
+						<td class="col-md-2"><a href="{{ '/admin/user-'.$users->id.'/edit' }}"><?php
+							echo $users->username;
+							if ($users->firstname != $users->username) {
+								echo ' (' . $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '') . ')';
+							}
+						?></a></td>
+						<td class="col-md-2">{{ $users->currentStatus() }}</td>
+						<td class="col-md-3 hidden-xs">{{ $users->email }}</td>
+						<td class="col-md-1 hidden-sm hidden-xs">{{ userStatus($users) }}</td>
+						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>
+						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserGroup::find($users->user_group)->name) }}</td>
+					</tr>
+				@endforeach
+				</tbody>
+			</table>
 			</div>
 		</div>
 

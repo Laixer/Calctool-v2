@@ -108,6 +108,10 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('myaccount', function() {
 		return view('user.myaccount');
 	});
+	Route::get('import', function() {
+		return view('base.import');
+	});
+	Route::post('import/save', 'AppsController@doImportRelation');
 	Route::get('myaccount/deactivate', 'UserController@getMyAccountDeactivate');
 	Route::get('myaccount/loaddemo', 'UserController@doLoadDemoProject');
 	Route::get('myaccount/oauth/session/{client_id}/revoke', 'UserController@doRevokeApp');
@@ -430,6 +434,9 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 	});
 	Route::get('product', function() {
 		return view('admin.product');
+	});
+	Route::get('auditlog', function() {
+		return view('admin.audit');
 	});
 	Route::post('product/upload', 'AdminController@doUploadCSV');
 	Route::get('application/{client_id}/delete', 'AdminController@doDeleteApplication');

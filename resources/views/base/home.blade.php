@@ -245,12 +245,18 @@ $relation = Relation::find(Auth::user()->self_id);
 
 						</div>
 						@else
-						<h2><strong>De eerste</strong> stappen...</h2>
-						<div class="bs-callout text-center whiteBg">
+						<h2><strong>De eerste</strong> stap... </h2>
+						<div class="bs-callout text-center whiteBg" style="margin:0">
 							<h3>			
-								<a href="/project/new" class="btn btn-primary btn-lg">Start nieuw project</a>
-								<strong>OF</strong>
-								<a href="/mycompany" class="btn btn-primary btn-lg">Maak je bedrijfsgegevens compleet</a>
+<!-- 								<a href="/mycompany" class="btn btn-primary btn-lg">Bedrijfsgegevens aanvullen</a>
+
+								<i class="fa fa-arrow-right"></i>
+
+								<a href="/import" class="btn btn-primary btn-lg">Contacten importeren</a>
+
+								<i class="fa fa-arrow-right"></i> -->
+
+								<a href="/project/new" class="btn btn-primary btn-lg">Maak je eerste project aan <i class="fa fa-arrow-right"></i></a>
 							</h3>
 						</div>
 						@endif
