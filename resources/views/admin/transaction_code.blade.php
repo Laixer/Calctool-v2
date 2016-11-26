@@ -4,8 +4,8 @@
 
 @section('content')
 <?php
-$mollie = new Mollie_API_Client;
-$mollie->setApiKey($_ENV['MOLLIE_API']);
+$mollie = new \Mollie_API_Client;
+$mollie->setApiKey(config('services.mollie.key'));
 
 $payment = $mollie->payments->get(Route::Input('transcode'));
 ?>
