@@ -179,33 +179,47 @@ class UserController extends Controller {
 
 	public function doPaymentUpdate(Request $request)
 	{
-		$order = Payment::where('transaction', $request->get('id'))->where('status', 'open')->first();
-		if (!$order) {
-			return;
-		}
-
 		$mollie = new \Mollie_API_Client;
 		$mollie->setApiKey(config('services.mollie.key'));
 
-		$payment = $mollie->payments->get($order->transaction);
-		if ($payment->metadata->token != $order->token)
-			return;
+		$payment = $mollie->payments->get($request->get('id'));
+		if ($payment->subscriptionId && $payment->recurringType) {
+			$order = new Payment;
+			$order->transaction = $payment->id;
+			$order->token = sha1(mt_rand().time());
+			$order->amount = $payment->amount;
+			$order->status = $payment->status;
+			$order->increment = $payment->metadata->incr;
+			$order->description = $payment->description;
+			$order->method = $payment->method;
+			$order->recurring_type = $payment->recurringType;
+			$order->user_id = $payment->metadata->uid;
+			$order->save();
+		} else {
+			$order = Payment::where('transaction', $payment->id)->where('status', 'open')->whereNull('recurring_type')->first();
+			if (!$order) {
+				return;
+			}
 
-		if ($payment->metadata->uid != $order->user_id)
-			return;
+			if ($payment->metadata->token != $order->token)
+				return;
 
-		$order->status = $payment->status;
-		$order->method = $payment->method;
-		$order->save();
+			if ($payment->metadata->uid != $order->user_id)
+				return;
+
+			$order->status = $payment->status;
+			$order->method = $payment->method;
+			$order->save();
+		}
 
 		if ($payment->isPaid()) {
-			$user = User::find($order->user_id);
+			$user = User::find($payment->metadata->uid);
 			$expdate = $user->expiration_date;
-			$user->expiration_date = date('Y-m-d', strtotime("+".$order->increment." month", strtotime($expdate)));
+			$user->expiration_date = date('Y-m-d', strtotime("+" . $payment->metadata->incr . " month", strtotime($expdate)));
 
 			$user->save();
 
-			$data = array('email' => $user->email, 'amount' => number_format($order->amount, 2,",","."), 'expdate' => date('j F Y', strtotime($user->expiration_date)), 'firstname' => $user->firstname, 'lastname' => $user->lastname);
+			$data = array('email' => $user->email, 'amount' => number_format($payment->amount, 2,",","."), 'expdate' => date('j F Y', strtotime($user->expiration_date)), 'firstname' => $user->firstname, 'lastname' => $user->lastname);
 			Mailgun::send('mail.paid', $data, function($message) use ($data) {
 				$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 				$message->subject('CalculatieTool.com - Abonnement verlengd');
