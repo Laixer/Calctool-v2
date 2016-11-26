@@ -58,16 +58,16 @@ $(document).ready(function() {
 
 			<?php
 			if ($all) {
-				$selection_today = \Calctool\Models\User::whereRaw("\"updated_at\" > NOW() - '1 day'::INTERVAL")->orderBy('updated_at','desc')->get();
-				$selection_week = \Calctool\Models\User::whereRaw("\"updated_at\" < NOW() - '1 day'::INTERVAL")->whereRaw("\"updated_at\" > NOW() - '1 week'::INTERVAL")->orderBy('updated_at','desc')->get();
+				$selection_today = \Calctool\Models\User::whereRaw("DATE(updated_at) = current_date")->orderBy('updated_at','desc')->get();
+				$selection_week = \Calctool\Models\User::whereRaw("DATE(updated_at) < current_date")->whereRaw("\"updated_at\" > NOW() - '1 week'::INTERVAL")->orderBy('updated_at','desc')->get();
 				$selection_other = \Calctool\Models\User::whereRaw("\"updated_at\" < NOW() - '1 week'::INTERVAL")->orderBy('updated_at','desc')->get();
 			} else if (!empty($group)) {
-				$selection_today = \Calctool\Models\User::where('user_group', $group)->whereRaw("\"updated_at\" > NOW() - '1 day'::INTERVAL")->orderBy('updated_at','desc')->get();
-				$selection_week = \Calctool\Models\User::where('user_group', $group)->whereRaw("\"updated_at\" < NOW() - '1 day'::INTERVAL")->whereRaw("\"updated_at\" > NOW() - '1 week'::INTERVAL")->orderBy('updated_at','desc')->get();
+				$selection_today = \Calctool\Models\User::where('user_group', $group)->whereRaw("\"DATE(updated_at) = current_date")->orderBy('updated_at','desc')->get();
+				$selection_week = \Calctool\Models\User::where('user_group', $group)->whereRaw("DATE(updated_at) < current_date")->whereRaw("\"updated_at\" > NOW() - '1 week'::INTERVAL")->orderBy('updated_at','desc')->get();
 				$selection_other = \Calctool\Models\User::where('user_group', $group)->whereRaw("\"updated_at\" < NOW() - '1 week'::INTERVAL")->orderBy('updated_at','desc')->get();
 			} else {
-				$selection_today = \Calctool\Models\User::where('active','true')->whereRaw("\"updated_at\" > NOW() - '1 day'::INTERVAL")->orderBy('updated_at','desc')->get();
-				$selection_week = \Calctool\Models\User::where('active','true')->whereRaw("\"updated_at\" < NOW() - '1 day'::INTERVAL")->whereRaw("\"updated_at\" > NOW() - '1 week'::INTERVAL")->orderBy('updated_at','desc')->get();
+				$selection_today = \Calctool\Models\User::where('active','true')->whereRaw("DATE(updated_at) = current_date")->orderBy('updated_at','desc')->get();
+				$selection_week = \Calctool\Models\User::where('active','true')->whereRaw("DATE(updated_at) < current_date")->whereRaw("\"updated_at\" > NOW() - '1 week'::INTERVAL")->orderBy('updated_at','desc')->get();
 				$selection_other = \Calctool\Models\User::where('active','true')->whereRaw("\"updated_at\" < NOW() - '1 week'::INTERVAL")->orderBy('updated_at','desc')->get();
 			}
 			?>

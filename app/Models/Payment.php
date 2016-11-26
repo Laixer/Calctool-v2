@@ -24,4 +24,14 @@ class Payment extends Model {
 				return $this->status;
 		}
 	}
+
+	public function getTypeName() {
+		switch ($this->recurring_type) {
+			case 'first':
+				return 'Eerste abonnements betaling';
+			
+			default:
+				return 'Eenmalige afschrijving';
+		}
+	}
 }

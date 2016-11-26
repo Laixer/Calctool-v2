@@ -71,7 +71,20 @@ $(document).ready(function() {
 		}
 	});
 
-	$("[name='pref_use_ct_numbering']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+	$("[name='payment_mandate']")
+		.bootstrapSwitch({onText: 'Ja',offText: 'Nee'})
+		.on('switchChange.bootstrapSwitch', function(event, state) {
+		  if (state) {
+		  	$('#mandate').show();
+		  	$('#payperclick').hide();
+		  	$('#payment_url').attr('href', '/payment?auto=1');
+		  } else {
+			$('#mandate').hide();
+		  	$('#payperclick').show();
+		  	$('#payment_url').attr('href', '/payment');
+		}
+	});
+	
 	$('#acc-deactive').click(function(e){
 		e.preventDefault();
 		location.href = '/myaccount/deactivate?reason=' + $('#reason').val();
@@ -111,10 +124,19 @@ $(document).ready(function() {
 				</div>
 				@endif
 
-				<div class="bs-callout text-center styleBackground nomargin-top">
-					<h2>Verleng met een maand voor &euro; <strong id="currprice">{{ number_format(UserGroup::find($user->user_group)->subscription_amount, 2,",",".") }}</strong></h2>
+				<div class="bs-callout text-center styleBackground nomargin">
+					<h2 id="payperclick" style="display:none;">Verleng met &eacute;&eacute;n maand voor &euro; <strong id="currprice">{{ number_format(UserGroup::find($user->user_group)->subscription_amount, 2,",",".") }}</strong></h2>
+					<h2 id="mandate">Elke maand automatisch voor &euro; <strong id="currprice">{{ number_format(UserGroup::find($user->user_group)->subscription_amount, 2,",",".") }}</strong></h2>
 				</div>
+
+				<br />
 				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<label for="payment_mandate" style="display:block;"><strong>Automatisch verlengen</strong></label>
+							<input name="payment_mandate" type="checkbox" checked>
+						</div>
+					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="promocode">Promotiecode</label>
@@ -129,7 +151,35 @@ $(document).ready(function() {
 
 			<div class="modal-footer">
 				<div class="col-md-12">
-					<a href="/payment" class="btn btn-primary"><i class="fa fa-check"></i> Betalen</a>
+					<a id="payment_url" href="/payment?auto=1" class="btn btn-primary"><i class="fa fa-check"></i> Betalen</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="paymentModalUpdate" tabindex="-1" role="dialog" aria-labelledby="paymentModalUpdate" aria-hidden="true">
+	<div class="modal-dialog modal-dialog">
+		<div class="modal-content">
+
+			<div class="modal-body">
+				@if (count($errors) > 0)
+				<div class="alert alert-danger">
+					<i class="fa fa-frown-o"></i>
+					<strong>Fout</strong>
+					@foreach ($errors->all() as $error)
+						{{ $error }}
+					@endforeach
+				</div>
+				@endif
+
+				<div class="bs-callout text-center styleBackground nomargin-top">
+					<h2>{{ $user->monthsBehind() }} Maanden bijwerken voor &euro; <strong id="currprice">{{ number_format(3 * UserGroup::find($user->user_group)->subscription_amount, 2,",",".") }}</strong></h2>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<div class="col-md-12">
+					<a href="/payment?incr={{ $user->monthsBehind() }}" class="btn btn-primary"><i class="fa fa-check"></i> Betalen</a>
 				</div>
 			</div>
 		</div>
@@ -334,8 +384,14 @@ $(document).ready(function() {
 								<a href="#" data-toggle="modal" data-target="#deactivateModal" class="btn btn-danger">Account deactiveren</a>
 								@if (UserGroup::find(Auth::user()->user_group)->subscription_amount == 0)
 								<a href="/payment/increasefree" class="btn btn-primary">Abonnement verlengen</a>
+								@elseif ($user->hasPayed())
+								@if (Auth::user()->payment_subscription_id)
+								<a href="/payment/subscription/cancel" class="btn btn-primary">Abonnement stoppen</a>
 								@else
 								<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#paymentModal">Abonnement verlengen</a>
+								@endif
+								@else
+								<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#paymentModalUpdate">Abonnement bijwerken</a>
 								@endif
 							</div>
 							@endif
@@ -352,10 +408,11 @@ $(document).ready(function() {
 								<thead>
 									<tr>
 										<th class="col-md-2">Datum</th>
-										<th class="col-md-2">Bedrag</th>
-										<th class="col-md-2">Status</th>
+										<th class="col-md-1">Bedrag</th>
+										<th class="col-md-1">Status</th>
+										<th class="col-md-3">Type</th>
 										<th class="col-md-4">Omschrijving</th>
-										<th class="col-md-2">Betalingswijze</th>
+										<th class="col-md-1">Betalingswijze</th>
 									</tr>
 								</thead>
 
@@ -363,10 +420,11 @@ $(document).ready(function() {
 									@foreach (Calctool\Models\Payment::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $order)
 									<tr>
 										<td class="col-md-2"><strong>{{ date('d-m-Y H:i:s', strtotime(DB::table('payment')->select('created_at')->where('id','=',$order->id)->get()[0]->created_at)) }}</strong></td>
-										<td class="col-md-2">{{ '&euro; '.number_format($order->amount, 2,",",".") }}</td>
-										<td class="col-md-2">{{ $order->getStatusName() }}</td>
+										<td class="col-md-1">{{ '&euro; '.number_format($order->amount, 2,",",".") }}</td>
+										<td class="col-md-1">{{ $order->getStatusName() }}</td>
+										<td class="col-md-3">{{ $order->getTypeName() }}</td>
 										<td class="col-md-4">{{ $order->description }}</td>
-										<td class="col-md-2">{{ $order->method ? $order->method : '-' }}</td>
+										<td class="col-md-1">{{ $order->method ? $order->method : '-' }}</td>
 									</tr>
 									@endforeach
 								</tbody>

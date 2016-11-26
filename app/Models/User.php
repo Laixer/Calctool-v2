@@ -76,6 +76,15 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 		return str_replace($en_months, $nl_months, $date);
 	}
 
+	public function monthsBehind() {
+		$d1 = new \DateTime($this->registration_date);
+		$d2 = new \DateTime();
+
+		$interval = $d2->diff($d1);
+
+		return $interval->format('%m');
+	}
+
 	public function isOnline() {
 		return $this->updated_at->diffInSeconds() < 60;
 	}
