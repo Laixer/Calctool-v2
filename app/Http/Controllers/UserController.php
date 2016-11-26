@@ -239,10 +239,10 @@ class UserController extends Controller {
 		$mollie->setApiKey(config('services.mollie.key'));
 
 		$subscription = $mollie->customers_subscriptions->withParentId(Auth::user()->payment_customer_id)->create([
-			"amount"      => $order->amount,
-			"times"       => 2,
-			"interval"    => "1 day",
-			"description" => "Maandelijkse abonnement CalculatieTool.com",
+			"amount"		=> $order->amount,
+			"times"			=> 2,
+			"interval"		=> "1 day",
+			"description"	=> "Maandelijkse abonnement CalculatieTool.com",
 			"webhookUrl"	=> url('payment/webhook/'),
 			"metadata"		=> [
 				"token"		=> $order->token,
@@ -585,11 +585,6 @@ class UserController extends Controller {
 			$user->invoicenumber_prefix = $request->get('invoicenumber_prefix');
 		if ($request->get('administration_cost') != "")
 			$user->administration_cost = str_replace(',', '.', str_replace('.', '' , $request->get('administration_cost')));
-
-		if (session()->has('swap_session')) {
-			$user->timestamps = false;
-		}
-
 		$user->save();
 
 		Audit::CreateEvent('account.preference.update.success', 'Account preferences updated');
