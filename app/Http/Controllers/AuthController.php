@@ -305,8 +305,9 @@ class AuthController extends Controller {
 		if ($user->confirmed_mail) {
 			return redirect('login')->withErrors(['activate' => ['Account is al geactiveerd']]);
 		}
-		$user->confirmed_mail = date('Y-m-d H:i:s');
+		$user->confirmed_mail = DB::raw('NOW()');
 		$user->reset_token = null;
+		$user->active = true;
 		$user->save();
 
 		\VoorbeeldRelatieTemplate::setup($user->id);
