@@ -388,10 +388,10 @@ $(document).ready(function() {
 								@if (Auth::user()->payment_subscription_id)
 								<a href="/payment/subscription/cancel" class="btn btn-primary">Abonnement stoppen</a>
 								@else
-								<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#paymentModal">Abonnement verlengen</a>
+								<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#paymentModal">Account verlengen</a>
 								@endif
 								@else
-								<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#paymentModalUpdate">Abonnement bijwerken</a>
+								<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#paymentModalUpdate">Account bijwerken</a>
 								@endif
 							</div>
 							@endif
