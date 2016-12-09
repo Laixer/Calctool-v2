@@ -372,7 +372,7 @@ class AuthController extends Controller {
 
 		$user = User::where('email', $request->get('email'))->first();
 		if (!$user)
-			return redirect('login')->with('success', 1);
+			return redirect('login')->with('success', 'Reset instructies zijn verzonden');
 		$user->reset_token = sha1(mt_rand());
 
 		$data = array(
@@ -392,7 +392,7 @@ class AuthController extends Controller {
 
 		Audit::CreateEvent('auth.reset.password.mail.success', 'Reset with: ' . \Calctool::remoteAgent(), $user->id);
 
-		return redirect('login')->with('success', 1);
+		return redirect('login')->with('success', 'Reset instructies zijn verzonden');
 	}
 
 	/**
