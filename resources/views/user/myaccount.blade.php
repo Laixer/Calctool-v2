@@ -71,7 +71,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$("[name='payment_mandate']")
+	/*$("[name='payment_mandate']")
 		.bootstrapSwitch({onText: 'Ja',offText: 'Nee'})
 		.on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
@@ -83,7 +83,7 @@ $(document).ready(function() {
 		  	$('#payperclick').show();
 		  	$('#payment_url').attr('href', '/payment');
 		}
-	});
+	});*/
 	
 	$('#acc-deactive').click(function(e){
 		e.preventDefault();
@@ -125,18 +125,18 @@ $(document).ready(function() {
 				@endif
 
 				<div class="bs-callout text-center styleBackground nomargin">
-					<h2 id="payperclick" style="display:none;">Verleng met &eacute;&eacute;n maand voor &euro; <strong id="currprice">{{ number_format(UserGroup::find($user->user_group)->subscription_amount, 2,",",".") }}</strong></h2>
-					<h2 id="mandate">Elke maand automatisch voor &euro; <strong id="currprice">{{ number_format(UserGroup::find($user->user_group)->subscription_amount, 2,",",".") }}</strong></h2>
+					<h2 id="payperclick">Verleng met &eacute;&eacute;n maand voor &euro; <strong id="currprice">{{ number_format(UserGroup::find($user->user_group)->subscription_amount, 2,",",".") }}</strong></h2>
+					<h2 id="mandate" style="display:none;">Elke maand automatisch voor &euro; <strong id="currprice">{{ number_format(UserGroup::find($user->user_group)->subscription_amount, 2,",",".") }}</strong></h2>
 				</div>
 
 				<br />
 				<div class="row">
-					<div class="col-md-12">
+					<!-- <div class="col-md-12">
 						<div class="form-group">
 							<label for="payment_mandate" style="display:block;"><strong>Automatisch verlengen</strong></label>
 							<input name="payment_mandate" type="checkbox" checked>
 						</div>
-					</div>
+					</div> -->
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="promocode">Promotiecode</label>
@@ -151,7 +151,7 @@ $(document).ready(function() {
 
 			<div class="modal-footer">
 				<div class="col-md-12">
-					<a id="payment_url" href="/payment?auto=1" class="btn btn-primary"><i class="fa fa-check"></i> Betalen</a>
+					<a id="payment_url" href="/payment" class="btn btn-primary"><i class="fa fa-check"></i> Betalen</a>
 				</div>
 			</div>
 		</div>
