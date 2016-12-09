@@ -132,6 +132,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('payment/order/{token}', 'UserController@getPaymentFinish')->where('token', '[0-9a-z]{40}');
 	Route::post('payment/promocode', 'UserController@doCheckPromotionCode');
 	Route::get('payment/increasefree', 'UserController@getPaymentFree');
+	Route::get('payment/subscription/cancel', 'UserController@getSubscriptionCancel');
 
 	/* Actions by calculation */
 	Route::post('calculation/newchapter/{project_id}', 'CalcController@doNewChapter')->where('project_id', '[0-9]+');

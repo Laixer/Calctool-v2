@@ -68,14 +68,21 @@ class UserController extends Controller {
 			$errors = new MessageBag(['status' => ['Callback niet mogelijk op local dev']]);
 			return redirect('myaccount')->withErrors($errors);
 		}
+		
+		$mollie = new \Mollie_API_Client;
+		$mollie->setApiKey(config('services.mollie.key'));
 
-		$amount = UserGroup::find(Auth::user()->user_group)->subscription_amount;
-		$description = 'Verleng met een maand';
 		$increment_months = 1;
+		if ($request->has('incr')) {
+			$increment_months = $request->get('incr');
+		}
+
+		$amount = $increment_months * UserGroup::find(Auth::user()->user_group)->subscription_amount;
+		$description = 'Verleng met ' . $increment_months . ' maand(en)';
 		$promo_id = -1;
 
 		if (Redis::exists('promo:'.Auth::user()->username)) {
-			$promo = Promotion::find(Redis::get('promo:'.Auth::user()->username));
+			$promo = Promotion::find(Redis::get('promo:' . Auth::user()->username));
 			if ($promo) {
 				$amount = $promo->amount;
 				$description .= ' Actie:' . $promo->name;
@@ -84,25 +91,38 @@ class UserController extends Controller {
 			}
 		}
 
-		$mollie = new \Mollie_API_Client;
-		$mollie->setApiKey(config('services.mollie.key'));
-
 		$token = sha1(mt_rand().time());
 
 		try {
-			$payment = $mollie->payments->create(array(
-				"amount"		=> $amount,
-				"description"	=> $description,
+			$payment_object = [
+				'amount'        => $amount,
+				'description'   => $description,
 				"locale"		=> 'nl',
 				"webhookUrl"	=> url('payment/webhook/'),
-				"redirectUrl"	=> url('payment/order/'.$token),
-				"metadata"		=> array(
+				'redirectUrl'   => url('payment/order/' . $token),
+				"metadata"		=> [
 					"token"		=> $token,
 					"uid"		=> Auth::id(),
 					"incr"		=> $increment_months,
-					"promo"		=> $promo_id,
-				),
-			));
+				],
+			];
+
+			if ($request->has('auto') && !Auth::user()->payment_subscription_id) {
+				if (!Auth::user()->payment_customer_id) {
+					$customer = $mollie->customers->create([
+						"name"  => Auth::user()->username,
+						"email" => Auth::user()->email,
+					]);
+
+					Auth::user()->payment_customer_id = $customer->id;
+					Auth::user()->save();
+				}
+				
+				$payment_object['customerId'] = Auth::user()->payment_customer_id;
+				$payment_object['recurringType'] = 'first';
+			}
+
+			$payment = $mollie->payments->create($payment_object);
 		} catch (\Mollie_API_Exception $e) {
 			Audit::CreateEvent('account.payment.initiated.failed', 'Create payment failed with ' . $e->getMessage());
 
@@ -118,6 +138,8 @@ class UserController extends Controller {
 		$order->increment = $increment_months;
 		$order->description = $description;
 		$order->method = '';
+		if (isset($payment_object['recurringType']))
+			$order->recurring_type = $payment_object['recurringType'];
 		$order->user_id = Auth::id();
 		$order->save();
 
@@ -157,37 +179,47 @@ class UserController extends Controller {
 
 	public function doPaymentUpdate(Request $request)
 	{
-		$order = Payment::where('transaction','=',$request->get('id'))->where('status','=','open')->first();
-		if (!$order) {
-			return;
-		}
-
 		$mollie = new \Mollie_API_Client;
 		$mollie->setApiKey(config('services.mollie.key'));
 
-		$payment = $mollie->payments->get($order->transaction);
-		if ($payment->metadata->token != $order->token)
-			return;
+		$payment = $mollie->payments->get($request->get('id'));
+		if ($payment->subscriptionId && $payment->recurringType) {
+			$order = new Payment;
+			$order->transaction = $payment->id;
+			$order->token = sha1(mt_rand().time());
+			$order->amount = $payment->amount;
+			$order->status = $payment->status;
+			$order->increment = $payment->metadata->incr;
+			$order->description = $payment->description;
+			$order->method = $payment->method;
+			$order->recurring_type = $payment->recurringType;
+			$order->user_id = $payment->metadata->uid;
+			$order->save();
+		} else {
+			$order = Payment::where('transaction', $payment->id)->where('status', 'open')->whereNull('recurring_type')->first();
+			if (!$order) {
+				return;
+			}
 
-		if ($payment->metadata->uid != $order->user_id)
-			return;
+			if ($payment->metadata->token != $order->token)
+				return;
 
-		if ($payment->metadata->promo != -1) {
-			$order->promotion_id = $payment->metadata->promo;
+			if ($payment->metadata->uid != $order->user_id)
+				return;
+
+			$order->status = $payment->status;
+			$order->method = $payment->method;
+			$order->save();
 		}
 
-		$order->status = $payment->status;
-		$order->method = $payment->method;
-		$order->save();
-
 		if ($payment->isPaid()) {
-			$user = User::find($order->user_id);
+			$user = User::find($payment->metadata->uid);
 			$expdate = $user->expiration_date;
-			$user->expiration_date = date('Y-m-d', strtotime("+".$order->increment." month", strtotime($expdate)));
+			$user->expiration_date = date('Y-m-d', strtotime("+" . $payment->metadata->incr . " month", strtotime($expdate)));
 
 			$user->save();
 
-			$data = array('email' => $user->email, 'amount' => number_format($order->amount, 2,",","."), 'expdate' => date('j F Y', strtotime($user->expiration_date)), 'firstname' => $user->firstname, 'lastname' => $user->lastname);
+			$data = array('email' => $user->email, 'amount' => number_format($payment->amount, 2,",","."), 'expdate' => date('j F Y', strtotime($user->expiration_date)), 'firstname' => $user->firstname, 'lastname' => $user->lastname);
 			Mailgun::send('mail.paid', $data, function($message) use ($data) {
 				$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 				$message->subject('CalculatieTool.com - Abonnement verlengd');
@@ -201,9 +233,31 @@ class UserController extends Controller {
 		return response()->json(['success' => 1]);
 	}
 
+	public function setupSubscription($order)
+	{
+		$mollie = new \Mollie_API_Client;
+		$mollie->setApiKey(config('services.mollie.key'));
+
+		$subscription = $mollie->customers_subscriptions->withParentId(Auth::user()->payment_customer_id)->create([
+			"amount"		=> $order->amount,
+			"times"			=> 2,
+			"interval"		=> "1 day",
+			"description"	=> "Maandelijkse abonnement CalculatieTool.com",
+			"webhookUrl"	=> url('payment/webhook/'),
+			"metadata"		=> [
+				"token"		=> $order->token,
+				"uid"		=> Auth::id(),
+				"incr"		=> 1,
+			],
+		]);
+
+		Auth::user()->payment_subscription_id = $subscription->id;
+		Auth::user()->save();
+	}
+
 	public function getPaymentFinish(Request $request, $token)
 	{
-		$order = Payment::where('token','=',$token)->first();
+		$order = Payment::where('token', $token)->first();
 		if (!$order) {
 			$errors = new MessageBag(['status' => ['Transactie niet geldig']]);
 			return redirect('myaccount')->withErrors($errors);
@@ -214,6 +268,11 @@ class UserController extends Controller {
 
 		$payment = $mollie->payments->get($order->transaction);
 		if ($payment->isPaid()) {
+			if ($payment->mandateId && $payment->customerId) {
+				$this->setupSubscription($order, $payment->customerId);
+				return redirect('myaccount')->with('success','Bedankt voor uw betaling, abonnement is ingesteld');
+			}
+
 			return redirect('myaccount')->with('success','Bedankt voor uw betaling');
 		} else if ($payment->isOpen() || $payment->isPending()) {
 			return redirect('myaccount')->with('success','Betaling is nog niet bevestigd, dit kan enkele dagen duren. Uw heeft in deze periode toegang tot uw account');
@@ -231,6 +290,22 @@ class UserController extends Controller {
 
 		$errors = new MessageBag(['status' => ['Transactie niet afgerond ('.$payment->status.')']]);
 		return redirect('myaccount')->withErrors($errors);
+	}
+
+	public function getSubscriptionCancel()
+	{
+		if (!Auth::user()->payment_subscription_id){
+			return back();
+		}
+
+		$mollie = new \Mollie_API_Client;
+		$mollie->setApiKey(config('services.mollie.key'));
+
+		$subscription = $mollie->customers_subscriptions->withParentId(Auth::user()->payment_customer_id)->cancel(Auth::user()->payment_subscription_id);
+		Auth::user()->payment_subscription_id = NULL;
+		Auth::user()->save();
+
+		return back()->with('success', 'Abonnement gestopt');
 	}
 
 	public function doUpdateSecurity(Request $request)
@@ -510,11 +585,6 @@ class UserController extends Controller {
 			$user->invoicenumber_prefix = $request->get('invoicenumber_prefix');
 		if ($request->get('administration_cost') != "")
 			$user->administration_cost = str_replace(',', '.', str_replace('.', '' , $request->get('administration_cost')));
-
-		if (session()->has('swap_session')) {
-			$user->timestamps = false;
-		}
-
 		$user->save();
 
 		Audit::CreateEvent('account.preference.update.success', 'Account preferences updated');

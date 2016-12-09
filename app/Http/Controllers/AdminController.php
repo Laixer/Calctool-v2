@@ -148,7 +148,6 @@ class AdminController extends Controller {
 				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 			});
 
-			$user->timestamps = false;
 			$user->save();
 		}
 
@@ -329,7 +328,6 @@ class AdminController extends Controller {
 		else
 			$user->gender = $request->input('gender');
 
-		$user->timestamps = false;
 		$user->save();
 
 		Audit::CreateEvent('admin.user.update.succces', 'Updated user: ' . $user->username);
@@ -803,7 +801,6 @@ class AdminController extends Controller {
 			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});
 
-		$user->timestamps = false;
 		$user->save();
 
 		Audit::CreateEvent('admin.auth.reset.password.succces', 'Admin send password reset email', $user->id);
@@ -824,7 +821,6 @@ class AdminController extends Controller {
 		$user = User::find($user_id);
 		$user->reset_token = sha1(mt_rand());
 		$user->secret = Hash::make('ABC@123');
-		$user->timestamps = false;
 		$user->save();
 
 		Audit::CreateEvent('admin.auth.reset.password.succces', 'Admin set default password', $user->id);

@@ -10,6 +10,8 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
+use Carbon\Carbon;
+
 class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract {
 
 	use Authenticatable, Authorizable, CanResetPassword;
@@ -76,13 +78,64 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 		return str_replace($en_months, $nl_months, $date);
 	}
 
+	public function monthsBehind() {
+		$d1 = new \DateTime($this->expiration_date);
+		$d2 = new \DateTime();
+
+		$interval = $d2->diff($d1);
+
+		return $interval->format('%m') + 1;
+	}
+
+	public function humanTiming($time) {
+	    $time = time() - $time; // to get the time since that moment
+	    $time = ($time<1)? 1 : $time;
+	    $tokens = array (
+	        31536000 => 'year',
+	        2592000 => 'month',
+	        604800 => 'week',
+	        86400 => 'day',
+	        3600 => 'hour',
+	        60 => 'minute',
+	        1 => 'second'
+	    );
+
+	    $units = NULL;
+	    foreach ($tokens as $unit => $text) {
+	        if ($time < $unit) continue;
+	        $numberOfUnits = floor($time / $unit);
+	        $units = $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'');
+	        break;
+	    }
+
+	    return $units . ' ago';
+	}
+
 	public function isOnline() {
-		return $this->updated_at->diffInSeconds() < 60;
+		if (!$this->online_at)
+			return false;
+
+		$d1 = new \DateTime($this->online_at);
+		$d2 = new \DateTime();
+
+		$diffInSeconds = $d2->getTimestamp() - $d1->getTimestamp();
+		if ($diffInSeconds < 60)
+			return true;
+
+		return false;
 	}
 
 	public function currentStatus() {
-		if ($this->updated_at->diffInSeconds() < 60)
+		if (!$this->online_at)
+			return 'Never';
+		
+		$d1 = new \DateTime($this->online_at);
+		$d2 = new \DateTime();
+
+		$diffInSeconds = $d2->getTimestamp() - $d1->getTimestamp();
+		if ($diffInSeconds < 60)
 			return "Online";
-		return $this->updated_at->diffForHumans();
+
+		return $this->humanTiming($d1->getTimestamp());
 	}
 }
