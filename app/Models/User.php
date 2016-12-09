@@ -79,7 +79,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 	}
 
 	public function monthsBehind() {
-		$d1 = new \DateTime($this->registration_date);
+		$d1 = new \DateTime($this->expiration_date);
 		$d2 = new \DateTime();
 
 		$interval = $d2->diff($d1);
