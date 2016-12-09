@@ -84,7 +84,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
 		$interval = $d2->diff($d1);
 
-		return $interval->format('%m') + 1;
+		return $d1->diff($d2)->m + ($d1->diff($d2)->y*12) + 1;
 	}
 
 	public function humanTiming($time) {
