@@ -227,7 +227,7 @@ class UserController extends Controller {
 				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 			});
 
-			Audit::CreateEvent('account.payment.callback.success', 'Payment ' . $payment->id . ' succeeded');
+			Audit::CreateEvent('account.payment.callback.success', 'Payment ' . $payment->id . ' succeeded', $user->id);
 		}
 
 		return response()->json(['success' => 1]);
