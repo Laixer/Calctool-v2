@@ -20,6 +20,8 @@ $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
 if (!$project || !$project->isOwner())
 	$common_access_error = true;
+
+$type = ProjectType::find($project->type_id);
 ?>
 
 @extends('layout.master')
@@ -104,24 +106,24 @@ if (!$project || !$project->isOwner())
 
 			@include('calc.wizard', array('page' => 'more'))
 
-			<h2><strong>Meerwerk</strong></h2>
+			<h2><strong>{{ $type->type_name == 'regie' ? 'Regiewerk' : 'Meerwerk' }}</strong></h2>
 
 			<div class="tabs nomargin">
 
 				<ul class="nav nav-tabs">
 					<li id="tab-calculate">
 						<a href="#calculate" data-toggle="tab">
-							<i class="fa fa-list"></i> Calculeren
+							<i class="fa fa-list"></i> Calculeren {{ $type->type_name == 'regie' ? 'Regiewerk' : 'Meerwerk' }}
 						</a>
 					</li>
 					<li id="tab-summary">
 						<a href="#summary" data-toggle="tab">
-							<i class="fa fa-align-justify"></i> Uittrekstaat Meerwerk
+							<i class="fa fa-align-justify"></i> Uittrekstaat {{ $type->type_name == 'regie' ? 'Regiewerk' : 'Meerwerk' }}
 						</a>
 					</li>
 					<li id="tab-endresult">
 						<a href="#endresult" data-toggle="tab">
-							<i class="fa fa-check-circle-o"></i> Eindresultaat Meerwerk
+							<i class="fa fa-check-circle-o"></i> Eindresultaat {{ $type->type_name == 'regie' ? 'Regiewerk' : 'Meerwerk' }}
 						</a>
 					</li>
 				</ul>

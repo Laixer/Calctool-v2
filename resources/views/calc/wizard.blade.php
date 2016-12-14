@@ -45,7 +45,7 @@ if ($offer_last && $offer_last->offer_finish)
 <div class="wizard">
 	<a href="/"> Dashboard</a>
 	<a href="/project-{{ $project->id }}/edit" {!! $page=='project' ? 'class="current"' : '' !!} >Project</a>
-	<a href="/more/project-{{ $project->id }}" {!! $page=='more' ? 'class="current"' : ''!!} >Regie</a>
+	<a href="/more/project-{{ $project->id }}" {!! $page=='more' ? 'class="current"' : ''!!} >Regiewerk</a>
 	<a href="/invoice/project-{{ $project->id }}" {!! $page=='invoice' ? 'class="current"' : ''!!} >Factuur</a>
 </div>
 

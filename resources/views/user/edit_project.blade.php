@@ -40,6 +40,7 @@ else {
 		$cntinv = Invoice::where('offer_id',$offer_last->id)->where('invoice_close',true)->count('id');
 	else
 		$cntinv = 0;
+
 }
 
 if($common_access_error){ ?>
@@ -719,6 +720,7 @@ $(document).ready(function() {
 							{!! csrf_field() !!}
 							<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
 
+							@if ($type->type_name != 'regie')
 							<div class="row">
 								<div class="col-md-6">	
 									<div class="col-md-3">
@@ -750,7 +752,8 @@ $(document).ready(function() {
 									</div>
 								</div>
 							</div>
-							<hr>		
+							<hr>
+							@endif
 							<div class="row">
 								<div class="col-md-6">
 									<div class="col-md-3">
@@ -782,6 +785,7 @@ $(document).ready(function() {
 									</div>
 								</div>
 							</div>
+							@if ($type->type_name != 'regie')
 							<hr>
 							<div class="row">
 								<div class="col-md-6">
@@ -815,6 +819,7 @@ $(document).ready(function() {
 									</div>
 								</div>
 							</div>
+							@endif
 
 							<br/>
 							<div class="row">
