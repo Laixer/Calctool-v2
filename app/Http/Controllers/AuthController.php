@@ -29,6 +29,7 @@ use \Mailgun;
 use \Authorizer;
 use \Validator;
 use \DB;
+use \Newsletter;
 
 class AuthController extends Controller {
 
@@ -351,6 +352,11 @@ class AuthController extends Controller {
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
 			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 		});
+
+		Newsletter::subscribe($user->email, [
+			'FNAME' => $user->firstname,
+			'LNAME' => $user->lastname
+		]);
 
 		Audit::CreateEvent('auth.activate.success', 'Activated with: ' . \Calctool::remoteAgent(), $user->id);
 
