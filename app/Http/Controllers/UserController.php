@@ -183,18 +183,31 @@ class UserController extends Controller {
 		$mollie->setApiKey(config('services.mollie.key'));
 
 		$payment = $mollie->payments->get($request->get('id'));
-		if ($payment->subscriptionId && $payment->recurringType) {
-			$order = new Payment;
-			$order->transaction = $payment->id;
-			$order->token = sha1(mt_rand().time());
-			$order->amount = $payment->amount;
-			$order->status = $payment->status;
-			$order->increment = $payment->metadata->incr;
-			$order->description = $payment->description;
-			$order->method = $payment->method;
-			$order->recurring_type = $payment->recurringType;
-			$order->user_id = $payment->metadata->uid;
-			$order->save();
+		if ($payment->recurringType) {
+			switch ($payment->recurringType) {
+				case 'first':
+					$order = Payment::where('transaction', $payment->id)->first();
+					if (!$order) {
+						return;
+					}
+					$order->status = $payment->status;
+					$order->method = $payment->method;
+					$order->save();
+					break;
+				default:
+					$order = new Payment;
+					$order->transaction = $payment->id;
+					$order->token = sha1(mt_rand().time());
+					$order->amount = $payment->amount;
+					$order->status = $payment->status;
+					$order->increment = $payment->metadata->incr;
+					$order->description = $payment->description;
+					$order->method = $payment->method;
+					$order->recurring_type = $payment->recurringType;
+					$order->user_id = $payment->metadata->uid;
+					$order->save();
+					break;
+			}
 		} else {
 			$order = Payment::where('transaction', $payment->id)->where('status', 'open')->whereNull('recurring_type')->first();
 			if (!$order) {
