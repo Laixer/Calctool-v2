@@ -4,10 +4,14 @@
 
 @section('content')
 <?php
-$mollie = new \Mollie_API_Client;
-$mollie->setApiKey(config('services.mollie.key'));
+try {
+	$mollie = new \Mollie_API_Client;
+	$mollie->setApiKey(config('services.mollie.key'));
 
-$payment = $mollie->payments->get(Route::Input('transcode'));
+	$payment = $mollie->payments->get(Route::Input('transcode'));
+} catch (Mollie_API_Exception $e) {
+	exit();
+}
 ?>
 <div id="wrapper">
 
