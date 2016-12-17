@@ -763,7 +763,7 @@ $(document).ready(function() {
 										</div>
 									</div>
 									<div class="col-md-9"  style="padding-top:30px;">
-										<p>Voeg onderaanneming toe aan je calculatie.</p>
+										<p>Voeg onderaanneming toe aan je {{ $type->type_name == 'regie' ? 'regiewerk' : 'calculatie' }}.</p>
 										<ul>
 											<li>Kan na toevoegen niet ongedaan gemaakt worden</li>
 										</ul>
@@ -777,7 +777,7 @@ $(document).ready(function() {
 										</div>
 									</div>
 									<div class="col-md-9" style="padding-top:30px;">
-										<p>Voeg naast arbeid en materiaal een extra calculeerniveau toe aan je calculatie.</p>
+										<p>Voeg naast arbeid en materiaal een extra niveau toe aan je {{ $type->type_name == 'regie' ? 'regiewerk' : 'calculatie' }}.</p>
 										<ul>
 											<li>Bijvoorbeeld voor <i>materieel</i></li>
 											<li>Kan na toevoegen niet ongedaan gemaakt worden</li>

@@ -83,7 +83,6 @@ class ProjectController extends Controller {
 	public function doNew(Request $request)
 	{
 		$validator = $this->validate($request, [
-			'name' => array('required','max:50'),
 			'street' => array('required','max:60'),
 			'address_number' => array('required','alpha_num','max:5'),
 			'zipcode' => array('required','size:6'),
@@ -98,7 +97,6 @@ class ProjectController extends Controller {
 		}
 
 		$project = new \Calctool\Models\Project;
-		$project->project_name = $request->input('name');
 		$project->address_street = $request->input('street');
 		$project->address_number = $request->input('address_number');
 		$project->address_postal = $request->input('zipcode');
@@ -119,6 +117,12 @@ class ProjectController extends Controller {
 		$project->country_id = $request->input('country');
 		$project->type_id = $request->input('type');
 		$project->client_id = $request->input('contractor');
+
+		if (!$request->has('name')) {
+			$project->project_name = 'PROJ-' . date("Ymd-s");
+		} else {
+			$project->project_name = $request->input('name');
+		}
 
 		if (!$project->hour_rate) {
 			$project->hour_rate = 0;

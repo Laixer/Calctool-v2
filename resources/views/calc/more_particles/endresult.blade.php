@@ -308,7 +308,7 @@ $type = ProjectType::find($project->type_id);
 
 	<tbody>
 		<tr>
-			<td class="col-md-5"><strong>Calculatief te factureren meerwerk (excl. BTW)<strong></td>
+			<td class="col-md-5"><strong>Calculatief te factureren {{ $type->type_name == 'regie' ? 'regiewerk' : 'calculatie' }} (excl. BTW)<strong></td>
 			<td class="col-md-2">{{ '&euro; '.number_format(MoreEndresult::totalProject($project), 2, ",",".") }}</td>
 			<td class="col-md-1">&nbsp;</td>
 			<td class="col-md-1">&nbsp;</td>
