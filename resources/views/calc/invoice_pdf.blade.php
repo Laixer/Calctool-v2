@@ -64,7 +64,7 @@ $type = ProjectType::find($project->type_id);
   </head>
 
 
- <body style="background-image: url(http://localhost/images/concept.png);">
+ <body style="background-image: url({{ asset('images/concept.png') }});">
      <header class="clearfix">
         <div id="heading" class="clearfix">
         <table border="0" cellspacing="0" cellpadding="0">
