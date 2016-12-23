@@ -239,6 +239,7 @@ class OfferController extends Controller {
 			foreach ($data['other_contacts'] as $email => $name) {
 				$message->cc($email, strtolower(trim($name)));
 			}
+			$message->bcc($data['email_from'], $data['mycomp']);
 			$message->attach($data['pdf']);
 			if (!empty($data['agreement']))
 				$message->attach($data['agreement']);

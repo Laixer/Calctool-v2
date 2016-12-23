@@ -482,6 +482,7 @@ class InvoiceController extends Controller {
 			foreach ($data['other_contacts'] as $email => $name) {
 				$message->cc($email, strtolower(trim($name)));
 			}
+			$message->bcc($data['email_from'], $data['mycomp']);
 			$message->attach($data['pdf']);
 			$message->subject('Factuur ' . $data['project_name']);
 			$message->from('noreply@calculatietool.com', $data['mycomp']);

@@ -281,6 +281,7 @@ $type = ProjectType::find($project->type_id);
 				<div class="modal-body">
 					<div class="form-horizontal">
 
+						@if($type->type_name != 'regie')
 						  <div class="form-group">
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
@@ -290,6 +291,7 @@ $type = ProjectType::find($project->type_id);
 						      </div>
 						    </div>
 						  </div>
+						  @endif
 						  <div class="form-group">
 						    <div class="col-sm-offset-0 col-sm-12">
 						      <div class="checkbox">
@@ -726,7 +728,6 @@ $type = ProjectType::find($project->type_id);
 						@endif
 						<th class="col-md-1">@if (!$project->tax_reverse) BTW @endif</th>
 						<th class="col-md-1">@if (!$project->tax_reverse) BTW bedrag @endif</th>
-						
 					</tr>
 				</thead>
 				<tbody>
