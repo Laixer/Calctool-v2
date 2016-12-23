@@ -400,7 +400,7 @@ $(document).ready(function() {
 
 						<div class="col-md-5">
 							<div class="form-group">
-								<label for="name">Projectnaam*</label>
+								<label for="name">Projectnaam</label>
 								<input name="name" id="name" type="text" value="{{ Input::old('name') }}" class="form-control" />
 							</div>
 						</div>

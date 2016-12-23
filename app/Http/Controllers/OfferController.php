@@ -104,11 +104,23 @@ class OfferController extends Controller {
 		$offer->offer_total = CalculationEndresult::totalProject($project);
 		$offer->save();
 
-
 		$page = 0;
 		$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.OfferController::getOfferCode($request->input('project_id')).'-offer.pdf';
 		$pdf = PDF::loadView('calc.offer_pdf', ['offer' => $offer]);
-		$pdf->setOption('footer-html', url('/') . '/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
+
+		$relation_self = Relation::find(Auth::User()->self_id);
+		$footer_text = $relation_self->company_name;
+		if ($relation_self->iban)
+			$footer_text .= ' | Rekeningnummer: ' . $relation_self->iban;
+		if ($relation_self->kvk)
+			$footer_text .= ' | KVK: ' . $relation_self->kvk;
+		if ($relation_self->btw)
+			$footer_text .= ' | BTW: ' . $relation_self->btw;
+
+		$pdf->setOption('footer-font-size', 8);
+		$pdf->setOption('footer-left', $footer_text);
+		$pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
+		$pdf->setOption('lowquality', false);
 		$pdf->save('user-content/'.$newname);
 
 		$resource = new Resource;
@@ -239,6 +251,7 @@ class OfferController extends Controller {
 			foreach ($data['other_contacts'] as $email => $name) {
 				$message->cc($email, strtolower(trim($name)));
 			}
+			$message->bcc($data['email_from'], $data['mycomp']);
 			$message->attach($data['pdf']);
 			if (!empty($data['agreement']))
 				$message->attach($data['agreement']);

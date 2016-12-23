@@ -134,7 +134,7 @@ class MoreController extends Controller {
 
 		$chapter = new Chapter;
 		$chapter->chapter_name = $request->get('chapter');
-		$chapter->priority = $last_chaper->priority ? $last_chaper->priority + 1 : 0;
+		$chapter->priority = $last_chaper ? $last_chaper->priority + 1 : 0;
 		$chapter->project_id = $project->id;
 		$chapter->more = true;
 
@@ -330,6 +330,8 @@ class MoreController extends Controller {
 			$_chapter = Chapter::find($_activity->chapter_id);
 			$_project = Project::find($_chapter->project_id);
 			$rate = $_project->hour_rate_more;
+			if (!$rate)
+				$rate = 0;
 		} else {
 			$rate = str_replace(',', '.', str_replace('.', '' , $rate));
 		}

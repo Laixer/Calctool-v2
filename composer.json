@@ -17,7 +17,8 @@
 		"doctrine/dbal": "v2.5.4",
 		"lucadegasperi/oauth2-server-laravel": "5.2.*",
 		"graham-campbell/markdown": "^6.0",
-		"webuni/commonmark-table-extension": "^0.5.0"
+		"webuni/commonmark-table-extension": "^0.5.0",
+		"spatie/laravel-newsletter": "^3.3"
 	},
 	"require-dev": {
 		"fzaninotto/faker": "~1.4",

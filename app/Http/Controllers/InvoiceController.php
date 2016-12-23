@@ -186,7 +186,20 @@ class InvoiceController extends Controller {
 		} else {
 			$pdf = PDF::loadView('calc.invoice_term_pdf', ['invoice' => $invoice_version]);
 		}
-		$pdf->setOption('footer-html', url('/') . '/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
+
+		$relation_self = Relation::find(Auth::User()->self_id);
+		$footer_text = $relation_self->company_name;
+		if ($relation_self->iban)
+			$footer_text .= ' | Rekeningnummer: ' . $relation_self->iban;
+		if ($relation_self->kvk)
+			$footer_text .= ' | KVK: ' . $relation_self->kvk;
+		if ($relation_self->btw)
+			$footer_text .= ' | BTW: ' . $relation_self->btw;
+
+		$pdf->setOption('footer-font-size', 8);
+		$pdf->setOption('footer-left', $footer_text);
+		$pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
+		$pdf->setOption('lowquality', false);
 		$pdf->save('user-content/'.$newname);
 
 		$resource = new Resource;
@@ -350,7 +363,20 @@ class InvoiceController extends Controller {
 		} else {
 			$pdf = PDF::loadView('calc.invoice_term_final_pdf', ['invoice' => $invoice]);
 		}
-		$pdf->setOption('footer-html', url('/') . '/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
+
+		$relation_self = Relation::find(Auth::User()->self_id);
+		$footer_text = $relation_self->company_name;
+		if ($relation_self->iban)
+			$footer_text .= ' | Rekeningnummer: ' . $relation_self->iban;
+		if ($relation_self->kvk)
+			$footer_text .= ' | KVK: ' . $relation_self->kvk;
+		if ($relation_self->btw)
+			$footer_text .= ' | BTW: ' . $relation_self->btw;
+
+		$pdf->setOption('footer-font-size', 8);
+		$pdf->setOption('footer-left', $footer_text);
+		$pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
+		$pdf->setOption('lowquality', false);
 		$pdf->save('user-content/'.$newname);
 
 		$resource = new Resource;
@@ -482,6 +508,7 @@ class InvoiceController extends Controller {
 			foreach ($data['other_contacts'] as $email => $name) {
 				$message->cc($email, strtolower(trim($name)));
 			}
+			$message->bcc($data['email_from'], $data['mycomp']);
 			$message->attach($data['pdf']);
 			$message->subject('Factuur ' . $data['project_name']);
 			$message->from('noreply@calculatietool.com', $data['mycomp']);

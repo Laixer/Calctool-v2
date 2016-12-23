@@ -12,8 +12,10 @@ use \Calctool\Models\Invoice;
 use \Calctool\Models\User;
 use \Calctool\Models\UserGroup;
 use \Calctool\Models\MessageBox;
+use \Calctool\Models\Payment;
 
 use \Mailgun;
+use \Newsletter;
 
 class Kernel extends ConsoleKernel
 {
@@ -156,6 +158,21 @@ class Kernel extends ConsoleKernel
                 }
             }
 
+        })->daily();
+
+        $schedule->call(function() {
+            foreach (Payment::select('user_id')->groupBy('user_id')->get() as $payment) {
+                $user = User::find($payment->user_id);
+                if (!$user)
+                    continue;
+                if (!$user->active)
+                    continue;
+                Newsletter::subscribe($user->email, [
+                    'FNAME' => $user->firstname,
+                    'LNAME' => $user->lastname
+                ], 'paying');
+                Newsletter::unsubscribe($user->email);
+            }
         })->daily();
 
         $schedule->command('oauth:clear')->daily();

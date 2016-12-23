@@ -40,7 +40,7 @@ class SupportController extends Controller
         }
 
         Mailgun::send('mail.feedback', $data, function($message) use ($data) {
-            $message->to('info@calculatietool.com', 'CalculatieTool.com');
+            $message->to('support@calculatietool.com', 'CalculatieTool.com');
             $message->bcc($data['email'], $data['name']);
             $message->subject('CalculatieTool.com - Contact form');
         });

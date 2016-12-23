@@ -64,7 +64,7 @@ $(document).ready(function() {
 				<div class="white-row">
 				<h2>Helpdesk</h2>
 				Telefoon: <a href="tel:+643587470">06 435 87470</a> of <a href="tel:+643587430">06 435 87430</a><br />
-				Email: <a href="mailto:info@calculatietool.com">info@calculatietool.com</a><br />
+				Email: <a href="mailto:info@calculatietool.com">support@calculatietool.com</a><br />
 				Stuur SMS, WhatsApp, Telegram naar bovenstaande telefoonnummers
 				</div>
 

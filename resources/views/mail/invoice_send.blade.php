@@ -152,6 +152,16 @@
 						<!-- /ROW FOOTER -->
 
 						@if ($preview)
+						<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
+							<tbody>
+								<tr><!-- copyright -->
+									<td width="100%" style="font-family: helvetica, Arial, sans-serif; font-size: 11px; text-align: center; line-height: 24px;">
+										<center>Dit is een voorbeeld van de mail die naar je opdrachtgever wordt verzonden. Jij ontvangt deze als kopie.</center>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
 						<div class="modal-footer">
 							<a class="btn btn-primary pull-right" id="sendmail" class="close" data-dismiss="modal" aria-hidden="true">Verstuur definitief naar {{ $email }}</a>
 						</div>

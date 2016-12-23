@@ -43,10 +43,16 @@ use \Calctool\Models\User;
 				<tbody>
 				@foreach (Payment::orderBy('created_at', 'desc')->get() as $payment)
 					<tr>
-						<td class="col-md-2"><a href="/admin/transaction/{{ $payment->transaction }}">{{ $payment->transaction }}</a></td>
+						<td class="col-md-2">
+						@if(substr($payment->transaction, 0, 3) == 'tr_')
+						<a href="/admin/transaction/{{ $payment->transaction }}">{{ $payment->transaction }}</a>
+						@else
+						{{ $payment->transaction }}
+						@endif
+						</td>
 						<td class="col-md-2">{{ ucfirst(User::find($payment->user_id)->username) }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format($payment->amount, 2,",",".") }}</td>
-						<td class="col-md-1">{{ $payment->status }}</td>
+						<td class="col-md-1">{{ $payment->getStatusName() }}</td>
 						<td class="col-md-2">{{ $payment->method }}</td>
 						<td class="col-md-2">{{ $payment->increment.' maanden' }}</td>
 						<td class="col-md-2">{{ date('d-m-Y H:i:s', strtotime(DB::table('payment')->select('created_at')->where('id','=',$payment->id)->get()[0]->created_at)) }}</td>

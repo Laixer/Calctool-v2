@@ -207,6 +207,7 @@ return [
         Nathanmac\Utilities\Parser\ParserServiceProvider::class,
         LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class,
         LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
+        Spatie\Newsletter\NewsletterServiceProvider::class,
 
     ],
 
@@ -264,6 +265,7 @@ return [
         'Parser'    => Nathanmac\Utilities\Parser\Facades\Parser::class,
         'Markdown'  => GrahamCampbell\Markdown\Facades\Markdown::class,
         'Authorizer'=> LucaDegasperi\OAuth2Server\Facades\Authorizer::class,
+        'Newsletter'=> Spatie\Newsletter\NewsletterFacade::class,
 
     ],
 

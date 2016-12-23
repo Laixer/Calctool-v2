@@ -84,11 +84,6 @@ Route::post('support', 'SupportController@sendSupport');
 /* Payment callbacks */
 Route::post('payment/webhook/', 'UserController@doPaymentUpdate');
 
-//TODO hack
-Route::get('c4586v34674v4&vwasrt/footer_pdf', function() {
-	return view('calc.footer_pdf');
-});
-
 Route::group(['middleware' => 'auth'], function() {
 	Route::get('/', ['middleware' => 'payzone', function() {
 		if (Auth::user()->isSystem()) {
