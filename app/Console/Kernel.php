@@ -165,6 +165,8 @@ class Kernel extends ConsoleKernel
                 $user = User::find($payment->user_id);
                 if (!$user)
                     continue;
+                if (!$user->active)
+                    continue;
                 Newsletter::subscribe($user->email, [
                     'FNAME' => $user->firstname,
                     'LNAME' => $user->lastname
