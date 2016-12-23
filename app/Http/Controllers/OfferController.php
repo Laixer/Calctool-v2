@@ -104,11 +104,13 @@ class OfferController extends Controller {
 		$offer->offer_total = CalculationEndresult::totalProject($project);
 		$offer->save();
 
+		$protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
 
 		$page = 0;
 		$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.OfferController::getOfferCode($request->input('project_id')).'-offer.pdf';
 		$pdf = PDF::loadView('calc.offer_pdf', ['offer' => $offer]);
-		$pdf->setOption('footer-html', url('/') . '/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
+		$pdf->setOption('footer-html', $protocol . 'localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
+		$pdf->setOption('lowquality', false);
 		$pdf->save('user-content/'.$newname);
 
 		$resource = new Resource;

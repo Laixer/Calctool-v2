@@ -179,6 +179,8 @@ class InvoiceController extends Controller {
 
 		$invoice_version->save();
 
+		$protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
+
 		$page = 0;
 		$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.$invoice_version->invoice_code.'-invoice.pdf';
 		if ($invoice->isclose) {
@@ -186,7 +188,8 @@ class InvoiceController extends Controller {
 		} else {
 			$pdf = PDF::loadView('calc.invoice_term_pdf', ['invoice' => $invoice_version]);
 		}
-		$pdf->setOption('footer-html', url('/') . '/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
+		$pdf->setOption('footer-html', $protocol . 'localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id()."&page=".$page++);
+		$pdf->setOption('lowquality', false);
 		$pdf->save('user-content/'.$newname);
 
 		$resource = new Resource;
