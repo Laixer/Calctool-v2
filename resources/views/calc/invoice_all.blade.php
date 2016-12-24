@@ -121,6 +121,17 @@ if (!$project || !$project->isOwner()) {
 			};
 		});
 
+		$('.docredit').click(function(e){
+			if(confirm('Factuur in credit brengen?')){
+				$curThis = $(this);
+				$curproj = $(this).attr('data-project');
+				$curinv = $(this).attr('data-invoice');
+				$.post("/invoice/creditinvoice", {project: {{ $project->id }}, id: $curinv, projectid: $curproj}, function(data){
+					location.reload();
+				}).fail(function(e) { console.log(e); });
+			};
+		});
+
 	});
 </script>
 <div id="wrapper">
@@ -221,15 +232,37 @@ if (!$project || !$project->isOwner()) {
 				<tbody>
 				<?php
 				if ($offer_last) {
-				$i=0;
+				$i=0;$skip=0;
 				$close = true;
 				$count = Invoice::where('offer_id','=', $offer_last->id)->count();
 				$invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first();
 				?>
-				@foreach (Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority')->get() as $invoice)
+				@foreach (Invoice::where('offer_id',$offer_last->id)->where('isclose',false)->orderBy('priority')->orderBy('created_at')->get() as $invoice)
 				<?php $invoice_version = InvoiceVersion::where('invoice_id', $invoice->id)->orderBy('created_at','desc')->first(); ?>
 					<tr>
-						<td class="col-md-2"><?php if (!$invoice->invoice_close && !$project->project_close) { if ($invoice_version){ echo '<a href="/invoice/project-' . $project->id . '/invoice-version-'.$invoice_version->id.'">'; } else { echo '<a href="/invoice/project-' . $project->id . '/term-invoice-' . $invoice->id . '">'; } } else { echo '<a href="/invoice/project-' . $project->id . '/pdf-invoice-'.$invoice->id.'">'; } ?>{{ ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1)) }}<?php if ($invoice->invoice_close) { echo '</a>'; }?></td>
+						<td class="col-md-2">
+							<?php
+							if (!$invoice->invoice_close && !$project->project_close) {
+								if ($invoice_version) {
+									echo  '<a href="/invoice/project-' . $project->id . '/invoice-version-'.$invoice_version->id.'">';
+								} else {
+									echo '<a href="/invoice/project-' . $project->id . '/term-invoice-' . $invoice->id . '">';
+								}
+							} else {
+								echo '<a href="/invoice/project-' . $project->id . '/pdf-invoice-'.$invoice->id.'">';
+							}
+							
+							if ($i==0 && $offer_last->downpayment) {
+								echo 'Aanbetaling';
+							} else if ($invoice->amount < 0) {
+								echo 'Creditfactuur ' . ($i-$skip);
+								$skip++;
+							} else {
+								echo 'Termijnfactuur ' . (($i+1)-$skip);
+							}
+							?>
+							<?php if ($invoice->invoice_close) { echo '</a>'; } ?>
+						</td>
 						<td class="col-md-2"><?php if ($invoice->invoice_close || $project->project_close){ echo "<span class='sdata'>".number_format($invoice->amount, 2, ",",".")."</span>"; } else  { ?><input data-id="{{ $invoice->id }}" class="form-control-sm-text adata" name="amount" type="text" value="{{ number_format($invoice->amount, 2, ",",".") }}" /><?php } ?></td>
 						<td class="col-md-2">{{ Auth::user()->pref_use_ct_numbering ? $invoice->invoice_code : ($invoice->book_code ? $invoice->book_code : $invoice->invoice_code) }}</td>
 						<td class="col-md-1"><?php if (!$invoice->invoice_close && !$project->project_close) { ?><a href="#" data-toggle="modal" class="changecode adata" data-reference="{{ $invoice->reference }}" data-bookcode="{{ $invoice->book_code }}" data-id="{{ $invoice->id }}" data-target="#codeModal">bewerk</a><?php } ?></td>
@@ -253,7 +286,10 @@ if (!$project || !$project->isOwner()) {
 						      <li><a target="blank" href="javascript:void(0);" data-invoice="{{ $invoice->id }}" data-project="{{ $project->id }}" class="dopay">Betaald</a></li>
 						      @endif
 						      <li><a href="/res-{{ $invoice->resource_id }}/download">Download PDF</a></li>
+						      @if ($invoice->amount > 0)
 						      <li><a href="/invoice/project-{{ $project->id }}/history-invoice-{{ $invoice->id }}">Geschiedenis</a></li>
+						      <li><a href="javascript:void(0);" data-invoice="{{ $invoice->id }}" data-project="{{ $project->id }}" class="docredit">Creditfactuur</a></li>
+						      @endif
 						    </ul>
 						  </div>
 						<?php

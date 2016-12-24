@@ -153,6 +153,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('invoice/save', 'InvoiceController@doInvoiceVersionNew');
 	Route::post('invoice/close', 'InvoiceController@doInvoiceClose');
 	Route::post('invoice/pay', 'InvoiceController@doInvoicePay');
+	Route::post('invoice/creditinvoice', 'InvoiceController@doCreditInvoiceNew');
 	Route::post('invoice/invclose', 'InvoiceController@doInvoiceCloseAjax');
 	Route::post('invoice/term/add', 'InvoiceController@doInvoiceNewTerm');
 	Route::post('invoice/term/delete', 'InvoiceController@doInvoiceDeleteTerm');
