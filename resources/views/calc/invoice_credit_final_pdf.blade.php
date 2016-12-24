@@ -152,7 +152,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
   <div id="spacing"></div>
   <div class="openingtext">Geachte {{ Contact::find($invoice->to_contact_id)->getFormalName() }},</div>
   <br>
-  <div class="openingtext">{{ ($invoice ? $invoice->description : '') }}</div>
+  <div class="openingtext">Hierbij doe ik de creditfactuur toekomen van {{ $project->project_name }}, factuurnummer {{ $oldinvoice }}.</div>
   <br>
 
     <h2 class="name">Specificatie creditfactuur</h2>
@@ -193,17 +193,16 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
 
       @if($project->tax_reverse)<h2 class="name">Deze creditfactuur is <strong>BTW Verlegd</strong></h1>@endif
 
-    <!-- <h2 class="name">Bepalingen</h2>
+    <h2 class="name">Bepalingen</h2>
     <hr color="#000" size="1">
     <div class="terms">
-      <li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
-      <li>Gaarne bij betaling factuurnummer vermelden.</li>
+      <li>Betreft de creditnota van factuur {{ $oldinvoice }}.</li>
     </div>
 
     <div class="closingtext">{{ ($invoice ? $invoice->closure : '') }}</div>
 
     <div class="signing">Met vriendelijke groet,</div>
-    <div class="signing">{{ Contact::find($invoice->from_contact_id)->firstname ." ". Contact::find($invoice->from_contact_id)->lastname }}</div> -->
+    <div class="signing">{{ Contact::find($invoice->from_contact_id)->firstname ." ". Contact::find($invoice->from_contact_id)->lastname }}</div>
 
   </main>
 

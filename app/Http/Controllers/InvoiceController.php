@@ -290,9 +290,8 @@ class InvoiceController extends Controller {
 		$ninvoice->rest_0 = InvoiceTerm::partTax3($project, $invoice)*$ninvoice->amount;
 		$ninvoice->save();
 
-
 		$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.$invoice->invoice_code.'-credit-invoice.pdf';
-		$pdf = PDF::loadView('calc.invoice_credit_final_pdf', ['invoice' => $ninvoice]);
+		$pdf = PDF::loadView('calc.invoice_credit_final_pdf', ['invoice' => $ninvoice, 'oldinvoice' => $invoice->invoice_code]);
 
 		$relation_self = Relation::find(Auth::User()->self_id);
 		$footer_text = $relation_self->company_name;
