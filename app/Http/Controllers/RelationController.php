@@ -79,12 +79,18 @@ class RelationController extends Controller {
 		$relation->note = $request->input('note');
 
 		/* Company */
-		$relation_kind = RelationKind::where('id','=',$relation->kind_id)->firstOrFail();
+		$relation_kind = RelationKind::where('id',$relation->kind_id)->firstOrFail();
 		if ($relation_kind->kind_name == "zakelijk") {
 			$relation->company_name = $request->input('company_name');
 			$relation->type_id = $request->input('company_type');
-			$relation->kvk = $request->input('kvk');
-			$relation->btw = $request->input('btw');
+			if (!$request->has('kvk'))
+				$relation->kvk = NULL;
+			else
+				$relation->kvk = $request->input('kvk');
+			if (!$request->input('btw'))
+				$relation->btw = NULL;
+			else
+				$relation->btw = $request->input('btw');
 			$relation->phone = $request->input('telephone_comp');
 			$relation->email = $request->input('email_comp');
 			$relation->website = $request->input('website');
