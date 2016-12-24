@@ -282,6 +282,7 @@ class InvoiceController extends Controller {
 		$ninvoice->offer_id = $invoice->offer_id;
 		$ninvoice->to_contact_id = $invoice->to_contact_id;
 		$ninvoice->from_contact_id = $invoice->from_contact_id;
+		$ninvoice->reference = $invoice->invoice_code;
 		$ninvoice->invoice_close = true;
 		$ninvoice->invoice_code = InvoiceController::getInvoiceCode($project->id);
 		$ninvoice->bill_date = date('Y-m-d H:i:s');
