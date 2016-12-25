@@ -289,7 +289,12 @@ if (!$project || !$project->isOwner()) {
 						      <li><a href="/res-{{ $invoice->resource_id }}/download">Download PDF</a></li>
 						      @if ($invoice->amount > 0)
 						      <li><a href="/invoice/project-{{ $project->id }}/history-invoice-{{ $invoice->id }}">Geschiedenis</a></li>
+						      <?php
+						      $is_credit_invoice = Invoice::where('priority',$invoice->priority)->where('reference',$invoice->invoice_code)->where('amount','<',0)->count();
+						      if ($is_credit_invoice == 0) {
+						      ?>
 						      <li><a href="javascript:void(0);" data-invoice="{{ $invoice->id }}" data-project="{{ $project->id }}" class="docredit">Creditfactuur</a></li>
+						      <?php } ?>
 						      @endif
 						    </ul>
 						  </div>
@@ -333,7 +338,12 @@ if (!$project || !$project->isOwner()) {
 						      <li><a href="/res-{{ $invoice_end->resource_id }}/download">Download PDF</a></li>
 						      @if ($invoice_end->amount > 0)
 						      <li><a href="/invoice/project-{{ $project->id }}/history-invoice-{{ $invoice_end->id }}">Geschiedenis</a></li>
+						      <?php
+						      $is_credit_invoice = Invoice::where('priority',$invoice_end->priority)->where('reference',$invoice_end->invoice_code)->where('isclose',true)->where('amount','<',0)->count();
+						      if ($is_credit_invoice == 0) {
+						      ?>
 						      <li><a href="javascript:void(0);" data-invoice="{{ $invoice_end->id }}" data-project="{{ $project->id }}" class="docredit">Creditfactuur</a></li>
+						      <?php } ?>
 						      @endif
 						    </ul>
 						  </div>
