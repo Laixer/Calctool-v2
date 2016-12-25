@@ -234,8 +234,9 @@ if (!$project || !$project->isOwner()) {
 				if ($offer_last) {
 				$i=0;$skip=0;
 				$close = true;
-				$count = Invoice::where('offer_id','=', $offer_last->id)->count();
-				$invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first();
+				$count = Invoice::where('offer_id',$offer_last->id)->count();
+				$invoice_end = Invoice::where('offer_id',$offer_last->id)->where('isclose',true)->where('amount','>',0)->first();
+				$creditinvoice_end = Invoice::where('offer_id',$offer_last->id)->where('isclose',true)->where('amount','<',0)->first();
 				?>
 				@foreach (Invoice::where('offer_id',$offer_last->id)->where('isclose',false)->orderBy('priority')->orderBy('created_at')->get() as $invoice)
 				<?php $invoice_version = InvoiceVersion::where('invoice_id', $invoice->id)->orderBy('created_at','desc')->first(); ?>
@@ -330,7 +331,10 @@ if (!$project || !$project->isOwner()) {
 						      <li><a target="blank" href="javascript:void(0);" data-invoice="{{ $invoice_end->id }}" data-project="{{ $project->id }}" class="dopay">Betaald</a></li>
 						      @endif
 						      <li><a href="/res-{{ $invoice_end->resource_id }}/download">Download PDF</a></li>
+						      @if ($invoice_end->amount > 0)
 						      <li><a href="/invoice/project-{{ $project->id }}/history-invoice-{{ $invoice_end->id }}">Geschiedenis</a></li>
+						      <li><a href="javascript:void(0);" data-invoice="{{ $invoice_end->id }}" data-project="{{ $project->id }}" class="docredit">Creditfactuur</a></li>
+						      @endif
 						    </ul>
 						  </div>
 						<?php 
@@ -341,6 +345,34 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-1"></td>
 					</tr>
 				<?php }} ?>
+				<?php if ($creditinvoice_end) { ?>
+					<tr>
+						<td class="col-md-2"><a href="/invoice/project-{{ $project->id }}/pdf-invoice-{{ $creditinvoice_end->id }}">Creditfactuur</a></td>
+						<td class="col-md-2">{{ number_format($creditinvoice_end->amount, 2, ",",".") }}</td>
+						<td class="col-md-2">{{ Auth::user()->pref_use_ct_numbering ? $creditinvoice_end->invoice_code : ($creditinvoice_end->book_code ? $creditinvoice_end->book_code : $creditinvoice_end->invoice_code) }}</td>
+						<td class="col-md-2"></td>
+						<td class="col-md-2"></td>
+						<td class="col-md-1"><input disabled type="number" name="condition" value="{{ $creditinvoice_end->payment_condition }}" class="form-control form-control-sm-number condition" /></td>
+						<td class="col-md-1">
+						  <div class="btn-group" role="group">
+						    <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    @if ($creditinvoice_end->payment_date)
+						    Betaald
+						    @else
+						      Gefactureerd
+						     @endif
+						      <span class="caret"></span>
+						    </button>
+						    <ul class="dropdown-menu">
+						      @if (!$creditinvoice_end->payment_date && !$project->project_close)
+						      <li><a target="blank" href="javascript:void(0);" data-invoice="{{ $creditinvoice_end->id }}" data-project="{{ $project->id }}" class="dopay">Betaald</a></li>
+						      @endif
+						      <li><a href="/res-{{ $creditinvoice_end->resource_id }}/download">Download PDF</a></li>
+						    </ul>
+						  </div>
+						<td class="col-md-1"></td>
+					</tr>
+				<?php } ?>
 				</tbody>
 			</table>
 			@if (!$project->project_close && ($invoice_end && !$invoice_end->invoice_close))
