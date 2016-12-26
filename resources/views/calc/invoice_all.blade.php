@@ -235,7 +235,7 @@ if (!$project || !$project->isOwner()) {
 				$i=0;$skip=0;
 				$close = true;
 				$count = Invoice::where('offer_id',$offer_last->id)->count();
-				$invoice_end = Invoice::where('offer_id',$offer_last->id)->where('isclose',true)->where('amount','>',0)->first();
+				$invoice_end = Invoice::where('offer_id',$offer_last->id)->where('isclose',true)->first();
 				$creditinvoice_end = Invoice::where('offer_id',$offer_last->id)->where('isclose',true)->where('amount','<',0)->first();
 				?>
 				@foreach (Invoice::where('offer_id',$offer_last->id)->where('isclose',false)->orderBy('priority')->orderBy('created_at')->get() as $invoice)
