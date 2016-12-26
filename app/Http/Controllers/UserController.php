@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use \Calctool\Models\Payment;
 use \Calctool\Models\User;
+use \Calctool\Models\Project;
 use \Calctool\Models\Audit;
 use \Calctool\Models\Promotion;
 use \Calctool\Models\UserGroup;
@@ -637,7 +638,11 @@ class UserController extends Controller {
 
 		Audit::CreateEvent('account.demoproject.success', 'Demoproject loaded for user');
 
-		return back()->with('success', 'Demoproject is geladen in je projectenoverzicht op het dashboard');
+		$project = Project::where('user_id', Auth::id())->orderBy('created_at', 'desc')->first();
+		if (!$project)
+			return back();
+
+		return redirect('/project-' . $project->id . '/edit');
 	}
 
 	public function doRevokeApp(Request $request, $client_id) {
