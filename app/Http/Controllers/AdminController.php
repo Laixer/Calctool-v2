@@ -121,7 +121,7 @@ class AdminController extends Controller {
 		$subtract = $request->input('amount');
 
 		$mollie = new \Mollie_API_Client;
-		$mollie->setApiKey(env('MOLLIE_API', null));
+		$mollie->setApiKey(config('services.mollie.key'));
 
 		$payment = $mollie->payments->get($transcode);
 
