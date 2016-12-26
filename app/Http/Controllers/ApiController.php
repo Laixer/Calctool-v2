@@ -42,7 +42,7 @@ class ApiController extends Controller {
 
 	public function getProjects()
 	{
-		$projects = Project::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+		$projects = Project::where('user_id',Auth::id())->where('is_dilapidated',false)->orderBy('created_at','desc')->get();
 
 		foreach ($projects as $project) {
 			$relation = Relation::find($project->client_id);

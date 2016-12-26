@@ -80,8 +80,8 @@ $relation = Relation::find(Auth::user()->self_id);
 	<div id="shop">
 		<section class="container">
 
-			@if (SysMessage::where('active','=',true)->count()>0)
-			@if (SysMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->level==1)
+			@if (SysMessage::where('active',true)->count()>0)
+			@if (SysMessage::where('active',true)->orderBy('created_at', 'desc')->first()->level==1)
 			<div class="alert alert-warning">
 				<i class="fa fa-fa fa-info-circle"></i>
 				{{ SysMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->content }}
@@ -89,36 +89,24 @@ $relation = Relation::find(Auth::user()->self_id);
 			@else
 			<div class="alert alert-danger">
 				<i class="fa fa-warning"></i>
-				<strong>{{ SysMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->content }}</strong>
+				<strong>{{ SysMessage::where('active',true)->orderBy('created_at', 'desc')->first()->content }}</strong>
 			</div>
 			@endif
 			@endif
 
 			<h2 style="margin: 10px 0 20px 0;"><strong>
-
-    <?php
-    /* This sets the $time variable to the current hour in the 24 hour clock format */
-    $time = date("H");
-    /* Set the $timezone variable to become the current timezone */
-    $timezone = date("e");
-    /* If the time is less than 1200 hours, show good morning */
-    if ($time < "12") {
-        echo "Goedemorgen";
-    } else
-    /* If the time is grater than or equal to 1200 hours, but less than 1700 hours, so good afternoon */
-    if ($time >= "12" && $time < "17") {
-        echo "Goedemiddag";
-    } else
-    /* Should the time be between or equal to 1700 and 1900 hours, show good evening */
-    if ($time >= "17" && $time < "19") {
-        echo "Goedeavond";
-    } else
-    /* Finally, show good night if the time is greater than or equal to 1900 hours */
-    if ($time >= "19") {
-        echo "Goedenacht";
-    }
-    ?>
-
+			<?php
+			$time = date("H");
+			if ($time >= "6" && $time < "12") {
+				echo "Goedemorgen";
+			} else if ($time >= "12" && $time < "17") {
+				echo "Goedemiddag";
+			} else if ($time >= "17") {
+				echo "Goedeavond";
+			} else if ($time >= "0") {
+				echo "Goedenacht";
+			}
+			?>
 			</strong> {{ Auth::user()->firstname }}&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
 
 			<div class="row">
@@ -221,30 +209,14 @@ $relation = Relation::find(Auth::user()->self_id);
 
 						<div class="white-row" ng-controller="projectController">
 							<div class="row">
-								<!-- <div class="form-group col-md-8">
-									<input type="text" ng-model="query" class="form-control" placeholder="Zoek in projecten">
-								</div> -->
-								<!-- <div class="form-group col-md-4 hidden-xs" STYLE="text-align: right;" >
-									<span><strong>Projectstatus: &nbsp;</strong></span>
-									<input name="toggle-close" type="checkbox">
-								</div> -->
-
-								  <div class="form-group col-lg-12">
-								    <div class="input-group">
-								      <input type="text" class="form-control" ng-model="query" placeholder="Zoek in projecten...">
-								      <span class="input-group-btn">
-								        <a href="/project/new" class="btn btn-primary" type="button"><i class="fa fa-file"></i> Nieuw project</a>
-								      </span>
-								    </div>
-								  </div>
-
-									<!-- <div class="col-md-3">
-										<div class="btn-group item-full">
-									  		<a href="/project/new" class="btn btn-primary item-full"> Nieuw project</a>
-									 		
-										</div>
-									</div> -->
-
+							  <div class="form-group col-lg-12">
+							    <div class="input-group">
+							      <input type="text" class="form-control" ng-model="query" placeholder="Zoek in projecten...">
+							      <span class="input-group-btn">
+							        <a href="/project/new" class="btn btn-primary" type="button"><i class="fa fa-file"></i> Nieuw project</a>
+							      </span>
+							    </div>
+							  </div>
 							</div>
 
 							<table ng-cloak class="table table-striped">

@@ -31,7 +31,7 @@ use \Calctool\Models\CalculationEquipment;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
-if (!$project || !$project->isOwner())
+if (!$project || !$project->isOwner() || $project->is_dilapidated)
 	$common_access_error = true;
 else {
 	$offer_last = Offer::where('project_id',$project->id)->orderBy('created_at', 'desc')->first();
@@ -419,14 +419,14 @@ $(document).ready(function() {
 							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acties&nbsp;&nbsp;<span class="caret"></span></button>
 							<ul class="dropdown-menu">
 								<li><a href="/project-{{ $project->id }}/copy">Project kopieren</a></i>
-									<li>
-										@if (!$project->project_close)
-										<a href="#" id="projclose">Project sluiten</a>
-										@endif
-									</li>
-								</ul>
-							</div>
+								@if (!$project->project_close)
+								<li><a href="#" id="projclose">Project sluiten</a></li>
+								@else
+								<li><a href="/project-{{ $project->id }}/updateprojectdilapidated">Project vervallen</a></li>
+								@endif
+							</ul>
 						</div>
+					</div>
 						<form method="post" {!! $offer_last && $offer_last->offer_finish ? 'action="/project/update/note"' : 'action="/project/update"' !!}>
 							{!! csrf_field() !!}
 
@@ -437,7 +437,6 @@ $(document).ready(function() {
 										<div class="modal-body">
 											<div class="col-md-12">
 
-												@if(1) 
 												<h4>Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
 												<div class="row">
 													<div class="form-group ">
@@ -447,7 +446,6 @@ $(document).ready(function() {
 														</div>
 													</div>
 												</div>
-												@endif
 
 											</div>
 

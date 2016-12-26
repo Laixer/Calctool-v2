@@ -10,7 +10,7 @@ use \Calctool\Models\InvoiceVersion;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
-if (!$project || !$project->isOwner()) {
+if (!$project || !$project->isOwner() || $project->is_dilapidated) {
 	$common_access_error = true;
 } else {
 	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();

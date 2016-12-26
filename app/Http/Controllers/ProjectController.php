@@ -605,6 +605,24 @@ class ProjectController extends Controller {
 		return response()->json(['success' => 1]);
 	}
 
+	public function getUpdateProjectDilapidated(Request $request, $project_id)
+	{
+		$project = Project::find($project_id);
+		if (!$project || !$project->isOwner()) {
+			return back()->withInput($request->all());
+		}
+		if (!$project->project_close) {
+			return back()->withInput($request->all());
+		}
+		$project->is_dilapidated = true;
+
+		$project->save();
+
+		Audit::CreateEvent('project.dilapidated.success', 'Project ' . $project->project_name . ' dilapidated');
+
+		return redirect('/');
+	}
+
 	public function doCommunication(Request $request)
 	{
 		$this->validate($request, [

@@ -329,6 +329,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('project/updateworkexecution', 'ProjectController@doUpdateWorkExecution');
 	Route::post('project/updateworkcompletion', 'ProjectController@doUpdateWorkCompletion');
 	Route::post('project/updateprojectclose', 'ProjectController@doUpdateProjectClose');
+	Route::get('project-{project_id}/updateprojectdilapidated', 'ProjectController@getUpdateProjectDilapidated');
 
 	/* Cost pages */
 	Route::get('timesheet', 'CostController@getTimesheet')->middleware('payzone');
