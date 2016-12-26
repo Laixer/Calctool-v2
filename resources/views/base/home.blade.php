@@ -15,12 +15,10 @@ use \Calctool\Models\SysMessage;
 @section('title', 'Dashboard')
 
 @push('style')
-<link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
 <script src="/components/angular/angular.min.js"></script>
 @endpush
 
 @push('scripts')
-<script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 @endpush
 
 <?php
@@ -115,8 +113,6 @@ $relation = Relation::find(Auth::user()->self_id);
 					</div>
 				</div>
 
-
-
 				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
@@ -200,13 +196,30 @@ $relation = Relation::find(Auth::user()->self_id);
 
 						<div class="white-row" ng-controller="projectController">
 							<div class="row">
-								<div class="form-group col-md-8">
+								<!-- <div class="form-group col-md-8">
 									<input type="text" ng-model="query" class="form-control" placeholder="Zoek in projecten">
-								</div>
-								<div class="form-group col-md-4 hidden-xs" STYLE="text-align: right;" >
+								</div> -->
+								<!-- <div class="form-group col-md-4 hidden-xs" STYLE="text-align: right;" >
 									<span><strong>Projectstatus: &nbsp;</strong></span>
 									<input name="toggle-close" type="checkbox">
-								</div>
+								</div> -->
+
+								  <div class="form-group col-lg-12">
+								    <div class="input-group">
+								      <input type="text" class="form-control" ng-model="query" placeholder="Zoek in projecten...">
+								      <span class="input-group-btn">
+								        <a href="/project/new" class="btn btn-primary" type="button"><i class="fa fa-file"></i> Nieuw project</a>
+								      </span>
+								    </div>
+								  </div>
+
+									<!-- <div class="col-md-3">
+										<div class="btn-group item-full">
+									  		<a href="/project/new" class="btn btn-primary item-full"> Nieuw project</a>
+									 		
+										</div>
+									</div> -->
+
 							</div>
 
 							<table ng-cloak class="table table-striped">
@@ -225,7 +238,7 @@ $relation = Relation::find(Auth::user()->self_id);
 									<tr ng-repeat="project in projects | filter: query | orderBy: orderByField:reverseSort as results">
 										<td class="col-md-5"><a href="/project-@{{ project.id }}/edit">@{{ project.project_name }}</a></td>
 										<td class="col-md-3">@{{ project.relation }}</td>
-										<td class="col-md-2 hidden-sm hidden-xs">@{{ project.type.type_name }}</td>
+										<td class="col-md-2 hidden-sm hidden-xs">@{{ project.type.type_name | capitalize }}</td>
 										<td class="col-md-2 hidden-xs">@{{ project.address_city }}</td>
 									</tr>
 									<tr ng-show="results == 0">
@@ -237,8 +250,7 @@ $relation = Relation::find(Auth::user()->self_id);
 							<div class="row">
 								<div class="col-md-3">
 									<div class="btn-group item-full">
-								  		<a href="/project/new" class="btn btn-primary item-full"><i class="fa fa-pencil"></i> Nieuw project</a>
-								 		
+								  		<button class="btn btn-primary" name="toggle-close">Gesloten projecten</a>
 									</div>
 								</div>
 							</div>
@@ -248,14 +260,6 @@ $relation = Relation::find(Auth::user()->self_id);
 						<h2><strong>De eerste</strong> stap... </h2>
 						<div class="bs-callout text-center whiteBg" style="margin:0">
 							<h3>			
-<!-- 								<a href="/mycompany" class="btn btn-primary btn-lg">Bedrijfsgegevens aanvullen</a>
-
-								<i class="fa fa-arrow-right"></i>
-
-								<a href="/import" class="btn btn-primary btn-lg">Contacten importeren</a>
-
-								<i class="fa fa-arrow-right"></i> -->
-
 								<a href="/project/new" class="btn btn-primary btn-lg">Maak je eerste project aan <i class="fa fa-arrow-right"></i></a>
 							</h3>
 						</div>
@@ -267,6 +271,7 @@ $relation = Relation::find(Auth::user()->self_id);
 				angular.module('projectApp', []).controller('projectController', function($scope, $http) {
 					$http.get('/api/v1/projects').then(function(response){
 						$scope._projects = response.data;
+						$scope.filter_close = false;
 						$scope.projects = [];
 						angular.forEach($scope._projects, function(value, key) {
 						  if (value.project_close == null) {
@@ -274,9 +279,8 @@ $relation = Relation::find(Auth::user()->self_id);
 						  }
 						});
 					});
-					$("[name='toggle-close']").bootstrapSwitch({onText: 'Gesloten', offText: 'Open'});
-					$("[name='toggle-close']").on('switchChange.bootstrapSwitch', function (event, state) {
-				        if (state == false) {
+					$("[name='toggle-close']").click(function() {
+				        if ($scope.filter_close) {
 							$scope.projects = [];
 							angular.forEach($scope._projects, function(value, key) {
 							  if (value.project_close == null) {
@@ -284,6 +288,8 @@ $relation = Relation::find(Auth::user()->self_id);
 							  }
 							});
 							$scope.$apply();
+							$scope.filter_close = false;
+							$("[name='toggle-close']").text('Gesloten projecten');
 				        } else {
 							$scope.projects = [];
 							angular.forEach($scope._projects, function(value, key) {
@@ -292,9 +298,15 @@ $relation = Relation::find(Auth::user()->self_id);
 							  }
 							});
 							$scope.$apply();
+							$scope.filter_close = true;
+							$("[name='toggle-close']").text('Open projecten');
 				        }
 					});
 
+				}).filter('capitalize', function() {
+					return function(input) {
+						return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+					}
 				});
 				</script>
 			</div>

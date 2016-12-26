@@ -46,7 +46,7 @@ class ApiController extends Controller {
 
 		foreach ($projects as $project) {
 			$relation = Relation::find($project->client_id);
-			$project['relation'] = RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']);
+			$project['relation'] = RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id',$relation->id)->first()['firstname'].' '.Contact::where('relation_id',$relation->id)->first()['lastname']);
 			$project['type'] = $project->type->type_name;
 		}
 

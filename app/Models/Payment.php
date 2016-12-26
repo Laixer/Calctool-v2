@@ -19,6 +19,8 @@ class Payment extends Model {
 				return 'Betaald';
 			case 'cancelled':
 				return 'Afgebroken';
+			case 'expired':
+				return 'Verlopen';
 			case 'open':
 				return 'Open';
 			
