@@ -45,7 +45,7 @@
 				<div class="row">
 					<div class="form-group col-lg-12">
 						<div class="input-group">
-							<input type="text" class="form-control" ng-model="query" placeholder="Zoek in relaties...">
+							<input type="text" class="form-control" ng-model="query" placeholder="Zoek in relaties op naam, nummer, adres of type">
 							<span class="input-group-btn">
 								<a href="/relation/new" class="btn btn-primary" type="button"><i class="fa fa-file"></i> Nieuwe relatie</a>
 							</span>
@@ -56,6 +56,7 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
+							<th class="col-md-1">Debiteur</th>
 							<th class="col-md-4">(Bedrijfs)naam</th>
 							<th class="col-md-2">Relatietype</th>
 							<th class="col-md-2">Telefoon</th>
@@ -68,8 +69,9 @@
 						<div ng-show="show" class="row text-center">
 							<img src="/images/loading_icon.gif" height="100" />
 						</div>
-						<tr ng-repeat="relation in relations | filter: query | orderBy: orderByField:reverseSort as results">
-							<td class="col-md-4"><a href="/">@{{ relation.company }}</td>
+						<tr ng-repeat="relation in relations | filter: query | orderBy: orderByField:reverseSort | limitTo:25 as results">
+							<td class="col-md-1"><a href="/relation-@{{ relation.id }}/edit">@{{ relation.id }}</td>
+							<td class="col-md-4"><a href="/relation-@{{ relation.id }}/edit">@{{ relation.company }}</td>
 							<td class="col-md-2">@{{ relation.type_name }}</td>
 							<td class="col-md-2">@{{ relation._phone }}</td>
 							<td class="col-md-2">@{{ relation._email }}</td>
