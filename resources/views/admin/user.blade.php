@@ -89,7 +89,7 @@ $(document).ready(function() {
 						<th class="col-md-3 hidden-xs">Email</th>
 						<th class="col-md-1 hidden-sm hidden-xs">Status</th>
 						<th class="col-md-1 hidden-sm hidden-xs">Type</th>
-						<th class="col-md-2 hidden-sm hidden-xs">Group</th>
+						<th class="col-md-2 hidden-sm hidden-xs">Groep</th>
 					</tr>
 				</thead>
 
