@@ -344,7 +344,7 @@ $type = ProjectType::find($project->type_id);
 				</div>
 
 				<div class="modal-footer">
-					<button class="btn btn-default" data-dismiss="modal">Close</button>
+					<button class="btn btn-primary" data-dismiss="modal">Opslaan</button>
 				</div>
 
 			</div>

@@ -179,7 +179,6 @@ class InvoiceController extends Controller {
 
 		$invoice_version->save();
 
-		$page = 0;
 		$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.$invoice_version->invoice_code.'-invoice.pdf';
 		if ($invoice->isclose) {
 			$pdf = PDF::loadView('calc.invoice_pdf', ['invoice' => $invoice_version]);
@@ -229,10 +228,10 @@ class InvoiceController extends Controller {
 			return response()->json(['success' => 0]);
 		}
 
-		$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+		$offer_last = Offer::where('project_id',$project->id)->orderBy('created_at', 'desc')->first();
 		$cnt = Invoice::where('offer_id', $offer_last->id)->where('isclose',false)->count();
 		if ($cnt>0) {
-			$invoice = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority', 'desc')->first();
+			$invoice = Invoice::where('offer_id',$offer_last->id)->where('isclose',false)->orderBy('priority', 'desc')->first();
 
 			$ninvoice = new Invoice;
 			$ninvoice->payment_condition = $invoice->payment_condition;
@@ -243,7 +242,7 @@ class InvoiceController extends Controller {
 			$ninvoice->from_contact_id = $invoice->from_contact_id;
 			$ninvoice->save();
 		} else {
-			$invoice = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first();
+			$invoice = Invoice::where('offer_id',$offer_last->id)->where('isclose',true)->first();
 
 			$ninvoice = new Invoice;
 			$ninvoice->payment_condition = $invoice->payment_condition;
@@ -256,6 +255,78 @@ class InvoiceController extends Controller {
 		}
 
 		return back();
+	}
+
+	public function doCreditInvoiceNew(Request $request)
+	{
+		$this->validate($request, [
+			'projectid' => array('required','integer'),	
+			'id' => array('required','integer'),
+		]);
+
+		$project = Project::find($request->get('projectid'));
+		if (!$project || !$project->isOwner()) {
+			return response()->json(['success' => 0]);
+		}
+
+		$invoice = Invoice::find($request->get('id'));
+		if (!$invoice) {
+			return response()->json(['success' => 0]);
+		}
+
+		$ninvoice = new Invoice;
+		$ninvoice->amount = ($invoice->amount - $invoice->amount - $invoice->amount);
+		$ninvoice->payment_condition = 0;
+		$ninvoice->invoice_code = $invoice->invoice_code;
+		$ninvoice->priority = $invoice->priority;
+		$ninvoice->offer_id = $invoice->offer_id;
+		$ninvoice->to_contact_id = $invoice->to_contact_id;
+		$ninvoice->from_contact_id = $invoice->from_contact_id;
+		$ninvoice->reference = $invoice->invoice_code;
+		$ninvoice->isclose = $invoice->isclose;
+		$ninvoice->invoice_close = true;
+		$ninvoice->invoice_code = InvoiceController::getInvoiceCode($project->id);
+		$ninvoice->bill_date = date('Y-m-d H:i:s');
+		$ninvoice->rest_21 = InvoiceTerm::partTax1($project, $invoice)*$ninvoice->amount;
+		$ninvoice->rest_6 = InvoiceTerm::partTax2($project, $invoice)*$ninvoice->amount;
+		$ninvoice->rest_0 = InvoiceTerm::partTax3($project, $invoice)*$ninvoice->amount;
+		$ninvoice->save();
+
+		$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.$invoice->invoice_code.'-credit-invoice.pdf';
+		$pdf = PDF::loadView('calc.invoice_credit_final_pdf', ['invoice' => $ninvoice, 'oldinvoice' => $invoice->invoice_code]);
+
+		$relation_self = Relation::find(Auth::User()->self_id);
+		$footer_text = $relation_self->company_name;
+		if ($relation_self->iban)
+			$footer_text .= ' | Rekeningnummer: ' . $relation_self->iban;
+		if ($relation_self->kvk)
+			$footer_text .= ' | KVK: ' . $relation_self->kvk;
+		if ($relation_self->btw)
+			$footer_text .= ' | BTW: ' . $relation_self->btw;
+
+		$pdf->setOption('footer-font-size', 8);
+		$pdf->setOption('footer-left', $footer_text);
+		$pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
+		$pdf->setOption('lowquality', false);
+		$pdf->save('user-content/'.$newname);
+
+		$resource = new Resource;
+		$resource->resource_name = $newname;
+		$resource->file_location = 'user-content/' . $newname;
+		$resource->file_size = filesize('user-content/' . $newname);
+		$resource->user_id = Auth::id();
+		$resource->description = 'Factuurversie';
+
+		$resource->save();
+
+		$ninvoice->resource_id = $resource->id;
+
+		$ninvoice->save();
+
+		Auth::user()->invoice_counter++;
+		Auth::user()->save();
+
+		return response()->json(['success' => 1]);
 	}
 
 	public function doInvoiceDeleteTerm(Request $request)
@@ -356,7 +427,6 @@ class InvoiceController extends Controller {
 
 		$invoice->save();
 
-		$page = 0;
 		$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.$invoice->invoice_code.'-invoice.pdf';
 		if ($invoice->isclose) {
 			$pdf = PDF::loadView('calc.invoice_final_pdf', ['invoice' => $invoice]);

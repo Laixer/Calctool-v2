@@ -42,15 +42,31 @@ class ApiController extends Controller {
 
 	public function getProjects()
 	{
-		$projects = Project::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+		$projects = Project::where('user_id',Auth::id())->where('is_dilapidated',false)->orderBy('created_at','desc')->get();
 
 		foreach ($projects as $project) {
 			$relation = Relation::find($project->client_id);
-			$project['relation'] = RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']);
+			$project['relation'] = RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id',$relation->id)->first()['firstname'].' '.Contact::where('relation_id',$relation->id)->first()['lastname']);
 			$project['type'] = $project->type->type_name;
 		}
 
 		return response()->json($projects);
+	}
+
+	public function getRelations()
+	{
+		$relations = Relation::where('user_id',Auth::id())->where('id','!=',Auth::user()->self_id)->where('active',true)->orderBy('created_at', 'desc')->get();
+
+		foreach ($relations as $relation) {
+			$contact = Contact::where('relation_id',$relation->id)->first();
+			$relation['contact'] = $contact;
+			$relation['type_name'] = ucfirst(RelationKind::find($relation->kind_id)->kind_name);
+			$relation['company'] = $relation->company_name ? $relation->company_name : $contact->firstname . ' '. $contact->lastname;
+			$relation['_phone'] = $relation->company_name ? $relation->phone : $contact->phone;
+			$relation['_email'] = $relation->company_name ? $relation->email : $contact->email;
+		}
+
+		return response()->json($relations);
 	}
 
 	public function getUserUpdate(Request $request)

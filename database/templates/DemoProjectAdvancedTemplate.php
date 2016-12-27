@@ -294,8 +294,6 @@ class DemoProjectAdvancedTemplate {
 		$calculation_material_activity4_2->isless = false;
 		$calculation_material_activity4_2->activity_id = $activity4->id;
 		$calculation_material_activity4_2->save();
-		
-
      }
   }
 

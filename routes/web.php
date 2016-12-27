@@ -34,6 +34,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'auth'], function() {
 	Route::get('/', 'ApiController@getApiRoot');
 	Route::post('/update', 'ApiController@getUserUpdate');
 	Route::get('/projects', 'ApiController@getProjects');
+	Route::get('/relations', 'ApiController@getRelations');
 
 	Route::get('/timesheet', 'ApiController@getTimesheet');
 	Route::post('/timesheet/delete', 'ApiController@doTimesheetDelete');
@@ -153,6 +154,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('invoice/save', 'InvoiceController@doInvoiceVersionNew');
 	Route::post('invoice/close', 'InvoiceController@doInvoiceClose');
 	Route::post('invoice/pay', 'InvoiceController@doInvoicePay');
+	Route::post('invoice/creditinvoice', 'InvoiceController@doCreditInvoiceNew');
 	Route::post('invoice/invclose', 'InvoiceController@doInvoiceCloseAjax');
 	Route::post('invoice/term/add', 'InvoiceController@doInvoiceNewTerm');
 	Route::post('invoice/term/delete', 'InvoiceController@doInvoiceDeleteTerm');
@@ -328,6 +330,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('project/updateworkexecution', 'ProjectController@doUpdateWorkExecution');
 	Route::post('project/updateworkcompletion', 'ProjectController@doUpdateWorkCompletion');
 	Route::post('project/updateprojectclose', 'ProjectController@doUpdateProjectClose');
+	Route::get('project-{project_id}/updateprojectdilapidated', 'ProjectController@getUpdateProjectDilapidated');
 
 	/* Cost pages */
 	Route::get('timesheet', 'CostController@getTimesheet')->middleware('payzone');

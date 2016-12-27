@@ -79,9 +79,9 @@
 	p.dropcap.color:first-letter,
 	.blog-timeline .timeline-item .item-date span,
 	ul.nav-pills li.active a,
-	.modal-header {
+	/*.modal-header {
 		background-color:#517A00;
-	}
+	}*/
 
 	.styleSecondBackground,
 	.styleSecondBackground h1,

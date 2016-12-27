@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use \Calctool\Models\Payment;
 use \Calctool\Models\User;
+use \Calctool\Models\Project;
 use \Calctool\Models\Audit;
 use \Calctool\Models\Promotion;
 use \Calctool\Models\UserGroup;
@@ -191,7 +192,10 @@ class UserController extends Controller {
 						return;
 					}
 					$order->status = $payment->status;
-					$order->method = $payment->method;
+					if ($payment->method)
+						$order->method = $payment->method;
+					else
+						$order->method = '';
 					$order->save();
 					break;
 				default:
@@ -202,7 +206,10 @@ class UserController extends Controller {
 					$order->status = $payment->status;
 					$order->increment = $payment->metadata->incr;
 					$order->description = $payment->description;
-					$order->method = $payment->method;
+					if ($payment->method)
+						$order->method = $payment->method;
+					else
+						$order->method = '';
 					$order->recurring_type = $payment->recurringType;
 					$order->user_id = $payment->metadata->uid;
 					$order->save();
@@ -221,7 +228,10 @@ class UserController extends Controller {
 				return;
 
 			$order->status = $payment->status;
-			$order->method = $payment->method;
+			if ($payment->method)
+				$order->method = $payment->method;
+			else
+				$order->method = '';
 			$order->save();
 		}
 
@@ -235,6 +245,7 @@ class UserController extends Controller {
 			$data = array('email' => $user->email, 'amount' => number_format($payment->amount, 2,",","."), 'expdate' => date('j F Y', strtotime($user->expiration_date)), 'firstname' => $user->firstname, 'lastname' => $user->lastname);
 			Mailgun::send('mail.paid', $data, function($message) use ($data) {
 				$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
+				$message->bcc('info@calculatietool.com', 'Gebruiker abonnement verlengd');
 				$message->subject('CalculatieTool.com - Abonnement verlengd');
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');
 				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
@@ -627,7 +638,11 @@ class UserController extends Controller {
 
 		Audit::CreateEvent('account.demoproject.success', 'Demoproject loaded for user');
 
-		return back()->with('success', 'Demoproject is geladen in je projectenoverzicht op het dashboard');
+		$project = Project::where('user_id', Auth::id())->orderBy('created_at', 'desc')->first();
+		if (!$project)
+			return back();
+
+		return redirect('/project-' . $project->id . '/edit');
 	}
 
 	public function doRevokeApp(Request $request, $client_id) {

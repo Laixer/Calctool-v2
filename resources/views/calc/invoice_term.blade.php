@@ -356,11 +356,11 @@ if (!$project || !$project->isOwner()) {
 					<table class="table table-striped hide-btw2">
 						<tbody>
 						<?php
-						$count = Invoice::where('offer_id', $invoice->offer_id)->where('priority','<',$invoice->priority)->count();
+						$count = Invoice::where('offer_id', $invoice->offer_id)->where('priority','<',$invoice->priority)->whereRaw('(amount > 0 OR amount IS NULL)')->count();
 						?>
 							<tr>
 								<td class="col-md-7">&nbsp;</td>
-								<td class="col-md-4"><strong>{{ $count+1 }}e van in totaal {{Invoice::where('offer_id','=', $invoice->offer_id)->count()}} betalingstermijnen</strong> @if (!$project->tax_reverse) <i>(Excl. BTW)</i> @endif</td>
+								<td class="col-md-4"><strong>{{ $count+1 }}e van in totaal {{ Invoice::where('offer_id', $invoice->offer_id)->whereRaw('(amount > 0 OR amount IS NULL)')->count() }} betalingstermijnen</strong> @if (!$project->tax_reverse) <i>(Excl. BTW)</i> @endif</td>
 								<td class="col-md-1"><strong>{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</strong></td>
 
 							</tr>

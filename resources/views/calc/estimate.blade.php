@@ -21,7 +21,7 @@ use \Calctool\Calculus\SetEstimateEndresult;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
-if (!$project || !$project->isOwner())
+if (!$project || !$project->isOwner() || $project->is_dilapidated)
 	$common_access_error = true;
 ?>
 
@@ -797,7 +797,7 @@ var n = this,
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-default" data-dismiss="modal">Sluiten</button>
+				<button class="btn btn-primary" data-dismiss="modal">Sluiten</button>
 			</div>
 
 		</div>
@@ -821,7 +821,7 @@ var n = this,
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-default" data-dismiss="modal">Sluiten</button>
+				<button class="btn btn-primary" data-dismiss="modal">Opslaan</button>
 			</div>
 
 		</div>
@@ -833,13 +833,6 @@ var n = this,
 		<div class="modal-content">
 
 			<iframe width="1280" height="720" src="https://www.youtube.com/embed/0bA6AK187a4?rel=0" frameborder="0" allowfullscreen></iframe>
-			
-			<div class="modal-body">
-				<div class="form-horizontal">
-
-
-				</div>
-			</div>
 
 		</div>
 	</div>

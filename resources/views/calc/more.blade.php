@@ -24,7 +24,7 @@ use \Calctool\Models\Timesheet;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
-if (!$project || !$project->isOwner())
+if (!$project || !$project->isOwner() || $project->is_dilapidated)
 	$common_access_error = true;
 
 $type = ProjectType::find($project->type_id);
@@ -696,7 +696,7 @@ var n = this,
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-default">Opslaan</button>
+				<button class="btn btn-primary">Opslaan</button>
 			</div>
 		</div>
 		</form>
@@ -727,7 +727,7 @@ var n = this,
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-default">Opslaan</button>
+				<button class="btn btn-primary">Opslaan</button>
 			</div>
 		</div>
 		</form>
@@ -781,7 +781,7 @@ var n = this,
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-default" data-dismiss="modal">Sluiten</button>
+				<button class="btn btn-primary" data-dismiss="modal">Sluiten</button>
 			</div>
 
 		</div>
@@ -818,7 +818,7 @@ var n = this,
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-default" data-dismiss="modal">Sluiten</button>
+				<button class="btn btn-primary" data-dismiss="modal">Sluiten</button>
 			</div>
 
 		</div>
@@ -842,7 +842,7 @@ var n = this,
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-default" data-dismiss="modal">Sluiten</button>
+				<button class="btn btn-primary" data-dismiss="modal">Opslaan</button>
 			</div>
 
 		</div>

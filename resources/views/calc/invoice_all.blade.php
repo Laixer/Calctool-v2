@@ -10,7 +10,7 @@ use \Calctool\Models\InvoiceVersion;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
-if (!$project || !$project->isOwner()) {
+if (!$project || !$project->isOwner() || $project->is_dilapidated) {
 	$common_access_error = true;
 } else {
 	$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
@@ -121,6 +121,17 @@ if (!$project || !$project->isOwner()) {
 			};
 		});
 
+		$('.docredit').click(function(e){
+			if(confirm('Factuur in credit brengen?')){
+				$curThis = $(this);
+				$curproj = $(this).attr('data-project');
+				$curinv = $(this).attr('data-invoice');
+				$.post("/invoice/creditinvoice", {project: {{ $project->id }}, id: $curinv, projectid: $curproj}, function(data){
+					location.reload();
+				}).fail(function(e) { console.log(e); });
+			};
+		});
+
 	});
 </script>
 <div id="wrapper">
@@ -156,7 +167,7 @@ if (!$project || !$project->isOwner()) {
 						</div>
 
 						<div class="modal-footer">
-							<button class="btn btn-default" data-dismiss="modal">Close</button>
+							<button class="btn btn-primary" data-dismiss="modal">Opslaan</button>
 						</div>
 
 					</div>
@@ -188,7 +199,7 @@ if (!$project || !$project->isOwner()) {
 						</div>
 
 						<div class="modal-footer">
-							<button class="btn btn-default" data-dismiss="modal">Close</button>
+							<button class="btn btn-primary" data-dismiss="modal">Opslaan</button>
 						</div>
 
 					</div>
@@ -221,15 +232,38 @@ if (!$project || !$project->isOwner()) {
 				<tbody>
 				<?php
 				if ($offer_last) {
-				$i=0;
+				$i=0;$skip=0;
 				$close = true;
-				$count = Invoice::where('offer_id','=', $offer_last->id)->count();
-				$invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first();
+				$count = Invoice::where('offer_id',$offer_last->id)->count();
+				$invoice_end = Invoice::where('offer_id',$offer_last->id)->where('isclose',true)->first();
+				$creditinvoice_end = Invoice::where('offer_id',$offer_last->id)->where('isclose',true)->where('amount','<',0)->first();
 				?>
-				@foreach (Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',false)->orderBy('priority')->get() as $invoice)
+				@foreach (Invoice::where('offer_id',$offer_last->id)->where('isclose',false)->orderBy('priority')->orderBy('created_at')->get() as $invoice)
 				<?php $invoice_version = InvoiceVersion::where('invoice_id', $invoice->id)->orderBy('created_at','desc')->first(); ?>
 					<tr>
-						<td class="col-md-2"><?php if (!$invoice->invoice_close && !$project->project_close) { if ($invoice_version){ echo '<a href="/invoice/project-' . $project->id . '/invoice-version-'.$invoice_version->id.'">'; } else { echo '<a href="/invoice/project-' . $project->id . '/term-invoice-' . $invoice->id . '">'; } } else { echo '<a href="/invoice/project-' . $project->id . '/pdf-invoice-'.$invoice->id.'">'; } ?>{{ ($i==0 && $offer_last->downpayment ? 'Aanbetaling' : 'Termijnfactuur '.($i+1)) }}<?php if ($invoice->invoice_close) { echo '</a>'; }?></td>
+						<td class="col-md-2">
+							<?php
+							if (!$invoice->invoice_close && !$project->project_close) {
+								if ($invoice_version) {
+									echo  '<a href="/invoice/project-' . $project->id . '/invoice-version-'.$invoice_version->id.'">';
+								} else {
+									echo '<a href="/invoice/project-' . $project->id . '/term-invoice-' . $invoice->id . '">';
+								}
+							} else {
+								echo '<a href="/invoice/project-' . $project->id . '/pdf-invoice-'.$invoice->id.'">';
+							}
+							
+							if ($i==0 && $offer_last->downpayment) {
+								echo 'Aanbetaling';
+							} else if ($invoice->amount < 0) {
+								echo 'Creditfactuur ' . ($i-$skip);
+								$skip++;
+							} else {
+								echo 'Termijnfactuur ' . (($i+1)-$skip);
+							}
+							?>
+							<?php if ($invoice->invoice_close) { echo '</a>'; } ?>
+						</td>
 						<td class="col-md-2"><?php if ($invoice->invoice_close || $project->project_close){ echo "<span class='sdata'>".number_format($invoice->amount, 2, ",",".")."</span>"; } else  { ?><input data-id="{{ $invoice->id }}" class="form-control-sm-text adata" name="amount" type="text" value="{{ number_format($invoice->amount, 2, ",",".") }}" /><?php } ?></td>
 						<td class="col-md-2">{{ Auth::user()->pref_use_ct_numbering ? $invoice->invoice_code : ($invoice->book_code ? $invoice->book_code : $invoice->invoice_code) }}</td>
 						<td class="col-md-1"><?php if (!$invoice->invoice_close && !$project->project_close) { ?><a href="#" data-toggle="modal" class="changecode adata" data-reference="{{ $invoice->reference }}" data-bookcode="{{ $invoice->book_code }}" data-id="{{ $invoice->id }}" data-target="#codeModal">bewerk</a><?php } ?></td>
@@ -253,7 +287,15 @@ if (!$project || !$project->isOwner()) {
 						      <li><a target="blank" href="javascript:void(0);" data-invoice="{{ $invoice->id }}" data-project="{{ $project->id }}" class="dopay">Betaald</a></li>
 						      @endif
 						      <li><a href="/res-{{ $invoice->resource_id }}/download">Download PDF</a></li>
+						      @if ($invoice->amount > 0)
 						      <li><a href="/invoice/project-{{ $project->id }}/history-invoice-{{ $invoice->id }}">Geschiedenis</a></li>
+						      <?php
+						      $is_credit_invoice = Invoice::where('priority',$invoice->priority)->where('reference',$invoice->invoice_code)->where('amount','<',0)->count();
+						      if ($is_credit_invoice == 0) {
+						      ?>
+						      <li><a href="javascript:void(0);" data-invoice="{{ $invoice->id }}" data-project="{{ $project->id }}" class="docredit">Creditfactuur</a></li>
+						      <?php } ?>
+						      @endif
 						    </ul>
 						  </div>
 						<?php
@@ -294,7 +336,15 @@ if (!$project || !$project->isOwner()) {
 						      <li><a target="blank" href="javascript:void(0);" data-invoice="{{ $invoice_end->id }}" data-project="{{ $project->id }}" class="dopay">Betaald</a></li>
 						      @endif
 						      <li><a href="/res-{{ $invoice_end->resource_id }}/download">Download PDF</a></li>
+						      @if ($invoice_end->amount > 0)
 						      <li><a href="/invoice/project-{{ $project->id }}/history-invoice-{{ $invoice_end->id }}">Geschiedenis</a></li>
+						      <?php
+						      $is_credit_invoice = Invoice::where('priority',$invoice_end->priority)->where('reference',$invoice_end->invoice_code)->where('isclose',true)->where('amount','<',0)->count();
+						      if ($is_credit_invoice == 0) {
+						      ?>
+						      <li><a href="javascript:void(0);" data-invoice="{{ $invoice_end->id }}" data-project="{{ $project->id }}" class="docredit">Creditfactuur</a></li>
+						      <?php } ?>
+						      @endif
 						    </ul>
 						  </div>
 						<?php 
@@ -305,6 +355,34 @@ if (!$project || !$project->isOwner()) {
 						<td class="col-md-1"></td>
 					</tr>
 				<?php }} ?>
+				<?php if ($creditinvoice_end) { ?>
+					<tr>
+						<td class="col-md-2"><a href="/invoice/project-{{ $project->id }}/pdf-invoice-{{ $creditinvoice_end->id }}">Creditfactuur</a></td>
+						<td class="col-md-2">{{ number_format($creditinvoice_end->amount, 2, ",",".") }}</td>
+						<td class="col-md-2">{{ Auth::user()->pref_use_ct_numbering ? $creditinvoice_end->invoice_code : ($creditinvoice_end->book_code ? $creditinvoice_end->book_code : $creditinvoice_end->invoice_code) }}</td>
+						<td class="col-md-2"></td>
+						<td class="col-md-2"></td>
+						<td class="col-md-1"><input disabled type="number" name="condition" value="{{ $creditinvoice_end->payment_condition }}" class="form-control form-control-sm-number condition" /></td>
+						<td class="col-md-1">
+						  <div class="btn-group" role="group">
+						    <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    @if ($creditinvoice_end->payment_date)
+						    Betaald
+						    @else
+						      Gefactureerd
+						     @endif
+						      <span class="caret"></span>
+						    </button>
+						    <ul class="dropdown-menu">
+						      @if (!$creditinvoice_end->payment_date && !$project->project_close)
+						      <li><a target="blank" href="javascript:void(0);" data-invoice="{{ $creditinvoice_end->id }}" data-project="{{ $project->id }}" class="dopay">Betaald</a></li>
+						      @endif
+						      <li><a href="/res-{{ $creditinvoice_end->resource_id }}/download">Download PDF</a></li>
+						    </ul>
+						  </div>
+						<td class="col-md-1"></td>
+					</tr>
+				<?php } ?>
 				</tbody>
 			</table>
 			@if (!$project->project_close && ($invoice_end && !$invoice_end->invoice_close))

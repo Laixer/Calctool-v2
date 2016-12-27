@@ -8,10 +8,7 @@ use \Calctool\Models\Offer;
 use \Calctool\Models\ProjectType;
 use \Calctool\Models\Resource;
 
-$_invoice = Invoice::find($invoice->invoice_id);
-if (!$_invoice)
-  exit();
-$offer = Offer::find($_invoice->offer_id);
+$offer = Offer::find($invoice->offer_id);
 if (!$offer)
   exit();
 $project = Project::find($offer->project_id);
@@ -35,7 +32,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
     <title>Termijnfactuur</title>
     <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" media="all" />
   </head>
-   <body style="background-image: url(http://localhost/images/concept.png);">
+   <body style="background-image: url(http://localhost/images/final.png);">
      <header class="clearfix">
         <div id="heading" class="clearfix">
         <table border="0" cellspacing="0" cellpadding="0">
@@ -100,7 +97,7 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
           <td style="width: 345px">
           </td>
           <td style="width: 300px">
-            <div><h2 class="type">TERMIJNFACTUUR</h2></div>
+            <div><h2 class="type">CREDITFACTUUR</h2></div>
           </td>
         </tr>
       </tbody>
@@ -155,10 +152,10 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
   <div id="spacing"></div>
   <div class="openingtext">Geachte {{ Contact::find($invoice->to_contact_id)->getFormalName() }},</div>
   <br>
-  <div class="openingtext">{{ ($invoice ? $invoice->description : '') }}</div>
+  <div class="openingtext">Hierbij doe ik de creditfactuur toekomen van {{ $project->project_name }}, factuurnummer {{ $oldinvoice }}.</div>
   <br>
 
-    <h2 class="name">Specificatie termijnfactuur</h2>
+    <h2 class="name">Specificatie creditfactuur</h2>
     <hr color="#000" size="1">
 
     <table class="table table-striped hide-btw2">
@@ -168,36 +165,12 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
         </tr>
       </thead>
            <tbody>
-           <?php
-            $count = Invoice::where('offer_id', $_invoice->offer_id)->where('priority','<',$_invoice->priority)->whereRaw('(amount > 0 OR amount IS NULL)')->count();
-            ?>
         <tr>
           <td style="width: 270px" class="qty">&nbsp;</td>
-          <td style="width: 385px" class="qty"><strong>{{ $count+1 }}e van in totaal {{Invoice::where('offer_id','=', $_invoice->offer_id)->whereRaw('(amount > 0 OR amount IS NULL)')->count()}} betalingstermijnen</strong> @if(!$project->tax_reverse)<i>(Excl. BTW)</i> @endif</td>
+          <td style="width: 385px" class="qty"><strong>Te crediteren</strong> @if(!$project->tax_reverse)<i>(Excl. BTW)</i> @endif</td>
           <td class="qty"><strong>{{ '&euro; '.number_format($invoice->amount, 2, ",",".") }}</strong></td>
         </tr>
-        
-        @if (!$project->tax_reverse)
-        <tr>
-          <td style="width: 270px" class="qty">&nbsp;</td>
-          <td style="width: 385px" class="qty">Aandeel termijnfactuur in 21% BTW categorie</td>
-          <td class="qty">{{ '&euro; '.number_format($invoice->rest_21, 2, ",",".") }}</td>
-
-        </tr>
-        <tr>
-          <td style="width: 270px" class="qty">&nbsp;</td> 
-          <td style="width: 385px" class="qty">Aandeel termijnfactuur in 6% BTW categorie</td>
-          <td class="qty">{{ '&euro; '.number_format($invoice->rest_6, 2, ",",".") }}</td>
-        </tr>
-        @else
-        <tr>
-          <td style="width: 270px" class="qty">&nbsp;</td>
-          <td style="width: 385px" class="qty">Aandeel termijnfactuur in 0% BTW categorie</td>
-          <td class="qty">{{ '&euro; '.number_format($invoice->rest_0, 2, ",",".") }}</td>
-
-        </tr>
-        @endif
-        
+          
         @if (!$project->tax_reverse)
         <tr>
           <td style="width: 270px" class="qty">&nbsp;</td>
@@ -212,19 +185,18 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
         @endif   
         <tr>
           <td style="width: 270px" class="qty">&nbsp;</td>
-          <td style="width: 385px" class="qty"><strong>Calculatief te factureren</strong> @if(!$project->tax_reverse)<i>(Incl. BTW)</i> @endif</td>
+          <td style="width: 385px" class="qty"><strong>Calculatief te crediteren</strong> @if(!$project->tax_reverse)<i>(Incl. BTW)</i> @endif</td>
           <td class="qty"><strong>{{ '&euro; '.number_format($invoice->amount+(($invoice->rest_21/100)*21)+(($invoice->rest_6/100)*6), 2, ",",".") }}</strong></td>
         </tr>
       </tbody>
     </table>
 
-      @if($project->tax_reverse)<h2 class="name">Deze factuur is <strong>BTW Verlegd</strong></h1>@endif
+      @if($project->tax_reverse)<h2 class="name">Deze creditfactuur is <strong>BTW Verlegd</strong></h1>@endif
 
     <h2 class="name">Bepalingen</h2>
     <hr color="#000" size="1">
     <div class="terms">
-      <li>Deze factuur dient betaald te worden binnen {{ $invoice->payment_condition }} dagen na dagtekening.</li>
-      <li>Gaarne bij betaling factuurnummer vermelden.</li>
+      <li>Betreft de creditnota van factuur {{ $oldinvoice }}.</li>
     </div>
 
     <div class="closingtext">{{ ($invoice ? $invoice->closure : '') }}</div>
@@ -233,13 +205,6 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
     <div class="signing">{{ Contact::find($invoice->from_contact_id)->firstname ." ". Contact::find($invoice->from_contact_id)->lastname }}</div>
 
   </main>
-
-
-
-
-
-
-
 
 
 
