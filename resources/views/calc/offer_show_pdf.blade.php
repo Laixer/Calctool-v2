@@ -137,7 +137,7 @@ $(document).ready(function() {
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button class="btn btn-default" data-dismiss="modal">Opslaan</button>
+					<button class="btn btn-primary" data-dismiss="modal">Opslaan</button>
 				</div>
 			</div>
 		</div>

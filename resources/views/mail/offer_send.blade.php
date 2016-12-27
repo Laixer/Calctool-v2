@@ -47,6 +47,13 @@
 				<tr>
 					<td align="center" style="border-collapse: collapse;">
 
+						@if ($preview)
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modal-title" style="text-align:left;">Verstuur bevestiging</h4>
+						</div>
+						@endif
+
 						<!-- ROW LOGO -->
 						<table cellpadding="0" cellspacing="0" border="0" width="560" style="border:0; border-collapse:collapse; background-color:#ffffff; border-radius:6px;">
 							<tbody>

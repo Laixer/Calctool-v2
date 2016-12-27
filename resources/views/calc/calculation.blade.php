@@ -1113,7 +1113,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-default">Opslaan</button>
+				<button class="btn btn-primary">Opslaan</button>
 			</div>
 		</div>
 		</form>
@@ -1144,7 +1144,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-default">Opslaan</button>
+				<button class="btn btn-primary">Opslaan</button>
 			</div>
 		</div>
 		</form>
@@ -1199,7 +1199,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-default" data-dismiss="modal">Sluiten</button>
+				<button class="btn btn-primary" data-dismiss="modal">Sluiten</button>
 			</div>
 
 		</div>
@@ -1240,7 +1240,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-default" data-dismiss="modal">Sluiten</button>
+				<button class="btn btn-primary" data-dismiss="modal">Sluiten</button>
 			</div>
 
 		</div>
@@ -1277,7 +1277,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-default" data-dismiss="modal">Sluiten</button>
+				<button class="btn btn-primary" data-dismiss="modal">Sluiten</button>
 			</div>
 
 		</div>
@@ -1301,7 +1301,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-default" data-dismiss="modal">Sluiten</button>
+				<button class="btn btn-primary" data-dismiss="modal">Opslaan</button>
 			</div>
 
 		</div>
@@ -1313,12 +1313,6 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 		<div class="modal-content">
 
 			<iframe width="1280" height="720" src="https://www.youtube.com/embed/Pm3vU0ropSE?rel=0;" frameborder="0" allowfullscreen></iframe>
-
-				<div class="form-horizontal">
-
-
-				</div>
-			</div>
 
 		</div>
 	</div>

@@ -13,13 +13,6 @@
 
 			<iframe width="1280" height="720" src="https://www.youtube.com/embed/CCXRWinSKsg?rel=0" frameborder="0" allowfullscreen></iframe>
 			
-			<div class="modal-body">
-				<div class="form-horizontal">
-
-
-				</div>
-			</div>
-
 		</div>
 	</div>
 </div>
@@ -53,7 +46,7 @@
 					</div>
 				</div>
 
-				<table class="table table-striped">
+				<table ng-cloak class="table table-striped">
 					<thead>
 						<tr>
 							<th class="col-md-1">Debiteur</th>
