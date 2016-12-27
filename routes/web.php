@@ -34,6 +34,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'auth'], function() {
 	Route::get('/', 'ApiController@getApiRoot');
 	Route::post('/update', 'ApiController@getUserUpdate');
 	Route::get('/projects', 'ApiController@getProjects');
+	Route::get('/relations', 'ApiController@getRelations');
 
 	Route::get('/timesheet', 'ApiController@getTimesheet');
 	Route::post('/timesheet/delete', 'ApiController@doTimesheetDelete');

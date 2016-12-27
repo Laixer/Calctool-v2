@@ -14,11 +14,8 @@ use \Calctool\Models\SysMessage;
 
 @section('title', 'Dashboard')
 
-@push('style')
-<script src="/components/angular/angular.min.js"></script>
-@endpush
-
 @push('scripts')
+<script src="/components/angular/angular.min.js"></script>
 @endpush
 
 <?php
@@ -40,7 +37,7 @@ $relation = Relation::find(Auth::user()->self_id);
 					</div>
 					<div class="col-md-4">
 						<a class="logo" href="/">
-						<img src="/images/logo2.png" width="229px" alt="Calctool">
+							<img src="/images/logo2.png" width="229px" alt="Calctool">
 						</a>
 					</div>
 				</div>
@@ -95,18 +92,18 @@ $relation = Relation::find(Auth::user()->self_id);
 			@endif
 
 			<h2 style="margin: 10px 0 20px 0;"><strong>
-			<?php
-			$time = date("H");
-			if ($time >= "6" && $time < "12") {
-				echo "Goedemorgen";
-			} else if ($time >= "12" && $time < "17") {
-				echo "Goedemiddag";
-			} else if ($time >= "17") {
-				echo "Goedeavond";
-			} else if ($time >= "0") {
-				echo "Goedenacht";
-			}
-			?>
+				<?php
+				$time = date("H");
+				if ($time >= "6" && $time < "12") {
+					echo "Goedemorgen";
+				} else if ($time >= "12" && $time < "17") {
+					echo "Goedemiddag";
+				} else if ($time >= "17") {
+					echo "Goedeavond";
+				} else if ($time >= "0") {
+					echo "Goedenacht";
+				}
+				?>
 			</strong> {{ Auth::user()->firstname }}&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
 
 			<div class="row">
@@ -209,14 +206,14 @@ $relation = Relation::find(Auth::user()->self_id);
 
 						<div class="white-row" ng-controller="projectController">
 							<div class="row">
-							  <div class="form-group col-lg-12">
-							    <div class="input-group">
-							      <input type="text" class="form-control" ng-model="query" placeholder="Zoek in projecten...">
-							      <span class="input-group-btn">
-							        <a href="/project/new" class="btn btn-primary" type="button"><i class="fa fa-file"></i> Nieuw project</a>
-							      </span>
-							    </div>
-							  </div>
+								<div class="form-group col-lg-12">
+									<div class="input-group">
+										<input type="text" class="form-control" ng-model="query" placeholder="Zoek in projecten...">
+										<span class="input-group-btn">
+											<a href="/project/new" class="btn btn-primary" type="button"><i class="fa fa-file"></i> Nieuw project</a>
+										</span>
+									</div>
+								</div>
 							</div>
 
 							<table ng-cloak class="table table-striped">
@@ -247,68 +244,70 @@ $relation = Relation::find(Auth::user()->self_id);
 							<div class="row">
 								<div class="col-md-3">
 									<div class="btn-group item-full">
-								  		<button class="btn btn-primary" name="toggle-close">Gesloten projecten</a>
+										<button class="btn btn-primary" name="toggle-close">Gesloten projecten</a>
+										</div>
 									</div>
 								</div>
+
 							</div>
+							@else
+							<h2><strong>De eerste</strong> stap... </h2>
+							<div class="bs-callout text-center whiteBg" style="margin:0">
+								<h3>			
+									<a href="/project/new" class="btn btn-primary btn-lg">Maak je eerste project aan <i class="fa fa-arrow-right"></i></a>
+								</h3>
+							</div>
+							@endif
+						</div>
 
-						</div>
-						@else
-						<h2><strong>De eerste</strong> stap... </h2>
-						<div class="bs-callout text-center whiteBg" style="margin:0">
-							<h3>			
-								<a href="/project/new" class="btn btn-primary btn-lg">Maak je eerste project aan <i class="fa fa-arrow-right"></i></a>
-							</h3>
-						</div>
-						@endif
 					</div>
-
 				</div>
-				<script type="text/javascript">
-				angular.module('projectApp', []).controller('projectController', function($scope, $http) {
-					$http.get('/api/v1/projects').then(function(response){
-						$scope._projects = response.data;
-						$scope.filter_close = false;
+			</div>
+		</div> 
+
+	</div>
+	<script type="text/javascript">
+		$( document ).ready(function() {
+			angular.module('projectApp', []).controller('projectController', function($scope, $http) {
+				$http.get('/api/v1/projects').then(function(response){
+					$scope._projects = response.data;
+					$scope.filter_close = false;
+					$scope.projects = [];
+					angular.forEach($scope._projects, function(value, key) {
+						if (value.project_close == null) {
+							$scope.projects.push(value);
+						}
+					});
+				});
+				$("[name='toggle-close']").click(function() {
+					if ($scope.filter_close) {
 						$scope.projects = [];
 						angular.forEach($scope._projects, function(value, key) {
-						  if (value.project_close == null) {
-							$scope.projects.push(value);
-						  }
+							if (value.project_close == null) {
+								$scope.projects.push(value);
+							}
 						});
-					});
-					$("[name='toggle-close']").click(function() {
-				        if ($scope.filter_close) {
-							$scope.projects = [];
-							angular.forEach($scope._projects, function(value, key) {
-							  if (value.project_close == null) {
+						$scope.$apply();
+						$scope.filter_close = false;
+						$("[name='toggle-close']").text('Gesloten projecten');
+					} else {
+						$scope.projects = [];
+						angular.forEach($scope._projects, function(value, key) {
+							if (value.project_close != null) {
 								$scope.projects.push(value);
-							  }
-							});
-							$scope.$apply();
-							$scope.filter_close = false;
-							$("[name='toggle-close']").text('Gesloten projecten');
-				        } else {
-							$scope.projects = [];
-							angular.forEach($scope._projects, function(value, key) {
-							  if (value.project_close != null) {
-								$scope.projects.push(value);
-							  }
-							});
-							$scope.$apply();
-							$scope.filter_close = true;
-							$("[name='toggle-close']").text('Open projecten');
-				        }
-					});
-
-				}).filter('capitalize', function() {
-					return function(input) {
-						return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+							}
+						});
+						$scope.$apply();
+						$scope.filter_close = true;
+						$("[name='toggle-close']").text('Open projecten');
 					}
 				});
-				</script>
-			</div>
-		</div>
-	</div> 
 
-</div>
-@stop
+			}).filter('capitalize', function() {
+				return function(input) {
+					return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+				}
+			});
+		});
+	</script>
+	@stop
