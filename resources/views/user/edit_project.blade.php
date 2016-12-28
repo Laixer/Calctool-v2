@@ -725,7 +725,7 @@ $(document).ready(function() {
 										</div>
 									</div>
 									<div class="col-md-9" style="padding-top:30px;">
-										<p>Een project zonder btw bedrag invoeren.</p>.
+										<p>Een project zonder btw bedrag invoeren.</p>
 										<ul>
 											<li>Kan na aanmaken project niet ongedaan gemaakt worden</li>
 										</ul>
