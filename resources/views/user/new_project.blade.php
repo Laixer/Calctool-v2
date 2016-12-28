@@ -137,28 +137,38 @@ $(document).ready(function() {
 		}
 	});
 
-	function isPrivateContractor(val) {
-		if (!$('#contractor :selected').data('business')) {
+	function getContractor(val) {
+		$.get("/project/relation/" + val.val(), function(data) {
+			if (data.success == 1) {
+				$('#street').val(data.address_street);
+				$('#address_number').val(data.address_number);
+				$('#zipcode').val(data.address_postal);
+				$('#city').val(data.address_city);
 
-			$.get("/project/relation/" + val.val(), function(data) {
-				if (data.success == 1) {
-					$('#street').val(data.address_street);
-					$('#address_number').val(data.address_number);
-					$('#zipcode').val(data.address_postal);
-					$('#city').val(data.address_city);
-
-					$("#province").find('option:selected').removeAttr("selected");
-					$('#province option[value=' + data.province_id + ']').attr('selected','selected');
-				}
-			});
-		}
+				$("#province").find('option:selected').removeAttr("selected");
+				$('#province option[value=' + data.province_id + ']').attr('selected','selected');
+			}
+		});
 	}
 
 	$('#contractor').change(function(){
-		isPrivateContractor($(this));
+		if (!$('#contractor :selected').data('business')) {
+			getContractor($(this));
+		} else {
+			$('#street').val('');
+			$('#address_number').val('');
+			$('#zipcode').val('');
+			$('#city').val('');
+		}
 	});
 
-	isPrivateContractor($('#contractor'));
+	$('#copyaddr').click(function(){
+		getContractor($('#contractor'), false);
+	});
+
+	if (!$('#contractor :selected').data('business')) {
+		getContractor($('#contractor'));
+	}
 });
 </script>
 <div class="modal fade" id="tutModal" tabindex="-1" role="dialog" aria-labelledby="tutModalLabel" aria-hidden="true">
@@ -344,13 +354,6 @@ $(document).ready(function() {
 
 			<iframe width="1280" height="720" src="https://www.youtube.com/embed/TH13Vg12kcM?rel=0;" frameborder="0" allowfullscreen></iframe>
 
-			<div class="modal-body">
-				<div class="form-horizontal">
-
-
-				</div>
-			</div>
-
 		</div>
 	</div>
 </div>
@@ -436,7 +439,7 @@ $(document).ready(function() {
 
 					</div>
 
-					<h5><strong>Adresgegevens</strong></h5>
+					<h5><strong>Adresgegevens</strong>&nbsp;(<a href="javascript:void(0);" id="copyaddr">Overnemen van relatie</a>)</h5>
 					<div data-step="2" data-intro="Geef de adresgegevens van het project op." class="row">
 
 						<div class="col-md-1">
