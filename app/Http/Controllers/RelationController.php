@@ -136,7 +136,7 @@ class RelationController extends Controller {
 		$relation->debtor_code = $request->input('debtor');
 
 		/* Company */
-		$relation_kind = \Calctool\Models\RelationKind::where('id','=',$relation->kind_id)->firstOrFail();
+		$relation_kind = \Calctool\Models\RelationKind::find($relation->kind_id);
 		if ($relation_kind->kind_name == "zakelijk") {
 			$relation->company_name = $request->input('company_name');
 			$relation->type_id = $request->input('company_type');
@@ -172,6 +172,30 @@ class RelationController extends Controller {
 		$relation->save();
 
 		return redirect('/relation');
+	}
+
+	public function getConvert(Request $request, $relation_id)
+	{
+		$relation = \Calctool\Models\Relation::find($relation_id);
+		if (!$relation || !$relation->isOwner()) {
+			return back()->withInput($request->all());
+		}
+
+		if (\Calctool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk') {
+			$relation->kind_id = \Calctool\Models\RelationKind::where('kind_name','particulier')->first()->id;
+		} else {
+			$relation->kind_id = \Calctool\Models\RelationKind::where('kind_name','zakelijk')->first()->id;
+			if (!$relation->company_name)
+				$relation->company_name = 'onbekend';
+			if (!$relation->email)
+				$relation->email = 'onbekend@calculatietool.com';
+		}
+
+		// $relation->active = false;
+
+		$relation->save();
+
+		return back()->with('success', 'Relatie is omgezet');
 	}
 
 	public function doUpdateContact(Request $request)

@@ -286,6 +286,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('relation-{relation_id}/delete', 'RelationController@getDelete')->where('relation_id', '[0-9]+')->middleware('payzone');
 	Route::get('relation-{relation_id}/contact/new','RelationController@getNewContact')->where('relation_id', '[0-9]+')->middleware('payzone');
 	Route::get('relation-{relation_id}/contact-{contact_id}/edit', 'RelationController@getEditContact')->where('relation_id', '[0-9]+')->where('contact_id', '[0-9]+')->middleware('payzone');
+	Route::get('relation-{relation_id}/convert', 'RelationController@getConvert')->where('relation_id', '[0-9]+')->middleware('payzone');
 	Route::get('mycompany', 'RelationController@getMyCompany')->middleware('payzone');
 	Route::post('mycompany/iban/update', 'UserController@doUpdateIban');
 	Route::post('mycompany/contact/new', 'RelationController@doMyCompanyNewContact');

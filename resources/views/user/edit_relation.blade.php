@@ -218,8 +218,20 @@ $(document).ready(function() {
 
 					<div class="tab-content">
 						<div id="company" class="tab-pane">
+
 							<div class="pull-right">
-								<a href="#" id="acc-deactive" class="btn btn-danger">Verwijderen</a>
+							<div class="btn-group" role="group">
+								<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acties&nbsp;&nbsp;<span class="caret"></span></button>
+								<ul class="dropdown-menu">
+									<li><a href="/project/new">Nieuw project</a></i>
+									@if (RelationKind::find($relation->kind_id)->kind_name == 'zakelijk')
+									<li><a href="/relation-{{ $relation->id }}/convert">Omzetten naar particulier</a></i>
+									@else
+									<li><a href="/relation-{{ $relation->id }}/convert">Omzetten naar zakelijk</a></i>
+									@endif
+									<li><a href="#" id="acc-deactive">Verwijderen</a></i>
+								</ul>
+							</div>
 							</div>
 
 							<form method="POST" action="/relation/update" accept-charset="UTF-8">
