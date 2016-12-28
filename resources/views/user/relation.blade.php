@@ -63,7 +63,7 @@
 							<img src="/images/loading_icon.gif" height="100" />
 						</div>
 						<tr ng-repeat="relation in relations | filter: query | orderBy: orderByField:reverseSort | limitTo:25 as results">
-							<td class="col-md-1"><a href="/relation-@{{ relation.id }}/edit">@{{ relation.id }}</td>
+							<td class="col-md-1"><a href="/relation-@{{ relation.id }}/edit">@{{ relation.debtor_code }}</td>
 							<td class="col-md-4"><a href="/relation-@{{ relation.id }}/edit">@{{ relation.company }}</td>
 							<td class="col-md-2">@{{ relation.type_name }}</td>
 							<td class="col-md-2">@{{ relation._phone }}</td>
