@@ -61,26 +61,26 @@ class AppsController extends Controller {
 					/* Convert to params */
 					$company_name = trim($data[0]);
 					$address_street = $data[1];
-					$address_number = $data[2];
-					$address_postal = $data[3];
+					$address_number = trim($data[2]);
+					$address_postal = trim($data[3]);
 					$address_city = trim($data[4]);
-					$kvk = $data[5];
-					$btw = $data[6];
-					$debtor = $data[7];
-					$phone_comp = $data[8];
-					$email_comp = $data[9];
+					$kvk = trim($data[5]);
+					$btw = trim($data[6]);
+					$debtor = trim($data[7]);
+					$phone_comp = trim($data[8]);
+					$email_comp = trim($data[9]);
 					$note = $data[10];
-					$website = $data[11];
-					$iban = $data[12];
-					$iban_name = $data[13];
+					$website = trim($data[11]);
+					$iban = trim($data[12]);
+					$iban_name = trim($data[13]);
 					$kind = strtolower($data[14]);
 
-					$firstname = $data[16];
-					$lastname = $data[17];
-					$mobile = $data[18];
-					$phone = $data[19];
-					$email = $data[20];
-					$gender = strtolower($data[21]);
+					$firstname = trim($data[16]);
+					$lastname = trim($data[17]);
+					$mobile = trim($data[18]);
+					$phone = trim($data[19]);
+					$email = trim($data[20]);
+					$gender = strtolower(trim($data[21]));
 
 					/* Fixes */
 					if (empty($debtor))
@@ -124,13 +124,10 @@ class AppsController extends Controller {
 						'lastname' => array('required','max:50'),
 						'firstname' => array('max:30'),
 						'email' => array('required','email','max:80'),
-						// 'contactfunction' => array('required','numeric'),
 						'address_street' => array('required','max:60'),
 						'address_number' => array('required','alpha_num','max:5'),
 						'address_postal' => array('required','size:6'),
 						'address_city' => array('required','max:35'),
-						// 'province' => array('required','numeric'),
-						// 'country' => array('required','numeric'),
 						'phone' => array('max:12'),
 						'mobile' => array('max:12'),
 						'website' => array('max:180'),
@@ -138,7 +135,6 @@ class AppsController extends Controller {
 
 					if ($validator->fails())
 						continue;
-						// return back()->withErrors($validator);
 
 					/* General */
 					$relation = new Relation;
@@ -148,15 +144,17 @@ class AppsController extends Controller {
 					$relation->debtor_code = $debtor;
 
 					/* Company */
-					if ($kind == 'zakelijk' || $kind[0] == 'z') {
-						$relation->kind_id = $kind_zakelijk;
-						$relation->company_name = $company_name;
-						$relation->type_id = $type_id;
-						$relation->kvk = $kvk;
-						$relation->btw = $btw;
-						$relation->phone = $phone_comp;
-						$relation->email = $email_comp;
-						$relation->website = $website;
+					if (!empty($kind)) {
+						if ($kind == 'zakelijk' || $kind[0] == 'z') {
+							$relation->kind_id = $kind_zakelijk;
+							$relation->company_name = $company_name;
+							$relation->type_id = $type_id;
+							$relation->kvk = $kvk;
+							$relation->btw = $btw;
+							$relation->phone = $phone_comp;
+							$relation->email = $email_comp;
+							$relation->website = $website;
+						}
 					}
 
 					/* Adress */
@@ -180,17 +178,21 @@ class AppsController extends Controller {
 					$contact->phone = $phone;
 					$contact->email = $email;
 					$contact->relation_id = $relation->id;
-					
-					if ($kind == 'zakelijk' || $kind[0] == 'z') {
-						$contact->function_id = $function_directeur;
-					} else {
-						$contact->function_id = $function_opdrachtgever;
+
+					if (!empty($kind)) {
+						if ($kind == 'zakelijk' || $kind[0] == 'z') {
+							$contact->function_id = $function_directeur;
+						} else {
+							$contact->function_id = $function_opdrachtgever;
+						}
 					}
-					
-					if ($gender == 'man' || $gender[0] == 'm')
-						$contact->gender = 'M';
-					if ($gender == 'vrouw' || $gender[0] == 'v' || $gender[0] == 'f')
-						$contact->gender = 'V';
+
+					if (!empty($gender)) {
+						if ($gender == 'man' || $gender[0] == 'm')
+							$contact->gender = 'M';
+						if ($gender == 'vrouw' || $gender[0] == 'v' || $gender[0] == 'f')
+							$contact->gender = 'V';
+					}
 
 					$contact->save();
 					$success++;
