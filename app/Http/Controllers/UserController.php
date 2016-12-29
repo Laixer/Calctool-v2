@@ -184,6 +184,7 @@ class UserController extends Controller {
 		$mollie->setApiKey(config('services.mollie.key'));
 
 		$user = null;
+		$increase = 0;
 
 		$payment = $mollie->payments->get($request->get('id'));
 		if ($payment->recurringType) {
@@ -200,6 +201,7 @@ class UserController extends Controller {
 						$order->method = '';
 					$order->save();
 					$user = User::find($order->user_id);
+					$increase = $order->increment;
 					break;
 				case 'recurring':
 					$user = User::where('payment_subscription_id', $payment->subscriptionId)->first();
@@ -217,6 +219,7 @@ class UserController extends Controller {
 					$order->recurring_type = $payment->recurringType;
 					$order->user_id = $user->id;
 					$order->save();
+					$increase = $order->increment;
 					break;
 			}
 		} else {
@@ -238,11 +241,12 @@ class UserController extends Controller {
 				$order->method = '';
 			$order->save();
 			$user = User::find($payment->metadata->uid);
+			$increase = $order->increment;
 		}
 
 		if ($payment->isPaid()) {
 			$expdate = $user->expiration_date;
-			$user->expiration_date = date('Y-m-d', strtotime("+" . $payment->metadata->incr . " month", strtotime($expdate)));
+			$user->expiration_date = date('Y-m-d', strtotime("+" . $increase . " month", strtotime($expdate)));
 
 			$user->save();
 
