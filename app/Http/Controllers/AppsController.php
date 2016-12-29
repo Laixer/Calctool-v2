@@ -59,11 +59,11 @@ class AppsController extends Controller {
 						continue;
 
 					/* Convert to params */
-					$company_name = $data[0];
+					$company_name = trim($data[0]);
 					$address_street = $data[1];
 					$address_number = $data[2];
 					$address_postal = $data[3];
-					$address_city = $data[4];
+					$address_city = trim($data[4]);
 					$kvk = $data[5];
 					$btw = $data[6];
 					$debtor = $data[7];
