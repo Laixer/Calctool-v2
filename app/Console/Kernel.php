@@ -161,7 +161,7 @@ class Kernel extends ConsoleKernel
         })->daily();
 
         $schedule->call(function() {
-            foreach (Payment::select('user_id')->groupBy('user_id')->get() as $payment) {
+            foreach (Payment::select('user_id')->where('status','paid')->groupBy('user_id')->get() as $payment) {
                 $user = User::find($payment->user_id);
                 if (!$user)
                     continue;
