@@ -278,7 +278,7 @@ class UserController extends Controller {
 
 		$subscription = $mollie->customers_subscriptions->withParentId(Auth::user()->payment_customer_id)->create([
 			"amount"		=> $order->amount,
-			"times"			=> 2,
+			"times"			=> 5,
 			"interval"		=> "1 day",
 			"description"	=> "Maandelijkse abonnement CalculatieTool.com",
 			"webhookUrl"	=> url('payment/webhook/'),
