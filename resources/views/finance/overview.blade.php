@@ -26,21 +26,6 @@ $user = Auth::user();
 @section('content')
 <script type="text/javascript">
 $(document).ready(function() {
-	function prefixURL(field) {
-		var cur_val = $(field).val();
-		if (!cur_val)
-			return;
-		var ini = cur_val.substring(0,4);
-		if (ini == 'http')
-			return;
-		else {
-			if (cur_val.indexOf("www") >=0) {
-				$(field).val('http://' + cur_val);
-			} else {
-				$(field).val('http://www.' + cur_val);
-			}
-		}
-	}
 	$('#tab-offer').click(function(e){
 		sessionStorage.toggleOfferInvoice{{Auth::id()}} = 'offer';
 	});
@@ -69,8 +54,7 @@ $(document).ready(function() {
 			<div>
 				<ol class="breadcrumb">
 				  <li><a href="/">Home</a></li>
-				  <li><a href="/mycompany">Mijn bedrijf</a></li>
-				  <li class="active">Overzichten</li>
+				  <li class="active">Financieel</li>
 				</ol>
 			<div>
 			<br>
@@ -112,29 +96,32 @@ $(document).ready(function() {
 							<table class="table table-striped">
 								<thead>
 									<tr>
+										<th class="col-md-4">Project</th>
 										<th class="col-md-2">Offertenummer</th>
-										<th class="col-md-3">Datum</th>
-										<th class="col-md-3">Aanbetalingsbedrag</th>
-										<th class="col-md-3">Offertebedrag (excl. BTW)</th>
+										<th class="col-md-2">Datum</th>
+										<th class="col-md-3">Offertebedrag</th>
 										<th class="col-md-3">Acties</th>
 									</tr>
 								</thead>
 								<tbody>
 									<?php $offer_paid_total = 0; $offer_total = 0; ?>
-									@foreach(Project::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $project)
-									@foreach(Offer::where('project_id', $project->id)->whereNotNull('offer_finish')->orderBy('created_at')->get() as $offer)
+									@foreach(Project::where('user_id', Auth::user()->id)->whereNull('project_close')->orderBy('created_at', 'desc')->get() as $project)
+									<?php
+									$offer = Offer::where('project_id', $project->id)->whereNull('offer_finish')->orderBy('created_at','desc')->first();
+									if (!$offer)
+										continue;
+									?>
 									<?php
 									$offer_paid_total += $offer->downpayment_amount;
 									$offer_total += $offer->offer_total;
 									?>
 									<tr>
+										<td class="col-md-4"><a href="/project-{{ $project->id }}/edit">{{ $project->project_name }}</a></td>
 										<td class="col-md-2"><a href="/offer/project-{{ $project->id }}/offer-{{ $offer->id }}">{{ $offer->offer_code }}</a></td>
-										<td class="col-md-3"><?php echo date('d-m-Y', strtotime($offer->offer_make)); ?></td>
-										<td class="col-md-3">{{ $offer->downpayment_amount ? number_format($offer->downpayment_amount, 2,",",".") : '-' }}</td>
+										<td class="col-md-2"><?php echo date('d-m-Y', strtotime($offer->offer_make)); ?></td>
 										<td class="col-md-3">{{ '&euro; '.number_format($offer->offer_total, 2, ",",".") }}</td>
 										<td class="col-md-3"><a href="/res-{{ ($offer->resource_id) }}/download" class="btn btn-primary btn-xs"><i class="fa fa-cloud-download fa-fw"></i> Downloaden</a></td>
 									</tr>
-									@endforeach
 									@endforeach
 								</tbody>
 								<tfooter>
@@ -152,13 +139,12 @@ $(document).ready(function() {
 							<table class="table table-striped">
 								<thead>
 									<tr>
+										<th class="col-md-3">Project</th>
 										<th class="col-md-2">Factuurnummer</th>
 										<th class="col-md-2">Bedrag (Excl. BTW)</th>
-										<th class="col-md-1">Referentie</th>
 										<th class="col-md-2">Aangemaakt op</th>
-										<th class="col-md-2">Betaald op</th>
 										<th class="col-md-1">Conditie</th>
-										<th class="col-md-2">Status</th>
+										<th class="col-md-2">Acties</th>
 										<th class="col-md-1"></th>
 									</tr>
 								</thead>
@@ -166,25 +152,27 @@ $(document).ready(function() {
 									<?php $invoice_total = 0; ?>
 									@foreach(Project::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $project)
 									<?php
-									$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
+									$offer_last = Offer::where('project_id',$project->id)->orderBy('created_at', 'desc')->first();
 									if (!$offer_last)
 										continue;
 									?>
-									@foreach(Invoice::where('offer_id','=', $offer_last->id)->where('isclose', true)->where('invoice_close', true)->orderBy('priority')->get() as $invoice)
+									<?php
+									$invoice = Invoice::where('offer_id',$offer_last->id)->where('invoice_close', true)->whereNull('payment_date')->orderBy('priority','desc')->first();
+									if (!$invoice)
+										continue;
+									?>
 									<?php
 									$invoice_total += $invoice->amount;
 									?>
 									<tr>
+										<td class="col-md-3"><a href="/project-{{ $project->id }}/edit">{{ $project->project_name }}</a></td>
 										<td class="col-md-2"><a href="/invoice/project-{{ $project->id }}/pdf-invoice-{{ $invoice->id }}">{{ Auth::user()->pref_use_ct_numbering ? $invoice->invoice_code : $invoice->book_code }}</a></td>
 										<td class="col-md-2">{{ number_format($invoice->amount, 2,",",".") }}</td>
-										<td class="col-md-2">{{ $invoice->reference ? $invoice->reference : '-' }}</td>
 										<td class="col-md-2">{{ $invoice->invoice_make ? date("d-m-Y", strtotime($invoice->invoice_make)) : '-' }}</td>
-										<td class="col-md-2">{{ $invoice->payment_date ? date("d-m-Y", strtotime($invoice->payment_date)) : '-' }}</td>
 										<td class="col-md-1">{{ $invoice->payment_condition }} dagen</td>
 										<td class="col-md-1"><a href="/res-{{ ($invoice->resource_id) }}/download" class="btn btn-primary btn-xs"><i class="fa fa-cloud-download fa-fw"></i> Downloaden</a></td>
 										<td class="col-md-1"></td>
 									</tr>
-									@endforeach
 									@endforeach
 								</tbody>
 								<tfooter>

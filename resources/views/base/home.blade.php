@@ -174,7 +174,7 @@ $relation = Relation::find(Auth::user()->self_id);
 									<span class="block fa fa-usd fsize60"></span>
 								</span>
 							</a>
-							<a href="/" class="btn btn-primary add_to_cart"><strong> Financieel</strong></a>
+							<a href="/finance/overview" class="btn btn-primary add_to_cart"><strong> Financieel</strong></a>
 						</figure>
 					</div>
 				</div>

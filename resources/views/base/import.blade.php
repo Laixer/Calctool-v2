@@ -21,14 +21,6 @@ use \Calctool\Models\SysMessage;
 @endpush
 
 @section('content')
-<script type="text/javascript">
-$(document).ready(function() {
-	$(document).on('change', '.btn-file :file', function() {
-	  $('#frm-save').submit();
-	});
-});
-</script>
-
 <div id="wrapper">
 
 	<div id="shop">
