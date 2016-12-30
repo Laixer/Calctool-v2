@@ -5,6 +5,8 @@ use \Calctool\Models\ProductSubCategory;
 use \Calctool\Models\Supplier;
 use \Calctool\Models\Product;
 use \Calctool\Models\Element;
+use \Calctool\Models\FavoriteActivity;
+use \Calctool\Models\Tax;
 ?>
 
 @extends('layout.master')
@@ -25,6 +27,9 @@ $(document).ready(function() {
 	});
 	$('#tab-favorite').click(function(e){
 		sessionStorage.toggleTabMat{{Auth::user()->id}} = 'favorite';
+	});
+	$('#tab-favorite-activity').click(function(e){
+		sessionStorage.toggleTabMat{{Auth::user()->id}} = 'favorite-activity';
 	});
 	if (sessionStorage.toggleTabMat{{Auth::user()->id}}){
 		$toggleOpenTab = sessionStorage.toggleTabMat{{Auth::user()->id}};
@@ -303,6 +308,9 @@ $(document).ready(function() {
 					<li id="tab-favorite">
 						<a href="#favorite" data-toggle="tab"><i class="fa fa-star"></i> Favorieten producten</a>
 					</li>
+					<li id="tab-favorite-activity">
+						<a href="#favorite-activity" data-toggle="tab"><i class="fa fa-star"></i> Favorieten werkzaamheden</a>
+					</li>
 				</ul>
 
 				<div class="tab-content">
@@ -425,8 +433,6 @@ $(document).ready(function() {
 								<tr></tr>
 							</tbody>
 						</table>
-
-
 					</div>
 
 					<div id="favorite" class="tab-pane">
@@ -460,12 +466,45 @@ $(document).ready(function() {
 								</tr>
 								@endforeach
 							</tbody>
+						</table>
+					</div>
+
+					<div id="favorite-activity" class="tab-pane">
+						<div class="row">
+							<div class="col-md-6"><h4>Favorieten Werkzaamheden</h4></div>
+						</div>
+
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th class="col-md-5">Omschrijving</th>
+									<th class="col-md-2">Datum</th>
+									<th class="col-md-1">BTW Arbeid</th>
+									<th class="col-md-2">BTW Materiaal</th>
+									<th class="col-md-1">BTW Overig</th>
+									<th class="col-md-1"></th>
+								</tr>
+							</thead>
 							<tbody>
-								<tr></tr>
+								<?php $i=0; ?>
+								@foreach(FavoriteActivity::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get() as $activity)
+								<?php $i++; ?>
+								<tr>
+									<td class="col-md-5">{{ $activity->activity_name }}</td>
+									<td class="col-md-2"><?php echo date('d-m-Y', strtotime($activity->created_at)); ?></td>
+									<td class="col-md-1">{{ Tax::find($activity->tax_labor_id)->tax_rate }}%</td>
+									<td class="col-md-2">{{ Tax::find($activity->tax_material_id)->tax_rate }}%</td>
+									<td class="col-md-1">{{ Tax::find($activity->tax_equipment_id)->tax_rate }}%</td>
+									<td class="col-md-1"><a href="/favorite/{{ $activity->id }}/delete" class="btn btn-danger btn-xs"> Verwijderen</a></td>
+								</tr>
+								@endforeach
+								@if (!$i)
+								<tr>
+									<td colspan="6" style="text-align: center;">Er zijn nog geen favorieten werkzaamheden</td>
+								</tr>
+								@endif
 							</tbody>
 						</table>
-
-
 					</div>
 
 				</div>

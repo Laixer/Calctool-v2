@@ -71,7 +71,7 @@ $(document).ready(function() {
 		}
 	});
 
-	/*$("[name='payment_mandate']")
+	$("[name='payment_mandate']")
 		.bootstrapSwitch({onText: 'Ja',offText: 'Nee'})
 		.on('switchChange.bootstrapSwitch', function(event, state) {
 		  if (state) {
@@ -83,7 +83,7 @@ $(document).ready(function() {
 		  	$('#payperclick').show();
 		  	$('#payment_url').attr('href', '/payment');
 		}
-	});*/
+	});
 	
 	$('#acc-deactive').click(function(e){
 		e.preventDefault();
@@ -125,18 +125,18 @@ $(document).ready(function() {
 				@endif
 
 				<div class="bs-callout text-center styleBackground nomargin">
-					<h2 id="payperclick">Verleng met &eacute;&eacute;n maand voor &euro; <strong id="currprice">{{ number_format(UserGroup::find($user->user_group)->subscription_amount, 2,",",".") }}</strong></h2>
-					<h2 id="mandate" style="display:none;">Elke maand automatisch voor &euro; <strong id="currprice">{{ number_format(UserGroup::find($user->user_group)->subscription_amount, 2,",",".") }}</strong></h2>
+					<h2 id="payperclick" style="display:none;">Verleng met &eacute;&eacute;n maand voor &euro; <strong id="currprice">{{ number_format(UserGroup::find($user->user_group)->subscription_amount, 2,",",".") }}</strong></h2>
+					<h2 id="mandate">Elke maand automatisch voor &euro; <strong id="currprice">{{ number_format(UserGroup::find($user->user_group)->subscription_amount, 2,",",".") }}</strong></h2>
 				</div>
 
 				<br />
 				<div class="row">
-					<!-- <div class="col-md-12">
+					<div class="col-md-12">
 						<div class="form-group">
 							<label for="payment_mandate" style="display:block;"><strong>Automatisch verlengen</strong></label>
 							<input name="payment_mandate" type="checkbox" checked>
 						</div>
-					</div> -->
+					</div>
 					<div class="col-md-6">
 						<div class="form-group">
 							<label for="promocode">Promotiecode</label>
@@ -279,7 +279,7 @@ $(document).ready(function() {
 							<a href="#company" data-toggle="tab">Mijn gegevens</a>
 						</li>
 						<li id="tab-payment">
-							<a href="#payment" data-toggle="tab">Mijn abonnement</a>
+							<a href="#payment" data-toggle="tab">Mijn betalingen</a>
 						</li>
 						<li id="tab-contact">
 							<a href="#contact" data-toggle="tab">Wachtwoord</a>
@@ -383,7 +383,7 @@ $(document).ready(function() {
 							<div class="pull-right">
 								<a href="#" data-toggle="modal" data-target="#deactivateModal" class="btn btn-danger">Account deactiveren</a>
 								@if (UserGroup::find(Auth::user()->user_group)->subscription_amount == 0)
-								<a href="/payment/increasefree" class="btn btn-primary">Abonnement verlengen</a>
+								<a href="/payment/increasefree" class="btn btn-primary">Gratis verlengen</a>
 								@elseif ($user->hasPayed())
 								@if (Auth::user()->payment_subscription_id)
 								<a href="/payment/subscription/cancel" class="btn btn-primary">Abonnement stoppen</a>
@@ -396,9 +396,9 @@ $(document).ready(function() {
 							</div>
 							@endif
 
-							<h4>Abonnementsduur</h4>
+							<h4>Accountlicentie</h4>
 							<div class="row">
-								<div class="col-md-3"><strong>Abonnement actief tot:</strong></div>
+								<div class="col-md-3"><strong>Account actief tot:</strong></div>
 								<div class="col-md-2">{{ $user->dueDateHuman() }}</div>
 								<div class="col-md-7">&nbsp;</div>
 							</div>
@@ -417,7 +417,9 @@ $(document).ready(function() {
 								</thead>
 
 								<tbody>
-									@foreach (Calctool\Models\Payment::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $order)
+									<?php $i=0; ?>
+									@foreach (Calctool\Models\Payment::where('user_id',Auth::user()->id)->where('status','paid')->orderBy('created_at', 'desc')->get() as $order)
+									<?php $i++; ?>
 									<tr>
 										<td class="col-md-2"><strong>{{ date('d-m-Y H:i:s', strtotime(DB::table('payment')->select('created_at')->where('id','=',$order->id)->get()[0]->created_at)) }}</strong></td>
 										<td class="col-md-1">{{ '&euro; '.number_format($order->amount, 2,",",".") }}</td>
@@ -427,6 +429,11 @@ $(document).ready(function() {
 										<td class="col-md-1">{{ $order->method ? $order->method : '-' }}</td>
 									</tr>
 									@endforeach
+									@if (!$i)
+									<tr>
+										<td colspan="6" style="text-align: center;">Er zijn nog geen betalingen</td>
+									</tr>
+									@endif
 								</tbody>
 							</table>
 						</div>

@@ -123,6 +123,9 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('messagebox', function() {
 		return view('user.messagebox');
 	});
+	Route::get('finance/overview', function() {
+		return view('finance.overview');
+	});
 
 	Route::get('payment', 'UserController@getPayment');
 	Route::get('payment/order/{token}', 'UserController@getPaymentFinish')->where('token', '[0-9a-z]{40}');
@@ -286,6 +289,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('relation-{relation_id}/delete', 'RelationController@getDelete')->where('relation_id', '[0-9]+')->middleware('payzone');
 	Route::get('relation-{relation_id}/contact/new','RelationController@getNewContact')->where('relation_id', '[0-9]+')->middleware('payzone');
 	Route::get('relation-{relation_id}/contact-{contact_id}/edit', 'RelationController@getEditContact')->where('relation_id', '[0-9]+')->where('contact_id', '[0-9]+')->middleware('payzone');
+	Route::get('relation-{relation_id}/convert', 'RelationController@getConvert')->where('relation_id', '[0-9]+')->middleware('payzone');
 	Route::get('mycompany', 'RelationController@getMyCompany')->middleware('payzone');
 	Route::post('mycompany/iban/update', 'UserController@doUpdateIban');
 	Route::post('mycompany/contact/new', 'RelationController@doMyCompanyNewContact');
@@ -313,8 +317,6 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('wholesale-{wholesale_id}/delete', 'WholesaleController@getDelete')->where('wholesale_id', '[0-9]+')->middleware('payzone');
 
 	/* Project pages */
-	Route::get('offer_invoice', 'ProjectController@getOfferInvoiceList')->middleware('payzone');
-	Route::get('favorite', 'ProjectController@getFavoriteManagement')->middleware('payzone');
 	Route::get('favorite/{fav_id}/delete', 'ProjectController@getFavoriteDelete')->middleware('payzone');
 	Route::get('project/new', 'ProjectController@getNew')->middleware('payzone'); 
 	Route::get('project/relation/{relation_id}', 'ProjectController@getRelationDetails')->middleware('payzone'); 

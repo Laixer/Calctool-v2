@@ -183,6 +183,9 @@ class UserController extends Controller {
 		$mollie = new \Mollie_API_Client;
 		$mollie->setApiKey(config('services.mollie.key'));
 
+		$user = null;
+		$increase = 0;
+
 		$payment = $mollie->payments->get($request->get('id'));
 		if ($payment->recurringType) {
 			switch ($payment->recurringType) {
@@ -197,22 +200,26 @@ class UserController extends Controller {
 					else
 						$order->method = '';
 					$order->save();
+					$user = User::find($order->user_id);
+					$increase = $order->increment;
 					break;
-				default:
+				case 'recurring':
+					$user = User::where('payment_subscription_id', $payment->subscriptionId)->first();
 					$order = new Payment;
 					$order->transaction = $payment->id;
 					$order->token = sha1(mt_rand().time());
 					$order->amount = $payment->amount;
 					$order->status = $payment->status;
-					$order->increment = $payment->metadata->incr;
+					$order->increment = 1;
 					$order->description = $payment->description;
 					if ($payment->method)
 						$order->method = $payment->method;
 					else
 						$order->method = '';
 					$order->recurring_type = $payment->recurringType;
-					$order->user_id = $payment->metadata->uid;
+					$order->user_id = $user->id;
 					$order->save();
+					$increase = $order->increment;
 					break;
 			}
 		} else {
@@ -233,16 +240,23 @@ class UserController extends Controller {
 			else
 				$order->method = '';
 			$order->save();
+			$user = User::find($payment->metadata->uid);
+			$increase = $order->increment;
 		}
 
 		if ($payment->isPaid()) {
-			$user = User::find($payment->metadata->uid);
 			$expdate = $user->expiration_date;
-			$user->expiration_date = date('Y-m-d', strtotime("+" . $payment->metadata->incr . " month", strtotime($expdate)));
+			$user->expiration_date = date('Y-m-d', strtotime("+" . $increase . " month", strtotime($expdate)));
 
 			$user->save();
 
-			$data = array('email' => $user->email, 'amount' => number_format($payment->amount, 2,",","."), 'expdate' => date('j F Y', strtotime($user->expiration_date)), 'firstname' => $user->firstname, 'lastname' => $user->lastname);
+			$data = array(
+				'email' => $user->email,
+				'amount' => number_format($payment->amount, 2,",","."),
+				'expdate' => date('j F Y', strtotime($user->expiration_date)),
+				'firstname' => $user->firstname,
+				'lastname' => $user->lastname
+			);
 			Mailgun::send('mail.paid', $data, function($message) use ($data) {
 				$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 				$message->bcc('info@calculatietool.com', 'Gebruiker abonnement verlengd');
@@ -264,7 +278,7 @@ class UserController extends Controller {
 
 		$subscription = $mollie->customers_subscriptions->withParentId(Auth::user()->payment_customer_id)->create([
 			"amount"		=> $order->amount,
-			"times"			=> 2,
+			"times"			=> 5,
 			"interval"		=> "1 day",
 			"description"	=> "Maandelijkse abonnement CalculatieTool.com",
 			"webhookUrl"	=> url('payment/webhook/'),
