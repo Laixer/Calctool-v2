@@ -926,9 +926,11 @@ $(document).ready(function() {
 									<span class="qty fsize13 bold">Geupload</span>
 									<div class="clearfix"></div>
 								</div>
+								<?php $i=0; ?>
 								@foreach(Resource::where('project_id', $project->id)->get() as $file)
+								<?php $i++; ?>
 								<div class="item">
-									<div class="cart_img" style="width:45px;"><a href="/res-{{ $file->id }}/download"><i class="fa fa-file-pdf-o fsize20"></i></a></div>
+									<div class="cart_img" style="width:45px;"><a href="/res-{{ $file->id }}/download"><i class="fa {{ $file->fa_icon() }} fsize20"></i></a></div>
 									<a href="/res-{{ $file->id }}/download" class="product_name">{{ $file->resource_name }}</a>
 									<a href="/res-{{ $file->id }}/delete" class="btn btn-danger btn-xs" style="float: right;margin: 10px;">Verwijderen</a>
 									<div class="total_price"><span>{{ round($file->file_size/1024) }}</span> Kb</div>
@@ -936,6 +938,11 @@ $(document).ready(function() {
 									<div class="clearfix"></div>
 								</div>
 								@endforeach
+								@if (!$i)
+								<div class="item">
+									<div style="width: 100%;text-align: center;" class="product_name">Er zijn nog geen documenten bij dit project</div>
+								</div>
+								@endif
 
 								<div class="clearfix"></div>
 							</div>
