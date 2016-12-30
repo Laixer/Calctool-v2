@@ -279,7 +279,7 @@ $(document).ready(function() {
 							<a href="#company" data-toggle="tab">Mijn gegevens</a>
 						</li>
 						<li id="tab-payment">
-							<a href="#payment" data-toggle="tab">Mijn abonnement</a>
+							<a href="#payment" data-toggle="tab">Mijn betalingen</a>
 						</li>
 						<li id="tab-contact">
 							<a href="#contact" data-toggle="tab">Wachtwoord</a>
@@ -383,7 +383,7 @@ $(document).ready(function() {
 							<div class="pull-right">
 								<a href="#" data-toggle="modal" data-target="#deactivateModal" class="btn btn-danger">Account deactiveren</a>
 								@if (UserGroup::find(Auth::user()->user_group)->subscription_amount == 0)
-								<a href="/payment/increasefree" class="btn btn-primary">Abonnement verlengen</a>
+								<a href="/payment/increasefree" class="btn btn-primary">Gratis verlengen</a>
 								@elseif ($user->hasPayed())
 								@if (Auth::user()->payment_subscription_id)
 								<a href="/payment/subscription/cancel" class="btn btn-primary">Abonnement stoppen</a>
@@ -396,9 +396,9 @@ $(document).ready(function() {
 							</div>
 							@endif
 
-							<h4>Abonnementsduur</h4>
+							<h4>Accountlicentie</h4>
 							<div class="row">
-								<div class="col-md-3"><strong>Abonnement actief tot:</strong></div>
+								<div class="col-md-3"><strong>Account actief tot:</strong></div>
 								<div class="col-md-2">{{ $user->dueDateHuman() }}</div>
 								<div class="col-md-7">&nbsp;</div>
 							</div>
