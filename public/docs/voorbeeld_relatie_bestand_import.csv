@@ -1,0 +1,6 @@
+Bedrijfsnaam;Straat;Nummer;Postcode;Plaats;KVK;BTWnummer;Debiteurnummer;Telefoon;email;Notitie;Website;Iban;Naam Iban houder;type relatie;;Voornaam;Achternaam;Mobiel;Telefoon;Email;Geslacht
+Mega Holding;Kerklaan;457;3000IJ;Rotterdam;11122233;112233445B01;123;0101234567;info@mega-holding.com;;www.mega-holding.com;NL45RABO000112233;Mega Holding;zakelijk;;Frederiek;van Uffelen;0611335577;0101234568;frederiek.vanuffelen@mega-holding.com;vrouw
+;Centraalstraat;83;1324GH;Almere;;;321;;;;;;;particulier;;Fam.;Aelbrechts;0619283745;0363388447;fam.aelbrechts@ziggo.nl;
+Firma Jansen;Dorpstraat;1;9700AB;Groningen;12345678;123456789B01;100987;0501122334;info@firmajansen.nl;;www.firma-jansen.nl;NL29INGB0001234567;Firma Jansen;zakelijk;;Anton;Jansen;0611223344;0501122335;a.a.jansen@firma-jansen.nl;man
+Onderhoudsbedrijf Visser;Kerstraat;12a;4800CD;Breda;87654321;987654321B01;1234;0764556677;administratie@onderhoudsbedrijfvisser.nl;;www.onderhoudsbedrijfvisser.nl;NL11ABNBB000123456;Onder. Visser;zakelijk;;C.D.E.;Visser;0656677889;0765667788;c.visser@onderhoudsbedrijfvisser.nl;man
+;Buitenweg;15;1000EF;Amsterdam;;;1;0209988776;;;;;;particulier;;Arie;von Strassen;0611998822;;;man

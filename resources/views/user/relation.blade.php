@@ -31,6 +31,10 @@
 			<div>
 			<br>
 
+			<div class="pull-right">
+				<a href="/import" class="btn btn-primary" type="button"><i class="fa fa-upload"></i> Importeer</a>
+			</div>
+
 			<h2 style="margin: 10px 0 20px 0;"><strong>Relaties</strong>&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
 
 			<div class="white-row" ng-controller="relationController">
@@ -39,12 +43,15 @@
 					<div class="form-group col-lg-12">
 						<div class="input-group">
 							<input type="text" class="form-control" ng-model="query" placeholder="Zoek in relaties op naam, nummer, adres of type">
+							
 							<span class="input-group-btn">
 								<a href="/relation/new" class="btn btn-primary" type="button"><i class="fa fa-file"></i> Nieuwe relatie</a>
 							</span>
 						</div>
 					</div>
 				</div>
+
+
 
 				<table ng-cloak class="table table-striped">
 					<thead>

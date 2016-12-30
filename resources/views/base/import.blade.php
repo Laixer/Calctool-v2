@@ -26,19 +26,6 @@ $(document).ready(function() {
 	$(document).on('change', '.btn-file :file', function() {
 	  $('#frm-save').submit();
 	});
-
-    /*$('.btn-file :file').on('fileselect', function(event, numFiles, label) {
-
-        var input = $(this).parents('.input-group').find(':text'),
-            log = numFiles > 1 ? numFiles + ' files selected' : label;
-
-        if( input.length ) {
-            input.val(log);
-        } else {
-            if( log ) alert(log);
-        }
-
-    });*/
 });
 </script>
 
@@ -79,6 +66,10 @@ $(document).ready(function() {
 							<div class="col-md-12">
 
 								<div class="white-row">
+									<div class="pull-right">
+										<a href="/docs/voorbeeld_relatie_bestand_import.csv" class="btn btn-primary" type="button"><i class="fa fa-download"></i> Download voorbeeld</a>
+									</div>
+
 								<h2>Bestandsindeling</h2>
 								De applicatie verwacht een CSV bestand met velden gescheiden door een <strong>;</strong> (puntcomma). De eerste regel van het bestand wordt overgeslagen. Regels die niet voldoen aan de opmaak of niet leeg mogen zijn worden overgeslagen.<br /><br />
 								Na het importeren kan overige informatie worden ingevoerd via <a href="/relation">relaties</a>.
@@ -98,8 +89,10 @@ $(document).ready(function() {
 										<div class="input-group col-md-12">
 							                <span class="">
 							                    <span class="btn btn-primary btn-lg btn-file">
-							                        Relatiebestand <input name="csvfile" type="file" multiple>
+							                        Selecteer bestand <input name="csvfile" type="file" multiple>
 							                    </span>
+							                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+							                    <input type="submit" class="btn btn-primary btn-lg" value="Importeer" />
 							                </span>
 							            </div>
 						            </div>
