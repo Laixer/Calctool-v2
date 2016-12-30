@@ -417,7 +417,9 @@ $(document).ready(function() {
 								</thead>
 
 								<tbody>
+									<?php $i=0; ?>
 									@foreach (Calctool\Models\Payment::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $order)
+									<?php $i++; ?>
 									<tr>
 										<td class="col-md-2"><strong>{{ date('d-m-Y H:i:s', strtotime(DB::table('payment')->select('created_at')->where('id','=',$order->id)->get()[0]->created_at)) }}</strong></td>
 										<td class="col-md-1">{{ '&euro; '.number_format($order->amount, 2,",",".") }}</td>
@@ -427,6 +429,11 @@ $(document).ready(function() {
 										<td class="col-md-1">{{ $order->method ? $order->method : '-' }}</td>
 									</tr>
 									@endforeach
+									@if (!$i)
+									<tr>
+										<td colspan="6" style="text-align: center;">Er zijn nog geen betalingen</td>
+									</tr>
+									@endif
 								</tbody>
 							</table>
 						</div>

@@ -895,6 +895,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 			if ($curThis.attr("data-id")) {
 				$.post("/calculation/calc/savefav", {project: {{ $project->id }}, activity: $curThis.attr("data-id")}, function(){
 					$curThis.text('Opgeslagen als favoriet');
+					alert('Opgeslagen als favoriet')
 				}).fail(function(e) { console.log(e); });
 			}
 		});
@@ -941,6 +942,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 			if ($curThis.attr("data-id")) {
 				$.post("/calculation/estim/savefav", {project: {{ $project->id }}, activity: $curThis.attr("data-id")}, function(){
 					$curThis.text('Opgeslagen als favoriet');
+					alert('Opgeslagen als favoriet');
 				}).fail(function(e) { console.log(e); });
 			}
 		});

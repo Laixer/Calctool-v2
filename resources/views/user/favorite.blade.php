@@ -80,7 +80,9 @@ $(document).ready(function() {
 							</tr>
 						</thead>
 						<tbody>
+							<?php $i=0; ?>
 							@foreach(FavoriteActivity::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get() as $activity)
+							<?php $i++; ?>
 							<tr>
 								<td class="col-md-5">{{ $activity->activity_name }}</td>
 								<td class="col-md-2"><?php echo date('d-m-Y', strtotime($activity->created_at)); ?></td>
@@ -90,6 +92,11 @@ $(document).ready(function() {
 								<td class="col-md-1"><a href="/favorite/{{ $activity->id }}/delete" class="btn btn-danger btn-xs"> Verwijderen</a></td>
 							</tr>
 							@endforeach
+							@if (!$i)
+							<tr>
+								<td colspan="6" style="text-align: center;">Er zijn nog geen favorieten werkzaamheden</td>
+							</tr>
+							@endif
 						</tbody>
 					</table>
 				</div>
