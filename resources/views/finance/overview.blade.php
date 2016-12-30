@@ -155,11 +155,7 @@ $(document).ready(function() {
 									if (!$offer_last)
 										continue;
 									?>
-									<?php
-									$invoice = Invoice::where('offer_id',$offer_last->id)->where('invoice_close', true)->whereNull('payment_date')->orderBy('priority','desc')->first();
-									if (!$invoice)
-										continue;
-									?>
+									@foreach(Invoice::where('offer_id',$offer_last->id)->where('invoice_close', true)->whereNull('payment_date')->orderBy('priority','desc')->get() as $invoice)
 									<?php
 									$invoice_total += $invoice->amount;
 									?>
@@ -172,6 +168,7 @@ $(document).ready(function() {
 										<td class="col-md-1"><a href="/res-{{ ($invoice->resource_id) }}/download" class="btn btn-primary btn-xs"><i class="fa fa-cloud-download fa-fw"></i> Downloaden</a></td>
 										<td class="col-md-1"></td>
 									</tr>
+									@endforeach
 									@endforeach
 								</tbody>
 								<tfooter>
