@@ -418,7 +418,7 @@ $(document).ready(function() {
 
 								<tbody>
 									<?php $i=0; ?>
-									@foreach (Calctool\Models\Payment::where('user_id','=', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $order)
+									@foreach (Calctool\Models\Payment::where('user_id',Auth::user()->id)->where('status','paid')->orderBy('created_at', 'desc')->get() as $order)
 									<?php $i++; ?>
 									<tr>
 										<td class="col-md-2"><strong>{{ date('d-m-Y H:i:s', strtotime(DB::table('payment')->select('created_at')->where('id','=',$order->id)->get()[0]->created_at)) }}</strong></td>
