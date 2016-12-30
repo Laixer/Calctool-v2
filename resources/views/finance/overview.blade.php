@@ -84,10 +84,10 @@ $(document).ready(function() {
 
 					<ul class="nav nav-tabs">
 						<li id="tab-offer">
-							<a href="#offer" data-toggle="tab" data-step="3" data-position="botom" data-intro="Je bedrijf heeft een contactpersoon nodig. Klik op het tabblad 'Contacten' en klik daarna op volgende.">Offertes</a>
+							<a href="#offer" data-toggle="tab">Openstaande offertes</a>
 						</li>
 						<li id="tab-invoice">
-							<a href="#invoice" data-toggle="tab">Facturen</a>
+							<a href="#invoice" data-toggle="tab">Openstaande facturen</a>
 						</li>
 					</ul>
 
@@ -104,7 +104,7 @@ $(document).ready(function() {
 									</tr>
 								</thead>
 								<tbody>
-									<?php $offer_paid_total = 0; $offer_total = 0; ?>
+									<?php $offer_total = 0; ?>
 									@foreach(Project::where('user_id', Auth::user()->id)->whereNull('project_close')->orderBy('created_at', 'desc')->get() as $project)
 									<?php
 									$offer = Offer::where('project_id', $project->id)->whereNull('offer_finish')->orderBy('created_at','desc')->first();
@@ -112,7 +112,6 @@ $(document).ready(function() {
 										continue;
 									?>
 									<?php
-									$offer_paid_total += $offer->downpayment_amount;
 									$offer_total += $offer->offer_total;
 									?>
 									<tr>
@@ -126,9 +125,9 @@ $(document).ready(function() {
 								</tbody>
 								<tfooter>
 									<tr>
-										<th class="col-md-2">Totaal</th>
-										<th class="col-md-3"></th>
-										<th class="col-md-3">{{ '&euro; '.number_format($offer_paid_total, 2, ",",".") }}</th>
+										<th class="col-md-4">Totaal</th>
+										<th class="col-md-2"></th>
+										<th class="col-md-2"></th>
 										<th class="col-md-3">{{ '&euro; '.number_format($offer_total, 2, ",",".") }}</th>
 										<th class="col-md-3"></th>
 									</tr>
@@ -150,7 +149,7 @@ $(document).ready(function() {
 								</thead>
 								<tbody>
 									<?php $invoice_total = 0; ?>
-									@foreach(Project::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get() as $project)
+									@foreach(Project::where('user_id', Auth::user()->id)->whereNull('project_close')->orderBy('created_at', 'desc')->get() as $project)
 									<?php
 									$offer_last = Offer::where('project_id',$project->id)->orderBy('created_at', 'desc')->first();
 									if (!$offer_last)
@@ -166,7 +165,7 @@ $(document).ready(function() {
 									?>
 									<tr>
 										<td class="col-md-3"><a href="/project-{{ $project->id }}/edit">{{ $project->project_name }}</a></td>
-										<td class="col-md-2"><a href="/invoice/project-{{ $project->id }}/pdf-invoice-{{ $invoice->id }}">{{ Auth::user()->pref_use_ct_numbering ? $invoice->invoice_code : $invoice->book_code }}</a></td>
+										<td class="col-md-2"><a href="/invoice/project-{{ $project->id }}/pdf-invoice-{{ $invoice->id }}">{{ Auth::user()->pref_use_ct_numbering ? $invoice->invoice_code : ($invoice->book_code ? $invoice->book_code : $invoice->invoice_code) }}</a></td>
 										<td class="col-md-2">{{ number_format($invoice->amount, 2,",",".") }}</td>
 										<td class="col-md-2">{{ $invoice->invoice_make ? date("d-m-Y", strtotime($invoice->invoice_make)) : '-' }}</td>
 										<td class="col-md-1">{{ $invoice->payment_condition }} dagen</td>
@@ -177,13 +176,12 @@ $(document).ready(function() {
 								</tbody>
 								<tfooter>
 									<tr>
-										<th class="col-md-2">Totaal</th>
+										<th class="col-md-3">Totaal</th>
+										<th class="col-md-2"></th>
 										<th class="col-md-2">{{ '&euro; '.number_format($invoice_total, 2, ",",".") }}</th>
-										<th class="col-md-1"></th>
-										<th class="col-md-2"></th>
 										<th class="col-md-2"></th>
 										<th class="col-md-1"></th>
-										<th class="col-md-2"></th>
+										<th class="col-md-1"></th>
 										<th class="col-md-1"></th>
 									</tr>
 								</tfooter>
