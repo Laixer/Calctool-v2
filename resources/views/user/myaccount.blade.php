@@ -173,8 +173,9 @@ $(document).ready(function() {
 				@endif
 
 				<div class="bs-callout text-center styleBackground nomargin-top">
-					<h2>{{ $user->monthsBehind() }} Maanden bijwerken voor &euro; <strong id="currprice">{{ number_format($user->monthsBehind() * UserGroup::find($user->user_group)->subscription_amount, 2,",",".") }}</strong></h2>
+					<h2>{{ $user->monthsBehind() }} {{ $user->monthsBehind() > 1 ? 'maanden' : 'maand' }} bijwerken* voor &euro; <strong id="currprice">{{ number_format($user->monthsBehind() * UserGroup::find($user->user_group)->subscription_amount, 2,",",".") }}</strong></h2>
 				</div>
+				<span>*Automatische betalingen kunnen alleen worden ingesteld met een actief account</span>
 			</div>
 
 			<div class="modal-footer">
