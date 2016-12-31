@@ -239,7 +239,7 @@ $(document).ready(function() {
 			@if (!Auth::user()->hasPayed())
 			<div class="alert alert-danger">
 				<i class="fa fa-danger"></i>
-				Account is gedeactiveerd, abonnement is verlopen.
+				Account is verlopen, activeer onder Mijn betalingen.
 			</div>
 			@endif
 
