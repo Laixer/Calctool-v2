@@ -136,22 +136,20 @@ $(document).ready(function() {
 					<tr>
 						<th class="col-md-4">Offertenummer</th>
 						<th class="col-md-3">Datum</th>
-						@if(0) <th class="col-md-3">Versie</th> @endif
 						<th class="col-md-3">Offertebedrag (excl. BTW)</th>
 						<th class="col-md-3">Acties</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php $i = 0; ?>
-					@foreach(Offer::where('project_id', '=', $project->id)->orderBy('created_at')->get() as $offer)
+					@foreach(Offer::where('project_id',$project->id)->orderBy('created_at')->get() as $offer)
 					<?php $i++; ?>
 					<tr>
 						<td class="col-md-4"><a href="/offer/project-{{ $project->id }}/offer-{{ $offer->id }}">{{ $offer->offer_code }}</a></td>
 						<td class="col-md-3"><?php echo date('d-m-Y', strtotime($offer->offer_make)); ?></td>
-						@if(0) <td class="col-md-3">{{ $i }}</td> @endif
 						<td class="col-md-3">{{ '&euro; '.number_format($offer->offer_total, 2, ",",".") }}</td>
 						<td class="col-md-3">
-							@if ($offer_last && $offer_last->id == $offer->id && !$offer->offer_finish)
+							@if ($offer_last && $offer_last->id == $offer->id && !$offer->offer_finish && !$project->project_close)
 							<a href="#" data-toggle="modal" data-target="#confirmModal" class="btn btn-primary btn-xs">Opdracht bevestigen</a>
 							@else
 							<a href="/res-{{ ($offer_last->resource_id) }}/download" class="btn btn-primary btn-xs"><i class="fa fa-cloud-download fa-fw"></i> Downloaden</a>
@@ -161,7 +159,7 @@ $(document).ready(function() {
 					@endforeach
 				</tbody>
 			</table>
-			@if (!($offer_last && $offer_last->offer_finish))
+			@if (!($offer_last && $offer_last->offer_finish) && !$project->project_close)
 			<a href="/offer/project-{{ $project->id }}" data-step="1" data-intro="Stap 7: Maak nieuwe offerte." class="btn btn-primary btn"><i class="fa fa-pencil"></i>
 				<?php
 				if(Offer::where('project_id', '=', $project->id)->count('id')>0) {
