@@ -88,6 +88,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 		$d1 = new \DateTime($this->expiration_date);
 		$d2 = new \DateTime();
 
+		if ($d1 > $d2)
+			return 0;
+
 		$interval = $d2->diff($d1);
 
 		return $d1->diff($d2)->m + ($d1->diff($d2)->y*12) + 1;

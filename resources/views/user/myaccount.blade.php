@@ -398,7 +398,7 @@ $(document).ready(function() {
 								<a href="#" data-toggle="modal" data-target="#deactivateModal" class="btn btn-danger">Account deactiveren</a>
 								@if (UserGroup::find(Auth::user()->user_group)->subscription_amount == 0)
 								<a href="/payment/increasefree" class="btn btn-primary">Gratis verlengen</a>
-								@elseif ($user->hasPayed())
+								@elseif ($user->monthsBehind() < 2)
 								@if (Auth::user()->payment_subscription_id)
 								<a href="/payment/subscription/cancel" class="btn btn-primary">Abonnement stoppen</a>
 								@else
