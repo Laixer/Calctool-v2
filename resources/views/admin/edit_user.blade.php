@@ -135,12 +135,13 @@ $(document).ready(function() {
 							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opties<span class="caret"></span></button>
 							<ul class="dropdown-menu">
 								<li><a href="/admin/user-{{ $user->id }}/switch">Gebruiker overnemen</a></li>
+								@if ($user->active)
 								<li><a href="/admin/user-{{ $user->id }}/validation">Validatie project laden</a></li>
 								<li><a href="/admin/user-{{ $user->id }}/stabu">STABU project laden</a></li>
-								@if ($user->active)
 								<li><a href="/admin/message?user={{ $user->id }}">Bericht sturen</a></li>
 								<li><a href="/admin/user-{{ $user->id }}/passreset">Stuur wachtwoord reset link</a></li>
 								<li><a href="/admin/user-{{ $user->id }}/passdefault">Standaard wachtwoord</a></li>
+								<li><a href="/admin/payment?user_id={{ $user->id }}">Transacties</a></li>
 								@endif
 								@if (Auth::user()->isSystem() && Auth::id() != $user->id)
 								<li><a href="/admin/user-{{ $user->id }}/purge">Definitef verwijderen</a></li>
@@ -174,8 +175,7 @@ $(document).ready(function() {
 									<h4 class="company">Gebruikersgegevens</h4>
 									<div class="row company">
 
-
-										<div class="col-md-5">
+										<div class="col-md-6">
 											<div class="form-group">
 												<label for="company_name">Gebruikersnaam*</label>
 												<input name="username" {{ $user->isAdmin() ? 'readonly' : '' }} id="username" type="text" value="{{ Input::old('username') ? Input::old('username') : $user->username}}" class="form-control" />
@@ -193,14 +193,12 @@ $(document).ready(function() {
 											</div>
 										</div>
 
-										@if (0)
 										<div class="col-md-3">
 											<div class="form-group">
-												<label for="secret">Wachtwoord</label>
-												<input name="secret" {{ $user->isAdmin() ? 'disabled' : '' }} type="password" id="secret" class="form-control" autocomplete="off">
+												<label for="customer_id">Customer ID</label>
+												<input name="customer_id" disabled class="form-control" value="{{ $user->payment_customer_id }}">
 											</div>
 										</div>
-										@endif
 
 									</div>
 
@@ -320,7 +318,7 @@ $(document).ready(function() {
 
 										<div class="col-md-3">
 											<div class="form-group">
-												<label for="iban">Abonnement verloopdatum</label>
+												<label for="iban">Account verloopdatum</label>
 												<input name="expdate" id="expdate" type="date" value="{{ Input::old('expdate') ? Input::old('expdate') : date('Y-m-d', strtotime($user->expiration_date)) }}" class="form-control"/>
 											</div>
 										</div>
@@ -377,6 +375,13 @@ $(document).ready(function() {
 											<div class="form-group">
 												<label for="address_city">IP adres</label>
 												<input type="text" value="{{ $user->ip }}" disabled class="form-control"/>
+											</div>
+										</div>
+
+										<div class="col-md-4">
+											<div class="form-group">
+												<label for="mandate">Mandate ID</label>
+												<input name="mandate" type="text" disabled value="{{ $user->payment_subscription_id }}" class="form-control"/>
 											</div>
 										</div>
 
