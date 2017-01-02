@@ -51,6 +51,11 @@ $(document).ready(function() {
 	$('#tab-other').click(function(e){
 		sessionStorage.toggleTabMyAcc{{Auth::id()}} = 'other';
 	});
+	@if (!Auth::user()->hasPayed())
+		sessionStorage.toggleTabMyAcc{{Auth::id()}} = 'payment';
+		$('#tab-payment').addClass('active');
+		$('#payment').addClass('active');
+	@else
 	if (sessionStorage.toggleTabMyAcc{{Auth::id()}}){
 		$toggleOpenTab = sessionStorage.toggleTabMyAcc{{Auth::id()}};
 		$('#tab-'+$toggleOpenTab).addClass('active');
@@ -60,6 +65,14 @@ $(document).ready(function() {
 		$('#tab-company').addClass('active');
 		$('#company').addClass('active');
 	}
+	@endif
+	$('#warn-link').click(function(e) {
+		var $curr = sessionStorage.toggleTabMyAcc{{Auth::id()}}
+		$('#tab-' + $curr).removeClass('active');
+		$('#' + $curr).removeClass('active');
+		$('#tab-payment').addClass('active');
+		$('#payment').addClass('active');
+	});
 	$('#website').blur(function(e) {
 		prefixURL($(this));
 	});
@@ -238,9 +251,9 @@ $(document).ready(function() {
 			<br>
 
 			@if (!Auth::user()->hasPayed())
-			<div class="alert alert-danger">
-				<i class="fa fa-danger"></i>
-				Account is verlopen, activeer onder Mijn betalingen.
+			<div class="alert alert-warning">
+				<i class="fa fa-warning"></i>
+				Account is verlopen, activeer onder <a href="javascript:void(0);" id="warn-link" style="color:#8a6d3b;"><b>Mijn betalingen</b></a>.
 			</div>
 			@endif
 
