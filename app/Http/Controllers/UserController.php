@@ -190,7 +190,7 @@ class UserController extends Controller {
 			$ctinvoice = $nctinvoice;
 		}
 
-		$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-ct_invoice.pdf';
+		$newname = $user->id . '-'.substr(md5(uniqid()), 0, 5).'-ct_invoice.pdf';
 		$pdf = PDF::loadView('base.ct_invoice_pdf', [
 			'name' => ucfirst($user->firstname) . ' ' . ucfirst($user->lastname),
 			'date' => $user->dueDateHuman(),
@@ -314,7 +314,7 @@ class UserController extends Controller {
 				$ctinvoice = $nctinvoice;
 			}
 
-			$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-ct_invoice.pdf';
+			$newname = $user->id . '-'.substr(md5(uniqid()), 0, 5).'-ct_invoice.pdf';
 			$pdf = PDF::loadView('base.ct_invoice_pdf', [
 				'name' => ucfirst($user->firstname) . ' ' . ucfirst($user->lastname),
 				'date' => $user->dueDateHuman(),
@@ -378,8 +378,7 @@ class UserController extends Controller {
 
 		$subscription = $mollie->customers_subscriptions->withParentId(Auth::user()->payment_customer_id)->create([
 			"amount"		=> $order->amount,
-			"times"			=> 5,
-			"interval"		=> "1 day",
+			"interval"		=> "1 month",
 			"description"	=> "Maandelijkse abonnement CalculatieTool.com",
 			"webhookUrl"	=> url('payment/webhook/'),
 			"metadata"		=> [
