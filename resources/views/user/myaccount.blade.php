@@ -423,10 +423,10 @@ $(document).ready(function() {
 									<tr>
 										<th class="col-md-2">Datum</th>
 										<th class="col-md-1">Bedrag</th>
-										<th class="col-md-1">Status</th>
 										<th class="col-md-3">Type</th>
 										<th class="col-md-4">Omschrijving</th>
 										<th class="col-md-1">Betalingswijze</th>
+										<th class="col-md-1"></th>
 									</tr>
 								</thead>
 
@@ -437,10 +437,14 @@ $(document).ready(function() {
 									<tr>
 										<td class="col-md-2"><strong>{{ date('d-m-Y H:i:s', strtotime(DB::table('payment')->select('created_at')->where('id','=',$order->id)->get()[0]->created_at)) }}</strong></td>
 										<td class="col-md-1">{{ '&euro; '.number_format($order->amount, 2,",",".") }}</td>
-										<td class="col-md-1">{{ $order->getStatusName() }}</td>
 										<td class="col-md-3">{{ $order->getTypeName() }}</td>
 										<td class="col-md-4">{{ $order->description }}</td>
 										<td class="col-md-1">{{ $order->method ? ucfirst($order->method) : '-' }}</td>
+										<td class="col-md-1">
+										@if ($order->resource_id)
+										<a href="/res-{{ $order->resource_id }}/download" class="btn btn-xs btn-primary" style="padding:0px 10px;"><i class="fa fa-download" aria-hidden="true"></i>Factuur</a>
+										@endif
+										</td>
 									</tr>
 									@endforeach
 									@if (!$i)
