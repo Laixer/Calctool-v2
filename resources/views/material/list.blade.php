@@ -321,7 +321,7 @@ $(document).ready(function() {
 							<input type="text" id="search" value="" class="form-control" placeholder="Zoek product">
 
 							<span class="input-group-btn">
-						        <select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000">
+						        <select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000; border-radius:0px;">
 							        <option value="0" selected>Selecteer categorie</option>
 							        @foreach (ProductGroup::all() as $group)
 							        <option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
