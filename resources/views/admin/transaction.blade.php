@@ -2,6 +2,11 @@
 use \Calctool\Models\Payment;
 use \Calctool\Models\User;
 
+$user_id = null;
+if (Input::get('user_id')) {
+	$user_id = Input::get('user_id');
+}
+
 ?>
 
 @extends('layout.master')
@@ -41,7 +46,14 @@ use \Calctool\Models\User;
 				</thead>
 
 				<tbody>
-				@foreach (Payment::orderBy('created_at', 'desc')->get() as $payment)
+				<?php
+				$selection = null;
+				if ($user_id) {
+					$selection = Payment::orderBy('created_at', 'desc')->where('user_id', $user_id)->get();
+				} else {
+					$selection  = Payment::orderBy('created_at', 'desc')->get();
+				} ?>
+					@foreach ($selection as $payment)
 					<tr>
 						<td class="col-md-2">
 						@if(substr($payment->transaction, 0, 3) == 'tr_')
@@ -57,7 +69,7 @@ use \Calctool\Models\User;
 						<td class="col-md-2">{{ $payment->increment.' maanden' }}</td>
 						<td class="col-md-2">{{ date('d-m-Y H:i:s', strtotime(DB::table('payment')->select('created_at')->where('id','=',$payment->id)->get()[0]->created_at)) }}</td>
 					</tr>
-				@endforeach
+					@endforeach
 				</tbody>
 			</table>
 			</div>

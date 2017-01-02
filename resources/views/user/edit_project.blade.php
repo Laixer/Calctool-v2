@@ -735,7 +735,7 @@ $(document).ready(function() {
 									<div class="col-md-3">
 										<label for="type"><b>Stelposten</b></label>
 										<div class="form-group">
-											<input name="use_estimate" {{ ($disable_estim ? 'disabled' : '') }} type="checkbox" {{ $project->use_estimate ? 'checked' : '' }}>
+											<input name="use_estimate" {{ $project->project_close ? 'disabled' : ($disable_estim ? 'disabled' : '') }} type="checkbox" {{ $project->use_estimate ? 'checked' : '' }}>
 										</div>
 									</div>
 									<div class="col-md-9"  style="padding-top:30px;">		
@@ -754,7 +754,7 @@ $(document).ready(function() {
 									<div class="col-md-3">
 										<label for="type"><b>Onderaanneming</b></label>
 										<div class="form-group">
-											<input name="use_subcontract" type="checkbox" {{ $project->use_subcontract ? 'disabled' : '' }} {{ $project->use_subcontract ? 'checked' : '' }}>
+											<input name="use_subcontract" type="checkbox" {{ $project->project_close ? 'disabled' : ($project->use_subcontract ? 'disabled' : '') }} {{ $project->use_subcontract ? 'checked' : '' }}>
 										</div>
 									</div>
 									<div class="col-md-9"  style="padding-top:30px;">
@@ -768,7 +768,7 @@ $(document).ready(function() {
 									<div class="col-md-3">
 										<label for="type"><b>Overige</b></label>
 										<div class="form-group">
-											<input name="use_equipment" type="checkbox" {{ $project->use_equipment ? 'disabled' : '' }} {{ $project->use_equipment ? 'checked' : '' }}>
+											<input name="use_equipment" type="checkbox" {{ $project->project_close ? 'disabled' : ($project->use_equipment ? 'disabled' : '') }} {{ $project->use_equipment ? 'checked' : '' }}>
 										</div>
 									</div>
 									<div class="col-md-9" style="padding-top:30px;">
@@ -787,7 +787,7 @@ $(document).ready(function() {
 									<div class="col-md-3">
 										<label for="type"><b>Meerwerk</b></label>
 										<div class="form-group">
-											<input name="use_more" type="checkbox" {{ ($disable_more ? 'disabled' : '') }} {{ $project->use_more ? 'checked' : '' }}>
+											<input name="use_more" type="checkbox" {{ $project->project_close ? 'disabled' : ($disable_more ? 'disabled' : '') }} {{ $project->use_more ? 'checked' : '' }}>
 										</div>
 									</div>
 									<div class="col-md-9" style="padding-top:30px;">
@@ -802,7 +802,7 @@ $(document).ready(function() {
 									<div class="col-md-3">
 										<label for="type"><b>Minderwerk</b></label>
 										<div class="form-group">
-											<input name="use_less" type="checkbox" {{ ($disable_less ? 'disabled' : '') }} {{ $project->use_less ? 'checked' : '' }}>
+											<input name="use_less" type="checkbox" {{ $project->project_close ? 'disabled' : ($disable_less ? 'disabled' : '') }} {{ $project->use_less ? 'checked' : '' }}>
 										</div>
 									</div>
 									<div class="col-md-9" style="padding-top:30px;">
@@ -901,6 +901,7 @@ $(document).ready(function() {
 					</div>
 					<div id="doc" class="tab-pane">
 
+						@if (!$project->project_close)
 						<div class="pull-right">
 							<form id="upload-file" action="/resource/upload" method="post" enctype="multipart/form-data">
 								{!! csrf_field() !!}
@@ -910,14 +911,13 @@ $(document).ready(function() {
 								<input type="hidden" value="{{ $project->id }}" name="project" />
 							</form>
 						</div>
+						@endif
 
 						<h4>Projectdocumenten</h4>
 
 						<div class="white-row">
 
-							<!-- cart content -->
 							<div id="cartContent">
-								<!-- cart header -->
 								<div class="item head">
 									<span class="cart_img" style="width:45px;"></span>
 									<span class="product_name fsize13 bold">Filename</span>
@@ -932,7 +932,11 @@ $(document).ready(function() {
 								<div class="item">
 									<div class="cart_img" style="width:45px;"><a href="/res-{{ $file->id }}/download"><i class="fa {{ $file->fa_icon() }} fsize20"></i></a></div>
 									<a href="/res-{{ $file->id }}/download" class="product_name">{{ $file->resource_name }}</a>
+									@if (!$project->project_close)
 									<a href="/res-{{ $file->id }}/delete" class="btn btn-danger btn-xs" style="float: right;margin: 10px;">Verwijderen</a>
+									@else
+									<a href="#" class="btn btn-danger btn-xs disabled" style="float: right;margin: 10px;">Verwijderen</a>
+									@endif
 									<div class="total_price"><span>{{ round($file->file_size/1024) }}</span> Kb</div>
 									<div class="qty">{{ $file->created_at->format("d-m-Y") }}</div>
 									<div class="clearfix"></div>

@@ -51,6 +51,11 @@ $(document).ready(function() {
 	$('#tab-other').click(function(e){
 		sessionStorage.toggleTabMyAcc{{Auth::id()}} = 'other';
 	});
+	@if (!Auth::user()->hasPayed())
+		sessionStorage.toggleTabMyAcc{{Auth::id()}} = 'payment';
+		$('#tab-payment').addClass('active');
+		$('#payment').addClass('active');
+	@else
 	if (sessionStorage.toggleTabMyAcc{{Auth::id()}}){
 		$toggleOpenTab = sessionStorage.toggleTabMyAcc{{Auth::id()}};
 		$('#tab-'+$toggleOpenTab).addClass('active');
@@ -60,6 +65,14 @@ $(document).ready(function() {
 		$('#tab-company').addClass('active');
 		$('#company').addClass('active');
 	}
+	@endif
+	$('#warn-link').click(function(e) {
+		var $curr = sessionStorage.toggleTabMyAcc{{Auth::id()}}
+		$('#tab-' + $curr).removeClass('active');
+		$('#' + $curr).removeClass('active');
+		$('#tab-payment').addClass('active');
+		$('#payment').addClass('active');
+	});
 	$('#website').blur(function(e) {
 		prefixURL($(this));
 	});
@@ -173,8 +186,9 @@ $(document).ready(function() {
 				@endif
 
 				<div class="bs-callout text-center styleBackground nomargin-top">
-					<h2>{{ $user->monthsBehind() }} Maanden bijwerken voor &euro; <strong id="currprice">{{ number_format($user->monthsBehind() * UserGroup::find($user->user_group)->subscription_amount, 2,",",".") }}</strong></h2>
+					<h2>{{ $user->monthsBehind() }} {{ $user->monthsBehind() > 1 ? 'maanden' : 'maand' }} bijwerken* voor &euro; <strong id="currprice">{{ number_format($user->monthsBehind() * UserGroup::find($user->user_group)->subscription_amount, 2,",",".") }}</strong></h2>
 				</div>
+				<span>*Automatische betalingen kunnen alleen worden ingesteld met een actief account</span>
 			</div>
 
 			<div class="modal-footer">
@@ -237,9 +251,9 @@ $(document).ready(function() {
 			<br>
 
 			@if (!Auth::user()->hasPayed())
-			<div class="alert alert-danger">
-				<i class="fa fa-danger"></i>
-				Account is gedeactiveerd, abonnement is verlopen.
+			<div class="alert alert-warning">
+				<i class="fa fa-warning"></i>
+				Account is verlopen, activeer onder <a href="javascript:void(0);" id="warn-link" style="color:#8a6d3b;"><b>Mijn betalingen</b></a>.
 			</div>
 			@endif
 
@@ -409,10 +423,10 @@ $(document).ready(function() {
 									<tr>
 										<th class="col-md-2">Datum</th>
 										<th class="col-md-1">Bedrag</th>
-										<th class="col-md-1">Status</th>
 										<th class="col-md-3">Type</th>
 										<th class="col-md-4">Omschrijving</th>
 										<th class="col-md-1">Betalingswijze</th>
+										<th class="col-md-1"></th>
 									</tr>
 								</thead>
 
@@ -423,10 +437,14 @@ $(document).ready(function() {
 									<tr>
 										<td class="col-md-2"><strong>{{ date('d-m-Y H:i:s', strtotime(DB::table('payment')->select('created_at')->where('id','=',$order->id)->get()[0]->created_at)) }}</strong></td>
 										<td class="col-md-1">{{ '&euro; '.number_format($order->amount, 2,",",".") }}</td>
-										<td class="col-md-1">{{ $order->getStatusName() }}</td>
 										<td class="col-md-3">{{ $order->getTypeName() }}</td>
 										<td class="col-md-4">{{ $order->description }}</td>
-										<td class="col-md-1">{{ $order->method ? $order->method : '-' }}</td>
+										<td class="col-md-1">{{ $order->method ? ucfirst($order->method) : '-' }}</td>
+										<td class="col-md-1">
+										@if ($order->resource_id)
+										<a href="/res-{{ $order->resource_id }}/download" class="btn btn-xs btn-primary" style="padding:0px 10px;"><i class="fa fa-download" aria-hidden="true"></i>Factuur</a>
+										@endif
+										</td>
 									</tr>
 									@endforeach
 									@if (!$i)

@@ -12,12 +12,15 @@ use \Calctool\Models\Audit;
 use \Calctool\Models\Promotion;
 use \Calctool\Models\UserGroup;
 use \Calctool\Models\BankAccount;
+use \Calctool\Models\Resource;
+use \Calctool\Models\CTInvoice;
 
 use \Auth;
 use \Redis;
 use \Hash;
 use \Mailgun;
 use \DB;
+use \PDF;
 
 class UserController extends Controller {
 
@@ -173,6 +176,54 @@ class UserController extends Controller {
 		$order->user_id = Auth::id();
 		$order->save();
 
+		$ctinvoice = CTInvoice::orderBy('invoice_count','desc')->first();
+		if (!$ctinvoice) {
+			$ctinvoice = new CTInvoice;
+			$ctinvoice->invoice_count = 0;
+			$ctinvoice->payment_id = $order->id;
+			$ctinvoice->save();
+		} else {
+			$nctinvoice = new CTInvoice;
+			$nctinvoice->invoice_count = $ctinvoice->invoice_count + 1;
+			$nctinvoice->payment_id = $order->id;
+			$nctinvoice->save();
+			$ctinvoice = $nctinvoice;
+		}
+
+		$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-ct_invoice.pdf';
+		$pdf = PDF::loadView('base.ct_invoice_pdf', [
+			'name' => ucfirst($user->firstname) . ' ' . ucfirst($user->lastname),
+			'date' => $user->dueDateHuman(),
+			'amount' => $order->amount,
+			'user_id' => $user->id,
+			'reference' => $order->transaction,
+			'payment_id' => mt_rand(100,999) . '-' . $order->id,
+			'username' => $user->username,
+			'invoice_id' => 'FACTUUR-' . $ctinvoice->invoice_count,
+		]);
+
+		$footer_text = 'CalculatieTool.com';
+		$footer_text .= ' | Rekeningnummer: NL29INGB0006863509';
+		$footer_text .= ' | KVK: 54565243';
+		$footer_text .= ' | BTW: 851353423B01';
+
+		$pdf->setOption('footer-font-size', 8);
+		$pdf->setOption('footer-left', $footer_text);
+		$pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
+		$pdf->setOption('lowquality', false);
+		$pdf->save('user-content/' . $newname);
+
+		$resource = new Resource;
+		$resource->resource_name = $newname;
+		$resource->file_location = 'user-content/' . $newname;
+		$resource->file_size = filesize('user-content/' . $newname);
+		$resource->user_id = Auth::id();
+		$resource->description = 'CTFactuur';
+		$resource->save();
+
+		$order->resource_id = $resource->id;
+		$order->save();
+
 		Audit::CreateEvent('account.payment.free.success', 'Payment free succeeded');
 
 		return redirect('myaccount')->with('success','Bedankt voor uw betaling');
@@ -247,19 +298,68 @@ class UserController extends Controller {
 		if ($payment->isPaid()) {
 			$expdate = $user->expiration_date;
 			$user->expiration_date = date('Y-m-d', strtotime("+" . $increase . " month", strtotime($expdate)));
-
 			$user->save();
+
+			$ctinvoice = CTInvoice::orderBy('invoice_count','desc')->first();
+			if (!$ctinvoice) {
+				$ctinvoice = new CTInvoice;
+				$ctinvoice->invoice_count = 0;
+				$ctinvoice->payment_id = $order->id;
+				$ctinvoice->save();
+			} else {
+				$nctinvoice = new CTInvoice;
+				$nctinvoice->invoice_count = $ctinvoice->invoice_count + 1;
+				$nctinvoice->payment_id = $order->id;
+				$nctinvoice->save();
+				$ctinvoice = $nctinvoice;
+			}
+
+			$newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-ct_invoice.pdf';
+			$pdf = PDF::loadView('base.ct_invoice_pdf', [
+				'name' => ucfirst($user->firstname) . ' ' . ucfirst($user->lastname),
+				'date' => $user->dueDateHuman(),
+				'amount' => $order->amount,
+				'user_id' => $user->id,
+				'reference' => $order->transaction,
+				'payment_id' => mt_rand(100,999) . '-' . $order->id,
+				'username' => $user->username,
+				'invoice_id' => 'FACTUUR-' . $ctinvoice->invoice_count,
+			]);
+
+			$footer_text = 'CalculatieTool.com';
+			$footer_text .= ' | Rekeningnummer: NL29INGB0006863509';
+			$footer_text .= ' | KVK: 54565243';
+			$footer_text .= ' | BTW: 851353423B01';
+
+			$pdf->setOption('footer-font-size', 8);
+			$pdf->setOption('footer-left', $footer_text);
+			$pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
+			$pdf->setOption('lowquality', false);
+			$pdf->save('user-content/' . $newname);
+
+			$resource = new Resource;
+			$resource->resource_name = $newname;
+			$resource->file_location = 'user-content/' . $newname;
+			$resource->file_size = filesize('user-content/' . $newname);
+			$resource->user_id = $user->id;
+			$resource->description = 'CTFactuur';
+			$resource->save();
+
+			$order->resource_id = $resource->id;
+			$order->save();
 
 			$data = array(
 				'email' => $user->email,
 				'amount' => number_format($payment->amount, 2,",","."),
 				'expdate' => date('j F Y', strtotime($user->expiration_date)),
 				'firstname' => $user->firstname,
-				'lastname' => $user->lastname
+				'lastname' => $user->lastname,
+				'pdf' => $resource->file_location,
 			);
 			Mailgun::send('mail.paid', $data, function($message) use ($data) {
 				$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 				$message->bcc('info@calculatietool.com', 'Gebruiker abonnement verlengd');
+				$message->attach($data['pdf']);
 				$message->subject('CalculatieTool.com - Abonnement verlengd');
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');
 				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');

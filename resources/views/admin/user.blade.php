@@ -105,7 +105,12 @@ $(document).ready(function() {
 						?></a></td>
 						<td class="col-md-2">{{ $users->currentStatus() }}</td>
 						<td class="col-md-3 hidden-xs">{{ $users->email }}</td>
-						<td class="col-md-1 hidden-sm hidden-xs">{{ userStatus($users) }}</td>
+						<td class="col-md-1 hidden-sm hidden-xs">
+						{{ userStatus($users) }}
+						@if (!$users->hasPayed())
+						<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 
+						@endif
+						</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserGroup::find($users->user_group)->name) }}</td>
 					</tr>
@@ -138,7 +143,12 @@ $(document).ready(function() {
 						?></a></td>
 						<td class="col-md-2">{{ $users->currentStatus() }}</td>
 						<td class="col-md-3 hidden-xs">{{ $users->email }}</td>
-						<td class="col-md-1 hidden-sm hidden-xs">{{ userStatus($users) }}</td>
+						<td class="col-md-1 hidden-sm hidden-xs">
+						{{ userStatus($users) }}
+						@if (!$users->hasPayed())
+						<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 
+						@endif
+						</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserGroup::find($users->user_group)->name) }}</td>
 					</tr>
@@ -171,7 +181,12 @@ $(document).ready(function() {
 						?></a></td>
 						<td class="col-md-2">{{ $users->currentStatus() }}</td>
 						<td class="col-md-3 hidden-xs">{{ $users->email }}</td>
-						<td class="col-md-1 hidden-sm hidden-xs">{{ userStatus($users) }}</td>
+						<td class="col-md-1 hidden-sm hidden-xs">
+						{{ userStatus($users) }}
+						@if (!$users->hasPayed())
+						<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 
+						@endif
+						</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserGroup::find($users->user_group)->name) }}</td>
 					</tr>
