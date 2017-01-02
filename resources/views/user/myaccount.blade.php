@@ -440,7 +440,7 @@ $(document).ready(function() {
 										<td class="col-md-1">{{ $order->getStatusName() }}</td>
 										<td class="col-md-3">{{ $order->getTypeName() }}</td>
 										<td class="col-md-4">{{ $order->description }}</td>
-										<td class="col-md-1">{{ $order->method ? $order->method : '-' }}</td>
+										<td class="col-md-1">{{ $order->method ? ucfirst($order->method) : '-' }}</td>
 									</tr>
 									@endforeach
 									@if (!$i)

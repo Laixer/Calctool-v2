@@ -341,7 +341,7 @@ class UserController extends Controller {
 			$resource->resource_name = $newname;
 			$resource->file_location = 'user-content/' . $newname;
 			$resource->file_size = filesize('user-content/' . $newname);
-			$resource->user_id = Auth::id();
+			$resource->user_id = $user->id;
 			$resource->description = 'CTFactuur';
 			$resource->save();
 
