@@ -139,7 +139,7 @@
         <tr>
           <td style="width: 270px" class="qty">&nbsp;</td>
           <td style="width: 385px" class="qty"><strong>Account activatie tot {{ $date }}</strong> <i>(excl. BTW)</i></td>
-          <td class="qty"><strong>{{ '&euro; '.number_format($amount, 2, ",",".") }}</strong></td>
+          <td class="qty"><strong>{{ '&euro; '.number_format($amount/1.21, 2, ",",".") }}</strong></td>
         </tr>
         
         <tr>
@@ -151,12 +151,12 @@
         <tr>
           <td style="width: 270px" class="qty">&nbsp;</td>
           <td style="width: 385px" class="qty">BTW bedrag 21%</td>
-          <td class="qty">{{ '&euro; '.number_format(($amount/100) * 21, 2, ",",".") }}</td>
+          <td class="qty">{{ '&euro; '.number_format($amount - ($amount/1.21), 2, ",",".") }}</td>
         </tr>
         <tr>
           <td style="width: 270px" class="qty">&nbsp;</td>
           <td style="width: 385px" class="qty"><strong>Betaald</strong> <i>(incl. BTW)</i></td>
-          <td class="qty"><strong>{{ '&euro; '.number_format($amount + (($amount/100) * 21), 2, ",",".") }}</strong></td>
+          <td class="qty"><strong>{{ '&euro; '.number_format($amount, 2, ",",".") }}</strong></td>
         </tr>
       </tbody>
     </table>
