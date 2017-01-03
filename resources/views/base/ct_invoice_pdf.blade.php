@@ -13,7 +13,7 @@
             <tr>
               <td style="width: 345px">
                 <div id="logo">
-                  <img src="http://localhost/images/logo2.png"/>
+                  <img src="{{ asset('images/logo2.png') }}"/>
                 </div>
               </td>
 
