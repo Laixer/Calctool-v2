@@ -13,7 +13,7 @@
             <tr>
               <td style="width: 345px">
                 <div id="logo">
-                  <img src="http://localhost/images/logo2.png"/>
+                  <img src="{{ asset('images/logo2.png') }}"/>
                 </div>
               </td>
 
@@ -84,10 +84,16 @@
             <table border="0" cellspacing="0" cellpadding="0" class="to">
               <tbody>
                 <tr>
-                  <td>CalculatieTool.com</td>
+                  <td>{{ $relation_self->company_name }}</td>
                 </tr>
                 <tr>
-                  <td>T.a.v. {{ $username }}</td>
+                  <td>T.a.v. {{ $name }}</td>
+                </tr>
+                <tr>
+                  <td>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</td>
+                </tr>
+                <tr>
+                  <td>{{ $relation_self->address_postal . ' ' . $relation_self->address_city }}</td>
                 </tr>
               </tbody>
             </table>
@@ -139,7 +145,7 @@
         <tr>
           <td style="width: 270px" class="qty">&nbsp;</td>
           <td style="width: 385px" class="qty"><strong>Account activatie tot {{ $date }}</strong> <i>(excl. BTW)</i></td>
-          <td class="qty"><strong>{{ '&euro; '.number_format($amount, 2, ",",".") }}</strong></td>
+          <td class="qty"><strong>{{ '&euro; '.number_format($amount/1.21, 2, ",",".") }}</strong></td>
         </tr>
         
         <tr>
@@ -151,12 +157,12 @@
         <tr>
           <td style="width: 270px" class="qty">&nbsp;</td>
           <td style="width: 385px" class="qty">BTW bedrag 21%</td>
-          <td class="qty">{{ '&euro; '.number_format(($amount/100) * 21, 2, ",",".") }}</td>
+          <td class="qty">{{ '&euro; '.number_format($amount - ($amount/1.21), 2, ",",".") }}</td>
         </tr>
         <tr>
           <td style="width: 270px" class="qty">&nbsp;</td>
           <td style="width: 385px" class="qty"><strong>Betaald</strong> <i>(incl. BTW)</i></td>
-          <td class="qty"><strong>{{ '&euro; '.number_format($amount + (($amount/100) * 21), 2, ",",".") }}</strong></td>
+          <td class="qty"><strong>{{ '&euro; '.number_format($amount, 2, ",",".") }}</strong></td>
         </tr>
       </tbody>
     </table>

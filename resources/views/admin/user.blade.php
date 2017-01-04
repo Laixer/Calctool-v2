@@ -62,7 +62,7 @@ $(document).ready(function() {
 				$selection_week = \Calctool\Models\User::whereRaw("DATE(online_at) < current_date")->whereRaw("\"online_at\" > NOW() - '1 week'::INTERVAL")->orderBy('online_at','desc')->get();
 				$selection_other = \Calctool\Models\User::whereRaw("\"online_at\" < NOW() - '1 week'::INTERVAL")->orWhereNull('online_at')->orderBy('online_at','desc')->get();
 			} else if (!empty($group)) {
-				$selection_today = \Calctool\Models\User::where('user_group', $group)->whereRaw("\"DATE(online_at) = current_date")->orderBy('online_at','desc')->get();
+				$selection_today = \Calctool\Models\User::where('user_group', $group)->whereRaw("DATE(online_at) = current_date")->orderBy('online_at','desc')->get();
 				$selection_week = \Calctool\Models\User::where('user_group', $group)->whereRaw("DATE(online_at) < current_date")->whereRaw("\"online_at\" > NOW() - '1 week'::INTERVAL")->orderBy('online_at','desc')->get();
 				$selection_other = \Calctool\Models\User::where('user_group', $group)->Where(function($query) {
 					$query->whereRaw("\"online_at\" < NOW() - '1 week'::INTERVAL")->orWhereNull('online_at');
