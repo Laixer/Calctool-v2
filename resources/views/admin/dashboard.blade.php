@@ -69,26 +69,6 @@ $(document).ready(function() {
 						<div class="col-sm-12 col-md-2">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
-									<a class="item-hover" href="/admin/alert">
-										<span class="overlay color2"></span>
-										<span class="inner">
-											<span class="block fa fa-warning fsize60"></span>
-											<strong>Alerts</strong>
-										</span>
-									</a>
-									<a href="/admin/alert" class="btn btn-primary add_to_cart"><i class="fa fa-warning"></i> Alerts</a>
-
-								</figure>
-								<div class="item-box-desc">
-									<a href="/admin/alert" ><h4>Alerts</h4></a>
-									<small class="styleColor">{{ \Calctool\Models\SysMessage::where('active',true)->count() }} alert(s)</small>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-sm-12 col-md-2">
-							<div class="item-box item-box-show fixed-box">
-								<figure>
 									<a class="item-hover" href="/admin/payment">
 										<span class="overlay color2"></span>
 										<span class="inner">
@@ -104,6 +84,61 @@ $(document).ready(function() {
 								</div>
 							</div>
 						</div>
+
+						<div class="col-sm-12 col-md-2">
+							<div class="item-box item-box-show fixed-box">
+								<figure>
+									<a class="item-hover" href="/admin/auditlog">
+										<span class="overlay color2"></span>
+										<span class="inner">
+											<span class="block fa fa-list-alt fsize60"></span>
+											<strong>Auditlog</strong>
+										</span>
+									</a>
+									<a href="/admin/auditlog" class="btn btn-primary add_to_cart"><i class="fa fa-list-alt"></i> Auditlog</a>
+								</figure>
+								<div class="item-box-desc">
+									<a href="/admin/auditlog" ><h4>Auditlog</h4></a>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-12 col-md-2">
+							<div class="item-box item-box-show fixed-box">
+								<figure>
+									<a class="item-hover" href="/admin/project">
+										<span class="overlay color2"></span>
+										<span class="inner">
+											<span class="block fa fa-pencil fsize60"></span>
+											<strong>Projecten</strong>
+										</span>
+									</a>
+									<a href="/admin/project" class="btn btn-primary add_to_cart"><i class="fa fa-pencil"></i> Projecten</a>
+								</figure>
+								<div class="item-box-desc">
+									<a href="/admin/project"><h4>Projecten</h4></a>
+									<small class="styleColor">{{ \Calctool\Models\Project::count() }} Projecten</small>
+								</div>
+							</div>
+						</div>
+
+						<!-- <div class="col-sm-12 col-md-2">
+							<div class="item-box item-box-show fixed-box">
+								<figure>
+									<a class="item-hover" href="/admin/map">
+										<span class="overlay color2"></span>
+										<span class="inner">
+											<span class="block fa fa-map-marker fsize60"></span>
+											<strong>Kaart</strong>
+										</span>
+									</a>
+									<a href="/admin/map" class="btn btn-primary add_to_cart"><i class="fa fa-map-marker"></i> Kaart</a>
+								</figure>
+								<div class="item-box-desc">
+									<a href="/admin/map"><h4>Kaart</h4></a>
+								</div>
+							</div>
+						</div> -->
 
 						<div class="col-sm-12 col-md-2">
 							<div class="item-box item-box-show fixed-box">
@@ -127,18 +162,19 @@ $(document).ready(function() {
 						<div class="col-sm-12 col-md-2">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
-									<a class="item-hover" href="/admin/project">
+									<a class="item-hover" href="/admin/alert">
 										<span class="overlay color2"></span>
 										<span class="inner">
-											<span class="block fa fa-pencil fsize60"></span>
-											<strong>Projecten</strong>
+											<span class="block fa fa-warning fsize60"></span>
+											<strong>Alerts</strong>
 										</span>
 									</a>
-									<a href="/admin/project" class="btn btn-primary add_to_cart"><i class="fa fa-pencil"></i> Projecten</a>
+									<a href="/admin/alert" class="btn btn-primary add_to_cart"><i class="fa fa-warning"></i> Alerts</a>
+
 								</figure>
 								<div class="item-box-desc">
-									<a href="/admin/project"><h4>Projecten</h4></a>
-									<small class="styleColor">{{ \Calctool\Models\Project::count() }} Projecten</small>
+									<a href="/admin/alert" ><h4>Alerts</h4></a>
+									<small class="styleColor">{{ \Calctool\Models\SysMessage::where('active',true)->count() }} alert(s)</small>
 								</div>
 							</div>
 						</div>
@@ -231,24 +267,6 @@ $(document).ready(function() {
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/product"><h4>Producten</h4></a>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-sm-12 col-md-2">
-							<div class="item-box item-box-show fixed-box">
-								<figure>
-									<a class="item-hover" href="/admin/auditlog">
-										<span class="overlay color2"></span>
-										<span class="inner">
-											<span class="block fa fa-list-alt fsize60"></span>
-											<strong>Auditlog</strong>
-										</span>
-									</a>
-									<a href="/admin/auditlog" class="btn btn-primary add_to_cart"><i class="fa fa-list-alt"></i> Auditlog</a>
-								</figure>
-								<div class="item-box-desc">
-									<a href="/admin/auditlog" ><h4>Auditlog</h4></a>
 								</div>
 							</div>
 						</div>
