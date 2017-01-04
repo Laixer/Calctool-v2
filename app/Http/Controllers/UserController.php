@@ -14,6 +14,8 @@ use \Calctool\Models\UserGroup;
 use \Calctool\Models\BankAccount;
 use \Calctool\Models\Resource;
 use \Calctool\Models\CTInvoice;
+use \Calctool\Models\Contact;
+use \Calctool\Models\Relation;
 
 use \Auth;
 use \Redis;
@@ -173,9 +175,11 @@ class UserController extends Controller {
 		$order->increment = 1;
 		$order->description = 'Verleng gratis met een maand';
 		$order->method = '';
-		$order->user_id = Auth::id();
+		$order->user_id = $user->id;
 		$order->save();
-
+		
+		$relation_self = Relation::find($user->self_id);
+		$contact_user = Contact::where('relation_id', $user->self_id)->first();
 		$ctinvoice = CTInvoice::orderBy('invoice_count','desc')->first();
 		if (!$ctinvoice) {
 			$ctinvoice = new CTInvoice;
@@ -192,13 +196,13 @@ class UserController extends Controller {
 
 		$newname = $user->id . '-'.substr(md5(uniqid()), 0, 5).'-ct_invoice.pdf';
 		$pdf = PDF::loadView('base.ct_invoice_pdf', [
-			'name' => ucfirst($user->firstname) . ' ' . ucfirst($user->lastname),
+			'name' => $contact_user->getFormalName(),
 			'date' => $user->dueDateHuman(),
 			'amount' => $order->amount,
 			'user_id' => $user->id,
+			'relation_self' => $relation_self,
 			'reference' => $order->transaction,
 			'payment_id' => mt_rand(100,999) . '-' . $order->id,
-			'username' => $user->username,
 			'invoice_id' => 'FACTUUR-' . $ctinvoice->invoice_count,
 		]);
 
@@ -314,15 +318,17 @@ class UserController extends Controller {
 				$ctinvoice = $nctinvoice;
 			}
 
+			$relation_self = Relation::find($user->self_id);
+			$contact_user = Contact::where('relation_id', $user->self_id)->first();
 			$newname = $user->id . '-'.substr(md5(uniqid()), 0, 5).'-ct_invoice.pdf';
 			$pdf = PDF::loadView('base.ct_invoice_pdf', [
-				'name' => ucfirst($user->firstname) . ' ' . ucfirst($user->lastname),
+				'name' => $contact_user->getFormalName(),
 				'date' => $user->dueDateHuman(),
 				'amount' => $order->amount,
 				'user_id' => $user->id,
+				'relation_self' => $relation_self,
 				'reference' => $order->transaction,
 				'payment_id' => mt_rand(100,999) . '-' . $order->id,
-				'username' => $user->username,
 				'invoice_id' => 'FACTUUR-' . $ctinvoice->invoice_count,
 			]);
 

@@ -84,10 +84,16 @@
             <table border="0" cellspacing="0" cellpadding="0" class="to">
               <tbody>
                 <tr>
-                  <td>CalculatieTool.com</td>
+                  <td>{{ $relation_self->company_name }}</td>
                 </tr>
                 <tr>
-                  <td>T.a.v. {{ $username }}</td>
+                  <td>T.a.v. {{ $name }}</td>
+                </tr>
+                <tr>
+                  <td>{{ $relation_self->address_street . ' ' . $relation_self->address_number }}</td>
+                </tr>
+                <tr>
+                  <td>{{ $relation_self->address_postal . ' ' . $relation_self->address_city }}</td>
                 </tr>
               </tbody>
             </table>
