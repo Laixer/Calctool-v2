@@ -1392,7 +1392,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 													</div>
 													
 													<div class="col-md-6 text-right">
-														<button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving</button>
+														<button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-default btn-xs notemod">Omschrijving</button>
 														<div class="btn-group" role="group">
 														  <button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Werkzaamheid&nbsp;&nbsp;<span class="caret"></span></button>
 														  <ul class="dropdown-menu">
@@ -1706,7 +1706,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 		    											@endif
 		    										</div>
 		    										<div class="col-md-6 text-right">
-														<button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-info btn-xs notemod">Omschrijving</button>
+														<button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-default btn-xs notemod">Omschrijving</button>
 														<div class="btn-group" role="group">
 														  <button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Werkzaamheid&nbsp;&nbsp;<span class="caret"></span></button>
 														  <ul class="dropdown-menu">
