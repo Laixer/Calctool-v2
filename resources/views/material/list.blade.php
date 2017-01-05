@@ -5,8 +5,12 @@ use \Calctool\Models\ProductSubCategory;
 use \Calctool\Models\Supplier;
 use \Calctool\Models\Product;
 use \Calctool\Models\Element;
-use \Calctool\Models\FavoriteActivity;
 use \Calctool\Models\Tax;
+use \Calctool\Models\FavoriteActivity;
+use \Calctool\Models\FavoriteMaterial;
+use \Calctool\Models\FavoriteLabor;
+use \Calctool\Models\FavoriteEquipment;
+use \Calctool\Calculus\CalculationRegister;
 ?>
 
 @extends('layout.master')
@@ -474,6 +478,184 @@ $(document).ready(function() {
 							<div class="col-md-6"><h4>Favorieten Werkzaamheden</h4></div>
 						</div>
 
+
+							<?php
+							$activity_total = 0;
+							foreach(FavoriteActivity::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get() as $activity) {
+							?>
+							<div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
+								<label><span>{{ $activity->activity_name }}</span></label>
+								<div class="toggle-content">
+									<div class="row">
+										<div class="col-md-12 text-right">
+											<button id="pop-{{ $activity->id }}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-default btn-xs notemod">Omschrijving</button>
+											<div class="btn-group" role="group">
+											  <button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Werkzaamheid&nbsp;&nbsp;<span class="caret"></span></button>
+											  <ul class="dropdown-menu">
+											    <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename">Naam wijzigen</a></li>
+											    <li><a href="/favorite/{{ $activity->id }}/delete">Verwijderen</a></li>
+											  </ul>
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-md-2"><h4>Arbeid</h4></div>
+										<div class="col-md-9"></div>
+									</div>
+
+									<table class="table table-striped" data-id="{{ $activity->id }}">
+										<thead>
+											<tr>
+												<th class="col-md-5">Omschrijving</th>
+												<th class="col-md-1">&nbsp;</th>
+												<th class="col-md-1">Uurtarief</th>
+												<th class="col-md-1">Aantal</th>
+												<th class="col-md-1">&nbsp;</th>
+												<th class="col-md-1">Prijs</th>
+												<th class="col-md-1">&nbsp;</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											<tr data-id="{{ FavoriteLabor::where('activity_id',$activity->id)->first()['id'] }}">
+												<td class="col-md-5">Arbeidsuren</td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1"><span class="rate">{{ number_format(FavoriteLabor::where('activity_id',$activity->id)->first()['rate'], 2,",",".") }}</span></td>
+												<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(FavoriteLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal(FavoriteLabor::where('activity_id',$activity->id)->first()['rate'], FavoriteLabor::where('activity_id',$activity->id)->first()['amount']), 2, ",",".") }}</span></td>
+												<td class="col-md-1 text-right"><button class="btn btn-danger ldeleterow btn-xs fa fa-times"></button></td>
+											</tr>
+										</tbody>
+									</table>
+
+									<div class="row">
+										<div class="col-md-2"><h4>Materiaal</h4></div>
+										<div class="col-md-9"></div>
+									</div>
+
+									<table class="table table-striped" data-id="{{ $activity->id }}">
+										<thead>
+											<tr>
+												<th class="col-md-5">Omschrijving</th>
+												<th class="col-md-1">Eenheid</th>
+												<th class="col-md-1">&euro; / Eenh.</th>
+												<th class="col-md-1">Aantal</th>
+												<th class="col-md-1">Prijs</th>
+												<th class="col-md-1">+ Winst %</th>
+												<th class="col-md-1">&nbsp;</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											@foreach (FavoriteMaterial::where('activity_id', $activity->id)->get() as $material)
+											<tr data-id="{{ $material->id }}">
+												<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text dsave newrow" /></td>
+												<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text dsave" /></td>
+												<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
+												<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
+												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->rate * $material->amount, 2,",",".") }}</span></td>
+												<td class="col-md-1"><span class="total-incl-tax">{{ '&euro; '.number_format($material->rate * $material->amount, 2,",",".") }}</span></td>
+												<td class="col-md-1 text-right"">
+													<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+													<button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
+													<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
+												</td>
+											</tr>
+											@endforeach
+											<tr>
+												<td class="col-md-5"><input name="name" id="name" type="text" class="form-control-sm-text dsave newrow" /></td>
+												<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text dsave" /></td>
+												<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number dsave" /></td>
+												<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsave" /></td>
+												<td class="col-md-1"><span class="total-ex-tax"></span></td>
+												<td class="col-md-1"><span class="total-incl-tax"></span></td>
+												<td class="col-md-1 text-right">
+													<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+													<button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
+													<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
+												</td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td class="col-md-5"><strong>Totaal</strong></td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1"><strong class="mat_subtotal">{{ '&euro; '.number_format(CalculationRegister::calcMaterialTotal($activity->id, 0), 2, ",",".") }}</span></td>
+												<td class="col-md-1"><strong class="mat_subtotal_profit">{{ '&euro; '.number_format(CalculationRegister::calcMaterialTotalProfit($activity->id, 0), 2, ",",".") }}</span></td>
+												<td class="col-md-1">&nbsp;</td>
+											</tr>
+										</tbody>
+									</table>
+									
+									<div class="row">
+										<div class="col-md-2"><h4>Overig</h4></div>
+										<div class="col-md-9"></div>
+									</div>
+
+									<table class="table table-striped" data-id="{{ $activity->id }}">
+										<thead>
+											<tr>
+												<th class="col-md-5">Omschrijving</th>
+												<th class="col-md-1">Eenheid</th>
+												<th class="col-md-1">&euro; / Eenh.</th>
+												<th class="col-md-1">Aantal</th>
+												<th class="col-md-1">Prijs</th>
+												<th class="col-md-1">+ Winst %</th>
+												<th class="col-md-1">&nbsp;</th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach (FavoriteEquipment::where('activity_id','=', $activity->id)->get() as $equipment)
+											<tr data-id="{{ $equipment->id }}">
+												<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text esave newrow" /></td>
+												<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $equipment->unit }}" class="form-control-sm-text esave" /></td>
+												<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($equipment->rate, 2,",",".") }}" class="form-control-sm-number esave" /></td>
+												<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($equipment->amount, 2,",",".") }}" class="form-control-sm-number esave" /></td>
+												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->rate * $equipment->amount, 2,",",".") }}</span></td>
+												<td class="col-md-1"><span class="total-incl-tax">{{ '&euro; '.number_format($equipment->rate * $equipment->amount, 2,",",".") }}</span></td>
+												<td class="col-md-1 text-right">
+													<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+													<button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
+													<button class="btn btn-danger btn-xs edeleterow fa fa-times"></button>
+												</td>
+											</tr>
+											@endforeach
+											<tr>
+												<td class="col-md-5"><input name="name" id="name" type="text" class="form-control-sm-text esave newrow" /></td>
+												<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text esave" /></td>
+												<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number esave" /></td>
+												<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number esave" /></td>
+												<td class="col-md-1"><span class="total-ex-tax"></span></td>
+												<td class="col-md-1"><span class="total-incl-tax"></span></td>
+												<td class="col-md-1 text-right">
+													<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+													<button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
+													<button class="btn btn-danger btn-xs edeleterow fa fa-times"></button>
+												</td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td class="col-md-5"><strong>Totaal</strong></td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1"><strong class="equip_subtotal">{{ '&euro; '.number_format(CalculationRegister::calcEquipmentTotal($activity->id, 0), 2, ",",".") }}</span></td>
+												<td class="col-md-1"><strong class="equip_subtotal_profit">{{ '&euro; '.number_format(CalculationRegister::calcEquipmentTotalProfit($activity->id, 0), 2, ",",".") }}</span></td>
+												<td class="col-md-1">&nbsp;</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<?php } ?>
+
+
+						@if(0)
 						<table class="table table-striped">
 							<thead>
 								<tr>
@@ -505,6 +687,7 @@ $(document).ready(function() {
 								@endif
 							</tbody>
 						</table>
+						@endif
 					</div>
 
 				</div>
