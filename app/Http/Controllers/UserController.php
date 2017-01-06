@@ -124,6 +124,7 @@ class UserController extends Controller {
 					Auth::user()->save();
 				}
 				
+				$payment_object['description'] = 'Automatische incasso';
 				$payment_object['customerId'] = Auth::user()->payment_customer_id;
 				$payment_object['recurringType'] = 'first';
 			}

@@ -15,7 +15,7 @@ use \Calctool\Calculus\CalculationRegister;
 
 @extends('layout.master')
 
-@section('title', 'Materialen')
+@section('title', 'Producten')
 
 @section('content')
 <script type="text/javascript">
@@ -295,7 +295,7 @@ $(document).ready(function() {
 
 			<!-- <p class="alert alert-warning">De prijslijsten bevinden zich nog in BETA fase.</p> -->
 
-			<h2><strong>Prijslijsten</strong></h2>
+			<h2><strong>Producten</strong></h2>
 
 			<div class="tabs nomargin-top">
 
