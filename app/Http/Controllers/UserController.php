@@ -445,6 +445,7 @@ class UserController extends Controller {
 		$mollie = new \Mollie_API_Client;
 		$mollie->setApiKey(config('services.mollie.key'));
 
+		$subscription_id = Auth::user()->payment_subscription_id
 		$subscription = $mollie->customers_subscriptions->withParentId(Auth::user()->payment_customer_id)->cancel(Auth::user()->payment_subscription_id);
 		Auth::user()->payment_subscription_id = NULL;
 		Auth::user()->save();
@@ -452,12 +453,11 @@ class UserController extends Controller {
 		if (!config('app.debug')) {
 			$data = array(
 				'user' => Auth::user()->username,
-				'subscription' => Auth::user()->payment_subscription_id,
+				'subscription' => $subscription_id,
 			);
 			Mailgun::send('mail.payment_stopped', $data, function($message) use ($data) {
 				$message->to('administratie@calculatietool.com', 'CalculatieTool.com');
-				$message->bcc('administratie@calculatietool.com', 'Automatische incasso gestopt');
-				$message->subject('CalculatieTool.com - Account verlengd');
+				$message->subject('CalculatieTool.com - Automatische incasso gestopt');
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');
 				$message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
 			});
