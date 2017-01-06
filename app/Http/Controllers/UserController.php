@@ -414,7 +414,7 @@ class UserController extends Controller {
 		if ($payment->isPaid()) {
 			if ($payment->mandateId && $payment->customerId) {
 				$this->setupSubscription($order, $payment->customerId);
-				return redirect('myaccount')->with('success','Bedankt voor uw betaling, Automatische incasso is ingesteld');
+				return redirect('myaccount')->with('success','Bedankt voor uw betaling, automatische incasso is ingesteld');
 			}
 
 			return redirect('myaccount')->with('success','Bedankt voor uw betaling');
@@ -448,6 +448,20 @@ class UserController extends Controller {
 		$subscription = $mollie->customers_subscriptions->withParentId(Auth::user()->payment_customer_id)->cancel(Auth::user()->payment_subscription_id);
 		Auth::user()->payment_subscription_id = NULL;
 		Auth::user()->save();
+
+		if (!config('app.debug')) {
+			$data = array(
+				'username' => Auth::user()->username,
+				'subscription' => Auth::user()->payment_subscription_id,
+			);
+			Mailgun::send('mail.payment_stopped', $data, function($message) use ($data) {
+				$message->to('administratie@calculatietool.com', 'CalculatieTool.com');
+				$message->bcc('administratie@calculatietool.com', 'Automatische incasso gestopt');
+				$message->subject('CalculatieTool.com - Account verlengd');
+				$message->from('info@calculatietool.com', 'CalculatieTool.com');
+				$message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
+			});
+		}
 
 		return back()->with('success', 'Automatische incasso gestopt');
 	}
