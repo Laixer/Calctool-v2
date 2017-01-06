@@ -186,9 +186,13 @@ $(document).ready(function() {
 											<div class="form-group">
 												<label for="user_type">Gebruikers type</label>
 												<select name="type" id="type" class="form-control pointer">
-													@foreach (\Calctool\Models\UserType::all() as $type)
+													<?php
+													foreach (\Calctool\Models\UserType::all() as $type) {
+														if ($type->user_type == 'system')
+															continue;
+													?>
 													<option {{ $user->user_type==$type->id ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->user_type) }}</option>
-													@endforeach
+													<?php } ?>
 												</select>
 											</div>
 										</div>

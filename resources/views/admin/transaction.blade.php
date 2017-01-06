@@ -65,7 +65,7 @@ if (Input::get('user_id')) {
 						<td class="col-md-2">{{ ucfirst(User::find($payment->user_id)->username) }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format($payment->amount, 2,",",".") }}</td>
 						<td class="col-md-1">{{ $payment->getStatusName() }}</td>
-						<td class="col-md-2">{{ $payment->method }}</td>
+						<td class="col-md-2">{{ ucfirst($payment->method) }}</td>
 						<td class="col-md-2">{{ $payment->increment.' maanden' }}</td>
 						<td class="col-md-2">{{ date('d-m-Y H:i:s', strtotime(DB::table('payment')->select('created_at')->where('id','=',$payment->id)->get()[0]->created_at)) }}</td>
 					</tr>
