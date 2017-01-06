@@ -451,7 +451,7 @@ class UserController extends Controller {
 
 		if (!config('app.debug')) {
 			$data = array(
-				'username' => Auth::user()->username,
+				'user' => Auth::user()->username,
 				'subscription' => Auth::user()->payment_subscription_id,
 			);
 			Mailgun::send('mail.payment_stopped', $data, function($message) use ($data) {
