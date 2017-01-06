@@ -144,6 +144,7 @@ $(document).ready(function() {
 								<li><a href="/admin/payment?user_id={{ $user->id }}">Transacties</a></li>
 								@endif
 								@if (Auth::user()->isSystem() && Auth::id() != $user->id)
+								<li><a href="/admin/user-{{ $user->id }}/login">Als gebruiker inloggen</a></li>
 								<li><a href="/admin/user-{{ $user->id }}/purge">Definitef verwijderen</a></li>
 								@endif
 							</ul>

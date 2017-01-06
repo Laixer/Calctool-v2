@@ -358,9 +358,7 @@ Route::group(['middleware' => 'auth'], function() {
 Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'], function()
 {
 	/* Admin */
-	Route::get('/', function() {
-		return view('admin.dashboard');
-	});
+	Route::get('/', 'AdminController@getDashboard');
 	Route::get('user/new', function() {
 		return view('admin.new_user');
 	});
@@ -377,6 +375,7 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 	Route::get('user-{user_id}/passreset', 'AdminController@getPasswordResetUser');
 	Route::get('user-{user_id}/passdefault', 'AdminController@getPasswordDefault');
 	Route::get('user-{user_id}/purge', 'AdminController@getPurgeUser');
+	Route::get('user-{user_id}/login', 'AdminController@getLoginAsUser');
 	Route::post('user-{user_id}/edit', 'AdminController@doUpdateUser');
 	Route::post('user-{user_id}/adminlog/new', 'AdminController@doNewAdminLog');
 	Route::get('group', function() {

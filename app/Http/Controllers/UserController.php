@@ -445,7 +445,7 @@ class UserController extends Controller {
 		$mollie = new \Mollie_API_Client;
 		$mollie->setApiKey(config('services.mollie.key'));
 
-		$subscription_id = Auth::user()->payment_subscription_id
+		$subscription_id = Auth::user()->payment_subscription_id;
 		$subscription = $mollie->customers_subscriptions->withParentId(Auth::user()->payment_customer_id)->cancel(Auth::user()->payment_subscription_id);
 		Auth::user()->payment_subscription_id = NULL;
 		Auth::user()->save();

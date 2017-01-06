@@ -9,10 +9,6 @@
 @endpush
 
 @section('content')
-<script type="text/javascript">
-$(document).ready(function() {
-});
-</script>
 		<div id="wrapper">
 
 			<section class="container text-center">
