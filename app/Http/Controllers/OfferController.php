@@ -340,10 +340,10 @@ class OfferController extends Controller {
 	        'user' => $user->username
 	    );
 	    Mailgun::send('mail.print', $data, function($message) use ($data) {
-	        $message->to('info@calculatietool.com', 'CalculatieTool.com');
+	        $message->to('administratie@calculatietool.com', 'CalculatieTool.com');
 	        $message->subject('CalculatieTool.com - Printopdracht');
 	        $message->from('info@calculatietool.com', 'CalculatieTool.com');
-	        $message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+	        $message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
 	    });
 
 		return response()->json(['success' => 1]);

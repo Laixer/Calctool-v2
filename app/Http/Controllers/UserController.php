@@ -45,7 +45,7 @@ class UserController extends Controller {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Account gedeactiveerd');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
-			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('support@calculatietool.com', 'CalculatieTool.com');
 		});
 
 		Audit::CreateEvent('account.deactivate.success', 'Account deactivated by user', $user->id);
@@ -58,10 +58,10 @@ class UserController extends Controller {
 				'reason' => $request->get('reason'),
 			);
 			Mailgun::send('mail.inform_deactivate_user', $data, function($message) use ($data) {
-				$message->to('info@calculatietool.com', 'CalculatieTool.com');
+				$message->to('administratie@calculatietool.com', 'CalculatieTool.com');
 				$message->subject('CalculatieTool.com - Account deactivatie');
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');
-				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+				$message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
 			});
 		}
 
@@ -365,11 +365,11 @@ class UserController extends Controller {
 			);
 			Mailgun::send('mail.paid', $data, function($message) use ($data) {
 				$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-				$message->bcc('info@calculatietool.com', 'Gebruiker account verlengd');
+				$message->bcc('administratie@calculatietool.com', 'Gebruiker account verlengd');
 				$message->attach($data['pdf']);
 				$message->subject('CalculatieTool.com - Account verlengd');
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');
-				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+				$message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
 			});
 
 			Audit::CreateEvent('account.payment.callback.success', 'Payment ' . $payment->id . ' succeeded', $user->id);
@@ -490,7 +490,7 @@ class UserController extends Controller {
 				$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 				$message->subject('CalculatieTool.com - Wachtwoord aangepast');
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');
-				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+				$message->replyTo('support@calculatietool.com', 'CalculatieTool.com');
 			});
 		}
 
@@ -643,7 +643,7 @@ class UserController extends Controller {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Betaalgegevens aangepast');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
-			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('support@calculatietool.com', 'CalculatieTool.com');
 		});
 
 		Audit::CreateEvent('account.iban.update.success', 'IBAN and/or account name updated');

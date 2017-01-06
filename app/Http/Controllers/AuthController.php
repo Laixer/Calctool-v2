@@ -231,7 +231,7 @@ class AuthController extends Controller {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Account activatie');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
-			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('support@calculatietool.com', 'CalculatieTool.com');
 		});
 
 		$user->save();
@@ -256,10 +256,10 @@ class AuthController extends Controller {
 				'contact_last'=> $contact->lastname
 			);
 			Mailgun::send('mail.inform_new_user', $data, function($message) use ($data) {
-				$message->to('info@calculatietool.com', 'CalculatieTool.com');
+				$message->to('administratie@calculatietool.com', 'CalculatieTool.com');
 				$message->subject('CalculatieTool.com - Account activatie');
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');
-				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+				$message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
 			});
 		}
 
@@ -351,7 +351,7 @@ class AuthController extends Controller {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Wachtwoord herstellen');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
-			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('support@calculatietool.com', 'CalculatieTool.com');
 		});
 
 		$user->save();
@@ -841,7 +841,7 @@ class AuthController extends Controller {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Account activatie');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
-			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('support@calculatietool.com', 'CalculatieTool.com');
 		});
 
 		$user->save();
@@ -858,10 +858,10 @@ class AuthController extends Controller {
 				'contact_last'=> $contact->lastname
 			);
 			Mailgun::send('mail.inform_new_user', $data, function($message) use ($data) {
-				$message->to('info@calculatietool.com', 'CalculatieTool.com');
+				$message->to('administratie@calculatietool.com', 'CalculatieTool.com');
 				$message->subject('CalculatieTool.com - Account activatie');
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');
-				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+				$message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
 			});
 		}
 

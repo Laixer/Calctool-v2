@@ -145,7 +145,7 @@ class AdminController extends Controller {
 				$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 				$message->subject('CalculatieTool.com - Terugstorting');
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');
-				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+				$message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
 			});
 
 			$user->save();
@@ -798,7 +798,7 @@ class AdminController extends Controller {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Wachtwoord herstellen');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
-			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('support@calculatietool.com', 'CalculatieTool.com');
 		});
 
 		$user->save();
