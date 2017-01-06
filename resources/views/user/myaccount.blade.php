@@ -164,7 +164,7 @@ $(document).ready(function() {
 
 			<div class="modal-footer">
 				<div class="col-md-12">
-					<a id="payment_url" href="/payment" class="btn btn-primary"><i class="fa fa-check"></i> Betalen</a>
+					<a id="payment_url" href="/payment?auto=1" class="btn btn-primary"><i class="fa fa-check"></i> Betalen</a>
 				</div>
 			</div>
 		</div>
@@ -230,7 +230,7 @@ $(document).ready(function() {
 					<button class="btn btn-primary" data-dismiss="modal">Annuleren</button>
 				</div>
 				<div class="col-md-6" style="padding: 0;">
-					<a href="/payment" class="btn btn-danger" id="acc-deactive">Definitief deactiveren</a>
+					<a href="javascript:void(0);" class="btn btn-danger" id="acc-deactive">Definitief deactiveren</a>
 				</div>
 			</div>
 		</div>
@@ -400,7 +400,7 @@ $(document).ready(function() {
 								<a href="/payment/increasefree" class="btn btn-primary">Gratis verlengen</a>
 								@elseif ($user->monthsBehind() < 2)
 								@if (Auth::user()->payment_subscription_id)
-								<a href="/payment/subscription/cancel" class="btn btn-primary">Abonnement stoppen</a>
+								<a href="/payment/subscription/cancel" class="btn btn-primary">Incasso stoppen</a>
 								@else
 								<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#paymentModal">Account verlengen</a>
 								@endif

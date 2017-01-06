@@ -99,7 +99,7 @@ $relation = Relation::find(Auth::user()->self_id);
 				} else if ($time >= "12" && $time < "17") {
 					echo "Goedemiddag";
 				} else if ($time >= "17") {
-					echo "Goedeavond";
+					echo "Goedenavond";
 				} else if ($time >= "0") {
 					echo "Goedenacht";
 				}

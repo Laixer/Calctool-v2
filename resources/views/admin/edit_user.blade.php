@@ -144,6 +144,7 @@ $(document).ready(function() {
 								<li><a href="/admin/payment?user_id={{ $user->id }}">Transacties</a></li>
 								@endif
 								@if (Auth::user()->isSystem() && Auth::id() != $user->id)
+								<li><a href="/admin/user-{{ $user->id }}/login">Als gebruiker inloggen</a></li>
 								<li><a href="/admin/user-{{ $user->id }}/purge">Definitef verwijderen</a></li>
 								@endif
 							</ul>
@@ -186,9 +187,13 @@ $(document).ready(function() {
 											<div class="form-group">
 												<label for="user_type">Gebruikers type</label>
 												<select name="type" id="type" class="form-control pointer">
-													@foreach (\Calctool\Models\UserType::all() as $type)
+													<?php
+													foreach (\Calctool\Models\UserType::all() as $type) {
+														if ($type->user_type == 'system')
+															continue;
+													?>
 													<option {{ $user->user_type==$type->id ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->user_type) }}</option>
-													@endforeach
+													<?php } ?>
 												</select>
 											</div>
 										</div>

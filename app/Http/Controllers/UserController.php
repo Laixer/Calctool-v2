@@ -45,7 +45,7 @@ class UserController extends Controller {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Account gedeactiveerd');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
-			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('support@calculatietool.com', 'CalculatieTool.com');
 		});
 
 		Audit::CreateEvent('account.deactivate.success', 'Account deactivated by user', $user->id);
@@ -58,10 +58,10 @@ class UserController extends Controller {
 				'reason' => $request->get('reason'),
 			);
 			Mailgun::send('mail.inform_deactivate_user', $data, function($message) use ($data) {
-				$message->to('info@calculatietool.com', 'CalculatieTool.com');
+				$message->to('administratie@calculatietool.com', 'CalculatieTool.com');
 				$message->subject('CalculatieTool.com - Account deactivatie');
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');
-				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+				$message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
 			});
 		}
 
@@ -124,6 +124,7 @@ class UserController extends Controller {
 					Auth::user()->save();
 				}
 				
+				$payment_object['description'] = 'Automatische incasso';
 				$payment_object['customerId'] = Auth::user()->payment_customer_id;
 				$payment_object['recurringType'] = 'first';
 			}
@@ -157,7 +158,7 @@ class UserController extends Controller {
 	public function getPaymentFree(Request $request)
 	{
 		if (UserGroup::find(Auth::user()->user_group)->subscription_amount > 0) {
-			$errors = new MessageBag(['status' => ['Abonnement vereist betaling']]);
+			$errors = new MessageBag(['status' => ['Account vereist betaling']]);
 			return redirect('myaccount')->withErrors($errors);
 		}
 
@@ -364,11 +365,11 @@ class UserController extends Controller {
 			);
 			Mailgun::send('mail.paid', $data, function($message) use ($data) {
 				$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-				$message->bcc('info@calculatietool.com', 'Gebruiker abonnement verlengd');
+				$message->bcc('administratie@calculatietool.com', 'Gebruiker account verlengd');
 				$message->attach($data['pdf']);
-				$message->subject('CalculatieTool.com - Abonnement verlengd');
+				$message->subject('CalculatieTool.com - Account verlengd');
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');
-				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+				$message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
 			});
 
 			Audit::CreateEvent('account.payment.callback.success', 'Payment ' . $payment->id . ' succeeded', $user->id);
@@ -385,7 +386,7 @@ class UserController extends Controller {
 		$subscription = $mollie->customers_subscriptions->withParentId(Auth::user()->payment_customer_id)->create([
 			"amount"		=> $order->amount,
 			"interval"		=> "1 month",
-			"description"	=> "Maandelijkse abonnement CalculatieTool.com",
+			"description"	=> "Maandelijkse incasso CalculatieTool.com",
 			"webhookUrl"	=> url('payment/webhook/'),
 			"metadata"		=> [
 				"token"		=> $order->token,
@@ -413,7 +414,7 @@ class UserController extends Controller {
 		if ($payment->isPaid()) {
 			if ($payment->mandateId && $payment->customerId) {
 				$this->setupSubscription($order, $payment->customerId);
-				return redirect('myaccount')->with('success','Bedankt voor uw betaling, abonnement is ingesteld');
+				return redirect('myaccount')->with('success','Bedankt voor uw betaling, automatische incasso is ingesteld');
 			}
 
 			return redirect('myaccount')->with('success','Bedankt voor uw betaling');
@@ -444,11 +445,25 @@ class UserController extends Controller {
 		$mollie = new \Mollie_API_Client;
 		$mollie->setApiKey(config('services.mollie.key'));
 
+		$subscription_id = Auth::user()->payment_subscription_id;
 		$subscription = $mollie->customers_subscriptions->withParentId(Auth::user()->payment_customer_id)->cancel(Auth::user()->payment_subscription_id);
 		Auth::user()->payment_subscription_id = NULL;
 		Auth::user()->save();
 
-		return back()->with('success', 'Abonnement gestopt');
+		if (!config('app.debug')) {
+			$data = array(
+				'user' => Auth::user()->username,
+				'subscription' => $subscription_id,
+			);
+			Mailgun::send('mail.payment_stopped', $data, function($message) use ($data) {
+				$message->to('administratie@calculatietool.com', 'CalculatieTool.com');
+				$message->subject('CalculatieTool.com - Automatische incasso gestopt');
+				$message->from('info@calculatietool.com', 'CalculatieTool.com');
+				$message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
+			});
+		}
+
+		return back()->with('success', 'Automatische incasso gestopt');
 	}
 
 	public function doUpdateSecurity(Request $request)
@@ -489,7 +504,7 @@ class UserController extends Controller {
 				$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 				$message->subject('CalculatieTool.com - Wachtwoord aangepast');
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');
-				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+				$message->replyTo('support@calculatietool.com', 'CalculatieTool.com');
 			});
 		}
 
@@ -642,7 +657,7 @@ class UserController extends Controller {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Betaalgegevens aangepast');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
-			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('support@calculatietool.com', 'CalculatieTool.com');
 		});
 
 		Audit::CreateEvent('account.iban.update.success', 'IBAN and/or account name updated');

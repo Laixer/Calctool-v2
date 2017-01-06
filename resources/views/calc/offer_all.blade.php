@@ -157,6 +157,11 @@ $(document).ready(function() {
 						</td>
 					</tr>
 					@endforeach
+					@if (!$i)
+					<tr>
+						<td colspan="4" style="text-align: center;">Er zijn nog geen offertes gemaakt</td>
+					</tr>
+					@endif
 				</tbody>
 			</table>
 			@if (!($offer_last && $offer_last->offer_finish) && !$project->project_close)

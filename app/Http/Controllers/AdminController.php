@@ -9,6 +9,7 @@ use \Calctool\Events\UserNotification;
 use \Calctool\Models\SysMessage;
 use \Calctool\Models\Payment;
 use \Calctool\Models\User;
+use \Calctool\Models\UserType;
 use \Calctool\Models\UserGroup;
 use \Calctool\Models\OfferPost;
 use \Calctool\Models\Offer;
@@ -54,6 +55,23 @@ class AdminController extends Controller {
 	|	Route::get('/', 'HomeController@showWelcome');
 	|
 	*/
+
+	public function getDashboard(Request $request)
+	{
+		if ($request->get('actas') == 'system') {
+			Auth::user()->user_type = UserType::where('user_type','system')->first()->id;
+			Auth::user()->save();
+			return redirect('/admin');
+		}
+
+		if ($request->get('actas') == 'admin') {
+			Auth::user()->user_type = UserType::where('user_type','admin')->first()->id;
+			Auth::user()->save();
+			return redirect('/admin');
+		}
+
+		return view('admin.dashboard');
+	}
 
 	public function getDocumentation(Request $request, $directory = null, $page = null)
 	{
@@ -145,7 +163,7 @@ class AdminController extends Controller {
 				$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 				$message->subject('CalculatieTool.com - Terugstorting');
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');
-				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+				$message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
 			});
 
 			$user->save();
@@ -372,6 +390,16 @@ class AdminController extends Controller {
 		Auth::loginUsingId($user_id);
 
 		session()->put('swap_session', $swapinfo);
+
+		return redirect('/');
+	}
+
+	public function getLoginAsUser(Request $request, $user_id)
+	{
+		if (!Auth::user()->isSystem())
+			return back();
+
+		Auth::loginUsingId($user_id);
 
 		return redirect('/');
 	}
@@ -798,7 +826,7 @@ class AdminController extends Controller {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Wachtwoord herstellen');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
-			$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+			$message->replyTo('support@calculatietool.com', 'CalculatieTool.com');
 		});
 
 		$user->save();

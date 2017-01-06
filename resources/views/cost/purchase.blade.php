@@ -73,13 +73,6 @@ use \Calctool\Models\Wholesale;
 		<div class="modal-content">
 
 			<iframe width="1280" height="720" src="https://www.youtube.com/embed/mLLx0lATWX8?rel=0" frameborder="0" allowfullscreen></iframe>
-			
-			<div class="modal-body">
-				<div class="form-horizontal">
-
-
-				</div>
-			</div>
 
 		</div>
 	</div>
@@ -123,7 +116,7 @@ use \Calctool\Models\Wholesale;
 							<td class="col-md-3">@{{ purchase.project_name }}</td>
 							<td class="col-md-1">@{{ purchase.purchase_kind }}</td>
 							<td class="col-md-3">@{{ purchase.note }}</td>
-							<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times" ng-click="deleteRow($index)"></button></td>
+							<td class="col-md-1"><button class="btn btn-danger btn-xs fa fa-times" ng-click="deleteRow(purchase.id)"></button></td>
 						</tr>
 						<tr>
 							<td class="col-md-1">
@@ -197,10 +190,12 @@ angular.module('purchaseApp', []).controller('purchaseController', function($sco
 	$scope.reverseSort = false;
 
 	$scope.deleteRow = function(id) {
-		var row = $scope.purchases[id];
-
-		$http.post('/api/v1/purchase/delete', {id: row.id}).then(function(response){
-			$scope.purchases.splice(id, 1);
+		$http.post('/api/v1/purchase/delete', {id: id}).then(function(response){
+			angular.forEach($scope.purchases, function(value, key) {
+				if (value.id == id) {
+					$scope.purchases.splice(key, 1);
+				}
+			});
 		});
 	};
 
@@ -214,7 +209,7 @@ angular.module('purchaseApp', []).controller('purchaseController', function($sco
 			project: $scope.projname,
 		};
 
-		$http.post('/api/v1/purchase/new', data).then(function(response){
+		$http.post('/api/v1/purchase/new', data).then(function(response) {
 			var data = {
 				register_date: response.data.date,
 				amount: response.data.amount,
@@ -226,6 +221,12 @@ angular.module('purchaseApp', []).controller('purchaseController', function($sco
 			};
 
 			$scope.purchases.push(data);
+			$('#date').val('');
+			$scope.amount = '';
+			$scope.typename = '';
+			$scope.relation = '';
+			$scope.note = '';
+			$scope.projname = '';
 		});
 	};
 });

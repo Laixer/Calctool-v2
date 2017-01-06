@@ -181,7 +181,7 @@ $(document).ready(function() {
 
 					<div class="col-md-3">
 						<div class="form-group">
-							<label for="iban">Abonnement verloopdatum</label>
+							<label for="iban">Account verloopdatum</label>
 							<input name="expdate" id="expdate" type="date" value="{{ Input::old('expdate') ? Input::old('expdate') : date('Y-m-d', strtotime('+1 month', time())) }}" class="form-control"/>
 						</div>
 					</div>

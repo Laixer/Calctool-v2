@@ -5,16 +5,35 @@ use \Calctool\Models\ProductSubCategory;
 use \Calctool\Models\Supplier;
 use \Calctool\Models\Product;
 use \Calctool\Models\Element;
-use \Calctool\Models\FavoriteActivity;
 use \Calctool\Models\Tax;
+use \Calctool\Models\FavoriteActivity;
+use \Calctool\Models\FavoriteMaterial;
+use \Calctool\Models\FavoriteLabor;
+use \Calctool\Models\FavoriteEquipment;
+use \Calctool\Calculus\CalculationRegister;
 ?>
 
 @extends('layout.master')
 
-@section('title', 'Materialen')
+@section('title', 'Producten')
+
+@push('scripts')
+<script src="/plugins/summernote/summernote.min.js"></script>
+<script src="/plugins/jquery.number.min.js"></script>
+@endpush
 
 @section('content')
 <script type="text/javascript">
+Number.prototype.formatMoney = function(c, d, t){
+var n = this,
+    c = isNaN(c = Math.abs(c)) ? 2 : c,
+    d = d == undefined ? "." : d,
+    t = t == undefined ? "," : t,
+    s = n < 0 ? "-" : "",
+    i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+    j = (j = i.length) > 3 ? j % 3 : 0;
+   return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+};
 $(document).ready(function() {
 	$('#tab-supplier').click(function(e){
 		sessionStorage.toggleTabMat{{Auth::user()->id}} = 'supplier';
@@ -220,9 +239,105 @@ $(document).ready(function() {
 		});
 
 	});
+
+	/*
+	 FavoriteActivity
+	*/
+
+	$('.toggle').click(function(e){
+		$id = $(this).attr('id');
+		if ($(this).hasClass('active')) {
+			if (sessionStorage.toggleOpen{{Auth::id()}}){
+				$toggleOpen = JSON.parse(sessionStorage.toggleOpen{{Auth::id()}});
+			} else {
+				$toggleOpen = [];
+			}
+			if (!$toggleOpen.length)
+				$toggleOpen.push($id);
+			for(var i in $toggleOpen){
+				if ($toggleOpen.indexOf( $id ) == -1)
+					$toggleOpen.push($id);
+			}
+			sessionStorage.toggleOpen{{Auth::id()}} = JSON.stringify($toggleOpen);
+		} else {
+			$tmpOpen = [];
+			if (sessionStorage.toggleOpen{{Auth::id()}}){
+				$toggleOpen = JSON.parse(sessionStorage.toggleOpen{{Auth::id()}});
+				for(var i in $toggleOpen){
+					if($toggleOpen[i] != $id)
+						$tmpOpen.push($toggleOpen[i]);
+				}
+			}
+			sessionStorage.toggleOpen{{Auth::id()}} = JSON.stringify($tmpOpen);
+		}
+	});
+	if (sessionStorage.toggleOpen{{Auth::id()}}){
+		$toggleOpen = JSON.parse(sessionStorage.toggleOpen{{Auth::id()}});
+		for(var i in $toggleOpen){
+			$('#'+$toggleOpen[i]).addClass('active').children('.toggle-content').toggle();
+		}
+	}
+	$("body").on("change", ".form-control-sm-number", function(){
+		$(this).val(parseFloat($(this).val().split('.').join('').replace(',', '.')).formatMoney(2, ',', '.'));
+	});
+	$('.changename').click(function(e) {
+		$activityid = $(this).attr('data-id');
+		$activity_name = $(this).attr('data-name');
+		$('#nc_activity').val($activityid);
+		$('#nc_activity_name').val($activity_name);
+	});
+
+	var $notecurr;
+	$('.notemod').click(function(e) {
+		$notecurr = $(this);
+		$curval = $(this).attr('data-note');
+		$curid = $(this).attr('data-id');
+		$('.summernote').code($curval);
+		$('#noteact').val($curid);
+	});
+	$('#descModal').on('hidden.bs.modal', function() {
+		$.post("/calculation/noteactivity", {activity: $('#noteact').val(), note: $('.summernote').code()}, function(){
+			$notecurr.attr('data-note', $('.summernote').code());
+			$('.summernote').code('');
+		}).fail(function(e) { console.log(e); });
+	});
+
+    $('.summernote').summernote({
+        height: $(this).attr("data-height") || 200,
+        toolbar: [
+            ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
+            ["para", ["ul", "ol", "paragraph"]],
+            ["media", ["link", "picture"]],
+        ]
+    });
 });
 </script>
 <div id="wrapper">
+
+	<div class="modal fade" id="descModal" tabindex="-1" role="dialog" aria-labelledby="descModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title" id="myModalLabel">Omschrijving werkzaamheid</h4>
+				</div>
+				
+				<div class="modal-body">
+					<div class="form-group">
+						<div class="col-md-12">
+							<textarea name="note" id="note" rows="5" class="form-control summernote"></textarea>
+							<input type="hidden" name="noteact" id="noteact" />
+						</div>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button class="btn btn-primary" data-dismiss="modal">Opslaan</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
 
 	<div class="modal fade" id="elmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
 		<div class="modal-dialog">
@@ -291,7 +406,7 @@ $(document).ready(function() {
 
 			<!-- <p class="alert alert-warning">De prijslijsten bevinden zich nog in BETA fase.</p> -->
 
-			<h2><strong>Prijslijsten</strong></h2>
+			<h2><strong>Producten</strong></h2>
 
 			<div class="tabs nomargin-top">
 
@@ -474,6 +589,178 @@ $(document).ready(function() {
 							<div class="col-md-6"><h4>Favorieten Werkzaamheden</h4></div>
 						</div>
 
+						@if (0)
+							<?php
+							$activity_total = 0;
+							foreach(FavoriteActivity::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get() as $activity) {
+							?>
+							<div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
+								<label><span>{{ $activity->activity_name }}</span></label>
+								<div class="toggle-content">
+									<div class="row">
+										<div class="col-md-12 text-right">
+											<button id="pop-{{ $activity->id }}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-default btn-xs notemod">Omschrijving</button>
+											<div class="btn-group" role="group">
+											  <button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Werkzaamheid&nbsp;&nbsp;<span class="caret"></span></button>
+											  <ul class="dropdown-menu">
+											    <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename">Naam wijzigen</a></li>
+											    <li><a href="/favorite/{{ $activity->id }}/delete">Verwijderen</a></li>
+											  </ul>
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-md-2"><h4>Arbeid</h4></div>
+										<div class="col-md-9"></div>
+									</div>
+
+									<table class="table table-striped" data-id="{{ $activity->id }}">
+										<thead>
+											<tr>
+												<th class="col-md-5">Omschrijving</th>
+												<th class="col-md-1">&nbsp;</th>
+												<th class="col-md-1">Tarief</th>
+												<th class="col-md-1">Aantal</th>
+												<th class="col-md-1">&nbsp;</th>
+												<th class="col-md-1">Prijs</th>
+												<th class="col-md-1">&nbsp;</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											<tr data-id="{{ FavoriteLabor::where('activity_id',$activity->id)->first()['id'] }}">
+												<td class="col-md-5">Arbeidsuren</td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1"><span class="rate">{{ number_format(FavoriteLabor::where('activity_id',$activity->id)->first()['rate'], 2,",",".") }}</span></td>
+												<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(FavoriteLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal(FavoriteLabor::where('activity_id',$activity->id)->first()['rate'], FavoriteLabor::where('activity_id',$activity->id)->first()['amount']), 2, ",",".") }}</span></td>
+												<td class="col-md-1 text-right"><button class="btn btn-danger ldeleterow btn-xs fa fa-times"></button></td>
+											</tr>
+										</tbody>
+									</table>
+
+									<div class="row">
+										<div class="col-md-2"><h4>Materiaal</h4></div>
+										<div class="col-md-9"></div>
+									</div>
+
+									<table class="table table-striped" data-id="{{ $activity->id }}">
+										<thead>
+											<tr>
+												<th class="col-md-6">Omschrijving</th>
+												<th class="col-md-1">Eenheid</th>
+												<th class="col-md-1">&euro; / Eenh.</th>
+												<th class="col-md-1">Aantal</th>
+												<th class="col-md-1">Prijs</th>
+												<th class="col-md-1">&nbsp;</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											@foreach (FavoriteMaterial::where('activity_id', $activity->id)->get() as $material)
+											<tr data-id="{{ $material->id }}">
+												<td class="col-md-6"><input name="name" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text dsave newrow" /></td>
+												<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text dsave" /></td>
+												<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
+												<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
+												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->rate * $material->amount, 2,",",".") }}</span></td>
+												<td class="col-md-1 text-right"">
+													<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+													<button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
+													<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
+												</td>
+											</tr>
+											@endforeach
+											<tr>
+												<td class="col-md-6"><input name="name" id="name" type="text" class="form-control-sm-text dsave newrow" /></td>
+												<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text dsave" /></td>
+												<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number dsave" /></td>
+												<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsave" /></td>
+												<td class="col-md-1"><span class="total-ex-tax"></span></td>
+												<td class="col-md-1 text-right">
+													<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+													<button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
+													<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
+												</td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td class="col-md-6"><strong>Totaal</strong></td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1"><strong class="mat_subtotal">{{ '&euro; '.number_format(CalculationRegister::calcMaterialTotal($activity->id, 0), 2, ",",".") }}</span></td>
+												<td class="col-md-1">&nbsp;</td>
+											</tr>
+										</tbody>
+									</table>
+									
+									<div class="row">
+										<div class="col-md-2"><h4>Overig</h4></div>
+										<div class="col-md-9"></div>
+									</div>
+
+									<table class="table table-striped" data-id="{{ $activity->id }}">
+										<thead>
+											<tr>
+												<th class="col-md-6">Omschrijving</th>
+												<th class="col-md-1">Eenheid</th>
+												<th class="col-md-1">&euro; / Eenh.</th>
+												<th class="col-md-1">Aantal</th>
+												<th class="col-md-1">Prijs</th>
+												<th class="col-md-1">&nbsp;</th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach (FavoriteEquipment::where('activity_id','=', $activity->id)->get() as $equipment)
+											<tr data-id="{{ $equipment->id }}">
+												<td class="col-md-6"><input name="name" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text esave newrow" /></td>
+												<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $equipment->unit }}" class="form-control-sm-text esave" /></td>
+												<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($equipment->rate, 2,",",".") }}" class="form-control-sm-number esave" /></td>
+												<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($equipment->amount, 2,",",".") }}" class="form-control-sm-number esave" /></td>
+												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->rate * $equipment->amount, 2,",",".") }}</span></td>
+												<td class="col-md-1 text-right">
+													<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+													<button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
+													<button class="btn btn-danger btn-xs edeleterow fa fa-times"></button>
+												</td>
+											</tr>
+											@endforeach
+											<tr>
+												<td class="col-md-6"><input name="name" id="name" type="text" class="form-control-sm-text esave newrow" /></td>
+												<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text esave" /></td>
+												<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number esave" /></td>
+												<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number esave" /></td>
+												<td class="col-md-1"><span class="total-ex-tax"></span></td>
+												<td class="col-md-1 text-right">
+													<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+													<button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
+													<button class="btn btn-danger btn-xs edeleterow fa fa-times"></button>
+												</td>
+											</tr>
+										</tbody>
+										<tbody>
+											<tr>
+												<td class="col-md-6"><strong>Totaal</strong></td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1">&nbsp;</td>
+												<td class="col-md-1"><strong class="equip_subtotal">{{ '&euro; '.number_format(CalculationRegister::calcEquipmentTotal($activity->id, 0), 2, ",",".") }}</span></td>
+												<td class="col-md-1">&nbsp;</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<?php } ?>
+						@else
+						<span>Tijdelijk niet beschikbaar</span>
+						@endif
+
+						@if(0)
 						<table class="table table-striped">
 							<thead>
 								<tr>
@@ -505,6 +792,7 @@ $(document).ready(function() {
 								@endif
 							</tbody>
 						</table>
+						@endif
 					</div>
 
 				</div>

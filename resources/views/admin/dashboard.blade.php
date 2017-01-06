@@ -9,10 +9,6 @@
 @endpush
 
 @section('content')
-<script type="text/javascript">
-$(document).ready(function() {
-});
-</script>
 		<div id="wrapper">
 
 			<section class="container text-center">
@@ -35,7 +31,6 @@ $(document).ready(function() {
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-user fsize60"></span>
-											<strong>Gebruikers</strong>
 										</span>
 									</a>
 									<a href="/admin/user" class="btn btn-primary add_to_cart"><i class="fa fa-user"></i> Gebruikers</a>
@@ -54,7 +49,6 @@ $(document).ready(function() {
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-users fsize60"></span>
-											<strong>Groepen</strong>
 										</span>
 									</a>
 									<a href="/admin/group" class="btn btn-primary add_to_cart"><i class="fa fa-users"></i> Groepen</a>
@@ -73,7 +67,6 @@ $(document).ready(function() {
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-usd fsize60"></span>
-											<strong>Transacties</strong>
 										</span>
 									</a>
 									<a href="/admin/payment" class="btn btn-primary add_to_cart"><i class="fa fa-usd"></i> Transacties</a>
@@ -92,7 +85,6 @@ $(document).ready(function() {
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-list-alt fsize60"></span>
-											<strong>Auditlog</strong>
 										</span>
 									</a>
 									<a href="/admin/auditlog" class="btn btn-primary add_to_cart"><i class="fa fa-list-alt"></i> Auditlog</a>
@@ -110,7 +102,6 @@ $(document).ready(function() {
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-pencil fsize60"></span>
-											<strong>Projecten</strong>
 										</span>
 									</a>
 									<a href="/admin/project" class="btn btn-primary add_to_cart"><i class="fa fa-pencil"></i> Projecten</a>
@@ -147,7 +138,6 @@ $(document).ready(function() {
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-file fsize60"></span>
-											<strong>Bestanden</strong>
 										</span>
 									</a>
 									<a href="/admin/resource" class="btn btn-primary add_to_cart"><i class="fa fa-file"></i> Bestanden</a>
@@ -166,7 +156,6 @@ $(document).ready(function() {
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-warning fsize60"></span>
-											<strong>Alerts</strong>
 										</span>
 									</a>
 									<a href="/admin/alert" class="btn btn-primary add_to_cart"><i class="fa fa-warning"></i> Alerts</a>
@@ -186,7 +175,6 @@ $(document).ready(function() {
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-print fsize60"></span>
-											<strong>Printservice</strong>
 										</span>
 									</a>
 									<a href="/admin/snailmail" class="btn btn-primary add_to_cart"><i class="fa fa-print"></i>Printservice</a>
@@ -206,7 +194,6 @@ $(document).ready(function() {
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-bell fsize60"></span>
-											<strong>Notificaties</strong>
 										</span>
 									</a>
 									<a href="/admin/message" class="btn btn-primary add_to_cart"><i class="fa fa-bell"></i> Notificaties</a>
@@ -224,7 +211,6 @@ $(document).ready(function() {
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-percent fsize60"></span>
-											<strong>Acties</strong>
 										</span>
 									</a>
 									<a href="/admin/promo" class="btn btn-primary add_to_cart"><i class="fa fa-percent"></i> Acties</a>
@@ -242,7 +228,6 @@ $(document).ready(function() {
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-user-plus fsize60"></span>
-											<strong>Applicaties</strong>
 										</span>
 									</a>
 									<a href="/admin/application" class="btn btn-primary add_to_cart"><i class="fa fa-user-plus"></i> Applicaties</a>
@@ -260,7 +245,6 @@ $(document).ready(function() {
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-shopping-cart fsize60"></span>
-											<strong>Producten</strong>
 										</span>
 									</a>
 									<a href="/admin/product" class="btn btn-primary add_to_cart"><i class="fa fa-user-plus"></i> Producten</a>
@@ -278,7 +262,6 @@ $(document).ready(function() {
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-book fsize60"></span>
-											<strong>Documentatie</strong>
 										</span>
 									</a>
 									<a href="/admin/documentation" class="btn btn-primary add_to_cart"><i class="fa fa-book-alt"></i> Documentatie</a>
@@ -296,7 +279,6 @@ $(document).ready(function() {
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-server fsize60"></span>
-											<strong>Server & Config</strong>
 										</span>
 									</a>
 									<a href="/admin/environment" class="btn btn-primary add_to_cart"><i class="fa fa-server"></i> Server & Config</a>
@@ -314,7 +296,6 @@ $(document).ready(function() {
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-wrench fsize60"></span>
-											<strong>PHP Info</strong>
 										</span>
 									</a>
 									<a href="/admin/phpinfo" class="btn btn-primary add_to_cart"><i class="fa fa-wrench"></i> PHP Info</a>
@@ -332,7 +313,6 @@ $(document).ready(function() {
 										<span class="overlay color2"></span>
 										<span class="inner">
 											<span class="block fa fa-list-alt fsize60"></span>
-											<strong>Logviewer</strong>
 										</span>
 									</a>
 									<a href="/admin/log" class="btn btn-primary add_to_cart"><i class="fa fa-list-alt"></i> Logviewer</a>

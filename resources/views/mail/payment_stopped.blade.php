@@ -4,7 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-		<title><strong>CalculatieTool.com</strong> - Terugstorting</title>
+		<title><strong>CalculatieTool.com</strong> - Automatische incasso gestopt</title>
 	</head>
 
 	<body style="margin:0; margin-top:30px; margin-bottom:30px; padding:0; width:100%; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; background-color: #F4F5F7;">
@@ -43,32 +43,11 @@
 												</tr>
 												<tr>
 													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; line-height: 24px; color:#8E8E8E;">
-														Goedendag <strong>{{ ucfirst($firstname) .' '. ucfirst($lastname) }}</strong>,
-													</td>
-												</tr>
-												<tr>
-													<td width="100%" height="10"></td>
-												</tr>
-												<tr>
-													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Het volledige bedrag van <strong>{{ $amount }}</strong> is teruggestort, je account is hierop aangepast.
-													</td>
-												</tr>
-												<tr>
-													<td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
-														<br>
-														<br>
-															Met vriendelijke groet,
-														<br>
-														<br>
-															Het team van de <a href="{{ URL::to('/') }}"><strong>CalculatieTool.com</strong></a>
-														<br>
+														De automatische incasso {{ $subscription }} is door gebruiker {{ $user }} gestopt.
 													</td>
 												</tr>
 											</tbody>
 										</table>
-										<!-- /Headline Header -->
-
 									</td>
 								</tr>
 							</tbody>

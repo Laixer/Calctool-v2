@@ -90,11 +90,10 @@ class ApiController extends Controller {
 
 	public function getTimesheet()
 	{
-		$projects = Project::where('user_id','=',Auth::id())->select('id')->get();
+		$projects = Project::where('user_id',Auth::id())->whereNull('project_close')->select('id')->get();
 		$chapters = Chapter::whereIn('project_id', $projects->toArray())->select('id')->get();
 		$activities = Activity::whereIn('chapter_id', $chapters->toArray())->select('id')->get();
 		$timesheets = Timesheet::whereIn('activity_id', $activities->toArray())->get();
-
 
 		foreach ($timesheets as $sheet) {
 			$sheet['activity_name'] = Activity::find($sheet->activity_id)->activity_name;
@@ -184,7 +183,7 @@ class ApiController extends Controller {
 
 	public function getPurchase()
 	{
-		$projects = Project::where('user_id','=',Auth::id())->select('id')->get();
+		$projects = Project::where('user_id',Auth::id())->whereNull('project_close')->select('id')->get();
 		$purchases = Purchase::whereIn('project_id', $projects->toArray())->get();
 
 		foreach ($purchases as $purchase) {

@@ -11,19 +11,6 @@ use \Calctool\Models\Contact;
 @section('title', 'Projectbeheer')
 
 @section('content')
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("body").on("click", ".delete", function(e){
-			e.preventDefault();
-			var $curThis = $(this);
-			if($curThis.closest("tr").attr("data-id"))
-				$.post("/admin/resource/delete", {id: $curThis.closest("tr").attr("data-id")}, function(){
-					$curThis.closest("tr").hide("slow");
-				}).fail(function(e) { console.log(e); });
-		});
-	});
-</script>
-
 <div id="wrapper">
 
 	<section class="container">
@@ -55,7 +42,7 @@ use \Calctool\Models\Contact;
 				</thead>
 
 				<tbody>
-				@foreach (Project::orderBy('created_at', 'desc')->get() as $project)
+				@foreach (Project::orderBy('created_at', 'desc')->limit(50)->get() as $project)
 				<?php $relation = Relation::find($project->client_id); ?>
 					<tr>
 						<td class="col-md-1">{{ $project->id }}</td>
