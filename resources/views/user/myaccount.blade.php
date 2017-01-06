@@ -400,7 +400,7 @@ $(document).ready(function() {
 								<a href="/payment/increasefree" class="btn btn-primary">Gratis verlengen</a>
 								@elseif ($user->monthsBehind() < 2)
 								@if (Auth::user()->payment_subscription_id)
-								<a href="/payment/subscription/cancel" class="btn btn-primary">Abonnement stoppen</a>
+								<a href="/payment/subscription/cancel" class="btn btn-primary">Incasso stoppen</a>
 								@else
 								<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#paymentModal">Account verlengen</a>
 								@endif

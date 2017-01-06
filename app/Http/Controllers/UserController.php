@@ -158,7 +158,7 @@ class UserController extends Controller {
 	public function getPaymentFree(Request $request)
 	{
 		if (UserGroup::find(Auth::user()->user_group)->subscription_amount > 0) {
-			$errors = new MessageBag(['status' => ['Abonnement vereist betaling']]);
+			$errors = new MessageBag(['status' => ['Account vereist betaling']]);
 			return redirect('myaccount')->withErrors($errors);
 		}
 
@@ -365,9 +365,9 @@ class UserController extends Controller {
 			);
 			Mailgun::send('mail.paid', $data, function($message) use ($data) {
 				$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-				$message->bcc('info@calculatietool.com', 'Gebruiker abonnement verlengd');
+				$message->bcc('info@calculatietool.com', 'Gebruiker account verlengd');
 				$message->attach($data['pdf']);
-				$message->subject('CalculatieTool.com - Abonnement verlengd');
+				$message->subject('CalculatieTool.com - Account verlengd');
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');
 				$message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
 			});
@@ -386,7 +386,7 @@ class UserController extends Controller {
 		$subscription = $mollie->customers_subscriptions->withParentId(Auth::user()->payment_customer_id)->create([
 			"amount"		=> $order->amount,
 			"interval"		=> "1 month",
-			"description"	=> "Maandelijkse abonnement CalculatieTool.com",
+			"description"	=> "Maandelijkse incasso CalculatieTool.com",
 			"webhookUrl"	=> url('payment/webhook/'),
 			"metadata"		=> [
 				"token"		=> $order->token,
@@ -414,7 +414,7 @@ class UserController extends Controller {
 		if ($payment->isPaid()) {
 			if ($payment->mandateId && $payment->customerId) {
 				$this->setupSubscription($order, $payment->customerId);
-				return redirect('myaccount')->with('success','Bedankt voor uw betaling, abonnement is ingesteld');
+				return redirect('myaccount')->with('success','Bedankt voor uw betaling, Automatische incasso is ingesteld');
 			}
 
 			return redirect('myaccount')->with('success','Bedankt voor uw betaling');
@@ -449,7 +449,7 @@ class UserController extends Controller {
 		Auth::user()->payment_subscription_id = NULL;
 		Auth::user()->save();
 
-		return back()->with('success', 'Abonnement gestopt');
+		return back()->with('success', 'Automatische incasso gestopt');
 	}
 
 	public function doUpdateSecurity(Request $request)

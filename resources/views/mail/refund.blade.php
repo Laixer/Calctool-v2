@@ -51,7 +51,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														Het volledige bedrag van <strong>{{ $amount }}</strong> is teruggestort, je abonnement is hierop aangepast.
+														Het volledige bedrag van <strong>{{ $amount }}</strong> is teruggestort, je account is hierop aangepast.
 													</td>
 												</tr>
 												<tr>

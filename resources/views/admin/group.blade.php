@@ -25,7 +25,7 @@
 					<tr>
 						<th class="col-md-1 hidden-sm hidden-xs">ID</th>
 						<th class="col-md-3">Groepnaam</th>
-						<th class="col-md-2">Abonnementsprijs</th>
+						<th class="col-md-2">Accountprijs</th>
 						<th class="col-md-2">Gebruikers</th>
 					</tr>
 				</thead>

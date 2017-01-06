@@ -25,8 +25,7 @@ $(document).ready(function() {
 	            ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
 	            ["para", ["ul", "ol", "paragraph"]],
 	            ["table", ["table"]],
-	            ["media", ["link", "picture", "video"]],
-	            ["misc", ["codeview"]]
+	            ["media", ["link", "picture"]],
 	        ]
 	    })
 });
@@ -60,14 +59,12 @@ $(document).ready(function() {
 		<div class="row">
 
 			<div class="col-md-12">
-
 				<div class="white-row">
 				<h2>Helpdesk</h2>
-				Telefoon: <a href="tel:+643587470">06 435 87470</a> of <a href="tel:+643587430">06 435 87430</a><br />
+				Telefoon: <a href="tel:+31643587470">+316 435 87470</a> of <a href="tel:+31643587430">+316 435 87430</a><br />
 				Email: <a href="mailto:info@calculatietool.com">support@calculatietool.com</a><br />
 				Stuur SMS, WhatsApp, Telegram naar bovenstaande telefoonnummers
 				</div>
-
 			</div>
 
 		</div>
@@ -104,16 +101,17 @@ $(document).ready(function() {
 								<select name="category" id="company_type" class="form-control pointer">
 									<option>Hulp / Demo gewenst</option>
 									<option>Account gerelateerd</option>
-									<option>Abonnement gerelateerd</option>
-									<option>Vraag / Suggestie</option>
+									<option>Betaling gerelateerd</option>
+									<option selected="selected">Vraag / Suggestie</option>
 									<option>Applicatieprobleem</option>
 									<option>Wachtwoord vergeten</option>
-									<option selected="selected">Overig</option>
+									<option>Account opzeggen</option>
+									<option>Overig</option>
 								</select>
 							</div>
 							<div class="col-md-8">
 								<label>Onderwerp (optioneel)</label>
-								<input type="text" value="" data-msg-required="Please enter the subject." maxlength="100" class="form-control" name="subject" id="subject">
+								<input type="text" value="" data-msg-required="Please enter the subject." maxlength="100" class="form-control" name="subject" id="subject" placeholder="Ik heb een vraag over ...">
 							</div>
 						</div>
 					</div>
@@ -121,6 +119,7 @@ $(document).ready(function() {
 
 						<div class="form-group">
 							<div class="col-md-12">
+								<label>Bericht (<strong>zo duidelijk mogelijk</strong>)</label>
 								<textarea name="message" id="message" rows="10" class="summernote form-control"></textarea>
 							</div>
 						</div>
@@ -128,7 +127,7 @@ $(document).ready(function() {
 					</div>
 
 					<div class="row">
-						<div class="col-md-12">
+						<div class="col-md-12 text-right">
 							<input type="submit" value="Verstuur" class="btn btn-primary btn-lg">
 						</div>
 					</div>
@@ -143,5 +142,4 @@ $(document).ready(function() {
 	</section>
 
 </div>
-<?# -- /WRAPPER -- ?>
 @stop
