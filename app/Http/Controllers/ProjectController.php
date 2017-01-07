@@ -58,18 +58,6 @@ class ProjectController extends Controller {
 		return view('user.offer_invoice');
 	}
 
-	public function getFavoriteDelete(Request $request, $favid)
-	{
-		$fav = FavoriteActivity::find($favid);
-		if (!$fav || !$fav->isOwner()) {
-			return back();
-		}
-
-		$fav->delete();
-
-		return back();
-	}
-
 	public function downloadResource(Request $request, $resourceid)
 	{
 		$res = Resource::find($resourceid);
