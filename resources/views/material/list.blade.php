@@ -698,6 +698,33 @@ $(document).ready(function() {
 			});
 		}
 	});
+	$('.getsub').change(function(e){
+		var $name = $('#group2 option:selected').attr('data-name');
+		var $value = $('#group2 option:selected').val();
+
+		$.get('/material/subcat/' + $name + '/' + $value, function(data) {
+			$('#group').find('option').remove();
+		    $.each(data, function(idx, item){
+			    $('#group').append($('<option>', {
+			        value: item.id,
+			        text: item.name
+			    }));
+		    });
+
+			$.post("/material/search", {group:data[0].id}, function(data) {
+				if (data) {
+					$('#tbl-materialx tbody tr').remove();
+					$.each(data, function(i, item) {
+						$('#tbl-materialx tbody').append('<tr><td><a data-name="'+item.description+'" data-unit="'+item.punit+'" data-price="'+item.pricenum+'" href="javascript:void(0);">'+item.description+'</a></td><td>'+item.unit+'</td><td>'+item.price+'</td><td>'+item.tprice+'</td></tr>');
+					});
+					$('#tbl-materialx tbody a').on("click", onmaterialclick);
+					$req = false;
+				}
+			});
+		    
+		});
+
+	});
 
 	$("button[data-target='#myModal']").click(function(e) {
 		$newinputtr = $(this).closest("tr");
@@ -1088,7 +1115,6 @@ $(document).ready(function() {
 						</div>
 
 						<?php
-						$activity_total = 0;
 						foreach(FavoriteActivity::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get() as $activity) {
 						?>
 						<div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
@@ -1156,7 +1182,9 @@ $(document).ready(function() {
 									</thead>
 
 									<tbody>
+										<?php $material_total = 0; ?>
 										@foreach (FavoriteMaterial::where('activity_id', $activity->id)->get() as $material)
+										<?php $material_total += ($material->rate * $material->amount); ?>
 										<tr data-id="{{ $material->id }}">
 											<td class="col-md-6"><input name="name" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text ddsave newrow2" /></td>
 											<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text ddsave" /></td>
@@ -1187,7 +1215,7 @@ $(document).ready(function() {
 											<td class="col-md-1">&nbsp;</td>
 											<td class="col-md-1">&nbsp;</td>
 											<td class="col-md-1">&nbsp;</td>
-											<td class="col-md-1"><strong class="mat_subtotal">{{ '&euro; '.number_format(CalculationRegister::calcMaterialTotal($activity->id, 0), 2, ",",".") }}</span></td>
+											<td class="col-md-1"><strong class="mat_subtotal">{{ '&euro; '.number_format($material_total, 2, ",",".") }}</span></td>
 											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
@@ -1210,7 +1238,9 @@ $(document).ready(function() {
 										</tr>
 									</thead>
 									<tbody>
+										<?php $equipment_total = 0; ?>
 										@foreach (FavoriteEquipment::where('activity_id','=', $activity->id)->get() as $equipment)
+										<?php $equipment_total += ($equipment->rate * $equipment->amount); ?>
 										<tr data-id="{{ $equipment->id }}">
 											<td class="col-md-6"><input name="name" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text eesave newrow2" /></td>
 											<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $equipment->unit }}" class="form-control-sm-text eesave" /></td>
@@ -1241,7 +1271,7 @@ $(document).ready(function() {
 											<td class="col-md-1">&nbsp;</td>
 											<td class="col-md-1">&nbsp;</td>
 											<td class="col-md-1">&nbsp;</td>
-											<td class="col-md-1"><strong class="equip_subtotal">{{ '&euro; '.number_format(CalculationRegister::calcEquipmentTotal($activity->id, 0), 2, ",",".") }}</span></td>
+											<td class="col-md-1"><strong class="equip_subtotal">{{ '&euro; '.number_format($equipment_total, 2, ",",".") }}</span></td>
 											<td class="col-md-1">&nbsp;</td>
 										</tr>
 									</tbody>
