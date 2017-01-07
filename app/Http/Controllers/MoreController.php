@@ -81,7 +81,7 @@ class MoreController extends Controller {
 
 		foreach (FavoriteLabor::where('activity_id', $favact->id)->get() as $fav_calc_labor) {
 			MoreLabor::create(array(
-				"rate" => $fav_calc_labor->rate,
+				"rate" => 0,
 				"amount" => $fav_calc_labor->amount,
 				"activity_id" => $activity->id,
 			));
@@ -97,14 +97,16 @@ class MoreController extends Controller {
 			));
 		}
 
-		foreach (FavoriteEquipment::where('activity_id', $favact->id)->get() as $fav_calc_equipment) {
-			MoreEquipment::create(array(
-				"equipment_name" => $fav_calc_equipment->equipment_name,
-				"unit" => $fav_calc_equipment->unit,
-				"rate" => $fav_calc_equipment->rate,
-				"amount" => $fav_calc_equipment->amount,
-				"activity_id" => $activity->id,
-			));
+		if ($project->use_equipment) {
+			foreach (FavoriteEquipment::where('activity_id', $favact->id)->get() as $fav_calc_equipment) {
+				MoreEquipment::create(array(
+					"equipment_name" => $fav_calc_equipment->equipment_name,
+					"unit" => $fav_calc_equipment->unit,
+					"rate" => $fav_calc_equipment->rate,
+					"amount" => $fav_calc_equipment->amount,
+					"activity_id" => $activity->id,
+				));
+			}
 		}
 
 		return back();

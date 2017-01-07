@@ -98,7 +98,6 @@ class CalcController extends Controller {
 
 		foreach (FavoriteLabor::where('activity_id', $favact->id)->get() as $fav_calc_labor) {
 			CalculationLabor::create(array(
-				"rate" => $fav_calc_labor->rate,
 				"amount" => $fav_calc_labor->amount,
 				"activity_id" => $activity->id,
 			));
@@ -114,14 +113,16 @@ class CalcController extends Controller {
 			));
 		}
 
-		foreach (FavoriteEquipment::where('activity_id', $favact->id)->get() as $fav_calc_equipment) {
-			CalculationEquipment::create(array(
-				"equipment_name" => $fav_calc_equipment->equipment_name,
-				"unit" => $fav_calc_equipment->unit,
-				"rate" => $fav_calc_equipment->rate,
-				"amount" => $fav_calc_equipment->amount,
-				"activity_id" => $activity->id,
-			));
+		if ($project->use_equipment) {
+			foreach (FavoriteEquipment::where('activity_id', $favact->id)->get() as $fav_calc_equipment) {
+				CalculationEquipment::create(array(
+					"equipment_name" => $fav_calc_equipment->equipment_name,
+					"unit" => $fav_calc_equipment->unit,
+					"rate" => $fav_calc_equipment->rate,
+					"amount" => $fav_calc_equipment->amount,
+					"activity_id" => $activity->id,
+				));
+			}
 		}
 
 		return back();
@@ -168,7 +169,6 @@ class CalcController extends Controller {
 
 		foreach (FavoriteLabor::where('activity_id', $favact->id)->get() as $fav_calc_labor) {
 			EstimateLabor::create(array(
-				"rate" => $fav_calc_labor->rate,
 				"amount" => $fav_calc_labor->amount,
 				"activity_id" => $activity->id,
 				"original" => true,
@@ -188,16 +188,18 @@ class CalcController extends Controller {
 			));
 		}
 
-		foreach (FavoriteEquipment::where('activity_id', $favact->id)->get() as $fav_calc_equipment) {
-			EstimateEquipment::create(array(
-				"equipment_name" => $fav_calc_equipment->equipment_name,
-				"unit" => $fav_calc_equipment->unit,
-				"rate" => $fav_calc_equipment->rate,
-				"amount" => $fav_calc_equipment->amount,
-				"activity_id" => $activity->id,
-				"original" => true,
-				"isset" => false,
-			));
+		if ($project->use_equipment) {
+			foreach (FavoriteEquipment::where('activity_id', $favact->id)->get() as $fav_calc_equipment) {
+				EstimateEquipment::create(array(
+					"equipment_name" => $fav_calc_equipment->equipment_name,
+					"unit" => $fav_calc_equipment->unit,
+					"rate" => $fav_calc_equipment->rate,
+					"amount" => $fav_calc_equipment->amount,
+					"activity_id" => $activity->id,
+					"original" => true,
+					"isset" => false,
+				));
+			}
 		}
 
 		return back();

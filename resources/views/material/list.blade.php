@@ -355,18 +355,11 @@ $(document).ready(function() {
 				$curThis.closest("tr").find("input").removeClass("error-input");
 				if (json.success) {
 					$curThis.closest("tr").attr("data-id", json.id);
-					var rate = $curThis.closest("tr").find("input[name='rate']").val()
-					//if (rate) {
-						rate.toString().split('.').join('').replace(',', '.');
-					//} else {
-					//	rate = {{-- $project->hour_rate --}};
-					//}
+					var rate = 1;
 					var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
 					$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
 				} else {
 					$.each(json.message, function(i, item) {
-						if(json.message['rate'])
-							$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
 						if(json.message['amount'])
 							$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
 					});
@@ -1155,10 +1148,10 @@ $(document).ready(function() {
 										<tr data-id="{{ FavoriteLabor::where('activity_id',$activity->id)->first()['id'] }}">
 											<td class="col-md-5">Arbeidsuren</td>
 											<td class="col-md-1">&nbsp;</td>
-											<td class="col-md-1"><span class="rate">{{ number_format(FavoriteLabor::where('activity_id',$activity->id)->first()['rate'], 2,",",".") }}</span></td>
+											<td class="col-md-1">&nbsp;</td>
 											<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(FavoriteLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
 											<td class="col-md-1">&nbsp;</td>
-											<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal(FavoriteLabor::where('activity_id',$activity->id)->first()['rate'], FavoriteLabor::where('activity_id',$activity->id)->first()['amount']), 2, ",",".") }}</span></td>
+											<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(FavoriteLabor::where('activity_id',$activity->id)->first()['amount'], 2, ",",".") }}</span></td>
 											<td class="col-md-1 text-right"><button class="btn btn-danger ldeleterow btn-xs fa fa-times"></button></td>
 										</tr>
 									</tbody>
