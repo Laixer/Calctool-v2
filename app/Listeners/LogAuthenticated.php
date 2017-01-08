@@ -10,6 +10,7 @@ use \Calctool\Models\User;
 
 use \Cookie;
 use \Auth;
+use \Cache;
 
 class LogAuthenticated
 {
@@ -31,19 +32,13 @@ class LogAuthenticated
      */
     public function handle(Login $event)
     {
-        if (session()->has('swap_session')) {
-            $swapinfo = session()->get('swap_session');
-
-            $admin_username = User::find($swapinfo['admin_id'])->username;
-
-            /* User is taken over */
-            if ($swapinfo['user_id'] == Auth::id()) {
-                Audit::CreateEvent('auth.swap.session.succces', 'Session takeover by admin: ' . $admin_username);
-            } else {
-                session()->forget('swap_session');
-            }
+        if (session()->has('swap_session')) { /* Admin switches back */
+            session()->forget('swap_session');
+        } else if (Cache::has('keepsesionstate')) { /* Admin switched into user */
+            Cache::forget('keepsesionstate');
         } else {
             $event->user->login_count++;
+            $event->user->online_at = \DB::raw('NOW()');
             $event->user->save();
             Audit::CreateEvent('auth.login.succces', 'Login with: ' . \Calctool::remoteAgent(), $event->user->id);
         }

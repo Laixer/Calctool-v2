@@ -32,6 +32,7 @@ use \Database\Templates\ValidationProjectTemplate;
 
 use \Storage;
 use \Auth;
+use \Cache;
 use \Hash;
 use \Redis;
 use \Markdown;
@@ -382,10 +383,17 @@ class AdminController extends Controller {
 		if (session()->has('swap_session'))
 			return back();
 
+		if (Cache::has('keepsesionstate'))
+			return back();
+
 		$swapinfo = [
 			'user_id' => $user_id,
 			'admin_id' => Auth::id(),
 		];
+
+		Audit::CreateEvent('auth.swap.session.succces', 'Session takeover by: ' . auth::user()->username, $user_id);
+
+		Cache::put('keepsesionstate', $user_id, 1);
 
 		Auth::loginUsingId($user_id);
 
