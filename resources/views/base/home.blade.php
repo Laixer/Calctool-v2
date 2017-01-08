@@ -168,7 +168,7 @@ $relation = Relation::find(Auth::user()->self_id);
 				<div class="col-sm-6 col-md-2 hidden-xs">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
-							<a class="item-hover" href="/">
+							<a class="item-hover" href="/finance/overview">
 								<span class="overlay color2"></span>
 								<span class="inner" style="top:40%;">
 									<span class="block fa fa-usd fsize60"></span>
