@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', 'Nieuwe groep')
+@section('title', 'Applicatie bewerken')
 
 @push('style')
 <link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
@@ -65,7 +65,7 @@ $(document).ready(function() {
 			  <li><a href="/">Home</a></li>
 			  <li><a href="/admin">Admin CP</a></li>
 			  <li><a href="/admin/application">applicaties</a></li>
-			  <li class="active">Nieuwe applicaties</li>
+			  <li class="active">{{ $client->name }}</li>
 			</ol>
 			<div>
 			<br />

@@ -147,6 +147,19 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('calculation/movechapter', 'CalcController@doMoveChapter');
 	Route::post('calculation/activity/usetimesheet', 'CalcController@doUpdateUseTimesheet');
 
+	Route::post('favorite/newmaterial', 'FavoriteController@doNewMaterial');
+	Route::post('favorite/newequipment', 'FavoriteController@doNewEquipment');
+	Route::post('favorite/newlabor', 'FavoriteController@doNewLabor');
+	Route::post('favorite/deletematerial', 'FavoriteController@doDeleteMaterial');
+	Route::post('favorite/deleteequipment', 'FavoriteController@doDeleteEquipment');
+	Route::post('favorite/deletelabor', 'FavoriteController@doDeleteLabor');
+	Route::post('favorite/updatematerial', 'FavoriteController@doUpdateMaterial');
+	Route::post('favorite/updateequipment', 'FavoriteController@doUpdateEquipment');
+	Route::post('favorite/updatelabor', 'FavoriteController@doUpdateLabor');
+	Route::post('favorite/deleteactivity', 'FavoriteController@doDeleteActivity');
+	Route::post('favorite/noteactivity', 'FavoriteController@doUpdateNote');
+	Route::post('favorite/rename_activity', 'FavoriteController@doRenameActivity');
+
 	Route::post('invoice/updatecondition', 'InvoiceController@doUpdateCondition');
 	Route::post('invoice/updatecode', 'InvoiceController@doUpdateCode');
 	Route::post('invoice/updatedesc', 'InvoiceController@doUpdateDescription');
@@ -317,7 +330,6 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('wholesale-{wholesale_id}/delete', 'WholesaleController@getDelete')->where('wholesale_id', '[0-9]+')->middleware('payzone');
 
 	/* Project pages */
-	Route::get('favorite/{fav_id}/delete', 'ProjectController@getFavoriteDelete')->middleware('payzone');
 	Route::get('project/new', 'ProjectController@getNew')->middleware('payzone'); 
 	Route::get('project/relation/{relation_id}', 'ProjectController@getRelationDetails')->middleware('payzone'); 
 	Route::post('project/new', 'ProjectController@doNew');

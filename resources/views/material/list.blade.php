@@ -277,8 +277,380 @@ $(document).ready(function() {
 			$('#'+$toggleOpen[i]).addClass('active').children('.toggle-content').toggle();
 		}
 	}
+
+	var $newinputtr;
+	var $newinputtr2;
 	$("body").on("change", ".form-control-sm-number", function(){
 		$(this).val(parseFloat($(this).val().split('.').join('').replace(',', '.')).formatMoney(2, ',', '.'));
+	});
+	$("body").on("change", ".newrow2", function(){
+		var i = 1;
+		if($(this).val()){
+			if(!$(this).closest("tr").next().length){
+				var $curTable = $(this).closest("table");
+				$curTable.find("tr:eq(1)").clone().removeAttr("data-id").find("input").each(function(){
+					$(this).val("").removeClass("error-input").attr("id", function(_, id){ return id + i });
+				}).end().find(".total-ex-tax").text("").end().appendTo($curTable);
+				$("button[data-target='#myModal']").on("click", function() {
+					$newinputtr = $(this).closest("tr");
+					$newinputtr2 = $(this).closest("tr");
+				});
+				i++;
+			}
+		}
+	});
+	$("body").on("change", ".lsave", function(){
+		var $curThis = $(this);
+		if($curThis.closest("tr").attr("data-id")){
+			$.post("/favorite/updatelabor", {
+				id: $curThis.closest("tr").attr("data-id"),
+				rate: $curThis.closest("tr").find("input[name='rate']").val(),
+				amount: $curThis.closest("tr").find("input[name='amount']").val(),
+			}, function(data){
+				var json = data;
+				$curThis.closest("tr").find("input").removeClass("error-input");
+				if (json.success) {
+					$curThis.closest("tr").attr("data-id", json.id);
+					var rate = $curThis.closest("tr").find("input[name='rate']").val()
+					// if (rate) {
+						rate = rate.toString().split('.').join('').replace(',', '.');
+					// } else {
+						// rate = {{-- $project->hour_rate --}};
+					// }
+					var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+					$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+				} else {
+					$.each(json.message, function(i, item) {
+						if(json.message['name'])
+							$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+						if(json.message['unit'])
+							$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+						if(json.message['rate'])
+							$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+						if(json.message['amount'])
+							$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+					});
+				}
+			}).fail(function(e){
+				console.log(e);
+			});
+		}
+	});
+	$("body").on("blur", ".lsave", function(){
+		var flag = true;
+		var $curThis = $(this);
+		if($curThis.closest("tr").attr("data-id"))
+			return false;
+		$curThis.closest("tr").find("input").each(function(){
+			if(!$(this).val())
+				flag = false;
+		});
+		if(flag){
+			$.post("/favorite/newlabor", {
+				rate: $curThis.closest("tr").find("input[name='rate']").val(),
+				amount: $curThis.closest("tr").find("input[name='amount']").val(),
+				activity: $curThis.closest("table").attr("data-id"),
+			}, function(data){
+				var json = data;
+				$curThis.closest("tr").find("input").removeClass("error-input");
+				if (json.success) {
+					$curThis.closest("tr").attr("data-id", json.id);
+					var rate = 1;
+					var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+					$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+				} else {
+					$.each(json.message, function(i, item) {
+						if(json.message['amount'])
+							$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+					});
+				}
+			}).fail(function(e){
+				console.log(e);
+			});
+		}
+	});
+
+	$("body").on("change", ".ddsave", function(){
+		var $curThis = $(this);
+		if($curThis.closest("tr").attr("data-id")){
+			$.post("/favorite/updatematerial", {
+				id: $curThis.closest("tr").attr("data-id"),
+				name: $curThis.closest("tr").find("input[name='name']").val(),
+				unit: $curThis.closest("tr").find("input[name='unit']").val(),
+				rate: $curThis.closest("tr").find("input[name='rate']").val(),
+				amount: $curThis.closest("tr").find("input[name='amount']").val(),
+			}, function(data){
+				var json = data;
+				$curThis.closest("tr").find("input").removeClass("error-input");
+				if (json.success) {
+					$curThis.closest("tr").attr("data-id", json.id);
+					var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
+					var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+					var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
+					$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+					$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+					var sub_total = 0;
+					$curThis.closest("tbody").find(".total-ex-tax").each(function(index){
+						var _cal = parseFloat($(this).text().substring(2).split('.').join('').replace(',', '.'));
+						if (_cal)
+							sub_total += _cal;
+					});
+					$curThis.closest("table").find('.mat_subtotal').text('€ '+$.number(sub_total,2,',','.'));
+					var sub_total_profit = 0;
+					$curThis.closest("tbody").find(".total-incl-tax").each(function(index){
+						var _cal = parseFloat($(this).text().substring(2).split('.').join('').replace(',', '.'));
+						if (_cal)
+							sub_total_profit += _cal;
+					});
+					$curThis.closest("table").find('.mat_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
+				} else {
+					$.each(json.message, function(i, item) {
+						if(json.message['name'])
+							$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+						if(json.message['unit'])
+							$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+						if(json.message['rate'])
+							$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+						if(json.message['amount'])
+							$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+					});
+				}
+			}).fail(function(e){
+				console.log(e);
+			});
+		}
+	});
+	$("body").on("blur", ".ddsave", function(){
+		var flag = true;
+		var $curThis = $(this);
+		if($curThis.closest("tr").attr("data-id"))
+			return false;
+		$curThis.closest("tr").find("input").each(function(){
+			if(!$(this).val())
+				flag = false;
+		});
+		if(flag){
+			$.post("/favorite/newmaterial", {
+				name: $curThis.closest("tr").find("input[name='name']").val(),
+				unit: $curThis.closest("tr").find("input[name='unit']").val(),
+				rate: $curThis.closest("tr").find("input[name='rate']").val(),
+				amount: $curThis.closest("tr").find("input[name='amount']").val(),
+				activity: $curThis.closest("table").attr("data-id"),
+			}, function(data){
+				var json = data;
+				$curThis.closest("tr").find("input").removeClass("error-input");
+				if (json.success) {
+					$curThis.closest("tr").attr("data-id", json.id);
+					var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
+					var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+					var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
+					$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+					$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+					var sub_total = 0;
+					$curThis.closest("tbody").find(".total-ex-tax").each(function(index){
+						var _cal = parseFloat($(this).text().substring(2).split('.').join('').replace(',', '.'));
+						if (_cal)
+							sub_total += _cal;
+					});
+					$curThis.closest("table").find('.mat_subtotal').text('€ '+$.number(sub_total,2,',','.'));
+					var sub_total_profit = 0;
+					$curThis.closest("tbody").find(".total-incl-tax").each(function(index){
+						var _cal = parseFloat($(this).text().substring(2).split('.').join('').replace(',', '.'));
+						if (_cal)
+							sub_total_profit += _cal;
+					});
+					$curThis.closest("table").find('.mat_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
+				} else {
+					$.each(json.message, function(i, item) {
+						if(json.message['name'])
+							$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+						if(json.message['unit'])
+							$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+						if(json.message['rate'])
+							$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+						if(json.message['amount'])
+							$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+					});
+				}
+			}).fail(function(e){
+				console.log(e);
+			});
+		}
+	});
+
+	$("body").on("change", ".eesave", function(){
+		var $curThis = $(this);
+		if($curThis.closest("tr").attr("data-id")){
+			$.post("/favorite/updateequipment", {
+				id: $curThis.closest("tr").attr("data-id"),
+				name: $curThis.closest("tr").find("input[name='name']").val(),
+				unit: $curThis.closest("tr").find("input[name='unit']").val(),
+				rate: $curThis.closest("tr").find("input[name='rate']").val(),
+				amount: $curThis.closest("tr").find("input[name='amount']").val(),
+			}, function(data){
+				var json = data;
+				$curThis.closest("tr").find("input").removeClass("error-input");
+				if (json.success) {
+					$curThis.closest("tr").attr("data-id", json.id);
+					var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
+					var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+					var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
+					$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+					$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+					var sub_total = 0;
+					$curThis.closest("tbody").find(".total-ex-tax").each(function(index){
+						var _cal = parseFloat($(this).text().substring(2).split('.').join('').replace(',', '.'));
+						if (_cal)
+							sub_total += _cal;
+					});
+					$curThis.closest("table").find('.equip_subtotal').text('€ '+$.number(sub_total,2,',','.'));
+					var sub_total_profit = 0;
+					$curThis.closest("tbody").find(".total-incl-tax").each(function(index){
+						var _cal = parseFloat($(this).text().substring(2).split('.').join('').replace(',', '.'));
+						if (_cal)
+							sub_total_profit += _cal;
+					});
+					$curThis.closest("table").find('.equip_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
+				} else {
+					$.each(json.message, function(i, item) {
+						if(json.message['name'])
+							$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+						if(json.message['unit'])
+							$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+						if(json.message['rate'])
+							$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+						if(json.message['amount'])
+							$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+					});
+				}
+			}).fail(function(e){
+				console.log(e);app/views/calc/more_closed.blade.php
+			});
+		}
+	});
+	$("body").on("blur", ".eesave", function(){
+		var flag = true;
+		var $curThis = $(this);
+		if($curThis.closest("tr").attr("data-id"))
+			return false;
+		$curThis.closest("tr").find("input").each(function(){
+			if(!$(this).val())
+				flag = false;
+		});
+		if(flag){
+			$.post("/favorite/newequipment", {
+				name: $curThis.closest("tr").find("input[name='name']").val(),
+				unit: $curThis.closest("tr").find("input[name='unit']").val(),
+				rate: $curThis.closest("tr").find("input[name='rate']").val(),
+				amount: $curThis.closest("tr").find("input[name='amount']").val(),
+				activity: $curThis.closest("table").attr("data-id"),
+			}, function(data){
+				var json = data;
+				$curThis.closest("tr").find("input").removeClass("error-input");
+				if (json.success) {
+					$curThis.closest("tr").attr("data-id", json.id);
+					var rate = $curThis.closest("tr").find("input[name='rate']").val().toString().split('.').join('').replace(',', '.');
+					var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
+					var profit = $curThis.closest("tr").find('td[data-profit]').data('profit');
+					$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
+					$curThis.closest("tr").find(".total-incl-tax").text('€ '+$.number(rate*amount*((100+profit)/100),2,',','.'));
+					var sub_total = 0;
+					$curThis.closest("tbody").find(".total-ex-tax").each(function(index){
+						var _cal = parseFloat($(this).text().substring(2).split('.').join('').replace(',', '.'));
+						if (_cal)
+							sub_total += _cal;
+					});
+					$curThis.closest("table").find('.equip_subtotal').text('€ '+$.number(sub_total,2,',','.'));
+					var sub_total_profit = 0;
+					$curThis.closest("tbody").find(".total-incl-tax").each(function(index){
+						var _cal = parseFloat($(this).text().substring(2).split('.').join('').replace(',', '.'));
+						if (_cal)
+							sub_total_profit += _cal;
+					});
+					$curThis.closest("table").find('.equip_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
+				} else {
+					$.each(json.message, function(i, item) {
+						if(json.message['name'])
+							$curThis.closest("tr").find("input[name='name']").addClass("error-input");
+						if(json.message['unit'])
+							$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
+						if(json.message['rate'])
+							$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
+						if(json.message['amount'])
+							$curThis.closest("tr").find("input[name='amount']").addClass("error-input");
+					});
+				}
+			}).fail(function(e){
+				console.log(e);
+			});
+		}
+	});
+
+	$("body").on("click", ".ldeleterow", function(){
+		var $curThis = $(this);
+		if($curThis.closest("tr").attr("data-id"))
+			$.post("/favorite/deletelabor", {id: $curThis.closest("tr").attr("data-id")}, function(){
+				$curThis.closest("tr").find("input").val("0,00");
+				$curThis.closest("tr").find(".total-ex-tax").text('€ 0,00');
+			}).fail(function(e) { console.log(e); });
+	});
+
+	$("body").on("click", ".ssdeleterow", function(){
+		var $curThis = $(this);
+		if($curThis.closest("tr").attr("data-id"))
+			$.post("/favorite/deletematerial", {id: $curThis.closest("tr").attr("data-id")}, function(){
+				var body = $curThis.closest("tbody");
+				var table = $curThis.closest("table");
+				$curThis.closest("tr").remove();
+				var sub_total = 0;
+				body.find(".total-ex-tax").each(function(index){
+					var _cal = parseFloat($(this).text().substring(2).split('.').join('').replace(',', '.'));
+					if (_cal)
+						sub_total += _cal;
+				});
+				table.find('.mat_subtotal').text('€ '+$.number(sub_total,2,',','.'));
+				var sub_total_profit = 0;
+				body.find(".total-incl-tax").each(function(index){
+					var _cal = parseFloat($(this).text().substring(2).split('.').join('').replace(',', '.'));
+					if (_cal)
+						sub_total_profit += _cal;
+				});
+				table.find('.mat_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
+			}).fail(function(e) { console.log(e); });
+	});
+	$("body").on("click", ".eedeleterow", function(){
+		var $curThis = $(this);
+		if($curThis.closest("tr").attr("data-id"))
+			$.post("/favorite/deleteequipment", {id: $curThis.closest("tr").attr("data-id")}, function(){
+				var body = $curThis.closest("tbody");
+				var table = $curThis.closest("table");
+				$curThis.closest("tr").remove();
+				var sub_total = 0;
+				body.find(".total-ex-tax").each(function(index){
+					var _cal = parseFloat($(this).text().substring(2).split('.').join('').replace(',', '.'));
+					if (_cal)
+						sub_total += _cal;
+				});
+				table.find('.equip_subtotal').text('€ '+$.number(sub_total,2,',','.'));
+				var sub_total_profit = 0;
+				body.find(".total-incl-tax").each(function(index){
+					var _cal = parseFloat($(this).text().substring(2).split('.').join('').replace(',', '.'));
+					if (_cal)
+						sub_total_profit += _cal;
+				});
+				table.find('.equip_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
+			}).fail(function(e) { console.log(e); });
+	});
+
+	$("body").on("click", ".deleteact", function(e){
+		e.preventDefault();
+		if(confirm('Weet je het zeker?')){
+			var $curThis = $(this);
+			if($curThis.attr("data-id"))
+				$.post("/favorite/deleteactivity", {activity: $curThis.attr("data-id")}, function(){
+					$('#toggle-activity-'+$curThis.attr("data-id")).hide('slow');
+				}).fail(function(e) { console.log(e); });
+		}
 	});
 	$('.changename').click(function(e) {
 		$activityid = $(this).attr('data-id');
@@ -296,11 +668,67 @@ $(document).ready(function() {
 		$('#noteact').val($curid);
 	});
 	$('#descModal').on('hidden.bs.modal', function() {
-		$.post("/calculation/noteactivity", {activity: $('#noteact').val(), note: $('.summernote').code()}, function(){
+		$.post("/favorite/noteactivity", {activity: $('#noteact').val(), note: $('.summernote').code()}, function(){
 			$notecurr.attr('data-note', $('.summernote').code());
 			$('.summernote').code('');
 		}).fail(function(e) { console.log(e); });
 	});
+
+	$req = false;
+	$("#searchx").keyup(function() {
+		$val = $(this).val();
+		if ($val.length > 2 && !$req) {
+			$req = true;
+			$.post("/material/search", {query: $val}, function(data) {
+				if (data) {
+					$('#tbl-materialx tbody tr').remove();
+					$.each(data, function(i, item) {
+						$('#tbl-materialx tbody').append('<tr><td><a data-name="'+item.description+'" data-unit="'+item.punit+'" data-price="'+item.pricenum+'" href="javascript:void(0);">'+item.description+'</a></td><td>'+item.unit+'</td><td>'+item.price+'</td><td>'+item.tprice+'</td></tr>');
+					});
+					$('#tbl-materialx tbody a').on("click", onmaterialclick);
+					$req = false;
+				}
+			});
+		}
+	});
+	$('.getsub').change(function(e){
+		var $name = $('#group2 option:selected').attr('data-name');
+		var $value = $('#group2 option:selected').val();
+
+		$.get('/material/subcat/' + $name + '/' + $value, function(data) {
+			$('#group').find('option').remove();
+		    $.each(data, function(idx, item){
+			    $('#group').append($('<option>', {
+			        value: item.id,
+			        text: item.name
+			    }));
+		    });
+
+			$.post("/material/search", {group:data[0].id}, function(data) {
+				if (data) {
+					$('#tbl-materialx tbody tr').remove();
+					$.each(data, function(i, item) {
+						$('#tbl-materialx tbody').append('<tr><td><a data-name="'+item.description+'" data-unit="'+item.punit+'" data-price="'+item.pricenum+'" href="javascript:void(0);">'+item.description+'</a></td><td>'+item.unit+'</td><td>'+item.price+'</td><td>'+item.tprice+'</td></tr>');
+					});
+					$('#tbl-materialx tbody a').on("click", onmaterialclick);
+					$req = false;
+				}
+			});
+		    
+		});
+
+	});
+
+	$("button[data-target='#myModal']").click(function(e) {
+		$newinputtr = $(this).closest("tr");
+	});
+	function onmaterialclick(e) {
+		$newinputtr.find("input[name='name']").val($(this).attr('data-name'));
+		$newinputtr.find("input[name='unit']").val($(this).attr('data-unit'));
+		$newinputtr.find("input[name='rate']").val($(this).attr('data-price'));
+		$newinputtr.find(".newrow").change();
+		$('#myModal').modal('toggle');
+	}
 
     $('.summernote').summernote({
         height: $(this).attr("data-height") || 200,
@@ -339,6 +767,95 @@ $(document).ready(function() {
 		</div>
 	</div>
 
+	<div class="modal fade" id="nameChangeModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			<form method="POST" action="/favorite/rename_activity" accept-charset="UTF-8">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel2">Naam werkzaamheid</h4>
+				</div>
+
+				<div class="modal-body">
+					<div class="form-horizontal">
+						{!! csrf_field() !!}
+						<div class="form-group">
+							<div class="col-md-4">
+								<label>Naam</label>
+							</div>
+							<div class="col-md-12">
+								<input value="" name="activity_name" id="nc_activity_name" class="form-control" />
+								<input value="" name="activity" id="nc_activity" type="hidden" class="form-control" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary">Opslaan</button>
+				</div>
+			</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h4 class="modal-title" id="myModalLabel">Producten</h4>
+				</div>
+
+				<div class="modal-body">
+					
+					<div class="form-group input-group input-group-lg">
+						<input type="text" id="searchx" value="" class="form-control" placeholder="Zoek in volledig lijst">
+						<span class="input-group-btn">
+							<select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000">
+								<option value="0" selected>of sorteer op categorie</option>
+								@foreach (ProductGroup::all() as $group)
+								<option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
+								@foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
+								<option data-name="cat" value="{{ $cat->id }}"> - {{ $cat->category_name }}</option>
+								@endforeach
+								@endforeach
+							</select>
+						</span>
+						<span class="input-group-btn">
+							<select id="group" class="btn" style="background-color: #E5E7E9; color:#000">
+								<option value="0" selected>en subcategorie</option>
+								@foreach (ProductSubCategory::all() as $subcat)
+								<option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
+								@endforeach
+							</select>
+						</span>
+					</div>
+					<div class="table-responsive">
+						<table id="tbl-materialx" class="table table-hover">
+							<thead>
+								<tr>
+									<th>Omschrijving</th>
+									<th>Eenheid</th>
+									<th>Prijs per eenheid</th>
+									<th>Totaalprijs</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button class="btn btn-primary" data-dismiss="modal">Sluiten</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	@if(0)
 	<div class="modal fade" id="elmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -374,6 +891,7 @@ $(document).ready(function() {
 			</div>
 		</div>
 	</div>
+	@endif
 
 	<section class="container">
 
@@ -589,210 +1107,172 @@ $(document).ready(function() {
 							<div class="col-md-6"><h4>Favorieten Werkzaamheden</h4></div>
 						</div>
 
-						@if (0)
-							<?php
-							$activity_total = 0;
-							foreach(FavoriteActivity::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get() as $activity) {
-							?>
-							<div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
-								<label><span>{{ $activity->activity_name }}</span></label>
-								<div class="toggle-content">
-									<div class="row">
-										<div class="col-md-12 text-right">
-											<button id="pop-{{ $activity->id }}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-default btn-xs notemod">Omschrijving</button>
-											<div class="btn-group" role="group">
-											  <button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Werkzaamheid&nbsp;&nbsp;<span class="caret"></span></button>
-											  <ul class="dropdown-menu">
-											    <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename">Naam wijzigen</a></li>
-											    <li><a href="/favorite/{{ $activity->id }}/delete">Verwijderen</a></li>
-											  </ul>
-											</div>
+						<?php
+						foreach(FavoriteActivity::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get() as $activity) {
+						?>
+						<div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
+							<label><span>{{ $activity->activity_name }}</span></label>
+							<div class="toggle-content">
+								<div class="row">
+									<div class="col-md-12 text-right">
+										<button id="pop-{{ $activity->id }}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-default btn-xs notemod">Omschrijving</button>
+										<div class="btn-group" role="group">
+										  <button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Werkzaamheid&nbsp;&nbsp;<span class="caret"></span></button>
+										  <ul class="dropdown-menu">
+										    <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename">Naam wijzigen</a></li>
+										    <li><a href="#" data-id="{{ $activity->id }}" class="deleteact">Verwijderen</a></li>
+										  </ul>
 										</div>
 									</div>
-
-									<div class="row">
-										<div class="col-md-2"><h4>Arbeid</h4></div>
-										<div class="col-md-9"></div>
-									</div>
-
-									<table class="table table-striped" data-id="{{ $activity->id }}">
-										<thead>
-											<tr>
-												<th class="col-md-5">Omschrijving</th>
-												<th class="col-md-1">&nbsp;</th>
-												<th class="col-md-1">Tarief</th>
-												<th class="col-md-1">Aantal</th>
-												<th class="col-md-1">&nbsp;</th>
-												<th class="col-md-1">Prijs</th>
-												<th class="col-md-1">&nbsp;</th>
-											</tr>
-										</thead>
-
-										<tbody>
-											<tr data-id="{{ FavoriteLabor::where('activity_id',$activity->id)->first()['id'] }}">
-												<td class="col-md-5">Arbeidsuren</td>
-												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1"><span class="rate">{{ number_format(FavoriteLabor::where('activity_id',$activity->id)->first()['rate'], 2,",",".") }}</span></td>
-												<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(FavoriteLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
-												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(CalculationRegister::calcLaborTotal(FavoriteLabor::where('activity_id',$activity->id)->first()['rate'], FavoriteLabor::where('activity_id',$activity->id)->first()['amount']), 2, ",",".") }}</span></td>
-												<td class="col-md-1 text-right"><button class="btn btn-danger ldeleterow btn-xs fa fa-times"></button></td>
-											</tr>
-										</tbody>
-									</table>
-
-									<div class="row">
-										<div class="col-md-2"><h4>Materiaal</h4></div>
-										<div class="col-md-9"></div>
-									</div>
-
-									<table class="table table-striped" data-id="{{ $activity->id }}">
-										<thead>
-											<tr>
-												<th class="col-md-6">Omschrijving</th>
-												<th class="col-md-1">Eenheid</th>
-												<th class="col-md-1">&euro; / Eenh.</th>
-												<th class="col-md-1">Aantal</th>
-												<th class="col-md-1">Prijs</th>
-												<th class="col-md-1">&nbsp;</th>
-											</tr>
-										</thead>
-
-										<tbody>
-											@foreach (FavoriteMaterial::where('activity_id', $activity->id)->get() as $material)
-											<tr data-id="{{ $material->id }}">
-												<td class="col-md-6"><input name="name" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text dsave newrow" /></td>
-												<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text dsave" /></td>
-												<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
-												<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
-												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->rate * $material->amount, 2,",",".") }}</span></td>
-												<td class="col-md-1 text-right"">
-													<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
-													<button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
-													<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
-												</td>
-											</tr>
-											@endforeach
-											<tr>
-												<td class="col-md-6"><input name="name" id="name" type="text" class="form-control-sm-text dsave newrow" /></td>
-												<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text dsave" /></td>
-												<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number dsave" /></td>
-												<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsave" /></td>
-												<td class="col-md-1"><span class="total-ex-tax"></span></td>
-												<td class="col-md-1 text-right">
-													<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
-													<button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
-													<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
-												</td>
-											</tr>
-										</tbody>
-										<tbody>
-											<tr>
-												<td class="col-md-6"><strong>Totaal</strong></td>
-												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1"><strong class="mat_subtotal">{{ '&euro; '.number_format(CalculationRegister::calcMaterialTotal($activity->id, 0), 2, ",",".") }}</span></td>
-												<td class="col-md-1">&nbsp;</td>
-											</tr>
-										</tbody>
-									</table>
-									
-									<div class="row">
-										<div class="col-md-2"><h4>Overig</h4></div>
-										<div class="col-md-9"></div>
-									</div>
-
-									<table class="table table-striped" data-id="{{ $activity->id }}">
-										<thead>
-											<tr>
-												<th class="col-md-6">Omschrijving</th>
-												<th class="col-md-1">Eenheid</th>
-												<th class="col-md-1">&euro; / Eenh.</th>
-												<th class="col-md-1">Aantal</th>
-												<th class="col-md-1">Prijs</th>
-												<th class="col-md-1">&nbsp;</th>
-											</tr>
-										</thead>
-										<tbody>
-											@foreach (FavoriteEquipment::where('activity_id','=', $activity->id)->get() as $equipment)
-											<tr data-id="{{ $equipment->id }}">
-												<td class="col-md-6"><input name="name" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text esave newrow" /></td>
-												<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $equipment->unit }}" class="form-control-sm-text esave" /></td>
-												<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($equipment->rate, 2,",",".") }}" class="form-control-sm-number esave" /></td>
-												<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($equipment->amount, 2,",",".") }}" class="form-control-sm-number esave" /></td>
-												<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->rate * $equipment->amount, 2,",",".") }}</span></td>
-												<td class="col-md-1 text-right">
-													<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
-													<button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
-													<button class="btn btn-danger btn-xs edeleterow fa fa-times"></button>
-												</td>
-											</tr>
-											@endforeach
-											<tr>
-												<td class="col-md-6"><input name="name" id="name" type="text" class="form-control-sm-text esave newrow" /></td>
-												<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text esave" /></td>
-												<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number esave" /></td>
-												<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number esave" /></td>
-												<td class="col-md-1"><span class="total-ex-tax"></span></td>
-												<td class="col-md-1 text-right">
-													<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
-													<button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
-													<button class="btn btn-danger btn-xs edeleterow fa fa-times"></button>
-												</td>
-											</tr>
-										</tbody>
-										<tbody>
-											<tr>
-												<td class="col-md-6"><strong>Totaal</strong></td>
-												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1">&nbsp;</td>
-												<td class="col-md-1"><strong class="equip_subtotal">{{ '&euro; '.number_format(CalculationRegister::calcEquipmentTotal($activity->id, 0), 2, ",",".") }}</span></td>
-												<td class="col-md-1">&nbsp;</td>
-											</tr>
-										</tbody>
-									</table>
 								</div>
-							</div>
-							<?php } ?>
-						@else
-						<span>Tijdelijk niet beschikbaar</span>
-						@endif
 
-						@if(0)
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th class="col-md-5">Omschrijving</th>
-									<th class="col-md-2">Datum</th>
-									<th class="col-md-1">BTW Arbeid</th>
-									<th class="col-md-2">BTW Materiaal</th>
-									<th class="col-md-1">BTW Overig</th>
-									<th class="col-md-1"></th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php $i=0; ?>
-								@foreach(FavoriteActivity::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get() as $activity)
-								<?php $i++; ?>
-								<tr>
-									<td class="col-md-5">{{ $activity->activity_name }}</td>
-									<td class="col-md-2"><?php echo date('d-m-Y', strtotime($activity->created_at)); ?></td>
-									<td class="col-md-1">{{ Tax::find($activity->tax_labor_id)->tax_rate }}%</td>
-									<td class="col-md-2">{{ Tax::find($activity->tax_material_id)->tax_rate }}%</td>
-									<td class="col-md-1">{{ Tax::find($activity->tax_equipment_id)->tax_rate }}%</td>
-									<td class="col-md-1"><a href="/favorite/{{ $activity->id }}/delete" class="btn btn-danger btn-xs"> Verwijderen</a></td>
-								</tr>
-								@endforeach
-								@if (!$i)
-								<tr>
-									<td colspan="6" style="text-align: center;">Er zijn nog geen favorieten werkzaamheden</td>
-								</tr>
-								@endif
-							</tbody>
-						</table>
-						@endif
+								<div class="row">
+									<div class="col-md-2"><h4>Arbeid</h4></div>
+									<div class="col-md-9"></div>
+								</div>
+
+								<table class="table table-striped" data-id="{{ $activity->id }}">
+									<thead>
+										<tr>
+											<th class="col-md-5">Omschrijving</th>
+											<th class="col-md-1">&nbsp;</th>
+											<th class="col-md-1">Tarief</th>
+											<th class="col-md-1">Aantal</th>
+											<th class="col-md-1">&nbsp;</th>
+											<th class="col-md-1">Prijs</th>
+											<th class="col-md-1">&nbsp;</th>
+										</tr>
+									</thead>
+
+									<tbody>
+										<tr data-id="{{ FavoriteLabor::where('activity_id',$activity->id)->first()['id'] }}">
+											<td class="col-md-5">Arbeidsuren</td>
+											<td class="col-md-1">&nbsp;</td>
+											<td class="col-md-1">&nbsp;</td>
+											<td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(FavoriteLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
+											<td class="col-md-1">&nbsp;</td>
+											<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format(FavoriteLabor::where('activity_id',$activity->id)->first()['amount'], 2, ",",".") }}</span></td>
+											<td class="col-md-1 text-right"><button class="btn btn-danger ldeleterow btn-xs fa fa-times"></button></td>
+										</tr>
+									</tbody>
+								</table>
+
+								<div class="row">
+									<div class="col-md-2"><h4>Materiaal</h4></div>
+									<div class="col-md-9"></div>
+								</div>
+
+								<table class="table table-striped" data-id="{{ $activity->id }}">
+									<thead>
+										<tr>
+											<th class="col-md-6">Omschrijving</th>
+											<th class="col-md-1">Eenheid</th>
+											<th class="col-md-1">&euro; / Eenh.</th>
+											<th class="col-md-1">Aantal</th>
+											<th class="col-md-1">Prijs</th>
+											<th class="col-md-1">&nbsp;</th>
+										</tr>
+									</thead>
+
+									<tbody>
+										<?php $material_total = 0; ?>
+										@foreach (FavoriteMaterial::where('activity_id', $activity->id)->get() as $material)
+										<?php $material_total += ($material->rate * $material->amount); ?>
+										<tr data-id="{{ $material->id }}">
+											<td class="col-md-6"><input name="name" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text ddsave newrow2" /></td>
+											<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text ddsave" /></td>
+											<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-sm-number ddsave" /></td>
+											<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-sm-number ddsave" /></td>
+											<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->rate * $material->amount, 2,",",".") }}</span></td>
+											<td class="col-md-1 text-right"">
+												<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+												<button class="btn btn-danger btn-xs ssdeleterow fa fa-times"></button>
+											</td>
+										</tr>
+										@endforeach
+										<tr>
+											<td class="col-md-6"><input name="name" id="name" type="text" class="form-control-sm-text ddsave newrow2" /></td>
+											<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text ddsave" /></td>
+											<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number ddsave" /></td>
+											<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number ddsave" /></td>
+											<td class="col-md-1"><span class="total-ex-tax"></span></td>
+											<td class="col-md-1 text-right">
+												<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+												<button class="btn btn-danger btn-xs ssdeleterow fa fa-times"></button>
+											</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td class="col-md-6"><strong>Totaal</strong></td>
+											<td class="col-md-1">&nbsp;</td>
+											<td class="col-md-1">&nbsp;</td>
+											<td class="col-md-1">&nbsp;</td>
+											<td class="col-md-1"><strong class="mat_subtotal">{{ '&euro; '.number_format($material_total, 2, ",",".") }}</span></td>
+											<td class="col-md-1">&nbsp;</td>
+										</tr>
+									</tbody>
+								</table>
+								
+								<div class="row">
+									<div class="col-md-2"><h4>Overig</h4></div>
+									<div class="col-md-9"></div>
+								</div>
+
+								<table class="table table-striped" data-id="{{ $activity->id }}">
+									<thead>
+										<tr>
+											<th class="col-md-6">Omschrijving</th>
+											<th class="col-md-1">Eenheid</th>
+											<th class="col-md-1">&euro; / Eenh.</th>
+											<th class="col-md-1">Aantal</th>
+											<th class="col-md-1">Prijs</th>
+											<th class="col-md-1">&nbsp;</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php $equipment_total = 0; ?>
+										@foreach (FavoriteEquipment::where('activity_id','=', $activity->id)->get() as $equipment)
+										<?php $equipment_total += ($equipment->rate * $equipment->amount); ?>
+										<tr data-id="{{ $equipment->id }}">
+											<td class="col-md-6"><input name="name" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text eesave newrow2" /></td>
+											<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $equipment->unit }}" class="form-control-sm-text eesave" /></td>
+											<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($equipment->rate, 2,",",".") }}" class="form-control-sm-number eesave" /></td>
+											<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($equipment->amount, 2,",",".") }}" class="form-control-sm-number eesave" /></td>
+											<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->rate * $equipment->amount, 2,",",".") }}</span></td>
+											<td class="col-md-1 text-right">
+												<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+												<button class="btn btn-danger btn-xs eedeleterow fa fa-times"></button>
+											</td>
+										</tr>
+										@endforeach
+										<tr>
+											<td class="col-md-6"><input name="name" id="name" type="text" class="form-control-sm-text eesave newrow2" /></td>
+											<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text eesave" /></td>
+											<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number eesave" /></td>
+											<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number eesave" /></td>
+											<td class="col-md-1"><span class="total-ex-tax"></span></td>
+											<td class="col-md-1 text-right">
+												<button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+												<button class="btn btn-danger btn-xs eedeleterow fa fa-times"></button>
+											</td>
+										</tr>
+									</tbody>
+									<tbody>
+										<tr>
+											<td class="col-md-6"><strong>Totaal</strong></td>
+											<td class="col-md-1">&nbsp;</td>
+											<td class="col-md-1">&nbsp;</td>
+											<td class="col-md-1">&nbsp;</td>
+											<td class="col-md-1"><strong class="equip_subtotal">{{ '&euro; '.number_format($equipment_total, 2, ",",".") }}</span></td>
+											<td class="col-md-1">&nbsp;</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<?php } ?>
+
 					</div>
 
 				</div>
