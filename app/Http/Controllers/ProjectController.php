@@ -316,6 +316,8 @@ class ProjectController extends Controller {
 
 		$res->delete();
 
+		Audit::CreateEvent('resource.delete.success', 'Resource ' . $res->id . ' deleted');
+
 		return back();
 	}
 
@@ -552,6 +554,8 @@ class ProjectController extends Controller {
 
 		$project->save();
 
+		Audit::CreateEvent('project.work.started.success', 'Work date started by project ' . $project->project_name);
+
 		return response()->json(['success' => 1]);
 	}
 
@@ -569,6 +573,8 @@ class ProjectController extends Controller {
 		$project->work_completion = date('Y-m-d', strtotime($request->input('date')));
 
 		$project->save();
+
+		Audit::CreateEvent('project.work.complete.success', 'Work date complete by project ' . $project->project_name);
 
 		return response()->json(['success' => 1]);
 	}
@@ -657,6 +663,8 @@ class ProjectController extends Controller {
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
 			$message->replyTo($data['email_from'], $data['mycomp']);
 		});
+
+		Audit::CreateEvent('project.communication.success', 'New project communication by project ' . $project->project_name);
 
 		return back()->with('success', 'Opmerking toegevoegd aan project');
 	}
