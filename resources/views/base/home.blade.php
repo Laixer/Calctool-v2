@@ -19,11 +19,10 @@ use \Calctool\Models\SysMessage;
 @endpush
 
 <?php
-$next_step = null;
-if (Input::get('nstep') == 'intro')
-	$next_step = 'intro_'.Auth::id();
-
-$relation = Relation::find(Auth::user()->self_id);
+if (!session()->has('swap_session')) {
+	Auth::user()->online_at = \DB::raw('NOW()');
+	Auth::user()->save();
+}
 ?>
 
 @section('content')

@@ -178,6 +178,12 @@ use \Calctool\Models\Offer;
 						</table>
 					</div>
 
+					<div class="row">
+						<div class="col-md-12">
+							<span><strong>Alleen bevestigde offertes kunnen uren boeken.</strong></span>
+						</div>
+					</div>
+
 					@if (0)
 					<div id="summary" class="tab-pane">
 
