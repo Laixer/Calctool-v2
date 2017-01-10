@@ -78,6 +78,7 @@ class ProjectController extends Controller {
 			'province' => array('required','numeric'),
 			'country' => array('required','numeric'),
 			'contractor' => array('required','numeric'),
+			'name' => array('max:50'),
 		]);
 
 		if (!Relation::find(Auth::user()->self_id)) {
