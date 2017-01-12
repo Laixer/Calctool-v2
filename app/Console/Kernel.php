@@ -180,7 +180,7 @@ class Kernel extends ConsoleKernel
         })->daily();
 
         $schedule->call(function() {
-            foreach (User::where('active',true)->whereDate('confirmed_mail', date('Y-m-d'))->get() as $user) {
+            foreach (User::where('active',true)->whereRaw("\"confirmed_mail\" > NOW() - '1 week'::INTERVAL")->get() as $user) {
 
                 /* Paying */
                 Newsletter::subscribe($user->email, [
@@ -192,7 +192,6 @@ class Kernel extends ConsoleKernel
                 Newsletter::unsubscribe($user->email, 'noaccount');
             }
         })->daily();
-
 
         $schedule->command('oauth:clear')->daily();
     }
