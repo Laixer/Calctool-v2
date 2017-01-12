@@ -420,14 +420,14 @@ $(document).ready(function() {
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="iban">IBAN rekeningnummer</label>
-										<input name="iban" id="iban" type="text" value="{{ Input::old('iban') ? Input::old('iban') : ($relation ? $relation->iban : '') }}" {{ $relation ? '' : 'disabled' }} class="form-control"/>
+										<input name="iban" id="iban" maxlength="25" type="text" value="{{ Input::old('iban') ? Input::old('iban') : ($relation ? $relation->iban : '') }}" {{ $relation ? '' : 'disabled' }} class="form-control"/>
 									</div>
 								</div>
 
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="btw">Naam rekeninghouder</label>
-										<input name="iban_name" id="iban_name" type="text" {{ $relation ? '' : 'disabled' }} value="{{ Input::old('iban_name') ? Input::old('iban_name') : ($relation ? $relation->iban_name : '') }}" class="form-control"/>
+										<input name="iban_name" maxlength="50" id="iban_name" type="text" {{ $relation ? '' : 'disabled' }} value="{{ Input::old('iban_name') ? Input::old('iban_name') : ($relation ? $relation->iban_name : '') }}" class="form-control"/>
 									</div>
 								</div>
 							</div>
@@ -536,10 +536,10 @@ $(document).ready(function() {
 												<div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
 												<div class="col-md-1"><div class="pull-right">&euro;</div></div>
 												<div class="col-md-2">
-													<input name="pref_hourrate_calc" id="pref_hourrate_calc" type="text" class="form-control" value="{{ number_format($user->pref_hourrate_calc, 2, ",",".") }}" />
+													<input name="pref_hourrate_calc" id="pref_hourrate_calc" type="text" class="form-control form-control-sm-number" value="{{ number_format($user->pref_hourrate_calc, 2, ",",".") }}" />
 												</div>
 												<div class="col-md-2">
-													<input name="pref_hourrate_more" id="pref_hourrate_more" type="text" class="form-control" value="{{ number_format($user->pref_hourrate_more, 2, ",",".") }}" />
+													<input name="pref_hourrate_more" id="pref_hourrate_more" type="text" class="form-control form-control-sm-number" value="{{ number_format($user->pref_hourrate_more, 2, ",",".") }}" />
 												</div>
 											</div>
 
@@ -548,20 +548,20 @@ $(document).ready(function() {
 												<div class="col-md-3"><label for="profit_material_1">Winstpercentage materiaal</label></div>
 												<div class="col-md-1"><div class="pull-right">%</div></div>
 												<div class="col-md-2">
-														<input name="pref_profit_calc_contr_mat" id="pref_profit_calc_contr_mat" type="text" class="form-control" value="{{ $user->pref_profit_calc_contr_mat }}" />
+														<input name="pref_profit_calc_contr_mat" type="number" min="0" max="200" id="pref_profit_calc_contr_mat" type="text" class="form-control form-control-sm-number" value="{{ $user->pref_profit_calc_contr_mat }}" />
 												</div>
 												<div class="col-md-2">
-														<input name="pref_profit_more_contr_mat" id="pref_profit_more_contr_mat" type="text" class="form-control" value="{{ $user->pref_profit_more_contr_mat }}" />
+														<input name="pref_profit_more_contr_mat" type="number" min="0" max="200" id="pref_profit_more_contr_mat" type="text" class="form-control form-control-sm-number" value="{{ $user->pref_profit_more_contr_mat }}" />
 												</div>
 											</div>
 											<div class="row">
 												<div class="col-md-3"><label for="profit_equipment_1">Winstpercentage overig</label></div>
 												<div class="col-md-1"><div class="pull-right">%</div></div>
 												<div class="col-md-2">
-														<input name="pref_profit_calc_contr_equip" id="pref_profit_calc_contr_equip" type="text" class="form-control" value="{{ $user->pref_profit_calc_contr_equip }}" />
+														<input name="pref_profit_calc_contr_equip" type="number" min="0" max="200" id="pref_profit_calc_contr_equip" type="text" class="form-control form-control-sm-number" value="{{ $user->pref_profit_calc_contr_equip }}" />
 												</div>
 												<div class="col-md-2">
-														<input name="pref_profit_more_contr_equip" id="pref_profit_more_contr_equip" type="text" class="form-control" value="{{ $user->pref_profit_more_contr_equip }}" />
+														<input name="pref_profit_more_contr_equip" type="number" min="0" max="200" id="pref_profit_more_contr_equip" type="text" class="form-control form-control-sm-number" value="{{ $user->pref_profit_more_contr_equip }}" />
 												</div>
 											</div>
 
@@ -570,20 +570,20 @@ $(document).ready(function() {
 												<div class="col-md-3"><label for="profit_material_2">Winstpercentage materiaal</label></div>
 												<div class="col-md-1"><div class="pull-right">%</div></div>
 												<div class="col-md-2">
-														<input name="pref_profit_calc_subcontr_mat" id="pref_profit_calc_subcontr_mat" type="text" class="form-control" value="{{ $user->pref_profit_calc_subcontr_mat }}" />
+														<input name="pref_profit_calc_subcontr_mat" type="number" min="0" max="200" id="pref_profit_calc_subcontr_mat" type="text" class="form-control form-control-sm-number" value="{{ $user->pref_profit_calc_subcontr_mat }}" />
 												</div>
 												<div class="col-md-2">
-														<input name="pref_profit_more_subcontr_mat" id="pref_profit_more_subcontr_mat" type="text" class="form-control" value="{{ $user->pref_profit_more_subcontr_mat }}" />
+														<input name="pref_profit_more_subcontr_mat" type="number" min="0" max="200" id="pref_profit_more_subcontr_mat" type="text" class="form-control form-control-sm-number" value="{{ $user->pref_profit_more_subcontr_mat }}" />
 												</div>
 											</div>
 											<div class="row">
 												<div class="col-md-3"><label for="profit_equipment_2">Winstpercentage overig</label></div>
 												<div class="col-md-1"><div class="pull-right">%</div></div>
 												<div class="col-md-2">
-														<input name="pref_profit_calc_subcontr_equip" id="pref_profit_calc_subcontr_equip" type="text" class="form-control" value="{{ $user->pref_profit_calc_subcontr_equip }}" />
+														<input name="pref_profit_calc_subcontr_equip" type="number" min="0" max="200" id="pref_profit_calc_subcontr_equip" type="text" class="form-control form-control-sm-number" value="{{ $user->pref_profit_calc_subcontr_equip }}" />
 												</div>
 												<div class="col-md-2">
-														<input name="pref_profit_more_subcontr_equip" id="pref_profit_more_subcontr_equip" type="text" class="form-control" value="{{ $user->pref_profit_more_subcontr_equip }}" />
+														<input name="pref_profit_more_subcontr_equip" type="number" min="0" max="200" id="pref_profit_more_subcontr_equip" type="text" class="form-control form-control-sm-number" value="{{ $user->pref_profit_more_subcontr_equip }}" />
 												</div>
 											</div>
 

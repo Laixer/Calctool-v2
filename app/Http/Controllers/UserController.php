@@ -627,7 +627,7 @@ class UserController extends Controller {
 	{
 		$this->validate($request, [
 			'id' => array('required','integer'),
-			'iban' => array('alpha_num'),
+			'iban' => array('alpha_num','max:25'),
 			'iban_name' => array('required','max:50')
 		]);
 
@@ -672,6 +672,14 @@ class UserController extends Controller {
 			'pref_hourrate_more' => array('regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'),
 			'offernumber_prefix' => array('max:10'),
 			'invoicenumber_prefix' => array('max:10'),
+			'pref_profit_calc_contr_mat' => array('numeric','between:0,200'),
+			'pref_profit_more_contr_mat' => array('numeric','between:0,200'),
+			'pref_profit_calc_contr_equip' => array('numeric','between:0,200'),
+			'pref_profit_more_contr_equip' => array('numeric','between:0,200'),
+			'pref_profit_calc_subcontr_mat' => array('numeric','between:0,200'),
+			'pref_profit_more_subcontr_mat' => array('numeric','between:0,200'),
+			'pref_profit_calc_subcontr_equip' => array('numeric','between:0,200'),
+			'pref_profit_more_subcontr_equip' => array('numeric','between:0,200'),
 		]);
 
 		$user = Auth::user();

@@ -421,14 +421,14 @@ $(document).ready(function() {
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="iban">IBAN rekeningnummer</label>
-										<input name="iban" id="iban" type="text" value="{{ Input::old('iban') ? Input::old('iban') : $relation->iban }}" class="form-control"/>
+										<input name="iban" maxlength="25" id="iban" type="text" value="{{ Input::old('iban') ? Input::old('iban') : $relation->iban }}" class="form-control"/>
 									</div>
 								</div>
 
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="btw">Naam rekeninghouder</label>
-										<input name="iban_name" id="iban_name" type="text" value="{{ Input::old('iban_name') ? Input::old('iban_name') : $relation->iban_name }}" class="form-control"/>
+										<input name="iban_name" maxlength="50" id="iban_name" type="text" value="{{ Input::old('iban_name') ? Input::old('iban_name') : $relation->iban_name }}" class="form-control"/>
 									</div>
 								</div>
 
