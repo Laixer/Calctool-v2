@@ -785,7 +785,7 @@ $(document).ready(function() {
 								<label>Naam</label>
 							</div>
 							<div class="col-md-12">
-								<input value="" name="activity_name" id="nc_activity_name" class="form-control" />
+								<input value="" maxlength="100" name="activity_name" id="nc_activity_name" class="form-control" />
 								<input value="" name="activity" id="nc_activity" type="hidden" class="form-control" />
 							</div>
 						</div>
@@ -810,7 +810,7 @@ $(document).ready(function() {
 				<div class="modal-body">
 					
 					<div class="form-group input-group input-group-lg">
-						<input type="text" id="searchx" value="" class="form-control" placeholder="Zoek in volledig lijst">
+						<input type="text" id="searchx" maxlength="100" value="" class="form-control" placeholder="Zoek in volledig lijst">
 						<span class="input-group-btn">
 							<select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000">
 								<option value="0" selected>of sorteer op categorie</option>
@@ -922,8 +922,6 @@ $(document).ready(function() {
 			<div>
 			<br>
 
-			<!-- <p class="alert alert-warning">De prijslijsten bevinden zich nog in BETA fase.</p> -->
-
 			<h2><strong>Producten</strong></h2>
 
 			<div class="tabs nomargin-top">
@@ -951,7 +949,7 @@ $(document).ready(function() {
 
 						<div class="form-group input-group input-group-lg">
 						
-							<input type="text" id="search" value="" class="form-control" placeholder="Zoek product">
+							<input type="text" maxlength="100" id="search" value="" class="form-control" placeholder="Zoek product">
 
 							<span class="input-group-btn">
 						        <select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000; border-radius:0px;">
@@ -1025,8 +1023,8 @@ $(document).ready(function() {
 								?>
 								@foreach (Product::where('supplier_id','=', $mysupplier->id)->limit(50)->get() as $product)
 								<tr data-id="{{ $product->id }}">
-									<td class="col-md-5"><input name="name" type="text" value="{{ $product->description }}" class="form-control-sm-text dsave newrow" /></td>
-									<td class="col-md-1"><input name="unit" type="text" value="{{ $product->unit }}" class="form-control-sm-text dsave" /></td>
+									<td class="col-md-5"><input name="name" maxlength="255" type="text" value="{{ $product->description }}" class="form-control-sm-text dsave newrow" /></td>
+									<td class="col-md-1"><input name="unit" maxlength="30" type="text" value="{{ $product->unit }}" class="form-control-sm-text dsave" /></td>
 									<td class="col-md-1"><input name="rate" type="text" value="{{ number_format($product->price, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
 									<td class="col-md-1">
 										<select name="ngroup" class="form-control-sm-text pointer dsave">
@@ -1044,8 +1042,8 @@ $(document).ready(function() {
 								@endforeach
 								<?php } ?>
 								<tr>
-									<td class="col-md-5"><input name="name" type="text" class="form-control-sm-text dsave newrow"></td>
-									<td class="col-md-1"><input name="unit" type="text" class="form-control-sm-text dsave"></td>
+									<td class="col-md-5"><input name="name" maxlength="255" type="text" class="form-control-sm-text dsave newrow"></td>
+									<td class="col-md-1"><input name="unit" maxlength="30" type="text" class="form-control-sm-text dsave"></td>
 									<td class="col-md-1"><input name="rate" type="text" class="form-control-sm-number dsave"></td>
 									<td class="col-md-1">
 										<select name="ngroup" class="form-control-sm-text pointer dsave">
@@ -1089,10 +1087,8 @@ $(document).ready(function() {
 								<tr data-id="{{ $product->id }}">
 									<td class="col-md-5">{{ $product->description }}</td>
 									<td class="col-md-1">{{ $product->unit }}</td>
-									<td class="col-md-1">{{ number_format($product->price, 2,",",".") }}</td>
-									<td class="col-md-1">{{ ProductSubCategory::find($product->group_id)->sub_category_name }}</td>
-									<td class="col-md-1"><span class="total-ex-tax"></span></td>
-									<td class="col-md-1"><span class="total-incl-tax"></span></td>
+									<td class="col-md-2">{{ number_format($product->price, 2,",",".") }}</td>
+									<td class="col-md-3">{{ ProductSubCategory::find($product->group_id)->sub_category_name }}</td>
 									<td class="col-md-2 text-right">
 										<button class="btn btn-danger btn-xs fdeleterow fa fa-times"></button>
 									</td>
@@ -1179,8 +1175,8 @@ $(document).ready(function() {
 										@foreach (FavoriteMaterial::where('activity_id', $activity->id)->get() as $material)
 										<?php $material_total += ($material->rate * $material->amount); ?>
 										<tr data-id="{{ $material->id }}">
-											<td class="col-md-6"><input name="name" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text ddsave newrow2" /></td>
-											<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text ddsave" /></td>
+											<td class="col-md-6"><input name="name" maxlength="100" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text ddsave newrow2" /></td>
+											<td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text ddsave" /></td>
 											<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-sm-number ddsave" /></td>
 											<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-sm-number ddsave" /></td>
 											<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->rate * $material->amount, 2,",",".") }}</span></td>
@@ -1191,8 +1187,8 @@ $(document).ready(function() {
 										</tr>
 										@endforeach
 										<tr>
-											<td class="col-md-6"><input name="name" id="name" type="text" class="form-control-sm-text ddsave newrow2" /></td>
-											<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text ddsave" /></td>
+											<td class="col-md-6"><input name="name" maxlength="100" id="name" type="text" class="form-control-sm-text ddsave newrow2" /></td>
+											<td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" class="form-control-sm-text ddsave" /></td>
 											<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number ddsave" /></td>
 											<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number ddsave" /></td>
 											<td class="col-md-1"><span class="total-ex-tax"></span></td>
@@ -1235,8 +1231,8 @@ $(document).ready(function() {
 										@foreach (FavoriteEquipment::where('activity_id','=', $activity->id)->get() as $equipment)
 										<?php $equipment_total += ($equipment->rate * $equipment->amount); ?>
 										<tr data-id="{{ $equipment->id }}">
-											<td class="col-md-6"><input name="name" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text eesave newrow2" /></td>
-											<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $equipment->unit }}" class="form-control-sm-text eesave" /></td>
+											<td class="col-md-6"><input name="name" maxlength="100" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text eesave newrow2" /></td>
+											<td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" value="{{ $equipment->unit }}" class="form-control-sm-text eesave" /></td>
 											<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($equipment->rate, 2,",",".") }}" class="form-control-sm-number eesave" /></td>
 											<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($equipment->amount, 2,",",".") }}" class="form-control-sm-number eesave" /></td>
 											<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->rate * $equipment->amount, 2,",",".") }}</span></td>
@@ -1247,8 +1243,8 @@ $(document).ready(function() {
 										</tr>
 										@endforeach
 										<tr>
-											<td class="col-md-6"><input name="name" id="name" type="text" class="form-control-sm-text eesave newrow2" /></td>
-											<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text eesave" /></td>
+											<td class="col-md-6"><input name="name" maxlength="100" id="name" type="text" class="form-control-sm-text eesave newrow2" /></td>
+											<td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" class="form-control-sm-text eesave" /></td>
 											<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number eesave" /></td>
 											<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number eesave" /></td>
 											<td class="col-md-1"><span class="total-ex-tax"></span></td>

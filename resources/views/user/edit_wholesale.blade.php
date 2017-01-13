@@ -132,7 +132,7 @@ $(document).ready(function() {
 								<div class="col-md-5">
 									<div class="form-group">
 										<label for="company_name">Bedrijfsnaam*</label>
-										<input name="company_name" id="company_name" type="text" value="{{ Input::old('company_name') ? Input::old('company_name') : $wholesale->company_name }}" class="form-control" />
+										<input name="company_name" maxlength="50" id="company_name" type="text" value="{{ Input::old('company_name') ? Input::old('company_name') : $wholesale->company_name }}" class="form-control" />
 									</div>
 								</div>
 
@@ -150,7 +150,7 @@ $(document).ready(function() {
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="website">Website</label>
-										<input name="website" id="website" type="url" value="{{ Input::old('website') ? Input::old('website') : $wholesale->website }}" class="form-control"/>
+										<input name="website" maxlength="180" id="website" type="url" value="{{ Input::old('website') ? Input::old('website') : $wholesale->website }}" class="form-control"/>
 									</div>
 								</div>
 
@@ -164,7 +164,7 @@ $(document).ready(function() {
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="email_comp">Email</label>
-										<input name="email_comp" id="email_comp" type="email" value="{{ Input::old('email_comp') ? Input::old('email_comp') : $wholesale->email }}" class="form-control"/>
+										<input name="email_comp" maxlength="80" id="email_comp" type="email" value="{{ Input::old('email_comp') ? Input::old('email_comp') : $wholesale->email }}" class="form-control"/>
 									</div>
 								</div>
 
@@ -176,14 +176,14 @@ $(document).ready(function() {
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="street">Straat*</label>
-										<input name="street" id="street" type="text" value="{{ Input::old('street') ? Input::old('street') : $wholesale->address_street }}" class="form-control"/>
+										<input name="street" maxlength="50" id="street" type="text" value="{{ Input::old('street') ? Input::old('street') : $wholesale->address_street }}" class="form-control"/>
 									</div>
 								</div>
 
 								<div class="col-md-1">
 									<div class="form-group">
 										<label for="address_number">Huis nr.*</label>
-										<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') ? Input::old('address_number') : $wholesale->address_number }}" class="form-control"/>
+										<input name="address_number" maxlength="5" id="address_number" type="text" value="{{ Input::old('address_number') ? Input::old('address_number') : $wholesale->address_number }}" class="form-control"/>
 									</div>
 								</div>
 
@@ -197,7 +197,7 @@ $(document).ready(function() {
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="city">Plaats*</label>
-										<input name="city" id="city" type="text" value="{{ Input::old('city') ? Input::old('city') : $wholesale->address_city }}" class="form-control"/>
+										<input name="city" maxlength="35" id="city" type="text" value="{{ Input::old('city') ? Input::old('city') : $wholesale->address_city }}" class="form-control"/>
 									</div>
 								</div>
 
@@ -251,14 +251,14 @@ $(document).ready(function() {
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="iban">IBAN rekeningnummer</label>
-										<input name="iban" id="iban" type="text" value="{{ Input::old('iban') ? Input::old('iban') : $wholesale->iban }}" class="form-control"/>
+										<input name="iban" maxlength="25" id="iban" type="text" value="{{ Input::old('iban') ? Input::old('iban') : $wholesale->iban }}" class="form-control"/>
 									</div>
 								</div>
 
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="btw">Naam rekeninghouder</label>
-										<input name="iban_name" id="iban_name" type="text" value="{{ Input::old('iban_name') ? Input::old('iban_name') : $wholesale->iban_name }}" class="form-control"/>
+										<input name="iban_name" maxlength="50" id="iban_name" type="text" value="{{ Input::old('iban_name') ? Input::old('iban_name') : $wholesale->iban_name }}" class="form-control"/>
 									</div>
 								</div>
 
