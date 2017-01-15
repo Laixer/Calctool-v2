@@ -145,7 +145,7 @@ $(document).ready(function() {
 					<div class="col-md-5">
 						<div class="form-group">
 							<label for="company_name">Bedrijfsnaam*</label>
-							<input name="company_name" id="company_name" type="text" value="{{ Input::old('company_name') }}" class="form-control" />
+							<input name="company_name" maxlength="50" id="company_name" type="text" value="{{ Input::old('company_name') }}" class="form-control" />
 						</div>
 					</div>
 
@@ -163,7 +163,7 @@ $(document).ready(function() {
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="website">Website</label>
-							<input name="website" id="website" type="url" value="{{ Input::old('website') }}" class="form-control"/>
+							<input name="website" maxlength="180" id="website" type="url" value="{{ Input::old('website') }}" class="form-control"/>
 						</div>
 					</div>
 
@@ -177,7 +177,7 @@ $(document).ready(function() {
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="email">Email</label>
-							<input name="email" id="email" type="email" value="{{ Input::old('email') }}" class="form-control"/>
+							<input name="email" maxlength="80" id="email" type="email" value="{{ Input::old('email') }}" class="form-control"/>
 						</div>
 					</div>
 
@@ -189,7 +189,7 @@ $(document).ready(function() {
 					<div class="col-md-1">
 						<div class="form-group">
 							<label for="address_number">Huis nr.*</label>
-							<input name="address_number" id="address_number" type="text" value="{{ old('address_number') }}" class="form-control autoappend"/>
+							<input name="address_number" maxlength="5" id="address_number" type="text" value="{{ old('address_number') }}" class="form-control autoappend"/>
 						</div>
 					</div>
 
@@ -203,14 +203,14 @@ $(document).ready(function() {
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="street">Straat*</label>
-							<input name="street" id="street" type="text" value="{{ old('street') }}" class="form-control"/>
+							<input name="street" maxlength="50" id="street" type="text" value="{{ old('street') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="city">Plaats*</label>
-							<input name="city" id="city" type="text" value="{{ 	old('city') }}" class="form-control"/>
+							<input name="city" maxlength="35" id="city" type="text" value="{{ 	old('city') }}" class="form-control"/>
 						</div>
 					</div>
 

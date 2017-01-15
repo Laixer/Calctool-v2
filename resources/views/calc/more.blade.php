@@ -689,7 +689,7 @@ var n = this,
 							<label>Naam</label>
 						</div>
 						<div class="col-md-12">
-							<input value="" name="chapter_name" id="nc_chapter_name" class="form-control" />
+							<input value="" maxlength="100" name="chapter_name" id="nc_chapter_name" class="form-control" />
 							<input value="" name="chapter" id="nc_chapter" type="hidden" class="form-control" />
 						</div>
 					</div>
@@ -720,7 +720,7 @@ var n = this,
 							<label>Naam</label>
 						</div>
 						<div class="col-md-12">
-							<input value="" name="activity_name" id="nc_activity_name" class="form-control" />
+							<input value="" maxlength="100" name="activity_name" id="nc_activity_name" class="form-control" />
 							<input value="" name="activity" id="nc_activity" type="hidden" class="form-control" />
 						</div>
 					</div>
@@ -743,7 +743,7 @@ var n = this,
 
 			<div class="modal-body">
 					<div class="form-group input-group input-group-lg">
-						<input type="text" id="search" value="" class="form-control" placeholder="Zoek producten">
+						<input type="text" maxlength="100" id="search" value="" class="form-control" placeholder="Zoek producten">
 							<span class="input-group-btn">
 					        <select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000">
 						        <option value="0" selected>of selecteer subcategorie</option>
@@ -1069,8 +1069,8 @@ var n = this,
 													<tbody>
 														@foreach (MoreMaterial::where('activity_id','=', $activity->id)->get() as $material)
 														<tr data-id="{{ $material->id }}">
-															<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text dsave newrow" /></td>
-															<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text dsave" /></td>
+															<td class="col-md-5"><input name="name" maxlength="100" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text dsave newrow" /></td>
+															<td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text dsave" /></td>
 															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</span></td>
@@ -1090,8 +1090,8 @@ var n = this,
 														</tr>
 														@endforeach
 														<tr>
-															<td class="col-md-5"><input name="name" id="name" type="text" class="form-control-sm-text dsave newrow" /></td>
-															<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text dsave" /></td>
+															<td class="col-md-5"><input name="name" maxlength="100" id="name" type="text" class="form-control-sm-text dsave newrow" /></td>
+															<td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" class="form-control-sm-text dsave" /></td>
 															<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
@@ -1169,8 +1169,8 @@ var n = this,
 													<tbody>
 														@foreach (MoreEquipment::where('activity_id','=', $activity->id)->get() as $equipment)
 														<tr data-id="{{ $equipment->id }}">
-															<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text esave newrow" /></td>
-															<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $equipment->unit }}" class="form-control-sm-text esave" /></td>
+															<td class="col-md-5"><input name="name" maxlength="100" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text esave newrow" /></td>
+															<td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" value="{{ $equipment->unit }}" class="form-control-sm-text esave" /></td>
 															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($equipment->rate, 2,",",".") }}" class="form-control-sm-number esave" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($equipment->amount, 2,",",".") }}" class="form-control-sm-number esave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->rate*$equipment->amount, 2,",",".") }}</span></td>
@@ -1190,8 +1190,8 @@ var n = this,
 														</tr>
 														@endforeach
 														<tr>
-															<td class="col-md-5"><input name="name" id="name" type="text" class="form-control-sm-text esave newrow" /></td>
-															<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text esave" /></td>
+															<td class="col-md-5"><input name="name" maxlength="100" id="name" type="text" class="form-control-sm-text esave newrow" /></td>
+															<td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" class="form-control-sm-text esave" /></td>
 															<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number esave" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number esave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
@@ -1242,7 +1242,7 @@ var n = this,
 										<div class="col-md-6">
 
 											<div class="input-group">
-												<input type="text" class="form-control" name="activity" id="activity" value="" placeholder="Nieuwe Werkzaamheid">
+												<input type="text" maxlength="100" class="form-control" name="activity" id="activity" value="" placeholder="Nieuwe Werkzaamheid">
 												<input type="hidden" name="project" value="{{ $project->id }}">
 												<span class="input-group-btn">
 													<button class="btn btn-primary btn-primary-activity">Voeg toe</button>
@@ -1281,7 +1281,7 @@ var n = this,
 						<div class="row">
 							<div class="col-md-6">
 								<div class="input-group">
-									<input type="text" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw Onderdeel">
+									<input type="text" maxlength="100" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw Onderdeel">
 									<input type="hidden" name="project" value="{{ $project->id }}">
 									<span class="input-group-btn">
 										<button class="btn btn-primary btn-primary-chapter">Voeg toe</button>

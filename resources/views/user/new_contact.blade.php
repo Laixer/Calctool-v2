@@ -71,7 +71,7 @@ if (!$relation || !$relation->isOwner()) {
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="contact_salutation">Aanhef</label>
-							<input name="contact_salutation" id="contact_salutation" type="text" value="{{ Input::old('contact_salutation') }}" class="form-control"/>
+							<input name="contact_salutation" maxlength="16" id="contact_salutation" type="text" value="{{ Input::old('contact_salutation') }}" class="form-control"/>
 							<input type="hidden" name="id" id="id" value="{{ $relation->id }}"/>
 						</div>
 					</div>
@@ -79,14 +79,14 @@ if (!$relation || !$relation->isOwner()) {
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="contact_name">Achternaam*</label>
-							<input name="contact_name" id="contact_name" type="text" value="{{ Input::old('contact_name') }}" class="form-control"/>
+							<input name="contact_name" maxlength="50" id="contact_name" type="text" value="{{ Input::old('contact_name') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="contact_firstname">Voornaam*</label>
-							<input name="contact_firstname" id="contact_firstname" type="text" value="{{ Input::old('contact_firstname') }}" class="form-control"/>
+							<input name="contact_firstname" maxlength="30" id="contact_firstname" type="text" value="{{ Input::old('contact_firstname') }}" class="form-control"/>
 						</div>
 					</div>
 

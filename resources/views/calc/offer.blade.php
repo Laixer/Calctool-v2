@@ -416,7 +416,7 @@ $type = ProjectType::find($project->type_id);
 										<tbody>
 											<tr>
 												<td>Aanbetalingsbedrag</td>
-												<td><input {{ ($offer_last ? ($offer_last->downpayment ? '' : 'disabled') : 'disabled') }} type="text" value="{{ ($offer_last ? number_format($offer_last->downpayment_amount, 2, ",","") : '0,00') }}" id="amount" name="amount" class="form-control-sm-number" /></td>
+												<td><input maxlength="6" {{ ($offer_last ? ($offer_last->downpayment ? '' : 'disabled') : 'disabled') }} type="text" value="{{ ($offer_last ? number_format($offer_last->downpayment_amount, 2, ",","") : '0,00') }}" id="amount" name="amount" class="form-control-sm-number" /></td>
 											</tr>
 										</tbody>
 										</table>

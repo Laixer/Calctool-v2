@@ -1108,7 +1108,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 							<label>Naam</label>
 						</div>
 						<div class="col-md-12">
-							<input value="" name="chapter_name" id="nc_chapter_name" class="form-control" />
+							<input value="" maxlength="100" name="chapter_name" id="nc_chapter_name" class="form-control" />
 							<input value="" name="chapter" id="nc_chapter" type="hidden" class="form-control" />
 						</div>
 					</div>
@@ -1139,7 +1139,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 							<label>Naam</label>
 						</div>
 						<div class="col-md-12">
-							<input value="" name="activity_name" id="nc_activity_name" class="form-control" />
+							<input value="" maxlength="100" name="activity_name" id="nc_activity_name" class="form-control" />
 							<input value="" name="activity" id="nc_activity" type="hidden" class="form-control" />
 						</div>
 					</div>
@@ -1163,7 +1163,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 			<div class="modal-body">
 				
 				<div class="form-group input-group input-group-lg">
-					<input type="text" id="search" value="" class="form-control" placeholder="Zoek in volledig lijst">
+					<input type="text" maxlength="100" id="search" value="" class="form-control" placeholder="Zoek in volledig lijst">
 					<span class="input-group-btn">
 						<select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000">
 							<option value="0" selected>of sorteer op categorie</option>
@@ -1492,8 +1492,8 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 													<tbody>
 														@foreach (CalculationMaterial::where('activity_id','=', $activity->id)->get() as $material)
 														<tr data-id="{{ $material->id }}">
-															<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text dsave newrow" /></td>
-															<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text dsave" /></td>
+															<td class="col-md-5"><input name="name" maxlength="100" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text dsave newrow" /></td>
+															<td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text dsave" /></td>
 															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</span></td>
@@ -1506,8 +1506,8 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 														</tr>
 														@endforeach
 														<tr>
-															<td class="col-md-5"><input name="name" id="name" type="text" class="form-control-sm-text dsave newrow" /></td>
-															<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text dsave" /></td>
+															<td class="col-md-5"><input name="name" maxlength="100" id="name" type="text" class="form-control-sm-text dsave newrow" /></td>
+															<td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" class="form-control-sm-text dsave" /></td>
 															<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
@@ -1570,8 +1570,8 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 													<tbody>
 														@foreach (CalculationEquipment::where('activity_id','=', $activity->id)->get() as $equipment)
 														<tr data-id="{{ $equipment->id }}">
-															<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text esave newrow" /></td>
-															<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $equipment->unit }}" class="form-control-sm-text esave" /></td>
+															<td class="col-md-5"><input name="name" maxlength="100" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text esave newrow" /></td>
+															<td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" value="{{ $equipment->unit }}" class="form-control-sm-text esave" /></td>
 															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($equipment->rate, 2,",",".") }}" class="form-control-sm-number esave" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($equipment->amount, 2,",",".") }}" class="form-control-sm-number esave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->rate*$equipment->amount, 2,",",".") }}</span></td>
@@ -1584,8 +1584,8 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 														</tr>
 														@endforeach
 														<tr>
-															<td class="col-md-5"><input name="name" id="name" type="text" class="form-control-sm-text esave newrow" /></td>
-															<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text esave" /></td>
+															<td class="col-md-5"><input name="name" maxlength="100" id="name" type="text" class="form-control-sm-text esave newrow" /></td>
+															<td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" class="form-control-sm-text esave" /></td>
 															<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number esave" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number esave" /></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
@@ -1621,7 +1621,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 										<div class="col-md-6">
 
 											<div class="input-group">
-												<input type="text" class="form-control" name="activity" id="activity" value="" placeholder="Nieuwe Werkzaamheid">
+												<input type="text" maxlength="100" class="form-control" name="activity" id="activity" value="" placeholder="Nieuwe Werkzaamheid">
 												<span class="input-group-btn">
 													<button class="btn btn-primary btn-primary-activity">Voeg toe</button>
 													<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -1658,7 +1658,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 						<div class="row">
 							<div class="col-md-6">
 								<div class="input-group" data-step="1" data-intro="Voeg een onderdeel toe. Een soort hoofdstuk waar je werkzaamheden onder vallen.">
-									<input type="text" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw onderdeel">
+									<input type="text" maxlength="100" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw onderdeel">
 									<span class="input-group-btn">
 										<button class="btn btn-primary btn-primary-chapter">Voeg toe</button>
 									</span>
@@ -1756,7 +1756,6 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 														</tr>
 													</thead>
 
-
 													<tbody>
 														<tr data-id="{{ EstimateLabor::where('activity_id','=', $activity->id)->first()['id'] }}">
 															<td class="col-md-5">Arbeidsuren</td>
@@ -1807,8 +1806,8 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 													<tbody>
 														@foreach (EstimateMaterial::where('activity_id','=', $activity->id)->get() as $material)
 														<tr data-id="{{ $material->id }}">
-															<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text dsavee newrow" /></td>
-															<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text dsavee" /></td>
+															<td class="col-md-5"><input name="name" maxlength="100" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text dsavee newrow" /></td>
+															<td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text dsavee" /></td>
 															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-sm-number dsavee" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-sm-number dsavee" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</span></td>
@@ -1821,8 +1820,8 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 														</tr>
 														@endforeach
 														<tr>
-															<td class="col-md-5"><input name="name" id="name" type="text" class="form-control-sm-text dsavee newrow" /></td>
-															<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text dsavee" /></td>
+															<td class="col-md-5"><input name="name" maxlength="100" id="name" type="text" class="form-control-sm-text dsavee newrow" /></td>
+															<td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" class="form-control-sm-text dsavee" /></td>
 															<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number dsavee" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsavee" /></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
@@ -1887,8 +1886,8 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 													<tbody>
 														@foreach (EstimateEquipment::where('activity_id','=', $activity->id)->get() as $equipment)
 														<tr data-id="{{ $equipment->id }}">
-															<td class="col-md-5"><input name="name" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text esavee newrow" /></td>
-															<td class="col-md-1"><input name="unit" id="name" type="text" value="{{ $equipment->unit }}" class="form-control-sm-text esave" /></td>
+															<td class="col-md-5"><input name="name" maxlength="100" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text esavee newrow" /></td>
+															<td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" value="{{ $equipment->unit }}" class="form-control-sm-text esave" /></td>
 															<td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($equipment->rate, 2,",",".") }}" class="form-control-sm-number esavee" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($equipment->amount, 2,",",".") }}" class="form-control-sm-number esavee" /></td>
 															<td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->rate*$equipment->amount, 2,",",".") }}</span></td>
@@ -1901,8 +1900,8 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 														</tr>
 														@endforeach
 														<tr>
-															<td class="col-md-5"><input name="name" id="name" type="text" class="form-control-sm-text esavee newrow" /></td>
-															<td class="col-md-1"><input name="unit" id="name" type="text" class="form-control-sm-text esavee" /></td>
+															<td class="col-md-5"><input name="name" maxlength="100" id="name" type="text" class="form-control-sm-text esavee newrow" /></td>
+															<td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" class="form-control-sm-text esavee" /></td>
 															<td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number esavee" /></td>
 															<td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number esavee" /></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
@@ -1937,7 +1936,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 											<div class="col-md-6">
 
 												<div class="input-group">
-													<input type="text" class="form-control" name="activity" id="activity" value="" placeholder="Nieuwe Werkzaamheid">
+													<input type="text" maxlength="100" class="form-control" name="activity" id="activity" value="" placeholder="Nieuwe Werkzaamheid">
 													<span class="input-group-btn">
 														<button class="btn btn-primary btn-primary-activity">Voeg toe</button>
 														<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -1975,7 +1974,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 							<div class="row">
 								<div class="col-md-6">
 									<div class="input-group">
-										<input type="text" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw onderdeel">
+										<input type="text" maxlength="100" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw onderdeel">
 										<span class="input-group-btn">
 											<button class="btn btn-primary btn-primary-chapter">Voeg toe</button>
 										</span>

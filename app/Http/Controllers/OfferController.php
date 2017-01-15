@@ -42,7 +42,7 @@ class OfferController extends Controller {
 	{
 		$this->validate($request, [
 			'deliver' => array('required','integer','min:0'),
-			'terms' => array('integer','min:0'),
+			'terms' => array('integer','min:0','max:50'),
 			'valid' => array('required','integer','min:0'),
 			'to_contact' => array('required'),
 			'from_contact' => array('required'),

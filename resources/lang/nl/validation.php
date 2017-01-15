@@ -132,12 +132,13 @@ return [
             'regex' => 'Ongeldig uurtarief. Gebruik een komma.',
         ],
         'pref_hourrate_calc' => [
-            'regex' => 'OOngeldig uurtarief. Gebruik een komma.',
+            'regex' => 'Ongeldig uurtarief. Gebruik een komma.',
         ],
         'pref_hourrate_more' => [
             'regex' => 'Ongeldig uurtarief. Gebruik een komma.',
         ],
         'contact_firstname' => [
+            'required' => 'Voornaam is een verplicht veld',
             'max' => 'Voornaam mag niet groter zijn dan 30 karakters',
         ],
         'contact_name' => [
@@ -155,6 +156,9 @@ return [
         'debtor' => [
             'required' => 'Het debiteurennummer is een verplicht veld',
             'max' => 'Het debiteurennummer mag niet groter zijn dan 10 karakters',
+        ],
+        'contact_salutation' => [
+            'max' => 'Aanhef mag niet groter zijn dan 16 karakters',
         ],
         'website' => [
             'url' => 'De URL van de website is ongeldig',

@@ -204,7 +204,7 @@ $(document).ready(function() {
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="debtor">Debiteurennummer*</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit nummer is gegenereerd door de CalculatieTool.com. Je kunt dit vervangen door je eigen boekhoudkundige nummering." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
-							<input name="debtor" id="debtor" type="text" value="{{ Input::old('debtor') ? Input::old('debtor') : $debtor_code }}" class="form-control"/>
+							<input name="debtor" maxlength="10" id="debtor" type="text" value="{{ Input::old('debtor') ? Input::old('debtor') : $debtor_code }}" class="form-control"/>
 						</div>
 					</div>
 
@@ -216,7 +216,7 @@ $(document).ready(function() {
 					<div class="col-md-5">
 						<div class="form-group">
 							<label for="company_name">Bedrijfsnaam*</label>
-							<input name="company_name" id="company_name" type="text" value="{{ Input::old('company_name') }}" class="form-control" />
+							<input name="company_name" maxlength="50" id="company_name" type="text" value="{{ Input::old('company_name') }}" class="form-control" />
 						</div>
 					</div>
 
@@ -234,7 +234,7 @@ $(document).ready(function() {
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="email_comp">Email*</label>
-							<input name="email_comp" id="email_comp" type="email" value="{{ Input::old('email_comp') }}" class="form-control"/>
+							<input name="email_comp" maxlength="80" id="email_comp" type="email" value="{{ Input::old('email_comp') }}" class="form-control"/>
 						</div>
 					</div>
 
@@ -246,7 +246,7 @@ $(document).ready(function() {
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="address_number">Huis nr.*</label>
-							<input name="address_number" id="address_number2" type="text" value="{{ old('address_number') }}" class="form-control autoappend2"/>
+							<input name="address_number" maxlength="5" id="address_number2" type="text" value="{{ old('address_number') }}" class="form-control autoappend2"/>
 						</div>
 					</div>
 
@@ -260,14 +260,14 @@ $(document).ready(function() {
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="street">Straat*</label>
-							<input name="street" id="street2" type="text" value="{{ Input::old('street') }}" class="form-control"/>
+							<input name="street" maxlength="50" id="street2" type="text" value="{{ Input::old('street') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="city">Plaats*</label>
-							<input name="city" id="city2" type="text" value="{{ Input::old('city') }}" class="form-control"/>
+							<input name="city" maxlength="35" id="city2" type="text" value="{{ Input::old('city') }}" class="form-control"/>
 						</div>
 					</div>
 
@@ -300,14 +300,14 @@ $(document).ready(function() {
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="contact_name">Achternaam*</label>
-							<input name="contact_name" id="contact_name" type="text" value="{{ Input::old('contact_name') }}" class="form-control"/>
+							<input name="contact_name" maxlength="50" id="contact_name" type="text" value="{{ Input::old('contact_name') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="email">Email*</label>
-							<input name="email" id="email" type="email" value="{{ Input::old('email') }}" class="form-control"/>
+							<input name="email" maxlength="80" id="email" type="email" value="{{ Input::old('email') }}" class="form-control"/>
 						</div>
 					</div>
 
@@ -445,7 +445,7 @@ $(document).ready(function() {
 						<div class="col-md-1">
 							<div class="form-group">
 								<label for="address_number">Huis nr.*</label>
-								<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') }}" class="form-control autoappend"/>
+								<input name="address_number" maxlength="5" id="address_number" type="text" value="{{ Input::old('address_number') }}" class="form-control autoappend"/>
 							</div>
 						</div>
 
@@ -459,14 +459,14 @@ $(document).ready(function() {
 						<div class="col-md-4">
 							<div class="form-group">
 								<label for="street">Straat*</label>
-								<input name="street" id="street" type="text" value="{{ Input::old('street') }}" class="form-control"/>
+								<input name="street" maxlength="60" id="street" type="text" value="{{ Input::old('street') }}" class="form-control"/>
 							</div>
 						</div>
 
 						<div class="col-md-3">
 							<div class="form-group">
 								<label for="city">Plaats*</label>
-								<input name="city" id="city" type="text" value="{{ Input::old('city') }}" class="form-control"/>
+								<input name="city" maxlength="35" id="city" type="text" value="{{ Input::old('city') }}" class="form-control"/>
 							</div>
 						</div>
 

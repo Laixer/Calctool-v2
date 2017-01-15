@@ -241,7 +241,7 @@ $(document).ready(function() {
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="debtor">Debiteurennummer</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit nummer is gegenereerd door de CalculatieTool.com. Je kunt dit vervangen door je eigen boekhoudkundige nummering." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
-										<input name="debtor" id="debtor" type="text" value="{{ Input::old('debtor') ? Input::old('debtor') : $relation->debtor_code }}" class="form-control"/>
+										<input name="debtor" maxlength="10" id="debtor" type="text" value="{{ Input::old('debtor') ? Input::old('debtor') : $relation->debtor_code }}" class="form-control"/>
 										<input type="hidden" name="id" id="id" value="{{ $relation->id }}"/>
 									</div>
 								</div>
@@ -255,7 +255,7 @@ $(document).ready(function() {
 								<div class="col-md-5">
 									<div class="form-group">
 										<label for="company_name">Bedrijfsnaam*</label>
-										<input name="company_name" id="company_name" type="text" value="{{ Input::old('company_name') ? Input::old('company_name') : $relation->company_name }}" class="form-control" />
+										<input name="company_name" maxlength="50" id="company_name" type="text" value="{{ Input::old('company_name') ? Input::old('company_name') : $relation->company_name }}" class="form-control" />
 									</div>
 								</div>
 
@@ -273,7 +273,7 @@ $(document).ready(function() {
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="website">Website</label>
-										<input name="website" id="website" type="url" value="{{ Input::old('website') ? Input::old('website') : $relation->website }}" class="form-control"/>
+										<input name="website" maxlength="180" id="website" type="url" value="{{ Input::old('website') ? Input::old('website') : $relation->website }}" class="form-control"/>
 									</div>
 								</div>
 
@@ -301,7 +301,7 @@ $(document).ready(function() {
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="email_comp">Email*</label>
-										<input name="email_comp" id="email_comp" type="email" value="{{ Input::old('email_comp') ? Input::old('email_comp') : $relation->email }}" class="form-control"/>
+										<input name="email_comp" maxlength="80" id="email_comp" type="email" value="{{ Input::old('email_comp') ? Input::old('email_comp') : $relation->email }}" class="form-control"/>
 									</div>
 								</div>
 
@@ -314,7 +314,7 @@ $(document).ready(function() {
 								<div class="col-md-1">
 									<div class="form-group">
 										<label for="address_number">Huis nr.*</label>
-										<input name="address_number" id="address_number" type="text" value="{{ Input::old('address_number') ? Input::old('address_number') : $relation->address_number }}" class="form-control autoappend"/>
+										<input name="address_number" maxlength="5" id="address_number" type="text" value="{{ Input::old('address_number') ? Input::old('address_number') : $relation->address_number }}" class="form-control autoappend"/>
 									</div>
 								</div>
 
@@ -328,14 +328,14 @@ $(document).ready(function() {
 								<div class="col-md-4">
 									<div class="form-group">
 										<label for="street">Straat*</label>
-										<input name="street" id="street" type="text" value="{{ Input::old('street') ? Input::old('street') : $relation->address_street }}" class="form-control"/>
+										<input name="street" maxlength="50" id="street" type="text" value="{{ Input::old('street') ? Input::old('street') : $relation->address_street }}" class="form-control"/>
 									</div>
 								</div>
 
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="city">Plaats*</label>
-										<input name="city" id="city" type="text" value="{{ Input::old('city') ? Input::old('city') : $relation->address_city }}" class="form-control"/>
+										<input name="city" maxlength="35" id="city" type="text" value="{{ Input::old('city') ? Input::old('city') : $relation->address_city }}" class="form-control"/>
 									</div>
 								</div>
 
@@ -421,14 +421,14 @@ $(document).ready(function() {
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="iban">IBAN rekeningnummer</label>
-										<input name="iban" id="iban" type="text" value="{{ Input::old('iban') ? Input::old('iban') : $relation->iban }}" class="form-control"/>
+										<input name="iban" maxlength="25" id="iban" type="text" value="{{ Input::old('iban') ? Input::old('iban') : $relation->iban }}" class="form-control"/>
 									</div>
 								</div>
 
 								<div class="col-md-3">
 									<div class="form-group">
 										<label for="btw">Naam rekeninghouder</label>
-										<input name="iban_name" id="iban_name" type="text" value="{{ Input::old('iban_name') ? Input::old('iban_name') : $relation->iban_name }}" class="form-control"/>
+										<input name="iban_name" maxlength="50" id="iban_name" type="text" value="{{ Input::old('iban_name') ? Input::old('iban_name') : $relation->iban_name }}" class="form-control"/>
 									</div>
 								</div>
 

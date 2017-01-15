@@ -26,6 +26,23 @@ return [
              * You can set it to any string you want and you can add
              * as many lists as you want.
              */
+            'noaccount' => [
+
+                /*
+                 * A mail chimp list id. Check the mailchimp docs if you don't know
+                 * how to get this value:
+                 * http://kb.mailchimp.com/lists/managing-subscribers/find-your-list-id
+                 */
+                'id' => env('MAILCHIMP_LIST_NOACCOUNT_ID'),
+            ],
+
+            /*
+             * This key is used to identify this list. It can be used
+             * in the various methods provided by this package.
+             *
+             * You can set it to any string you want and you can add
+             * as many lists as you want.
+             */
             'registration' => [
 
                 /*

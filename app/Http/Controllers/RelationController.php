@@ -244,6 +244,11 @@ class RelationController extends Controller {
 
 	public function doUpdateIban(Request $request)
 	{
+		$this->validate($request, [
+			'iban' => array('alpha_num','max:25'),
+			'iban_name' => array('max:50'),
+		]);
+
 		$relation = \Calctool\Models\Relation::find($request->input('id'));
 		if (!$relation || !$relation->isOwner()) {
 			return back()->withInput($request->all());
@@ -334,6 +339,8 @@ class RelationController extends Controller {
 			'telephone' => array('max:12'),
 			'mobile' => array('max:12'),
 			'website' => array('max:180'),
+			'iban' => array('alpha_num','max:25'),
+			'iban_name' => array('max:50'),
 		);
 
 		$this->validate($request, $rules);

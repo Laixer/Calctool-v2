@@ -180,7 +180,7 @@ use \Calctool\Models\Offer;
 
 					<div class="row">
 						<div class="col-md-12">
-							<span><strong>Alleen bevestigde offertes kunnen uren boeken.</strong></span>
+							<span><strong>Uren mogen alleen geboekt worden op projecten met een opdrachtbevestiging.</strong></span>
 						</div>
 					</div>
 

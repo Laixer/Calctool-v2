@@ -378,6 +378,9 @@ class InvoiceController extends Controller {
 		$amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
 		$total = str_replace(',', '.', str_replace('.', '' , $request->get('totaal')));
 
+		if ($amount > 999000)
+			return response()->json(['success' => 0]);
+
 		$invoice->amount = $amount;
 		$invoice->rest_21 = InvoiceTerm::partTax1($project, $invoice)*$amount;
 		$invoice->rest_6 = InvoiceTerm::partTax2($project, $invoice)*$amount;

@@ -167,11 +167,29 @@ class Kernel extends ConsoleKernel
                     continue;
                 if (!$user->active)
                     continue;
+
+                /* Paying */
                 Newsletter::subscribe($user->email, [
                     'FNAME' => $user->firstname,
                     'LNAME' => $user->lastname
                 ], 'paying');
+
+                /* Registration */
                 Newsletter::unsubscribe($user->email);
+            }
+        })->daily();
+
+        $schedule->call(function() {
+            foreach (User::where('active',true)->whereRaw("\"confirmed_mail\" > NOW() - '1 week'::INTERVAL")->get() as $user) {
+
+                /* Paying */
+                Newsletter::subscribe($user->email, [
+                    'FNAME' => $user->firstname,
+                    'LNAME' => $user->lastname
+                ]);
+
+                /* Registration */
+                Newsletter::unsubscribe($user->email, 'noaccount');
             }
         })->daily();
 
