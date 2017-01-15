@@ -286,7 +286,7 @@ class AuthController extends Controller {
 		$user->reset_token = null;
 		$user->save();
 
-		Audit::CreateEvent('auth.update.password.success', 'Updated with: ' . \Calctool::remoteAgent(), $user->id);
+		Audit::CreateEvent('auth.update.password.success', 'Updated with: ' . Audit::UserAgent(), $user->id);
 
 		Auth::login($user);
 		return redirect('/');
@@ -318,7 +318,7 @@ class AuthController extends Controller {
 			'LNAME' => $user->lastname
 		]);
 
-		Audit::CreateEvent('auth.activate.success', 'Activated with: ' . \Calctool::remoteAgent(), $user->id);
+		Audit::CreateEvent('auth.activate.success', 'Activated with: ' . Audit::UserAgent(), $user->id);
 
 		Auth::login($user);
 
@@ -356,7 +356,7 @@ class AuthController extends Controller {
 
 		$user->save();
 
-		Audit::CreateEvent('auth.reset.password.mail.success', 'Reset with: ' . \Calctool::remoteAgent(), $user->id);
+		Audit::CreateEvent('auth.reset.password.mail.success', 'Reset with: ' . Audit::UserAgent(), $user->id);
 
 		return redirect('login')->with('success', 'Reset instructies zijn verzonden');
 	}

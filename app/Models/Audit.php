@@ -5,6 +5,7 @@ namespace Calctool\Models;
 use Illuminate\Database\Eloquent\Model;
 
 use \Auth;
+use Jenssegers\Agent\Agent;
 
 class Audit extends Model {
 
@@ -13,6 +14,12 @@ class Audit extends Model {
 
 	public function user() {
 		return $this->hasOne('User');
+	}
+
+	public static function UserAgent()
+	{
+		$agent = new Agent();
+		return $agent->platform() . ' ' . $agent->device() . ' ' . $agent->browser() . '/' . $agent->version($agent->browser());
 	}
 
 	public static function CreateEvent($module, $event, $user = null)

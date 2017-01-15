@@ -8,6 +8,7 @@ use \Calctool\Models\Country;
 use \Calctool\Models\Contact;
 use \Calctool\Models\ContactFunction;
 use \Calctool\Models\SysMessage;
+use \Jenssegers\Agent\Agent;
 ?>
 
 @extends('layout.master')
@@ -19,6 +20,7 @@ use \Calctool\Models\SysMessage;
 @endpush
 
 <?php
+$agent = new Agent();
 if (!session()->has('swap_session')) {
 	Auth::user()->online_at = \DB::raw('NOW()');
 	Auth::user()->save();
@@ -88,6 +90,13 @@ if (!session()->has('swap_session')) {
 				<strong>{{ SysMessage::where('active',true)->orderBy('created_at', 'desc')->first()->content }}</strong>
 			</div>
 			@endif
+			@endif
+
+			@if ($agent->isMobile())
+			<div class="alert alert-warning">
+				<i class="fa fa-warning"></i>
+				<strong>De applicatie werkt het beste op desktop of tablet</strong>
+			</div>
 			@endif
 
 			<h2 style="margin: 10px 0 20px 0;"><strong>
