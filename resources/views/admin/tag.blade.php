@@ -25,14 +25,16 @@
 					<tr>
 						<th class="col-md-1 hidden-sm hidden-xs">ID</th>
 						<th class="col-md-3">Naam</th>
+						<th class="col-md-3">Gebruikers</th>
 					</tr>
 				</thead>
 
 				<tbody>
 					@foreach ($selection = \Calctool\Models\UserTag::orderBy('id')->get() as $tag)
 					<tr>
-						<td class="col-md-1 hidden-sm hidden-xs"><a href="{{ '/admin/group-'.$tag->id.'/edit' }}">{{ $tag->id }}</a></td>
-						<td class="col-md-3">{{ ucfirst($tag->name) }}</td>
+						<td class="col-md-1 hidden-sm hidden-xs">{{ $tag->id }}</td>
+						<td class="col-md-3">{{ $tag->name }}</td>
+						<td class="col-md-2">{{ \Calctool\Models\User::where('user_tag_id', $tag->id)->count() }}</td>
 					</tr>
 					@endforeach
 				</tbody>

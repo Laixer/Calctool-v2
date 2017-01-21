@@ -470,8 +470,6 @@ class AdminController extends Controller {
 
 	public function doNewTag(Request $request)
 	{
-		$request->merge(array('name' => strtolower(trim($request->input('name')))));
-
 		$this->validate($request, [
 			'name' => array('required'),
 		]);
