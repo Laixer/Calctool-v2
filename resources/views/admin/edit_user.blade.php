@@ -185,7 +185,7 @@ $(document).ready(function() {
 
 										<div class="col-md-3">
 											<div class="form-group">
-												<label for="user_type">Gebruikers type</label>
+												<label for="user_type">Gebruikerstype</label>
 												<select name="type" id="type" class="form-control pointer">
 													<?php
 													foreach (\Calctool\Models\UserType::all() as $type) {
@@ -335,13 +335,12 @@ $(document).ready(function() {
 											</div>
 										</div>
 
-										<div class="col-md-3">
+										<!-- <div class="col-md-3">
 											<div class="form-group">
 												<label for="iban">Blokkeringsdatum</label>
 												<input name="bandate" id="bandate" type="date" value="{{ ($user->banned ? date('Y-m-d', strtotime($user->banned)) : '') }}" class="form-control"/>
 											</div>
-										</div>
-
+										</div> -->
 										<div class="col-md-3">
 											<div class="form-group">
 												<label for="gender" style="display:block;">Gebruikersgroep</label>
@@ -352,6 +351,21 @@ $(document).ready(function() {
 												</select>
 											</div>
 										</div>
+
+										<div class="col-md-3">
+											<div class="form-group">
+												<label for="tag">Gebruikerstag</label>
+												<select name="tag" id="tag" class="form-control pointer">
+													<option value="-1">Geen</option>
+													<?php
+													foreach (\Calctool\Models\UserTag::all() as $tag) {
+													?>
+													<option {{ $user->user_tag_id==$tag->id ? 'selected' : '' }} value="{{ $tag->id }}">{{ $tag->name }}</option>
+													<?php } ?>
+												</select>
+											</div>
+										</div>
+
 									</div>
 									<div class="row">
 

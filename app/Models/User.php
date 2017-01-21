@@ -36,6 +36,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 		return $this->belongsToMany('\Calctool\Models\Product', 'product_favorite', 'user_id', 'product_id');
 	}
 
+	public function tag() {
+		return $this->hasOne('\Calctool\Models\UserTag', 'id', 'user_tag_id');
+	}
+
 	public function isSuperUser() {
 		return in_array(UserType::find($this->user_type)->user_type, array('superuser', 'admin', 'system'));
 	}
