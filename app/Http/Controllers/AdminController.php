@@ -10,6 +10,7 @@ use \Calctool\Models\SysMessage;
 use \Calctool\Models\Payment;
 use \Calctool\Models\User;
 use \Calctool\Models\UserType;
+use \Calctool\Models\UserTag;
 use \Calctool\Models\UserGroup;
 use \Calctool\Models\OfferPost;
 use \Calctool\Models\Offer;
@@ -292,6 +293,12 @@ class AdminController extends Controller {
 			$user->user_type = $request->input('type');
 		if ($request->input('group'))
 			$user->user_group = $request->input('group');
+		if ($request->input('tag')) {
+			if ( $request->input('tag') == '-1' )
+				$user->user_tag_id = NULL;
+			else
+				$user->user_tag_id = $request->input('tag');
+		}
 
 		/* Contact */
 		if ($request->input('firstname'))
@@ -459,6 +466,21 @@ class AdminController extends Controller {
 		$group->save();
 
 		return back()->with('success', 'Groep aangemaakt');
+	}
+
+	public function doNewTag(Request $request)
+	{
+		$this->validate($request, [
+			'name' => array('required'),
+		]);
+
+		/* General */
+		$tag = new UserTag;
+		$tag->name = $request->input('name');
+
+		$tag->save();
+
+		return back()->with('success', 'Tag aangemaakt');
 	}
 
 	public function doUpdateGroup(Request $request, $group_id)

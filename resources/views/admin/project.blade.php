@@ -48,7 +48,7 @@ use \Calctool\Models\Contact;
 						<td class="col-md-1">{{ $project->id }}</td>
 						<td class="col-md-3">{{ $project->project_name }}</td>
 						<td class="col-md-2">{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</td>
-						<td class="col-md-2">{{ ucfirst(User::find($project->user_id)->username) }}</td>
+						<td class="col-md-2"><a href="/admin/user-{{ $project->user_id }}/edit">{{ ucfirst(User::find($project->user_id)->username) }}</a></td>
 						<td class="col-md-1">{{ $project->project_close ? 'Gesloten' : 'Open' }}</td>
 						<td class="col-md-2">{{ date('d-m-Y H:i:s', strtotime(DB::table('project')->select('created_at')->where('id','=',$project->id)->get()[0]->created_at)) }}</td>
 					</tr>

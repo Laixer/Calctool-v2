@@ -40,7 +40,7 @@ class LogAuthenticated
             $event->user->login_count++;
             $event->user->online_at = \DB::raw('NOW()');
             $event->user->save();
-            Audit::CreateEvent('auth.login.succces', 'Login with: ' . \Calctool::remoteAgent(), $event->user->id);
+            Audit::CreateEvent('auth.login.succces', 'Login with: ' . Audit::UserAgent(), $event->user->id);
         }
     }
 }

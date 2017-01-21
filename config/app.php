@@ -208,6 +208,7 @@ return [
         LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class,
         LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
         Spatie\Newsletter\NewsletterServiceProvider::class,
+        Jenssegers\Agent\AgentServiceProvider::class,
 
     ],
 
@@ -266,6 +267,7 @@ return [
         'Markdown'  => GrahamCampbell\Markdown\Facades\Markdown::class,
         'Authorizer'=> LucaDegasperi\OAuth2Server\Facades\Authorizer::class,
         'Newsletter'=> Spatie\Newsletter\NewsletterFacade::class,
+        'Agent'     => Jenssegers\Agent\Facades\Agent::class,
 
     ],
 

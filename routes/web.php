@@ -401,6 +401,15 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 		return view('admin.new_group');
 	});
 	Route::post('group/new', 'AdminController@doNewGroup');
+
+	Route::get('user/tags', function() {
+		return view('admin.tag');
+	});
+	Route::get('user/tags/new', function() {
+		return view('admin.new_tag');
+	});
+	Route::post('user/tags/new', 'AdminController@doNewTag');
+
 	Route::get('alert', function() {
 		return view('admin.alert');
 	});

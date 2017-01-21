@@ -54,6 +54,7 @@ $(document).ready(function() {
 					<a class="btn btn-primary" href="?all=1">Alle gebruikers</a>
 				@endif
 				<a href="/admin/user/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuwe gebruiker</a>
+				<a href="/admin/user/tags" class="btn btn-primary"><i class="fa fa-tag"></i> Tags</a>
 			</div>
 
 			<?php
@@ -84,12 +85,12 @@ $(document).ready(function() {
 				<thead>
 					<tr>
 						<th class="col-md-1 hidden-xs">ID</th>
-						<th class="col-md-2">Gebruikersnaam</th>
+						<th class="col-md-4">Gebruikersnaam</th>
 						<th class="col-md-2">Actief</th>
-						<th class="col-md-3 hidden-xs">Email</th>
 						<th class="col-md-1 hidden-sm hidden-xs">Status</th>
 						<th class="col-md-1 hidden-sm hidden-xs">Type</th>
 						<th class="col-md-2 hidden-sm hidden-xs">Groep</th>
+						<th class="col-md-1 hidden-xs">Tag</th>
 					</tr>
 				</thead>
 
@@ -97,14 +98,13 @@ $(document).ready(function() {
 				@foreach ($selection_today as $users)
 					<tr>
 						<td class="col-md-1 hidden-xs"><a href="{{ '/admin/user-'.$users->id.'/edit' }}">{{ $users->id }}</a></td>
-						<td class="col-md-2"><a href="{{ '/admin/user-'.$users->id.'/edit' }}"><?php
+						<td class="col-md-4"><a href="{{ '/admin/user-'.$users->id.'/edit' }}"><?php
 							echo $users->username;
 							if ($users->firstname != $users->username) {
 								echo ' (' . $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '') . ')';
 							}
 						?></a></td>
 						<td class="col-md-2">{{ $users->currentStatus() }}</td>
-						<td class="col-md-3 hidden-xs">{{ $users->email }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">
 						{{ userStatus($users) }}
 						@if (!$users->hasPayed())
@@ -113,6 +113,7 @@ $(document).ready(function() {
 						</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserGroup::find($users->user_group)->name) }}</td>
+						<td class="col-md-1 hidden-xs">{{ $users->tag ? $users->tag->name : '-' }}</td>
 					</tr>
 				@endforeach
 				</tbody>
@@ -122,12 +123,12 @@ $(document).ready(function() {
 				<thead>
 					<tr>
 						<th class="col-md-1 hidden-xs">ID</th>
-						<th class="col-md-2">Gebruikersnaam</th>
+						<th class="col-md-4">Gebruikersnaam</th>
 						<th class="col-md-2">Actief</th>
-						<th class="col-md-3 hidden-xs">Email</th>
 						<th class="col-md-1 hidden-sm hidden-xs">Status</th>
 						<th class="col-md-1 hidden-sm hidden-xs">Type</th>
 						<th class="col-md-2 hidden-sm hidden-xs">Groep</th>
+						<th class="col-md-1 hidden-xs">Tag</th>
 					</tr>
 				</thead>
 
@@ -135,14 +136,13 @@ $(document).ready(function() {
 				@foreach ($selection_week as $users)
 					<tr>
 						<td class="col-md-1 hidden-xs"><a href="{{ '/admin/user-'.$users->id.'/edit' }}">{{ $users->id }}</a></td>
-						<td class="col-md-2"><a href="{{ '/admin/user-'.$users->id.'/edit' }}"><?php
+						<td class="col-md-4"><a href="{{ '/admin/user-'.$users->id.'/edit' }}"><?php
 							echo $users->username;
 							if ($users->firstname != $users->username) {
 								echo ' (' . $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '') . ')';
 							}
 						?></a></td>
 						<td class="col-md-2">{{ $users->currentStatus() }}</td>
-						<td class="col-md-3 hidden-xs">{{ $users->email }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">
 						{{ userStatus($users) }}
 						@if (!$users->hasPayed())
@@ -151,6 +151,7 @@ $(document).ready(function() {
 						</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserGroup::find($users->user_group)->name) }}</td>
+						<td class="col-md-1 hidden-xs">{{ $users->tag ? $users->tag->name : '-' }}</td>
 					</tr>
 				@endforeach
 				</tbody>
@@ -160,12 +161,12 @@ $(document).ready(function() {
 				<thead>
 					<tr>
 						<th class="col-md-1 hidden-xs">ID</th>
-						<th class="col-md-2">Gebruikersnaam</th>
+						<th class="col-md-4">Gebruikersnaam</th>
 						<th class="col-md-2">Actief</th>
-						<th class="col-md-3 hidden-xs">Email</th>
 						<th class="col-md-1 hidden-sm hidden-xs">Status</th>
 						<th class="col-md-1 hidden-sm hidden-xs">Type</th>
 						<th class="col-md-2 hidden-sm hidden-xs">Groep</th>
+						<th class="col-md-1 hidden-xs">Tag</th>
 					</tr>
 				</thead>
 
@@ -173,14 +174,13 @@ $(document).ready(function() {
 				@foreach ($selection_other as $users)
 					<tr>
 						<td class="col-md-1 hidden-xs"><a href="{{ '/admin/user-'.$users->id.'/edit' }}">{{ $users->id }}</a></td>
-						<td class="col-md-2"><a href="{{ '/admin/user-'.$users->id.'/edit' }}"><?php
+						<td class="col-md-4"><a href="{{ '/admin/user-'.$users->id.'/edit' }}"><?php
 							echo $users->username;
 							if ($users->firstname != $users->username) {
 								echo ' (' . $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '') . ')';
 							}
 						?></a></td>
 						<td class="col-md-2">{{ $users->currentStatus() }}</td>
-						<td class="col-md-3 hidden-xs">{{ $users->email }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">
 						{{ userStatus($users) }}
 						@if (!$users->hasPayed())
@@ -189,6 +189,7 @@ $(document).ready(function() {
 						</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserGroup::find($users->user_group)->name) }}</td>
+						<td class="col-md-1 hidden-xs">{{ $users->tag ? $users->tag->name : '-' }}</td>
 					</tr>
 				@endforeach
 				</tbody>
