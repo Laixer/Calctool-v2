@@ -367,7 +367,7 @@ class AdminController extends Controller {
 		$this->validate($request, [
 			'date' => array('required'),
 			'note' => array('required'),
-			'label' => array('required'),
+			'label' => array('required', 'max:100'),
 		]);
 
 		$log = new AdminLog;
