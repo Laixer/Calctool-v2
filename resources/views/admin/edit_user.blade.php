@@ -463,7 +463,7 @@ $(document).ready(function() {
 
 											<tr>
 												<td class="col-md-2"><input type="text" name="date" id="date" class="form-control-sm-text datepick"/></td>
-												<td class="col-md-7"><input type="text" name="note" id="note" class="form-control-sm-text" placeholder="Gebruiker geholpen met project invullen..." /></td>
+												<td class="col-md-7"><input type="text" name="note" id="note" class="form-control-sm-text" placeholder="Gebruiker geholpen met project invullen..." maxlength="100" /></td>
 												<td class="col-md-2">
 													<select name="label" id="label" class="getact form-control-sm-text">
 														@foreach (\Calctool\Models\AdminLogLabel::all() as $label)
