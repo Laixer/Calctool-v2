@@ -43,11 +43,11 @@ try {
 				</div>
 				<div class="row">
 					<div class="col-md-2">Ordertoken</div>
-					<div class="col-md-6">{{ $payment->metadata->token }}</div>
+					<div class="col-md-6">{{ $payment->metadata ? $payment->metadata->token : '-' }}</div>
 				</div>
 				<div class="row">
 					<div class="col-md-2">Authorisatie object</div>
-					<div class="col-md-6">{{ $payment->metadata->uid }}</div>
+					<div class="col-md-6">{{ $payment->metadata ? $payment->metadata->uid : '-' }}</div>
 				</div>
 				<div class="row">
 					<div class="col-md-2">Mode</div>
@@ -98,7 +98,7 @@ try {
 				<br />
 				<div class="row">
 					<div class="col-md-2"><strong>Increment</strong></div>
-					<div class="col-md-6"><strong>{{ $payment->metadata->incr }}M</strong></div>
+					<div class="col-md-6"><strong>{{ $payment->metadata ? $payment->metadata->incr : '-' }}M</strong></div>
 				</div>
 				<div class="row">
 					<div class="col-md-2">Omschrijving</div>
