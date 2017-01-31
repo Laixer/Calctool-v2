@@ -211,8 +211,6 @@ class AdminController extends Controller {
 		$user->user_group = $request->input('group');		
 
 		/* Server */
-		$user->api = md5(mt_rand());
-		$user->token = sha1($user->secret);
 		$user->referral_key = md5(mt_rand());
 		$user->ip = \Calctool::remoteAddr();
 
