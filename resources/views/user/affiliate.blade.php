@@ -48,13 +48,7 @@ use \Calctool\Models\User;
 				?>
 					@foreach ($selection as $payment)
 					<tr>
-						<td class="col-md-2">
-						@if(substr($payment->transaction, 0, 3) == 'tr_')
-						<a href="/admin/transaction/{{ $payment->transaction }}">{{ $payment->transaction }}</a>
-						@else
-						{{ $payment->transaction }}
-						@endif
-						</td>
+						<td class="col-md-2">{{ $payment->transaction }}</td>
 						<td class="col-md-2">{{ ucfirst(User::find($payment->user_id)->username) }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format($payment->amount, 2,",",".") }}</td>
 						<td class="col-md-1">{{ $payment->getStatusName() }}</td>
