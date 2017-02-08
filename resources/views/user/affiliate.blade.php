@@ -1,21 +1,11 @@
 <?php
 use \Calctool\Models\Payment;
 use \Calctool\Models\User;
-
-$user_id = null;
-$group_id = null;
-if (Input::get('user_id')) {
-	$user_id = Input::get('user_id');
-}
-if (Input::get('group_id')) {
-	$group_id = Input::get('group_id');
-}
-
 ?>
 
 @extends('layout.master')
 
-@section('title', 'Transacties')
+@section('title', 'Gebruiker transacties')
 
 @section('content')
 <div id="wrapper">
@@ -27,8 +17,7 @@ if (Input::get('group_id')) {
 			<div>
 			<ol class="breadcrumb">
 			  <li><a href="/">Home</a></li>
-			  <li><a href="/admin">Admin CP</a></li>
-			  <li class="active">Transacties & Betalingen</li>
+			  <li class="active">Transacties</li>
 			</ol>
 			<div>
 			<br />
@@ -52,23 +41,14 @@ if (Input::get('group_id')) {
 				<tbody>
 				<?php
 				$selection = null;
-				if ($user_id) {
-					$selection = Payment::orderBy('created_at', 'desc')->where('user_id', $user_id)->get();
-				} else if ($group_id) {
-					$users = User::select('id')->where('user_group', $group_id)->get();
-					$selection = Payment::orderBy('created_at', 'desc')->whereIn('user_id', $users->toArray())->get();
-				} else {
-					$selection  = Payment::orderBy('created_at', 'desc')->get();
-				} ?>
+				$group_id = Auth::user()->user_group;
+			
+				$users = User::select('id')->where('user_group', $group_id)->get();
+				$selection = Payment::orderBy('created_at', 'desc')->whereIn('user_id', $users->toArray())->get();
+				?>
 					@foreach ($selection as $payment)
 					<tr>
-						<td class="col-md-2">
-						@if(substr($payment->transaction, 0, 3) == 'tr_')
-						<a href="/admin/transaction/{{ $payment->transaction }}">{{ $payment->transaction }}</a>
-						@else
-						{{ $payment->transaction }}
-						@endif
-						</td>
+						<td class="col-md-2">{{ $payment->transaction }}</td>
 						<td class="col-md-2">{{ ucfirst(User::find($payment->user_id)->username) }}</td>
 						<td class="col-md-1">{{ '&euro; '.number_format($payment->amount, 2,",",".") }}</td>
 						<td class="col-md-1">{{ $payment->getStatusName() }}</td>

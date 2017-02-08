@@ -27,8 +27,6 @@ class SystemSeeder extends Seeder {
 		$system_user->username = 'admin';
 		$system_user->secret = Hash::make('ABC@123');
 		$system_user->firstname = 'SYSTEM';
-		$system_user->api = md5(mt_rand());
-		$system_user->token = sha1(Hash::make('ABC@123'));
 		$system_user->ip = '::1';
 		$system_user->active = 'Y';
 		$system_user->confirmed_mail = date('Y-m-d');
@@ -44,8 +42,6 @@ class SystemSeeder extends Seeder {
 		$guest_user->username = 'guest';
 		$guest_user->secret = Hash::make('ABC@123');
 		$guest_user->firstname = 'Guest';
-		$guest_user->api = md5(mt_rand());
-		$guest_user->token = sha1(Hash::make('ABC@123'));
 		$guest_user->ip = '::1';
 		$guest_user->active = 'N';
 		$guest_user->confirmed_mail = date('Y-m-d');

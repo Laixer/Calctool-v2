@@ -126,6 +126,9 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('finance/overview', function() {
 		return view('finance.overview');
 	});
+	Route::get('affiliate/5bdc2bbd-4021-4e12-9012-647385c28c03', function(){
+		return view('user.affiliate');
+	});
 
 	Route::get('payment', 'UserController@getPayment');
 	Route::get('payment/order/{token}', 'UserController@getPaymentFinish')->where('token', '[0-9a-z]{40}');
