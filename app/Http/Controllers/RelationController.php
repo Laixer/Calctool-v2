@@ -585,6 +585,9 @@ class RelationController extends Controller {
 			$newname = Auth::id().'-'.md5(mt_rand()).'.'.$file->getClientOriginalExtension();
 			$file->move('user-content', $newname);
 
+			if (strlen($file->getClientOriginalName()) >= 50)
+				return back()->withErrors(['msg' => 'Bestandsnaam te lang']);
+
 			$resource = new Resource;
 			$resource->resource_name = $file->getClientOriginalName();
 			$resource->file_location = 'user-content/' . $newname;
