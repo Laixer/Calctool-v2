@@ -101,7 +101,7 @@
 												</tr>
 												<tr>
 													<td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-														{{ $pref_email_offer }}
+														{!! nl2br($pref_email_offer) !!}
 													</td>
 												</tr>
 												<tr><!-- spacer after the line -->
