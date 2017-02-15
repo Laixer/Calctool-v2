@@ -15,8 +15,6 @@ use \Jenssegers\Agent\Agent;
 
 @section('title', 'Dashboard')
 
-@section('manifest','manifest="/main.appcache"')
-
 @push('scripts')
 <script src="/components/angular/angular.min.js"></script>
 @endpush

@@ -8,9 +8,11 @@ CACHE MANIFEST
 /images/favicon-96x96.png
 /images/android-chrome-192x192.png
 
-/components/bootstrap/dist/css/bootstrap.min.css
-/components/font-awesome/css/font-awesome.css
 /components/bootstrap/dist/js/bootstrap.min.js
+/components/bootstrap/dist/css/bootstrap.min.css
+/components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2
+/components/font-awesome/css/font-awesome.css
+/components/font-awesome/fonts/fontawesome-webfont.woff2?v=4.7.0
 /components/angular/angular.min.js
 /components/jquery/dist/jquery.min.js
 
@@ -22,9 +24,9 @@ CACHE MANIFEST
 /css/custom.css
 
 /plugins/masonry.js
+/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css
+/plugins/bootstrap-switch/js/bootstrap-switch.min.js
+/plugins/summernote/summernote.min.js
 /js/scripts.js
 
-NETWORK:
-/api/v1/projects
-/api/v1/update
-/api/v1/relations
+https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800

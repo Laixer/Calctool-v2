@@ -10,6 +10,8 @@ if (Auth::check()) {
 
 @section('title', 'Support')
 
+@section('manifest','manifest="/main.appcache"')
+
 @push('scripts')
 <script src="/plugins/summernote/summernote.min.js"></script>
 @endpush

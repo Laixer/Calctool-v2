@@ -2,8 +2,6 @@
 
 @section('title', 'Admin Dashboard')
 
-@section('manifest','manifest="/main.appcache"')
-
 @section('content')
 		<div id="wrapper">
 
