@@ -7,14 +7,24 @@ CACHE MANIFEST
 /images/favicon-32x32.png
 /images/favicon-96x96.png
 /images/android-chrome-192x192.png
+/images/apple-touch-icon-57x57.png
+/images/apple-touch-icon-60x60.png
+/images/apple-touch-icon-72x72.png
+/images/apple-touch-icon-76x76.png
+/images/apple-touch-icon-114x114.png
+/images/apple-touch-icon-120x120.png
+/images/apple-touch-icon-144x144.png
+/images/apple-touch-icon-152x152.png
+/images/apple-touch-icon-180x180.png
+/images/mstile-144x144.png
 
 /components/bootstrap/dist/js/bootstrap.min.js
 /components/bootstrap/dist/css/bootstrap.min.css
 /components/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2
 /components/font-awesome/css/font-awesome.css
 /components/font-awesome/fonts/fontawesome-webfont.woff2?v=4.7.0
-/components/angular/angular.min.js
 /components/jquery/dist/jquery.min.js
+/components/angular/angular.min.js
 
 /css/shop.css
 /css/essentials.css
@@ -22,11 +32,19 @@ CACHE MANIFEST
 /css/layout-responsive.css
 /css/darkgreen.css
 /css/custom.css
+/css/opensans.css
 
 /plugins/masonry.js
 /plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css
 /plugins/bootstrap-switch/js/bootstrap-switch.min.js
-/plugins/summernote/summernote.min.js
-/js/scripts.js
 
-https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800
+/js/scripts.js
+/manifest.json
+
+https://fonts.gstatic.com/s/opensans/v13/cJZKeOuBrn4kERxqtaUH3VtXRa8TVwTICgirnJhmVJw.woff2
+https://fonts.gstatic.com/s/opensans/v13/DXI1ORHCpsQm3Vp6mXoaTegdm0LZdjqr5-oayXSOefg.woff2
+https://fonts.gstatic.com/s/opensans/v13/k3k702ZOKiLJc3WVjuplzOgdm0LZdjqr5-oayXSOefg.woff2
+
+NETWORK:
+/api/v1/projects
+/api/v1/update

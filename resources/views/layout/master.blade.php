@@ -29,7 +29,7 @@
 		<meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
 
 		<?php // -- CORE CSS -- ?>
-		<link media="all" type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800">
+		<link media="all" type="text/css" rel="stylesheet" href="/css/opensans.css">
 		<link media="all" type="text/css" rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.min.css">
 		<link media="all" type="text/css" rel="stylesheet" href="/components/font-awesome/css/font-awesome.css">
 		@stack('style')
