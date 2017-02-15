@@ -724,27 +724,30 @@ class UserController extends Controller {
 			$user->pref_profit_more_subcontr_equip = str_replace(',', '.', str_replace('.', '' , $request->get('pref_profit_more_subcontr_equip')));
 
 		if ($request->get('pref_email_offer'))
-			$user->pref_email_offer = $request->get('pref_email_offer');
+			$user->pref_email_offer = htmlspecialchars($request->get('pref_email_offer'));
 		if ($request->get('pref_offer_description'))
-			$user->pref_offer_description = $request->get('pref_offer_description');
+			$user->pref_offer_description = htmlspecialchars($request->get('pref_offer_description'));
 		if ($request->get('pref_extracondition_offer'))
-			$user->pref_extracondition_offer = $request->get('pref_extracondition_offer');
+			$user->pref_extracondition_offer = htmlspecialchars($request->get('pref_extracondition_offer'));
 		if ($request->get('pref_closure_offer'))
-			$user->pref_closure_offer = $request->get('pref_closure_offer');
+			$user->pref_closure_offer = htmlspecialchars($request->get('pref_closure_offer'));
+		
 		if ($request->get('pref_email_invoice'))
-			$user->pref_email_invoice = $request->get('pref_email_invoice');
+			$user->pref_email_invoice = htmlspecialchars($request->get('pref_email_invoice'));
 		if ($request->get('pref_invoice_description'))
-			$user->pref_invoice_description = $request->get('pref_invoice_description');
+			$user->pref_invoice_description = htmlspecialchars($request->get('pref_invoice_description'));
 		if ($request->get('pref_invoice_closure'))
-			$user->pref_invoice_closure = $request->get('pref_invoice_closure');
+			$user->pref_invoice_closure = htmlspecialchars($request->get('pref_invoice_closure'));
+		
 		if ($request->get('pref_email_invoice_first_reminder'))
-			$user->pref_email_invoice_first_reminder = $request->get('pref_email_invoice_first_reminder');
+			$user->pref_email_invoice_first_reminder = htmlspecialchars($request->get('pref_email_invoice_first_reminder'));
 		if ($request->get('pref_email_invoice_last_reminder'))
-			$user->pref_email_invoice_last_reminder = $request->get('pref_email_invoice_last_reminder');
+			$user->pref_email_invoice_last_reminder = htmlspecialchars($request->get('pref_email_invoice_last_reminder'));
 		if ($request->get('pref_email_invoice_first_demand'))
-			$user->pref_email_invoice_first_demand = $request->get('pref_email_invoice_first_demand');
+			$user->pref_email_invoice_first_demand = htmlspecialchars($request->get('pref_email_invoice_first_demand'));
 		if ($request->get('pref_email_invoice_last_demand'))
-			$user->pref_email_invoice_last_demand = $request->get('pref_email_invoice_last_demand');
+			$user->pref_email_invoice_last_demand = htmlspecialchars($request->get('pref_email_invoice_last_demand'));
+		
 		if ($request->get('offernumber_prefix') != "")
 			$user->offernumber_prefix = $request->get('offernumber_prefix');
 		if ($request->get('invoicenumber_prefix') != "")

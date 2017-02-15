@@ -2,12 +2,6 @@
 
 @section('title', 'Admin Dashboard')
 
-@push('style')
-@endpush
-
-@push('scripts')
-@endpush
-
 @section('content')
 		<div id="wrapper">
 

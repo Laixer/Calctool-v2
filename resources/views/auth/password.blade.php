@@ -2,8 +2,9 @@
 
 @section('title', 'Nieuw wachtwoord')
 
-@section('content')
+@section('manifest','manifest="/main.appcache"')
 
+@section('content')
 <div id="wrapper">
 
 	<div id="shop">
