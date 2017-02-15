@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html>
+<html @yield('manifest','')>
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="x-ua-compatible" content="ie=edge" />

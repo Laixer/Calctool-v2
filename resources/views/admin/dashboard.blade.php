@@ -2,11 +2,7 @@
 
 @section('title', 'Admin Dashboard')
 
-@push('style')
-@endpush
-
-@push('scripts')
-@endpush
+@section('manifest','manifest="/main.appcache"')
 
 @section('content')
 		<div id="wrapper">

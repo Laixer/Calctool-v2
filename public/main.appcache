@@ -1,0 +1,30 @@
+CACHE MANIFEST
+# 2017-02-15:v1
+
+/images/logo2.png
+/images/loading_icon.gif
+/images/favicon-16x16.png
+/images/favicon-32x32.png
+/images/favicon-96x96.png
+/images/android-chrome-192x192.png
+
+/components/bootstrap/dist/css/bootstrap.min.css
+/components/font-awesome/css/font-awesome.css
+/components/bootstrap/dist/js/bootstrap.min.js
+/components/angular/angular.min.js
+/components/jquery/dist/jquery.min.js
+
+/css/shop.css
+/css/essentials.css
+/css/layout.css
+/css/layout-responsive.css
+/css/darkgreen.css
+/css/custom.css
+
+/plugins/masonry.js
+/js/scripts.js
+
+NETWORK:
+/api/v1/projects
+/api/v1/update
+/api/v1/relations
