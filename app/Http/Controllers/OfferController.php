@@ -111,7 +111,7 @@ class OfferController extends Controller {
 		$relation_self = Relation::find(Auth::User()->self_id);
 		$footer_text = $relation_self->company_name;
 		if ($relation_self->iban)
-			$footer_text .= ' | Rekeningnummer: ' . $relation_self->iban;
+			$footer_text .= ' | IBAN: ' . $relation_self->iban;
 		if ($relation_self->kvk)
 			$footer_text .= ' | KVK: ' . $relation_self->kvk;
 		if ($relation_self->btw)

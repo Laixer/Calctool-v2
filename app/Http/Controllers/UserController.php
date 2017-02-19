@@ -208,7 +208,7 @@ class UserController extends Controller {
 		]);
 
 		$footer_text = 'CalculatieTool.com';
-		$footer_text .= ' | Rekeningnummer: NL29INGB0006863509';
+		$footer_text .= ' | IBAN: NL29INGB0006863509';
 		$footer_text .= ' | KVK: 54565243';
 		$footer_text .= ' | BTW: 851353423B01';
 
@@ -334,7 +334,7 @@ class UserController extends Controller {
 			]);
 
 			$footer_text = 'CalculatieTool.com';
-			$footer_text .= ' | Rekeningnummer: NL29INGB0006863509';
+			$footer_text .= ' | IBAN: NL29INGB0006863509';
 			$footer_text .= ' | KVK: 54565243';
 			$footer_text .= ' | BTW: 851353423B01';
 
