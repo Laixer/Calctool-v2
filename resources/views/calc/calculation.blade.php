@@ -1670,10 +1670,10 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 						<br>
 						<img src="/images/exp_calc.jpg" />
 							<ul>
-								<li>Stap 1: Voeg nieuw Onderdeel toe</li>
-								<li>Stap 2: Selecteer Onderdeel met een klik zodat de regel groen wordt</li>
-								<li>Stap 3. Voeg Werkzaamheid toe</li>
-								<li>Stap 4: Selecteer Werkzaamheid met een klik zodat de regel grijs wordt</li>
+								<li>Stap 1: Voeg nieuw <i>Onderdeel</i> toe</li>
+								<li>Stap 2: Klik op het toegevoegd <i>Onderdeel</i></li>
+								<li>Stap 3. Voeg <i>Werkzaamheid</i> toe</li>
+								<li>Stap 4: Klik op de toegevoegde <i>Werkzaamheid</i></li>
 						</ul>
 						@endif
 
