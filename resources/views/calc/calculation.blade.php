@@ -1668,7 +1668,10 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 
 						@if (!Chapter::where('project_id', $project->id)->count())
 						<br>
+						<h4>Een kleine uitleg voordat je begint met calculeren</h4>
+						<hr>
 						<img src="/images/exp_calc.jpg" />
+						<br>
 							<ul>
 								<li>Stap 1: Voeg nieuw <i>Onderdeel</i> toe</li>
 								<li>Stap 2: Klik op het toegevoegde <i>Onderdeel</i></li>
