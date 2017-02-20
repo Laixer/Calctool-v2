@@ -1358,9 +1358,6 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 				<div class="tab-content">
 					<div id="calculate" class="tab-pane">
 						<div class="toogle">
-							@if (!Chapter::where('project_id', $project->id)->count())
-							<img src="http://cdn.thefederalist.com/wp-content/uploads/2016/08/therock-998x624.jpg" />
-							@endif
 							@foreach (Chapter::where('project_id', $project->id)->orderBy('priority')->get() as $chapter)
 							<div data-step="2" data-intro="Open het onderdeel door op de regel te klikken." id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
 								<label>{{ $chapter->chapter_name }}</label>
@@ -1668,6 +1665,18 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 								</div>
 							</div>
 						</div>
+
+						@if (!Chapter::where('project_id', $project->id)->count())
+						<br>
+						<img src="http://localhost/images/exp_calc.jpg" />
+							<ul>
+								<li>Stap 1: Voeg nieuw Onderdeel toe</li>
+								<li>Stap 2: Selecteer Onderdeel met een klik zodat de regel groen wordt</li>
+								<li>Stap 3. Voeg Werkzaamheid toe</li>
+								<li>Stap 4: Selecteer Werkzaamheid met een klik zodat de regel grijs wordt</li>
+						</ul>
+						@endif
+
 						</form>
 					</div>
 
