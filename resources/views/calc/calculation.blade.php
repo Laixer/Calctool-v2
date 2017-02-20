@@ -1668,7 +1668,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 
 						@if (!Chapter::where('project_id', $project->id)->count())
 						<br>
-						<img src="http://localhost/images/exp_calc.jpg" />
+						<img src="/images/exp_calc.jpg" />
 							<ul>
 								<li>Stap 1: Voeg nieuw Onderdeel toe</li>
 								<li>Stap 2: Selecteer Onderdeel met een klik zodat de regel groen wordt</li>
