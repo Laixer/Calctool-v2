@@ -1670,15 +1670,16 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 						<br>
 						<h4>Een kleine uitleg voordat je begint met calculeren</h4>
 						<hr>
-						<img src="/images/exp_calc.jpg" />
-						<br>
-							<ul>
+													<ul>
 								<li>Stap 1: Voeg nieuw <i>Onderdeel</i> toe</li>
 								<li>Stap 2: Klik op het toegevoegde <i>Onderdeel</i></li>
 								<li>Stap 3. Voeg <i>Werkzaamheid</i> toe</li>
 								<li>Stap 4: Klik op de toegevoegde <i>Werkzaamheid</i></li>
 								<li>Stap 5: Nu kunt u de <i>Werkzaamheid</i> gaan calculeren</li>
 						</ul>
+						<br>
+						<img src="/images/exp_calc.jpg" />
+						<br>
 						@endif
 
 						</form>
