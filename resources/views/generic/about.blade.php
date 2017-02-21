@@ -12,7 +12,7 @@
 			<article>
 				<h2><strong>Over</strong> ons</h2>
 					<h4>Wie wij zijn</h4>
-					<p>Het bedrijf <strong>CalculatieTool.com</strong> is een kleine onderneming met één been in de ICT dienstverlening en het andere in de bouwwereld. <strong>CalculatieTool.com</strong> haalt de computerwereld naar de ambachten met als resultaat een makkelijke en snelle manier van calculeren, offreren en factureren van projecten.
+					<p>Het bedrijf <strong>CalculatieTool.com</strong> is een onderneming met één been in de ICT dienstverlening en het andere in de bouwwereld. <strong>CalculatieTool.com</strong> haalt de computerwereld naar de ambachten met als resultaat een makkelijke en snelle manier van calculeren, offreren en factureren van projecten.
 					Ervaren zzp-ers uit de bouw en doorgewinterde programmeurs werken samen en vormen de hoeksteen van ons bedrijf. <strong>CalculatieTool.com</strong> brengt op geheel eigenwijze de welbekende sigarendoos-calculatie volledig digitaal en sterk uitgebreid met zeer groot gebruikersgemak naar de zzp-er. De ontwerp gedachte is daarbij altijd geweest een overzichtelijke manier van calculeren te maken waarin tevens gemakkelijk het beheren van stelposten, meerwerk & minderwerk is uit te voeren door zowel ervaren als onervaren computergebruikers.
 					Een ontwikkelperiode van 4 jaar door een vast team van ontwikkelaars en het herhaaldelijk uitbreiden, innoveren en verbeteren ligt ten grondslag aan huidige CalculatieTool.</p>
 
@@ -34,17 +34,14 @@
 					<ul class="list-icon star-o">
 						<li>Bedrijfsnaam: CalculatieTool.com</li>
 						<li>Vestigingsadres: Odinholm 25, 3124SC Schiedam</li>
-						<li>CalculatieTool.com heeft geen vast kantooradres</li>
 						<li>Contactgegevens: info@CalculatieTool.com</li>
 						<li>KvK-nummer: 54565243</li>
 						<li>BTW-nummer: NL851353423B01</li>
-						<li>Rekeningnummer: NL45ISABO12344556789</li>
+						<li>IBAN: NL45ISABO12344556789</li>
 						<li>Commercieel websiteadres: http://www.CalculatieTool.com</li>
-						<li>Technisch websiteadres: https://app.CalculatieTool.com</li>
+						<li>Applicatie: https://app.CalculatieTool.com</li>
 					</ul>
 					<br>
-					<p>Wij hebben geen vast kantoor. We werken vanuit huis en flexibele werkplekken. Dit houdt de kosten laag en blijven we dynamisch. Natuurlijk hebben we wel een postadres waar alle stukken naartoe kunnen die niet met de e-mail kunnen en waarop het bedrijf staat geregistreerd.</p>
-
 				</article>
 
 			</div>

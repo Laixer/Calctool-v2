@@ -1358,7 +1358,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 				<div class="tab-content">
 					<div id="calculate" class="tab-pane">
 						<div class="toogle">
-							@foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
+							@foreach (Chapter::where('project_id', $project->id)->orderBy('priority')->get() as $chapter)
 							<div data-step="2" data-intro="Open het onderdeel door op de regel te klikken." id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
 								<label>{{ $chapter->chapter_name }}</label>
 								<div data-step="3" data-intro="Maak een werkzaamheid aan, open deze door op de regel te klikken en druk daarna op volgende." class="toggle-content">
@@ -1665,6 +1665,23 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 								</div>
 							</div>
 						</div>
+
+						@if (!Chapter::where('project_id', $project->id)->count())
+						<br>
+						<h4>Een kleine uitleg voordat je begint met calculeren</h4>
+						<hr>
+													<ul>
+								<li>Stap 1: Voeg nieuw <i>Onderdeel</i> toe</li>
+								<li>Stap 2: Klik op het toegevoegde <i>Onderdeel</i></li>
+								<li>Stap 3. Voeg <i>Werkzaamheid</i> toe</li>
+								<li>Stap 4: Klik op de toegevoegde <i>Werkzaamheid</i></li>
+								<li>Stap 5: Nu kunt u de <i>Werkzaamheid</i> gaan calculeren</li>
+						</ul>
+						<br>
+						<img src="/images/exp_calc.jpg" />
+						<br>
+						@endif
+
 						</form>
 					</div>
 
