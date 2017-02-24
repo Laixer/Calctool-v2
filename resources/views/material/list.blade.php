@@ -1032,7 +1032,7 @@ $(document).ready(function() {
 									<th class="col-md-5">Omschrijving</th>
 									<th class="col-md-1">Eenheid</th>
 									<th class="col-md-1">&euro; / Eenheid</th>
-									<th class="col-md-2">Productgroep</th>
+									<th class="col-md-2">Subcategorie</th>
 									<th class="col-md-1">&nbsp;</th>
 									<th class="col-md-1">&nbsp;</th>
 									<th class="col-md-1">&nbsp;</th>
@@ -1051,7 +1051,7 @@ $(document).ready(function() {
 									<td class="col-md-1"><input name="rate" type="text" value="{{ number_format($product->price, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
 									<td class="col-md-1">
 										<select name="ngroup" class="form-control-sm-text pointer dsave">
-								        @foreach (ProductSubCategory::all() as $subcat)
+								        @foreach (ProductSubCategory::orderBy('sub_category_name')->get() as $subcat)
 								        	<option {{ ($product->group_id == $subcat->id ? 'selected' : '') }} value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
 								        @endforeach
 										</select>
@@ -1071,7 +1071,7 @@ $(document).ready(function() {
 									<td class="col-md-1">
 										<select name="ngroup" class="form-control-sm-text pointer dsave">
 										<option value="0">Selecteer</option>
-								        @foreach (ProductSubCategory::all() as $subcat)
+								        @foreach (ProductSubCategory::orderBy('sub_category_name')->get() as $subcat)
 								        	<option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
 								        @endforeach
 										</select>
