@@ -85,7 +85,11 @@ class MaterialController extends Controller {
 		if ($request->has('group')) {
 			$products = Product::where('group_id',$request->get('group'))->where('supplier_id', $request->get('wholesale'))->take(200)->get();
 		} else if ($request->has('query')) {
-			$products = Product::where('description', 'LIKE', '%'.strtolower($request->get('query')).'%')->where('supplier_id', $request->get('wholesale'))->take(200)->get();
+			if ($request->get('query') == '***') {
+				$products = Product::where('supplier_id', $request->get('wholesale'))->take(200)->get();
+			} else {
+				$products = Product::where('description', 'LIKE', '%'.strtolower($request->get('query')).'%')->where('supplier_id', $request->get('wholesale'))->take(200)->get();
+			}
 		}
 		foreach ($products as $product) {
 			$isFav = $product->user()->where('user_id', Auth::id())->count('id');

@@ -832,7 +832,7 @@ $(document).ready(function() {
 
 						<div class="row">
 							<div class="col-md-4">
-								<select id="mod-wholesale" class="form-control" style="background-color: #E5E7E9; color:#000;">
+								<select id="mod-wholesale" class="mod-getsub form-control" style="background-color: #E5E7E9; color:#000;">
 									<?php
 									$mysupplier = Supplier::where('user_id', Auth::id())->first();
 									if ($mysupplier) {
@@ -953,7 +953,7 @@ $(document).ready(function() {
 
 							<div class="row">
 								<div class="col-md-4">
-									<select id="wholesale" class="form-control" style="background-color: #E5E7E9; color:#000;">
+									<select id="wholesale" class="getsub form-control" style="background-color: #E5E7E9; color:#000;">
 										<?php
 										$mysupplier = Supplier::where('user_id', Auth::id())->first();
 										if ($mysupplier) {
