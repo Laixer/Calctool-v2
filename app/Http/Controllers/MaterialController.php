@@ -81,23 +81,10 @@ class MaterialController extends Controller {
 
 		$rtn_products = array();
 
-		// $supplier = Supplier::where('wholesale_id', $request->get('wholesale'))->first();
-
-		// $suppliers = array();
-		// $mysupplier = Supplier::where('user_id', Auth::id())->first();
-		// if ($mysupplier) {
-		// 	array_push($suppliers, $mysupplier->id);
-		// }
-		// foreach (Supplier::whereNull('user_id')->get() as $supplier) {
-		// 	array_push($suppliers, $supplier->id);
-		// }
-
 		$products = [];
 		if ($request->has('group')) {
-			// $products = Product::where('group_id',$request->get('group'))->whereIn('supplier_id', $suppliers)->take(200)->get();
 			$products = Product::where('group_id',$request->get('group'))->where('supplier_id', $request->get('wholesale'))->take(200)->get();
 		} else if ($request->has('query')) {
-			// $products = Product::where('description', 'LIKE', '%'.strtolower($request->get('query')).'%')->whereIn('supplier_id', $suppliers)->take(200)->get();
 			$products = Product::where('description', 'LIKE', '%'.strtolower($request->get('query')).'%')->where('supplier_id', $request->get('wholesale'))->take(200)->get();
 		}
 		foreach ($products as $product) {
