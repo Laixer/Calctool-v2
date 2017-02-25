@@ -657,7 +657,7 @@ class AdminController extends Controller {
 		if ($request->hasFile('csvfile')) {
 			$file = $request->file('csvfile');
 
-			if ($file->getMimeType() != 'text/csv')
+			if ($file->getMimeType() != 'text/csv' && $file->getMimeType() != 'text/plain')
 				return back()->withErrors('Geen CSV bestand');
 
 			$row = 0;
