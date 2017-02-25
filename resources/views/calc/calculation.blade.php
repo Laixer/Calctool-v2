@@ -7,6 +7,7 @@ use \Calctool\Models\ProductSubCategory;
 use \Calctool\Models\Chapter;
 use \Calctool\Calculus\CalculationOverview;
 use \Calctool\Models\ProjectType;
+use \Calctool\Models\Product;
 use \Calctool\Models\Activity as ProjectActivity;
 use \Calctool\Models\FavoriteActivity;
 use \Calctool\Models\PartType;
@@ -1180,7 +1181,12 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 								<?php } ?>
 								
 								@foreach (Wholesale::all() as $wholesale)
-								<?php $supplier = Supplier::where('wholesale_id', $wholesale->id)->first(); ?>
+								<?php
+								$supplier = Supplier::where('wholesale_id', $wholesale->id)->first();
+								$cnt = Product::where('supplier_id', $supplier->id)->limit(1)->count();
+								if (!$cnt)
+									continue;
+								?>
 								<option {{ $wholesale->company_name=='Bouwmaat NL' ? 'selected' : '' }} value="{{ $supplier->id }}">{{ $wholesale->company_name }}</option>
 								@endforeach
 							</select>

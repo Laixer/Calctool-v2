@@ -841,7 +841,12 @@ $(document).ready(function() {
 									<?php } ?>
 									
 									@foreach (Wholesale::all() as $wholesale)
-									<?php $supplier = Supplier::where('wholesale_id', $wholesale->id)->first(); ?>
+									<?php
+									$supplier = Supplier::where('wholesale_id', $wholesale->id)->first();
+									$cnt = Product::where('supplier_id', $supplier->id)->limit(1)->count();
+									if (!$cnt)
+										continue;
+									?>
 									<option {{ $wholesale->company_name=='Bouwmaat NL' ? 'selected' : '' }} value="{{ $supplier->id }}">{{ $wholesale->company_name }}</option>
 									@endforeach
 								</select>
@@ -962,7 +967,12 @@ $(document).ready(function() {
 										<?php } ?>
 										
 										@foreach (Wholesale::all() as $wholesale)
-										<?php $supplier = Supplier::where('wholesale_id', $wholesale->id)->first(); ?>
+										<?php
+										$supplier = Supplier::where('wholesale_id', $wholesale->id)->first();
+										$cnt = Product::where('supplier_id', $supplier->id)->limit(1)->count();
+										if (!$cnt)
+											continue;
+										?>
 										<option {{ $wholesale->company_name=='Bouwmaat NL' ? 'selected' : '' }} value="{{ $supplier->id }}">{{ $wholesale->company_name }}</option>
 										@endforeach
 									</select>
