@@ -12,7 +12,10 @@ use \Calctool\Models\TimesheetKind;
 use \Calctool\Models\SubGroup;
 use \Calctool\Models\PartType;
 use \Calctool\Models\MoreLabor;
+use \Calctool\Models\Product;
 use \Calctool\Models\Tax;
+use \Calctool\Models\Supplier;
+use \Calctool\Models\Wholesale;
 use \Calctool\Models\MoreMaterial;
 use \Calctool\Models\MoreEquipment;
 use \Calctool\Models\Detail;
@@ -573,8 +576,9 @@ var n = this,
 		$("#search").keyup(function() {
 			$val = $(this).val();
 			if ($val.length > 2 && !$req) {
+				var $wholesale = $('#wholesale option:selected').val();
 				$req = true;
-				$.post("/material/search", {project: {{ $project->id }}, query: $val}, function(data) {
+				$.post("/material/search", {project: {{ $project->id }}, query: $val, wholesale: $wholesale}, function(data) {
 					if (data) {
 						$('#tbl-material tbody tr').remove();
 						$.each(data, function(i, item) {
@@ -589,7 +593,8 @@ var n = this,
 
 		$('#group').change(function(){
 			$val = $(this).val();
-			$.post("/material/search", {group:$val}, function(data) {
+			var $wholesale = $('#wholesale option:selected').val();
+			$.post("/material/search", {group:$val, wholesale: $wholesale}, function(data) {
 				if (data) {
 					$('#tbl-material tbody tr').remove();
 					$.each(data, function(i, item) {
@@ -604,6 +609,7 @@ var n = this,
 		$('.getsub').change(function(e){
 			var $name = $('#group2 option:selected').attr('data-name');
 			var $value = $('#group2 option:selected').val();
+			var $wholesale = $('#wholesale option:selected').val();
 
 			$.get('/material/subcat/' + $name + '/' + $value, function(data) {
 				$('#group').find('option').remove();
@@ -614,7 +620,7 @@ var n = this,
 				    }));
 			    });
 
-				$.post("/material/search", {group:data[0].id}, function(data) {
+				$.post("/material/search", {group:data[0].id, wholesale: $wholesale}, function(data) {
 					if (data) {
 						$('#tbl-material tbody tr').remove();
 						$.each(data, function(i, item) {
@@ -742,42 +748,71 @@ var n = this,
 			</div>
 
 			<div class="modal-body">
-					<div class="form-group input-group input-group-lg">
-						<input type="text" maxlength="100" id="search" value="" class="form-control" placeholder="Zoek producten">
-							<span class="input-group-btn">
-					        <select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000">
-						        <option value="0" selected>of selecteer subcategorie</option>
-						        @foreach (ProductGroup::all() as $group)
-						        <option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
-						        	@foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
-						        	<option data-name="cat" value="{{ $cat->id }}"> - {{ $cat->category_name }}</option>
-						        	@endforeach
-						        @endforeach
-					        </select>
-					      </span>
-					      <span class="input-group-btn">
-					        <select id="group" class="btn" style="background-color: #E5E7E9; color:#000">
-					        <option value="0" selected>en subcategorie</option>
-					        @foreach (ProductSubCategory::all() as $subcat)
-					          <option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
-					        @endforeach
-					        </select>
-					      </span>
+				<div class="form-group input-group-lg">
+
+					<div class="row">
+						<div class="col-md-4">
+							<select id="wholesale" class="getsub form-control" style="background-color: #E5E7E9; color:#000;">
+								<?php
+								$mysupplier = Supplier::where('user_id', Auth::id())->first();
+								if ($mysupplier) {
+								?>
+								<option value="{{ $mysupplier->id }}">Mijn Materiaal</option>
+								<?php } ?>
+								
+								@foreach (Wholesale::all() as $wholesale)
+								<?php
+								$supplier = Supplier::where('wholesale_id', $wholesale->id)->first();
+								$cnt = Product::where('supplier_id', $supplier->id)->limit(1)->count();
+								if (!$cnt)
+									continue;
+								?>
+								<option {{ $wholesale->company_name=='Bouwmaat NL' ? 'selected' : '' }} value="{{ $supplier->id }}">{{ $wholesale->company_name }}</option>
+								@endforeach
+							</select>
+						</div>
+
+						<div class="col-md-4">
+							<select id="group2" class="getsub form-control" style="background-color: #E5E7E9; color:#000;">
+								<option value="0" selected>Selecteer Categorie</option>
+								@foreach (ProductGroup::all() as $group)
+								<option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
+								@foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
+								<option data-name="cat" value="{{ $cat->id }}"> - {{ $cat->category_name }}</option>
+								@endforeach
+								@endforeach
+							</select>
+						</div>
+						<div class="col-md-4">
+							<select id="group" class="form-control" style="background-color: #E5E7E9; color:#000">
+								<option value="0" selected>Selecteer Subcategorie</option>
+								@foreach (ProductSubCategory::all() as $subcat)
+								<option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
+								@endforeach
+							</select>
+						</div>
+
 					</div>
-					<div class="table-responsive">
-						<table id="tbl-material" class="table table-hover">
-							<thead>
-								<tr>
-									<th>Omschrijving</th>
-									<th>Eenheid</th>
-									<th>Prijs per eenheid</th>
-									<th>Totaalprijs</th>
-								</tr>
-							</thead>
-							<tbody>
-							</tbody>
-						</table>
-					</div>
+				</div>
+
+				<div class="form-group">
+				      <input type="text" maxlength="100" id="search" value="" class="form-control" placeholder="Zoek in alle producten">
+				</div>
+
+				<div class="table-responsive">
+					<table id="tbl-material" class="table table-hover">
+						<thead>
+							<tr>
+								<th>Omschrijving</th>
+								<th>Eenheid</th>
+								<th>Prijs per eenheid</th>
+								<th>Totaalprijs</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
 			</div>
 
 			<div class="modal-footer">

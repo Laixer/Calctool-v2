@@ -726,4 +726,19 @@ class ProjectController extends Controller {
 			return back()->withErrors('Geen bestand geupload');
 		}
 	}
+
+	public function getMaterialList(Request $request, $project_id)
+	{
+		$pdf = \PDF::loadView('calc.materiallist_pdf', [
+			'name' => 'Sjaakie',
+			'date' => '12-23-23',
+			'amount' => 456,
+			'project_id' => $project_id,
+			'user_id' => Auth::id(),
+			'relation_self' => $relation_self = Relation::find(Auth::user()->self_id),
+			'list_id' => $project_id . date('Y') . mt_rand(10,99),
+		]);
+
+		return $pdf->inline();
+	}
 }

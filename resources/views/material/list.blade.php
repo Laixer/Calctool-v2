@@ -6,6 +6,7 @@ use \Calctool\Models\Supplier;
 use \Calctool\Models\Product;
 use \Calctool\Models\Element;
 use \Calctool\Models\Tax;
+use \Calctool\Models\Wholesale;
 use \Calctool\Models\FavoriteActivity;
 use \Calctool\Models\FavoriteMaterial;
 use \Calctool\Models\FavoriteLabor;
@@ -70,8 +71,9 @@ $(document).ready(function() {
 	$("#search").keyup(function() {
 		$val = $(this).val();
 		if ($val.length > 2 && !$req) {
+			var $wholesale = $('#wholesale option:selected').val();
 			$req = true;
-			$.post("/material/search", {query:$val}, function(data) {
+			$.post("/material/search", {query:$val,wholesale:$wholesale}, function(data) {
 				if (data) {
 					$('#alllist tbody tr').remove();
 					$.each(data, function(i, item) {
@@ -84,7 +86,8 @@ $(document).ready(function() {
 	});
 	$('#group').change(function(){
 		$val = $(this).val();
-		$.post("/material/search", {group:$val}, function(data) {
+		var $wholesale = $('#wholesale option:selected').val();
+		$.post("/material/search", {group:$val,wholesale:$wholesale}, function(data) {
 			if (data) {
 				$('#alllist tbody tr').remove();
 				$.each(data, function(i, item) {
@@ -217,6 +220,7 @@ $(document).ready(function() {
 	$('.getsub').change(function(e){
 		var $name = $('#group2 option:selected').attr('data-name');
 		var $value = $('#group2 option:selected').val();
+		var $wholesale = $('#wholesale option:selected').val();
 		$.get('/material/subcat/' + $name + '/' + $value, function(data) {
 			$('#group').find('option').remove();
 		    $.each(data, function(idx, item){
@@ -226,7 +230,7 @@ $(document).ready(function() {
 			    }));
 		    });
 
-			$.post("/material/search", {group:data[0].id}, function(data) {
+			$.post("/material/search", {group:data[0].id,wholesale:$wholesale}, function(data) {
 				if (data) {
 					$('#alllist tbody tr').remove();
 					$.each(data, function(i, item) {
@@ -675,11 +679,12 @@ $(document).ready(function() {
 	});
 
 	$req = false;
-	$("#searchx").keyup(function() {
+	$("#mod-search").keyup(function() {
 		$val = $(this).val();
 		if ($val.length > 2 && !$req) {
+			var $wholesale = $('#mod-wholesale option:selected').val();
 			$req = true;
-			$.post("/material/search", {query: $val}, function(data) {
+			$.post("/material/search", {query: $val,wholesale:$wholesale}, function(data) {
 				if (data) {
 					$('#tbl-materialx tbody tr').remove();
 					$.each(data, function(i, item) {
@@ -691,20 +696,34 @@ $(document).ready(function() {
 			});
 		}
 	});
-	$('.getsub').change(function(e){
-		var $name = $('#group2 option:selected').attr('data-name');
-		var $value = $('#group2 option:selected').val();
-
+	$('#mod-group').change(function(){
+		$val = $(this).val();
+		var $wholesale = $('#mod-wholesale option:selected').val();
+		$.post("/material/search", {group:$val,wholesale:$wholesale}, function(data) {
+			if (data) {
+				$('#tbl-materialx tbody tr').remove();
+				$.each(data, function(i, item) {
+					$('#tbl-materialx tbody').append('<tr><td><a data-name="'+item.description+'" data-unit="'+item.punit+'" data-price="'+item.pricenum+'" href="javascript:void(0);">'+item.description+'</a></td><td>'+item.unit+'</td><td>'+item.price+'</td><td>'+item.tprice+'</td></tr>');
+				});
+				$('#tbl-materialx tbody a').on("click", onmaterialclick);
+				$req = false;
+			}
+		});
+	});
+	$('.mod-getsub').change(function(e){
+		var $name = $('#mod-group2 option:selected').attr('data-name');
+		var $value = $('#mod-group2 option:selected').val();
+		var $wholesale = $('#mod-wholesale option:selected').val();
 		$.get('/material/subcat/' + $name + '/' + $value, function(data) {
-			$('#group').find('option').remove();
+			$('#mod-group').find('option').remove();
 		    $.each(data, function(idx, item){
-			    $('#group').append($('<option>', {
+			    $('#mod-group').append($('<option>', {
 			        value: item.id,
 			        text: item.name
 			    }));
 		    });
 
-			$.post("/material/search", {group:data[0].id}, function(data) {
+			$.post("/material/search", {group:data[0].id,wholesale:$wholesale}, function(data) {
 				if (data) {
 					$('#tbl-materialx tbody tr').remove();
 					$.each(data, function(i, item) {
@@ -809,28 +828,57 @@ $(document).ready(function() {
 
 				<div class="modal-body">
 					
-					<div class="form-group input-group input-group-lg">
-						<input type="text" id="searchx" maxlength="100" value="" class="form-control" placeholder="Zoek in volledig lijst">
-						<span class="input-group-btn">
-							<select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000">
-								<option value="0" selected>of sorteer op categorie</option>
-								@foreach (ProductGroup::all() as $group)
-								<option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
-								@foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
-								<option data-name="cat" value="{{ $cat->id }}"> - {{ $cat->category_name }}</option>
-								@endforeach
-								@endforeach
-							</select>
-						</span>
-						<span class="input-group-btn">
-							<select id="group" class="btn" style="background-color: #E5E7E9; color:#000">
-								<option value="0" selected>en subcategorie</option>
-								@foreach (ProductSubCategory::all() as $subcat)
-								<option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
-								@endforeach
-							</select>
-						</span>
+					<div class="form-group input-group-lg">
+
+						<div class="row">
+							<div class="col-md-4">
+								<select id="mod-wholesale" class="mod-getsub form-control" style="background-color: #E5E7E9; color:#000;">
+									<?php
+									$mysupplier = Supplier::where('user_id', Auth::id())->first();
+									if ($mysupplier) {
+									?>
+									<option value="{{ $mysupplier->id }}">Mijn Materiaal</option>
+									<?php } ?>
+									
+									@foreach (Wholesale::all() as $wholesale)
+									<?php
+									$supplier = Supplier::where('wholesale_id', $wholesale->id)->first();
+									$cnt = Product::where('supplier_id', $supplier->id)->limit(1)->count();
+									if (!$cnt)
+										continue;
+									?>
+									<option {{ $wholesale->company_name=='Bouwmaat NL' ? 'selected' : '' }} value="{{ $supplier->id }}">{{ $wholesale->company_name }}</option>
+									@endforeach
+								</select>
+							</div>
+
+							<div class="col-md-4">
+								<select id="mod-group2" class="mod-getsub form-control" style="background-color: #E5E7E9; color:#000;">
+									<option value="0" selected>Selecteer Categorie</option>
+									@foreach (ProductGroup::all() as $group)
+									<option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
+									@foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
+									<option data-name="cat" value="{{ $cat->id }}"> - {{ $cat->category_name }}</option>
+									@endforeach
+									@endforeach
+								</select>
+							</div>
+							<div class="col-md-4">
+								<select id="mod-group" class="form-control" style="background-color: #E5E7E9; color:#000">
+									<option value="0" selected>Selecteer Subcategorie</option>
+									@foreach (ProductSubCategory::all() as $subcat)
+									<option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
+									@endforeach
+								</select>
+							</div>
+
+						</div>
 					</div>
+
+					<div class="form-group">
+					      <input type="text" maxlength="100" id="mod-search" value="" class="form-control" placeholder="Zoek in alle producten">
+					</div>
+
 					<div class="table-responsive">
 						<table id="tbl-materialx" class="table table-hover">
 							<thead>
@@ -854,44 +902,6 @@ $(document).ready(function() {
 			</div>
 		</div>
 	</div>
-
-	@if(0)
-	<div class="modal fade" id="elmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel2">Nieuw element</h4>
-				</div>
-
-				<div class="modal-body">
-					<div class="form-horizontal">
-						<div class="form-group">
-							<div class="col-md-4">
-								<label>Naam</label>
-							</div>
-							<div class="col-md-8">
-								<input name="name" id="name" type="text" class="form-control" />
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="col-md-4">
-								<label>Opmerking</label>
-							</div>
-							<div class="col-md-8">
-								<input name="desc" id="desc" type="text" class="form-control" />
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button class="btn btn-default" data-dismiss="modal">Opslaan</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	@endif
 
 	<section class="container">
 
@@ -933,9 +943,6 @@ $(document).ready(function() {
 					<li id="tab-material">
 						<a href="#material" data-toggle="tab"><i class="fa fa-wrench"></i> Mijn producten</a>
 					</li>
-					<!-- <li id="tab-element">
-						<a href="#element" data-toggle="tab"><i class="fa fa-th-list"></i> Elementen</a>
-					</li> -->
 					<li id="tab-favorite">
 						<a href="#favorite" data-toggle="tab"><i class="fa fa-star"></i> Favorieten producten</a>
 					</li>
@@ -947,29 +954,55 @@ $(document).ready(function() {
 				<div class="tab-content">
 					<div id="supplier" class="tab-pane">
 
-						<div class="form-group input-group input-group-lg">
-						
-							<input type="text" maxlength="100" id="search" value="" class="form-control" placeholder="Zoek product">
+						<div class="form-group input-group-lg">
 
-							<span class="input-group-btn">
-						        <select id="group2" class="btn getsub" style="background-color: #E5E7E9; color:#000; border-radius:0px;">
-							        <option value="0" selected>Selecteer categorie</option>
-							        @foreach (ProductGroup::all() as $group)
-							        <option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
-							        	@foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
-							        	<option data-name="cat" value="{{ $cat->id }}"> - {{ $cat->category_name }}</option>
-							        	@endforeach
-							        @endforeach
-						        </select>
-						      </span>
-						      <span class="input-group-btn">
-						        <select id="group" class="btn" style="background-color: #E5E7E9; color:#000">
-						        <option value="0" selected>Selecteer subcategorie</option>
-						        @foreach (ProductSubCategory::all() as $subcat)
-						          <option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
-						        @endforeach
-						        </select>
-						      </span>
+							<div class="row">
+								<div class="col-md-4">
+									<select id="wholesale" class="getsub form-control" style="background-color: #E5E7E9; color:#000;">
+										<?php
+										$mysupplier = Supplier::where('user_id', Auth::id())->first();
+										if ($mysupplier) {
+										?>
+										<option value="{{ $mysupplier->id }}">Mijn Materiaal</option>
+										<?php } ?>
+										
+										@foreach (Wholesale::all() as $wholesale)
+										<?php
+										$supplier = Supplier::where('wholesale_id', $wholesale->id)->first();
+										$cnt = Product::where('supplier_id', $supplier->id)->limit(1)->count();
+										if (!$cnt)
+											continue;
+										?>
+										<option {{ $wholesale->company_name=='Bouwmaat NL' ? 'selected' : '' }} value="{{ $supplier->id }}">{{ $wholesale->company_name }}</option>
+										@endforeach
+									</select>
+								</div>
+
+								<div class="col-md-4">
+									<select id="group2" class="getsub form-control" style="background-color: #E5E7E9; color:#000;">
+										<option value="0" selected>Selecteer Categorie</option>
+										@foreach (ProductGroup::all() as $group)
+										<option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
+										@foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
+										<option data-name="cat" value="{{ $cat->id }}"> - {{ $cat->category_name }}</option>
+										@endforeach
+										@endforeach
+									</select>
+								</div>
+								<div class="col-md-4">
+									<select id="group" class="form-control" style="background-color: #E5E7E9; color:#000">
+										<option value="0" selected>Selecteer Subcategorie</option>
+										@foreach (ProductSubCategory::all() as $subcat)
+										<option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
+										@endforeach
+									</select>
+								</div>
+
+							</div>
+						</div>
+
+						<div class="form-group input-group-lg">
+						      <input type="text" maxlength="100" id="search" value="" class="form-control" placeholder="Zoek in alle producten">
 						</div>
 
 						<div class="table-responsive">
@@ -1009,7 +1042,7 @@ $(document).ready(function() {
 									<th class="col-md-5">Omschrijving</th>
 									<th class="col-md-1">Eenheid</th>
 									<th class="col-md-1">&euro; / Eenheid</th>
-									<th class="col-md-2">Productgroep</th>
+									<th class="col-md-2">Subcategorie</th>
 									<th class="col-md-1">&nbsp;</th>
 									<th class="col-md-1">&nbsp;</th>
 									<th class="col-md-1">&nbsp;</th>
@@ -1028,7 +1061,7 @@ $(document).ready(function() {
 									<td class="col-md-1"><input name="rate" type="text" value="{{ number_format($product->price, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
 									<td class="col-md-1">
 										<select name="ngroup" class="form-control-sm-text pointer dsave">
-								        @foreach (ProductSubCategory::all() as $subcat)
+								        @foreach (ProductSubCategory::orderBy('sub_category_name')->get() as $subcat)
 								        	<option {{ ($product->group_id == $subcat->id ? 'selected' : '') }} value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
 								        @endforeach
 										</select>
@@ -1048,7 +1081,7 @@ $(document).ready(function() {
 									<td class="col-md-1">
 										<select name="ngroup" class="form-control-sm-text pointer dsave">
 										<option value="0">Selecteer</option>
-								        @foreach (ProductSubCategory::all() as $subcat)
+								        @foreach (ProductSubCategory::orderBy('sub_category_name')->get() as $subcat)
 								        	<option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
 								        @endforeach
 										</select>
