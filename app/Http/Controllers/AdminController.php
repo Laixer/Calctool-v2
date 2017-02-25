@@ -660,16 +660,18 @@ class AdminController extends Controller {
 			if ($file->getMimeType() != 'text/csv' && $file->getMimeType() != 'text/plain')
 				return back()->withErrors('Geen CSV bestand');
 
-			$row = 0;
+			$row = 0; $i = 0; $j = 0; $skip = 0; $new_group = 0; $new_category = 0; $new_subcategory = 0;
 			if (($handle = fopen($file->getRealPath(), "r")) !== FALSE) {
 				while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
 					if ($row++ == 0)
 						continue;
 					
-					if (count($data)<9)
+					if (count($data)<9) {
+						$skip++;
 						continue;
+					}
 					
-					$description = strtolower($data[0]);
+					$description = strtolower(preg_replace('/[[:^print:]]/', '', $data[0]));
 					$unit = $data[1];
 					$article_code = $data[2];
 
@@ -688,12 +690,16 @@ class AdminController extends Controller {
 					$supplier = $data[5];
 
 					$wholesale = Wholesale::where('company_name', $supplier)->first();
-					if (!$wholesale)
+					if (!$wholesale) {
+						$skip++;
 						continue;
+					}
 
 					$mysupplier = Supplier::where('wholesale_id', $wholesale->id)->first();
-					if (!$mysupplier)
+					if (!$mysupplier) {
+						$skip++;
 						continue;
+					}
 
 					$group = $data[8];
 
@@ -702,6 +708,7 @@ class AdminController extends Controller {
 						$mygroup = ProductGroup::create(array(
 							'group_name' => $group
 						));
+						$new_group++;
 					}
 
 					$cat = $data[7];
@@ -712,6 +719,7 @@ class AdminController extends Controller {
 							'category_name' => $cat,
 							'group_id' => $mygroup->id
 						));
+						$new_category++;
 					}
 
 					$sub_cat = $data[6];
@@ -722,6 +730,7 @@ class AdminController extends Controller {
 							'sub_category_name' => $sub_cat,
 							'category_id' => $mycat->id
 						));
+						$new_subcategory++;
 					}
 
 					$product = Product::where('article_code', $article_code)->limit(1)->first();
@@ -733,6 +742,7 @@ class AdminController extends Controller {
 						$product->group_id = $mysubcat->id;
 						$product->supplier_id = $mysupplier->id;
 						$product->save();
+						$j++;
 					} else {
 						Product::create(array(
 							'description' => $description,
@@ -744,11 +754,13 @@ class AdminController extends Controller {
 							'supplier_id' => $mysupplier->id
 						));
 					}
+
+					$i++;
 				}
 				fclose($handle);
 			}
 
-			return back()->with('success', 'Materialenlijst geimporteerd');
+			return back()->with('success', $i . ' materialen geimporteerd<ul><li>Updates: ' . $j . '</li><li>Overgeslagen: ' . $skip . '</li><li>Nieuwe groepen: ' . $new_group++ . '</li><li>Nieuwe categorien: ' . $new_category . '</li><li>Nieuwe subcategorien: ' . $new_subcategory . '</li></ul>');
 		} else {
 			// redirect our user back to the form with the errors from the validator
 			return back()->withErrors('Geen CSV geupload');
