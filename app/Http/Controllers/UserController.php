@@ -75,6 +75,12 @@ class UserController extends Controller {
 			return redirect('myaccount')->withErrors($errors);
 		}
 		
+		$relation_self = Relation::find(Auth::user()->self_id);
+		if (!$relation_self) {
+			$errors = new MessageBag(['status' => ['Account vereist bedrijfsgegevens']]);
+			return redirect('myaccount')->withErrors($errors);
+		}
+		
 		$mollie = new \Mollie_API_Client;
 		$mollie->setApiKey(config('services.mollie.key'));
 
@@ -180,6 +186,11 @@ class UserController extends Controller {
 		$order->save();
 		
 		$relation_self = Relation::find($user->self_id);
+		if (!$relation_self) {
+			$errors = new MessageBag(['status' => ['Account vereist bedrijfsgegevens']]);
+			return redirect('myaccount')->withErrors($errors);
+		}
+
 		$contact_user = Contact::where('relation_id', $user->self_id)->first();
 		$ctinvoice = CTInvoice::orderBy('invoice_count','desc')->first();
 		if (!$ctinvoice) {
