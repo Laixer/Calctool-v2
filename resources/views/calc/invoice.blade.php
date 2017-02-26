@@ -2193,7 +2193,7 @@ $type = ProjectType::find($project->type_id);
 				<thead>
 					<tr>
 						<th class="col-md-6">&nbsp;</th>
-						<th class="col-md-1">Regie</th>
+						<th class="col-md-1">Bedrag</th>
 						<th class="col-md-1">@if (!$project->tax_reverse) BTW @endif</th>
 						<th class="col-md-1">@if (!$project->tax_reverse) BTW bedrag @endif</th>
 					</tr>
@@ -2251,7 +2251,7 @@ $type = ProjectType::find($project->type_id);
 				<thead>
 					<tr>
 						<th class="col-md-6">&nbsp;</th>
-						<th class="col-md-1">Regie</th>
+						<th class="col-md-1">Bedrag</th>
 						<th class="col-md-1">@if (!$project->tax_reverse) BTW @endif</th>
 						<th class="col-md-1">@if (!$project->tax_reverse) BTW bedrag @endif</th>
 					</tr>
@@ -2315,7 +2315,7 @@ $type = ProjectType::find($project->type_id);
 				<thead>
 					<tr>
 						<th class="col-md-6">&nbsp;</th>
-						<th class="col-md-1">Regie</th>
+						<th class="col-md-1">Bedrag</th>
 						<th class="col-md-1">@if (!$project->tax_reverse) BTW @endif</th>
 						<th class="col-md-1">@if (!$project->tax_reverse) BTW bedrag @endif</th>
 					</tr>
