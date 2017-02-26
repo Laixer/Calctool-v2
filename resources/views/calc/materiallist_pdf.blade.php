@@ -101,7 +101,7 @@ use \Calctool\Models\MoreEquipment;
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr>
-        <td style="width: 185px" class="qty"><strong>Onderdeel</strong></th>
+        <td style="width: 185px" class="qty"><strong>Werkzaamheid</strong></th>
         <td style="width: 160px" class="qty"><strong>Materiaal</strong></th>
         <td style="width: 70px" class="qty"><strong>&euro; / Eenh.</strong></th>
         <td style="width: 60px" class="qty"><strong>Aantal</strong></th>
