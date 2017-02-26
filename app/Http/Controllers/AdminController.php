@@ -767,6 +767,18 @@ class AdminController extends Controller {
 		}
 	}
 
+	public function getEmptyList(Request $request)
+	{
+		$this->validate($request, [
+			'supplier' => array('required'),
+		]);
+
+		$supplier = Supplier::where('wholesale_id', $request->get('supplier'))->first();
+		Product::where('supplier_id', $supplier->id)->delete();
+
+		return back()->with('success', 'Lijst verwijderd');
+	}
+
 	public function doNewPromotion(Request $request)
 	{
 		$this->validate($request, [

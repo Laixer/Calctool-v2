@@ -9,7 +9,7 @@ use \Calctool\Models\ProductSubCategory;
 
 @section('content')
 
-@section('title', 'Applicaties')
+@section('title', 'Producten')
 
 ?>
 <script type="text/javascript">
@@ -28,7 +28,7 @@ $(document).ready(function() {
 			<ol class="breadcrumb">
 			  <li><a href="/">Home</a></li>
 			  <li><a href="/admin">Admin CP</a></li>
-			  <li class="active">Applicaties</li>
+			  <li class="active">Producten</li>
 			</ol>
 			<div>
 			<br />
@@ -65,54 +65,60 @@ $(document).ready(function() {
 
 			<div class="white-row">
 
-				<div class="row">
-					<div class="col-md-10">
-						<select id="mod-group2" class="mod-getsub form-control" style="background-color: #E5E7E9; color:#000;">
-							<option value="0" selected>Selecteer Leverancier</option>
-							@foreach (Wholesale::all() as $wholesale)
-							<option {{ $wholesale->company_name=='Bouwmaat NL' ? 'selected' : '' }} value="{{ $wholesale->id }}">{{ $wholesale->company_name }}</option>
-							@endforeach
-						</select>
+				<form action="/admin/product/emptylist" method="post">
+				{!! csrf_field() !!}
+					<div class="row">
+						<div class="col-md-10">
+							<select name="supplier" class="form-control" style="background-color: #E5E7E9; color:#000;">
+								@foreach (Wholesale::all() as $wholesale)
+								<option {{ $wholesale->company_name=='Bouwmaat NL' ? 'selected' : '' }} value="{{ $wholesale->id }}">{{ $wholesale->company_name }}</option>
+								@endforeach
+							</select>
+						</div>
+						<div class="col-md-2">
+							<button class="btn btn-danger btn dsave">Lijst legen</button>
+						</div>
 					</div>
-					<div class="col-md-2">
-						<button class="btn btn-danger btn dsave">Lijst legen</button>
-					</div>
-				</div>
+				</form>
 
 				<br />
 
-				<div class="row">
-					<div class="col-md-10">
-						<select id="mod-group2" class="mod-getsub form-control" style="background-color: #E5E7E9; color:#000;">
-							<option value="0" selected>Selecteer Categorie</option>
-							@foreach (ProductGroup::all() as $group)
-							<option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
-							@foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
-							<option data-name="cat" value="{{ $cat->id }}"> - {{ $cat->category_name }}</option>
-							@endforeach
-							@endforeach
-						</select>
+				<form action="/admin/product/delete_group" method="post">
+				{!! csrf_field() !!}
+					<div class="row">
+						<div class="col-md-10">
+							<select name="group" class="form-control" style="background-color: #E5E7E9; color:#000;">
+								@foreach (ProductGroup::all() as $group)
+								<option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
+								@foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
+								<option data-name="cat" value="{{ $cat->id }}"> - {{ $cat->category_name }}</option>
+								@endforeach
+								@endforeach
+							</select>
+						</div>
+						<div class="col-md-2">
+							<button class="btn btn-danger btn dsave">Verwijderen</button>
+						</div>
 					</div>
-					<div class="col-md-2">
-						<button class="btn btn-danger btn dsave">Verwijderen</button>
-					</div>
-				</div>
+				</form>
 
 				<br />
 
-				<div class="row">
-					<div class="col-md-10">
-						<select id="mod-group2" class="mod-getsub form-control" style="background-color: #E5E7E9; color:#000;">
-							<option value="0" selected>Selecteer Subcategorie</option>
-							@foreach (ProductSubCategory::all() as $subcat)
-							<option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
-							@endforeach
-						</select>
+				<form action="/admin/product/delete_subcat" method="post">
+				{!! csrf_field() !!}
+					<div class="row">
+						<div class="col-md-10">
+							<select name="subcat" class="form-control" style="background-color: #E5E7E9; color:#000;">
+								@foreach (ProductSubCategory::all() as $subcat)
+								<option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
+								@endforeach
+							</select>
+						</div>
+						<div class="col-md-2">
+							<button class="btn btn-danger btn dsave">Verwijderen</button>
+						</div>
 					</div>
-					<div class="col-md-2">
-						<button class="btn btn-danger btn dsave">Verwijderen</button>
-					</div>
-				</div>
+				</form>
 
 			</div>
 

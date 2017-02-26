@@ -463,6 +463,7 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 		return view('admin.audit');
 	});
 	Route::post('product/upload', 'AdminController@doUploadCSV');
+	Route::post('product/emptylist', 'AdminController@getEmptyList');
 	Route::get('application/{client_id}/delete', 'AdminController@doDeleteApplication');
 	Route::post('application/{client_id}/edit', 'AdminController@doUpdateApplication');
 	Route::post('application/new', 'AdminController@doNewApplication');
