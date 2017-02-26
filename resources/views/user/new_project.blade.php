@@ -418,7 +418,6 @@ $(document).ready(function() {
 								<a href="#" data-toggle="modal" data-target="#tutModal">+ Nieuwe opdrachtgever toevoegen</a>
 							</div>
 						</div>
-						@if (Auth::user()->isAdmin())
 						<div class="col-md-2">
 							<div class="form-group">
 								<label for="type">Soort project</label>
@@ -429,7 +428,6 @@ $(document).ready(function() {
 								</select>										
 							</div>
 						</div>
-						@endif
 						<div class="col-md-2">
 							<label for="tax_reverse">BTW verlegd</label>
 							<div class="form-group">
