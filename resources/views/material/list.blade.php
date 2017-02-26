@@ -158,7 +158,7 @@ $(document).ready(function() {
 			});
 		}
 	});
-	$("body").on("blur", ".dsave", function(){
+	$("body").on("click", ".dsave", function(){
 		var flag = true;
 		var $curThis = $(this);
 		if($curThis.closest("tr").attr("data-id"))
@@ -171,29 +171,14 @@ $(document).ready(function() {
 			if($(this).val()=='0')
 				flag = false;
 		});
-		if(flag){
+		if (flag) {
 			$.post("/material/newmaterial", {
 				name: $curThis.closest("tr").find("input[name='name']").val(),
 				unit: $curThis.closest("tr").find("input[name='unit']").val(),
 				rate: $curThis.closest("tr").find("input[name='rate']").val(),
 				group: $curThis.closest("tr").find("select[name='ngroup']").val()
-			}, function(data){
-				var json = data;
-				$curThis.closest("tr").find("input").removeClass("error-input");
-				if (json.success) {
-					$curThis.closest("tr").attr("data-id", json.id);
-				} else {
-					$.each(json.message, function(i, item) {
-						if(json.message['name'])
-							$curThis.closest("tr").find("input[name='name']").addClass("error-input");
-						if(json.message['unit'])
-							$curThis.closest("tr").find("input[name='unit']").addClass("error-input");
-						if(json.message['rate'])
-							$curThis.closest("tr").find("input[name='rate']").addClass("error-input");
-						if(json.message['group'])
-							$curThis.closest("tr").find("input[select='ngroup']").addClass("error-input");
-					});
-				}
+			}, function(data) {
+				location.reload();
 			}).fail(function(e){
 				console.log(e);
 			});
@@ -213,8 +198,24 @@ $(document).ready(function() {
 				$curThis.closest("tr").hide("slow");
 			}).fail(function(e) { console.log(e); });
 	});
-	$('#btn-load-csv').change(function() {
-		$('#upload-csv').submit();
+	// $('#btn-load-csv').change(function() {
+	// 	$('#upload-csv').submit();
+	// });
+
+	$('select[name="ngroup2"]').change(function(e){
+		var $curThis = $(this);
+		var $name = $curThis.find('option:selected').attr('data-name');
+		var $value = $curThis.find('option:selected').val();
+
+		$.get('/material/subcat/' + $name + '/' + $value, function(data) {
+			$curThis.closest("tr").find("select[name='ngroup']").find('option').remove();
+		    $.each(data, function(idx, item){
+			    $curThis.closest("tr").find("select[name='ngroup']").append($('<option>', {
+			        value: item.id,
+			        text: item.name
+			    }));
+		    });
+		});
 	});
 
 	$('.getsub').change(function(e){
@@ -1042,54 +1043,71 @@ $(document).ready(function() {
 									<th class="col-md-5">Omschrijving</th>
 									<th class="col-md-1">Eenheid</th>
 									<th class="col-md-1">&euro; / Eenheid</th>
+									<th class="col-md-2">Categorie</th>
 									<th class="col-md-2">Subcategorie</th>
-									<th class="col-md-1">&nbsp;</th>
-									<th class="col-md-1">&nbsp;</th>
 									<th class="col-md-1">&nbsp;</th>
 								</tr>
 							</thead>
 
 							<tbody>
 								<?php
-									$mysupplier = Supplier::where('user_id','=',Auth::id())->first();
+									$mysupplier = Supplier::where('user_id', Auth::id())->first();
 									if ($mysupplier) {
 								?>
-								@foreach (Product::where('supplier_id','=', $mysupplier->id)->limit(50)->get() as $product)
+								@foreach (Product::where('supplier_id', $mysupplier->id)->orderBy('id')->limit(150)->get() as $product)
 								<tr data-id="{{ $product->id }}">
 									<td class="col-md-5"><input name="name" maxlength="255" type="text" value="{{ $product->description }}" class="form-control-sm-text dsave newrow" /></td>
 									<td class="col-md-1"><input name="unit" maxlength="30" type="text" value="{{ $product->unit }}" class="form-control-sm-text dsave" /></td>
 									<td class="col-md-1"><input name="rate" type="text" value="{{ number_format($product->price, 2,",",".") }}" class="form-control-sm-number dsave" /></td>
-									<td class="col-md-1">
+									<td class="col-md-2">
+										<select name="ngroup2" class="form-control-sm-text pointer">
+										<option value="0" selected>Selecteer Categorie</option>
+										@foreach (ProductGroup::all() as $group)
+										<option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
+										@foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
+										<option data-name="cat" value="{{ $cat->id }}"> - {{ $cat->category_name }}</option>
+										@endforeach
+										@endforeach
+										</select>
+									</td>
+									<td class="col-md-2">
 										<select name="ngroup" class="form-control-sm-text pointer dsave">
 								        @foreach (ProductSubCategory::orderBy('sub_category_name')->get() as $subcat)
-								        	<option {{ ($product->group_id == $subcat->id ? 'selected' : '') }} value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
+								        <option {{ ($product->group_id == $subcat->id ? 'selected' : '') }} value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
 								        @endforeach
 										</select>
 									</td>
-									<td class="col-md-1"><span class="total-ex-tax"></span></td>
-									<td class="col-md-1"><span class="total-incl-tax"></span></td>
-									<td class="col-md-2 text-right">
+									<td class="col-md-1 text-right">
 										<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
 									</td>
 								</tr>
 								@endforeach
 								<?php } ?>
 								<tr>
-									<td class="col-md-5"><input name="name" maxlength="255" type="text" class="form-control-sm-text dsave newrow"></td>
-									<td class="col-md-1"><input name="unit" maxlength="30" type="text" class="form-control-sm-text dsave"></td>
-									<td class="col-md-1"><input name="rate" type="text" class="form-control-sm-number dsave"></td>
-									<td class="col-md-1">
-										<select name="ngroup" class="form-control-sm-text pointer dsave">
+									<td class="col-md-5"><input name="name" maxlength="255" type="text" class="form-control-sm-text"></td>
+									<td class="col-md-1"><input name="unit" maxlength="30" type="text" class="form-control-sm-text"></td>
+									<td class="col-md-1"><input name="rate" type="text" class="form-control-sm-number"></td>
+									<td class="col-md-2">
+										<select name="ngroup2" class="form-control-sm-text pointer">
+										<option value="0" selected>Selecteer Categorie</option>
+										@foreach (ProductGroup::all() as $group)
+										<option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
+										@foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
+										<option data-name="cat" value="{{ $cat->id }}"> - {{ $cat->category_name }}</option>
+										@endforeach
+										@endforeach
+										</select>
+									</td>
+									<td class="col-md-2">
+										<select name="ngroup" class="form-control-sm-text pointer">
 										<option value="0">Selecteer</option>
 								        @foreach (ProductSubCategory::orderBy('sub_category_name')->get() as $subcat)
-								        	<option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
+								        <option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
 								        @endforeach
 										</select>
 									</td>
-									<td class="col-md-1"><span class="total-ex-tax"></span></td>
-									<td class="col-md-1"><span class="total-incl-tax"></span></td>
-									<td class="col-md-2 text-right">
-										<button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
+									<td class="col-md-1 text-right">
+										<button class="btn btn-primary btn-xs dsave">Opslaan</button>
 									</td>
 								</tr>
 							</tbody>
