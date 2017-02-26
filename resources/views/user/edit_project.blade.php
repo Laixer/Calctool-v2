@@ -417,7 +417,7 @@ $(document).ready(function() {
 				<div id="project" class="tab-pane">
 					<div class="pull-right">
 						<a href="javascript:void(0);" data-toggle="modal" data-target="#notepad" class="btn btn-primary">Kladblok</a>
-						<a href="/project-{{ $project->id }}/materiallist" target="new" class="btn btn-primary">Pakbon</a>
+						<a href="/project-{{ $project->id }}/materiallist" target="new" class="btn btn-primary">Raaplijst</a>
 						<div class="btn-group" role="group">
 							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acties&nbsp;&nbsp;<span class="caret"></span></button>
 							<ul class="dropdown-menu">

@@ -237,7 +237,7 @@ var n = this,
 							@if ($project->tax_reverse)
 								<span>0%</span>
 							@else
-								<select name="tax" id="type" class="dsave">
+								<select name="tax" id="type" class="dsave form-control-sm-text">
 									@foreach (Tax::orderBy('tax_rate', 'desc')->get() as $tax)
 									<?php
 									if ($tax->id == 1)
@@ -262,7 +262,7 @@ var n = this,
 							@if ($project->tax_reverse)
 								<span>0%</span>
 							@else
-								<select name="tax" id="type" class="dsave">
+								<select name="tax" id="type" class="dsave form-control-sm-text">
 									@foreach (Tax::orderBy('tax_rate', 'desc')->get() as $tax)
 									<?php
 									if ($tax->id == 1)

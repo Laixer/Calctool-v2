@@ -213,7 +213,11 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated) {
 			</div>
 			@else
 
+			<div class="pull-right">
+				<a href="/project-{{ $project->id }}/materiallist" target="new" class="btn btn-primary">Pakbon maken</a>
+			</div>
 			<h2><strong>Factuurbeheer</strong></h2>
+
 			<div class="white-row">
 			<table class="table table-striped">
 				<thead>
