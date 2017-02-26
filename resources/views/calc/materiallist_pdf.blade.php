@@ -101,12 +101,12 @@ use \Calctool\Models\MoreEquipment;
   <table border="0" cellspacing="0" cellpadding="0">
     <thead>
       <tr>
-        <th class="col-md-4">Onderdeel</th>
-        <th class="col-md-1">Stelpost</th>
-        <th class="col-md-4">Materiaal</th>
-        <th class="col-md-1">&euro; / Eenh.</th>
-        <th class="col-md-1">Aantal</th>
-        <th class="col-md-1">Prijs</th>
+        <td style="width: 185px" class="qty"><strong>Onderdeel</strong></th>
+        <td style="width: 160px" class="qty"><strong>Materiaal</strong></th>
+        <td style="width: 70px" class="qty"><strong>&euro; / Eenh.</strong></th>
+        <td style="width: 60px" class="qty"><strong>Aantal</strong></th>
+        <td style="width: 60px" class="qty"><strong>Prijs</strong></th>
+        <td style="width: 60px" class="qty"><strong>Stelpost</strong></th>
       </tr>
     </thead>
     <tbody>
@@ -114,62 +114,62 @@ use \Calctool\Models\MoreEquipment;
     <?php $i = true; ?>
     @foreach (CalculationMaterial::where('activity_id', $activity->id)->get() as $material)
       <tr>
-        <td class="col-md-4"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
-        <td class="col-md-1">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
-        <td class="col-md-4">{{ $material->material_name }}</td>
-        <td class="col-md-1">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
-        <td class="col-md-1">{{ number_format($material->amount, 2,",",".") }}</td>
-        <td class="col-md-1">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
+        <td style="width: 185px" class="qty"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
+        <td style="width: 160px" class="qty">{{ $material->material_name }}</td>
+        <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
+        <td style="width: 60px" class="qty">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
+        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
       </tr>
      @endforeach
     @foreach (CalculationEquipment::where('activity_id', $activity->id)->get() as $material)
       <tr>
-        <td class="col-md-4"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
-        <td class="col-md-1">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
-        <td class="col-md-4">{{ $material->equipment_name }}</td>
-        <td class="col-md-1">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
-        <td class="col-md-1">{{ number_format($material->amount, 2,",",".") }}</td>
-        <td class="col-md-1">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
+        <td style="width: 185px" class="qty"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
+        <td style="width: 160px" class="qty">{{ $material->equipment_name }}</td>
+        <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
+        <td style="width: 60px" class="qty">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
+        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
       </tr>
     @endforeach
     @foreach (EstimateMaterial::where('activity_id', $activity->id)->get() as $material)
       <tr>
-        <td class="col-md-4"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
-        <td class="col-md-1">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
-        <td class="col-md-4">{{ $material->material_name }}</td>
-        <td class="col-md-1">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
-        <td class="col-md-1">{{ number_format($material->amount, 2,",",".") }}</td>
-        <td class="col-md-1">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
+        <td style="width: 185px" class="qty"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
+        <td style="width: 160px" class="qty">{{ $material->material_name }}</td>
+        <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
+        <td style="width: 60px" class="qty">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
+        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
       </tr>
     @endforeach
     @foreach (EstimateEquipment::where('activity_id', $activity->id)->get() as $material)
       <tr>
-        <td class="col-md-4"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
-        <td class="col-md-1">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
-        <td class="col-md-4">{{ $material->equipment_name }}</td>
-        <td class="col-md-1">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
-        <td class="col-md-1">{{ number_format($material->amount, 2,",",".") }}</td>
-        <td class="col-md-1">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
+        <td style="width: 185px" class="qty"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
+        <td style="width: 160px" class="qty">{{ $material->equipment_name }}</td>
+        <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
+        <td style="width: 60px" class="qty">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
+        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
       </tr>
     @endforeach
     @foreach (MoreMaterial::where('activity_id', $activity->id)->get() as $material)
       <tr>
-        <td class="col-md-4"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
-        <td class="col-md-1">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
-        <td class="col-md-4">{{ $material->material_name }}</td>
-        <td class="col-md-1">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
-        <td class="col-md-1">{{ number_format($material->amount, 2,",",".") }}</td>
-        <td class="col-md-1">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
+        <td style="width: 185px" class="qty">><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
+        <td style="width: 160px" class="qty">{{ $material->material_name }}</td>
+        <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
+        <td style="width: 60px" class="qty">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
+        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
       </tr>
     @endforeach
     @foreach (MoreEquipment::where('activity_id', $activity->id)->get() as $material)
       <tr>
-        <td class="col-md-4"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
-        <td class="col-md-1">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
-        <td class="col-md-4">{{ $material->equipment_name }}</td>
-        <td class="col-md-1">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
-        <td class="col-md-1">{{ number_format($material->amount, 2,",",".") }}</td>
-        <td class="col-md-1">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
+        <td style="width: 185px" class="qty"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
+        <td style="width: 160px" class="qty">{{ $material->equipment_name }}</td>
+        <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
+        <td style="width: 60px" class="qty">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
+        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
       </tr>
     @endforeach
     @endforeach
@@ -177,14 +177,12 @@ use \Calctool\Models\MoreEquipment;
   </table>
   @endforeach
 
-    <h2 class="name">Bepalingen</h2>
+    <h2 class="name">Opmerkingen</h2>
     <hr color="#000" size="1">
     <div class="terms">
-      <li>Pakbon gebasseerd op huidig projectstatus.</li>
+      <li>Overzicht gebaseerd op huidige projectstatus.</li>
     </div>
 
-    <div class="from">Met vriendelijke groet,</div>
-    <div class="from">{{ $relation_self->name() }}</div>
 
   </main>
 
