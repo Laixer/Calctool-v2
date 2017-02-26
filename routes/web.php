@@ -100,7 +100,6 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('res-{resource_id}/download', 'ProjectController@downloadResource')->where('resource_id', '[0-9]+');
 	Route::get('res-{resource_id}/delete', 'ProjectController@doDeleteResource')->where('resource_id', '[0-9]+');
 	Route::post('resource/upload', 'ProjectController@doUploadProjectDocument');
-	Route::get('apps', 'AppsController@getAppsDashboard');
 	Route::get('myaccount', function() {
 		return view('user.myaccount');
 	});

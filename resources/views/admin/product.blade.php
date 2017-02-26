@@ -1,3 +1,10 @@
+<?php
+use \Calctool\Models\Wholesale;
+use \Calctool\Models\ProductGroup;
+use \Calctool\Models\ProductCategory;
+use \Calctool\Models\ProductSubCategory;
+?>
+
 @extends('layout.master')
 
 @section('content')
@@ -58,40 +65,56 @@ $(document).ready(function() {
 
 			<div class="white-row">
 
-			@if(0)
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th class="col-md-2">Naam</th>
-						<th class="col-md-3">Client ID</th>
-						<th class="col-md-5">Endpoint</th>
-						<th class="col-md-1 hidden-sm hidden-xs">Sessies</th>
-						<th class="col-md-1 hidden-sm hidden-xs">Actief</th>
-					</tr>
-				</thead>
-
-				<tbody>
-				<?php
-				$clients = DB::table('oauth_clients')->join('oauth_client_endpoints', 'oauth_clients.id', '=', 'oauth_client_endpoints.client_id')->select('oauth_clients.*', 'oauth_client_endpoints.redirect_uri')->get();
-				?>
-				@foreach ($clients as $client)
-					<tr>
-						<td class="col-md-2"><a href="{{ '/admin/application/'.$client->id.'/edit' }}">{{ $client->name }}</a></td>
-						<td class="col-md-3">{{ $client->id }}</td>
-						<td class="col-md-5">{{ $client->redirect_uri }}</td>
-						<td class="col-md-1 hidden-sm hidden-xs">{{ DB::table('oauth_sessions')->where('client_id',$client->id)->count() }}</td>
-						<td class="col-md-1 hidden-sm hidden-xs">{{ $client->active ? 'Ja' : 'Nee' }}</td>
-					</tr>
-				@endforeach
-				</tbody>
-			</table>
-			<div class="row">
-				<div class="col-md-12">
-					<a href="/admin/application/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuwe applicatie</a>
+				<div class="row">
+					<div class="col-md-10">
+						<select id="mod-group2" class="mod-getsub form-control" style="background-color: #E5E7E9; color:#000;">
+							<option value="0" selected>Selecteer Leverancier</option>
+							@foreach (Wholesale::all() as $wholesale)
+							<option {{ $wholesale->company_name=='Bouwmaat NL' ? 'selected' : '' }} value="{{ $wholesale->id }}">{{ $wholesale->company_name }}</option>
+							@endforeach
+						</select>
+					</div>
+					<div class="col-md-2">
+						<button class="btn btn-danger btn dsave">Lijst legen</button>
+					</div>
 				</div>
+
+				<br />
+
+				<div class="row">
+					<div class="col-md-10">
+						<select id="mod-group2" class="mod-getsub form-control" style="background-color: #E5E7E9; color:#000;">
+							<option value="0" selected>Selecteer Categorie</option>
+							@foreach (ProductGroup::all() as $group)
+							<option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
+							@foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
+							<option data-name="cat" value="{{ $cat->id }}"> - {{ $cat->category_name }}</option>
+							@endforeach
+							@endforeach
+						</select>
+					</div>
+					<div class="col-md-2">
+						<button class="btn btn-danger btn dsave">Verwijderen</button>
+					</div>
+				</div>
+
+				<br />
+
+				<div class="row">
+					<div class="col-md-10">
+						<select id="mod-group2" class="mod-getsub form-control" style="background-color: #E5E7E9; color:#000;">
+							<option value="0" selected>Selecteer Subcategorie</option>
+							@foreach (ProductSubCategory::all() as $subcat)
+							<option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
+							@endforeach
+						</select>
+					</div>
+					<div class="col-md-2">
+						<button class="btn btn-danger btn dsave">Verwijderen</button>
+					</div>
+				</div>
+
 			</div>
-			</div>
-			@endif
 
 		</div>
 

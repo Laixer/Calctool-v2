@@ -4,7 +4,6 @@ use \Calctool\Models\ProductCategory;
 use \Calctool\Models\ProductSubCategory;
 use \Calctool\Models\Supplier;
 use \Calctool\Models\Product;
-use \Calctool\Models\Element;
 use \Calctool\Models\Tax;
 use \Calctool\Models\Wholesale;
 use \Calctool\Models\FavoriteActivity;
@@ -42,9 +41,6 @@ $(document).ready(function() {
 	$('#tab-material').click(function(e){
 		sessionStorage.toggleTabMat{{Auth::user()->id}} = 'material';
 	});
-	$('#tab-element').click(function(e){
-		sessionStorage.toggleTabMat{{Auth::user()->id}} = 'element';
-	});
 	$('#tab-favorite').click(function(e){
 		sessionStorage.toggleTabMat{{Auth::user()->id}} = 'favorite';
 	});
@@ -60,13 +56,6 @@ $(document).ready(function() {
 		$('#tab-supplier').addClass('active');
 		$('#supplier').addClass('active');
 	}
-	$('#elmModal').on('hidden.bs.modal', function() {
-		$name = $('#name').val();
-		$desc = $('#desc').val();
-		$.post("/material/element/new", {name: $name, desc: $desc}, function(data) {
-			location.reload();
-		});
-	});
 	$req = false;
 	$("#search").keyup(function() {
 		$val = $(this).val();
