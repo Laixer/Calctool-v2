@@ -56,8 +56,7 @@ function invoice_condition($offer) {
   <head>
 	 <meta charset="utf-8">
 	<title>Offerte</title>
-	<link rel="stylesheet" href="{{ asset('css/pdf.css') }}" media="all" />
-	<link href='http://fonts.googleapis.com/css?family=Jolly+Lodger' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="{{ getcwd() }}/css/pdf.css" media="all" />
    </head>
  
   <body>
@@ -68,8 +67,10 @@ function invoice_condition($offer) {
 				<tr>
 					<td style="width: 345px">
 						<div id="logo">
-							<?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"
-								; ?>
+							<?php
+								if ($relation_self && $relation_self->logo_id)
+									echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+							?>
 						</div>
 					</td>
 					<td style="width: 300px">
@@ -988,7 +989,10 @@ function invoice_condition($offer) {
 	  <div style="page-break-after:always;"></div>
 	  <header class="clearfix">
 		<div id="logo">
-		<?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+		<?php
+			if ($relation_self && $relation_self->logo_id)
+				echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+		?>
 		</div>
 		  <div id="invoice">
 		  <span>{{ OfferController::getOfferCode($project->id) }}</span>
@@ -1046,7 +1050,10 @@ function invoice_condition($offer) {
 	  <div style="page-break-after:always;"></div>
 	  <header class="clearfix">
 		<div id="logo">
-		<?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+		<?php
+			if ($relation_self && $relation_self->logo_id)
+				echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+		?>
 		</div>
 		  <div id="invoice">
 		  <div>{{ OfferController::getOfferCode($project->id) }}</div>
@@ -1169,7 +1176,10 @@ function invoice_condition($offer) {
 	  <div style="page-break-after:always;"></div>
 	  <header class="clearfix">
 		<div id="logo">
-		<?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+		<?php
+			if ($relation_self && $relation_self->logo_id)
+				echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+		?>
 		</div>
 		  <div id="invoice">
 		  <div>{{ OfferController::getOfferCode($project->id) }}</div>
@@ -1343,7 +1353,10 @@ function invoice_condition($offer) {
 	  <div style="page-break-after:always;"></div>
 	  <header class="clearfix">
 		<div id="logo">
-		<?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+		<?php
+			if ($relation_self && $relation_self->logo_id)
+				echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+		?>
 		</div>
 		  <div id="invoice">
 		  <div>{{ OfferController::getOfferCode($project->id) }}</div>
@@ -1382,7 +1395,10 @@ function invoice_condition($offer) {
 	  <div style="page-break-after:always;"></div>
 	  <header class="clearfix">
 		<div id="logo">
-		<?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+		<?php
+			if ($relation_self && $relation_self->logo_id)
+				echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+		?>
 		</div>
 		  <div id="invoice">
 		  <div>{{ OfferController::getOfferCode($project->id) }}</div>

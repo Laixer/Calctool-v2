@@ -57,11 +57,11 @@ $type = ProjectType::find($project->type_id);
   <head>
     <meta charset="utf-8">
     <title>Factuur</title>
-    <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" media="all" />
+    <link rel="stylesheet" href="{{ getcwd() }}/css/pdf.css" media="all" />
   </head>
 
 
- <body style="background-image: url(http://localhost/images/final.png);">
+ <body>
      <header class="clearfix">
         <div id="heading" class="clearfix">
         <table border="0" cellspacing="0" cellpadding="0">
@@ -69,7 +69,10 @@ $type = ProjectType::find($project->type_id);
             <tr>
               <td style="width: 345px">
                 <div id="logo">
-                  <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+                  <?php
+                    if ($relation_self && $relation_self->logo_id)
+                      echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+                  ?>
                 </div>
               </td>
 
@@ -909,7 +912,10 @@ $type = ProjectType::find($project->type_id);
                                     <div style="page-break-after:always;"></div>
                                     <header class="clearfix">
                                     <div id="logo">
-                                    <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+                                    <?php
+                                      if ($relation_self && $relation_self->logo_id)
+                                        echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+                                    ?>
                                     </div>
                                       <div id="invoice">
                                         <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
@@ -952,7 +958,10 @@ $type = ProjectType::find($project->type_id);
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
       <div id="logo">
-      <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+      <?php
+        if ($relation_self && $relation_self->logo_id)
+          echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+      ?>
       </div>
         <div id="invoice">
           <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
@@ -1045,7 +1054,10 @@ $type = ProjectType::find($project->type_id);
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
       <div id="logo">
-      <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+      <?php
+        if ($relation_self && $relation_self->logo_id)
+          echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+      ?>
       </div>
         <div id="invoice">
           <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
@@ -1143,7 +1155,10 @@ $type = ProjectType::find($project->type_id);
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
       <div id="logo">
-      <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+      <?php
+        if ($relation_self && $relation_self->logo_id)
+          echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+      ?>
       </div>
         <div id="invoice">
           <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
@@ -1241,7 +1256,10 @@ $type = ProjectType::find($project->type_id);
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
       <div id="logo">
-      <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+      <?php
+        if ($relation_self && $relation_self->logo_id)
+          echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+      ?>
       </div>
         <div id="invoice">
           <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
@@ -1338,7 +1356,10 @@ $type = ProjectType::find($project->type_id);
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
       <div id="logo">
-      <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+      <?php
+        if ($relation_self && $relation_self->logo_id)
+          echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+      ?>
       </div>
         <div id="invoice">
           <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
@@ -1463,7 +1484,10 @@ $type = ProjectType::find($project->type_id);
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
       <div id="logo">
-      <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+      <?php
+        if ($relation_self && $relation_self->logo_id)
+          echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+      ?>
       </div>
         <div id="invoice">
           <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
@@ -1596,7 +1620,10 @@ $type = ProjectType::find($project->type_id);
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
       <div id="logo">
-      <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+      <?php
+        if ($relation_self && $relation_self->logo_id)
+          echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+      ?>
       </div>
         <div id="invoice">
           <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
@@ -1729,7 +1756,10 @@ $type = ProjectType::find($project->type_id);
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
       <div id="logo">
-      <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+      <?php
+        if ($relation_self && $relation_self->logo_id)
+          echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+      ?>
       </div>
         <div id="invoice">
           <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
@@ -1863,7 +1893,10 @@ $type = ProjectType::find($project->type_id);
       <div style="page-break-after:always;"></div>
       <header class="clearfix">
       <div id="logo">
-      <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+      <?php
+        if ($relation_self && $relation_self->logo_id)
+          echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+      ?>
       </div>
         <div id="invoice">
           <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
@@ -1907,7 +1940,10 @@ $type = ProjectType::find($project->type_id);
     <div style="page-break-after:always;"></div>
       <header class="clearfix">
       <div id="logo">
-      <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+      <?php
+        if ($relation_self && $relation_self->logo_id)
+          echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+      ?>
       </div>
         <div id="invoice">
           <div><?php if (Auth::user()->pref_use_ct_numbering) { echo $invoice->invoice_code; } else { echo $invoice->book_code; } ?></div>
