@@ -17,21 +17,28 @@ class DemoEnvSeeder extends Seeder {
 
 	public function run()
 	{
-		$user_type = UserType::where('user_type', 'user')->first();
+		$user_type = UserType::where('user_type', 'demo')->first();
 
 		$demo_user = new User;
 		$demo_user->username = 'demo';
 		$demo_user->secret = Hash::make('demo');
-		$demo_user->firstname = 'Demo';
+		$demo_user->firstname = 'Arie';
+		$demo_user->lastname = 'Kaas';
 		$demo_user->ip = '::1';
 		$demo_user->active = 'Y';
 		$demo_user->confirmed_mail = date('Y-m-d');
 		$demo_user->registration_date = date('Y-m-d');
 		$demo_user->expiration_date = date('Y-m-d', strtotime("+100 month", time()));
 		$demo_user->referral_key = md5(mt_rand());
+		$demo_user->mobile = '0612345678';
+		$demo_user->phone = '01012345763';
 		$demo_user->email = 'demo@calculatietool.com';
+		$demo_user->website = 'http://www.calculatietool.com';
 		$demo_user->user_type = $user_type->id;
 		$demo_user->user_group = 100;
+		$demo_user->pref_hourrate_calc = 35;
+		$demo_user->pref_hourrate_more = 45;
+		$demo_user->gender = 'M';
 		$demo_user->save();
 
 		$relation = new Relation;
