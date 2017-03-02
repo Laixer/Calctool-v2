@@ -59,6 +59,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 		return (strtotime($this->expiration_date) >= time());
 	}
 
+	public function isTryPeriod() {
+		return (strtotime($this->confirmed_mail . "+30 days") > time());
+	}
+
 	public function isAlmostDue() {
 		if ($this->isAdmin())
 			return false;
