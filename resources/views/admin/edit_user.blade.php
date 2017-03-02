@@ -227,14 +227,14 @@ $(document).ready(function() {
 										<div class="col-md-2">
 											<div class="form-group">
 												<label for="mobile">Mobiel</label>
-												<input name="mobile" id="mobile" type="text" maxlength="12" value="{{ Input::old('mobile') ? Input::old('mobile') : $user->mobile}}" class="form-control"/>
+												<input name="mobile" id="mobile" type="number" value="{{ Input::old('mobile') ? Input::old('mobile') : $user->mobile}}" class="form-control"/>
 											</div>
 										</div>
 
 										<div class="col-md-2">
 											<div class="form-group">
 												<label for="telephone">Telefoonnummer</label>
-												<input name="telephone" id="telephone" type="text" maxlength="12" value="{{ Input::old('telephone') ? Input::old('telephone') : $user->phone }}" class="form-control"/>
+												<input name="telephone" id="telephone" type="number" value="{{ Input::old('telephone') ? Input::old('telephone') : $user->phone }}" class="form-control"/>
 											</div>
 										</div>
 

@@ -158,7 +158,7 @@ class AuthController extends Controller {
 			$request->input('username'),
 			$request->input('secret'),
 			$request->input('rememberme') ? true : false,
-			$request->has('redirect'));
+			$request->get('redirect'));
 
 		if (is_array($resp))
 			return back()->withErrors($resp)->withInput($request->except('secret'));

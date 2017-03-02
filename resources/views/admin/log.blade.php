@@ -2,6 +2,10 @@
 
 @section('title', 'Logviewer')
 
+<?php
+$filename = '../storage/logs/laravel.log';
+?>
+
 @section('content')
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -35,7 +39,11 @@
 			<div class="row">
 				<div class="form-group">
 					<div class="col-md-12">
-						<textarea name="log" id="log" rows="25" class="form-control">{{ file_get_contents('../storage/logs/laravel.log') }}</textarea>
+						@if (file_exists($filename))
+						<textarea name="log" id="log" rows="25" class="form-control">{{ file_get_contents($filename) }}</textarea>
+						@else
+						<textarea name="log" id="log" rows="25" disabled class="form-control"></textarea>
+						@endif
 					</div>
 				</div>
 			</div>
