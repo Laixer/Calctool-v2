@@ -103,15 +103,16 @@ class AuthController extends Controller {
 			Cache::forget($this->getCacheBlockItem());
 		}
 
-		if ($request->has('username') && $request->has('password')) {
-			$resp = $this->authLogin(
-				$request->get('username'),
-				$request->get('password'));
+		if ($request->has('dauth')) {
+			$auth = explode(":", base64_decode($request->get('dauth')));
+			if (count($auth) == 2) {
+				$resp = $this->authLogin($auth[0], $auth[1]);
 
-			if (is_array($resp))
-				return view('auth.login')->withErrors($resp)->withInput($request->except('secret'));
+				if (is_array($resp))
+					return view('auth.login')->withErrors($resp)->withInput($request->except('secret'));
 
-			return $resp;
+				return $resp;
+			}
 		}
 
 		if (Cache::has($this->getCacheBlockItem())) {

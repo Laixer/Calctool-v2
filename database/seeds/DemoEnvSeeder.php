@@ -20,10 +20,10 @@ class DemoEnvSeeder extends Seeder {
 		$user_type = UserType::where('user_type', 'demo')->first();
 
 		$demo_user = new User;
-		$demo_user->username = 'demo';
-		$demo_user->secret = Hash::make('demo');
-		$demo_user->firstname = 'Arie';
-		$demo_user->lastname = 'Kaas';
+		$demo_user->username = 'mitch';
+		$demo_user->secret = Hash::make('deurzen');
+		$demo_user->firstname = 'Mitch';
+		$demo_user->lastname = 'Deurzen';
 		$demo_user->ip = '::1';
 		$demo_user->active = 'Y';
 		$demo_user->confirmed_mail = date('Y-m-d');
@@ -32,8 +32,8 @@ class DemoEnvSeeder extends Seeder {
 		$demo_user->referral_key = md5(mt_rand());
 		$demo_user->mobile = '0612345678';
 		$demo_user->phone = '01012345763';
-		$demo_user->email = 'demo@calculatietool.com';
-		$demo_user->website = 'http://www.calculatietool.com';
+		$demo_user->email = 'info@mitchdeurzen.nl';
+		$demo_user->website = 'https://www.mitchdeurzen.nl/';
 		$demo_user->user_type = $user_type->id;
 		$demo_user->user_group = 100;
 		$demo_user->pref_hourrate_calc = 35;
@@ -45,21 +45,21 @@ class DemoEnvSeeder extends Seeder {
 		$relation->user_id = $demo_user->id;
 		$relation->kind_id = 1;
 		$relation->debtor_code = 'DEMO42';
-		$relation->company_name = 'CalculatieTool.com';
+		$relation->company_name = 'Deurzen Onderhoud';
 		$relation->type_id = 28;
 		$relation->kvk = '54565243';
 		$relation->btw = 'NL851353423B01';
 		$relation->phone = '0612345678';
-		$relation->email = 'demo@calculatietool.com';
-		$relation->website = 'http://www.calculatietool.com';
-		$relation->address_street = 'Odinholm';
-		$relation->address_number = '25';
-		$relation->address_postal = '3124SC';
-		$relation->address_city = 'Schiedam';
+		$relation->email = 'info@mitchdeurzen.nl';
+		$relation->website = 'https://www.mitchdeurzen.nl/';
+		$relation->address_street = 'Straatweg';
+		$relation->address_number = '11';
+		$relation->address_postal = '3116CD';
+		$relation->address_city = 'Rotterdam';
 		$relation->province_id = 9;
 		$relation->country_id = 34;
 		$relation->iban = 'NL29INGB0006863509';
-		$relation->iban_name = 'CalculatieTool.com';
+		$relation->iban_name = 'DEURZEN ONDERHOUD';
 		$relation->save();
 
 		$demo_user->self_id = $relation->id;
@@ -67,14 +67,16 @@ class DemoEnvSeeder extends Seeder {
 
 		$contact = new Contact;
 		$contact->salutation = 'Dhr.';
-		$contact->firstname = 'Arie';
-		$contact->lastname = 'Kaas';
+		$contact->firstname = 'Mitch';
+		$contact->lastname = 'Deurzen';
 		$contact->mobile = '0612345678';
 		$contact->phone = '01012345763';
-		$contact->email = 'demo@calculatietool.com';
+		$contact->email = 'mitch@mitchdeurzen.nl';
 		$contact->relation_id = $relation->id;
 		$contact->function_id = 7;
 		$contact->gender = 'M';
 		$contact->save();
+
+		DB::table('system_message')->delete();
 	}
  }
