@@ -8,6 +8,7 @@ use \Calctool\Models\User;
 use \Calctool\Models\Relation;
 use \Calctool\Models\Contact;
 use \Calctool\Models\MessageBox;
+use \Calctool\Models\Resource;
 
 /*
  * Static Models Only
@@ -17,6 +18,7 @@ class DemoEnvSeeder extends Seeder {
 
 	public function run()
 	{
+		DB::table('system_message')->delete();
 		$user_type = UserType::where('user_type', 'demo')->first();
 
 		$demo_user = new User;
@@ -77,6 +79,16 @@ class DemoEnvSeeder extends Seeder {
 		$contact->gender = 'M';
 		$contact->save();
 
-		DB::table('system_message')->delete();
+		$resource = new Resource;
+		$resource->resource_name = md5(mt_rand());
+		$resource->file_location = 'images/logo-demo.png';
+		$resource->file_size = 29385;
+		$resource->user_id = $demo_user->id;
+		$resource->description = 'Relatielogo';
+
+		$resource->save();
+
+		$relation->logo_id = $resource->id;
+		$relation->save();
 	}
  }
