@@ -471,7 +471,7 @@ class InvoiceController extends Controller {
 		Auth::user()->invoice_counter++;
 		Auth::user()->save();
 
-		return redirect('/invoice/project-'.$project->id.'/pdf-invoice-'.$invoice->id);
+		return response()->json(['success' => 1]);
 	}
 
 	public function doInvoicePay(Request $request)

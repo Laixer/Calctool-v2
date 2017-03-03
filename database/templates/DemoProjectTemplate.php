@@ -55,7 +55,7 @@ class DemoProjectTemplate {
 
 		
 		$project = new Project;
-		$project->project_name 		= 'Demoproject';
+		$project->project_name 		= 'PROJ-' . date("Ymd-s");
 		$project->address_street 	= 'Demolaan';
 		$project->address_number 	= '2';
 		$project->address_postal 	= '5678MO';
