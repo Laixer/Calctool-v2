@@ -195,6 +195,7 @@ class InvoiceController extends Controller {
 		if ($relation_self->btw)
 			$footer_text .= ' | BTW: ' . $relation_self->btw;
 
+		$pdf->setOption('zoom', 1.1);
 		$pdf->setOption('footer-font-size', 8);
 		$pdf->setOption('footer-left', $footer_text);
 		$pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
@@ -304,6 +305,7 @@ class InvoiceController extends Controller {
 		if ($relation_self->btw)
 			$footer_text .= ' | BTW: ' . $relation_self->btw;
 
+		$pdf->setOption('zoom', 1.1);
 		$pdf->setOption('footer-font-size', 8);
 		$pdf->setOption('footer-left', $footer_text);
 		$pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
@@ -446,6 +448,7 @@ class InvoiceController extends Controller {
 		if ($relation_self->btw)
 			$footer_text .= ' | BTW: ' . $relation_self->btw;
 
+		$pdf->setOption('zoom', 1.1);
 		$pdf->setOption('footer-font-size', 8);
 		$pdf->setOption('footer-left', $footer_text);
 		$pdf->setOption('footer-right', 'Pagina [page]/[toPage]');

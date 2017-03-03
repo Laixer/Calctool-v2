@@ -223,6 +223,7 @@ class UserController extends Controller {
 		$footer_text .= ' | KVK: 54565243';
 		$footer_text .= ' | BTW: 851353423B01';
 
+		$pdf->setOption('zoom', 1.1);
 		$pdf->setOption('footer-font-size', 8);
 		$pdf->setOption('footer-left', $footer_text);
 		$pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
@@ -349,6 +350,7 @@ class UserController extends Controller {
 			$footer_text .= ' | KVK: 54565243';
 			$footer_text .= ' | BTW: 851353423B01';
 
+			$pdf->setOption('zoom', 1.1);
 			$pdf->setOption('footer-font-size', 8);
 			$pdf->setOption('footer-left', $footer_text);
 			$pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
