@@ -128,7 +128,7 @@ class Kernel extends ConsoleKernel
         })->dailyAt('06:30');
 
         $schedule->call(function() {
-            foreach (User::where('active',true)->whereNotNull('confirmed_mail')->whereNull('banned')->get() as $user) {
+            foreach (User::where('active',true)->whereNotNull('confirmed_mail')->whereNull('banned')->whereNull('payment_subscription_id')->get() as $user) {
                 if ($user->isAlmostDue()) {
                     if (UserGroup::find($user->user_group)->subscription_amount == 0)
                         continue;
@@ -147,7 +147,6 @@ class Kernel extends ConsoleKernel
                     });
                 }
             }
-
         })->daily();
 
         $schedule->call(function() {
