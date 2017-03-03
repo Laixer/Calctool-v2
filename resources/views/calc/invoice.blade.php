@@ -2187,7 +2187,7 @@ $type = ProjectType::find($project->type_id);
 
 <div class="show-all" style="display:none">
 
-			<h4>Specificatie regiewerk</h4>
+			<h4>Specificatie factuur</h4>
 			<h5>AANNEMING</h5>
 			<table class="table table-striped">
 				<thead>
@@ -2309,7 +2309,7 @@ $type = ProjectType::find($project->type_id);
 		<div class="show-subcon">
 		<?#--CONTENT, TOTAL START--?>
 		<div>
-			<h4>Specificatie regiewerk</h4>
+			<h4>Specificatie factuur</h4>
 			@if($type->type_name != 'snelle offerte en factuur')
 			<table class="table table-striped">
 				<thead>
@@ -2622,7 +2622,7 @@ $type = ProjectType::find($project->type_id);
 
 			<div class="show-all">
 			<?#-- DECRIPTION MORE CON&SUBCON START --?>
-			<h4>Regiewerk Aanneming</h4>
+			<h4>Aanneming</h4>
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -2669,7 +2669,7 @@ $type = ProjectType::find($project->type_id);
 					</tbody>
 				</table>
 
-				<h4>Regiewerk Onderaanneming</h4>
+				<h4>Onderaanneming</h4>
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -2716,7 +2716,7 @@ $type = ProjectType::find($project->type_id);
 					</tbody>
 				</table>
 
-				<h4>Totalen regiewerk</h4>
+				<h4>Totalen</h4>
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -2752,7 +2752,7 @@ $type = ProjectType::find($project->type_id);
 			<div class="show-subcon" style="display:none">
 			<?#-- DECRIPTION MORE TOTAL START --?>
 			<div>
-				<h4>Regiewerk</h4>
+				<h4>Totalen</h4>
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -2815,7 +2815,7 @@ $type = ProjectType::find($project->type_id);
 					</thead>
 					<tbody>
 						<tr>
-							<td class="col-md-3"><strong>Totalen regiewerk</td>
+							<td class="col-md-3"><strong>Totalen</td>
 							<td class="col-md-4">&nbsp;</td>
 							<td class="only-end-total-spec col-md-1"><strong><span class="pull-right">{{ number_format(MoreOverview::laborSuperTotalAmount($project), 2, ",",".") }}</span></strong></td>
 							<td class="only-end-total-spec col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::laborSuperTotal($project), 2, ",",".") }}</span></strong></td>

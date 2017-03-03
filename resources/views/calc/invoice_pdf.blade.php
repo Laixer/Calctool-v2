@@ -2020,7 +2020,7 @@ $type = ProjectType::find($project->type_id);
       <thead>
         <tr style="page-break-after: always;">
           <th class="qty">&nbsp;</th>
-          <td class="qty"><strong>Regiewerk</strong></td>
+          <td class="qty"><strong>Te factureren</strong></td>
           <th class="qty">@if(!$project->tax_reverse) @if ($display_specification) BTW % @endif @endif</th>
           <th class="qty">@if(!$project->tax_reverse) BTW bedrag @endif</th>
         </tr>
@@ -2253,7 +2253,7 @@ $type = ProjectType::find($project->type_id);
       <thead>
         <tr style="page-break-after: always;">
           <th style="width: 181px" class="qty">&nbsp;</th>
-          <th class="qty">Regiewerk</th>
+          <th class="qty">Te factureren</th>
           <th class="qty">@if(!$project->tax_reverse) @if ($display_specification) BTW % @endif @endif</th>
           <th class="qty">@if(!$project->tax_reverse) BTW bedrag @endif</th>
         </tr>
@@ -2340,7 +2340,7 @@ $type = ProjectType::find($project->type_id);
       <thead>
         <tr style="page-break-after: always;">
           <th style="width: 181px" class="qty">&nbsp;</th>
-          <th class="qty">Regiewerk</th>
+          <th class="qty">Te factureren</th>
           <th class="qty">@if(!$project->tax_reverse) @if ($display_specification) BTW % @endif @endif</th>
           <th class="qty">@if(!$project->tax_reverse) BTW bedrag @endif </th>
         </tr>
@@ -2599,7 +2599,7 @@ $type = ProjectType::find($project->type_id);
 
   <?#--MORE TOTAL START--?>
 
-  <h2 class="name">Regie per werkzaamheid</h2>
+  <h2 class="name">Totalen per werkzaamheid</h2>
   <hr color="#000" size="1">
 
   <table border="0" cellspacing="0" cellpadding="0">
