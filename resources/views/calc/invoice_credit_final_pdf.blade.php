@@ -30,9 +30,9 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
   <head>
     <meta charset="utf-8">
     <title>Termijnfactuur</title>
-    <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" media="all" />
+    <link rel="stylesheet" href="{{ getcwd() }}/css/pdf.css" media="all" />
   </head>
-   <body style="background-image: url(http://localhost/images/final.png);">
+   <body>
      <header class="clearfix">
         <div id="heading" class="clearfix">
         <table border="0" cellspacing="0" cellpadding="0">
@@ -40,7 +40,10 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
             <tr>
               <td style="width: 345px">
                 <div id="logo">
-                  <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+                <?php
+                  if ($relation_self && $relation_self->logo_id)
+                    echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+                ?>
                 </div>
               </td>
 

@@ -42,6 +42,56 @@ class AuthController extends Controller {
 		return 'blockremotelocal';
 	}
 
+	private function authLogin($username, $password, $rememberme = false, $redirect = null)
+	{
+		$username = strtolower(trim($username));
+		$userdata = array(
+			'username' 	=> $username,
+			'password' 	=> $password,
+			'active' 	=> 1,
+			'banned' 	=> NULL
+		);
+
+		$userdata2 = array(
+			'email' 	=> $username,
+			'password' 	=> $password,
+			'active' 	=> 1,
+			'banned' 	=> NULL
+		);
+
+		if (Cache::has($this->getCacheBlockItem())) {
+			if (Cache::get($this->getCacheBlockItem()) >= 10)
+				return ['auth' => ['Toegang geblokkeerd voor 15 minuten. Probeer later opnieuw.']];
+		}
+
+		if (Auth::attempt($userdata, $rememberme) || Auth::attempt($userdata2, $rememberme)) {
+
+			/* Email must be confirmed */
+			if (!Auth::user()->confirmed_mail) {
+				Auth::logout();
+				return ['mail' => ['Email nog niet bevestigd']];
+			}
+
+			if (Auth::user()->isSystem())
+				return redirect('/admin');
+
+			if ($redirect)
+				return redirect(urldecode($redirect));
+
+			/* Redirect to dashboard*/
+			return redirect('/');
+		} else {
+
+			if (Cache::has($this->getCacheBlockItem())) {
+				Cache::increment($this->getCacheBlockItem());
+			} else {
+				Cache::put($this->getCacheBlockItem(), 1, 15);
+			}
+	
+			return ['password' => ['Gebruikersnaam en/of wachtwoord verkeerd']];
+		}
+	}
+
 	/**
 	 * Show the form for creating a new resource.
 	 *
@@ -51,6 +101,17 @@ class AuthController extends Controller {
 	{
 		if ($request->has('delblock')) {
 			Cache::forget($this->getCacheBlockItem());
+		}
+
+		if ($request->has('username') && $request->has('password')) {
+			$resp = $this->authLogin(
+				$request->get('username'),
+				$request->get('password'));
+
+			if (is_array($resp))
+				return view('auth.login')->withErrors($resp)->withInput($request->except('secret'));
+
+			return $resp;
 		}
 
 		if (Cache::has($this->getCacheBlockItem())) {
@@ -93,57 +154,16 @@ class AuthController extends Controller {
 	 */
 	public function doLogin(Request $request)
 	{
-		$username = strtolower(trim($request->input('username')));
-		$userdata = array(
-			'username' 	=> $username,
-			'password' 	=> $request->input('secret'),
-			'active' 	=> 1,
-			'banned' 	=> NULL
-		);
+		$resp = $this->authLogin(
+			$request->input('username'),
+			$request->input('secret'),
+			$request->input('rememberme') ? true : false,
+			$request->get('redirect'));
 
-		$userdata2 = array(
-			'email' 	=> $username,
-			'password' 	=> $request->input('secret'),
-			'active' 	=> 1,
-			'banned' 	=> NULL
-		);
+		if (is_array($resp))
+			return back()->withErrors($resp)->withInput($request->except('secret'));
 
-		$remember = $request->input('rememberme') ? true : false;
-
-		if (Cache::has($this->getCacheBlockItem())) {
-			if (Cache::get($this->getCacheBlockItem()) >= 10) {
-				return back()->withErrors(['auth' => ['Toegang geblokkeerd voor 15 minuten. Probeer later opnieuw.']]);
-			}
-		}
-
-		if (Auth::attempt($userdata, $remember) || Auth::attempt($userdata2, $remember)) {
-
-			/* Email must be confirmed */
-			if (!Auth::user()->confirmed_mail) {
-				Auth::logout();
-				return back()->withErrors(['mail' => ['Email nog niet bevestigd']])->withInput($request->except('secret'));
-			}
-
-			if ($request->has('redirect')) {
-				return redirect(urldecode($request->get('redirect')));
-			}
-
-			if (Auth::user()->isSystem()) {
-				return redirect('/admin');
-			}
-
-			/* Redirect to dashboard*/
-			return redirect('/');
-		} else {
-
-			if (Cache::has($this->getCacheBlockItem())) {
-				Cache::increment($this->getCacheBlockItem());
-			} else {
-				Cache::put($this->getCacheBlockItem(), 1, 15);
-			}
-	
-			return back()->withErrors(['password' => ['Gebruikersnaam en/of wachtwoord verkeerd']])->withInput($request->except('secret'));
-		}
+		return $resp;
 	}
 
 	/**
