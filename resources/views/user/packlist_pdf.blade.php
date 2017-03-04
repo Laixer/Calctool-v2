@@ -62,6 +62,8 @@ $project = Project::find($project_id);
                         @if ($relation_self->kvk)<div><strong>KVK:</strong></div>@endif
                         @if ($relation_self->btw)<div><strong>BTW:</strong></div>@endif
                         <div>&nbsp;</div>
+                        <div><strong>Project:</strong>
+                        <div><strong>Projectnr:</strong>
                         <div><strong>Datum:</strong>
                         <div><strong>Pakbonnr:</strong>
                       </td>
@@ -73,6 +75,8 @@ $project = Project::find($project_id);
                         @if ($relation_self->kvk)<div>{{ $relation_self->kvk }}&nbsp;</div>@endif
                         @if ($relation_self->btw)<div>{{ $relation_self->btw }}&nbsp;</div>@endif
                         <div>&nbsp;</div>
+                        <div>{{ $project->project_name }}&nbsp;</div>
+                        <div>{{ $project->id }}&nbsp;</div>
                         <div>{{ date('d M Y') }}&nbsp;</div>
                         <div>{{ $list_id }}&nbsp;</div>
                       </td>
