@@ -733,9 +733,9 @@ class ProjectController extends Controller {
 		}
 	}
 
-	public function getMaterialList(Request $request, $project_id)
+	public function getPackingSlip(Request $request, $project_id)
 	{
-		$pdf = \PDF::loadView('calc.materiallist_pdf', [
+		$pdf = \PDF::loadView('calc.packslip_pdf', [
 			'name' => 'Sjaakie',
 			'date' => '12-23-23',
 			'amount' => 456,

@@ -1361,6 +1361,10 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 
 		@include('calc.wizard', array('page' => 'calculation'))
 
+			<div class="pull-right">
+				<a href="#" class="btn btn-primary" type="button">Calculatie overzicht</a>
+			</div>
+
 			<h2><strong>Calculeren</strong>&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
 
 			<div class="tabs nomargin" ng-controller="SummaryCtrl">
@@ -1708,7 +1712,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 													<ul>
 								<li>Stap 1: Voeg nieuw <i>Onderdeel</i> toe</li>
 								<li>Stap 2: Klik op het toegevoegde <i>Onderdeel</i></li>
-								<li>Stap 3. Voeg <i>Werkzaamheid</i> toe</li>
+								<li>Stap 3: Voeg <i>Werkzaamheid</i> toe</li>
 								<li>Stap 4: Klik op de toegevoegde <i>Werkzaamheid</i></li>
 								<li>Stap 5: Nu kunt u de <i>Werkzaamheid</i> gaan calculeren</li>
 						</ul>
