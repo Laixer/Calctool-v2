@@ -73,11 +73,22 @@ if (!$invoice) {
 
 	$('.oclose').click(function(e){
 		e.preventDefault();
-		$.post("/invoice/close", {projectid: {{ $project->id }}, id: {{ $_invoice->id }} }, function(data){
+		$('#progress').show();
+
+		var timerId = 0;
+		var ctr=5;
+		var max=9;
+
+		timerId = setInterval(function () {
+			ctr++;
+			$('#progress div').width(ctr*max + "%");
+			if (ctr == max)
+				clearInterval(timerId);
+		}, 250);
+		$.post("/invoice/close", {projectid: {{ $project->id }}, id: {{ $_invoice->id }} }, function(data) {
+			$('#progress div').width("100%");
 			window.location.href = '/invoice/project-'+{{ $project->id }}+'/pdf-invoice-'+{{ $_invoice->id }};
 		}).fail(function(e) { console.log(e); });
-		$('#progress').show();
-		$('#progress div').width('85%');
 	});
 
 });
