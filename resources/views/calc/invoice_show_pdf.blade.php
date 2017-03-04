@@ -76,11 +76,14 @@ if (!$invoice) {
 		$.post("/invoice/close", {projectid: {{ $project->id }}, id: {{ $_invoice->id }} }, function(data){
 			window.location.href = '/invoice/project-'+{{ $project->id }}+'/pdf-invoice-'+{{ $_invoice->id }};
 		}).fail(function(e) { console.log(e); });
+		$('#progress').show();
+		$('#progress div').width('85%');
 	});
 
 });
 </script>
-	<div id="wrapper">
+
+<div id="wrapper">
 
 	<section class="container">
 
@@ -126,6 +129,12 @@ if (!$invoice) {
 		</div>
 
 		<h2><strong>Concept factuur</strong></h2>
+
+		<div id="progress" class="progress" style="height: 15px;display: none;">
+		  <div class="progress-bar progress-bar-striped active" role="progressbar"
+		  aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:20%;background-color:#89a550;">
+		  </div>
+		</div>
 
 		<div id="pages"></div>
 
