@@ -33,9 +33,9 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
   <head>
     <meta charset="utf-8">
     <title>Termijnfactuur</title>
-    <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" media="all" />
+    <link rel="stylesheet" href="{{ getcwd() }}/css/pdf.css" media="all" />
   </head>
-   <body style="background-image: url(http://localhost/images/concept.png);">
+   <body style="background-image: url({{ getcwd() }}/images/concept.png);">
      <header class="clearfix">
         <div id="heading" class="clearfix">
         <table border="0" cellspacing="0" cellpadding="0">
@@ -43,7 +43,10 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
             <tr>
               <td style="width: 345px">
                 <div id="logo">
-                  <?php if ($relation_self && $relation_self->logo_id) echo "<img src=\"".asset(Resource::find($relation_self->logo_id)->file_location)."\"/>"; ?>
+                <?php
+                  if ($relation_self && $relation_self->logo_id)
+                    echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+                ?>
                 </div>
               </td>
 
@@ -218,7 +221,13 @@ $include_tax = $invoice->include_tax; //BTW bedragen weergeven
       </tbody>
     </table>
 
-      @if($project->tax_reverse)<h2 class="name">Deze factuur is <strong>BTW Verlegd</strong></h1>@endif
+          @if ($project->tax_reverse)
+    @if ($relation->btw)
+    <h2 class="name">Deze offerte is <strong>BTW Verlegd</strong> naar {{ $relation->btw }}</h1>
+    @else
+    <h2 class="name">Deze offerte is <strong>BTW Verlegd</strong></h1>
+    @endif
+    @endif
 
     <h2 class="name">Bepalingen</h2>
     <hr color="#000" size="1">

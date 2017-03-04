@@ -100,7 +100,6 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('res-{resource_id}/download', 'ProjectController@downloadResource')->where('resource_id', '[0-9]+');
 	Route::get('res-{resource_id}/delete', 'ProjectController@doDeleteResource')->where('resource_id', '[0-9]+');
 	Route::post('resource/upload', 'ProjectController@doUploadProjectDocument');
-	Route::get('apps', 'AppsController@getAppsDashboard');
 	Route::get('myaccount', function() {
 		return view('user.myaccount');
 	});
@@ -348,6 +347,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('project/updateworkcompletion', 'ProjectController@doUpdateWorkCompletion');
 	Route::post('project/updateprojectclose', 'ProjectController@doUpdateProjectClose');
 	Route::get('project-{project_id}/updateprojectdilapidated', 'ProjectController@getUpdateProjectDilapidated');
+	Route::get('project-{project_id}/materiallist', 'ProjectController@getMaterialList');
 
 	/* Cost pages */
 	Route::get('timesheet', 'CostController@getTimesheet')->middleware('payzone');
@@ -463,6 +463,7 @@ Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'],
 		return view('admin.audit');
 	});
 	Route::post('product/upload', 'AdminController@doUploadCSV');
+	Route::post('product/emptylist', 'AdminController@getEmptyList');
 	Route::get('application/{client_id}/delete', 'AdminController@doDeleteApplication');
 	Route::post('application/{client_id}/edit', 'AdminController@doUpdateApplication');
 	Route::post('application/new', 'AdminController@doNewApplication');

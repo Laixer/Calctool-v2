@@ -1,7 +1,9 @@
 <?php
 use \Calctool\Models\UserGroup;
+use \Calctool\Models\UserType;
 
 $user = Auth::user();
+$user_type_name = UserType::find($user->user_type)->user_type;
 ?>
 
 @extends('layout.master')
@@ -292,12 +294,14 @@ $(document).ready(function() {
 						<li id="tab-company">
 							<a href="#company" data-toggle="tab">Mijn gegevens</a>
 						</li>
+						@if ($user_type_name != 'demo')
 						<li id="tab-payment">
 							<a href="#payment" data-toggle="tab">Mijn betalingen</a>
 						</li>
 						<li id="tab-contact">
 							<a href="#contact" data-toggle="tab">Wachtwoord</a>
 						</li>
+						@endif
 						@if (count($clients))
 						<li id="tab-apps">
 							<a href="#apps" data-toggle="tab">Applicaties</a>
@@ -391,6 +395,7 @@ $(document).ready(function() {
 						</form>
 
 						</div>
+						@if ($user_type_name != 'demo')
 						<div id="payment" class="tab-pane">
 
 							@if(!session()->has('swap_session'))
@@ -506,6 +511,7 @@ $(document).ready(function() {
 						</form>
 
 						</div>
+						@endif
 						
 						@if (count($clients))
 						<div id="apps" class="tab-pane">

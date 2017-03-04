@@ -107,8 +107,10 @@ $(document).ready(function() {
 						<td class="col-md-2">{{ $users->currentStatus() }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">
 						{{ userStatus($users) }}
-						@if (!$users->hasPayed())
-						<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 
+						@if ($users->isTryPeriod())
+						<i class="fa fa-flask" aria-hidden="true"></i> 
+						@elseif ($users->hasPayed())
+						<i class="fa fa-heart" aria-hidden="true"></i> 
 						@endif
 						</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>
@@ -145,8 +147,10 @@ $(document).ready(function() {
 						<td class="col-md-2">{{ $users->currentStatus() }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">
 						{{ userStatus($users) }}
-						@if (!$users->hasPayed())
-						<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 
+						@if ($users->isTryPeriod())
+						<i class="fa fa-flask" aria-hidden="true"></i> 
+						@elseif ($users->hasPayed())
+						<i class="fa fa-heart" aria-hidden="true"></i> 
 						@endif
 						</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>
@@ -183,8 +187,10 @@ $(document).ready(function() {
 						<td class="col-md-2">{{ $users->currentStatus() }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">
 						{{ userStatus($users) }}
-						@if (!$users->hasPayed())
-						<i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 
+						@if ($users->isTryPeriod())
+						<i class="fa fa-flask" aria-hidden="true"></i> 
+						@elseif ($users->hasPayed())
+						<i class="fa fa-heart" aria-hidden="true"></i> 
 						@endif
 						</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>

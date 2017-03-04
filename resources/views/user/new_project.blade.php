@@ -385,7 +385,7 @@ $(document).ready(function() {
 
 		<h2><strong>Nieuw</strong> project&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
 
-		@if(!Calctool\Models\Relation::where('user_id','=', Auth::user()->id)->count())
+		@if(!Calctool\Models\Relation::where('user_id', Auth::user()->id)->count())
 		<div class="alert alert-info">
 			<i class="fa fa-info-circle"></i>
 			<strong>Let Op!</strong> Maak eerst een opdrachtgever aan onder <a href="/relation/new">nieuwe relatie</a>
@@ -418,7 +418,6 @@ $(document).ready(function() {
 								<a href="#" data-toggle="modal" data-target="#tutModal">+ Nieuwe opdrachtgever toevoegen</a>
 							</div>
 						</div>
-						@if (Auth::user()->isAdmin())
 						<div class="col-md-2">
 							<div class="form-group">
 								<label for="type">Soort project</label>
@@ -429,7 +428,6 @@ $(document).ready(function() {
 								</select>										
 							</div>
 						</div>
-						@endif
 						<div class="col-md-2">
 							<label for="tax_reverse">BTW verlegd</label>
 							<div class="form-group">

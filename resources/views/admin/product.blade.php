@@ -1,8 +1,15 @@
+<?php
+use \Calctool\Models\Wholesale;
+use \Calctool\Models\ProductGroup;
+use \Calctool\Models\ProductCategory;
+use \Calctool\Models\ProductSubCategory;
+?>
+
 @extends('layout.master')
 
 @section('content')
 
-@section('title', 'Applicaties')
+@section('title', 'Producten')
 
 ?>
 <script type="text/javascript">
@@ -21,7 +28,7 @@ $(document).ready(function() {
 			<ol class="breadcrumb">
 			  <li><a href="/">Home</a></li>
 			  <li><a href="/admin">Admin CP</a></li>
-			  <li class="active">Applicaties</li>
+			  <li class="active">Producten</li>
 			</ol>
 			<div>
 			<br />
@@ -29,7 +36,7 @@ $(document).ready(function() {
 			@if (Session::has('success'))
 			<div class="alert alert-success">
 				<i class="fa fa-check-circle"></i>
-				<strong>{{ Session::get('success') }}</strong>
+				<strong>{!! Session::get('success') !!}</strong>
 			</div>
 			@endif
 
@@ -58,40 +65,62 @@ $(document).ready(function() {
 
 			<div class="white-row">
 
-			@if(0)
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th class="col-md-2">Naam</th>
-						<th class="col-md-3">Client ID</th>
-						<th class="col-md-5">Endpoint</th>
-						<th class="col-md-1 hidden-sm hidden-xs">Sessies</th>
-						<th class="col-md-1 hidden-sm hidden-xs">Actief</th>
-					</tr>
-				</thead>
+				<form action="/admin/product/emptylist" method="post">
+				{!! csrf_field() !!}
+					<div class="row">
+						<div class="col-md-10">
+							<select name="supplier" class="form-control" style="background-color: #E5E7E9; color:#000;">
+								@foreach (Wholesale::all() as $wholesale)
+								<option {{ $wholesale->company_name=='Bouwmaat NL' ? 'selected' : '' }} value="{{ $wholesale->id }}">{{ $wholesale->company_name }}</option>
+								@endforeach
+							</select>
+						</div>
+						<div class="col-md-2">
+							<button class="btn btn-danger btn dsave">Lijst legen</button>
+						</div>
+					</div>
+				</form>
 
-				<tbody>
-				<?php
-				$clients = DB::table('oauth_clients')->join('oauth_client_endpoints', 'oauth_clients.id', '=', 'oauth_client_endpoints.client_id')->select('oauth_clients.*', 'oauth_client_endpoints.redirect_uri')->get();
-				?>
-				@foreach ($clients as $client)
-					<tr>
-						<td class="col-md-2"><a href="{{ '/admin/application/'.$client->id.'/edit' }}">{{ $client->name }}</a></td>
-						<td class="col-md-3">{{ $client->id }}</td>
-						<td class="col-md-5">{{ $client->redirect_uri }}</td>
-						<td class="col-md-1 hidden-sm hidden-xs">{{ DB::table('oauth_sessions')->where('client_id',$client->id)->count() }}</td>
-						<td class="col-md-1 hidden-sm hidden-xs">{{ $client->active ? 'Ja' : 'Nee' }}</td>
-					</tr>
-				@endforeach
-				</tbody>
-			</table>
-			<div class="row">
-				<div class="col-md-12">
-					<a href="/admin/application/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuwe applicatie</a>
-				</div>
+				<br />
+
+				<form action="/admin/product/delete_group" method="post">
+				{!! csrf_field() !!}
+					<div class="row">
+						<div class="col-md-10">
+							<select name="group" class="form-control" style="background-color: #E5E7E9; color:#000;">
+								@foreach (ProductGroup::all() as $group)
+								<option data-name="group" value="{{ $group->id }}">{{ $group->group_name }}</option>
+								@foreach (ProductCategory::where('group_id', $group->id)->get() as $cat)
+								<option data-name="cat" value="{{ $cat->id }}"> - {{ $cat->category_name }}</option>
+								@endforeach
+								@endforeach
+							</select>
+						</div>
+						<div class="col-md-2">
+							<button class="btn btn-danger btn dsave">Verwijderen</button>
+						</div>
+					</div>
+				</form>
+
+				<br />
+
+				<form action="/admin/product/delete_subcat" method="post">
+				{!! csrf_field() !!}
+					<div class="row">
+						<div class="col-md-10">
+							<select name="subcat" class="form-control" style="background-color: #E5E7E9; color:#000;">
+								@foreach (ProductSubCategory::all() as $subcat)
+								<option value="{{ $subcat->id }}">{{ $subcat->sub_category_name }}</option>
+								@endforeach
+							</select>
+						</div>
+						<div class="col-md-2">
+							<button class="btn btn-danger btn dsave">Verwijderen</button>
+						</div>
+					</div>
+				</form>
+
 			</div>
-			</div>
-			@endif
 
 		</div>
 

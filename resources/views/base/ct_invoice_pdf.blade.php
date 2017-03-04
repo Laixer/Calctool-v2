@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Termijnfactuur</title>
-    <link rel="stylesheet" href="{{ asset('css/pdf.css') }}" media="all" />
+    <link rel="stylesheet" href="{{ getcwd() }}/css/pdf.css" media="all" />
   </head>
    <body>
      <header class="clearfix">
@@ -13,7 +13,7 @@
             <tr>
               <td style="width: 345px">
                 <div id="logo">
-                  <img src="{{ asset('images/logo2.png') }}"/>
+                  <img src="{{ getcwd() }}/images/logo2.png"/>
                 </div>
               </td>
 
