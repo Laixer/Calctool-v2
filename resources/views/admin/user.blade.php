@@ -80,6 +80,7 @@ $(document).ready(function() {
 			<h2><strong>{{ ($all ? 'Alle' : ($group ? 'Groep' : 'Actieve')) }} gebruikers ({{ count($selection_today) + count($selection_week) + count($selection_other) }})</strong></h2>
 
 			<div class="white-row">
+			@if (count($selection_today))
 			<h4>Vandaag ({{ count($selection_today) }})</h4>
 			<table class="table table-striped">
 				<thead>
@@ -107,10 +108,14 @@ $(document).ready(function() {
 						<td class="col-md-2">{{ $users->currentStatus() }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">
 						{{ userStatus($users) }}
-						@if ($users->isTryPeriod())
+						@if ($users->isAdmin())
+						<i class="fa fa-bolt" aria-hidden="true"></i> 
+						@elseif ($users->isTryPeriod())
 						<i class="fa fa-flask" aria-hidden="true"></i> 
 						@elseif ($users->hasPayed())
 						<i class="fa fa-heart" aria-hidden="true"></i> 
+						@else
+						<i class="fa fa-exclamation" aria-hidden="true"></i> 
 						@endif
 						</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>
@@ -120,6 +125,9 @@ $(document).ready(function() {
 				@endforeach
 				</tbody>
 			</table>
+			@endif
+
+			@if (count($selection_week))
 			<h4>Deze week ({{ count($selection_week) }})</h4>
 			<table class="table table-striped">
 				<thead>
@@ -147,10 +155,14 @@ $(document).ready(function() {
 						<td class="col-md-2">{{ $users->currentStatus() }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">
 						{{ userStatus($users) }}
-						@if ($users->isTryPeriod())
+						@if ($users->isAdmin())
+						<i class="fa fa-bolt" aria-hidden="true"></i> 
+						@elseif ($users->isTryPeriod())
 						<i class="fa fa-flask" aria-hidden="true"></i> 
 						@elseif ($users->hasPayed())
 						<i class="fa fa-heart" aria-hidden="true"></i> 
+						@else
+						<i class="fa fa-exclamation" aria-hidden="true"></i> 
 						@endif
 						</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>
@@ -160,6 +172,9 @@ $(document).ready(function() {
 				@endforeach
 				</tbody>
 			</table>
+			@endif
+
+			@if (count($selection_other))
 			<h4>Eerder ({{ count($selection_other) }})</h4>
 			<table class="table table-striped">
 				<thead>
@@ -187,10 +202,14 @@ $(document).ready(function() {
 						<td class="col-md-2">{{ $users->currentStatus() }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">
 						{{ userStatus($users) }}
-						@if ($users->isTryPeriod())
+						@if ($users->isAdmin())
+						<i class="fa fa-bolt" aria-hidden="true"></i> 
+						@elseif ($users->isTryPeriod())
 						<i class="fa fa-flask" aria-hidden="true"></i> 
 						@elseif ($users->hasPayed())
 						<i class="fa fa-heart" aria-hidden="true"></i> 
+						@else
+						<i class="fa fa-exclamation" aria-hidden="true"></i> 
 						@endif
 						</td>
 						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>
@@ -200,6 +219,8 @@ $(document).ready(function() {
 				@endforeach
 				</tbody>
 			</table>
+			@endif
+
 			</div>
 		</div>
 

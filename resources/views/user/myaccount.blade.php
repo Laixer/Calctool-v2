@@ -552,16 +552,20 @@ $(document).ready(function() {
 
 						<div id="other" class="tab-pane">
 
-							<!--<form method="POST" action="myaccount/security/update" accept-charset="UTF-8">-->
-                            {{-- !! csrf_field() !! --}}
-
-							<h4 class="company">Demoproject</h4>
 							<div class="row">
-								<div class="col-md-12">
-									<a href="/myaccount/loaddemo" class="btn btn-primary"><i class="fa fa-check"></i> Laad demoproject</a>
+								<div class="col-md-3">
+
+									<div style="width: 20rem;">
+									  <div class="card-block">
+									    <h4 class="card-title">Demo Project</h4>
+									    <p class="card-text">Laad een voorbeeldproject. Dit kan handig zijn om functies te testen of om gelijk aan de slag te kunnen.</p>
+									    <a href="/myaccount/loaddemo" class="btn btn-primary"><i class="fa fa-check"></i> Laad demoproject</a>
+									  </div>
+									</div>
+
 								</div>
+
 							</div>
-						<!--</form>-->
 
 						</div>
 					</div>

@@ -73,14 +73,28 @@ if (!$invoice) {
 
 	$('.oclose').click(function(e){
 		e.preventDefault();
-		$.post("/invoice/close", {projectid: {{ $project->id }}, id: {{ $_invoice->id }} }, function(data){
+		$('#progress').show();
+
+		var timerId = 0;
+		var ctr=5;
+		var max=9;
+
+		timerId = setInterval(function () {
+			ctr++;
+			$('#progress div').width(ctr*max + "%");
+			if (ctr == max)
+				clearInterval(timerId);
+		}, 250);
+		$.post("/invoice/close", {projectid: {{ $project->id }}, id: {{ $_invoice->id }} }, function(data) {
+			$('#progress div').width("100%");
 			window.location.href = '/invoice/project-'+{{ $project->id }}+'/pdf-invoice-'+{{ $_invoice->id }};
 		}).fail(function(e) { console.log(e); });
 	});
 
 });
 </script>
-	<div id="wrapper">
+
+<div id="wrapper">
 
 	<section class="container">
 
@@ -126,6 +140,12 @@ if (!$invoice) {
 		</div>
 
 		<h2><strong>Concept factuur</strong></h2>
+
+		<div id="progress" class="progress" style="height: 15px;display: none;">
+		  <div class="progress-bar progress-bar-striped active" role="progressbar"
+		  aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:20%;background-color:#89a550;">
+		  </div>
+		</div>
 
 		<div id="pages"></div>
 

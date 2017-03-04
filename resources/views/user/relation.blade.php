@@ -33,6 +33,7 @@
 
 			<div class="pull-right">
 				<a href="/import" class="btn btn-primary" type="button"><i class="fa fa-upload"></i> Importeer</a>
+				<a href="/relation/export" class="btn btn-primary" type="button"><i class="fa fa-download"></i> Exporteer</a>
 			</div>
 
 			<h2 style="margin: 10px 0 20px 0;"><strong>Relaties</strong>&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
