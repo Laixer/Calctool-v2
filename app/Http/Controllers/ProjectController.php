@@ -14,6 +14,7 @@ use \Calctool\Models\Contact;
 use \Calctool\Models\Chapter;
 use \Calctool\Models\Audit;
 use \Calctool\Models\Activity;
+use \Calctool\Models\RelationKind;
 use \Calctool\Models\FavoriteActivity;
 use \Calctool\Models\ProjectShare;
 use \Calctool\Http\Controllers\InvoiceController;
@@ -109,9 +110,11 @@ class ProjectController extends Controller {
 
 		$relation = Relation::find($project->client_id);
 		if ($request->input('tax_reverse')) {
-			if (!trim($relation->btw)) {
+			if (RelationKind::find($relation->kind_id)->kind_name == 'particulier')
+				return back()->withErrors(['error' => 'BTW kan niet worden verlegt naar een particulier opdrachtgever'])->withInput($request->all());
+
+			if (!trim($relation->btw))
 				return back()->withErrors(['error' => 'Opdrachtgever heeft geen BTW nummer'])->withInput($request->all());
-			}
 		}
 
 		if (!$request->has('name')) {
