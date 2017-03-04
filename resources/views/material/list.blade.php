@@ -1013,14 +1013,16 @@ $(document).ready(function() {
 					</div>
 
 					<div id="material" class="tab-pane">
-							<!-- <div class="pull-right">
-					            <form id="upload-csv" action="material/upload" method="post" enctype="multipart/form-data">
-					            {!! csrf_field() !!}
-						            <label class="btn btn-primary btn-file">
-									    CSV laden <input type="file" name="csvfile" id="btn-load-csv" style="display: none;">
-									</label>
-								</form>
-							</div> -->
+						@if (0)
+						<div class="pull-right">
+				            <form id="upload-csv" action="material/upload" method="post" enctype="multipart/form-data">
+				            {!! csrf_field() !!}
+					            <label class="btn btn-primary btn-file">
+								    CSV laden <input type="file" name="csvfile" id="btn-load-csv" style="display: none;">
+								</label>
+							</form>
+						</div>
+						@endif
 
 						<div class="row">
 							<div class="col-md-2"><h4>Mijn producten</h4></div>
@@ -1142,6 +1144,19 @@ $(document).ready(function() {
 						<div class="row">
 							<div class="col-md-6"><h4>Favorieten Werkzaamheden</h4></div>
 						</div>
+
+						@if (!FavoriteActivity::where('user_id', Auth::id())->count())
+						<div>
+						<h5>Nog geen favoriete werkzaamheden</h5>
+						<ul>
+								<li>Stap 1: Ga naar een <i>Calculatie</i></li>
+								<li>Stap 2: Open een <i>Onderdeel</i></li>
+								<li>Stap 3: Klik op de knop <i>Werkzaamheid</i></li>
+								<li>Stap 4: Klik vervolgens op <i>Opslaan als Favoriet</i></li>
+								<li>Stap 5: De <i>Werkzaamheid</i> zal in dit overzicht verschijnen</li>
+						</ul>
+						</div>
+						@endif
 
 						<?php
 						foreach(FavoriteActivity::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get() as $activity) {

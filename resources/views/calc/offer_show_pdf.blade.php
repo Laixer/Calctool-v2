@@ -96,13 +96,31 @@ $(document).ready(function() {
 			}
 		});
 	});
-    $('#dateRangePicker').datepicker().on('changeDate', function(e){
+ //    $('#dateRangePicker').datepicker().on('changeDate', function(e){
+	// 	$.post("/offer/close", {
+	// 		date: e.date.toISOString(),
+	// 		offer: {{ $offer_last->id }},
+	// 		project: {{ $project->id }}
+	// 	}, function(data){
+	// 		location.reload();
+	// 	});
+	// });
+	$('#dateRangePicker').datepicker({
+		format: 'dd-mm-yyyy'
+	}).on('changeDate', function(ev){
+		$(this).datepicker('hide');
+	});
+	$('#close_offer').click(function(e) {
+		var from = $('#dateRangePicker').find('input').val().split("-");
+		var f = new Date(from[2], from[1] - 1, from[0]);
+
 		$.post("/offer/close", {
-			date: e.date.toISOString(),
+			date: f,
 			offer: {{ $offer_last->id }},
 			project: {{ $project->id }}
-		}, function(data){
-			location.reload();
+		}, function(data) {
+			if (data.success)
+				location.reload();
 		});
 	});
 });
@@ -128,7 +146,7 @@ $(document).ready(function() {
 					        <label class="col-xs-3 control-label">Bevestiging</label>
 					        <div class="col-xs-6 date">
 					            <div class="input-group input-append date" id="dateRangePicker">
-					                <input type="text" class="form-control" name="date" />
+					                <input type="text" class="form-control" name="date" value="{{ date('d-m-Y') }}" />
 					                <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
 					            </div>
 					        </div>
@@ -137,7 +155,7 @@ $(document).ready(function() {
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button class="btn btn-primary" data-dismiss="modal">Opslaan</button>
+					<button class="btn btn-primary" id="close_offer" data-dismiss="modal">Opslaan</button>
 				</div>
 			</div>
 		</div>
