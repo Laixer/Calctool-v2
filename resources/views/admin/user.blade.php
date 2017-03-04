@@ -37,7 +37,7 @@ $(document).ready(function() {
 	    	if (jqXHR.status == 200)
 	    		location.reload();
 	    });
-	}, 10000);
+	}, 45000);
 })
 </script>
 <div id="wrapper">
