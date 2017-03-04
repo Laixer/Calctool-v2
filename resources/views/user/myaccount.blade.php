@@ -553,20 +553,6 @@ $(document).ready(function() {
 						<div id="other" class="tab-pane">
 
 							<div class="row">
-								@if (0)
-								<div class="col-md-3">
-
-									<div style="width: 20rem;">
-									  <div class="card-block">
-									    <h4 class="card-title">Exporteer Relaties</h4>
-									    <p class="card-text">Exporteer de relaties vanuit de CalculatieTool. De applicatie zal een CSV bestand genereren.</p>
-									    <a href="/relation/export" target="new" class="btn btn-primary">Exporteer naar CSV</a>
-									  </div>
-									</div>
-
-								</div>
-								@endif
-
 								<div class="col-md-3">
 
 									<div style="width: 20rem;">

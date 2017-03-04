@@ -208,35 +208,44 @@ class AppsController extends Controller {
 
 	public function getExportRelation(Request $request)
 	{
+		header('Content-Type: text/csv');
+		header('Content-Disposition: attachment; filename="export.csv"');
+		$fp = fopen('php://output', 'w');
 
+		$header = ['Bedrijfsnaam','Straat','Nummer','Postcode','Plaats','KVK','BTWnummer','Debiteurnummer','Telefoon','email','Notitie','Website','Iban','Naam Iban houder','Type relatie','','Voornaam','Achternaam','Mobiel','Telefoon','Email','Geslacht'];
 
-header('Content-Type: text/csv');
-header('Content-Disposition: attachment; filename="export.csv"');
-$data = array(
-        'aaa,bbb,ccc,dddd',
-        '123,456,789',
-        '"aaa","bbb"'
-);
+		fputcsv($fp, $header, ";");
 
-$fp = fopen('php://output', 'w');
-foreach ( $data as $line ) {
-    $val = explode(",", $line);
-    fputcsv($fp, $val);
-}
-fclose($fp);
+		$relations = Relation::where('user_id',Auth::id())->where('active',true)->orderBy('created_at', 'desc')->get();
+		foreach ($relations as $relation) {
+			$contact = Contact::where('relation_id',$relation->id)->first();
 
-		// if (count($array) == 0) {
-		// return null;
-		// }
-		// ob_start();
-		// $df = fopen("php://output", 'w');
-		// fputcsv($df, array_keys(reset($array)));
-		// foreach ($array as $row) {
-		// fputcsv($df, $row);
-		// }
-		// fclose($df);
-		// return ob_get_clean()
+			$row = [];
+			array_push($row, $relation->company_name ? $relation->company_name : $contact->firstname . ' '. $contact->lastname);
+			array_push($row, $relation->address_street);
+			array_push($row, $relation->address_number);
+			array_push($row, $relation->address_postal);
+			array_push($row, $relation->address_city);
+			array_push($row, $relation->kvk);
+			array_push($row, $relation->btw);
+			array_push($row, $relation->debtor);
+			array_push($row, $relation->phone_comp);
+			array_push($row, $relation->email_comp);
+			array_push($row, $relation->note);
+			array_push($row, $relation->website);
+			array_push($row, $relation->iban);
+			array_push($row, $relation->iban_name);
+			array_push($row, ucfirst(RelationKind::find($relation->kind_id)->kind_name));
+			array_push($row, '');
+			array_push($row, $contact->firstname);
+			array_push($row, $contact->lastname);
+			array_push($row, $contact->mobile);
+			array_push($row, $contact->phone);
+			array_push($row, $contact->email);
+			array_push($row, $contact->gender);
 
-		// return response()->file($pathToFile, ['Content-Type: text/csv']);
+			fputcsv($fp, $row, ";");
+		}
+		fclose($fp);
 	}
 }
