@@ -142,6 +142,9 @@ $(document).ready(function() {
 								<li><a href="/admin/user-{{ $user->id }}/passreset">Stuur wachtwoord reset link</a></li>
 								<li><a href="/admin/user-{{ $user->id }}/passdefault">Standaard wachtwoord</a></li>
 								<li><a href="/admin/payment?user_id={{ $user->id }}">Transacties</a></li>
+								@if ($user->payment_subscription_id)
+								<li><a href="/admin/user-{{ $user->id }}/subscription/cancel">Incasso stoppen</a></li>
+								@endif
 								@endif
 								@if (Auth::user()->isSystem() && Auth::id() != $user->id)
 								<li><a href="/admin/user-{{ $user->id }}/login">Als gebruiker inloggen</a></li>
