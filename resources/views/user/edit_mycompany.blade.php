@@ -454,7 +454,7 @@ $(document).ready(function() {
 										<div class="input-group col-md-4">
 							                <span class="input-group-btn">
 							                    <span class="btn btn-primary btn-file {{ $relation ? '' : 'disabled' }}">
-							                        Browse&hellip; <input {{ $relation ? '' : 'disabled' }} name="image" type="file" multiple>
+							                        Bestand&hellip; <input {{ $relation ? '' : 'disabled' }} name="image" type="file" multiple>
 							                    </span>
 							                </span>
 							                <input type="text" class="form-control" readonly>
@@ -488,7 +488,7 @@ $(document).ready(function() {
 										<div class="input-group col-md-4">
 							                <span class="input-group-btn">
 							                    <span class="btn btn-primary btn-file {{ $relation ? '' : 'disabled' }}">
-							                        Browse&hellip; <input {{ $relation ? '' : 'disabled' }} name="doc" type="file" multiple>
+							                        Bestand&hellip; <input {{ $relation ? '' : 'disabled' }} name="doc" type="file" multiple>
 							                    </span>
 							                </span>
 							                <input type="text" class="form-control" readonly>
@@ -719,6 +719,7 @@ $(document).ready(function() {
 									<div id="acordion4" class="collapse">
 										<div class="panel-body">
 
+											<h4>Offerte</h5>
 											<div class="row">
 												<div class="col-md-4">
 													<div class="form-group">
@@ -727,7 +728,9 @@ $(document).ready(function() {
 													</div>
 												</div>
 											</div>
-												<div class="row">
+
+											<h4>Factuur</h5>
+											<div class="row">
 												<div class="col-md-6">
 													<div class="form-group">
 														<label for="pref_use_ct_numbering" style="display:block;"><strong>Gebruik CalculatieTool nummering voor factuurnummer</strong></label>

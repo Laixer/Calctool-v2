@@ -123,7 +123,7 @@ $project = Project::find($project_id);
     </thead>
     <tbody>
    @foreach (Activity::where('chapter_id', $chapter->id)->where('part_id',Part::where('part_name','contracting')->first()->id)->orderBy('priority')->get() as $activity)
-    <?php $i = true; //$project->profit_calc_contr_mat ?>
+    <?php $i = true; ?>
     @foreach (CalculationMaterial::where('activity_id', $activity->id)->get() as $material)
       <tr>
         <td style="width: 185px" class="qty"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
@@ -137,7 +137,7 @@ $project = Project::find($project_id);
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
         @endif
-        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
+        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Stelpost' : '' }}</td>
       </tr>
      @endforeach
     @foreach (CalculationEquipment::where('activity_id', $activity->id)->get() as $material)
@@ -153,7 +153,7 @@ $project = Project::find($project_id);
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
         @endif
-        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
+        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Stelpost' : '' }}</td>
       </tr>
     @endforeach
     @foreach (EstimateMaterial::where('activity_id', $activity->id)->get() as $material)
@@ -170,7 +170,7 @@ $project = Project::find($project_id);
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
         @endif
-        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
+        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Stelpost' : '' }}</td>
       </tr>
     @endforeach
     @foreach (EstimateEquipment::where('activity_id', $activity->id)->get() as $material)
@@ -187,17 +187,17 @@ $project = Project::find($project_id);
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
         @endif
-        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
+        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Stelpost' : '' }}</td>
       </tr>
     @endforeach
     @foreach (MoreMaterial::where('activity_id', $activity->id)->get() as $material)
       <tr>
-        <td style="width: 185px" class="qty">><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
+        <td style="width: 185px" class="qty"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
         <td style="width: 160px" class="qty">{{ $material->material_name }}</td>
         <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
-        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
+        <td style="width: 60px" class="qty">Meerwerk</td>
       </tr>
     @endforeach
     @foreach (MoreEquipment::where('activity_id', $activity->id)->get() as $material)
@@ -207,7 +207,7 @@ $project = Project::find($project_id);
         <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
-        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
+        <td style="width: 60px" class="qty">Meerwerk</td>
       </tr>
     @endforeach
     @endforeach
@@ -248,7 +248,7 @@ $project = Project::find($project_id);
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
         @endif
-        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
+        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Stelpost' : '' }}</td>
       </tr>
      @endforeach
     @foreach (CalculationEquipment::where('activity_id', $activity->id)->get() as $material)
@@ -264,7 +264,7 @@ $project = Project::find($project_id);
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
         @endif
-        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
+        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Stelpost' : '' }}</td>
       </tr>
     @endforeach
     @foreach (EstimateMaterial::where('activity_id', $activity->id)->get() as $material)
@@ -281,7 +281,7 @@ $project = Project::find($project_id);
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
         @endif
-        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
+        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Stelpost' : '' }}</td>
       </tr>
     @endforeach
     @foreach (EstimateEquipment::where('activity_id', $activity->id)->get() as $material)
@@ -298,17 +298,17 @@ $project = Project::find($project_id);
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
         @endif
-        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
+        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Stelpost' : '' }}</td>
       </tr>
     @endforeach
     @foreach (MoreMaterial::where('activity_id', $activity->id)->get() as $material)
       <tr>
-        <td style="width: 185px" class="qty">><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
+        <td style="width: 185px" class="qty"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
         <td style="width: 160px" class="qty">{{ $material->material_name }}</td>
         <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
-        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
+        <td style="width: 60px" class="qty">Meerwerk</td>
       </tr>
     @endforeach
     @foreach (MoreEquipment::where('activity_id', $activity->id)->get() as $material)
@@ -318,7 +318,7 @@ $project = Project::find($project_id);
         <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format($material->rate*$material->amount, 2,",",".") }}</td>
-        <td style="width: 60px" class="qty">{{ (PartType::find($activity->part_type_id)->type_name=='estimate') ? 'Ja' : '' }}</td>
+        <td style="width: 60px" class="qty">Meerwerk</td>
       </tr>
     @endforeach
     @endforeach

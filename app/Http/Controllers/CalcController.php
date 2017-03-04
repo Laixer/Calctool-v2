@@ -223,7 +223,7 @@ class CalcController extends Controller {
 		if ($project) {
 			if ($project->project_close)
 				return response()->view('calc.estimate_closed');
-			$invoice_end = Invoice::where('offer_id','=', Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first()->id)->where('isclose','=',true)->first();
+			$invoice_end = Invoice::where('offer_id',Offer::where('project_id',$project->id)->orderBy('created_at','desc')->first()->id)->where('isclose',true)->first();
 			if ($invoice_end && $invoice_end->invoice_close)
 				return response()->view('calc.estimate_closed');
 		}

@@ -14,6 +14,7 @@ use \Calctool\Models\Contact;
 use \Calctool\Models\Chapter;
 use \Calctool\Models\Audit;
 use \Calctool\Models\Activity;
+use \Calctool\Models\RelationKind;
 use \Calctool\Models\FavoriteActivity;
 use \Calctool\Models\ProjectShare;
 use \Calctool\Http\Controllers\InvoiceController;
@@ -109,9 +110,11 @@ class ProjectController extends Controller {
 
 		$relation = Relation::find($project->client_id);
 		if ($request->input('tax_reverse')) {
-			if (!trim($relation->btw)) {
+			if (RelationKind::find($relation->kind_id)->kind_name == 'particulier')
+				return back()->withErrors(['error' => 'BTW kan niet worden verlegd naar een particulier opdrachtgever'])->withInput($request->all());
+
+			if (!trim($relation->btw))
 				return back()->withErrors(['error' => 'Opdrachtgever heeft geen BTW nummer'])->withInput($request->all());
-			}
 		}
 
 		if (!$request->has('name')) {
@@ -210,6 +213,8 @@ class ProjectController extends Controller {
 
 		$project->save();
 
+		$type = ProjectType::find($project->type_id);
+
 		foreach (Chapter::where('project_id', $orig_project->id)->where('more', false)->get() as $orig_chapter) {
 			$chapter = new Chapter;
 			$chapter->chapter_name = $orig_chapter->chapter_name;
@@ -290,18 +295,106 @@ class ProjectController extends Controller {
 				}
 
 				foreach(EstimateEquipment::where('activity_id', $orig_activity->id)->get() as $orig_estim_equipment) {
-					$calc_equipment = new EstimateEquipment;
-					$calc_equipment->equipment_name = $orig_estim_equipment->equipment_name;
-					$calc_equipment->unit = $orig_estim_equipment->unit;
-					$calc_equipment->rate = $orig_estim_equipment->rate;
-					$calc_equipment->amount = $orig_estim_equipment->amount;
-					$calc_equipment->original = $orig_estim_equipment->original;
-					$calc_equipment->isset = $orig_estim_equipment->isset;
-					$calc_equipment->activity_id = $activity->id;
+					$estim_equipment = new EstimateEquipment;
+					$estim_equipment->equipment_name = $orig_estim_equipment->equipment_name;
+					$estim_equipment->unit = $orig_estim_equipment->unit;
+					$estim_equipment->rate = $orig_estim_equipment->rate;
+					$estim_equipment->amount = $orig_estim_equipment->amount;
+					$estim_equipment->original = $orig_estim_equipment->original;
+					$estim_equipment->isset = $orig_estim_equipment->isset;
+					$estim_equipment->activity_id = $activity->id;
 
-					$calc_equipment->save();
+					$estim_equipment->save();
 				}
 			}
+		}
+
+		if ($type->type_name == 'regie') {
+			foreach (Chapter::where('project_id', $orig_project->id)->where('more', true)->get() as $orig_chapter) {
+				$chapter = new Chapter;
+				$chapter->chapter_name = $orig_chapter->chapter_name;
+				$chapter->priority = $orig_chapter->priority;
+				$chapter->project_id = $project->id;
+
+				$chapter->save();
+
+				foreach (Activity::where('chapter_id', $orig_chapter->id)->whereNotNull('detail_id')->get() as $orig_activity) {
+					$activity = new Activity;
+					$activity->chapter_id = $chapter->id;
+					$activity->activity_name = $orig_activity->activity_name;
+					$activity->priority = $orig_activity->priority;
+					$activity->note = $orig_activity->note;
+					$activity->use_timesheet = $orig_activity->use_timesheet;
+					$activity->part_id = $orig_activity->part_id;
+					$activity->part_type_id = $orig_activity->part_type_id;
+					$activity->detail_id = $orig_activity->detail_id;
+					$activity->tax_labor_id = $orig_activity->tax_labor_id;
+					$activity->tax_material_id = $orig_activity->tax_material_id;
+					$activity->tax_equipment_id = $orig_activity->tax_equipment_id;
+
+					$activity->save();
+
+					foreach(MoreLabor::where('activity_id', $orig_activity->id)->get() as $orig_more_labor) {
+						$more_labor = new MoreLabor;
+						$more_labor->rate = $orig_more_labor->rate;
+						$more_labor->amount = $orig_more_labor->amount;
+						$more_labor->activity_id = $activity->id;
+
+						$more_labor->save();
+					}
+
+					foreach(MoreMaterial::where('activity_id', $orig_activity->id)->get() as $orig_more_material) {
+						$more_material = new MoreMaterial;
+						$more_material->material_name = $orig_more_material->material_name;
+						$more_material->unit = $orig_more_material->unit;
+						$more_material->rate = $orig_more_material->rate;
+						$more_material->amount = $orig_more_material->amount;
+						$more_material->activity_id = $activity->id;
+
+						$more_material->save();
+					}
+
+					foreach(MoreEquipment::where('activity_id', $orig_activity->id)->get() as $orig_more_equipment) {
+						$more_equipment = new MoreEquipment;
+						$more_equipment->equipment_name = $orig_more_equipment->equipment_name;
+						$more_equipment->unit = $orig_more_equipment->unit;
+						$more_equipment->rate = $orig_more_equipment->rate;
+						$more_equipment->amount = $orig_more_equipment->amount;
+						$more_equipment->activity_id = $activity->id;
+
+						$more_equipment->save();
+					}
+				}
+			}
+		}
+
+		if ($type->type_name == 'regie') {
+			$relation = Relation::find($project->client_id);
+			$relation_self = Relation::find(Auth::user()->self_id);
+			$contact = Contact::where('relation_id',$relation->id)->first();
+			$contact_self = Contact::where('relation_id',$relation_self->id)->first();
+
+			$offer = new Offer;
+			$offer->to_contact_id = $contact->id;
+			$offer->from_contact_id = $contact_self->id;
+			$offer->offer_code = 'REGIE';
+			$offer->auto_email_reminder = false;
+			$offer->deliver_id = 1;
+			$offer->valid_id = 1;
+			$offer->offer_finish = date('Y-m-d');
+			$offer->project_id = $project->id;;
+			$offer->offer_total = 0;
+			$offer->save();
+
+			$invoice = new Invoice;
+			$invoice->priority = 0;
+			$invoice->invoice_code = InvoiceController::getInvoiceCodeConcept($project->id);
+			$invoice->payment_condition = 30;
+			$invoice->offer_id = $offer->id;
+			$invoice->to_contact_id = $contact->id;
+			$invoice->from_contact_id = $contact_self->id;
+			$invoice->isclose = true;
+			$invoice->save();
 		}
 
 		Audit::CreateEvent('project.copy.success', 'Duplicated project: ' . $project->project_name);

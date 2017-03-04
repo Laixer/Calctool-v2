@@ -968,6 +968,23 @@ class AdminController extends Controller {
 		return back()->with('success', 'STABU-project ingevoegd');
 	}
 
+	public function getSubscriptionCancel(Request $request, $user_id)
+	{
+		$mollie = new \Mollie_API_Client;
+		$mollie->setApiKey(config('services.mollie.key'));
+
+		$user = User::find($user_id);
+		if (!$user)
+			return back();
+
+		$subscription_id = $user->payment_subscription_id;
+		$subscription = $mollie->customers_subscriptions->withParentId($user->payment_customer_id)->cancel($user->payment_subscription_id);
+		$user->payment_subscription_id = NULL;
+		$user->save();
+
+		return back()->with('success', 'Automatische incasso gestopt');
+	}
+
 	public function doApplicationClearCache(Request $request)
 	{
 		Artisan::call('clear-compiled');
