@@ -107,6 +107,13 @@ class ProjectController extends Controller {
 		$project->type_id = $request->input('type');
 		$project->client_id = $request->input('contractor');
 
+		$relation = Relation::find($project->client_id);
+		if ($request->input('tax_reverse')) {
+			if (!trim($relation->btw)) {
+				return back()->withErrors(['error' => 'Opdrachtgever heeft geen BTW nummer'])->withInput($request->all());
+			}
+		}
+
 		if (!$request->has('name')) {
 			$project->project_name = 'PROJ-' . date("Ymd-s");
 		} else {
@@ -130,7 +137,6 @@ class ProjectController extends Controller {
 
 		$type = ProjectType::find($project->type_id);
 		if ($type->type_name == 'regie') {
-			$relation = Relation::find($project->client_id);
 			$relation_self = Relation::find(Auth::user()->self_id);
 			$contact = Contact::where('relation_id','=', $relation->id)->first();
 			$contact_self = Contact::where('relation_id','=', $relation_self->id)->first();

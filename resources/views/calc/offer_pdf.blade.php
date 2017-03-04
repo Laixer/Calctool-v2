@@ -577,7 +577,13 @@ function invoice_condition($offer) {
 		</tbody>
 	  </table>
 	  <br>
-	  	  @if ($project->tax_reverse)<h2 class="name">Deze offerte is <strong>BTW Verlegd</strong></h1>@endif
+	  @if ($project->tax_reverse)
+	  @if ($relation->btw)
+	  <h2 class="name">Deze offerte is <strong>BTW Verlegd</strong> naar {{ $relation->btw }}</h1>
+	  @else
+	  <h2 class="name">Deze offerte is <strong>BTW Verlegd</strong></h1>
+	  @endif
+	  @endif
 	  <br>
 	  <h2 class="name">Bepalingen</h2>
 	  <hr color="#000" size="1">
@@ -944,8 +950,7 @@ function invoice_condition($offer) {
 		</tbody>
 	  </table>
 	  <br>
-<!-- 	  		@if ($project->tax_reverse)<h2 class="name">Deze offerte is <strong>BTW Verlegd</strong></h1>@endif
- -->	  <br>
+	  <br>
 	  <h2 class="name">Bepalingen</h2>
 	  <hr color="#000" size="1">
 	  <div class="terms">
@@ -1002,8 +1007,7 @@ function invoice_condition($offer) {
 	  </header>
 	  <?#--PAGE HEADER SECOND END--?>
       <br>
-<!-- 		  @if ($project->tax_reverse)<h2 class="name">Deze offerte is <strong>BTW Verlegd</strong></h1>@endif
- -->	  <br>
+	  <br>
 	  <h2 class="name">Bepalingen</h2>
 	  <hr color="#000" size="1">
 	  <div class="terms">

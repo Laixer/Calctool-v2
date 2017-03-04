@@ -413,7 +413,11 @@ if (!$project || !$project->isOwner()) {
 
 						@if($project->tax_reverse)
 						<br>
+						@if ($relation->btw)
+						<h2>Deze factuur is <strong>BTW Verlegd</strong>naar {{ $relation->btw }}</h2>
+						@else
 						<h2>Deze factuur is <strong>BTW Verlegd</strong></h2>
+						@endif
 						<br>
 						@endif
 

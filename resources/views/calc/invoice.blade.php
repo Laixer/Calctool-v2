@@ -974,7 +974,11 @@ $type = ProjectType::find($project->type_id);
 				<textarea name="closure" id="closure" rows="5" class="form-control">{{ ($invoice ? ($invoice->closure ? $invoice->closure : Auth::user()->pref_invoice_closure) : Auth::user()->pref_invoice_closure) }}</textarea>
 				@if($project->tax_reverse)
 				<br>
+				@if ($relation->btw)
+				<h2>Deze factuur is <strong>BTW Verlegd</strong>naar {{ $relation->btw }}</h2>
+				@else
 				<h2>Deze factuur is <strong>BTW Verlegd</strong></h2>
+				@endif
 				<br>
 				@endif
 				<div class="row">
@@ -2498,7 +2502,11 @@ $type = ProjectType::find($project->type_id);
 				<textarea name="closure" id="closure" rows="5" class="form-control">{{ ($invoice ? ($invoice->closure ? $invoice->closure : Auth::user()->pref_invoice_closure) : Auth::user()->pref_invoice_closure) }}</textarea>
 				@if($project->tax_reverse)
 				<br>
+				@if ($relation->btw)
+				<h2>Deze factuur is <strong>BTW Verlegd</strong>naar {{ $relation->btw }}</h2>
+				@else
 				<h2>Deze factuur is <strong>BTW Verlegd</strong></h2>
+				@endif
 				<br>
 				@endif
 				<div class="row">
