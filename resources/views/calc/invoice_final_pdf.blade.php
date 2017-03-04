@@ -235,7 +235,7 @@ $type = ProjectType::find($project->type_id);
           @if ($project->use_more || $project->use_less)
           <th class="qty">Balans</th>
           @endif
-          <th class="qty">@if(!$project->tax_reverse) @if ($display_specification) BTW % @endif @endif</th>
+          <th class="qty">@if ($display_specification) BTW % @endif</th>
           <th class="qty">@if(!$project->tax_reverse) BTW bedrag @endif</th>
         </tr>
       </thead>
@@ -565,7 +565,7 @@ $type = ProjectType::find($project->type_id);
           <th class="qty">Meerwerk</th>
           <th class="qty">Minderwerk</th>
           <th class="qty">Balans</th>
-          <th class="qty">@if(!$project->tax_reverse) @if ($display_specification) BTW % @endif @endif</th>
+          <th class="qty">@if ($display_specification) BTW % @endif</th>
           <th class="qty">@if(!$project->tax_reverse) BTW bedrag @endif</th>
         </tr>
       </thead>
@@ -685,7 +685,7 @@ $type = ProjectType::find($project->type_id);
           <th class="qty">Meerwerk</th>
           <th class="qty">Minderwerk</th>
           <th class="qty">Balans</th>
-          <th class="qty">@if(!$project->tax_reverse) @if ($display_specification) BTW % @endif @endif</th>
+          <th class="qty">@if ($display_specification) BTW % @endif</th>
           <th class="qty">@if(!$project->tax_reverse) BTW bedrag @endif </th>
         </tr>
       </thead>
