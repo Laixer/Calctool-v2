@@ -20,7 +20,7 @@ $project = Project::find($project_id);
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Pakbon</title>
+    <title>Raaplijst</title>
     <link rel="stylesheet" href="{{ getcwd() }}/css/pdf.css" media="all" />
   </head>
    <body>
@@ -91,7 +91,7 @@ $project = Project::find($project_id);
       <tbody>
         <tr>
           <td style="width: 345px">
-            <div><h2 class="type">PAKBON</h2></div>
+            <div><h2 class="type">RAAPLIJST</h2></div>
           </td>
           <td style="width: 300px">
           </td>

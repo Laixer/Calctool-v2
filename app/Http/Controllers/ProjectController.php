@@ -736,9 +736,17 @@ class ProjectController extends Controller {
 	public function getPackingSlip(Request $request, $project_id)
 	{
 		$pdf = \PDF::loadView('calc.packslip_pdf', [
-			'name' => 'Sjaakie',
-			'date' => '12-23-23',
-			'amount' => 456,
+			'project_id' => $project_id,
+			'relation_self' => $relation_self = Relation::find(Auth::user()->self_id),
+			'list_id' => $project_id . date('Y') . mt_rand(10,99),
+		]);
+
+		return $pdf->inline();
+	}
+
+	public function getPackList(Request $request, $project_id)
+	{
+		$pdf = \PDF::loadView('user.packlist_pdf', [
 			'project_id' => $project_id,
 			'user_id' => Auth::id(),
 			'relation_self' => $relation_self = Relation::find(Auth::user()->self_id),

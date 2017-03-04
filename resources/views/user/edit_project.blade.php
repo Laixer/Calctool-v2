@@ -417,10 +417,10 @@ $(document).ready(function() {
 				<div id="project" class="tab-pane">
 					<div class="pull-right">
 						<a href="javascript:void(0);" data-toggle="modal" data-target="#notepad" class="btn btn-primary">Kladblok</a>
-						<!-- <a href="/project-{{ $project->id }}/materiallist" target="new" class="btn btn-primary">Raaplijst</a> -->
 						<div class="btn-group" role="group">
 							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acties&nbsp;&nbsp;<span class="caret"></span></button>
 							<ul class="dropdown-menu">
+								<li><a href="/project-{{ $project->id }}/packlist" target="new">Raaplijst</a></i>
 								<li><a href="/project-{{ $project->id }}/copy">Project kopieren</a></i>
 								@if (!$project->project_close)
 								<li><a href="#" id="projclose">Project sluiten</a></li>
