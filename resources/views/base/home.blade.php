@@ -15,8 +15,6 @@ use \Jenssegers\Agent\Agent;
 
 @section('title', 'Dashboard')
 
-@section('manifest','manifest="/main.appcache"')
-
 @push('scripts')
 <script src="/components/angular/angular.min.js"></script>
 @endpush
@@ -33,41 +31,6 @@ $project_cnt = Project::where('user_id', Auth::user()->id)->count();
 ?>
 
 @section('content')
-<div class="modal fade" id="introModal" tabindex="-1" role="dialog" aria-labelledby="introModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-body" id="introform">
-				<div class="row">
-					<div class="col-md-8">
-						<h4>Welkom bij de<strong> CalculatieTool.com</strong></h4>
-					</div>
-					<div class="col-md-4">
-						<a class="logo" href="/">
-							<img src="/images/logo2.png" width="229px" alt="Calctool">
-						</a>
-					</div>
-				</div>
-				<hr>
-				<div class="row">
-					<div class="col-md-12">
-						<h4>Al je noodzakelijke gegevens zijn bekend en je kan direct beginnen met het aanmaken van een nieuw project. </h4>
-						Je kan je gegevens controleren of later aanpassen en aanvullen onder "Mijn bedrijf".
-						<br>
-						Mocht je vragen hebben of hulp nodig hebben laat dit dan weten in de feedback knop rechts op het scherm.
-						Wij beantwoorden deze vraag dan binnen 12 uur of bellen je indien gewenst, laat hiervoor je telefoonnummer achter.
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<div class="col-md-6"></div>
-				<div class="col-md-6">
-					<button class="btn btn-primary" onclick="$('#introModal').modal('hide')"> Sluiten</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
 <div class="modal fade" id="myYouTube" tabindex="-1" role="dialog" aria-labelledby="mYouTubeLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -106,7 +69,7 @@ $project_cnt = Project::where('user_id', Auth::user()->id)->count();
 
 			@if (Auth::user()->login_count < 5)
 			<div class="pull-right" style="margin: 10px 0 20px 0">
-				<a href="/import" class="btn btn-default" type="button">Hulp gewenst?</a>
+				<a href="/get-help" class="btn btn-default" type="button">Hulp gewenst?</a>
 			</div>
 			@endif
 

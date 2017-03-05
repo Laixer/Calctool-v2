@@ -106,6 +106,9 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('import', function() {
 		return view('base.import');
 	});
+	Route::get('get-help', function() {
+		return view('base.get_help');
+	});
 	Route::post('import/save', 'AppsController@doImportRelation');
 	Route::get('relation/export', 'AppsController@getExportRelation');
 	Route::get('myaccount/deactivate', 'UserController@getMyAccountDeactivate');

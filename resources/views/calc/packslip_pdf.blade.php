@@ -129,11 +129,11 @@ $project = Project::find($project_id);
         <td style="width: 185px" class="qty"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
         <td style="width: 160px" class="qty">{{ $material->material_name }}</td>
         @if ($material->isless)
-        <td style="width: 70px" class="qty">{{ number_format($material->less_rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 70px" class="qty">{{ number_format(($material->less_rate * (($project->profit_calc_contr_mat/100)+1)), 2,",",".") . '/' . $material->unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->less_amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format(($material->less_rate * (($project->profit_calc_contr_mat/100)+1)) * $material->less_amount , 2,",",".") }}</td>
         @else
-        <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 70px" class="qty">{{ number_format(($material->rate * (($project->profit_calc_contr_mat/100)+1)), 2,",",".") . '/' . $material->unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format(($material->rate * (($project->profit_calc_contr_mat/100)+1)) * $material->amount, 2,",",".") }}</td>
         @endif
@@ -145,11 +145,11 @@ $project = Project::find($project_id);
         <td style="width: 185px" class="qty"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
         <td style="width: 160px" class="qty">{{ $material->equipment_name }}</td>
         @if ($material->isless)
-        <td style="width: 70px" class="qty">{{ number_format($material->less_rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 70px" class="qty">{{ number_format(($material->less_rate * (($project->profit_calc_contr_equip/100)+1)), 2,",",".") . '/' . $material->unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->less_amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format(($material->less_rate * (($project->profit_calc_contr_equip/100)+1)) * $material->less_amount, 2,",",".") }}</td>
         @else
-        <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 70px" class="qty">{{ number_format(($material->rate * (($project->profit_calc_contr_equip/100)+1)), 2,",",".") . '/' . $material->unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format(($material->rate * (($project->profit_calc_contr_equip/100)+1)) * $material->amount, 2,",",".") }}</td>
         @endif
@@ -161,12 +161,12 @@ $project = Project::find($project_id);
         <td style="width: 185px" class="qty"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
         @if ($material->isset)
         <td style="width: 160px" class="qty">{{ $material->set_material_name }}</td>
-        <td style="width: 70px" class="qty">{{ number_format($material->set_rate, 2,",",".") . '/' . $material->set_unit }}</td>
+        <td style="width: 70px" class="qty">{{ number_format(($material->set_rate * (($project->profit_calc_contr_mat/100)+1)), 2,",",".") . '/' . $material->set_unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->set_amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format(($material->set_rate * (($project->profit_calc_contr_mat/100)+1)) * $material->set_amount, 2,",",".") }}</td>
         @else
         <td style="width: 160px" class="qty">{{ $material->material_name }}</td>
-        <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 70px" class="qty">{{ number_format(($material->rate * (($project->profit_calc_contr_mat/100)+1)), 2,",",".") . '/' . $material->unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format(($material->rate * (($project->profit_calc_contr_mat/100)+1)) * $material->amount, 2,",",".") }}</td>
         @endif
@@ -178,12 +178,12 @@ $project = Project::find($project_id);
         <td style="width: 185px" class="qty"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
         @if ($material->isset)
         <td style="width: 160px" class="qty">{{ $material->set_equipment_name }}</td>
-        <td style="width: 70px" class="qty">{{ number_format($material->set_rate, 2,",",".") . '/' . $material->set_unit }}</td>
+        <td style="width: 70px" class="qty">{{ number_format(($material->set_rate * (($project->profit_calc_contr_equip/100)+1)), 2,",",".") . '/' . $material->set_unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->set_amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format(($material->set_rate * (($project->profit_calc_contr_equip/100)+1)) * $material->set_amount, 2,",",".") }}</td>
         @else
         <td style="width: 160px" class="qty">{{ $material->equipment_name }}</td>
-        <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 70px" class="qty">{{ number_format(($material->rate * (($project->profit_calc_contr_equip/100)+1)), 2,",",".") . '/' . $material->unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format(($material->rate * (($project->profit_calc_contr_equip/100)+1)) * $material->amount, 2,",",".") }}</td>
         @endif
@@ -194,7 +194,7 @@ $project = Project::find($project_id);
       <tr>
         <td style="width: 185px" class="qty"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
         <td style="width: 160px" class="qty">{{ $material->material_name }}</td>
-        <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 70px" class="qty">{{ number_format(($material->rate * (($project->profit_more_contr_mat/100)+1)), 2,",",".") . '/' . $material->unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format(($material->rate * (($project->profit_more_contr_mat/100)+1)) * $material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">Meerwerk</td>
@@ -204,7 +204,7 @@ $project = Project::find($project_id);
       <tr>
         <td style="width: 185px" class="qty"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
         <td style="width: 160px" class="qty">{{ $material->equipment_name }}</td>
-        <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 70px" class="qty">{{ number_format(($material->rate * (($project->profit_more_contr_equip/100)+1)), 2,",",".") . '/' . $material->unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format(($material->rate * (($project->profit_more_contr_equip/100)+1)) * $material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">Meerwerk</td>
@@ -240,11 +240,11 @@ $project = Project::find($project_id);
         <td style="width: 185px" class="qty"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
         <td style="width: 160px" class="qty">{{ $material->material_name }}</td>
         @if ($material->isless)
-        <td style="width: 70px" class="qty">{{ number_format($material->less_rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 70px" class="qty">{{ number_format(($material->less_rate * (($project->profit_calc_subcontr_mat/100)+1)), 2,",",".") . '/' . $material->unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->less_amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format(($material->less_rate * (($project->profit_calc_subcontr_mat/100)+1)) * $material->less_amount, 2,",",".") }}</td>
         @else
-        <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 70px" class="qty">{{ number_format(($material->rate * (($project->profit_calc_subcontr_mat/100)+1)), 2,",",".") . '/' . $material->unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format(($material->rate * (($project->profit_calc_subcontr_mat/100)+1)) * $material->amount, 2,",",".") }}</td>
         @endif
@@ -256,11 +256,11 @@ $project = Project::find($project_id);
         <td style="width: 185px" class="qty"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
         <td style="width: 160px" class="qty">{{ $material->equipment_name }}</td>
         @if ($material->isless)
-        <td style="width: 70px" class="qty">{{ number_format($material->less_rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 70px" class="qty">{{ number_format(($material->less_rate * (($project->profit_calc_subcontr_equip/100)+1)), 2,",",".") . '/' . $material->unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->less_amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format(($material->less_rate * (($project->profit_calc_subcontr_equip/100)+1)) * $material->less_amount, 2,",",".") }}</td>
         @else
-        <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 70px" class="qty">{{ number_format(($material->rate * (($project->profit_calc_subcontr_equip/100)+1)), 2,",",".") . '/' . $material->unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format(($material->rate * (($project->profit_calc_subcontr_equip/100)+1)) * $material->amount, 2,",",".") }}</td>
         @endif
@@ -272,12 +272,12 @@ $project = Project::find($project_id);
         <td style="width: 185px" class="qty"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
         @if ($material->isset)
         <td style="width: 160px" class="qty">{{ $material->set_material_name }}</td>
-        <td style="width: 70px" class="qty">{{ number_format($material->set_rate, 2,",",".") . '/' . $material->set_unit }}</td>
+        <td style="width: 70px" class="qty">{{ number_format(($material->set_rate * (($project->profit_calc_subcontr_mat/100)+1)), 2,",",".") . '/' . $material->set_unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->set_amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format(($material->set_rate * (($project->profit_calc_subcontr_mat/100)+1)) * $material->set_amount, 2,",",".") }}</td>
         @else
         <td style="width: 160px" class="qty">{{ $material->material_name }}</td>
-        <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 70px" class="qty">{{ number_format(($material->rate * (($project->profit_calc_subcontr_mat/100)+1)), 2,",",".") . '/' . $material->unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format(($material->rate * (($project->profit_calc_subcontr_mat/100)+1)) * $material->amount, 2,",",".") }}</td>
         @endif
@@ -289,12 +289,12 @@ $project = Project::find($project_id);
         <td style="width: 185px" class="qty"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
         @if ($material->isset)
         <td style="width: 160px" class="qty">{{ $material->set_equipment_name }}</td>
-        <td style="width: 70px" class="qty">{{ number_format($material->set_rate, 2,",",".") . '/' . $material->set_unit }}</td>
+        <td style="width: 70px" class="qty">{{ number_format(($material->set_rate * (($project->profit_calc_subcontr_equip/100)+1)), 2,",",".") . '/' . $material->set_unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->set_amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format(($material->set_rate * (($project->profit_calc_subcontr_equip/100)+1)) * $material->set_amount, 2,",",".") }}</td>
         @else
         <td style="width: 160px" class="qty">{{ $material->equipment_name }}</td>
-        <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 70px" class="qty">{{ number_format(($material->rate * (($project->profit_calc_subcontr_equip/100)+1)), 2,",",".") . '/' . $material->unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format(($material->rate * (($project->profit_calc_subcontr_equip/100)+1)) * $material->amount, 2,",",".") }}</td>
         @endif
@@ -305,7 +305,7 @@ $project = Project::find($project_id);
       <tr>
         <td style="width: 185px" class="qty"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
         <td style="width: 160px" class="qty">{{ $material->material_name }}</td>
-        <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 70px" class="qty">{{ number_format(($material->rate * (($project->profit_more_subcontr_mat/100)+1)), 2,",",".") . '/' . $material->unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format(($material->rate * (($project->profit_more_subcontr_mat/100)+1)) * $material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">Meerwerk</td>
@@ -315,7 +315,7 @@ $project = Project::find($project_id);
       <tr>
         <td style="width: 185px" class="qty"><?php echo ($i ? $activity->activity_name : ''); $i = false; ?></td>
         <td style="width: 160px" class="qty">{{ $material->equipment_name }}</td>
-        <td style="width: 70px" class="qty">{{ number_format($material->rate, 2,",",".") . '/' . $material->unit }}</td>
+        <td style="width: 70px" class="qty">{{ number_format(($material->rate * (($project->profit_more_subcontr_equip/100)+1)), 2,",",".") . '/' . $material->unit }}</td>
         <td style="width: 60px" class="qty">{{ number_format($material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">{{ '&euro; '.number_format(($material->rate * (($project->profit_more_subcontr_equip/100)+1)) * $material->amount, 2,",",".") }}</td>
         <td style="width: 60px" class="qty">Meerwerk</td>
