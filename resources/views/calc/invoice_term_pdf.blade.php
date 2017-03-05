@@ -191,19 +191,18 @@ if ($relation_self && $relation_self->logo_id) {
         <tr>
           <td style="width: 270px" class="qty">&nbsp;</td>
           <td style="width: 385px" class="qty">Aandeel termijnfactuur in 21% BTW categorie</td>
-          <td class="qty">{{ '&euro; '.number_format($invoice->rest_21, 2, ",",".") }}</td>
+          <td class="qty">{{ '&euro; '.number_format(($invoice->rest_21/100)*21, 2, ",",".") }}</td>
 
         </tr>
         <tr>
           <td style="width: 270px" class="qty">&nbsp;</td> 
           <td style="width: 385px" class="qty">Aandeel termijnfactuur in 6% BTW categorie</td>
-          <td class="qty">{{ '&euro; '.number_format($invoice->rest_6, 2, ",",".") }}</td>
+          <td class="qty">{{ '&euro; '.number_format(($invoice->rest_6/100)*6, 2, ",",".") }}</td>
         </tr>
-        @else
         <tr>
           <td style="width: 270px" class="qty">&nbsp;</td>
           <td style="width: 385px" class="qty">Aandeel termijnfactuur in 0% BTW categorie</td>
-          <td class="qty">{{ '&euro; '.number_format($invoice->rest_0, 2, ",",".") }}</td>
+          <td class="qty">{{ '&euro; '.number_format(($invoice->rest_0/100)*0, 2, ",",".") }}</td>
 
         </tr>
         @endif
