@@ -539,7 +539,7 @@ class RelationController extends Controller {
 			$newname = Auth::id().'-'.md5(mt_rand()).'.'.$file->getClientOriginalExtension();
 			$file->move('user-content', $newname);
 
-			$image = Image::make('user-content/' . $newname)->resize(null, 150, function ($constraint) {
+			$image = Image::make('user-content/' . $newname)->resize(null, 200, function ($constraint) {
     			$constraint->aspectRatio();
     			$constraint->upsize();
 			})->save();
