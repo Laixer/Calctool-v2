@@ -702,7 +702,7 @@ var n = this,
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-primary">Opslaan</button>
+				<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 			</div>
 		</div>
 		</form>
@@ -733,7 +733,7 @@ var n = this,
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-primary">Opslaan</button>
+				<button class="btn btn-primary"><i class="fa fa-check"></i>Opslaan</button>
 			</div>
 		</div>
 		</form>
@@ -877,7 +877,7 @@ var n = this,
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-primary" data-dismiss="modal">Opslaan</button>
+				<button class="btn btn-primary" data-dismiss="modal"><i class="fa fa-check"></i> Opslaan</button>
 			</div>
 
 		</div>
@@ -890,7 +890,7 @@ var n = this,
 		@include('calc.wizard', array('page' => 'more'))
 
 			<div class="pull-right">
-				<a href="/project-{{ $project->id }}/printoverview" target="new" class="btn btn-primary" type="button">{{ $type->type_name == 'regie' ? 'Regiewerk' : 'Meerwerk' }} overzicht</a>
+				<a href="/project-{{ $project->id }}/printoverview" class="btn btn-primary" target="new" type="button"><i class="fa fa-file-pdf-o">&nbsp;</i>Project overzicht</a>
 			</div>
 
 			<h2><strong>{{ $type->type_name == 'regie' ? 'Regiewerk' : 'Meerwerk' }}</strong> <strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u meerwerk op basis van regie toevoegen bestemd voor op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h2>

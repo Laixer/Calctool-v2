@@ -446,7 +446,7 @@ var n = this,
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-primary" data-dismiss="modal">Opslaan</button>
+				<button class="btn btn-primary" data-dismiss="modal"><i class="fa fa-check"></i> Opslaan</button>
 			</div>
 
 		</div>
@@ -468,6 +468,10 @@ var n = this,
 	<section class="container fix-footer-bottom">
 
 		@include('calc.wizard', array('page' => 'less'))
+
+			<div class="pull-right">
+				<a href="/project-{{ $project->id }}/printoverview" class="btn btn-primary" target="new" type="button"><i class="fa fa-file-pdf-o">&nbsp;</i>Project overzicht</a>
+			</div>
 
 			<h2 style="margin: 10px 0 20px 0;"><strong>Minderwerk </strong><strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u hoeveelheden in mindering brengen op de bestaande calculatie bedoeld als minderwerk op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></strong></h2>
 

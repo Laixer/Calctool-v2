@@ -1121,7 +1121,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-primary">Opslaan</button>
+				<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 			</div>
 		</div>
 		</form>
@@ -1152,7 +1152,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-primary">Opslaan</button>
+				<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 			</div>
 		</div>
 		</form>
@@ -1338,7 +1338,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-primary" data-dismiss="modal">Opslaan</button>
+				<button class="btn btn-primary" data-dismiss="modal"><i class="fa fa-check"></i> Opslaan</button>
 			</div>
 
 		</div>
@@ -1362,7 +1362,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 		@include('calc.wizard', array('page' => 'calculation'))
 
 			<div class="pull-right">
-				<a href="/project-{{ $project->id }}/printoverview" class="btn btn-primary" target="new" type="button">Calculatie overzicht</a>
+				<a href="/project-{{ $project->id }}/printoverview" class="btn btn-primary" target="new" type="button"><i class="fa fa-file-pdf-o">&nbsp;</i>Calculatie overzicht</a>
 			</div>
 
 			<h2><strong>Calculeren</strong>&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>

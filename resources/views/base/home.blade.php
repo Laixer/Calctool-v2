@@ -284,7 +284,7 @@ $project_cnt = Project::where('user_id', Auth::user()->id)->count();
 							<div class="row">
 								<div class="col-md-3">
 									<div class="btn-group item-full">
-										<button class="btn btn-primary" name="toggle-close">Gesloten projecten</a>
+										<button class="btn btn-primary" name="toggle-close"><i class="fa fa-close"></i> Gesloten projecten</a>
 										</div>
 									</div>
 								</div>
@@ -329,7 +329,7 @@ $project_cnt = Project::where('user_id', Auth::user()->id)->count();
 						});
 						$scope.$apply();
 						$scope.filter_close = false;
-						$("[name='toggle-close']").text('Gesloten projecten');
+						$("[name='toggle-close']")..text('Gesloten projecten');
 					} else {
 						$scope.projects = [];
 						angular.forEach($scope._projects, function(value, key) {

@@ -355,15 +355,15 @@ $type = ProjectType::find($project->type_id);
 		<?php if (!$project->project_close) { ?>
 		<?php if ($offer_last) { ?>
 		<?php if (!$offer_last->offer_finish) { ?>
-		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
-		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
-		<button class="btn btn-primary osave">Voorbeeld</button>
+		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-sliders">&nbsp;</i>Opties</a>
+		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal"><i class="fa fa-pie-chart">&nbsp;</i>Termijnen</a>
+		<button class="btn btn-primary osave"><i class="fa fa-file-pdf-o">&nbsp;</i>Voorbeeld</button>
 		<?php } ?>
 		<?php } else { ?>
-		<a href="#" data-step="1" data-intro="Bepaal offerte optie" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
-		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
+		<a href="#" data-step="1" data-intro="Bepaal offerte optie" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-sliders">&nbsp;</i>Opties</a>
+		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal"><i class="fa fa-pie-chart">&nbsp;</i>Termijnen</a>
 		@if (CalculationEndresult::totalProject($project))
-		<button data-step="2" data-intro="Maak een voorbeeld (PDF in concept-versie)" class="btn btn-primary osave">Voorbeeld</button>
+		<button data-step="2" data-intro="Maak een voorbeeld (PDF in concept-versie)" class="btn btn-primary osave"><i class="fa fa-file-pdf-o">&nbsp;</i>Voorbeeld</button>
 		@endif
 		<?php } ?>
 		<?php } ?>
@@ -1579,15 +1579,15 @@ $type = ProjectType::find($project->type_id);
 						<?php if (!$project->project_close) { ?>
 						<?php if ($offer_last) { ?>
 						<?php if (!$offer_last->offer_finish) { ?>
-						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
-						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
-						<button class="btn btn-primary osave">Voorbeeld</button>
+						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-sliders">&nbsp;</i>Opties</a>
+						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal"><i class="fa fa-pie-chart">&nbsp;</i>Termijnen</a>
+						<button class="btn btn-primary osave"><i class="fa fa-file-pdf-o">&nbsp;</i>Voorbeeld</button>
 						<?php } ?>
 						<?php }else{ ?>
-						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
-						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal">Termijnen</a>
+						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-sliders">&nbsp;</i>Opties</a>
+						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#termModal"><i class="fa fa-pie-chart">&nbsp;</i>Termijnen</a>
 						@if (CalculationEndresult::totalProject($project))
-						<button class="btn btn-primary osave">Voorbeeld</button>
+						<button class="btn btn-primary osave"><i class="fa fa-file-pdf-o">&nbsp;</i>Voorbeeld</button>
 						@endif
 						<?php } ?>
 						<?php } ?>

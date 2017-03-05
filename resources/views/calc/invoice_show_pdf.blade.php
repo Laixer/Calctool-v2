@@ -104,7 +104,7 @@ if (!$invoice) {
 			<?php if (!$project->project_close) { ?>
 			<?php if (!$_invoice->invoice_close){ ?>
 			<?php if (!$_invoice->isclose) { ?>
-				<a href="/invoice/project-{{ $project->id }}/term-invoice-{{ $_invoice->id }}" class="btn btn-primary">Bewerk</a>
+				<a href="/invoice/project-{{ $project->id }}/term-invoice-{{ $_invoice->id }}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Bewerk</a>
 
 			<?php
 			$prev = Invoice::where('offer_id','=', $_invoice->offer_id)->where('isclose','=',false)->where('priority','<',$_invoice->priority)->orderBy('priority', 'desc')->first();
@@ -122,20 +122,20 @@ if (!$invoice) {
 			?>
 
 			<?php }else{ ?>
-				<a href="/invoice/project-{{ $project->id }}/invoice-{{ $_invoice->id }}" class="btn btn-primary">Bewerk</a>
+				<a href="/invoice/project-{{ $project->id }}/invoice-{{ $_invoice->id }}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Bewerk</a>
 
 			<?php
 			$prev = Invoice::where('offer_id','=', $_invoice->offer_id)->where('isclose','=',false)->orderBy('priority', 'desc')->first();
 			if ($prev && $prev->invoice_close) {
-				echo '<button class="btn btn-primary oclose">Factureren</button>';
+				echo '<button class="btn btn-primary oclose"><i class="fa fa-check-square-o"></i> Factureren</button>';
 			} else if (!$prev) {
-				echo '<button class="btn btn-primary oclose">Factureren</button>';
+				echo '<button class="btn btn-primary oclose"><i class="fa fa-check-square-o"></i> Factureren</button>';
 			}
 			?>
 
 			<?php } ?>
 			<?php } ?>
-			<a href="/res-{{ $res->id }}/download" class="btn btn-primary">Download PDF</a>
+			<a href="/res-{{ $res->id }}/download" class="btn btn-primary"><i class="fa fa-cloud-download"></i> Download PDF</a>
 			<?php } ?>
 		</div>
 
@@ -156,38 +156,38 @@ if (!$invoice) {
 					<?php if (!$project->project_close) { ?>
 					<?php if (!$_invoice->invoice_close){ ?>
 					<?php if (!$_invoice->isclose) { ?>
-						<a href="/invoice/project-{{ $project->id }}/term-invoice-{{ $_invoice->id }}" class="btn btn-primary">Bewerk</a>
+						<a href="/invoice/project-{{ $project->id }}/term-invoice-{{ $_invoice->id }}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Bewerk</a>
 
 					<?php
 					$prev = Invoice::where('offer_id','=', $_invoice->offer_id)->where('isclose','=',false)->where('priority','<',$_invoice->priority)->orderBy('priority', 'desc')->first();
 					$next = Invoice::where('offer_id','=', $_invoice->offer_id)->where('isclose','=',false)->where('priority','>',$_invoice->priority)->orderBy('priority')->first();
 					$end = Invoice::where('offer_id','=', $_invoice->offer_id)->where('isclose','=',true)->first();
 					if ($prev && $prev->invoice_close && $next && !$next->invoice_close) {
-						echo '<button class="btn btn-primary oclose">Factureren</button>';
+						echo '<button class="btn btn-primary oclose"><i class="fa fa-check-square-o"></i> Factureren</button>';
 					} else if (!$prev && $next && !$next->invoice_close) {
-						echo '<button class="btn btn-primary oclose">Factureren</button>';
+						echo '<button class="btn btn-primary oclose"><i class="fa fa-check-square-o"></i> Factureren</button>';
 					} else if (!$prev && !$next) {
-						echo '<button class="btn btn-primary oclose">Factureren</button>';
+						echo '<button class="btn btn-primary oclose"><i class="fa fa-check-square-o"></i> Factureren</button>';
 					} else if ($prev && $prev->invoice_close && $end && !$end->invoice_close) {
-						echo '<button class="btn btn-primary oclose">Factureren</button>';
+						echo '<button class="btn btn-primary oclose"><i class="fa fa-check-square-o"></i> Factureren</button>';
 					}
 					?>
 
 					<?php }else{ ?>
-						<a href="/invoice/project-{{ $project->id }}/invoice-{{ $_invoice->id }}" class="btn btn-primary">Bewerk</a>
+						<a href="/invoice/project-{{ $project->id }}/invoice-{{ $_invoice->id }}" class="btn btn-primary"><i class="fa fa-pencil-square-o"></i> Bewerk</a>
 
 					<?php
 					$prev = Invoice::where('offer_id','=', $_invoice->offer_id)->where('isclose','=',false)->orderBy('priority', 'desc')->first();
 					if ($prev && $prev->invoice_close) {
-						echo '<button class="btn btn-primary oclose">Factureren</button>';
+						echo '<button class="btn btn-primary oclose"><i class="fa fa-check-square-o"></i> Factureren</button>';
 					} else if (!$prev) {
-						echo '<button class="btn btn-primary oclose">Factureren</button>';
+						echo '<button class="btn btn-primary oclose"><i class="fa fa-check-square-o"></i> Factureren</button>';
 					}
 					?>
 
 					<?php } ?>
 					<?php } ?>
-					<a href="/res-{{ $res->id }}/download" class="btn btn-primary">Download PDF</a>
+					<a href="/res-{{ $res->id }}/download" class="btn btn-primary"><i class="fa fa-cloud-download"></i> Download PDF</a>
 					<?php } ?>
 				</div>
 			</div>
