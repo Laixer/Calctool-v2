@@ -121,7 +121,7 @@ if ($relation_self && $relation_self->logo_id) {
     <thead>
       <tr>
         <td style="width: 185px" class="qty"><strong>Werkzaamheid</strong></th>
-        <td style="width: 160px" class="qty"><strong>Materiaal</strong></th>
+        <td style="width: 160px" class="qty"><strong>Materiaal @if ($project->use_equipment)& overig @endif </strong></th>
         <td style="width: 70px" class="qty"><strong>&euro; / Eenh.</strong></th>
         <td style="width: 60px" class="qty"><strong>Aantal</strong></th>
         <td style="width: 60px" class="qty"><strong>Prijs</strong></th>
@@ -232,7 +232,7 @@ if ($relation_self && $relation_self->logo_id) {
     <thead>
       <tr>
         <td style="width: 185px" class="qty"><strong>Werkzaamheid</strong></th>
-        <td style="width: 160px" class="qty"><strong>Materiaal</strong></th>
+        <td style="width: 160px" class="qty"><strong>Materiaal @if ($project->use_equipment)& overig @endif </strong></th>
         <td style="width: 70px" class="qty"><strong>&euro; / Eenh.</strong></th>
         <td style="width: 60px" class="qty"><strong>Aantal</strong></th>
         <td style="width: 60px" class="qty"><strong>Prijs</strong></th>
