@@ -848,4 +848,14 @@ class ProjectController extends Controller {
 
 		return $pdf->inline();
 	}
+
+	public function getPrintOverview(Request $request, $project_id)
+	{
+		$pdf = \PDF::loadView('calc.print_overview_pdf', [
+			'project_id' => $project_id,
+			'relation_self' => $relation_self = Relation::find(Auth::user()->self_id),
+		]);
+
+		return $pdf->inline();
+	}
 }

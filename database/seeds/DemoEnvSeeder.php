@@ -48,9 +48,9 @@ class DemoEnvSeeder extends Seeder {
 		$relation->kind_id = 1;
 		$relation->debtor_code = 'DEMO42';
 		$relation->company_name = 'Deurzen Onderhoud';
-		$relation->type_id = 28;
-		$relation->kvk = '54565243';
-		$relation->btw = 'NL851353423B01';
+		$relation->type_id = 13;
+		$relation->kvk = '15632146';
+		$relation->btw = 'NL244115789B01';
 		$relation->phone = '0612345678';
 		$relation->email = 'info@mitchdeurzen.nl';
 		$relation->website = 'https://www.mitchdeurzen.nl/';
@@ -60,7 +60,7 @@ class DemoEnvSeeder extends Seeder {
 		$relation->address_city = 'Rotterdam';
 		$relation->province_id = 9;
 		$relation->country_id = 34;
-		$relation->iban = 'NL29INGB0006863509';
+		$relation->iban = 'NL45INGB0007421467';
 		$relation->iban_name = 'DEURZEN ONDERHOUD';
 		$relation->save();
 
@@ -90,5 +90,42 @@ class DemoEnvSeeder extends Seeder {
 
 		$relation->logo_id = $resource->id;
 		$relation->save();
+
+		$relation2 = new Relation;
+		$relation2->user_id = $demo_user->id;
+		$relation2->kind_id = 1;
+		$relation2->debtor_code = mt_rand(1000000, 9999999);
+		$relation2->company_name = 'CalculatieTool.com';
+		$relation2->type_id = 27;
+		$relation2->kvk = '54565243';
+		$relation2->btw = 'NL851353423B01';
+		$relation2->phone = '0643587470';
+		$relation2->email = 'info@calculatietool.com';
+		$relation2->website = 'https://www.calculatietool.com';
+		$relation2->address_street = 'Odinholm';
+		$relation2->address_number = '25';
+		$relation2->address_postal = '3124SC';
+		$relation2->address_city = 'Schiedam';
+		$relation2->province_id = 9;
+		$relation2->country_id = 34;
+		$relation2->iban = 'NL29INGB0006863509';
+		$relation2->iban_name = 'CalculatieTool.com';
+		$relation2->save();
+
+		$contact2 = new Contact;
+		$contact2->lastname = 'Info';
+		$contact2->mobile = '0643587470';
+		$contact2->email = 'info@calculatietool.com';
+		$contact2->relation_id = $relation2->id;
+		$contact2->function_id = 7;
+		$contact2->save();
+
+		$contact3 = new Contact;
+		$contact3->lastname = 'Support';
+		$contact3->mobile = '0643587470';
+		$contact3->email = 'support@calculatietool.com';
+		$contact3->relation_id = $relation2->id;
+		$contact3->function_id = 7;
+		$contact3->save();
 	}
  }
