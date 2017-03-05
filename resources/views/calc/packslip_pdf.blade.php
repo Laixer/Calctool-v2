@@ -113,6 +113,7 @@ if ($relation_self && $relation_self->logo_id) {
   <br>
   </div>
 
+
   <h1>Aanneming</h1>
   @foreach (Chapter::where('project_id', $project->id)->orderBy('priority')->get() as $chapter)
   <h2 class="name">{{ $chapter->chapter_name }}</h2>
@@ -121,7 +122,7 @@ if ($relation_self && $relation_self->logo_id) {
     <thead>
       <tr>
         <td style="width: 185px" class="qty"><strong>Werkzaamheid</strong></th>
-        <td style="width: 160px" class="qty"><strong>Materiaal</strong></th>
+        <td style="width: 160px" class="qty"><strong>Materiaal @if ($project->use_equipment)& overig @endif </strong></th>
         <td style="width: 70px" class="qty"><strong>&euro; / Eenh.</strong></th>
         <td style="width: 60px" class="qty"><strong>Aantal</strong></th>
         <td style="width: 60px" class="qty"><strong>Prijs</strong></th>
@@ -232,7 +233,7 @@ if ($relation_self && $relation_self->logo_id) {
     <thead>
       <tr>
         <td style="width: 185px" class="qty"><strong>Werkzaamheid</strong></th>
-        <td style="width: 160px" class="qty"><strong>Materiaal</strong></th>
+        <td style="width: 160px" class="qty"><strong>Materiaal @if ($project->use_equipment)& overig @endif </strong></th>
         <td style="width: 70px" class="qty"><strong>&euro; / Eenh.</strong></th>
         <td style="width: 60px" class="qty"><strong>Aantal</strong></th>
         <td style="width: 60px" class="qty"><strong>Prijs</strong></th>
