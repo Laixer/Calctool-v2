@@ -15,8 +15,6 @@ use \Jenssegers\Agent\Agent;
 
 @section('title', 'Dashboard')
 
-@section('manifest','manifest="/main.appcache"')
-
 @push('scripts')
 <script src="/components/angular/angular.min.js"></script>
 @endpush
@@ -27,44 +25,12 @@ if (!session()->has('swap_session')) {
 	Auth::user()->online_at = \DB::raw('NOW()');
 	Auth::user()->save();
 }
+
+$project_cnt = Project::where('user_id', Auth::user()->id)->count();
+
 ?>
 
 @section('content')
-<div class="modal fade" id="introModal" tabindex="-1" role="dialog" aria-labelledby="introModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-body" id="introform">
-				<div class="row">
-					<div class="col-md-8">
-						<h4>Welkom bij de<strong> CalculatieTool.com</strong></h4>
-					</div>
-					<div class="col-md-4">
-						<a class="logo" href="/">
-							<img src="/images/logo2.png" width="229px" alt="Calctool">
-						</a>
-					</div>
-				</div>
-				<hr>
-				<div class="row">
-					<div class="col-md-12">
-						<h4>Al je noodzakelijke gegevens zijn bekend en je kan direct beginnen met het aanmaken van een nieuw project. </h4>
-						Je kan je gegevens controleren of later aanpassen en aanvullen onder "Mijn bedrijf".
-						<br>
-						Mocht je vragen hebben of hulp nodig hebben laat dit dan weten in de feedback knop rechts op het scherm.
-						Wij beantwoorden deze vraag dan binnen 12 uur of bellen je indien gewenst, laat hiervoor je telefoonnummer achter.
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<div class="col-md-6"></div>
-				<div class="col-md-6">
-					<button class="btn btn-primary" onclick="$('#introModal').modal('hide')"> Sluiten</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
 <div class="modal fade" id="myYouTube" tabindex="-1" role="dialog" aria-labelledby="mYouTubeLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -101,6 +67,12 @@ if (!session()->has('swap_session')) {
 			</div>
 			@endif
 
+			@if (Auth::user()->login_count < 5)
+			<div class="pull-right" style="margin: 10px 0 20px 0">
+				<a href="/get-help" class="btn btn-default" type="button">Hulp gewenst?</a>
+			</div>
+			@endif
+
 			<h2 style="margin: 10px 0 20px 0;"><strong>
 				<?php
 				$time = date("H");
@@ -133,6 +105,7 @@ if (!session()->has('swap_session')) {
 					</div>
 				</div>
 
+				@if ($project_cnt)
 				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
 						<figure>
@@ -188,6 +161,63 @@ if (!session()->has('swap_session')) {
 						</figure>
 					</div>
 				</div>
+				@else
+				<div class="col-sm-6 col-md-2">
+					<div class="item-box item-box-show fixed-box">
+						<figure>
+							<a class="item-hover" style="cursor: default;" href="javascript:void(0);">
+								<span class="overlay color2" style="background: #9E9E9E !important"></span>
+								<span class="inner" style="top:40%;">
+									<span class="block fa fa-wrench fsize60"></span>
+								</span>
+							</a>
+							<a href="javascript:void(0);" style="cursor: default;" class="btn btn-primary add_to_cart"><strong> Producten</strong></a>
+						</figure>
+					</div>
+				</div>
+
+				<div class="col-sm-6 col-md-2">
+					<div class="item-box item-box-show fixed-box">
+						<figure>
+							<a class="item-hover" style="cursor: default;" href="javascript:void(0);">
+								<span class="overlay color2" style="background: #9E9E9E !important"></span>
+								<span class="inner" style="top:40%;">
+									<span class="block fa fa-clock-o fsize60"></span>
+								</span>
+							</a>
+							<a href="javascript:void(0);" style="cursor: default;" class="btn btn-primary add_to_cart"><strong> Urenregistratie</strong></a>
+						</figure>
+					</div>
+				</div>
+
+				<div class="col-sm-6 col-md-2">
+					<div class="item-box item-box-show fixed-box">
+						<figure>
+							<a class="item-hover" style="cursor: default;" href="javascript:void(0);">
+								<span class="overlay color2" style="background: #9E9E9E !important"></span>
+								<span class="inner" style="top:40%;">
+									<span class="block fa fa-shopping-cart fsize60"></span>
+								</span>
+							</a>
+							<a href="javascript:void(0);" style="cursor: default;" class="btn btn-primary add_to_cart"><strong> Inkoopfacturen</strong></a>
+						</figure>
+					</div>
+				</div>
+
+				<div class="col-sm-6 col-md-2 hidden-xs">
+					<div class="item-box item-box-show fixed-box">
+						<figure>
+							<a class="item-hover" style="cursor: default;" href="javascript:void(0);">
+								<span class="overlay color2" style="background: #9E9E9E !important"></span>
+								<span class="inner" style="top:40%;">
+									<span class="block fa fa-usd fsize60"></span>
+								</span>
+							</a>
+							<a href="javascript:void(0);" style="cursor: default;" class="btn btn-primary add_to_cart"><strong> Financieel</strong></a>
+						</figure>
+					</div>
+				</div>
+				@endif
 
 				<div class="col-sm-6 col-md-2">
 					<div class="item-box item-box-show fixed-box">
@@ -211,7 +241,7 @@ if (!session()->has('swap_session')) {
 
 					<div class="col-md-12">
 						<br>
-						@if (Project::where('user_id', Auth::user()->id)->count('id')>0)
+						@if ($project_cnt)
 						<h2><strong>Jouw</strong> projecten</h2>
 
 						<div class="white-row" ng-controller="projectController">

@@ -306,11 +306,7 @@ $(document).ready(function() {
 				if (json.success) {
 					$curThis.closest("tr").attr("data-id", json.id);
 					var rate = $curThis.closest("tr").find("input[name='rate']").val()
-					// if (rate) {
-						rate = rate.toString().split('.').join('').replace(',', '.');
-					// } else {
-						// rate = {{-- $project->hour_rate --}};
-					// }
+					rate = rate.toString().split('.').join('').replace(',', '.');
 					var amount = $curThis.closest("tr").find("input[name='amount']").val().toString().split('.').join('').replace(',', '.');
 					$curThis.closest("tr").find(".total-ex-tax").text('€ '+$.number(rate*amount,2,',','.'));
 				} else {
@@ -1007,6 +1003,7 @@ $(document).ready(function() {
 									</tr>
 								</thead>
 								<tbody>
+									<td colspan="4"><center>Geen producten gevonden</center></td>
 								</tbody>
 							</table>
 						</div>
@@ -1125,6 +1122,12 @@ $(document).ready(function() {
 							</thead>
 
 							<tbody>
+								@if (!Auth::user()->productFavorite()->count())
+								<tr>
+									<td colspan="5"><center>Geen favoriete werkzaamheden</center></td>
+								</tr>
+								@endif
+
 								@foreach (Auth::user()->productFavorite()->get() as $product)
 								<tr data-id="{{ $product->id }}">
 									<td class="col-md-5">{{ $product->description }}</td>

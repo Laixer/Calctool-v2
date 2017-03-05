@@ -454,7 +454,7 @@ $(document).ready(function() {
 										<div class="input-group col-md-4">
 							                <span class="input-group-btn">
 							                    <span class="btn btn-primary btn-file {{ $relation ? '' : 'disabled' }}">
-							                        Bestand&hellip; <input {{ $relation ? '' : 'disabled' }} name="image" type="file" multiple>
+							                        <i class="fa fa-file-o" aria-hidden="true"></i> Bestand&hellip; <input {{ $relation ? '' : 'disabled' }} name="image" type="file" multiple>
 							                    </span>
 							                </span>
 							                <input type="text" class="form-control" readonly>
@@ -488,7 +488,7 @@ $(document).ready(function() {
 										<div class="input-group col-md-4">
 							                <span class="input-group-btn">
 							                    <span class="btn btn-primary btn-file {{ $relation ? '' : 'disabled' }}">
-							                        Bestand&hellip; <input {{ $relation ? '' : 'disabled' }} name="doc" type="file" multiple>
+							                        <i class="fa fa-file-o" aria-hidden="true"></i> Bestand&hellip; <input {{ $relation ? '' : 'disabled' }} name="doc" type="file" multiple>
 							                    </span>
 							                </span>
 							                <input type="text" class="form-control" readonly>

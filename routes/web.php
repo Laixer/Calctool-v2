@@ -106,6 +106,9 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('import', function() {
 		return view('base.import');
 	});
+	Route::get('get-help', function() {
+		return view('base.get_help');
+	});
 	Route::post('import/save', 'AppsController@doImportRelation');
 	Route::get('relation/export', 'AppsController@getExportRelation');
 	Route::get('myaccount/deactivate', 'UserController@getMyAccountDeactivate');
@@ -350,6 +353,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('project-{project_id}/updateprojectdilapidated', 'ProjectController@getUpdateProjectDilapidated');
 	Route::get('project-{project_id}/packingslip', 'ProjectController@getPackingSlip');
 	Route::get('project-{project_id}/packlist', 'ProjectController@getPackList');
+	Route::get('project-{project_id}/printoverview', 'ProjectController@getPrintOverview');
 
 	/* Cost pages */
 	Route::get('timesheet', 'CostController@getTimesheet')->middleware('payzone');

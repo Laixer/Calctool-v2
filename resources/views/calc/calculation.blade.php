@@ -1362,7 +1362,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 		@include('calc.wizard', array('page' => 'calculation'))
 
 			<div class="pull-right">
-				<a href="#" class="btn btn-primary" type="button">Calculatie overzicht</a>
+				<a href="/project-{{ $project->id }}/printoverview" class="btn btn-primary" target="new" type="button">Calculatie overzicht</a>
 			</div>
 
 			<h2><strong>Calculeren</strong>&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>

@@ -39,6 +39,13 @@ $display_description = $offer->display_description;  //Omschrijving werkzaamhede
 
 $type = ProjectType::find($project->type_id);
 
+$image_height = 0;
+if ($relation_self && $relation_self->logo_id) {
+   $image_src = getcwd() . '/' . Resource::find($relation_self->logo_id)->file_location;
+   $image = getimagesize($image_src);
+   $image_height = round(($image[1] / $image[0]) * 300);
+}
+
 function invoice_condition($offer) {
 	if ($offer && $offer->invoice_quantity > 1) {
 		if ($offer && $offer->downpayment) {
@@ -68,8 +75,8 @@ function invoice_condition($offer) {
 					<td style="width: 345px">
 						<div id="logo">
 							<?php
-								if ($relation_self && $relation_self->logo_id)
-									echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+			                  if ($image_height > 0)
+			                    echo "<img style=\"width:300px;height:" . $image_height . "px;\" src=\"" . $image_src . "\"/>";
 							?>
 						</div>
 					</td>
@@ -995,8 +1002,8 @@ function invoice_condition($offer) {
 	  <header class="clearfix">
 		<div id="logo">
 		<?php
-			if ($relation_self && $relation_self->logo_id)
-				echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+	      if ($image_height > 0)
+	        echo "<img style=\"width:300px;height:" . $image_height . "px;\" src=\"" . $image_src . "\"/>";
 		?>
 		</div>
 		  <div id="invoice">
@@ -1055,8 +1062,8 @@ function invoice_condition($offer) {
 	  <header class="clearfix">
 		<div id="logo">
 		<?php
-			if ($relation_self && $relation_self->logo_id)
-				echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+	      if ($image_height > 0)
+	        echo "<img style=\"width:300px;height:" . $image_height . "px;\" src=\"" . $image_src . "\"/>";
 		?>
 		</div>
 		  <div id="invoice">
@@ -1181,8 +1188,8 @@ function invoice_condition($offer) {
 	  <header class="clearfix">
 		<div id="logo">
 		<?php
-			if ($relation_self && $relation_self->logo_id)
-				echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+	      if ($image_height > 0)
+	        echo "<img style=\"width:300px;height:" . $image_height . "px;\" src=\"" . $image_src . "\"/>";
 		?>
 		</div>
 		  <div id="invoice">
@@ -1358,8 +1365,8 @@ function invoice_condition($offer) {
 	  <header class="clearfix">
 		<div id="logo">
 		<?php
-			if ($relation_self && $relation_self->logo_id)
-				echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+	      if ($image_height > 0)
+	        echo "<img style=\"width:300px;height:" . $image_height . "px;\" src=\"" . $image_src . "\"/>";
 		?>
 		</div>
 		  <div id="invoice">
@@ -1400,8 +1407,8 @@ function invoice_condition($offer) {
 	  <header class="clearfix">
 		<div id="logo">
 		<?php
-			if ($relation_self && $relation_self->logo_id)
-				echo "<img src=\"".getcwd().'/'.Resource::find($relation_self->logo_id)->file_location."\"/>";
+	      if ($image_height > 0)
+	        echo "<img style=\"width:300px;height:" . $image_height . "px;\" src=\"" . $image_src . "\"/>";
 		?>
 		</div>
 		  <div id="invoice">

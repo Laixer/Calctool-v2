@@ -456,9 +456,11 @@ $(document).ready(function() {
 								</thead>
 
 								<tbody>
+									<?php $i = 0; ?>
 									@foreach (Project::where('user_id','=', Auth::id())->where('client_id',$relation->id)->orderBy('created_at','desc')->get() as $project)
 									@foreach (Offer::where('project_id','=', $project->id)->orderBy('created_at','desc')->get() as $offer)
 									@foreach (Invoice::where('offer_id','=', $offer->id)->whereNotNUll('bill_date')->orderBy('created_at','desc')->get() as $invoice)
+									<?php $i++; ?>
 									<tr>
 										<td class="col-md-2"><a href="/invoice/project-{{ $project->id }}/pdf-invoice-{{ $invoice->id }}">{{ $invoice->invoice_code }}</a></td>
 										<td class="col-md-2">{{ $project->project_name }}</td>
@@ -470,6 +472,12 @@ $(document).ready(function() {
 									@endforeach
 									@endforeach
 									@endforeach
+
+									@if (!$i)
+									<tr>
+										<td colspan="6"><center>Geen facturen bij relatie</center></td>
+									</td>
+									@endif
 								</tbody>
 							</table>							
 						</div>
