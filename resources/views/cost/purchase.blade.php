@@ -167,7 +167,7 @@ use \Calctool\Models\Wholesale;
 				<div class="row">
 					<div class="col-md-3">
 						<div class="btn-group">
-					  		<a href="/wholesale" class="btn btn-primary"><i class="fa fa-pencil"></i> Leveranciers</a>
+					  		<a href="/wholesale" class="btn btn-primary"><i class="fa fa-truck"></i> Leveranciers</a>
 					 	</div>
 					</div>
 				</div>
