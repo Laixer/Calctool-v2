@@ -340,6 +340,7 @@ if ($relation_self && $relation_self->logo_id) {
     <hr color="#000" size="1">
     <div class="terms">
       <li>Overzicht gebaseerd op huidige projectstatus.</li>
+      <li>Materiaalprijzen zijn excl. winstpercentages.</li>
     </div>
 
 
