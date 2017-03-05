@@ -329,7 +329,7 @@ $project_cnt = Project::where('user_id', Auth::user()->id)->count();
 						});
 						$scope.$apply();
 						$scope.filter_close = false;
-						$("[name='toggle-close']")..text('Gesloten projecten');
+						$("[name='toggle-close']").text('Gesloten projecten');
 					} else {
 						$scope.projects = [];
 						angular.forEach($scope._projects, function(value, key) {
