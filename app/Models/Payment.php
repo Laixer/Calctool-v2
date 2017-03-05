@@ -32,7 +32,7 @@ class Payment extends Model {
 	public function getTypeName() {
 		switch ($this->recurring_type) {
 			case 'first':
-				return 'Eerste abonnements betaling';
+				return 'Eerste betaling met incasso';
 			
 			default:
 				return 'Eenmalige afschrijving';
