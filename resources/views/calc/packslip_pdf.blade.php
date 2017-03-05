@@ -36,7 +36,7 @@ if ($relation_self && $relation_self->logo_id) {
         <table border="0" cellspacing="0" cellpadding="0">
           <tbody>
             <tr>
-              <td>
+              <td style="width: 345px">
                 <div id="logo">
                 <?php
                   if ($image_height > 0)
@@ -102,7 +102,7 @@ if ($relation_self && $relation_self->logo_id) {
       <tbody>
         <tr>
           <td style="width: 345px">
-            <div><h2 class="type">PAKBON</h2></div>
+            <div><h1 class="type">PAKBON</h1></div>
           </td>
           <td style="width: 300px">
           </td>

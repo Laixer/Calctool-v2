@@ -104,7 +104,7 @@ if ($relation_self && $relation_self->logo_id) {
       <tbody>
         <tr>
           <td style="width: 345px">
-            <div><h1>Calculatieoverzicht</h1></div>
+            <div><h1 class="type">CALCULATIEOVERZICHT</h1></div>
           </td>
           <td style="width: 300px">
           </td>
@@ -116,7 +116,7 @@ if ($relation_self && $relation_self->logo_id) {
   </div>
 
   @if ($project->use_subcontract)
-  <h2 class="type">Aanneming</h2>
+  <h1 class="type">Aanneming</h1>
   @endif
 
   <br>
@@ -283,7 +283,7 @@ if ($relation_self && $relation_self->logo_id) {
   <?#--PAGE HEADER SECOND END--?>
 
 
-  <h2>Onderaanneming</h2>
+  <h1>Onderaanneming</h1>
 
     <br>
     <h3 class="type">Calculatie</h3>

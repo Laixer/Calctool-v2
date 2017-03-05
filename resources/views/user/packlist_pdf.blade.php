@@ -102,7 +102,7 @@ if ($relation_self && $relation_self->logo_id) {
       <tbody>
         <tr>
           <td style="width: 345px">
-            <div><h2 class="type">RAAPLIJST</h2></div>
+            <div><h1 class="type">RAAPLIJST</h1></div>
           </td>
           <td style="width: 300px">
           </td>
