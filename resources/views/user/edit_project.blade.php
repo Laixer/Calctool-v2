@@ -420,7 +420,7 @@ $(document).ready(function() {
 						<div class="btn-group" role="group">	
 							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acties&nbsp;&nbsp;<span class="caret"></span></button>
 							<ul class="dropdown-menu">
-								<li><a href="/project-{{ $project->id }}/printoverview" target="new"><i class="fa fa-file-pdf-o"></i>&nbsp;Calculatie overzicht</a></i>
+								<li><a href="/project-{{ $project->id }}/printoverview" target="new"><i class="fa fa-file-pdf-o"></i>&nbsp;Projectoverzicht</a></i>
 								<li><a href="/project-{{ $project->id }}/packlist" target="new"><i class="fa fa-file-pdf-o"></i>&nbsp;Raaplijst</a></i>
 								<li><a href="/project-{{ $project->id }}/copy"><i class="fa fa-copy"></i>&nbsp;Project kopieren</a></i>
 								@if (!$project->project_close)
@@ -634,8 +634,8 @@ $(document).ready(function() {
 								<div class="col-md-3"><h5><strong>Eigen uurtarief <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier uw uurtarief op wat door heel de calculatie gebruikt wordt voor dit project. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></div>
 								<div class="col-md-1"></div>
 								@if ($type->type_name != 'regie')
-								<div class="col-md-2"><h5><strong>Calculatie *</strong></h5></div>
-								<div class="col-md-2"><h5><strong>Meerwerk *</strong></h5></div>
+								<div class="col-md-2"><h5><strong>Calculatie</strong></h5></div>
+								<div class="col-md-2"><h5><strong>Meerwerk</strong></h5></div>
 								@endif
 							</div>
 							<div class="row">

@@ -31,7 +31,7 @@ if ($relation_self && $relation_self->logo_id) {
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Calculatieoverzicht</title>
+    <title>Projectoverzicht</title>
     <link rel="stylesheet" href="{{ getcwd() }}/css/pdf.css" media="all" />
   </head>
    <body>
@@ -104,7 +104,7 @@ if ($relation_self && $relation_self->logo_id) {
       <tbody>
         <tr>
           <td style="width: 345px">
-            <div><h1 class="type">CALCULATIEOVERZICHT</h1></div>
+            <div><h1 class="type">PROJECTOVERZICHT</h1></div>
           </td>
           <td style="width: 300px">
           </td>
