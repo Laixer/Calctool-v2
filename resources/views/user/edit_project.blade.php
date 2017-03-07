@@ -416,8 +416,8 @@ $(document).ready(function() {
 
 				<div id="project" class="tab-pane">
 					<div class="pull-right">
-						<a href="javascript:void(0);" data-toggle="modal" data-target="#notepad" class="btn btn-primary"><i class="fa fa-sticky-note-o"></i>&nbsp;Kladblok</a>
-						<div class="btn-group" role="group">
+						<a href="javascript:void(0);" data-toggle="modal" data-target="#notepad" class="btn btn-primary"><i class="fa fa-file-text-o"></i>&nbsp;Kladblok</a>
+						<div class="btn-group" role="group">	
 							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acties&nbsp;&nbsp;<span class="caret"></span></button>
 							<ul class="dropdown-menu">
 								<li><a href="/project-{{ $project->id }}/printoverview" target="new"><i class="fa fa-file-pdf-o"></i>&nbsp;Calculatie overzicht</a></i>

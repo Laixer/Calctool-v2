@@ -69,7 +69,7 @@ $project_cnt = Project::where('user_id', Auth::user()->id)->count();
 
 			@if (Auth::user()->login_count < 5)
 			<div class="pull-right" style="margin: 10px 0 20px 0">
-				<a href="/get-help" class="btn btn-default hidden-sm hidden-xs" type="button">Hulp gewenst?</a>
+				<a href="/get-help" class="btn btn-default hidden-sm hidden-xs" type="button"><i class="fa fa-support"></i>Hulp gewenst?</a>
 			</div>
 			@endif
 

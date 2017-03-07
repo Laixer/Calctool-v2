@@ -292,23 +292,23 @@ $(document).ready(function() {
 
 					<ul class="nav nav-tabs">
 						<li id="tab-company">
-							<a href="#company" data-toggle="tab">Mijn gegevens</a>
+							<a href="#company" data-toggle="tab"><i class="fa fa-info"></i> Mijn gegevens</a>
 						</li>
 						@if ($user_type_name != 'demo')
 						<li id="tab-payment">
-							<a href="#payment" data-toggle="tab">Mijn betalingen</a>
+							<a href="#payment" data-toggle="tab"><i class="fa fa-credit-card"></i> Mijn betalingen</a>
 						</li>
 						<li id="tab-contact">
-							<a href="#contact" data-toggle="tab">Wachtwoord</a>
+							<a href="#contact" data-toggle="tab"><i class="fa fa-key"></i> Wachtwoord</a>
 						</li>
 						@endif
 						@if (count($clients))
 						<li id="tab-apps">
-							<a href="#apps" data-toggle="tab">Applicaties</a>
+							<a href="#apps" data-toggle="tab"><i class="fa fa-exchange"></i> Applicaties</a>
 						</li>
 						@endif
 						<li id="tab-other">
-							<a href="#other" data-toggle="tab">Overig</a>
+							<a href="#other" data-toggle="tab"><i class="fa fa-plus"></i> Overig</a>
 						</li>
 					</ul>
 
