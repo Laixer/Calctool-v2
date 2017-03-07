@@ -1704,12 +1704,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 								</div>
 							</div>
 						</div>
-<<<<<<< Updated upstream
-
 						@if (Auth::user()->login_count < 5)
-=======
-;
->>>>>>> Stashed changes
 						@if (!Chapter::where('project_id', $project->id)->count())
 						<br>
 						<h4>Een kleine uitleg voordat je begint met calculeren</h4>

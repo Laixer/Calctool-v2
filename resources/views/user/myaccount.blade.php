@@ -400,17 +400,17 @@ $(document).ready(function() {
 
 							@if(!session()->has('swap_session'))
 							<div class="pull-right">
-								<a href="#" data-toggle="modal" data-target="#deactivateModal" class="btn btn-danger">Account deactiveren</a>
+								<a href="#" data-toggle="modal" data-target="#deactivateModal" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Account deactiveren</a>
 								@if (UserGroup::find(Auth::user()->user_group)->subscription_amount == 0)
 								<a href="/payment/increasefree" class="btn btn-primary">Gratis verlengen</a>
 								@elseif ($user->monthsBehind() < 2)
 								@if (Auth::user()->payment_subscription_id)
 								<a href="/payment/subscription/cancel" class="btn btn-primary">Incasso stoppen</a>
 								@else
-								<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#paymentModal">Account verlengen</a>
+								<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#paymentModal"><i class="fa fa-refresh" aria-hidden="true"></i> Account verlengen</a>
 								@endif
 								@else
-								<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#paymentModalUpdate">Account bijwerken</a>
+								<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#paymentModalUpdate"><i class="fa fa-refresh" aria-hidden="true"></i> Account bijwerken</a>
 								@endif
 							</div>
 							@endif

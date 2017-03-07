@@ -491,19 +491,6 @@ $(document).ready(function() {
 						</div>
 					</div>		
 
-					@if (0)
-					<div class="hidden-xs" data-step="3" data-intro="Noteer eventueel aantekeningen bestemd voor het project. (Dit is alleen zichtbaar voor jou)">
-						<h4 class="hidden-xs" >Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);" ><i class="fa fa-info-circle"></i></a></h4>
-						<div class="row hidden-xs">
-							<div class="form-group">
-								<div class="col-md-12">
-									<textarea name="note" id="note" rows="5" class="form-control summernote">{{ Input::old('note') }}</textarea>
-								</div>
-							</div>
-						</div>
-					</div>
-					@endif
-
 					<div class="row">
 						<div class="col-md-12 item-full">
 							<button data-step="4" name="save-project" class="btn btn-primary item-full"><i class="fa fa-check"></i> Opslaan</button>

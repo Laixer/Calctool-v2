@@ -91,7 +91,6 @@ class ProjectController extends Controller {
 		$project->address_number = $request->input('address_number');
 		$project->address_postal = $request->input('zipcode');
 		$project->address_city = $request->input('city');
-		$project->note = $request->input('note');
 		$project->hour_rate = Auth::user()->pref_hourrate_calc;
 		$project->hour_rate_more = Auth::user()->pref_hourrate_more;
 		$project->profit_calc_contr_mat = Auth::user()->pref_profit_calc_contr_mat;
