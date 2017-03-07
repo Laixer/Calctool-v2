@@ -69,7 +69,7 @@ $project_cnt = Project::where('user_id', Auth::user()->id)->count();
 
 			@if (Auth::user()->login_count < 5)
 			<div class="pull-right" style="margin: 10px 0 20px 0">
-				<a href="/get-help" class="btn btn-default" type="button">Hulp gewenst?</a>
+				<a href="/get-help" class="btn btn-default hidden-sm hidden-xs" type="button">Hulp gewenst?</a>
 			</div>
 			@endif
 
@@ -329,7 +329,7 @@ $project_cnt = Project::where('user_id', Auth::user()->id)->count();
 						});
 						$scope.$apply();
 						$scope.filter_close = false;
-						$("[name='toggle-close']").text('Gesloten projecten');
+						$("[name='toggle-close']").html('<i class="fa fa-close"></i> Gesloten projecten');
 					} else {
 						$scope.projects = [];
 						angular.forEach($scope._projects, function(value, key) {
@@ -339,7 +339,7 @@ $project_cnt = Project::where('user_id', Auth::user()->id)->count();
 						});
 						$scope.$apply();
 						$scope.filter_close = true;
-						$("[name='toggle-close']").text('Open projecten');
+						$("[name='toggle-close']").html('<i class="fa fa-folder-open" aria-hidden="true"></i> Open projecten');
 					}
 				});
 
