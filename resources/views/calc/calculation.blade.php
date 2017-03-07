@@ -1705,6 +1705,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 							</div>
 						</div>
 
+						@if (Auth::user()->login_count < 5)
 						@if (!Chapter::where('project_id', $project->id)->count())
 						<br>
 						<h4>Een kleine uitleg voordat je begint met calculeren</h4>
@@ -1719,6 +1720,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 						<br>
 						<img src="/images/exp_calc.jpg" />
 						<br>
+						@endif
 						@endif
 
 						</form>

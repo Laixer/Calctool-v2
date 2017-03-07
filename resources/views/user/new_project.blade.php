@@ -404,7 +404,7 @@ $(document).ready(function() {
 						<div class="col-md-5">
 							<div class="form-group">
 								<label for="name">Projectnaam</label>
-								<input name="name" id="name" type="text" maxlength="50" placeholder="{{ 'PROJ-' . date("Ymd-s") }}" value="{{ Input::old('name') }}" class="form-control" />
+								<input name="name" id="name" type="text" maxlength="50" placeholder="{{ 'PROJ-' . date("Ymd") . '-XX' }}" value="{{ Input::old('name') }}" class="form-control" />
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -491,6 +491,7 @@ $(document).ready(function() {
 						</div>
 					</div>		
 
+					@if (0)
 					<div class="hidden-xs" data-step="3" data-intro="Noteer eventueel aantekeningen bestemd voor het project. (Dit is alleen zichtbaar voor jou)">
 						<h4 class="hidden-xs" >Kladblok van project <a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit betreft een persoonlijk kladblok van dit project en wordt nergens anders weergegeven." href="javascript:void(0);" ><i class="fa fa-info-circle"></i></a></h4>
 						<div class="row hidden-xs">
@@ -501,6 +502,7 @@ $(document).ready(function() {
 							</div>
 						</div>
 					</div>
+					@endif
 
 					<div class="row">
 						<div class="col-md-12 item-full">
