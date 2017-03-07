@@ -816,7 +816,7 @@ var n = this,
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-primary" data-dismiss="modal">Sluiten</button>
+				<button class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times">&nbsp;</i>Sluiten</button>
 			</div>
 
 		</div>
@@ -827,7 +827,7 @@ var n = this,
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h4 class="modal-title" id="myModalLabel">Favoriete werkzaamheden</h4>
+				<h4 class="modal-title" id="myModalLabel"><i class="fa fa-star-o">&nbsp;</i>Favoriete werkzaamheden</h4>
 			</div>
 
 			<div class="modal-body">
@@ -864,7 +864,7 @@ var n = this,
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h4 class="modal-title" id="myModalLabel">Omschrijving werkzaamheid</h4>
+				<h4 class="modal-title" id="myModalLabel"><i class="fa fa-file-text-o">&nbsp;</i>Omschrijving werkzaamheid</h4>
 			</div>
 
 			<div class="modal-body">
@@ -966,14 +966,14 @@ var n = this,
 													</div>
 	    											
 													<div class="col-md-4 text-right">
-														<button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-default btn-xs notemod">Omschrijving</button>
+														<button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-default btn-xs notemod"><i class="fa fa-file-text-o">&nbsp;</i>Omschrijving</button>
 														<div class="btn-group" role="group">
 														  <button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Werkzaamheid&nbsp;&nbsp;<span class="caret"></span></button>
 														  <ul class="dropdown-menu">
-														    <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename">Naam wijzigen</a></li>
-														    <li><a href="#" data-id="{{ $activity->id }}" class="moveupactivity">Verplaats omhoog</a></li>
-											    			<li><a href="#" data-id="{{ $activity->id }}" class="movedownactivity">Verplaats omlaag</a></li>
-														    <li><a href="#" data-id="{{ $activity->id }}" class="deleteact">Verwijderen</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename"><i class="fa fa-pencil-square-o">&nbsp;</i>Naam wijzigen</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" class="moveupactivity"><i class="fa fa-arrow-down">&nbsp;</i>Verplaats omhoog</a></li>
+											    			<li><a href="#" data-id="{{ $activity->id }}" class="movedownactivity"><i class="fa fa-arrow-up">&nbsp;</i>Verplaats omlaag</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" class="deleteact"><i class="fa fa-times">&nbsp;</i>Verwijderen</a></li>
 														  </ul>
 														</div>
 													</div>
@@ -1048,7 +1048,7 @@ var n = this,
 															<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-7"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
-															<td class="col-md-1"><button class="btn btn-primary btn-xs tsave-save"> Toevoegen</button></td>
+															<td class="col-md-1"><button class="btn btn-primary btn-xs tsave-plus"><i class="fa fa-times">&nbsp;</i>Voe toe</button></td>
 														</tr>
 														<?php
 														}else {
@@ -1284,12 +1284,12 @@ var n = this,
 												<input type="text" maxlength="100" class="form-control" name="activity" id="activity" value="" placeholder="Nieuwe Werkzaamheid">
 												<input type="hidden" name="project" value="{{ $project->id }}">
 												<span class="input-group-btn">
-													<button class="btn btn-primary btn-primary-activity">Voeg toe</button>
+													<button class="btn btn-primary btn-primary-activity"><i class="fa fa-plus">&nbsp;&nbsp;</i>Voeg toe</button>
 													<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 														<span class="caret"></span>
 													</button>
 													  <ul class="dropdown-menu" role="menu">
-													    <li><a href="#" class="favselect" data-id="{{ $chapter->id }}" data-toggle="modal" data-target="#myFavAct">Favoriet selecteren</a></li>
+													    <li><a href="#" class="favselect" data-id="{{ $chapter->id }}" data-toggle="modal" data-target="#myFavAct"><i class="fa fa-star-o">&nbsp;</i>Favoriet selecteren</a></li>
 													  </ul>
 												</span>
 											</div>
@@ -1299,10 +1299,10 @@ var n = this,
 											<div class="btn-group" role="group">
 											  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Onderdeel&nbsp;&nbsp;<span class="caret"></span></button>
 											  <ul class="dropdown-menu">
-											    <li><a href="#" data-id="{{ $chapter->id }}" data-name="{{ $chapter->chapter_name }}" data-toggle="modal" data-target="#nameChangeChapModal" class="changenamechap">Naam wijzigen</a></li>
-											    <li><a href="#" data-id="{{ $chapter->id }}" class="moveupchap">Verplaats omhoog</a></li>
-											    <li><a href="#" data-id="{{ $chapter->id }}" class="movedownchap">Verplaats omlaag</a></li>
-											    <li><a href="#" data-id="{{ $chapter->id }}" class="deletechap">Verwijderen</a></li>
+											    <li><a href="#" data-id="{{ $chapter->id }}" data-name="{{ $chapter->chapter_name }}" data-toggle="modal" data-target="#nameChangeChapModal" class="changenamechap"><i class="fa fa-pencil-square-o">&nbsp;</i>Naam wijzigen</a></li>
+											    <li><a href="#" data-id="{{ $chapter->id }}" class="moveupchap"><i class="fa fa-arrow-up">&nbsp;</i>Verplaats omhoog</a></li>
+											    <li><a href="#" data-id="{{ $chapter->id }}" class="movedownchap"><i class="fa fa-arrow-down">&nbsp;</i>Verplaats omlaag</a></li>
+											    <li><a href="#" data-id="{{ $chapter->id }}" class="deletechap"><i class="fa fa-times">&nbsp;</i>Verwijderen</a></li>
 											  </ul>
 											</div>
 											@endif
@@ -1323,7 +1323,7 @@ var n = this,
 									<input type="text" maxlength="100" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw Onderdeel">
 									<input type="hidden" name="project" value="{{ $project->id }}">
 									<span class="input-group-btn">
-										<button class="btn btn-primary btn-primary-chapter">Voeg toe</button>
+										<button class="btn btn-primary btn-primary-chapter"><i class="fa fa-plus">&nbsp;&nbsp;</i>Voeg toe</button>
 									</span>
 								</div>
 							</div>

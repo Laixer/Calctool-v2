@@ -433,7 +433,7 @@ var n = this,
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h4 class="modal-title" id="myModalLabel">Omschrijving aanpassen</h4>
+				<h4 class="modal-title" id="myModalLabel"><i class="fa fa-file-text-o">&nbsp;</i>Omschrijving aanpassen</h4>
 			</div>
 
 			<div class="modal-body">
@@ -525,7 +525,7 @@ var n = this,
 													<div class="col-md-4"></div>
 													<div class="col-md-2"></div>
 	    											<div class="col-md-2"></div>
-													<div class="col-md-3 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-default btn-xs notemod">Omschrijving aanpassen</button></div>
+													<div class="col-md-3 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-default btn-xs notemod"><i class="fa fa-files-text-o">&nbsp;</i>Omschrijving aanpassen</button></div>
 												</div>
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>

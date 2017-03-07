@@ -954,7 +954,7 @@ var n = this,
 														</div>
 														@endif
 													</div>
-													<div class="col-md-3 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-default btn-xs notemod">Omschrijving aanpassen</button></div>
+													<div class="col-md-3 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-default btn-xs notemod"><i class="fa fa-file-text-o">&nbsp;</i>Omschrijving aanpassen</button></div>
 												</div>
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>
@@ -1005,7 +1005,7 @@ var n = this,
 															<td class="col-md-1"><input type="text" name="hour" id="hour" class="form-control-sm-text"/></td>
 															<td class="col-md-1"><span class="total-ex-tax"></span></td>
 															<td class="col-md-7"><input type="text" name="note" id="note" class="form-control-sm-text"/></td>
-															<td class="col-md-1"><button class="btn btn-primary btn-xs lsave-save"> Toevoegen</button></td>
+															<td class="col-md-1"><button class="btn btn-primary btn-xs lsave-save"><i class="fa fa-plus">&nbsp;</i>Voe toe</button></td>
 														</tr>
 														<?php }else{ ?>
 														<?php

@@ -427,7 +427,7 @@ $type = ProjectType::find($project->type_id);
 							</div>
 						</div>
 						<div class="modal-footer">
-							<button class="btn btn-primary" data-dismiss="modal">Opslaan</button>
+							<button class="btn btn-primary" data-dismiss="modal"><i class="fa fa-check"></i> Opslaan</button>
 						</div>
 					</div>
 				</div>
@@ -504,7 +504,7 @@ $type = ProjectType::find($project->type_id);
 						</div>
 
 						<div class="modal-footer">
-							<button class="btn btn-primary" data-dismiss="modal">Opslaan</button>
+							<button class="btn btn-primary" data-dismiss="modal"><i class="fa fa-check"></i> Opslaan</button>
 						</div>
 
 					</div>

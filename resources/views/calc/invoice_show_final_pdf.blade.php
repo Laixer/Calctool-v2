@@ -118,7 +118,7 @@ $(document).ready(function() {
 					</div>
 				</div>
 				<div class="modal-footer">
-					<a class="btn btn-primary pull-right" id="sendpost" data-dismiss="modal" aria-hidden="true"><i class="fa fa-check-square-o"></i> Definitief versturen per post</a>
+					<a class="btn btn-primary pull-right" id="sendpost" data-dismiss="modal" aria-hidden="true"><i class="fa fa-check"></i> Definitief versturen per post</a>
 				</div>
 			</div>
 		</div>

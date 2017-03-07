@@ -199,7 +199,7 @@
 						</table>
 
 						<div class="modal-footer">
-							<a class="btn btn-primary pull-right" id="sendmail" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-check-square-o"></i> Verstuur definitief naar {{ $email }}</a>
+							<a class="btn btn-primary pull-right" id="sendmail" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-check"></i> Verstuur definitief naar {{ $email }}</a>
 						</div>
 						@endif
 
