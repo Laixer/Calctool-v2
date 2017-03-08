@@ -521,6 +521,60 @@ class RelationController extends Controller {
 		}
 	}
 
+	public function doUpdateProfit(Request $request)
+	{
+		$this->validate($request, [
+			'id' => array('required','integer'),
+			'hour_rate' => array('regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9]?)?$/'),
+			'more_hour_rate' => array('required','regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9]?)?$/'),
+			'profit_material_1' => array('numeric','between:0,200'),
+			'profit_equipment_1' => array('numeric','between:0,200'),
+			'profit_material_2' => array('numeric','between:0,200'),
+			'profit_equipment_2' => array('numeric','between:0,200'),
+			'more_profit_material_1' => array('required','numeric','between:0,200'),
+			'more_profit_equipment_1' => array('required','numeric','between:0,200'),
+			'more_profit_material_2' => array('required','numeric','between:0,200'),
+			'more_profit_equipment_2' => array('required','numeric','between:0,200')
+		]);
+
+		$relation = Relation::find($request->input('id'));
+		if (!$relation || !$relation->isOwner()) {
+			return back()->withInput($request->all());
+		}
+
+		$hour_rate = floatval(str_replace(',', '.', str_replace('.', '', $request->input('hour_rate'))));
+		if ($hour_rate<0 || $hour_rate>999) {
+			return back()->withInput($request->all())->withErrors(['error' => "Ongeldige invoer, vervang punten door comma's"]);
+		}
+
+		$hour_rate_more = floatval(str_replace(',', '.', str_replace('.', '', $request->input('more_hour_rate'))));
+		if ($hour_rate_more<0 || $hour_rate_more>999) {
+			return back()->withInput($request->all())->withErrors(['error' => "Ongeldige invoer, vervang punten door comma's"]);
+		}
+
+		if ($hour_rate)
+			$relation->hour_rate = $hour_rate;
+			$relation->hour_rate_more = $hour_rate_more;
+		if ($request->input('profit_material_1') != "")
+			$relation->profit_calc_contr_mat = round($request->input('profit_material_1'));
+		if ($request->input('profit_equipment_1') != "")
+			$relation->profit_calc_contr_equip = round($request->input('profit_equipment_1'));
+		if ($request->input('profit_material_2') != "")
+			$relation->profit_calc_subcontr_mat = round($request->input('profit_material_2'));
+		if ($request->input('profit_equipment_2') != "")
+			$relation->profit_calc_subcontr_equip = round($request->input('profit_equipment_2'));
+		$relation->profit_more_contr_mat = round($request->input('more_profit_material_1'));
+		$relation->profit_more_contr_equip = round($request->input('more_profit_equipment_1'));
+		$relation->profit_more_subcontr_mat = round($request->input('more_profit_material_2'));
+		$relation->profit_more_subcontr_equip = round($request->input('more_profit_equipment_2'));
+
+		$relation->save();
+
+		Audit::CreateEvent('relation.update.profit.success', 'Profits by relation ' . $relation->id . ' updated');
+
+		return back()->with('success', 'Uurtarief & winstpercentages aangepast');
+	}
+
 	public function getAll()
 	{
 		return view('user.relation');
