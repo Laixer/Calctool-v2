@@ -933,7 +933,7 @@ $(document).ready(function() {
 						<a href="#favorite" data-toggle="tab"><i class="fa fa-star"></i> Favorieten producten</a>
 					</li>
 					<li id="tab-favorite-activity">
-						<a href="#favorite-activity" data-toggle="tab"><i class="fa fa-star"></i> Favorieten werkzaamheden</a>
+						<a href="#favorite-activity" data-toggle="tab"><i class="fa fa-star-o"></i> Favorieten werkzaamheden</a>
 					</li>
 				</ul>
 

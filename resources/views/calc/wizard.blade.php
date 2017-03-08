@@ -9,8 +9,7 @@ if (empty($project)) {
 <div class="wizard">
 	<a href="/"> Dashboard</a>
 	<a href="/project/new" class="current">Project</a>
-	<span>Calculeren</span>
-	<span>Offerte</span>
+	<span>...</span>
 	<span>Factuur</span>
 	<span>Resultaat</span>
 </div>

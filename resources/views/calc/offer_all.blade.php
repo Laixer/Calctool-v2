@@ -174,7 +174,7 @@ $(document).ready(function() {
 				</tbody>
 			</table>
 			@if (!($offer_last && $offer_last->offer_finish) && !$project->project_close)
-			<a href="/offer/project-{{ $project->id }}" data-step="1" data-intro="Stap 7: Maak nieuwe offerte." class="btn btn-primary btn"><i class="fa fa-pencil"></i>
+			<a href="/offer/project-{{ $project->id }}" data-step="1" data-intro="Stap 7: Maak nieuwe offerte." class="btn btn-primary btn"><i class="fa fa-pencil-square-o"></i>
 				<?php
 				if(Offer::where('project_id', '=', $project->id)->count('id')>0) {
 					echo "Laatste versie bewerken";

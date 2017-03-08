@@ -249,6 +249,6 @@ class AuthenticationTest extends TestCase
              ->type($password, 'secret')
              ->press('Login')
              ->seePageIs('/myaccount')
-             ->see('Account is gedeactiveerd, abonnement is verlopen.');
+             ->see('Account is gedeactiveerd, maak betaling.');
     }
 }

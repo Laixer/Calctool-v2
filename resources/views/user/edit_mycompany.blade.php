@@ -230,19 +230,19 @@ $(document).ready(function() {
 
 					<ul class="nav nav-tabs">
 						<li id="tab-company">
-							<a href="#company" data-toggle="tab">Bedrijfsgegevens</a>
+							<a href="#company" data-toggle="tab"><i class="fa fa-info" aria-hidden="true"></i>Bedrijfsgegevens</a>
 						</li>
 						<li id="tab-contact">
-							<a href="#contact" data-toggle="tab" data-step="3" data-position="botom" data-intro="Je bedrijf heeft een contactpersoon nodig. Klik op het tabblad 'Contacten' en klik daarna op volgende.">Contacten</a>
+							<a href="#contact" data-toggle="tab" data-step="3" data-position="botom" data-intro="Je bedrijf heeft een contactpersoon nodig. Klik op het tabblad 'Contacten' en klik daarna op volgende."><i class="fa fa-users" aria-hidden="true"></i>Contacten</a>
 						</li>
 						<li id="tab-payment">
-							<a href="#payment" data-toggle="tab">Betalingsgegevens</a>
+							<a href="#payment" data-toggle="tab"><i class="fa fa-university" aria-hidden="true"></i>Betalingsgegevens</a>
 						</li>
 						<li id="tab-logo">
-							<a href="#logo" data-toggle="tab">Logo & Voorwaarden</a>
+							<a href="#logo" data-toggle="tab"><i class="fa fa-file-image-o" aria-hidden="true"></i>Logo & Voorwaarden</a>
 						</li>
 						<li id="tab-prefs">
-							<a href="#prefs" data-toggle="tab">Voorkeuren</a>
+							<a href="#prefs" data-toggle="tab"><i class="fa fa-cogs" aria-hidden="true"></i>Voorkeuren</a>
 						</li>
 					</ul>
 

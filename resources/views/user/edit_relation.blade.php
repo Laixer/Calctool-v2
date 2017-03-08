@@ -203,16 +203,16 @@ $(document).ready(function() {
 
 					<ul class="nav nav-tabs">
 						<li id="tab-company">
-							<a href="#company" data-toggle="tab">{{ ucfirst( RelationKind::find($relation->kind_id)->kind_name) }}e gegevens</a>
+							<a href="#company" data-toggle="tab"><i class="fa fa-info"></i> {{ ucfirst( RelationKind::find($relation->kind_id)->kind_name) }}e gegevens</a>
 						</li>
 						<li id="tab-contact">
-							<a href="#contact" data-toggle="tab">Contacten</a>
+							<a href="#contact" data-toggle="tab"><i class="fa fa-users"></i> Contacten</a>
 						</li>
 						<li id="tab-payment">
-							<a href="#payment" data-toggle="tab">Betalingsgegevens</a>
+							<a href="#payment" data-toggle="tab"><i class="fa fa-university"></i> Betalingsgegevens</a>
 						</li>
 						<li id="tab-invoices">
-							<a href="#invoices" data-toggle="tab">Facturen</a>
+							<a href="#invoices" data-toggle="tab"><i class="fa fa-file-pdf-o"></i> Facturen</a>
 						</li>
 					</ul>
 

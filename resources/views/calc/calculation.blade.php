@@ -1121,7 +1121,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-primary">Opslaan</button>
+				<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 			</div>
 		</div>
 		</form>
@@ -1152,7 +1152,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-primary">Opslaan</button>
+				<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 			</div>
 		</div>
 		</form>
@@ -1236,7 +1236,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-primary" data-dismiss="modal">Sluiten</button>
+				<button class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times">&nbsp;</i>Sluiten</button>
 			</div>
 
 		</div>
@@ -1277,7 +1277,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-primary" data-dismiss="modal">Sluiten</button>
+				<button class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times">&nbsp;</i>Sluiten</button>
 			</div>
 
 		</div>
@@ -1314,7 +1314,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-primary" data-dismiss="modal">Sluiten</button>
+				<button class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times">&nbsp;</i>Sluiten</button>
 			</div>
 
 		</div>
@@ -1338,7 +1338,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-primary" data-dismiss="modal">Opslaan</button>
+				<button class="btn btn-primary" data-dismiss="modal"><i class="fa fa-check"></i> Opslaan</button>
 			</div>
 
 		</div>
@@ -1362,7 +1362,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 		@include('calc.wizard', array('page' => 'calculation'))
 
 			<div class="pull-right">
-				<a href="/project-{{ $project->id }}/printoverview" class="btn btn-primary" target="new" type="button">Calculatie overzicht</a>
+				<a href="/project-{{ $project->id }}/printoverview" class="btn btn-primary" target="new" type="button"><i class="fa fa-file-pdf-o">&nbsp;</i>Projectoverzicht</a>
 			</div>
 
 			<h2><strong>Calculeren</strong>&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
@@ -1431,15 +1431,15 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 													</div>
 													
 													<div class="col-md-6 text-right">
-														<button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-default btn-xs notemod">Omschrijving</button>
+														<button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-default btn-xs notemod"><i class="fa fa-file-text-o">&nbsp;&nbsp;</i>Omschrijving</button>
 														<div class="btn-group" role="group">
 														  <button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Werkzaamheid&nbsp;&nbsp;<span class="caret"></span></button>
 														  <ul class="dropdown-menu">
-														    <li><a href="#" data-id="{{ $activity->id }}" class="lsavefav">Opslaan als favoriet</a></li>
-														    <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename">Naam wijzigen</a></li>
-														    <li><a href="#" data-id="{{ $activity->id }}" class="moveupactivity">Verplaats omhoog</a></li>
-											    			<li><a href="#" data-id="{{ $activity->id }}" class="movedownactivity">Verplaats omlaag</a></li>
-														    <li><a href="#" data-id="{{ $activity->id }}" class="deleteact">Verwijderen</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" class="lsavefav"><i class="fa fa-star-o">&nbsp;</i>Opslaan als favoriet</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename"><i class="fa fa-pencil-square-o">&nbsp;</i>Naam wijzigen</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" class="moveupactivity"><i class="fa fa-arrow-up">&nbsp;</i>Verplaats omhoog</a></li>
+											    			<li><a href="#" data-id="{{ $activity->id }}" class="movedownactivity"><i class="fa fa-arrow-down">&nbsp;</i>Verplaats omlaag</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" class="deleteact"><i class="fa fa-times">&nbsp;</i>Verwijderen</a></li>
 														  </ul>
 														</div>
 													</div>
@@ -1662,12 +1662,12 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 											<div class="input-group">
 												<input type="text" maxlength="100" class="form-control" name="activity" id="activity" value="" placeholder="Nieuwe Werkzaamheid">
 												<span class="input-group-btn">
-													<button class="btn btn-primary btn-primary-activity">Voeg toe</button>
+													<button class="btn btn-primary btn-primary-activity"><i class="fa fa-plus">&nbsp;&nbsp;</i> Voeg toe</button>
 													<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 														<span class="caret"></span>
 													</button>
 													  <ul class="dropdown-menu" role="menu">
-													    <li><a href="#" class="lfavselect" data-id="{{ $chapter->id }}" data-toggle="modal" data-target="#myFavAct">Favoriet selecteren</a></li>
+													    <li><a href="#" class="lfavselect" data-id="{{ $chapter->id }}" data-toggle="modal" data-target="#myFavAct"><i class="fa fa-star-o">&nbsp;</i>Favoriet selecteren</a></li>
 													  </ul>
 												</span>
 											</div>
@@ -1676,10 +1676,10 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 											<div class="btn-group" role="group">
 											  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Onderdeel&nbsp;&nbsp;<span class="caret"></span></button>
 											  <ul class="dropdown-menu">
-											    <li><a href="#" data-id="{{ $chapter->id }}" data-name="{{ $chapter->chapter_name }}" data-toggle="modal" data-target="#nameChangeChapModal" class="changenamechap">Naam wijzigen</a></li>
-											    <li><a href="#" data-id="{{ $chapter->id }}" class="moveupchap">Verplaats omhoog</a></li>
-											    <li><a href="#" data-id="{{ $chapter->id }}" class="movedownchap">Verplaats omlaag</a></li>
-											    <li><a href="#" data-id="{{ $chapter->id }}" class="deletechap">Verwijderen</a></li>
+											    <li><a href="#" data-id="{{ $chapter->id }}" data-name="{{ $chapter->chapter_name }}" data-toggle="modal" data-target="#nameChangeChapModal" class="changenamechap"><i class="fa fa-pencil-square-o">&nbsp;</i>Naam wijzigen</a></li>
+											    <li><a href="#" data-id="{{ $chapter->id }}" class="moveupchap"><i class="fa fa-arrow-up">&nbsp;</i>Verplaats omhoog</a></li>
+											    <li><a href="#" data-id="{{ $chapter->id }}" class="movedownchap"><i class="fa fa-arrow-down">&nbsp;</i>Verplaats omlaag</a></li>
+											    <li><a href="#" data-id="{{ $chapter->id }}" class="deletechap"><i class="fa fa-times">&nbsp;</i>Verwijderen</a></li>
 											  </ul>
 											</div>
 										</div>
@@ -1699,12 +1699,12 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 								<div class="input-group" data-step="1" data-intro="Voeg een onderdeel toe. Een soort hoofdstuk waar je werkzaamheden onder vallen.">
 									<input type="text" maxlength="100" class="form-control" name="chapter" id="chapter" value="" placeholder="Nieuw onderdeel">
 									<span class="input-group-btn">
-										<button class="btn btn-primary btn-primary-chapter">Voeg toe</button>
+										<button class="btn btn-primary btn-primary-chapter"><i class="fa fa-plus">&nbsp;&nbsp;</i> Voeg toe</button>
 									</span>
 								</div>
 							</div>
 						</div>
-
+						@if (Auth::user()->login_count < 5)
 						@if (!Chapter::where('project_id', $project->id)->count())
 						<br>
 						<h4>Een kleine uitleg voordat je begint met calculeren</h4>
@@ -1719,6 +1719,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 						<br>
 						<img src="/images/exp_calc.jpg" />
 						<br>
+						@endif
 						@endif
 
 						</form>
@@ -1762,15 +1763,15 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 		    											@endif
 		    										</div>
 		    										<div class="col-md-6 text-right">
-														<button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-default btn-xs notemod">Omschrijving</button>
+														<button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-default btn-xs notemod"><i class="fa fa-file-text-o">&nbsp;</i>Omschrijving</button>
 														<div class="btn-group" role="group">
 														  <button type="button" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Werkzaamheid&nbsp;&nbsp;<span class="caret"></span></button>
 														  <ul class="dropdown-menu">
-														    <li><a href="#" data-id="{{ $activity->id }}" class="esavefav">Opslaan als favoriet</a></li>
-														    <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename">Naam wijzigen</a></li>
-														    <li><a href="#" data-id="{{ $activity->id }}" class="moveupactivity">Verplaats omhoog</a></li>
-											    			<li><a href="#" data-id="{{ $activity->id }}" class="movedownactivity">Verplaats omlaag</a></li>
-														    <li><a href="#" data-id="{{ $activity->id }}" class="deleteact">Verwijderen</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" class="esavefav"><i class="fa fa-star-o">&nbsp;</i>Opslaan als favoriet</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename"><i class="fa fa-pencil-square-o">&nbsp;</i>Naam wijzigen</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" class="moveupactivity"><i class="fa fa-arrow-up">&nbsp;</i>Verplaats omhoog</a></li>
+											    			<li><a href="#" data-id="{{ $activity->id }}" class="movedownactivity"><i class="fa fa-arrow-down">&nbsp;</i>Verplaats omlaag</a></li>
+														    <li><a href="#" data-id="{{ $activity->id }}" class="deleteact"><i class="fa fa-times">&nbsp;</i>Verwijderen</a></li>
 														  </ul>
 														</div>
 													</div>
@@ -1999,7 +2000,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 															<span class="caret"></span>
 														</button>
 														  <ul class="dropdown-menu" role="menu">
-														    <li><a href="#" class="efavselect" data-id="{{ $chapter->id }}" data-toggle="modal" data-target="#myFavAct">Favoriet selecteren</a></li>
+														    <li><a href="#" class="efavselect" data-id="{{ $chapter->id }}" data-toggle="modal" data-target="#myFavAct"><i class="fa fa-star-o">&nbsp;</i>Favoriet selecteren</a></li>
 														  </ul>
 													</span>
 												</div>
@@ -2010,10 +2011,10 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 												<div class="btn-group" role="group">
 												  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Onderdeel&nbsp;&nbsp;<span class="caret"></span></button>
 												  <ul class="dropdown-menu">
-												    <li><a href="#" data-id="{{ $chapter->id }}" data-name="{{ $chapter->chapter_name }}" data-toggle="modal" data-target="#nameChangeChapModal" class="changenamechap">Naam wijzigen</a></li>
-												    <li><a href="#" data-id="{{ $chapter->id }}" class="moveupchap">Verplaats omhoog</a></li>
-											    	<li><a href="#" data-id="{{ $chapter->id }}" class="movedownchap">Verplaats omlaag</a></li>
-												    <li><a href="#" data-id="{{ $chapter->id }}" class="deletechap">Verwijderen</a></li>
+												    <li><a href="#" data-id="{{ $chapter->id }}" data-name="{{ $chapter->chapter_name }}" data-toggle="modal" data-target="#nameChangeChapModal" class="changenamechap"><i class="fa fa-pencil-square-o">&nbsp;</i>Naam wijzigen</a></li>
+												    <li><a href="#" data-id="{{ $chapter->id }}" class="moveupchap"><i class="fa fa-arrow-up">&nbsp;</i>Verplaats omhoog</a></li>
+											    	<li><a href="#" data-id="{{ $chapter->id }}" class="movedownchap"><i class="fa fa-arrow-down">&nbsp;</i>Verplaats omlaag</a></li>
+												    <li><a href="#" data-id="{{ $chapter->id }}" class="deletechap"><i class="fa fa-times">&nbsp;</i>Verwijderen</a></li>
 												  </ul>
 												</div>
 											</div>

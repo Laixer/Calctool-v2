@@ -292,23 +292,23 @@ $(document).ready(function() {
 
 					<ul class="nav nav-tabs">
 						<li id="tab-company">
-							<a href="#company" data-toggle="tab">Mijn gegevens</a>
+							<a href="#company" data-toggle="tab"><i class="fa fa-info"></i> Mijn gegevens</a>
 						</li>
 						@if ($user_type_name != 'demo')
 						<li id="tab-payment">
-							<a href="#payment" data-toggle="tab">Mijn betalingen</a>
+							<a href="#payment" data-toggle="tab"><i class="fa fa-credit-card"></i> Mijn betalingen</a>
 						</li>
 						<li id="tab-contact">
-							<a href="#contact" data-toggle="tab">Wachtwoord</a>
+							<a href="#contact" data-toggle="tab"><i class="fa fa-key"></i> Wachtwoord</a>
 						</li>
 						@endif
 						@if (count($clients))
 						<li id="tab-apps">
-							<a href="#apps" data-toggle="tab">Applicaties</a>
+							<a href="#apps" data-toggle="tab"><i class="fa fa-exchange"></i> Applicaties</a>
 						</li>
 						@endif
 						<li id="tab-other">
-							<a href="#other" data-toggle="tab">Overig</a>
+							<a href="#other" data-toggle="tab"><i class="fa fa-plus"></i> Overig</a>
 						</li>
 					</ul>
 
@@ -400,17 +400,17 @@ $(document).ready(function() {
 
 							@if(!session()->has('swap_session'))
 							<div class="pull-right">
-								<a href="#" data-toggle="modal" data-target="#deactivateModal" class="btn btn-danger">Account deactiveren</a>
+								<a href="#" data-toggle="modal" data-target="#deactivateModal" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Account deactiveren</a>
 								@if (UserGroup::find(Auth::user()->user_group)->subscription_amount == 0)
 								<a href="/payment/increasefree" class="btn btn-primary">Gratis verlengen</a>
 								@elseif ($user->monthsBehind() < 2)
 								@if (Auth::user()->payment_subscription_id)
 								<a href="/payment/subscription/cancel" class="btn btn-primary">Incasso stoppen</a>
 								@else
-								<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#paymentModal">Account verlengen</a>
+								<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#paymentModal"><i class="fa fa-refresh" aria-hidden="true"></i> Account verlengen</a>
 								@endif
 								@else
-								<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#paymentModalUpdate">Account bijwerken</a>
+								<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#paymentModalUpdate"><i class="fa fa-refresh" aria-hidden="true"></i> Account bijwerken</a>
 								@endif
 							</div>
 							@endif

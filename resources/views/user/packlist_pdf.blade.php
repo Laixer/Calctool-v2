@@ -102,7 +102,7 @@ if ($relation_self && $relation_self->logo_id) {
       <tbody>
         <tr>
           <td style="width: 345px">
-            <div><h2 class="type">RAAPLIJST</h2></div>
+            <div><h1 class="type">RAAPLIJST</h1></div>
           </td>
           <td style="width: 300px">
           </td>
@@ -121,7 +121,7 @@ if ($relation_self && $relation_self->logo_id) {
     <thead>
       <tr>
         <td style="width: 185px" class="qty"><strong>Werkzaamheid</strong></th>
-        <td style="width: 160px" class="qty"><strong>Materiaal</strong></th>
+        <td style="width: 160px" class="qty"><strong>Materiaal @if ($project->use_equipment)& overig @endif </strong></th>
         <td style="width: 70px" class="qty"><strong>&euro; / Eenh.</strong></th>
         <td style="width: 60px" class="qty"><strong>Aantal</strong></th>
         <td style="width: 60px" class="qty"><strong>Prijs</strong></th>
@@ -232,7 +232,7 @@ if ($relation_self && $relation_self->logo_id) {
     <thead>
       <tr>
         <td style="width: 185px" class="qty"><strong>Werkzaamheid</strong></th>
-        <td style="width: 160px" class="qty"><strong>Materiaal</strong></th>
+        <td style="width: 160px" class="qty"><strong>Materiaal @if ($project->use_equipment)& overig @endif </strong></th>
         <td style="width: 70px" class="qty"><strong>&euro; / Eenh.</strong></th>
         <td style="width: 60px" class="qty"><strong>Aantal</strong></th>
         <td style="width: 60px" class="qty"><strong>Prijs</strong></th>
@@ -340,6 +340,7 @@ if ($relation_self && $relation_self->logo_id) {
     <hr color="#000" size="1">
     <div class="terms">
       <li>Overzicht gebaseerd op huidige projectstatus.</li>
+      <li>Materiaalprijzen zijn excl. winstpercentages.</li>
     </div>
 
 

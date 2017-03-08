@@ -238,14 +238,14 @@ $type = ProjectType::find($project->type_id);
 
 		<div class="pull-right">
 			@if (!$invoice->invoice_close)
-			<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
+			<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-sliders">&nbsp;</i>Opties</a>
 			<?php
 			if (!$project->project_close) {
 				$prev = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->orderBy('priority', 'desc')->first();
 				if ($prev && $prev->invoice_close) {
-					echo '<button class="btn btn-primary osave">Voorbeeld</button>&nbsp;';
+					echo '<button class="btn btn-primary osave"><i class="fa fa-file-pdf-o">&nbsp;</i>Voorbeeld</button>&nbsp;';
 				} else if (!$prev) {
-					echo '<button class="btn btn-primary osave">Voorbeeld</button>&nbsp;';
+					echo '<button class="btn btn-primary osave"><i class="fa fa-file-pdf-o">&nbsp;</i>Voorbeeld</button>&nbsp;';
 				}
 			}
 			?>
@@ -344,7 +344,7 @@ $type = ProjectType::find($project->type_id);
 						</div>
 
 						<div class="modal-footer">
-							<button class="btn btn-primary" data-dismiss="modal">Opslaan</button>
+							<button class="btn btn-primary" data-dismiss="modal"><i class="fa fa-check"></i> Opslaan</event_buffer_timeout_set(bevent, read_timeout, write_timeout)ton>
 						</div>
 
 					</div>
@@ -3002,7 +3002,7 @@ if ($cnt>1) {
 	<div class="col-sm-6 text-right">
 		<div class="padding20">
 			@if (!$invoice->invoice_close)
-			<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Opties</a>
+			<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-sliders">&nbsp;</i>Opties</a>
 			<?php
 			if (!$project->project_close) {
 				$prev = Invoice::where('offer_id','=', $invoice->offer_id)->where('isclose','=',false)->orderBy('priority', 'desc')->first();

@@ -433,7 +433,7 @@ var n = this,
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h4 class="modal-title" id="myModalLabel">Omschrijving aanpassen</h4>
+				<h4 class="modal-title" id="myModalLabel"><i class="fa fa-file-text-o">&nbsp;</i>Omschrijving aanpassen</h4>
 			</div>
 
 			<div class="modal-body">
@@ -446,7 +446,7 @@ var n = this,
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-primary" data-dismiss="modal">Opslaan</button>
+				<button class="btn btn-primary" data-dismiss="modal"><i class="fa fa-check"></i> Opslaan</button>
 			</div>
 
 		</div>
@@ -468,6 +468,10 @@ var n = this,
 	<section class="container fix-footer-bottom">
 
 		@include('calc.wizard', array('page' => 'less'))
+
+			<div class="pull-right">
+				<a href="/project-{{ $project->id }}/printoverview" class="btn btn-primary" target="new" type="button"><i class="fa fa-file-pdf-o">&nbsp;</i>Project overzicht</a>
+			</div>
 
 			<h2 style="margin: 10px 0 20px 0;"><strong>Minderwerk </strong><strong><a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier kunt u hoeveelheden in mindering brengen op de bestaande calculatie bedoeld als minderwerk op de factuur." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></strong></h2>
 
@@ -521,7 +525,7 @@ var n = this,
 													<div class="col-md-4"></div>
 													<div class="col-md-2"></div>
 	    											<div class="col-md-2"></div>
-													<div class="col-md-3 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-default btn-xs notemod">Omschrijving aanpassen</button></div>
+													<div class="col-md-3 text-right"><button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-default btn-xs notemod"><i class="fa fa-files-text-o">&nbsp;</i>Omschrijving aanpassen</button></div>
 												</div>
 												<div class="row">
 													<div class="col-md-2"><h4>Arbeid</h4></div>

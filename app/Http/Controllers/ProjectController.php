@@ -91,7 +91,6 @@ class ProjectController extends Controller {
 		$project->address_number = $request->input('address_number');
 		$project->address_postal = $request->input('zipcode');
 		$project->address_city = $request->input('city');
-		$project->note = $request->input('note');
 		$project->hour_rate = Auth::user()->pref_hourrate_calc;
 		$project->hour_rate_more = Auth::user()->pref_hourrate_more;
 		$project->profit_calc_contr_mat = Auth::user()->pref_profit_calc_contr_mat;
@@ -164,6 +163,7 @@ class ProjectController extends Controller {
 			$invoice->to_contact_id = $contact->id;
 			$invoice->from_contact_id = $contact_self->id;
 			$invoice->isclose = true;
+			$invoice->priority = 100;
 			$invoice->save();
 		}
 
@@ -394,6 +394,7 @@ class ProjectController extends Controller {
 			$invoice->to_contact_id = $contact->id;
 			$invoice->from_contact_id = $contact_self->id;
 			$invoice->isclose = true;
+			$invoice->priority = 100;
 			$invoice->save();
 		}
 
@@ -834,6 +835,12 @@ class ProjectController extends Controller {
 			'list_id' => $project_id . date('Y') . mt_rand(10,99),
 		]);
 
+		$pdf->setOption('zoom', 1.1);
+		$pdf->setOption('footer-font-size', 8);
+		$pdf->setOption('footer-left', Project::find($project_id)->project_name);
+		$pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
+		$pdf->setOption('lowquality', false);
+
 		return $pdf->inline();
 	}
 
@@ -846,6 +853,12 @@ class ProjectController extends Controller {
 			'list_id' => $project_id . date('Y') . mt_rand(10,99),
 		]);
 
+		$pdf->setOption('zoom', 1.1);
+		$pdf->setOption('footer-font-size', 8);
+		$pdf->setOption('footer-left', Project::find($project_id)->project_name);
+		$pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
+		$pdf->setOption('lowquality', false);
+
 		return $pdf->inline();
 	}
 
@@ -855,6 +868,12 @@ class ProjectController extends Controller {
 			'project_id' => $project_id,
 			'relation_self' => $relation_self = Relation::find(Auth::user()->self_id),
 		]);
+
+		$pdf->setOption('zoom', 1.1);
+		$pdf->setOption('footer-font-size', 8);
+		$pdf->setOption('footer-left', Project::find($project_id)->project_name);
+		$pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
+		$pdf->setOption('lowquality', false);
 
 		return $pdf->inline();
 	}

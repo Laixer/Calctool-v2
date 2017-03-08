@@ -22,7 +22,7 @@ use \Jenssegers\Agent\Agent;
 		<section class="container">
 
 			<div class="pull-right" style="margin: 10px 0 20px 0">
-				<a href="/support" class="btn btn-default" type="button">Persoonlijk contact</a>
+				<a href="/support" class="btn btn-default" type="button"><i class="fa fa-user"></i> Persoonlijk contact</a>
 			</div>
 
 			<h2 style="margin: 10px 0 20px 0;"><strong>Ik ...</strong></h2>

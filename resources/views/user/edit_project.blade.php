@@ -392,17 +392,17 @@ $(document).ready(function() {
 
 			<ul class="nav nav-tabs">
 				<li id="tab-project">
-					<a href="#project" data-toggle="tab">Projectgegevens</a>
+					<a href="#project" data-toggle="tab"><i class="fa fa-info"></i> Projectgegevens</a>
 				</li>
 				@if ($type->type_name != 'snelle offerte en factuur')
 				<li id="tab-advanced">
-					<a href="#advanced" data-toggle="tab" data-toggle="tab" data-step="3" data-intro="Geef aan of je andere modules wilt laden in je project. Dit kan later ook nog.">Extra opties</a>
+					<a href="#advanced" data-toggle="tab" data-toggle="tab" data-step="3" data-intro="Geef aan of je andere modules wilt laden in je project. Dit kan later ook nog."><i class="fa fa-sliders"></i> Extra opties</a>
 				</li>
 				<li id="tab-calc">
-					<a href="#calc" data-toggle="tab" data-step="1" data-intro="Geef je uurtarief en winstpercentages op waarmee je wilt gaan calculeren.">Uurtarief en Winstpercentages</a>
+					<a href="#calc" data-toggle="tab" data-step="1" data-intro="Geef je uurtarief en winstpercentages op waarmee je wilt gaan calculeren."><i class="fa fa-percent"></i> Uurtarief en Winstpercentages</a>
 				</li>
 				<li id="tab-doc">
-					<a href="#doc" data-toggle="tab" data-step="1" data-intro="Geef je uurtarief en winstpercentages op waarmee je wilt gaan calculeren.">Documenten</a>
+					<a href="#doc" data-toggle="tab" data-step="1" data-intro="Geef je uurtarief en winstpercentages op waarmee je wilt gaan calculeren."><i class="fa fa-cloud"></i> Documenten</a>
 				</li>
 				@endif
 				@if ($share && $share->client_note )
@@ -416,18 +416,19 @@ $(document).ready(function() {
 
 				<div id="project" class="tab-pane">
 					<div class="pull-right">
-						<a href="javascript:void(0);" data-toggle="modal" data-target="#notepad" class="btn btn-primary">Kladblok</a>
-						<div class="btn-group" role="group">
+						<a href="javascript:void(0);" data-toggle="modal" data-target="#notepad" class="btn btn-primary"><i class="fa fa-file-text-o"></i>&nbsp;Kladblok</a>
+						<div class="btn-group" role="group">	
 							<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acties&nbsp;&nbsp;<span class="caret"></span></button>
 							<ul class="dropdown-menu">
-								<li><a href="/project-{{ $project->id }}/printoverview" target="new">Calculatie overzicht</a></i>
-								<li><a href="/project-{{ $project->id }}/packlist" target="new">Raaplijst</a></i>
-								<li><a href="/project-{{ $project->id }}/copy">Project kopieren</a></i>
+								<li><a href="/project-{{ $project->id }}/printoverview" target="new"><i class="fa fa-file-pdf-o"></i>&nbsp;Projectoverzicht</a></i>
+								<li><a href="/project-{{ $project->id }}/packlist" target="new"><i class="fa fa-file-pdf-o"></i>&nbsp;Raaplijst</a></i>
+								<li><a href="/project-{{ $project->id }}/copy"><i class="fa fa-copy"></i>&nbsp;Project kopieren</a></i>
 								@if (!$project->project_close)
-								<li><a href="#" id="projclose">Project sluiten</a></li>
+								<li><a href="#" id="projclose"><i class="fa fa-close"></i>&nbsp;Project sluiten</a></li>
 								@else
 								<li><a href="/project-{{ $project->id }}/updateprojectdilapidated">Project vervallen</a></li>
 								@endif
+
 							</ul>
 						</div>
 					</div>
@@ -451,7 +452,7 @@ $(document).ready(function() {
 												</div>
 											</div>
 											<div class="modal-footer">
-												<button class="btn btn-primary">Opslaan</button>
+												<button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
 											</div>
 										</div>
 
@@ -633,8 +634,8 @@ $(document).ready(function() {
 								<div class="col-md-3"><h5><strong>Eigen uurtarief <a data-toggle="tooltip" data-placement="bottom" data-original-title="Geef hier uw uurtarief op wat door heel de calculatie gebruikt wordt voor dit project. Of stel deze in bij Voorkeuren om bij elk project te kunnen gebruiken." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></strong></h5></div>
 								<div class="col-md-1"></div>
 								@if ($type->type_name != 'regie')
-								<div class="col-md-2"><h5><strong>Calculatie *</strong></h5></div>
-								<div class="col-md-2"><h5><strong>Meerwerk *</strong></h5></div>
+								<div class="col-md-2"><h5><strong>Calculatie</strong></h5></div>
+								<div class="col-md-2"><h5><strong>Meerwerk</strong></h5></div>
 								@endif
 							</div>
 							<div class="row">
@@ -910,7 +911,7 @@ $(document).ready(function() {
 							<form id="upload-file" action="/resource/upload" method="post" enctype="multipart/form-data">
 								{!! csrf_field() !!}
 								<label class="btn btn-primary btn-file">
-									Upload document <input type="file" name="projectfile" id="btn-load-file" style="display: none;">
+									<i class="fa fa-cloud-upload"></i>&nbsp;Upload document <input type="file" name="projectfile" id="btn-load-file" style="display: none;">
 								</label>
 								<input type="hidden" value="{{ $project->id }}" name="project" />
 							</form>

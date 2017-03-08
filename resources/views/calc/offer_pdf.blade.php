@@ -550,7 +550,7 @@ function invoice_condition($offer) {
 		</thead>
 		<tbody>
 		  <tr style="page-break-after: always;">
-			<td class="qty"><strong>Calculatief te offreren (excl. BTW)</strong></td>
+			<td class="qty"><strong>Calculatief te offreren @if (!$project->tax_reverse) (excl. BTW) @endif </strong></td>
 			<td class="qty"><class="pull-right">{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">&nbsp;</td>
@@ -874,7 +874,7 @@ function invoice_condition($offer) {
 		</thead>
 		<tbody>
 		  <tr style="page-break-after: always;">
-			<td class="qty"><strong>Calculatief te offreren (excl. BTW)</strong></td>
+			<td class="qty"><strong>Calculatief te offreren @if (!$project->tax_reverse) (excl. BTW) @endif </strong></td>
 			<td class="qty"><class="pull-right">{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">&nbsp;</td>
@@ -923,7 +923,7 @@ function invoice_condition($offer) {
 		</thead>
 		<tbody>
 		  <tr style="page-break-after: always;">
-			<td class="qty"><strong>Calculatief te offreren (excl. BTW)</strong></td>
+			<td class="qty"><strong>Calculatief te offreren @if (!$project->tax_reverse) (excl. BTW) @endif </strong></td>
 			<td class="qty"><class="pull-right">{{ '&euro; '.number_format(CalculationEndresult::totalProject($project), 2, ",",".") }}</td>
 			<td class="qty">&nbsp;</td>
 			<td class="qty">&nbsp;</td>
