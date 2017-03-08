@@ -835,6 +835,12 @@ class ProjectController extends Controller {
 			'list_id' => $project_id . date('Y') . mt_rand(10,99),
 		]);
 
+		$pdf->setOption('zoom', 1.1);
+		$pdf->setOption('footer-font-size', 8);
+		$pdf->setOption('footer-left', Project::find($project_id)->project_name);
+		$pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
+		$pdf->setOption('lowquality', false);
+
 		return $pdf->inline();
 	}
 
@@ -847,6 +853,12 @@ class ProjectController extends Controller {
 			'list_id' => $project_id . date('Y') . mt_rand(10,99),
 		]);
 
+		$pdf->setOption('zoom', 1.1);
+		$pdf->setOption('footer-font-size', 8);
+		$pdf->setOption('footer-left', Project::find($project_id)->project_name);
+		$pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
+		$pdf->setOption('lowquality', false);
+
 		return $pdf->inline();
 	}
 
@@ -856,6 +868,12 @@ class ProjectController extends Controller {
 			'project_id' => $project_id,
 			'relation_self' => $relation_self = Relation::find(Auth::user()->self_id),
 		]);
+
+		$pdf->setOption('zoom', 1.1);
+		$pdf->setOption('footer-font-size', 8);
+		$pdf->setOption('footer-left', Project::find($project_id)->project_name);
+		$pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
+		$pdf->setOption('lowquality', false);
 
 		return $pdf->inline();
 	}

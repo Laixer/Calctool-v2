@@ -15,6 +15,7 @@ use \Calctool\Models\Part;
 use \Calctool\Models\Detail;
 use \Calctool\Calculus\CalculationOverview;
 use \Calctool\Calculus\MoreOverview;
+use \Calctool\Calculus\EstimateOverview;
 use \Calctool\Calculus\LessOverview;
 
 $project = Project::find($project_id);
@@ -137,18 +138,27 @@ if ($relation_self && $relation_self->logo_id) {
       </tr>
     </thead>
     <tbody>
+      <?php $j1 = 0; $j2 = 0; $j3 = 0; $j4 = 0; $j5 = 0; ?>
       @foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
       <?php $i = 0; ?>
       @foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('priority')->get() as $activity)
-      <?php $i++; ?>
+      <?php $i++ ?>
       <tr>
         <td style="width: 130px" class="qty-small">{{ $i == 1 ? $chapter->chapter_name : ''  }}</td>
         <td style="width: 144px" class="qty-small">{{ $activity->activity_name }}</td>
-        <td style="width: 40px" class="qty-small"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
-        <td style="width: 60px" class="qty-small"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
-        <td style="width: 60px" class="qty-small"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
-        <td style="width: 60px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
-        <td style="width: 60px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
+        @if (PartType::find($activity->part_type_id)->type_name=='estimate')
+        <td style="width: 40px" class="qty-small"><span class="pull-right"><?php echo number_format(EstimateOverview::laborTotal($activity), 2, ",","."); $j1 += EstimateOverview::laborTotal($activity) ?></td>
+        <td style="width: 60px" class="qty-small"><span class="pull-right total-ex-tax"><?php echo '&euro; '.number_format(EstimateOverview::laborActivity($activity), 2, ",","."); $j2 += EstimateOverview::laborActivity($activity) ?></span></td>
+        <td style="width: 60px" class="qty-small"><span class="pull-right total-ex-tax"><?php echo '&euro; '.number_format(EstimateOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",","."); $j3 += EstimateOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat) ?></span></td>
+        <td style="width: 60px" class="qty-small"><span class="pull-right"><?php echo '&euro; '.number_format(EstimateOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",","."); $j4 += EstimateOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip) ?></span></td>
+        <td style="width: 60px" class="qty-small"><span class="pull-right"><?php echo '&euro; '.number_format(EstimateOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",","."); $j5 += EstimateOverview::activityTotalProfit($activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip) ?></td>
+        @else
+        <td style="width: 40px" class="qty-small"><span class="pull-right"><?php echo number_format(CalculationOverview::laborTotal($activity), 2, ",","."); $j1 += CalculationOverview::laborTotal($activity) ?></td>
+        <td style="width: 60px" class="qty-small"><span class="pull-right total-ex-tax"><?php echo '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",","."); $j2 += CalculationOverview::laborActivity($project->hour_rate, $activity) ?></span></td>
+        <td style="width: 60px" class="qty-small"><span class="pull-right total-ex-tax"><?php echo '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",","."); $j3 += CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat) ?></span></td>
+        <td style="width: 60px" class="qty-small"><span class="pull-right"><?php echo '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",","."); $j4 += CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip) ?></span></td>
+        <td style="width: 60px" class="qty-small"><span class="pull-right"><?php echo '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",","."); $j5 += CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip) ?></td>
+        @endif
         <td style="width: 40px" class="qty-small" text-center">{{ PartType::find($activity->part_type_id)->type_name=='estimate' ? 'Stelpost' : '' }}</td>
       </tr>
       @endforeach
@@ -156,11 +166,11 @@ if ($relation_self && $relation_self->logo_id) {
       <tr>
         <th style="width: 130px" class="qty-small"><strong>Totaal</strong></th>
         <th style="width: 144px" class="qty-small">&nbsp;</th>
-        <td style="width: 40px" class="qty-small"><strong><span class="pull-right">{{ number_format(CalculationOverview::contrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
-        <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
-        <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
-        <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
-        <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
+        <td style="width: 40px" class="qty-small"><strong><span class="pull-right">{{ number_format($j1, 2, ",",".") }}</span></strong></td>
+        <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format($j2, 2, ",",".") }}</span></strong></td>
+        <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format($j3, 2, ",",".") }}</span></strong></td>
+        <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format($j4, 2, ",",".") }}</span></strong></td>
+        <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format($j5, 2, ",",".") }}</span></strong></td>
         <th style="width: 40px" class="qty-small">&nbsp;</th>
       </tr>
     </tbody>
@@ -305,6 +315,7 @@ if ($relation_self && $relation_self->logo_id) {
       </thead>
 
       <tbody>
+        <?php $j1 = 0; $j2 = 0; $j3 = 0; $j4 = 0; $j5 = 0; ?>
         @foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
         <?php $i = 0; ?>
         @foreach (Activity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('priority')->get() as $activity)
@@ -312,11 +323,19 @@ if ($relation_self && $relation_self->logo_id) {
         <tr>
           <td style="width: 130px" class="qty-small">{{ $i == 1 ? $chapter->chapter_name : '' }}</td>
           <td style="width: 144px" class="qty-small">{{ $activity->activity_name }}</td>
-          <td style="width: 40px" class="qty-small"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
-          <td style="width: 60px" class="qty-small"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
-          <td style="width: 60px" class="qty-small"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
-          <td style="width: 60px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
-          <td style="width: 60px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
+          @if (PartType::find($activity->part_type_id)->type_name=='estimate')
+          <td style="width: 40px" class="qty-small"><span class="pull-right"><?php echo number_format(EstimateOverview::laborTotal($activity), 2, ",","."); $j1 += EstimateOverview::laborTotal($activity) ?></td>
+          <td style="width: 60px" class="qty-small"><span class="pull-right total-ex-tax"><?php echo '&euro; '.number_format(EstimateOverview::laborActivity($activity), 2, ",","."); $j2 += EstimateOverview::laborActivity($activity) ?></span></td>
+          <td style="width: 60px" class="qty-small"><span class="pull-right total-ex-tax"><?php echo '&euro; '.number_format(EstimateOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",","."); $j3 += EstimateOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat) ?></span></td>
+          <td style="width: 60px" class="qty-small"><span class="pull-right"><?php echo '&euro; '.number_format(EstimateOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",","."); $j4 += EstimateOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip) ?></span></td>
+          <td style="width: 60px" class="qty-small"><span class="pull-right"><?php echo '&euro; '.number_format(EstimateOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",","."); $j5 += EstimateOverview::activityTotalProfit($activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip) ?></td>
+          @else
+          <td style="width: 40px" class="qty-small"><span class="pull-right"><?php echo number_format(CalculationOverview::laborTotal($activity), 2, ",","."); $j1 += CalculationOverview::laborTotal($activity) ?></td>
+          <td style="width: 60px" class="qty-small"><span class="pull-right total-ex-tax"><?php echo '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",","."); $j2 += CalculationOverview::laborActivity($project->hour_rate, $activity) ?></span></td>
+          <td style="width: 60px" class="qty-small"><span class="pull-right total-ex-tax"><?php echo '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",","."); $j3 += CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat) ?></span></td>
+          <td style="width: 60px" class="qty-small"><span class="pull-right"><?php echo '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",","."); $j4 += CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip) ?></span></td>
+          <td style="width: 60px" class="qty-small"><span class="pull-right"><?php echo '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",","."); $j5 += CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip) ?></td>
+          @endif
           <td style="width: 40px" class="qty-small" text-center">{{ PartType::find($activity->part_type_id)->type_name=='estimate' ? 'Stelpost' : '' }}</td>
         </tr>
         @endforeach
@@ -324,11 +343,11 @@ if ($relation_self && $relation_self->logo_id) {
         <tr>
           <th style="width: 130px" class="qty-small"><strong>Totaal Onderaanneming</strong></th>
           <th style="width: 144px" class="qty-small">&nbsp;</th>
-          <td style="width: 40px" class="qty-small"><strong><span class="pull-right">{{ number_format(CalculationOverview::subcontrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
-          <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
-          <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
-          <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
-          <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
+          <td style="width: 40px" class="qty-small"><strong><span class="pull-right">{{ number_format($j1, 2, ",",".") }}</span></strong></td>
+          <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format($j2, 2, ",",".") }}</span></strong></td>
+          <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format($j3, 2, ",",".") }}</span></strong></td>
+          <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format($j4, 2, ",",".") }}</span></strong></td>
+          <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format($j5, 2, ",",".") }}</span></strong></td>
           <th style="width: 40px" class="qty-small">&nbsp;</th>
         </tr>
       </tbody>
