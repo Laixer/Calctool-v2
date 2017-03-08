@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Termijnfactuur</title>
+    <title>Accountfactuur</title>
     <link rel="stylesheet" href="{{ getcwd() }}/css/pdf.css" media="all" />
   </head>
    <body>
