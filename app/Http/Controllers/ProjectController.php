@@ -163,6 +163,7 @@ class ProjectController extends Controller {
 			$invoice->to_contact_id = $contact->id;
 			$invoice->from_contact_id = $contact_self->id;
 			$invoice->isclose = true;
+			$invoice->priority = 100;
 			$invoice->save();
 		}
 
@@ -393,6 +394,7 @@ class ProjectController extends Controller {
 			$invoice->to_contact_id = $contact->id;
 			$invoice->from_contact_id = $contact_self->id;
 			$invoice->isclose = true;
+			$invoice->priority = 100;
 			$invoice->save();
 		}
 
