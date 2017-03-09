@@ -236,7 +236,7 @@ $(document).ready(function() {
 					<?php if (!$project->project_close && !$offer->offer_finish) { ?>
 					@if ($offer_last->id == $offer->id && !$offer->offer_finish)
 					<a href="/offer/project-{{ $project->id }}" class="btn btn-primary"><i class="fa fa-pencil-square-o">&nbsp;</i>Bewerken</a>
-					<a href="#" data-toggle="modal" data-target="#confirmModal" class="btn btn-primary">Opdracht bevestigen</a>
+					<a href="#" data-toggle="modal" data-target="#confirmModal" class="btn btn-primary"><i class="fa fa-check-square-o">&nbsp;</i>Opdracht bevestigen</a>
 					@endif
 					<?php } else { ?>
 					<a href="/res-{{ $res->id }}/download" class="btn btn-primary">Download PDF</a>

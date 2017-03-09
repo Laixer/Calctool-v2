@@ -159,7 +159,7 @@ $(document).ready(function() {
 						<td class="col-md-3">{{ '&euro; '.number_format($offer->offer_total, 2, ",",".") }}</td>
 						<td class="col-md-3">
 							@if ($offer_last && $offer_last->id == $offer->id && !$offer->offer_finish && !$project->project_close)
-							<a href="#" data-toggle="modal" data-target="#confirmModal" class="btn btn-primary btn-xs">Opdracht bevestigen</a>
+							<a href="#" data-toggle="modal" data-target="#confirmModal" class="btn btn-primary btn-xs"><i class="fa fa-check-square-o">&nbsp;</i>Opdracht bevestigen</a>
 							@else
 							<a href="/res-{{ ($offer_last->resource_id) }}/download" class="btn btn-primary btn-xs"><i class="fa fa-cloud-download fa-fw"></i> Downloaden</a>
 							@endif
