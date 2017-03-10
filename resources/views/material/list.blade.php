@@ -829,6 +829,8 @@ $(document).ready(function() {
 									@foreach (Wholesale::all() as $wholesale)
 									<?php
 									$supplier = Supplier::where('wholesale_id', $wholesale->id)->first();
+									if (!$supplier)
+										continue;
 									$cnt = Product::where('supplier_id', $supplier->id)->limit(1)->count();
 									if (!$cnt)
 										continue;
@@ -955,6 +957,8 @@ $(document).ready(function() {
 										@foreach (Wholesale::all() as $wholesale)
 										<?php
 										$supplier = Supplier::where('wholesale_id', $wholesale->id)->first();
+										if (!$supplier)
+											continue;
 										$cnt = Product::where('supplier_id', $supplier->id)->limit(1)->count();
 										if (!$cnt)
 											continue;
