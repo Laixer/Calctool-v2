@@ -49,14 +49,38 @@ class AppsController extends Controller {
 			$function_directeur = ContactFunction::where('function_name','directeur')->first()->id;
 			$function_opdrachtgever = ContactFunction::where('function_name','opdrachtgever')->first()->id;
 
-			$row = 0; $success = 0;
+			$row = 0; $success = 0; $skip = 0;
 			if (($handle = fopen($file->getRealPath(), "r")) !== FALSE) {
-				while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-					if ($row++ == 0)
+
+				$line = fgets($handle);
+
+				$delimiter = ";";
+				if (count(explode(",", $line)) == 21)
+					$delimiter = ",";
+
+				rewind($handle);
+				while (($data = fgetcsv($handle, 1000, $delimiter)) !== FALSE) {
+					if ($row++ == 0) {
+						if (strtolower($data[0]) != 'bedrijfsnaam')
+							return back()->withErrors('Bestand heeft verkeerde indeling');
+
+						if (strlen($data[14]) > 0)
+							return back()->withErrors('Bestand heeft verkeerde indeling');
+
+						if (strtolower($data[20]) != 'geslacht')
+							return back()->withErrors('Bestand heeft verkeerde indeling');
 						continue;
-					
-					if (count($data) < 22)
+					}
+
+					if (count($data) != 21) {
+						$skip++;
 						continue;
+					}
+
+					if (strlen($data[14]) > 0) {
+						$skip++;
+						continue;
+					}
 
 					/* Convert to params */
 					$company_name = trim($data[0]);
@@ -73,14 +97,13 @@ class AppsController extends Controller {
 					$website = trim($data[11]);
 					$iban = trim($data[12]);
 					$iban_name = trim($data[13]);
-					$kind = strtolower($data[14]);
 
-					$firstname = trim($data[16]);
-					$lastname = trim($data[17]);
-					$mobile = trim($data[18]);
-					$phone = trim($data[19]);
-					$email = trim($data[20]);
-					$gender = strtolower(trim($data[21]));
+					$firstname = trim($data[15]);
+					$lastname = trim($data[16]);
+					$mobile = trim($data[17]);
+					$phone = trim($data[18]);
+					$email = trim($data[19]);
+					$gender = strtolower(trim($data[20]));
 
 					/* Fixes */
 					if (empty($debtor))
@@ -133,8 +156,10 @@ class AppsController extends Controller {
 						'website' => array('max:180'),
 					]);
 
-					if ($validator->fails())
+					if ($validator->fails()) {
+						$skip++;
 						continue;
+					}
 
 					/* General */
 					$relation = new Relation;
@@ -144,17 +169,15 @@ class AppsController extends Controller {
 					$relation->debtor_code = $debtor;
 
 					/* Company */
-					if (!empty($kind)) {
-						if ($kind == 'zakelijk' || $kind[0] == 'z') {
-							$relation->kind_id = $kind_zakelijk;
-							$relation->company_name = $company_name;
-							$relation->type_id = $type_id;
-							$relation->kvk = $kvk;
-							$relation->btw = $btw;
-							$relation->phone = $phone_comp;
-							$relation->email = $email_comp;
-							$relation->website = $website;
-						}
+					if (!empty($company_name)) {
+						$relation->kind_id = $kind_zakelijk;
+						$relation->company_name = $company_name;
+						$relation->type_id = $type_id;
+						$relation->kvk = $kvk;
+						$relation->btw = $btw;
+						$relation->phone = $phone_comp;
+						$relation->email = $email_comp;
+						$relation->website = $website;
 					}
 
 					/* Adress */
@@ -164,10 +187,8 @@ class AppsController extends Controller {
 					$relation->address_city = $address_city;
 					$relation->province_id = $province_id;
 					$relation->country_id = $country_id;
-
 					$relation->iban = $iban;
 					$relation->iban_name = $iban_name;
-
 					$relation->save();
 
 					/* Contact */
@@ -179,12 +200,10 @@ class AppsController extends Controller {
 					$contact->email = $email;
 					$contact->relation_id = $relation->id;
 
-					if (!empty($kind)) {
-						if ($kind == 'zakelijk' || $kind[0] == 'z') {
-							$contact->function_id = $function_directeur;
-						} else {
-							$contact->function_id = $function_opdrachtgever;
-						}
+					if (!empty($company_name)) {
+						$contact->function_id = $function_directeur;
+					} else {
+						$contact->function_id = $function_opdrachtgever;
 					}
 
 					if (!empty($gender)) {
@@ -199,7 +218,7 @@ class AppsController extends Controller {
 				}
 				fclose($handle);
 			}
-			return back()->with('success', $success . ' relaties geimporteerd');
+			return back()->with('success', $success . ' relaties geimporteerd, ' . $skip . ' overgeslagen');
 		} else {
 			return back()->withErrors('Geen CSV geupload');
 		}

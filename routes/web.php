@@ -129,7 +129,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('finance/overview', function() {
 		return view('finance.overview');
 	});
-	Route::get('affiliate/5bdc2bbd-4021-4e12-9012-647385c28c03', function(){
+	Route::get('affiliate/5bdc2bbd-4021-4e12-9012-647385c28c05', function(){
 		return view('user.affiliate');
 	});
 
@@ -303,6 +303,7 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('relation/contact/delete', 'RelationController@doDeleteContact');
 	Route::post('relation/iban/update', 'RelationController@doUpdateIban');
 	Route::post('relation/iban/new', 'RelationController@doNewIban');
+	Route::post('relation/updatecalc', 'RelationController@doUpdateProfit');
 	Route::get('relation', 'RelationController@getAll')->middleware('payzone');
 	Route::get('relation-{relation_id}/edit', 'RelationController@getEdit')->where('relation_id', '[0-9]+')->middleware('payzone');
 	Route::get('relation-{relation_id}/delete', 'RelationController@getDelete')->where('relation_id', '[0-9]+')->middleware('payzone');
@@ -315,8 +316,6 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('mycompany/contact/new', function() {
 		return view('user.mycompany_contact');
 	});
-	Route::post('mycompany/cashbook/account/new', 'CashbookController@doNewAccount');
-	Route::post('mycompany/cashbook/new', 'CashbookController@doNewCashRow');
 	Route::post('mycompany/quickstart/address', 'ZipcodeController@getExternalAddress');
 
 	Route::get('relation-{relation_id}/contact-{contact_id}/vcard', 'RelationController@downloadVCard')->where('relation_id', '[0-9]+')->where('contact_id', '[0-9]+');

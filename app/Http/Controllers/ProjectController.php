@@ -135,6 +135,27 @@ class ProjectController extends Controller {
 			$project->type_id = 2;
 		}
 
+		if ($relation->hour_rate)
+			$project->hour_rate = $relation->hour_rate;
+		if ($relation->hour_rate_more)
+			$project->hour_rate_more = $relation->hour_rate_more;
+		if ($relation->profit_calc_contr_mat)
+			$project->profit_calc_contr_mat = $relation->profit_calc_contr_mat;
+		if ($relation->profit_calc_contr_equip)
+			$project->profit_calc_contr_equip = $relation->profit_calc_contr_equip;
+		if ($relation->profit_calc_subcontr_mat)
+			$project->profit_calc_subcontr_mat = $relation->profit_calc_subcontr_mat;
+		if ($relation->profit_calc_subcontr_equip)
+			$project->profit_calc_subcontr_equip = $relation->profit_calc_subcontr_equip;
+		if ($relation->profit_more_contr_mat)
+			$project->profit_more_contr_mat = $relation->profit_more_contr_mat;
+		if ($relation->profit_more_contr_equip)
+			$project->profit_more_contr_equip = $relation->profit_more_contr_equip;
+		if ($relation->profit_more_subcontr_mat)
+			$project->profit_more_subcontr_mat = $relation->profit_more_subcontr_mat;
+		if ($relation->profit_more_subcontr_equip)
+			$project->profit_more_subcontr_equip = $relation->profit_more_subcontr_equip;
+
 		$project->save();
 
 		$type = ProjectType::find($project->type_id);

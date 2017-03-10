@@ -9,7 +9,6 @@ use \Calctool\Models\Province;
 use \Calctool\Models\Country;
 use \Calctool\Models\Resource;
 use \Calctool\Models\BankAccount;
-use \Calctool\Models\Cashbook;
 
 $relation = Relation::find(Auth::user()->self_id);
 $user = Auth::user();

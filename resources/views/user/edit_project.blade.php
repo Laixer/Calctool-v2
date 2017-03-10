@@ -626,7 +626,7 @@ $(document).ready(function() {
 					</div>
 
 					@if ($type->type_name != 'snelle offerte en factuur')
-					<div id="calc" class="tab-pane" data-step="2" data-intro="Geef je uurtarief en winstpercentages op waarmee je wilt gaan calculeren.">
+					<div id="calc" class="tab-pane">
 						<form method="post" action="/project/updatecalc">
 							{!! csrf_field() !!}
 							<input type="hidden" name="id" id="id" value="{{ $project->id }}"/>

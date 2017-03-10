@@ -45,6 +45,15 @@ use \Calctool\Models\SysMessage;
 			</div>
 			@endif
 
+			<div>
+				<ol class="breadcrumb">
+				  <li><a href="/">Dashboard</a></li>
+				  <li><a href="/relation">Relaties</a></li>
+				  <li>Importeren</li>
+				</ol>
+			<div>
+			<br>
+
 			<div class="row">
 
 				<div id="wrapper" ng-app="projectApp" class="nopadding-top">
