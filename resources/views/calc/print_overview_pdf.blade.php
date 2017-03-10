@@ -177,6 +177,7 @@ if ($relation_self && $relation_self->logo_id) {
   </tbody>
 </table>
 
+@if ($project->use_less)
 <br>   
 <h3 class="type">Minderwerk</h3>
 <hr>
@@ -223,7 +224,9 @@ if ($relation_self && $relation_self->logo_id) {
     </tr>
   </tbody>
 </table>
+@endif
 
+@if ($project->use_more)
 <br>
 <h3 class="type">Meerwerk</h3>
 <hr>
@@ -270,21 +273,10 @@ if ($relation_self && $relation_self->logo_id) {
       <th style="width: 40px" class="qty-small">&nbsp;</th>
     </tr>
   </tbody>
-<!--   <tbody>
-    <tr>
-      <th class="col-md-12">&nbsp;</th>
-    </tr>
-    <tr>
-      <th class="col-md-12">&nbsp;</th>
-    </tr>
-  </tbody> -->
-</table>
+ </table>
+ @endif
 
-
-
-
-
-@if ($project->use_subcontract)
+ @if ($project->use_subcontract)
   <?#--PAGE HEADER SECOND START--?>
   <div style="page-break-after:always;"></div>
   <header class="clearfix">
@@ -353,6 +345,7 @@ if ($relation_self && $relation_self->logo_id) {
       </tbody>
     </table>
    
+    @if ($project->use_more)
     <br>
     <h3 class="type">Meerwerk</h3>
     <hr>
@@ -401,7 +394,9 @@ if ($relation_self && $relation_self->logo_id) {
         </tr>
       </tbody>
     </table>
-   
+    @endif
+
+    @if ($project->use_less)
     <br>
     <h3 class="type">Minderwerk</h3>
     <hr>
@@ -450,6 +445,7 @@ if ($relation_self && $relation_self->logo_id) {
         </tr>
       </tbody>
     </table>
+    @endif
 
   @endif
 
