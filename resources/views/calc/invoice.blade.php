@@ -2741,7 +2741,7 @@ if ($cnt>1) {
 				</thead>
 				<tbody>
 					<tr>
-						<td class="col-md-3"><strong>Totalen meerwerk</td>
+						<td class="col-md-3"><strong>Totalen</td>
 						<td class="col-md-4">&nbsp;</td>
 						<td class="only-end-total-spec col-md-1"><strong><span class="pull-right">{{ number_format(MoreOverview::laborSuperTotalAmount($project), 2, ",",".") }}</span></strong></td>
 						<td class="only-end-total-spec col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::laborSuperTotal($project), 2, ",",".") }}</span></strong></td>
