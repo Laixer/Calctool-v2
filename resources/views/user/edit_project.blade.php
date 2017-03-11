@@ -426,7 +426,7 @@ $(document).ready(function() {
 								@if (!$project->project_close)
 								<li><a href="#" id="projclose"><i class="fa fa-close"></i>&nbsp;Project sluiten</a></li>
 								@else
-								<li><a href="/project-{{ $project->id }}/updateprojectdilapidated">Project vervallen</a></li>
+								<li><a href="/project-{{ $project->id }}/updateprojectdilapidated"><i class="fa fa-times"></i>&nbsp;Project vervallen</a></li>
 								@endif
 
 							</ul>
