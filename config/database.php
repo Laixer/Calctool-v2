@@ -89,7 +89,7 @@ return [
         'cluster' => false,
 
         'default' => [
-            'host'     => 'localhost',
+            'host'     => env('RDS_PORT', 'localhost'),
             'port'     => env('RDS_PORT', 6379),
             'password' => env('RDS_PASSWORD'),
             'database' => env('RDS_DATABASE', 0),
