@@ -72,8 +72,27 @@ use \Calctool\Models\SysMessage;
 									</div>
 
 								<h2>Bestandsindeling</h2>
-								De applicatie verwacht een CSV bestand met velden gescheiden door een <strong>;</strong> (puntcomma). De eerste regel van het bestand wordt overgeslagen. Regels die niet voldoen aan de opmaak of niet leeg mogen zijn worden overgeslagen.<br /><br />
-								Na het importeren kan overige informatie worden ingevoerd via <a href="/relation">relaties</a>.
+								<span>De applicatie verwacht een .CSV bestand. Een .CSV bestand kan je zelf vaak openen met notepad (kladblok) of Microsoft Office Excel. Ook is het vaak het bestandtype dat als export wordt verkregen. Bijvoorbeeld de aplicatie waar je de relatie uit hebt gexporteerd.</span>
+								<br>
+								<span>Je kan het bestand echter niet zomaar hier uploaden. Een voorbeeldbestand is hiernaast opgenomen, zorg ervoor dat jouw bestand er vergelijkbaar uit ziet.</span>
+								<br>
+								<br>
+								<strong>Enkele regels:</strong>
+								<ul>
+									<li>Velden in het bestand moeten worden gescheiden door een <strong>;</strong> (puntcomma). </li>
+									<li>De eerste regel van het bestand beveat de kolomnamen en wordt overgeslagen.</li>
+								</ul>
+								<br>
+								<span>Regels die niet voldoen aan de opmaak of niet leeg mogen zijn worden overgeslagen.</span>
+								<br>
+								<br>
+								<strong>Dit komt voor bij:</strong>
+								<ul>
+									<li>Huisnummers langer dan vier karakters.</li>
+									<li>Postcodes langer dan 6 karakters.</li>
+									<li>Regels met daarin karakters die niet UTF8 zijn (trema's, umloat en accent grave).</li>
+								</ul>
+								<span>Na het importeren kan overige informatie worden ingevoerd via <a href="/relation">relaties</a>.</span>
 								</div>
 
 							</div>
