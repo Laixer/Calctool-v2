@@ -81,6 +81,8 @@ use \Calctool\Models\SysMessage;
 								<ul>
 									<li>Velden in het bestand moeten worden gescheiden door een <strong>;</strong> (puntcomma). </li>
 									<li>De eerste regel van het bestand beveat de kolomnamen en wordt overgeslagen.</li>
+									<li>Vul posbussen in bij straat, zowel "postbus" als het "nummer".</li>
+									<li>Indien het een zakelijk relatie betreft vul je een bedrijfsnaam in. Indien het particuliere relatie betreft laat de bedrijfsnaam leeg.</li>
 								</ul>
 								<br>
 								<span>Regels die niet voldoen aan de opmaak of niet leeg mogen zijn worden overgeslagen.</span>
