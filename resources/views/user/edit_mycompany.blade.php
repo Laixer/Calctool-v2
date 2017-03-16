@@ -518,7 +518,7 @@ $(document).ready(function() {
 										<h4 class="panel-title">
 											<a data-toggle="collapse" data-parent="#accordion" href="#acordion1">
 												<i class="fa fa-check"></i>
-												Uurtarief en Winspercentages
+												Uurtarief en Winstpercentages
 											</a>
 										</h4>
 									</div>

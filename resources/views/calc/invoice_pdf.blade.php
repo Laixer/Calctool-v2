@@ -1263,7 +1263,7 @@ if ($relation_self && $relation_self->logo_id) {
           <th style="width: 170px" class="qty-small">&nbsp;</th>
           <th style="width: 40px" class="qty-small">@if ($display_specification) @if(0) Arbeidsuren @endif &nbsp;  @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) Arbeid @endif</th>
-          <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaa @endif</th>
+          <th style="width: 51px" class="qty-small">@if ($display_specification) Materiaal @endif</th>
           <th style="width: 51px" class="qty-small">@if ($display_specification) @if ($project->use_equipment) Overig @endif &nbsp; @endif</th>
           <th style="width: 51px" class="qty-small">Totaal</th>
         </tr>
