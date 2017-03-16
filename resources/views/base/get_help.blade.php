@@ -34,10 +34,11 @@ use \Jenssegers\Agent\Agent;
 						<h2>Wil <strong>direct</strong> aan de slag</h2>
 						
 						<ul style="list-style-type: decimal;">
-							<li><a href="shop-full-width.html">Nieuw Project</a></li>
-							<li><a href="shop-sidebar.html">Nieuwe Relatie</a></li>
-							<li><a href="shop-product-full-width.html">Mijn Bedrijf</a></li>
-							<li><a href="shop-product-sidebar.html">Algemene Urenregistratie</a></li>
+							<li><a href="/project/new">Nieuw Project</a></li>
+							<li><a href="/relation/new">Nieuwe Relatie</a></li>
+							<li><a href="/mycompany">Mijn Bedrijf</a></li>
+							<li><a href="/timesheet">Algemene Urenregistratie</a></li>
+							<li><a href="/purchase">Algemene Inkoopfacturen</a></li>
 						</ul>
 
 					</div>
@@ -49,17 +50,33 @@ use \Jenssegers\Agent\Agent;
 						
 						<h5>Account</h5>
 						<ul>
-							<li><a href="shop-full-width.html">Wachtwoord veranderen</a></li>
-							<li><a href="shop-full-width.html">Account verlengen</a></li>
-							<li><a href="shop-full-width.html">Account opzeggen</a></li>
-							<li><a href="shop-full-width.html">Email adres aanpassen</a></li>
+							<li><a href="/myaccount">Wachtwoord veranderen</a></li>
+							<li><a href="/myaccount">Email adres aanpassen</a></li>
+							<li><a href="/myaccount">Uw betalingsgsoverzicht</a></li>
+							<li><a href="/myaccount">Account verlengen</a></li>
+							<li><a href="/myaccount">Account opzeggen</a></li>
+							
 						</ul>
 
 						<h5>Bedrijf</h5>
 						<ul>
-							<li><a href="shop-full-width.html">Gegevens wijzingen</a></li>
-							<li><a href="shop-full-width.html">Betalingsgegevens</a></li>
-							<li><a href="shop-full-width.html">Account opzeggen</a></li>
+							<li><a href="/mycompany">Bedrijfsgegevens wijzingen</a></li>
+							<li><a href="/mycompany">Bedrijfsadres wijzigen</a></li>
+							<li><a href="/mycompany">Contacten toeovegen aan uw bedrijf</a></li>
+							<li><a href="/mycompany">Logo & voorwaarden uploaden</a></li>
+							<li><a href="/mycompany">Voorkeuren voor op brieven beheren</a></li>
+							<li><a href="/mycompany">Betalingsgegevens voor op factuur</a></li>
+							<li><a href="/finance/overview">Uw financieel overzicht</a></li>
+						</ul>
+
+						<h5>Projecten</h5>
+						<ul>
+							<li><a href="/">Overzicht van mijn open projecten</a></li>
+							<li><a href="/">Overzicht van mijn gesloten projecten</a></li>
+							<li><a href="/finance/overview">Openstande offertes</a></li>
+							<li><a href="/finance/overview">Openstande Facturen</a></li>
+							<li><a href="/mycompany">Contacten toeovegen aan uw bedrijf</a></li>
+	
 						</ul>
 
 					</div>
