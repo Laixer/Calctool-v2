@@ -37,7 +37,6 @@
                         <div><strong>Adres:</strong></div>
                         <div><strong>&nbsp;</strong></div>
                         <div><strong>Telefoon: </strong></div>
-                        <div><strong>&nbsp;</strong></div>
                         <div><strong>E-mail: </strong></div>  
                         <div><strong>KVK: </strong></div> 
                         <div><strong>BTW: </strong></div> 
@@ -45,10 +44,9 @@
                         <div><strong>T.n.v.: </strong></div>
                       </td>
                       <td style="width: 200px">
-                        <div>Odinholm 25</div>  
-                        <div>3124SC Schiedam</div>
-                        <div>+31 (0)643587470</div>
-                        <div>+31 (0)643587430</div>
+                        <div>Melbournestraat 34a</div>  
+                        <div>3047 BJ Rotterdam</div>
+                        <div>085 0655268</div>
                         <div>administratie@calculatietool.com</div> 
                         <div>54565243&nbsp;</div> 
                         <div>851353423B01</div>

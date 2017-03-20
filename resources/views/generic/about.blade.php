@@ -29,18 +29,6 @@
 					Wij hanteren een blijvend laagdrempelig maandbedrag zodat iedereen hier gebruik van kan gaan maken. Het moet voor iedereen toegankelijk zijn zowel voor de starter als de ervaren ondernemer.
 					Alles wat u zou willen weten over uw project zoals de calculatie opbouw, meer- en minderwerk, urenregistraties, winst/verlies, offertes, facturen en nog veel meer maakt dit programma inzichtelijk voor u. Het is op een hele simpele manier opgebouwd die binnen een mum van tijd eigen te maken is.</p>
 
-					<h4>Waar zijn wij te vinden</h4>
-
-					<ul class="list-icon star-o">
-						<li>Bedrijfsnaam: CalculatieTool.com</li>
-						<li>Vestigingsadres: Odinholm 25, 3124SC Schiedam</li>
-						<li>Contactgegevens: info@CalculatieTool.com</li>
-						<li>KvK-nummer: 54565243</li>
-						<li>BTW-nummer: NL851353423B01</li>
-						<li>IBAN: NL45ISABO12344556789</li>
-						<li>Commercieel websiteadres: http://www.CalculatieTool.com</li>
-						<li>Applicatie: https://app.CalculatieTool.com</li>
-					</ul>
 					<br>
 				</article>
 
