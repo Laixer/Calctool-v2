@@ -72,7 +72,7 @@ use \Calctool\Models\Wholesale;
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 
-			<iframe width="1280" height="720" src="https://www.youtube.com/embed/mLLx0lATWX8?rel=0" frameborder="0" allowfullscreen></iframe>
+			<iframe width="1280" height="720" src="https://www.youtube.com/embed/c0pQytImWCA" frameborder="0" allowfullscreen></iframe>
 
 		</div>
 	</div>

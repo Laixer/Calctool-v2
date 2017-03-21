@@ -35,7 +35,17 @@ $project_cnt = Project::where('user_id', Auth::user()->id)->count();
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 
-			<iframe width="1280" height="720" src="https://www.youtube.com/embed/edTyWvLUeDo?rel=0;" frameborder="0" allowfullscreen></iframe>
+			<iframe width="1280" height="720" src="https://www.youtube.com/embed/xPmVzvmuFvY" frameborder="0" allowfullscreen></iframe>
+
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="myYouTube2" tabindex="-1" role="dialog" aria-labelledby="mYouTubeLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<iframe width="1280" height="720" src="https://www.youtube.com/embed/8YevS5CHoMA" frameborder="0" allowfullscreen></iframe>
 
 		</div>
 	</div>
@@ -86,8 +96,8 @@ $project_cnt = Project::where('user_id', Auth::user()->id)->count();
 					echo "Goedenacht";
 				}
 				?>
-			</strong> {{ Auth::user()->firstname }}&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
-
+			</strong> {{ Auth::user()->firstname }} &nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
+			
 			<div class="row">
 
 				<div class="col-sm-6 col-md-2" data-step="1" data-intro="Klik op 'Mijn Bedrijf' om je bedrijfsgegevens in te vullen.">
@@ -242,7 +252,7 @@ $project_cnt = Project::where('user_id', Auth::user()->id)->count();
 					<div class="col-md-12">
 						<br>
 						@if ($project_cnt)
-						<h2><strong>Jouw</strong> projecten</h2>
+						<h2><strong>Jouw</strong> projecten	&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube2"></a></h2>
 
 						<div class="white-row" ng-controller="projectController">
 							<div class="row">

@@ -11,7 +11,7 @@
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 
-			<iframe width="1280" height="720" src="https://www.youtube.com/embed/CCXRWinSKsg?rel=0" frameborder="0" allowfullscreen></iframe>
+			<iframe width="1280" height="720" src="https://www.youtube.com/embed/bSkG2pJWDGg" frameborder="0" allowfullscreen></iframe>
 			
 		</div>
 	</div>

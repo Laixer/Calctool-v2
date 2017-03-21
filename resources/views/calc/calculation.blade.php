@@ -1351,7 +1351,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 
-			<iframe width="1280" height="720" src="https://www.youtube.com/embed/Pm3vU0ropSE?rel=0;" frameborder="0" allowfullscreen></iframe>
+			<iframe width="1280" height="720" src="https://www.youtube.com/embed/QZIOU7v7eY8" frameborder="0" allowfullscreen></iframe>
 
 		</div>
 	</div>

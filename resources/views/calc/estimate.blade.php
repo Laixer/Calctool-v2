@@ -869,7 +869,7 @@ var n = this,
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 
-			<iframe width="1280" height="720" src="https://www.youtube.com/embed/0bA6AK187a4?rel=0" frameborder="0" allowfullscreen></iframe>
+			<iframe width="1280" height="720" src="https://www.youtube.com/embed/TbNyuzFUJmI" frameborder="0" allowfullscreen></iframe>
 
 		</div>
 	</div>

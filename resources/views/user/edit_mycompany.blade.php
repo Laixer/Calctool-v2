@@ -171,7 +171,7 @@ $(document).ready(function() {
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 
-			<iframe width="1280" height="720" src="https://www.youtube.com/embed/jlCQ3nWO9T0?rel=0" frameborder="0" allowfullscreen></iframe>
+			<iframe width="1280" height="720" src="https://www.youtube.com/embed/v0QnQpoXt-4" frameborder="0" allowfullscreen></iframe>
 
 		</div>
 	</div>
