@@ -63,11 +63,10 @@ $(document).ready(function() {
 			<div class="col-md-12">
 				<div class="white-row">
 				<h2>Helpdesk</h2>
-				Telefoon: <a href="tel:+31850655268">085 0655268</a><br />
-				Email: <a href="mailto:info@calculatietool.com">support@calculatietool.com</a><br />
-				Bel ons vrijblijvend op bovenstaand nummer. Zijn wij niet bereikbaar? Spreek de voicemail in en wij bellen terug.
+				Onze supportmedewerkers zijn bereikbaar voor uw vragen op: <a href="tel:+31850655268">085 0655268</a><br />
+				Ook zijn wij bereikbaar via WahtasApp op: <a href="tel:+31643587470">06 43587470</a> of <a href="tel:+31643587430">06 43587430</a><br />
+				<i>7 dagen per week van 08:00-21:00 bereikbaar.</i>
 				<br>
-				Je kan hieronder ook een bericht naar ons sturen. Wij antwoorden binnen 24 uur.
 				</div>
 			</div>
 
@@ -84,8 +83,12 @@ $(document).ready(function() {
 						<div class="col-md-12">
 						<h2>Bericht</h2>
 						</div>
+						<div class="col-md-12">
+						Stuur ons een bericht of stel een vraag.<br />
+						<i>Wij antwoorden binnen 24 uur.</i>
+						</div>
 					</div>
-
+					<br>
 					<div class="row">
 						<div class="form-group">
 							<div class="col-md-6">
@@ -123,7 +126,7 @@ $(document).ready(function() {
 
 						<div class="form-group">
 							<div class="col-md-12">
-								<label>Bericht (<strong>zo duidelijk mogelijk</strong>)</label>
+								<label>Bericht (Omschrijf uw vraag zo duidelijk mogelijk)</label>
 								<textarea name="message" id="message" rows="10" class="summernote form-control"></textarea>
 							</div>
 						</div>
