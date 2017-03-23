@@ -51,6 +51,16 @@ $project_cnt = Project::where('user_id', Auth::user()->id)->count();
 	</div>
 </div>
 
+<div class="modal fade" id="myYouTube3" tabindex="-1" role="dialog" aria-labelledby="mYouTubeLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<iframe width="1280" height="720" src="https://www.youtube.com/embed/JGj8iyxZXH0" frameborder="0" allowfullscreen></iframe>
+
+		</div>
+	</div>
+</div>
+
 <div id="wrapper">
 
 	<div id="shop">
@@ -89,7 +99,7 @@ $project_cnt = Project::where('user_id', Auth::user()->id)->count();
 				if ($time >= "6" && $time < "12") {
 					echo "Goedemorgen";
 				} else if ($time >= "12" && $time < "17") {
-					echo "Goedemiddag";
+					echo "Goedenmiddag";
 				} else if ($time >= "17") {
 					echo "Goedenavond";
 				} else if ($time >= "0") {
@@ -304,9 +314,12 @@ $project_cnt = Project::where('user_id', Auth::user()->id)->count();
 							<h2><strong>De eerste</strong> stap... </h2>
 							<div class="bs-callout text-center whiteBg" style="margin:0">
 								<h3>			
-									<a href="/project/new" class="btn btn-primary btn-lg">Maak je eerste project aan <i class="fa fa-arrow-right"></i></a>
+									<a href="javascript:void(0);" class="btn btn-primary btn-lg" class="fa fa-youtube-play yt-vid" data-toggle="modal" data-target="#myYouTube3">Bekijk de welkomstvideo om snel te kunnen starten&nbsp;<i class="fa fa-youtube-square"></i>&nbsp;(1:22)</a>
+										of
+									<a href="/project/new" class="btn btn-primary btn-lg">Maak direct je eerste project aan <i class="fa fa-arrow-right"></i></a>
 								</h3>
 							</div>
+
 							@endif
 						</div>
 
