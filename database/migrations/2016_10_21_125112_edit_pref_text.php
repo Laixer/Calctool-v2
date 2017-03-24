@@ -18,7 +18,7 @@ class EditPrefText extends Migration
         });
 
         Schema::table('user_account', function(Blueprint $table) {
-            $table->text('pref_invoice_description')->nullable()->default('Bij deze doe ik u toekomen mijn factuur betreffende het uitgevoerde werk behorende bij offerte. Hierin zit tevens het eventuele meer- en minderwerk en de stelpost verwerkt zoals besproken.')->change();
+            $table->text('pref_invoice_description')->nullable()->default('Bij deze doe ik u toekomen mijn factuur betreffende bovennoemd project.')->change();
         });
     }
 
