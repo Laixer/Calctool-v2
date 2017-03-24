@@ -13,6 +13,7 @@ use \Calctool\Models\MoreEquipment;
 use \Calctool\Models\Project;
 use \Calctool\Models\Part;
 use \Calctool\Models\Detail;
+use \Calctool\Models\ProjectType;
 use \Calctool\Calculus\CalculationOverview;
 use \Calctool\Calculus\MoreOverview;
 use \Calctool\Calculus\EstimateOverview;
@@ -25,6 +26,8 @@ if ($relation_self && $relation_self->logo_id) {
    $image_src = getcwd() . '/' . Resource::find($relation_self->logo_id)->file_location;
    $image = getimagesize($image_src);
    $image_height = round(($image[1] / $image[0]) * 300);
+
+   $type = ProjectType::find($project->type_id);
 }
 
 ?>
@@ -115,6 +118,8 @@ if ($relation_self && $relation_self->logo_id) {
   <br>
   <br>
   </div>
+
+  @if($type->type_name != 'regie')
 
   @if ($project->use_subcontract)
   <h1 class="type">Aanneming</h1>
@@ -445,6 +450,124 @@ if ($relation_self && $relation_self->logo_id) {
         </tr>
       </tbody>
     </table>
+    @endif
+
+  @endif
+
+@else
+
+  @if ($project->use_subcontract)
+  <h1 class="type">Aanneming</h1>
+  @endif
+
+  <br>
+  <h3 class="type">Werkzaamheden</h3>
+  <hr>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th style="width: 130px" class="qty-small">Onderdeel</th>
+        <th style="width: 144px" class="qty-small">Werkzaamheden</th>
+        <th style="width: 40px" class="qty-small"><span class="pull-right">Uren</th>
+        <th style="width: 60px" class="qty-small"><span class="pull-right">Arbeid</th>
+        <th style="width: 60px" class="qty-small"><span class="pull-right">Materiaal</th>
+        <th style="width: 60px" class="qty-small"><span class="pull-right">Overig</th>
+        <th style="width: 60px" class="qty-small"><span class="pull-right">Totaal</th>
+        <th style="width: 40px" class="qty-small"><span class="text-center">&nbsp;<!-- Type --></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
+      <?php $i = 0; ?>
+      @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->orderBy('priority')->get() as $activity)
+      <?php $i++; ?>
+      <tr>
+        <td style="width: 130px" class="qty-small">{{ $i==1 ? $chapter->chapter_name : '' }}</td>
+        <td style="width: 144px" class="qty-small">{{ $activity->activity_name }}</td>
+        <td style="width: 40px" class="qty-small"><span class="pull-right">{{ number_format(MoreOverview::laborTotal($activity), 2, ",",".") }}</td>
+        <td style="width: 60px" class="qty-small"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(MoreOverview::laborActivity($activity), 2, ",",".") }}</span></td>
+        <td style="width: 60px" class="qty-small"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(MoreOverview::materialActivityProfit($activity, $project->profit_more_contr_mat), 2, ",",".") }}</span></td>
+        <td style="width: 60px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::equipmentActivityProfit($activity, $project->profit_more_contr_equip), 2, ",",".") }}</span></td>
+        <td style="width: 60px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::activityTotalProfit($activity, $project->profit_more_contr_mat, $project->profit_more_contr_equip), 2, ",",".") }} </td>
+        <td style="width: 40px" class="qty-small" text-center">&nbsp;<!-- Meerwerk --></td>
+      </tr>
+      @endforeach
+      @endforeach
+      <tr>
+        <th style="width: 130px" class="qty-small"><strong>Totaal</strong></th>
+        <th style="width: 144px" class="qty-small">&nbsp;</th>
+        <td style="width: 40px" class="qty-small"><strong><span class="pull-right">{{ number_format(MoreOverview::contrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
+        <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
+        <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
+        <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
+        <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
+        <th style="width: 40px" class="qty-small">&nbsp;</th>
+      </tr>
+    </tbody>
+   </table>
+
+   @if ($project->use_subcontract)
+    <?#--PAGE HEADER SECOND START--?>
+    <div style="page-break-after:always;"></div>
+    <header class="clearfix">
+   
+    </header>
+    <?#--PAGE HEADER SECOND END--?>
+
+
+    <h1>Onderaanneming</h1>
+
+      <br>
+      <h3 class="type">Werkzaamheden</h3>
+      <hr>
+      
+      <table class="table table-striped">
+
+        <thead>
+          <tr>
+            <th style="width: 130px" class="qty-small">Onderdeel</th>
+            <th style="width: 144px" class="qty-small">Werkzaamheden</th>
+            <th style="width: 40px" class="qty-small"><span class="pull-right">Uren</th>
+            <th style="width: 60px" class="qty-small"><span class="pull-right">Arbeid</th>
+            <th style="width: 60px" class="qty-small"><span class="pull-right">Materiaal</th>
+            <th style="width: 60px" class="qty-small"><span class="pull-right">Overig</th>
+            <th style="width: 60px" class="qty-small"><span class="pull-right">Totaal</th>
+            <th style="width: 40px" class="qty-small"><span class="text-center"><!-- Type --></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
+          <?php $i = 0; ?>
+          @foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->orderBy('priority')->get() as $activity)
+          <?php $i++; ?>
+          <tr>
+            <td style="width: 130px" class="qty-small">{{ $i==1 ? $chapter->chapter_name : ''}}</td>
+            <td style="width: 144px" class="qty-small">{{ $activity->activity_name }}</td>
+            <td style="width: 60px" class="qty-small"><span class="pull-right">{{ number_format(MoreOverview::laborTotal($activity), 2, ",",".") }}</td>
+            <td style="width: 60px" class="qty-small"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(MoreOverview::laborActivity($activity), 2, ",",".") }}</span></td>
+            <td style="width: 60px" class="qty-small"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(MoreOverview::materialActivityProfit($activity, $project->profit_more_subcontr_mat), 2, ",",".") }}</span></td>
+            <td style="width: 60px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::equipmentActivityProfit($activity, $project->profit_more_subcontr_equip), 2, ",",".") }}</span></td>
+            <td style="width: 60px" class="qty-small"><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::activityTotalProfit($activity, $project->profit_more_subcontr_mat, $project->profit_more_subcontr_equip), 2, ",",".") }} </td>
+            <td style="width: 40px" class="qty-small" text-center">&nbsp;<!-- Meerwerk --></td>
+          </tr>
+          @endforeach
+          @endforeach
+          <tr>
+            <th style="width: 130px" class="qty-small"><strong>Totaal Onderaanneming</strong></th>
+            <th style="width: 144px" class="qty-small">&nbsp;</th>
+            <td style="width: 40px" class="qty-small"><strong><span class="pull-right">{{ number_format(MoreOverview::subcontrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
+            <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
+            <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
+            <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
+            <td style="width: 60px" class="qty-small"><strong><span class="pull-right">{{ '&euro; '.number_format(MoreOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
+            <th style="width: 40px" class="qty-small">&nbsp;</th>
+          </tr>
+        </tbody>
+      </table>
+
     @endif
 
   @endif
