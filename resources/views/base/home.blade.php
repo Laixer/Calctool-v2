@@ -314,9 +314,9 @@ $project_cnt = Project::where('user_id', Auth::user()->id)->count();
 							<h2><strong>De eerste</strong> stap... </h2>
 							<div class="bs-callout text-center whiteBg" style="margin:0">
 								<h3>			
-									<a href="javascript:void(0);" class="btn btn-primary btn-lg" class="fa fa-youtube-play yt-vid" data-toggle="modal" data-target="#myYouTube3">Bekijk de welkomstvideo om snel te kunnen starten&nbsp;<i class="fa fa-youtube-square"></i>&nbsp;(1:22)</a>
+									<a href="javascript:void(0);" class="btn btn-primary btn-lg" class="fa fa-youtube-play yt-vid" data-toggle="modal" data-target="#myYouTube3">Bekijk de Welkomstvideo</a>
 										of
-									<a href="/project/new" class="btn btn-primary btn-lg">Maak direct je eerste project aan <i class="fa fa-arrow-right"></i></a>
+									<a href="/project/new" class="btn btn-primary btn-lg">Maak eerste project aan <i class="fa fa-arrow-right"></i></a>
 								</h3>
 							</div>
 
