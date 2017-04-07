@@ -1,6 +1,7 @@
 <?php
 use \Calctool\Models\User;
 use \Calctool\Models\MessageBox;
+use \Calctool\Models\UserType;
 ?>
 
 <header id="topNav" class="topHead">
@@ -42,10 +43,14 @@ use \Calctool\Models\MessageBox;
 					<li class="active">
 					<?php
 						if (Auth::check()) {
-							if (session()->has('swap_session')) {
-								echo '<a href="/admin/switch/back">Terugkeren</a>';
+							if (UserType::find(Auth::user()->user_type)->user_type != 'demo') {
+								if (session()->has('swap_session')) {
+									echo '<a href="/admin/switch/back">Terugkeren</a>';
+								} else {
+									echo '<a href="/logout">Uitloggen</a>';
+								}
 							} else {
-								echo '<a href="/logout">Uitloggen</a>';
+								echo '<a href="javascript:void(0);"></a>';
 							}
 						} else {
 							echo '<a href="/login">Login</a>';

@@ -75,31 +75,6 @@ class AdminController extends Controller {
 		return view('admin.dashboard');
 	}
 
-	public function getDocumentation(Request $request, $directory = null, $page = null)
-	{
-		$docdir = "../docs/";
-
-		if (!$directory)
-			$directory = "";
-
-		if (!$page)
-			$page = "index";
-
-		$dirpage = "/" . $page . ".md";
-
-		if (!file_exists(config('filesystems.docs') . "/" . $directory . $dirpage))
-			return redirect('/admin/documentation')->withErrors('Deze pagina bestaat (nog) niet');
-
-		$mdpage = file_get_contents(config('filesystems.docs') . "/" . $directory . $dirpage);
-		if (!$mdpage)
-			return redirect('/admin/documentation');
-
-		$content = Markdown::convertToHtml($mdpage);
-
-		return view('admin.documentation',['content' => $content, 'dir' => $directory, 'page' => $page]);
-
-	}
-
 	public function doNewAlert(Request $request)
 	{
 		$this->validate($request, [

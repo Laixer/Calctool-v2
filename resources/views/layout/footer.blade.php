@@ -3,7 +3,7 @@
 	<div class="footer-bar">
 		<div class="container">
 			<span class="copyright">Copyright &copy; {{ date("Y") }} CalculatieTool.com Alle Rechten Voorbehouden.</span>
-			<span class="toTop">Versie {{ config('app.version') }}</span>
+			<span class="toTop">Versie {{ config('app.version') }} | {{ app()->environment() }}</span>
 		</div>
 	</div>
 
