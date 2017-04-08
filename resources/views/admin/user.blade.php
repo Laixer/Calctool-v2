@@ -29,15 +29,8 @@ if (Input::has('group')) {
 <script type="text/javascript">
 $(document).ready(function() {
 	setInterval(function() {
-	    $.ajax({
-	        type: "HEAD",
-	        async: true,
-	        url: '/admin/user',
-	    }).done(function(message,text,jqXHR){
-	    	if (jqXHR.status == 200)
-	    		location.reload();
-	    });
-	}, 45000);
+		location.reload();
+	}, 30000);
 })
 </script>
 <div id="wrapper">

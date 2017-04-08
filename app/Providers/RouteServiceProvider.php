@@ -49,10 +49,21 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
+        /* Default application routes */
         Route::group([
-            'namespace' => $this->namespace,
+            'namespace' => $this->namespace
         ], function ($router) {
             require base_path('routes/web.php');
+        });
+
+        /* Admin application routes */
+        Route::group([
+            'namespace' => $this->namespace,
+            'before' => 'admin',
+            'prefix' => 'admin',
+            'middleware' => 'admin'
+        ], function ($router) {
+            require base_path('routes/admin.php');
         });
     }
 }

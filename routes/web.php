@@ -83,7 +83,7 @@ Route::group(['prefix' => 'oauth2/rest', 'middleware' => 'oauth'], function() {
 Route::post('support', 'SupportController@sendSupport');
 
 /* Payment callbacks */
-Route::post('payment/webhook/', 'UserController@doPaymentUpdate');
+Route::post('payment/webhook/', 'PaymentController@doPaymentUpdate');
 
 Route::group(['middleware' => 'auth'], function() {
 	Route::get('/', ['middleware' => 'payzone', function() {
@@ -133,11 +133,12 @@ Route::group(['middleware' => 'auth'], function() {
 		return view('user.affiliate');
 	});
 
-	Route::get('payment', 'UserController@getPayment');
-	Route::get('payment/order/{token}', 'UserController@getPaymentFinish')->where('token', '[0-9a-z]{40}');
-	Route::post('payment/promocode', 'UserController@doCheckPromotionCode');
-	Route::get('payment/increasefree', 'UserController@getPaymentFree');
-	Route::get('payment/subscription/cancel', 'UserController@getSubscriptionCancel');
+	/* Actions by payment */
+	Route::get('payment',                      'PaymentController@getPayment');
+	Route::get('payment/order/{token}',        'PaymentController@getPaymentFinish')->where('token', '[0-9a-z]{40}');
+	Route::post('payment/promocode',           'PaymentController@doCheckPromotionCode');
+	Route::get('payment/increasefree',         'PaymentController@getPaymentFree');
+	Route::get('payment/subscription/cancel',  'PaymentController@getSubscriptionCancel');
 
 	/* Actions by calculation */
 	Route::post('calculation/newchapter/{project_id}', 'CalcController@doNewChapter')->where('project_id', '[0-9]+');
@@ -210,33 +211,33 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('invoice/pdf/project-{project_id}/term-invoice-{invoice_id}/download', 'CalcController@getTermInvoiceDownloadPDF')->where('project_id', '[0-9]+')->middleware('payzone');
 
 	/* Calculation acions by calculation */
-	Route::post('calculation/calc/newmaterial', 'CalcController@doNewCalculationMaterial');
-	Route::post('calculation/calc/newequipment', 'CalcController@doNewCalculationEquipment');
-	Route::post('calculation/calc/newlabor', 'CalcController@doNewCalculationLabor');
-	Route::post('calculation/calc/deletematerial', 'CalcController@doDeleteCalculationMaterial');
+	Route::post('calculation/calc/newmaterial',     'CalcController@doNewCalculationMaterial');
+	Route::post('calculation/calc/newequipment',    'CalcController@doNewCalculationEquipment');
+	Route::post('calculation/calc/newlabor',        'CalcController@doNewCalculationLabor');
+	Route::post('calculation/calc/deletematerial',  'CalcController@doDeleteCalculationMaterial');
 	Route::post('calculation/calc/deleteequipment', 'CalcController@doDeleteCalculationEquipment');
-	Route::post('calculation/calc/deletelabor', 'CalcController@doDeleteCalculationLabor');
-	Route::post('calculation/calc/updatematerial', 'CalcController@doUpdateCalculationMaterial');
+	Route::post('calculation/calc/deletelabor',     'CalcController@doDeleteCalculationLabor');
+	Route::post('calculation/calc/updatematerial',  'CalcController@doUpdateCalculationMaterial');
 	Route::post('calculation/calc/updateequipment', 'CalcController@doUpdateCalculationEquipment');
-	Route::post('calculation/calc/updatelabor', 'CalcController@doUpdateCalculationLabor');
-	Route::post('calculation/calc/savefav', 'CalcController@doNewCalculationFavorite');
+	Route::post('calculation/calc/updatelabor',     'CalcController@doUpdateCalculationLabor');
+	Route::post('calculation/calc/savefav',         'CalcController@doNewCalculationFavorite');
 	Route::post('calculation/calc/rename_activity', 'CalcController@doRenameCalculationActivity');
-	Route::post('calculation/calc/rename_chapter', 'CalcController@doRenameCalculationChapter');
+	Route::post('calculation/calc/rename_chapter',  'CalcController@doRenameCalculationChapter');
 
 	/* Estimate acions by calculation */
-	Route::post('calculation/estim/newmaterial', 'CalcController@doNewEstimateMaterial');
-	Route::post('calculation/estim/newequipment', 'CalcController@doNewEstimateEquipment');
-	Route::post('calculation/estim/newlabor', 'CalcController@doNewEstimateLabor');
-	Route::post('calculation/estim/deletematerial', 'CalcController@doDeleteEstimateMaterial');
+	Route::post('calculation/estim/newmaterial',     'CalcController@doNewEstimateMaterial');
+	Route::post('calculation/estim/newequipment',    'CalcController@doNewEstimateEquipment');
+	Route::post('calculation/estim/newlabor',        'CalcController@doNewEstimateLabor');
+	Route::post('calculation/estim/deletematerial',  'CalcController@doDeleteEstimateMaterial');
 	Route::post('calculation/estim/deleteequipment', 'CalcController@doDeleteEstimateEquipment');
-	Route::post('calculation/estim/deletelabor', 'CalcController@doDeleteEstimateLabor');
-	Route::post('calculation/estim/updatematerial', 'CalcController@doUpdateEstimateMaterial');
+	Route::post('calculation/estim/deletelabor',     'CalcController@doDeleteEstimateLabor');
+	Route::post('calculation/estim/updatematerial',  'CalcController@doUpdateEstimateMaterial');
 	Route::post('calculation/estim/updateequipment', 'CalcController@doUpdateEstimateEquipment');
-	Route::post('calculation/estim/updatelabor', 'CalcController@doUpdateEstimateLabor');
-	Route::post('calculation/estim/savefav', 'CalcController@doNewEstimateFavorite');
+	Route::post('calculation/estim/updatelabor',     'CalcController@doUpdateEstimateLabor');
+	Route::post('calculation/estim/savefav',         'CalcController@doNewEstimateFavorite');
 
 	/* Blancrow acions by calculation */
-	Route::post('blancrow/newrow', 'BlancController@doNewRow');
+	Route::post('blancrow/newrow',    'BlancController@doNewRow');
 	Route::post('blancrow/updaterow', 'BlancController@doUpdateRow');
 
 	/* Calculation pages */
@@ -251,18 +252,18 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('estimate/endresult/project-{project_id}', 'CalcController@getEstimateEndresult')->where('project_id', '[0-9]+')->middleware('payzone');
 
 	/* Estimate acions by estimate */
-	Route::post('estimate/newlabor', 'EstimController@doNewEstimateLabor');
-	Route::post('estimate/newmaterial', 'EstimController@doNewEstimateMaterial');
-	Route::post('estimate/updatematerial', 'EstimController@doUpdateEstimateMaterial');
-	Route::post('estimate/deletematerial', 'EstimController@doDeleteEstimateMaterial');
-	Route::post('estimate/resetmaterial', 'EstimController@doResetEstimateMaterial');
-	Route::post('estimate/newequipment', 'EstimController@doNewEstimateEquipment');
+	Route::post('estimate/newlabor',        'EstimController@doNewEstimateLabor');
+	Route::post('estimate/newmaterial',     'EstimController@doNewEstimateMaterial');
+	Route::post('estimate/updatematerial',  'EstimController@doUpdateEstimateMaterial');
+	Route::post('estimate/deletematerial',  'EstimController@doDeleteEstimateMaterial');
+	Route::post('estimate/resetmaterial',   'EstimController@doResetEstimateMaterial');
+	Route::post('estimate/newequipment',    'EstimController@doNewEstimateEquipment');
 	Route::post('estimate/updateequipment', 'EstimController@doUpdateEstimateEquipment');
 	Route::post('estimate/deleteequipment', 'EstimController@doDeleteEstimateEquipment');
-	Route::post('estimate/resetequipment', 'EstimController@doResetEstimateEquipment');
-	Route::post('estimate/updatelabor', 'EstimController@doUpdateEstimateLabor');
-	Route::post('estimate/resetlabor', 'EstimController@doResetEstimateLabor');
-	Route::post('estimate/deletelabor', 'EstimController@doDeleteEstimateLabor');
+	Route::post('estimate/resetequipment',  'EstimController@doResetEstimateEquipment');
+	Route::post('estimate/updatelabor',     'EstimController@doUpdateEstimateLabor');
+	Route::post('estimate/resetlabor',      'EstimController@doResetEstimateLabor');
+	Route::post('estimate/deletelabor',     'EstimController@doDeleteEstimateLabor');
 
 	/* Less pages */
 	Route::get('less/project-{project_id}', 'CalcController@getLess')->where('project_id', '[0-9]+')->middleware('payzone');
@@ -364,125 +365,126 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('purchase/delete', 'CostController@doDeletePurchase');
 
 	/* Material database */
-	Route::get('material', 'MaterialController@getList')->middleware('payzone');
+	Route::get('material',                    'MaterialController@getList')->middleware('payzone');
 	Route::get('material/subcat/{type}/{id}', 'MaterialController@getListSubcat');
-	Route::post('material/search', 'MaterialController@doSearch');
-	Route::post('material/newmaterial', 'MaterialController@doNew');
-	Route::post('material/updatematerial', 'MaterialController@doUpdate');
-	Route::post('material/deletematerial', 'MaterialController@doDelete');
-	Route::post('material/favorite', 'MaterialController@doFavorite');
-	Route::post('material/element/new', 'MaterialController@doNewElement');
-	Route::post('material/upload', 'MaterialController@doUploadCSV');
+	Route::post('material/search',            'MaterialController@doSearch');
+	Route::post('material/newmaterial',       'MaterialController@doNew');
+	Route::post('material/updatematerial',    'MaterialController@doUpdate');
+	Route::post('material/deletematerial',    'MaterialController@doDelete');
+	Route::post('material/favorite',          'MaterialController@doFavorite');
+	Route::post('material/element/new',       'MaterialController@doNewElement');
+	Route::post('material/upload',            'MaterialController@doUploadCSV');
 });
 
-Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'], function()
-{
-	/* Admin */
-	Route::get('/', 'AdminController@getDashboard');
-	Route::get('user/new', function() {
-		return view('admin.new_user');
-	});
-	Route::post('user/new', 'AdminController@doNewUser');
-	Route::get('user', function() {
-		return view('admin.user');
-	});
-	Route::get('user-{user_id}/edit', function() {
-		return view('admin.edit_user');
-	});
-	Route::get('user-{user_id}/switch', 'AdminController@getSwitchSession');
-	Route::get('user-{user_id}/validation', 'AdminController@getValidationProject');
-	Route::get('user-{user_id}/stabu', 'AdminController@getStabuProject');
-	Route::get('user-{user_id}/passreset', 'AdminController@getPasswordResetUser');
-	Route::get('user-{user_id}/passdefault', 'AdminController@getPasswordDefault');
-	Route::get('user-{user_id}/purge', 'AdminController@getPurgeUser');
-	Route::get('user-{user_id}/login', 'AdminController@getLoginAsUser');
-	Route::get('user-{user_id}/subscription/cancel', 'AdminController@getSubscriptionCancel');
-	Route::post('user-{user_id}/edit', 'AdminController@doUpdateUser');
-	Route::post('user-{user_id}/adminlog/new', 'AdminController@doNewAdminLog');
-	Route::get('group', function() {
-		return view('admin.group');
-	});
-	Route::get('group-{group_id}/edit', function() {
-		return view('admin.edit_group');
-	});
-	Route::post('group-{group_id}/edit', 'AdminController@doUpdateGroup');
-	Route::get('group/new', function() {
-		return view('admin.new_group');
-	});
-	Route::post('group/new', 'AdminController@doNewGroup');
 
-	Route::get('user/tags', function() {
-		return view('admin.tag');
-	});
-	Route::get('user/tags/new', function() {
-		return view('admin.new_tag');
-	});
-	Route::post('user/tags/new', 'AdminController@doNewTag');
+// Route::group(['before' => 'admin', 'prefix' => 'admin','middleware' => 'admin'], function()
+// {
+// 	/* Admin */
+// 	Route::get('/', 'AdminController@getDashboard');
+// 	Route::get('user/new', function() {
+// 		return view('admin.new_user');
+// 	});
+// 	Route::post('user/new', 'AdminController@doNewUser');
+// 	Route::get('user', function() {
+// 		return view('admin.user');
+// 	});
+// 	Route::get('user-{user_id}/edit', function() {
+// 		return view('admin.edit_user');
+// 	});
+// 	Route::get('user-{user_id}/switch', 'AdminController@getSwitchSession');
+// 	Route::get('user-{user_id}/validation', 'AdminController@getValidationProject');
+// 	Route::get('user-{user_id}/stabu', 'AdminController@getStabuProject');
+// 	Route::get('user-{user_id}/passreset', 'AdminController@getPasswordResetUser');
+// 	Route::get('user-{user_id}/passdefault', 'AdminController@getPasswordDefault');
+// 	Route::get('user-{user_id}/purge', 'AdminController@getPurgeUser');
+// 	Route::get('user-{user_id}/login', 'AdminController@getLoginAsUser');
+// 	Route::get('user-{user_id}/subscription/cancel', 'AdminController@getSubscriptionCancel');
+// 	Route::post('user-{user_id}/edit', 'AdminController@doUpdateUser');
+// 	Route::post('user-{user_id}/adminlog/new', 'AdminController@doNewAdminLog');
+// 	Route::get('group', function() {
+// 		return view('admin.group');
+// 	});
+// 	Route::get('group-{group_id}/edit', function() {
+// 		return view('admin.edit_group');
+// 	});
+// 	Route::post('group-{group_id}/edit', 'AdminController@doUpdateGroup');
+// 	Route::get('group/new', function() {
+// 		return view('admin.new_group');
+// 	});
+// 	Route::post('group/new', 'AdminController@doNewGroup');
 
-	Route::get('alert', function() {
-		return view('admin.alert');
-	});
-	Route::post('alert/new', 'AdminController@doNewAlert');
-	Route::post('alert/delete', 'AdminController@doDeleteAlert');
-	Route::get('phpinfo', function() {
-		return view('admin.phpinfo');
-	});
-	Route::post('transaction/{transcode}/refund', 'AdminController@doRefund');
-	Route::get('payment', function() {
-		return view('admin.transaction');
-	});
-	Route::get('transaction/{transcode}', function() {
-		return view('admin.transaction_code');
-	});
-	Route::get('environment', function() {
-		return view('admin.server');
-	});
-	Route::get('environment/clearcaches', 'AdminController@doApplicationClearCache');
-	Route::get('project', function() {
-		return view('admin.project');
-	});
-	Route::get('snailmail', function() {
-		return view('admin.snailmail');
-	});
-	Route::get('message', function() {
-		return view('admin.message');
-	});
-	Route::post('message', 'AdminController@doSendNotification');
-	Route::post('promo', 'AdminController@doNewPromotion');
-	Route::get('promo/{id}/delete', 'AdminController@doDeletePromotion');
-	Route::get('promo', function() {
-		return view('admin.promo');
-	});
-	Route::get('application', function() {
-		return view('admin.application');
-	});
-	Route::get('application/new', function() {
-		return view('admin.new_application');
-	});
-	Route::get('application/{client_id}/edit', function() {
-		return view('admin.edit_application');
-	});
-	Route::get('product', function() {
-		return view('admin.product');
-	});
-	Route::get('auditlog', function() {
-		return view('admin.audit');
-	});
-	Route::post('product/upload', 'AdminController@doUploadCSV');
-	Route::post('product/emptylist', 'AdminController@getEmptyList');
-	Route::get('application/{client_id}/delete', 'AdminController@doDeleteApplication');
-	Route::post('application/{client_id}/edit', 'AdminController@doUpdateApplication');
-	Route::post('application/new', 'AdminController@doNewApplication');
-	Route::post('snailmail/offer/done', 'AdminController@doOfferPostDone');
-	Route::post('snailmail/invoice/done', 'AdminController@doInvoicePostDone');
-	Route::post('snailmail/offer/delete', 'AdminController@doOfferPostDelete');
-	Route::post('snailmail/invoice/delete', 'AdminController@doInvoicePostDelete');
-	Route::get('resource', function() {
-		return view('admin.resource');
-	});
-	Route::post('resource/delete', 'AdminController@doDeleteResource');
-	Route::get('log', function() {
-		return view('admin.log');
-	});
-	Route::get('log/truncate', 'AdminController@doTruncateLog');
-});
+// 	Route::get('user/tags', function() {
+// 		return view('admin.tag');
+// 	});
+// 	Route::get('user/tags/new', function() {
+// 		return view('admin.new_tag');
+// 	});
+// 	Route::post('user/tags/new', 'AdminController@doNewTag');
+
+// 	Route::get('alert', function() {
+// 		return view('admin.alert');
+// 	});
+// 	Route::post('alert/new', 'AdminController@doNewAlert');
+// 	Route::post('alert/delete', 'AdminController@doDeleteAlert');
+// 	Route::get('phpinfo', function() {
+// 		return view('admin.phpinfo');
+// 	});
+// 	Route::post('transaction/{transcode}/refund', 'AdminController@doRefund');
+// 	Route::get('payment', function() {
+// 		return view('admin.transaction');
+// 	});
+// 	Route::get('transaction/{transcode}', function() {
+// 		return view('admin.transaction_code');
+// 	});
+// 	Route::get('environment', function() {
+// 		return view('admin.server');
+// 	});
+// 	Route::get('environment/clearcaches', 'AdminController@doApplicationClearCache');
+// 	Route::get('project', function() {
+// 		return view('admin.project');
+// 	});
+// 	Route::get('snailmail', function() {
+// 		return view('admin.snailmail');
+// 	});
+// 	Route::get('message', function() {
+// 		return view('admin.message');
+// 	});
+// 	Route::post('message', 'AdminController@doSendNotification');
+// 	Route::post('promo', 'AdminController@doNewPromotion');
+// 	Route::get('promo/{id}/delete', 'AdminController@doDeletePromotion');
+// 	Route::get('promo', function() {
+// 		return view('admin.promo');
+// 	});
+// 	Route::get('application', function() {
+// 		return view('admin.application');
+// 	});
+// 	Route::get('application/new', function() {
+// 		return view('admin.new_application');
+// 	});
+// 	Route::get('application/{client_id}/edit', function() {
+// 		return view('admin.edit_application');
+// 	});
+// 	Route::get('product', function() {
+// 		return view('admin.product');
+// 	});
+// 	Route::get('auditlog', function() {
+// 		return view('admin.audit');
+// 	});
+// 	Route::post('product/upload', 'AdminController@doUploadCSV');
+// 	Route::post('product/emptylist', 'AdminController@getEmptyList');
+// 	Route::get('application/{client_id}/delete', 'AdminController@doDeleteApplication');
+// 	Route::post('application/{client_id}/edit', 'AdminController@doUpdateApplication');
+// 	Route::post('application/new', 'AdminController@doNewApplication');
+// 	Route::post('snailmail/offer/done', 'AdminController@doOfferPostDone');
+// 	Route::post('snailmail/invoice/done', 'AdminController@doInvoicePostDone');
+// 	Route::post('snailmail/offer/delete', 'AdminController@doOfferPostDelete');
+// 	Route::post('snailmail/invoice/delete', 'AdminController@doInvoicePostDelete');
+// 	Route::get('resource', function() {
+// 		return view('admin.resource');
+// 	});
+// 	Route::post('resource/delete', 'AdminController@doDeleteResource');
+// 	Route::get('log', function() {
+// 		return view('admin.log');
+// 	});
+// 	Route::get('log/truncate', 'AdminController@doTruncateLog');
+// });

@@ -11,7 +11,7 @@
 		"Nathanmac/Parser": "3.*",
 		"intervention/image": "dev-master",
 		"barryvdh/laravel-snappy": "0.3.*",
-		"mollie/mollie-api-php": "1.8.x",
+		"mollie/mollie-api-php": "1.9.x",
 		"bogardo/mailgun": "4.0.*",
 		"jeroendesloovere/vcard": "1.2.*",
 		"doctrine/dbal": "v2.5.4",

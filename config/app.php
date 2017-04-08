@@ -193,13 +193,13 @@ return [
          */
         Calctool\Providers\AppServiceProvider::class,
         Calctool\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
         Calctool\Providers\EventServiceProvider::class,
         Calctool\Providers\RouteServiceProvider::class,
+        Calctool\Providers\PaymentServiceProvider::class,
 
         /*
-        * 3rd-party providers
-        */
+         * 3rd-party providers
+         */
         Intervention\Image\ImageServiceProvider::class,
         Bogardo\Mailgun\MailgunServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
