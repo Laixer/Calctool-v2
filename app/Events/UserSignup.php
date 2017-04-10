@@ -5,24 +5,26 @@ namespace Calctool\Events;
 use Calctool\Events\Event;
 use Illuminate\Queue\SerializesModels;
 use \Calctool\Models\User;
+use \Calctool\Models\Relation;
+use \Calctool\Models\Contact;
 
-class UserNotification extends Event
+class UserSignup extends Event
 {
     use SerializesModels;
 
     public $user;
-    public $subject;
-    public $text;
+    public $relation;
+    public $contact;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(User $user, $subject, $text)
+    public function __construct(User $user, Relation $relation, Contact $contact)
     {
         $this->user = $user;
-        $this->subject = $subject;
-        $this->text = $text;
+        $this->relation = $relation;
+        $this->contact = $contact;
     }
 }

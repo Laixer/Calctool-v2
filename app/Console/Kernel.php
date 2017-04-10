@@ -14,7 +14,7 @@ use \Calctool\Models\UserGroup;
 use \Calctool\Models\MessageBox;
 use \Calctool\Models\Payment;
 
-use \Mailgun;
+use \Mail;
 use \Newsletter;
 
 class Kernel extends ConsoleKernel
@@ -62,7 +62,7 @@ class Kernel extends ConsoleKernel
                         'pref_email_invoice_demand' => $user->pref_email_invoice_demand,
                         'user' => $contact_user->getFormalName()
                     );
-                    Mailgun::send('mail.invoice_demand', $data, function($message) use ($data) {
+                    Mail::send('mail.invoice_demand', $data, function($message) use ($data) {
                         $message->to($data['email'], strtolower(trim($data['client'])));
                         $message->subject('CalculatieTool.com - Vordering');
                         $message->from('info@calculatietool.com', 'CalculatieTool.com');
@@ -85,7 +85,7 @@ class Kernel extends ConsoleKernel
                         'pref_email_invoice_last_reminder' => $user->pref_email_invoice_last_reminder,
                         'user' => $contact_user->getFormalName()
                     );
-                    Mailgun::send('mail.invoice_last_reminder', $data, function($message) use ($data) {
+                    Mail::send('mail.invoice_last_reminder', $data, function($message) use ($data) {
                         $message->to($data['email'], strtolower(trim($data['client'])));
                         $message->subject('CalculatieTool.com - Tweede betalingsherinnering');
                         $message->from('info@calculatietool.com', 'CalculatieTool.com');
@@ -108,7 +108,7 @@ class Kernel extends ConsoleKernel
                         'pref_email_invoice_first_reminder' => $user->pref_email_invoice_first_reminder,
                         'user' => $contact_user->getFormalName()
                     );
-                    Mailgun::send('mail.invoice_first_reminder', $data, function($message) use ($data) {
+                    Mail::send('mail.invoice_first_reminder', $data, function($message) use ($data) {
                         $message->to($data['email'], strtolower(trim($data['client'])));
                         $message->subject('CalculatieTool.com - Betalingsherinnering');
                         $message->from('info@calculatietool.com', 'CalculatieTool.com');
@@ -139,7 +139,7 @@ class Kernel extends ConsoleKernel
                         'lastname' => $user->lastname
                     );
 
-                    Mailgun::send('mail.due', $data, function($message) use ($data) {
+                    Mail::send('mail.due', $data, function($message) use ($data) {
                         $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
                         $message->subject('CalculatieTool.com - Account verlengen');
                         $message->from('info@calculatietool.com', 'CalculatieTool.com');
@@ -193,5 +193,15 @@ class Kernel extends ConsoleKernel
         })->daily();
 
         $schedule->command('oauth:clear')->daily();
+    }
+
+    /**
+     * Register the Closure based commands for the application.
+     *
+     * @return void
+     */
+    protected function commands()
+    {
+        require base_path('routes/console.php');
     }
 }

@@ -16,6 +16,10 @@ class EventServiceProvider extends ServiceProvider
         'Calctool\Events\UserNotification' => [
             'Calctool\Listeners\SendNotificationMail',
         ],
+        'Calctool\Events\UserSignup' => [
+            'Calctool\Listeners\SendActivationMail',
+            'Calctool\Listeners\InformAdminOfNewUser',
+        ],
         'Illuminate\Auth\Events\Login' => [
             'Calctool\Listeners\LogAuthenticated',
         ],

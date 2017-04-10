@@ -54,19 +54,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Application Debug Mode
-    |--------------------------------------------------------------------------
-    |
-    | When your application is in debug mode, detailed error messages with
-    | stack traces will be shown on every error that occurs within your
-    | application. If disabled, a simple generic error page is shown.
-    |
-    */
-
-    'profiler' => env('APP_PROFILER', false),
-
-    /*
-    |--------------------------------------------------------------------------
     | Application URL
     |--------------------------------------------------------------------------
     |
@@ -76,7 +63,7 @@ return [
     |
     */
 
-    'url' => env('URL','http://localhost'),
+    'url' => env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -89,7 +76,7 @@ return [
     |
     */
 
-    'timezone' => 'Europe/Amsterdam',
+    'timezone' => env('APP_TIMEZONE', 'Europe/Amsterdam'),
 
     /*
     |--------------------------------------------------------------------------
@@ -102,7 +89,7 @@ return [
     |
     */
 
-    'locale' => 'nl',
+    'locale' => env('APP_LOCALE', 'nl'),
 
     /*
     |--------------------------------------------------------------------------
@@ -200,9 +187,7 @@ return [
          * 3rd-party providers
          */
         Intervention\Image\ImageServiceProvider::class,
-        Bogardo\Mailgun\MailgunServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
-        GrahamCampbell\Markdown\MarkdownServiceProvider::class,
         Nathanmac\Utilities\Parser\ParserServiceProvider::class,
         LucaDegasperi\OAuth2Server\Storage\FluentStorageServiceProvider::class,
         LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
@@ -260,10 +245,8 @@ return [
 
         'Calctool'  => Calctool\Facades\Calctool::class,
         'Image'     => Intervention\Image\Facades\Image::class,
-        'Mailgun'   => Bogardo\Mailgun\Facades\Mailgun::class,
         'PDF'       => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'Parser'    => Nathanmac\Utilities\Parser\Facades\Parser::class,
-        'Markdown'  => GrahamCampbell\Markdown\Facades\Markdown::class,
         'Authorizer'=> LucaDegasperi\OAuth2Server\Facades\Authorizer::class,
         'Newsletter'=> Spatie\Newsletter\NewsletterFacade::class,
         'Agent'     => Jenssegers\Agent\Facades\Agent::class,

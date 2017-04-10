@@ -20,7 +20,7 @@ use \Calctool\Models\Relation;
 use \Auth;
 use \Redis;
 use \Hash;
-use \Mailgun;
+use \Mail;
 use \DB;
 use \PDF;
 
@@ -41,7 +41,7 @@ class UserController extends Controller {
 		Auth::logout();
 
 		$data = array('email' => $user->email, 'firstname' => $user->firstname, 'lastname' => $user->lastname);
-		Mailgun::send('mail.deactivate', $data, function($message) use ($data) {
+		Mail::send('mail.deactivate', $data, function($message) use ($data) {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Account gedeactiveerd');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
@@ -57,7 +57,7 @@ class UserController extends Controller {
 				'lastname' => $user->lastname,
 				'reason' => $request->get('reason'),
 			);
-			Mailgun::send('mail.inform_deactivate_user', $data, function($message) use ($data) {
+			Mail::send('mail.inform_deactivate_user', $data, function($message) use ($data) {
 				$message->to('administratie@calculatietool.com', 'CalculatieTool.com');
 				$message->subject('CalculatieTool.com - Account deactivatie');
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');
@@ -102,7 +102,7 @@ class UserController extends Controller {
 		if ($request->get('secret')) {
 			$user = Auth::user();
 			$data = array('email' => $user->email, 'firstname' => $user->firstname, 'lastname' => $user->lastname);
-			Mailgun::send('mail.password_update', $data, function($message) use ($data) {
+			Mail::send('mail.password_update', $data, function($message) use ($data) {
 				$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 				$message->subject('CalculatieTool.com - Wachtwoord aangepast');
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');
@@ -255,7 +255,7 @@ class UserController extends Controller {
 		$user = Auth::user();
 
 		$data = array('email' => Auth::user()->email, 'firstname' => $user->firstname, 'lastname' => $user->lastname);
-		Mailgun::send('mail.iban_update', $data, function($message) use ($data) {
+		Mail::send('mail.iban_update', $data, function($message) use ($data) {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Betaalgegevens aangepast');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');

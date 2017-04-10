@@ -11,7 +11,7 @@ use Illuminate\Session\TokenMismatchException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-use \Mailgun;
+use \Mail;
 use \Auth;
 
 class Handler extends ExceptionHandler
@@ -75,7 +75,7 @@ class Handler extends ExceptionHandler
 
             $content .= "<br /><pre>Stacktrace:</pre><br />" . nl2br($e);
             $data = array('content' => $content, 'env' => app()->environment());
-            Mailgun::send('mail.raw', $data, function($message) use ($data) {
+            Mail::send('mail.raw', $data, function($message) use ($data) {
                 $message->to('y.dewid@calculatietool.com', 'Yorick de Wid');
                 $message->to('d.zandbergen@calculatietool.com', 'Don Zandbergen');
                 $message->subject('CalculatieTool.com - Exception report [' . $data['env'] . ']');

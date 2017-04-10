@@ -21,7 +21,7 @@ use \Calctool\Calculus\InvoiceTerm;
 
 use \Auth;
 use \PDF;
-use \Mailgun;
+use \Mail;
 
 class OfferController extends Controller {
 
@@ -247,7 +247,7 @@ class OfferController extends Controller {
 			'pref_email_offer' => Auth::User()->pref_email_offer,
 			'user_logo' => $user_logo
 		);
-		Mailgun::send('mail.offer_send', $data, function($message) use ($data) {
+		Mail::send('mail.offer_send', $data, function($message) use ($data) {
 			$message->to($data['email'], strtolower(trim($data['client'])));
 			foreach ($data['other_contacts'] as $email => $name) {
 				$message->cc($email, strtolower(trim($name)));
@@ -340,7 +340,7 @@ class OfferController extends Controller {
 	        'code' => $offer->offer_code,
 	        'user' => $user->username
 	    );
-	    Mailgun::send('mail.print', $data, function($message) use ($data) {
+	    Mail::send('mail.print', $data, function($message) use ($data) {
 	        $message->to('administratie@calculatietool.com', 'CalculatieTool.com');
 	        $message->subject('CalculatieTool.com - Printopdracht');
 	        $message->from('info@calculatietool.com', 'CalculatieTool.com');

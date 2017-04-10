@@ -5,6 +5,7 @@ namespace Calctool\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
+use \Calctool\Events\UserSignup;
 use \Calctool\Models\User;
 use \Calctool\Models\UserGroup;
 use \Calctool\Models\Project;
@@ -25,7 +26,7 @@ use \Auth;
 use \Redis;
 use \Cache;
 use \Hash;
-use \Mailgun;
+use \Mail;
 use \Authorizer;
 use \Validator;
 use \DB;
@@ -242,23 +243,6 @@ class AuthController extends Controller {
 
 		$contact->save();
 
-		$data = array(
-			'email' => $user->email,
-			'token' => $user->reset_token,
-			'firstname' => $user->firstname,
-			'lastname' => $user->lastname
-		);
-		Mailgun::send('mail.confirm', $data, function($message) use ($data) {
-			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-			$message->subject('CalculatieTool.com - Account activatie');
-			$message->from('info@calculatietool.com', 'CalculatieTool.com');
-			$message->replyTo('support@calculatietool.com', 'CalculatieTool.com');
-		});
-
-		$user->save();
-
-		Audit::CreateEvent('account.new.success', 'Created new account from template', $user->id);
-
 		if ($referral_user) {
 			$referral_user->expiration_date = date('Y-m-d', strtotime("+3 month", strtotime($referral_user->expiration_date)));
 
@@ -267,22 +251,9 @@ class AuthController extends Controller {
 			Audit::CreateEvent('account.referralkey.used.success', 'Referral key used', $referral_user->id);
 		}
 
-		if (!config('app.debug')) {
-			$data = array(
-				'email' => $user->email,
-				'firstname' => $user->firstname,
-				'lastname' => $user->lastname,
-				'company' => $relation->company_name,
-				'contact_first' => $contact->firstname,
-				'contact_last'=> $contact->lastname
-			);
-			Mailgun::send('mail.inform_new_user', $data, function($message) use ($data) {
-				$message->to('administratie@calculatietool.com', 'CalculatieTool.com');
-				$message->subject('CalculatieTool.com - Account activatie');
-				$message->from('info@calculatietool.com', 'CalculatieTool.com');
-				$message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
-			});
-		}
+		event(new UserSignup($user, $relation, $contact));
+
+		Audit::CreateEvent('account.new.success', 'Created new account from template', $user->id);
 
 		return back()->with('success', 'Account aangemaakt, er is een bevestingsmail verstuurd');
 	}
@@ -368,7 +339,7 @@ class AuthController extends Controller {
 			'firstname' => $user->firstname,
 			'lastname' => $user->lastname
 		);
-		Mailgun::send('mail.password', $data, function($message) use ($data) {
+		Mail::send('mail.password', $data, function($message) use ($data) {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Wachtwoord herstellen');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
@@ -858,7 +829,7 @@ class AuthController extends Controller {
 			'firstname' => $user->firstname,
 			'lastname' => $user->lastname
 		);
-		Mailgun::send('mail.confirm', $data, function($message) use ($data) {
+		Mail::send('mail.confirm', $data, function($message) use ($data) {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Account activatie');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
@@ -878,7 +849,7 @@ class AuthController extends Controller {
 				'contact_first' => $contact->firstname,
 				'contact_last'=> $contact->lastname
 			);
-			Mailgun::send('mail.inform_new_user', $data, function($message) use ($data) {
+			Mail::send('mail.inform_new_user', $data, function($message) use ($data) {
 				$message->to('administratie@calculatietool.com', 'CalculatieTool.com');
 				$message->subject('CalculatieTool.com - Account activatie');
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');

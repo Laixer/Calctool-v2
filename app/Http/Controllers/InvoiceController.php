@@ -19,7 +19,7 @@ use \Calctool\Calculus\InvoiceTerm;
 
 use \Auth;
 use \PDF;
-use \Mailgun;
+use \Mail;
 
 class InvoiceController extends Controller {
 
@@ -579,7 +579,7 @@ class InvoiceController extends Controller {
 			'pref_email_invoice' => Auth::User()->pref_email_invoice,
 			'user_logo' => $user_logo
 		);
-		Mailgun::send('mail.invoice_send', $data, function($message) use ($data) {
+		Mail::send('mail.invoice_send', $data, function($message) use ($data) {
 			$message->to($data['email'], strtolower(trim($data['client'])));
 			foreach ($data['other_contacts'] as $email => $name) {
 				$message->cc($email, strtolower(trim($name)));
@@ -669,7 +669,7 @@ class InvoiceController extends Controller {
 	        'code' => $invoice->invoice_code,
 	        'user' => $user->username
 	    );
-	    Mailgun::send('mail.print', $data, function($message) use ($data) {
+	    Mail::send('mail.print', $data, function($message) use ($data) {
 	        $message->to('administratie@calculatietool.com', 'CalculatieTool.com');
 	        $message->subject('CalculatieTool.com - Printopdracht');
 	        $message->from('info@calculatietool.com', 'CalculatieTool.com');

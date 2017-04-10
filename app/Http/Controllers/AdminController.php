@@ -37,7 +37,7 @@ use \Cache;
 use \Hash;
 use \Redis;
 use \Markdown;
-use \Mailgun;
+use \Mail;
 use \Artisan;
 
 ini_set('max_execution_time', 0);
@@ -136,7 +136,7 @@ class AdminController extends Controller {
 			$user->expiration_date = date('Y-m-d', strtotime("-".$order->increment." month", strtotime($expdate)));
 
 			$data = array('email' => $user->email, 'amount' => number_format($order->amount, 2,",","."), 'firstname' => $user->firstname, 'lastname' => $user->lastname);
-			Mailgun::send('mail.refund', $data, function($message) use ($data) {
+			Mail::send('mail.refund', $data, function($message) use ($data) {
 				$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 				$message->subject('CalculatieTool.com - Terugstorting');
 				$message->from('info@calculatietool.com', 'CalculatieTool.com');
@@ -852,7 +852,7 @@ class AdminController extends Controller {
 			'firstname' => $user->firstname,
 			'lastname' => $user->lastname
 		);
-		Mailgun::send('mail.password', $data, function($message) use ($data) {
+		Mail::send('mail.password', $data, function($message) use ($data) {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Wachtwoord herstellen');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');

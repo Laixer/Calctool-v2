@@ -8,7 +8,7 @@ use Calctool\Http\Requests;
 use Calctool\Http\Controllers\Controller;
 
 use \Auth;
-use \Mailgun;
+use \Mail;
 
 class SupportController extends Controller
 {
@@ -39,7 +39,7 @@ class SupportController extends Controller
             $data['user'] = Auth::user()->username;
         }
 
-        Mailgun::send('mail.feedback', $data, function($message) use ($data) {
+        Mail::send('mail.feedback', $data, function($message) use ($data) {
             $message->to('support@calculatietool.com', 'CalculatieTool.com');
             $message->bcc($data['email'], $data['name']);
             $message->subject('CalculatieTool.com - Contact form');

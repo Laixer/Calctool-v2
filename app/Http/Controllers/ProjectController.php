@@ -29,7 +29,7 @@ use \Calctool\Models\CalculationMaterial;
 use \Calctool\Models\CalculationEquipment;
 
 use \Auth;
-use \Mailgun;
+use \Mail;
 
 class ProjectController extends Controller {
 
@@ -779,7 +779,7 @@ class ProjectController extends Controller {
 			'user_logo' => $user_logo,
 			'note' => nl2br($request->input('user_note'))
 		);
-		Mailgun::send('mail.user_reacted', $data, function($message) use ($data) {
+		Mail::send('mail.user_reacted', $data, function($message) use ($data) {
 			$message->to($data['email'], strtolower(trim($data['client'])));
 			$message->subject('CalculatieTool.com - Uw vakman heeft gereageerd');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');

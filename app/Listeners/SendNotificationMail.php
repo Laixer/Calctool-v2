@@ -6,24 +6,14 @@ use Calctool\Events\UserNotification;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-use \Mailgun;
+use \Mail;
 
 class SendNotificationMail
 {
     /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
      * Handle the event.
      *
-     * @param  SomeEvent  $event
+     * @param  UserNotification  $event
      * @return void
      */
     public function handle(UserNotification $event)
@@ -35,7 +25,7 @@ class SendNotificationMail
             'subject' => $event->subject,
             'body' => $event->text
         );
-        Mailgun::send('mail.notification', $data, function($message) use ($data) {
+        Mail::send('mail.notification', $data, function($message) use ($data) {
             $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
             $message->subject('CalculatieTool.com - Notificatie: ' . $data['subject']);
             $message->from('info@calculatietool.com', 'CalculatieTool.com');

@@ -13,7 +13,7 @@ use \Calctool\Calculus\InvoiceTerm;
 use \Calctool\Models\ProjectShare;
 
 use \Auth;
-use \Mailgun;
+use \Mail;
 
 class ClientController extends Controller {
 
@@ -63,7 +63,7 @@ class ClientController extends Controller {
 			'project_name' => $project->project_name,
 			'note' => nl2br($request->input('client_note'))
 		);
-		Mailgun::send('mail.client_reacted', $data, function($message) use ($data) {
+		Mail::send('mail.client_reacted', $data, function($message) use ($data) {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Uw opdrachtgever heeft gereageerd');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');
@@ -117,7 +117,7 @@ class ClientController extends Controller {
 		$user = User::find($project->user_id);
 
 		$data = array('email' => $user->email, 'firstname' => $user->firstname, 'lastname' => $user->lastname, 'project_name' => $project->project_name);
-		Mailgun::send('mail.offer_accepted', $data, function($message) use ($data) {
+		Mail::send('mail.offer_accepted', $data, function($message) use ($data) {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('CalculatieTool.com - Offerte bevestigd');
 			$message->from('info@calculatietool.com', 'CalculatieTool.com');

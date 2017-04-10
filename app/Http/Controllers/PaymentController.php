@@ -20,7 +20,7 @@ use \Calctool\Models\Relation;
 use \Auth;
 use \Redis;
 use \Hash;
-use \Mailgun;
+use \Mail;
 use \DB;
 use \PDF;
 
@@ -59,7 +59,7 @@ class PaymentController extends Controller
             "amount"		=> $order->amount,
             "interval"		=> "1 month",
             "description"	=> "Maandelijkse incasso CalculatieTool.com",
-            "webhookUrl"	=> url('payment/webhook/'),
+            "webhookUrl"	=> secure_url('payment/webhook/'),
             "metadata"		=> [
                 "token"		=> $order->token,
                 "uid"		=> Auth::id(),
@@ -240,7 +240,7 @@ class PaymentController extends Controller
                 'lastname' => $user->lastname,
                 'pdf' => $resource->file_location,
             );
-            Mailgun::send('mail.paid', $data, function($message) use ($data) {
+            Mail::send('mail.paid', $data, function($message) use ($data) {
                 $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
                 $message->bcc('administratie@calculatietool.com', 'Gebruiker account verlengd');
                 $message->attach($data['pdf']);
@@ -298,8 +298,8 @@ class PaymentController extends Controller
                 'amount'        => $amount,
                 'description'   => $description,
                 "locale"		=> self::DEFAULT_LANGUAGE,
-                "webhookUrl"	=> url('payment/webhook/'),
-                'redirectUrl'   => url('payment/order/' . $token),
+                "webhookUrl"	=> secure_url('payment/webhook/'),
+                'redirectUrl'   => secure_url('payment/order/' . $token),
                 "metadata"		=> [
                     "token"		=> $token,
                     "uid"		=> Auth::id(),
@@ -499,7 +499,7 @@ class PaymentController extends Controller
                 'subscription' => $subscription_id,
             );
 
-            Mailgun::send('mail.payment_stopped', $data, function($message) use ($data) {
+            Mail::send('mail.payment_stopped', $data, function($message) use ($data) {
                 $message->to('administratie@calculatietool.com', 'CalculatieTool.com');
                 $message->subject('CalculatieTool.com - Automatische incasso gestopt');
                 $message->from('info@calculatietool.com', 'CalculatieTool.com');
