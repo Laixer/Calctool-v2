@@ -8,8 +8,8 @@ use \Auth;
 
 class AdminLogLabel extends Model {
 
-	protected $table = 'admin_log_label';
+    protected $table = 'admin_log_label';
 
-	public $timestamps = false;
+    public $timestamps = false;
 
 }
