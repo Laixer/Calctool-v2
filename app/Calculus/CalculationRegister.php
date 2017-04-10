@@ -1,11 +1,11 @@
 <?php
 
-namespace Calctool\Calculus;
+namespace CalculatieTool\Calculus;
 
-use \Calctool\Models\CalculationMaterial;
-use \Calctool\Models\CalculationEquipment;
-use \Calctool\Models\EstimateMaterial;
-use \Calctool\Models\EstimateEquipment;
+use \CalculatieTool\Models\CalculationMaterial;
+use \CalculatieTool\Models\CalculationEquipment;
+use \CalculatieTool\Models\EstimateMaterial;
+use \CalculatieTool\Models\EstimateEquipment;
 
 class CalculationRegister {
 

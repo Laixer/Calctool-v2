@@ -1,11 +1,11 @@
 <?php
 
-namespace Calctool\Http\Controllers;
+namespace CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use \Calctool\Models\BankAccount;
-use \Calctool\Models\Cashbook;
+use \CalculatieTool\Models\BankAccount;
+use \CalculatieTool\Models\Cashbook;
 
 use \Auth;
 

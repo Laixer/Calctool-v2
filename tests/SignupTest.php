@@ -20,7 +20,7 @@ class SignupTest extends TestCase
         $faker = Faker::create();
         $password = $faker->password;
 
-        $user = factory(Calctool\Models\User::class)->make();
+        $user = factory(CalculatieTool\Models\User::class)->make();
 
         $this->visit('/register')
              ->type($user->firstname, 'contact_firstname')
@@ -138,11 +138,11 @@ class SignupTest extends TestCase
         $faker = Faker::create();
         $password = $faker->password;
 
-        $referred_user = factory(Calctool\Models\User::class)->create([
+        $referred_user = factory(CalculatieTool\Models\User::class)->create([
             'expiration_date' => date('Y-m-d'),
         ]);
 
-        $user = factory(Calctool\Models\User::class)->make();
+        $user = factory(CalculatieTool\Models\User::class)->make();
 
         $this->visit('/register?client_referer=' . $referred_user->referral_key)
              ->type($user->firstname, 'contact_firstname')

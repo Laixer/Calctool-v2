@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Calctool\Models\User::class,
+            'model' => CalculatieTool\Models\User::class,
         ],
 
         // 'users' => [

@@ -1,6 +1,6 @@
 <?php
 
-namespace Calctool\Providers;
+namespace CalculatieTool\Providers;
 
 use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -13,15 +13,15 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'Calctool\Events\UserNotification' => [
-            'Calctool\Listeners\SendNotificationMail',
+        'CalculatieTool\Events\UserNotification' => [
+            'CalculatieTool\Listeners\SendNotificationMail',
         ],
-        'Calctool\Events\UserSignup' => [
-            'Calctool\Listeners\SendActivationMail',
-            'Calctool\Listeners\InformAdminOfNewUser',
+        'CalculatieTool\Events\UserSignup' => [
+            'CalculatieTool\Listeners\SendActivationMail',
+            'CalculatieTool\Listeners\InformAdminOfNewUser',
         ],
         'Illuminate\Auth\Events\Login' => [
-            'Calctool\Listeners\LogAuthenticated',
+            'CalculatieTool\Listeners\LogAuthenticated',
         ],
     ];
 

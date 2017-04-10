@@ -1,6 +1,6 @@
 <?php
 
-namespace Calctool\Http;
+namespace CalculatieTool\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -13,11 +13,11 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-        \Calctool\Http\Middleware\EncryptCookies::class,
+        \CalculatieTool\Http\Middleware\EncryptCookies::class,
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-        \Calctool\Http\Middleware\VerifyCsrfToken::class,
+        \CalculatieTool\Http\Middleware\VerifyCsrfToken::class,
         \LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware::class,
     ];
 
@@ -28,11 +28,11 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'admin' => [
-            \Calctool\Http\Middleware\Admin::class,
+            \CalculatieTool\Http\Middleware\Admin::class,
         ],
 
         'payzone' => [
-            \Calctool\Http\Middleware\PayRestrict::class,
+            \CalculatieTool\Http\Middleware\PayRestrict::class,
         ],
 
         'api' => [
@@ -46,10 +46,10 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'utm' => \Calctool\Http\Middleware\UTMState::class,
-        'auth' => \Calctool\Http\Middleware\Authenticate::class,
+        'utm' => \CalculatieTool\Http\Middleware\UTMState::class,
+        'auth' => \CalculatieTool\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest' => \Calctool\Http\Middleware\RedirectIfAuthenticated::class,
+        'guest' => \CalculatieTool\Http\Middleware\RedirectIfAuthenticated::class,
         'oauth' => \LucaDegasperi\OAuth2Server\Middleware\OAuthMiddleware::class,
         'oauth-user' => \LucaDegasperi\OAuth2Server\Middleware\OAuthUserOwnerMiddleware::class,
         'oauth-client' => \LucaDegasperi\OAuth2Server\Middleware\OAuthClientOwnerMiddleware::class,

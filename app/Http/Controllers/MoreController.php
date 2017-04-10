@@ -1,24 +1,24 @@
 <?php
 
-namespace Calctool\Http\Controllers;
+namespace CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use \Calctool\Models\Project;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Activity;
-use \Calctool\Models\FavoriteActivity;
-use \Calctool\Models\Detail;
-use \Calctool\Models\PartType;
-use \Calctool\Models\Part;
-use \Calctool\Models\ProjectType;
-use \Calctool\Models\Tax;
-use \Calctool\Models\MoreEquipment;
-use \Calctool\Models\MoreLabor;
-use \Calctool\Models\MoreMaterial;
-use \Calctool\Models\FavoriteLabor;
-use \Calctool\Models\FavoriteMaterial;
-use \Calctool\Models\FavoriteEquipment;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\FavoriteActivity;
+use \CalculatieTool\Models\Detail;
+use \CalculatieTool\Models\PartType;
+use \CalculatieTool\Models\Part;
+use \CalculatieTool\Models\ProjectType;
+use \CalculatieTool\Models\Tax;
+use \CalculatieTool\Models\MoreEquipment;
+use \CalculatieTool\Models\MoreLabor;
+use \CalculatieTool\Models\MoreMaterial;
+use \CalculatieTool\Models\FavoriteLabor;
+use \CalculatieTool\Models\FavoriteMaterial;
+use \CalculatieTool\Models\FavoriteEquipment;
 
 use \Auth;
 

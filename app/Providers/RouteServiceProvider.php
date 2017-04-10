@@ -1,6 +1,6 @@
 <?php
 
-namespace Calctool\Providers;
+namespace CalculatieTool\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -16,14 +16,14 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */ 
-    protected $namespace = 'Calctool\Http\Controllers';
+    protected $namespace = 'CalculatieTool\Http\Controllers';
 
     /**
      * This namespace is applied to the admin controller routes.
      *
      * @var string
      */ 
-    protected $namespaceAdmin = 'Calctool\Http\Controllers\Admin';
+    protected $namespaceAdmin = 'CalculatieTool\Http\Controllers\Admin';
 
     /**
      * Define your route model bindings, pattern filters, etc.

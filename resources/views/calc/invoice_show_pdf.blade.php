@@ -1,11 +1,11 @@
 <?php
 
-use \Calctool\Models\Project;
-use \Calctool\Models\Resource;
-use \Calctool\Models\PartType;
-use \Calctool\Models\Invoice;
-use \Calctool\Models\Offer;
-use \Calctool\Models\InvoiceVersion;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Resource;
+use \CalculatieTool\Models\PartType;
+use \CalculatieTool\Models\Invoice;
+use \CalculatieTool\Models\Offer;
+use \CalculatieTool\Models\InvoiceVersion;
 
 $common_access_error = false;
 $invoice = InvoiceVersion::find(Route::Input('invoice_id'));

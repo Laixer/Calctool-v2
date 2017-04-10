@@ -1,23 +1,23 @@
 <?php
 
-use \Calctool\Models\Project;
-use \Calctool\Models\Relation;
-use \Calctool\Models\Contact;
-use \Calctool\Models\Offer;
-use \Calctool\Models\Resource;
-use \Calctool\Models\ProjectType;
-use \Calctool\Calculus\CalculationEndresult;
-use \Calctool\Http\Controllers\OfferController;
-use \Calctool\Models\DeliverTime;
-use \Calctool\Models\Valid;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Tax;
-use \Calctool\Models\BlancRow;
-use \Calctool\Models\Activity;
-use \Calctool\Models\Part;
-use \Calctool\Models\PartType;
-use \Calctool\Calculus\CalculationOverview;
-use \Calctool\Calculus\BlancRowsEndresult;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\Contact;
+use \CalculatieTool\Models\Offer;
+use \CalculatieTool\Models\Resource;
+use \CalculatieTool\Models\ProjectType;
+use \CalculatieTool\Calculus\CalculationEndresult;
+use \CalculatieTool\Http\Controllers\OfferController;
+use \CalculatieTool\Models\DeliverTime;
+use \CalculatieTool\Models\Valid;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Tax;
+use \CalculatieTool\Models\BlancRow;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\Part;
+use \CalculatieTool\Models\PartType;
+use \CalculatieTool\Calculus\CalculationOverview;
+use \CalculatieTool\Calculus\BlancRowsEndresult;
 
 $c=false;
 

@@ -59,19 +59,19 @@ $(document).ready(function() {
 
 			<?php
 			if ($all) {
-				$selection_today = \Calctool\Models\User::whereRaw("DATE(online_at) = current_date")->orderBy('online_at','desc')->get();
-				$selection_week = \Calctool\Models\User::whereRaw("DATE(online_at) < current_date")->whereRaw("\"online_at\" > NOW() - '1 week'::INTERVAL")->orderBy('online_at','desc')->get();
-				$selection_other = \Calctool\Models\User::whereRaw("\"online_at\" < NOW() - '1 week'::INTERVAL")->orWhereNull('online_at')->orderBy('online_at','desc')->get();
+				$selection_today = \CalculatieTool\Models\User::whereRaw("DATE(online_at) = current_date")->orderBy('online_at','desc')->get();
+				$selection_week = \CalculatieTool\Models\User::whereRaw("DATE(online_at) < current_date")->whereRaw("\"online_at\" > NOW() - '1 week'::INTERVAL")->orderBy('online_at','desc')->get();
+				$selection_other = \CalculatieTool\Models\User::whereRaw("\"online_at\" < NOW() - '1 week'::INTERVAL")->orWhereNull('online_at')->orderBy('online_at','desc')->get();
 			} else if (!empty($group)) {
-				$selection_today = \Calctool\Models\User::where('user_group', $group)->whereRaw("DATE(online_at) = current_date")->orderBy('online_at','desc')->get();
-				$selection_week = \Calctool\Models\User::where('user_group', $group)->whereRaw("DATE(online_at) < current_date")->whereRaw("\"online_at\" > NOW() - '1 week'::INTERVAL")->orderBy('online_at','desc')->get();
-				$selection_other = \Calctool\Models\User::where('user_group', $group)->Where(function($query) {
+				$selection_today = \CalculatieTool\Models\User::where('user_group', $group)->whereRaw("DATE(online_at) = current_date")->orderBy('online_at','desc')->get();
+				$selection_week = \CalculatieTool\Models\User::where('user_group', $group)->whereRaw("DATE(online_at) < current_date")->whereRaw("\"online_at\" > NOW() - '1 week'::INTERVAL")->orderBy('online_at','desc')->get();
+				$selection_other = \CalculatieTool\Models\User::where('user_group', $group)->Where(function($query) {
 					$query->whereRaw("\"online_at\" < NOW() - '1 week'::INTERVAL")->orWhereNull('online_at');
 				})->orderBy('online_at','desc')->get();
 			} else {
-				$selection_today = \Calctool\Models\User::where('active','true')->whereRaw("DATE(online_at) = current_date")->orderBy('online_at','desc')->get();
-				$selection_week = \Calctool\Models\User::where('active','true')->whereRaw("DATE(online_at) < current_date")->whereRaw("\"online_at\" > NOW() - '1 week'::INTERVAL")->orderBy('online_at','desc')->get();
-				$selection_other = \Calctool\Models\User::where('active','true')->Where(function($query) {
+				$selection_today = \CalculatieTool\Models\User::where('active','true')->whereRaw("DATE(online_at) = current_date")->orderBy('online_at','desc')->get();
+				$selection_week = \CalculatieTool\Models\User::where('active','true')->whereRaw("DATE(online_at) < current_date")->whereRaw("\"online_at\" > NOW() - '1 week'::INTERVAL")->orderBy('online_at','desc')->get();
+				$selection_other = \CalculatieTool\Models\User::where('active','true')->Where(function($query) {
 					$query->whereRaw("\"online_at\" < NOW() - '1 week'::INTERVAL")->orWhereNull('online_at');
 				})->orderBy('online_at','desc')->get();
 			}
@@ -118,8 +118,8 @@ $(document).ready(function() {
 						<i class="fa fa-exclamation" aria-hidden="true"></i> 
 						@endif
 						</td>
-						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>
-						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserGroup::find($users->user_group)->name) }}</td>
+						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\CalculatieTool\Models\UserType::find($users->user_type)->user_type) }}</td>
+						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\CalculatieTool\Models\UserGroup::find($users->user_group)->name) }}</td>
 						<td class="col-md-1 hidden-xs">{{ $users->tag ? $users->tag->name : '-' }}</td>
 					</tr>
 				@endforeach
@@ -165,8 +165,8 @@ $(document).ready(function() {
 						<i class="fa fa-exclamation" aria-hidden="true"></i> 
 						@endif
 						</td>
-						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>
-						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserGroup::find($users->user_group)->name) }}</td>
+						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\CalculatieTool\Models\UserType::find($users->user_type)->user_type) }}</td>
+						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\CalculatieTool\Models\UserGroup::find($users->user_group)->name) }}</td>
 						<td class="col-md-1 hidden-xs">{{ $users->tag ? $users->tag->name : '-' }}</td>
 					</tr>
 				@endforeach
@@ -212,8 +212,8 @@ $(document).ready(function() {
 						<i class="fa fa-exclamation" aria-hidden="true"></i> 
 						@endif
 						</td>
-						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserType::find($users->user_type)->user_type) }}</td>
-						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\Calctool\Models\UserGroup::find($users->user_group)->name) }}</td>
+						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\CalculatieTool\Models\UserType::find($users->user_type)->user_type) }}</td>
+						<td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\CalculatieTool\Models\UserGroup::find($users->user_group)->name) }}</td>
 						<td class="col-md-1 hidden-xs">{{ $users->tag ? $users->tag->name : '-' }}</td>
 					</tr>
 				@endforeach

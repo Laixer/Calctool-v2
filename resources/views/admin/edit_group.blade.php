@@ -14,7 +14,7 @@
 @endpush
 
 <?php
-$group = \Calctool\Models\UserGroup::find(Route::input('group_id'));
+$group = \CalculatieTool\Models\UserGroup::find(Route::input('group_id'));
 if (!$group){ ?>
 @section('content')
 <div id="wrapper">

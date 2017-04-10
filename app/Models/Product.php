@@ -1,6 +1,6 @@
 <?php
 
-namespace Calctool\Models;
+namespace CalculatieTool\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,7 +20,7 @@ class Product extends Model {
 	}
 
 	public function user() {
-		return $this->belongsToMany('\Calctool\Models\User', 'product_favorite', 'product_id', 'user_id');
+		return $this->belongsToMany('\CalculatieTool\Models\User', 'product_favorite', 'product_id', 'user_id');
 	}
 
 }

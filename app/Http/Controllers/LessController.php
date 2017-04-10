@@ -1,17 +1,17 @@
 <?php
 
-namespace Calctool\Http\Controllers;
+namespace CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use \Calctool\Models\Part;
-use \Calctool\Models\Project;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Activity;
-use \Calctool\Models\CalculationEquipment;
-use \Calctool\Models\CalculationLabor;
-use \Calctool\Models\CalculationMaterial;
-use \Calctool\Calculus\LessRegister;
+use \CalculatieTool\Models\Part;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\CalculationEquipment;
+use \CalculatieTool\Models\CalculationLabor;
+use \CalculatieTool\Models\CalculationMaterial;
+use \CalculatieTool\Calculus\LessRegister;
 
 class LessController extends Controller {
 

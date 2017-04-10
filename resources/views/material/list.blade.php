@@ -1,16 +1,16 @@
 <?php
-use \Calctool\Models\ProductGroup;
-use \Calctool\Models\ProductCategory;
-use \Calctool\Models\ProductSubCategory;
-use \Calctool\Models\Supplier;
-use \Calctool\Models\Product;
-use \Calctool\Models\Tax;
-use \Calctool\Models\Wholesale;
-use \Calctool\Models\FavoriteActivity;
-use \Calctool\Models\FavoriteMaterial;
-use \Calctool\Models\FavoriteLabor;
-use \Calctool\Models\FavoriteEquipment;
-use \Calctool\Calculus\CalculationRegister;
+use \CalculatieTool\Models\ProductGroup;
+use \CalculatieTool\Models\ProductCategory;
+use \CalculatieTool\Models\ProductSubCategory;
+use \CalculatieTool\Models\Supplier;
+use \CalculatieTool\Models\Product;
+use \CalculatieTool\Models\Tax;
+use \CalculatieTool\Models\Wholesale;
+use \CalculatieTool\Models\FavoriteActivity;
+use \CalculatieTool\Models\FavoriteMaterial;
+use \CalculatieTool\Models\FavoriteLabor;
+use \CalculatieTool\Models\FavoriteEquipment;
+use \CalculatieTool\Calculus\CalculationRegister;
 ?>
 
 @extends('layout.master')

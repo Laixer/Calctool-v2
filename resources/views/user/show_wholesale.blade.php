@@ -1,9 +1,9 @@
 <?php
 
-use \Calctool\Models\Wholesale;
-use \Calctool\Models\WholesaleType;
-use \Calctool\Models\Province;
-use \Calctool\Models\Country;
+use \CalculatieTool\Models\Wholesale;
+use \CalculatieTool\Models\WholesaleType;
+use \CalculatieTool\Models\Province;
+use \CalculatieTool\Models\Country;
 
 $common_access_error = false;
 $wholesale = Wholesale::find(Route::Input('wholesale_id'));

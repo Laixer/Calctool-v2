@@ -1,33 +1,33 @@
 <?php
 
-namespace Calctool\Http\Controllers;
+namespace CalculatieTool\Http\Controllers;
 
 use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
 
-use \Calctool\Events\UserNotification;
-use \Calctool\Models\SysMessage;
-use \Calctool\Models\Payment;
-use \Calctool\Models\User;
-use \Calctool\Models\UserType;
-use \Calctool\Models\UserTag;
-use \Calctool\Models\UserGroup;
-use \Calctool\Models\OfferPost;
-use \Calctool\Models\Offer;
-use \Calctool\Models\Invoice;
-use \Calctool\Models\InvoicePost;
-use \Calctool\Models\Resource;
-use \Calctool\Models\MessageBox;
-use \Calctool\Models\Product;
-use \Calctool\Models\Audit;
-use \Calctool\Models\Wholesale;
-use \Calctool\Models\Supplier;
-use \Calctool\Models\Project;
-use \Calctool\Models\Promotion;
-use \Calctool\Models\AdminLog;
-use \Calctool\Models\ProductGroup;
-use \Calctool\Models\ProductCategory;
-use \Calctool\Models\ProductSubCategory;
+use \CalculatieTool\Events\UserNotification;
+use \CalculatieTool\Models\SysMessage;
+use \CalculatieTool\Models\Payment;
+use \CalculatieTool\Models\User;
+use \CalculatieTool\Models\UserType;
+use \CalculatieTool\Models\UserTag;
+use \CalculatieTool\Models\UserGroup;
+use \CalculatieTool\Models\OfferPost;
+use \CalculatieTool\Models\Offer;
+use \CalculatieTool\Models\Invoice;
+use \CalculatieTool\Models\InvoicePost;
+use \CalculatieTool\Models\Resource;
+use \CalculatieTool\Models\MessageBox;
+use \CalculatieTool\Models\Product;
+use \CalculatieTool\Models\Audit;
+use \CalculatieTool\Models\Wholesale;
+use \CalculatieTool\Models\Supplier;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Promotion;
+use \CalculatieTool\Models\AdminLog;
+use \CalculatieTool\Models\ProductGroup;
+use \CalculatieTool\Models\ProductCategory;
+use \CalculatieTool\Models\ProductSubCategory;
 use \Database\Templates\DemoProjectTemplate;
 use \Database\Templates\ValidationProjectTemplate;
 

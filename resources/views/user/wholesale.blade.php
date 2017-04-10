@@ -1,7 +1,7 @@
 <?php
 
-use \Calctool\Models\Wholesale;
-use \Calctool\Models\WholesaleType;
+use \CalculatieTool\Models\Wholesale;
+use \CalculatieTool\Models\WholesaleType;
 ?>
 
 @extends('layout.master')

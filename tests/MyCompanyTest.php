@@ -15,7 +15,7 @@ class MyCompanyTest extends TestCase
      */
     public function testEditMyAccount() // TODO
     {
-        $user = factory(Calctool\Models\User::class)->create();
+        $user = factory(CalculatieTool\Models\User::class)->create();
 
         $this->actingAs($user)
              ->visit('/mycompany')

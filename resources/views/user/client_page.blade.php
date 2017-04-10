@@ -1,22 +1,22 @@
 <?php
 
-use \Calctool\Calculus\CalculationEndresult;
-use \Calctool\Models\Relation;
-use \Calctool\Models\Resource;
-use \Calctool\Models\PurchaseKind;
-use \Calctool\Models\RelationKind;
-use \Calctool\Models\Contact;
-use \Calctool\Models\Country;
-use \Calctool\Models\Province;
-use \Calctool\Models\Project;
-use \Calctool\Models\Offer;
-use \Calctool\Models\Invoice;
-use \Calctool\Models\Wholesale;
-use \Calctool\Models\ProjectShare;
-use \Calctool\Models\User;
+use \CalculatieTool\Calculus\CalculationEndresult;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\Resource;
+use \CalculatieTool\Models\PurchaseKind;
+use \CalculatieTool\Models\RelationKind;
+use \CalculatieTool\Models\Contact;
+use \CalculatieTool\Models\Country;
+use \CalculatieTool\Models\Province;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Offer;
+use \CalculatieTool\Models\Invoice;
+use \CalculatieTool\Models\Wholesale;
+use \CalculatieTool\Models\ProjectShare;
+use \CalculatieTool\Models\User;
 
-use \Calctool\Models\RelationType;
-use \Calctool\Models\ContactFunction;
+use \CalculatieTool\Models\RelationType;
+use \CalculatieTool\Models\ContactFunction;
 
 
 $common_access_error = false;

@@ -1,14 +1,14 @@
 <?php
 
-namespace Calctool\Http\Controllers;
+namespace CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use \Calctool\Models\Project;
-use \Calctool\Models\FavoriteActivity;
-use \Calctool\Models\FavoriteMaterial;
-use \Calctool\Models\FavoriteEquipment;
-use \Calctool\Models\FavoriteLabor;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\FavoriteActivity;
+use \CalculatieTool\Models\FavoriteMaterial;
+use \CalculatieTool\Models\FavoriteEquipment;
+use \CalculatieTool\Models\FavoriteLabor;
 
 class FavoriteController extends Controller {
 

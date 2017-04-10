@@ -1,12 +1,12 @@
 <?php
 
-namespace Calctool\Events;
+namespace CalculatieTool\Events;
 
-use Calctool\Events\Event;
+use CalculatieTool\Events\Event;
 use Illuminate\Queue\SerializesModels;
-use \Calctool\Models\User;
-use \Calctool\Models\Relation;
-use \Calctool\Models\Contact;
+use \CalculatieTool\Models\User;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\Contact;
 
 class UserSignup extends Event
 {

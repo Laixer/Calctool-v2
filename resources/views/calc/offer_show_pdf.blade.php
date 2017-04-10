@@ -1,9 +1,9 @@
 <?php
 
-use \Calctool\Models\Offer;
-use \Calctool\Models\Project;
-use \Calctool\Models\Resource;
-use \Calctool\Models\PartType;
+use \CalculatieTool\Models\Offer;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Resource;
+use \CalculatieTool\Models\PartType;
 
 $common_access_error = false;
 $offer = Offer::find(Route::Input('offer_id'));

@@ -1,6 +1,6 @@
 <?php
 
-namespace Calctool\Other;
+namespace CalculatieTool\Other;
 
 class Calctool {
 

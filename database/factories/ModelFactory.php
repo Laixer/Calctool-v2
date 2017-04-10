@@ -11,7 +11,7 @@
 |
 */
 
-$factory->define(Calctool\Models\User::class, function (Faker\Generator $faker) {
+$factory->define(CalculatieTool\Models\User::class, function (Faker\Generator $faker) {
     return [
         'username' => str_replace(' ', '', strtolower($faker->unique()->name)),
         'firstname' => $faker->firstName,
@@ -47,16 +47,16 @@ $factory->define(Calctool\Models\User::class, function (Faker\Generator $faker) 
     ];
 });
 
-$factory->defineAs(Calctool\Models\User::class, 'admin', function ($faker) use ($factory) {
-    $user = $factory->raw(Calctool\Models\User::class);
+$factory->defineAs(CalculatieTool\Models\User::class, 'admin', function ($faker) use ($factory) {
+    $user = $factory->raw(CalculatieTool\Models\User::class);
 
     return array_merge($user, ['user_type' => 2]);
 });
 
-$factory->define(Calctool\Models\Relation::class, function (Faker\Generator $faker) {
+$factory->define(CalculatieTool\Models\Relation::class, function (Faker\Generator $faker) {
     return [
         'user_id' => function() {
-            return factory(Calctool\Models\User::class)->create()->id;
+            return factory(CalculatieTool\Models\User::class)->create()->id;
         },
         'kind_id' => 1,
         'debtor_code' => $faker->randomNumber,
@@ -79,7 +79,7 @@ $factory->define(Calctool\Models\Relation::class, function (Faker\Generator $fak
     ];
 });
 
-$factory->define(Calctool\Models\Contact::class, function (Faker\Generator $faker) {
+$factory->define(CalculatieTool\Models\Contact::class, function (Faker\Generator $faker) {
     return [
         'firstname' => $faker->firstName,
         'lastname' => $faker->lastName,
@@ -87,14 +87,14 @@ $factory->define(Calctool\Models\Contact::class, function (Faker\Generator $fake
         'phone' => $faker->numberBetween(0,999999999999),
         'email' => $faker->email,
         'relation_id' => function() {
-            return factory(Calctool\Models\Relation::class)->create()->id;
+            return factory(CalculatieTool\Models\Relation::class)->create()->id;
         },
         'function_id' => $faker->numberBetween(1,31),
         'gender' => $faker->randomElement(['M','V']),
     ];
 });
 
-$factory->define(Calctool\Models\Project::class, function (Faker\Generator $faker) {
+$factory->define(CalculatieTool\Models\Project::class, function (Faker\Generator $faker) {
     return [
         'project_name' => $faker->word,
         'address_street' => $faker->streetName,
@@ -105,13 +105,13 @@ $factory->define(Calctool\Models\Project::class, function (Faker\Generator $fake
         'hour_rate' => $faker->randomFloat(3, 20, 80),
         'hour_rate_more' => $faker->randomFloat(3, 20, 80),
         'user_id' => function() {
-            return factory(Calctool\Models\User::class)->create()->id;
+            return factory(CalculatieTool\Models\User::class)->create()->id;
         },
         'province_id' => $faker->numberBetween(1, 12),
         'country_id' => $faker->numberBetween(1, 52),
         'type_id' => 2,
         'client_id' => function() {
-            return factory(Calctool\Models\User::class)->create()->id;
+            return factory(CalculatieTool\Models\User::class)->create()->id;
         },
         'profit_calc_contr_mat' => $faker->numberBetween(0, 100),
         'profit_calc_contr_equip' => $faker->numberBetween(0, 100),

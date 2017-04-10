@@ -1,14 +1,14 @@
 <?php
 
-namespace Calctool\Http\Controllers;
+namespace CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use \Calctool\Models\ProductSubCategory;
-use \Calctool\Models\Supplier;
-use \Calctool\Models\SubGroup;
-use \Calctool\Models\Product;
-// use \Calctool\Models\Element;
+use \CalculatieTool\Models\ProductSubCategory;
+use \CalculatieTool\Models\Supplier;
+use \CalculatieTool\Models\SubGroup;
+use \CalculatieTool\Models\Product;
+// use \CalculatieTool\Models\Element;
 
 use \Auth;
 use \DB;

@@ -1,7 +1,7 @@
 <?php
-use \Calctool\Models\User;
-use \Calctool\Models\MessageBox;
-use \Calctool\Models\UserType;
+use \CalculatieTool\Models\User;
+use \CalculatieTool\Models\MessageBox;
+use \CalculatieTool\Models\UserType;
 ?>
 
 <header id="topNav" class="topHead">
@@ -12,7 +12,7 @@ use \Calctool\Models\UserType;
 		</button>
 
 		<a class="logo" href="/">
-			<img src="/images/logo2.png" width="229px" alt="Calctool" />
+			<img src="/images/logo2.png" width="229px" alt="CalculatieTool.com" />
 		</a>
 
 		<div class="navbar-collapse nav-main-collapse collapse pull-right">

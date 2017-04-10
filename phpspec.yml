@@ -1,5 +1,5 @@
 suites:
     main:
-        namespace: Calctool
-        psr4_prefix: Calctool
+        namespace: CalculatieTool
+        psr4_prefix: CalculatieTool
         src_path: app

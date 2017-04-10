@@ -1,21 +1,21 @@
 <?php
 
-namespace Calctool\Http\Controllers;
+namespace CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use \Calctool\Models\Project;
-use \Calctool\Models\Invoice;
-use \Calctool\Models\InvoiceVersion;
-use \Calctool\Models\Offer;
-use \Calctool\Models\Contact;
-use \Calctool\Models\Resource;
-use \Calctool\Models\InvoicePost;
-use \Calctool\Models\Relation;
-use \Calctool\Models\User;
-use \Calctool\Models\UserType;
-use \Calctool\Models\MessageBox;
-use \Calctool\Calculus\InvoiceTerm;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Invoice;
+use \CalculatieTool\Models\InvoiceVersion;
+use \CalculatieTool\Models\Offer;
+use \CalculatieTool\Models\Contact;
+use \CalculatieTool\Models\Resource;
+use \CalculatieTool\Models\InvoicePost;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\User;
+use \CalculatieTool\Models\UserType;
+use \CalculatieTool\Models\MessageBox;
+use \CalculatieTool\Calculus\InvoiceTerm;
 
 use \Auth;
 use \PDF;

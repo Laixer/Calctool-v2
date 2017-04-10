@@ -1,7 +1,7 @@
 <?php
-use \Calctool\Models\UserType;
-use \Calctool\Models\Province;
-use \Calctool\Models\Country;
+use \CalculatieTool\Models\UserType;
+use \CalculatieTool\Models\Province;
+use \CalculatieTool\Models\Country;
 ?>
 
 @extends('layout.master')
@@ -203,7 +203,7 @@ $(document).ready(function() {
 							<div class="form-group">
 								<label for="gender" style="display:block;">Gebruikersgroep</label>
 								<select name="group" id="group" class="form-control pointer">
-									@foreach (\Calctool\Models\UserGroup::all() as $group)
+									@foreach (\CalculatieTool\Models\UserGroup::all() as $group)
 										<option value="{{ $group->id }}">{{ ucwords($group->name) }}</option>
 									@endforeach
 								</select>

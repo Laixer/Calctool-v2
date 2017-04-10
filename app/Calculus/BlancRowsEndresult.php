@@ -1,8 +1,8 @@
 <?php
 
-namespace Calctool\Calculus;
+namespace CalculatieTool\Calculus;
 
-use \Calctool\Models\BlancRow;
+use \CalculatieTool\Models\BlancRow;
 
 /*
  * Eindresultaat
@@ -11,7 +11,7 @@ class BlancRowsEndresult {
 
 	public static function rowTax1($project) {
 		$total = 0;
-		$tax_id = \Calctool\Models\Tax::where('tax_rate','=','21')->first()->id;
+		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','21')->first()->id;
 
 		foreach (BlancRow::where('project_id','=', $project->id)->where('tax_id', $tax_id)->get() as $row)
 		{
@@ -23,7 +23,7 @@ class BlancRowsEndresult {
 
 	public static function rowTax2($project) {
 		$total = 0;
-		$tax_id = \Calctool\Models\Tax::where('tax_rate','=','6')->first()->id;
+		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','6')->first()->id;
 
 		foreach (BlancRow::where('project_id','=', $project->id)->where('tax_id', $tax_id)->get() as $row)
 		{
@@ -35,7 +35,7 @@ class BlancRowsEndresult {
 
 	public static function rowTax3($project) {
 		$total = 0;
-		$tax_id = \Calctool\Models\Tax::where('tax_rate','=','0')->first()->id;
+		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','0')->first()->id;
 
 		foreach (BlancRow::where('project_id','=', $project->id)->where('tax_id', $tax_id)->get() as $row)
 		{
@@ -47,7 +47,7 @@ class BlancRowsEndresult {
 
 	public static function rowTax1Amount($project) {
 		$total = 0;
-		$tax_id = \Calctool\Models\Tax::where('tax_rate','=','21')->first()->id;
+		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','21')->first()->id;
 
 		foreach (BlancRow::where('project_id','=', $project->id)->where('tax_id', $tax_id)->get() as $row)
 		{
@@ -59,7 +59,7 @@ class BlancRowsEndresult {
 
 	public static function rowTax2Amount($project) {
 		$total = 0;
-		$tax_id = \Calctool\Models\Tax::where('tax_rate','=','6')->first()->id;
+		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','6')->first()->id;
 
 		foreach (BlancRow::where('project_id','=', $project->id)->where('tax_id', $tax_id)->get() as $row)
 		{
@@ -71,7 +71,7 @@ class BlancRowsEndresult {
 
 	public static function rowTax3Amount($project) {
 		$total = 0;
-		$tax_id = \Calctool\Models\Tax::where('tax_rate','=','0')->first()->id;
+		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','0')->first()->id;
 
 		foreach (BlancRow::where('project_id','=', $project->id)->where('tax_id', $tax_id)->get() as $row)
 		{

@@ -1,24 +1,24 @@
 <?php
 
-namespace Calctool\Http\Controllers;
+namespace CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use \Calctool\Models\Project;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Activity;
-use \Calctool\Models\Detail;
-use \Calctool\Models\Part;
-use \Calctool\Models\PartType;
-use \Calctool\Models\Purchase;
-use \Calctool\Models\PurchaseKind;
-use \Calctool\Models\Relation;
-use \Calctool\Models\Timesheet;
-use \Calctool\Models\TimesheetKind;
-use \Calctool\Models\EstimateLabor;
-use \Calctool\Models\Wholesale;
-use \Calctool\Models\MoreLabor;
-use \Calctool\Models\ProjectType;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\Detail;
+use \CalculatieTool\Models\Part;
+use \CalculatieTool\Models\PartType;
+use \CalculatieTool\Models\Purchase;
+use \CalculatieTool\Models\PurchaseKind;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\Timesheet;
+use \CalculatieTool\Models\TimesheetKind;
+use \CalculatieTool\Models\EstimateLabor;
+use \CalculatieTool\Models\Wholesale;
+use \CalculatieTool\Models\MoreLabor;
+use \CalculatieTool\Models\ProjectType;
 
 class CostController extends Controller {
 

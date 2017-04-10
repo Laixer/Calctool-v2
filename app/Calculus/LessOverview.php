@@ -1,14 +1,14 @@
 <?php
 
-namespace Calctool\Calculus;
+namespace CalculatieTool\Calculus;
 
-use \Calctool\Models\PartType;
-use \Calctool\Models\CalculationLabor;
-use \Calctool\Models\CalculationMaterial;
-use \Calctool\Models\CalculationEquipment;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Activity;
-use \Calctool\Models\Part;
+use \CalculatieTool\Models\PartType;
+use \CalculatieTool\Models\CalculationLabor;
+use \CalculatieTool\Models\CalculationMaterial;
+use \CalculatieTool\Models\CalculationEquipment;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\Part;
 
 /*
  * Uittrekstaat

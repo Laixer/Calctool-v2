@@ -1,6 +1,6 @@
 <?php
 
-namespace Calctool\Models;
+namespace CalculatieTool\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,7 +15,7 @@ class AdminLog extends Model {
 	}
 
 	public function label() {
-		return $this->hasOne('Calctool\Models\AdminLogLabel', 'id', 'label_id');
+		return $this->hasOne('CalculatieTool\Models\AdminLogLabel', 'id', 'label_id');
 	}
 
 }

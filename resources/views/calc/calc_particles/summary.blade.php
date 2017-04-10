@@ -1,8 +1,8 @@
 <?php
-use \Calctool\Models\Chapter;
-use \Calctool\Calculus\CalculationOverview;
-use \Calctool\Models\Activity as ProjectActivity;
-use \Calctool\Models\Part;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Calculus\CalculationOverview;
+use \CalculatieTool\Models\Activity as ProjectActivity;
+use \CalculatieTool\Models\Part;
 
 ?>
 <div>

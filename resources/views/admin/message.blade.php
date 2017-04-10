@@ -1,7 +1,7 @@
 <?php
-use \Calctool\Models\User;
-use \Calctool\Models\UserGroup;
-use \Calctool\Models\MessageBox;
+use \CalculatieTool\Models\User;
+use \CalculatieTool\Models\UserGroup;
+use \CalculatieTool\Models\MessageBox;
 
 ?>
 

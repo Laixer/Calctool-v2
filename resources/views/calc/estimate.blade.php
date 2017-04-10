@@ -1,26 +1,26 @@
 <?php
 
-use \Calctool\Models\TimesheetKind;
-use \Calctool\Models\Project;
-use \Calctool\Models\ProductGroup;
-use \Calctool\Models\ProductCategory;
-use \Calctool\Models\ProductSubCategory;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Activity;
-use \Calctool\Models\PartType;
-use \Calctool\Models\Part;
-use \Calctool\Models\Product;
-use \Calctool\Models\Tax;
-use \Calctool\Models\Supplier;
-use \Calctool\Models\Wholesale;
-use \Calctool\Models\EstimateLabor;
-use \Calctool\Calculus\EstimateRegister;
-use \Calctool\Models\EstimateMaterial;
-use \Calctool\Models\EstimateEquipment;
-use \Calctool\Calculus\EstimateOverview;
-use \Calctool\Models\ProjectType;
-use \Calctool\Models\Timesheet;
-use \Calctool\Calculus\SetEstimateEndresult;
+use \CalculatieTool\Models\TimesheetKind;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\ProductGroup;
+use \CalculatieTool\Models\ProductCategory;
+use \CalculatieTool\Models\ProductSubCategory;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\PartType;
+use \CalculatieTool\Models\Part;
+use \CalculatieTool\Models\Product;
+use \CalculatieTool\Models\Tax;
+use \CalculatieTool\Models\Supplier;
+use \CalculatieTool\Models\Wholesale;
+use \CalculatieTool\Models\EstimateLabor;
+use \CalculatieTool\Calculus\EstimateRegister;
+use \CalculatieTool\Models\EstimateMaterial;
+use \CalculatieTool\Models\EstimateEquipment;
+use \CalculatieTool\Calculus\EstimateOverview;
+use \CalculatieTool\Models\ProjectType;
+use \CalculatieTool\Models\Timesheet;
+use \CalculatieTool\Calculus\SetEstimateEndresult;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));

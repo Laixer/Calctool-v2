@@ -1,8 +1,8 @@
 <?php
 
-namespace Calctool\Listeners;
+namespace CalculatieTool\Listeners;
 
-use Calctool\Events\UserSignup;
+use CalculatieTool\Events\UserSignup;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 

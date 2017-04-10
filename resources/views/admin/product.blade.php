@@ -1,8 +1,8 @@
 <?php
-use \Calctool\Models\Wholesale;
-use \Calctool\Models\ProductGroup;
-use \Calctool\Models\ProductCategory;
-use \Calctool\Models\ProductSubCategory;
+use \CalculatieTool\Models\Wholesale;
+use \CalculatieTool\Models\ProductGroup;
+use \CalculatieTool\Models\ProductCategory;
+use \CalculatieTool\Models\ProductSubCategory;
 ?>
 
 @extends('layout.master')

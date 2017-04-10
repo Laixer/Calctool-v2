@@ -1,23 +1,23 @@
 <?php
 
-namespace Calctool\Http\Controllers;
+namespace CalculatieTool\Http\Controllers;
 
 use Auth;
-use \Calctool\Models\Project;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Activity;
-use \Calctool\Models\Timesheet;
-use \Calctool\Models\TimesheetKind;
-use \Calctool\Models\Purchase;
-use \Calctool\Models\PurchaseKind;
-use \Calctool\Models\Wholesale;
-use \Calctool\Models\Relation;
-use \Calctool\Models\RelationKind;
-use \Calctool\Models\Contact;
-use \Calctool\Models\MoreLabor;
-use \Calctool\Models\User;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\Timesheet;
+use \CalculatieTool\Models\TimesheetKind;
+use \CalculatieTool\Models\Purchase;
+use \CalculatieTool\Models\PurchaseKind;
+use \CalculatieTool\Models\Wholesale;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\RelationKind;
+use \CalculatieTool\Models\Contact;
+use \CalculatieTool\Models\MoreLabor;
+use \CalculatieTool\Models\User;
 use Illuminate\Http\Request;
-use \Calctool\Models\EstimateLabor;
+use \CalculatieTool\Models\EstimateLabor;
 
 
 class ApiController extends Controller {

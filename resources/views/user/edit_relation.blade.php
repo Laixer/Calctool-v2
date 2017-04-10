@@ -1,16 +1,16 @@
 <?php
 
-use \Calctool\Models\Project;
-use \Calctool\Models\User;
-use \Calctool\Models\Relation;
-use \Calctool\Models\Contact;
-use \Calctool\Models\ContactFunction;
-use \Calctool\Models\RelationKind;
-use \Calctool\Models\RelationType;
-use \Calctool\Models\Province;
-use \Calctool\Models\Country;
-use \Calctool\Models\Invoice;
-use \Calctool\Models\Offer;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\User;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\Contact;
+use \CalculatieTool\Models\ContactFunction;
+use \CalculatieTool\Models\RelationKind;
+use \CalculatieTool\Models\RelationType;
+use \CalculatieTool\Models\Province;
+use \CalculatieTool\Models\Country;
+use \CalculatieTool\Models\Invoice;
+use \CalculatieTool\Models\Offer;
 
 $common_access_error = false;
 $relation = Relation::find(Route::Input('relation_id'));

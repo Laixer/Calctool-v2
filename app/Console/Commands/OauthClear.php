@@ -1,11 +1,11 @@
 <?php
 
-namespace Calctool\Console\Commands;
+namespace CalculatieTool\Console\Commands;
 
 use Illuminate\Console\Command;
 
-use \Calctool\Models\User;
-use \Calctool\Models\UserType;
+use \CalculatieTool\Models\User;
+use \CalculatieTool\Models\UserType;
 
 use \DB;
 

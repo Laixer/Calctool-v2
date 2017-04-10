@@ -1,14 +1,14 @@
 <?php
 
-namespace Calctool\Calculus;
+namespace CalculatieTool\Calculus;
 
-use \Calctool\Models\CalculationLabor;
-use \Calctool\Models\EstimateLabor;
-use \Calctool\Models\Timesheet;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Activity;
-use \Calctool\Models\TimesheetKind;
-use \Calctool\Models\MoreLabor;
+use \CalculatieTool\Models\CalculationLabor;
+use \CalculatieTool\Models\EstimateLabor;
+use \CalculatieTool\Models\Timesheet;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\TimesheetKind;
+use \CalculatieTool\Models\MoreLabor;
 
 /*
  * Urenregistratie

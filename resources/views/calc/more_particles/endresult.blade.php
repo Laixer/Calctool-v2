@@ -1,7 +1,7 @@
 <?php
 
-use \Calctool\Models\ProjectType;
-use \Calctool\Calculus\MoreEndresult;
+use \CalculatieTool\Models\ProjectType;
+use \CalculatieTool\Calculus\MoreEndresult;
 
 $type = ProjectType::find($project->type_id);
 ?>

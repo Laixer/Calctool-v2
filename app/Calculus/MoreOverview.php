@@ -1,15 +1,15 @@
 <?php
 
-namespace Calctool\Calculus;
+namespace CalculatieTool\Calculus;
 
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Activity;
-use \Calctool\Models\Part;
-use \Calctool\Models\Project;
-use \Calctool\Models\MoreLabor;
-use \Calctool\Models\Detail;
-use \Calctool\Models\MoreMaterial;
-use \Calctool\Models\MoreEquipment;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\Part;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\MoreLabor;
+use \CalculatieTool\Models\Detail;
+use \CalculatieTool\Models\MoreMaterial;
+use \CalculatieTool\Models\MoreEquipment;
 /*
  * Uittrekstaat
  */

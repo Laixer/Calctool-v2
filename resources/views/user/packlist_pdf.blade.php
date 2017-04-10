@@ -1,17 +1,17 @@
 <?php
 
-use \Calctool\Models\Activity;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Resource;
-use \Calctool\Models\PartType;
-use \Calctool\Models\CalculationMaterial;
-use \Calctool\Models\CalculationEquipment;
-use \Calctool\Models\EstimateMaterial;
-use \Calctool\Models\EstimateEquipment;
-use \Calctool\Models\MoreMaterial;
-use \Calctool\Models\MoreEquipment;
-use \Calctool\Models\Project;
-use \Calctool\Models\Part;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Resource;
+use \CalculatieTool\Models\PartType;
+use \CalculatieTool\Models\CalculationMaterial;
+use \CalculatieTool\Models\CalculationEquipment;
+use \CalculatieTool\Models\EstimateMaterial;
+use \CalculatieTool\Models\EstimateEquipment;
+use \CalculatieTool\Models\MoreMaterial;
+use \CalculatieTool\Models\MoreEquipment;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Part;
 
 $project = Project::find($project_id);
 

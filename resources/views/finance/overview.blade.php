@@ -1,11 +1,11 @@
 <?php
 
-use \Calctool\Models\Relation;
-use \Calctool\Models\Contact;
-use \Calctool\Models\Invoice;
-use \Calctool\Models\Resource;
-use \Calctool\Models\Project;
-use \Calctool\Models\Offer;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\Contact;
+use \CalculatieTool\Models\Invoice;
+use \CalculatieTool\Models\Resource;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Offer;
 
 $relation = Relation::find(Auth::user()->self_id);
 $user = Auth::user();

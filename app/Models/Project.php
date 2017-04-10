@@ -1,6 +1,6 @@
 <?php
 
-namespace Calctool\Models;
+namespace CalculatieTool\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,7 +28,7 @@ class Project extends Model {
 	}
 
 	public function type() {
-		return $this->hasOne('\Calctool\Models\ProjectType', 'id', 'type_id');
+		return $this->hasOne('\CalculatieTool\Models\ProjectType', 'id', 'type_id');
 	}
 
 	public function isOwner() {

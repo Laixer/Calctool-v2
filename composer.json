@@ -33,7 +33,7 @@
 			"app/Models"
 		],
 		"psr-4": {
-			"Calctool\\": "app/"
+			"CalculatieTool\\": "app/"
 		}
 	},
 	"autoload-dev": {

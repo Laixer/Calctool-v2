@@ -1,10 +1,10 @@
 <?php
 
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Activity;
-use \Calctool\Models\PartType;
-use \Calctool\Models\Part;
-use \Calctool\Calculus\EstimateOverview;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\PartType;
+use \CalculatieTool\Models\Part;
+use \CalculatieTool\Calculus\EstimateOverview;
 
 ?>
 <div>

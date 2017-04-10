@@ -48,7 +48,7 @@
 				</thead>
 
 				<tbody>
-				@foreach (\Calctool\Models\SysMessage::take(3)->orderBy('created_at', 'desc')->get() as $message)
+				@foreach (\CalculatieTool\Models\SysMessage::take(3)->orderBy('created_at', 'desc')->get() as $message)
 					<tr>
 						<td class="col-md-2">{{ $message->level==1 ? 'Warning' : 'Error' }}</td>
 						<td class="col-md-6">{{ $message->content }}</td>

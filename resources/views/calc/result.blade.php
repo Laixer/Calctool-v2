@@ -1,22 +1,22 @@
 <?php
 
-use \Calctool\Models\Project;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Activity;
-use \Calctool\Models\PartType;
-use \Calctool\Models\Part;
-use \Calctool\Models\Time;
-use \Calctool\Models\Detail;
-use \Calctool\Models\TimesheetKind;
-use \Calctool\Models\MoreLabor;
-use \Calctool\Models\ProjectType;
-use \Calctool\Calculus\SetEstimateCalculationEndresult;
-use \Calctool\Calculus\MoreEndresult;
-use \Calctool\Calculus\LessEndresult;
-use \Calctool\Calculus\ResultEndresult;
-use \Calctool\Calculus\TimesheetOverview;
-use \Calctool\Models\Timesheet;
-use \Calctool\Calculus\CalculationLabor;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\PartType;
+use \CalculatieTool\Models\Part;
+use \CalculatieTool\Models\Time;
+use \CalculatieTool\Models\Detail;
+use \CalculatieTool\Models\TimesheetKind;
+use \CalculatieTool\Models\MoreLabor;
+use \CalculatieTool\Models\ProjectType;
+use \CalculatieTool\Calculus\SetEstimateCalculationEndresult;
+use \CalculatieTool\Calculus\MoreEndresult;
+use \CalculatieTool\Calculus\LessEndresult;
+use \CalculatieTool\Calculus\ResultEndresult;
+use \CalculatieTool\Calculus\TimesheetOverview;
+use \CalculatieTool\Models\Timesheet;
+use \CalculatieTool\Calculus\CalculationLabor;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));

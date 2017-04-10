@@ -1,6 +1,6 @@
 <?php
 
-namespace Calctool\Exceptions;
+namespace CalculatieTool\Exceptions;
 
 use Exception;
 use Psr\Log\LoggerInterface;

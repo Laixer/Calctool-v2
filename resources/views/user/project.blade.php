@@ -1,8 +1,8 @@
 <?php
-use \Calctool\Models\Project;
-use \Calctool\Models\Relation;
-use \Calctool\Models\RelationKind;
-use \Calctool\Models\Contact;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\RelationKind;
+use \CalculatieTool\Models\Contact;
 ?>
 
 @extends('layout.master')

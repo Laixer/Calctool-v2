@@ -1,21 +1,21 @@
 <?php
 
-namespace Calctool\Http\Controllers;
+namespace CalculatieTool\Http\Controllers;
 
 use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
 
-use \Calctool\Models\Payment;
-use \Calctool\Models\User;
-use \Calctool\Models\Project;
-use \Calctool\Models\Audit;
-use \Calctool\Models\Promotion;
-use \Calctool\Models\UserGroup;
-use \Calctool\Models\BankAccount;
-use \Calctool\Models\Resource;
-use \Calctool\Models\CTInvoice;
-use \Calctool\Models\Contact;
-use \Calctool\Models\Relation;
+use \CalculatieTool\Models\Payment;
+use \CalculatieTool\Models\User;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Audit;
+use \CalculatieTool\Models\Promotion;
+use \CalculatieTool\Models\UserGroup;
+use \CalculatieTool\Models\BankAccount;
+use \CalculatieTool\Models\Resource;
+use \CalculatieTool\Models\CTInvoice;
+use \CalculatieTool\Models\Contact;
+use \CalculatieTool\Models\Relation;
 
 use \Auth;
 use \Redis;

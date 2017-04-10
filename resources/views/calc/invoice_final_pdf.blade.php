@@ -2,31 +2,31 @@
 
 ini_set('memory_limit', '2048M');
 
-use \Calctool\Models\Project;
-use \Calctool\Models\Relation;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Activity;
-use \Calctool\Models\Part;
-use \Calctool\Models\PartType;
-use \Calctool\Models\Contact;
-use \Calctool\Models\Invoice;
-use \Calctool\Models\Offer;
-use \Calctool\Models\Detail;
-use \Calctool\Models\ProjectType;
-use \Calctool\Models\Resource;
-use \Calctool\Models\BlancRow;
-use \Calctool\Models\Tax;
-use \Calctool\Calculus\EstimateEndresult;
-use \Calctool\Calculus\MoreEndresult;
-use \Calctool\Calculus\LessEndresult;
-use \Calctool\Calculus\ResultEndresult;
-use \Calctool\Calculus\CalculationOverview;
-use \Calctool\Calculus\EstimateOverview;
-use \Calctool\Calculus\LessOverview;
-use \Calctool\Calculus\MoreOverview;
-use \Calctool\Calculus\BlancRowsEndresult;
-use \Calctool\Http\Controllers\OfferController;
-use \Calctool\Calculus\SetEstimateCalculationEndresult;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\Part;
+use \CalculatieTool\Models\PartType;
+use \CalculatieTool\Models\Contact;
+use \CalculatieTool\Models\Invoice;
+use \CalculatieTool\Models\Offer;
+use \CalculatieTool\Models\Detail;
+use \CalculatieTool\Models\ProjectType;
+use \CalculatieTool\Models\Resource;
+use \CalculatieTool\Models\BlancRow;
+use \CalculatieTool\Models\Tax;
+use \CalculatieTool\Calculus\EstimateEndresult;
+use \CalculatieTool\Calculus\MoreEndresult;
+use \CalculatieTool\Calculus\LessEndresult;
+use \CalculatieTool\Calculus\ResultEndresult;
+use \CalculatieTool\Calculus\CalculationOverview;
+use \CalculatieTool\Calculus\EstimateOverview;
+use \CalculatieTool\Calculus\LessOverview;
+use \CalculatieTool\Calculus\MoreOverview;
+use \CalculatieTool\Calculus\BlancRowsEndresult;
+use \CalculatieTool\Http\Controllers\OfferController;
+use \CalculatieTool\Calculus\SetEstimateCalculationEndresult;
 
 $offer = Offer::find($invoice->offer_id);
 if (!$offer)

@@ -1,9 +1,9 @@
 <?php
 
-namespace Calctool\Http\Controllers;
+namespace CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
-use \Calctool\Models\Province;
+use \CalculatieTool\Models\Province;
 
 use \Auth;
 use \Validator;

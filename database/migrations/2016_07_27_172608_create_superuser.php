@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use \Calctool\Models\UserType;
+use \CalculatieTool\Models\UserType;
 
 class CreateSuperuser extends Migration
 {

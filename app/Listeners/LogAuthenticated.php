@@ -1,12 +1,12 @@
 <?php
 
-namespace Calctool\Listeners;
+namespace CalculatieTool\Listeners;
 
 use Illuminate\Auth\Events\Login;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use \Calctool\Models\Audit;
-use \Calctool\Models\User;
+use \CalculatieTool\Models\Audit;
+use \CalculatieTool\Models\User;
 
 use \Cookie;
 use \Auth;

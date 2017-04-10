@@ -1,15 +1,15 @@
 <?php
 
-namespace Calctool\Calculus;
+namespace CalculatieTool\Calculus;
 
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Activity;
-use \Calctool\Models\Purchase;
-use \Calctool\Models\PurchaseKind;
-use \Calctool\Models\Timesheet;
-use \Calctool\Models\TimesheetKind;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\Purchase;
+use \CalculatieTool\Models\PurchaseKind;
+use \CalculatieTool\Models\Timesheet;
+use \CalculatieTool\Models\TimesheetKind;
 
-use \Calctool\Calculus\BlancRowsEndresult;
+use \CalculatieTool\Calculus\BlancRowsEndresult;
 
 /*
  * Eindresultaat

@@ -72,7 +72,7 @@ class AuthenticationTest extends TestCase
         $faker = Faker::create();
         $password = $faker->password;
 
-        $user = factory(Calctool\Models\User::class)->create();
+        $user = factory(CalculatieTool\Models\User::class)->create();
 
         for ($i=0; $i<10; ++$i) {
             $this->visit('/')
@@ -96,7 +96,7 @@ class AuthenticationTest extends TestCase
         $faker = Faker::create();
         $password = $faker->password;
 
-        $user = factory(Calctool\Models\User::class)->create([
+        $user = factory(CalculatieTool\Models\User::class)->create([
             'secret' => Hash::make($password)
         ]);
 
@@ -124,7 +124,7 @@ class AuthenticationTest extends TestCase
         $faker = Faker::create();
         $password = $faker->password;
 
-        $user = factory(Calctool\Models\User::class)->create([
+        $user = factory(CalculatieTool\Models\User::class)->create([
             'secret' => Hash::make($password)
         ]);
 
@@ -153,7 +153,7 @@ class AuthenticationTest extends TestCase
         $password = $faker->password;
         $new_password = $faker->password;
 
-        $user = factory(Calctool\Models\User::class)->create([
+        $user = factory(CalculatieTool\Models\User::class)->create([
             'secret' => Hash::make($password)
         ]);
 
@@ -178,7 +178,7 @@ class AuthenticationTest extends TestCase
         $password = $faker->password;
         $new_password = $faker->password;
 
-        $user = factory(Calctool\Models\User::class)->create();
+        $user = factory(CalculatieTool\Models\User::class)->create();
 
         $this->actingAs($user)
              ->visit('/myaccount')
@@ -197,7 +197,7 @@ class AuthenticationTest extends TestCase
      */
     public function testDeactivateAccount()
     {
-        $user = factory(Calctool\Models\User::class)->create();
+        $user = factory(CalculatieTool\Models\User::class)->create();
 
         $this->actingAs($user)
              ->visit('/myaccount')
@@ -218,7 +218,7 @@ class AuthenticationTest extends TestCase
         $faker = Faker::create();
         $password = $faker->password;
 
-        $user = factory(Calctool\Models\User::class)->create([
+        $user = factory(CalculatieTool\Models\User::class)->create([
             'secret' => Hash::make($password)
         ]);
 
@@ -239,7 +239,7 @@ class AuthenticationTest extends TestCase
         $faker = Faker::create();
         $password = $faker->password;
 
-        $user = factory(Calctool\Models\User::class)->create([
+        $user = factory(CalculatieTool\Models\User::class)->create([
             'expiration_date' => date('Y-m-d', strtotime("-1 days", time())),
             'secret' => Hash::make($password)
         ]);

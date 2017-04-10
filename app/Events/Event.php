@@ -1,6 +1,6 @@
 <?php
 
-namespace Calctool\Events;
+namespace CalculatieTool\Events;
 
 abstract class Event
 {

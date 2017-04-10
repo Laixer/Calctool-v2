@@ -1,11 +1,11 @@
 <?php
 
-namespace Calctool\Http\Controllers;
+namespace CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use \Calctool\Models\Wholesale;
-use \Calctool\Models\WholesaleType;
+use \CalculatieTool\Models\Wholesale;
+use \CalculatieTool\Models\WholesaleType;
 
 use \Auth;
 

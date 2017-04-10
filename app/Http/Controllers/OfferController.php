@@ -1,23 +1,23 @@
 <?php
 
-namespace Calctool\Http\Controllers;
+namespace CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
-use \Calctool\Models\Project;
-use \Calctool\Models\Offer;
-use \Calctool\Models\OfferPost;
-use \Calctool\Calculus\CalculationEndresult;
-use \Calctool\Models\Resource;
-use \Calctool\Http\Controllers\InvoiceController;
-use \Calctool\Models\Invoice;
-use \Calctool\Models\ProjectShare;
-use \Calctool\Models\Contact;
-use \Calctool\Models\User;
-use \Calctool\Models\UserType;
-use \Calctool\Models\Relation;
-use \Calctool\Models\MessageBox;
-use \Calctool\Calculus\ResultEndresult;
-use \Calctool\Calculus\InvoiceTerm;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Offer;
+use \CalculatieTool\Models\OfferPost;
+use \CalculatieTool\Calculus\CalculationEndresult;
+use \CalculatieTool\Models\Resource;
+use \CalculatieTool\Http\Controllers\InvoiceController;
+use \CalculatieTool\Models\Invoice;
+use \CalculatieTool\Models\ProjectShare;
+use \CalculatieTool\Models\Contact;
+use \CalculatieTool\Models\User;
+use \CalculatieTool\Models\UserType;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\MessageBox;
+use \CalculatieTool\Calculus\ResultEndresult;
+use \CalculatieTool\Calculus\InvoiceTerm;
 
 use \Auth;
 use \PDF;

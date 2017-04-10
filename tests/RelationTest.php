@@ -19,7 +19,7 @@ class RelationTest extends TestCase
     {
         $faker = Faker::create();
 
-        $user = factory(Calctool\Models\User::class)->create();
+        $user = factory(CalculatieTool\Models\User::class)->create();
 
         $this->actingAs($user) //TODO replace with factory
              ->visit('/relation/new')
@@ -59,7 +59,7 @@ class RelationTest extends TestCase
     {
         $faker = Faker::create();
 
-        $user = factory(Calctool\Models\User::class)->create();
+        $user = factory(CalculatieTool\Models\User::class)->create();
 
         $this->actingAs($user)
              ->visit('/relation/new')
@@ -96,7 +96,7 @@ class RelationTest extends TestCase
     {
         $faker = Faker::create();
 
-        $user = factory(Calctool\Models\User::class)->create();
+        $user = factory(CalculatieTool\Models\User::class)->create();
 
         $this->actingAs($user)
              ->visit('/relation/new')

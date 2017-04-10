@@ -3,11 +3,11 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-use \Calctool\Models\UserType;
-use \Calctool\Models\User;
-use \Calctool\Models\Relation;
-use \Calctool\Models\Contact;
-use \Calctool\Models\MessageBox;
+use \CalculatieTool\Models\UserType;
+use \CalculatieTool\Models\User;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\Contact;
+use \CalculatieTool\Models\MessageBox;
 
 /*
  * Static Models Only
@@ -48,7 +48,7 @@ class SystemSeeder extends Seeder {
 		$guest_user->registration_date = date('Y-m-d');
 		$guest_user->expiration_date = date('Y-m-d', strtotime("+1 month", time()));
 		$guest_user->referral_key = md5(mt_rand());
-		$guest_user->email = 'guest@calctool.nl';
+		$guest_user->email = 'guest@calculatietool.com';
 		$guest_user->user_type = $guest_user_type->id;
 		$guest_user->user_group = 100;
 		$guest_user->save();

@@ -1,9 +1,9 @@
 <?php
 
-use \Calctool\Models\Project;
-use \Calctool\Models\Invoice;
-use \Calctool\Models\Offer;
-use \Calctool\Models\InvoiceVersion;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Invoice;
+use \CalculatieTool\Models\Offer;
+use \CalculatieTool\Models\InvoiceVersion;
 
 $common_access_error = false;
 $invoice = Invoice::find(Route::Input('invoice_id'));

@@ -18,7 +18,7 @@ class OauthTest extends TestCase
     public function testEstablishOauthAuthorizationCode()
     {
     	$faker = Faker::create();
-        $user = factory(Calctool\Models\User::class)->create();
+        $user = factory(CalculatieTool\Models\User::class)->create();
 
         $appid = sha1(mt_rand());
         $appsecret = sha1(mt_rand());
@@ -103,7 +103,7 @@ class OauthTest extends TestCase
     public function testEstablishOauthClientCredential()
     {
         $faker = Faker::create();
-        $user = factory(Calctool\Models\User::class)->create();
+        $user = factory(CalculatieTool\Models\User::class)->create();
 
         $appid = sha1(mt_rand());
         $appsecret = sha1(mt_rand());
@@ -157,7 +157,7 @@ class OauthTest extends TestCase
     public function testEstablishOauthClientCredentialForbiddenGrant()
     {
         $faker = Faker::create();
-        $user = factory(Calctool\Models\User::class)->create();
+        $user = factory(CalculatieTool\Models\User::class)->create();
 
         $appid = sha1(mt_rand());
         $appsecret = sha1(mt_rand());
@@ -204,7 +204,7 @@ class OauthTest extends TestCase
     public function testEstablishOauthAuthorizationCodeForbiddenRestCall()
     {
         $faker = Faker::create();
-        $user = factory(Calctool\Models\User::class)->create();
+        $user = factory(CalculatieTool\Models\User::class)->create();
 
         $appid = sha1(mt_rand());
         $appsecret = sha1(mt_rand());

@@ -1,21 +1,21 @@
 <?php
 
-use \Calctool\Models\Project;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Activity as ProjectActivity;
-use \Calctool\Models\PartType;
-use \Calctool\Models\Part;
-use \Calctool\Models\Tax;
-use \Calctool\Models\CalculationLabor;
-use \Calctool\Calculus\CalculationRegister;
-use \Calctool\Models\CalculationMaterial;
-use \Calctool\Models\CalculationEquipment;
-use \Calctool\Models\EstimateLabor;
-use \Calctool\Models\EstimateMaterial;
-use \Calctool\Models\EstimateEquipment;
-use \Calctool\Models\ProjectType;
-use \Calctool\Calculus\CalculationOverview;
-use \Calctool\Calculus\CalculationEndresult;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Activity as ProjectActivity;
+use \CalculatieTool\Models\PartType;
+use \CalculatieTool\Models\Part;
+use \CalculatieTool\Models\Tax;
+use \CalculatieTool\Models\CalculationLabor;
+use \CalculatieTool\Calculus\CalculationRegister;
+use \CalculatieTool\Models\CalculationMaterial;
+use \CalculatieTool\Models\CalculationEquipment;
+use \CalculatieTool\Models\EstimateLabor;
+use \CalculatieTool\Models\EstimateMaterial;
+use \CalculatieTool\Models\EstimateEquipment;
+use \CalculatieTool\Models\ProjectType;
+use \CalculatieTool\Calculus\CalculationOverview;
+use \CalculatieTool\Calculus\CalculationEndresult;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));

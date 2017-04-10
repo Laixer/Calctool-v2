@@ -1,9 +1,9 @@
 <?php
-use \Calctool\Models\Project;
-use \Calctool\Models\Purchase;
-use \Calctool\Models\Relation;
-use \Calctool\Models\PurchaseKind;
-use \Calctool\Models\Wholesale;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Purchase;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\PurchaseKind;
+use \CalculatieTool\Models\Wholesale;
 ?>
 
 @extends('layout.master')

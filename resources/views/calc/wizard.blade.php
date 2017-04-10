@@ -1,7 +1,7 @@
 <?php
 
-use \Calctool\Models\ProjectType;
-use \Calctool\Models\Offer;
+use \CalculatieTool\Models\ProjectType;
+use \CalculatieTool\Models\Offer;
 
 if (empty($project)) {
 ?>

@@ -30,7 +30,7 @@ return [
     ],
 
     'stripe' => [
-        'model'  => Calctool\User::class,
+        'model'  => CalculatieTool\User::class,
         'key'    => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],

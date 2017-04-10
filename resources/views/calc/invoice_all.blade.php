@@ -1,12 +1,12 @@
 <?php
 
-use \Calctool\Models\Project;
-use \Calctool\Models\Offer;
-use \Calctool\Models\Invoice;
-use \Calctool\Calculus\ResultEndresult;
-use \Calctool\Http\Controllers\InvoiceController;
-use \Calctool\Models\InvoiceTerm;
-use \Calctool\Models\InvoiceVersion;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Offer;
+use \CalculatieTool\Models\Invoice;
+use \CalculatieTool\Calculus\ResultEndresult;
+use \CalculatieTool\Http\Controllers\InvoiceController;
+use \CalculatieTool\Models\InvoiceTerm;
+use \CalculatieTool\Models\InvoiceVersion;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));

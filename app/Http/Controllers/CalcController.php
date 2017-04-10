@@ -1,30 +1,30 @@
 <?php
 
-namespace Calctool\Http\Controllers;
+namespace CalculatieTool\Http\Controllers;
 
 use \Illuminate\Http\Request;
-use \Calctool\Models\Project;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Part;
-use \Calctool\Models\PartType;
-use \Calctool\Models\ProjectType;
-use \Calctool\Models\Tax;
-use \Calctool\Models\Activity;
-use \Calctool\Models\FavoriteActivity;
-use \Calctool\Calculus\InvoiceTerm;
-use \Calctool\Calculus\ResultEndresult;
-use \Calctool\Calculus\CalculationRegister;
-use \Calctool\Models\CalculationMaterial;
-use \Calctool\Models\CalculationEquipment;
-use \Calctool\Models\CalculationLabor;
-use \Calctool\Models\FavoriteLabor;
-use \Calctool\Models\FavoriteMaterial;
-use \Calctool\Models\FavoriteEquipment;
-use \Calctool\Models\EstimateLabor;
-use \Calctool\Models\EstimateMaterial;
-use \Calctool\Models\EstimateEquipment;
-use \Calctool\Models\Invoice;
-use \Calctool\Models\Offer;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Part;
+use \CalculatieTool\Models\PartType;
+use \CalculatieTool\Models\ProjectType;
+use \CalculatieTool\Models\Tax;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\FavoriteActivity;
+use \CalculatieTool\Calculus\InvoiceTerm;
+use \CalculatieTool\Calculus\ResultEndresult;
+use \CalculatieTool\Calculus\CalculationRegister;
+use \CalculatieTool\Models\CalculationMaterial;
+use \CalculatieTool\Models\CalculationEquipment;
+use \CalculatieTool\Models\CalculationLabor;
+use \CalculatieTool\Models\FavoriteLabor;
+use \CalculatieTool\Models\FavoriteMaterial;
+use \CalculatieTool\Models\FavoriteEquipment;
+use \CalculatieTool\Models\EstimateLabor;
+use \CalculatieTool\Models\EstimateMaterial;
+use \CalculatieTool\Models\EstimateEquipment;
+use \CalculatieTool\Models\Invoice;
+use \CalculatieTool\Models\Offer;
 
 use \Auth;
 use \PDF;
@@ -33,7 +33,7 @@ class CalcController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------
-	| Default Home Controlluse \Calctool\Models\Invoice;er
+	| Default Home Controlluse \CalculatieTool\Models\Invoice;er
 	|--------------------------------------------------------------------------
 	|
 	| You may wish to use controllers instead of, or in addition to, Closure

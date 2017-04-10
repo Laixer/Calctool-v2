@@ -70,13 +70,6 @@
 
 	</head>
 	<body>
-		<?php // -- ONLY DEV -- ?>
-		@if(App()->environment('dev'))
-		<div class="hidden-xs" style="color:#fff;background-color:red;z-index:200;position:fixed;top:0px;left:45%;width: 150px;text-align: center;"><a href="https://bitbucket.org/calctool/calctool-v2/commits/{{ File::get('../.revision') }}" style="color: black;">{{ 'REV: ' . substr(File::get('../.revision'), 0, 7) }}</a></div>
-		@elseif(App()->environment('local'))
-		<div class="hidden-xs" style="color:#fff;background-color:green;z-index:200;position:fixed;top:0px;left:45%;width: 150px;text-align: center;">{{ exec('git describe --always') }}</div>
-		@endif
-
 		<?php // -- HEADER -- ?>
 		@section('header')
 			@include('layout.header')

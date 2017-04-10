@@ -1,14 +1,14 @@
 <?php
 
-namespace Calctool\Http\Controllers;
+namespace CalculatieTool\Http\Controllers;
 
 use \Illuminate\Http\Request;
-use \Calctool\Models\Activity;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Project;
-use \Calctool\Models\EstimateLabor;
-use \Calctool\Models\EstimateMaterial;
-use \Calctool\Models\EstimateEquipment;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\EstimateLabor;
+use \CalculatieTool\Models\EstimateMaterial;
+use \CalculatieTool\Models\EstimateEquipment;
 
 
 class EstimController extends Controller {

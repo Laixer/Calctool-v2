@@ -1,6 +1,6 @@
 <?php
-use \Calctool\Models\User;
-use \Calctool\Models\MessageBox;
+use \CalculatieTool\Models\User;
+use \CalculatieTool\Models\MessageBox;
 ?>
 
 @extends('layout.master')

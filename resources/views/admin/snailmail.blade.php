@@ -1,12 +1,12 @@
 <?php
-use \Calctool\Models\Project;
-use \Calctool\Models\User;
-use \Calctool\Models\Relation;
-use \Calctool\Models\RelationKind;
-use \Calctool\Models\OfferPost;
-use \Calctool\Models\InvoicePost;
-use \Calctool\Models\Offer;
-use \Calctool\Models\Invoice;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\User;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\RelationKind;
+use \CalculatieTool\Models\OfferPost;
+use \CalculatieTool\Models\InvoicePost;
+use \CalculatieTool\Models\Offer;
+use \CalculatieTool\Models\Invoice;
 ?>
 
 @extends('layout.master')

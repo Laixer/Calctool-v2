@@ -1,14 +1,14 @@
 <?php
 
-namespace Calctool\Calculus;
+namespace CalculatieTool\Calculus;
 
-use \Calctool\Models\EstimateLabor;
-use \Calctool\Models\PartType;
-use \Calctool\Models\EstimateMaterial;
-use \Calctool\Models\EstimateEquipment;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Activity;
-use \Calctool\Models\Part;
+use \CalculatieTool\Models\EstimateLabor;
+use \CalculatieTool\Models\PartType;
+use \CalculatieTool\Models\EstimateMaterial;
+use \CalculatieTool\Models\EstimateEquipment;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\Part;
 
 
 

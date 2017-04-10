@@ -1,6 +1,6 @@
 <?php
 
-namespace Calctool\Facades;
+namespace CalculatieTool\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Calctool\Calculus;
+namespace CalculatieTool\Calculus;
 
-use \Calctool\Models\MoreMaterial;
-use \Calctool\Models\MoreEquipment;
+use \CalculatieTool\Models\MoreMaterial;
+use \CalculatieTool\Models\MoreEquipment;
 
 class MoreRegister {
 

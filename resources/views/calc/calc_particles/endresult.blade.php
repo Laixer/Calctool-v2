@@ -1,5 +1,5 @@
 <?php
-use \Calctool\Calculus\CalculationEndresult;
+use \CalculatieTool\Calculus\CalculationEndresult;
 
 ?>
 <h4>Aanneming</h4>

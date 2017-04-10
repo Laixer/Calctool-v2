@@ -1,29 +1,29 @@
 <?php
 
-use \Calctool\Models\Province;
-use \Calctool\Models\Country;
-use \Calctool\Models\ProjectType;
-use \Calctool\Models\RelationType;
-use \Calctool\Models\RelationKind;
-use \Calctool\Models\ContactFunction;
-use \Calctool\Models\Relation;
-use \Calctool\Models\Project;
-use \Calctool\Models\Contact;
-use \Calctool\Models\Part;
-use \Calctool\Models\PartType;
-use \Calctool\Models\Tax;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Activity;
-use \Calctool\Models\CalculationLabor;
-use \Calctool\Models\CalculationMaterial;
-use \Calctool\Models\CalculationEquipment;
-use \Calctool\Models\EstimateLabor;
-use \Calctool\Models\EstimateMaterial;
-use \Calctool\Models\EstimateEquipment;
-use \Calctool\Models\Detail;
-use \Calctool\Models\MoreLabor;
-use \Calctool\Models\MoreMaterial;
-use \Calctool\Models\MoreEquipment;
+use \CalculatieTool\Models\Province;
+use \CalculatieTool\Models\Country;
+use \CalculatieTool\Models\ProjectType;
+use \CalculatieTool\Models\RelationType;
+use \CalculatieTool\Models\RelationKind;
+use \CalculatieTool\Models\ContactFunction;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Contact;
+use \CalculatieTool\Models\Part;
+use \CalculatieTool\Models\PartType;
+use \CalculatieTool\Models\Tax;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\CalculationLabor;
+use \CalculatieTool\Models\CalculationMaterial;
+use \CalculatieTool\Models\CalculationEquipment;
+use \CalculatieTool\Models\EstimateLabor;
+use \CalculatieTool\Models\EstimateMaterial;
+use \CalculatieTool\Models\EstimateEquipment;
+use \CalculatieTool\Models\Detail;
+use \CalculatieTool\Models\MoreLabor;
+use \CalculatieTool\Models\MoreMaterial;
+use \CalculatieTool\Models\MoreEquipment;
 
 
 /*

@@ -1,8 +1,8 @@
 <?php
 
-namespace Calctool\Listeners;
+namespace CalculatieTool\Listeners;
 
-use Calctool\Events\UserNotification;
+use CalculatieTool\Events\UserNotification;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 

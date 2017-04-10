@@ -1,14 +1,14 @@
 <?php
-use \Calctool\Models\Project;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Activity;
-use \Calctool\Models\Timesheet;
-use \Calctool\Models\PartType;
-use \Calctool\Models\Detail;
-use \Calctool\Models\TimesheetKind;
-use \Calctool\Calculus\TimesheetOverview;
-use \Calctool\Models\MoreLabor;
-use \Calctool\Models\Offer;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\Timesheet;
+use \CalculatieTool\Models\PartType;
+use \CalculatieTool\Models\Detail;
+use \CalculatieTool\Models\TimesheetKind;
+use \CalculatieTool\Calculus\TimesheetOverview;
+use \CalculatieTool\Models\MoreLabor;
+use \CalculatieTool\Models\Offer;
 ?>
 
 @extends('layout.master')

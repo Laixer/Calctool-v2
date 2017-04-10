@@ -1,9 +1,9 @@
 <?php
 
-use \Calctool\Models\RelationKind;
-use \Calctool\Models\ContactFunction;
-use \Calctool\Models\Contact;
-use \Calctool\Models\Relation;
+use \CalculatieTool\Models\RelationKind;
+use \CalculatieTool\Models\ContactFunction;
+use \CalculatieTool\Models\Contact;
+use \CalculatieTool\Models\Relation;
 
 
 $common_access_error = false;

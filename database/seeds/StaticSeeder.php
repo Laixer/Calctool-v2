@@ -3,25 +3,25 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-use \Calctool\Models\Supplier;
-use \Calctool\Models\UserType;
-use \Calctool\Models\UserGroup;
-use \Calctool\Models\Province;
-use \Calctool\Models\Country;
-use \Calctool\Models\ProjectType;
-use \Calctool\Models\Part;
-use \Calctool\Models\PartType;
-use \Calctool\Models\Detail;
-use \Calctool\Models\ContactFunction;
-use \Calctool\Models\RelationType;
-use \Calctool\Models\RelationKind;
-use \Calctool\Models\WholesaleType;
-use \Calctool\Models\Valid;
-use \Calctool\Models\DeliverTime;
-use \Calctool\Models\Tax;
-use \Calctool\Models\TimesheetKind;
-use \Calctool\Models\PurchaseKind;
-use \Calctool\Models\SysMessage;
+use \CalculatieTool\Models\Supplier;
+use \CalculatieTool\Models\UserType;
+use \CalculatieTool\Models\UserGroup;
+use \CalculatieTool\Models\Province;
+use \CalculatieTool\Models\Country;
+use \CalculatieTool\Models\ProjectType;
+use \CalculatieTool\Models\Part;
+use \CalculatieTool\Models\PartType;
+use \CalculatieTool\Models\Detail;
+use \CalculatieTool\Models\ContactFunction;
+use \CalculatieTool\Models\RelationType;
+use \CalculatieTool\Models\RelationKind;
+use \CalculatieTool\Models\WholesaleType;
+use \CalculatieTool\Models\Valid;
+use \CalculatieTool\Models\DeliverTime;
+use \CalculatieTool\Models\Tax;
+use \CalculatieTool\Models\TimesheetKind;
+use \CalculatieTool\Models\PurchaseKind;
+use \CalculatieTool\Models\SysMessage;
 
 /*
  * Static Models Only

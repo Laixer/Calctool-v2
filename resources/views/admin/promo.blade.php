@@ -1,6 +1,6 @@
 <?php
-use \Calctool\Models\User;
-use \Calctool\Models\Promotion;
+use \CalculatieTool\Models\User;
+use \CalculatieTool\Models\Promotion;
 
 ?>
 

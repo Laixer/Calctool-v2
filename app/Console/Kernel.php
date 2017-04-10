@@ -1,18 +1,18 @@
 <?php
 
-namespace Calctool\Console;
+namespace CalculatieTool\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
-use \Calctool\Models\Project;
-use \Calctool\Models\Contact;
-use \Calctool\Models\Offer;
-use \Calctool\Models\Invoice;
-use \Calctool\Models\User;
-use \Calctool\Models\UserGroup;
-use \Calctool\Models\MessageBox;
-use \Calctool\Models\Payment;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Contact;
+use \CalculatieTool\Models\Offer;
+use \CalculatieTool\Models\Invoice;
+use \CalculatieTool\Models\User;
+use \CalculatieTool\Models\UserGroup;
+use \CalculatieTool\Models\MessageBox;
+use \CalculatieTool\Models\Payment;
 
 use \Mail;
 use \Newsletter;
@@ -25,13 +25,13 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \Calctool\Console\Commands\DropHard::class,
-        \Calctool\Console\Commands\MaterialImport::class,
-        \Calctool\Console\Commands\StorageClear::class,
-        \Calctool\Console\Commands\SessionClear::class,
-        \Calctool\Console\Commands\OauthClear::class,
-        \Calctool\Console\Commands\AdminReset::class,
-        \Calctool\Console\Commands\Snapshot::class,
+        \CalculatieTool\Console\Commands\DropHard::class,
+        \CalculatieTool\Console\Commands\MaterialImport::class,
+        \CalculatieTool\Console\Commands\StorageClear::class,
+        \CalculatieTool\Console\Commands\SessionClear::class,
+        \CalculatieTool\Console\Commands\OauthClear::class,
+        \CalculatieTool\Console\Commands\AdminReset::class,
+        \CalculatieTool\Console\Commands\Snapshot::class,
     ];
 
     /**

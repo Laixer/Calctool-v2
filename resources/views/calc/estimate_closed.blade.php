@@ -1,20 +1,20 @@
 <?php
 
-use \Calctool\Models\Project;
-use \Calctool\Models\SubGroup;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Activity;
-use \Calctool\Models\PartType;
-use \Calctool\Models\Part;
-use \Calctool\Models\Tax;
-use \Calctool\Models\EstimateLabor;
-use \Calctool\Calculus\EstimateRegister;
-use \Calctool\Models\EstimateMaterial;
-use \Calctool\Models\EstimateEquipment;
-use \Calctool\Calculus\EstimateOverview;
-use \Calctool\Models\ProjectType;
-use \Calctool\Models\Timesheet;
-use \Calctool\Calculus\SetEstimateEndresult;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\SubGroup;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\PartType;
+use \CalculatieTool\Models\Part;
+use \CalculatieTool\Models\Tax;
+use \CalculatieTool\Models\EstimateLabor;
+use \CalculatieTool\Calculus\EstimateRegister;
+use \CalculatieTool\Models\EstimateMaterial;
+use \CalculatieTool\Models\EstimateEquipment;
+use \CalculatieTool\Calculus\EstimateOverview;
+use \CalculatieTool\Models\ProjectType;
+use \CalculatieTool\Models\Timesheet;
+use \CalculatieTool\Calculus\SetEstimateEndresult;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));

@@ -1,6 +1,6 @@
 <?php
 
-namespace Calctool\Providers;
+namespace CalculatieTool\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -36,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
     public function registerCalctool()
     {
         $this->app->bind('calctool', function() {
-            return new \Calctool\Other\Calctool;
+            return new \CalculatieTool\Other\Calctool;
         });
     }
 }

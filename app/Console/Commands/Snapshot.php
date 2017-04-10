@@ -1,6 +1,6 @@
 <?php
 
-namespace Calctool\Console\Commands;
+namespace CalculatieTool\Console\Commands;
 
 use DB;
 use Illuminate\Console\Command;

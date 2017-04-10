@@ -1,5 +1,5 @@
 <?php
-use \Calctool\Calculus\SetEstimateEndresult;
+use \CalculatieTool\Calculus\SetEstimateEndresult;
 ?>
 <h4>Aanneming</h4>
 <table class="table table-striped">

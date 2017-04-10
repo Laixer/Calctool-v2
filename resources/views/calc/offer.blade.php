@@ -1,22 +1,22 @@
 <?php
 
-use \Calctool\Models\Project;
-use \Calctool\Models\Relation;
-use \Calctool\Models\Tax;
-use \Calctool\Models\Offer;
-use \Calctool\Calculus\CalculationEndresult;
-use \Calctool\Models\Contact;
-use \Calctool\Models\ProjectType;
-use \Calctool\Models\DeliverTime;
-use \Calctool\Models\Valid;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\BlancRow;
-use \Calctool\Models\Activity;
-use \Calctool\Models\Part;
-use \Calctool\Calculus\CalculationOverview;
-use \Calctool\Calculus\BlancRowsEndresult;
-use \Calctool\Models\Resource;
-use \Calctool\Http\Controllers\OfferController;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\Tax;
+use \CalculatieTool\Models\Offer;
+use \CalculatieTool\Calculus\CalculationEndresult;
+use \CalculatieTool\Models\Contact;
+use \CalculatieTool\Models\ProjectType;
+use \CalculatieTool\Models\DeliverTime;
+use \CalculatieTool\Models\Valid;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\BlancRow;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\Part;
+use \CalculatieTool\Calculus\CalculationOverview;
+use \CalculatieTool\Calculus\BlancRowsEndresult;
+use \CalculatieTool\Models\Resource;
+use \CalculatieTool\Http\Controllers\OfferController;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));

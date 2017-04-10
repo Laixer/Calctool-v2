@@ -15,28 +15,28 @@ class ProjectTest extends TestCase
      */
     public function testNewProject()
     {
-        $user = factory(Calctool\Models\User::class)->create();
+        $user = factory(CalculatieTool\Models\User::class)->create();
 
-        $user_relation = factory(Calctool\Models\Relation::class)->create([
+        $user_relation = factory(CalculatieTool\Models\Relation::class)->create([
             'user_id' => $user->id,
         ]);
 
-        $user_relation_contact = factory(Calctool\Models\Contact::class)->create([
+        $user_relation_contact = factory(CalculatieTool\Models\Contact::class)->create([
             'relation_id' => $user_relation->id,
         ]);
 
         $user->self_id = $user_relation->id;
         $user->save();
 
-        $relation = factory(Calctool\Models\Relation::class)->create([
+        $relation = factory(CalculatieTool\Models\Relation::class)->create([
             'user_id' => $user->id,
         ]);
 
-        $relation_contact = factory(Calctool\Models\Contact::class)->create([
+        $relation_contact = factory(CalculatieTool\Models\Contact::class)->create([
             'relation_id' => $relation->id,
         ]);
 
-        $project = factory(Calctool\Models\Project::class)->make([
+        $project = factory(CalculatieTool\Models\Project::class)->make([
             'user_id' => $user->id,
             'client_id' => $user->id,
         ]);

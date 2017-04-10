@@ -1,12 +1,12 @@
 <?php
 
-use \Calctool\Models\Province;
-use \Calctool\Models\Country;
-use \Calctool\Models\RelationType;
-use \Calctool\Models\RelationKind;
-use \Calctool\Models\ContactFunction;
-use \Calctool\Models\Relation;
-use \Calctool\Models\Contact;
+use \CalculatieTool\Models\Province;
+use \CalculatieTool\Models\Country;
+use \CalculatieTool\Models\RelationType;
+use \CalculatieTool\Models\RelationKind;
+use \CalculatieTool\Models\ContactFunction;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\Contact;
 
 /*
  * Static Models Only

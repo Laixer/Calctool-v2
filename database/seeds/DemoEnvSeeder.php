@@ -3,12 +3,12 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-use \Calctool\Models\UserType;
-use \Calctool\Models\User;
-use \Calctool\Models\Relation;
-use \Calctool\Models\Contact;
-use \Calctool\Models\MessageBox;
-use \Calctool\Models\Resource;
+use \CalculatieTool\Models\UserType;
+use \CalculatieTool\Models\User;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\Contact;
+use \CalculatieTool\Models\MessageBox;
+use \CalculatieTool\Models\Resource;
 
 /*
  * Static Models Only

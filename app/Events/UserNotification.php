@@ -1,10 +1,10 @@
 <?php
 
-namespace Calctool\Events;
+namespace CalculatieTool\Events;
 
-use Calctool\Events\Event;
+use CalculatieTool\Events\Event;
 use Illuminate\Queue\SerializesModels;
-use \Calctool\Models\User;
+use \CalculatieTool\Models\User;
 
 class UserNotification extends Event
 {

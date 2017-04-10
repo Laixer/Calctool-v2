@@ -1,6 +1,6 @@
 <?php
-use \Calctool\Models\Payment;
-use \Calctool\Models\User;
+use \CalculatieTool\Models\Payment;
+use \CalculatieTool\Models\User;
 ?>
 
 @extends('layout.master')

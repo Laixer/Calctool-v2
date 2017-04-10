@@ -1,6 +1,6 @@
 <?php
 
-namespace Calctool\Http\Middleware;
+namespace CalculatieTool\Http\Middleware;
 
 use Closure;
 

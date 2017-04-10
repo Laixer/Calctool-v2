@@ -1,16 +1,16 @@
 <?php
 
-use \Calctool\Models\Project;
-use \Calctool\Models\Relation;
-use \Calctool\Models\Contact;
-use \Calctool\Models\Invoice;
-use \Calctool\Models\Offer;
-use \Calctool\Models\Iban;
-use \Calctool\Models\ProjectType;
-use \Calctool\Models\InvoiceTerm;
-use \Calctool\Models\InvoiceVersion;
-use \Calctool\Models\Resource;
-use \Calctool\Http\Controllers\InvoiceController;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\Contact;
+use \CalculatieTool\Models\Invoice;
+use \CalculatieTool\Models\Offer;
+use \CalculatieTool\Models\Iban;
+use \CalculatieTool\Models\ProjectType;
+use \CalculatieTool\Models\InvoiceTerm;
+use \CalculatieTool\Models\InvoiceVersion;
+use \CalculatieTool\Models\Resource;
+use \CalculatieTool\Http\Controllers\InvoiceController;
 
 $displaytax=Input::get("displaytax");
 $common_access_error = false;

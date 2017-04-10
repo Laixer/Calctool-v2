@@ -1,9 +1,9 @@
 <?php
 
-namespace Calctool\Calculus;
+namespace CalculatieTool\Calculus;
 
-use \Calctool\Models\Invoice;
-use \Calctool\Calculus\BlancRowsEndresult;
+use \CalculatieTool\Models\Invoice;
+use \CalculatieTool\Calculus\BlancRowsEndresult;
 
 /*
  * Eindresultaat

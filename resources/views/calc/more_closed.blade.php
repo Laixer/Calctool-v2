@@ -1,20 +1,20 @@
 <?php
 
-use \Calctool\Models\Project;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Activity;
-use \Calctool\Models\PartType;
-use \Calctool\Models\Part;
-use \Calctool\Models\Tax;
-use \Calctool\Models\MoreLabor;
-use \Calctool\Models\MoreMaterial;
-use \Calctool\Calculus\MoreRegister;
-use \Calctool\Models\MoreEquipment;
-use \Calctool\Models\Detail;
-use \Calctool\Calculus\MoreOverview;
-use \Calctool\Calculus\MoreEndresult;
-use \Calctool\Models\ProjectType;
-use \Calctool\Models\Timesheet;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\PartType;
+use \CalculatieTool\Models\Part;
+use \CalculatieTool\Models\Tax;
+use \CalculatieTool\Models\MoreLabor;
+use \CalculatieTool\Models\MoreMaterial;
+use \CalculatieTool\Calculus\MoreRegister;
+use \CalculatieTool\Models\MoreEquipment;
+use \CalculatieTool\Models\Detail;
+use \CalculatieTool\Calculus\MoreOverview;
+use \CalculatieTool\Calculus\MoreEndresult;
+use \CalculatieTool\Models\ProjectType;
+use \CalculatieTool\Models\Timesheet;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));

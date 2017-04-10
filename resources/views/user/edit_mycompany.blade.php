@@ -1,14 +1,14 @@
 <?php
 
-use \Calctool\Models\Relation;
-use \Calctool\Models\RelationType;
-use \Calctool\Models\RelationKind;
-use \Calctool\Models\Contact;
-use \Calctool\Models\ContactFunction;
-use \Calctool\Models\Province;
-use \Calctool\Models\Country;
-use \Calctool\Models\Resource;
-use \Calctool\Models\BankAccount;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\RelationType;
+use \CalculatieTool\Models\RelationKind;
+use \CalculatieTool\Models\Contact;
+use \CalculatieTool\Models\ContactFunction;
+use \CalculatieTool\Models\Province;
+use \CalculatieTool\Models\Country;
+use \CalculatieTool\Models\Resource;
+use \CalculatieTool\Models\BankAccount;
 
 $relation = Relation::find(Auth::user()->self_id);
 $user = Auth::user();

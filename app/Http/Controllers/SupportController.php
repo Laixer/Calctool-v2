@@ -1,11 +1,11 @@
 <?php
 
-namespace Calctool\Http\Controllers;
+namespace CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Calctool\Http\Requests;
-use Calctool\Http\Controllers\Controller;
+use CalculatieTool\Http\Requests;
+use CalculatieTool\Http\Controllers\Controller;
 
 use \Auth;
 use \Mail;

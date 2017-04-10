@@ -1,17 +1,17 @@
 <?php
 
-namespace Calctool\Calculus;
+namespace CalculatieTool\Calculus;
 
-use \Calctool\Models\Part;
-use \Calctool\Models\Tax;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Activity;
-use \Calctool\Models\PartType;
-use \Calctool\Models\EstimateLabor;
-use \Calctool\Models\CalculationMaterial;
-use \Calctool\Models\EstimateMaterial;
-use \Calctool\Models\CalculationEquipment;
-use \Calctool\Models\EstimateEquipment;
+use \CalculatieTool\Models\Part;
+use \CalculatieTool\Models\Tax;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\PartType;
+use \CalculatieTool\Models\EstimateLabor;
+use \CalculatieTool\Models\CalculationMaterial;
+use \CalculatieTool\Models\EstimateMaterial;
+use \CalculatieTool\Models\CalculationEquipment;
+use \CalculatieTool\Models\EstimateEquipment;
 
 /*
  * Eindresultaat

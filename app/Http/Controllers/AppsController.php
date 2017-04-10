@@ -1,16 +1,16 @@
 <?php
 
-namespace Calctool\Http\Controllers;
+namespace CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use \Calctool\Models\Relation;
-use \Calctool\Models\RelationKind;
-use \Calctool\Models\RelationType;
-use \Calctool\Models\Contact;
-use \Calctool\Models\Province;
-use \Calctool\Models\Country;
-use \Calctool\Models\ContactFunction;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\RelationKind;
+use \CalculatieTool\Models\RelationType;
+use \CalculatieTool\Models\Contact;
+use \CalculatieTool\Models\Province;
+use \CalculatieTool\Models\Country;
+use \CalculatieTool\Models\ContactFunction;
 
 use \Auth;
 use \Cookie;

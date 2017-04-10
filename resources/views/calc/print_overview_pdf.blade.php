@@ -1,23 +1,23 @@
 <?php
 
-use \Calctool\Models\Activity;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Resource;
-use \Calctool\Models\PartType;
-use \Calctool\Models\CalculationMaterial;
-use \Calctool\Models\CalculationEquipment;
-use \Calctool\Models\EstimateMaterial;
-use \Calctool\Models\EstimateEquipment;
-use \Calctool\Models\MoreMaterial;
-use \Calctool\Models\MoreEquipment;
-use \Calctool\Models\Project;
-use \Calctool\Models\Part;
-use \Calctool\Models\Detail;
-use \Calctool\Models\ProjectType;
-use \Calctool\Calculus\CalculationOverview;
-use \Calctool\Calculus\MoreOverview;
-use \Calctool\Calculus\EstimateOverview;
-use \Calctool\Calculus\LessOverview;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Resource;
+use \CalculatieTool\Models\PartType;
+use \CalculatieTool\Models\CalculationMaterial;
+use \CalculatieTool\Models\CalculationEquipment;
+use \CalculatieTool\Models\EstimateMaterial;
+use \CalculatieTool\Models\EstimateEquipment;
+use \CalculatieTool\Models\MoreMaterial;
+use \CalculatieTool\Models\MoreEquipment;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Part;
+use \CalculatieTool\Models\Detail;
+use \CalculatieTool\Models\ProjectType;
+use \CalculatieTool\Calculus\CalculationOverview;
+use \CalculatieTool\Calculus\MoreOverview;
+use \CalculatieTool\Calculus\EstimateOverview;
+use \CalculatieTool\Calculus\LessOverview;
 
 $project = Project::find($project_id);
 $type = ProjectType::find($project->type_id);

@@ -1,16 +1,16 @@
 <?php
 
-namespace Calctool\Console\Commands;
+namespace CalculatieTool\Console\Commands;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Nathanmac\Utilities\Parser\Parser;
 
-use \Calctool\Models\SubGroup;
-use \Calctool\Models\Wholesale;
-use \Calctool\Models\Product;
-use \Calctool\Models\Supplier;
+use \CalculatieTool\Models\SubGroup;
+use \CalculatieTool\Models\Wholesale;
+use \CalculatieTool\Models\Product;
+use \CalculatieTool\Models\Supplier;
 
 use DB;
 

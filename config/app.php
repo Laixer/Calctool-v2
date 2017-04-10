@@ -178,10 +178,10 @@ return [
         /*
          * Application Service Providers...
          */
-        Calctool\Providers\AppServiceProvider::class,
-        Calctool\Providers\AuthServiceProvider::class,
-        Calctool\Providers\EventServiceProvider::class,
-        Calctool\Providers\RouteServiceProvider::class,
+        CalculatieTool\Providers\AppServiceProvider::class,
+        CalculatieTool\Providers\AuthServiceProvider::class,
+        CalculatieTool\Providers\EventServiceProvider::class,
+        CalculatieTool\Providers\RouteServiceProvider::class,
 
         /*
          * 3rd-party providers
@@ -243,7 +243,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
-        'Calctool'  => Calctool\Facades\Calctool::class,
+        'Calctool'  => CalculatieTool\Facades\Calctool::class,
         'Image'     => Intervention\Image\Facades\Image::class,
         'PDF'       => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'Parser'    => Nathanmac\Utilities\Parser\Facades\Parser::class,

@@ -1,32 +1,32 @@
 <?php
 
-namespace Calctool\Http\Controllers;
+namespace CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use \Calctool\Models\Project;
-use \Calctool\Models\Offer;
-use \Calctool\Models\Invoice;
-use \Calctool\Models\ProjectType;
-use \Calctool\Models\Resource;
-use \Calctool\Models\Relation;
-use \Calctool\Models\Contact;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Audit;
-use \Calctool\Models\Activity;
-use \Calctool\Models\RelationKind;
-use \Calctool\Models\FavoriteActivity;
-use \Calctool\Models\ProjectShare;
-use \Calctool\Http\Controllers\InvoiceController;
-use \Calctool\Models\EstimateLabor;
-use \Calctool\Models\EstimateMaterial;
-use \Calctool\Models\EstimateEquipment;
-use \Calctool\Models\MoreLabor;
-use \Calctool\Models\MoreMaterial;
-use \Calctool\Models\MoreEquipment;
-use \Calctool\Models\CalculationLabor;
-use \Calctool\Models\CalculationMaterial;
-use \Calctool\Models\CalculationEquipment;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Offer;
+use \CalculatieTool\Models\Invoice;
+use \CalculatieTool\Models\ProjectType;
+use \CalculatieTool\Models\Resource;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\Contact;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Audit;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\RelationKind;
+use \CalculatieTool\Models\FavoriteActivity;
+use \CalculatieTool\Models\ProjectShare;
+use \CalculatieTool\Http\Controllers\InvoiceController;
+use \CalculatieTool\Models\EstimateLabor;
+use \CalculatieTool\Models\EstimateMaterial;
+use \CalculatieTool\Models\EstimateEquipment;
+use \CalculatieTool\Models\MoreLabor;
+use \CalculatieTool\Models\MoreMaterial;
+use \CalculatieTool\Models\MoreEquipment;
+use \CalculatieTool\Models\CalculationLabor;
+use \CalculatieTool\Models\CalculationMaterial;
+use \CalculatieTool\Models\CalculationEquipment;
 
 use \Auth;
 use \Mail;
@@ -86,7 +86,7 @@ class ProjectController extends Controller {
 			return back()->withErrors(['error' => 'Mijn bedrijf bestaat niet'])->withInput($request->all());
 		}
 
-		$project = new \Calctool\Models\Project;
+		$project = new \CalculatieTool\Models\Project;
 		$project->address_street = $request->input('street');
 		$project->address_number = $request->input('address_number');
 		$project->address_postal = $request->input('zipcode');

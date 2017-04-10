@@ -1,12 +1,12 @@
 <?php
 
-use \Calctool\Models\Project;
-use \Calctool\Models\Relation;
-use \Calctool\Models\Contact;
-use \Calctool\Models\Invoice;
-use \Calctool\Models\Offer;
-use \Calctool\Models\ProjectType;
-use \Calctool\Models\Resource;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\Contact;
+use \CalculatieTool\Models\Invoice;
+use \CalculatieTool\Models\Offer;
+use \CalculatieTool\Models\ProjectType;
+use \CalculatieTool\Models\Resource;
 
 $offer = Offer::find($invoice->offer_id);
 if (!$offer)

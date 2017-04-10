@@ -1,23 +1,23 @@
 <?php
 
-use \Calctool\Models\Project;
-use \Calctool\Models\SubGroup;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\BlancRow;
-use \Calctool\Calculus\CalculationOverview;
-use \Calctool\Models\ProjectType;
-use \Calctool\Models\Activity as ProjectActivity;
-use \Calctool\Models\PartType;
-use \Calctool\Models\Part;
-use \Calctool\Calculus\CalculationEndresult;
-use \Calctool\Models\Tax;
-use \Calctool\Models\CalculationLabor;
-use \Calctool\Calculus\CalculationRegister;
-use \Calctool\Models\CalculationMaterial;
-use \Calctool\Models\CalculationEquipment;
-use \Calctool\Models\EstimateLabor;
-use \Calctool\Models\EstimateMaterial;
-use \Calctool\Models\EstimateEquipment;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\SubGroup;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\BlancRow;
+use \CalculatieTool\Calculus\CalculationOverview;
+use \CalculatieTool\Models\ProjectType;
+use \CalculatieTool\Models\Activity as ProjectActivity;
+use \CalculatieTool\Models\PartType;
+use \CalculatieTool\Models\Part;
+use \CalculatieTool\Calculus\CalculationEndresult;
+use \CalculatieTool\Models\Tax;
+use \CalculatieTool\Models\CalculationLabor;
+use \CalculatieTool\Calculus\CalculationRegister;
+use \CalculatieTool\Models\CalculationMaterial;
+use \CalculatieTool\Models\CalculationEquipment;
+use \CalculatieTool\Models\EstimateLabor;
+use \CalculatieTool\Models\EstimateMaterial;
+use \CalculatieTool\Models\EstimateEquipment;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));

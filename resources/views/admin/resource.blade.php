@@ -1,7 +1,7 @@
 <?php
-use \Calctool\Models\Resource;
-use \Calctool\Models\User;
-use \Calctool\Models\Project;
+use \CalculatieTool\Models\Resource;
+use \CalculatieTool\Models\User;
+use \CalculatieTool\Models\Project;
 ?>
 
 @extends('layout.master')

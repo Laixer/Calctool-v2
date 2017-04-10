@@ -1,26 +1,26 @@
 <?php
 
-namespace Calctool\Http\Controllers;
+namespace CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-use \Calctool\Events\UserSignup;
-use \Calctool\Models\User;
-use \Calctool\Models\UserGroup;
-use \Calctool\Models\Project;
-use \Calctool\Models\UserType;
-use \Calctool\Models\Audit;
-use \Calctool\Models\MessageBox;
-use \Calctool\Models\Relation;
-use \Calctool\Models\RelationType;
-use \Calctool\Models\RelationKind;
-use \Calctool\Models\Contact;
-use \Calctool\Models\ContactFunction;
-use \Calctool\Models\Chapter;
-use \Calctool\Models\Activity;
-use \Calctool\Models\Offer;
-use \Calctool\Models\Invoice;
+use \CalculatieTool\Events\UserSignup;
+use \CalculatieTool\Models\User;
+use \CalculatieTool\Models\UserGroup;
+use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\UserType;
+use \CalculatieTool\Models\Audit;
+use \CalculatieTool\Models\MessageBox;
+use \CalculatieTool\Models\Relation;
+use \CalculatieTool\Models\RelationType;
+use \CalculatieTool\Models\RelationKind;
+use \CalculatieTool\Models\Contact;
+use \CalculatieTool\Models\ContactFunction;
+use \CalculatieTool\Models\Chapter;
+use \CalculatieTool\Models\Activity;
+use \CalculatieTool\Models\Offer;
+use \CalculatieTool\Models\Invoice;
 
 use \Auth;
 use \Redis;
