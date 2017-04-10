@@ -31,7 +31,6 @@ class Kernel extends ConsoleKernel
         \CalculatieTool\Console\Commands\SessionClear::class,
         \CalculatieTool\Console\Commands\OauthClear::class,
         \CalculatieTool\Console\Commands\AdminReset::class,
-        \CalculatieTool\Console\Commands\Snapshot::class,
     ];
 
     /**

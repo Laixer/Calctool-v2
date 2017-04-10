@@ -48,9 +48,9 @@ return [
             'root'   => storage_path('userbin'),
         ],
 
-        'video' => [
+        'encrypt' => [
             'driver' => 'local',
-            'root'   => storage_path('vid'),
+            'root'   => storage_path('encrypt'),
         ],
 
         'ftp' => [

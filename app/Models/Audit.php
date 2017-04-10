@@ -9,38 +9,38 @@ use Jenssegers\Agent\Agent;
 
 class Audit extends Model {
 
-	protected $table = 'audit';
-	protected $guarded = array('id', 'ip');
+    protected $table = 'audit';
+    protected $guarded = array('id', 'ip');
 
-	public function user() {
-		return $this->hasOne('User');
-	}
+    public function user() {
+        return $this->hasOne('User');
+    }
 
-	public static function UserAgent()
-	{
-		$agent = new Agent();
-		return $agent->platform() . ' ' . $agent->device() . ' ' . $agent->browser() . '/' . $agent->version($agent->browser());
-	}
+    public static function UserAgent()
+    {
+        $agent = new Agent();
+        return $agent->platform() . ' ' . $agent->device() . ' ' . $agent->browser() . '/' . $agent->version($agent->browser());
+    }
 
-	public static function CreateEvent($module, $event, $user = null)
-	{
-		$log = new Audit($module, $event);
-		$log->setUserId($user ? $user : Auth::id());
-		$log->save();
-	}
+    public static function CreateEvent($module, $event, $user = null)
+    {
+        $log = new Audit($module, $event);
+        $log->setUserId($user ? $user : Auth::id());
+        $log->save();
+    }
 
-	public function __construct($module = null, $event = null)
-	{
-		if (!empty($module) && !empty($event)) {
-			$this->event = $module . "\n" . $event;
-		}
+    public function __construct($module = null, $event = null)
+    {
+        if (!empty($module) && !empty($event)) {
+            $this->event = $module . "\n" . $event;
+        }
 
-		$this->ip = \Calctool::remoteAddr();
-	}
+        $this->ip = \Calctool::remoteAddr();
+    }
 
-	public function setUserId($id)
-	{
-		$this->user_id = $id;
-		return $this;
-	}
+    public function setUserId($id)
+    {
+        $this->user_id = $id;
+        return $this;
+    }
 }

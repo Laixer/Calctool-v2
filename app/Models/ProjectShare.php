@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProjectShare extends Model {
 
-	protected $table = 'project_share';
-	protected $guarded = array('id', 'token');
+    protected $table = 'project_share';
+    protected $guarded = array('id', 'token');
 
-	public function __construct()
-	{
-		$this->token = \Calctool::generateToken();
-	}
+    public function __construct()
+    {
+        $this->token = \Calctool::generateToken();
+    }
 
 }
