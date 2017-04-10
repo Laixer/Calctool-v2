@@ -18,21 +18,6 @@ class GenericController extends Controller {
 		return view('generic.about');
 	}
 
-	public function getFaq(Request $request)
-	{
-		return view('generic.faq');
-	}
-
-	public function getTerms(Request $request)
-	{
-		return view('generic.terms');
-	}
-
-	public function getPrivacy(Request $request)
-	{
-		return view('generic.privacy');
-	}
-
 	public function getSupport(Request $request)
 	{
 		return view('generic.support');

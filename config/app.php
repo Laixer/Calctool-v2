@@ -182,7 +182,7 @@ return [
         Illuminate\Pipeline\PipelineServiceProvider::class,
         Illuminate\Queue\QueueServiceProvider::class,
         Illuminate\Redis\RedisServiceProvider::class,
-        Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
+        // Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
         Illuminate\Session\SessionServiceProvider::class,
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
@@ -195,7 +195,6 @@ return [
         Calctool\Providers\AuthServiceProvider::class,
         Calctool\Providers\EventServiceProvider::class,
         Calctool\Providers\RouteServiceProvider::class,
-        Calctool\Providers\PaymentServiceProvider::class,
 
         /*
          * 3rd-party providers

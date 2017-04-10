@@ -19,13 +19,21 @@ class RouteServiceProvider extends ServiceProvider
     protected $namespace = 'Calctool\Http\Controllers';
 
     /**
+     * This namespace is applied to the admin controller routes.
+     *
+     * @var string
+     */ 
+    protected $namespaceAdmin = 'Calctool\Http\Controllers\Admin';
+
+    /**
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void
      */
     public function boot()
     {
-        //
+        Route::pattern('project_id', '[0-9]{5}');
+
         parent::boot();
     }
 
@@ -37,6 +45,7 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapWebRoutes();
+
         //
     }
 
@@ -65,5 +74,6 @@ class RouteServiceProvider extends ServiceProvider
         ], function ($router) {
             require base_path('routes/admin.php');
         });
+
     }
 }

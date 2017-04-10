@@ -20,14 +20,13 @@ use \Calctool\Calculus\EstimateOverview;
 use \Calctool\Calculus\LessOverview;
 
 $project = Project::find($project_id);
+$type = ProjectType::find($project->type_id);
 
 $image_height = 0;
 if ($relation_self && $relation_self->logo_id) {
-   $image_src = getcwd() . '/' . Resource::find($relation_self->logo_id)->file_location;
-   $image = getimagesize($image_src);
-   $image_height = round(($image[1] / $image[0]) * 300);
-
-   $type = ProjectType::find($project->type_id);
+    $image_src = getcwd() . '/' . Resource::find($relation_self->logo_id)->file_location;
+    $image = getimagesize($image_src);
+    $image_height = round(($image[1] / $image[0]) * 300);
 }
 
 ?>

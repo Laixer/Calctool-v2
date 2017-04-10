@@ -23,13 +23,20 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('calctool', function()
-        {
+        $this->registerCalctool();
+
+        //
+    }
+
+    /**
+     * Register the calctool helper.
+     *
+     * @return void
+     */
+    public function registerCalctool()
+    {
+        $this->app->bind('calctool', function() {
             return new \Calctool\Other\Calctool;
         });
-
-        if (config('app.profiler') && config('app.debug')) {
-            $this->app->register('Barryvdh\Debugbar\ServiceProvider');
-        }
     }
 }
