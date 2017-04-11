@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use CalculatieTool\Http\Requests;
 use CalculatieTool\Http\Controllers\Controller;
+use CalculatieTool\Jobs\SendSupportMail;
 
 use \Auth;
 use \Mail;
@@ -24,27 +25,29 @@ class SupportController extends Controller
             'email' => array('required','email'),
         ]);
 
-        $data = array(
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'subject' => $request->get('subject'),
-            'category' => $request->get('category'),
-            'feedback_message' => $request->get('message'),
-            'user' => 'anoniem',
-            'remote' => isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'unknown',
-            'agent' => isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'unknown',
-        );
-
-        if (Auth::check()) {
-            $data['user'] = Auth::user()->username;
-        }
-
-        Mail::send('mail.feedback', $data, function($message) use ($data) {
-            $message->to('support@calculatietool.com', 'CalculatieTool.com');
-            $message->bcc($data['email'], $data['name']);
-            $message->subject('CalculatieTool.com - Contact form');
-        });
+        dispatch(new SendSupportMail(
+            $request->get('name'),
+            $request->get('email'),
+            $request->get('subject'),
+            $request->get('category'),
+            $request->get('message')
+        ));
 
         return back()->with('success', 'Bericht en kopie verstuurd');
     }
+
+    /**
+     * Return support view.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getSupport(Request $request)
+    {
+        $user = null;
+        if (Auth::check())
+            $user = Auth::user();
+
+        return view('generic.support', ['user' => $user]);
+    }
+
 }

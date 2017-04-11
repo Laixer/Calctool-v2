@@ -12,7 +12,7 @@
 */
 
 /* Admin */
-Route::get('/', 'AdminController@getDashboard');
+Route::get('/', 'AdminController@getDashboard')->name('adminDashboard');
 Route::get('user/new', function() {
     return view('admin.new_user');
 });
@@ -33,6 +33,8 @@ Route::get('user-{user_id}/login', 'AdminController@getLoginAsUser');
 Route::get('user-{user_id}/subscription/cancel', 'AdminController@getSubscriptionCancel');
 Route::post('user-{user_id}/edit', 'AdminController@doUpdateUser');
 Route::post('user-{user_id}/adminlog/new', 'AdminController@doNewAdminLog');
+
+/* Group actions */
 Route::get('group', function() {
     return view('admin.group');
 });
@@ -40,11 +42,13 @@ Route::get('group-{group_id}/edit', function() {
     return view('admin.edit_group');
 });
 Route::post('group-{group_id}/edit', 'AdminController@doUpdateGroup');
+Route::get('group-{group_id}/delete', 'AdminController@getDeleteGroup');
 Route::get('group/new', function() {
     return view('admin.new_group');
 });
 Route::post('group/new', 'AdminController@doNewGroup');
 
+/* Tag actions */
 Route::get('user/tags', function() {
     return view('admin.tag');
 });
@@ -53,11 +57,13 @@ Route::get('user/tags/new', function() {
 });
 Route::post('user/tags/new', 'AdminController@doNewTag');
 
+/* Alert actions */
 Route::get('alert', function() {
     return view('admin.alert');
 });
 Route::post('alert/new', 'AdminController@doNewAlert');
 Route::post('alert/delete', 'AdminController@doDeleteAlert');
+
 Route::get('phpinfo', function() {
     return view('admin.phpinfo');
 });

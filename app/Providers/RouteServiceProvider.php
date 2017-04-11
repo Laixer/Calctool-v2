@@ -10,20 +10,13 @@ use Auth;
 class RouteServiceProvider extends ServiceProvider
 {
     /**
-     * This namespace is applied to the controller routes in your routes file.
-     *
-     * In addition, it is set as the URL generator's root namespace.
+     * A namespace is applied to a grou of controller routes in the routes file.
      *
      * @var string
      */ 
     protected $namespace = 'CalculatieTool\Http\Controllers';
-
-    /**
-     * This namespace is applied to the admin controller routes.
-     *
-     * @var string
-     */ 
     protected $namespaceAdmin = 'CalculatieTool\Http\Controllers\Admin';
+    protected $namespaceApi = 'CalculatieTool\Http\Controllers\Api';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -46,7 +39,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapWebRoutes();
 
-        //
+        $this->mapApiRoutes();
     }
 
     /**
@@ -74,6 +67,21 @@ class RouteServiceProvider extends ServiceProvider
         ], function ($router) {
             require base_path('routes/admin.php');
         });
+    }
 
+    /**
+     * Define the "api" routes for the application.
+      *
+     * @return void
+     */
+    protected function mapApiRoutes()
+    {
+        /* Admin application routes */
+        Route::group([
+            'namespace' => $this->namespaceApi,
+            'prefix' => 'api/v1',
+        ], function ($router) {
+            require base_path('routes/api.php');
+        });
     }
 }

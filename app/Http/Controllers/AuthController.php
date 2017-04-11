@@ -23,7 +23,6 @@ use \CalculatieTool\Models\Offer;
 use \CalculatieTool\Models\Invoice;
 
 use \Auth;
-use \Redis;
 use \Cache;
 use \Hash;
 use \Mail;
@@ -100,9 +99,8 @@ class AuthController extends Controller {
      */
     public function getLogin(Request $request)
     {
-        if ($request->has('delblock')) {
+        if ($request->has('delblock'))
             Cache::forget($this->getCacheBlockItem());
-        }
 
         if ($request->has('dauth')) {
             $auth = explode(":", base64_decode($request->get('dauth')));

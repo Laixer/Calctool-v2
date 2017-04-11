@@ -8,9 +8,10 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
+use \Auth;
 use \Mail;
 
-class SendActivationMail implements ShouldQueue
+class SendSupportMail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -40,14 +41,21 @@ class SendActivationMail implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($name, $email, $subject, $category, $message)
     {
         $this->data = [
-            'email' => $user->email,
-            'token' => $user->reset_token,
-            'firstname' => $user->firstname,
-            'lastname' => $user->lastname
+            'name' => $name,
+            'email' => $email,
+            'subject' => $subject,
+            'category' => $category,
+            'feedback_message' => $message,
+            'user' => '-',
+            'remote' => isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'unknown',
+            'agent' => isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'unknown',
         ];
+
+        if (Auth::check())
+            $this->data['user'] = Auth::user()->username;
     }
 
     /**
@@ -58,11 +66,10 @@ class SendActivationMail implements ShouldQueue
     public function handle()
     {
         $data = $this->data;
-        Mail::send('mail.activation', $data, function ($message) use ($data) {
-            $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-            $message->subject('CalculatieTool.com - Account activatie');
-            $message->from('info@calculatietool.com', 'CalculatieTool.com');
-            $message->replyTo('support@calculatietool.com', 'CalculatieTool.com');
+        Mail::send('mail.support', $data, function($message) use ($data) {
+            $message->to('support@calculatietool.com', 'CalculatieTool.com');
+            $message->bcc($data['email'], $data['name']);
+            $message->subject('CalculatieTool.com - Contact formulier');
         });
     }
 }

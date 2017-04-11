@@ -493,6 +493,18 @@ class AdminController extends Controller {
         return back()->with('success', 'Groep opgeslagen');
     }
 
+    public function getDeleteGroup(Request $request, $group_id)
+    {
+        if (User::where('user_group', $group_id)->count())
+            return back()->withErrors(['error' => 'Group is niet leeg']);
+
+        /* General */
+        $group = UserGroup::find($group_id);
+        $group->delete();
+   
+        return redirect('admin/group')->with('success', 'Groep verwijderd');
+    }
+
     public function doDeleteResource(Request $request)
     {
         $this->validate($request, [

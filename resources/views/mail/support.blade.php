@@ -4,11 +4,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <title><strong>CalculatieTool.com</strong> - Account activatie</title>
+        <title><strong>CalculatieTool.com</strong> - Feedback/Vraag/Suggestie</title>
     </head>
 
     <body style="margin:0; margin-top:30px; margin-bottom:30px; padding:0; width:100%; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; background-color: #F4F5F7;">
-
 
         <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border:0; border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; background-color: #F4F5F7;">
             <tbody>
@@ -27,8 +26,8 @@
 
                                                 <tr><!-- logo -->
                                                     <td width="100%" style="font-family: helvetica, Arial, sans-serif; font-size: 18px; letter-spacing: 0px;">
-                                                        <a href="{{ secure_url('/') }}" style="text-decoration: none;">
-                                                            <img src="{{ secure_url('/') }}/images/logo2.png" alt="CalculatieTool.com" border="0" width="166" height="auto" style="with: 166px; height: auto; border: 5px solid #ffffff;" />
+                                                        <a href="{{ url('/') }}" style="text-decoration: none;">
+                                                            <img src="{{ url('/') }}/images/logo2.png" alt="CalculatieTool.com" border="0" width="166" height="auto" style="with: 166px; height: auto; border: 5px solid #ffffff;" />
                                                         </a>
                                                     </td>
                                                 </tr>
@@ -42,8 +41,8 @@
                                                     <td width="100%" height="30"></td>
                                                 </tr>
                                                 <tr>
-                                                    <td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
-                                                        Goedendag <strong>{{ ucfirst($firstname) .' '. ucfirst($lastname) }}</strong>,
+                                                    <td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; line-height: 24px; color:#8E8E8E;">
+                                                        Goedendag,
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -51,32 +50,53 @@
                                                 </tr>
                                                 <tr>
                                                     <td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
-                                                        Je bent zojuist succesvol geregistreerd voor een gebruikersaccount van de <strong>CalculatieTool.com</strong>.
-
-                                                        Klik hieronder op <i>Activeer account</i> om uw gratis account te activeren.
+                                                        Er is feedback/vraag/suggestie binnengekomen van een gebruiker <strong>{{ $name }} ({{ $user }})</strong>
+                                                    </td>
+                                                </tr>
+                                                <tr><!-- spacer after the line -->
+                                                    <td width="100%" height="30"></td>
+                                                </tr>
+                                                @if(isset($category))
+                                                <tr>
+                                                    <td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
+                                                        <strong>Categorie: </strong>{{ $category }}
+                                                    </td>
+                                                </tr>
+                                                @endif
+                                                @if(isset($subject))
+                                                <tr>
+                                                    <td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
+                                                        <strong>Onderwerp: </strong>{{ $subject }}
+                                                    </td>
+                                                </tr>
+                                                @endif
+                                                <tr>
+                                                    <td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
+                                                        <strong>Bericht: </strong><br />{!! $feedback_message !!}
+                                                    </td>
+                                                </tr>
+                                                <tr><!-- spacer after the line -->
+                                                    <td width="100%" height="30"></td>
+                                                </tr>
+                                                @if (isset($email))
+                                                <tr>
+                                                    <td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
+                                                        <strong>Email: {{ $email }}</strong>
+                                                    </td>
+                                                </tr>
+                                                @endif
+                                                <tr>
+                                                    <td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
+                                                        <strong>IP: {{ $remote }}</strong>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="100%" style=" font-size: 14px; line-height: 24px; font-family:helvetica, Arial, sans-serif; text-align: left; color:#8E8E8E;">
+                                                        <strong>User agent: {{ $agent }}</strong>
                                                     </td>
                                                 </tr>
                                                 <tr><!-- spacer after the line -->
                                                     <td width="100%" height="20"></td>
-                                                </tr>
-                                                <tr>
-                                                    <!--<td width="100%" height="15"></td>-->
-                                                    <td width="100%" style="text-align:center;">
-                                                        <a href="{{ secure_url('confirm/' . $token) }}" style="text-decoration:none; font-family: helvetica, Arial, sans-serif; font-size: 12px; letter-spacing: 0px; text-align: center; text-transform: uppercase; padding:10px; color:#ffffff; background-color:#79BB00; border-radius:6px;">
-                                                            <strong>Activeer account</strong>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <tr><!-- spacer after the line -->
-                                                    <td width="100%" height="20"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
-                                                        <br>
-                                                            Je wordt na de bevestiging direct doorgestuurd naar de <strong>CalculatieTool.com</strong> en kunt dan 30 dagen lang gebruikmaken van alles wat de <strong>CalculatieTool.com</strong> te bieden heeft. Zonder beperkingen, afgeschermde delen of verborgen kosten.
-
-                                                            Wij geloven in simpel en transparant. De <strong>CalculatieTool.com</strong> is voor de zzp'er die snel en gemakkelijk gestructureerde offertes en facturen wilt kunnen maken.
-                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#8E8E8E; line-height: 24px;">
@@ -85,7 +105,7 @@
                                                             Met vriendelijke groet,
                                                         <br>
                                                         <br>
-                                                            Het team van de <a href="{{ secure_url('/') }}"><strong>CalculatieTool.com</strong></a>
+                                                            Het team van de <a href="{{ url('/') }}"><strong>CalculatieTool.com</strong></a>
                                                         <br>
                                                     </td>
                                                 </tr>
@@ -133,7 +153,6 @@
                             </tbody>
                         </table>
                         <!-- /ROW FOOTER -->
-
 
                     </td>
                 </tr>
