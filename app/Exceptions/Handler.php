@@ -115,15 +115,15 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($e instanceof ModelNotFoundException) {
-            $e = new NotFoundHttpException($exception->getMessage(), $exception);
+        if ($exception instanceof ModelNotFoundException) {
+            $exception = new NotFoundHttpException($exception->getMessage(), $exception);
         }
 
-        if ($e instanceof TokenMismatchException) {
+        if ($exception instanceof TokenMismatchException) {
             return back()->withErrors(['csrf' => ['Beveiligingstokens komen niet overeen, probeer opnieuw']]);
         }
 
-        if ($e instanceof MethodNotAllowedHttpException) {
+        if ($exception instanceof MethodNotAllowedHttpException) {
             abort(404);
         }
 

@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'default' => 'sync',
+    'default' => 'redis',
 
     /*
     |--------------------------------------------------------------------------
@@ -70,7 +70,7 @@ return [
             'driver' => 'redis',
             'connection' => 'default',
             'queue'  => 'default',
-            'expire' => 60,
+            'expire' => 90,
         ],
 
     ],
@@ -86,8 +86,8 @@ return [
     |
     */
 
-    'failed' => [
-        'database' => 'mysql', 'table' => 'failed_jobs',
-    ],
+    // 'failed' => [
+    //     'database' => 'mysql', 'table' => 'failed_jobs',
+    // ],
 
 ];
