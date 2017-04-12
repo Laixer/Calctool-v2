@@ -407,13 +407,13 @@ $(document).ready(function() {
                 </li>
                 @if ($type->type_name != 'snelle offerte en factuur')
                 <li id="tab-advanced">
-                    <a href="#advanced" data-toggle="tab" data-toggle="tab" data-step="3" data-intro="Geef aan of je andere modules wilt laden in je project. Dit kan later ook nog."><i class="fa fa-sliders"></i> Extra opties</a>
+                    <a href="#advanced" data-toggle="tab" data-toggle="tab"><i class="fa fa-sliders"></i> Extra opties</a>
                 </li>
                 <li id="tab-calc">
-                    <a href="#calc" data-toggle="tab" data-step="1" data-intro="Geef je uurtarief en winstpercentages op waarmee je wilt gaan calculeren."><i class="fa fa-percent"></i> Uurtarief en Winstpercentages</a>
+                    <a href="#calc" data-toggle="tab"><i class="fa fa-percent"></i> Uurtarief en Winstpercentages</a>
                 </li>
                 <li id="tab-doc">
-                    <a href="#doc" data-toggle="tab" data-step="1" data-intro="Geef je uurtarief en winstpercentages op waarmee je wilt gaan calculeren."><i class="fa fa-cloud"></i> Documenten</a>
+                    <a href="#doc" data-toggle="tab"><i class="fa fa-cloud"></i> Documenten</a>
                 </li>
                 @endif
                 @if ($share && $share->client_note )
@@ -725,7 +725,7 @@ $(document).ready(function() {
                     </div>
                     @endif
 
-                    <div id="advanced" class="tab-pane" data-step="4" data-intro="Geef aan of je andere modules wilt laden in je project. Dit kan later ook nog. Klik daarna op opslaan & 'klaar'.">
+                    <div id="advanced" class="tab-pane">
 
                         <form method="POST" action="/project/updateadvanced">
                             {!! csrf_field() !!}

@@ -356,10 +356,12 @@ class AuthController extends Controller {
      *
      * @return Route
      */
-    public function doLogout()
+    public function logout()
     {
         Audit::CreateEvent('auth.logout.success', 'User destroyed current session');
+        
         Auth::logout();
+        
         return redirect('/login');
     }
 

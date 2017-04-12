@@ -15,10 +15,18 @@ class UTMState
      */
     public function handle($request, Closure $next)
     {
+        /* Save referrer on firsts request */
         $referrer = $request->server('HTTP_REFERER');
         if ($referrer) {
             if (!$request->session()->has('referrer')) {
                 $request->session()->put('referrer', $referrer);
+            }
+        }
+
+        /* Save campaign info */
+        if ($request->has('utmcampaign')) {
+            if (!$request->session()->has('utmcampaign')) {
+                $request->session()->put('utmcampaign', $request->get('utmcampaign'));
             }
         }
 

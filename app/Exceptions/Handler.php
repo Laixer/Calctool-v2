@@ -35,16 +35,15 @@ class Handler extends ExceptionHandler
     /**
      * Report or log an exception.
      *
-     * @param  \Exception  $e
-     * @return void
+     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @throws \Exception
+     * @param  \Exception  $exception
+     * @return void
      */
     public function report(Exception $e)
     {
-        if ($this->shouldntReport($e)) {
+        if ($this->shouldntReport($e))
             return;
-        }
 
         if (!config('app.debug')) {
             $request = request();
@@ -99,9 +98,8 @@ class Handler extends ExceptionHandler
      */
     protected function convertExceptionToResponse(Exception $e)
     {
-        if (config('app.debug')) {
+        if (config('app.debug'))
             return parent::convertExceptionToResponse($e);
-        }
 
         return response()->view("errors.common", ['exception' => $e]);
     }
@@ -115,17 +113,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        if ($exception instanceof ModelNotFoundException) {
+        if ($exception instanceof ModelNotFoundException)
             $exception = new NotFoundHttpException($exception->getMessage(), $exception);
-        }
 
-        if ($exception instanceof TokenMismatchException) {
+        if ($exception instanceof TokenMismatchException)
             return back()->withErrors(['csrf' => ['Beveiligingstokens komen niet overeen, probeer opnieuw']]);
-        }
 
-        if ($exception instanceof MethodNotAllowedHttpException) {
+        if ($exception instanceof MethodNotAllowedHttpException)
             abort(404);
-        }
 
         return parent::render($request, $exception);
     }
@@ -139,9 +134,9 @@ class Handler extends ExceptionHandler
      */
     protected function unauthenticated($request, AuthenticationException $exception)
     {
-        if ($request->expectsJson()) {
+        if ($request->expectsJson())
             return response()->json(['error' => 'Unauthenticated.'], 401);
-        }
+
         return redirect()->guest(route('login'));
     }
 }

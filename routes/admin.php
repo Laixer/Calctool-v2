@@ -125,3 +125,7 @@ Route::get('log', function() {
     return view('admin.log');
 });
 Route::get('log/truncate', 'AdminController@doTruncateLog');
+Route::get('session', function() {
+    return view('admin.session');
+});
+Route::get('session/{session}/kill', 'AdminController@killSession');

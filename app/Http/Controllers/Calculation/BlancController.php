@@ -1,6 +1,6 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers;
+namespace CalculatieTool\Http\Controllers\Calculation;
 
 use \Illuminate\Http\Request;
 use \CalculatieTool\Models\Project;
@@ -22,6 +22,7 @@ use \CalculatieTool\Models\EstimateMaterial;
 use \CalculatieTool\Models\EstimateEquipment;
 use \CalculatieTool\Models\Invoice;
 use \CalculatieTool\Models\Offer;
+use CalculatieTool\Http\Controllers\Controller;
 
 use \Auth;
 use \PDF;

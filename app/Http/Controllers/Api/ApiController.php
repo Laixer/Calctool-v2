@@ -20,6 +20,7 @@ use \CalculatieTool\Models\EstimateLabor;
 use CalculatieTool\Http\Controllers\Controller;
 
 use \Auth;
+use \DB;
 
 class ApiController extends Controller {
 
@@ -85,6 +86,8 @@ class ApiController extends Controller {
             $update_user->online_at = \DB::raw('NOW()');
             $update_user->save();
         }
+
+        DB::table('sessions')->where('user_id', $update_user->id)->update(['instance' => gethostname()]);
 
         return response(null, 204);
     }

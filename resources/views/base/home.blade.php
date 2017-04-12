@@ -1,14 +1,3 @@
-<?php
-use \CalculatieTool\Models\Relation;
-use \CalculatieTool\Models\RelationKind;
-use \CalculatieTool\Models\RelationType;
-use \CalculatieTool\Models\Province;
-use \CalculatieTool\Models\Country;
-use \CalculatieTool\Models\Contact;
-use \CalculatieTool\Models\ContactFunction;
-use \CalculatieTool\Models\SysMessage;
-?>
-
 @extends('layout.master')
 
 @section('title', 'Dashboard')
@@ -53,18 +42,16 @@ use \CalculatieTool\Models\SysMessage;
     <div id="shop">
         <section class="container">
 
-            @if (SysMessage::where('active',true)->count()>0)
-            @if (SysMessage::where('active',true)->orderBy('created_at', 'desc')->first()->level==1)
+            @if ($systemMessage && $systemMessage->level == 1)
             <div class="alert alert-warning">
                 <i class="fa fa-fa fa-info-circle"></i>
-                {{ SysMessage::where('active','=',true)->orderBy('created_at', 'desc')->first()->content }}
+                {{ $systemMessage->content }}
             </div>
-            @else
+            @elseif ($systemMessage && $systemMessage->level > 1)
             <div class="alert alert-danger">
                 <i class="fa fa-warning"></i>
-                <strong>{{ SysMessage::where('active',true)->orderBy('created_at', 'desc')->first()->content }}</strong>
+                <strong>{{ $systemMessage->content }}</strong>
             </div>
-            @endif
             @endif
 
             @if ($agent->isMobile())
@@ -74,7 +61,7 @@ use \CalculatieTool\Models\SysMessage;
             </div>
             @endif
 
-            @if (Auth::user()->login_count < 5)
+            @if (Auth::user()->isNewPeriod())
             <div class="pull-right" style="margin: 10px 0 20px 0">
                 <a href="/get-help" class="btn btn-default hidden-sm hidden-xs" type="button"><i class="fa fa-support"></i>Hulp gewenst?</a>
             </div>
@@ -84,7 +71,7 @@ use \CalculatieTool\Models\SysMessage;
             
             <div class="row">
 
-                <div class="col-sm-6 col-md-2" data-step="1" data-intro="Klik op 'Mijn Bedrijf' om je bedrijfsgegevens in te vullen.">
+                <div class="col-sm-6 col-md-2">
                     <div class="item-box item-box-show fixed-box">
                         <figure>
                             <a class="item-hover" href="/mycompany">
@@ -93,7 +80,7 @@ use \CalculatieTool\Models\SysMessage;
                                     <span class="block fa fa-home fsize60"></span>
                                 </span>
                             </a>
-                            <a href="/mycompany" class="btn btn-primary add_to_cart"><strong> Mijn Bedrijf</strong></a>
+                            <a href="/mycompany" class="btn btn-primary add_to_cart"><strong> Bedrijfsgegevens</strong></a>
 
                         </figure>
                     </div>
@@ -236,7 +223,7 @@ use \CalculatieTool\Models\SysMessage;
                     <div class="col-md-12">
                         <br>
                         @if ($projectCount)
-                        <h2><strong>Jouw</strong> projecten	&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube2"></a></h2>
+                        <h2><strong>Projecten</strong>&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube2"></a></h2>
 
                         <div class="white-row" ng-controller="projectController">
                             <div class="row">

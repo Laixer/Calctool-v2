@@ -971,6 +971,13 @@ class AdminController extends Controller {
         return back()->with('success', 'Automatische incasso gestopt');
     }
 
+    public function killSession(Request $request, $session)
+    {
+        \DB::table('sessions')->where('id', $session)->delete();
+
+        return back()->with('success', 'Sessie verwijderd');
+    }
+
     public function doApplicationClearCache(Request $request)
     {
         Artisan::call('clear-compiled');

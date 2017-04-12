@@ -14,9 +14,21 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */ 
-    protected $namespace = 'CalculatieTool\Http\Controllers';
-    protected $namespaceAdmin = 'CalculatieTool\Http\Controllers\Admin';
-    protected $namespaceApi = 'CalculatieTool\Http\Controllers\Api';
+    protected $namespace            = 'CalculatieTool\Http\Controllers';
+    protected $namespaceApi         = 'CalculatieTool\Http\Controllers\Api';
+    protected $namespaceAdmin       = 'CalculatieTool\Http\Controllers\Admin';
+
+    /**
+     * A namespace is applied to a grou of controller routes in the routes file.
+     *
+     * @var string
+     */ 
+    protected $namespaceAccount     = 'Account';
+    protected $namespaceCalculation = 'Calculation';
+    protected $namespaceInvoice     = 'Invoice';
+    protected $namespaceProducts    = 'Products';
+    protected $namespaceProposal    = 'Poposal';
+    protected $namespaceRelation    = 'Relation';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -25,7 +37,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Route::pattern('project_id', '[0-9]{5}');
+        Route::pattern('project_id', '[0-9]{5,}');
+        Route::pattern('relation_id', '[0-9]{5,}');
+        Route::pattern('contact_id', '[0-9]{3,}');
+        Route::pattern('resource_id', '[0-9]+');
 
         parent::boot();
     }
@@ -38,8 +53,8 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapWebRoutes();
-
         $this->mapApiRoutes();
+        $this->mapServiceRoutes();
     }
 
     /**
@@ -84,4 +99,21 @@ class RouteServiceProvider extends ServiceProvider
             require base_path('routes/api.php');
         });
     }
+
+    /**
+     * Define the "api" routes for the application.
+      *
+     * @return void
+     */
+    protected function mapServiceRoutes()
+    {
+        /* Admin application routes */
+        Route::group([
+            'namespace' => $this->namespaceApi,
+            'prefix' => 'api/v1',
+        ], function ($router) {
+            require base_path('routes/service.php');
+        });
+    }
+
 }

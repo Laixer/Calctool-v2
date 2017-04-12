@@ -3,12 +3,14 @@
 namespace CalculatieTool\Http\Controllers;
 
 use \CalculatieTool\Models\Project;
+use \CalculatieTool\Models\SysMessage;
 use \Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
 
 use \Auth;
+use \DB;
 
-class HomeController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Instantiate the dashboard controller.
@@ -27,13 +29,14 @@ class HomeController extends Controller
      *
      * @return void
      */
-    private function setUserOnline()
+    protected function setUserOnline()
     {
         if (session()->has('swap_session'))
             return;
 
         Auth::user()->online_at = \DB::raw('NOW()');
         Auth::user()->save();
+        DB::table('sessions')->where('user_id', Auth::id())->update(['instance' => gethostname()]);
     }
 
     /**
@@ -42,7 +45,7 @@ class HomeController extends Controller
      *
      * @return void
      */
-    private function welcomeMessage()
+    protected function welcomeMessage()
     {
         $time = date("H");
         if ($time >= "6" && $time < "12") {
@@ -71,9 +74,10 @@ class HomeController extends Controller
         $this->setUserOnline();
 
         return view('base.home', [
-            'agent' => new Agent(),
-            'projectCount' => Project::where('user_id', Auth::user()->id)->count(),
-            'welcomeMessage' => $this->welcomeMessage(),
+            'agent'           => new Agent(),
+            'welcomeMessage'  => $this->welcomeMessage(),
+            'projectCount'    => Project::where('user_id', Auth::id())->count(),
+            'systemMessage'   => SysMessage::where('active', true)->orderBy('created_at', 'desc')->first(),
         ]);
     }
 
