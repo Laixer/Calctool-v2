@@ -13,7 +13,7 @@ class MyCompanyTest extends TestCase
      *
      * @return void
      */
-    public function testEditMyAccount() // TODO
+    public function testEditAccount() // TODO
     {
         $user = factory(CalculatieTool\Models\User::class)->create();
 

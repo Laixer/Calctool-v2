@@ -265,13 +265,13 @@ class PaymentController extends Controller
     {
         if (\App::environment('local')) {
             $errors = new MessageBag(['status' => ['Callback niet mogelijk op local dev']]);
-            return redirect('myaccount')->withErrors($errors);
+            return redirect('account')->withErrors($errors);
         }
         
         $relation_self = Relation::find(Auth::user()->self_id);
         if (!$relation_self) {
             $errors = new MessageBag(['status' => ['Account vereist bedrijfsgegevens']]);
-            return redirect('myaccount')->withErrors($errors);
+            return redirect('account')->withErrors($errors);
         }
         
         $token = $this->newToken();
@@ -323,7 +323,7 @@ class PaymentController extends Controller
             Audit::CreateEvent('account.payment.initiated.failed', 'Create payment failed with ' . $e->getMessage());
 
             $errors = new MessageBag(['status' => ['Aanmaken van een betaling is mislukt']]);
-            return redirect('myaccount')->withErrors($errors);
+            return redirect('account')->withErrors($errors);
         }
 
         $order = new Payment;
@@ -354,7 +354,7 @@ class PaymentController extends Controller
     {
         if (UserGroup::find(Auth::user()->user_group)->subscription_amount > 0) {
             $errors = new MessageBag(['status' => ['Account vereist betaling']]);
-            return redirect('myaccount')->withErrors($errors);
+            return redirect('account')->withErrors($errors);
         }
 
         $user = Auth::user();
@@ -377,7 +377,7 @@ class PaymentController extends Controller
         $relation_self = Relation::find($user->self_id);
         if (!$relation_self) {
             $errors = new MessageBag(['status' => ['Account vereist bedrijfsgegevens']]);
-            return redirect('myaccount')->withErrors($errors);
+            return redirect('account')->withErrors($errors);
         }
 
         $contact_user = Contact::where('relation_id', $user->self_id)->first();
@@ -432,7 +432,7 @@ class PaymentController extends Controller
 
         Audit::CreateEvent('account.payment.free.success', 'Payment free succeeded');
 
-        return redirect('myaccount')->with('success','Bedankt voor uw betaling');
+        return redirect('account')->with('success','Bedankt voor uw betaling');
     }
 
     public function getPaymentFinish(Request $request, $token)
@@ -440,7 +440,7 @@ class PaymentController extends Controller
         $order = Payment::where('token', $token)->first();
         if (!$order) {
             $errors = new MessageBag(['status' => ['Transactie niet geldig']]);
-            return redirect('myaccount')->withErrors($errors);
+            return redirect('account')->withErrors($errors);
         }
 
         $payment = $this->mollie->payments->get($order->transaction);
@@ -452,26 +452,26 @@ class PaymentController extends Controller
              */
             if ($payment->mandateId && $payment->customerId) {
                 $this->setupSubscription($order, $payment->customerId);
-                return redirect('myaccount')->with('success','Bedankt voor uw betaling, automatische incasso is ingesteld');
+                return redirect('account')->with('success','Bedankt voor uw betaling, automatische incasso is ingesteld');
             }
 
-            return redirect('myaccount')->with('success','Bedankt voor uw betaling');
+            return redirect('account')->with('success','Bedankt voor uw betaling');
         } else if ($payment->isOpen() || $payment->isPending()) {
-            return redirect('myaccount')->with('success','Betaling is nog niet bevestigd, dit kan enkele dagen duren. Uw heeft in deze periode toegang tot uw account');
+            return redirect('account')->with('success','Betaling is nog niet bevestigd, dit kan enkele dagen duren. Uw heeft in deze periode toegang tot uw account');
         } else if ($payment->isCancelled()) {
             $order->status = $payment->status;
             $order->save();
             $errors = new MessageBag(['status' => ['Betaling is afgebroken']]);
-            return redirect('myaccount')->withErrors($errors);
+            return redirect('account')->withErrors($errors);
         } else if ($payment->isExpired()) {
             $order->status = $payment->status;
             $order->save();
             $errors = new MessageBag(['status' => ['Betaling is verlopen']]);
-            return redirect('myaccount')->withErrors($errors);
+            return redirect('account')->withErrors($errors);
         }
 
         $errors = new MessageBag(['status' => ['Transactie niet afgerond ('.$payment->status.')']]);
-        return redirect('myaccount')->withErrors($errors);
+        return redirect('account')->withErrors($errors);
     }
 
     /**

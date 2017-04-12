@@ -158,7 +158,7 @@ class AuthenticationTest extends TestCase
         ]);
 
         $this->actingAs($user)
-             ->visit('/myaccount')
+             ->visit('/account')
              ->see('Wachtwoord wijzigen')
              ->type($password, 'curr_secret')
              ->type($new_password, 'secret')
@@ -181,7 +181,7 @@ class AuthenticationTest extends TestCase
         $user = factory(CalculatieTool\Models\User::class)->create();
 
         $this->actingAs($user)
-             ->visit('/myaccount')
+             ->visit('/account')
              ->see('Wachtwoord wijzigen')
              ->type($password, 'curr_secret')
              ->type($new_password, 'secret')
@@ -200,9 +200,9 @@ class AuthenticationTest extends TestCase
         $user = factory(CalculatieTool\Models\User::class)->create();
 
         $this->actingAs($user)
-             ->visit('/myaccount')
+             ->visit('/account')
              ->see('Abonnementsduur')
-             ->visit('/myaccount/deactivate')
+             ->visit('/account/deactivate')
              ->seePageIs('/login');
 
         $this->seeInDatabase('user_account', ['username' => $user->username, 'active' => false]);
@@ -222,11 +222,11 @@ class AuthenticationTest extends TestCase
             'secret' => Hash::make($password)
         ]);
 
-        $this->visit('/myaccount')
+        $this->visit('/account')
              ->type($user->username, 'username')
              ->type($password, 'secret')
              ->press('Login')
-             ->seePageIs('/myaccount');
+             ->seePageIs('/account');
     }
 
     /**
@@ -248,7 +248,7 @@ class AuthenticationTest extends TestCase
              ->type($user->username, 'username')
              ->type($password, 'secret')
              ->press('Login')
-             ->seePageIs('/myaccount')
+             ->seePageIs('/account')
              ->see('Account is gedeactiveerd, maak betaling.');
     }
 }

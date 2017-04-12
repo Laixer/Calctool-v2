@@ -8,7 +8,7 @@ $user_type_name = UserType::find($user->user_type)->user_type;
 
 @extends('layout.master')
 
-@section('title', 'Mijn account')
+@section('title', 'Account')
 
 @push('style')
 <link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
@@ -102,7 +102,7 @@ $(document).ready(function() {
     
     $('#acc-deactive').click(function(e){
         e.preventDefault();
-        location.href = '/myaccount/deactivate?reason=' + $('#reason').val();
+        location.href = '/account/deactivate?reason=' + $('#reason').val();
     });
     $('#promocode').blur(function(e){
         e.preventDefault();
@@ -258,7 +258,7 @@ $(document).ready(function() {
             <div>
                 <ol class="breadcrumb">
                   <li><a href="/">Home</a></li>
-                  <li class="active">Mijn account</li>
+                  <li class="active">Account</li>
                 </ol>
             <div>
             <br>
@@ -266,7 +266,7 @@ $(document).ready(function() {
             @if (!Auth::user()->hasPayed())
             <div class="alert alert-warning">
                 <i class="fa fa-warning"></i>
-                Account is verlopen, activeer onder <a href="javascript:void(0);" id="warn-link" style="color:#8a6d3b;"><b>Mijn betalingen</b></a>.
+                Account is verlopen, activeer onder <a href="javascript:void(0);" id="warn-link" style="color:#8a6d3b;"><b>Betalingen</b></a>.
             </div>
             @endif
 
@@ -297,17 +297,17 @@ $(document).ready(function() {
                             ->where('owner_id',Auth::id())->get();
             ?>
 
-            <h2><strong>Mijn</strong> account &nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube2"></a></h2>
+            <h2><strong>Account</strong> Instellingen &nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube2"></a></h2>
 
                 <div class="tabs nomargin-top">
 
                     <ul class="nav nav-tabs">
                         <li id="tab-company">
-                            <a href="#company" data-toggle="tab"><i class="fa fa-info"></i> Mijn gegevens</a>
+                            <a href="#company" data-toggle="tab"><i class="fa fa-info"></i> Accountgegevens</a>
                         </li>
                         @if ($user_type_name != 'demo')
                         <li id="tab-payment">
-                            <a href="#payment" data-toggle="tab"><i class="fa fa-credit-card"></i> Mijn betalingen</a>
+                            <a href="#payment" data-toggle="tab"><i class="fa fa-credit-card"></i> Betalingen</a>
                         </li>
                         <li id="tab-contact">
                             <a href="#contact" data-toggle="tab"><i class="fa fa-key"></i> Wachtwoord</a>
@@ -326,7 +326,7 @@ $(document).ready(function() {
                     <div class="tab-content">
                         <div id="company" class="tab-pane">
 
-                            <form method="POST" action="/myaccount/updateuser" accept-charset="UTF-8">
+                            <form method="POST" action="/account/updateuser" accept-charset="UTF-8">
                             {!! csrf_field() !!}
 
                             <div>
@@ -473,7 +473,7 @@ $(document).ready(function() {
                         </div>
                         <div id="contact" class="tab-pane">
 
-                            <form method="POST" action="myaccount/security/update" accept-charset="UTF-8">
+                            <form method="POST" action="account/security/update" accept-charset="UTF-8">
                             {!! csrf_field() !!}
 
                             <h4 class="company">Wachtwoord wijzigen</h4>
@@ -551,7 +551,7 @@ $(document).ready(function() {
                                         <td class="col-md-2">{{ $client->active ? 'Ja' : 'Nee' }}</td>
                                         <td class="col-md-2" style="text-align:right">
                                         @if(!session()->has('swap_session'))
-                                            <a href="/myaccount/oauth/session/{{ $client->id }}/revoke" class="btn btn-danger btn-xs">Intrekken</a>
+                                            <a href="/account/oauth/session/{{ $client->id }}/revoke" class="btn btn-danger btn-xs">Intrekken</a>
                                         @endif
                                         </td>
                                     </tr>
@@ -570,7 +570,7 @@ $(document).ready(function() {
                                       <div class="card-block">
                                         <h4 class="card-title">Demo Project</h4>
                                         <p class="card-text">Laad een voorbeeldproject. Dit kan handig zijn om functies te testen of om gelijk aan de slag te kunnen.</p>
-                                        <a href="/myaccount/loaddemo" class="btn btn-primary"><i class="fa fa-check"></i> Laad demoproject</a>
+                                        <a href="/account/loaddemo" class="btn btn-primary"><i class="fa fa-check"></i> Laad demoproject</a>
                                       </div>
                                     </div>
 

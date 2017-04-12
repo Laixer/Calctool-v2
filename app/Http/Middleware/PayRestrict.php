@@ -21,7 +21,7 @@ class PayRestrict
         }
 
         if (!Auth::guard($guard)->user()->hasPayed()) {
-            return redirect('/myaccount');
+            return redirect('/account');
         }
 
         return $next($request);

@@ -13,46 +13,19 @@
 
 /* Application guest pages */
 Route::group(['middleware' => ['guest', 'utm']], function() {
-    Route::get('register',          'AuthController@getRegister');
-    Route::get('login',             'AuthController@getLogin')->name('login');
-    Route::post('login',            'AuthController@doLogin');
-    Route::post('register',         'AuthController@doRegister');
-    Route::get('confirm/{token}',   'AuthController@doActivate')->where('token', '[0-9a-z]{40}');
-    Route::post('password/reset',   'AuthController@doBlockPassword');
-    Route::get('password/{token}',  'AuthController@getPasswordReset')->where('token', '[0-9a-z]{40}');
-    Route::post('password/{token}', 'AuthController@doNewPassword')->where('token', '[0-9a-z]{40}');
+    Route::get('register',                            'AuthController@getRegister')->name('signup');
+    Route::get('login',                               'AuthController@getLogin')->name('login');
+    Route::post('login',                              'AuthController@doLogin');
+    Route::post('register',                           'AuthController@doRegister');
+    Route::get('confirm/{token}',                     'AuthController@doActivate');
+    Route::post('password/reset',                     'AuthController@doBlockPassword');
+    Route::get('password/{token}',                    'AuthController@getPasswordReset');
+    Route::post('password/{token}',                   'AuthController@doNewPassword');
     
-    Route::get('ex-project-overview/{token}', 'ClientController@getClientPage')->where('token', '[0-9a-z]{40}');
-    Route::post('ex-project-overview/{token}/update', 'ClientController@doUpdateCommunication')->where('token', '[0-9a-z]{40}');
-    Route::get('ex-project-overview/{token}/done', 'ClientController@doOfferAccept')->where('token', '[0-9a-z]{40}');
+    Route::get('ex-project-overview/{token}',         'ClientController@getClientPage');
+    Route::post('ex-project-overview/{token}/update', 'ClientController@doUpdateCommunication');
+    Route::get('ex-project-overview/{token}/done',    'ClientController@doOfferAccept');
 });
-
-/* Oauth2 REST API */
-Route::group(['prefix' => 'oauth2', 'middleware' => ['check-authorization-params', 'auth']], function() {
-    Route::get('authorize',  'AuthController@getOauth2Authorize');
-    Route::post('authorize', 'AuthController@doOauth2Authorize');
-});
-
-Route::post('oauth2/access_token', 'AuthController@doIssueAccessToken');
-
-Route::group(['prefix' => 'oauth2/rest', 'middleware' => 'oauth'], function() {
-    /* Owner rest functions */
-    Route::get('user',      'AuthController@getRestUser');
-    Route::get('projects',  'AuthController@getRestUserProjects');
-    Route::get('relations', 'AuthController@getRestUserRelations');
-
-    /* Internal rest functions */
-    Route::get('internal/verify',         'AuthController@getRestVerify');
-    Route::post('internal/user_signup',   'AuthController@doRestNewUser');
-    Route::post('internal/usernamecheck', 'AuthController@doRestUsernameCheck');
-    Route::get('internal/user_all',       'AuthController@getRestAllUsers');
-    Route::get('internal/relation_all',   'AuthController@getRestAllRelations');
-    Route::get('internal/project_all',    'AuthController@getRestAllProjects');
-    Route::get('internal/chapter_all',    'AuthController@getRestAllChapters');
-    Route::get('internal/activity_all',   'AuthController@getRestAllActivities');
-    Route::get('internal/offer_all',      'AuthController@getRestAllOffers');
-    Route::get('internal/invoice_all',    'AuthController@getRestAllInvoices');
-});	
 
 /* Support */
 Route::post('support', 'SupportController@sendSupport');
@@ -90,15 +63,16 @@ Route::group(['middleware' => 'auth'], function() {
     /* Account actions*/
     Route::group(['namespace' => $this->namespaceAccount], function() {
         
-        Route::get('myaccount',                     'AccountController@getMyAccount')->name('account');
-        Route::get('myaccount/deactivate',          'AccountController@getMyAccountDeactivate');
-        Route::get('myaccount/loaddemo',            'AccountController@doLoadDemoProject');
-        Route::get('myaccount/oauth/session/{client_id}/revoke', 'AccountController@doRevokeApp');
-        Route::post('myaccount/updateuser',         'AccountController@doMyAccountUser');
-        Route::post('myaccount/iban/new',           'AccountController@doNewIban');
-        Route::post('myaccount/security/update',    'AccountController@doUpdateSecurity');
-        Route::post('myaccount/preferences/update', 'AccountController@doUpdatePreferences');
-        Route::post('myaccount/notepad/save',       'AccountController@doUpdateNotepad');
+        /* Account actions */
+        Route::get('account',                     'AccountController@getAccount')->name('account');
+        Route::get('account/deactivate',          'AccountController@getAccountDeactivate');
+        Route::get('account/loaddemo',            'AccountController@doLoadDemoProject');
+        Route::get('account/oauth/session/{client_id}/revoke', 'AccountController@doRevokeApp');
+        Route::post('account/updateuser',         'AccountController@doAccountUser');
+        Route::post('account/iban/new',           'AccountController@doNewIban');
+        Route::post('account/security/update',    'AccountController@doUpdateSecurity');
+        Route::post('account/preferences/update', 'AccountController@doUpdatePreferences');
+        Route::post('account/notepad/save',       'AccountController@doUpdateNotepad');
     });
 
     /* Notification actions*/
@@ -117,7 +91,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     /* Routes by PaymentController */
     Route::get('payment',                      'PaymentController@getPayment');
-    Route::get('payment/order/{token}',        'PaymentController@getPaymentFinish')->where('token', '[0-9a-z]{40}');
+    Route::get('payment/order/{token}',        'PaymentController@getPaymentFinish');
     Route::post('payment/promocode',           'PaymentController@doCheckPromotionCode');
     Route::get('payment/increasefree',         'PaymentController@getPaymentFree');
     Route::get('payment/subscription/cancel',  'PaymentController@getSubscriptionCancel');

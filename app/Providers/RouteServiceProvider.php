@@ -10,7 +10,7 @@ use Auth;
 class RouteServiceProvider extends ServiceProvider
 {
     /**
-     * A namespace is applied to a grou of controller routes in the routes file.
+     * Toplevel namespaces.
      *
      * @var string
      */ 
@@ -19,7 +19,7 @@ class RouteServiceProvider extends ServiceProvider
     protected $namespaceAdmin       = 'CalculatieTool\Http\Controllers\Admin';
 
     /**
-     * A namespace is applied to a grou of controller routes in the routes file.
+     * Module namespaces.
      *
      * @var string
      */ 
@@ -41,6 +41,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::pattern('relation_id', '[0-9]{5,}');
         Route::pattern('contact_id', '[0-9]{3,}');
         Route::pattern('resource_id', '[0-9]+');
+        Route::pattern('token', '[0-9a-z]{40}');
 
         parent::boot();
     }
@@ -110,7 +111,7 @@ class RouteServiceProvider extends ServiceProvider
         /* Admin application routes */
         Route::group([
             'namespace' => $this->namespaceApi,
-            'prefix' => 'api/v1',
+            'prefix' => 'oauth2',
         ], function ($router) {
             require base_path('routes/service.php');
         });

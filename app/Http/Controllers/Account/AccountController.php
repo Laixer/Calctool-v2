@@ -28,9 +28,9 @@ use \PDF;
 
 class AccountController extends Controller
 {
-    public function getMyAccount(Request $request)
+    public function getAccount(Request $request)
     {
-        return view('user.myaccount');
+        return view('user.account');
     }
 
     /**
@@ -39,7 +39,7 @@ class AccountController extends Controller
      *
      * @return Response
      */
-    public function getMyAccountDeactivate(Request $request)
+    public function getAccountDeactivate(Request $request)
     {
         $user = Auth::user();
         $user->active = false;
@@ -119,7 +119,7 @@ class AccountController extends Controller
         return back()->with('success', 'Opgeslagen');
     }
 
-    public function doMyAccountUser(Request $request)
+    public function doAccountUser(Request $request)
     {
         $this->validate($request, [
             'firstname' => array('max:30'),

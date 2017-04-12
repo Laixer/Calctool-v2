@@ -510,7 +510,7 @@ $(document).ready(function() {
                         
                         <div id="prefs" class="tab-pane">
 
-                            <form method="POST" action="myaccount/preferences/update" accept-charset="UTF-8">
+                            <form method="POST" action="/account/preferences/update" accept-charset="UTF-8">
                             {!! csrf_field() !!}
 
                             <h4 class="company">Voorkeuren</h4>
