@@ -147,6 +147,25 @@
                         <div class="col-sm-12 col-md-2">
                             <div class="item-box item-box-show fixed-box">
                                 <figure>
+                                    <a class="item-hover" href="/admin/mailqueue">
+                                        <span class="overlay color2"></span>
+                                        <span class="inner">
+                                            <span class="block fa fa-envelope-o fsize60"></span>
+                                        </span>
+                                    </a>
+                                    <a href="/admin/mailqueue" class="btn btn-primary add_to_cart"><i class="fa fa-envelope-o"></i> Mailqueue</a>
+
+                                </figure>
+                                <div class="item-box-desc">
+                                    <a href="/admin/mailqueue" ><h4>Mailqueue</h4></a>
+                                    <small class="styleColor">{{ \DB::table('sessions')->count() }} actief</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-2">
+                            <div class="item-box item-box-show fixed-box">
+                                <figure>
                                     <a class="item-hover" href="/admin/alert">
                                         <span class="overlay color2"></span>
                                         <span class="inner">

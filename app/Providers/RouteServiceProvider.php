@@ -26,7 +26,7 @@ class RouteServiceProvider extends ServiceProvider
     protected $namespaceAccount     = 'Account';
     protected $namespaceCalculation = 'Calculation';
     protected $namespaceInvoice     = 'Invoice';
-    protected $namespaceProducts    = 'Products';
+    protected $namespaceProducts    = 'Product';
     protected $namespaceProposal    = 'Poposal';
     protected $namespaceRelation    = 'Relation';
 
@@ -37,11 +37,12 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Route::pattern('project_id', '[0-9]{5,}');
+        Route::pattern('project_id',  '[0-9]{5,}');
         Route::pattern('relation_id', '[0-9]{5,}');
-        Route::pattern('contact_id', '[0-9]{3,}');
+        Route::pattern('contact_id',  '[0-9]{3,}');
         Route::pattern('resource_id', '[0-9]+');
-        Route::pattern('token', '[0-9a-z]{40}');
+        Route::pattern('invoice_id',  '[0-9]+');
+        Route::pattern('token',       '[0-9a-z]{40}');
 
         parent::boot();
     }
@@ -76,7 +77,7 @@ class RouteServiceProvider extends ServiceProvider
 
         /* Admin application routes */
         Route::group([
-            'namespace' => $this->namespace,
+            'namespace' => $this->namespaceAdmin,
             'before' => 'admin',
             'prefix' => 'admin',
             'middleware' => 'admin'
@@ -102,7 +103,7 @@ class RouteServiceProvider extends ServiceProvider
     }
 
     /**
-     * Define the "api" routes for the application.
+     * Define the "service" routes for the application.
       *
      * @return void
      */

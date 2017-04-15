@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use \CalculatieTool\Models\Resource;
 
 use \Auth;
+use \Storage;
 
 class ResourceController extends Controller
 {
@@ -28,7 +29,9 @@ class ResourceController extends Controller
             return response(null, 404);
         }
 
-        return response()->download($res->file_location);
+        $storagePath = Storage::getDriver()->getAdapter()->getPathPrefix();
+
+        return response()->download($storagePath . $res->file_location);
     }
 
     public function view(Request $request, $resourceid)
@@ -38,7 +41,9 @@ class ResourceController extends Controller
             return response(null, 404);
         }
 
-        return response()->file($res->file_location);
+        $storagePath = Storage::getDriver()->getAdapter()->getPathPrefix();
+
+        return response()->file($storagePath . $res->file_location);
     }
 
     public function doDeleteResource(Request $request, $resourceid)

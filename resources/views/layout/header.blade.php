@@ -12,7 +12,7 @@ use \CalculatieTool\Models\UserType;
         </button>
 
         <a class="logo" href="/">
-            <img src="/images/logo2.png" width="229px" alt="CalculatieTool.com" />
+            <img src="/images/logo.png" width="229px" alt="CalculatieTool.com" />
         </a>
 
         <div class="navbar-collapse nav-main-collapse collapse pull-right">
@@ -28,11 +28,15 @@ use \CalculatieTool\Models\UserType;
                     @endif
                     @if (Auth::check() && Auth::user()->isAdmin() && !session()->has('swap_session'))
                     <li>
-                        <a href="/admin">Admin CP</a>
+                        <a href="/admin">Admin Dashboard</a>
                     </li>
                     @else
                     <li>
+                        @if (!Auth::check())
+                        <a href="/support">Support</a>
+                        @else
                         <a href="/get-help">Support</a>
+                        @endif
                     </li>
                     @endif
                     <li class="active">
@@ -70,7 +74,7 @@ use \CalculatieTool\Models\UserType;
                     @if (Auth::check())
                     <li class="quick-cart">
                         <?php
-                        $msg_cnt = MessageBox::where('user_id','=', Auth::id())->where('active', true)->whereNull('read')->count();
+                        $msg_cnt = MessageBox::where('user_id', Auth::id())->where('active', true)->whereNull('read')->count();
                         ?>
                         @if ($msg_cnt > 0)
                         <span class="badge pull-right">{{ $msg_cnt }}</span>
@@ -86,7 +90,7 @@ use \CalculatieTool\Models\UserType;
                             @endif
 
                             @foreach(MessageBox::where('user_id','=', Auth::id())->where('active', true)->whereNull('read')->get() as $message)
-                            <a class="item" href="/messagebox/message-{{ $message->id }}">
+                            <a class="item" href="/notification/message-{{ $message->id }}">
                                 <i class="fa fa-envelope pull-left fsize30" style="margin-right: 10px; margin-left: 8px;"></i>
                                 <div class="inline-block">
                                     <span class="price">{{ ucfirst(User::find($message->from_user)->username) }}</span>
@@ -97,7 +101,7 @@ use \CalculatieTool\Models\UserType;
 
                             <div class="row cart-footer">
                                 <div class="col-md-12">
-                                    <a href="/messagebox" class="btn btn-primary btn-xs fullwidth">Alle notificaties</a>
+                                    <a href="/notification" class="btn btn-primary btn-xs fullwidth">Alle notificaties</a>
                                 </div>
                             </div>
 

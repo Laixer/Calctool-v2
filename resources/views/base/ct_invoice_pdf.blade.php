@@ -13,7 +13,7 @@
             <tr>
               <td style="width: 345px">
                 <div id="logo">
-                  <img style="width:300px;height:60px;" src="{{ getcwd() }}/images/logo2.png"/>
+                  <img style="width:300px;height:60px;" src="{{ getcwd() }}/images/logo.png"/>
                 </div>
               </td>
 

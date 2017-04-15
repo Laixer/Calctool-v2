@@ -9,7 +9,7 @@
         </button>
 
         <a class="logo" href="/">
-            <img src="/images/logo2.png" width="229px" alt="CalculatieTool.com" />
+            <img src="/images/logo.png" width="229px" alt="CalculatieTool.com" />
         </a>
 
     </div>

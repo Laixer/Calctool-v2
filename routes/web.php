@@ -11,7 +11,7 @@
 |
 */
 
-/* Application guest pages */
+/* Application front actions */
 Route::group(['middleware' => ['guest', 'utm']], function() {
     Route::get('register',                            'AuthController@getRegister')->name('signup');
     Route::get('login',                               'AuthController@getLogin')->name('login');
@@ -21,7 +21,12 @@ Route::group(['middleware' => ['guest', 'utm']], function() {
     Route::post('password/reset',                     'AuthController@doBlockPassword');
     Route::get('password/{token}',                    'AuthController@getPasswordReset');
     Route::post('password/{token}',                   'AuthController@doNewPassword');
-    
+});
+
+Route::group(['middleware' => 'guest'], function() {
+    /* Payment callbacks */
+    Route::post('payment/webhook/', 'PaymentController@doPaymentUpdate');
+
     Route::get('ex-project-overview/{token}',         'ClientController@getClientPage');
     Route::post('ex-project-overview/{token}/update', 'ClientController@doUpdateCommunication');
     Route::get('ex-project-overview/{token}/done',    'ClientController@doOfferAccept');
@@ -30,9 +35,6 @@ Route::group(['middleware' => ['guest', 'utm']], function() {
 /* Support */
 Route::post('support', 'SupportController@sendSupport');
 Route::get('support',  'SupportController@getSupport');
-
-/* Payment callbacks */
-Route::post('payment/webhook/', 'PaymentController@doPaymentUpdate');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', 'DashboardController')->name('dashboard');
@@ -60,7 +62,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('import/save',                  'AppsController@doImportRelation');
     Route::get('relation/export',               'AppsController@getExportRelation');
    
-    /* Account actions*/
+    /* Module Group Account */
     Route::group(['namespace' => $this->namespaceAccount], function() {
         
         /* Account actions */
@@ -75,13 +77,12 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('account/notepad/save',       'AccountController@doUpdateNotepad');
     });
 
-    /* Notification actions*/
-    Route::get('messagebox/message-{message}/read',   'MessageBoxController@doRead')->where('message', '[0-9]+');
-    Route::get('messagebox/message-{message}/delete', 'MessageBoxController@doDelete')->where('message', '[0-9]+');
-    Route::get('messagebox/message-{message}',        'MessageBoxController@getMessage')->where('message', '[0-9]+');
-    Route::get('messagebox', function() {
-        return view('user.messagebox');
-    });
+    /* Notification actions */
+    Route::get('notification',                          'NotificationController@notificationList');
+    Route::get('notification/message-{message}/read',   'NotificationController@doRead')->where('message', '[0-9]+');
+    Route::get('notification/message-{message}/delete', 'NotificationController@doDelete')->where('message', '[0-9]+');
+    Route::get('notification/message-{message}',        'NotificationController@getMessage')->where('message', '[0-9]+');
+
     Route::get('finance/overview', function() {
         return view('finance.overview');
     });
@@ -103,8 +104,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('invoice/updatedesc', 'InvoiceController@doUpdateDescription');
         Route::post('invoice/updateamount', 'InvoiceController@doUpdateAmount');
         Route::get('invoice/project-{project_id}', 'Calculation\CalcController@getInvoiceAll');;
-        Route::get('invoice/project-{project_id}/invoice-{invoice_id}', 'Calculation\CalcController@getInvoice')->where('invoice_id', '[0-9]+');
-        Route::get('invoice/project-{project_id}/term-invoice-{invoice_id}', 'Calculation\CalcController@getTermInvoice')->where('invoice_id', '[0-9]+');
+        Route::get('invoice/project-{project_id}/invoice-{invoice_id}', 'Calculation\CalcController@getInvoice');
+        Route::get('invoice/project-{project_id}/term-invoice-{invoice_id}', 'Calculation\CalcController@getTermInvoice');
         Route::post('invoice/save', 'InvoiceController@doInvoiceVersionNew');
         Route::post('invoice/close', 'InvoiceController@doInvoiceClose');
         Route::post('invoice/pay', 'InvoiceController@doInvoicePay');
@@ -113,20 +114,20 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('invoice/term/add', 'InvoiceController@doInvoiceNewTerm');
         Route::post('invoice/term/delete', 'InvoiceController@doInvoiceDeleteTerm');
         Route::get('invoice/project-{project_id}/invoice-version-{invoice_id}', function() {
-            return View::make('calc.invoice_show_pdf');
-        })->where('invoice_id', '[0-9]+');
+            return view('calc.invoice_show_pdf');
+        });
         Route::get('invoice/project-{project_id}/pdf-invoice-{invoice_id}', function() {
-            return View::make('calc.invoice_show_final_pdf');
-        })->where('invoice_id', '[0-9]+');
-        Route::get('invoice/project-{project_id}/invoice-{offer_id}/mail-preview', 'InvoiceController@getSendOfferPreview')->where('invoice_id', '[0-9]+');;
+            return view('calc.invoice_show_final_pdf');
+        });
+        Route::get('invoice/project-{project_id}/invoice-{offer_id}/mail-preview', 'InvoiceController@getSendOfferPreview');
         Route::post('invoice/sendmail', 'InvoiceController@doSendOffer');
         Route::post('invoice/sendpost', 'InvoiceController@doSendPostOffer');
         Route::get('invoice/pdf/project-{project_id}/invoice-{invoice_id}', 'Calculation\CalcController@getInvoicePDF');
-        Route::get('invoice/pdf/project-{project_id}/invoice-{invoice_id}/download', 'Calculation\CalcController@getInvoiceDownloadPDF');;
-        Route::get('invoice/pdf/project-{project_id}/term-invoice-{invoice_id}/download', 'Calculation\CalcController@getTermInvoiceDownloadPDF');;
+        Route::get('invoice/pdf/project-{project_id}/invoice-{invoice_id}/download', 'Calculation\CalcController@getInvoiceDownloadPDF');
+        Route::get('invoice/pdf/project-{project_id}/term-invoice-{invoice_id}/download', 'Calculation\CalcController@getTermInvoiceDownloadPDF');
         Route::get('invoice/project-{project_id}/history-invoice-{invoice_id}', function() {
-            return View::make('calc.invoice_version');
-        })->where('invoice_id', '[0-9]+');;
+            return view('calc.invoice_version');
+        });
     });
 
     Route::group(['middleware' => 'payzone'], function() {
@@ -134,7 +135,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('offer/project-{project_id}', 'Calculation\CalcController@getOffer');;
         Route::post('offer/project-{project_id}',                 'OfferController@doNewOffer');
         Route::get('offer/project-{project_id}/offer-{offer_id}', function() {
-            return View::make('calc.offer_show_pdf');
+            return view('calc.offer_show_pdf');
         })->where('offer_id', '[0-9]+');;
         Route::get('offer/project-{project_id}/offer-{offer_id}/mail-preview', 'OfferController@getSendOfferPreview')->where('offer_id', '[0-9]+');;
         Route::post('offer/close',                                'OfferController@doOfferClose');
@@ -142,6 +143,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('offer/sendpost',                             'OfferController@doSendPostOffer');
     });
 
+    /* Module Group Calculation */
     Route::group(['namespace' => $this->namespaceCalculation, 'middleware' => 'payzone'], function() {
 
         /* Routes by CalcController */
@@ -260,6 +262,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('more/moveactivity',                         'MoreController@doMoveActivity');
     });
 
+    /* Module Group Relation */
     Route::group(['namespace' => $this->namespaceRelation, 'middleware' => 'payzone'], function() {
 
         /* Relation pages */
@@ -325,7 +328,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('purchase/delete',                              'CostController@doDeletePurchase')->middleware('payzone');
     });
 
-    /* Module Group Products */
+    /* Module Group Product */
     Route::group(['namespace' => $this->namespaceProducts, 'middleware' => 'payzone'], function() {
  
          /* Product list */

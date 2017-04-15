@@ -56,6 +56,7 @@ Route::get('user/tags/new', function() {
     return view('admin.new_tag');
 });
 Route::post('user/tags/new', 'AdminController@doNewTag');
+Route::get('user/tag-{tag}/delete', 'AdminController@doDeleteTag');
 
 /* Alert actions */
 Route::get('alert', function() {

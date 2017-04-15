@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html lang="en">
 
     <head>
@@ -27,7 +27,7 @@
                                                 <tr><!-- logo -->
                                                     <td width="100%" style="font-family: helvetica, Arial, sans-serif; font-size: 18px; letter-spacing: 0px;">
                                                         <a href="{{ secure_url('/') }}" style="text-decoration: none;">
-                                                            <img src="{{ secure_url('/') }}/images/logo2.png" alt="CalculatieTool.com" border="0" width="166" height="auto" style="with: 166px; height: auto; border: 5px solid #ffffff;" />
+                                                            <img src="{{ secure_url('/') }}/images/logo.png" alt="CalculatieTool.com" border="0" width="166" height="auto" style="with: 166px; height: auto; border: 5px solid #ffffff;" />
                                                         </a>
                                                     </td>
                                                 </tr>

@@ -19,6 +19,12 @@ class EventServiceProvider extends ServiceProvider
         'CalculatieTool\Events\UserSignup' => [
             'CalculatieTool\Listeners\UserSignup',
         ],
+        'CalculatieTool\Events\UserPaymentSuccess' => [
+            'CalculatieTool\Listeners\PaymentSuccess',
+        ],
+        'CalculatieTool\Events\UserSubscriptionCanceled' => [
+            'CalculatieTool\Listeners\SubscriptionCanceled',
+        ],        
         'Illuminate\Auth\Events\Login' => [
             'CalculatieTool\Listeners\LogAuthenticated',
         ],

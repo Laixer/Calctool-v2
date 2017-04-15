@@ -1,6 +1,6 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers;
+namespace CalculatieTool\Http\Controllers\Admin;
 
 use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
@@ -30,6 +30,7 @@ use \CalculatieTool\Models\ProductCategory;
 use \CalculatieTool\Models\ProductSubCategory;
 use \Database\Templates\DemoProjectTemplate;
 use \Database\Templates\ValidationProjectTemplate;
+use CalculatieTool\Http\Controllers\Controller;
 
 use \Storage;
 use \Auth;
@@ -42,8 +43,8 @@ use \Artisan;
 ini_set('max_execution_time', 0);
 ini_set('max_input_time', -1);
 
-class AdminController extends Controller {
-
+class AdminController extends Controller
+{
     /*
     |--------------------------------------------------------------------------
     | Default Home Controller
@@ -503,6 +504,18 @@ class AdminController extends Controller {
         $group->delete();
    
         return redirect('admin/group')->with('success', 'Groep verwijderd');
+    }
+
+    public function doDeleteTag(Request $request, $tag_id)
+    {
+        if (User::where('user_tag_id', $tag_id)->count())
+            return back()->withErrors(['error' => 'Tag is niet leeg']);
+
+        /* General */
+        $tag = UserTag::find($tag_id);
+        $tag->delete();
+   
+        return redirect('admin/user/tags')->with('success', 'Tag verwijderd');
     }
 
     public function doDeleteResource(Request $request)

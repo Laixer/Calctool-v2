@@ -16,6 +16,8 @@ use \CalculatieTool\Models\Resource;
 use \CalculatieTool\Models\CTInvoice;
 use \CalculatieTool\Models\Contact;
 use \CalculatieTool\Models\Relation;
+use CalculatieTool\Events\UserPaymentSuccess;
+use CalculatieTool\Events\UserSubscriptionCanceled;
 
 use \Auth;
 use \Redis;
@@ -24,10 +26,111 @@ use \Mail;
 use \DB;
 use \PDF;
 
+class TVarDumper
+{
+    private static $_objects;
+    private static $_output;
+    private static $_depth;
+
+    /**
+     * Converts a variable into a string representation.
+     * This method achieves the similar functionality as var_dump and print_r
+     * but is more robust when handling complex objects such as PRADO controls.
+     * @param mixed variable to be dumped
+     * @param integer maximum depth that the dumper should go into the variable. Defaults to 10.
+     * @return string the string representation of the variable
+     */
+    public static function dump($var,$depth=10,$highlight=false)
+    {
+        self::$_output='';
+        self::$_objects=array();
+        self::$_depth=$depth;
+        self::dumpInternal($var,0);
+        if($highlight)
+        {
+            $result=highlight_string("<?php\n".self::$_output,true);
+            return preg_replace('/&lt;\\?php<br \\/>/','',$result,1);
+        }
+        else
+            return self::$_output;
+    }
+
+    private static function dumpInternal($var,$level)
+    {
+        switch(gettype($var))
+        {
+            case 'boolean':
+                self::$_output.=$var?'true':'false';
+                break;
+            case 'integer':
+                self::$_output.="$var";
+                break;
+            case 'double':
+                self::$_output.="$var";
+                break;
+            case 'string':
+                self::$_output.="'$var'";
+                break;
+            case 'resource':
+                self::$_output.='{resource}';
+                break;
+            case 'NULL':
+                self::$_output.="null";
+                break;
+            case 'unknown type':
+                self::$_output.='{unknown}';
+                break;
+            case 'array':
+                if(self::$_depth<=$level)
+                    self::$_output.='array(...)';
+                else if(empty($var))
+                    self::$_output.='array()';
+                else
+                {
+                    $keys=array_keys($var);
+                    $spaces=str_repeat(' ',$level*4);
+                    self::$_output.="array\n".$spaces.'(';
+                    foreach($keys as $key)
+                    {
+                        self::$_output.="\n".$spaces."    [$key] => ";
+                        self::$_output.=self::dumpInternal($var[$key],$level+1);
+                    }
+                    self::$_output.="\n".$spaces.')';
+                }
+                break;
+            case 'object':
+                if(($id=array_search($var,self::$_objects,true))!==false)
+                    self::$_output.=get_class($var).'#'.($id+1).'(...)';
+                else if(self::$_depth<=$level)
+                    self::$_output.=get_class($var).'(...)';
+                else
+                {
+                    $id=array_push(self::$_objects,$var);
+                    $className=get_class($var);
+                    $members=(array)$var;
+                    $keys=array_keys($members);
+                    $spaces=str_repeat(' ',$level*4);
+                    self::$_output.="$className#$id\n".$spaces.'(';
+                    foreach($keys as $key)
+                    {
+                        $keyDisplay=strtr(trim($key),array("\0"=>':'));
+                        self::$_output.="\n".$spaces."    [$keyDisplay] => ";
+                        self::$_output.=self::dumpInternal($members[$key],$level+1);
+                    }
+                    self::$_output.="\n".$spaces.')';
+                }
+                break;
+        }
+    }
+}
+
 class PaymentController extends Controller
 {
+    /**
+     * Constant defaults.
+     */
     const DEFAULT_INCREMENT = 1;
-    const DEFAULT_LANGUAGE = 'nl';
+    const DEFAULT_LANGUAGE  = 'nl';
 
     /**
      * The API object.
@@ -48,12 +151,12 @@ class PaymentController extends Controller
         $this->mollie->setApiKey(config('services.mollie.key'));
     }
 
-    private function userSubscription($customerId)
+    protected function userSubscription($customerId)
     {
         return $this->mollie->customers_subscriptions->withParentId($customerId);
     }
 
-    private function setupSubscription($order, $customerId)
+    protected function setupSubscription($order, $customerId)
     {
         $subscription = $this->userSubscription($customerId)->create([
             "amount"		=> $order->amount,
@@ -73,7 +176,7 @@ class PaymentController extends Controller
         return $subscription;
     }
 
-    private function hasPromoCode()
+    protected function hasPromoCode()
     {
         if (Redis::exists('promo:' . Auth::user()->username)) {
             $promo = Promotion::find(Redis::get('promo:' . Auth::user()->username));
@@ -89,12 +192,12 @@ class PaymentController extends Controller
         }
     }
 
-    private function newToken()
+    protected function newToken()
     {
         return sha1(mt_rand() . time());
     }
 
-    private function registerUserAsCustomer()
+    protected function registerUserAsCustomer()
     {
         if (!Auth::user()->payment_customer_id) {
             $customer = $this->mollie->customers->create([
@@ -105,6 +208,21 @@ class PaymentController extends Controller
             Auth::user()->payment_customer_id = $customer->id;
             Auth::user()->save();
         }
+    }
+
+    protected function newPayment($transaction, $description, $amount = 0, $status = 'paid', $inc = self::DEFAULT_INCREMENT)
+    {
+        $order = new Payment;
+
+        $order->transaction = $transaction;
+        $order->token       = $this->newToken();
+        $order->amount      = $amount;
+        $order->status      = $status;
+        $order->increment   = $inc;
+        $order->description = $description;
+        $order->method      = '';
+        
+        return $order;
     }
 
     /**
@@ -181,73 +299,7 @@ class PaymentController extends Controller
             $user->expiration_date = date('Y-m-d', strtotime("+" . $increase . " month", strtotime($expdate)));
             $user->save();
 
-            $ctinvoice = CTInvoice::orderBy('invoice_count','desc')->first();
-            if (!$ctinvoice) {
-                $ctinvoice = new CTInvoice;
-                $ctinvoice->invoice_count = 0;
-                $ctinvoice->payment_id = $order->id;
-                $ctinvoice->save();
-            } else {
-                $nctinvoice = new CTInvoice;
-                $nctinvoice->invoice_count = $ctinvoice->invoice_count + 1;
-                $nctinvoice->payment_id = $order->id;
-                $nctinvoice->save();
-                $ctinvoice = $nctinvoice;
-            }
-
-            $relation_self = Relation::find($user->self_id);
-            $contact_user = Contact::where('relation_id', $user->self_id)->first();
-            $newname = $user->id . '-'.substr(md5(uniqid()), 0, 5).'-ct_invoice.pdf';
-            $pdf = PDF::loadView('base.ct_invoice_pdf', [
-                'name' => $contact_user->getFormalName(),
-                'date' => $user->dueDateHuman(),
-                'amount' => $order->amount,
-                'user_id' => $user->id,
-                'relation_self' => $relation_self,
-                'reference' => $order->transaction,
-                'payment_id' => mt_rand(100,999) . '-' . $order->id,
-                'invoice_id' => 'FACTUUR-' . $ctinvoice->invoice_count,
-            ]);
-
-            $footer_text = 'CalculatieTool.com';
-            $footer_text .= ' | IBAN: NL29INGB0006863509';
-            $footer_text .= ' | KVK: 54565243';
-            $footer_text .= ' | BTW: 851353423B01';
-
-            $pdf->setOption('zoom', 1.1);
-            $pdf->setOption('footer-font-size', 8);
-            $pdf->setOption('footer-left', $footer_text);
-            $pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
-            $pdf->setOption('lowquality', false);
-            $pdf->save('user-content/' . $newname);
-
-            $resource = new Resource;
-            $resource->resource_name = $newname;
-            $resource->file_location = 'user-content/' . $newname;
-            $resource->file_size = filesize('user-content/' . $newname);
-            $resource->user_id = $user->id;
-            $resource->description = 'CTFactuur';
-            $resource->save();
-
-            $order->resource_id = $resource->id;
-            $order->save();
-
-            $data = array(
-                'email' => $user->email,
-                'amount' => number_format($payment->amount, 2,",","."),
-                'expdate' => date('j F Y', strtotime($user->expiration_date)),
-                'firstname' => $user->firstname,
-                'lastname' => $user->lastname,
-                'pdf' => $resource->file_location,
-            );
-            Mail::send('mail.paid', $data, function($message) use ($data) {
-                $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-                $message->bcc('administratie@calculatietool.com', 'Gebruiker account verlengd');
-                $message->attach($data['pdf']);
-                $message->subject('CalculatieTool.com - Account verlengd');
-                $message->from('info@calculatietool.com', 'CalculatieTool.com');
-                $message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
-            });
+            event(new UserPaymentSuccess($user, $order));
 
             Audit::CreateEvent('account.payment.callback.success', 'Payment ' . $payment->id . ' succeeded', $user->id);
         }
@@ -263,23 +315,21 @@ class PaymentController extends Controller
      */
     public function getPayment(Request $request)
     {
-        if (\App::environment('local')) {
-            $errors = new MessageBag(['status' => ['Callback niet mogelijk op local dev']]);
-            return redirect('account')->withErrors($errors);
+        if (app()->environment('local')) {
+            return redirect('account')->withErrors(['status' => ['Callback niet mogelijk op local dev']]);
         }
         
         $relation_self = Relation::find(Auth::user()->self_id);
         if (!$relation_self) {
-            $errors = new MessageBag(['status' => ['Account vereist bedrijfsgegevens']]);
-            return redirect('account')->withErrors($errors);
+            return redirect('account')->withErrors(['status' => ['Account vereist bedrijfsgegevens']]);
         }
         
         $token = $this->newToken();
-        $increment_months = self::DEFAULT_INCREMENT;
+        $increment = self::DEFAULT_INCREMENT;
         if ($request->has('incr'))
-            $increment_months = $request->get('incr');
+            $increment = $request->get('incr');
 
-        $amount = $increment_months * UserGroup::find(Auth::user()->user_group)->subscription_amount;
+        $amount = $increment * UserGroup::find(Auth::user()->user_group)->subscription_amount;
         $description = 'Verleng met ' . $increment_months . ' maand(en)';
         $promo_id = -1;
 
@@ -303,7 +353,7 @@ class PaymentController extends Controller
                 "metadata"		=> [
                     "token"		=> $token,
                     "uid"		=> Auth::id(),
-                    "incr"		=> $increment_months,
+                    "incr"		=> $increment,
                 ],
             ];
 
@@ -322,26 +372,21 @@ class PaymentController extends Controller
         } catch (\Mollie_API_Exception $e) {
             Audit::CreateEvent('account.payment.initiated.failed', 'Create payment failed with ' . $e->getMessage());
 
-            $errors = new MessageBag(['status' => ['Aanmaken van een betaling is mislukt']]);
-            return redirect('account')->withErrors($errors);
+            return redirect('account')->withErrors(['status' => ['Aanmaken van een betaling is mislukt']]);
         }
 
-        $order = new Payment;
-        $order->transaction = $payment->id;
+        $order = $this->newPayment($payment->id, $description, $amount, $payment->status, $increment);
         $order->token = $token;
-        $order->amount = $amount;
-        $order->status = $payment->status;
-        $order->increment = $increment_months;
-        $order->description = $description;
-        $order->method = '';
+        
         if (isset($payment_object['recurringType']))
             $order->recurring_type = $payment_object['recurringType'];
+
         $order->user_id = Auth::id();
         $order->save();
 
         Audit::CreateEvent('account.payment.initiated.success', 'Create payment ' . $payment->id . ' for ' . $amount);
 
-        return redirect($payment->links->paymentUrl)->withCookie(cookie()->forget('_dccod'.Auth::id()));
+        return redirect($payment->links->paymentUrl);
     }
 
     /**
@@ -352,85 +397,23 @@ class PaymentController extends Controller
      */
     public function getPaymentFree(Request $request)
     {
+        //TODO: move into user
         if (UserGroup::find(Auth::user()->user_group)->subscription_amount > 0) {
-            $errors = new MessageBag(['status' => ['Account vereist betaling']]);
-            return redirect('account')->withErrors($errors);
+            return redirect('account')->withErrors(['status' => ['Account vereist betaling']]);
         }
 
-        $user = Auth::user();
-        $expdate = $user->expiration_date;
-        $user->expiration_date = date('Y-m-d', strtotime("+1 month", strtotime($expdate)));
+        $order = $this->newPayment('CTFREE', 'Verleng gratis met een maand');
+        $order->user_id = Auth::id();
+        $order->save();
 
+        /* Increase account subscription */
+        $user = Auth::user();
+        $user->expiration_date = date('Y-m-d', strtotime("+1 month", strtotime($user->expiration_date)));
         $user->save();
 
-        $order = new Payment;
-        $order->transaction = 'CT_FREE';
-        $order->token = sha1(mt_rand().time());
-        $order->amount = 0;
-        $order->status = 'paid';
-        $order->increment = 1;
-        $order->description = 'Verleng gratis met een maand';
-        $order->method = '';
-        $order->user_id = $user->id;
-        $order->save();
-        
-        $relation_self = Relation::find($user->self_id);
-        if (!$relation_self) {
-            $errors = new MessageBag(['status' => ['Account vereist bedrijfsgegevens']]);
-            return redirect('account')->withErrors($errors);
-        }
-
-        $contact_user = Contact::where('relation_id', $user->self_id)->first();
-        $ctinvoice = CTInvoice::orderBy('invoice_count','desc')->first();
-        if (!$ctinvoice) {
-            $ctinvoice = new CTInvoice;
-            $ctinvoice->invoice_count = 0;
-            $ctinvoice->payment_id = $order->id;
-            $ctinvoice->save();
-        } else {
-            $nctinvoice = new CTInvoice;
-            $nctinvoice->invoice_count = $ctinvoice->invoice_count + 1;
-            $nctinvoice->payment_id = $order->id;
-            $nctinvoice->save();
-            $ctinvoice = $nctinvoice;
-        }
-
-        $newname = $user->id . '-'.substr(md5(uniqid()), 0, 5).'-ct_invoice.pdf';
-        $pdf = PDF::loadView('base.ct_invoice_pdf', [
-            'name' => $contact_user->getFormalName(),
-            'date' => $user->dueDateHuman(),
-            'amount' => $order->amount,
-            'user_id' => $user->id,
-            'relation_self' => $relation_self,
-            'reference' => $order->transaction,
-            'payment_id' => mt_rand(100,999) . '-' . $order->id,
-            'invoice_id' => 'FACTUUR-' . $ctinvoice->invoice_count,
-        ]);
-
-        $footer_text = 'CalculatieTool.com';
-        $footer_text .= ' | IBAN: NL29INGB0006863509';
-        $footer_text .= ' | KVK: 54565243';
-        $footer_text .= ' | BTW: 851353423B01';
-
-        $pdf->setOption('zoom', 1.1);
-        $pdf->setOption('footer-font-size', 8);
-        $pdf->setOption('footer-left', $footer_text);
-        $pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
-        $pdf->setOption('lowquality', false);
-        $pdf->save('user-content/' . $newname);
-
-        $resource = new Resource;
-        $resource->resource_name = $newname;
-        $resource->file_location = 'user-content/' . $newname;
-        $resource->file_size = filesize('user-content/' . $newname);
-        $resource->user_id = Auth::id();
-        $resource->description = 'CTFactuur';
-        $resource->save();
-
-        $order->resource_id = $resource->id;
-        $order->save();
-
         Audit::CreateEvent('account.payment.free.success', 'Payment free succeeded');
+
+        event(new UserPaymentSuccess($user, $order));
 
         return redirect('account')->with('success','Bedankt voor uw betaling');
     }
@@ -439,8 +422,7 @@ class PaymentController extends Controller
     {
         $order = Payment::where('token', $token)->first();
         if (!$order) {
-            $errors = new MessageBag(['status' => ['Transactie niet geldig']]);
-            return redirect('account')->withErrors($errors);
+            return redirect('account')->withErrors(['status' => ['Transactie niet geldig']]);
         }
 
         $payment = $this->mollie->payments->get($order->transaction);
@@ -461,17 +443,16 @@ class PaymentController extends Controller
         } else if ($payment->isCancelled()) {
             $order->status = $payment->status;
             $order->save();
-            $errors = new MessageBag(['status' => ['Betaling is afgebroken']]);
-            return redirect('account')->withErrors($errors);
+
+            return redirect('account')->withErrors(['status' => ['Betaling is afgebroken']]);
         } else if ($payment->isExpired()) {
             $order->status = $payment->status;
             $order->save();
-            $errors = new MessageBag(['status' => ['Betaling is verlopen']]);
-            return redirect('account')->withErrors($errors);
+
+            return redirect('account')->withErrors(['status' => ['Betaling is verlopen']]);
         }
 
-        $errors = new MessageBag(['status' => ['Transactie niet afgerond ('.$payment->status.')']]);
-        return redirect('account')->withErrors($errors);
+        return redirect('account')->withErrors(['status' => ['Transactie niet afgerond ('.$payment->status.')']]);
     }
 
     /**
@@ -482,30 +463,19 @@ class PaymentController extends Controller
      */
     public function getSubscriptionCancel()
     {
-        if (!Auth::user()->payment_subscription_id)
+        $user = Auth::user();
+        if (!$user->payment_subscription_id)
             return back();
 
-        $subscription_id = Auth::user()->payment_subscription_id;
-        $customerId      = Auth::user()->payment_customer_id;
+        $subscription_id = $user->payment_subscription_id;
+        $customerId      = $user->payment_customer_id;
 
-        $subscription = $this->userSubscription($customerId)->cancel(subscription_id);
+        $subscription = $this->userSubscription($customerId)->cancel($subscription_id);
 
-        Auth::user()->payment_subscription_id = NULL;
-        Auth::user()->save();
+        $user->payment_subscription_id = NULL;
+        $user->save();
 
-        if (!config('app.debug')) {
-            $data = array(
-                'user' => Auth::user()->username,
-                'subscription' => $subscription_id,
-            );
-
-            Mail::send('mail.payment_stopped', $data, function($message) use ($data) {
-                $message->to('administratie@calculatietool.com', 'CalculatieTool.com');
-                $message->subject('CalculatieTool.com - Automatische incasso gestopt');
-                $message->from('info@calculatietool.com', 'CalculatieTool.com');
-                $message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
-            });
-        }
+        event(new UserSubscriptionCanceled($user, $subscription_id));
 
         return back()->with('success', 'Automatische incasso gestopt');
     }    

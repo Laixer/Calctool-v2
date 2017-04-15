@@ -1,6 +1,6 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers\Products;
+namespace CalculatieTool\Http\Controllers\Product;
 
 use Illuminate\Http\Request;
 
