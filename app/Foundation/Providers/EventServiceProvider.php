@@ -8,6 +8,9 @@
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
+ *
+ * @package  CalculatieTool
+ * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
 namespace BynqIO\CalculatieTool\Foundation\Providers;
@@ -40,15 +43,4 @@ class EventServiceProvider extends ServiceProvider
         ],
     ];
 
-    /**
-     * Register any events for your application.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        parent::boot();
-
-        //
-    }
 }

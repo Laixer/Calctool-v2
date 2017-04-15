@@ -2,7 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| Api Routes
+| Service Routes
 |--------------------------------------------------------------------------
 |
 | This file is where you may define all of the routes that are handled
@@ -11,20 +11,31 @@
 |
 */
 
-/* Frontend API */
-Route::post('register/usernamecheck', 'ApiController@doCheckUsernameEXist');
+/* Oauth2 REST API */
+Route::group(['middleware' => ['check-authorization-params', 'auth']], function() {
+    Route::get('authorize',  'AuthController@getOauth2Authorize');
+    Route::post('authorize', 'AuthController@doOauth2Authorize');
+});
 
-Route::group(['middleware' => 'auth'], function() {
-    Route::get('/',                  'ApiController@getApiRoot');
-    Route::post('/update',           'ApiController@getUserUpdate');
-    Route::get('/projects',          'ApiController@getProjects');
-    Route::get('/relations',         'ApiController@getRelations');
+Route::post('access_token', 'AuthController@doIssueAccessToken');
 
-    Route::get('/timesheet',         'ApiController@getTimesheet');
-    Route::post('/timesheet/delete', 'ApiController@doTimesheetDelete');
-    Route::post('/timesheet/new',    'ApiController@doTimesheetNew');
+/* Rest Service calls */
+Route::group(['prefix' => 'oauth2/rest', 'middleware' => 'oauth'], function() {
 
-    Route::get('/purchase',          'ApiController@getPurchase');
-    Route::post('/purchase/delete',  'ApiController@doPurchaseDelete');
-    Route::post('/purchase/new',     'ApiController@doPurchaseNew');
+    /* Owner rest functions */
+    Route::get('user',      'AuthController@getRestUser');
+    Route::get('projects',  'AuthController@getRestUserProjects');
+    Route::get('relations', 'AuthController@getRestUserRelations');
+
+    /* Internal rest functions */
+    Route::get('internal/verify',         'AuthController@getRestVerify');
+    Route::post('internal/user_signup',   'AuthController@doRestNewUser');
+    Route::post('internal/usernamecheck', 'AuthController@doRestUsernameCheck');
+    Route::get('internal/user_all',       'AuthController@getRestAllUsers');
+    Route::get('internal/relation_all',   'AuthController@getRestAllRelations');
+    Route::get('internal/project_all',    'AuthController@getRestAllProjects');
+    Route::get('internal/chapter_all',    'AuthController@getRestAllChapters');
+    Route::get('internal/activity_all',   'AuthController@getRestAllActivities');
+    Route::get('internal/offer_all',      'AuthController@getRestAllOffers');
+    Route::get('internal/invoice_all',    'AuthController@getRestAllInvoices');
 });

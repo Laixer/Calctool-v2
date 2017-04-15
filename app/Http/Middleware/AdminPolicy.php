@@ -5,7 +5,7 @@ namespace BynqIO\CalculatieTool\Http\Middleware;
 use Closure;
 use Auth;
 
-class Admin
+class AdminPolicy
 {
     /**
      * Handle an incoming request.

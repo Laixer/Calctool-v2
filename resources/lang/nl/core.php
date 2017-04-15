@@ -4,10 +4,13 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the CalculatieTool.com.
+ * This file is part of the BynqIO\CalculatieTool.com.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
+ *
+ * @package  CalculatieTool
+ * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
 return [
@@ -20,6 +23,46 @@ return [
     | 
     |
     */
+
+    // Generic
+    'new'         => 'Nieuw',
+    'open'        => 'Open',
+    'closed'      => 'Gesloten',
+    'name'        => 'Naam',
+    'type'        => 'Type',
+    'city'        => 'Plaats',
+
+    // Dashboard
+    'dashboard'       => 'Dashboard',
+    'mobilewarning'   => 'De applicatie werkt het beste op desktop of tablet',
+    'needhelp'        => 'Hulp gewenst?',
+    'companyinfo'     => 'Bedrijfsgegevens',
+    'products'        => 'Producten',
+    'timesheet'       => 'Urenregistratie',
+    'purchaseinvoice' => 'Inkoopfacturen',
+    'financial'       => 'Financieel',
+    'relation'        => 'Relatie|Relaties',
+    'project'         => 'Project|Projecten',
+    'projectname'     => 'Projectnaam',
+    'customer'        => 'Opdrachtgever',
+    'firststep'       => 'De eerste stap...',
+    'watchwelcvid'    => 'Bekijk de Welkomstvideo',
+    'noprodavail'     => 'Geen projecten beschikbaar',
+    'crefirstprod'    => 'Maak eerste project aan',
+
+    // Daypart welcome
+    'welcome' => [
+        'morning'   => 'Goedemorgen',
+        'afternoon' => 'Goedenmiddag',
+        'evening'   => 'Goedenavond',
+        'night'     => 'Goedenacht',
+    ],
+
+    // Account
+    'account' => 'Account',
+
+    // Support
+    'support' => 'Support',
 
     // Components
     'components' => [

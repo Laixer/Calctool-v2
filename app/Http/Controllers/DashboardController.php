@@ -1,10 +1,22 @@
 <?php
 
+/**
+ * Copyright (C) 2017 Bynq.io B.V.
+ * All Rights Reserved
+ *
+ * This file is part of the BynqIO\CalculatieTool.com.
+ *
+ * Content can not be copied and/or distributed without the express
+ * permission of the author.
+ *
+ * @package  CalculatieTool
+ * @author   Yorick de Wid <y.dewid@calculatietool.com>
+ */
+
 namespace BynqIO\CalculatieTool\Http\Controllers;
 
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\SysMessage;
-use \Jenssegers\Agent\Agent;
+use BynqIO\CalculatieTool\Models\Project;
+use BynqIO\CalculatieTool\Models\SysMessage;
 use Illuminate\Http\Request;
 
 use \Auth;
@@ -12,6 +24,14 @@ use \DB;
 
 class DashboardController extends Controller
 {
+    /*
+    |--------------------------------------------------------------------------
+    | Dashboard Controller
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
+
     /**
      * Instantiate the dashboard controller.
      *
@@ -31,13 +51,11 @@ class DashboardController extends Controller
      */
     protected function setUserOnline()
     {
-        if (session()->has('swap_session')) {
-            return;
+        if (!session()->has('swap_session')) {
+            Auth::user()->online_at = \DB::raw('NOW()');
+            Auth::user()->save();
+            DB::table('sessions')->where('user_id', Auth::id())->update(['instance' => gethostname()]);
         }
-
-        Auth::user()->online_at = \DB::raw('NOW()');
-        Auth::user()->save();
-        DB::table('sessions')->where('user_id', Auth::id())->update(['instance' => gethostname()]);
     }
 
     /**
@@ -49,17 +67,16 @@ class DashboardController extends Controller
     protected function welcomeMessage()
     {
         $time = date("H");
-        if ($time >= "6" && $time < "12") {
-            return "Goedemorgen";
-        } else if ($time >= "12" && $time < "17") {
-            return "Goedenmiddag";
-        } else if ($time >= "17") {
-            return "Goedenavond";
-        } else if ($time >= "0") {
-            return "Goedenacht";
-        }
 
-        return "Timeless";
+        if ($time >= "6" && $time < "12") {
+            return __('core.welcome.morning');
+        } else if ($time >= "12" && $time < "17") {
+            return __('core.welcome.afternoon');
+        } else if ($time >= "17") {
+            return __('core.welcome.evening');
+        } else if ($time >= "0") {
+            return __('core.welcome.night');
+        }
     }
 
     /**
@@ -75,7 +92,6 @@ class DashboardController extends Controller
         $this->setUserOnline();
 
         return view('base.dashboard', [
-            'agent'           => new Agent(),
             'welcomeMessage'  => $this->welcomeMessage(),
             'projectCount'    => Project::where('user_id', Auth::id())->count(),
             'systemMessage'   => SysMessage::where('active', true)->orderBy('created_at', 'desc')->first(),

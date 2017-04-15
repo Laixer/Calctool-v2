@@ -1,36 +1,49 @@
 <?php
 
+/**
+ * Copyright (C) 2017 Bynq.io B.V.
+ * All Rights Reserved
+ *
+ * This file is part of the BynqIO\CalculatieTool.com.
+ *
+ * Content can not be copied and/or distributed without the express
+ * permission of the author.
+ *
+ * @package  CalculatieTool
+ * @author   Yorick de Wid <y.dewid@calculatietool.com>
+ */
+
 namespace BynqIO\CalculatieTool\Http\Controllers\Admin;
 
 use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
 
-use \BynqIO\CalculatieTool\Events\UserNotification;
-use \BynqIO\CalculatieTool\Models\SysMessage;
-use \BynqIO\CalculatieTool\Models\Payment;
-use \BynqIO\CalculatieTool\Models\User;
-use \BynqIO\CalculatieTool\Models\UserType;
-use \BynqIO\CalculatieTool\Models\UserTag;
-use \BynqIO\CalculatieTool\Models\UserGroup;
-use \BynqIO\CalculatieTool\Models\OfferPost;
-use \BynqIO\CalculatieTool\Models\Offer;
-use \BynqIO\CalculatieTool\Models\Invoice;
-use \BynqIO\CalculatieTool\Models\InvoicePost;
-use \BynqIO\CalculatieTool\Models\Resource;
-use \BynqIO\CalculatieTool\Models\MessageBox;
-use \BynqIO\CalculatieTool\Models\Product;
-use \BynqIO\CalculatieTool\Models\Audit;
-use \BynqIO\CalculatieTool\Models\Wholesale;
-use \BynqIO\CalculatieTool\Models\Supplier;
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Promotion;
-use \BynqIO\CalculatieTool\Models\AdminLog;
-use \BynqIO\CalculatieTool\Models\ProductGroup;
-use \BynqIO\CalculatieTool\Models\ProductCategory;
-use \BynqIO\CalculatieTool\Models\ProductSubCategory;
-use \Database\Templates\DemoProjectTemplate;
-use \Database\Templates\ValidationProjectTemplate;
+use BynqIO\CalculatieTool\Events\UserNotification;
+use BynqIO\CalculatieTool\Models\SysMessage;
+use BynqIO\CalculatieTool\Models\Payment;
+use BynqIO\CalculatieTool\Models\User;
+use BynqIO\CalculatieTool\Models\UserType;
+use BynqIO\CalculatieTool\Models\UserTag;
+use BynqIO\CalculatieTool\Models\UserGroup;
+use BynqIO\CalculatieTool\Models\OfferPost;
+use BynqIO\CalculatieTool\Models\Offer;
+use BynqIO\CalculatieTool\Models\Invoice;
+use BynqIO\CalculatieTool\Models\InvoicePost;
+use BynqIO\CalculatieTool\Models\Resource;
+use BynqIO\CalculatieTool\Models\MessageBox;
+use BynqIO\CalculatieTool\Models\Product;
+use BynqIO\CalculatieTool\Models\Audit;
+use BynqIO\CalculatieTool\Models\Wholesale;
+use BynqIO\CalculatieTool\Models\Supplier;
+use BynqIO\CalculatieTool\Models\Project;
+use BynqIO\CalculatieTool\Models\Promotion;
+use BynqIO\CalculatieTool\Models\AdminLog;
+use BynqIO\CalculatieTool\Models\ProductGroup;
+use BynqIO\CalculatieTool\Models\ProductCategory;
+use BynqIO\CalculatieTool\Models\ProductSubCategory;
 use BynqIO\CalculatieTool\Http\Controllers\Controller;
+use Database\Templates\DemoProjectTemplate;
+use Database\Templates\ValidationProjectTemplate;
 
 use \Storage;
 use \Auth;

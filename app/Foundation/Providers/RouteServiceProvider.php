@@ -8,6 +8,9 @@
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
+ *
+ * @package  CalculatieTool
+ * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
 namespace BynqIO\CalculatieTool\Foundation\Providers;
@@ -65,8 +68,8 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapWebRoutes();
+        $this->mapAsyncRoutes();
         $this->mapApiRoutes();
-        $this->mapServiceRoutes();
     }
 
     /**
@@ -78,22 +81,38 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
+        $routesWeb   = function ($router) { require base_path('routes/web.php'); };
+        $routesAdmin = function ($router) { require base_path('routes/admin.php'); };
+
         /* Default application routes */
         Route::group([
-            'namespace' => $this->namespace
-        ], function ($router) {
-            require base_path('routes/web.php');
-        });
+            'namespace' => $this->namespace,
+            'middleware' => 'web'
+        ], $routesWeb);
 
         /* Admin application routes */
         Route::group([
             'namespace' => $this->namespaceAdmin,
-            'before' => 'admin',
             'prefix' => 'admin',
             'middleware' => 'admin'
-        ], function ($router) {
-            require base_path('routes/admin.php');
-        });
+        ], $routesAdmin);
+    }
+
+    /**
+     * Define the "async" routes for the application.
+      *
+     * @return void
+     */
+    protected function mapAsyncRoutes()
+    {
+        $routes = function ($router) { require base_path('routes/async.php'); };
+
+        /* Admin application routes */
+        Route::group([
+            'namespace' => $this->namespaceApi,
+            'prefix' => 'api/v1',
+            'middleware' => 'async'
+        ], $routes);
     }
 
     /**
@@ -103,29 +122,14 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        /* Admin application routes */
-        Route::group([
-            'namespace' => $this->namespaceApi,
-            'prefix' => 'api/v1',
-        ], function ($router) {
-            require base_path('routes/api.php');
-        });
-    }
+        $routes = function ($router) { require base_path('routes/api.php'); };
 
-    /**
-     * Define the "service" routes for the application.
-      *
-     * @return void
-     */
-    protected function mapServiceRoutes()
-    {
         /* Admin application routes */
         Route::group([
             'namespace' => $this->namespaceApi,
             'prefix' => 'oauth2',
-        ], function ($router) {
-            require base_path('routes/service.php');
-        });
+            'middleware' => 'api'
+        ], $routes);
     }
 
 }

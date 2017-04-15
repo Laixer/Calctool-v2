@@ -1,29 +1,42 @@
 <?php
 
+/**
+ * Copyright (C) 2017 Bynq.io B.V.
+ * All Rights Reserved
+ *
+ * This file is part of the BynqIO\CalculatieTool.com.
+ *
+ * Content can not be copied and/or distributed without the express
+ * permission of the author.
+ *
+ * @package  CalculatieTool
+ * @author   Yorick de Wid <y.dewid@calculatietool.com>
+ */
+
 namespace BynqIO\CalculatieTool\Http\Controllers\Api;
 
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Chapter;
-use \BynqIO\CalculatieTool\Models\Activity;
-use \BynqIO\CalculatieTool\Models\Timesheet;
-use \BynqIO\CalculatieTool\Models\TimesheetKind;
-use \BynqIO\CalculatieTool\Models\Purchase;
-use \BynqIO\CalculatieTool\Models\PurchaseKind;
-use \BynqIO\CalculatieTool\Models\Wholesale;
-use \BynqIO\CalculatieTool\Models\Relation;
-use \BynqIO\CalculatieTool\Models\RelationKind;
-use \BynqIO\CalculatieTool\Models\Contact;
-use \BynqIO\CalculatieTool\Models\MoreLabor;
-use \BynqIO\CalculatieTool\Models\User;
-use Illuminate\Http\Request;
-use \BynqIO\CalculatieTool\Models\EstimateLabor;
+use BynqIO\CalculatieTool\Models\Project;
+use BynqIO\CalculatieTool\Models\Chapter;
+use BynqIO\CalculatieTool\Models\Activity;
+use BynqIO\CalculatieTool\Models\Timesheet;
+use BynqIO\CalculatieTool\Models\TimesheetKind;
+use BynqIO\CalculatieTool\Models\Purchase;
+use BynqIO\CalculatieTool\Models\PurchaseKind;
+use BynqIO\CalculatieTool\Models\Wholesale;
+use BynqIO\CalculatieTool\Models\Relation;
+use BynqIO\CalculatieTool\Models\RelationKind;
+use BynqIO\CalculatieTool\Models\Contact;
+use BynqIO\CalculatieTool\Models\MoreLabor;
+use BynqIO\CalculatieTool\Models\User;
+use BynqIO\CalculatieTool\Models\EstimateLabor;
 use BynqIO\CalculatieTool\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 use \Auth;
 use \DB;
 
-class ApiController extends Controller {
-
+class ApiController extends Controller
+{
     /*
     |--------------------------------------------------------------------------
     | Default Home Controller

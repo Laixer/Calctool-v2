@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', 'Dashboard')
+@section('title', __('core.dashboard'))
 
 @push('scripts')
 <script src="/components/angular/angular.min.js"></script>
@@ -54,16 +54,11 @@
             </div>
             @endif
 
-            @if ($agent->isMobile())
-            <div class="alert alert-warning">
-                <i class="fa fa-warning"></i>
-                <strong>De applicatie werkt het beste op desktop of tablet</strong>
-            </div>
-            @endif
+            @include('layout.message')
 
             @if (Auth::user()->isNewPeriod())
             <div class="pull-right" style="margin: 10px 0 20px 0">
-                <a href="/get-help" class="btn btn-default hidden-sm hidden-xs" type="button"><i class="fa fa-support"></i>Hulp gewenst?</a>
+                <a href="/get-help" class="btn btn-default hidden-sm hidden-xs" type="button"><i class="fa fa-support"></i>@lang('core.needhelp')</a>
             </div>
             @endif
 
@@ -80,7 +75,7 @@
                                     <span class="block fa fa-home fsize60"></span>
                                 </span>
                             </a>
-                            <a href="/mycompany" class="btn btn-primary add_to_cart"><strong> Bedrijfsgegevens</strong></a>
+                            <a href="/mycompany" class="btn btn-primary add_to_cart"><strong> @lang('core.companyinfo')</strong></a>
 
                         </figure>
                     </div>
@@ -96,7 +91,7 @@
                                     <span class="block fa fa-wrench fsize60"></span>
                                 </span>
                             </a>
-                            <a href="/material" class="btn btn-primary add_to_cart"><strong> Producten</strong></a>
+                            <a href="/material" class="btn btn-primary add_to_cart"><strong> @lang('core.products')</strong></a>
                         </figure>
                     </div>
                 </div>
@@ -110,7 +105,7 @@
                                     <span class="block fa fa-clock-o fsize60"></span>
                                 </span>
                             </a>
-                            <a href="/timesheet" class="btn btn-primary add_to_cart"><strong> Urenregistratie</strong></a>
+                            <a href="/timesheet" class="btn btn-primary add_to_cart"><strong> @lang('core.timesheet')</strong></a>
                         </figure>
                     </div>
                 </div>
@@ -124,7 +119,7 @@
                                     <span class="block fa fa-shopping-cart fsize60"></span>
                                 </span>
                             </a>
-                            <a href="/purchase" class="btn btn-primary add_to_cart"><strong> Inkoopfacturen</strong></a>
+                            <a href="/purchase" class="btn btn-primary add_to_cart"><strong> @lang('core.purchaseinvoice')</strong></a>
                         </figure>
                     </div>
                 </div>
@@ -138,7 +133,7 @@
                                     <span class="block fa fa-usd fsize60"></span>
                                 </span>
                             </a>
-                            <a href="/finance/overview" class="btn btn-primary add_to_cart"><strong> Financieel</strong></a>
+                            <a href="/finance/overview" class="btn btn-primary add_to_cart"><strong> @lang('core.financial')</strong></a>
                         </figure>
                     </div>
                 </div>
@@ -152,7 +147,7 @@
                                     <span class="block fa fa-wrench fsize60"></span>
                                 </span>
                             </a>
-                            <a href="javascript:void(0);" style="cursor: default;" class="btn btn-primary add_to_cart"><strong> Producten</strong></a>
+                            <a href="javascript:void(0);" style="cursor: default;" class="btn btn-primary add_to_cart"><strong> XXX</strong></a>
                         </figure>
                     </div>
                 </div>
@@ -166,7 +161,7 @@
                                     <span class="block fa fa-clock-o fsize60"></span>
                                 </span>
                             </a>
-                            <a href="javascript:void(0);" style="cursor: default;" class="btn btn-primary add_to_cart"><strong> Urenregistratie</strong></a>
+                            <a href="javascript:void(0);" style="cursor: default;" class="btn btn-primary add_to_cart"><strong> @lang('core.timesheet')</strong></a>
                         </figure>
                     </div>
                 </div>
@@ -180,7 +175,7 @@
                                     <span class="block fa fa-shopping-cart fsize60"></span>
                                 </span>
                             </a>
-                            <a href="javascript:void(0);" style="cursor: default;" class="btn btn-primary add_to_cart"><strong> Inkoopfacturen</strong></a>
+                            <a href="javascript:void(0);" style="cursor: default;" class="btn btn-primary add_to_cart"><strong> @lang('core.purchaseinvoice')</strong></a>
                         </figure>
                     </div>
                 </div>
@@ -194,7 +189,7 @@
                                     <span class="block fa fa-usd fsize60"></span>
                                 </span>
                             </a>
-                            <a href="javascript:void(0);" style="cursor: default;" class="btn btn-primary add_to_cart"><strong> Financieel</strong></a>
+                            <a href="javascript:void(0);" style="cursor: default;" class="btn btn-primary add_to_cart"><strong> @lang('core.financial')</strong></a>
                         </figure>
                     </div>
                 </div>
@@ -209,7 +204,7 @@
                                     <span class="block fa fa-users fsize60"></span>
                                 </span>
                             </a>
-                            <a href="/relation" class="btn btn-primary add_to_cart"><strong> Relaties</strong></a>
+                            <a href="/relation" class="btn btn-primary add_to_cart"><strong> {{ trans_choice('core.relation', 2) }}</strong></a>
                         </figure>
                     </div>
                 </div>
@@ -223,7 +218,7 @@
                     <div class="col-md-12">
                         <br>
                         @if ($projectCount)
-                        <h2><strong>Projecten</strong>&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube2"></a></h2>
+                        <h2><strong>{{ trans_choice('core.project', 2) }}</strong>&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube2"></a></h2>
 
                         <div class="white-row" ng-controller="projectController">
                             <div class="row">
@@ -231,7 +226,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" ng-model="query" placeholder="Zoek in projecten...">
                                         <span class="input-group-btn">
-                                            <a href="/project/new" class="btn btn-primary" type="button"><i class="fa fa-file"></i> Nieuw project</a>
+                                            <a href="/project/new" class="btn btn-primary" type="button"><i class="fa fa-file"></i> @lang('core.new') {{ trans_choice('core.project', 1) }}</a>
                                         </span>
                                     </div>
                                 </div>
@@ -240,10 +235,10 @@
                             <table ng-cloak class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th class="col-md-5" ng-click="orderByField='project_name'; reverseSort = !reverseSort">Projectnaam</th>
-                                        <th class="col-md-3" ng-click="orderByField='relation'; reverseSort = !reverseSort">Opdrachtgever</th>
-                                        <th class="col-md-2 hidden-sm hidden-xs" ng-click="orderByField='type_name'; reverseSort = !reverseSort">Type</th>
-                                        <th class="col-md-2 hidden-xs" ng-click="orderByField='address_city'; reverseSort = !reverseSort">Plaats</th>
+                                        <th class="col-md-5" ng-click="orderByField='project_name'; reverseSort = !reverseSort">@lang('core.projectname')</th>
+                                        <th class="col-md-3" ng-click="orderByField='relation'; reverseSort = !reverseSort">@lang('core.customer')</th>
+                                        <th class="col-md-2 hidden-sm hidden-xs" ng-click="orderByField='type_name'; reverseSort = !reverseSort">@lang('core.type')</th>
+                                        <th class="col-md-2 hidden-xs" ng-click="orderByField='address_city'; reverseSort = !reverseSort">@lang('core.city')</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -257,7 +252,7 @@
                                         <td class="col-md-2 hidden-xs">@{{ project.address_city }}</td>
                                     </tr>
                                     <tr ng-show="results == 0">
-                                        <td colspan="6" style="text-align: center;">Geen projecten beschikbaar</td>
+                                        <td colspan="6" style="text-align: center;">@lang('core.noprodavail')</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -265,19 +260,19 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="btn-group item-full">
-                                        <button class="btn btn-primary" name="toggle-close"><i class="fa fa-close"></i> Gesloten projecten</a>
+                                        <button class="btn btn-primary" name="toggle-close"><i class="fa fa-close"></i> @lang('core.closed') {{ trans_choice('core.project', 2) }}</a>
                                         </div>
                                     </div>
                                 </div>
 
                             </div>
                             @else
-                            <h2><strong>De eerste</strong> stap... </h2>
+                            <h2><strong>@lang('core.firststep')</strong></h2>
                             <div class="bs-callout text-center whiteBg" style="margin:0">
                                 <h3>			
-                                    <a href="javascript:void(0);" class="btn btn-primary btn-lg" class="fa fa-youtube-play yt-vid" data-toggle="modal" data-target="#myYouTube3">Bekijk de Welkomstvideo</a>
+                                    <a href="javascript:void(0);" class="btn btn-primary btn-lg" class="fa fa-youtube-play yt-vid" data-toggle="modal" data-target="#myYouTube3">@lang('core.watchwelcvid')</a>
                                         of
-                                    <a href="/project/new" class="btn btn-primary btn-lg">Maak eerste project aan <i class="fa fa-arrow-right"></i></a>
+                                    <a href="/project/new" class="btn btn-primary btn-lg">@lang('core.crefirstprod') <i class="fa fa-arrow-right"></i></a>
                                 </h3>
                             </div>
 
@@ -313,7 +308,7 @@
                         });
                         $scope.$apply();
                         $scope.filter_close = false;
-                        $("[name='toggle-close']").html('<i class="fa fa-close"></i> Gesloten projecten');
+                        $("[name='toggle-close']").html('<i class="fa fa-close"></i> @lang('core.closed') {{ trans_choice('core.project', 2) }}');
                     } else {
                         $scope.projects = [];
                         angular.forEach($scope._projects, function(value, key) {
@@ -323,7 +318,7 @@
                         });
                         $scope.$apply();
                         $scope.filter_close = true;
-                        $("[name='toggle-close']").html('<i class="fa fa-folder-open" aria-hidden="true"></i> Open projecten');
+                        $("[name='toggle-close']").html('<i class="fa fa-folder-open" aria-hidden="true"></i> @lang('core.open') {{ trans_choice('core.project', 2) }}');
                     }
                 });
 
@@ -334,4 +329,4 @@
             });
         });
     </script>
-    @stop
+@stop

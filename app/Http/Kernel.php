@@ -2,6 +2,17 @@
 
 namespace BynqIO\CalculatieTool\Http;
 
+use BynqIO\CalculatieTool\Http\Middleware\AdminPolicy;
+use BynqIO\CalculatieTool\Http\Middleware\TrimStrings;
+use BynqIO\CalculatieTool\Http\Middleware\EncryptCookies;
+use BynqIO\CalculatieTool\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Routing\Middleware\SubstituteBindings;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Illuminate\Foundation\Http\Middleware\ValidatePostSize;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode;
+use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -12,16 +23,12 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-        \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-        \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
-        \BynqIO\CalculatieTool\Http\Middleware\EncryptCookies::class,
-        \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-        \Illuminate\Session\Middleware\StartSession::class,
-        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-        \BynqIO\CalculatieTool\Http\Middleware\VerifyCsrfToken::class,
+        CheckForMaintenanceMode::class,
+        ValidatePostSize::class,
+        ConvertEmptyStringsToNull::class,
+        
         \LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware::class,
-        \BynqIO\CalculatieTool\Http\Middleware\TrimStrings::class,
-        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        TrimStrings::class,
     ];
 
     /**
@@ -30,16 +37,35 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middlewareGroups = [
-        'admin' => [
-            \BynqIO\CalculatieTool\Http\Middleware\Admin::class,
+        'web' => [
+            EncryptCookies::class,
+            AddQueuedCookiesToResponse::class,
+            StartSession::class,
+            ShareErrorsFromSession::class,
+            VerifyCsrfToken::class,
+            SubstituteBindings::class,
         ],
 
-        'payzone' => [
-            \BynqIO\CalculatieTool\Http\Middleware\PayRestrict::class,
+        'async' => [
+            EncryptCookies::class,
+            StartSession::class,
+            VerifyCsrfToken::class,
+            SubstituteBindings::class,
+        ],
+
+        'admin' => [
+            EncryptCookies::class,
+            AddQueuedCookiesToResponse::class,
+            StartSession::class,
+            ShareErrorsFromSession::class,
+            VerifyCsrfToken::class,
+            SubstituteBindings::class,
+            AdminPolicy::class,
         ],
 
         'api' => [
             'throttle:60,1',
+            'bindings'
         ],
     ];
 
@@ -51,8 +77,8 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'utm' => \BynqIO\CalculatieTool\Http\Middleware\UTMState::class,
         'auth' => \BynqIO\CalculatieTool\Http\Middleware\Authenticate::class,
-        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \BynqIO\CalculatieTool\Http\Middleware\RedirectIfAuthenticated::class,
+        'payzone' => \BynqIO\CalculatieTool\Http\Middleware\PayRestrict::class,
         'oauth' => \LucaDegasperi\OAuth2Server\Middleware\OAuthMiddleware::class,
         'oauth-user' => \LucaDegasperi\OAuth2Server\Middleware\OAuthUserOwnerMiddleware::class,
         'oauth-client' => \LucaDegasperi\OAuth2Server\Middleware\OAuthClientOwnerMiddleware::class,
