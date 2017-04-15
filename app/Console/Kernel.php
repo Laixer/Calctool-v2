@@ -1,18 +1,18 @@
 <?php
 
-namespace CalculatieTool\Console;
+namespace BynqIO\CalculatieTool\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\Contact;
-use \CalculatieTool\Models\Offer;
-use \CalculatieTool\Models\Invoice;
-use \CalculatieTool\Models\User;
-use \CalculatieTool\Models\UserGroup;
-use \CalculatieTool\Models\MessageBox;
-use \CalculatieTool\Models\Payment;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\Contact;
+use \BynqIO\CalculatieTool\Models\Offer;
+use \BynqIO\CalculatieTool\Models\Invoice;
+use \BynqIO\CalculatieTool\Models\User;
+use \BynqIO\CalculatieTool\Models\UserGroup;
+use \BynqIO\CalculatieTool\Models\MessageBox;
+use \BynqIO\CalculatieTool\Models\Payment;
 
 use \Mail;
 use \Newsletter;
@@ -25,12 +25,12 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \CalculatieTool\Console\Commands\DropHard::class,
-        \CalculatieTool\Console\Commands\MaterialImport::class,
-        \CalculatieTool\Console\Commands\StorageClear::class,
-        \CalculatieTool\Console\Commands\SessionClear::class,
-        \CalculatieTool\Console\Commands\OauthClear::class,
-        \CalculatieTool\Console\Commands\AdminReset::class,
+        \BynqIO\CalculatieTool\Console\Commands\DropHard::class,
+        \BynqIO\CalculatieTool\Console\Commands\MaterialImport::class,
+        \BynqIO\CalculatieTool\Console\Commands\StorageClear::class,
+        \BynqIO\CalculatieTool\Console\Commands\SessionClear::class,
+        \BynqIO\CalculatieTool\Console\Commands\OauthClear::class,
+        \BynqIO\CalculatieTool\Console\Commands\AdminReset::class,
     ];
 
     /**
@@ -63,14 +63,14 @@ class Kernel extends ConsoleKernel
                     );
                     Mail::send('mail.invoice_demand', $data, function($message) use ($data) {
                         $message->to($data['email'], strtolower(trim($data['client'])));
-                        $message->subject('CalculatieTool.com - Vordering');
-                        $message->from('info@calculatietool.com', 'CalculatieTool.com');
-                        $message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+                        $message->subject('BynqIO\CalculatieTool.com - Vordering');
+                        $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+                        $message->replyTo('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
                     });
 
                     $message = new MessageBox;
                     $message->subject = 'Factuur over betalingsdatum';
-                    $message->message = 'Een vordering voor '.$project->project_name.' is verzonden naar '.$contact_client->getFormalName().'. De CalculatieTool.com neemt nu geen verdere stappen meer voor afhandeling van deze factuur.';
+                    $message->message = 'Een vordering voor '.$project->project_name.' is verzonden naar '.$contact_client->getFormalName().'. De BynqIO\CalculatieTool.com neemt nu geen verdere stappen meer voor afhandeling van deze factuur.';
                     $message->from_user = User::where('username', 'system')->first()['id'];
                     $message->user_id = $project->user_id;
 
@@ -86,9 +86,9 @@ class Kernel extends ConsoleKernel
                     );
                     Mail::send('mail.invoice_last_reminder', $data, function($message) use ($data) {
                         $message->to($data['email'], strtolower(trim($data['client'])));
-                        $message->subject('CalculatieTool.com - Tweede betalingsherinnering');
-                        $message->from('info@calculatietool.com', 'CalculatieTool.com');
-                        $message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+                        $message->subject('BynqIO\CalculatieTool.com - Tweede betalingsherinnering');
+                        $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+                        $message->replyTo('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
                     });
 
                     $message = new MessageBox;
@@ -109,9 +109,9 @@ class Kernel extends ConsoleKernel
                     );
                     Mail::send('mail.invoice_first_reminder', $data, function($message) use ($data) {
                         $message->to($data['email'], strtolower(trim($data['client'])));
-                        $message->subject('CalculatieTool.com - Betalingsherinnering');
-                        $message->from('info@calculatietool.com', 'CalculatieTool.com');
-                        $message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+                        $message->subject('BynqIO\CalculatieTool.com - Betalingsherinnering');
+                        $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+                        $message->replyTo('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
                     });
 
                     $message = new MessageBox;
@@ -140,9 +140,9 @@ class Kernel extends ConsoleKernel
 
                     Mail::send('mail.due', $data, function($message) use ($data) {
                         $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-                        $message->subject('CalculatieTool.com - Account verlengen');
-                        $message->from('info@calculatietool.com', 'CalculatieTool.com');
-                        $message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+                        $message->subject('BynqIO\CalculatieTool.com - Account verlengen');
+                        $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+                        $message->replyTo('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
                     });
                 }
             }

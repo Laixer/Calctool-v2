@@ -1,9 +1,9 @@
 <?php
 
-use \CalculatieTool\Models\Wholesale;
-use \CalculatieTool\Models\WholesaleType;
-use \CalculatieTool\Models\Province;
-use \CalculatieTool\Models\Country;
+use \BynqIO\CalculatieTool\Models\Wholesale;
+use \BynqIO\CalculatieTool\Models\WholesaleType;
+use \BynqIO\CalculatieTool\Models\Province;
+use \BynqIO\CalculatieTool\Models\Country;
 
 $common_access_error = false;
 $wholesale = Wholesale::find(Route::Input('wholesale_id'));

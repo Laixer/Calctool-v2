@@ -1,23 +1,23 @@
 <?php
 
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\Relation;
-use \CalculatieTool\Models\Contact;
-use \CalculatieTool\Models\Offer;
-use \CalculatieTool\Models\Resource;
-use \CalculatieTool\Models\ProjectType;
-use \CalculatieTool\Calculus\CalculationEndresult;
-use \CalculatieTool\Http\Controllers\OfferController;
-use \CalculatieTool\Models\DeliverTime;
-use \CalculatieTool\Models\Valid;
-use \CalculatieTool\Models\Chapter;
-use \CalculatieTool\Models\Tax;
-use \CalculatieTool\Models\BlancRow;
-use \CalculatieTool\Models\Activity;
-use \CalculatieTool\Models\Part;
-use \CalculatieTool\Models\PartType;
-use \CalculatieTool\Calculus\CalculationOverview;
-use \CalculatieTool\Calculus\BlancRowsEndresult;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\Relation;
+use \BynqIO\CalculatieTool\Models\Contact;
+use \BynqIO\CalculatieTool\Models\Offer;
+use \BynqIO\CalculatieTool\Models\Resource;
+use \BynqIO\CalculatieTool\Models\ProjectType;
+use \BynqIO\CalculatieTool\Calculus\CalculationEndresult;
+use \BynqIO\CalculatieTool\Http\Controllers\OfferController;
+use \BynqIO\CalculatieTool\Models\DeliverTime;
+use \BynqIO\CalculatieTool\Models\Valid;
+use \BynqIO\CalculatieTool\Models\Chapter;
+use \BynqIO\CalculatieTool\Models\Tax;
+use \BynqIO\CalculatieTool\Models\BlancRow;
+use \BynqIO\CalculatieTool\Models\Activity;
+use \BynqIO\CalculatieTool\Models\Part;
+use \BynqIO\CalculatieTool\Models\PartType;
+use \BynqIO\CalculatieTool\Calculus\CalculationOverview;
+use \BynqIO\CalculatieTool\Calculus\BlancRowsEndresult;
 
 $c=false;
 

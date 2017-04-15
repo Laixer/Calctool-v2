@@ -1,25 +1,25 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers\Calculation;
+namespace BynqIO\CalculatieTool\Http\Controllers\Calculation;
 
 use Illuminate\Http\Request;
 
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\Chapter;
-use \CalculatieTool\Models\Activity;
-use \CalculatieTool\Models\FavoriteActivity;
-use \CalculatieTool\Models\Detail;
-use \CalculatieTool\Models\PartType;
-use \CalculatieTool\Models\Part;
-use \CalculatieTool\Models\ProjectType;
-use \CalculatieTool\Models\Tax;
-use \CalculatieTool\Models\MoreEquipment;
-use \CalculatieTool\Models\MoreLabor;
-use \CalculatieTool\Models\MoreMaterial;
-use \CalculatieTool\Models\FavoriteLabor;
-use \CalculatieTool\Models\FavoriteMaterial;
-use \CalculatieTool\Models\FavoriteEquipment;
-use CalculatieTool\Http\Controllers\Controller;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\Chapter;
+use \BynqIO\CalculatieTool\Models\Activity;
+use \BynqIO\CalculatieTool\Models\FavoriteActivity;
+use \BynqIO\CalculatieTool\Models\Detail;
+use \BynqIO\CalculatieTool\Models\PartType;
+use \BynqIO\CalculatieTool\Models\Part;
+use \BynqIO\CalculatieTool\Models\ProjectType;
+use \BynqIO\CalculatieTool\Models\Tax;
+use \BynqIO\CalculatieTool\Models\MoreEquipment;
+use \BynqIO\CalculatieTool\Models\MoreLabor;
+use \BynqIO\CalculatieTool\Models\MoreMaterial;
+use \BynqIO\CalculatieTool\Models\FavoriteLabor;
+use \BynqIO\CalculatieTool\Models\FavoriteMaterial;
+use \BynqIO\CalculatieTool\Models\FavoriteEquipment;
+use BynqIO\CalculatieTool\Http\Controllers\Controller;
 
 use \Auth;
 

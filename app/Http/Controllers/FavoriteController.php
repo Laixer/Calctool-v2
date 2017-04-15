@@ -1,14 +1,14 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers;
+namespace BynqIO\CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\FavoriteActivity;
-use \CalculatieTool\Models\FavoriteMaterial;
-use \CalculatieTool\Models\FavoriteEquipment;
-use \CalculatieTool\Models\FavoriteLabor;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\FavoriteActivity;
+use \BynqIO\CalculatieTool\Models\FavoriteMaterial;
+use \BynqIO\CalculatieTool\Models\FavoriteEquipment;
+use \BynqIO\CalculatieTool\Models\FavoriteLabor;
 
 class FavoriteController extends Controller {
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace CalculatieTool\Calculus;
+namespace BynqIO\CalculatieTool\Calculus;
 
-use \CalculatieTool\Models\Chapter;
-use \CalculatieTool\Models\Activity;
-use \CalculatieTool\Models\Purchase;
-use \CalculatieTool\Models\PurchaseKind;
-use \CalculatieTool\Models\Timesheet;
-use \CalculatieTool\Models\TimesheetKind;
+use \BynqIO\CalculatieTool\Models\Chapter;
+use \BynqIO\CalculatieTool\Models\Activity;
+use \BynqIO\CalculatieTool\Models\Purchase;
+use \BynqIO\CalculatieTool\Models\PurchaseKind;
+use \BynqIO\CalculatieTool\Models\Timesheet;
+use \BynqIO\CalculatieTool\Models\TimesheetKind;
 
-use \CalculatieTool\Calculus\BlancRowsEndresult;
+use \BynqIO\CalculatieTool\Calculus\BlancRowsEndresult;
 
 /*
  * Eindresultaat

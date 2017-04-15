@@ -41,26 +41,14 @@ Route::group(['middleware' => 'auth'], function() {
     Route::any('logout', 'AuthController@logout')->name('logout');
 
     Route::get('admin/switch/back', 'AdminController@getSwitchSessionBack');
-    Route::get('result/project-{project_id}', function() {
-        return view('calc.result');
-    })->middleware('payzone');
     
     /* Resource actions*/
     Route::get('res-{resource_id}/download', 'ResourceController@download');
     Route::get('res-{resource_id}/view', 'ResourceController@view');
     Route::get('res-{resource_id}/delete', 'ResourceController@doDeleteResource');
-    
-    Route::post('resource/upload', 'ProjectController@doUploadProjectDocument');//TODO: rename url
 
-    Route::get('import', function() {
-        return view('base.import');
-    });
-    Route::get('get-help', function() {
-        return view('base.get_help');
-    });
-
-    Route::post('import/save',                  'AppsController@doImportRelation');
-    Route::get('relation/export',               'AppsController@getExportRelation');
+    /* Common actions*/
+    Route::get('get-help', 'CommonController@helpPage');
    
     /* Module Group Account */
     Route::group(['namespace' => $this->namespaceAccount], function() {
@@ -83,9 +71,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('notification/message-{message}/delete', 'NotificationController@doDelete')->where('message', '[0-9]+');
     Route::get('notification/message-{message}',        'NotificationController@getMessage')->where('message', '[0-9]+');
 
-    Route::get('finance/overview', function() {
-        return view('finance.overview');
-    });
+    /* Finance actions */
+    Route::get('finance/overview', 'Finance\OverviewController@overview');
+
     Route::get('affiliate/5bdc2bbd-4021-4e12-9012-647385c28c05', function(){
         return view('user.affiliate');
     });
@@ -97,7 +85,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('payment/increasefree',         'PaymentController@getPaymentFree');
     Route::get('payment/subscription/cancel',  'PaymentController@getSubscriptionCancel');
 
-    /* Routes by InvoiceController */
+    /* Module Group Invoice */
     Route::group(['middleware' => 'payzone'], function() {
         Route::post('invoice/updatecondition', 'InvoiceController@doUpdateCondition');
         Route::post('invoice/updatecode', 'InvoiceController@doUpdateCode');
@@ -130,6 +118,7 @@ Route::group(['middleware' => 'auth'], function() {
         });
     });
 
+    /* Module Group Proposal */
     Route::group(['middleware' => 'payzone'], function() {
         Route::get('offerversions/project-{project_id}', 'Calculation\CalcController@getOfferAll');;
         Route::get('offer/project-{project_id}', 'Calculation\CalcController@getOffer');;
@@ -142,6 +131,11 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('offer/sendmail',                             'OfferController@doSendOffer');
         Route::post('offer/sendpost',                             'OfferController@doSendPostOffer');
     });
+
+    //TODO: move into namespaceCalculation
+    Route::get('result/project-{project_id}', function() {
+        return view('calc.result');
+    })->middleware('payzone');
 
     /* Module Group Calculation */
     Route::group(['namespace' => $this->namespaceCalculation, 'middleware' => 'payzone'], function() {
@@ -262,6 +256,14 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('more/moveactivity',                         'MoreController@doMoveActivity');
     });
 
+    //TODO: move into namespaceRelation
+    Route::get('import', function() {
+        return view('base.import');
+    });
+
+    Route::post('import/save',                  'Relation\ImportController');
+    Route::get('relation/export',               'Relation\ExportController');
+
     /* Module Group Relation */
     Route::group(['namespace' => $this->namespaceRelation, 'middleware' => 'payzone'], function() {
 
@@ -315,6 +317,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('project-{project_id}/packingslip',              'ProjectController@getPackingSlip')->middleware('payzone');
     Route::get('project-{project_id}/packlist',                 'ProjectController@getPackList')->middleware('payzone');
     Route::get('project-{project_id}/printoverview',            'ProjectController@getPrintOverview')->middleware('payzone');
+    Route::post('resource/upload', 'ProjectController@doUploadProjectDocument');//TODO: rename url
 
     /* Cost pages */
     Route::group(['middleware' => 'payzone'], function() {

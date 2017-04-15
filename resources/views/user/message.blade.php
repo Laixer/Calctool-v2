@@ -1,6 +1,6 @@
 <?php
-use \CalculatieTool\Models\User;
-use \CalculatieTool\Models\MessageBox;
+use \BynqIO\CalculatieTool\Models\User;
+use \BynqIO\CalculatieTool\Models\MessageBox;
 
 $common_access_error = false;
 $message = MessageBox::find(Route::Input('message'));

@@ -1,9 +1,9 @@
 <?php
 
-namespace CalculatieTool\Listeners;
+namespace BynqIO\CalculatieTool\Listeners;
 
-use CalculatieTool\Events\UserPaymentSuccess as UserPaymentSuccessEvent;
-use CalculatieTool\Jobs\CreatePaymentInvoice;
+use BynqIO\CalculatieTool\Events\UserPaymentSuccess as UserPaymentSuccessEvent;
+use BynqIO\CalculatieTool\Jobs\CreatePaymentInvoice;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 

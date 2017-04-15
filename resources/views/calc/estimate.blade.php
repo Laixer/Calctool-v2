@@ -1,26 +1,26 @@
 <?php
 
-use \CalculatieTool\Models\TimesheetKind;
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\ProductGroup;
-use \CalculatieTool\Models\ProductCategory;
-use \CalculatieTool\Models\ProductSubCategory;
-use \CalculatieTool\Models\Chapter;
-use \CalculatieTool\Models\Activity;
-use \CalculatieTool\Models\PartType;
-use \CalculatieTool\Models\Part;
-use \CalculatieTool\Models\Product;
-use \CalculatieTool\Models\Tax;
-use \CalculatieTool\Models\Supplier;
-use \CalculatieTool\Models\Wholesale;
-use \CalculatieTool\Models\EstimateLabor;
-use \CalculatieTool\Calculus\EstimateRegister;
-use \CalculatieTool\Models\EstimateMaterial;
-use \CalculatieTool\Models\EstimateEquipment;
-use \CalculatieTool\Calculus\EstimateOverview;
-use \CalculatieTool\Models\ProjectType;
-use \CalculatieTool\Models\Timesheet;
-use \CalculatieTool\Calculus\SetEstimateEndresult;
+use \BynqIO\CalculatieTool\Models\TimesheetKind;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\ProductGroup;
+use \BynqIO\CalculatieTool\Models\ProductCategory;
+use \BynqIO\CalculatieTool\Models\ProductSubCategory;
+use \BynqIO\CalculatieTool\Models\Chapter;
+use \BynqIO\CalculatieTool\Models\Activity;
+use \BynqIO\CalculatieTool\Models\PartType;
+use \BynqIO\CalculatieTool\Models\Part;
+use \BynqIO\CalculatieTool\Models\Product;
+use \BynqIO\CalculatieTool\Models\Tax;
+use \BynqIO\CalculatieTool\Models\Supplier;
+use \BynqIO\CalculatieTool\Models\Wholesale;
+use \BynqIO\CalculatieTool\Models\EstimateLabor;
+use \BynqIO\CalculatieTool\Calculus\EstimateRegister;
+use \BynqIO\CalculatieTool\Models\EstimateMaterial;
+use \BynqIO\CalculatieTool\Models\EstimateEquipment;
+use \BynqIO\CalculatieTool\Calculus\EstimateOverview;
+use \BynqIO\CalculatieTool\Models\ProjectType;
+use \BynqIO\CalculatieTool\Models\Timesheet;
+use \BynqIO\CalculatieTool\Calculus\SetEstimateEndresult;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));

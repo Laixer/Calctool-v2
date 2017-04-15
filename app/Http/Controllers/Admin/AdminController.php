@@ -1,36 +1,36 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers\Admin;
+namespace BynqIO\CalculatieTool\Http\Controllers\Admin;
 
 use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
 
-use \CalculatieTool\Events\UserNotification;
-use \CalculatieTool\Models\SysMessage;
-use \CalculatieTool\Models\Payment;
-use \CalculatieTool\Models\User;
-use \CalculatieTool\Models\UserType;
-use \CalculatieTool\Models\UserTag;
-use \CalculatieTool\Models\UserGroup;
-use \CalculatieTool\Models\OfferPost;
-use \CalculatieTool\Models\Offer;
-use \CalculatieTool\Models\Invoice;
-use \CalculatieTool\Models\InvoicePost;
-use \CalculatieTool\Models\Resource;
-use \CalculatieTool\Models\MessageBox;
-use \CalculatieTool\Models\Product;
-use \CalculatieTool\Models\Audit;
-use \CalculatieTool\Models\Wholesale;
-use \CalculatieTool\Models\Supplier;
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\Promotion;
-use \CalculatieTool\Models\AdminLog;
-use \CalculatieTool\Models\ProductGroup;
-use \CalculatieTool\Models\ProductCategory;
-use \CalculatieTool\Models\ProductSubCategory;
+use \BynqIO\CalculatieTool\Events\UserNotification;
+use \BynqIO\CalculatieTool\Models\SysMessage;
+use \BynqIO\CalculatieTool\Models\Payment;
+use \BynqIO\CalculatieTool\Models\User;
+use \BynqIO\CalculatieTool\Models\UserType;
+use \BynqIO\CalculatieTool\Models\UserTag;
+use \BynqIO\CalculatieTool\Models\UserGroup;
+use \BynqIO\CalculatieTool\Models\OfferPost;
+use \BynqIO\CalculatieTool\Models\Offer;
+use \BynqIO\CalculatieTool\Models\Invoice;
+use \BynqIO\CalculatieTool\Models\InvoicePost;
+use \BynqIO\CalculatieTool\Models\Resource;
+use \BynqIO\CalculatieTool\Models\MessageBox;
+use \BynqIO\CalculatieTool\Models\Product;
+use \BynqIO\CalculatieTool\Models\Audit;
+use \BynqIO\CalculatieTool\Models\Wholesale;
+use \BynqIO\CalculatieTool\Models\Supplier;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\Promotion;
+use \BynqIO\CalculatieTool\Models\AdminLog;
+use \BynqIO\CalculatieTool\Models\ProductGroup;
+use \BynqIO\CalculatieTool\Models\ProductCategory;
+use \BynqIO\CalculatieTool\Models\ProductSubCategory;
 use \Database\Templates\DemoProjectTemplate;
 use \Database\Templates\ValidationProjectTemplate;
-use CalculatieTool\Http\Controllers\Controller;
+use BynqIO\CalculatieTool\Http\Controllers\Controller;
 
 use \Storage;
 use \Auth;
@@ -138,9 +138,9 @@ class AdminController extends Controller
             $data = array('email' => $user->email, 'amount' => number_format($order->amount, 2,",","."), 'firstname' => $user->firstname, 'lastname' => $user->lastname);
             Mail::send('mail.refund', $data, function($message) use ($data) {
                 $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-                $message->subject('CalculatieTool.com - Terugstorting');
-                $message->from('info@calculatietool.com', 'CalculatieTool.com');
-                $message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
+                $message->subject('BynqIO\CalculatieTool.com - Terugstorting');
+                $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+                $message->replyTo('administratie@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
             });
 
             $user->save();
@@ -187,7 +187,7 @@ class AdminController extends Controller
 
         /* Server */
         $user->referral_key = md5(mt_rand());
-        $user->ip = \Calctool::remoteAddr();
+        $user->ip = $request->ip();
 
         /* Contact */
         if ($request->input('firstname'))
@@ -550,7 +550,7 @@ class AdminController extends Controller
 
         $message = new MessageBox;
         $message->subject = 'Offerte ' . $project->project_name;
-        $message->message = 'De offerte voor ' . $project->project_name . ' is met de post verstuurd door de CalculatieTool.com.';
+        $message->message = 'De offerte voor ' . $project->project_name . ' is met de post verstuurd door de BynqIO\CalculatieTool.com.';
         $message->from_user = User::where('username', 'admin')->first()['id'];
         $message->user_id =	$project->user_id;
 
@@ -578,7 +578,7 @@ class AdminController extends Controller
 
         $message = new MessageBox;
         $message->subject = 'Factuur ' . $project->project_name;
-        $message->message = 'De factuur voor ' . $project->project_name . ' is met de post verstuurd door de CalculatieTool.com.';
+        $message->message = 'De factuur voor ' . $project->project_name . ' is met de post verstuurd door de BynqIO\CalculatieTool.com.';
         $message->from_user = User::where('username', 'admin')->first()['id'];
         $message->user_id =	$project->user_id;
 
@@ -878,9 +878,9 @@ class AdminController extends Controller
         );
         Mail::send('mail.password', $data, function($message) use ($data) {
             $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-            $message->subject('CalculatieTool.com - Wachtwoord herstellen');
-            $message->from('info@calculatietool.com', 'CalculatieTool.com');
-            $message->replyTo('support@calculatietool.com', 'CalculatieTool.com');
+            $message->subject('BynqIO\CalculatieTool.com - Wachtwoord herstellen');
+            $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+            $message->replyTo('support@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
         });
 
         $user->save();

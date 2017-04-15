@@ -1,8 +1,8 @@
 <?php
-use \CalculatieTool\Models\Wholesale;
-use \CalculatieTool\Models\ProductGroup;
-use \CalculatieTool\Models\ProductCategory;
-use \CalculatieTool\Models\ProductSubCategory;
+use \BynqIO\CalculatieTool\Models\Wholesale;
+use \BynqIO\CalculatieTool\Models\ProductGroup;
+use \BynqIO\CalculatieTool\Models\ProductCategory;
+use \BynqIO\CalculatieTool\Models\ProductSubCategory;
 ?>
 
 @extends('layout.master')

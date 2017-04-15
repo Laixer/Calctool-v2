@@ -1,6 +1,6 @@
 <?php
 
-namespace CalculatieTool\Models;
+namespace BynqIO\CalculatieTool\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +11,7 @@ class ProjectShare extends Model {
 
     public function __construct()
     {
-        $this->token = \Calctool::generateToken();
+        $this->token = uniqid();
     }
 
 }

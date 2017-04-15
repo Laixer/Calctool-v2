@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Copyright (C) 2017 Bynq.io B.V.
+ * All Rights Reserved
+ *
+ * This file is part of the CalculatieTool.com.
+ *
+ * Content can not be copied and/or distributed without the express
+ * permission of the author.
+ */
+
 return [
 
     /*

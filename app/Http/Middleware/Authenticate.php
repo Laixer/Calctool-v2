@@ -1,6 +1,6 @@
 <?php
 
-namespace CalculatieTool\Http\Middleware;
+namespace BynqIO\CalculatieTool\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;

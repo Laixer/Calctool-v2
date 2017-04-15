@@ -1,22 +1,22 @@
 <?php
 
-use \CalculatieTool\Calculus\CalculationEndresult;
-use \CalculatieTool\Models\Relation;
-use \CalculatieTool\Models\Resource;
-use \CalculatieTool\Models\PurchaseKind;
-use \CalculatieTool\Models\RelationKind;
-use \CalculatieTool\Models\Contact;
-use \CalculatieTool\Models\Country;
-use \CalculatieTool\Models\Province;
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\Offer;
-use \CalculatieTool\Models\Invoice;
-use \CalculatieTool\Models\Wholesale;
-use \CalculatieTool\Models\ProjectShare;
-use \CalculatieTool\Models\User;
+use \BynqIO\CalculatieTool\Calculus\CalculationEndresult;
+use \BynqIO\CalculatieTool\Models\Relation;
+use \BynqIO\CalculatieTool\Models\Resource;
+use \BynqIO\CalculatieTool\Models\PurchaseKind;
+use \BynqIO\CalculatieTool\Models\RelationKind;
+use \BynqIO\CalculatieTool\Models\Contact;
+use \BynqIO\CalculatieTool\Models\Country;
+use \BynqIO\CalculatieTool\Models\Province;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\Offer;
+use \BynqIO\CalculatieTool\Models\Invoice;
+use \BynqIO\CalculatieTool\Models\Wholesale;
+use \BynqIO\CalculatieTool\Models\ProjectShare;
+use \BynqIO\CalculatieTool\Models\User;
 
-use \CalculatieTool\Models\RelationType;
-use \CalculatieTool\Models\ContactFunction;
+use \BynqIO\CalculatieTool\Models\RelationType;
+use \BynqIO\CalculatieTool\Models\ContactFunction;
 
 
 $common_access_error = false;

@@ -31,7 +31,7 @@
                                 </figure>
                                 <div class="item-box-desc">
                                     <a href="/admin/user" ><h4>Gebruikers</h4></a>
-                                    <small class="styleColor">{{ \CalculatieTool\Models\User::where('active','=','true')->count() }} actieve gebruikers</small>
+                                    <small class="styleColor">{{ \BynqIO\CalculatieTool\Models\User::where('active','=','true')->count() }} actieve gebruikers</small>
                                 </div>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
                                 </figure>
                                 <div class="item-box-desc">
                                     <a href="/admin/group" ><h4>Groepen</h4></a>
-                                    <small class="styleColor">{{ \CalculatieTool\Models\UserGroup::count() }} groepen</small>
+                                    <small class="styleColor">{{ \BynqIO\CalculatieTool\Models\UserGroup::count() }} groepen</small>
                                 </div>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                                 </figure>
                                 <div class="item-box-desc">
                                     <a href="/admin/payment"><h4>Transacties</h4></a>
-                                    <small class="styleColor">{{ \CalculatieTool\Models\Payment::count() }} transactie(s)</small>
+                                    <small class="styleColor">{{ \BynqIO\CalculatieTool\Models\Payment::count() }} transactie(s)</small>
                                 </div>
                             </div>
                         </div>
@@ -102,7 +102,7 @@
                                 </figure>
                                 <div class="item-box-desc">
                                     <a href="/admin/project"><h4>Projecten</h4></a>
-                                    <small class="styleColor">{{ \CalculatieTool\Models\Project::count() }} Projecten</small>
+                                    <small class="styleColor">{{ \BynqIO\CalculatieTool\Models\Project::count() }} Projecten</small>
                                 </div>
                             </div>
                         </div>
@@ -120,7 +120,7 @@
                                 </figure>
                                 <div class="item-box-desc">
                                     <a href="/admin/resource"><h4>Bestanden</h4></a>
-                                    <small class="styleColor">{{ \CalculatieTool\Models\Resource::count() }} bestand(en)</small>
+                                    <small class="styleColor">{{ \BynqIO\CalculatieTool\Models\Resource::count() }} bestand(en)</small>
                                 </div>
                             </div>
                         </div>
@@ -177,7 +177,7 @@
                                 </figure>
                                 <div class="item-box-desc">
                                     <a href="/admin/alert" ><h4>Alerts</h4></a>
-                                    <small class="styleColor">{{ \CalculatieTool\Models\SysMessage::where('active',true)->count() }} alert(s)</small>
+                                    <small class="styleColor">{{ \BynqIO\CalculatieTool\Models\SysMessage::where('active',true)->count() }} alert(s)</small>
                                 </div>
                             </div>
                         </div>
@@ -195,8 +195,8 @@
                                 </figure>
                                 <div class="item-box-desc">
                                     <a href="/admin/snailmail"><h4>Printservice</h4></a>
-                                    <small class="styleColor">{{ \CalculatieTool\Models\OfferPost::whereNull('sent_date')->count() }} offertes</small>
-                                    <small class="styleColor">{{ \CalculatieTool\Models\InvoicePost::whereNull('sent_date')->count() }} facturen</small>
+                                    <small class="styleColor">{{ \BynqIO\CalculatieTool\Models\OfferPost::whereNull('sent_date')->count() }} offertes</small>
+                                    <small class="styleColor">{{ \BynqIO\CalculatieTool\Models\InvoicePost::whereNull('sent_date')->count() }} facturen</small>
                                 </div>
                             </div>
                         </div>

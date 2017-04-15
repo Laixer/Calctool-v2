@@ -1,9 +1,9 @@
 <?php
 
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\Offer;
-use \CalculatieTool\Models\ProjectType;
-use \CalculatieTool\Calculus\CalculationEndresult;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\Offer;
+use \BynqIO\CalculatieTool\Models\ProjectType;
+use \BynqIO\CalculatieTool\Calculus\CalculationEndresult;
 
 
 $common_access_error = false;

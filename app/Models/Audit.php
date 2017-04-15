@@ -1,6 +1,6 @@
 <?php
 
-namespace CalculatieTool\Models;
+namespace BynqIO\CalculatieTool\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,7 +35,7 @@ class Audit extends Model {
             $this->event = $module . "\n" . $event;
         }
 
-        $this->ip = \Calctool::remoteAddr();
+        $this->ip = $_SERVER['REMOTE_ADDR'];//TODO: replace with function
     }
 
     public function setUserId($id)

@@ -1,8 +1,8 @@
 <?php
 
-namespace CalculatieTool\Listeners;
+namespace BynqIO\CalculatieTool\Listeners;
 
-use CalculatieTool\Events\UserNotification;
+use BynqIO\CalculatieTool\Events\UserNotification;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -27,9 +27,9 @@ class SendNotificationMail
         );
         Mail::send('mail.notification', $data, function($message) use ($data) {
             $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-            $message->subject('CalculatieTool.com - Notificatie: ' . $data['subject']);
-            $message->from('info@calculatietool.com', 'CalculatieTool.com');
-            $message->replyTo('info@calculatietool.com', 'CalculatieTool.com');
+            $message->subject('BynqIO\CalculatieTool.com - Notificatie: ' . $data['subject']);
+            $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+            $message->replyTo('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
         });
     }
 }

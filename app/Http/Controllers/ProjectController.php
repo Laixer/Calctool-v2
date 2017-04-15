@@ -1,32 +1,32 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers;
+namespace BynqIO\CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\Offer;
-use \CalculatieTool\Models\Invoice;
-use \CalculatieTool\Models\ProjectType;
-use \CalculatieTool\Models\Resource;
-use \CalculatieTool\Models\Relation;
-use \CalculatieTool\Models\Contact;
-use \CalculatieTool\Models\Chapter;
-use \CalculatieTool\Models\Audit;
-use \CalculatieTool\Models\Activity;
-use \CalculatieTool\Models\RelationKind;
-use \CalculatieTool\Models\FavoriteActivity;
-use \CalculatieTool\Models\ProjectShare;
-use \CalculatieTool\Http\Controllers\InvoiceController;
-use \CalculatieTool\Models\EstimateLabor;
-use \CalculatieTool\Models\EstimateMaterial;
-use \CalculatieTool\Models\EstimateEquipment;
-use \CalculatieTool\Models\MoreLabor;
-use \CalculatieTool\Models\MoreMaterial;
-use \CalculatieTool\Models\MoreEquipment;
-use \CalculatieTool\Models\CalculationLabor;
-use \CalculatieTool\Models\CalculationMaterial;
-use \CalculatieTool\Models\CalculationEquipment;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\Offer;
+use \BynqIO\CalculatieTool\Models\Invoice;
+use \BynqIO\CalculatieTool\Models\ProjectType;
+use \BynqIO\CalculatieTool\Models\Resource;
+use \BynqIO\CalculatieTool\Models\Relation;
+use \BynqIO\CalculatieTool\Models\Contact;
+use \BynqIO\CalculatieTool\Models\Chapter;
+use \BynqIO\CalculatieTool\Models\Audit;
+use \BynqIO\CalculatieTool\Models\Activity;
+use \BynqIO\CalculatieTool\Models\RelationKind;
+use \BynqIO\CalculatieTool\Models\FavoriteActivity;
+use \BynqIO\CalculatieTool\Models\ProjectShare;
+use \BynqIO\CalculatieTool\Http\Controllers\InvoiceController;
+use \BynqIO\CalculatieTool\Models\EstimateLabor;
+use \BynqIO\CalculatieTool\Models\EstimateMaterial;
+use \BynqIO\CalculatieTool\Models\EstimateEquipment;
+use \BynqIO\CalculatieTool\Models\MoreLabor;
+use \BynqIO\CalculatieTool\Models\MoreMaterial;
+use \BynqIO\CalculatieTool\Models\MoreEquipment;
+use \BynqIO\CalculatieTool\Models\CalculationLabor;
+use \BynqIO\CalculatieTool\Models\CalculationMaterial;
+use \BynqIO\CalculatieTool\Models\CalculationEquipment;
 
 use \Auth;
 use \Mail;
@@ -77,7 +77,7 @@ class ProjectController extends Controller {
             return back()->withErrors(['error' => 'Mijn bedrijf bestaat niet'])->withInput($request->all());
         }
 
-        $project = new \CalculatieTool\Models\Project;
+        $project = new \BynqIO\CalculatieTool\Models\Project;
         $project->address_street = $request->input('street');
         $project->address_number = $request->input('address_number');
         $project->address_postal = $request->input('zipcode');
@@ -758,8 +758,8 @@ class ProjectController extends Controller {
         );
         Mail::send('mail.user_reacted', $data, function($message) use ($data) {
             $message->to($data['email'], strtolower(trim($data['client'])));
-            $message->subject('CalculatieTool.com - Uw vakman heeft gereageerd');
-            $message->from('info@calculatietool.com', 'CalculatieTool.com');
+            $message->subject('BynqIO\CalculatieTool.com - Uw vakman heeft gereageerd');
+            $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
             $message->replyTo($data['email_from'], $data['mycomp']);
         });
 

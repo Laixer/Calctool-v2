@@ -1,15 +1,15 @@
 <?php
 
-namespace CalculatieTool\Calculus;
+namespace BynqIO\CalculatieTool\Calculus;
 
-use \CalculatieTool\Models\Activity;
-use \CalculatieTool\Models\PartType;
-use \CalculatieTool\Models\CalculationLabor;
-use \CalculatieTool\Models\CalculationMaterial;
-use \CalculatieTool\Models\CalculationEquipment;
-use \CalculatieTool\Models\EstimateLabor;
-use \CalculatieTool\Models\EstimateMaterial;
-use \CalculatieTool\Models\EstimateEquipment;
+use BynqIO\CalculatieTool\Models\Activity;
+use BynqIO\CalculatieTool\Models\PartType;
+use BynqIO\CalculatieTool\Models\CalculationLabor;
+use BynqIO\CalculatieTool\Models\CalculationMaterial;
+use BynqIO\CalculatieTool\Models\CalculationEquipment;
+use BynqIO\CalculatieTool\Models\EstimateLabor;
+use BynqIO\CalculatieTool\Models\EstimateMaterial;
+use BynqIO\CalculatieTool\Models\EstimateEquipment;
 
 
 /*
@@ -19,10 +19,10 @@ class CalculationEndresult {
 
 	public static function conCalcLaborActivityTax1($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','21')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','21')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
@@ -39,10 +39,10 @@ class CalculationEndresult {
 
 	public static function conCalcLaborActivityTax2($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','6')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','6')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
@@ -59,10 +59,10 @@ class CalculationEndresult {
 
 	public static function conCalcLaborActivityTax3($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','0')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','0')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
@@ -79,12 +79,12 @@ class CalculationEndresult {
 
 	public static function conCalcLaborActivityTax1Amount($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','21')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','21')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
-			foreach (\CalculatieTool\Models\Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
+			foreach (\BynqIO\CalculatieTool\Models\Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
 				if (PartType::find($activity->part_type_id)->type_name=='estimate') {
 					$rows = EstimateLabor::where('activity_id','=',$activity->id)->get();
@@ -103,10 +103,10 @@ class CalculationEndresult {
 
 	public static function conCalcLaborActivityTax2Amount($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','6')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','6')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
@@ -127,10 +127,10 @@ class CalculationEndresult {
 
 	public static function conCalcLaborActivityTax3Amount($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','0')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','0')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
@@ -159,10 +159,10 @@ class CalculationEndresult {
 
 	public static function conCalcMaterialActivityTax1Amount($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','21')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','21')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
@@ -183,10 +183,10 @@ class CalculationEndresult {
 
 	public static function conCalcMaterialActivityTax2Amount($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','6')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','6')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
@@ -207,10 +207,10 @@ class CalculationEndresult {
 
 	public static function conCalcMaterialActivityTax3Amount($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','0')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','0')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
@@ -239,10 +239,10 @@ class CalculationEndresult {
 
 	public static function conCalcEquipmentActivityTax1Amount($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','21')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','21')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
@@ -263,10 +263,10 @@ class CalculationEndresult {
 
 	public static function conCalcEquipmentActivityTax2Amount($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','6')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','6')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
@@ -287,10 +287,10 @@ class CalculationEndresult {
 
 	public static function conCalcEquipmentActivityTax3Amount($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','0')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','contracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','0')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
@@ -319,10 +319,10 @@ class CalculationEndresult {
 
 	public static function subconCalcLaborActivityTax1($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','21')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','21')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
@@ -339,10 +339,10 @@ class CalculationEndresult {
 
 	public static function subconCalcLaborActivityTax2($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','6')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','6')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
@@ -359,10 +359,10 @@ class CalculationEndresult {
 
 	public static function subconCalcLaborActivityTax3($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','0')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','0')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
@@ -379,10 +379,10 @@ class CalculationEndresult {
 
 	public static function subconCalcLaborActivityTax1Amount($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','21')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','21')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
@@ -403,10 +403,10 @@ class CalculationEndresult {
 
 	public static function subconCalcLaborActivityTax2Amount($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','6')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','6')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
@@ -427,10 +427,10 @@ class CalculationEndresult {
 
 	public static function subconCalcLaborActivityTax3Amount($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','0')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','0')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_labor_id','=',$tax_id)->get() as $activity)
 			{
@@ -459,10 +459,10 @@ class CalculationEndresult {
 
 	public static function subconCalcMaterialActivityTax1Amount($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','21')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','21')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
@@ -483,10 +483,10 @@ class CalculationEndresult {
 
 	public static function subconCalcMaterialActivityTax2Amount($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','6')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','6')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
@@ -507,10 +507,10 @@ class CalculationEndresult {
 
 	public static function subconCalcMaterialActivityTax3Amount($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','0')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','0')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_material_id','=',$tax_id)->get() as $activity)
 			{
@@ -539,10 +539,10 @@ class CalculationEndresult {
 
 	public static function subconCalcEquipmentActivityTax1Amount($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','21')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','21')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
@@ -563,10 +563,10 @@ class CalculationEndresult {
 
 	public static function subconCalcEquipmentActivityTax2Amount($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','6')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','6')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{
@@ -587,10 +587,10 @@ class CalculationEndresult {
 
 	public static function subconCalcEquipmentActivityTax3Amount($project) {
 		$total = 0;
-		$part_id = \CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
-		$tax_id = \CalculatieTool\Models\Tax::where('tax_rate','=','0')->first()->id;
+		$part_id = \BynqIO\CalculatieTool\Models\Part::where('part_name','=','subcontracting')->first()->id;
+		$tax_id = \BynqIO\CalculatieTool\Models\Tax::where('tax_rate','=','0')->first()->id;
 
-		foreach (\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
+		foreach (\BynqIO\CalculatieTool\Models\Chapter::where('project_id','=', $project->id)->get() as $chapter)
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',$part_id)->where('tax_equipment_id','=',$tax_id)->get() as $activity)
 			{

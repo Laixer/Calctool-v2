@@ -3,11 +3,11 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-use \CalculatieTool\Models\UserType;
-use \CalculatieTool\Models\User;
-use \CalculatieTool\Models\Relation;
-use \CalculatieTool\Models\Contact;
-use \CalculatieTool\Models\MessageBox;
+use BynqIO\CalculatieTool\Models\UserType;
+use BynqIO\CalculatieTool\Models\User;
+use BynqIO\CalculatieTool\Models\Relation;
+use BynqIO\CalculatieTool\Models\Contact;
+use BynqIO\CalculatieTool\Models\MessageBox;
 
 /*
  * Static Models Only

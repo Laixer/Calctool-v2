@@ -1,9 +1,9 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers;
+namespace BynqIO\CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
-use \CalculatieTool\Models\Resource;
+use \BynqIO\CalculatieTool\Models\Resource;
 
 use \Auth;
 use \Storage;
@@ -29,9 +29,7 @@ class ResourceController extends Controller
             return response(null, 404);
         }
 
-        $storagePath = Storage::getDriver()->getAdapter()->getPathPrefix();
-
-        return response()->download($storagePath . $res->file_location);
+        return response()->download(storage_prefix_path() . $res->file_location);
     }
 
     public function view(Request $request, $resourceid)
@@ -41,9 +39,7 @@ class ResourceController extends Controller
             return response(null, 404);
         }
 
-        $storagePath = Storage::getDriver()->getAdapter()->getPathPrefix();
-
-        return response()->file($storagePath . $res->file_location);
+        return response()->file(storage_prefix_path() . $res->file_location);
     }
 
     public function doDeleteResource(Request $request, $resourceid)

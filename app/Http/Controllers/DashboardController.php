@@ -1,9 +1,9 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers;
+namespace BynqIO\CalculatieTool\Http\Controllers;
 
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\SysMessage;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\SysMessage;
 use \Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
 
@@ -31,8 +31,9 @@ class DashboardController extends Controller
      */
     protected function setUserOnline()
     {
-        if (session()->has('swap_session'))
+        if (session()->has('swap_session')) {
             return;
+        }
 
         Auth::user()->online_at = \DB::raw('NOW()');
         Auth::user()->save();
@@ -73,7 +74,7 @@ class DashboardController extends Controller
 
         $this->setUserOnline();
 
-        return view('base.home', [
+        return view('base.dashboard', [
             'agent'           => new Agent(),
             'welcomeMessage'  => $this->welcomeMessage(),
             'projectCount'    => Project::where('user_id', Auth::id())->count(),

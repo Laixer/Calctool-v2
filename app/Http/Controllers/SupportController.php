@@ -1,12 +1,12 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers;
+namespace BynqIO\CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use CalculatieTool\Http\Requests;
-use CalculatieTool\Http\Controllers\Controller;
-use CalculatieTool\Jobs\SendSupportMail;
+use BynqIO\CalculatieTool\Http\Requests;
+use BynqIO\CalculatieTool\Http\Controllers\Controller;
+use BynqIO\CalculatieTool\Jobs\SendSupportMail;
 
 use \Auth;
 use \Mail;

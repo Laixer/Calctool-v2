@@ -1,31 +1,31 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers\Calculation;
+namespace BynqIO\CalculatieTool\Http\Controllers\Calculation;
 
 use \Illuminate\Http\Request;
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\Chapter;
-use \CalculatieTool\Models\Part;
-use \CalculatieTool\Models\PartType;
-use \CalculatieTool\Models\ProjectType;
-use \CalculatieTool\Models\Tax;
-use \CalculatieTool\Models\Activity;
-use \CalculatieTool\Models\FavoriteActivity;
-use \CalculatieTool\Calculus\InvoiceTerm;
-use \CalculatieTool\Calculus\ResultEndresult;
-use \CalculatieTool\Calculus\CalculationRegister;
-use \CalculatieTool\Models\CalculationMaterial;
-use \CalculatieTool\Models\CalculationEquipment;
-use \CalculatieTool\Models\CalculationLabor;
-use \CalculatieTool\Models\FavoriteLabor;
-use \CalculatieTool\Models\FavoriteMaterial;
-use \CalculatieTool\Models\FavoriteEquipment;
-use \CalculatieTool\Models\EstimateLabor;
-use \CalculatieTool\Models\EstimateMaterial;
-use \CalculatieTool\Models\EstimateEquipment;
-use \CalculatieTool\Models\Invoice;
-use \CalculatieTool\Models\Offer;
-use CalculatieTool\Http\Controllers\Controller;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\Chapter;
+use \BynqIO\CalculatieTool\Models\Part;
+use \BynqIO\CalculatieTool\Models\PartType;
+use \BynqIO\CalculatieTool\Models\ProjectType;
+use \BynqIO\CalculatieTool\Models\Tax;
+use \BynqIO\CalculatieTool\Models\Activity;
+use \BynqIO\CalculatieTool\Models\FavoriteActivity;
+use \BynqIO\CalculatieTool\Calculus\InvoiceTerm;
+use \BynqIO\CalculatieTool\Calculus\ResultEndresult;
+use \BynqIO\CalculatieTool\Calculus\CalculationRegister;
+use \BynqIO\CalculatieTool\Models\CalculationMaterial;
+use \BynqIO\CalculatieTool\Models\CalculationEquipment;
+use \BynqIO\CalculatieTool\Models\CalculationLabor;
+use \BynqIO\CalculatieTool\Models\FavoriteLabor;
+use \BynqIO\CalculatieTool\Models\FavoriteMaterial;
+use \BynqIO\CalculatieTool\Models\FavoriteEquipment;
+use \BynqIO\CalculatieTool\Models\EstimateLabor;
+use \BynqIO\CalculatieTool\Models\EstimateMaterial;
+use \BynqIO\CalculatieTool\Models\EstimateEquipment;
+use \BynqIO\CalculatieTool\Models\Invoice;
+use \BynqIO\CalculatieTool\Models\Offer;
+use BynqIO\CalculatieTool\Http\Controllers\Controller;
 
 use \Auth;
 use \PDF;
@@ -34,7 +34,7 @@ class CalcController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------
-	| Default Home Controlluse \CalculatieTool\Models\Invoice;er
+	| Default Home Controlluse \BynqIO\CalculatieTool\Models\Invoice;er
 	|--------------------------------------------------------------------------
 	|
 	| You may wish to use controllers instead of, or in addition to, Closure

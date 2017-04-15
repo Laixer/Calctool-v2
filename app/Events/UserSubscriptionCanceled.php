@@ -1,10 +1,10 @@
 <?php
 
-namespace CalculatieTool\Events;
+namespace BynqIO\CalculatieTool\Events;
 
-use CalculatieTool\Events\Event;
+use BynqIO\CalculatieTool\Events\Event;
 use Illuminate\Queue\SerializesModels;
-use \CalculatieTool\Models\User;
+use \BynqIO\CalculatieTool\Models\User;
 
 class UserSubscriptionCanceled extends Event
 {

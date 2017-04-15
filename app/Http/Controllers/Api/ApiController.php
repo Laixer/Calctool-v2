@@ -1,23 +1,23 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers\Api;
+namespace BynqIO\CalculatieTool\Http\Controllers\Api;
 
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\Chapter;
-use \CalculatieTool\Models\Activity;
-use \CalculatieTool\Models\Timesheet;
-use \CalculatieTool\Models\TimesheetKind;
-use \CalculatieTool\Models\Purchase;
-use \CalculatieTool\Models\PurchaseKind;
-use \CalculatieTool\Models\Wholesale;
-use \CalculatieTool\Models\Relation;
-use \CalculatieTool\Models\RelationKind;
-use \CalculatieTool\Models\Contact;
-use \CalculatieTool\Models\MoreLabor;
-use \CalculatieTool\Models\User;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\Chapter;
+use \BynqIO\CalculatieTool\Models\Activity;
+use \BynqIO\CalculatieTool\Models\Timesheet;
+use \BynqIO\CalculatieTool\Models\TimesheetKind;
+use \BynqIO\CalculatieTool\Models\Purchase;
+use \BynqIO\CalculatieTool\Models\PurchaseKind;
+use \BynqIO\CalculatieTool\Models\Wholesale;
+use \BynqIO\CalculatieTool\Models\Relation;
+use \BynqIO\CalculatieTool\Models\RelationKind;
+use \BynqIO\CalculatieTool\Models\Contact;
+use \BynqIO\CalculatieTool\Models\MoreLabor;
+use \BynqIO\CalculatieTool\Models\User;
 use Illuminate\Http\Request;
-use \CalculatieTool\Models\EstimateLabor;
-use CalculatieTool\Http\Controllers\Controller;
+use \BynqIO\CalculatieTool\Models\EstimateLabor;
+use BynqIO\CalculatieTool\Http\Controllers\Controller;
 
 use \Auth;
 use \DB;

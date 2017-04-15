@@ -1,12 +1,12 @@
 <?php
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\User;
-use \CalculatieTool\Models\Relation;
-use \CalculatieTool\Models\RelationKind;
-use \CalculatieTool\Models\OfferPost;
-use \CalculatieTool\Models\InvoicePost;
-use \CalculatieTool\Models\Offer;
-use \CalculatieTool\Models\Invoice;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\User;
+use \BynqIO\CalculatieTool\Models\Relation;
+use \BynqIO\CalculatieTool\Models\RelationKind;
+use \BynqIO\CalculatieTool\Models\OfferPost;
+use \BynqIO\CalculatieTool\Models\InvoicePost;
+use \BynqIO\CalculatieTool\Models\Offer;
+use \BynqIO\CalculatieTool\Models\Invoice;
 ?>
 
 @extends('layout.master')

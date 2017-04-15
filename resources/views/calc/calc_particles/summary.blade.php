@@ -1,8 +1,8 @@
 <?php
-use \CalculatieTool\Models\Chapter;
-use \CalculatieTool\Calculus\CalculationOverview;
-use \CalculatieTool\Models\Activity as ProjectActivity;
-use \CalculatieTool\Models\Part;
+use \BynqIO\CalculatieTool\Models\Chapter;
+use \BynqIO\CalculatieTool\Calculus\CalculationOverview;
+use \BynqIO\CalculatieTool\Models\Activity as ProjectActivity;
+use \BynqIO\CalculatieTool\Models\Part;
 
 ?>
 <div>

@@ -1,10 +1,10 @@
 <?php
 
-namespace CalculatieTool\Calculus;
+namespace BynqIO\CalculatieTool\Calculus;
 
-use \CalculatieTool\Models\CalculationMaterial;
-use \CalculatieTool\Models\CalculationEquipment;
-use \CalculatieTool\Models\Part;
+use \BynqIO\CalculatieTool\Models\CalculationMaterial;
+use \BynqIO\CalculatieTool\Models\CalculationEquipment;
+use \BynqIO\CalculatieTool\Models\Part;
 
 class LessRegister {
 

@@ -1,5 +1,5 @@
 <?php
-use \CalculatieTool\Models\User;
+use \BynqIO\CalculatieTool\Models\User;
 ?>
 
 @extends('layout.master')

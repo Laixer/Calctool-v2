@@ -1,6 +1,6 @@
 <?php
 
-namespace CalculatieTool\Models;
+namespace BynqIO\CalculatieTool\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,7 +28,7 @@ class Project extends Model {
 	}
 
 	public function type() {
-		return $this->hasOne('\CalculatieTool\Models\ProjectType', 'id', 'type_id');
+		return $this->hasOne('\BynqIO\CalculatieTool\Models\ProjectType', 'id', 'type_id');
 	}
 
 	public function isOwner() {

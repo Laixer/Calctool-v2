@@ -1,6 +1,6 @@
 <?php
 
-namespace CalculatieTool\Models;
+namespace BynqIO\CalculatieTool\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,7 +15,7 @@ class AdminLog extends Model {
     }
 
     public function label() {
-        return $this->hasOne('CalculatieTool\Models\AdminLogLabel', 'id', 'label_id');
+        return $this->hasOne('BynqIO\CalculatieTool\Models\AdminLogLabel', 'id', 'label_id');
     }
 
 }

@@ -1,10 +1,10 @@
 <?php
 
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\Resource;
-use \CalculatieTool\Models\PartType;
-use \CalculatieTool\Models\Invoice;
-use \CalculatieTool\Models\Offer;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\Resource;
+use \BynqIO\CalculatieTool\Models\PartType;
+use \BynqIO\CalculatieTool\Models\Invoice;
+use \BynqIO\CalculatieTool\Models\Offer;
 
 $common_access_error = false;
 $invoice = Invoice::find(Route::Input('invoice_id'));

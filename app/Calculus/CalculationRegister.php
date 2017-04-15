@@ -1,102 +1,102 @@
 <?php
 
-namespace CalculatieTool\Calculus;
+namespace BynqIO\CalculatieTool\Calculus;
 
-use \CalculatieTool\Models\CalculationMaterial;
-use \CalculatieTool\Models\CalculationEquipment;
-use \CalculatieTool\Models\EstimateMaterial;
-use \CalculatieTool\Models\EstimateEquipment;
+use BynqIO\CalculatieTool\Models\CalculationMaterial;
+use BynqIO\CalculatieTool\Models\CalculationEquipment;
+use BynqIO\CalculatieTool\Models\EstimateMaterial;
+use BynqIO\CalculatieTool\Models\EstimateEquipment;
 
 class CalculationRegister {
 
 /*Calculation labor*/
-	public static function calcLaborTotal($rate, $amount) {
-		return $rate * $amount;
-	}
+    public static function calcLaborTotal($rate, $amount) {
+        return $rate * $amount;
+    }
 
 /*Calculation Material*/
-	public static function calcMaterialTotal($activity) {
-		$total = 0;
+    public static function calcMaterialTotal($activity) {
+        $total = 0;
 
-		$rows = CalculationMaterial::where('activity_id', '=', $activity)->get();
-		foreach ($rows as $row)
-		{
-			$total += CalculationRegister::calcLaborTotal($row->rate, $row->amount);
-		}
+        $rows = CalculationMaterial::where('activity_id', '=', $activity)->get();
+        foreach ($rows as $row)
+        {
+            $total += CalculationRegister::calcLaborTotal($row->rate, $row->amount);
+        }
 
-		return $total;
-	}
+        return $total;
+    }
 
 /*Calculation Material Profit*/
-	public static function calcMaterialTotalProfit($activity, $profit) {
-		$total = CalculationRegister::calcMaterialTotal($activity);
+    public static function calcMaterialTotalProfit($activity, $profit) {
+        $total = CalculationRegister::calcMaterialTotal($activity);
 
-		return (1+($profit/100))*$total;
-	}
+        return (1+($profit/100))*$total;
+    }
 
 /*Calculation Equipment*/
-	public static function calcEquipmentTotal($activity) {
-		$total = 0;
+    public static function calcEquipmentTotal($activity) {
+        $total = 0;
 
-		$rows = CalculationEquipment::where('activity_id', '=', $activity)->get();
-		foreach ($rows as $row)
-		{
-			$total += CalculationRegister::calcLaborTotal($row->rate, $row->amount);
-		}
+        $rows = CalculationEquipment::where('activity_id', '=', $activity)->get();
+        foreach ($rows as $row)
+        {
+            $total += CalculationRegister::calcLaborTotal($row->rate, $row->amount);
+        }
 
-		return $total;
-	}
+        return $total;
+    }
 
 /*Calculation Equipment Profit*/
-	public static function calcEquipmentTotalProfit($activity, $profit) {
-		$total = CalculationRegister::calcEquipmentTotal($activity);
+    public static function calcEquipmentTotalProfit($activity, $profit) {
+        $total = CalculationRegister::calcEquipmentTotal($activity);
 
-		return (1+($profit/100))*$total;
-	}
+        return (1+($profit/100))*$total;
+    }
 
 /*Calculation Estimate labor*/
-	public static function estimLaborTotal($rate, $amount) {
-		return $rate * $amount;
-	}
+    public static function estimLaborTotal($rate, $amount) {
+        return $rate * $amount;
+    }
 
 /*Calculation Estimate Material*/
-	public static function estimMaterialTotal($activity) {
-		$total = 0;
+    public static function estimMaterialTotal($activity) {
+        $total = 0;
 
-		$rows = EstimateMaterial::where('activity_id', '=', $activity)->get();
-		foreach ($rows as $row)
-		{
-			$total += CalculationRegister::estimLaborTotal($row->rate, $row->amount);
-		}
+        $rows = EstimateMaterial::where('activity_id', '=', $activity)->get();
+        foreach ($rows as $row)
+        {
+            $total += CalculationRegister::estimLaborTotal($row->rate, $row->amount);
+        }
 
-		return $total;
-	}
+        return $total;
+    }
 
 /*Calculation Estimate Material Profit*/
-	public static function estimMaterialTotalProfit($activity, $profit) {
-		$total = CalculationRegister::estimMaterialTotal($activity);
+    public static function estimMaterialTotalProfit($activity, $profit) {
+        $total = CalculationRegister::estimMaterialTotal($activity);
 
-		return (1+($profit/100))*$total;
-	}
+        return (1+($profit/100))*$total;
+    }
 
 /*Calculation Estimate Equipment*/
-	public static function estimEquipmentTotal($activity) {
-		$total = 0;
+    public static function estimEquipmentTotal($activity) {
+        $total = 0;
 
-		$rows = EstimateEquipment::where('activity_id', '=', $activity)->get();
-		foreach ($rows as $row)
-		{
-			$total += CalculationRegister::estimLaborTotal($row->rate, $row->amount);
-		}
+        $rows = EstimateEquipment::where('activity_id', '=', $activity)->get();
+        foreach ($rows as $row)
+        {
+            $total += CalculationRegister::estimLaborTotal($row->rate, $row->amount);
+        }
 
-		return $total;
-	}
+        return $total;
+    }
 
 /*Calculation Estimate Equipment Profit*/
-	public static function estimEquipmentTotalProfit($activity, $profit) {
-		$total = CalculationRegister::estimEquipmentTotal($activity);
+    public static function estimEquipmentTotalProfit($activity, $profit) {
+        $total = CalculationRegister::estimEquipmentTotal($activity);
 
-		return (1+($profit/100))*$total;
-	}
+        return (1+($profit/100))*$total;
+    }
 
 }

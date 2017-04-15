@@ -1,15 +1,15 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers\Calculation;
+namespace BynqIO\CalculatieTool\Http\Controllers\Calculation;
 
 use \Illuminate\Http\Request;
-use \CalculatieTool\Models\Activity;
-use \CalculatieTool\Models\Chapter;
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\EstimateLabor;
-use \CalculatieTool\Models\EstimateMaterial;
-use \CalculatieTool\Models\EstimateEquipment;
-use CalculatieTool\Http\Controllers\Controller;
+use \BynqIO\CalculatieTool\Models\Activity;
+use \BynqIO\CalculatieTool\Models\Chapter;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\EstimateLabor;
+use \BynqIO\CalculatieTool\Models\EstimateMaterial;
+use \BynqIO\CalculatieTool\Models\EstimateEquipment;
+use BynqIO\CalculatieTool\Http\Controllers\Controller;
 
 class EstimController extends Controller {
 

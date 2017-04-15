@@ -1,6 +1,6 @@
 <?php
 
-namespace CalculatieTool\Http\Middleware;
+namespace BynqIO\CalculatieTool\Http\Middleware;
 
 use Illuminate\Cookie\Middleware\EncryptCookies as BaseEncrypter;
 

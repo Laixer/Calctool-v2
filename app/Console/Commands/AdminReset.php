@@ -1,11 +1,11 @@
 <?php
 
-namespace CalculatieTool\Console\Commands;
+namespace BynqIO\CalculatieTool\Console\Commands;
 
 use Illuminate\Console\Command;
 
-use \CalculatieTool\Models\User;
-use \CalculatieTool\Models\UserType;
+use \BynqIO\CalculatieTool\Models\User;
+use \BynqIO\CalculatieTool\Models\UserType;
 
 use \Redis;
 use \Hash;

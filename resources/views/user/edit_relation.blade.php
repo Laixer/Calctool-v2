@@ -1,16 +1,16 @@
 <?php
 
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\User;
-use \CalculatieTool\Models\Relation;
-use \CalculatieTool\Models\Contact;
-use \CalculatieTool\Models\ContactFunction;
-use \CalculatieTool\Models\RelationKind;
-use \CalculatieTool\Models\RelationType;
-use \CalculatieTool\Models\Province;
-use \CalculatieTool\Models\Country;
-use \CalculatieTool\Models\Invoice;
-use \CalculatieTool\Models\Offer;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\User;
+use \BynqIO\CalculatieTool\Models\Relation;
+use \BynqIO\CalculatieTool\Models\Contact;
+use \BynqIO\CalculatieTool\Models\ContactFunction;
+use \BynqIO\CalculatieTool\Models\RelationKind;
+use \BynqIO\CalculatieTool\Models\RelationType;
+use \BynqIO\CalculatieTool\Models\Province;
+use \BynqIO\CalculatieTool\Models\Country;
+use \BynqIO\CalculatieTool\Models\Invoice;
+use \BynqIO\CalculatieTool\Models\Offer;
 
 $common_access_error = false;
 $relation = Relation::find(Route::Input('relation_id'));

@@ -1,23 +1,23 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers;
+namespace BynqIO\CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\Offer;
-use \CalculatieTool\Models\OfferPost;
-use \CalculatieTool\Calculus\CalculationEndresult;
-use \CalculatieTool\Models\Resource;
-use \CalculatieTool\Http\Controllers\InvoiceController;
-use \CalculatieTool\Models\Invoice;
-use \CalculatieTool\Models\ProjectShare;
-use \CalculatieTool\Models\Contact;
-use \CalculatieTool\Models\User;
-use \CalculatieTool\Models\UserType;
-use \CalculatieTool\Models\Relation;
-use \CalculatieTool\Models\MessageBox;
-use \CalculatieTool\Calculus\ResultEndresult;
-use \CalculatieTool\Calculus\InvoiceTerm;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\Offer;
+use \BynqIO\CalculatieTool\Models\OfferPost;
+use \BynqIO\CalculatieTool\Calculus\CalculationEndresult;
+use \BynqIO\CalculatieTool\Models\Resource;
+use \BynqIO\CalculatieTool\Http\Controllers\InvoiceController;
+use \BynqIO\CalculatieTool\Models\Invoice;
+use \BynqIO\CalculatieTool\Models\ProjectShare;
+use \BynqIO\CalculatieTool\Models\Contact;
+use \BynqIO\CalculatieTool\Models\User;
+use \BynqIO\CalculatieTool\Models\UserType;
+use \BynqIO\CalculatieTool\Models\Relation;
+use \BynqIO\CalculatieTool\Models\MessageBox;
+use \BynqIO\CalculatieTool\Calculus\ResultEndresult;
+use \BynqIO\CalculatieTool\Calculus\InvoiceTerm;
 
 use \Auth;
 use \PDF;
@@ -257,7 +257,7 @@ class OfferController extends Controller {
             if (!empty($data['agreement']))
                 $message->attach($data['agreement']);
             $message->subject('Offerte ' . $data['project_name']);
-            $message->from('noreply@calculatietool.com', $data['mycomp']);
+            $message->from('noreply@BynqIO\CalculatieTool.com', $data['mycomp']);
             $message->replyTo($data['email_from'], $data['mycomp']);
         });
 
@@ -341,10 +341,10 @@ class OfferController extends Controller {
             'user' => $user->username
         );
         Mail::send('mail.print', $data, function($message) use ($data) {
-            $message->to('administratie@calculatietool.com', 'CalculatieTool.com');
-            $message->subject('CalculatieTool.com - Printopdracht');
-            $message->from('info@calculatietool.com', 'CalculatieTool.com');
-            $message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
+            $message->to('administratie@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+            $message->subject('BynqIO\CalculatieTool.com - Printopdracht');
+            $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+            $message->replyTo('administratie@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
         });
 
         return response()->json(['success' => 1]);

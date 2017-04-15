@@ -1,16 +1,16 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers;
+namespace BynqIO\CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use \CalculatieTool\Models\User;
-use \CalculatieTool\Models\MessageBox;
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\Offer;
-use \CalculatieTool\Models\Invoice;
-use \CalculatieTool\Calculus\InvoiceTerm;
-use \CalculatieTool\Models\ProjectShare;
+use \BynqIO\CalculatieTool\Models\User;
+use \BynqIO\CalculatieTool\Models\MessageBox;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\Offer;
+use \BynqIO\CalculatieTool\Models\Invoice;
+use \BynqIO\CalculatieTool\Calculus\InvoiceTerm;
+use \BynqIO\CalculatieTool\Models\ProjectShare;
 
 use \Auth;
 use \Mail;
@@ -65,9 +65,9 @@ class ClientController extends Controller {
 		);
 		Mail::send('mail.client_reacted', $data, function($message) use ($data) {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-			$message->subject('CalculatieTool.com - Uw opdrachtgever heeft gereageerd');
-			$message->from('info@calculatietool.com', 'CalculatieTool.com');
-			$message->replyTo('support@calculatietool.com', 'CalculatieTool.com');
+			$message->subject('BynqIO\CalculatieTool.com - Uw opdrachtgever heeft gereageerd');
+			$message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+			$message->replyTo('support@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
 		});
 
 		return back()->with('success', 'Opmerking toegevoegd aan project');
@@ -119,9 +119,9 @@ class ClientController extends Controller {
 		$data = array('email' => $user->email, 'firstname' => $user->firstname, 'lastname' => $user->lastname, 'project_name' => $project->project_name);
 		Mail::send('mail.offer_accepted', $data, function($message) use ($data) {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-			$message->subject('CalculatieTool.com - Offerte bevestigd');
-			$message->from('info@calculatietool.com', 'CalculatieTool.com');
-			$message->replyTo('support@calculatietool.com', 'CalculatieTool.com');
+			$message->subject('BynqIO\CalculatieTool.com - Offerte bevestigd');
+			$message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+			$message->replyTo('support@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
 		});
 		
 		return back()->with('success', 'Offerte is bevestigd');

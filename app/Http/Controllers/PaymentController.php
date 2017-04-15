@@ -1,23 +1,23 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers;
+namespace BynqIO\CalculatieTool\Http\Controllers;
 
 use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
 
-use \CalculatieTool\Models\Payment;
-use \CalculatieTool\Models\User;
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\Audit;
-use \CalculatieTool\Models\Promotion;
-use \CalculatieTool\Models\UserGroup;
-use \CalculatieTool\Models\BankAccount;
-use \CalculatieTool\Models\Resource;
-use \CalculatieTool\Models\CTInvoice;
-use \CalculatieTool\Models\Contact;
-use \CalculatieTool\Models\Relation;
-use CalculatieTool\Events\UserPaymentSuccess;
-use CalculatieTool\Events\UserSubscriptionCanceled;
+use \BynqIO\CalculatieTool\Models\Payment;
+use \BynqIO\CalculatieTool\Models\User;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\Audit;
+use \BynqIO\CalculatieTool\Models\Promotion;
+use \BynqIO\CalculatieTool\Models\UserGroup;
+use \BynqIO\CalculatieTool\Models\BankAccount;
+use \BynqIO\CalculatieTool\Models\Resource;
+use \BynqIO\CalculatieTool\Models\CTInvoice;
+use \BynqIO\CalculatieTool\Models\Contact;
+use \BynqIO\CalculatieTool\Models\Relation;
+use BynqIO\CalculatieTool\Events\UserPaymentSuccess;
+use BynqIO\CalculatieTool\Events\UserSubscriptionCanceled;
 
 use \Auth;
 use \Redis;
@@ -161,7 +161,7 @@ class PaymentController extends Controller
         $subscription = $this->userSubscription($customerId)->create([
             "amount"		=> $order->amount,
             "interval"		=> "1 month",
-            "description"	=> "Maandelijkse incasso CalculatieTool.com",
+            "description"	=> "Maandelijkse incasso BynqIO\CalculatieTool.com",
             "webhookUrl"	=> secure_url('payment/webhook/'),
             "metadata"		=> [
                 "token"		=> $order->token,

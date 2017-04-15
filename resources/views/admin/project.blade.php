@@ -1,9 +1,9 @@
 <?php
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\User;
-use \CalculatieTool\Models\Relation;
-use \CalculatieTool\Models\RelationKind;
-use \CalculatieTool\Models\Contact;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\User;
+use \BynqIO\CalculatieTool\Models\Relation;
+use \BynqIO\CalculatieTool\Models\RelationKind;
+use \BynqIO\CalculatieTool\Models\Contact;
 ?>
 
 @extends('layout.master')

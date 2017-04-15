@@ -1,6 +1,6 @@
 <?php
-use \CalculatieTool\Models\User;
-use \CalculatieTool\Models\Promotion;
+use \BynqIO\CalculatieTool\Models\User;
+use \BynqIO\CalculatieTool\Models\Promotion;
 
 ?>
 

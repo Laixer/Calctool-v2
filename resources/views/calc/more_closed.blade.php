@@ -1,20 +1,20 @@
 <?php
 
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\Chapter;
-use \CalculatieTool\Models\Activity;
-use \CalculatieTool\Models\PartType;
-use \CalculatieTool\Models\Part;
-use \CalculatieTool\Models\Tax;
-use \CalculatieTool\Models\MoreLabor;
-use \CalculatieTool\Models\MoreMaterial;
-use \CalculatieTool\Calculus\MoreRegister;
-use \CalculatieTool\Models\MoreEquipment;
-use \CalculatieTool\Models\Detail;
-use \CalculatieTool\Calculus\MoreOverview;
-use \CalculatieTool\Calculus\MoreEndresult;
-use \CalculatieTool\Models\ProjectType;
-use \CalculatieTool\Models\Timesheet;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\Chapter;
+use \BynqIO\CalculatieTool\Models\Activity;
+use \BynqIO\CalculatieTool\Models\PartType;
+use \BynqIO\CalculatieTool\Models\Part;
+use \BynqIO\CalculatieTool\Models\Tax;
+use \BynqIO\CalculatieTool\Models\MoreLabor;
+use \BynqIO\CalculatieTool\Models\MoreMaterial;
+use \BynqIO\CalculatieTool\Calculus\MoreRegister;
+use \BynqIO\CalculatieTool\Models\MoreEquipment;
+use \BynqIO\CalculatieTool\Models\Detail;
+use \BynqIO\CalculatieTool\Calculus\MoreOverview;
+use \BynqIO\CalculatieTool\Calculus\MoreEndresult;
+use \BynqIO\CalculatieTool\Models\ProjectType;
+use \BynqIO\CalculatieTool\Models\Timesheet;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));

@@ -1,6 +1,6 @@
 <?php
 
-namespace CalculatieTool\Models;
+namespace BynqIO\CalculatieTool\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,7 +32,7 @@ class Relation extends Model {
 	}
 
 	public function kind() {
-		return $this->hasOne('CalculatieTool\Models\RelationKind', 'id', 'kind_id')->first();
+		return $this->hasOne('BynqIO\CalculatieTool\Models\RelationKind', 'id', 'kind_id')->first();
 	}
 
 	public function isOwner() {

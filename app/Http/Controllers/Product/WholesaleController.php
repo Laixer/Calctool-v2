@@ -1,12 +1,12 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers\Product;
+namespace BynqIO\CalculatieTool\Http\Controllers\Product;
 
 use Illuminate\Http\Request;
 
-use \CalculatieTool\Models\Wholesale;
-use \CalculatieTool\Models\WholesaleType;
-use CalculatieTool\Http\Controllers\Controller;
+use \BynqIO\CalculatieTool\Models\Wholesale;
+use \BynqIO\CalculatieTool\Models\WholesaleType;
+use BynqIO\CalculatieTool\Http\Controllers\Controller;
 
 use \Auth;
 

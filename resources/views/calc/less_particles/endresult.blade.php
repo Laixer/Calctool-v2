@@ -1,6 +1,6 @@
 <?php
 
-use \CalculatieTool\Calculus\LessEndresult;
+use \BynqIO\CalculatieTool\Calculus\LessEndresult;
 ?>
 <h4>Aanneming</h4>
 <table class="table table-striped">

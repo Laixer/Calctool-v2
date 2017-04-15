@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => CalculatieTool\Models\User::class,
+            'model' => BynqIO\CalculatieTool\Models\User::class,
         ],
 
         // 'users' => [

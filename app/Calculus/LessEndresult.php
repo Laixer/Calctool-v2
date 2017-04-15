@@ -1,14 +1,14 @@
 <?php
 
-namespace CalculatieTool\Calculus;
+namespace BynqIO\CalculatieTool\Calculus;
 
-use \CalculatieTool\Models\Part;
-use \CalculatieTool\Models\Tax;
-use \CalculatieTool\Models\Chapter;
-use \CalculatieTool\Models\Activity;
-use \CalculatieTool\Models\CalculationLabor;
-use \CalculatieTool\Models\CalculationMaterial;
-use \CalculatieTool\Models\CalculationEquipment;
+use \BynqIO\CalculatieTool\Models\Part;
+use \BynqIO\CalculatieTool\Models\Tax;
+use \BynqIO\CalculatieTool\Models\Chapter;
+use \BynqIO\CalculatieTool\Models\Activity;
+use \BynqIO\CalculatieTool\Models\CalculationLabor;
+use \BynqIO\CalculatieTool\Models\CalculationMaterial;
+use \BynqIO\CalculatieTool\Models\CalculationEquipment;
 
 /*
  * Eindresultaat

@@ -1,16 +1,16 @@
 <?php
 
-namespace CalculatieTool\Jobs;
+namespace BynqIO\CalculatieTool\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use \CalculatieTool\Models\CTInvoice;
-use \CalculatieTool\Models\Relation;
-use \CalculatieTool\Models\Contact;
-use \CalculatieTool\Models\Resource;
+use \BynqIO\CalculatieTool\Models\CTInvoice;
+use \BynqIO\CalculatieTool\Models\Relation;
+use \BynqIO\CalculatieTool\Models\Contact;
+use \BynqIO\CalculatieTool\Models\Resource;
 
 use \Mail;
 use \PDF;
@@ -98,7 +98,7 @@ class CreatePaymentInvoice implements ShouldQueue
             'invoice_id'    => 'FACTUUR-' . $invoice_counter,
         ]);
 
-        $footer_text = 'CalculatieTool.com';
+        $footer_text = 'BynqIO\CalculatieTool.com';
         $footer_text .= ' | IBAN: NL29INGB0006863509';
         $footer_text .= ' | KVK: 54565243';
         $footer_text .= ' | BTW: 851353423B01';
@@ -149,13 +149,13 @@ class CreatePaymentInvoice implements ShouldQueue
         );
         Mail::send('mail.paid', $data, function($message) use ($data) {
             $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-            $message->bcc('administratie@calculatietool.com', 'Gebruiker account verlengd');
+            $message->bcc('administratie@BynqIO\CalculatieTool.com', 'Gebruiker account verlengd');
             $message->attachData(Storage::get($data['pdf']), 'invoice.pdf', [
                 'mime' => 'application/pdf',
             ]);
-            $message->subject('CalculatieTool.com - Account verlengd');
-            $message->from('info@calculatietool.com', 'CalculatieTool.com');
-            $message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
+            $message->subject('BynqIO\CalculatieTool.com - Account verlengd');
+            $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+            $message->replyTo('administratie@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
         });
     }
 }

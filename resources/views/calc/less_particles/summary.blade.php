@@ -1,10 +1,10 @@
 <?php
 
-use \CalculatieTool\Models\Chapter;
-use \CalculatieTool\Models\Activity;
-use \CalculatieTool\Models\PartType;
-use \CalculatieTool\Models\Part;
-use \CalculatieTool\Calculus\LessOverview;
+use \BynqIO\CalculatieTool\Models\Chapter;
+use \BynqIO\CalculatieTool\Models\Activity;
+use \BynqIO\CalculatieTool\Models\PartType;
+use \BynqIO\CalculatieTool\Models\Part;
+use \BynqIO\CalculatieTool\Calculus\LessOverview;
 ?>
 <div>
 

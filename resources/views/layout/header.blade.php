@@ -1,7 +1,7 @@
 <?php
-use \CalculatieTool\Models\User;
-use \CalculatieTool\Models\MessageBox;
-use \CalculatieTool\Models\UserType;
+use \BynqIO\CalculatieTool\Models\User;
+use \BynqIO\CalculatieTool\Models\MessageBox;
+use \BynqIO\CalculatieTool\Models\UserType;
 ?>
 
 <header id="topNav" class="topHead">

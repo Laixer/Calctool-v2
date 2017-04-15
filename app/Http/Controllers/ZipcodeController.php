@@ -1,9 +1,9 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers;
+namespace BynqIO\CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
-use \CalculatieTool\Models\Province;
+use BynqIO\CalculatieTool\Models\Province;
 
 use \Auth;
 use \Validator;

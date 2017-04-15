@@ -1,12 +1,12 @@
 <?php
 
-namespace CalculatieTool\Listeners;
+namespace BynqIO\CalculatieTool\Listeners;
 
 use Illuminate\Auth\Events\Login;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use \CalculatieTool\Models\Audit;
-use \CalculatieTool\Models\User;
+use \BynqIO\CalculatieTool\Models\Audit;
+use \BynqIO\CalculatieTool\Models\User;
 
 use \Cookie;
 use \Auth;

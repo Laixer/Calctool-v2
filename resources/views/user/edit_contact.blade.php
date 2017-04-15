@@ -1,9 +1,9 @@
 <?php
 
-use \CalculatieTool\Models\RelationKind;
-use \CalculatieTool\Models\ContactFunction;
-use \CalculatieTool\Models\Contact;
-use \CalculatieTool\Models\Relation;
+use \BynqIO\CalculatieTool\Models\RelationKind;
+use \BynqIO\CalculatieTool\Models\ContactFunction;
+use \BynqIO\CalculatieTool\Models\Contact;
+use \BynqIO\CalculatieTool\Models\Relation;
 
 
 $common_access_error = false;

@@ -20,7 +20,7 @@ $allevents = false;
 if (Input::get('allevents') == 1) {
 	$allevents = true;
 }
-$user = \CalculatieTool\Models\User::find(Route::input('user_id'));
+$user = \BynqIO\CalculatieTool\Models\User::find(Route::input('user_id'));
 if (!$user){ ?>
 @section('content')
 <div id="wrapper">
@@ -191,7 +191,7 @@ $(document).ready(function() {
 												<label for="user_type">Gebruikerstype</label>
 												<select name="type" id="type" class="form-control pointer">
 													<?php
-													foreach (\CalculatieTool\Models\UserType::all() as $type) {
+													foreach (\BynqIO\CalculatieTool\Models\UserType::all() as $type) {
 														if ($type->user_type == 'system')
 															continue;
 													?>
@@ -348,7 +348,7 @@ $(document).ready(function() {
 											<div class="form-group">
 												<label for="gender" style="display:block;">Gebruikersgroep</label>
 												<select name="group" id="group" class="form-control pointer">
-													@foreach (\CalculatieTool\Models\UserGroup::all() as $group)
+													@foreach (\BynqIO\CalculatieTool\Models\UserGroup::all() as $group)
 													<option {{ $user->user_group==$group->id ? 'selected' : '' }} value="{{ $group->id }}">{{ ucwords($group->name) }}</option>
 													@endforeach
 												</select>
@@ -361,7 +361,7 @@ $(document).ready(function() {
 												<select name="tag" id="tag" class="form-control pointer">
 													<option value="-1">Geen</option>
 													<?php
-													foreach (\CalculatieTool\Models\UserTag::all() as $tag) {
+													foreach (\BynqIO\CalculatieTool\Models\UserTag::all() as $tag) {
 													?>
 													<option {{ $user->user_tag_id==$tag->id ? 'selected' : '' }} value="{{ $tag->id }}">{{ $tag->name }}</option>
 													<?php } ?>
@@ -453,7 +453,7 @@ $(document).ready(function() {
 									</thead>
 
 									<tbody>
-										@foreach (\CalculatieTool\Models\AdminLog::where('user_id', $user->id)->orderBy('created_at','asc')->get() as $rec)
+										@foreach (\BynqIO\CalculatieTool\Models\AdminLog::where('user_id', $user->id)->orderBy('created_at','asc')->get() as $rec)
 										<tr>
 											<td class="col-md-2">{{ date('d-m-Y', strtotime(DB::table('admin_log')->select('created_at')->where('id',$rec->id)->get()[0]->created_at)) }}</td>
 											<td class="col-md-7">{{ $rec->note }}</td>
@@ -469,7 +469,7 @@ $(document).ready(function() {
 												<td class="col-md-7"><input type="text" name="note" id="note" class="form-control-sm-text" placeholder="Gebruiker geholpen met project invullen..." maxlength="100" /></td>
 												<td class="col-md-2">
 													<select name="label" id="label" class="getact form-control-sm-text">
-														@foreach (\CalculatieTool\Models\AdminLogLabel::all() as $label)
+														@foreach (\BynqIO\CalculatieTool\Models\AdminLogLabel::all() as $label)
 														<option value="{{ $label->id }}">{{ ucwords($label->label_name) }}</option>
 														@endforeach
 													</select>
@@ -505,9 +505,9 @@ $(document).ready(function() {
 									<tbody>
 										<?php
 										if ($allevents) {
-											$selection = \CalculatieTool\Models\Audit::where('user_id', $user->id)->orderBy('created_at','desc')->get();
+											$selection = \BynqIO\CalculatieTool\Models\Audit::where('user_id', $user->id)->orderBy('created_at','desc')->get();
 										} else {
-											$selection = \CalculatieTool\Models\Audit::where('user_id', $user->id)->orderBy('created_at','desc')->limit(25)->get();
+											$selection = \BynqIO\CalculatieTool\Models\Audit::where('user_id', $user->id)->orderBy('created_at','desc')->limit(25)->get();
 										}
 										?>
 										@foreach ($selection as $rec)

@@ -1,10 +1,10 @@
 <?php
 
-namespace CalculatieTool\Listeners;
+namespace BynqIO\CalculatieTool\Listeners;
 
-use CalculatieTool\Events\UserSignup as UserSignupEvent;
-use CalculatieTool\Jobs\SendActivationMail;
-use CalculatieTool\Jobs\SendNewUserMail;
+use BynqIO\CalculatieTool\Events\UserSignup as UserSignupEvent;
+use BynqIO\CalculatieTool\Jobs\SendActivationMail;
+use BynqIO\CalculatieTool\Jobs\SendNewUserMail;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 

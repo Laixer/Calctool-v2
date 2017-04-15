@@ -1,22 +1,22 @@
 <?php
 
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\Chapter;
-use \CalculatieTool\Models\Activity;
-use \CalculatieTool\Models\PartType;
-use \CalculatieTool\Models\Part;
-use \CalculatieTool\Models\Time;
-use \CalculatieTool\Models\Detail;
-use \CalculatieTool\Models\TimesheetKind;
-use \CalculatieTool\Models\MoreLabor;
-use \CalculatieTool\Models\ProjectType;
-use \CalculatieTool\Calculus\SetEstimateCalculationEndresult;
-use \CalculatieTool\Calculus\MoreEndresult;
-use \CalculatieTool\Calculus\LessEndresult;
-use \CalculatieTool\Calculus\ResultEndresult;
-use \CalculatieTool\Calculus\TimesheetOverview;
-use \CalculatieTool\Models\Timesheet;
-use \CalculatieTool\Calculus\CalculationLabor;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\Chapter;
+use \BynqIO\CalculatieTool\Models\Activity;
+use \BynqIO\CalculatieTool\Models\PartType;
+use \BynqIO\CalculatieTool\Models\Part;
+use \BynqIO\CalculatieTool\Models\Time;
+use \BynqIO\CalculatieTool\Models\Detail;
+use \BynqIO\CalculatieTool\Models\TimesheetKind;
+use \BynqIO\CalculatieTool\Models\MoreLabor;
+use \BynqIO\CalculatieTool\Models\ProjectType;
+use \BynqIO\CalculatieTool\Calculus\SetEstimateCalculationEndresult;
+use \BynqIO\CalculatieTool\Calculus\MoreEndresult;
+use \BynqIO\CalculatieTool\Calculus\LessEndresult;
+use \BynqIO\CalculatieTool\Calculus\ResultEndresult;
+use \BynqIO\CalculatieTool\Calculus\TimesheetOverview;
+use \BynqIO\CalculatieTool\Models\Timesheet;
+use \BynqIO\CalculatieTool\Calculus\CalculationLabor;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));

@@ -1,11 +1,11 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers;
+namespace BynqIO\CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use \CalculatieTool\Models\BankAccount;
-use \CalculatieTool\Models\Cashbook;
+use \BynqIO\CalculatieTool\Models\BankAccount;
+use \BynqIO\CalculatieTool\Models\Cashbook;
 
 use \Auth;
 

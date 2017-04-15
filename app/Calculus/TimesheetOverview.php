@@ -1,14 +1,14 @@
 <?php
 
-namespace CalculatieTool\Calculus;
+namespace BynqIO\CalculatieTool\Calculus;
 
-use \CalculatieTool\Models\CalculationLabor;
-use \CalculatieTool\Models\EstimateLabor;
-use \CalculatieTool\Models\Timesheet;
-use \CalculatieTool\Models\Chapter;
-use \CalculatieTool\Models\Activity;
-use \CalculatieTool\Models\TimesheetKind;
-use \CalculatieTool\Models\MoreLabor;
+use \BynqIO\CalculatieTool\Models\CalculationLabor;
+use \BynqIO\CalculatieTool\Models\EstimateLabor;
+use \BynqIO\CalculatieTool\Models\Timesheet;
+use \BynqIO\CalculatieTool\Models\Chapter;
+use \BynqIO\CalculatieTool\Models\Activity;
+use \BynqIO\CalculatieTool\Models\TimesheetKind;
+use \BynqIO\CalculatieTool\Models\MoreLabor;
 
 /*
  * Urenregistratie

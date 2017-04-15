@@ -1,29 +1,29 @@
 <?php
 
-use \CalculatieTool\Models\Province;
-use \CalculatieTool\Models\Country;
-use \CalculatieTool\Models\ProjectType;
-use \CalculatieTool\Models\RelationType;
-use \CalculatieTool\Models\RelationKind;
-use \CalculatieTool\Models\ContactFunction;
-use \CalculatieTool\Models\Relation;
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\Contact;
-use \CalculatieTool\Models\Part;
-use \CalculatieTool\Models\PartType;
-use \CalculatieTool\Models\Tax;
-use \CalculatieTool\Models\Chapter;
-use \CalculatieTool\Models\Activity;
-use \CalculatieTool\Models\CalculationLabor;
-use \CalculatieTool\Models\CalculationMaterial;
-use \CalculatieTool\Models\CalculationEquipment;
-use \CalculatieTool\Models\EstimateLabor;
-use \CalculatieTool\Models\EstimateMaterial;
-use \CalculatieTool\Models\EstimateEquipment;
-use \CalculatieTool\Models\Detail;
-use \CalculatieTool\Models\MoreLabor;
-use \CalculatieTool\Models\MoreMaterial;
-use \CalculatieTool\Models\MoreEquipment;
+use BynqIO\CalculatieTool\Models\Province;
+use BynqIO\CalculatieTool\Models\Country;
+use BynqIO\CalculatieTool\Models\ProjectType;
+use BynqIO\CalculatieTool\Models\RelationType;
+use BynqIO\CalculatieTool\Models\RelationKind;
+use BynqIO\CalculatieTool\Models\ContactFunction;
+use BynqIO\CalculatieTool\Models\Relation;
+use BynqIO\CalculatieTool\Models\Project;
+use BynqIO\CalculatieTool\Models\Contact;
+use BynqIO\CalculatieTool\Models\Part;
+use BynqIO\CalculatieTool\Models\PartType;
+use BynqIO\CalculatieTool\Models\Tax;
+use BynqIO\CalculatieTool\Models\Chapter;
+use BynqIO\CalculatieTool\Models\Activity;
+use BynqIO\CalculatieTool\Models\CalculationLabor;
+use BynqIO\CalculatieTool\Models\CalculationMaterial;
+use BynqIO\CalculatieTool\Models\CalculationEquipment;
+use BynqIO\CalculatieTool\Models\EstimateLabor;
+use BynqIO\CalculatieTool\Models\EstimateMaterial;
+use BynqIO\CalculatieTool\Models\EstimateEquipment;
+use BynqIO\CalculatieTool\Models\Detail;
+use BynqIO\CalculatieTool\Models\MoreLabor;
+use BynqIO\CalculatieTool\Models\MoreMaterial;
+use BynqIO\CalculatieTool\Models\MoreEquipment;
 
 
 /*

@@ -1,11 +1,27 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
-    "license": "MIT",
+    "name": "bynqio/calculatietool",
+    "description": "Online Calculation, ERP and CRM application.",
+    "keywords": [
+        "laravel",
+        "bynqio",
+        "crm",
+        "erp",
+        "calculation"
+    ],
     "type": "project",
+    "license": "Proprietary",
+    "authors": [
+        {
+            "name": "Yorick de Wid",
+            "email": "y.dewid@calculatietool.com"
+        },
+        {
+            "name": "Don Zandbergen",
+            "email": "d.zandbergen@calculatietool.com"
+        }
+    ],
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=5.6.4",
         "laravel/framework": "5.4.*",
         "predis/predis": "~1.0",
         "Nathanmac/Parser": "3.*",
@@ -32,8 +48,11 @@
             "database",
             "app/Models"
         ],
+        "files": [
+            "app/helpers.php"
+        ],
         "psr-4": {
-            "CalculatieTool\\": "app/"
+            "BynqIO\\CalculatieTool\\": "app/"
         }
     },
     "autoload-dev": {
@@ -43,21 +62,31 @@
     },
     "scripts": {
         "post-root-package-install": [
-            "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+            "php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "php artisan key:generate"
         ],
         "post-create-project-cmd": [
             "php artisan key:generate"
         ],
         "post-install-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postInstall",
-            "php artisan optimize"
+            "php artisan optimize",
+            "php artisan config:cache"
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan optimize"
+            "php artisan optimize",
+            "php artisan config:cache"
         ]
     },
     "config": {
         "preferred-install": "dist"
-    }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.5-dev"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }

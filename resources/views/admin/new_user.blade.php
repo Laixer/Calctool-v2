@@ -1,7 +1,7 @@
 <?php
-use \CalculatieTool\Models\UserType;
-use \CalculatieTool\Models\Province;
-use \CalculatieTool\Models\Country;
+use \BynqIO\CalculatieTool\Models\UserType;
+use \BynqIO\CalculatieTool\Models\Province;
+use \BynqIO\CalculatieTool\Models\Country;
 ?>
 
 @extends('layout.master')
@@ -203,7 +203,7 @@ $(document).ready(function() {
 							<div class="form-group">
 								<label for="gender" style="display:block;">Gebruikersgroep</label>
 								<select name="group" id="group" class="form-control pointer">
-									@foreach (\CalculatieTool\Models\UserGroup::all() as $group)
+									@foreach (\BynqIO\CalculatieTool\Models\UserGroup::all() as $group)
 										<option value="{{ $group->id }}">{{ ucwords($group->name) }}</option>
 									@endforeach
 								</select>

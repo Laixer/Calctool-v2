@@ -1,6 +1,6 @@
 <?php
-use \CalculatieTool\Models\User;
-use \CalculatieTool\Models\MessageBox;
+use \BynqIO\CalculatieTool\Models\User;
+use \BynqIO\CalculatieTool\Models\MessageBox;
 ?>
 
 @extends('layout.master')

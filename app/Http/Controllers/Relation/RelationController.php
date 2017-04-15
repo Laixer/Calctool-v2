@@ -1,24 +1,34 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers\Relation;
+/**
+ * Copyright (C) 2017 Bynq.io B.V.
+ * All Rights Reserved
+ *
+ * This file is part of the BynqIO\CalculatieTool.com.
+ *
+ * Content can not be copied and/or distributed without the express
+ * permission of the author.
+ */
+
+namespace BynqIO\CalculatieTool\Http\Controllers\Relation;
 
 use Illuminate\Http\Request;
 use JeroenDesloovere\VCard\VCard;
 
-use \CalculatieTool\Models\Relation;
-use \CalculatieTool\Models\RelationKind;
-use \CalculatieTool\Models\Contact;
-use \CalculatieTool\Models\Audit;
-use \CalculatieTool\Models\ContactFunction;
-use \CalculatieTool\Models\Resource;
-use CalculatieTool\Http\Controllers\Controller;
+use BynqIO\CalculatieTool\Models\Relation;
+use BynqIO\CalculatieTool\Models\RelationKind;
+use BynqIO\CalculatieTool\Models\Contact;
+use BynqIO\CalculatieTool\Models\Audit;
+use BynqIO\CalculatieTool\Models\ContactFunction;
+use BynqIO\CalculatieTool\Models\Resource;
+use BynqIO\CalculatieTool\Http\Controllers\Controller;
 
 use \Auth;
 use \Image;
 use \Storage;
 
-class RelationController extends Controller {
-
+class RelationController extends Controller
+{
     /**
      * Display a listing of the resource.
      * GET /relation
@@ -129,7 +139,7 @@ class RelationController extends Controller {
         ]);
 
         /* General */
-        $relation = \CalculatieTool\Models\Relation::find($request->input('id'));
+        $relation = \BynqIO\CalculatieTool\Models\Relation::find($request->input('id'));
         if (!$relation || !$relation->isOwner()) {
             return back()->withInput($request->all());
         }
@@ -137,7 +147,7 @@ class RelationController extends Controller {
         $relation->debtor_code = $request->input('debtor');
 
         /* Company */
-        $relation_kind = \CalculatieTool\Models\RelationKind::find($relation->kind_id);
+        $relation_kind = \BynqIO\CalculatieTool\Models\RelationKind::find($relation->kind_id);
         if ($relation_kind->kind_name == "zakelijk") {
             $relation->company_name = $request->input('company_name');
             $relation->type_id = $request->input('company_type');
@@ -163,7 +173,7 @@ class RelationController extends Controller {
 
     public function getDelete(Request $request, $relation_id)
     {
-        $relation = \CalculatieTool\Models\Relation::find($relation_id);
+        $relation = \BynqIO\CalculatieTool\Models\Relation::find($relation_id);
         if (!$relation || !$relation->isOwner()) {
             return back()->withInput($request->all());
         }
@@ -177,19 +187,19 @@ class RelationController extends Controller {
 
     public function getConvert(Request $request, $relation_id)
     {
-        $relation = \CalculatieTool\Models\Relation::find($relation_id);
+        $relation = \BynqIO\CalculatieTool\Models\Relation::find($relation_id);
         if (!$relation || !$relation->isOwner()) {
             return back()->withInput($request->all());
         }
 
-        if (\CalculatieTool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk') {
-            $relation->kind_id = \CalculatieTool\Models\RelationKind::where('kind_name','particulier')->first()->id;
+        if (\BynqIO\CalculatieTool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk') {
+            $relation->kind_id = \BynqIO\CalculatieTool\Models\RelationKind::where('kind_name','particulier')->first()->id;
         } else {
-            $relation->kind_id = \CalculatieTool\Models\RelationKind::where('kind_name','zakelijk')->first()->id;
+            $relation->kind_id = \BynqIO\CalculatieTool\Models\RelationKind::where('kind_name','zakelijk')->first()->id;
             if (!$relation->company_name)
                 $relation->company_name = 'onbekend';
             if (!$relation->email)
-                $relation->email = 'onbekend@calculatietool.com';
+                $relation->email = 'onbekend@BynqIO\CalculatieTool.com';
         }
 
         // $relation->active = false;
@@ -209,11 +219,11 @@ class RelationController extends Controller {
             'email' => array('required','email','max:80'),
         ]);
 
-        $contact = \CalculatieTool\Models\Contact::find($request->input('id'));
+        $contact = \BynqIO\CalculatieTool\Models\Contact::find($request->input('id'));
         if (!$contact) {
             return back()->withInput($request->all());
         }
-        $relation = \CalculatieTool\Models\Relation::find($contact->relation_id);
+        $relation = \BynqIO\CalculatieTool\Models\Relation::find($contact->relation_id);
         if (!$relation || !$relation->isOwner()) {
             return back()->withInput($request->all());
         }
@@ -250,7 +260,7 @@ class RelationController extends Controller {
             'iban_name' => array('max:50'),
         ]);
 
-        $relation = \CalculatieTool\Models\Relation::find($request->input('id'));
+        $relation = \BynqIO\CalculatieTool\Models\Relation::find($request->input('id'));
         if (!$relation || !$relation->isOwner()) {
             return back()->withInput($request->all());
         }
@@ -347,14 +357,14 @@ class RelationController extends Controller {
         $this->validate($request, $rules);
 
         /* General */
-        $relation = new \CalculatieTool\Models\Relation;
+        $relation = new \BynqIO\CalculatieTool\Models\Relation;
         $relation->user_id = \Auth::id();
         $relation->note = $request->input('note');
         $relation->kind_id = $request->input('relationkind');
         $relation->debtor_code = $request->input('debtor');
 
         /* Company */
-        $relation_kind = \CalculatieTool\Models\RelationKind::where('id','=',$relation->kind_id)->firstOrFail();
+        $relation_kind = \BynqIO\CalculatieTool\Models\RelationKind::where('id','=',$relation->kind_id)->firstOrFail();
         if ($relation_kind->kind_name == "zakelijk") {
             $relation->company_name = $request->input('company_name');
             $relation->type_id = $request->input('company_type');
@@ -381,7 +391,7 @@ class RelationController extends Controller {
         $relation->save();
 
         /* Contact */
-        $contact = new \CalculatieTool\Models\Contact;
+        $contact = new \BynqIO\CalculatieTool\Models\Contact;
         $contact->salutation = $request->input('contact_salutation');
         $contact->firstname = $request->input('contact_firstname');
         $contact->lastname = $request->input('contact_name');
@@ -426,12 +436,12 @@ class RelationController extends Controller {
             'email' => array('required','email','max:80'),
         ]);
 
-        $relation = \CalculatieTool\Models\Relation::find($request->input('id'));
+        $relation = \BynqIO\CalculatieTool\Models\Relation::find($request->input('id'));
         if (!$relation || !$relation->isOwner()) {
             return back()->withInput($request->all());
         }
 
-        $contact = new \CalculatieTool\Models\Contact;
+        $contact = new \BynqIO\CalculatieTool\Models\Contact;
         $contact->salutation = $request->input('contact_salutation');
         $contact->firstname = $request->input('contact_firstname');
         $contact->lastname = $request->input('contact_name');
@@ -440,7 +450,7 @@ class RelationController extends Controller {
         $contact->email = $request->input('email');
         $contact->note = $request->input('note');
         $contact->relation_id = $relation->id;
-        if (\CalculatieTool\Models\RelationKind::find($relation->kind_id)->kind_name=='zakelijk') {
+        if (\BynqIO\CalculatieTool\Models\RelationKind::find($relation->kind_id)->kind_name=='zakelijk') {
             $contact->function_id = $request->input('contactfunction');
         } else {
             $contact->function_id = ContactFunction::where('function_name','=','opdrachtgever')->first()->id;
@@ -674,11 +684,11 @@ class RelationController extends Controller {
 
     public function downloadVCard(Request $request, $relation_id, $contact_id)
     {
-        $contact = \CalculatieTool\Models\Contact::find($contact_id);
+        $contact = \BynqIO\CalculatieTool\Models\Contact::find($contact_id);
         if (!$contact) {
             return;
         } else {
-            $relation = \CalculatieTool\Models\Relation::find($contact->relation_id);
+            $relation = \BynqIO\CalculatieTool\Models\Relation::find($contact->relation_id);
             if (!$relation || !$relation->isOwner()) {
                 return;
             }
@@ -697,7 +707,7 @@ class RelationController extends Controller {
 
         // add work data
         $vcard->addCompany($relation->company_name);
-        $vcard->addJobtitle(ucwords(\CalculatieTool\Models\ContactFunction::find($contact->function_id)->function_name));
+        $vcard->addJobtitle(ucwords(\BynqIO\CalculatieTool\Models\ContactFunction::find($contact->function_id)->function_name));
         $vcard->addEmail($relation->email);
         if ($relation->phone)
             $vcard->addPhoneNumber($relation->phone, 'WORK');

@@ -1,16 +1,16 @@
 <?php
-use \CalculatieTool\Models\ProductGroup;
-use \CalculatieTool\Models\ProductCategory;
-use \CalculatieTool\Models\ProductSubCategory;
-use \CalculatieTool\Models\Supplier;
-use \CalculatieTool\Models\Product;
-use \CalculatieTool\Models\Tax;
-use \CalculatieTool\Models\Wholesale;
-use \CalculatieTool\Models\FavoriteActivity;
-use \CalculatieTool\Models\FavoriteMaterial;
-use \CalculatieTool\Models\FavoriteLabor;
-use \CalculatieTool\Models\FavoriteEquipment;
-use \CalculatieTool\Calculus\CalculationRegister;
+use \BynqIO\CalculatieTool\Models\ProductGroup;
+use \BynqIO\CalculatieTool\Models\ProductCategory;
+use \BynqIO\CalculatieTool\Models\ProductSubCategory;
+use \BynqIO\CalculatieTool\Models\Supplier;
+use \BynqIO\CalculatieTool\Models\Product;
+use \BynqIO\CalculatieTool\Models\Tax;
+use \BynqIO\CalculatieTool\Models\Wholesale;
+use \BynqIO\CalculatieTool\Models\FavoriteActivity;
+use \BynqIO\CalculatieTool\Models\FavoriteMaterial;
+use \BynqIO\CalculatieTool\Models\FavoriteLabor;
+use \BynqIO\CalculatieTool\Models\FavoriteEquipment;
+use \BynqIO\CalculatieTool\Calculus\CalculationRegister;
 ?>
 
 @extends('layout.master')

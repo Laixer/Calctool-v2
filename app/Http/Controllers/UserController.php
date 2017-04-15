@@ -1,21 +1,21 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers;
+namespace BynqIO\CalculatieTool\Http\Controllers;
 
 use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
 
-use \CalculatieTool\Models\Payment;
-use \CalculatieTool\Models\User;
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\Audit;
-use \CalculatieTool\Models\Promotion;
-use \CalculatieTool\Models\UserGroup;
-use \CalculatieTool\Models\BankAccount;
-use \CalculatieTool\Models\Resource;
-use \CalculatieTool\Models\CTInvoice;
-use \CalculatieTool\Models\Contact;
-use \CalculatieTool\Models\Relation;
+use \BynqIO\CalculatieTool\Models\Payment;
+use \BynqIO\CalculatieTool\Models\User;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\Audit;
+use \BynqIO\CalculatieTool\Models\Promotion;
+use \BynqIO\CalculatieTool\Models\UserGroup;
+use \BynqIO\CalculatieTool\Models\BankAccount;
+use \BynqIO\CalculatieTool\Models\Resource;
+use \BynqIO\CalculatieTool\Models\CTInvoice;
+use \BynqIO\CalculatieTool\Models\Contact;
+use \BynqIO\CalculatieTool\Models\Relation;
 
 use \Auth;
 use \Redis;
@@ -34,7 +34,7 @@ class UserController extends Controller
             'iban_name' => array('required','max:50')
         ]);
 
-        $relation = \CalculatieTool\Models\Relation::find($request->input('id'));
+        $relation = \BynqIO\CalculatieTool\Models\Relation::find($request->input('id'));
         if (!$relation || !$relation->isOwner()) {
             return back()->withInput($request->all());
         }
@@ -58,9 +58,9 @@ class UserController extends Controller
         $data = array('email' => Auth::user()->email, 'firstname' => $user->firstname, 'lastname' => $user->lastname);
         Mail::send('mail.iban_update', $data, function($message) use ($data) {
             $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-            $message->subject('CalculatieTool.com - Betaalgegevens aangepast');
-            $message->from('info@calculatietool.com', 'CalculatieTool.com');
-            $message->replyTo('support@calculatietool.com', 'CalculatieTool.com');
+            $message->subject('BynqIO\CalculatieTool.com - Betaalgegevens aangepast');
+            $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+            $message->replyTo('support@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
         });
 
         Audit::CreateEvent('account.iban.update.success', 'IBAN and/or account name updated');

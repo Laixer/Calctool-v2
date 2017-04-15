@@ -1,8 +1,8 @@
 <?php
 
-use \CalculatieTool\Models\Relation;
-use \CalculatieTool\Models\Contact;
-use \CalculatieTool\Models\ContactFunction;
+use \BynqIO\CalculatieTool\Models\Relation;
+use \BynqIO\CalculatieTool\Models\Contact;
+use \BynqIO\CalculatieTool\Models\ContactFunction;
 
 $relation = Relation::find(Auth::user()->self_id);
 if (!$relation) {

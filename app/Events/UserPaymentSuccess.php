@@ -1,11 +1,11 @@
 <?php
 
-namespace CalculatieTool\Events;
+namespace BynqIO\CalculatieTool\Events;
 
-use CalculatieTool\Events\Event;
+use BynqIO\CalculatieTool\Events\Event;
 use Illuminate\Queue\SerializesModels;
-use \CalculatieTool\Models\User;
-use \CalculatieTool\Models\Payment;
+use \BynqIO\CalculatieTool\Models\User;
+use \BynqIO\CalculatieTool\Models\Payment;
 
 class UserPaymentSuccess extends Event
 {

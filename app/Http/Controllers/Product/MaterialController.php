@@ -1,14 +1,14 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers\Product;
+namespace BynqIO\CalculatieTool\Http\Controllers\Product;
 
 use Illuminate\Http\Request;
 
-use \CalculatieTool\Models\ProductSubCategory;
-use \CalculatieTool\Models\Supplier;
-use \CalculatieTool\Models\SubGroup;
-use \CalculatieTool\Models\Product;
-use CalculatieTool\Http\Controllers\Controller;
+use \BynqIO\CalculatieTool\Models\ProductSubCategory;
+use \BynqIO\CalculatieTool\Models\Supplier;
+use \BynqIO\CalculatieTool\Models\SubGroup;
+use \BynqIO\CalculatieTool\Models\Product;
+use BynqIO\CalculatieTool\Http\Controllers\Controller;
 
 use \Auth;
 use \DB;

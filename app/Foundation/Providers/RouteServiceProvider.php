@@ -1,6 +1,16 @@
 <?php
 
-namespace CalculatieTool\Providers;
+/**
+ * Copyright (C) 2017 Bynq.io B.V.
+ * All Rights Reserved
+ *
+ * This file is part of the BynqIO\CalculatieTool.com.
+ *
+ * Content can not be copied and/or distributed without the express
+ * permission of the author.
+ */
+
+namespace BynqIO\CalculatieTool\Foundation\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -14,9 +24,9 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */ 
-    protected $namespace            = 'CalculatieTool\Http\Controllers';
-    protected $namespaceApi         = 'CalculatieTool\Http\Controllers\Api';
-    protected $namespaceAdmin       = 'CalculatieTool\Http\Controllers\Admin';
+    protected $namespace            = 'BynqIO\CalculatieTool\Http\Controllers';
+    protected $namespaceApi         = 'BynqIO\CalculatieTool\Http\Controllers\Api';
+    protected $namespaceAdmin       = 'BynqIO\CalculatieTool\Http\Controllers\Admin';
 
     /**
      * Module namespaces.

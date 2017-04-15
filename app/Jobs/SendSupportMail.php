@@ -1,6 +1,6 @@
 <?php
 
-namespace CalculatieTool\Jobs;
+namespace BynqIO\CalculatieTool\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -67,9 +67,9 @@ class SendSupportMail implements ShouldQueue
     {
         $data = $this->data;
         Mail::send('mail.support', $data, function($message) use ($data) {
-            $message->to('support@calculatietool.com', 'CalculatieTool.com');
+            $message->to('support@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
             $message->bcc($data['email'], $data['name']);
-            $message->subject('CalculatieTool.com - Contact formulier');
+            $message->subject('BynqIO\CalculatieTool.com - Contact formulier');
         });
     }
 }

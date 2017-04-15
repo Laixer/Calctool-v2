@@ -1,6 +1,6 @@
 <?php
 
-namespace CalculatieTool\Http\Middleware;
+namespace BynqIO\CalculatieTool\Http\Middleware;
 
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
 

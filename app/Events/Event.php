@@ -1,6 +1,6 @@
 <?php
 
-namespace CalculatieTool\Events;
+namespace BynqIO\CalculatieTool\Events;
 
 abstract class Event
 {

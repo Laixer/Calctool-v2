@@ -3,25 +3,25 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-use \CalculatieTool\Models\Supplier;
-use \CalculatieTool\Models\UserType;
-use \CalculatieTool\Models\UserGroup;
-use \CalculatieTool\Models\Province;
-use \CalculatieTool\Models\Country;
-use \CalculatieTool\Models\ProjectType;
-use \CalculatieTool\Models\Part;
-use \CalculatieTool\Models\PartType;
-use \CalculatieTool\Models\Detail;
-use \CalculatieTool\Models\ContactFunction;
-use \CalculatieTool\Models\RelationType;
-use \CalculatieTool\Models\RelationKind;
-use \CalculatieTool\Models\WholesaleType;
-use \CalculatieTool\Models\Valid;
-use \CalculatieTool\Models\DeliverTime;
-use \CalculatieTool\Models\Tax;
-use \CalculatieTool\Models\TimesheetKind;
-use \CalculatieTool\Models\PurchaseKind;
-use \CalculatieTool\Models\SysMessage;
+use BynqIO\CalculatieTool\Models\Supplier;
+use BynqIO\CalculatieTool\Models\UserType;
+use BynqIO\CalculatieTool\Models\UserGroup;
+use BynqIO\CalculatieTool\Models\Province;
+use BynqIO\CalculatieTool\Models\Country;
+use BynqIO\CalculatieTool\Models\ProjectType;
+use BynqIO\CalculatieTool\Models\Part;
+use BynqIO\CalculatieTool\Models\PartType;
+use BynqIO\CalculatieTool\Models\Detail;
+use BynqIO\CalculatieTool\Models\ContactFunction;
+use BynqIO\CalculatieTool\Models\RelationType;
+use BynqIO\CalculatieTool\Models\RelationKind;
+use BynqIO\CalculatieTool\Models\WholesaleType;
+use BynqIO\CalculatieTool\Models\Valid;
+use BynqIO\CalculatieTool\Models\DeliverTime;
+use BynqIO\CalculatieTool\Models\Tax;
+use BynqIO\CalculatieTool\Models\TimesheetKind;
+use BynqIO\CalculatieTool\Models\PurchaseKind;
+use BynqIO\CalculatieTool\Models\SysMessage;
 
 /*
  * Static Models Only

@@ -1,6 +1,6 @@
 <?php
 
-namespace CalculatieTool\Http;
+namespace BynqIO\CalculatieTool\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -13,12 +13,15 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-        \CalculatieTool\Http\Middleware\EncryptCookies::class,
+        \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
+        \BynqIO\CalculatieTool\Http\Middleware\EncryptCookies::class,
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-        \CalculatieTool\Http\Middleware\VerifyCsrfToken::class,
+        \BynqIO\CalculatieTool\Http\Middleware\VerifyCsrfToken::class,
         \LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware::class,
+        \BynqIO\CalculatieTool\Http\Middleware\TrimStrings::class,
+        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
 
     /**
@@ -28,11 +31,11 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'admin' => [
-            \CalculatieTool\Http\Middleware\Admin::class,
+            \BynqIO\CalculatieTool\Http\Middleware\Admin::class,
         ],
 
         'payzone' => [
-            \CalculatieTool\Http\Middleware\PayRestrict::class,
+            \BynqIO\CalculatieTool\Http\Middleware\PayRestrict::class,
         ],
 
         'api' => [
@@ -46,10 +49,10 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'utm' => \CalculatieTool\Http\Middleware\UTMState::class,
-        'auth' => \CalculatieTool\Http\Middleware\Authenticate::class,
+        'utm' => \BynqIO\CalculatieTool\Http\Middleware\UTMState::class,
+        'auth' => \BynqIO\CalculatieTool\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest' => \CalculatieTool\Http\Middleware\RedirectIfAuthenticated::class,
+        'guest' => \BynqIO\CalculatieTool\Http\Middleware\RedirectIfAuthenticated::class,
         'oauth' => \LucaDegasperi\OAuth2Server\Middleware\OAuthMiddleware::class,
         'oauth-user' => \LucaDegasperi\OAuth2Server\Middleware\OAuthUserOwnerMiddleware::class,
         'oauth-client' => \LucaDegasperi\OAuth2Server\Middleware\OAuthClientOwnerMiddleware::class,

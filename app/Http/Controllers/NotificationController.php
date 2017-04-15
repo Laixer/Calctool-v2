@@ -1,10 +1,10 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers;
+namespace BynqIO\CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use \CalculatieTool\Models\MessageBox;
+use \BynqIO\CalculatieTool\Models\MessageBox;
 
 use \Auth;
 

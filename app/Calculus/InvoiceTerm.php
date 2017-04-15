@@ -1,9 +1,9 @@
 <?php
 
-namespace CalculatieTool\Calculus;
+namespace BynqIO\CalculatieTool\Calculus;
 
-use \CalculatieTool\Models\Invoice;
-use \CalculatieTool\Calculus\BlancRowsEndresult;
+use \BynqIO\CalculatieTool\Models\Invoice;
+use \BynqIO\CalculatieTool\Calculus\BlancRowsEndresult;
 
 /*
  * Eindresultaat

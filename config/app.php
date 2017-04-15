@@ -134,7 +134,7 @@ return [
 
     'log' => env('APP_LOG', 'single'),
 
-    'log_level' => env('APP_LOG_LEVEL', 'info'),
+    'log_level' => env('APP_LOG_LEVEL', 'error'),
 
     /*
     |--------------------------------------------------------------------------
@@ -176,15 +176,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
-         * Application Service Providers...
-         */
-        CalculatieTool\Providers\AppServiceProvider::class,
-        CalculatieTool\Providers\AuthServiceProvider::class,
-        CalculatieTool\Providers\EventServiceProvider::class,
-        CalculatieTool\Providers\RouteServiceProvider::class,
-
-        /*
-         * 3rd-party providers
+         * Packages Service Providers...
          */
         Intervention\Image\ImageServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
@@ -193,6 +185,14 @@ return [
         LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
         Spatie\Newsletter\NewsletterServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
+
+        /*
+         * Application Service Providers...
+         */
+        BynqIO\CalculatieTool\Foundation\Providers\AppServiceProvider::class,
+        BynqIO\CalculatieTool\Foundation\Providers\AuthServiceProvider::class,
+        BynqIO\CalculatieTool\Foundation\Providers\EventServiceProvider::class,
+        BynqIO\CalculatieTool\Foundation\Providers\RouteServiceProvider::class,
 
     ],
 
@@ -243,10 +243,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
-        'Calctool'  => CalculatieTool\Facades\Calctool::class,
-        'Image'     => Intervention\Image\Facades\Image::class,
         'PDF'       => Barryvdh\Snappy\Facades\SnappyPdf::class,
-        'Parser'    => Nathanmac\Utilities\Parser\Facades\Parser::class,
         'Authorizer'=> LucaDegasperi\OAuth2Server\Facades\Authorizer::class,
         'Newsletter'=> Spatie\Newsletter\NewsletterFacade::class,
         'Agent'     => Jenssegers\Agent\Facades\Agent::class,

@@ -1,9 +1,9 @@
 <?php
 
-namespace CalculatieTool\Listeners;
+namespace BynqIO\CalculatieTool\Listeners;
 
-use CalculatieTool\Events\UserSubscriptionCanceled as SubscriptionCanceledEvent;
-use CalculatieTool\Jobs\SendNewUserMail;
+use BynqIO\CalculatieTool\Events\UserSubscriptionCanceled as SubscriptionCanceledEvent;
+use BynqIO\CalculatieTool\Jobs\SendNewUserMail;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 

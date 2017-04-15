@@ -1,21 +1,21 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers;
+namespace BynqIO\CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\Invoice;
-use \CalculatieTool\Models\InvoiceVersion;
-use \CalculatieTool\Models\Offer;
-use \CalculatieTool\Models\Contact;
-use \CalculatieTool\Models\Resource;
-use \CalculatieTool\Models\InvoicePost;
-use \CalculatieTool\Models\Relation;
-use \CalculatieTool\Models\User;
-use \CalculatieTool\Models\UserType;
-use \CalculatieTool\Models\MessageBox;
-use \CalculatieTool\Calculus\InvoiceTerm;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\Invoice;
+use \BynqIO\CalculatieTool\Models\InvoiceVersion;
+use \BynqIO\CalculatieTool\Models\Offer;
+use \BynqIO\CalculatieTool\Models\Contact;
+use \BynqIO\CalculatieTool\Models\Resource;
+use \BynqIO\CalculatieTool\Models\InvoicePost;
+use \BynqIO\CalculatieTool\Models\Relation;
+use \BynqIO\CalculatieTool\Models\User;
+use \BynqIO\CalculatieTool\Models\UserType;
+use \BynqIO\CalculatieTool\Models\MessageBox;
+use \BynqIO\CalculatieTool\Calculus\InvoiceTerm;
 
 use \Auth;
 use \PDF;
@@ -587,7 +587,7 @@ class InvoiceController extends Controller {
 			$message->bcc($data['email_from'], $data['mycomp']);
 			$message->attach($data['pdf']);
 			$message->subject('Factuur ' . $data['project_name']);
-			$message->from('noreply@calculatietool.com', $data['mycomp']);
+			$message->from('noreply@BynqIO\CalculatieTool.com', $data['mycomp']);
 			$message->replyTo($data['email_from'], $data['mycomp']);
 		});
 
@@ -670,10 +670,10 @@ class InvoiceController extends Controller {
 	        'user' => $user->username
 	    );
 	    Mail::send('mail.print', $data, function($message) use ($data) {
-	        $message->to('administratie@calculatietool.com', 'CalculatieTool.com');
-	        $message->subject('CalculatieTool.com - Printopdracht');
-	        $message->from('info@calculatietool.com', 'CalculatieTool.com');
-	        $message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
+	        $message->to('administratie@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+	        $message->subject('BynqIO\CalculatieTool.com - Printopdracht');
+	        $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+	        $message->replyTo('administratie@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
 	    });
 
 		return response()->json(['success' => 1]);

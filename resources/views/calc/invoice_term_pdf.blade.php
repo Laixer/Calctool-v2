@@ -1,12 +1,12 @@
 <?php
 
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\Relation;
-use \CalculatieTool\Models\Contact;
-use \CalculatieTool\Models\Invoice;
-use \CalculatieTool\Models\Offer;
-use \CalculatieTool\Models\ProjectType;
-use \CalculatieTool\Models\Resource;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\Relation;
+use \BynqIO\CalculatieTool\Models\Contact;
+use \BynqIO\CalculatieTool\Models\Invoice;
+use \BynqIO\CalculatieTool\Models\Offer;
+use \BynqIO\CalculatieTool\Models\ProjectType;
+use \BynqIO\CalculatieTool\Models\Resource;
 
 $_invoice = Invoice::find($invoice->invoice_id);
 if (!$_invoice)

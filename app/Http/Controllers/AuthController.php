@@ -1,26 +1,26 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers;
+namespace BynqIO\CalculatieTool\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-use \CalculatieTool\Events\UserSignup;
-use \CalculatieTool\Models\User;
-use \CalculatieTool\Models\UserGroup;
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\UserType;
-use \CalculatieTool\Models\Audit;
-use \CalculatieTool\Models\MessageBox;
-use \CalculatieTool\Models\Relation;
-use \CalculatieTool\Models\RelationType;
-use \CalculatieTool\Models\RelationKind;
-use \CalculatieTool\Models\Contact;
-use \CalculatieTool\Models\ContactFunction;
-use \CalculatieTool\Models\Chapter;
-use \CalculatieTool\Models\Activity;
-use \CalculatieTool\Models\Offer;
-use \CalculatieTool\Models\Invoice;
+use BynqIO\CalculatieTool\Events\UserSignup;
+use BynqIO\CalculatieTool\Models\User;
+use BynqIO\CalculatieTool\Models\UserGroup;
+use BynqIO\CalculatieTool\Models\Project;
+use BynqIO\CalculatieTool\Models\UserType;
+use BynqIO\CalculatieTool\Models\Audit;
+use BynqIO\CalculatieTool\Models\MessageBox;
+use BynqIO\CalculatieTool\Models\Relation;
+use BynqIO\CalculatieTool\Models\RelationType;
+use BynqIO\CalculatieTool\Models\RelationKind;
+use BynqIO\CalculatieTool\Models\Contact;
+use BynqIO\CalculatieTool\Models\ContactFunction;
+use BynqIO\CalculatieTool\Models\Chapter;
+use BynqIO\CalculatieTool\Models\Activity;
+use BynqIO\CalculatieTool\Models\Offer;
+use BynqIO\CalculatieTool\Models\Invoice;
 
 use \Auth;
 use \Cache;
@@ -35,7 +35,7 @@ class AuthController extends Controller {
 
     private function getCacheBlockItem()
     {
-        $remote = \Calctool::remoteAddr();
+        $remote = $_SERVER['REMOTE_ADDR'];//TODO: replace with function
         if ($remote)
             return 'blockremote' . base64_encode($remote);
 
@@ -99,8 +99,9 @@ class AuthController extends Controller {
      */
     public function getLogin(Request $request)
     {
-        if ($request->has('delblock'))
+        if ($request->has('delblock')) {
             Cache::forget($this->getCacheBlockItem());
+        }
 
         if ($request->has('dauth')) {
             $auth = explode(":", base64_decode($request->get('dauth')));
@@ -201,7 +202,7 @@ class AuthController extends Controller {
         $user->firstname = $user->username;
         $user->reset_token = sha1(mt_rand());
         $user->referral_key = md5(mt_rand());
-        $user->ip = \Calctool::remoteAddr();
+        $user->ip = $request->ip();
         $user->email = $request->get('email');
         $user->expiration_date = $expiration_date;
         $user->user_type = UserType::where('user_type', 'user')->first()->id;
@@ -339,9 +340,9 @@ class AuthController extends Controller {
         );
         Mail::send('mail.password', $data, function($message) use ($data) {
             $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-            $message->subject('CalculatieTool.com - Wachtwoord herstellen');
-            $message->from('info@calculatietool.com', 'CalculatieTool.com');
-            $message->replyTo('support@calculatietool.com', 'CalculatieTool.com');
+            $message->subject('BynqIO\CalculatieTool.com - Wachtwoord herstellen');
+            $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+            $message->replyTo('support@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
         });
 
         $user->save();
@@ -831,9 +832,9 @@ class AuthController extends Controller {
         );
         Mail::send('mail.confirm', $data, function($message) use ($data) {
             $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-            $message->subject('CalculatieTool.com - Account activatie');
-            $message->from('info@calculatietool.com', 'CalculatieTool.com');
-            $message->replyTo('support@calculatietool.com', 'CalculatieTool.com');
+            $message->subject('BynqIO\CalculatieTool.com - Account activatie');
+            $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+            $message->replyTo('support@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
         });
 
         $user->save();
@@ -850,10 +851,10 @@ class AuthController extends Controller {
                 'contact_last'=> $contact->lastname
             );
             Mail::send('mail.inform_new_user', $data, function($message) use ($data) {
-                $message->to('administratie@calculatietool.com', 'CalculatieTool.com');
-                $message->subject('CalculatieTool.com - Account activatie');
-                $message->from('info@calculatietool.com', 'CalculatieTool.com');
-                $message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
+                $message->to('administratie@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+                $message->subject('BynqIO\CalculatieTool.com - Account activatie');
+                $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+                $message->replyTo('administratie@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
             });
         }
 

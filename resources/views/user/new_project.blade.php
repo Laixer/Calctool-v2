@@ -1,9 +1,9 @@
 <?php
 
-use \CalculatieTool\Models\Contact;
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\RelationKind;
-use \CalculatieTool\Models\RelationType;
+use \BynqIO\CalculatieTool\Models\Contact;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\RelationKind;
+use \BynqIO\CalculatieTool\Models\RelationType;
 
 ?>
 

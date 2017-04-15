@@ -1,18 +1,18 @@
 <?php
 
-namespace CalculatieTool\Http\Controllers\Calculation;
+namespace BynqIO\CalculatieTool\Http\Controllers\Calculation;
 
 use Illuminate\Http\Request;
 
-use \CalculatieTool\Models\Part;
-use \CalculatieTool\Models\Project;
-use \CalculatieTool\Models\Chapter;
-use \CalculatieTool\Models\Activity;
-use \CalculatieTool\Models\CalculationEquipment;
-use \CalculatieTool\Models\CalculationLabor;
-use \CalculatieTool\Models\CalculationMaterial;
-use \CalculatieTool\Calculus\LessRegister;
-use CalculatieTool\Http\Controllers\Controller;
+use \BynqIO\CalculatieTool\Models\Part;
+use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\CalculatieTool\Models\Chapter;
+use \BynqIO\CalculatieTool\Models\Activity;
+use \BynqIO\CalculatieTool\Models\CalculationEquipment;
+use \BynqIO\CalculatieTool\Models\CalculationLabor;
+use \BynqIO\CalculatieTool\Models\CalculationMaterial;
+use \BynqIO\CalculatieTool\Calculus\LessRegister;
+use BynqIO\CalculatieTool\Http\Controllers\Controller;
 
 class LessController extends Controller {
 

@@ -1,7 +1,7 @@
 <?php
 
-use \CalculatieTool\Models\ProjectType;
-use \CalculatieTool\Models\Offer;
+use \BynqIO\CalculatieTool\Models\ProjectType;
+use \BynqIO\CalculatieTool\Models\Offer;
 
 if (empty($project)) {
 ?>

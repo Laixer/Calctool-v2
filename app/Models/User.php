@@ -1,6 +1,6 @@
 <?php
 
-namespace CalculatieTool\Models;
+namespace BynqIO\CalculatieTool\Models;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -33,11 +33,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
 
     public function productFavorite() {
-        return $this->belongsToMany('\CalculatieTool\Models\Product', 'product_favorite', 'user_id', 'product_id');
+        return $this->belongsToMany('\BynqIO\CalculatieTool\Models\Product', 'product_favorite', 'user_id', 'product_id');
     }
 
     public function tag() {
-        return $this->hasOne('\CalculatieTool\Models\UserTag', 'id', 'user_tag_id');
+        return $this->hasOne('\BynqIO\CalculatieTool\Models\UserTag', 'id', 'user_tag_id');
     }
 
     public function isSuperUser() {

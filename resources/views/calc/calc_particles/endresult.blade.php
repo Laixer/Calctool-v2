@@ -1,5 +1,5 @@
 <?php
-use \CalculatieTool\Calculus\CalculationEndresult;
+use \BynqIO\CalculatieTool\Calculus\CalculationEndresult;
 
 ?>
 <h4>Aanneming</h4>

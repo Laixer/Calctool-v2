@@ -1,14 +1,14 @@
 <?php
 
-namespace CalculatieTool\Calculus;
+namespace BynqIO\CalculatieTool\Calculus;
 
-use \CalculatieTool\Models\EstimateLabor;
-use \CalculatieTool\Models\PartType;
-use \CalculatieTool\Models\EstimateMaterial;
-use \CalculatieTool\Models\EstimateEquipment;
-use \CalculatieTool\Models\Chapter;
-use \CalculatieTool\Models\Activity;
-use \CalculatieTool\Models\Part;
+use BynqIO\CalculatieTool\Models\EstimateLabor;
+use BynqIO\CalculatieTool\Models\PartType;
+use BynqIO\CalculatieTool\Models\EstimateMaterial;
+use BynqIO\CalculatieTool\Models\EstimateEquipment;
+use BynqIO\CalculatieTool\Models\Chapter;
+use BynqIO\CalculatieTool\Models\Activity;
+use BynqIO\CalculatieTool\Models\Part;
 
 
 
