@@ -1,16 +1,30 @@
 <?php
 
+/**
+ * Copyright (C) 2017 Bynq.io B.V.
+ * All Rights Reserved
+ *
+ * This file is part of the BynqIO\CalculatieTool.com.
+ *
+ * Content can not be copied and/or distributed without the express
+ * permission of the author.
+ *
+ * @package  CalculatieTool
+ * @author   Yorick de Wid <y.dewid@calculatietool.com>
+ */
+
 namespace BynqIO\CalculatieTool\Jobs;
 
+use BynqIO\CalculatieTool\Jobs\Job;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-use \Mail;
+use Mail;
 
-class SendSubscriptionCanceledMail implements ShouldQueue
+class SendSubscriptionCanceledMail extends Job implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

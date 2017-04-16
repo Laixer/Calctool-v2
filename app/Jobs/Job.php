@@ -13,9 +13,9 @@
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Events;
+namespace BynqIO\CalculatieTool\Jobs;
 
-abstract class Event
+abstract class Job
 {
     //
 }
