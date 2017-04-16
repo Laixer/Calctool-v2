@@ -61,10 +61,10 @@ class SendNewUserMail implements ShouldQueue
     {
         $data = $this->data;
         Mail::send('mail.inform_new_user', $data, function($message) use ($data) {
-            $message->to('administratie@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-            $message->subject('BynqIO\CalculatieTool.com - Account activatie');
-            $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-            $message->replyTo('administratie@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+            $message->to('administratie@calculatietool.com', 'CalculatieTool.com');
+            $message->subject('CalculatieTool.com - Account activatie');
+            $message->from('info@calculatietool.com', 'CalculatieTool.com');
+            $message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
         });
     }
 }

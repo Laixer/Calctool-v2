@@ -46,13 +46,13 @@ use \BynqIO\CalculatieTool\Models\UserType;
                                 if (session()->has('swap_session')) {
                                     echo '<a href="/admin/switch/back">Terugkeren</a>';
                                 } else {
-                                    echo '<a href="/logout">Uitloggen</a>';
+                                    echo '<a href="/auth/signout">Uitloggen</a>';
                                 }
                             } else {
                                 echo '<a href="javascript:void(0);"></a>';
                             }
                         } else {
-                            echo '<a href="/login">Login</a>';
+                            echo '<a href="/auth/signin">Login</a>';
                         }
                     ?>
                     </li>

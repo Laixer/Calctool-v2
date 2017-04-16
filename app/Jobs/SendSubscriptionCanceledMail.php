@@ -57,10 +57,10 @@ class SendSubscriptionCanceledMail implements ShouldQueue
     {
         $data = $this->data;
         Mail::send('mail.payment_stopped', $data, function($message) use ($data) {
-            $message->to('administratie@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-            $message->subject('BynqIO\CalculatieTool.com - Automatische incasso gestopt');
-            $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-            $message->replyTo('administratie@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+            $message->to('administratie@calculatietool.com', 'CalculatieTool.com');
+            $message->subject('CalculatieTool.com - Automatische incasso gestopt');
+            $message->from('info@calculatietool.com', 'CalculatieTool.com');
+            $message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
         });
     }
 }

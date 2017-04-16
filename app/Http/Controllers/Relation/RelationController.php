@@ -199,7 +199,7 @@ class RelationController extends Controller
             if (!$relation->company_name)
                 $relation->company_name = 'onbekend';
             if (!$relation->email)
-                $relation->email = 'onbekend@BynqIO\CalculatieTool.com';
+                $relation->email = 'onbekend@calculatietool.com';
         }
 
         // $relation->active = false;

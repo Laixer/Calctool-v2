@@ -54,6 +54,13 @@
             </div>
             @endif
 
+            @if (Session::has('success'))
+            <div class="alert alert-success">
+                <i class="fa fa-check-circle"></i>
+                <strong>{{ Session::get('success') }}</strong>
+            </div>
+            @endif
+
             @include('layout.message')
 
             @if (Auth::user()->isNewPeriod())
@@ -147,7 +154,7 @@
                                     <span class="block fa fa-wrench fsize60"></span>
                                 </span>
                             </a>
-                            <a href="javascript:void(0);" style="cursor: default;" class="btn btn-primary add_to_cart"><strong> XXX</strong></a>
+                            <a href="javascript:void(0);" style="cursor: default;" class="btn btn-primary add_to_cart"><strong> @lang('core.products')</strong></a>
                         </figure>
                     </div>
                 </div>

@@ -37,6 +37,7 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */ 
     protected $namespaceAccount     = 'Account';
+    protected $namespaceAuth        = 'Auth';
     protected $namespaceCalculation = 'Calculation';
     protected $namespaceInvoice     = 'Invoice';
     protected $namespaceProducts    = 'Product';

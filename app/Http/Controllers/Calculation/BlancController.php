@@ -2,27 +2,27 @@
 
 namespace BynqIO\CalculatieTool\Http\Controllers\Calculation;
 
-use \Illuminate\Http\Request;
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Chapter;
-use \BynqIO\CalculatieTool\Models\BlancRow;
-use \BynqIO\CalculatieTool\Models\Part;
-use \BynqIO\CalculatieTool\Models\PartType;
-use \BynqIO\CalculatieTool\Models\ProjectType;
-use \BynqIO\CalculatieTool\Models\Tax;
-use \BynqIO\CalculatieTool\Models\Activity;
-use \BynqIO\CalculatieTool\Calculus\InvoiceTerm;
-use \BynqIO\CalculatieTool\Calculus\ResultEndresult;
-use \BynqIO\CalculatieTool\Calculus\CalculationRegister;
-use \BynqIO\CalculatieTool\Models\CalculationMaterial;
-use \BynqIO\CalculatieTool\Models\CalculationEquipment;
-use \BynqIO\CalculatieTool\Models\CalculationLabor;
-use \BynqIO\CalculatieTool\Models\EstimateLabor;
-use \BynqIO\CalculatieTool\Models\EstimateMaterial;
-use \BynqIO\CalculatieTool\Models\EstimateEquipment;
-use \BynqIO\CalculatieTool\Models\Invoice;
-use \BynqIO\CalculatieTool\Models\Offer;
+use BynqIO\CalculatieTool\Models\Project;
+use BynqIO\CalculatieTool\Models\Chapter;
+use BynqIO\CalculatieTool\Models\BlancRow;
+use BynqIO\CalculatieTool\Models\Part;
+use BynqIO\CalculatieTool\Models\PartType;
+use BynqIO\CalculatieTool\Models\ProjectType;
+use BynqIO\CalculatieTool\Models\Tax;
+use BynqIO\CalculatieTool\Models\Activity;
+use BynqIO\CalculatieTool\Calculus\InvoiceTerm;
+use BynqIO\CalculatieTool\Calculus\ResultEndresult;
+use BynqIO\CalculatieTool\Calculus\CalculationRegister;
+use BynqIO\CalculatieTool\Models\CalculationMaterial;
+use BynqIO\CalculatieTool\Models\CalculationEquipment;
+use BynqIO\CalculatieTool\Models\CalculationLabor;
+use BynqIO\CalculatieTool\Models\EstimateLabor;
+use BynqIO\CalculatieTool\Models\EstimateMaterial;
+use BynqIO\CalculatieTool\Models\EstimateEquipment;
+use BynqIO\CalculatieTool\Models\Invoice;
+use BynqIO\CalculatieTool\Models\Offer;
 use BynqIO\CalculatieTool\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 use \Auth;
 use \PDF;

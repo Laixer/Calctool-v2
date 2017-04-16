@@ -111,11 +111,11 @@ class ImportController extends Controller
                     if (empty($address_city))
                         $address_city = 'onbekend';
                     if (empty($email_comp))
-                        $email = 'onbekend@BynqIO\CalculatieTool.com';
+                        $email = 'onbekend@calculatietool.com';
                     if (empty($lastname))
                         $lastname = 'onbekend';
                     if (empty($email))
-                        $email = 'onbekend@BynqIO\CalculatieTool.com';
+                        $email = 'onbekend@calculatietool.com';
 
                     $input = compact(
                         'debtor',

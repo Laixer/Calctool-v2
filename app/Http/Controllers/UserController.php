@@ -1,5 +1,18 @@
 <?php
 
+/**
+ * Copyright (C) 2017 Bynq.io B.V.
+ * All Rights Reserved
+ *
+ * This file is part of the BynqIO\CalculatieTool.com.
+ *
+ * Content can not be copied and/or distributed without the express
+ * permission of the author.
+ *
+ * @package  CalculatieTool
+ * @author   Yorick de Wid <y.dewid@calculatietool.com>
+ */
+
 namespace BynqIO\CalculatieTool\Http\Controllers;
 
 use Illuminate\Support\MessageBag;
@@ -17,12 +30,12 @@ use \BynqIO\CalculatieTool\Models\CTInvoice;
 use \BynqIO\CalculatieTool\Models\Contact;
 use \BynqIO\CalculatieTool\Models\Relation;
 
-use \Auth;
-use \Redis;
-use \Hash;
-use \Mail;
-use \DB;
-use \PDF;
+use Auth;
+use Redis;
+use Hash;
+use Mail;
+use DB;
+use PDF;
 
 class UserController extends Controller
 {
@@ -59,8 +72,8 @@ class UserController extends Controller
         Mail::send('mail.iban_update', $data, function($message) use ($data) {
             $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
             $message->subject('BynqIO\CalculatieTool.com - Betaalgegevens aangepast');
-            $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-            $message->replyTo('support@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+            $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
+            $message->replyTo('support@calculatietool.com', 'BynqIO\CalculatieTool.com');
         });
 
         Audit::CreateEvent('account.iban.update.success', 'IBAN and/or account name updated');

@@ -64,8 +64,8 @@ class Kernel extends ConsoleKernel
                     Mail::send('mail.invoice_demand', $data, function($message) use ($data) {
                         $message->to($data['email'], strtolower(trim($data['client'])));
                         $message->subject('BynqIO\CalculatieTool.com - Vordering');
-                        $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-                        $message->replyTo('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+                        $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
+                        $message->replyTo('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
                     });
 
                     $message = new MessageBox;
@@ -87,8 +87,8 @@ class Kernel extends ConsoleKernel
                     Mail::send('mail.invoice_last_reminder', $data, function($message) use ($data) {
                         $message->to($data['email'], strtolower(trim($data['client'])));
                         $message->subject('BynqIO\CalculatieTool.com - Tweede betalingsherinnering');
-                        $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-                        $message->replyTo('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+                        $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
+                        $message->replyTo('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
                     });
 
                     $message = new MessageBox;
@@ -110,8 +110,8 @@ class Kernel extends ConsoleKernel
                     Mail::send('mail.invoice_first_reminder', $data, function($message) use ($data) {
                         $message->to($data['email'], strtolower(trim($data['client'])));
                         $message->subject('BynqIO\CalculatieTool.com - Betalingsherinnering');
-                        $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-                        $message->replyTo('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+                        $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
+                        $message->replyTo('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
                     });
 
                     $message = new MessageBox;
@@ -141,8 +141,8 @@ class Kernel extends ConsoleKernel
                     Mail::send('mail.due', $data, function($message) use ($data) {
                         $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
                         $message->subject('BynqIO\CalculatieTool.com - Account verlengen');
-                        $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-                        $message->replyTo('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+                        $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
+                        $message->replyTo('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
                     });
                 }
             }

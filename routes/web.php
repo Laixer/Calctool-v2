@@ -1,5 +1,18 @@
 <?php
 
+/**
+ * Copyright (C) 2017 Bynq.io B.V.
+ * All Rights Reserved
+ *
+ * This file is part of the BynqIO\CalculatieTool.com.
+ *
+ * Content can not be copied and/or distributed without the express
+ * permission of the author.
+ *
+ * @package  CalculatieTool
+ * @author   Yorick de Wid <y.dewid@calculatietool.com>
+ */
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,20 +25,30 @@
 */
 
 /* Application front actions */
-Route::group(['middleware' => ['guest', 'utm']], function() {
-    Route::get('register',                            'AuthController@getRegister')->name('signup');
-    Route::get('login',                               'AuthController@getLogin')->name('login');
-    Route::post('login',                              'AuthController@doLogin');
-    Route::post('register',                           'AuthController@doRegister');
-    Route::get('confirm/{token}',                     'AuthController@doActivate');
-    Route::post('password/reset',                     'AuthController@doBlockPassword');
-    Route::get('password/{token}',                    'AuthController@getPasswordReset');
-    Route::post('password/{token}',                   'AuthController@doNewPassword');
+Route::group(['namespace' => $this->namespaceAuth, 'prefix' => 'auth'], function() {
+    /* Signin actions */
+    Route::get('signin',                              'SigninController@index')->name('signin');
+    Route::post('signin',                             'SigninController@signin');
+
+    /* Signout actions */
+    Route::any('signout',                             'SignoutController')->name('singout');
+
+    /* Signup actions */
+    Route::get('signup',                              'SignupController@index')->name('signup');
+    Route::post('signup',                             'SignupController@signup');
+
+    /* Account confirm actions */
+    Route::get('confirm/{token}',                     'ActivateController');
+
+    /* Password reset actions */
+    Route::get('password/{token}',                    'PasswordResetController@index');
+    Route::post('password/reset',                     'PasswordResetController@requestPasswordReset');
+    Route::post('password/{token}',                   'PasswordResetController@submitNewPassword');
 });
 
 Route::group(['middleware' => 'guest'], function() {
     /* Payment callbacks */
-    Route::post('payment/webhook/', 'PaymentController@doPaymentUpdate');
+    Route::post('payment/webhook/',                   'PaymentController@doPaymentUpdate');
 
     Route::get('ex-project-overview/{token}',         'ClientController@getClientPage');
     Route::post('ex-project-overview/{token}/update', 'ClientController@doUpdateCommunication');
@@ -35,10 +58,10 @@ Route::group(['middleware' => 'guest'], function() {
 /* Support */
 Route::post('support', 'SupportController@sendSupport');
 Route::get('support',  'SupportController@getSupport');
+Route::get('get-help',  'SupportController@helpPage');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', 'DashboardController')->name('dashboard');
-    Route::any('logout', 'AuthController@logout')->name('logout');
 
     Route::get('admin/switch/back', 'AdminController@getSwitchSessionBack');
     
@@ -46,9 +69,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('res-{resource_id}/download', 'ResourceController@download');
     Route::get('res-{resource_id}/view', 'ResourceController@view');
     Route::get('res-{resource_id}/delete', 'ResourceController@doDeleteResource');
-
-    /* Common actions*/
-    Route::get('get-help', 'CommonController@helpPage');
    
     /* Module Group Account */
     Route::group(['namespace' => $this->namespaceAccount], function() {

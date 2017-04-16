@@ -759,7 +759,7 @@ class ProjectController extends Controller {
         Mail::send('mail.user_reacted', $data, function($message) use ($data) {
             $message->to($data['email'], strtolower(trim($data['client'])));
             $message->subject('BynqIO\CalculatieTool.com - Uw vakman heeft gereageerd');
-            $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+            $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
             $message->replyTo($data['email_from'], $data['mycomp']);
         });
 

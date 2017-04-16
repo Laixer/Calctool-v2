@@ -32,6 +32,16 @@ return [
     'type'        => 'Type',
     'city'        => 'Plaats',
 
+    // Authentication
+    'blocked'          => 'Toegang geblokkeerd voor 15 minuten. Probeer later opnieuw',
+    'notconfirmed'     => 'Email nog niet bevestigd',
+    'authfailed'       => 'Gebruikersnaam en/of wachtwoord verkeerd',
+    'invactivatelink'  => 'Activatielink is niet geldig',
+    'accoutncreated'   => 'Account aangemaakt, er is een bevestingsmail verstuurd',
+    'passresetsent'    => 'Wachtwoord herstel instructies zijn verzonden',
+    'invresetlink'     => 'Link is ongeldig',
+    'passresetok'      => 'Wachtwoord is aangepast',
+
     // Dashboard
     'dashboard'       => 'Dashboard',
     'mobilewarning'   => 'De applicatie werkt het beste op desktop of tablet',

@@ -149,13 +149,13 @@ class CreatePaymentInvoice implements ShouldQueue
         );
         Mail::send('mail.paid', $data, function($message) use ($data) {
             $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-            $message->bcc('administratie@BynqIO\CalculatieTool.com', 'Gebruiker account verlengd');
+            $message->bcc('administratie@calculatietool.com', 'Gebruiker account verlengd');
             $message->attachData(Storage::get($data['pdf']), 'invoice.pdf', [
                 'mime' => 'application/pdf',
             ]);
-            $message->subject('BynqIO\CalculatieTool.com - Account verlengd');
-            $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-            $message->replyTo('administratie@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+            $message->subject('CalculatieTool.com - Account verlengd');
+            $message->from('info@calculatietool.com', 'CalculatieTool.com');
+            $message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
         });
     }
 }

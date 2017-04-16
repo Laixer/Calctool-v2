@@ -66,8 +66,8 @@ class ClientController extends Controller {
 		Mail::send('mail.client_reacted', $data, function($message) use ($data) {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('BynqIO\CalculatieTool.com - Uw opdrachtgever heeft gereageerd');
-			$message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-			$message->replyTo('support@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+			$message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
+			$message->replyTo('support@calculatietool.com', 'BynqIO\CalculatieTool.com');
 		});
 
 		return back()->with('success', 'Opmerking toegevoegd aan project');
@@ -120,8 +120,8 @@ class ClientController extends Controller {
 		Mail::send('mail.offer_accepted', $data, function($message) use ($data) {
 			$message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
 			$message->subject('BynqIO\CalculatieTool.com - Offerte bevestigd');
-			$message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-			$message->replyTo('support@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+			$message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
+			$message->replyTo('support@calculatietool.com', 'BynqIO\CalculatieTool.com');
 		});
 		
 		return back()->with('success', 'Offerte is bevestigd');

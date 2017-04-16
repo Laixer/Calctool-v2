@@ -28,8 +28,8 @@ class SendNotificationMail
         Mail::send('mail.notification', $data, function($message) use ($data) {
             $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
             $message->subject('BynqIO\CalculatieTool.com - Notificatie: ' . $data['subject']);
-            $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-            $message->replyTo('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+            $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
+            $message->replyTo('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
         });
     }
 }

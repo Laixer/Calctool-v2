@@ -22,7 +22,7 @@ class Authenticate
                 return response('Unauthorized.', 401);
             }
 
-            return redirect()->guest('/login?redirect=' . urlencode($request->fullUrl()));
+            return redirect()->guest('/auth/signin?redirect=' . urlencode($request->fullUrl()));
         }
 
         return $next($request);

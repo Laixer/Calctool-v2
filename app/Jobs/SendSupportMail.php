@@ -67,9 +67,9 @@ class SendSupportMail implements ShouldQueue
     {
         $data = $this->data;
         Mail::send('mail.support', $data, function($message) use ($data) {
-            $message->to('support@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+            $message->to('support@calculatietool.com', 'CalculatieTool.com');
             $message->bcc($data['email'], $data['name']);
-            $message->subject('BynqIO\CalculatieTool.com - Contact formulier');
+            $message->subject('CalculatieTool.com - Contact formulier');
         });
     }
 }

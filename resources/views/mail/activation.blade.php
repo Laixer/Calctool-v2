@@ -61,7 +61,7 @@
                                                 <tr>
                                                     <!--<td width="100%" height="15"></td>-->
                                                     <td width="100%" style="text-align:center;">
-                                                        <a href="{{ secure_url('confirm/' . $token) }}" style="text-decoration:none; font-family: helvetica, Arial, sans-serif; font-size: 12px; letter-spacing: 0px; text-align: center; text-transform: uppercase; padding:10px; color:#ffffff; background-color:#79BB00; border-radius:6px;">
+                                                        <a href="{{ secure_url('auth/confirm/' . $token) }}" style="text-decoration:none; font-family: helvetica, Arial, sans-serif; font-size: 12px; letter-spacing: 0px; text-align: center; text-transform: uppercase; padding:10px; color:#ffffff; background-color:#79BB00; border-radius:6px;">
                                                             <strong>Activeer account</strong>
                                                         </a>
                                                     </td>

@@ -71,11 +71,11 @@ class Handler extends ExceptionHandler
             $content .= "<br /><pre>Stacktrace:</pre><br />" . nl2br($e);
             $data = array('content' => $content, 'env' => app()->environment());
             Mail::send('mail.raw', $data, function($message) use ($data) {
-                $message->to('y.dewid@BynqIO\CalculatieTool.com', 'Yorick de Wid');
-                $message->to('d.zandbergen@BynqIO\CalculatieTool.com', 'Don Zandbergen');
+                $message->to('y.dewid@calculatietool.com', 'Yorick de Wid');
+                $message->to('d.zandbergen@calculatietool.com', 'Don Zandbergen');
                 $message->subject('BynqIO\CalculatieTool.com - Exception report [' . $data['env'] . ']');
-                $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-                $message->replyTo('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+                $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
+                $message->replyTo('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
             });
         }
 

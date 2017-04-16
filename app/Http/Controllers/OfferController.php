@@ -257,7 +257,7 @@ class OfferController extends Controller {
             if (!empty($data['agreement']))
                 $message->attach($data['agreement']);
             $message->subject('Offerte ' . $data['project_name']);
-            $message->from('noreply@BynqIO\CalculatieTool.com', $data['mycomp']);
+            $message->from('noreply@calculatietool.com', $data['mycomp']);
             $message->replyTo($data['email_from'], $data['mycomp']);
         });
 
@@ -341,10 +341,10 @@ class OfferController extends Controller {
             'user' => $user->username
         );
         Mail::send('mail.print', $data, function($message) use ($data) {
-            $message->to('administratie@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+            $message->to('administratie@calculatietool.com', 'BynqIO\CalculatieTool.com');
             $message->subject('BynqIO\CalculatieTool.com - Printopdracht');
-            $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-            $message->replyTo('administratie@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+            $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
+            $message->replyTo('administratie@calculatietool.com', 'BynqIO\CalculatieTool.com');
         });
 
         return response()->json(['success' => 1]);

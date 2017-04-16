@@ -14,6 +14,18 @@ use \Mail;
 class SupportController extends Controller
 {
     /**
+     * Instantiate a new activate controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth')->only('helpPage');
+
+        //
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -44,10 +56,22 @@ class SupportController extends Controller
     public function getSupport(Request $request)
     {
         $user = null;
-        if (Auth::check())
+        if (Auth::check()) {
             $user = Auth::user();
+        }
 
         return view('generic.support', ['user' => $user]);
+    }
+
+    /**
+     * Display the help page.
+     * GET /get-help
+     *
+     * @return Response
+     */
+    public function helpPage()
+    {
+        return view('base.get_help');
     }
 
 }

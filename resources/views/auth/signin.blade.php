@@ -44,7 +44,7 @@ $(function() {
 
                     <h2><strong>Log</strong>In</h2>
 
-                    <form method="POST" action="/login" accept-charset="UTF-8" class="white-row">
+                    <form method="POST" action="/auth/signin" accept-charset="UTF-8" class="white-row">
                         {!! csrf_field() !!}
                         <input type="hidden" name="redirect" value="{{ Request::get('redirect') }}">
 
@@ -113,7 +113,7 @@ $(function() {
                         @endif
 
                         <label class="nobold">Vul uw e-mailadres hier in</label>
-                        <form id="passforgot" method="post" action="password/reset">
+                        <form id="passforgot" method="post" action="/auth/password/reset">
                             <div class="input-group">
                                 <input type="text" class="form-control" name="email" id="email" placeholder="E-mail adres" />
                                 <span class="input-group-btn">
@@ -131,7 +131,7 @@ $(function() {
 
             <div class="white-row hidden-sm hidden-xs">
                 <h4>Nog Registreren?</h4>
-                <span>Nog geen account? <a href="/register">Maak er &eacute;&eacute;n aan</a>, het is <strong>gratis!</strong></span>
+                <span>Nog geen account? <a href="/auth/signup">Maak er &eacute;&eacute;n aan</a>, het is <strong>gratis!</strong></span>
             </div>
 
         </section>

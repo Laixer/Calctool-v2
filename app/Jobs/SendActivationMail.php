@@ -60,9 +60,9 @@ class SendActivationMail implements ShouldQueue
         $data = $this->data;
         Mail::send('mail.activation', $data, function ($message) use ($data) {
             $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-            $message->subject('BynqIO\CalculatieTool.com - Account activatie');
-            $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-            $message->replyTo('support@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+            $message->subject('CalculatieTool.com - Account activatie');
+            $message->from('info@calculatietool.com', 'CalculatieTool.com');
+            $message->replyTo('support@calculatietool.com', 'CalculatieTool.com');
         });
     }
 }

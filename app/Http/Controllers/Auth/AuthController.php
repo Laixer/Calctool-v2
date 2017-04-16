@@ -1,9 +1,19 @@
 <?php
 
-namespace BynqIO\CalculatieTool\Http\Controllers;
+/**
+ * Copyright (C) 2017 Bynq.io B.V.
+ * All Rights Reserved
+ *
+ * This file is part of the BynqIO\CalculatieTool.com.
+ *
+ * Content can not be copied and/or distributed without the express
+ * permission of the author.
+ *
+ * @package  CalculatieTool
+ * @author   Yorick de Wid <y.dewid@calculatietool.com>
+ */
 
-use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
+namespace BynqIO\CalculatieTool\Http\Controllers\Auth;
 
 use BynqIO\CalculatieTool\Events\UserSignup;
 use BynqIO\CalculatieTool\Models\User;
@@ -21,350 +31,28 @@ use BynqIO\CalculatieTool\Models\Chapter;
 use BynqIO\CalculatieTool\Models\Activity;
 use BynqIO\CalculatieTool\Models\Offer;
 use BynqIO\CalculatieTool\Models\Invoice;
+use BynqIO\CalculatieTool\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
-use \Auth;
-use \Cache;
-use \Hash;
-use \Mail;
-use \Authorizer;
-use \Validator;
-use \DB;
-use \Newsletter;
+use Auth;
+use Cache;
+use Hash;
+use Mail;
+use Authorizer;
+use Validator;
+use DB;
+use Newsletter;
 
-class AuthController extends Controller {
-
-    private function getCacheBlockItem()
-    {
-        $remote = $_SERVER['REMOTE_ADDR'];//TODO: replace with function
-        if ($remote)
-            return 'blockremote' . base64_encode($remote);
-
-        return 'blockremotelocal';
-    }
-
-    private function authLogin($username, $password, $rememberme = false, $redirect = null)
-    {
-        $username = strtolower(trim($username));
-        $userdata = array(
-            'username' 	=> $username,
-            'password' 	=> $password,
-            'active' 	=> 1,
-            'banned' 	=> NULL
-        );
-
-        $userdata2 = array(
-            'email' 	=> $username,
-            'password' 	=> $password,
-            'active' 	=> 1,
-            'banned' 	=> NULL
-        );
-
-        if (Cache::has($this->getCacheBlockItem())) {
-            if (Cache::get($this->getCacheBlockItem()) >= 10)
-                return ['auth' => ['Toegang geblokkeerd voor 15 minuten. Probeer later opnieuw.']];
-        }
-
-        if (Auth::attempt($userdata, $rememberme) || Auth::attempt($userdata2, $rememberme)) {
-
-            /* Email must be confirmed */
-            if (!Auth::user()->confirmed_mail) {
-                Auth::logout();
-                return ['mail' => ['Email nog niet bevestigd']];
-            }
-
-            if (Auth::user()->isSystem())
-                return redirect('/admin');
-
-            if ($redirect)
-                return redirect(urldecode($redirect));
-
-            /* Redirect to dashboard*/
-            return redirect('/');
-        } else {
-
-            if (Cache::has($this->getCacheBlockItem())) {
-                Cache::increment($this->getCacheBlockItem());
-            } else {
-                Cache::put($this->getCacheBlockItem(), 1, 15);
-            }
-    
-            return ['password' => ['Gebruikersnaam en/of wachtwoord verkeerd']];
-        }
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Route
-     */
-    public function getLogin(Request $request)
-    {
-        if ($request->has('delblock')) {
-            Cache::forget($this->getCacheBlockItem());
-        }
-
-        if ($request->has('dauth')) {
-            $auth = explode(":", base64_decode($request->get('dauth')));
-            if (count($auth) == 2) {
-                $resp = $this->authLogin($auth[0], $auth[1]);
-
-                if (is_array($resp))
-                    return view('auth.login')->withErrors($resp)->withInput($request->except('secret'));
-
-                return $resp;
-            }
-        }
-
-        if (Cache::has($this->getCacheBlockItem())) {
-            if (Cache::get($this->getCacheBlockItem()) >= 10) {
-                return view('auth.login', ['isblock' => true])->withErrors(['auth' => ['Toegang geblokkeerd voor 15 minuten. Probeer later opnieuw.']]);
-            }
-        }
-
-        return view('auth.login');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Route
-     */
-    public function getRegister(Request $request)
-    {
-        if ($request->has('client_referer')) {
-            return view('auth.registration', ['client_referer' => $request->get('client_referer')]);
-        }
-
-        return view('auth.registration');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Route
-     */
-    public function getPasswordReset()
-    {
-        return view('auth.password');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Route
-     */
-    public function doLogin(Request $request)
-    {
-        $resp = $this->authLogin(
-            $request->input('username'),
-            $request->input('secret'),
-            $request->input('rememberme') ? true : false,
-            $request->get('redirect'));
-
-        if (is_array($resp))
-            return back()->withErrors($resp)->withInput($request->except('secret'));
-
-        return $resp;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Route
-     */
-    public function doRegister(Request $request)
-    {
-        $request->merge(array('username' => strtolower(trim($request->input('username')))));
-        $request->merge(array('email' => strtolower(trim($request->input('email')))));
-        
-        $referral_user = null;
-        $expiration_date = date('Y-m-d', strtotime("+1 month", time()));
-        if ($request->has('client_referer')) {
-            $referral_user = User::where('referral_key', $request->get('client_referer'))->first();
-            if ($referral_user) {
-                $expiration_date = date('Y-m-d', strtotime("+3 month", time()));
-            }
-        }
-
-        $this->validate($request, [
-            'username' => array('required','max:30','unique:user_account'),
-            'email' => array('required','max:80','email','unique:user_account'),
-            'secret' => array('required','confirmed','min:5'),
-            'secret_confirmation' => array('required','min:5'),
-            'contact_name' => array('required','max:50'),
-            'contact_firstname' => array('max:30'),
-            'company_name' => array('required','max:50'),
-        ]);
-
-        $user = new User;
-        $user->username = $request->get('username');
-        $user->secret = Hash::make($request->get('secret'));
-        $user->firstname = $user->username;
-        $user->reset_token = sha1(mt_rand());
-        $user->referral_key = md5(mt_rand());
-        $user->ip = $request->ip();
-        $user->email = $request->get('email');
-        $user->expiration_date = $expiration_date;
-        $user->user_type = UserType::where('user_type', 'user')->first()->id;
-        $user->user_group = 100;
-        $user->firstname = $request->get('contact_firstname');
-        $user->lastname = $request->get('contact_name');
-
-        if ($request->session()->has('referrer')) {
-            $user->referral_url = substr($request->session()->pull('referrer'), 0, 180);
-        }
-
-        $user->save();
-
-        /* General relation */
-        $relation = new Relation;
-        $relation->user_id = $user->id;
-        $relation->debtor_code = mt_rand(1000000, 9999999);
-
-        /* My company */
-        $relation->kind_id = RelationKind::where('kind_name', 'zakelijk')->first()->id;
-        $relation->company_name = $request->input('company_name');
-        $relation->type_id = RelationType::where('type_name', 'aannemer')->first()->id;
-        $relation->email = $user->email;
-
-        $relation->save();
-
-        $user->self_id = $relation->id;
-        $user->save();
-
-        /* Contact */
-        $contact = new Contact;
-        $contact->firstname = $request->input('contact_firstname');
-        $contact->lastname = $request->input('contact_name');
-        $contact->email = $user->email;
-        $contact->relation_id = $relation->id;
-        $contact->function_id = ContactFunction::where('function_name','eigenaar')->first()->id;
-
-        $contact->save();
-
-        if ($referral_user) {
-            $referral_user->expiration_date = date('Y-m-d', strtotime("+3 month", strtotime($referral_user->expiration_date)));
-
-            $referral_user->save();
-
-            Audit::CreateEvent('account.referralkey.used.success', 'Referral key used', $referral_user->id);
-        }
-
-        event(new UserSignup($user, $relation, $contact));
-
-        Audit::CreateEvent('account.new.success', 'Created new account from template', $user->id);
-
-        return back()->with('success', 'Account aangemaakt, er is een bevestingsmail verstuurd');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Route
-     */
-    public function doNewPassword(Request $request, $token)
-    {
-        $this->validate($request, [
-            'secret' => array('required','confirmed','min:5'),
-            'secret_confirmation' => array('required','min:5'),
-        ]);
-
-        $user = User::where('reset_token', $token)->first();
-        if (!$user) {
-            return redirect('login')->withErrors(['activate' => ['Activatielink is niet geldig']]);
-        }
-        $user->secret = Hash::make($request->get('secret'));
-        $user->reset_token = null;
-        $user->save();
-
-        Audit::CreateEvent('auth.update.password.success', 'Updated with: ' . Audit::UserAgent(), $user->id);
-
-        Auth::login($user);
-        return redirect('/');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Route
-     */
-    public function doActivate(Request $request, $token)
-    {
-        $user = User::where('reset_token', $token)->first();
-        if (!$user) {
-            return redirect('login')->withErrors(['activate' => ['Activatielink is niet geldig']]);
-        }
-        if ($user->confirmed_mail) {
-            return redirect('login')->withErrors(['activate' => ['Account is al geactiveerd']]);
-        }
-        $user->confirmed_mail = DB::raw('NOW()');
-        $user->reset_token = null;
-        $user->active = true;
-        $user->save();
-
-        \VoorbeeldRelatieTemplate::setup($user->id);
-
-        Newsletter::subscribe($user->email, [
-            'FNAME' => $user->firstname,
-            'LNAME' => $user->lastname
-        ]);
-
-        Audit::CreateEvent('auth.activate.success', 'Activated with: ' . Audit::UserAgent(), $user->id);
-
-        Auth::login($user);
-
-        return redirect('/?nstep=intro')->withCookie(cookie('_xintr'.$user->id, '1', 60*24*7));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Route
-     */
-    public function doBlockPassword(Request $request)
-    {
-        $this->validate($request, [
-            'email' => array('required','max:80','email')
-        ]);
-
-        $user = User::where('email', $request->get('email'))->first();
-        if (!$user)
-            return redirect('login')->with('success', 'Reset instructies zijn verzonden');
-        $user->reset_token = sha1(mt_rand());
-
-        $data = array(
-            'email' => $user->email,
-            'token' => $user->reset_token,
-            'firstname' => $user->firstname,
-            'lastname' => $user->lastname
-        );
-        Mail::send('mail.password', $data, function($message) use ($data) {
-            $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-            $message->subject('BynqIO\CalculatieTool.com - Wachtwoord herstellen');
-            $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-            $message->replyTo('support@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-        });
-
-        $user->save();
-
-        Audit::CreateEvent('auth.reset.password.mail.success', 'Reset with: ' . Audit::UserAgent(), $user->id);
-
-        return redirect('login')->with('success', 'Reset instructies zijn verzonden');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Route
-     */
-    public function logout()
-    {
-        Audit::CreateEvent('auth.logout.success', 'User destroyed current session');
-        
-        Auth::logout();
-        
-        return redirect('/login');
-    }
+class AuthController extends Controller
+{
+    /*
+    |--------------------------------------------------------------------------
+    | Auth Controller
+    |--------------------------------------------------------------------------
+    |
+    |
+    */
 
     /**
      * Show the form for creating a new resource.
@@ -833,8 +521,8 @@ class AuthController extends Controller {
         Mail::send('mail.confirm', $data, function($message) use ($data) {
             $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
             $message->subject('BynqIO\CalculatieTool.com - Account activatie');
-            $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-            $message->replyTo('support@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+            $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
+            $message->replyTo('support@calculatietool.com', 'BynqIO\CalculatieTool.com');
         });
 
         $user->save();
@@ -851,10 +539,10 @@ class AuthController extends Controller {
                 'contact_last'=> $contact->lastname
             );
             Mail::send('mail.inform_new_user', $data, function($message) use ($data) {
-                $message->to('administratie@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+                $message->to('administratie@calculatietool.com', 'BynqIO\CalculatieTool.com');
                 $message->subject('BynqIO\CalculatieTool.com - Account activatie');
-                $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-                $message->replyTo('administratie@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+                $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
+                $message->replyTo('administratie@calculatietool.com', 'BynqIO\CalculatieTool.com');
             });
         }
 

@@ -19,8 +19,8 @@ use BynqIO\CalculatieTool\Models\Project;
 use BynqIO\CalculatieTool\Models\SysMessage;
 use Illuminate\Http\Request;
 
-use \Auth;
-use \DB;
+use Auth;
+use DB;
 
 class DashboardController extends Controller
 {

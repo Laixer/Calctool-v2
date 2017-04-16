@@ -152,8 +152,8 @@ class AdminController extends Controller
             Mail::send('mail.refund', $data, function($message) use ($data) {
                 $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
                 $message->subject('BynqIO\CalculatieTool.com - Terugstorting');
-                $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-                $message->replyTo('administratie@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+                $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
+                $message->replyTo('administratie@calculatietool.com', 'BynqIO\CalculatieTool.com');
             });
 
             $user->save();
@@ -892,8 +892,8 @@ class AdminController extends Controller
         Mail::send('mail.password', $data, function($message) use ($data) {
             $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
             $message->subject('BynqIO\CalculatieTool.com - Wachtwoord herstellen');
-            $message->from('info@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
-            $message->replyTo('support@BynqIO\CalculatieTool.com', 'BynqIO\CalculatieTool.com');
+            $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
+            $message->replyTo('support@calculatietool.com', 'BynqIO\CalculatieTool.com');
         });
 
         $user->save();
