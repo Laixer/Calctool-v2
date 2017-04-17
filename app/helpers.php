@@ -8,6 +8,9 @@
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
+ *
+ * @package  CalculatieTool
+ * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
 use Illuminate\Support\Facades\Config;

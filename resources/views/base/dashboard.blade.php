@@ -54,13 +54,6 @@
             </div>
             @endif
 
-            @if (Session::has('success'))
-            <div class="alert alert-success">
-                <i class="fa fa-check-circle"></i>
-                <strong>{{ Session::get('success') }}</strong>
-            </div>
-            @endif
-
             @include('layout.message')
 
             @if (Auth::user()->isNewPeriod())

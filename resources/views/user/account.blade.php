@@ -509,7 +509,7 @@ $(document).ready(function() {
                                 <div class="col-md-8">
                                     <div class="form-group">
                                         <label for="api">Referral link</label>
-                                        <input name="api" id="api" type="text" readonly="readonly" value="{{ URL::to('/') }}/register?client_referer={{ $user->referral_key }}" class="form-control"/>
+                                        <input name="api" id="api" type="text" readonly="readonly" value="{{ url('register') }}?client_referer={{ $user->referral_key }}" class="form-control"/>
                                     </div>
                                 </div>
                             </div>

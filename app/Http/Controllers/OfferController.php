@@ -1,30 +1,43 @@
 <?php
 
+/**
+ * Copyright (C) 2017 Bynq.io B.V.
+ * All Rights Reserved
+ *
+ * This file is part of the BynqIO\CalculatieTool.com.
+ *
+ * Content can not be copied and/or distributed without the express
+ * permission of the author.
+ *
+ * @package  CalculatieTool
+ * @author   Yorick de Wid <y.dewid@calculatietool.com>
+ */
+
 namespace BynqIO\CalculatieTool\Http\Controllers;
 
+use BynqIO\CalculatieTool\Models\Project;
+use BynqIO\CalculatieTool\Models\Offer;
+use BynqIO\CalculatieTool\Models\OfferPost;
+use BynqIO\CalculatieTool\Calculus\CalculationEndresult;
+use BynqIO\CalculatieTool\Models\Resource;
+use BynqIO\CalculatieTool\Http\Controllers\InvoiceController;
+use BynqIO\CalculatieTool\Models\Invoice;
+use BynqIO\CalculatieTool\Models\ProjectShare;
+use BynqIO\CalculatieTool\Models\Contact;
+use BynqIO\CalculatieTool\Models\User;
+use BynqIO\CalculatieTool\Models\UserType;
+use BynqIO\CalculatieTool\Models\Relation;
+use BynqIO\CalculatieTool\Models\MessageBox;
+use BynqIO\CalculatieTool\Calculus\ResultEndresult;
+use BynqIO\CalculatieTool\Calculus\InvoiceTerm;
 use Illuminate\Http\Request;
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Offer;
-use \BynqIO\CalculatieTool\Models\OfferPost;
-use \BynqIO\CalculatieTool\Calculus\CalculationEndresult;
-use \BynqIO\CalculatieTool\Models\Resource;
-use \BynqIO\CalculatieTool\Http\Controllers\InvoiceController;
-use \BynqIO\CalculatieTool\Models\Invoice;
-use \BynqIO\CalculatieTool\Models\ProjectShare;
-use \BynqIO\CalculatieTool\Models\Contact;
-use \BynqIO\CalculatieTool\Models\User;
-use \BynqIO\CalculatieTool\Models\UserType;
-use \BynqIO\CalculatieTool\Models\Relation;
-use \BynqIO\CalculatieTool\Models\MessageBox;
-use \BynqIO\CalculatieTool\Calculus\ResultEndresult;
-use \BynqIO\CalculatieTool\Calculus\InvoiceTerm;
 
-use \Auth;
-use \PDF;
-use \Mail;
+use Auth;
+use PDF;
+use Mail;
 
-class OfferController extends Controller {
-
+class OfferController extends Controller
+{
     /*
     |--------------------------------------------------------------------------
     | Default Home Controller

@@ -23,15 +23,14 @@ use Validator;
 use Cache;
 use Cookie;
 
-class ZipcodeController extends Controller {
-
+class ZipcodeController extends Controller
+{
     /**
      * Display a listing of the resource.
      * GET /relation
      *
      * @return Response
      */
-
     public function getExternalAddress(Request $request)
     {
         $validator = Validator::make($request->all(), [

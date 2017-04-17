@@ -17,7 +17,6 @@ namespace BynqIO\CalculatieTool\Http\Controllers;
 
 use BynqIO\CalculatieTool\Models\Project;
 use BynqIO\CalculatieTool\Models\SysMessage;
-use Illuminate\Http\Request;
 
 use Auth;
 use DB;
@@ -86,8 +85,9 @@ class DashboardController extends Controller
      */
     public function __invoke()
     {
-        if (Auth::user()->isSystem())
+        if (Auth::user()->isSystem()) {
             return redirect('/admin');
+        }
 
         $this->setUserOnline();
 

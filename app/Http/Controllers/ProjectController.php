@@ -1,39 +1,51 @@
 <?php
 
+/**
+ * Copyright (C) 2017 Bynq.io B.V.
+ * All Rights Reserved
+ *
+ * This file is part of the BynqIO\CalculatieTool.com.
+ *
+ * Content can not be copied and/or distributed without the express
+ * permission of the author.
+ *
+ * @package  CalculatieTool
+ * @author   Yorick de Wid <y.dewid@calculatietool.com>
+ */
+
 namespace BynqIO\CalculatieTool\Http\Controllers;
 
+use BynqIO\CalculatieTool\Models\Project;
+use BynqIO\CalculatieTool\Models\Offer;
+use BynqIO\CalculatieTool\Models\Invoice;
+use BynqIO\CalculatieTool\Models\ProjectType;
+use BynqIO\CalculatieTool\Models\Resource;
+use BynqIO\CalculatieTool\Models\Relation;
+use BynqIO\CalculatieTool\Models\Contact;
+use BynqIO\CalculatieTool\Models\Chapter;
+use BynqIO\CalculatieTool\Models\Audit;
+use BynqIO\CalculatieTool\Models\Activity;
+use BynqIO\CalculatieTool\Models\RelationKind;
+use BynqIO\CalculatieTool\Models\FavoriteActivity;
+use BynqIO\CalculatieTool\Models\ProjectShare;
+use BynqIO\CalculatieTool\Http\Controllers\InvoiceController;
+use BynqIO\CalculatieTool\Models\EstimateLabor;
+use BynqIO\CalculatieTool\Models\EstimateMaterial;
+use BynqIO\CalculatieTool\Models\EstimateEquipment;
+use BynqIO\CalculatieTool\Models\MoreLabor;
+use BynqIO\CalculatieTool\Models\MoreMaterial;
+use BynqIO\CalculatieTool\Models\MoreEquipment;
+use BynqIO\CalculatieTool\Models\CalculationLabor;
+use BynqIO\CalculatieTool\Models\CalculationMaterial;
+use BynqIO\CalculatieTool\Models\CalculationEquipment;
 use Illuminate\Http\Request;
 
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Offer;
-use \BynqIO\CalculatieTool\Models\Invoice;
-use \BynqIO\CalculatieTool\Models\ProjectType;
-use \BynqIO\CalculatieTool\Models\Resource;
-use \BynqIO\CalculatieTool\Models\Relation;
-use \BynqIO\CalculatieTool\Models\Contact;
-use \BynqIO\CalculatieTool\Models\Chapter;
-use \BynqIO\CalculatieTool\Models\Audit;
-use \BynqIO\CalculatieTool\Models\Activity;
-use \BynqIO\CalculatieTool\Models\RelationKind;
-use \BynqIO\CalculatieTool\Models\FavoriteActivity;
-use \BynqIO\CalculatieTool\Models\ProjectShare;
-use \BynqIO\CalculatieTool\Http\Controllers\InvoiceController;
-use \BynqIO\CalculatieTool\Models\EstimateLabor;
-use \BynqIO\CalculatieTool\Models\EstimateMaterial;
-use \BynqIO\CalculatieTool\Models\EstimateEquipment;
-use \BynqIO\CalculatieTool\Models\MoreLabor;
-use \BynqIO\CalculatieTool\Models\MoreMaterial;
-use \BynqIO\CalculatieTool\Models\MoreEquipment;
-use \BynqIO\CalculatieTool\Models\CalculationLabor;
-use \BynqIO\CalculatieTool\Models\CalculationMaterial;
-use \BynqIO\CalculatieTool\Models\CalculationEquipment;
+use Auth;
+use Mail;
+use Storage;
 
-use \Auth;
-use \Mail;
-use \Storage;
-
-class ProjectController extends Controller {
-
+class ProjectController extends Controller
+{
     /**
      * Display a listing of the resource.
      * GET /relation

@@ -24,7 +24,7 @@
 |
 */
 
-/* Application front actions */
+/* Module Group Auth */
 Route::group(['namespace' => $this->namespaceAuth, 'prefix' => 'auth'], function() {
     /* Signin actions */
     Route::get('signin',                              'SigninController@index')->name('signin');
@@ -46,10 +46,10 @@ Route::group(['namespace' => $this->namespaceAuth, 'prefix' => 'auth'], function
     Route::post('password/{token}',                   'PasswordResetController@submitNewPassword');
 });
 
-Route::group(['middleware' => 'guest'], function() {
-    /* Payment callbacks */
-    Route::post('payment/webhook/',                   'PaymentController@doPaymentUpdate');
+/* Payment callbacks */
+Route::post('payment/webhook/',                       'PaymentController@doPaymentUpdate');
 
+Route::group(['middleware' => 'guest'], function() {
     Route::get('ex-project-overview/{token}',         'ClientController@getClientPage');
     Route::post('ex-project-overview/{token}/update', 'ClientController@doUpdateCommunication');
     Route::get('ex-project-overview/{token}/done',    'ClientController@doOfferAccept');
@@ -60,6 +60,7 @@ Route::post('support', 'SupportController@sendSupport');
 Route::get('support',  'SupportController@getSupport');
 Route::get('get-help',  'SupportController@helpPage');
 
+/* Authentication Group */
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', 'DashboardController')->name('dashboard');
 
@@ -74,15 +75,15 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['namespace' => $this->namespaceAccount], function() {
         
         /* Account actions */
-        Route::get('account',                     'AccountController@getAccount')->name('account');
-        Route::get('account/deactivate',          'AccountController@getAccountDeactivate');
-        Route::get('account/loaddemo',            'AccountController@doLoadDemoProject');
+        Route::get('account',                                  'AccountController@getAccount')->name('account');
+        Route::get('account/deactivate',                       'AccountController@getAccountDeactivate');
+        Route::get('account/loaddemo',                         'AccountController@doLoadDemoProject');
         Route::get('account/oauth/session/{client_id}/revoke', 'AccountController@doRevokeApp');
-        Route::post('account/updateuser',         'AccountController@doAccountUser');
-        Route::post('account/iban/new',           'AccountController@doNewIban');
-        Route::post('account/security/update',    'AccountController@doUpdateSecurity');
-        Route::post('account/preferences/update', 'AccountController@doUpdatePreferences');
-        Route::post('account/notepad/save',       'AccountController@doUpdateNotepad');
+        Route::post('account/updateuser',                      'AccountController@doAccountUser');
+        Route::post('account/iban/new',                        'AccountController@doNewIban');
+        Route::post('account/security/update',                 'AccountController@doUpdateSecurity');
+        Route::post('account/preferences/update',              'AccountController@doUpdatePreferences');
+        Route::post('account/notepad/save',                    'AccountController@doUpdateNotepad');
     });
 
     /* Notification actions */
@@ -93,10 +94,6 @@ Route::group(['middleware' => 'auth'], function() {
 
     /* Finance actions */
     Route::get('finance/overview', 'Finance\OverviewController@overview');
-
-    Route::get('affiliate/5bdc2bbd-4021-4e12-9012-647385c28c05', function(){
-        return view('user.affiliate');
-    });
 
     /* Routes by PaymentController */
     Route::get('payment',                      'PaymentController@getPayment');
