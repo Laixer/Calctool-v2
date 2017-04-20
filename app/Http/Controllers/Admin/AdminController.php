@@ -45,16 +45,12 @@ use BynqIO\CalculatieTool\Http\Controllers\Controller;
 use Database\Templates\DemoProjectTemplate;
 use Database\Templates\ValidationProjectTemplate;
 
-use \Storage;
-use \Auth;
-use \Cache;
-use \Hash;
-use \Redis;
-use \Mail;
-use \Artisan;
-
-ini_set('max_execution_time', 0);
-ini_set('max_input_time', -1);
+use Storage;
+use Auth;
+use Cache;
+use Hash;
+use Mail;
+use Artisan;
 
 class AdminController extends Controller
 {

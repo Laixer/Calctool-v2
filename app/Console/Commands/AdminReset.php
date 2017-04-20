@@ -2,13 +2,11 @@
 
 namespace BynqIO\CalculatieTool\Console\Commands;
 
+use BynqIO\CalculatieTool\Models\User;
+use BynqIO\CalculatieTool\Models\UserType;
 use Illuminate\Console\Command;
 
-use \BynqIO\CalculatieTool\Models\User;
-use \BynqIO\CalculatieTool\Models\UserType;
-
-use \Redis;
-use \Hash;
+use Hash;
 
 class AdminReset extends Command
 {

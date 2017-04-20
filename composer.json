@@ -33,7 +33,9 @@
         "doctrine/dbal": "v2.5.4",
         "lucadegasperi/oauth2-server-laravel": "5.2.*",
         "spatie/laravel-newsletter": "^3.3",
-        "jenssegers/agent": "^2.4"
+        "jenssegers/agent": "^2.4",
+        "webpatser/laravel-uuid": "2.*",
+        "fideloper/proxy": "^3.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

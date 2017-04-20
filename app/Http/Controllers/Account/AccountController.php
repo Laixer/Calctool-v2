@@ -5,26 +5,25 @@ namespace BynqIO\CalculatieTool\Http\Controllers\Account;
 use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
 
-use \BynqIO\CalculatieTool\Models\Payment;
-use \BynqIO\CalculatieTool\Models\User;
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Audit;
-use \BynqIO\CalculatieTool\Models\Promotion;
-use \BynqIO\CalculatieTool\Models\UserGroup;
-use \BynqIO\CalculatieTool\Models\BankAccount;
-use \BynqIO\CalculatieTool\Models\Resource;
-use \BynqIO\CalculatieTool\Models\CTInvoice;
-use \BynqIO\CalculatieTool\Models\Contact;
-use \BynqIO\CalculatieTool\Models\Relation;
+use BynqIO\CalculatieTool\Models\Payment;
+use BynqIO\CalculatieTool\Models\User;
+use BynqIO\CalculatieTool\Models\Project;
+use BynqIO\CalculatieTool\Models\Audit;
+use BynqIO\CalculatieTool\Models\Promotion;
+use BynqIO\CalculatieTool\Models\UserGroup;
+use BynqIO\CalculatieTool\Models\BankAccount;
+use BynqIO\CalculatieTool\Models\Resource;
+use BynqIO\CalculatieTool\Models\CTInvoice;
+use BynqIO\CalculatieTool\Models\Contact;
+use BynqIO\CalculatieTool\Models\Relation;
 use BynqIO\CalculatieTool\Jobs\SendPasswordChangeMail;
 use BynqIO\CalculatieTool\Http\Controllers\Controller;
 
-use \Auth;
-use \Redis;
-use \Hash;
-use \Mail;
-use \DB;
-use \PDF;
+use Auth;
+use Hash;
+use Mail;
+use DB;
+use PDF;
 
 class AccountController extends Controller
 {

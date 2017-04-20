@@ -15,23 +15,21 @@
 
 namespace BynqIO\CalculatieTool\Http\Controllers;
 
+use BynqIO\CalculatieTool\Models\Payment;
+use BynqIO\CalculatieTool\Models\User;
+use BynqIO\CalculatieTool\Models\Project;
+use BynqIO\CalculatieTool\Models\Audit;
+use BynqIO\CalculatieTool\Models\Promotion;
+use BynqIO\CalculatieTool\Models\UserGroup;
+use BynqIO\CalculatieTool\Models\BankAccount;
+use BynqIO\CalculatieTool\Models\Resource;
+use BynqIO\CalculatieTool\Models\CTInvoice;
+use BynqIO\CalculatieTool\Models\Contact;
+use BynqIO\CalculatieTool\Models\Relation;
 use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
 
-use \BynqIO\CalculatieTool\Models\Payment;
-use \BynqIO\CalculatieTool\Models\User;
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Audit;
-use \BynqIO\CalculatieTool\Models\Promotion;
-use \BynqIO\CalculatieTool\Models\UserGroup;
-use \BynqIO\CalculatieTool\Models\BankAccount;
-use \BynqIO\CalculatieTool\Models\Resource;
-use \BynqIO\CalculatieTool\Models\CTInvoice;
-use \BynqIO\CalculatieTool\Models\Contact;
-use \BynqIO\CalculatieTool\Models\Relation;
-
 use Auth;
-use Redis;
 use Hash;
 use Mail;
 use DB;
