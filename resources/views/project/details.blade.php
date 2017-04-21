@@ -1,33 +1,33 @@
 <?php
 
-use \BynqIO\CalculatieTool\Calculus\CalculationEndresult;
-use \BynqIO\CalculatieTool\Models\Relation;
-use \BynqIO\CalculatieTool\Models\PurchaseKind;
-use \BynqIO\CalculatieTool\Models\Contact;
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\ProjectType;
-use \BynqIO\CalculatieTool\Models\Offer;
-use \BynqIO\CalculatieTool\Models\Invoice;
-use \BynqIO\CalculatieTool\Models\Wholesale;
-use \BynqIO\CalculatieTool\Models\ProjectShare;
-use \BynqIO\CalculatieTool\Models\RelationKind;
-use \BynqIO\CalculatieTool\Models\Province;
-use \BynqIO\CalculatieTool\Models\Country;
-use \BynqIO\CalculatieTool\Models\Chapter;
-use \BynqIO\CalculatieTool\Models\Activity;
-use \BynqIO\CalculatieTool\Models\Timesheet;
-use \BynqIO\CalculatieTool\Models\Resource;
-use \BynqIO\CalculatieTool\Models\TimesheetKind;
-use \BynqIO\CalculatieTool\Models\Purchase;
-use \BynqIO\CalculatieTool\Models\EstimateLabor;
-use \BynqIO\CalculatieTool\Models\EstimateMaterial;
-use \BynqIO\CalculatieTool\Models\EstimateEquipment;
-use \BynqIO\CalculatieTool\Models\MoreLabor;
-use \BynqIO\CalculatieTool\Models\MoreMaterial;
-use \BynqIO\CalculatieTool\Models\MoreEquipment;
-use \BynqIO\CalculatieTool\Models\CalculationLabor;
-use \BynqIO\CalculatieTool\Models\CalculationMaterial;
-use \BynqIO\CalculatieTool\Models\CalculationEquipment;
+use BynqIO\CalculatieTool\Calculus\CalculationEndresult;
+use BynqIO\CalculatieTool\Models\Relation;
+use BynqIO\CalculatieTool\Models\PurchaseKind;
+use BynqIO\CalculatieTool\Models\Contact;
+use BynqIO\CalculatieTool\Models\Project;
+use BynqIO\CalculatieTool\Models\ProjectType;
+use BynqIO\CalculatieTool\Models\Offer;
+use BynqIO\CalculatieTool\Models\Invoice;
+use BynqIO\CalculatieTool\Models\Wholesale;
+use BynqIO\CalculatieTool\Models\ProjectShare;
+use BynqIO\CalculatieTool\Models\RelationKind;
+use BynqIO\CalculatieTool\Models\Province;
+use BynqIO\CalculatieTool\Models\Country;
+use BynqIO\CalculatieTool\Models\Chapter;
+use BynqIO\CalculatieTool\Models\Activity;
+use BynqIO\CalculatieTool\Models\Timesheet;
+use BynqIO\CalculatieTool\Models\Resource;
+use BynqIO\CalculatieTool\Models\TimesheetKind;
+use BynqIO\CalculatieTool\Models\Purchase;
+use BynqIO\CalculatieTool\Models\EstimateLabor;
+use BynqIO\CalculatieTool\Models\EstimateMaterial;
+use BynqIO\CalculatieTool\Models\EstimateEquipment;
+use BynqIO\CalculatieTool\Models\MoreLabor;
+use BynqIO\CalculatieTool\Models\MoreMaterial;
+use BynqIO\CalculatieTool\Models\MoreEquipment;
+use BynqIO\CalculatieTool\Models\CalculationLabor;
+use BynqIO\CalculatieTool\Models\CalculationMaterial;
+use BynqIO\CalculatieTool\Models\CalculationEquipment;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));
@@ -431,15 +431,14 @@ $(document).ready(function() {
                         <div class="btn-group" role="group">	
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acties&nbsp;&nbsp;<span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                                <li><a href="/project-{{ $project->id }}/printoverview" target="new"><i class="fa fa-file-pdf-o"></i>&nbsp;Projectoverzicht</a></i>
-                                <li><a href="/project-{{ $project->id }}/packlist" target="new"><i class="fa fa-file-pdf-o"></i>&nbsp;Raaplijst</a></i>
-                                <li><a href="/project-{{ $project->id }}/copy"><i class="fa fa-copy"></i>&nbsp;Project kopieren</a></i>
+                                <li><a href="/project/{{ $project->id }}-{{ str_slug($project->project_name) }}/printoverview" target="new"><i class="fa fa-file-pdf-o"></i>&nbsp;Projectoverzicht</a></i>
+                                <li><a href="/project/{{ $project->id }}-{{ str_slug($project->project_name) }}/packlist" target="new"><i class="fa fa-file-pdf-o"></i>&nbsp;Raaplijst</a></i>
+                                <li><a href="/project/{{ $project->id }}-{{ str_slug($project->project_name) }}/copy"><i class="fa fa-copy"></i>&nbsp;Project kopieren</a></i>
                                 @if (!$project->project_close)
                                 <li><a href="#" id="projclose"><i class="fa fa-close"></i>&nbsp;Project sluiten</a></li>
                                 @else
-                                <li><a href="/project-{{ $project->id }}/updateprojectdilapidated"><i class="fa fa-times"></i>&nbsp;Project vervallen</a></li>
+                                <li><a href="/project/{{ $project->id }}-{{ str_slug($project->project_name) }}/cancel" onclick="return confirm('Project laten vervallen?')"><i class="fa fa-times"></i>&nbsp;Project vervallen</a></li>
                                 @endif
-
                             </ul>
                         </div>
                     </div>
@@ -727,7 +726,7 @@ $(document).ready(function() {
 
                     <div id="advanced" class="tab-pane">
 
-                        <form method="POST" action="/project/updateadvanced">
+                        <form method="POST" action="/project/updateoptions">
                             {!! csrf_field() !!}
                             <input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
 
@@ -911,15 +910,15 @@ $(document).ready(function() {
                                 <div class="row">
                                     <label for="name">Telefoon</label>
                                     <span>{{ $contact->mobile }}</span>
-                                </div>		
-                            </div>									
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div id="doc" class="tab-pane">
 
                         @if (!$project->project_close)
                         <div class="pull-right">
-                            <form id="upload-file" action="/resource/upload" method="post" enctype="multipart/form-data">
+                            <form id="upload-file" action="/project/document/upload" method="post" enctype="multipart/form-data">
                                 {!! csrf_field() !!}
                                 <label class="btn btn-primary btn-file">
                                     <i class="fa fa-cloud-upload"></i>&nbsp;Upload document <input type="file" name="projectfile" id="btn-load-file" style="display: none;">

@@ -72,7 +72,7 @@ if (!$contact) {
 			<div>
 			<ol class="breadcrumb">
 			  <li><a href="/">Dashboard</a></li>
-			  <li><a href="/mycompany">Mijn bedrijf</a></li>
+			  <li><a href="/company">Mijn bedrijf</a></li>
 			 <li class="active">contact bewerken</li>
 			</ol>
 			</div>

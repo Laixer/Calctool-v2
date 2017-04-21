@@ -6,7 +6,7 @@ use \BynqIO\CalculatieTool\Models\ContactFunction;
 
 $relation = Relation::find(Auth::user()->self_id);
 if (!$relation) {
-    header("Location: /mycompany");
+    header("Location: /company");
     exit();	
 }
 
@@ -52,7 +52,7 @@ $contact = Contact::where('relation_id','=',$relation->id)->first();
             <div>
             <ol class="breadcrumb">
               <li><a href="/">Home</a></li>
-              <li><a href="/mycompany">Mijn bedrijf</a></li>
+              <li><a href="/company">Mijn bedrijf</a></li>
              <li class="active" /relation-{{ $relation->id }}/contact/new">nieuw contact</li>
             </ol>
             </div>
@@ -60,7 +60,7 @@ $contact = Contact::where('relation_id','=',$relation->id)->first();
 
             <h2><strong>Nieuw</strong> contact</h2>
             <div class="white-row">
-            <form action="/mycompany/contact/new" method="post">
+            <form action="/company/contact/new" method="post">
             {!! csrf_field() !!}
             <div>
             <h4>Contactgegevens</h4>

@@ -147,7 +147,7 @@ $(document).ready(function() {
         number = $('#address_number').val();
         if (number && zipcode) {
 
-            $.post("/mycompany/quickstart/address", {
+            $.post("/company/quickstart/address", {
                 zipcode: zipcode,
                 number: number,
             }, function(data) {
@@ -223,11 +223,25 @@ $(document).ready(function() {
             </div>
             @endif
 
-            <h2 style="margin: 10px 0 20px 0;"><strong>Bedrijfsgegevens</strong> &nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
+                <aside class="col-md-3">
+
+                    <ul class="nav nav-list">
+                        <li><a href="/company/details"><i class="fa fa-info"></i> Bedrijfsgegevens</a></li>
+                        <li><a href="/company/contacts"><i class="fa fa-users"></i> Contacten</a></li>
+                        <li><a href="/company/financial"><i class="fa fa-university"></i> Financieel</a></li>
+                        <li><a href="/company/logo"><i class="fa fa-file-image-o"></i> Logo</a></li>
+                        <li><a href="/company/team"><i class="fa fa-users"></i> Teamleden</a></li>
+                        <li><a href="/company/preferences"><i class="fa fa-cogs"></i> Voorkeuren</a></li>
+                    </ul>
+
+                </aside>
+            <div class="col-md-9">
+            <h4 class="company" >Bedrijfsgegevens</h4>
+            <!--<h2 style="margin: 10px 0 20px 0;"><strong>Bedrijfsgegevens</strong> &nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>-->
 
                 <div class="tabs nomargin-top">
 
-                    <ul class="nav nav-tabs">
+                    <!--<ul class="nav nav-tabs">
                         <li id="tab-company">
                             <a href="#company" data-toggle="tab"><i class="fa fa-info" aria-hidden="true"></i>Bedrijfsgegevens</a>
                         </li>
@@ -243,7 +257,7 @@ $(document).ready(function() {
                         <li id="tab-prefs">
                             <a href="#prefs" data-toggle="tab"><i class="fa fa-cogs" aria-hidden="true"></i>Voorkeuren</a>
                         </li>
-                    </ul>
+                    </ul>-->
 
                     <div class="tab-content">
                         <div id="company" class="tab-pane">
@@ -252,7 +266,7 @@ $(document).ready(function() {
                             {!! csrf_field() !!}
 
                             <div>
-                            <h4 class="company" >Bedrijfsgegevens</h4>
+                            <!--<h4 class="company" >Bedrijfsgegevens</h4>-->
                             <input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
                             <div class="row">
                                 <div class="col-md-5">
@@ -405,13 +419,13 @@ $(document).ready(function() {
                             </table>
                             <div class="row">
                                 <div class="col-md-2">
-                                    <a href="/mycompany/contact/new" {{ $relation ? '' : 'disabled' }} class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
+                                    <a href="/company/contact/new" {{ $relation ? '' : 'disabled' }} class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw contact</a>
                                 </div>
                             </div>
                         </div>
                         <div id="payment" class="tab-pane">
                             <h4>Betalingsgegevens</h4>
-                            <form action="mycompany/iban/update" method="post">
+                            <form action="/company/iban/update" method="post">
                             {!! csrf_field() !!}
                             <div class="row">
                             <input type="hidden" name="id" id="id" value="{{ $relation ? $relation->id : '' }}"/>
@@ -760,6 +774,7 @@ $(document).ready(function() {
                         </div>
                     </div>
                 </div>
+            </div>
 
         </div>
 

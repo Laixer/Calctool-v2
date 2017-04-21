@@ -35,7 +35,7 @@ use \BynqIO\CalculatieTool\Models\UserType;
                         @if (!Auth::check())
                         <a href="/support">Support</a>
                         @else
-                        <a href="/get-help">Support</a>
+                        <a href="/support/gethelp">Support</a>
                         @endif
                     </li>
                     @endif

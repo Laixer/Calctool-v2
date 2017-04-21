@@ -42,6 +42,7 @@ class RouteServiceProvider extends ServiceProvider
     protected $namespaceCalculation = 'Calculation';
     protected $namespaceInvoice     = 'Invoice';
     protected $namespaceProducts    = 'Product';
+    protected $namespaceProject     = 'Project';
     protected $namespaceProposal    = 'Poposal';
     protected $namespaceRelation    = 'Relation';
 

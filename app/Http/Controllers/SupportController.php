@@ -60,7 +60,7 @@ class SupportController extends Controller
             $user = Auth::user();
         }
 
-        return view('generic.support', ['user' => $user]);
+        return view('support.support', ['user' => $user]);
     }
 
     /**
@@ -71,7 +71,7 @@ class SupportController extends Controller
      */
     public function helpPage()
     {
-        return view('base.get_help');
+        return view('support.gethelp');
     }
 
 }

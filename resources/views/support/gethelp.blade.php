@@ -36,7 +36,7 @@ use \Jenssegers\Agent\Agent;
                         <ul style="list-style-type: decimal;">
                             <li><a href="/project/new">Nieuw Project</a></li>
                             <li><a href="/relation/new">Nieuwe Relatie</a></li>
-                            <li><a href="/mycompany">Mijn Bedrijf</a></li>
+                            <li><a href="/company">Mijn Bedrijf</a></li>
                             <li><a href="/timesheet">Algemene Urenregistratie</a></li>
                             <li><a href="/purchase">Algemene Inkoopfacturen</a></li>
                         </ul>
@@ -60,12 +60,12 @@ use \Jenssegers\Agent\Agent;
 
                         <h5>Bedrijf</h5>
                         <ul>
-                            <li><a href="/mycompany">Bedrijfsgegevens wijzingen</a></li>
-                            <li><a href="/mycompany">Bedrijfsadres wijzigen</a></li>
-                            <li><a href="/mycompany">Contacten toeovegen aan uw bedrijf</a></li>
-                            <li><a href="/mycompany">Logo & voorwaarden uploaden</a></li>
-                            <li><a href="/mycompany">Voorkeuren voor op brieven beheren</a></li>
-                            <li><a href="/mycompany">Betalingsgegevens voor op factuur</a></li>
+                            <li><a href="/company">Bedrijfsgegevens wijzingen</a></li>
+                            <li><a href="/company">Bedrijfsadres wijzigen</a></li>
+                            <li><a href="/company">Contacten toeovegen aan uw bedrijf</a></li>
+                            <li><a href="/company">Logo & voorwaarden uploaden</a></li>
+                            <li><a href="/company">Voorkeuren voor op brieven beheren</a></li>
+                            <li><a href="/company">Betalingsgegevens voor op factuur</a></li>
                             <li><a href="/finance/overview">Uw financieel overzicht</a></li>
                         </ul>
 
@@ -75,7 +75,7 @@ use \Jenssegers\Agent\Agent;
                             <li><a href="/">Overzicht van mijn gesloten projecten</a></li>
                             <li><a href="/finance/overview">Openstande offertes</a></li>
                             <li><a href="/finance/overview">Openstande Facturen</a></li>
-                            <li><a href="/mycompany">Contacten toeovegen aan uw bedrijf</a></li>
+                            <li><a href="/company">Contacten toeovegen aan uw bedrijf</a></li>
     
                         </ul>
 

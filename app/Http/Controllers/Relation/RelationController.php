@@ -58,7 +58,7 @@ class RelationController extends Controller
 
     public function getMyCompany()
     {
-        return view('user.edit_mycompany');
+        return view('company.edit_mycompany');
     }
 
     public function doUpdateMyCompany(Request $request)

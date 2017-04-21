@@ -1,9 +1,14 @@
 <?php
 
-use \BynqIO\CalculatieTool\Models\Contact;
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\RelationKind;
-use \BynqIO\CalculatieTool\Models\RelationType;
+use BynqIO\CalculatieTool\Models\Contact;
+use BynqIO\CalculatieTool\Models\Project;
+use BynqIO\CalculatieTool\Models\ProjectType;
+use BynqIO\CalculatieTool\Models\Relation;
+use BynqIO\CalculatieTool\Models\RelationKind;
+use BynqIO\CalculatieTool\Models\RelationType;
+use BynqIO\CalculatieTool\Models\Province;
+use BynqIO\CalculatieTool\Models\Country;
+use BynqIO\CalculatieTool\Models\ContactFunction;
 
 ?>
 
@@ -98,7 +103,7 @@ $(document).ready(function() {
         number = $('#address_number').val();
         if (number && zipcode) {
 
-            $.post("/mycompany/quickstart/address", {
+            $.post("/company/quickstart/address", {
                 zipcode: zipcode,
                 number: number,
             }, function(data) {
@@ -122,7 +127,7 @@ $(document).ready(function() {
         number = $('#address_number2').val();
         if (number && zipcode) {
 
-            $.post("/mycompany/quickstart/address", {
+            $.post("/company/quickstart/address", {
                 zipcode: zipcode,
                 number: number,
             }, function(data) {
@@ -275,7 +280,7 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label for="province">Provincie*</label>
                             <select name="province" id="province2" class="form-control pointer">
-                                @foreach (CalculatieTool\Models\Province::all() as $province)
+                                @foreach (Province::all() as $province)
                                 <option  {{ (old('province') ? (old('province') == $province->id ? 'selected' : '') : $province->province_name=='overig' ? 'selected' : '') }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
                                 @endforeach
                             </select>
@@ -286,7 +291,7 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label for="country">Land*</label>
                             <select name="country" id="country2" class="form-control pointer">
-                                @foreach (CalculatieTool\Models\Country::all() as $country)
+                                @foreach (Country::all() as $country)
                                 <option {{ (old('country') ? (old('country') == $country->id ? 'selected' : '') : $country->country_name=='nederland' ? 'selected' : '') }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
                                 @endforeach
                             </select>
@@ -315,7 +320,7 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label for="contactfunction">Functie*</label>
                             <select name="contactfunction" id="contactfunction" class="form-control pointer">
-                                @foreach (CalculatieTool\Models\ContactFunction::all() as $function)
+                                @foreach (ContactFunction::all() as $function)
                                 <option {{ (old('contactfunction') ? (old('contactfunction') == $function->id ? 'selected' : '') : $function->function_name=='directeur' ? 'selected' : '') }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
                                 @endforeach
                             </select>
@@ -385,7 +390,7 @@ $(document).ready(function() {
 
         <h2><strong>Nieuw</strong> project&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
 
-        @if(!CalculatieTool\Models\Relation::where('user_id', Auth::user()->id)->count())
+        @if(!Relation::where('user_id', Auth::user()->id)->count())
         <div class="alert alert-info">
             <i class="fa fa-info-circle"></i>
             <strong>Let Op!</strong> Maak eerst een opdrachtgever aan onder <a href="/relation/new">nieuwe relatie</a>
@@ -411,7 +416,7 @@ $(document).ready(function() {
                             <div class="form-group">
                                 <label for="contractor">Opdrachtgever*</label>
                                 <select name="contractor" id="contractor" class="form-control pointer">
-                                    @foreach (CalculatieTool\Models\Relation::where('user_id', Auth::user()->id)->where('active',true)  ->get() as $relation)
+                                    @foreach (Relation::where('user_id', Auth::user()->id)->where('active',true)  ->get() as $relation)
                                     <option data-business="{{ $relation->isBusiness() ? 1 : 0 }}" value="{{ $relation->id }}">{{ $relation->name() }}</option>
                                     @endforeach
                                 </select>
@@ -422,7 +427,7 @@ $(document).ready(function() {
                             <div class="form-group">
                                 <label for="type">Soort project</label>
                                 <select name="type" id="type" class="form-control pointer">
-                                    @foreach (CalculatieTool\Models\ProjectType::all() as $type)
+                                    @foreach (ProjectType::all() as $type)
                                     <option {{ $type->type_name=='calculatie' ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
                                     @endforeach
                                 </select>										
@@ -472,7 +477,7 @@ $(document).ready(function() {
                             <div class="form-group">
                                 <label for="province">Provincie*</label>
                                 <select name="province" id="province" class="form-control pointer">
-                                    @foreach (CalculatieTool\Models\Province::all() as $province)
+                                    @foreach (Province::all() as $province)
                                     <option {{ (old('province') ? (old('province') == $province->id ? 'selected' : '') : $province->province_name=='overig'  ? 'selected' : '') }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
                                     @endforeach
                                 </select>
@@ -483,7 +488,7 @@ $(document).ready(function() {
                             <div class="form-group">
                                 <label for="country">Land*</label>
                                 <select name="country" id="country" class="form-control pointer">
-                                    @foreach (CalculatieTool\Models\Country::all() as $country)
+                                    @foreach (Country::all() as $country)
                                     <option {{ (old('country') ? (old('country') == $country->id ? 'selected' : '') : $country->country_name=='nederland' ? 'selected' : '') }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
                                     @endforeach
                                 </select>

@@ -22,6 +22,25 @@ class ResourceController extends Controller
         //
     }
 
+    /**
+     * Convert storage object to transferable file.
+     *
+     * @return Response
+     */
+    protected function fileTransfer($resource)
+    {
+        $date = date('D, d M Y H:i:s T', Storage::lastModified($resource->file_location));
+        $size = Storage::size($resource->file_location);
+        $type = Storage::mimeType($resource->file_location);
+
+        return response(Storage::get($resource->file_location))
+            ->header('Content-Type', $type)
+            ->header('Accept-Ranges', 'bytes')
+            ->header('Cache-Control', 'no-cache, private')
+            ->header('Content-Length', $size)
+            ->header('Last-Modified', $date);
+    }
+
     public function download(Request $request, $resourceid)
     {
         $res = Resource::find($resourceid);
@@ -29,7 +48,7 @@ class ResourceController extends Controller
             return response(null, 404);
         }
 
-        return response()->download(storage_prefix_path() . $res->file_location);
+        return $this->fileTransfer($res)->header('Content-Disposition', 'attachment; filename="' . $res->resource_name . '"');
     }
 
     public function view(Request $request, $resourceid)
@@ -39,7 +58,7 @@ class ResourceController extends Controller
             return response(null, 404);
         }
 
-        return response()->file(storage_prefix_path() . $res->file_location);
+        return $this->fileTransfer($res);
     }
 
     public function doDeleteResource(Request $request, $resourceid)

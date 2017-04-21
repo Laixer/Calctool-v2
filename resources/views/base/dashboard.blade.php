@@ -58,7 +58,7 @@
 
             @if (Auth::user()->isNewPeriod())
             <div class="pull-right" style="margin: 10px 0 20px 0">
-                <a href="/get-help" class="btn btn-default hidden-sm hidden-xs" type="button"><i class="fa fa-support"></i>@lang('core.needhelp')</a>
+                <a href="/support/gethelp" class="btn btn-default hidden-sm hidden-xs" type="button"><i class="fa fa-support"></i>@lang('core.needhelp')</a>
             </div>
             @endif
 
@@ -69,13 +69,13 @@
                 <div class="col-sm-6 col-md-2">
                     <div class="item-box item-box-show fixed-box">
                         <figure>
-                            <a class="item-hover" href="/mycompany">
+                            <a class="item-hover" href="/company">
                                 <span class="overlay color2"></span>
                                 <span class="inner" style="top:40%;">
                                     <span class="block fa fa-home fsize60"></span>
                                 </span>
                             </a>
-                            <a href="/mycompany" class="btn btn-primary add_to_cart"><strong> @lang('core.companyinfo')</strong></a>
+                            <a href="/company" class="btn btn-primary add_to_cart"><strong> @lang('core.companyinfo')</strong></a>
 
                         </figure>
                     </div>
@@ -246,7 +246,7 @@
                                         <img src="/images/loading_icon.gif" height="100" />
                                     </div>
                                     <tr ng-repeat="project in projects | filter: query | orderBy: orderByField:reverseSort as results">
-                                        <td class="col-md-5"><a href="/project-@{{ project.id }}/edit">@{{ project.project_name }}</a></td>
+                                        <td class="col-md-5"><a href="/project/@{{ project.id }}-@{{ project.project_name | strReplace:' ':'-' }}/details">@{{ project.project_name }}</a></td>
                                         <td class="col-md-3">@{{ project.relation }}</td>
                                         <td class="col-md-2 hidden-sm hidden-xs">@{{ project.type.type_name | capitalize }}</td>
                                         <td class="col-md-2 hidden-xs">@{{ project.address_city }}</td>
@@ -326,7 +326,16 @@
                 return function(input) {
                     return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
                 }
-            });
+            }).filter('strReplace', function () {
+  return function (input, from, to) {
+    input = input || '';
+    from = from || '';
+    to = to || '';
+    return input.replace(new RegExp(from, 'g'), to);
+  };
+});
+
+
         });
     </script>
 @stop

@@ -330,7 +330,7 @@ $type = ProjectType::find($project->type_id);
         @if(!$relation_self || Contact::where('relation_id','=',$relation_self->id)->count()<1)
         <div class="alert alert-danger">
             <i class="fa fa-frown-o"></i>
-            Geen bedrijfsgegevens bekend. Vul de <a href="/mycompany">bedrijfsgegevens</a> aan.
+            Geen bedrijfsgegevens bekend. Vul de <a href="/company">bedrijfsgegevens</a> aan.
         </div>
         @else
 

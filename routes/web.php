@@ -26,21 +26,12 @@
 
 /* Module Group Auth */
 Route::group(['namespace' => $this->namespaceAuth, 'prefix' => 'auth'], function() {
-    /* Signin actions */
     Route::get('signin',                              'SigninController@index')->name('signin');
     Route::post('signin',                             'SigninController@signin');
-
-    /* Signout actions */
     Route::any('signout',                             'SignoutController')->name('singout');
-
-    /* Signup actions */
     Route::get('signup',                              'SignupController@index')->name('signup');
     Route::post('signup',                             'SignupController@signup');
-
-    /* Account confirm actions */
     Route::get('confirm/{token}',                     'ActivateController');
-
-    /* Password reset actions */
     Route::get('password/{token}',                    'PasswordResetController@index');
     Route::post('password/reset',                     'PasswordResetController@requestPasswordReset');
     Route::post('password/{token}',                   'PasswordResetController@submitNewPassword');
@@ -56,25 +47,23 @@ Route::group(['middleware' => 'guest'], function() {
 });
 
 /* Support */
-Route::post('support', 'SupportController@sendSupport');
-Route::get('support',  'SupportController@getSupport');
-Route::get('get-help',  'SupportController@helpPage');
+Route::post('support',         'SupportController@sendSupport');
+Route::get('support',          'SupportController@getSupport');
+Route::get('support/gethelp',  'SupportController@helpPage');
 
 /* Authentication Group */
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', 'DashboardController')->name('dashboard');
 
     Route::get('admin/switch/back', 'AdminController@getSwitchSessionBack');
-    
+
     /* Resource actions*/
     Route::get('res-{resource_id}/download', 'ResourceController@download');
-    Route::get('res-{resource_id}/view', 'ResourceController@view');
-    Route::get('res-{resource_id}/delete', 'ResourceController@doDeleteResource');
-   
+    Route::get('res-{resource_id}/view',     'ResourceController@view');
+    Route::get('res-{resource_id}/delete',   'ResourceController@doDeleteResource');
+
     /* Module Group Account */
     Route::group(['namespace' => $this->namespaceAccount], function() {
-        
-        /* Account actions */
         Route::get('account',                                  'AccountController@getAccount')->name('account');
         Route::get('account/deactivate',                       'AccountController@getAccountDeactivate');
         Route::get('account/loaddemo',                         'AccountController@doLoadDemoProject');
@@ -300,52 +289,57 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('relation-{relation_id}/contact/new','RelationController@getNewContact');
         Route::get('relation-{relation_id}/contact-{contact_id}/edit', 'RelationController@getEditContact');
         Route::get('relation-{relation_id}/convert',    'RelationController@getConvert');
-        Route::get('mycompany',                         'RelationController@getMyCompany');
-        Route::post('mycompany/iban/update',            'UserController@doUpdateIban');
-        Route::post('mycompany/contact/new',            'RelationController@doMyCompanyNewContact');
-        Route::get('mycompany/contact/new', function() {
-            return view('user.mycompany_contact');
-        });
-        Route::post('mycompany/quickstart/address', 'ZipcodeController@getExternalAddress');
 
         Route::get('relation-{relation_id}/contact-{contact_id}/vcard', 'RelationController@downloadVCard');
-        Route::post('relation/updatemycompany', 'RelationController@doUpdateMyCompany');
-        Route::post('relation/newmycompany', 'RelationController@doNewMyCompany');
-        Route::post('relation/logo/save', 'RelationController@doNewLogo');
-        Route::post('relation/agreement/save', 'RelationController@doNewAgreement');
+        Route::post('relation/updatemycompany',         'RelationController@doUpdateMyCompany');
+        Route::post('relation/newmycompany',            'RelationController@doNewMyCompany');
+        Route::post('relation/logo/save',               'RelationController@doNewLogo');
+        Route::post('relation/agreement/save',          'RelationController@doNewAgreement');
     });
 
-    /* Project pages */
-    Route::get('project/new',                                   'ProjectController@getNew')->middleware('payzone'); 
-    Route::get('project/relation/{relation_id}',                'ProjectController@getRelationDetails')->middleware('payzone'); 
-    Route::post('project/new',                                  'ProjectController@doNew')->middleware('payzone');
-    Route::post('project/update',                               'ProjectController@doUpdate')->middleware('payzone');
-    Route::post('project/update/note',                          'ProjectController@doUpdateNote')->middleware('payzone');
-    Route::post('project/update/communication',                 'ProjectController@doCommunication')->middleware('payzone');
-    Route::post('project/updatecalc',                           'ProjectController@doUpdateProfit')->middleware('payzone');
-    Route::post('project/updateadvanced',                       'ProjectController@doUpdateAdvanced')->middleware('payzone');
-    Route::get('project',                                       'ProjectController@getAll')->middleware('payzone');
-    Route::get('project-{project_id}/edit',                     'ProjectController@getEdit')->middleware('payzone');
-    Route::get('project-{project_id}/copy',                     'ProjectController@getProjectCopy')->middleware('payzone');
-    Route::post('project/updateworkexecution',                  'ProjectController@doUpdateWorkExecution')->middleware('payzone');
-    Route::post('project/updateworkcompletion',                 'ProjectController@doUpdateWorkCompletion')->middleware('payzone');
-    Route::post('project/updateprojectclose',                   'ProjectController@doUpdateProjectClose')->middleware('payzone');
-    Route::get('project-{project_id}/updateprojectdilapidated', 'ProjectController@getUpdateProjectDilapidated')->middleware('payzone');
-    Route::get('project-{project_id}/packingslip',              'ProjectController@getPackingSlip')->middleware('payzone');
-    Route::get('project-{project_id}/packlist',                 'ProjectController@getPackList')->middleware('payzone');
-    Route::get('project-{project_id}/printoverview',            'ProjectController@getPrintOverview')->middleware('payzone');
-    Route::post('resource/upload', 'ProjectController@doUploadProjectDocument');//TODO: rename url
+    /* Module Group Company */
+    Route::group(['middleware' => 'payzone'], function() {
+        Route::get('company',                         'Relation\RelationController@getMyCompany');
+        Route::post('company/iban/update',            'UserController@doUpdateIban');
+        Route::post('company/contact/new',            'Relation\RelationController@doMyCompanyNewContact');
+        Route::get('company/contact/new', function() {
+            return view('user.company_contact');
+        });
+        Route::post('company/quickstart/address',     'Postal\PostalController');//TODO: MOVE into API
+    });
+
+    /* Module Group Project */ //TODO: prefix
+    Route::group(['namespace' => $this->namespaceProject, 'middleware' => 'payzone'], function() {
+        Route::get('project/all',                                          'ListController');
+        Route::get('project/new',                                          'NewController@index');
+        Route::post('project/new',                                         'NewController@new');
+        Route::get('project/{project_id}-{name}/copy',                     'CopyController');
+        Route::get('project/{project_id}-{name}/details',                  'DetailController@index');
+        Route::get('project/relation/{relation_id}',                       'UpdateController@getRelationDetails'); //TODO: MOVE
+        Route::post('project/update',                                      'UpdateController@updateDetails');
+        Route::post('project/update/note',                                 'UpdateController@updateNote');
+        Route::post('project/update/communication',                        'UpdateController@doCommunication');//TODO: MOVE
+        Route::post('project/updatecalc',                                  'UpdateController@updateProfit');
+        Route::post('project/updateoptions',                               'UpdateController@updateOptions');
+        Route::post('project/updateworkexecution',                         'UpdateController@updateWorkExecution');
+        Route::post('project/updateworkcompletion',                        'UpdateController@updateWorkCompletion');
+        Route::post('project/updateprojectclose',                          'UpdateController@updateProjectClose');
+        Route::get('project/{project_id}-{name}/cancel',                   'UpdateController@cancel');
+        Route::get('project/{project_id}-{name}/packingslip',              'ReportController@packingSlip');
+        Route::get('project/{project_id}-{name}/printoverview',            'ReportController@printOverview');
+        Route::post('project/document/upload',                             'DocumentController');
+    });
 
     /* Cost pages */
     Route::group(['middleware' => 'payzone'], function() {
-        Route::get('timesheet',                                     'CostController@getTimesheet')->middleware('payzone');
-        Route::post('timesheet/new',                                'CostController@doNewTimesheet')->middleware('payzone');
-        Route::post('timesheet/delete',                             'CostController@doDeleteTimesheet')->middleware('payzone');
+        Route::get('timesheet',                                     'CostController@getTimesheet');
+        Route::post('timesheet/new',                                'CostController@doNewTimesheet');
+        Route::post('timesheet/delete',                             'CostController@doDeleteTimesheet');
         
-        Route::get('timesheet/activity/{project_id}/{type}',        'CostController@getActivityByType')->where('type', '[0-9]+')->middleware('payzone');
-        Route::get('purchase',                                      'CostController@getPurchase')->middleware('payzone');
-        Route::post('purchase/new',                                 'CostController@doNewPurchase')->middleware('payzone');
-        Route::post('purchase/delete',                              'CostController@doDeletePurchase')->middleware('payzone');
+        Route::get('timesheet/activity/{project_id}/{type}',        'CostController@getActivityByType')->where('type', '[0-9]+');
+        Route::get('purchase',                                      'CostController@getPurchase');
+        Route::post('purchase/new',                                 'CostController@doNewPurchase');
+        Route::post('purchase/delete',                              'CostController@doDeletePurchase');
     });
 
     /* Module Group Product */
