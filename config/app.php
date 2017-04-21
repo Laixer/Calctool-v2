@@ -192,6 +192,8 @@ return [
         LucaDegasperi\OAuth2Server\OAuth2ServerServiceProvider::class,
         Spatie\Newsletter\NewsletterServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
+        Fideloper\Proxy\TrustedProxyServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
         /*
          * Application Service Providers...

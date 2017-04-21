@@ -35,7 +35,8 @@
         "spatie/laravel-newsletter": "^3.3",
         "jenssegers/agent": "^2.4",
         "webpatser/laravel-uuid": "2.*",
-        "fideloper/proxy": "^3.3"
+        "fideloper/proxy": "^3.3",
+        "rap2hpoutre/laravel-log-viewer": "v0.9.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

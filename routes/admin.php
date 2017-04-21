@@ -135,11 +135,12 @@ Route::get('resource', function() {
     return view('admin.resource');
 });
 Route::post('resource/delete', 'AdminController@doDeleteResource');
-Route::get('log', function() {
-    return view('admin.log');
-});
-Route::get('log/truncate', 'AdminController@doTruncateLog');
-Route::get('session', function() {
-    return view('admin.session');
-});
+// Route::get('log', function() {
+//     return view('admin.log');
+// });
+// Route::get('log/truncate', 'AdminController@doTruncateLog');
+// Route::get('session', function() {
+//     return view('admin.session');
+// });
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 Route::get('session/{session}/kill', 'AdminController@killSession');

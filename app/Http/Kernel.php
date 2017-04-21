@@ -39,6 +39,7 @@ class Kernel extends HttpKernel
         CheckForMaintenanceMode::class,
         ValidatePostSize::class,
         ConvertEmptyStringsToNull::class,
+        \Fideloper\Proxy\TrustProxies::class,
         
         \LucaDegasperi\OAuth2Server\Middleware\OAuthExceptionHandlerMiddleware::class,
         TrimStrings::class,

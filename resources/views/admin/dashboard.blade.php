@@ -306,16 +306,16 @@
                         <div class="col-sm-12 col-md-2">
                             <div class="item-box item-box-show fixed-box">
                                 <figure>
-                                    <a class="item-hover" href="/admin/log">
+                                    <a class="item-hover" href="/admin/logs" target="blank">
                                         <span class="overlay color2"></span>
                                         <span class="inner">
                                             <span class="block fa fa-list-alt fsize60"></span>
                                         </span>
                                     </a>
-                                    <a href="/admin/log" class="btn btn-primary add_to_cart"><i class="fa fa-list-alt"></i> Logviewer</a>
+                                    <a href="/admin/logs" target="blank" class="btn btn-primary add_to_cart"><i class="fa fa-list-alt"></i> Logviewer</a>
                                 </figure>
                                 <div class="item-box-desc">
-                                    <a href="/admin/log" ><h4>Logviewer</h4></a>
+                                    <a href="/admin/logs" target="blank" ><h4>Logviewer</h4></a>
                                 </div>
                             </div>
                         </div>
