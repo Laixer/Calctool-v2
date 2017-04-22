@@ -13,7 +13,7 @@
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers\Postal;
+namespace BynqIO\CalculatieTool\Http\Controllers\Api\Postal;
 
 use BynqIO\CalculatieTool\Models\Province;
 

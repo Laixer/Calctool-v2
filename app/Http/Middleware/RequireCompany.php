@@ -18,7 +18,7 @@ namespace BynqIO\CalculatieTool\Http\Middleware;
 use Closure;
 use Auth;
 
-class AdminPolicy
+class RequireCompany
 {
     /**
      * Handle an incoming request.
@@ -29,8 +29,8 @@ class AdminPolicy
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (!Auth::guard($guard)->user()->isAdmin()) {
-            abort(404);
+        if (!Auth::guard($guard)->user()->hasOwnCompany()) {
+            return redirect('/company/setupcompany');
         }
 
         return $next($request);

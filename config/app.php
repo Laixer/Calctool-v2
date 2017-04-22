@@ -256,6 +256,7 @@ return [
         'Authorizer'=> LucaDegasperi\OAuth2Server\Facades\Authorizer::class,
         'Newsletter'=> Spatie\Newsletter\NewsletterFacade::class,
         'Agent'     => Jenssegers\Agent\Facades\Agent::class,
+        'Image'     => Intervention\Image\Facades\Image::class,
 
     ],
 

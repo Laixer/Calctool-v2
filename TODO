@@ -1,3 +1,10 @@
+# TODO
+* Validation
 * Translations
+* Comments
+* Usability
 * Database rewrite
     * Migration squashing
+
+# To Upgrade
+* LB1 forward headers

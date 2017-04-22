@@ -71,7 +71,7 @@ if (!$relation || !$relation->isOwner()) {
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="contact_salutation">Aanhef</label>
-							<input name="contact_salutation" maxlength="16" id="contact_salutation" type="text" value="{{ Input::old('contact_salutation') }}" class="form-control"/>
+							<input name="contact_salutation" maxlength="16" id="contact_salutation" type="text" value="{{ old('contact_salutation') }}" class="form-control"/>
 							<input type="hidden" name="id" id="id" value="{{ $relation->id }}"/>
 						</div>
 					</div>
@@ -79,35 +79,35 @@ if (!$relation || !$relation->isOwner()) {
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="contact_name">Achternaam*</label>
-							<input name="contact_name" maxlength="50" id="contact_name" type="text" value="{{ Input::old('contact_name') }}" class="form-control"/>
+							<input name="contact_name" maxlength="50" id="contact_name" type="text" value="{{ old('contact_name') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="contact_firstname">Voornaam*</label>
-							<input name="contact_firstname" maxlength="30" id="contact_firstname" type="text" value="{{ Input::old('contact_firstname') }}" class="form-control"/>
+							<input name="contact_firstname" maxlength="30" id="contact_firstname" type="text" value="{{ old('contact_firstname') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="mobile">Mobiel</label>
-							<input name="mobile" id="mobile" type="text" maxlength="12" value="{{ Input::old('mobile') }}" class="form-control"/>
+							<input name="mobile" id="mobile" type="text" maxlength="12" value="{{ old('mobile') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="telephone">Telefoonnummer</label>
-							<input name="telephone" id="telephone" type="text" maxlength="12" value="{{ Input::old('telephone') }}" class="form-control"/>
+							<input name="telephone" id="telephone" type="text" maxlength="12" value="{{ old('telephone') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="email">Email*</label>
-							<input name="email" id="email" type="email" value="{{ Input::old('email') }}" class="form-control"/>
+							<input name="email" id="email" type="email" value="{{ old('email') }}" class="form-control"/>
 						</div>
 					</div>
 

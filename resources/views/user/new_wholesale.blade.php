@@ -80,7 +80,7 @@ $(document).ready(function() {
         number = $('#address_number').val();
         if (number && zipcode) {
 
-            $.post("/company/quickstart/address", {
+            $.post("/api/v1/postaladdress", {
                 zipcode: zipcode,
                 number: number,
             }, function(data) {
@@ -145,7 +145,7 @@ $(document).ready(function() {
                     <div class="col-md-5">
                         <div class="form-group">
                             <label for="company_name">Bedrijfsnaam*</label>
-                            <input name="company_name" maxlength="50" id="company_name" type="text" value="{{ Input::old('company_name') }}" class="form-control" />
+                            <input name="company_name" maxlength="50" id="company_name" type="text" value="{{ old('company_name') }}" class="form-control" />
                         </div>
                     </div>
 
@@ -163,21 +163,21 @@ $(document).ready(function() {
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="website">Website</label>
-                            <input name="website" maxlength="180" id="website" type="url" value="{{ Input::old('website') }}" class="form-control"/>
+                            <input name="website" maxlength="180" id="website" type="url" value="{{ old('website') }}" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="telephone_comp">Telefoonnummer</label>
-                            <input name="telephone_comp" id="telephone_comp" type="text" minlength="12" maxlength="12" value="{{ Input::old('telephone_comp') }}" class="form-control"/>
+                            <input name="telephone_comp" id="telephone_comp" type="text" minlength="12" maxlength="12" value="{{ old('telephone_comp') }}" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input name="email" maxlength="80" id="email" type="email" value="{{ Input::old('email') }}" class="form-control"/>
+                            <input name="email" maxlength="80" id="email" type="email" value="{{ old('email') }}" class="form-control"/>
                         </div>
                     </div>
 
@@ -241,7 +241,7 @@ $(document).ready(function() {
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-12">
-                            <textarea name="note" id="note" rows="10" class="form-control">{{ Input::old('note') }}</textarea>
+                            <textarea name="note" id="note" rows="10" class="form-control">{{ old('note') }}</textarea>
                         </div>
                     </div>
                 </div>

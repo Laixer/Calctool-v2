@@ -82,7 +82,7 @@
 				<div class="form-group">
 					<div class="col-md-12">
 						<label for="message">Bericht</label>
-						<textarea name="message" id="message" rows="3" class="form-control">{{ Input::old('message') }}</textarea>
+						<textarea name="message" id="message" rows="3" class="form-control">{{ old('message') }}</textarea>
 					</div>
 				</div>
 			</div>

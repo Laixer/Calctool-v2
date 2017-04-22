@@ -79,6 +79,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return (strtotime($this->registration_date . "+2 days") < time());
     }
 
+    public function hasOwnCompany()
+    {
+        return $this->self_id;
+    }
+
     public function myCompany() {
         if ($this->self_id)
             return Relation::find($this->self_id);

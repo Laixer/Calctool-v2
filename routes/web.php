@@ -144,7 +144,7 @@ Route::group(['middleware' => 'auth'], function() {
     })->middleware('payzone');
 
     /* Module Group Calculation */
-    Route::group(['namespace' => $this->namespaceCalculation, 'middleware' => 'payzone'], function() {
+    Route::group(['namespace' => $this->namespaceCalculation, 'middleware' => ['payzone','reqcompany']], function() {
 
         /* Routes by CalcController */
         Route::post('calculation/newchapter/{project_id}',        'CalcController@doNewChapter');
@@ -267,6 +267,7 @@ Route::group(['middleware' => 'auth'], function() {
         return view('base.import');
     });
 
+    //TODO: move into namespaceRelation
     Route::post('import/save',                  'Relation\ImportController');
     Route::get('relation/export',               'Relation\ExportController');
 
@@ -289,27 +290,27 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('relation-{relation_id}/contact/new','RelationController@getNewContact');
         Route::get('relation-{relation_id}/contact-{contact_id}/edit', 'RelationController@getEditContact');
         Route::get('relation-{relation_id}/convert',    'RelationController@getConvert');
-
         Route::get('relation-{relation_id}/contact-{contact_id}/vcard', 'RelationController@downloadVCard');
-        Route::post('relation/updatemycompany',         'RelationController@doUpdateMyCompany');
-        Route::post('relation/newmycompany',            'RelationController@doNewMyCompany');
-        Route::post('relation/logo/save',               'RelationController@doNewLogo');
-        Route::post('relation/agreement/save',          'RelationController@doNewAgreement');
+        
     });
 
-    /* Module Group Company */
+    /* Module Group Company */ //TODO: namespace
     Route::group(['middleware' => 'payzone'], function() {
-        Route::get('company',                         'Relation\RelationController@getMyCompany');
-        Route::post('company/iban/update',            'UserController@doUpdateIban');
-        Route::post('company/contact/new',            'Relation\RelationController@doMyCompanyNewContact');
-        Route::get('company/contact/new', function() {
-            return view('user.company_contact');
-        });
-        Route::post('company/quickstart/address',     'Postal\PostalController');//TODO: MOVE into API
+        Route::get('company/details',                 'Company\LayoutController@details');
+        Route::get('company/setupcompany',            'Company\LayoutController@setupCompany');
+        Route::post('company/setupcompany',           'Company\SetupCompanyController');
+        Route::get('company/contacts',                'Company\LayoutController@contacts');
+        Route::get('company/financial',               'Company\LayoutController@financial');
+        Route::get('company/logo',                    'Company\LayoutController@logo');
+        Route::get('company/preferences',             'Company\LayoutController@preferences');
+        Route::post('company/update',                 'Company\UpdateController@updateDetails');
+        Route::post('company/updatefinacial',         'Company\UpdateController@updateIban');
+        Route::post('company/uploadlogo',             'Company\UploadController@uploadLogo');
+        Route::post('company/uploadagreement',        'Company\UploadController@uploadAgreement');
     });
 
     /* Module Group Project */ //TODO: prefix
-    Route::group(['namespace' => $this->namespaceProject, 'middleware' => 'payzone'], function() {
+    Route::group(['namespace' => $this->namespaceProject, 'middleware' => ['payzone','reqcompany']], function() {
         Route::get('project/all',                                          'ListController');
         Route::get('project/new',                                          'NewController@index');
         Route::post('project/new',                                         'NewController@new');
@@ -330,7 +331,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('project/document/upload',                             'DocumentController');
     });
 
-    /* Cost pages */
+    /* Module Group Cost */
     Route::group(['middleware' => 'payzone'], function() {
         Route::get('timesheet',                                     'CostController@getTimesheet');
         Route::post('timesheet/new',                                'CostController@doNewTimesheet');

@@ -318,9 +318,11 @@ $(document).ready(function() {
                             <a href="#apps" data-toggle="tab"><i class="fa fa-exchange"></i> Applicaties</a>
                         </li>
                         @endif
+                        @if (Input::has('options'))
                         <li id="tab-other">
                             <a href="#other" data-toggle="tab"><i class="fa fa-plus"></i> Overig</a>
                         </li>
+                        @endif
                     </ul>
 
                     <div class="tab-content">
@@ -344,14 +346,14 @@ $(document).ready(function() {
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="firstname">Voornaam</label>
-                                        <input {{ session()->has('swap_session') ? 'disabled' : '' }} name="firstname" id="firstname" type="text" value="{{ Input::old('firstname') ? Input::old('firstname') : $user->firstname }}" class="form-control" />
+                                        <input {{ session()->has('swap_session') ? 'disabled' : '' }} name="firstname" id="firstname" type="text" value="{{ old('firstname') ? old('firstname') : $user->firstname }}" class="form-control" />
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="lastname">Achternaam</label>
-                                        <input {{ session()->has('swap_session') ? 'disabled' : '' }} name="lastname" id="lastname" type="text" value="{{ Input::old('lastname') ? Input::old('lastname') : $user->lastname }}" class="form-control"/>
+                                        <input {{ session()->has('swap_session') ? 'disabled' : '' }} name="lastname" id="lastname" type="text" value="{{ old('lastname') ? old('lastname') : $user->lastname }}" class="form-control"/>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -371,28 +373,28 @@ $(document).ready(function() {
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="phone">Telefoonnummer</label>
-                                        <input {{ session()->has('swap_session') ? 'disabled' : '' }} name="phone" id="phone" type="text" maxlength="12" value="{{ Input::old('phone') ? Input::old('phone') : $user->phone }}" class="form-control"/>
+                                        <input {{ session()->has('swap_session') ? 'disabled' : '' }} name="phone" id="phone" type="text" maxlength="12" value="{{ old('phone') ? old('phone') : $user->phone }}" class="form-control"/>
                                     </div>
                                 </div>
 
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="mobile">Mobiel</label>
-                                        <input {{ session()->has('swap_session') ? 'disabled' : '' }} name="mobile" id="mobile" type="text" maxlength="12" value="{{ Input::old('mobile') ? Input::old('mobile') : $user->mobile }}" class="form-control"/>
+                                        <input {{ session()->has('swap_session') ? 'disabled' : '' }} name="mobile" id="mobile" type="text" maxlength="12" value="{{ old('mobile') ? old('mobile') : $user->mobile }}" class="form-control"/>
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="email">Email*</label>
-                                        <input {{ session()->has('swap_session') ? 'disabled' : '' }} name="email" id="email" type="email" value="{{ Input::old('email') ? Input::old('email') : $user->email }}" class="form-control"/>
+                                        <input {{ session()->has('swap_session') ? 'disabled' : '' }} name="email" id="email" type="email" value="{{ old('email') ? old('email') : $user->email }}" class="form-control"/>
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="website">Website</label>
-                                        <input {{ session()->has('swap_session') ? 'disabled' : '' }} name="website" id="website" type="url" value="{{ Input::old('website') ? Input::old('website') : $user->website }}" class="form-control"/>
+                                        <input {{ session()->has('swap_session') ? 'disabled' : '' }} name="website" id="website" type="url" value="{{ old('website') ? old('website') : $user->website }}" class="form-control"/>
                                     </div>
                                 </div>
 
@@ -561,6 +563,7 @@ $(document).ready(function() {
                         </div>
                         @endif
 
+                        @if (Input::has('options'))
                         <div id="other" class="tab-pane">
 
                             <div class="row">
@@ -579,6 +582,7 @@ $(document).ready(function() {
                             </div>
 
                         </div>
+                        @endif
                     </div>
                 </div>
 

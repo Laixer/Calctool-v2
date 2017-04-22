@@ -56,72 +56,6 @@ class RelationController extends Controller
         return view('user.edit_contact');
     }
 
-    public function getMyCompany()
-    {
-        return view('company.edit_mycompany');
-    }
-
-    public function doUpdateMyCompany(Request $request)
-    {
-        $this->validate($request, [
-            /* General */
-            'id' => array('required','integer'),
-            /* Company */
-            'company_type' => array('required_if:relationkind,zakelijk','numeric'),
-            'company_name' => array('required_if:relationkind,zakelijk','max:50'),
-            'kvk' => array('numeric','min:8'),
-            'btw' => array('alpha_num','min:14'),
-            'telephone_comp' => array('alpha_num','max:12'),
-            'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
-            /* Adress */
-            'street' => array('required','max:60'),
-            'address_number' => array('required','alpha_num','max:5'),
-            'zipcode' => array('required','size:6'),
-            'city' => array('required','max:35'),
-            'province' => array('required','numeric'),
-            'country' => array('required','numeric')
-        ]);
-
-        /* General */
-        $relation = Relation::find($request->input('id'));
-        if (!$relation || !$relation->isOwner()) {
-            return Redirect::back()->withInput($request->all());
-        }
-        $relation->note = $request->input('note');
-
-        /* Company */
-        $relation_kind = RelationKind::where('id',$relation->kind_id)->firstOrFail();
-        if ($relation_kind->kind_name == "zakelijk") {
-            $relation->company_name = $request->input('company_name');
-            $relation->type_id = $request->input('company_type');
-            if (!$request->has('kvk'))
-                $relation->kvk = NULL;
-            else
-                $relation->kvk = $request->input('kvk');
-            if (!$request->input('btw'))
-                $relation->btw = NULL;
-            else
-                $relation->btw = $request->input('btw');
-            $relation->phone = $request->input('telephone_comp');
-            $relation->email = $request->input('email_comp');
-            $relation->website = $request->input('website');
-        }
-
-        /* Adress */
-        $relation->address_street = $request->input('street');
-        $relation->address_number = $request->input('address_number');
-        $relation->address_postal = $request->input('zipcode');
-        $relation->address_city = $request->input('city');
-        $relation->province_id = $request->input('province');
-        $relation->country_id = $request->input('country');
-
-        $relation->save();
-
-        Audit::CreateEvent('mycompany.update.success', 'Settings for my corporation updated');
-        
-        return redirect('/mycompany/?multipage=true')->with('success', 'Uw bedrijfsgegevens zijn aangepast');
-    }
-
     public function doUpdate(Request $request)
     {
         $this->validate($request, [
@@ -273,61 +207,6 @@ class RelationController extends Controller
         return back()->with('success', 'Betalingsgegevens zijn aangepast');
     }
 
-    public function doNewMyCompany(Request $request)
-    {
-        $this->validate($request, [
-            /* Company */
-            'company_type' => array('required_if:relationkind,zakelijk','numeric'),
-            'company_name' => array('required_if:relationkind,zakelijk','max:50'),
-            'kvk' => array('numeric','min:8'),
-            'btw' => array('alpha_num','min:14'),
-            'telephone_comp' => array('alpha_num','max:12'),
-            'email_comp' => array('required_if:relationkind,zakelijk','email','max:80'),
-            /* Adress */
-            'street' => array('required','max:60'),
-            'address_number' => array('required','alpha_num','max:5'),
-            'zipcode' => array('required','size:6'),
-            'city' => array('required','max:35'),
-            'province' => array('required','numeric'),
-            'country' => array('required','numeric'),
-            'website' => array('max:180'),
-        ]);
-
-        /* General */
-        $relation = new Relation;
-        $relation->user_id = Auth::id();
-        $relation->note = $request->input('note');
-        $relation->debtor_code = mt_rand(1000000, 9999999);
-
-        /* Company */
-        $relation->kind_id = RelationKind::where('kind_name','=','zakelijk')->first()->id;
-        $relation->company_name = $request->input('company_name');
-        $relation->type_id = $request->input('company_type');
-        $relation->kvk = $request->input('kvk');
-        $relation->btw = $request->input('btw');
-        $relation->phone = $request->input('telephone_comp');
-        $relation->email = $request->input('email_comp');
-        $relation->website = $request->input('website');
-
-        /* Adress */
-        $relation->address_street = $request->input('street');
-        $relation->address_number = $request->input('address_number');
-        $relation->address_postal = $request->input('zipcode');
-        $relation->address_city = $request->input('city');
-        $relation->province_id = $request->input('province');
-        $relation->country_id = $request->input('country');
-
-        $relation->save();
-
-        $user = Auth::user();
-        $user->self_id = $relation->id;
-        $user->save();
-
-        Audit::CreateEvent('mycompany.new.success', 'Settings for my corporation created');
-
-        return back()->with('success', 'Uw bedrijfsgegevens zijn opgeslagen');
-    }
-
     public function doNew(Request $request)
     {
         $rules = array(
@@ -466,43 +345,6 @@ class RelationController extends Controller
         return redirect('/relation-'.$request->input('id').'/edit')->with('success','Contact opgeslagen');
     }
 
-    public function doMyCompanyNewContact(Request $request)
-    {
-        $this->validate($request, [
-            /* Contact */
-            'id' => array('required','integer'),
-            'contact_salutation' => array('max:16'),
-            'contact_name' => array('required','max:50'),
-            'email' => array('required','email','max:80'),
-            'contactfunction' => array('required','numeric'),
-        ]);
-
-        $relation = Relation::find($request->input('id'));
-        if (!$relation || !$relation->isOwner()) {
-            return Redirect::back()->withInput($request->all());
-        }
-
-        $contact = new Contact;
-        $contact->salutation = $request->input('contact_salutation');
-        $contact->firstname = $request->input('contact_firstname');
-        $contact->lastname = $request->input('contact_name');
-        $contact->mobile = $request->input('mobile');
-        $contact->phone = $request->input('telephone');
-        $contact->email = $request->input('email');
-        $contact->note = $request->input('note');
-        $contact->relation_id = $relation->id;
-        $contact->function_id = $request->input('contactfunction');
-        if ($request->input('gender') == '-1') {
-            $contact->gender = NULL;
-        } else {
-            $contact->gender = $request->input('gender');
-        }
-
-        $contact->save();
-
-        return redirect('/mycompany')->with('success', 'Nieuw contact aangemaakt');
-    }
-
     public function doDeleteContact()
     {
         $rules = array(
@@ -589,97 +431,6 @@ class RelationController extends Controller
     public function getAll()
     {
         return view('user.relation');
-    }
-
-    public function doNewLogo(Request $request)
-    {
-        $this->validate($request, [
-            'id' => array('required','integer'),
-            'image' => array('required', 'mimes:jpeg,bmp,png,gif'),
-        ]);
-
-        if ($request->hasFile('image')) {
-            $file = $request->file('image');
-
-            $path = Storage::putFile(Auth::user()->encodedName(), $file);
-            if (!$path) {
-                return back()->withErrors(['msg' => 'Upload mislukt']);
-            }
-
-            $path = config('filesystems.disks.local.root') . '/' . $path;
-            $image = Image::make($path)->resize(null, 200, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            })->save();
-
-            $resource = new Resource;
-            $resource->resource_name = 'Bedrijfslogo';
-            $resource->file_location = $path;
-            $resource->file_size = $image->filesize();
-            $resource->user_id = Auth::id();
-            $resource->description = 'Relatielogo';
-            $resource->save();
-
-            $relation = Relation::find($request->input('id'));
-            if (!$relation || !$relation->isOwner()) {
-                return back()->withInput($request->all());
-            }
-            $relation->logo_id = $resource->id;
-
-            $relation->save();
-
-            return back()->with('success', 'Uw logo is geupload');
-        } else {
-
-            $messages->add('file', 'Geen afbeelding geupload');
-
-            // redirect our user back to the form with the errors from the validator
-            return back()->withErrors($messages);
-        }
-
-    }
-
-    public function doNewAgreement(Request $request)
-    {
-        $this->validate($request, [
-            'id' => array('required','integer'),
-            'doc' => array('required', 'mimes:pdf'),
-        ]);
-
-        if ($request->hasFile('doc')) {
-            $file = $request->file('doc');
-            if (strlen($file->getClientOriginalName()) >= 50) {
-                return back()->withErrors(['msg' => 'Bestandsnaam te lang']);
-            }
-
-            $path = Storage::putFile(Auth::user()->encodedName(), $file);
-            if (!$path) {
-                return back()->withErrors(['msg' => 'Upload mislukt']);
-            }
-
-            $resource = new Resource;
-            $resource->resource_name = $file->getClientOriginalName();
-            $resource->file_location = config('filesystems.disks.local.root') . '/' . $path;
-            $resource->file_size = $file->getClientSize();
-            $resource->user_id = Auth::id();
-            $resource->description = 'Algemene Voorwaarden';
-            $resource->save();
-
-            $relation = Relation::find($request->input('id'));
-            if (!$relation || !$relation->isOwner()) {
-                return back()->withInput($request->all());
-            }
-            $relation->agreement_id = $resource->id;
-
-            $relation->save();
-
-            return back()->with('success', 'Uw algemene voorwaarden zijn geupload');
-        } else {
-
-            // redirect our user back to the form with the errors from the validator
-            return back()->withErrors(['file' => 'Geen document geupload']);
-        }
-
     }
 
     public function downloadVCard(Request $request, $relation_id, $contact_id)

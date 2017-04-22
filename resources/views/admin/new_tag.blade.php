@@ -50,7 +50,7 @@
 					<div class="col-md-12">
 						<div class="form-group">
 							<label for="company_name">Naam</label>
-							<input name="name" id="name" type="text" value="{{ Input::old('name') ? Input::old('name') : ''}}" class="form-control" />
+							<input name="name" id="name" type="text" value="{{ old('name') ? old('name') : ''}}" class="form-control" />
 						</div>
 					</div>
 

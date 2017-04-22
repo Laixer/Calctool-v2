@@ -27,6 +27,8 @@
 /* Frontend API */
 Route::post('register/usernamecheck', 'ApiController@doCheckUsernameEXist');
 
+Route::post('postaladdress',          'Postal\PostalController');//TODO: MOVE into API
+
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/',                  'ApiController@getApiRoot');
     Route::post('/update',           'ApiController@getUserUpdate');

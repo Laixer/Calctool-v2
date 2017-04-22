@@ -69,13 +69,13 @@
                 <div class="col-sm-6 col-md-2">
                     <div class="item-box item-box-show fixed-box">
                         <figure>
-                            <a class="item-hover" href="/company">
+                            <a class="item-hover" href="/company/details">
                                 <span class="overlay color2"></span>
                                 <span class="inner" style="top:40%;">
                                     <span class="block fa fa-home fsize60"></span>
                                 </span>
                             </a>
-                            <a href="/company" class="btn btn-primary add_to_cart"><strong> @lang('core.companyinfo')</strong></a>
+                            <a href="/company/details" class="btn btn-primary add_to_cart"><strong> @lang('core.companyinfo')</strong></a>
 
                         </figure>
                     </div>
@@ -242,9 +242,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <div ng-show="show" class="row text-center">
-                                        <img src="/images/loading_icon.gif" height="100" />
-                                    </div>
                                     <tr ng-repeat="project in projects | filter: query | orderBy: orderByField:reverseSort as results">
                                         <td class="col-md-5"><a href="/project/@{{ project.id }}-@{{ project.project_name | strReplace:' ':'-' }}/details">@{{ project.project_name }}</a></td>
                                         <td class="col-md-3">@{{ project.relation }}</td>

@@ -91,7 +91,7 @@ class RouteServiceProvider extends ServiceProvider
     }
 
     /**
-     * Define the "web" routes for the application.
+     * Define the "web" routes for the internal application.
      *
      * These routes all receive session state, CSRF protection, etc.
      *
@@ -117,7 +117,7 @@ class RouteServiceProvider extends ServiceProvider
     }
 
     /**
-     * Define the "async" routes for the application.
+     * Define the "async" routes for the internal application.
       *
      * @return void
      */
@@ -128,13 +128,13 @@ class RouteServiceProvider extends ServiceProvider
         /* Admin application routes */
         Route::group([
             'namespace' => $this->namespaceApi,
-            'prefix' => 'api/v1',
+            'prefix' => 'api/v1',//TODO: /async/
             'middleware' => 'async'
         ], $routes);
     }
 
     /**
-     * Define the "api" routes for the application.
+     * Define the "api" routes for the external application.
       *
      * @return void
      */

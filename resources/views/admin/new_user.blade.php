@@ -95,7 +95,7 @@ $(document).ready(function() {
 					<div class="col-md-5">
 						<div class="form-group">
 							<label for="company_name">Gebruikersnaam*</label>
-							<input name="username" id="username" type="text" value="{{ Input::old('username') }}" class="form-control" />
+							<input name="username" id="username" type="text" value="{{ old('username') }}" class="form-control" />
 						</div>
 					</div>
 
@@ -125,42 +125,42 @@ $(document).ready(function() {
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="firstname">Voornaam</label>
-							<input name="firstname" id="firstname" type="text" value="{{ Input::old('firstname') }}" class="form-control"/>
+							<input name="firstname" id="firstname" type="text" value="{{ old('firstname') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="lastname">Achternaam</label>
-							<input name="lastname" id="lastname" type="text" value="{{ Input::old('lastname') }}" class="form-control"/>
+							<input name="lastname" id="lastname" type="text" value="{{ old('lastname') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="mobile">Mobiel</label>
-							<input name="mobile" id="mobile" type="text" maxlength="12" value="{{ Input::old('mobile') }}" class="form-control"/>
+							<input name="mobile" id="mobile" type="text" maxlength="12" value="{{ old('mobile') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-2">
 						<div class="form-group">
 							<label for="telephone">Telefoonnummer</label>
-							<input name="telephone" id="telephone" type="text" maxlength="12" value="{{ Input::old('telephone') }}" class="form-control"/>
+							<input name="telephone" id="telephone" type="text" maxlength="12" value="{{ old('telephone') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="email">Email*</label>
-							<input name="email" id="email" type="email" value="{{ Input::old('email') }}" class="form-control"/>
+							<input name="email" id="email" type="email" value="{{ old('email') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-4">
 						<div class="form-group">
 							<label for="website">Website</label>
-							<input name="website" id="website" type="url" value="{{ Input::old('website') }}" class="form-control"/>
+							<input name="website" id="website" type="url" value="{{ old('website') }}" class="form-control"/>
 						</div>
 					</div>
 					<div class="col-md-3">
@@ -182,21 +182,21 @@ $(document).ready(function() {
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="iban">Account verloopdatum</label>
-							<input name="expdate" id="expdate" type="date" value="{{ Input::old('expdate') ? Input::old('expdate') : date('Y-m-d', strtotime('+1 month', time())) }}" class="form-control"/>
+							<input name="expdate" id="expdate" type="date" value="{{ old('expdate') ? old('expdate') : date('Y-m-d', strtotime('+1 month', time())) }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="iban">Activeringsdatum</label>
-							<input name="confirmdate" id="confirmdate" type="date" value="{{ Input::old('confirmdate') ? Input::old('confirmdate') : date('Y-m-d') }}" class="form-control"/>
+							<input name="confirmdate" id="confirmdate" type="date" value="{{ old('confirmdate') ? old('confirmdate') : date('Y-m-d') }}" class="form-control"/>
 						</div>
 					</div>
 
 					<div class="col-md-3">
 						<div class="form-group">
 							<label for="iban">Blokkeeringsdatum</label>
-							<input name="bandate" id="bandate" type="date" value="{{ Input::old('bandate') ? Input::old('bandate') : '' }}" class="form-control"/>
+							<input name="bandate" id="bandate" type="date" value="{{ old('bandate') ? old('bandate') : '' }}" class="form-control"/>
 						</div>
 					</div>
 						<div class="col-md-3">
@@ -232,7 +232,7 @@ $(document).ready(function() {
 				<div class="row">
 					<div class="form-group">
 						<div class="col-md-12">
-							<textarea name="note" id="note" rows="10" class="form-control">{{ Input::old('note') }}</textarea>
+							<textarea name="note" id="note" rows="10" class="form-control">{{ old('note') }}</textarea>
 						</div>
 					</div>
 				</div>
@@ -240,7 +240,7 @@ $(document).ready(function() {
 				<div class="row">
 					<div class="form-group">
 						<div class="col-md-12">
-							<textarea name="notepad" id="notepad" rows="10" class="form-control">{{ Input::old('notepad') }}</textarea>
+							<textarea name="notepad" id="notepad" rows="10" class="form-control">{{ old('notepad') }}</textarea>
 						</div>
 					</div>
 				</div>

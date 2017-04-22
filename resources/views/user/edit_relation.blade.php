@@ -134,7 +134,7 @@ $(document).ready(function() {
         number = $('#address_number').val();
         if (number && zipcode) {
 
-            $.post("/company/quickstart/address", {
+            $.post("/api/v1/postaladdress", {
                 zipcode: zipcode,
                 number: number,
             }, function(data) {
@@ -249,7 +249,7 @@ $(document).ready(function() {
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="debtor">Debiteurennummer</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit nummer is gegenereerd door de CalculatieTool.com. Je kunt dit vervangen door je eigen boekhoudkundige nummering." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
-                                        <input name="debtor" maxlength="10" id="debtor" type="text" value="{{ Input::old('debtor') ? Input::old('debtor') : $relation->debtor_code }}" class="form-control"/>
+                                        <input name="debtor" maxlength="10" id="debtor" type="text" value="{{ old('debtor') ? old('debtor') : $relation->debtor_code }}" class="form-control"/>
                                         <input type="hidden" name="id" id="id" value="{{ $relation->id }}"/>
                                     </div>
                                 </div>
@@ -263,7 +263,7 @@ $(document).ready(function() {
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label for="company_name">Bedrijfsnaam*</label>
-                                        <input name="company_name" maxlength="50" id="company_name" type="text" value="{{ Input::old('company_name') ? Input::old('company_name') : $relation->company_name }}" class="form-control" />
+                                        <input name="company_name" maxlength="50" id="company_name" type="text" value="{{ old('company_name') ? old('company_name') : $relation->company_name }}" class="form-control" />
                                     </div>
                                 </div>
 
@@ -281,35 +281,35 @@ $(document).ready(function() {
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="website">Website</label>
-                                        <input name="website" maxlength="180" id="website" type="url" value="{{ Input::old('website') ? Input::old('website') : $relation->website }}" class="form-control"/>
+                                        <input name="website" maxlength="180" id="website" type="url" value="{{ old('website') ? old('website') : $relation->website }}" class="form-control"/>
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="kvk">K.v.K nummer</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Je KVK-nummer dient te bestaan uit 8 cijfers" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
-                                        <input name="kvk" id="kvk" type="text" maxlength="8" minlength="8" value="{{ Input::old('kvk') ? Input::old('kvk') : trim($relation->kvk) }}" class="form-control"/>
+                                        <input name="kvk" id="kvk" type="text" maxlength="8" minlength="8" value="{{ old('kvk') ? old('kvk') : trim($relation->kvk) }}" class="form-control"/>
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="btw">BTW nummer</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Je BTW-nummer bestaat uit een combinatie van 12 cijfers en/of letters. Veelal beginnen nederlandse BTW-nummers met 'NL' en eindigen op 'B01'." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
-                                        <input name="btw" id="btw" type="text" maxlength="14" value="{{ Input::old('btw') ? Input::old('btw') : $relation->btw }}" class="form-control"/>
+                                        <input name="btw" id="btw" type="text" maxlength="14" value="{{ old('btw') ? old('btw') : $relation->btw }}" class="form-control"/>
                                     </div>
                                 </div>
 
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="telephone_comp">Telefoonnummer</label>
-                                        <input name="telephone_comp" id="telephone_comp" type="text" maxlength="12" value="{{ Input::old('telephone_comp') ? Input::old('telephone_comp') : $relation->phone }}" class="form-control"/>
+                                        <input name="telephone_comp" id="telephone_comp" type="text" maxlength="12" value="{{ old('telephone_comp') ? old('telephone_comp') : $relation->phone }}" class="form-control"/>
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="email_comp">Email*</label>
-                                        <input name="email_comp" maxlength="80" id="email_comp" type="email" value="{{ Input::old('email_comp') ? Input::old('email_comp') : $relation->email }}" class="form-control"/>
+                                        <input name="email_comp" maxlength="80" id="email_comp" type="email" value="{{ old('email_comp') ? old('email_comp') : $relation->email }}" class="form-control"/>
                                     </div>
                                 </div>
 
@@ -322,28 +322,28 @@ $(document).ready(function() {
                                 <div class="col-md-1">
                                     <div class="form-group">
                                         <label for="address_number">Huis nr.*</label>
-                                        <input name="address_number" maxlength="5" id="address_number" type="text" value="{{ Input::old('address_number') ? Input::old('address_number') : $relation->address_number }}" class="form-control autoappend"/>
+                                        <input name="address_number" maxlength="5" id="address_number" type="text" value="{{ old('address_number') ? old('address_number') : $relation->address_number }}" class="form-control autoappend"/>
                                     </div>
                                 </div>
 
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="zipcode">Postcode*</label>
-                                        <input name="zipcode" id="zipcode" maxlength="6" type="text" value="{{ Input::old('zipcode') ? Input::old('zipcode') : $relation->address_postal }}" class="form-control autoappend"/>
+                                        <input name="zipcode" id="zipcode" maxlength="6" type="text" value="{{ old('zipcode') ? old('zipcode') : $relation->address_postal }}" class="form-control autoappend"/>
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="street">Straat*</label>
-                                        <input name="street" maxlength="50" id="street" type="text" value="{{ Input::old('street') ? Input::old('street') : $relation->address_street }}" class="form-control"/>
+                                        <input name="street" maxlength="50" id="street" type="text" value="{{ old('street') ? old('street') : $relation->address_street }}" class="form-control"/>
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="city">Plaats*</label>
-                                        <input name="city" maxlength="35" id="city" type="text" value="{{ Input::old('city') ? Input::old('city') : $relation->address_city }}" class="form-control"/>
+                                        <input name="city" maxlength="35" id="city" type="text" value="{{ old('city') ? old('city') : $relation->address_city }}" class="form-control"/>
                                     </div>
                                 </div>
 
@@ -375,7 +375,7 @@ $(document).ready(function() {
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-md-12">
-                                        <textarea name="note" id="summernote" rows="10" class="form-control">{{ Input::old('note') ? Input::old('note') : $relation->note }}</textarea>
+                                        <textarea name="note" id="summernote" rows="10" class="form-control">{{ old('note') ? old('note') : $relation->note }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -429,14 +429,14 @@ $(document).ready(function() {
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="iban">IBAN rekeningnummer</label>
-                                        <input name="iban" maxlength="25" id="iban" type="text" value="{{ Input::old('iban') ? Input::old('iban') : $relation->iban }}" class="form-control"/>
+                                        <input name="iban" maxlength="25" id="iban" type="text" value="{{ old('iban') ? old('iban') : $relation->iban }}" class="form-control"/>
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="btw">Naam rekeninghouder</label>
-                                        <input name="iban_name" maxlength="50" id="iban_name" type="text" value="{{ Input::old('iban_name') ? Input::old('iban_name') : $relation->iban_name }}" class="form-control"/>
+                                        <input name="iban_name" maxlength="50" id="iban_name" type="text" value="{{ old('iban_name') ? old('iban_name') : $relation->iban_name }}" class="form-control"/>
                                     </div>
                                 </div>
 
@@ -464,10 +464,10 @@ $(document).ready(function() {
                                     <div class="col-md-3"><label for="hour_rate">Uurtarief excl. BTW</label></div>
                                     <div class="col-md-1"><div class="pull-right">&euro;</div></div>
                                     <div class="col-md-2">
-                                        <input name="hour_rate" type="text" value="{{ Input::old('hour_rate') ? Input::old('hour_rate') : number_format($relation->hour_rate, 2,",",".") }}" class="form-control form-control-sm-number"/>
+                                        <input name="hour_rate" type="text" value="{{ old('hour_rate') ? old('hour_rate') : number_format($relation->hour_rate, 2,",",".") }}" class="form-control form-control-sm-number"/>
                                     </div>
                                     <div class="col-md-2">
-                                        <input name="more_hour_rate" id="more_hour_rate" type="text" value="{{ Input::old('more_hour_rate') ? Input::old('more_hour_rate') : number_format($relation->hour_rate_more, 2,",",".") }}" class="form-control form-control-sm-number"/>
+                                        <input name="more_hour_rate" id="more_hour_rate" type="text" value="{{ old('more_hour_rate') ? old('more_hour_rate') : number_format($relation->hour_rate_more, 2,",",".") }}" class="form-control form-control-sm-number"/>
                                     </div>
                                 </div>
 
@@ -476,20 +476,20 @@ $(document).ready(function() {
                                     <div class="col-md-3"><label for="profit_material_1">Winstpercentage materiaal</label></div>
                                     <div class="col-md-1"><div class="pull-right">%</div></div>
                                     <div class="col-md-2">
-                                        <input name="profit_material_1" id="profit_material_1" type="number" min="0" max="200" value="{{ Input::old('profit_material_1') ? Input::old('profit_material_1') : $relation->profit_calc_contr_mat }}" class="form-control form-control-sm-number"/>
+                                        <input name="profit_material_1" id="profit_material_1" type="number" min="0" max="200" value="{{ old('profit_material_1') ? old('profit_material_1') : $relation->profit_calc_contr_mat }}" class="form-control form-control-sm-number"/>
                                     </div>
                                     <div class="col-md-2">
-                                        <input name="more_profit_material_1" id="more_profit_material_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_1') ? Input::old('more_profit_material_1') : $relation->profit_more_contr_mat }}" class="form-control form-control-sm-number"/>
+                                        <input name="more_profit_material_1" id="more_profit_material_1" type="number" min="0" max="200" value="{{ old('more_profit_material_1') ? old('more_profit_material_1') : $relation->profit_more_contr_mat }}" class="form-control form-control-sm-number"/>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3"><label for="profit_equipment_1">Winstpercentage overig</label></div>
                                     <div class="col-md-1"><div class="pull-right">%</div></div>
                                     <div class="col-md-2">
-                                        <input name="profit_equipment_1" id="profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_1') ? Input::old('profit_equipment_1') : $relation->profit_calc_contr_equip }}" class="form-control form-control-sm-number"/>
+                                        <input name="profit_equipment_1" id="profit_equipment_1" type="number" min="0" max="200" value="{{ old('profit_equipment_1') ? old('profit_equipment_1') : $relation->profit_calc_contr_equip }}" class="form-control form-control-sm-number"/>
                                     </div>
                                     <div class="col-md-2">
-                                        <input name="more_profit_equipment_1" id="more_profit_equipment_1" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_1') ? Input::old('more_profit_equipment_1') : $relation->profit_more_contr_equip }}" class="form-control form-control-sm-number"/>
+                                        <input name="more_profit_equipment_1" id="more_profit_equipment_1" type="number" min="0" max="200" value="{{ old('more_profit_equipment_1') ? old('more_profit_equipment_1') : $relation->profit_more_contr_equip }}" class="form-control form-control-sm-number"/>
                                     </div>
                                 </div>
 
@@ -498,20 +498,20 @@ $(document).ready(function() {
                                     <div class="col-md-3"><label for="profit_material_2">Winstpercentage materiaal</label></div>
                                     <div class="col-md-1"><div class="pull-right">%</div></div>
                                     <div class="col-md-2">
-                                        <input name="profit_material_2" id="profit_material_2" type="number" min="0" max="200" value="{{ Input::old('profit_material_2') ? Input::old('profit_material_2') : $relation->profit_calc_subcontr_mat }}" class="form-control form-control-sm-number"/>
+                                        <input name="profit_material_2" id="profit_material_2" type="number" min="0" max="200" value="{{ old('profit_material_2') ? old('profit_material_2') : $relation->profit_calc_subcontr_mat }}" class="form-control form-control-sm-number"/>
                                     </div>
                                     <div class="col-md-2">
-                                        <input name="more_profit_material_2" id="more_profit_material_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_material_2') ? Input::old('more_profit_material_2') : $relation->profit_more_subcontr_mat }}" class="form-control form-control-sm-number"/>
+                                        <input name="more_profit_material_2" id="more_profit_material_2" type="number" min="0" max="200" value="{{ old('more_profit_material_2') ? old('more_profit_material_2') : $relation->profit_more_subcontr_mat }}" class="form-control form-control-sm-number"/>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3"><label for="profit_equipment_2">Winstpercentage overig</label></div>
                                     <div class="col-md-1"><div class="pull-right">%</div></div>
                                     <div class="col-md-2">
-                                        <input name="profit_equipment_2" id="profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('profit_equipment_2') ? Input::old('profit_equipment_2') : $relation->profit_calc_subcontr_equip }}" class="form-control form-control-sm-number"/>
+                                        <input name="profit_equipment_2" id="profit_equipment_2" type="number" min="0" max="200" value="{{ old('profit_equipment_2') ? old('profit_equipment_2') : $relation->profit_calc_subcontr_equip }}" class="form-control form-control-sm-number"/>
                                     </div>
                                     <div class="col-md-2">
-                                        <input name="more_profit_equipment_2" id="more_profit_equipment_2" type="number" min="0" max="200" value="{{ Input::old('more_profit_equipment_2') ? Input::old('more_profit_equipment_2') : $relation->profit_more_subcontr_equip }}" class="form-control form-control-sm-number"/>
+                                        <input name="more_profit_equipment_2" id="more_profit_equipment_2" type="number" min="0" max="200" value="{{ old('more_profit_equipment_2') ? old('more_profit_equipment_2') : $relation->profit_more_subcontr_equip }}" class="form-control form-control-sm-number"/>
                                     </div>
                                 </div>
                                 <br/>
@@ -575,10 +575,10 @@ $(document).ready(function() {
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-    <?php $response = RelationKind::where('id','=',Input::old('relationkind'))->first(); ?>
+    <?php $response = RelationKind::where('id','=',old('relationkind'))->first(); ?>
     if('{{ ($response ? $response->kind_name : 'zakelijk') }}'=='particulier'){
         $('.company').hide();
-        $('#relationkind option[value="{{ Input::old('relationkind') }}"]').attr("selected",true);
+        $('#relationkind option[value="{{ old('relationkind') }}"]').attr("selected",true);
     }
     $('#relationkind').change(function() {
         $('.company').toggle('slow');

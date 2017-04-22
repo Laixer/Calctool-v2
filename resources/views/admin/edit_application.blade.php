@@ -116,7 +116,7 @@ $(document).ready(function() {
 					<div class="col-md-5">
 						<div class="form-group">
 							<label for="company_name">Naam</label>
-							<input name="name" id="name" type="text" value="{{ Input::old('name') ? Input::old('name') : $client->name }}" class="form-control" />
+							<input name="name" id="name" type="text" value="{{ old('name') ? old('name') : $client->name }}" class="form-control" />
 						</div>
 					</div>
 
@@ -126,7 +126,7 @@ $(document).ready(function() {
 					<div class="col-md-5">
 						<div class="form-group">
 							<label for="company_name">Callback</label>
-							<input name="endpoint" id="endpoint" type="text" value="{{ Input::old('endpoint') ? Input::old('endpoint') : $client->redirect_uri }}" class="form-control" />
+							<input name="endpoint" id="endpoint" type="text" value="{{ old('endpoint') ? old('endpoint') : $client->redirect_uri }}" class="form-control" />
 						</div>
 					</div>
 
@@ -185,7 +185,7 @@ $(document).ready(function() {
 				<div class="row">
 					<div class="form-group">
 						<div class="col-md-12">
-							<textarea name="note" id="note" rows="10" class="summernote form-control">{{ Input::old('note') ? Input::old('note') : $client->note }}</textarea>
+							<textarea name="note" id="note" rows="10" class="summernote form-control">{{ old('note') ? old('note') : $client->note }}</textarea>
 						</div>
 					</div>
 				</div>

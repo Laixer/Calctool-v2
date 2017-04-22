@@ -182,7 +182,7 @@ $(document).ready(function() {
 										<div class="col-md-6">
 											<div class="form-group">
 												<label for="company_name">Gebruikersnaam*</label>
-												<input name="username" {{ $user->isAdmin() ? 'readonly' : '' }} id="username" type="text" value="{{ Input::old('username') ? Input::old('username') : $user->username}}" class="form-control" />
+												<input name="username" {{ $user->isAdmin() ? 'readonly' : '' }} id="username" type="text" value="{{ old('username') ? old('username') : $user->username}}" class="form-control" />
 											</div>
 										</div>
 
@@ -216,42 +216,42 @@ $(document).ready(function() {
 										<div class="col-md-2">
 											<div class="form-group">
 												<label for="firstname">Voornaam</label>
-												<input name="firstname" id="firstname" type="text" value="{{ Input::old('firstname') ? Input::old('firstname') : $user->firstname }}" class="form-control"/>
+												<input name="firstname" id="firstname" type="text" value="{{ old('firstname') ? old('firstname') : $user->firstname }}" class="form-control"/>
 											</div>
 										</div>
 
 										<div class="col-md-3">
 											<div class="form-group">
 												<label for="lastname">Achternaam</label>
-												<input name="lastname" id="lastname" type="text" value="{{ Input::old('lastname') ? Input::old('lastname') : $user->lastname }}" class="form-control"/>
+												<input name="lastname" id="lastname" type="text" value="{{ old('lastname') ? old('lastname') : $user->lastname }}" class="form-control"/>
 											</div>
 										</div>
 
 										<div class="col-md-2">
 											<div class="form-group">
 												<label for="mobile">Mobiel</label>
-												<input name="mobile" id="mobile" type="number" value="{{ Input::old('mobile') ? Input::old('mobile') : $user->mobile}}" class="form-control"/>
+												<input name="mobile" id="mobile" type="number" value="{{ old('mobile') ? old('mobile') : $user->mobile}}" class="form-control"/>
 											</div>
 										</div>
 
 										<div class="col-md-2">
 											<div class="form-group">
 												<label for="telephone">Telefoonnummer</label>
-												<input name="telephone" id="telephone" type="number" value="{{ Input::old('telephone') ? Input::old('telephone') : $user->phone }}" class="form-control"/>
+												<input name="telephone" id="telephone" type="number" value="{{ old('telephone') ? old('telephone') : $user->phone }}" class="form-control"/>
 											</div>
 										</div>
 
 										<div class="col-md-3">
 											<div class="form-group">
 												<label for="email">Email*</label>
-												<input name="email" {{ $user->isAdmin() ? 'readonly' : '' }} id="email" type="email" value="{{ Input::old('email') ? Input::old('email') : $user->email }}" class="form-control"/>
+												<input name="email" {{ $user->isAdmin() ? 'readonly' : '' }} id="email" type="email" value="{{ old('email') ? old('email') : $user->email }}" class="form-control"/>
 											</div>
 										</div>
 
 										<div class="col-md-4">
 											<div class="form-group">
 												<label for="website">Website</label>
-												<input name="website" id="website" type="url" value="{{ Input::old('website') ? Input::old('website') : $user->website }}" class="form-control"/>
+												<input name="website" id="website" type="url" value="{{ old('website') ? old('website') : $user->website }}" class="form-control"/>
 											</div>
 										</div>
 										<div class="col-md-3">
@@ -327,14 +327,14 @@ $(document).ready(function() {
 										<div class="col-md-3">
 											<div class="form-group">
 												<label for="iban">Account verloopdatum</label>
-												<input name="expdate" id="expdate" type="date" value="{{ Input::old('expdate') ? Input::old('expdate') : date('Y-m-d', strtotime($user->expiration_date)) }}" class="form-control"/>
+												<input name="expdate" id="expdate" type="date" value="{{ old('expdate') ? old('expdate') : date('Y-m-d', strtotime($user->expiration_date)) }}" class="form-control"/>
 											</div>
 										</div>
 
 										<div class="col-md-3">
 											<div class="form-group">
 												<label for="iban">Activeringsdatum</label>
-												<input name="confirmdate" id="confirmdate" type="date" value="{{ Input::old('confirmdate') ? Input::old('confirmdate') : date('Y-m-d', strtotime($user->confirmed_mail)) }}" class="form-control"/>
+												<input name="confirmdate" id="confirmdate" type="date" value="{{ old('confirmdate') ? old('confirmdate') : date('Y-m-d', strtotime($user->confirmed_mail)) }}" class="form-control"/>
 											</div>
 										</div>
 
@@ -420,7 +420,7 @@ $(document).ready(function() {
 									<div class="row hidden-xs">
 										<div class="form-group">
 											<div class="col-md-12">
-												<textarea name="note" id="note" rows="10" class="summernote form-control">{{ Input::old('note') ? Input::old('note') : $user->note }}</textarea>
+												<textarea name="note" id="note" rows="10" class="summernote form-control">{{ old('note') ? old('note') : $user->note }}</textarea>
 											</div>
 										</div>
 									</div>
@@ -428,7 +428,7 @@ $(document).ready(function() {
 									<div class="row hidden-xs">
 										<div class="form-group">
 											<div class="col-md-12">
-												<textarea name="notepad" id="note" rows="10" class="summernote form-control">{{ Input::old('notepad') ? Input::old('notepad') : $user->notepad }}</textarea>
+												<textarea name="notepad" id="note" rows="10" class="summernote form-control">{{ old('notepad') ? old('notepad') : $user->notepad }}</textarea>
 											</div>
 										</div>
 									</div>

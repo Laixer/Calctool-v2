@@ -91,9 +91,10 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         'utm' => \BynqIO\CalculatieTool\Http\Middleware\UTMState::class,
         'auth' => \BynqIO\CalculatieTool\Http\Middleware\Authenticate::class,
-        'guest' => \BynqIO\CalculatieTool\Http\Middleware\RedirectIfAuthenticated::class,
         'payzone' => \BynqIO\CalculatieTool\Http\Middleware\PayRestrict::class,
         'oauth' => \LucaDegasperi\OAuth2Server\Middleware\OAuthMiddleware::class,
+        'reqcompany' => \BynqIO\CalculatieTool\Http\Middleware\RequireCompany::class,
+        'guest' => \BynqIO\CalculatieTool\Http\Middleware\RedirectIfAuthenticated::class,
         'oauth-user' => \LucaDegasperi\OAuth2Server\Middleware\OAuthUserOwnerMiddleware::class,
         'oauth-client' => \LucaDegasperi\OAuth2Server\Middleware\OAuthClientOwnerMiddleware::class,
         'check-authorization-params' => \LucaDegasperi\OAuth2Server\Middleware\CheckAuthCodeRequestMiddleware::class,

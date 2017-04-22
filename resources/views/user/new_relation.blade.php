@@ -95,7 +95,7 @@ $(document).ready(function() {
         number = $('#address_number').val();
         if (number && zipcode) {
 
-            $.post("/company/quickstart/address", {
+            $.post("/api/v1/postaladdress", {
                 zipcode: zipcode,
                 number: number,
             }, function(data) {
@@ -188,7 +188,7 @@ $(document).ready(function() {
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="debtor">Debiteurennummer*</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit nummer is gegenereerd door de CalculatieTool.com. Je kunt dit vervangen door je eigen boekhoudkundige nummering." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
-                            <input name="debtor" maxlength="10" id="debtor" type="text" value="{{ Input::old('debtor') ? Input::old('debtor') : $debtor_code }}" class="form-control"/>
+                            <input name="debtor" maxlength="10" id="debtor" type="text" value="{{ old('debtor') ? old('debtor') : $debtor_code }}" class="form-control"/>
                         </div>
                     </div>
 
@@ -200,7 +200,7 @@ $(document).ready(function() {
                     <div class="col-md-5">
                         <div class="form-group">
                             <label for="company_name">Bedrijfsnaam*</label>
-                            <input name="company_name" maxlength="50" id="company_name" type="text" value="{{ Input::old('company_name') }}" class="form-control" />
+                            <input name="company_name" maxlength="50" id="company_name" type="text" value="{{ old('company_name') }}" class="form-control" />
                         </div>
                     </div>
 
@@ -218,35 +218,35 @@ $(document).ready(function() {
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="website">Website</label>
-                            <input name="website" maxlength="180" id="website" type="url" value="{{ Input::old('website') }}" class="form-control"/>
+                            <input name="website" maxlength="180" id="website" type="url" value="{{ old('website') }}" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="kvk">K.v.K nummer</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Je KVK-nummer dient te bestaan uit 8 cijfers" href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
-                            <input name="kvk" id="kvk" type="text" maxlength="8" minlength="8" value="{{ Input::old('kvk') }}" class="form-control"/>
+                            <input name="kvk" id="kvk" type="text" maxlength="8" minlength="8" value="{{ old('kvk') }}" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="btw">BTW nummer</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Je BTW-nummer bestaat uit een combinatie van 12 cijfers en/of letters. Veelal beginnen nederlandse BTW-nummers met 'NL' en eindigen op 'B01'." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
-                            <input name="btw" id="btw" type="text" maxlength="14" value="{{ Input::old('btw') }}" class="form-control"/>
+                            <input name="btw" id="btw" type="text" maxlength="14" value="{{ old('btw') }}" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="telephone_comp">Telefoonnummer</label>
-                            <input name="telephone_comp" id="telephone_comp" type="text" minlength="12" maxlength="12" value="{{ Input::old('telephone_comp') }}" class="form-control"/>
+                            <input name="telephone_comp" id="telephone_comp" type="text" minlength="12" maxlength="12" value="{{ old('telephone_comp') }}" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="email_comp">Email*</label>
-                            <input name="email_comp" maxlength="80" id="email_comp" type="email" value="{{ Input::old('email_comp') }}" class="form-control"/>
+                            <input name="email_comp" maxlength="80" id="email_comp" type="email" value="{{ old('email_comp') }}" class="form-control"/>
                         </div>
                     </div>
 
@@ -272,14 +272,14 @@ $(document).ready(function() {
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="street">Straat*</label>
-                            <input name="street" id="street" maxlength="50" type="text" value="{{ Input::old('street') }}" class="form-control"/>
+                            <input name="street" id="street" maxlength="50" type="text" value="{{ old('street') }}" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="city">Plaats*</label>
-                            <input name="city" id="city" maxlength="35" type="text" value="{{ Input::old('city') }}" class="form-control"/>
+                            <input name="city" id="city" maxlength="35" type="text" value="{{ old('city') }}" class="form-control"/>
                         </div>
                     </div>
 
@@ -312,42 +312,42 @@ $(document).ready(function() {
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="contact_salutation">Aanhef</label>
-                            <input name="contact_salutation" maxlength="16" id="contact_salutation" type="text" value="{{ Input::old('contact_salutation') }}" class="form-control"/>
+                            <input name="contact_salutation" maxlength="16" id="contact_salutation" type="text" value="{{ old('contact_salutation') }}" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="contact_name">Achternaam*</label>
-                            <input name="contact_name" maxlength="50" id="contact_name" type="text" value="{{ Input::old('contact_name') }}" class="form-control"/>
+                            <input name="contact_name" maxlength="50" id="contact_name" type="text" value="{{ old('contact_name') }}" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="contact_firstname">Voornaam</label>
-                            <input name="contact_firstname" maxlength="30" id="contact_firstname" type="text" value="{{ Input::old('contact_firstname') }}" class="form-control"/>
+                            <input name="contact_firstname" maxlength="30" id="contact_firstname" type="text" value="{{ old('contact_firstname') }}" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="mobile">Mobiel</label>
-                            <input name="mobile" id="mobile" type="text" maxlength="12" value="{{ Input::old('mobile') }}" class="form-control"/>
+                            <input name="mobile" id="mobile" type="text" maxlength="12" value="{{ old('mobile') }}" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="telephone">Telefoonnummer</label>
-                            <input name="telephone" id="telephone" type="text" maxlength="12" value="{{ Input::old('telephone') }}" class="form-control"/>
+                            <input name="telephone" id="telephone" type="text" maxlength="12" value="{{ old('telephone') }}" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
                             <label for="email">Email*</label>
-                            <input name="email" id="email" maxlength="80" type="email" value="{{ Input::old('email') }}" class="form-control"/>
+                            <input name="email" id="email" maxlength="80" type="email" value="{{ old('email') }}" class="form-control"/>
                         </div>
                     </div>
 
@@ -378,7 +378,7 @@ $(document).ready(function() {
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-12">
-                            <textarea name="note" id="summernote" rows="10" class="form-control">{{ Input::old('note') }}</textarea>
+                            <textarea name="note" id="summernote" rows="10" class="form-control">{{ old('note') }}</textarea>
                         </div>
                     </div>
                 </div>

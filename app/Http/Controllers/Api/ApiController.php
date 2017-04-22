@@ -32,8 +32,8 @@ use BynqIO\CalculatieTool\Models\EstimateLabor;
 use BynqIO\CalculatieTool\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use \Auth;
-use \DB;
+use Auth;
+use DB;
 
 class ApiController extends Controller
 {
@@ -70,7 +70,8 @@ class ApiController extends Controller
 
     public function getRelations()
     {
-        $relations = Relation::where('user_id',Auth::id())->where('id','!=',Auth::user()->self_id)->where('active',true)->orderBy('created_at', 'desc')->get();
+        // $relations = Relation::where('user_id',Auth::id())->where('id','!=',Auth::user()->self_id)->where('active',true)->orderBy('created_at', 'desc')->get();
+        $relations = Relation::where('user_id',Auth::id())->where('active',true)->orderBy('created_at', 'desc')->get();
 
         foreach ($relations as $relation) {
             $contact = Contact::where('relation_id',$relation->id)->first();

@@ -99,14 +99,14 @@ $(document).ready(function() {
                     <div class="col-md-5">
                         <div class="form-group">
                             <label for="company_name">Groepnaam</label>
-                            <input name="name" id="name" type="text" value="{{ Input::old('name') ? Input::old('name') : $group->name}}" class="form-control" />
+                            <input name="name" id="name" type="text" value="{{ old('name') ? old('name') : $group->name}}" class="form-control" />
                         </div>
                     </div>
 
                     <div class="col-md-2">
                         <div class="form-group">
                             <label for="subscription_amount">Maandbedrag</label>
-                            <input name="subscription_amount" id="subscription_amount" type="number" min="0" step="any"value="{{ Input::old('subscription_amount') ? Input::old('subscription_amount') : $group->subscription_amount }}" class="form-control"/>
+                            <input name="subscription_amount" id="subscription_amount" type="number" min="0" step="any"value="{{ old('subscription_amount') ? old('subscription_amount') : $group->subscription_amount }}" class="form-control"/>
                         </div>
                     </div>
 
@@ -142,7 +142,7 @@ $(document).ready(function() {
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-12">
-                            <textarea name="note" id="note" rows="10" class="summernote form-control">{{ Input::old('note') ? Input::old('note') : $group->note }}</textarea>
+                            <textarea name="note" id="note" rows="10" class="summernote form-control">{{ old('note') ? old('note') : $group->note }}</textarea>
                         </div>
                     </div>
                 </div>
