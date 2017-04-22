@@ -19,7 +19,7 @@ class DemoEnvSeeder extends Seeder {
     public function run()
     {
         DB::table('system_message')->delete();
-        $user_type = UserType::where('user_type', 'demo')->first();
+        $user_type = UserType::where('user_type', 'demo')->firstOrFail();
 
         $demo_user = new User;
         $demo_user->username = 'mitch';
@@ -99,13 +99,13 @@ class DemoEnvSeeder extends Seeder {
         $relation2->type_id = 27;
         $relation2->kvk = '54565243';
         $relation2->btw = 'NL851353423B01';
-        $relation2->phone = '0643587470';
+        $relation2->phone = '0850655268';
         $relation2->email = 'info@calculatietool.com';
         $relation2->website = 'https://www.calculatietool.com';
-        $relation2->address_street = 'Odinholm';
-        $relation2->address_number = '25';
-        $relation2->address_postal = '3124SC';
-        $relation2->address_city = 'Schiedam';
+        $relation2->address_street = 'Melbournestraat';
+        $relation2->address_number = '34a';
+        $relation2->address_postal = '3047BJ';
+        $relation2->address_city = 'Rotterdam';
         $relation2->province_id = 9;
         $relation2->country_id = 34;
         $relation2->iban = 'NL29INGB0006863509';

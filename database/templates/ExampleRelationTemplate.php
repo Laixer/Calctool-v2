@@ -16,11 +16,11 @@ class ExampleRelationTemplate {
 
     public static function setup($userid)
     {
-        $province = Province::where('province_name','=','zuid-holland')->first();
-        $country = Country::where('country_name','=','nederland')->first();
-        $relationtype = RelationType::where('type_name','=','adviesbureau')->first();
-        $relationkind = RelationKind::where('kind_name','=','zakelijk')->first();
-        $contact_function = ContactFunction::where('function_name','=','voorzitter')->first();
+        $province = Province::where('province_name','zuid-holland')->firstOrFail();
+        $country = Country::where('country_name','nederland')->firstOrFail();
+        $relationtype = RelationType::where('type_name','adviesbureau')->firstOrFail();
+        $relationkind = RelationKind::where('kind_name','zakelijk')->firstOrFail();
+        $contact_function = ContactFunction::where('function_name','voorzitter')->firstOrFail();
 
         $relation = new Relation;
         $relation->company_name		= 'Voorbeeldrelatie';
